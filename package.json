@@ -1,0 +1,8 @@
+{
+  "name": "react-web-sdk",
+  "version": "0.0.1",
+  "description": "UI SDK based on react-native",
+  "main": "index.js",
+  "author": "Nicolas Gallagher",
+  "license": "MIT"
+}
