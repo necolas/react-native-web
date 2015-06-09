@@ -1,0 +1,3 @@
+:local .userSelect-all { user-select: all; }
+:local .userSelect-inherit { user-select: inherit; }
+:local .userSelect-none { user-select: none; }

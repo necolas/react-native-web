@@ -1,0 +1,12 @@
+:local .display-block { display: block; }
+:local .display-flex { display: flex; }
+:local .display-inline { display: inline; }
+:local .display-inline-block { display: inline-block; }
+:local .display-inline-flex { display: inline-flex; }
+:local .display-inline-table { display: inline-table; }
+:local .display-none { display: none; }
+:local .display-table { display: table; }
+:local .display-table-row { display: table-row; }
+:local .display-table-cell { display: table-cell; }
+:local .display-table-column { display: table-column; }
+:local .display-table-column-group { display: table-column-group; }

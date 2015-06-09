@@ -1,0 +1,3 @@
+:local .whiteSpace-normal { white-space: normal; }
+:local .whiteSpace-nowrap { white-space: nowrap; }
+:local .whiteSpace-pre { white-space: pre; }

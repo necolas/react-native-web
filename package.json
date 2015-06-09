@@ -3,6 +3,28 @@
   "version": "0.0.1",
   "description": "UI SDK based on react-native",
   "main": "index.js",
+  "scripts": {
+    "build": "npm run build:package & npm run build:example",
+    "build:example": "webpack index.js dist/main.js --config webpack.config.js",
+    "build:example:watch": "npm run build:example -- --watch",
+    "build:package": "webpack example.js dist/example.js --config webpack.config.js",
+    "build:package:watch": "npm run build:package -- --watch",
+    "build:watch": "npm run build:package:watch & npm run build:example:watch"
+  },
   "author": "Nicolas Gallagher",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer-core": "^5.2.0",
+    "babel-core": "^5.5.6",
+    "babel-loader": "^5.1.4",
+    "babel-runtime": "^5.5.6",
+    "css-loader": "^0.14.4",
+    "node-libs-browser": "^0.5.2",
+    "postcss-loader": "^0.4.4",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.9.10"
+  },
+  "dependencies": {
+    "react": "^0.13.3"
+  }
 }

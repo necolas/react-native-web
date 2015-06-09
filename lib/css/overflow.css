@@ -1,0 +1,14 @@
+:local .overflow-auto { overflow: auto; }
+:local .overflow-hidden { overflow: hidden; }
+:local .overflow-scroll { overflow: scroll; }
+:local .overflow-visible { overflow: visible; }
+
+:local .overflowX-auto { overflow-x: auto; }
+:local .overflowX-hidden { overflow-x: hidden; }
+:local .overflowX-scroll { overflow-x: scroll; }
+:local .overflowX-visible { overflow-x: visible; }
+
+:local .overflowY-auto { overflow-y: auto; }
+:local .overflowY-hidden { overflow-y: hidden; }
+:local .overflowY-scroll { overflow-y: scroll; }
+:local .overflowY-visible { overflow-y: visible; }

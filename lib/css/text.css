@@ -1,0 +1,14 @@
+:local .textAlign-center { text-align: center; }
+:local .textAlign-left { text-align: left; }
+:local .textAlign-right { text-align: right; }
+:local .textAlign-justify { text-align: justify; }
+
+:local .textDecoration-none { text-decoration: none; }
+:local .textDecoration-underline { text-decoration: underline; }
+
+:local .textOverflow-ellipsis { text-overflow: ellipsis }
+
+:local .textTransform-capitalize { text-transform: capitalize; }
+:local .textTransform-lowercase { text-transform: lowercase; }
+:local .textTransform-none { text-transform: none; }
+:local .textTransform-uppercase { text-transform: uppercase; }

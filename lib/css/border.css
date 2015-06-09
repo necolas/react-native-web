@@ -1,0 +1,42 @@
+:local .borderColor-currentcolor { border-color: currentcolor; }
+:local .borderColor-transparent { border-color: transparent; }
+
+:local .borderStyle-dotted { border-style: dotted; }
+:local .borderStyle-dashed { border-style: dashed; }
+:local .borderStyle-solid { border-style: solid; }
+
+:local .borderWidth-0 { border-width: 0; }
+:local .borderTopWidth-0 { border-top-width: 0; }
+:local .borderRightWidth-0 { border-right-width: 0; }
+:local .borderBottomWidth-0 { border-bottom-width: 0; }
+:local .borderLeftWidth-0 { border-left-width: 0; }
+
+:local .borderWidth-1px { border-width: 1px; }
+:local .borderTopWidth-1px { border-top-width: 1px; }
+:local .borderRightWidth-1px { border-right-width: 1px; }
+:local .borderBottomWidth-1px { border-bottom-width: 1px; }
+:local .borderLeftWidth-1px { border-left-width: 1px; }
+
+:local .borderWidth-2px { border-width: 2px; }
+:local .borderTopWidth-2px { border-top-width: 2px; }
+:local .borderRightWidth-2px { border-right-width: 2px; }
+:local .borderBottomWidth-2px { border-bottom-width: 2px; }
+:local .borderLeftWidth-2px { border-left-width: 2px; }
+
+:local .borderWidth-3px { border-width: 3px; }
+:local .borderTopWidth-3px { border-top-width: 3px; }
+:local .borderRightWidth-3px { border-right-width: 3px; }
+:local .borderBottomWidth-3px { border-bottom-width: 3px; }
+:local .borderLeftWidth-3px { border-left-width: 3px; }
+
+:local .borderWidth-4px { border-width: 4px; }
+:local .borderTopWidth-4px { border-top-width: 4px; }
+:local .borderRightWidth-4px { border-right-width: 4px; }
+:local .borderBottomWidth-4px { border-bottom-width: 4px; }
+:local .borderLeftWidth-4px { border-left-width: 4px; }
+
+:local .borderWidth-5px { border-width: 5px; }
+:local .borderTopWidth-5px { border-top-width: 5px; }
+:local .borderRightWidth-5px { border-right-width: 5px; }
+:local .borderBottomWidth-5px { border-bottom-width: 5px; }
+:local .borderLeftWidth-5px { border-left-width: 5px; }

@@ -1,0 +1,13 @@
+:local .position-absolute { position: absolute; }
+:local .position-fixed { position: fixed; }
+:local .position-relative { position: relative; }
+
+:local .top-0 { top: 0; }
+:local .right-0 { right: 0; }
+:local .left-0 { left: 0; }
+:local .bottom-0 { bottom: 0; }
+
+:local .top-100\% { top: 100%; }
+:local .right-100\% { right: 100%; }
+:local .left-100\% { left: 100%; }
+:local .bottom-100\% { bottom: 100%; }

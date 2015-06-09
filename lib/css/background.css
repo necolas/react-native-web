@@ -1,0 +1,13 @@
+:local .backgroundColor-#fff { background-color: #fff; }
+:local .backgroundColor-transparent { background-color: currentcolor; }
+
+:local .backgroundImage { background-image: none; }
+
+:local .backgroundPosition-center { background-position: center; }
+:local .backgroundSize-contain { background-size: contain; }
+:local .backgroundSize-cover { background-size: cover; }
+
+:local .backgroundRepeat-no-repeat { background-repeat: no-repeat; }
+:local .backgroundRepeat-repeat { background-repeat: repeat; }
+:local .backgroundRepeat-repeat-x { background-repeat: repeat-x; }
+:local .backgroundRepeat-repeat-y { background-repeat: repeat-y; }

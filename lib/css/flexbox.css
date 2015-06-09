@@ -1,0 +1,70 @@
+:local .alignContent-center { align-content: center; }
+:local .alignContent-flex-end { align-content: flex-end; }
+:local .alignContent-flex-start { align-content: flex-start; }
+:local .alignContent-stretch { align-content: stretch; }
+:local .alignContent-space-around { align-content: space-around; }
+:local .alignContent-space-between { align-content: space-between; }
+
+:local .alignItems-center { align-items: center; }
+:local .alignItems-flex-end { align-items: flex-end; }
+:local .alignItems-flex-start { align-items: flex-start; }
+:local .alignItems-stretch { align-items: stretch; }
+:local .alignItems-space-around { align-items: space-around; }
+:local .alignItems-space-between { align-items: space-between; }
+
+:local .alignSelf-auto { align-self: auto; }
+:local .alignSelf-baseline { align-self: baseline; }
+:local .alignSelf-center { align-self: center; }
+:local .alignSelf-flex-end { align-self: flex-end; }
+:local .alignSelf-flex-start { align-self: flex-start; }
+:local .alignSelf-stretch { align-self: stretch; }
+
+:local .flexBasis-0 { flex-basis: 0%; }
+:local .flexBasis-auto { flex-basis: auto; }
+
+:local .flexDirection-column { flex-direction: column; }
+:local .flexDirection-column-reverse { flex-direction: column-reverse; }
+:local .flexDirection-row { flex-direction: row; }
+:local .flexDirection-row-reverse { flex-direction: row-reverse; }
+
+:local .flexGrow-0 { flex-grow: 0; }
+:local .flexGrow-1 { flex-grow: 1; }
+:local .flexGrow-2 { flex-grow: 2; }
+:local .flexGrow-3 { flex-grow: 3; }
+:local .flexGrow-4 { flex-grow: 4; }
+:local .flexGrow-5 { flex-grow: 5; }
+:local .flexGrow-6 { flex-grow: 6; }
+:local .flexGrow-7 { flex-grow: 7; }
+:local .flexGrow-8 { flex-grow: 8; }
+:local .flexGrow-9 { flex-grow: 9; }
+
+:local .flexShrink-0 { flex-shrink: 0; }
+:local .flexShrink-1 { flex-shrink: 1; }
+:local .flexShrink-2 { flex-shrink: 2; }
+:local .flexShrink-3 { flex-shrink: 3; }
+:local .flexShrink-4 { flex-shrink: 4; }
+:local .flexShrink-5 { flex-shrink: 5; }
+:local .flexShrink-6 { flex-shrink: 6; }
+:local .flexShrink-7 { flex-shrink: 7; }
+:local .flexShrink-8 { flex-shrink: 8; }
+:local .flexShrink-9 { flex-shrink: 9; }
+
+:local .flexWrap-nowrap { flex-wrap: nowrap; }
+:local .flexWrap-wrap { flex-wrap: wrap; }
+:local .flexWrap-wrap-reverse { flex-wrap: wrap-reverse; }
+
+:local .justifyContent-center { justify-content: center; }
+:local .justifyContent-flex-end { justify-content: flex-end; }
+:local .justifyContent-flex-start { justify-content: flex-start; }
+:local .justifyContent-space-around { justify-content: space-around; }
+:local .justifyContent-space-between { justify-content: space-between; }
+
+:local .order-1 { order: 1; }
+:local .order-2 { order: 2; }
+:local .order-3 { order: 3; }
+:local .order-4 { order: 4; }
+:local .order-5 { order: 5; }
+:local .order-6 { order: 6; }
+:local .order-7 { order: 7; }
+:local .order-8 { order: 8; }
+:local .order-9 { order: 9; }
