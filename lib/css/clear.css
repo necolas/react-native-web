@@ -1,4 +1,4 @@
-:local .clear-both { clear: both; }
-:local .clear-left { clear: left; }
-:local .clear-none { clear: none; }
-:local .clear-right { clear: right; }
+.clear-both { clear: both; }
+.clear-left { clear: left; }
+.clear-none { clear: none; }
+.clear-right { clear: right; }

@@ -1,4 +1,4 @@
-:local .color-\#fff { color: #fff; }
-:local .color-\#000 { color: #000; }
-:local .color-transparent { color: transparent; }
-:local .color-inherit { color: inherit; }
+.color-\#fff { color: #fff; }
+.color-\#000 { color: #000; }
+.color-transparent { color: transparent; }
+.color-inherit { color: inherit; }

@@ -1,13 +1,13 @@
-:local .margin-0 { margin: 0; }
-:local .margin-auto { margin: auto; }
-:local .marginTop-0 { margin-top: 0; }
-:local .marginTop-auto { margin-top: auto; }
+.margin-0 { margin: 0; }
+.margin-auto { margin: auto; }
+.marginTop-0 { margin-top: 0; }
+.marginTop-auto { margin-top: auto; }
 
-:local .marginRight-0 { margin-right: 0; }
-:local .marginRight-auto { margin-right: auto; }
+.marginRight-0 { margin-right: 0; }
+.marginRight-auto { margin-right: auto; }
 
-:local .marginBottom-0 { margin-bottom: 0; }
-:local .marginBottom-auto { margin-bottom: auto; }
+.marginBottom-0 { margin-bottom: 0; }
+.marginBottom-auto { margin-bottom: auto; }
 
-:local .marginLeft-0 { margin-left: 0; }
-:local .marginLeft-auto { margin-left: auto; }
+.marginLeft-0 { margin-left: 0; }
+.marginLeft-auto { margin-left: auto; }

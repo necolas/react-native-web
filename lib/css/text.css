@@ -1,14 +1,14 @@
-:local .textAlign-center { text-align: center; }
-:local .textAlign-left { text-align: left; }
-:local .textAlign-right { text-align: right; }
-:local .textAlign-justify { text-align: justify; }
+.textAlign-center { text-align: center; }
+.textAlign-left { text-align: left; }
+.textAlign-right { text-align: right; }
+.textAlign-justify { text-align: justify; }
 
-:local .textDecoration-none { text-decoration: none; }
-:local .textDecoration-underline { text-decoration: underline; }
+.textDecoration-none { text-decoration: none; }
+.textDecoration-underline { text-decoration: underline; }
 
-:local .textOverflow-ellipsis { text-overflow: ellipsis }
+.textOverflow-ellipsis { text-overflow: ellipsis }
 
-:local .textTransform-capitalize { text-transform: capitalize; }
-:local .textTransform-lowercase { text-transform: lowercase; }
-:local .textTransform-none { text-transform: none; }
-:local .textTransform-uppercase { text-transform: uppercase; }
+.textTransform-capitalize { text-transform: capitalize; }
+.textTransform-lowercase { text-transform: lowercase; }
+.textTransform-none { text-transform: none; }
+.textTransform-uppercase { text-transform: uppercase; }

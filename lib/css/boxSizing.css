@@ -1,2 +1,2 @@
-:local .boxSizing-border-box { box-sizing: border-box; }
-:local .boxSizing-content-box { box-sizing: content-box; }
+.boxSizing-border-box { box-sizing: border-box; }
+.boxSizing-content-box { box-sizing: content-box; }

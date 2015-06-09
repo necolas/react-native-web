@@ -1,12 +1,12 @@
-:local .display-block { display: block; }
-:local .display-flex { display: flex; }
-:local .display-inline { display: inline; }
-:local .display-inline-block { display: inline-block; }
-:local .display-inline-flex { display: inline-flex; }
-:local .display-inline-table { display: inline-table; }
-:local .display-none { display: none; }
-:local .display-table { display: table; }
-:local .display-table-row { display: table-row; }
-:local .display-table-cell { display: table-cell; }
-:local .display-table-column { display: table-column; }
-:local .display-table-column-group { display: table-column-group; }
+.display-block { display: block; }
+.display-flex { display: flex; }
+.display-inline { display: inline; }
+.display-inline-block { display: inline-block; }
+.display-inline-flex { display: inline-flex; }
+.display-inline-table { display: inline-table; }
+.display-none { display: none; }
+.display-table { display: table; }
+.display-table-row { display: table-row; }
+.display-table-cell { display: table-cell; }
+.display-table-column { display: table-column; }
+.display-table-column-group { display: table-column-group; }

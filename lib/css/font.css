@@ -1,16 +1,16 @@
-:local .font-inherit { font: inherit; }
+.font-inherit { font: inherit; }
 
-:local .fontStyle-italic { font-style: italic; }
-:local .fontStyle-normal { font-style: normal; }
+.fontStyle-italic { font-style: italic; }
+.fontStyle-normal { font-style: normal; }
 
-:local .fontWeight-100 { font-weight: 100; }
-:local .fontWeight-200 { font-weight: 200; }
-:local .fontWeight-300 { font-weight: 300; }
-:local .fontWeight-400 { font-weight: 400; }
-:local .fontWeight-500 { font-weight: 500; }
-:local .fontWeight-600 { font-weight: 600; }
-:local .fontWeight-700 { font-weight: 700; }
-:local .fontWeight-800 { font-weight: 800; }
-:local .fontWeight-900 { font-weight: 900; }
-:local .fontWeight-bold { font-weight: bold; }
-:local .fontWeight-normal { font-weight: normal; }
+.fontWeight-100 { font-weight: 100; }
+.fontWeight-200 { font-weight: 200; }
+.fontWeight-300 { font-weight: 300; }
+.fontWeight-400 { font-weight: 400; }
+.fontWeight-500 { font-weight: 500; }
+.fontWeight-600 { font-weight: 600; }
+.fontWeight-700 { font-weight: 700; }
+.fontWeight-800 { font-weight: 800; }
+.fontWeight-900 { font-weight: 900; }
+.fontWeight-bold { font-weight: bold; }
+.fontWeight-normal { font-weight: normal; }

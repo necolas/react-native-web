@@ -1,14 +1,14 @@
-:local .overflow-auto { overflow: auto; }
-:local .overflow-hidden { overflow: hidden; }
-:local .overflow-scroll { overflow: scroll; }
-:local .overflow-visible { overflow: visible; }
+.overflow-auto { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-scroll { overflow: scroll; }
+.overflow-visible { overflow: visible; }
 
-:local .overflowX-auto { overflow-x: auto; }
-:local .overflowX-hidden { overflow-x: hidden; }
-:local .overflowX-scroll { overflow-x: scroll; }
-:local .overflowX-visible { overflow-x: visible; }
+.overflowX-auto { overflow-x: auto; }
+.overflowX-hidden { overflow-x: hidden; }
+.overflowX-scroll { overflow-x: scroll; }
+.overflowX-visible { overflow-x: visible; }
 
-:local .overflowY-auto { overflow-y: auto; }
-:local .overflowY-hidden { overflow-y: hidden; }
-:local .overflowY-scroll { overflow-y: scroll; }
-:local .overflowY-visible { overflow-y: visible; }
+.overflowY-auto { overflow-y: auto; }
+.overflowY-hidden { overflow-y: hidden; }
+.overflowY-scroll { overflow-y: scroll; }
+.overflowY-visible { overflow-y: visible; }

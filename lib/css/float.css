@@ -1,3 +1,3 @@
-:local .float-left { float: left; }
-:local .float-none { float: none; }
-:local .float-right { float: right; }
+.float-left { float: left; }
+.float-none { float: none; }
+.float-right { float: right; }

@@ -1,6 +1,6 @@
-:local .pointerEvents-auto { pointer-events: auto; }
-:local .pointerEvents-none { pointer-events: none; }
-:local .pointerEvents-box-none { pointer-events: none; }
-:local .pointerEvents-box-none * { pointer-events: auto;}
-:local .pointerEvents-box-only { pointer-events: auto; }
-:local .pointerEvents-box-only * { pointer-events: none; }
+.pointerEvents-auto { pointer-events: auto; }
+.pointerEvents-none { pointer-events: none; }
+.pointerEvents-box-none { pointer-events: none; }
+.pointerEvents-box-none * { pointer-events: auto;}
+.pointerEvents-box-only { pointer-events: auto; }
+.pointerEvents-box-only * { pointer-events: none; }

@@ -1,4 +1,5 @@
 var autoprefixer = require('autoprefixer-core');
+var localcss = require('postcss-modules-local-by-default');
 
 module.exports = {
   module: {
@@ -15,5 +16,5 @@ module.exports = {
       }
     ]
   },
-  postcss: [ autoprefixer ]
+  postcss: [ autoprefixer, localcss ]
 };

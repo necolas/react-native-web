@@ -1,2 +1,2 @@
-:local .visibility-hidden { visibility: hidden; }
-:local .visibility-visible { visibility: visible; }
+.visibility-hidden { visibility: hidden; }
+.visibility-visible { visibility: visible; }

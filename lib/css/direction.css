@@ -1,3 +1,3 @@
-:local .direction-auto { direction: auto; }
-:local .direction-ltr { direction: ltr; }
-:local .direction-rtl { direction: rtl; }
+.direction-auto { direction: auto; }
+.direction-ltr { direction: ltr; }
+.direction-rtl { direction: rtl; }
