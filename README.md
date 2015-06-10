@@ -273,7 +273,7 @@ class Avatar extends React.Component {
 
     return (
       <Image
-        accessibilityLabel=""
+        accessibilityLabel={`${user.name}'s profile picture`}
         source={user.avatarUrl}
         style={style}
       />
@@ -327,9 +327,9 @@ class PrettyText extends React.Component {
         ...other
         style={{
           ...style,
-          ...localStyle[color],
-          ...localStyle[size],
-          ...localStyle[weight]
+          ...localStyle.color[color],
+          ...localStyle.size[size],
+          ...localStyle.weight[weight]
         }}
       />
     );
