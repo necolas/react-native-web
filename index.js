@@ -1,4 +1,4 @@
-import {getOtherProps, pickProps, omit} from './lib/filterObjectProps';
+import {getOtherProps, omitProps, pickProps} from './lib/filterObjectProps';
 import Component from './lib/components/Component';
 import Image from './lib/components/Image';
 import Text from './lib/components/Text';

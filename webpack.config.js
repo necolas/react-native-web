@@ -1,4 +1,5 @@
 var autoprefixer = require('autoprefixer-core');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var localcss = require('postcss-modules-local-by-default');
 
 module.exports = {
@@ -6,7 +7,10 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?localIdentName=[hash:base64:5]!postcss-loader'
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          'css-loader?localIdentName=[hash:base64:5]!postcss-loader'
+        )
       },
       {
         test: /\.jsx?$/,
@@ -16,5 +20,8 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new ExtractTextPlugin('react-web-sdk.css')
+  ],
   postcss: [ autoprefixer, localcss ]
 };

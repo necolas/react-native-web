@@ -4,10 +4,11 @@
   "description": "UI SDK based on react-native",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rm -rf ./dist",
     "build": "npm run build:package & npm run build:example",
-    "build:example": "webpack index.js dist/main.js --config webpack.config.js",
+    "build:example": "webpack index.js ./dist/main.js --config webpack.config.js",
     "build:example:watch": "npm run build:example -- --watch",
-    "build:package": "webpack example.js dist/example.js --config webpack.config.js",
+    "build:package": "webpack example.js ./dist/example.js --config webpack.config.js",
     "build:package:watch": "npm run build:package -- --watch",
     "build:watch": "npm run build:package:watch & npm run build:example:watch"
   },
@@ -19,6 +20,7 @@
     "babel-loader": "^5.1.4",
     "babel-runtime": "^5.5.6",
     "css-loader": "^0.14.4",
+    "extract-text-webpack-plugin": "^0.8.1",
     "node-libs-browser": "^0.5.2",
     "postcss-loader": "^0.4.4",
     "postcss-modules-local-by-default": "0.0.7",
