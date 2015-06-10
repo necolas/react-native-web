@@ -33,7 +33,7 @@ to happen at breakpoints.  And that would avoid the need for any additional
 CSS. Alternatively, rely on something similar to `react-style`'s approach and
 duplicate the single-purpose classes within static CSS media queries.
 
-## Example
+### Example
 
 ```js
 import React from 'react';
@@ -72,13 +72,17 @@ const style = {
 export default Example;
 ```
 
-## Component: `SDKComponent`
+---
+
+## Components
+
+### `Component`
 
 A component that manages styles across the `className` and `style` properties.
 The building block upon which all other components in `react-web-sdk` are
 build.
 
-### PropTypes
+#### PropTypes
 
 All other props are transferred directly to the `element`.
 
@@ -86,32 +90,41 @@ All other props are transferred directly to the `element`.
 + `element`: `func` or `string`
 + `style`: `object`
 
-### Examples
+#### Examples
 
 ```js
-const ViewStylePropTypes = {
+import {Component, getOtherProps, pickProps} from 'react-web-sdk';
+import React, {PropTypes} from 'react';
+
+const ExampleStylePropTypes = {
   opacity: PropTypes.number
 };
 
-const ViewStyleDefaultProps = {
+const ExampleStyleDefaultProps = {
   opacity: 1
 };
 
-class ViewExample extends React.Component {
+class Example extends React.Component {
+  static propTypes = {
+    anExampleProp: PropTypes.number,
+    someExampleProp: PropTypes.string,
+    style: PropTypes.shape(ExampleStylePropTypes)
+  }
+
+  static defaultProps = {
+    style: ExampleStyleDefaultProps
+  }
+
   render() {
-    // filter other props
-    const other = ReactWebSDK.getOtherProps(this);
-    // exclude other styles
-    const supportedStyle = ReactWebSDK.objectWithProps(this.props.style, ViewStylePropTypes);
-    // merge defaults with instance styles
-    const style = { ...ViewStyleDefaultProps, ...supportedStyle }
+    const other = getOtherProps(this);
+    const supportedStyle = pickProps(this.props.style, ExampleStylePropTypes);
+    const style = { ...ExampleStyleDefaultProps, ...supportedStyle }
 
     return (
-      <SDKComponent
+      <Component
         {...other}
-        children={this.props.children}
-        className={`ViewExample ${this.props.className}`}
-        element={this.props.element}
+        className={`Example`}
+        element="main"
         style={style}
       />
     );
@@ -120,11 +133,11 @@ class ViewExample extends React.Component {
 ```
 
 
-## Component: `Image`
+### `Image`
 
 TODO
 
-### PropTypes
+#### PropTypes
 
 All other props are transferred directly to the `element`.
 
@@ -134,7 +147,7 @@ All other props are transferred directly to the `element`.
 + `src`: `string`
 + `style`: `ImageStylePropTypes`
 
-### ImageStylePropTypes
+#### ImageStylePropTypes
 
 + `BackgroundPropTypes`
 + `BorderThemePropTypes`
@@ -142,11 +155,11 @@ All other props are transferred directly to the `element`.
 + `opacity`: `string`
 
 
-## Component: `Text`
+### `Text`
 
 Text layout and styles.
 
-### PropTypes
+#### PropTypes
 
 All other props are transferred directly to the `element`.
 
@@ -154,19 +167,19 @@ All other props are transferred directly to the `element`.
 + `element`: `func` or `string` (default `"div"`)
 + `style`: `TextStylePropTypes`
 
-### TextStylePropTypes
+#### TextStylePropTypes
 
 + ViewStylePropTypes
 + TypographicPropTypes
 
 
-## Component: `View`
+### `View`
 
 `View` is a flexbox container and the fundamental building block for UI. It is
 designed to be nested inside other `View`'s and to have 0-to-many children of
 any type.
 
-### PropTypes
+#### PropTypes
 
 All other props are transferred directly to the `element`.
 
@@ -175,7 +188,7 @@ All other props are transferred directly to the `element`.
 + `pointerEvents`: `oneOf('all', 'box-only', 'box-none', 'none')`
 + `style`: `ViewStylePropTypes`
 
-### ViewStylePropTypes
+#### ViewStylePropTypes
 
 + BackgroundPropTypes
 + BorderThemePropTypes
@@ -184,7 +197,7 @@ All other props are transferred directly to the `element`.
 + `color`: `string`
 + `opacity`: `number`
 
-### ViewStyleDefaultProps
+#### ViewStyleDefaultProps
 
 Implements the default styles from
 [facebook/css-layout](https://github.com/facebook/css-layout).
@@ -222,11 +235,25 @@ const ViewStyleDefaultProps = {
    it in the DOM instead of relying of CSS. It also makes `top`, `left`,
    `right`, `bottom` do something when not specifying `position:absolute`.
 
-### Examples
+#### Examples
 
 ```js
 // TODO
 ```
+
+---
+
+## Utilities
+
+### Object property filtering
+
+Create a new object that includes or excludes a list of properties.
+
+* `.getOtherProps(reactComponentInstance)` (strips propTypes from `this.props`)
+* `.pickProps(obj, arrayOfIncludedProps)`
+* `.omitProps(obj, arrayOfExcludedProps)`
+
+---
 
 ## StylePropTypes
 
@@ -317,6 +344,8 @@ See this [guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexb
 * `textDecoration`: `oneOf('none', 'underline')`
 * `textTransform`: `oneOf('capitalize', 'lowercase', 'none', 'uppercase')`
 * `wordWrap`: `oneOf('break-word', 'normal')`
+
+---
 
 ## Development
 
