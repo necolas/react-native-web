@@ -1,57 +1,34 @@
 # react-web-sdk
 
-**Experimental / API proof of concept**
+**Experimental / Proof of concept**
 
-Components for building web applications and SDKs. Based on `react-native`'s
-components.
+A component-based React SDK for building and styling web applications and SDKs.
+Inspired by `react-native`.
 
-1. Styles are plain JavaScript objects.
-2. Styles are passed to a component's `style` prop.
-3. Non-dynamic styles rely on static CSS classes.
-4. Dynamic styles are written as inline styles on the DOM node.
+This library provides:
 
-Each Component defines `StylePropTypes` and filters out any style properties
-that are not part of its style API. For example, `View` does not support any
-typographic properties. You must use `Text` to wrap and style any text strings.
+* An initial implementation of the `react-native` components `Image`, `Text`,
+  and `View`.
+* An initial implementation of defining explicit and default `style` propTypes.
+* A proof of concept implementation for converting inline `style` definitions
+  to CSS classes.
 
-### Implementation notes
-
-The current implementation uses a prebuilt CSS library – 200+ single-purpose,
-obfuscated selectors. It provides a large number of common, knowable styles
-needed to build apps. This makes the foundational CSS fixed (~5KB gzipped) and
-highly cachable. Inline styles are used for anything the CSS library doesn't
-provide, but their use is significantly reduced.
-
-A better implementation would generate the CSS library from the declarations
-defined in the source code, replace static variables (use webpack's
-`DefinePlugin`?), and only use inline-styles for dynamic, instance-specific
+This proof of concept uses a ~3KB (gzipped) precomputed CSS bundle; a complete
+implementation is likely to produce a slightly larger CSS file and fewer inline
 styles.
 
-What about media queries? Perhaps rely on `mediaMatch` and re-render when the
-`style` prop needs to change; works better with DOM-related changes that need
-to happen at breakpoints.  And that would avoid the need for any additional
-CSS. Alternatively, rely on something similar to `react-style`'s approach and
-duplicate the single-purpose classes within static CSS media queries.
+Other React styling strategies:
+[react-native](https://facebook.github.io/react-native/),
+[react-style](https://github.com/js-next/react-style),
+[jsxstyle](https://github.com/petehunt/jsxstyle),
+[react-inline](https://github.com/martinandert/react-inline), and
+[react-free-style](https://github.com/blakeembrey/react-free-style/)
 
-### Example
+### 1. Write styles using plain JavaScript objects
+
+Use JavaScript to write style definitions in React components:
 
 ```js
-import React from 'react';
-import {Image, Text, View} from 'react-web-sdk';
-
-class Example extends React.Component {
-  render() {
-    return (
-      <View element="main" style={{ ...style.common, ...style.root }}>
-        <Image alt="accessibility text" src="/image.png" style={style.image} />
-        <Text style={{ ...style.common, ...(Math.random() > 0.5 && style.text) }}>
-          Example component
-        </Text>
-      </View>
-    );
-  }
-}
-
 const style = {
   common: {
     backgroundColor: 'white',
@@ -68,9 +45,130 @@ const style = {
     fontWeight: '300'
   }
 };
-
-export default Example;
 ```
+
+### 2. Set styles using the `style` attribute
+
+The `style` attribute is a simple API for creating element-scoped styles.
+
+```js
+<View style={style.root}>...</View>
+
+<View style={{
+  flexDirection: 'row',
+  justifyContent: 'space-between'
+}}>
+  ...
+</View
+```
+
+It's easy to combine and override style objects:
+
+```js
+import baseStyle from './baseStyle';
+
+const buttonStyle = {
+  ...baseStyle,
+  backgroundColor: '#333',
+  color: '#fff'
+}
+```
+
+So far, this is identical to using inline styles in a React component.
+
+### 3. Map inline styles to static CSS rules
+
+Using the `style` attribute would normally produce inline styles. Libraries
+like [react-style](https://github.com/js-next/react-style) implement a
+`Stylesheet.create` API and provide a means to extract styles to CSS at build
+time. The extraction maps whole style objects to multi-declaration CSS rules.
+
+For example:
+
+```js
+// relies on a new construct
+Stylesheet.create({
+  root: {
+    background: 'transparent',
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'center'
+  }
+});
+```
+
+Yields:
+
+```css
+/* produces new css for every new style rule */
+.foo {
+  background: transparent;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+```
+
+Each component adds new rules to the stylesheet. This can lead the extracted
+stylesheet to become increasingly large and prone to change.
+
+Libraries like [Atomic CSS](http://acss.io/),
+[Basscss](http://www.basscss.com/), [SUIT CSS](https://suitcss.github.io/), and
+[tachyons](http://tachyons.io/) are attempts to limit style scope and limit
+stylesheet growth. But they are CSS utility libraries, each with a particular
+set of classes and features to learn. All of them require developers to
+manually connect CSS classes for given styles.
+
+The `react-web-sdk` library's implementation is a proof-of-concept for the
+strategy of automatically mapping style `key`-`value` pairs to
+single-declaration CSS rules.
+
+```css
+.background-transparent { background: transparent }
+.display-block { display: block }
+.flexGrow-1 { flex-grow: 1 }
+.justifyContent-center { justify-content: center }
+```
+
+Mapping declarations to single-purpose classes greatly reduces the total amount
+of CSS needed. It avoids the repetition of declarations between rules for
+unrelated elements, and prevents style collisions. A build step hashes the class names.
+
+```html
+<div class="_jsy9e _fidnk _jn78h _qqqnk">...</div>
+```
+
+The current implementation uses a precomputed CSS library of known and common
+declarations – 200+ single-declaration rules, with obfuscated selectors. This
+handles a signficant portion of possible declarations. But it falls through to
+inline styles significantly more often than an better implementation using
+static analysis to generate the CSS library at build time.
+
+### 4. Use inline styles for dynamic values
+
+Inline styles are used for values that cannot be resolved at build time.
+
+```js
+<Text style={{ color: (Math.random() > 0.5 ? 'red' : 'black')}}>...</Text>
+```
+
+### 5. Add `style` prop types
+
+Each Component defines `StylePropTypes` and filters out any style properties
+that are not part of its style API. For example, `View` does not support any
+typographic properties.
+
+See the section below on `StylePropTypes`.
+
+### Media Queries?
+
+We can use `mediaMatch` to orchestrate both style and DOM changes. The
+component can be re-rendered when the styles change. This also avoids the need
+for additional CSS. Adding media queries as keys on the `style` object (like
+`react-style` does) might be a good, or it might not be. I'd prefer a solution
+that accomodates both style and DOM changes, rather than one or the other.
+Perhaps `this.context` or a higher-order component that passes viewport data to
+components via `props`.
 
 ---
 
@@ -93,37 +191,26 @@ All other props are transferred directly to the `element`.
 #### Examples
 
 ```js
-import {Component, getOtherProps, pickProps} from 'react-web-sdk';
+import {Component, pickProps} from 'react-web-sdk';
 import React, {PropTypes} from 'react';
 
-const ExampleStylePropTypes = {
-  opacity: PropTypes.number
-};
-
-const ExampleStyleDefaultProps = {
-  opacity: 1
-};
+const ExampleStylePropTypes = { opacity: PropTypes.number };
+const ExampleStyleDefaultProps = { opacity: 1 };
 
 class Example extends React.Component {
   static propTypes = {
-    anExampleProp: PropTypes.number,
-    someExampleProp: PropTypes.string,
     style: PropTypes.shape(ExampleStylePropTypes)
   }
 
-  static defaultProps = {
-    style: ExampleStyleDefaultProps
-  }
-
   render() {
-    const other = getOtherProps(this);
+    // only apply supported styles
     const supportedStyle = pickProps(this.props.style, ExampleStylePropTypes);
+    // merge with default styles
     const style = { ...ExampleStyleDefaultProps, ...supportedStyle }
 
     return (
       <Component
-        {...other}
-        className={`Example`}
+        children={this.props.children}
         element="main"
         style={style}
       />
@@ -141,10 +228,10 @@ TODO
 
 All other props are transferred directly to the `element`.
 
-+ `alt`: `string`
++ `accessibilityLabel`: `string`
 + `async`: `bool` (TODO)
 + `className`: `string`
-+ `src`: `string`
++ `source`: `string`
 + `style`: `ImageStylePropTypes`
 
 #### ImageStylePropTypes
@@ -153,6 +240,47 @@ All other props are transferred directly to the `element`.
 + `BorderThemePropTypes`
 + `LayoutPropTypes`
 + `opacity`: `string`
+
+#### Examples
+
+```js
+import {Image, StylePropTypes} from 'react-web-sdk';
+import React, {PropTypes} from 'react';
+
+const AvatarStylePropTypes = {
+   ...StylePropTypes.BorderThemePropTypes
+};
+
+const AvatarStyleDefaultProps = {
+  borderColor: 'white',
+  borderWidth: '5px'
+};
+
+class Avatar extends React.Component {
+  static propTypes = {
+    size: PropTypes.oneOf(['small', 'normal', 'large']),
+    style: PropTypes.shape(AvatarStylePropTypes),
+    user: PropTypes.object
+  }
+
+  static defaultProps = {
+    size: 'normal'
+  }
+
+  render() {
+    const supportedStyle = pickProps(this.props.style, AvatarStylePropTypes);
+    const style = { ...AvatarStyleDefaultProps, ...supportedStyle }
+
+    return (
+      <Image
+        accessibilityLabel=""
+        source={user.avatarUrl}
+        style={style}
+      />
+    );
+  }
+}
+```
 
 
 ### `Text`
@@ -171,6 +299,61 @@ All other props are transferred directly to the `element`.
 
 + ViewStylePropTypes
 + TypographicPropTypes
+
+#### Examples
+
+```js
+import {StylePropTypes, Text} from 'react-web-sdk';
+import React, {PropTypes} from 'react';
+
+class PrettyText extends React.Component {
+  static propTypes = {
+    color: PropTypes.oneOf(['white', 'gray', 'red']),
+    size: PropTypes.oneOf(['small', 'normal', 'large']),
+    weight: PropTypes.oneOf(['light', 'normal', 'bold'])
+  }
+
+  static defaultProps = {
+    color: 'gray',
+    size: 'normal',
+    weight: 'normal'
+  }
+
+  render() {
+    const { color, size, style, weight, ...other } = this.props;
+
+    return (
+      <Text
+        ...other
+        style={{
+          ...style,
+          ...localStyle[color],
+          ...localStyle[size],
+          ...localStyle[weight]
+        }}
+      />
+    );
+  }
+}
+
+const localStyle = {
+  color: {
+    white: { color: 'white' },
+    gray: { color: 'gray' },
+    red: { color: 'red' }
+  },
+  size: {
+    small: { fontSize: '0.85rem', padding: '0.5rem' },
+    normal: { fontSize: '1rem', padding: '0.75rem' },
+    large: { fontSize: '1.5rem', padding: '1rem' }
+  },
+  weight: {
+    light: { fontWeight: '300' },
+    normal: { fontWeight: '400' },
+    bold: { fontWeight: '700' }
+  }
+}
+```
 
 
 ### `View`
