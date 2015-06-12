@@ -8,7 +8,7 @@ class Example extends React.Component {
         {[1,2,3,4,5,6].map((item) => {
           return (
             <View style={{ ...style.box, ...(item === 6 && style.boxFull) }}>
-              <Text style={{fontSize: '2rem'}}>{item}</Text>
+              <Text style={{ fontSize: '2rem' }}>{item}</Text>
             </View>
           );
         })}
