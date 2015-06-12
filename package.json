@@ -23,7 +23,6 @@
     "extract-text-webpack-plugin": "^0.8.1",
     "node-libs-browser": "^0.5.2",
     "postcss-loader": "^0.4.4",
-    "postcss-modules-local-by-default": "0.0.7",
     "style-loader": "^0.12.3",
     "webpack": "^1.9.10"
   },

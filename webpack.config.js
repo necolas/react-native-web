@@ -9,7 +9,7 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
           'style-loader',
-          'css-loader?localIdentName=[hash:base64:5]!postcss-loader'
+          'css-loader?module&localIdentName=[hash:base64:5]!postcss-loader'
         )
       },
       {
@@ -23,5 +23,5 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('react-web-sdk.css')
   ],
-  postcss: [ autoprefixer, localcss ]
+  postcss: [ autoprefixer ]
 };
