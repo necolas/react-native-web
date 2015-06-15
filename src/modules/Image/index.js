@@ -1,7 +1,7 @@
-import Component from './Component';
-import {pickProps} from '../filterObjectProps';
-import React, {PropTypes} from 'react';
+import { pickProps } from '../filterObjectProps';
 import StylePropTypes from '../StylePropTypes';
+import React, { PropTypes } from 'react';
+import WebStyleComponent from '../WebStyleComponent';
 
 const ImageStyleDefaultProps = {
   backgroundColor: 'lightGray',
@@ -43,7 +43,7 @@ class Image extends React.Component {
     const mergedStyle = { ...ImageStyleDefaultProps, ...filteredStyle };
 
     return (
-      <Component
+      <WebStyleComponent
         {...other}
         alt={alt}
         className={`Image ${className}`}

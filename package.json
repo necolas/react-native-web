@@ -2,18 +2,20 @@
   "name": "react-web-sdk",
   "version": "0.0.1",
   "description": "UI SDK based on react-native",
-  "main": "index.js",
+  "main": "dist/main.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "prebuild": "rm -rf ./dist",
-    "build": "npm run build:package & npm run build:example",
-    "build:example": "webpack index.js ./dist/main.js --config webpack.config.js",
-    "build:example:watch": "npm run build:example -- --watch",
-    "build:package": "webpack example.js ./dist/example.js --config webpack.config.js",
-    "build:package:watch": "npm run build:package -- --watch",
-    "build:watch": "npm run build:package:watch & npm run build:example:watch"
+    "prebuild": "rm -rf ./dist && npm install",
+    "build": "webpack --config webpack.config.js",
+    "build:watch": "npm run build -- --watch",
+    "build:example": "npm run build && cd example && webpack --config ./webpack.config.js",
+    "build:example:watch": "npm run build:example -- --watch"
   },
-  "author": "Nicolas Gallagher",
-  "license": "MIT",
+  "dependencies": {
+    "react": "^0.13.3"
+  },
   "devDependencies": {
     "autoprefixer-core": "^5.2.0",
     "babel-core": "^5.5.6",
@@ -26,7 +28,10 @@
     "style-loader": "^0.12.3",
     "webpack": "^1.9.10"
   },
-  "dependencies": {
-    "react": "^0.13.3"
+  "author": "Nicolas Gallagher",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/necolas/react-web-sdk.git"
   }
 }

@@ -1,8 +1,8 @@
-import Component from './Component';
-import {pickProps} from '../filterObjectProps';
-import React, {PropTypes} from 'react';
+import { pickProps } from '../filterObjectProps';
+import { ViewStylePropTypes } from '../View';
 import StylePropTypes from '../StylePropTypes';
-import {ViewStylePropTypes} from './View';
+import React, { PropTypes } from 'react';
+import WebStyleComponent from '../WebStyleComponent';
 
 const TextStyleDefaultProps = {
   alignItems: 'stretch', /* 1 */
@@ -44,15 +44,14 @@ class Text extends React.Component {
   }
 
   render() {
-    const { className, element, style, ...other } = this.props;
+    const { className, style, ...other } = this.props;
     const filteredStyle = pickProps(style, Object.keys(TextStylePropTypes));
     const mergedStyle = { ...TextStyleDefaultProps, ...filteredStyle };
 
     return (
-      <Component
+      <WebStyleComponent
         {...other}
         className={`Text ${className}`}
-        element={element}
         style={mergedStyle}
       />
     );
@@ -63,4 +62,4 @@ Text.propTypes = Text._getPropTypes();
 Text.defaultProps = Text._getDefaultProps();
 
 export default Text;
-export {TextStylePropTypes};
+export { TextStylePropTypes };

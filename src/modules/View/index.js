@@ -1,7 +1,7 @@
-import Component from './Component';
-import {pickProps} from '../filterObjectProps';
-import React, {PropTypes} from 'react';
+import { pickProps } from '../filterObjectProps';
 import StylePropTypes from '../StylePropTypes';
+import React, { PropTypes } from 'react';
+import WebStyleComponent from '../WebStyleComponent';
 
 // https://github.com/facebook/css-layout#default-values
 const ViewStyleDefaultProps = {
@@ -64,7 +64,7 @@ class View extends React.Component {
     };
 
     return (
-      <Component
+      <WebStyleComponent
         {...other}
         className={`View ${className}`}
         element={element}
@@ -78,4 +78,4 @@ View.propTypes = View._getPropTypes();
 View.defaultProps = View._getDefaultProps();
 
 export default View;
-export {ViewStylePropTypes};
+export { ViewStylePropTypes };

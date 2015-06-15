@@ -1,11 +1,8 @@
-import autoprefix from '../autoprefix';
-import {getOtherProps} from '../filterObjectProps';
+import autoprefix from './lib/autoprefix';
 import React, {PropTypes} from 'react';
+import styleMap from './lib/styleMap';
 
-// styles
-import styleMap from '../styleMap';
-
-class Component extends React.Component {
+class WebStyleComponent extends React.Component {
   static _getPropTypes() {
     return {
       className: PropTypes.string,
@@ -24,12 +21,13 @@ class Component extends React.Component {
     };
   }
 
+
   render() {
-    const other = getOtherProps(this);
+    const { element: Element, ...other } = this.props;
     const { classNames, inlineStyles } = this._separateClassNamesAndStyles();
 
     return (
-      <this.props.element
+      <Element
         {...other}
         className={classNames.join(' ')}
         style={autoprefix(inlineStyles)}
@@ -66,7 +64,7 @@ class Component extends React.Component {
   }
 }
 
-Component.propTypes = Component._getPropTypes();
-Component.defaultProps = Component._getDefaultProps();
+WebStyleComponent.propTypes = WebStyleComponent._getPropTypes();
+WebStyleComponent.defaultProps = WebStyleComponent._getDefaultProps();
 
-export default Component;
+export default WebStyleComponent;

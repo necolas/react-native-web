@@ -2,7 +2,7 @@
 
 **Experimental / Proof of concept**
 
-A React SDK for creating web applications and toolkits. Inspired by `react-native`.
+A React SDK (~8KB gzipped) for creating web applications and toolkits. Inspired by `react-native`.
 
 It includes the following components:
 
@@ -131,7 +131,7 @@ Returns an object with the specified props included.
 ## Development
 
 ```
-npm run build
-npm run build:watch
-open index.html
+npm install
+npm run build:example:watch
+open example/index.html
 ```
