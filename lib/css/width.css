@@ -1,3 +1,49 @@
-.maxWidth-100\% { max-width: 100%; }
-.minWidth-100\% { min-width: 100%; }
-.width-100\% { width: 100%; }
+.width-0 { width: 0; }
+
+.maxWidth-10% { max-width: 10%; }
+.minWidth-10% { min-width: 10%; }
+.width-10% { width: 10%; }
+
+.maxWidth-20% { max-width: 20%; }
+.minWidth-20% { min-width: 20%; }
+.width-20% { width: 20%; }
+
+.maxWidth-25% { max-width: 25%; }
+.minWidth-25% { min-width: 25%; }
+.width-25% { width: 25%; }
+
+.maxWidth-30% { max-width: 30%; }
+.minWidth-30% { min-width: 30%; }
+.width-30% { width: 30%; }
+
+.maxWidth-40% { max-width: 40%; }
+.minWidth-40% { min-width: 40%; }
+.width-40% { width: 40%; }
+
+.maxWidth-50% { max-width: 50%; }
+.minWidth-50% { min-width: 50%; }
+.width-50% { width: 50%; }
+
+.maxWidth-60% { max-width: 60%; }
+.minWidth-60% { min-width: 60%; }
+.width-60% { width: 60%; }
+
+.maxWidth-70% { max-width: 70%; }
+.minWidth-70% { min-width: 70%; }
+.width-70% { width: 70%; }
+
+.maxWidth-75% { max-width: 75%; }
+.minWidth-75% { min-width: 75%; }
+.width-75% { width: 75%; }
+
+.maxWidth-80% { max-width: 80%; }
+.minWidth-80% { min-width: 80%; }
+.width-80% { width: 80%; }
+
+.maxWidth-90% { max-width: 90%; }
+.minWidth-90% { min-width: 90%; }
+.width-90% { width: 90%; }
+
+.maxWidth-100% { max-width: 100%; }
+.minWidth-100% { min-width: 100%; }
+.width-100% { width: 100%; }

@@ -1,5 +1,6 @@
-.backgroundColor-#fff { background-color: #fff; }
+.backgroundColor-black { background-color: black; }
 .backgroundColor-transparent { background-color: currentcolor; }
+.backgroundColor-white { background-color: white; }
 
 .backgroundImage { background-image: none; }
 
