@@ -1,13 +1,22 @@
 .margin-0 { margin: 0; }
 .margin-auto { margin: auto; }
-.marginTop-0 { margin-top: 0; }
+
+.marginBottom-auto { margin-bottom: auto; }
+.marginLeft-auto { margin-left: auto; }
+.marginRight-auto { margin-right: auto; }
 .marginTop-auto { margin-top: auto; }
 
-.marginRight-0 { margin-right: 0; }
-.marginRight-auto { margin-right: auto; }
-
 .marginBottom-0 { margin-bottom: 0; }
-.marginBottom-auto { margin-bottom: auto; }
-
 .marginLeft-0 { margin-left: 0; }
-.marginLeft-auto { margin-left: auto; }
+.marginRight-0 { margin-right: 0; }
+.marginTop-0 { margin-top: 0; }
+
+.marginBottom-1em { margin-bottom: 1em; }
+.marginLeft-1em { margin-left: 1em; }
+.marginRight-1em { margin-right: 1em; }
+.marginTop-1em { margin-top: 1em; }
+
+.marginBottom-1rem { margin-bottom: 1rem; }
+.marginLeft-1rem { margin-left: 1rem; }
+.marginRight-1rem { margin-right: 1rem; }
+.marginTop-1rem { margin-top: 1rem; }

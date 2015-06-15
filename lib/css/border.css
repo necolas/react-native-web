@@ -1,5 +1,6 @@
 .borderColor-currentcolor { border-color: currentcolor; }
 .borderColor-transparent { border-color: transparent; }
+.borderColor-white { border-color: white; }
 
 .borderStyle-dotted { border-style: dotted; }
 .borderStyle-dashed { border-style: dashed; }

@@ -37,6 +37,8 @@
 .flexGrow-7 { flex-grow: 7; }
 .flexGrow-8 { flex-grow: 8; }
 .flexGrow-9 { flex-grow: 9; }
+.flexGrow-10 { flex-grow: 10; }
+.flexGrow-11 { flex-grow: 11; }
 
 .flexShrink-0 { flex-shrink: 0; }
 .flexShrink-1 { flex-shrink: 1; }
@@ -48,6 +50,8 @@
 .flexShrink-7 { flex-shrink: 7; }
 .flexShrink-8 { flex-shrink: 8; }
 .flexShrink-9 { flex-shrink: 9; }
+.flexShrink-10 { flex-shrink: 10; }
+.flexShrink-11 { flex-shrink: 11; }
 
 .flexWrap-nowrap { flex-wrap: nowrap; }
 .flexWrap-wrap { flex-wrap: wrap; }

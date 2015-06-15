@@ -57,7 +57,7 @@ files. Each new component adds new rules to the stylesheet.
 React Web SDK includes a proof-of-concept for the strategy of automatically
 mapping unique declarations to declarations, via a unique selector for each
 declaration. This strategy results in smaller CSS files because an application
-has fewer unique declarations than total declarations.  Creating a new
+has fewer unique declarations than total declarations. Creating a new
 component with no new unique declarations results in no change to the CSS file.
 
 For example:
@@ -90,11 +90,10 @@ And is backed by:
 ._pqrst { justify-content: center }
 ```
 
-The current implementation uses a precomputed CSS library – 200+
-single-declaration rules, with obfuscated selectors. This handles a signficant
-portion of possible declarations. But a build-time implementation would produce
-more accurate CSS files and fall through to inline styles significantly less
-often.
+The current implementation uses a precomputed CSS library of single-declaration
+rules, with obfuscated selectors. This handles a signficant portion of possible
+declarations. But a build-time implementation would produce more accurate CSS
+files and fall through to inline styles significantly less often.
 
 
 (CSS libraries like [Atomic CSS](http://acss.io/),
