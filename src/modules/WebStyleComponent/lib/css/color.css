@@ -1,4 +1,6 @@
+.color-#000,
 .color-black { color: black; }
+.color-\#fff,
+.color-white { color: white; }
 .color-inherit { color: inherit; }
 .color-transparent { color: transparent; }
-.color-white { color: white; }

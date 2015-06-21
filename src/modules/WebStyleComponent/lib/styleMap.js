@@ -10,6 +10,7 @@ import display from './css/display.css';
 import flexbox from './css/flexbox.css';
 import font from './css/font.css';
 import height from './css/height.css';
+import lineHeight from './css/lineHeight.css';
 import list from './css/list.css';
 import margin from './css/margin.css';
 import opacity from './css/opacity.css';
@@ -18,6 +19,7 @@ import padding from './css/padding.css';
 import pointerEvents from './css/pointerEvents.css';
 import position from './css/position.css';
 import text from './css/text.css';
+import unicodeBidi from './css/unicodeBidi.css';
 import userSelect from './css/userSelect.css';
 import visibility from './css/visibility.css';
 import whiteSpace from './css/whiteSpace.css';
@@ -46,6 +48,7 @@ const map = Object.assign({},
   pointerEvents,
   position,
   text,
+  unicodeBidi,
   userSelect,
   visibility,
   whiteSpace,

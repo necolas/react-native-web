@@ -1,7 +1,25 @@
 .font-inherit { font: inherit; }
 
+/* font-family */
+
+.fontFamily-inherit { font-family: inherit; }
+.fontFamily-monospace { font-family: monospace; }
+.fontFamily-sans-serif { font-family: sans-serif; }
+.fontFamily-serif { font-family: serif; }
+
+/* font-size */
+
+.fontSize-100\% { font-size: 100%; }
+.fontSize-inherit { font-size: inherit; }
+
+/* font-style */
+
+.fontStyle-inherit { font-style: inherit; }
 .fontStyle-italic { font-style: italic; }
 .fontStyle-normal { font-style: normal; }
+.fontStyle-oblique { font-style: oblique; }
+
+/* font-weight */
 
 .fontWeight-100 { font-weight: 100; }
 .fontWeight-200 { font-weight: 200; }
@@ -13,4 +31,7 @@
 .fontWeight-800 { font-weight: 800; }
 .fontWeight-900 { font-weight: 900; }
 .fontWeight-bold { font-weight: bold; }
+.fontWeight-bolder { font-weight: bolder; }
+.fontWeight-inherit { font-weight: inherit; }
+.fontWeight-lighter { font-weight: lighter; }
 .fontWeight-normal { font-weight: normal; }

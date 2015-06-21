@@ -1,0 +1,7 @@
+.unicodeBidi-bidi-override { unicode-bidi: bidi-override; }
+.unicodeBidi-embed { unicode-bidi: embed; }
+.unicodeBidi-inherit { unicode-bidi: inherit; }
+.unicodeBidi-isolate { unicode-bidi: isolate; }
+.unicodeBidi-isolate-override { unicode-bidi: isolate-override; }
+.unicodeBidi-normal { unicode-bidi: normal; }
+.unicodeBidi-plaintext { unicode-bidi: plaintext; }

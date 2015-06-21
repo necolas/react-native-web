@@ -2,7 +2,7 @@
 
 **Experimental / Proof of concept**
 
-A React SDK (~8KB gzipped) for creating web applications and toolkits. Inspired by `react-native`.
+A React SDK (~9KB gzipped) for creating web applications and toolkits. Inspired by `react-native`.
 
 It includes the following components:
 
@@ -14,7 +14,7 @@ It includes the following components:
 And uses a [styling strategy](docs/styling-strategy.md) that maps inline styles
 to single-purpose CSS rules.
 
-This proof of concept uses a CSS bundle (~3.7KB gzipped) of 300+ precomputed
+This proof of concept uses a CSS bundle (~4.5KB gzipped) of 300+ precomputed
 declarations. A more sophisticated implementation is likely to produce a
 slightly larger CSS file and fewer inline styles.
 

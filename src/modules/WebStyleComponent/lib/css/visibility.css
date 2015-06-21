@@ -1,2 +1,4 @@
+.visibility-collapse { visibility: collapse; }
 .visibility-hidden { visibility: hidden; }
+.visibility-inherit { visibility: inherit; }
 .visibility-visible { visibility: visible; }

@@ -1,3 +1,4 @@
 .userSelect-all { user-select: all; }
 .userSelect-inherit { user-select: inherit; }
 .userSelect-none { user-select: none; }
+.userSelect-text { user-select: text; }

@@ -1,12 +1,23 @@
 .textAlign-center { text-align: center; }
+.textAlign-end { text-align: end; }
+.textAlign-inherit { text-align: inherit; }
 .textAlign-left { text-align: left; }
 .textAlign-right { text-align: right; }
 .textAlign-justify { text-align: justify; }
+.textAlign-start { text-align: start; }
 
+.textDecoration-inherit { text-decoration: inherit; }
 .textDecoration-none { text-decoration: none; }
 .textDecoration-underline { text-decoration: underline; }
 
-.textOverflow-ellipsis { text-overflow: ellipsis }
+.textOverflow-clip { text-overflow: clip; }
+.textOverflow-ellipsis { text-overflow: ellipsis; }
+
+.textRendering-auto { text-rendering: auto; }
+.textRendering-geometricPrecision { text-rendering: geometricPrecision; }
+.textRendering-inherit { text-rendering: inherit; }
+.textRendering-optimizeLegibility { text-rendering: optimizeLegibility; }
+.textRendering-optimizeSpeed { text-rendering: optimizeSpeed; }
 
 .textTransform-capitalize { text-transform: capitalize; }
 .textTransform-lowercase { text-transform: lowercase; }
