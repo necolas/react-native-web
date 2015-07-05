@@ -1,6 +1,6 @@
 {
   "name": "react-web-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "UI SDK based on react-native",
   "main": "dist/main.js",
   "files": [
