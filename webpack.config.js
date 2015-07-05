@@ -1,6 +1,5 @@
 var autoprefixer = require('autoprefixer-core');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var localcss = require('postcss-modules-local-by-default');
 var webpack = require('webpack');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
