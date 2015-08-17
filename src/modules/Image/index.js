@@ -1,61 +1,39 @@
 import { pickProps } from '../filterObjectProps';
-import StylePropTypes from '../StylePropTypes';
+import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes';
 import React, { PropTypes } from 'react';
 import WebStyleComponent from '../WebStyleComponent';
 
-const ImageStyleDefaultProps = {
-  backgroundColor: 'lightGray',
-  borderWidth: 0,
-  maxWidth: '100%'
-};
-
-const ImageStylePropTypes = {
-  ...StylePropTypes.BorderThemePropTypes,
-  ...StylePropTypes.LayoutPropTypes,
-  backgroundColor: PropTypes.string,
-  opacity: PropTypes.string
-};
-
 class Image extends React.Component {
-  static _getPropTypes() {
-    return {
-      alt: PropTypes.string,
-      async: PropTypes.bool,
-      className: PropTypes.string,
-      src: PropTypes.string,
-      style: PropTypes.shape(ImageStylePropTypes)
-    };
+  static propTypes = {
+    alt: PropTypes.string,
+    async: PropTypes.bool,
+    className: PropTypes.string,
+    src: PropTypes.string,
+    style: PropTypes.shape(ImageStylePropTypes)
   }
 
-  static _getDefaultProps() {
-    return {
-      async: true,
-      className: '',
-      src: 'data:image/gif;base64,' +
-          'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-      style: {}
-    };
+  static defaultProps = {
+    async: true,
+    className: '',
+    src: 'data:image/gif;base64,' +
+        'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
   }
 
   render() {
-    const { alt, className, src, style, ...other } = this.props;
+    const { className, src, style, ...other } = this.props;
     const filteredStyle = pickProps(style, Object.keys(ImageStylePropTypes));
-    const mergedStyle = { ...ImageStyleDefaultProps, ...filteredStyle };
+    const mergedStyle = { ...ImageDefaultStyles, ...filteredStyle };
 
     return (
       <WebStyleComponent
         {...other}
         alt={alt}
-        className={`Image ${className}`}
-        element="img"
-        src={src}
+        className={`sdk-Image ${className}`}
+        element='img'
         style={mergedStyle}
       />
     );
   }
 }
-
-Image.propTypes = Image._getPropTypes();
-Image.defaultProps = Image._getDefaultProps();
 
 export default Image;
