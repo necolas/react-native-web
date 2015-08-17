@@ -1,4 +1,4 @@
-import {PropTypes} from 'react';
+import { PropTypes } from 'react';
 
 const numberOrString = PropTypes.oneOfType([
   PropTypes.number,

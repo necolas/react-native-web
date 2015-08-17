@@ -1,28 +1,33 @@
-import {PropTypes} from 'react';
+import { PropTypes } from 'react';
 
 export default {
+  color: PropTypes.string,
   direction: PropTypes.oneOf([
-    'auto', 'ltr', 'rtl'
+    'auto' /*default*/, 'ltr', 'rtl'
   ]),
+  font: PropTypes.string,
   fontFamily: PropTypes.string,
   fontSize: PropTypes.string,
-  fontWeight: PropTypes.oneOf([
-     '100', '200', '300', '400', '500', '600', '700', '800', '900',
-     'bold', 'normal'
-  ]),
   fontStyle: PropTypes.oneOf([
-    'normal', 'italic'
+    'inherit' /*default*/, 'normal', 'italic'
+  ]),
+  fontWeight: PropTypes.oneOf([
+     'inherit' /*default*/, 'bold', 'normal',
+     '100', '200', '300', '400', '500', '600', '700', '800', '900'
   ]),
   letterSpacing: PropTypes.string,
-  lineHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
+  lineHeight: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   textAlign: PropTypes.oneOf([
-    'auto', 'left', 'right', 'center'
+    'auto' /*default*/, 'center', 'justify', 'left', 'right'
   ]),
   textDecoration: PropTypes.oneOf([
-    'none', 'underline'
+    'none' /*default*/, 'line-through', 'underline', 'underline line-through'
   ]),
   textTransform: PropTypes.oneOf([
-    'capitalize', 'lowercase', 'none', 'uppercase'
+    'none' /*default*/, 'capitalize', 'lowercase', 'uppercase'
   ]),
   wordWrap: PropTypes.oneOf([
     'break-word', 'normal'

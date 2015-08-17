@@ -1,4 +1,4 @@
-import {PropTypes} from 'react';
+import { PropTypes } from 'react';
 
 const numberOrString = PropTypes.oneOfType([
   PropTypes.number,
@@ -9,7 +9,7 @@ export default {
   position: PropTypes.oneOf([
     'absolute',
     'fixed',
-    'relative'
+    'relative' /*default*/
   ]),
   bottom: numberOrString,
   left: numberOrString,
