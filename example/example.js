@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from '../dist/main';
+import { Image, Text, TextInput, View } from '../dist/main';
 
 class Example extends React.Component {
   render() {
@@ -24,6 +24,9 @@ class Example extends React.Component {
         }}>
           <Text>This should be centered</Text>
         </View>
+
+        <TextInput type="text" autoFocus />
+        <TextInput multiline defaultValue="default value" />
       </View>
     );
   }
