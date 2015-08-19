@@ -6,10 +6,10 @@ A React SDK (~9KB gzipped) for creating web applications and toolkits. Inspired 
 
 It includes the following components:
 
-* `View`: a flexbox primitive
-* `Text`: a text primitive
 * `Image`: an image primitive
-* (`Component`: base / implementation)
+* `Text`: a text primitive
+* `TextInput`: a text input primitive
+* `View`: a flexbox primitive
 
 And uses a [styling strategy](docs/styling-strategy.md) that maps inline styles
 to single-purpose CSS rules.
@@ -22,12 +22,6 @@ slightly larger CSS file and fewer inline styles.
 
 All components define explicit `style` PropTypes according to the [`StyleProp`
 spec](docs/StyleProp.spec.md).
-
-### Component
-
-TODO
-
-[`Component`](docs/Component.md)
 
 ### View
 
@@ -43,19 +37,24 @@ See this [guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexb
 
 TODO
 
-[`Text` spec](docs/View.spec.md)
+[`Text` spec](docs/Text.spec.md)
+
+### TextInput
+
+TODO
+
+[`Text` spec](docs/TextInput.spec.md)
 
 ### Image
 
 TODO
 
-[`Image` spec](docs/View.spec.md)
+[`Image` spec](docs/Image.spec.md)
 
 ## Styling
 
 Styling is identical to using inline styles in React, but most inline styles
-are converted to unique CSS classes. **This is only true for the SDK
-components**.
+are converted to unique CSS classes.
 
 The companion stylesheet can be referenced as an external resource, inlined, or
 injected by JS.
@@ -90,7 +89,7 @@ const style = {
 The `style` attribute is a simple API for creating element-scoped styles.
 
 ```js
-import {View} from 'react-web-sdk';
+import { View } from 'react-web-sdk';
 
 class Example extends React.Component {
   render() {
@@ -112,6 +111,25 @@ const buttonStyle = {
   color: '#fff'
 }
 ```
+
+The styling strategy can be applied directly to non-SDK elements:
+
+```js
+import { stylingStrategy } from 'react-web-sdk';
+
+class Example extends React.Component {
+  render() {
+    return (
+      <div {...stylingStrategy({
+        style: {
+          opacity: 0.5
+        }
+      })} />
+    );
+  }
+}
+```
+
 
 ## Utilities
 
