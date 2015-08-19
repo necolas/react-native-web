@@ -17,7 +17,6 @@ class WebStyleComponent extends React.Component {
     element: 'div'
   }
 
-
   render() {
     const { component: Component, ...other } = this.props;
 
@@ -30,4 +29,4 @@ class WebStyleComponent extends React.Component {
   }
 }
 
-export { StylePropTypes, WebStyleComponent };
+export { StylePropTypes, stylingStrategy, WebStyleComponent };
