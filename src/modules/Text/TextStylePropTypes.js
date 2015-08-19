@@ -1,9 +1,9 @@
-import { TypographicPropTypes } from '../StylePropTypes';
+import { StylePropTypes } from '../react-web-style';
 import { ViewStylePropTypes } from '../View/ViewStylePropTypes';
 
 export default {
   ...ViewStylePropTypes,
-  ...TypographicPropTypes
+  ...StylePropTypes.TypographicPropTypes
 };
 
 export const TextDefaultStyles = {

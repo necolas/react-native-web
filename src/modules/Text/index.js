@@ -1,13 +1,13 @@
 import { pickProps } from '../filterObjectProps';
+import { WebStyleComponent } from '../react-web-style';
 import React, { PropTypes } from 'react';
 import TextStylePropTypes, { TextDefaultStyle } from './TextStylePropTypes';
-import WebStyleComponent from '../WebStyleComponent';
 
 class Text extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string,
-    element: PropTypes.oneOfType([
+    component: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.string
     ]),
@@ -16,7 +16,7 @@ class Text extends React.Component {
 
   static defaultProps = {
     className: '',
-    element: 'div'
+    component: 'div'
   }
 
   render() {

@@ -1,7 +1,7 @@
 import { pickProps } from '../filterObjectProps';
+import { WebStyleComponent } from '../react-web-style';
 import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes';
 import React, { PropTypes } from 'react';
-import WebStyleComponent from '../WebStyleComponent';
 
 class Image extends React.Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class Image extends React.Component {
         {...other}
         alt={alt}
         className={`sdk-Image ${className}`}
-        element='img'
+        component='img'
         style={mergedStyle}
       />
     );

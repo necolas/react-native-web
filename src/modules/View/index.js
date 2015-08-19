@@ -1,13 +1,13 @@
 import { pickProps } from '../filterObjectProps';
+import { WebStyleComponent } from '../react-web-style';
 import React, { PropTypes } from 'react';
 import ViewStylePropTypes, { ViewDefaultStyle } from './ViewStylePropTypes';
-import WebStyleComponent from '../WebStyleComponent';
 
 class View extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string,
-    element: PropTypes.oneOfType([
+    component: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.string
     ]),
@@ -22,11 +22,11 @@ class View extends React.Component {
 
   static defaultProps = {
     className: '',
-    element: 'div'
+    component: 'div'
   }
 
   render() {
-    const { className, element, pointerEvents, style, ...other } = this.props;
+    const { className, pointerEvents, style, ...other } = this.props;
     const filteredStyle = pickProps(style, Object.keys(ViewStylePropTypes));
     const pointerEventsStyle = pointerEvents && { pointerEvents };
     const mergedStyle = {
@@ -39,7 +39,6 @@ class View extends React.Component {
       <WebStyleComponent
         {...other}
         className={`sdk-View ${className}`}
-        element={element}
         style={mergedStyle}
       />
     );

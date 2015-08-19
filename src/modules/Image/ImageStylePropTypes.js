@@ -1,12 +1,9 @@
-import {
-  BorderThemePropTypes,
-  LayoutPropTypes
-} from '../StylePropTypes';
+import { StylePropTypes } from '../react-web-style';
 import { PropTypes } from 'react';
 
 export default {
-  ...BorderThemePropTypes,
-  ...LayoutPropTypes,
+  ...StylePropTypes.BorderThemePropTypes,
+  ...StylePropTypes.LayoutPropTypes,
   backgroundColor: PropTypes.string,
   boxShadow: PropTypes.string,
   opacity: PropTypes.number,
