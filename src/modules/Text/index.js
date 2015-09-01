@@ -1,5 +1,5 @@
 import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-web-style';
+import { WebStyleComponent } from '../react-native-web-style';
 import React, { PropTypes } from 'react';
 import TextStylePropTypes, { TextDefaultStyle } from './TextStylePropTypes';
 
@@ -27,7 +27,7 @@ class Text extends React.Component {
     return (
       <WebStyleComponent
         {...other}
-        className={`sdk-Text ${className}`}
+        className={`Text ${className}`}
         style={mergedStyle}
       />
     );

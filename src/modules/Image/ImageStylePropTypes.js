@@ -1,4 +1,4 @@
-import { StylePropTypes } from '../react-web-style';
+import { StylePropTypes } from '../react-native-web-style';
 import { PropTypes } from 'react';
 
 export default {

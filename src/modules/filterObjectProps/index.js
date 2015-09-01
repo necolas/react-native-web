@@ -20,12 +20,6 @@ function filterProps(obj, props, excluded=false) {
   return filtered;
 }
 
-// Extract all props that are not part of the React Component's 'propTypes'
-export function getOtherProps(componentInstance) {
-  const excludedProps = Object.keys(componentInstance.constructor.propTypes);
-  return omitProps(componentInstance.props, excludedProps);
-}
-
 export function pickProps(obj, props) {
   return filterProps(obj, props);
 }

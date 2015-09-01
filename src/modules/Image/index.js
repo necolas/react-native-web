@@ -1,5 +1,5 @@
 import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-web-style';
+import { WebStyleComponent } from '../react-native-web-style';
 import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes';
 import React, { PropTypes } from 'react';
 
@@ -28,7 +28,7 @@ class Image extends React.Component {
       <WebStyleComponent
         {...other}
         alt={alt}
-        className={`sdk-Image ${className}`}
+        className={`Image ${className}`}
         component='img'
         style={mergedStyle}
       />

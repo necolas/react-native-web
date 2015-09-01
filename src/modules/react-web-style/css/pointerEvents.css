@@ -1,6 +1,0 @@
-.pointerEvents-auto { pointer-events: auto; }
-.pointerEvents-none { pointer-events: none; }
-.pointerEvents-box-none { pointer-events: none; }
-.pointerEvents-box-none * { pointer-events: auto;}
-.pointerEvents-box-only { pointer-events: auto; }
-.pointerEvents-box-only * { pointer-events: none; }

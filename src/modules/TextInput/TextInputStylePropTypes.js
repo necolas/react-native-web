@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import { StylePropTypes } from '../react-web-style';
+import { StylePropTypes } from '../react-native-web-style';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
 
 export default {

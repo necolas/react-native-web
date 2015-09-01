@@ -1,5 +1,5 @@
 import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-web-style';
+import { WebStyleComponent } from '../react-native-web-style';
 import React, { PropTypes } from 'react';
 import TextInputStylePropTypes, { TextInputDefaultStyles } from './TextInputStylePropTypes';
 
@@ -25,7 +25,7 @@ class TextInput extends React.Component {
     return (
       <WebStyleComponent
         {...other}
-        className={`sdk-TextInput ${className}`}
+        className={`TextInput ${className}`}
         component={multiline ? 'textarea' : 'input'}
         disabled={!editable}
         placeholder={placeholder}

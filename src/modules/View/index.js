@@ -1,5 +1,5 @@
 import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-web-style';
+import { WebStyleComponent } from '../react-native-web-style';
 import React, { PropTypes } from 'react';
 import ViewStylePropTypes, { ViewDefaultStyle } from './ViewStylePropTypes';
 
@@ -38,7 +38,7 @@ class View extends React.Component {
     return (
       <WebStyleComponent
         {...other}
-        className={`sdk-View ${className}`}
+        className={`View ${className}`}
         style={mergedStyle}
       />
     );
