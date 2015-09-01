@@ -112,40 +112,6 @@ const buttonStyle = {
 }
 ```
 
-The styling strategy can be applied directly to non-SDK elements:
-
-```js
-import { stylingStrategy } from 'react-web-sdk';
-
-class Example extends React.Component {
-  render() {
-    return (
-      <div {...stylingStrategy({
-        style: {
-          opacity: 0.5
-        }
-      })} />
-    );
-  }
-}
-```
-
-
-## Utilities
-
-#### `getOtherProps(reactComponentInstance)`
-
-Returns an object containing all the props from `this.props` that are not
-defined in `propTypes`.
-
-#### `omitProps(obj, arrayOfExcludedProps)`
-
-Returns an object with the specified props excluded.
-
-#### `pickProps(obj, arrayOfIncludedProps)`
-
-Returns an object with the specified props included.
-
 ## Development
 
 ```

@@ -1,17 +1,9 @@
-import React from 'react';
-import { Image, Text, TextInput, View, stylingStrategy } from '../dist/main';
+import React, { Image, Text, TextInput, View } from '../dist/react-native-web';
 
 class Example extends React.Component {
   render() {
     return (
       <View>
-        <div {...stylingStrategy({
-          style: {
-            backgroundColor: '#000',
-            height: '10px',
-            opacity: '0.5'
-          }
-        })} />
         <View style={styles.grid}>
           {[1,2,3,4,5,6].map((item, i) => {
             return (
