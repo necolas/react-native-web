@@ -6,6 +6,6 @@ export default {
   ...StylePropTypes.TypographicPropTypes
 };
 
-export const TextDefaultStyles = {
+export const TextDefaultStyle = {
   display: 'inline'
 }

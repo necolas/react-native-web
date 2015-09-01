@@ -16,7 +16,7 @@ class Text extends React.Component {
 
   static defaultProps = {
     className: '',
-    component: 'div'
+    component: 'span'
   }
 
   render() {
