@@ -2,6 +2,7 @@
 
 var webpackConfig = require('./webpack-base.config.js');
 // entry is determined by karma config 'files' array
+webpackConfig.devtool = 'inline-source-map'
 webpackConfig.entry = {};
 
 module.exports = function (config) {
