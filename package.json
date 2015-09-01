@@ -11,7 +11,9 @@
     "build": "webpack --config webpack.config.js",
     "build:watch": "npm run build -- --watch",
     "build:example": "npm run build && cd example && webpack --config ./webpack.config.js",
-    "build:example:watch": "npm run build:example -- --watch"
+    "build:example:watch": "npm run build:example -- --watch",
+    "test": "NODE_ENV=test karma start karma.config.js",
+    "test:watch": "npm test -- --no-single-run"
   },
   "dependencies": {
     "react": "^0.13.3"
@@ -23,7 +25,14 @@
     "babel-runtime": "^5.5.6",
     "css-loader": "^0.15.1",
     "extract-text-webpack-plugin": "^0.8.1",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-mocha": "^0.2.0",
+    "karma-sourcemap-loader": "^0.3.5",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
+    "object-assign": "^4.0.1",
     "postcss-loader": "^0.4.4",
     "style-loader": "^0.12.3",
     "webpack": "^1.9.10"
