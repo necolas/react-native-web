@@ -1,35 +1,34 @@
 import { pickProps } from '../filterObjectProps'
 import { WebStyleComponent } from '../react-native-web-style'
-import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes'
+import ImageStylePropTypes, { ImageDefaultStyle } from './ImageStylePropTypes'
 import React, { PropTypes } from 'react'
 
 class Image extends React.Component {
   static propTypes = {
-    alt: PropTypes.string,
-    async: PropTypes.bool,
+    accessibilityLabel: PropTypes.string,
     className: PropTypes.string,
-    src: PropTypes.string,
+    source: PropTypes.string,
     style: PropTypes.shape(ImageStylePropTypes)
   }
 
   static defaultProps = {
-    async: true,
     className: '',
-    src: 'data:image/gif;base64,' +
+    source: 'data:image/gif;base64,' +
         'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
   }
 
   render() {
-    const { alt, className, src, style, ...other } = this.props
+    const { accessibilityLabel, className, source, style, ...other } = this.props
     const filteredStyle = pickProps(style, Object.keys(ImageStylePropTypes))
-    const mergedStyle = { ...ImageDefaultStyles, ...filteredStyle }
+    const mergedStyle = { ...ImageDefaultStyle, ...filteredStyle }
 
     return (
       <WebStyleComponent
         {...other}
-        alt={alt}
+        alt={accessibilityLabel}
         className={`Image ${className}`}
         component='img'
+        src={source}
         style={mergedStyle}
       />
     )

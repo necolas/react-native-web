@@ -10,7 +10,7 @@ export default {
   transform: PropTypes.string
 }
 
-export const ImageDefaultStyles = {
+export const ImageDefaultStyle = {
   backgroundColor: 'lightGray',
   borderWidth: 0,
   maxWidth: '100%'
