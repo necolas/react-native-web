@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
-import restyle from './modules/restyle';
-import StylePropTypes from './modules/StylePropTypes';
+import React, { PropTypes } from 'react'
+import restyle from './modules/restyle'
+import StylePropTypes from './modules/StylePropTypes'
 
 class WebStyleComponent extends React.Component {
   static propTypes = {
@@ -18,15 +18,15 @@ class WebStyleComponent extends React.Component {
   }
 
   render() {
-    const { component: Component, ...other } = this.props;
+    const { component: Component, ...other } = this.props
 
     return (
       <Component
         {...other}
         {...restyle(this.props)}
       />
-    );
+    )
   }
 }
 
-export { StylePropTypes, restyle, WebStyleComponent };
+export { StylePropTypes, restyle, WebStyleComponent }

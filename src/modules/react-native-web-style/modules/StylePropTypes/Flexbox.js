@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import { PropTypes } from 'react'
 
 export default {
   alignContent: PropTypes.oneOf([
@@ -46,4 +46,4 @@ export default {
     'space-between'
   ]),
   order: PropTypes.number
-};
+}

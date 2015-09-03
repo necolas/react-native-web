@@ -1,4 +1,4 @@
-var autoprefixer = require('autoprefixer-core');
+var autoprefixer = require('autoprefixer-core')
 
 module.exports = {
   module: {
@@ -20,5 +20,4 @@ module.exports = {
     ]
   },
   postcss: [ autoprefixer ]
-};
-
+}

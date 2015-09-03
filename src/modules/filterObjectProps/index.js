@@ -1,29 +1,29 @@
-function filterProps(obj, props, excluded=false) {
+function filterProps(obj, props, excluded = false) {
   if (!Array.isArray(props)) {
-    throw new TypeError('props is not an Array');
+    throw new TypeError('props is not an Array')
   }
 
-  let filtered = {};
-  for (let prop in obj) {
+  const filtered = {}
+  for (const prop in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-      let isMatch = props.indexOf(prop) > -1;
+      const isMatch = props.indexOf(prop) > -1
       if (excluded && isMatch) {
-        continue;
+        continue
       } else if (!excluded && !isMatch) {
-        continue;
+        continue
       }
 
-      filtered[prop] = obj[prop];
+      filtered[prop] = obj[prop]
     }
   }
 
-  return filtered;
+  return filtered
 }
 
 export function pickProps(obj, props) {
-  return filterProps(obj, props);
+  return filterProps(obj, props)
 }
 
 export function omitProps(obj, props) {
-  return filterProps(obj, props, true);
+  return filterProps(obj, props, true)
 }

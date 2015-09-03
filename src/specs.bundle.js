@@ -4,6 +4,6 @@
  *
  * See: https://github.com/webpack/docs/wiki/context
  */
-const specContext = require.context('.', true, /.+\.spec\.jsx?$/);
-specContext.keys().forEach(specContext);
-module.exports = specContext;
+const specContext = require.context('.', true, /.+\.spec\.jsx?$/)
+specContext.keys().forEach(specContext)
+module.exports = specContext

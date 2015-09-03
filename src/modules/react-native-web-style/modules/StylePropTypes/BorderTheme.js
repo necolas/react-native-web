@@ -1,9 +1,9 @@
-import { PropTypes } from 'react';
+import { PropTypes } from 'react'
 
 const numberOrString = PropTypes.oneOfType([
   PropTypes.number,
-  PropTypes.string,
-]);
+  PropTypes.string
+])
 
 export default {
   // border-color
@@ -20,4 +20,4 @@ export default {
   borderTopRightRadius: numberOrString,
   borderBottomLeftRadius: numberOrString,
   borderBottomRightRadius: numberOrString
-};
+}

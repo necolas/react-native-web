@@ -1,5 +1,5 @@
-import { PropTypes } from 'react';
-import { StylePropTypes } from '../react-native-web-style';
+import { PropTypes } from 'react'
+import { StylePropTypes } from '../react-native-web-style'
 
 export default {
   ...StylePropTypes.BackgroundPropTypes,
@@ -8,7 +8,7 @@ export default {
   boxShadow: PropTypes.string,
   opacity: PropTypes.number,
   transform: PropTypes.string
-};
+}
 
 // https://github.com/facebook/css-layout#default-values
 export const ViewDefaultStyle = {
@@ -24,4 +24,4 @@ export const ViewDefaultStyle = {
   margin: 0,
   padding: 0,
   position: 'relative'
-};
+}

@@ -1,7 +1,7 @@
-import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-native-web-style';
-import React, { PropTypes } from 'react';
-import ViewStylePropTypes, { ViewDefaultStyle } from './ViewStylePropTypes';
+import { pickProps } from '../filterObjectProps'
+import { WebStyleComponent } from '../react-native-web-style'
+import React, { PropTypes } from 'react'
+import ViewStylePropTypes, { ViewDefaultStyle } from './ViewStylePropTypes'
 
 class View extends React.Component {
   static propTypes = {
@@ -26,14 +26,14 @@ class View extends React.Component {
   }
 
   render() {
-    const { className, pointerEvents, style, ...other } = this.props;
-    const filteredStyle = pickProps(style, Object.keys(ViewStylePropTypes));
-    const pointerEventsStyle = pointerEvents && { pointerEvents };
+    const { className, pointerEvents, style, ...other } = this.props
+    const filteredStyle = pickProps(style, Object.keys(ViewStylePropTypes))
+    const pointerEventsStyle = pointerEvents && { pointerEvents }
     const mergedStyle = {
       ...ViewDefaultStyle,
       ...filteredStyle,
       ...pointerEventsStyle
-    };
+    }
 
     return (
       <WebStyleComponent
@@ -41,8 +41,8 @@ class View extends React.Component {
         className={`View ${className}`}
         style={mergedStyle}
       />
-    );
+    )
   }
 }
 
-export default View;
+export default View

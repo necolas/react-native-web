@@ -1,7 +1,7 @@
-import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-native-web-style';
-import React, { PropTypes } from 'react';
-import TextInputStylePropTypes, { TextInputDefaultStyles } from './TextInputStylePropTypes';
+import { pickProps } from '../filterObjectProps'
+import { WebStyleComponent } from '../react-native-web-style'
+import React, { PropTypes } from 'react'
+import TextInputStylePropTypes, { TextInputDefaultStyles } from './TextInputStylePropTypes'
 
 class TextInput extends React.Component {
   static propTypes = {
@@ -10,7 +10,7 @@ class TextInput extends React.Component {
     multiline: PropTypes.bool,
     placeholder: PropTypes.string,
     style: PropTypes.shape(TextInputStylePropTypes)
-  };
+  }
 
   static defaultProps = {
     editable: true,
@@ -18,9 +18,9 @@ class TextInput extends React.Component {
   }
 
   render() {
-    const { className, editable, multiline, placeholder, style, ...other } = this.props;
-    const filteredStyle = pickProps(style, Object.keys(TextInputStylePropTypes));
-    const mergedStyle = { ...TextInputDefaultStyles, ...filteredStyle };
+    const { className, editable, multiline, placeholder, style, ...other } = this.props
+    const filteredStyle = pickProps(style, Object.keys(TextInputStylePropTypes))
+    const mergedStyle = { ...TextInputDefaultStyles, ...filteredStyle }
 
     return (
       <WebStyleComponent
@@ -31,8 +31,8 @@ class TextInput extends React.Component {
         placeholder={placeholder}
         style={mergedStyle}
       />
-    );
+    )
   }
 }
 
-export default TextInput;
+export default TextInput

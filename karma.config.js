@@ -1,9 +1,7 @@
-'use strict';
-
-var webpackConfig = require('./webpack-base.config.js');
+var webpackConfig = require('./webpack-base.config.js')
 // entry is determined by karma config 'files' array
 webpackConfig.devtool = 'inline-source-map'
-webpackConfig.entry = {};
+webpackConfig.entry = {}
 
 module.exports = function (config) {
   config.set({
@@ -43,5 +41,5 @@ module.exports = function (config) {
         modules: false
       }
     }
-  });
-};
+  })
+}

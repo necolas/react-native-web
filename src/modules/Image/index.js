@@ -1,7 +1,7 @@
-import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-native-web-style';
-import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes';
-import React, { PropTypes } from 'react';
+import { pickProps } from '../filterObjectProps'
+import { WebStyleComponent } from '../react-native-web-style'
+import ImageStylePropTypes, { ImageDefaultStyles } from './ImageStylePropTypes'
+import React, { PropTypes } from 'react'
 
 class Image extends React.Component {
   static propTypes = {
@@ -20,9 +20,9 @@ class Image extends React.Component {
   }
 
   render() {
-    const { className, src, style, ...other } = this.props;
-    const filteredStyle = pickProps(style, Object.keys(ImageStylePropTypes));
-    const mergedStyle = { ...ImageDefaultStyles, ...filteredStyle };
+    const { alt, className, src, style, ...other } = this.props
+    const filteredStyle = pickProps(style, Object.keys(ImageStylePropTypes))
+    const mergedStyle = { ...ImageDefaultStyles, ...filteredStyle }
 
     return (
       <WebStyleComponent
@@ -32,8 +32,8 @@ class Image extends React.Component {
         component='img'
         style={mergedStyle}
       />
-    );
+    )
   }
 }
 
-export default Image;
+export default Image

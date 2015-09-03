@@ -1,9 +1,9 @@
-import {PropTypes} from 'react';
+import {PropTypes} from 'react'
 
 const numberOrString = PropTypes.oneOfType([
   PropTypes.number,
-  PropTypes.string,
-]);
+  PropTypes.string
+])
 
 export default {
   boxSizing: PropTypes.oneOf([
@@ -39,4 +39,4 @@ export default {
   paddingBottom: numberOrString,
   paddingLeft: numberOrString,
   paddingRight: numberOrString
-};
+}

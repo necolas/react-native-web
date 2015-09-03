@@ -4,7 +4,7 @@ export default function prefixStyles(style) {
       WebkitFlexBasis: style.flexBasis,
       msFlexBasis: style.flexBasis,
       ...style
-    };
+    }
   }
 
   if (style.hasOwnProperty('flexGrow')) {
@@ -13,7 +13,7 @@ export default function prefixStyles(style) {
       WebkitFlexGrow: style.flexGrow,
       msFlexPositive: style.flexGrow,
       ...style
-    };
+    }
   }
 
   if (style.hasOwnProperty('flexShrink')) {
@@ -21,7 +21,7 @@ export default function prefixStyles(style) {
       WebkitFlexShrink: style.flexShrink,
       msFlexNegative: style.flexShrink,
       ...style
-    };
+    }
   }
 
   // NOTE: adding `;` to the string value prevents React from automatically
@@ -30,9 +30,9 @@ export default function prefixStyles(style) {
     style = {
       WebkitBoxOrdinalGroup: `${parseInt(style.order, 10) + 1};`,
       WebkitOrder: `${style.order}`,
-      msFlexOrder: `${style.order};`,
+      msFlexOrder: `${style.order}`,
       ...style
-    };
+    }
   }
 
   if (style.hasOwnProperty('transform')) {
@@ -40,8 +40,8 @@ export default function prefixStyles(style) {
       WebkitTransform: style.transform,
       msTransform: style.transform,
       ...style
-    };
+    }
   }
 
-  return style;
+  return style
 }

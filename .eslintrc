@@ -1,0 +1,17 @@
+{
+  // babel parser to support ES features
+  "parser": "babel-eslint",
+  // based on https://github.com/feross/standard
+  "extends": [ "standard", "standard-react" ],
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    // overrides of the standard style
+    "space-before-function-paren": [ 2, { "anonymous": "always", "named": "never" } ],
+    "wrap-iife": [ 2, "outside" ],
+    // overrides of the standard-react style
+    "react/jsx-sort-props": 2,
+    "react/jsx-sort-prop-types": 2
+  }
+}

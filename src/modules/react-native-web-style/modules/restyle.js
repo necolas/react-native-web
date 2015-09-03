@@ -1,5 +1,5 @@
-import autoprefix from './autoprefix';
-import styles from './styles.css';
+import autoprefix from './autoprefix'
+import styles from './styles.css'
 
 /**
  * Get the HTML class that corresponds to a style declaration
@@ -8,9 +8,9 @@ import styles from './styles.css';
  * @return {string} class name
  */
 function getSinglePurposeClassName(prop, style) {
-  const className = `${prop}-${style[prop]}`;
+  const className = `${prop}-${style[prop]}`
   if (style.hasOwnProperty(prop) && styles[className]) {
-    return styles[className];
+    return styles[className]
   }
 }
 
@@ -20,21 +20,21 @@ function getSinglePurposeClassName(prop, style) {
  * @return {Object}
  */
 export default function stylingStrategy(props) {
-  let className;
-  let style = {};
+  let className
+  let style = {}
 
-  const classList = [ props.className ];
-  for (let prop in props.style) {
-    let styleClass = getSinglePurposeClassName(prop, props.style);
+  const classList = [ props.className ]
+  for (const prop in props.style) {
+    const styleClass = getSinglePurposeClassName(prop, props.style)
     if (styleClass) {
-      classList.push(styleClass);
+      classList.push(styleClass)
     } else {
-      style[prop] = props.style[prop];
+      style[prop] = props.style[prop]
     }
   }
 
-  className = classList.join(' ');
-  style = autoprefix(style);
+  className = classList.join(' ')
+  style = autoprefix(style)
 
-  return { className: className, style };
+  return { className: className, style }
 }

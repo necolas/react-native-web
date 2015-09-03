@@ -1,7 +1,7 @@
-var assign = require('object-assign');
-var base = require('./webpack-base.config.js');
-var webpack = require('webpack');
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+var assign = require('object-assign')
+var base = require('./webpack-base.config.js')
+var webpack = require('webpack')
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
 module.exports = assign({}, base, {
   entry: {
@@ -26,4 +26,4 @@ module.exports = assign({}, base, {
       }
     })
   ]
-});
+})

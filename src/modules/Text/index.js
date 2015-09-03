@@ -1,7 +1,7 @@
-import { pickProps } from '../filterObjectProps';
-import { WebStyleComponent } from '../react-native-web-style';
-import React, { PropTypes } from 'react';
-import TextStylePropTypes, { TextDefaultStyle } from './TextStylePropTypes';
+import { pickProps } from '../filterObjectProps'
+import { WebStyleComponent } from '../react-native-web-style'
+import React, { PropTypes } from 'react'
+import TextStylePropTypes, { TextDefaultStyle } from './TextStylePropTypes'
 
 class Text extends React.Component {
   static propTypes = {
@@ -20,9 +20,9 @@ class Text extends React.Component {
   }
 
   render() {
-    const { className, style, ...other } = this.props;
-    const filteredStyle = pickProps(style, Object.keys(TextStylePropTypes));
-    const mergedStyle = { ...TextDefaultStyle, ...filteredStyle };
+    const { className, style, ...other } = this.props
+    const filteredStyle = pickProps(style, Object.keys(TextStylePropTypes))
+    const mergedStyle = { ...TextDefaultStyle, ...filteredStyle }
 
     return (
       <WebStyleComponent
@@ -30,8 +30,8 @@ class Text extends React.Component {
         className={`Text ${className}`}
         style={mergedStyle}
       />
-    );
+    )
   }
 }
 
-export default Text;
+export default Text
