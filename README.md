@@ -69,7 +69,7 @@ are converted to single-purpose classes. The current implementation includes
 300+ precomputed CSS declarations (~4.5KB gzipped) that cover a large
 proportion of common styles. A more sophisticated build-time implementation may
 produce a slightly larger CSS file for large apps, and fall back to fewer
-inline styles.  Read more about the [styling
+inline styles. Read more about the [styling
 strategy](docs/react-native-web-style/styling.md).
 
 See this [guide to flexbox][flexbox-guide-url].
@@ -150,7 +150,7 @@ Copyright (c) 2015 Nicolas Gallagher. Released under the [MIT
 license](http://www.opensource.org/licenses/mit-license.php).
 
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/CONTRIBUTING.md
-[flexbox-guide]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+[flexbox-guide-url]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 [npm-image]: https://img.shields.io/npm/v/react-native-web.svg
 [npm-url]: https://npmjs.org/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/

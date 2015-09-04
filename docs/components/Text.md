@@ -4,9 +4,9 @@ Text layout and styles.
 
 #### PropTypes
 
-All other props are transferred directly to the `element`.
+All other props are transferred directly to the `component`.
 
-+ `element`: `func` or `string` (default `"div"`)
++ `component`: `func` or `string` (default `'div'`)
 + `style`: `TextStylePropTypes`
 
 #### TextStylePropTypes
@@ -17,10 +17,11 @@ All other props are transferred directly to the `element`.
 ## Examples
 
 ```js
-import {Text} from 'react-web-sdk';
-import React, {PropTypes} from 'react';
+import React, { Text } from 'react-native-web'
 
-class PrettyText extends React.Component {
+const { Component, PropTypes } = React
+
+class PrettyText extends Component {
   static propTypes = {
     color: PropTypes.oneOf(['white', 'gray', 'red']),
     size: PropTypes.oneOf(['small', 'normal', 'large']),

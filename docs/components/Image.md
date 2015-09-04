@@ -2,12 +2,10 @@
 
 #### PropTypes
 
-All other props are transferred directly to the `element`.
+All other props are transferred to the resulting `img`.
 
 + `accessibilityLabel`: `string`
-+ `async`: `bool` (TODO)
-+ `className`: `string`
-+ `source`: `string`
++ `source`: `object`
 + `style`: `ImageStylePropTypes`
 
 #### ImageStylePropTypes
@@ -20,10 +18,11 @@ All other props are transferred directly to the `element`.
 #### Examples
 
 ```js
-import {Image} from 'react-web-sdk';
-import React, {PropTypes} from 'react';
+import React, { Image } from 'react-native-web'
 
-class Avatar extends React.Component {
+const { Component, PropTypes } = React;
+
+class Avatar extends Component {
   static propTypes = {
     size: PropTypes.oneOf(['small', 'normal', 'large']),
     user: PropTypes.object
@@ -37,10 +36,10 @@ class Avatar extends React.Component {
     return (
       <Image
         accessibilityLabel={`${user.name}'s profile picture`}
-        source={user.avatarUrl}
+        source={{ uri: user.avatarUrl }}
         style={ ...style.base, ...style[this.props.size] }
       />
-    );
+    )
   }
 }
 

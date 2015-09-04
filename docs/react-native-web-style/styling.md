@@ -12,8 +12,8 @@ convert inline styles to static CSS:
 
 ## Style syntax: native vs proprietary data structure
 
-React Web SDK (in a divergence from React Native) represents style using plain
-JS objects:
+React Native for Web diverges from React Native by using plain JS objects for
+styles:
 
 ```js
 <Text style={styles.root}>...</Text>
@@ -46,19 +46,18 @@ const styles = Stylesheet.create({
 
 ## JS-to-CSS: conversion strategies
 
-One strategy for converting styles from JS to CSS is to map style objects to
-CSS rules. Another strategy is to map declarations to declarataions.
-
-![](../static/styling-strategy.png)
-
 Mapping entire `style` objects to CSS rules can lead to increasingly large CSS
 files. Each new component adds new rules to the stylesheet.
 
-React Web SDK includes a proof-of-concept for the strategy of automatically
-mapping unique declarations to declarations, via a unique selector for each
-declaration. This strategy results in smaller CSS files because an application
-has fewer unique declarations than total declarations. Creating a new
-component with no new unique declarations results in no change to the CSS file.
+![](../static/styling-strategy.png)
+
+One strategy for converting styles from JS to CSS is to map style objects to
+CSS rules. Another strategy is to map declarations to declarations.
+
+React Native for Web currently includes a proof-of-concept implementation of
+the latter strategy. This results in smaller CSS files because all applications
+has fewer unique declarations than total declarations. Creating a new component
+with no new unique declarations results in no change to the CSS file.
 
 For example:
 
@@ -92,9 +91,8 @@ And is backed by:
 
 The current implementation uses a precomputed CSS library of single-declaration
 rules, with obfuscated selectors. This handles a signficant portion of possible
-declarations. But a build-time implementation would produce more accurate CSS
+declarations. A build-time implementation would produce more accurate CSS
 files and fall through to inline styles significantly less often.
-
 
 (CSS libraries like [Atomic CSS](http://acss.io/),
 [Basscss](http://www.basscss.com/), [SUIT CSS](https://suitcss.github.io/), and
@@ -121,5 +119,5 @@ Query data could be accessed on `this.content`?
 Pseudo-classes like `:hover` and `:focus` can be handled with JavaScript.
 
 Pseudo-elements should be avoided in general, but for particular cases like
-`::placeholder` it might be necessary to reimplement it in the SDK's
-`TextInput` component (see React Native's API).
+`::placeholder` it might be necessary to reimplement it in the `TextInput`
+component (see React Native's API).

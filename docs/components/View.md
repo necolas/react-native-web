@@ -8,7 +8,7 @@ any type.
 
 All other props are transferred directly to the `element`.
 
-+ `element`: `func` or `string` (default `"div"`)
++ `component`: `func` or `string` (default `'div'`)
 + `pointerEvents`: `oneOf('all', 'box-only', 'box-none', 'none')`
 + `style`: `ViewStylePropTypes`
 
@@ -21,7 +21,7 @@ All other props are transferred directly to the `element`.
 + `color`: `string`
 + `opacity`: `number`
 
-## ViewStyleDefaultProps
+## ViewDefaultStyle
 
 Implements the default styles from
 [facebook/css-layout](https://github.com/facebook/css-layout).
@@ -43,7 +43,7 @@ Implements the default styles from
    `right`, `bottom` do something when not specifying `position:absolute`.
 
 ```js
-const ViewStyleDefaultProps = {
+const ViewDefaultStyle = {
   alignItems: 'stretch', // 1
   borderWidth: 0,
   borderStyle: 'solid',
