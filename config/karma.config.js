@@ -5,7 +5,7 @@ var webpackConfig = require('./webpack-base.config.js')
 module.exports = function (config) {
   config.set({
     basePath: path.resolve(__dirname, '..'),
-    browsers: [ 'Chrome' ],
+    browsers: [ process.env.TRAVIS ? 'Firefox' : 'Chrome' ],
     browserNoActivityTimeout: 60000,
     client: {
       captureConsole: true,
@@ -29,7 +29,7 @@ module.exports = function (config) {
     preprocessors: {
       'src/specs.bundle.js': [ 'webpack', 'sourcemap' ]
     },
-    reporters: [ 'dots' ],
+    reporters: [ process.env.TRAVIS ? 'dots' : 'progress' ],
     singleRun: true,
     webpack: assign({}, webpackConfig, { devtool: 'inline' }),
     webpackMiddleware: {
