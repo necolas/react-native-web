@@ -39,11 +39,11 @@ suite('Image', () => {
   })
 
   test('prop "source"', () => {
-    const source = 'path-to-image'
+    const source = { uri: 'path-to-image' }
     const result = ReactTestUtils.renderIntoDocument(<Image source={source} />)
     const root = React.findDOMNode(result)
 
-    assert.equal(root.getAttribute('src'), source)
+    assert.equal(root.getAttribute('src'), source.uri)
   })
 
   test('prop "style"', () => {

@@ -1,5 +1,5 @@
 import autoprefix from './autoprefix'
-import styles from './styles.css'
+import styles from '../../styles'
 
 /**
  * Get the HTML class that corresponds to a style declaration

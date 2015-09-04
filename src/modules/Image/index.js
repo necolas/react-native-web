@@ -7,7 +7,7 @@ class Image extends React.Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
     className: PropTypes.string,
-    source: PropTypes.string,
+    source: PropTypes.object,
     style: PropTypes.shape(ImageStylePropTypes)
   }
 
@@ -28,7 +28,7 @@ class Image extends React.Component {
         alt={accessibilityLabel}
         className={`Image ${className}`}
         component='img'
-        src={source}
+        src={source.uri}
         style={mergedStyle}
       />
     )
