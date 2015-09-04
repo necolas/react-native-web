@@ -1,10 +1,10 @@
+var assign = require('object-assign')
+var path = require('path')
 var webpackConfig = require('./webpack-base.config.js')
-// entry is determined by karma config 'files' array
-webpackConfig.devtool = 'inline-source-map'
-webpackConfig.entry = {}
 
 module.exports = function (config) {
   config.set({
+    basePath: path.resolve(__dirname, '..'),
     browsers: [ 'Chrome' ],
     browserNoActivityTimeout: 60000,
     client: {
@@ -31,7 +31,7 @@ module.exports = function (config) {
     },
     reporters: [ 'dots' ],
     singleRun: true,
-    webpack: webpackConfig,
+    webpack: assign({}, webpackConfig, { devtool: 'inline' }),
     webpackMiddleware: {
       stats: {
         assetsSort: 'name',
