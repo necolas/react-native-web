@@ -1,4 +1,4 @@
-# View
+# View spec
 
 `View` is a flexbox container and the fundamental building block for UI. It is
 designed to be nested inside other `View`'s and to have 0-to-many children of
@@ -8,7 +8,7 @@ any type.
 
 All other props are transferred directly to the `element`.
 
-+ `component`: `func` or `string` (default `"div"`)
++ `element`: `func` or `string` (default `"div"`)
 + `pointerEvents`: `oneOf('all', 'box-only', 'box-none', 'none')`
 + `style`: `ViewStylePropTypes`
 
@@ -43,7 +43,7 @@ Implements the default styles from
    `right`, `bottom` do something when not specifying `position:absolute`.
 
 ```js
-const ViewDefaultStyle = {
+const ViewStyleDefaultProps = {
   alignItems: 'stretch', // 1
   borderWidth: 0,
   borderStyle: 'solid',

@@ -49,7 +49,7 @@ const styles = Stylesheet.create({
 One strategy for converting styles from JS to CSS is to map style objects to
 CSS rules. Another strategy is to map declarations to declarataions.
 
-![](sdk-styling-strategy.png)
+![](../static/styling-strategy.png)
 
 Mapping entire `style` objects to CSS rules can lead to increasingly large CSS
 files. Each new component adds new rules to the stylesheet.
