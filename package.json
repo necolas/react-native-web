@@ -1,53 +1,53 @@
 {
-  "name": "react-web-sdk",
+  "name": "react-native-web",
   "version": "0.0.3",
-  "description": "UI SDK based on react-native",
-  "main": "dist/main.js",
+  "description": "React Native for Web",
+  "main": "dist/react-native-web.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prebuild": "rm -rf ./dist && npm install",
-    "build": "webpack --config webpack.config.js",
-    "build:watch": "npm run build -- --watch",
-    "build:example": "npm run build && cd example && webpack --config ./webpack.config.js",
-    "build:example:watch": "npm run build:example -- --watch",
+    "prepublish": "NODE_ENV=production npm run build",
+    "build": "rm -rf ./dist && webpack --config config/webpack.config.js --sort-assets-by --progress",
     "lint": "eslint .",
-    "test": "NODE_ENV=test karma start karma.config.js",
-    "test:watch": "npm test -- --no-single-run"
+    "specs": "NODE_ENV=test karma start config/karma.config.js",
+    "specs:watch": "npm run specs -- --no-single-run",
+    "start": "webpack-dev-server --config config/webpack.config.js --inline --hot --colors --quiet",
+    "test": "npm run specs && npm run lint"
   },
   "dependencies": {
     "react": "^0.13.3"
   },
   "devDependencies": {
-    "autoprefixer-core": "^5.2.0",
-    "babel-core": "^5.5.6",
+    "autoprefixer-core": "^5.2.1",
+    "babel-core": "^5.8.23",
     "babel-eslint": "^4.1.1",
-    "babel-loader": "^5.1.4",
-    "babel-runtime": "^5.5.6",
-    "css-loader": "^0.15.1",
+    "babel-loader": "^5.3.2",
+    "babel-runtime": "^5.8.20",
+    "css-loader": "^0.17.0",
     "eslint": "^1.3.1",
-    "eslint-config-standard": "^4.1.0",
+    "eslint-config-standard": "^4.3.1",
     "eslint-config-standard-react": "^1.0.4",
     "eslint-plugin-react": "^3.3.1",
     "eslint-plugin-standard": "^1.3.0",
-    "extract-text-webpack-plugin": "^0.8.1",
+    "extract-text-webpack-plugin": "^0.8.2",
     "karma": "^0.13.9",
     "karma-chrome-launcher": "^0.2.0",
     "karma-mocha": "^0.2.0",
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
-    "mocha": "^2.2.5",
+    "mocha": "^2.3.0",
     "node-libs-browser": "^0.5.2",
     "object-assign": "^4.0.1",
     "postcss-loader": "^0.4.4",
     "style-loader": "^0.12.3",
-    "webpack": "^1.9.10"
+    "webpack": "^1.12.1",
+    "webpack-dev-server": "^1.10.1"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/necolas/react-web-sdk.git"
+    "url": "git://github.com/necolas/react-native-web.git"
   }
 }
