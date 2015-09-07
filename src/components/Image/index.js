@@ -177,7 +177,7 @@ class Image extends React.Component {
     const defaultImage = defaultSource.uri || null
     const displayImage = !isLoaded ? defaultImage : source.uri
     const resolvedStyle = pickProps(style, Object.keys(ImageStylePropTypes))
-    const backgroundImage = displayImage ? `url(${displayImage})` : null
+    const backgroundImage = displayImage ? `url("${displayImage}")` : null
 
     /**
      * Image is a non-stretching View. The image is displayed as a background

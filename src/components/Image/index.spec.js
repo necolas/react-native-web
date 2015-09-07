@@ -41,11 +41,14 @@ suite('Image', () => {
   test('prop "defaultSource"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' }
     const elementHasdefaultSource = getImageDOM({ defaultSource })
+    const backgroundImage = elementHasdefaultSource.style.backgroundImage
 
-    assert.equal(elementHasdefaultSource.style.backgroundImage, `url(${defaultSource.uri})`)
+    assert(backgroundImage.indexOf(defaultSource.uri) > -1)
   })
 
-  test('prop "onError"', (done) => {
+  test('prop "onError"', function(done) {
+    this.timeout(5000);
+
     function onError(e) {
       assert.equal(e.nativeEvent.type, 'error')
       done()
@@ -57,7 +60,9 @@ suite('Image', () => {
     />)
   })
 
-  test('prop "onLoad"', (done) => {
+  test('prop "onLoad"', function(done) {
+    this.timeout(5000);
+
     function onLoad(e) {
       assert.equal(e.nativeEvent.type, 'load')
       done()
