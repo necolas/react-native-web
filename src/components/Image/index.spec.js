@@ -46,8 +46,8 @@ suite('Image', () => {
     assert(backgroundImage.indexOf(defaultSource.uri) > -1)
   })
 
-  test('prop "onError"', function(done) {
-    this.timeout(5000);
+  test('prop "onError"', function (done) {
+    this.timeout(5000)
 
     function onError(e) {
       assert.equal(e.nativeEvent.type, 'error')
@@ -60,8 +60,8 @@ suite('Image', () => {
     />)
   })
 
-  test('prop "onLoad"', function(done) {
-    this.timeout(5000);
+  test('prop "onLoad"', function (done) {
+    this.timeout(5000)
 
     function onLoad(e) {
       assert.equal(e.nativeEvent.type, 'load')
