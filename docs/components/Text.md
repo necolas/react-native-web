@@ -1,18 +1,55 @@
-# Text spec
+# Text
 
-Text layout and styles.
+`Text` is component for displaying text. It supports style, basic touch
+handling, and inherits typographic styles from ancestor elements. In a
+divergence from React Native, components other than `Text` can be children of a
+`Text` component.
 
-#### PropTypes
+The `Text` is unique relative to layout: child elements use text layout
+(`inline-block`) rather than flexbox layout. This means that elements inside of
+a `Text` are not rectangles, as they wrap when reaching the edge of their
+container.
 
-All other props are transferred directly to the `component`.
+## Props
 
-+ `component`: `func` or `string` (default `'div'`)
-+ `style`: `TextStylePropTypes`
+**children** any
 
-#### TextStylePropTypes
+Child content
 
-+ ViewStylePropTypes
-+ TypographicPropTypes
+**component** function, string
+
+Default is `span`.
+
+**numberOfLines** number
+
+Truncates the text with an ellipsis after this many lines.
+
+**onPress** function
+
+This function is called on press.
+
+**style** style
+
++ `backgroundColor`
++ `color`
++ `direction`
++ `fontFamily`
++ `fontSize`
++ `fontStyle`
++ `fontWeight`
++ `letterSpacing`
++ `lineHeight`
++ `margin`
++ `padding`
++ `textAlign`
++ `textDecoration`
++ `textTransform`
++ `whiteSpace`
++ `wordWrap`
+
+**testID** string
+
+Used to locate this view in end-to-end tests.
 
 ## Examples
 

@@ -1,66 +1,141 @@
-# View spec
+# View
 
-`View` is a flexbox container and the fundamental building block for UI. It is
-designed to be nested inside other `View`'s and to have 0-to-many children of
-any type.
+`View` is the fundamental UI building block. It is a component that supports
+style, layout with flexbox, and accessibility controls.  It can be nested
+inside another `View` and has 0-to-many children of any type.
 
-## PropTypes
+## Props
 
-All other props are transferred directly to the `element`.
+**accessibilityLabel** string
 
-+ `component`: `func` or `string` (default `'div'`)
-+ `pointerEvents`: `oneOf('all', 'box-only', 'box-none', 'none')`
-+ `style`: `ViewStylePropTypes`
+Overrides the text that's read by the screen reader when the user interacts
+with the element. This is implemented using `aria-label`.
 
-## ViewStylePropTypes
+**component** function, string
 
-+ BackgroundPropTypes
-+ BorderThemePropTypes
-+ LayoutPropTypes
-+ `boxShadow`: `string`
-+ `color`: `string`
-+ `opacity`: `number`
+Default is `div`.
 
-## ViewDefaultStyle
+**pointerEvents** oneOf('auto', 'box-only', 'box-none', 'none')
 
-Implements the default styles from
-[facebook/css-layout](https://github.com/facebook/css-layout).
+We deviate from the CSS spec by supporting additional `pointerEvents` modes,
+therefore `pointerEvents` is excluded from `style`.
 
-1. All the flex elements are oriented from top-to-bottom, left-to-right and do
-   not shrink. This is how things are laid out using the default CSS settings
-   and what you'd expect.
+`box-none` is the equivalent of:
 
-2. The most convenient way to express the relation between width and other
-   box-model properties.
+```css
+.box-none { pointer-events: none }
+.box-none * { pointer-events: auto }
+```
 
-3. Everything is `display:flex` by default. All the behaviors of `block` and
-   `inline-block` can be expressed in term of flex but not the opposite.
+`box-only` is the equivalent of:
 
-4. Everything is `position:relative`. This makes `position:absolute` target the
-   direct parent and not some parent which is either relative or absolute. If
-   you want to position an element relative to something else, you should move
-   it in the DOM instead of relying of CSS. It also makes `top`, `left`,
-   `right`, `bottom` do something when not specifying `position:absolute`.
+```css
+.box-only { pointer-events: auto }
+.box-only * { pointer-events: none }
+```
+
+**style** style
+
++ `alignContent`
++ `alignItems`
++ `alignSelf`
++ `backfaceVisibility`
++ `backgroundAttachment`
++ `backgroundClip`
++ `backgroundColor`
++ `backgroundImage`
++ `backgroundOrigin`
++ `backgroundPosition`
++ `backgroundRepeat`
++ `backgroundSize`
++ `borderColor`
++ `borderRadius`
++ `borderStyle`
++ `borderWidth`
++ `bottom`
++ `boxShadow`
++ `boxSizing`
++ `flexBasis`
++ `flexDirection`
++ `flexGrow`
++ `flexShrink`
++ `flexWrap`
++ `height`
++ `justifyContent`
++ `left`
++ `margin`
++ `maxHeight`
++ `maxWidth`
++ `minHeight`
++ `minWidth`
++ `opacity`
++ `order`
++ `overflow`
++ `overflowX`
++ `overflowY`
++ `padding`
++ `position`
++ `right`
++ `top`
++ `transform`
++ `userSelect`
++ `visibility`
++ `width`
++ `zIndex`
+
+Default:
 
 ```js
-const ViewDefaultStyle = {
-  alignItems: 'stretch', // 1
+{
+  alignItems: 'stretch',
   borderWidth: 0,
   borderStyle: 'solid',
-  boxSizing: 'border-box', // 2
-  display: 'flex', // 3
-  flexBasis: 'auto', // 1
-  flexDirection: 'column', // 1
-  flexShrink: 0, // 1
-  listStyle: 'none',
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexBasis: 'auto',
+  flexDirection: 'column',
+  flexShrink: 0,
   margin: 0,
   padding: 0,
-  position: 'relative' // 4
+  position: 'relative'
 };
 ```
+
+(See [facebook/css-layout](https://github.com/facebook/css-layout)).
+
+**testID** string
+
+Used to locate this view in end-to-end tests.
 
 ## Examples
 
 ```js
-// TODO
+import React, { View } from 'react-native-web'
+
+const { Component, PropTypes } = React
+
+class Example extends Component {
+  render() {
+    return (
+      <View style={styles.row}>
+        {
+          ['1', '2', '3', '4', '5'].map((value, i) => {
+            return <View children={value} key={i} style={styles.cell} />
+          })
+        }
+      </View>
+    );
+  }
+}
+
+const styles = {
+  row: {
+    flexDirection: 'row'
+  },
+  cell: {
+    flexGrow: 1
+  }
+}
+
+export default Example
 ```

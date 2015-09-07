@@ -1,10 +1,10 @@
 # React Native for Web
 
 [![Build Status][travis-image]][travis-url]
-[![npm version][npm-image]][npm-url] (14 KB gzipped)
+[![npm version][npm-image]][npm-url]
 
-The core [React Native][react-native-url] components built for the web, backed
-by a precomputed CSS library.
+The core [React Native][react-native-url] components adapted and expanded upon
+for the web, backed by a precomputed CSS library. ~19KB minified and gzipped.
 
 ## Table of contents
 
@@ -50,19 +50,46 @@ const styles = {
 
 ## Components
 
-Partial implementations of…
+### [`Image`](docs/components/Image.md)
 
-* [`Image`](docs/components/Image.md)
-* [`Text`](docs/components/Text.md)
-* [`TextInput`](docs/components/TextInput.md)
-* [`View`](docs/components/View.md)
+An accessibile image component with support for image resizing, default image,
+and child content.
+
+### [`ListView`](docs/components/ListView.md)
+
+(TODO)
+
+### [`ScrollView`](docs/components/ListView.md)
+
+(TODO)
+
+### [`Swipeable`](docs/components/Swipeable.md)
+
+Touch bindings for swipe gestures.
+
+### [`Text`](docs/components/Text.md)
+
+Displays text as an inline block and supports basic press handling.
+
+### [`TextInput`](docs/components/TextInput.md)
+
+Accessible single- and multi-line text input via a keyboard. Supports features
+
+### [`Touchable`](docs/components/Touchable.md)
+
+Touch bindings for press and long press.
+
+### [`View`](docs/components/View.md)
+
+The fundamental UI building block: layout with flexbox, layout and positioning
+styles, and accessibility controls.
 
 ## Styling
 
-React Native Web provides a mechanism to declare all your styles and layout
-inline with the components that use them. The `View` component makes it easy
-to build common layouts with flexbox, such as stacked and nested boxes with
-margin and padding.
+React Native for Web provides a mechanism to declare all your styles and layout
+inline with the components that use them. The `View` component makes it easy to
+build common layouts with flexbox, such as stacked and nested boxes with margin
+and padding.
 
 Styling is identical to using inline styles in React, but most inline styles
 are converted to single-purpose classes. The current implementation includes
@@ -70,7 +97,7 @@ are converted to single-purpose classes. The current implementation includes
 proportion of common styles. A more sophisticated build-time implementation may
 produce a slightly larger CSS file for large apps, and fall back to fewer
 inline styles. Read more about the [styling
-strategy](docs/react-native-web-style/styling.md).
+strategy](docs/style.md).
 
 See this [guide to flexbox][flexbox-guide-url].
 
@@ -143,6 +170,11 @@ welcome!
 
 Thanks to current and past members of the React and React Native teams (in
 particular Vjeux and Pete Hunt), and Tobias Koppers for Webpack and CSS loader.
+
+Thanks to [react-swipeable](https://github.com/dogfessional/react-swipeable/)
+for the current implementation of `Swipeable`, and to
+[react-tappable](https://github.com/JedWatson/react-tappable) for backing the
+current implementation of `Touchable`.
 
 ## License
 
