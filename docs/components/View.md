@@ -1,10 +1,12 @@
 # View
 
 `View` is the fundamental UI building block. It is a component that supports
-style, layout with flexbox, and accessibility controls.  It can be nested
+style, layout with flexbox, and accessibility controls. It can be nested
 inside another `View` and has 0-to-many children of any type.
 
 ## Props
+
+NOTE: `View` will transfer all other props to the rendered HTML element.
 
 **accessibilityLabel** string
 

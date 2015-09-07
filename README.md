@@ -73,7 +73,7 @@ Displays text as an inline block and supports basic press handling.
 
 ### [`TextInput`](docs/components/TextInput.md)
 
-Accessible single- and multi-line text input via a keyboard. Supports features
+Accessible single- and multi-line text input via a keyboard.
 
 ### [`Touchable`](docs/components/Touchable.md)
 
@@ -81,25 +81,22 @@ Touch bindings for press and long press.
 
 ### [`View`](docs/components/View.md)
 
-The fundamental UI building block: layout with flexbox, layout and positioning
-styles, and accessibility controls.
+The fundamental UI building block using flexbox for layout.
 
 ## Styling
 
-React Native for Web provides a mechanism to declare all your styles and layout
-inline with the components that use them. The `View` component makes it easy to
-build common layouts with flexbox, such as stacked and nested boxes with margin
-and padding.
+React Native for Web provides a mechanism to declare all your styles in
+JavaScript within your components. The `View` component makes it easy to build
+common layouts with flexbox, such as stacked and nested boxes with margin
+and padding. See this [guide to flexbox][flexbox-guide-url].
 
-Styling is identical to using inline styles in React, but most inline styles
-are converted to single-purpose classes. The current implementation includes
-300+ precomputed CSS declarations (~4.5KB gzipped) that cover a large
-proportion of common styles. A more sophisticated build-time implementation may
-produce a slightly larger CSS file for large apps, and fall back to fewer
-inline styles. Read more about the [styling
+Authoring `style` is no different to the existing use of inline styles in
+React, but most inline styles are converted to single-purpose class names. The
+current implementation includes 300+ precomputed CSS declarations (~4.5KB
+gzipped) that covers many common property-value pairs. A more sophisticated
+build-time implementation may produce a slightly larger CSS file for large
+apps, and fall back to fewer inline styles. Read more about the [styling
 strategy](docs/style.md).
-
-See this [guide to flexbox][flexbox-guide-url].
 
 ```js
 import React, { Image, Text, View } from 'react-native-web'

@@ -44,11 +44,21 @@ class Text extends React.Component {
   }
 
   render() {
-    const { children, component, numberOfLines, style, testID } = this.props
+    const {
+      children,
+      component,
+      numberOfLines,
+      onPress,
+      style,
+      testID,
+      ...other
+    } = this.props
+
     const resolvedStyle = pickProps(style, textStyleKeys)
 
     return (
       <CoreComponent
+        {...other}
         children={children}
         className={'Text'}
         component={component}

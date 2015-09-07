@@ -12,6 +12,8 @@ container.
 
 ## Props
 
+NOTE: `Text` will transfer all other props to the rendered HTML element.
+
 **children** any
 
 Child content
