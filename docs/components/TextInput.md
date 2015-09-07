@@ -67,7 +67,7 @@ passwords stay secure. Default: `false`. (Not available when `multiline` is `tru
 
 **style** style
 
-[View](docs/components/View) style
+[View](View.md) style
 
 + `color`
 + `direction`

@@ -45,7 +45,7 @@ could be an http address or a base64 encoded image.
 
 **style** style
 
-[View](docs/components/View) style
+[View](View.md) style
 
 Defaults:
 
