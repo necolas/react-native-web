@@ -3,6 +3,20 @@ var base = require('./webpack-base.config.js')
 var webpack = require('webpack')
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
+var plugins = []
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(
+    new UglifyJsPlugin({
+      compress: {
+        dead_code: true,
+        drop_console: true,
+        screw_ie8: true,
+        warnings: true
+      }
+    })
+  )
+}
+
 module.exports = assign({}, base, {
   entry: {
     main: './src/index'
@@ -16,14 +30,5 @@ module.exports = assign({}, base, {
     libraryTarget: 'commonjs2',
     path: './dist'
   },
-  plugins: [
-    new UglifyJsPlugin({
-      compress: {
-        dead_code: true,
-        drop_console: true,
-        screw_ie8: true,
-        warnings: true
-      }
-    })
-  ]
+  plugins: plugins
 })

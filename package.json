@@ -9,6 +9,7 @@
   "scripts": {
     "prepublish": "NODE_ENV=production npm run build",
     "build": "rm -rf ./dist && webpack --config config/webpack.config.js --sort-assets-by --progress",
+    "example": "cd example && webpack --config webpack.config.js",
     "lint": "eslint .",
     "specs": "NODE_ENV=test karma start config/karma.config.js",
     "specs:watch": "npm run specs -- --no-single-run",
@@ -16,7 +17,9 @@
     "test": "npm run specs && npm run lint"
   },
   "dependencies": {
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-swipeable": "^3.0.2",
+    "react-tappable": "^0.6.0"
   },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",

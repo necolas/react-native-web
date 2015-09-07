@@ -29,7 +29,7 @@ module.exports = function (config) {
     preprocessors: {
       'src/specs.bundle.js': [ 'webpack', 'sourcemap' ]
     },
-    reporters: [ process.env.TRAVIS ? 'dots' : 'progress' ],
+    reporters: [ 'dots' ],
     singleRun: true,
     webpack: assign({}, webpackConfig, { devtool: 'inline' }),
     webpackMiddleware: {
