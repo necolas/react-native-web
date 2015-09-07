@@ -1,7 +1,6 @@
 import assert from 'assert'
 import React from 'react/addons'
 
-import { TextDefaultStyle } from './TextStylePropTypes'
 import Text from '.'
 
 const ReactTestUtils = React.addons.TestUtils
@@ -27,16 +26,6 @@ suite('Text', () => {
     assert.equal(result.props.children, children)
   })
 
-  test('prop "className"', () => {
-    const className = 'className'
-    const result = shallowRender(<Text className={className} />)
-
-    assert.ok(
-      (result.props.className).indexOf(className) > -1,
-      '"className" was not transferred'
-    )
-  })
-
   test('prop "component"', () => {
     const type = 'a'
     const result = ReactTestUtils.renderIntoDocument(<Text component={type} />)
@@ -49,19 +38,43 @@ suite('Text', () => {
     )
   })
 
+  test.skip('prop "numberOfLines"', () => {})
+
+  test('prop "onPress"', (done) => {
+    const result = ReactTestUtils.renderIntoDocument(<Text onPress={onPress} />)
+    const root = React.findDOMNode(result)
+    ReactTestUtils.Simulate.click(root)
+
+    function onPress(e) {
+      assert(true, 'the "onPress" callback was never called')
+      assert.ok(e.nativeEvent)
+      done()
+    }
+  })
+
   test('prop "style"', () => {
     const initial = shallowRender(<Text />)
     assert.deepEqual(
       initial.props.style,
-      TextDefaultStyle,
-      'default "style" is incorrect'
+      Text.defaultProps.style
     )
 
-    const unsupported = shallowRender(<Text style={{ unsupported: 'true' }} />)
+    const unsupported = shallowRender(<Text style={{ flexDirection: 'row' }} />)
     assert.deepEqual(
-      unsupported.props.style.unsupported,
+      unsupported.props.style.flexDirection,
       null,
       'unsupported "style" properties must not be transferred'
+    )
+  })
+
+  test('prop "testID"', () => {
+    const testID = 'Example.text'
+    const result = ReactTestUtils.renderIntoDocument(<Text testID={testID} />)
+    const root = React.findDOMNode(result)
+
+    assert.equal(
+      root.getAttribute('data-testid'),
+      testID
     )
   })
 })
