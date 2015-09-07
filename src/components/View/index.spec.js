@@ -1,7 +1,6 @@
 import assert from 'assert'
 import React from 'react/addons'
 
-import { ViewDefaultStyle } from './ViewStylePropTypes'
 import View from '.'
 
 const ReactTestUtils = React.addons.TestUtils
@@ -20,21 +19,19 @@ suite('View', () => {
     assert.equal((root.tagName).toLowerCase(), 'div')
   })
 
+  test('prop "accessibilityLabel"', () => {
+    const accessibilityLabel = 'accessibilityLabel'
+    const result = ReactTestUtils.renderIntoDocument(<View accessibilityLabel={accessibilityLabel} />)
+    const root = React.findDOMNode(result)
+
+    assert.equal(root.getAttribute('aria-label'), accessibilityLabel)
+  })
+
   test('prop "children"', () => {
     const children = 'children'
     const result = shallowRender(<View>{children}</View>)
 
     assert.equal(result.props.children, children)
-  })
-
-  test('prop "className"', () => {
-    const className = 'className'
-    const result = shallowRender(<View className={className} />)
-
-    assert.ok(
-      (result.props.className).indexOf(className) > -1,
-      '"className" was not transferred'
-    )
   })
 
   test('prop "component"', () => {
@@ -62,8 +59,7 @@ suite('View', () => {
     const initial = shallowRender(<View />)
     assert.deepEqual(
       initial.props.style,
-      ViewDefaultStyle,
-      'default "style" is incorrect'
+      View.defaultProps.style
     )
 
     const unsupported = shallowRender(<View style={{ unsupported: 'true' }} />)
@@ -71,6 +67,17 @@ suite('View', () => {
       unsupported.props.style.unsupported,
       null,
       'unsupported "style" properties must not be transferred'
+    )
+  })
+
+  test('prop "testID"', () => {
+    const testID = 'Example.view'
+    const result = ReactTestUtils.renderIntoDocument(<View testID={testID} />)
+    const root = React.findDOMNode(result)
+
+    assert.equal(
+      root.getAttribute('data-testid'),
+      testID
     )
   })
 })
