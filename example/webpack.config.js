@@ -16,4 +16,4 @@ module.exports = {
     filename: 'example.js',
     path: '../dist'
   }
-};
+}
