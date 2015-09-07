@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "prepublish": "NODE_ENV=production npm run build",
+    "prepublish": "npm run build",
     "build": "rm -rf ./dist && webpack --config config/webpack.config.js --sort-assets-by --progress",
     "example": "cd example && webpack --config webpack.config.js",
     "lint": "eslint .",
