@@ -43,6 +43,7 @@ export default {
     'bottom',
     'boxShadow',
     'boxSizing',
+    'cursor',
     'flexBasis',
     'flexDirection',
     'flexGrow',

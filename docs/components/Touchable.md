@@ -1,5 +1,9 @@
 # Touchable
 
+A wrapper for making views respond to mouse, keyboard, and touch presses. On
+press in, the touchable area can display a highlight color, and the opacity of
+the wrapped view can be decreased.
+
 ## Props
 
 **activeHighlight** string
@@ -12,9 +16,9 @@ highlight is removed when `onPressOut` is called. Default: `transparent`.
 Sets the opacity of the child view when `onPressIn` is called. The opacity is
 reset when `onPressOut` is called. Default: `1`.
 
-**component** function or string
+**children** element
 
-The backing component. Default: `div`.
+A single child element.
 
 **delayLongPress** number
 
@@ -35,6 +39,10 @@ Delay in ms, from the release of the touch, before `onPressOut` is called. Defau
 **onPressIn** function
 
 **onPressOut** function
+
+**style** style
+
+[View](View.md) style
 
 ## Examples
 

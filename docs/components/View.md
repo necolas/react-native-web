@@ -57,6 +57,7 @@ therefore `pointerEvents` is excluded from `style`.
 + `bottom`
 + `boxShadow`
 + `boxSizing`
++ `cursor`
 + `flexBasis`
 + `flexDirection`
 + `flexGrow`

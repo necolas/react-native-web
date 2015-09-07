@@ -49,6 +49,7 @@ export default {
   boxSizing: string,
   clear: string,
   color: string,
+  cursor: string,
   direction: string,
   display: string,
   flexBasis: string,

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Tappable from 'react-tappable'
+import View from '../View'
 
 class Touchable extends React.Component {
   constructor(props, context) {
@@ -7,23 +8,25 @@ class Touchable extends React.Component {
     this.state = {
       isActive: false
     }
+
+    this._onLongPress = this._onLongPress.bind(this)
+    this._onPress = this._onPress.bind(this)
+    this._onPressIn = this._onPressIn.bind(this)
+    this._onPressOut = this._onPressOut.bind(this)
   }
 
   static propTypes = {
     activeHighlight: PropTypes.string,
     activeOpacity: PropTypes.number,
     children: PropTypes.element,
-    component: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
-    ]),
     delayLongPress: PropTypes.number,
     delayPressIn: PropTypes.number,
     delayPressOut: PropTypes.number,
     onLongPress: PropTypes.func,
     onPress: PropTypes.func,
     onPressIn: PropTypes.func,
-    onPressOut: PropTypes.func
+    onPressOut: PropTypes.func,
+    style: View.propTypes.style
   }
 
   static defaultProps = {
@@ -32,11 +35,30 @@ class Touchable extends React.Component {
     component: 'div',
     delayLongPress: 1000,
     delayPressIn: 0,
-    delayPressOut: 0
+    delayPressOut: 0,
+    style: View.defaultProps.style
+  }
+
+  _getChildren() {
+    const { activeOpacity, children } = this.props
+    return React.cloneElement(React.Children.only(children), {
+      style: {
+        ...children.props.style,
+        ...(this.state.isActive ? { opacity: activeOpacity } : {})
+      }
+    })
+  }
+
+  _onKeyEnter(e, callback) {
+    var ENTER = 13
+    if (e.keyCode === ENTER) {
+      callback(e)
+    }
   }
 
   _onLongPress(e) {
-    if (this.props.onLongPress) this.props.onLongPress(e)
+    const event = e
+    if (this.props.onLongPress) this.props.onLongPress(event)
   }
 
   _onPress(e) {
@@ -53,33 +75,41 @@ class Touchable extends React.Component {
     if (this.props.onPressOut) this.props.onPressOut(e)
   }
 
-  _getChildren() {
-    const { activeOpacity, children } = this.props
-    return React.cloneElement(React.Children.only(children), {
-      style: { ...children.props.style, ...(this.state.isActive ? { opacity: activeOpacity } : {}) }
-    })
-  }
-
   render() {
     const {
       activeHighlight,
-      component,
-      delayLongPress
+      delayLongPress,
+      style
     } = this.props
 
+    /**
+     * Creates a wrapping element that can receive beyboard focus. The
+     * highlight is applied as a background color on this wrapper. The opacity
+     * is set on the child element, allowing it to have its own background
+     * color.
+     */
     return (
       <Tappable
         children={this._getChildren()}
-        component={component}
-        onMouseDown={this._onPressIn.bind(this)}
-        onMouseUp={this._onPressOut.bind(this)}
-        onPress={this._onLongPress.bind(this)}
-        onTap={this._onPress.bind(this)}
-        onTouchEnd={this._onPressOut.bind(this)}
-        onTouchStart={this._onPressIn.bind(this)}
+        component={View}
+        onKeyDown={(e) => { this._onKeyEnter(e, this._onPressIn) }}
+        onKeyPress={this._onPress}
+        onKeyUp={(e) => { this._onKeyEnter(e, this._onPressOut) }}
+        onMouseDown={this._onPressIn}
+        onMouseUp={this._onPressOut}
+        onPress={this._onLongPress}
+        onTap={this._onPress}
+        onTouchEnd={this._onPressOut}
+        onTouchStart={this._onPressIn}
         pressDelay={delayLongPress}
         pressMoveThreshold={5}
-        style={{ backgroundColor: this.state.isActive ? activeHighlight : null }}
+        style={{
+          ...style,
+          backgroundColor: this.state.isActive ? activeHighlight : null,
+          cursor: 'pointer',
+          userSelect: undefined
+        }}
+        tabIndex='0'
       />
     )
   }
