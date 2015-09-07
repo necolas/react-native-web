@@ -3,6 +3,8 @@ import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
+const viewStyleKeys = Object.keys(ViewStylePropTypes)
+
 const styles = {
   // https://github.com/facebook/css-layout#default-values
   initial: {
@@ -51,7 +53,7 @@ class View extends React.Component {
   render() {
     const { accessibilityLabel, pointerEvents, style, testID, ...other } = this.props
     const pointerEventsStyle = pointerEvents && { pointerEvents }
-    const resolvedStyle = pickProps(style, Object.keys(ViewStylePropTypes))
+    const resolvedStyle = pickProps(style, viewStyleKeys)
 
     return (
       <CoreComponent

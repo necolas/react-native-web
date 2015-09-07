@@ -11,6 +11,8 @@ const STATUS_LOADING = 'LOADING'
 const STATUS_PENDING = 'PENDING'
 const STATUS_IDLE = 'IDLE'
 
+const imageStyleKeys = Object.keys(ImageStylePropTypes)
+
 const styles = {
   initial: {
     alignSelf: 'flex-start',
@@ -176,7 +178,7 @@ class Image extends React.Component {
     const isLoaded = this.state.status === STATUS_LOADED
     const defaultImage = defaultSource.uri || null
     const displayImage = !isLoaded ? defaultImage : source.uri
-    const resolvedStyle = pickProps(style, Object.keys(ImageStylePropTypes))
+    const resolvedStyle = pickProps(style, imageStyleKeys)
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
 
     /**

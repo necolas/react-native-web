@@ -3,6 +3,8 @@ import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
 import TextStylePropTypes from './TextStylePropTypes'
 
+const textStyleKeys = Object.keys(TextStylePropTypes)
+
 const styles = {
   initial: {
     color: 'inherit',
@@ -43,7 +45,7 @@ class Text extends React.Component {
 
   render() {
     const { children, component, numberOfLines, style, testID } = this.props
-    const resolvedStyle = pickProps(style, Object.keys(TextStylePropTypes))
+    const resolvedStyle = pickProps(style, textStyleKeys)
 
     return (
       <CoreComponent

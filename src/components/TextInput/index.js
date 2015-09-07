@@ -3,6 +3,8 @@ import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
 import TextInputStylePropTypes from './TextInputStylePropTypes'
 
+const textInputStyleKeys = Object.keys(TextInputStylePropTypes)
+
 const styles = {
   initial: {
     appearance: 'none',
@@ -70,7 +72,7 @@ class TextInput extends React.Component {
       testID
     } = this.props
 
-    const resolvedStyle = pickProps(style, Object.keys(TextInputStylePropTypes))
+    const resolvedStyle = pickProps(style, textInputStyleKeys)
     const type = secureTextEntry && 'password' || (keyboardType === 'default' ? '' : keyboardType)
 
     return (
