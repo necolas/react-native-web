@@ -191,9 +191,9 @@ class Image extends React.Component {
     return (
       <View
         accessibilityLabel={accessibilityLabel}
-        aria-role='img'
         className={'Image'}
         component='div'
+        role='img'
         style={{
           ...(styles.initial),
           ...resolvedStyle,
