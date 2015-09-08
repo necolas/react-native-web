@@ -10,17 +10,37 @@ NOTE: `View` will transfer all other props to the rendered HTML element.
 
 **accessibilityLabel** string
 
-Overrides the text that's read by the screen reader when the user interacts
-with the element. (This is implemented using `aria-label`.)
+Defines the text available to assistive technologies upon interaction with the
+element. (This is implemented using `aria-label`.)
 
 **accessible** bool
 
-When `false`, the view is hidden from screenreaders. Default: `true`. (This is
+When `false`, the view is hidden from assistive technologies. Default: `true`. (This is
 implemented using `aria-hidden`.)
+
+**accessibilityLiveRegion** oneOf('assertive', 'off', 'polite')
+
+Indicates to assistive technologies whether to notify the user when the view
+changes. The values of this attribute are expressed in degrees of importance.
+When regions are specified as `polite` (recommended), updates take low
+priority. When regions are specified as `assertive`, assistive technologies
+will interrupt and immediately notify the user. Default: `off`. (This is
+implemented using [`aria-live`](http://www.w3.org/TR/wai-aria/states_and_properties#aria-live).)
+
+**accessibilityRole** oneOf(roles)
+
+Allows assistive technologies to present and support interaction with the view
+in a manner that is consistent with user expectations for similar views of that
+type. For example, marking a touchable view with an `accessibilityRole` of
+`button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
+
+Note: Avoid changing `accessibilityRole` values over time or after user
+actions. Generally, accessibility APIs do not provide a means of notifying
+assistive technologies of a `role` value change.
 
 **component** function, string
 
-Default: `div`.
+The React Component for this view. Default: `div`.
 
 **pointerEvents** oneOf('auto', 'box-only', 'box-none', 'none')
 

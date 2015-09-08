@@ -245,6 +245,10 @@
 .color-inherit { color: inherit; }
 .color-transparent { color: transparent; }
 
+/* cursor */
+
+.cursor-pointer { cursor: pointer; }
+
 /* direction */
 
 .direction-inherit { direction: inherit; }

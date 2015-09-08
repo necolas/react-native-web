@@ -14,6 +14,26 @@ export const assertProps = {
     assert.equal(dom.getAttribute('aria-label'), accessibilityLabel)
   },
 
+  accessibilityLiveRegion: function (Component) {
+    // no live
+    let dom = renderToDOM(<Component />)
+    assert.equal(dom.getAttribute('aria-live'), null)
+    // with live
+    const accessibilityLiveRegion = 'polite'
+    dom = renderToDOM(<Component accessibilityLiveRegion={accessibilityLiveRegion} />)
+    assert.equal(dom.getAttribute('aria-live'), accessibilityLiveRegion)
+  },
+
+  accessibilityRole: function (Component) {
+    // no role
+    let dom = renderToDOM(<Component />)
+    assert.equal(dom.getAttribute('role'), null)
+    // with role
+    const accessibilityRole = 'main'
+    dom = renderToDOM(<Component accessibilityRole={accessibilityRole} />)
+    assert.equal(dom.getAttribute('role'), accessibilityRole)
+  },
+
   accessible: function (Component) {
     // accessible
     let dom = renderToDOM(<Component accessible={true} />)

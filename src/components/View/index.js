@@ -31,15 +31,12 @@ const styles = {
 class View extends React.Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
+    accessibilityLiveRegion: PropTypes.oneOf(['assertive', 'off', 'polite']),
+    accessibilityRole: PropTypes.string,
     accessible: PropTypes.bool,
     children: PropTypes.any,
     component: CoreComponent.propTypes.component,
-    pointerEvents: PropTypes.oneOf([
-      'auto',
-      'box-none',
-      'box-only',
-      'none'
-    ]),
+    pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
     style: PropTypes.shape(ViewStylePropTypes),
     testID: CoreComponent.propTypes.testID
   }
@@ -53,7 +50,17 @@ class View extends React.Component {
   }
 
   render() {
-    const { accessible, accessibilityLabel, pointerEvents, style, testID, ...other } = this.props
+    const {
+      accessibilityLabel,
+      accessibilityLiveRegion,
+      accessibilityRole,
+      accessible,
+      pointerEvents,
+      style,
+      testID,
+      ...other
+    } = this.props
+
     const pointerEventsStyle = pointerEvents && { pointerEvents }
     const resolvedStyle = pickProps(style, viewStyleKeys)
 
@@ -62,7 +69,9 @@ class View extends React.Component {
         {...other}
         aria-hidden={accessible ? null : true}
         aria-label={accessibilityLabel}
+        aria-live={accessibilityLiveRegion}
         className={'View'}
+        role={accessibilityRole}
         style={{
           ...(styles.initial),
           ...resolvedStyle,

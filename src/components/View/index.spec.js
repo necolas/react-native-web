@@ -11,6 +11,14 @@ suite('View', () => {
     assertProps.accessibilityLabel(View)
   })
 
+  test('prop "accessibilityLiveRegion"', () => {
+    assertProps.accessibilityLiveRegion(View)
+  })
+
+  test('prop "accessibilityRole"', () => {
+    assertProps.accessibilityRole(View)
+  })
+
   test('prop "accessible"', () => {
     assertProps.accessible(View)
   })
