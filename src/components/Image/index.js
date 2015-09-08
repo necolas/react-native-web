@@ -17,8 +17,7 @@ const styles = {
   initial: {
     alignSelf: 'flex-start',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover'
+    backgroundPosition: 'center'
   },
   img: {
     borderWidth: 0,
@@ -35,14 +34,14 @@ const styles = {
     top: 0
   },
   resizeMode: {
-    clip: {
-      backgroundSize: 'auto'
-    },
     contain: {
       backgroundSize: 'contain'
     },
     cover: {
       backgroundSize: 'cover'
+    },
+    none: {
+      backgroundSize: 'auto'
     },
     stretch: {
       backgroundSize: '100% 100%'
@@ -71,7 +70,7 @@ class Image extends React.Component {
     onLoad: PropTypes.func,
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
-    resizeMode: PropTypes.oneOf(['clip', 'contain', 'cover', 'stretch']),
+    resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
     source: PropTypes.object,
     style: PropTypes.shape(ImageStylePropTypes),
     testID: CoreComponent.propTypes.testID
@@ -82,7 +81,7 @@ class Image extends React.Component {
   static defaultProps = {
     accessible: true,
     defaultSource: {},
-    resizeMode: 'cover',
+    resizeMode: 'stretch',
     source: {},
     style: styles.initial
   }
