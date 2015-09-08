@@ -16,13 +16,13 @@ NOTE: `Text` will transfer all other props to the rendered HTML element.
 
 **children** any
 
-Child content
+Child content.
 
-**component** function, string
+**component** function or string
 
 Default is `span`.
 
-**numberOfLines** number
+**numberOfLines** number.
 
 Truncates the text with an ellipsis after this many lines.
 

@@ -13,11 +13,6 @@ NOTE: `View` will transfer all other props to the rendered HTML element.
 Defines the text available to assistive technologies upon interaction with the
 element. (This is implemented using `aria-label`.)
 
-**accessible** bool
-
-When `false`, the view is hidden from assistive technologies. Default: `true`. (This is
-implemented using `aria-hidden`.)
-
 **accessibilityLiveRegion** oneOf('assertive', 'off', 'polite')
 
 Indicates to assistive technologies whether to notify the user when the view
@@ -38,7 +33,12 @@ Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
-**component** function, string
+**accessible** bool
+
+When `false`, the view is hidden from assistive technologies. Default: `true`. (This is
+implemented using `aria-hidden`.)
+
+**component** function or string
 
 The React Component for this view. Default: `div`.
 
