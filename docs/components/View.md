@@ -11,16 +11,22 @@ NOTE: `View` will transfer all other props to the rendered HTML element.
 **accessibilityLabel** string
 
 Overrides the text that's read by the screen reader when the user interacts
-with the element. This is implemented using `aria-label`.
+with the element. (This is implemented using `aria-label`.)
+
+**accessible** bool
+
+When `false`, the view is hidden from screenreaders. Default: `true`. (This is
+implemented using `aria-hidden`.)
 
 **component** function, string
 
-Default is `div`.
+Default: `div`.
 
 **pointerEvents** oneOf('auto', 'box-only', 'box-none', 'none')
 
-We deviate from the CSS spec by supporting additional `pointerEvents` modes,
-therefore `pointerEvents` is excluded from `style`.
+Configure the `pointerEvents` of the view. The enhanced `pointerEvents` modes
+provided are not part of the CSS spec, therefore, `pointerEvents` is excluded
+from `style`.
 
 `box-none` is the equivalent of:
 

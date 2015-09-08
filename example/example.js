@@ -136,6 +136,7 @@ class Example extends Component {
 
         <Heading level='2' size='large'>Touchable</Heading>
         <Touchable
+          accessibilityLabel={'Touchable element'}
           activeHighlight='lightblue'
           activeOpacity={0.8}
           onLongPress={(e) => { console.log('Touchable.onLongPress', e) }}

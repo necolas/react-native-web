@@ -64,6 +64,7 @@ class Image extends React.Component {
 
   static propTypes = {
     accessibilityLabel: PropTypes.string,
+    accessible: PropTypes.bool,
     children: PropTypes.any,
     defaultSource: PropTypes.object,
     onError: PropTypes.func,
@@ -79,15 +80,11 @@ class Image extends React.Component {
   static stylePropTypes = ImageStylePropTypes
 
   static defaultProps = {
+    accessible: true,
     defaultSource: {},
     resizeMode: 'cover',
     source: {},
     style: styles.initial
-  }
-
-  _cancelEvent(event) {
-    event.preventDefault()
-    event.stopPropagation()
   }
 
   _createImageLoader() {
@@ -167,6 +164,7 @@ class Image extends React.Component {
   render() {
     const {
       accessibilityLabel,
+      accessible,
       children,
       defaultSource,
       resizeMode,
@@ -190,6 +188,7 @@ class Image extends React.Component {
      */
     return (
       <View
+        accessible={accessible}
         accessibilityLabel={accessibilityLabel}
         className={'Image'}
         component='div'

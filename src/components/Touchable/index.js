@@ -16,6 +16,8 @@ class Touchable extends React.Component {
   }
 
   static propTypes = {
+    accessibilityLabel: PropTypes.string,
+    accessible: PropTypes.bool,
     activeHighlight: PropTypes.string,
     activeOpacity: PropTypes.number,
     children: PropTypes.element,
@@ -77,6 +79,8 @@ class Touchable extends React.Component {
 
   render() {
     const {
+      accessibilityLabel,
+      accessible,
       activeHighlight,
       delayLongPress,
       style
@@ -90,6 +94,8 @@ class Touchable extends React.Component {
      */
     return (
       <Tappable
+        accessibilityLabel={accessibilityLabel}
+        accessible={accessible}
         children={this._getChildren()}
         component={View}
         onKeyDown={(e) => { this._onKeyEnter(e, this._onPressIn) }}

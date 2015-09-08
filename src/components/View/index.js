@@ -31,6 +31,7 @@ const styles = {
 class View extends React.Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
+    accessible: PropTypes.bool,
     children: PropTypes.any,
     component: CoreComponent.propTypes.component,
     pointerEvents: PropTypes.oneOf([
@@ -46,18 +47,20 @@ class View extends React.Component {
   static stylePropTypes = ViewStylePropTypes
 
   static defaultProps = {
+    accessible: true,
     component: 'div',
     style: styles.initial
   }
 
   render() {
-    const { accessibilityLabel, pointerEvents, style, testID, ...other } = this.props
+    const { accessible, accessibilityLabel, pointerEvents, style, testID, ...other } = this.props
     const pointerEventsStyle = pointerEvents && { pointerEvents }
     const resolvedStyle = pickProps(style, viewStyleKeys)
 
     return (
       <CoreComponent
         {...other}
+        aria-hidden={accessible ? null : true}
         aria-label={accessibilityLabel}
         className={'View'}
         style={{

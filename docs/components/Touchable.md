@@ -6,6 +6,15 @@ the wrapped view can be decreased.
 
 ## Props
 
+**accessibilityLabel** string
+
+Overrides the text that's read by the screen reader when the user interacts
+with the element.
+
+**accessible** bool
+
+When `false`, the view is hidden from screenreaders. Default: `true`.
+
 **activeHighlight** string
 
 Sets the color of the background highlight when `onPressIn` is called. The

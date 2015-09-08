@@ -7,7 +7,11 @@ and child content.
 
 **accessibilityLabel** string
 
-The text that's read by the screen reader when the user interacts with the image.
+The text that's read by a screenreader when someone interacts with the image.
+
+**accessible** bool
+
+When `false`, the view is hidden from screenreaders. Default: `true`.
 
 **children** any
 
