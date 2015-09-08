@@ -93,9 +93,9 @@ export const assertProps = {
 }
 
 export function render(element, container) {
-  return container ?
-    React.render(element, container) :
-    ReactTestUtils.renderIntoDocument(element)
+  return container
+    ? React.render(element, container)
+    : ReactTestUtils.renderIntoDocument(element)
 }
 
 export function renderToDOM(element, container) {

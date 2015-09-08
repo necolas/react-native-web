@@ -53,7 +53,7 @@ class Example extends Component {
 
   render() {
     return (
-      <View style={styles.root} accessibilityRole='main'>
+      <View accessibilityRole='main' style={styles.root}>
         <Heading level='1' size='xlarge'>React Native for Web: examples</Heading>
 
         <Heading level='2' size='large'>Image</Heading>

@@ -5,8 +5,6 @@ import React from 'react/addons'
 import Image from '.'
 import View from '../View'
 
-const ReactTestUtils = React.addons.TestUtils
-
 suite('Image', () => {
   test('defaults', () => {
     const result = shallowRender(<Image />)

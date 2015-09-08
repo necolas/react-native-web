@@ -1,10 +1,8 @@
-import { assertProps, render, renderToDOM, shallowRender } from '../../modules/specHelpers'
+import { assertProps, shallowRender } from '../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
 import View from '.'
-
-const ReactTestUtils = React.addons.TestUtils
 
 suite('View', () => {
   test('prop "accessibilityLabel"', () => {

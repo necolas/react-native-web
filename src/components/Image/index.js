@@ -17,7 +17,8 @@ const styles = {
   initial: {
     alignSelf: 'flex-start',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
+    backgroundSize: '100% 100%'
   },
   img: {
     borderWidth: 0,
@@ -187,8 +188,8 @@ class Image extends React.Component {
      */
     return (
       <View
-        accessible={accessible}
         accessibilityLabel={accessibilityLabel}
+        accessible={accessible}
         className={'Image'}
         component='div'
         role='img'
