@@ -54,7 +54,13 @@ class Example extends Component {
   render() {
     return (
       <View accessibilityRole='main' style={styles.root}>
-        <Heading level='1' size='xlarge'>React Native for Web: examples</Heading>
+        <Heading level='1' size='xlarge'>React Native Web</Heading>
+        <Text>React Native Web takes the core components from <Text
+        component="a" href="https://facebook.github.io/react-native/">React
+        Native</Text> and brings them to the web. These components provide
+        simple building blocks – touch and swipe handling, flexbox layout,
+        scroll views – from which more complex components and apps can be
+        constructed.</Text>
 
         <Heading level='2' size='large'>Image</Heading>
         <Image
@@ -194,7 +200,6 @@ class Example extends Component {
 
 const styles = {
   root: {
-    fontFamily: 'sans-serif',
     maxWidth: '600px',
     margin: '0 auto'
   },
