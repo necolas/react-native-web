@@ -1,10 +1,10 @@
 var assign = require('object-assign')
-var path = require('path')
-var webpackConfig = require('./webpack-base.config.js')
+var constants = require('./constants')
+var webpackConfig = require('./webpack.config.base')
 
 module.exports = function (config) {
   config.set({
-    basePath: path.resolve(__dirname, '..'),
+    basePath: constants.ROOT_DIRECTORY,
     browsers: [ process.env.TRAVIS ? 'Firefox' : 'Chrome' ],
     browserNoActivityTimeout: 60000,
     client: {
@@ -15,7 +15,7 @@ module.exports = function (config) {
       useIframe: true
     },
     files: [
-      'src/specs.bundle.js'
+      'src/specs.context.js'
     ],
     frameworks: [
       'mocha'
@@ -28,7 +28,7 @@ module.exports = function (config) {
       'karma-webpack'
     ],
     preprocessors: {
-      'src/specs.bundle.js': [ 'webpack', 'sourcemap' ]
+      'src/specs.context.js': [ 'webpack', 'sourcemap' ]
     },
     reporters: [ 'dots' ],
     singleRun: true,

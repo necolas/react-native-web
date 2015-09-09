@@ -67,10 +67,10 @@ not want to merge into the project.
 
 Development commands:
 
-* `npm start` – start the dev server and develop against live examples
+* `npm run build` – build the library
+* `npm run dev` – start the dev server and develop against live examples
 * `npm run lint` – run the linter
-* `npm run specs` – run the unit tests
-* `npm run build` – generate a build
+* `npm run specs:watch` – run and watch the unit tests
 
 Please follow this process for submitting a patch:
 

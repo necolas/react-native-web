@@ -1,4 +1,4 @@
-import React, { Image, Swipeable, Text, TextInput, Touchable, View } from '../dist/react-native-web'
+import React, { Image, Swipeable, Text, TextInput, Touchable, View } from '.'
 
 const { Component, PropTypes } = React
 
