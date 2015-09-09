@@ -16,8 +16,8 @@ const imageStyleKeys = Object.keys(ImageStylePropTypes)
 const styles = {
   initial: {
     alignSelf: 'flex-start',
-    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%'
   },
   img: {

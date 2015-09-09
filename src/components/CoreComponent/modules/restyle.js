@@ -36,5 +36,5 @@ export default function stylingStrategy(props) {
   className = classList.join(' ')
   style = autoprefix(style)
 
-  return { className: className, style }
+  return { className, style }
 }

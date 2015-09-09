@@ -59,8 +59,7 @@ class Touchable extends React.Component {
   }
 
   _onLongPress(e) {
-    const event = e
-    if (this.props.onLongPress) this.props.onLongPress(event)
+    if (this.props.onLongPress) this.props.onLongPress(e)
   }
 
   _onPress(e) {

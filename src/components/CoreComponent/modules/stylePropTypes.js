@@ -12,7 +12,6 @@ export default {
   alignItems: string,
   alignSelf: string,
   backfaceVisibility: string,
-  // background
   backgroundAttachment: string,
   backgroundClip: string,
   backgroundColor: string,
@@ -21,25 +20,21 @@ export default {
   backgroundPosition: string,
   backgroundRepeat: string,
   backgroundSize: string,
-  // border color
   borderColor: numberOrString,
   borderBottomColor: numberOrString,
   borderLeftColor: numberOrString,
   borderRightColor: numberOrString,
   borderTopColor: numberOrString,
-  // border-radius
   borderRadius: numberOrString,
   borderTopLeftRadius: numberOrString,
   borderTopRightRadius: numberOrString,
   borderBottomLeftRadius: numberOrString,
   borderBottomRightRadius: numberOrString,
-  // border style
   borderStyle: numberOrString,
   borderBottomStyle: numberOrString,
   borderLeftStyle: numberOrString,
   borderRightStyle: numberOrString,
   borderTopStyle: numberOrString,
-  // border width
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
   borderLeftWidth: numberOrString,
@@ -68,13 +63,11 @@ export default {
   left: numberOrString,
   letterSpacing: string,
   lineHeight: numberOrString,
-  // margin
   margin: numberOrString,
   marginBottom: numberOrString,
   marginLeft: numberOrString,
   marginRight: numberOrString,
   marginTop: numberOrString,
-  // min/max
   maxHeight: numberOrString,
   maxWidth: numberOrString,
   minHeight: numberOrString,
@@ -84,7 +77,6 @@ export default {
   overflow: string,
   overflowX: string,
   overflowY: string,
-  // padding
   padding: numberOrString,
   paddingBottom: numberOrString,
   paddingLeft: numberOrString,
