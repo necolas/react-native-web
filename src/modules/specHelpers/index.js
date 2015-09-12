@@ -36,7 +36,7 @@ export const assertProps = {
 
   accessible: function (Component) {
     // accessible
-    let dom = renderToDOM(<Component accessible={true} />)
+    let dom = renderToDOM(<Component accessible />)
     assert.equal(dom.getAttribute('aria-hidden'), null)
     // not accessible
     dom = renderToDOM(<Component accessible={false} />)

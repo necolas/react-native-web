@@ -133,7 +133,7 @@ class Example extends Component {
           onChangeText={(e) => { console.log('TextInput.onChangeText', e) }}
           onFocus={(e) => { console.log('TextInput.onFocus', e) }}
         />
-        <TextInput secureTextEntry={true} />
+        <TextInput secureTextEntry />
         <TextInput keyboardType='numeric' />
         <TextInput keyboardType='tel' />
         <TextInput keyboardType='url' />
