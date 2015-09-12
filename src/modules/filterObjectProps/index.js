@@ -1,8 +1,4 @@
-function filterProps(obj, props, excluded = false) {
-  if (!Array.isArray(props)) {
-    throw new TypeError('props is not an Array')
-  }
-
+function filterProps(obj, props: Array, excluded = false) {
   const filtered = {}
   for (const prop in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, prop)) {
