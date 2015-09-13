@@ -16,6 +16,7 @@ const imageStyleKeys = Object.keys(ImageStylePropTypes)
 const styles = {
   initial: {
     alignSelf: 'flex-start',
+    backgroundColor: 'lightgray',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%'
@@ -112,8 +113,8 @@ class Image extends React.Component {
 
     this._destroyImageLoader()
     this.setState({ status: STATUS_ERRORED })
-    if (onError) onError(event)
     this._onLoadEnd()
+    if (onError) onError(event)
   }
 
   _onLoad(e) {
@@ -122,8 +123,8 @@ class Image extends React.Component {
 
     this._destroyImageLoader()
     this.setState({ status: STATUS_LOADED })
-    if (onLoad) onLoad(event)
     this._onLoadEnd()
+    if (onLoad) onLoad(event)
   }
 
   _onLoadEnd() {

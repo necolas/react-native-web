@@ -75,7 +75,7 @@ const { Component, PropTypes } = React;
 class Avatar extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = { isLoaded: false }
+    this.state = { loading: true }
   }
 
   static propTypes = {
@@ -90,12 +90,12 @@ class Avatar extends Component {
 
   _onLoad(e) {
     console.log('Avatar.onLoad', e)
-    this.setState({ isLoaded: true })
+    this.setState({ loading: false })
   }
 
   render() {
     const { size, testID, user } = this.props
-    const { isLoaded } = this.state
+    const loadingStyle = this.state.loading ? { styles.loading } : { }
 
     return (
       <Image
@@ -104,18 +104,20 @@ class Avatar extends Component {
         onLoad={this._onLoad.bind(this)}
         resizeMode='cover'
         source={{ uri: user.avatarUrl }}
-        style={ ...style.base, ...style[size], ...style[isLoaded] }
+        style={{ ...styles.base, ...styles[size], ...loadingStyle }}
       />
     )
   }
 }
 
-const style = {
+const styles = {
   base: {
     borderColor: 'white',
     borderRadius: '5px',
-    borderWidth: '5px',
-    opacity: 0.5,
+    borderWidth: '5px'
+  },
+  loading: {
+    opacity: 0.5
   },
   small: {
     height: '32px',
@@ -128,9 +130,6 @@ const style = {
   large: {
     height: '64px',
     width: '64px'
-  }
-  isLoaded: {
-    opacity: 1
   }
 }
 ```
