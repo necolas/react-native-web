@@ -1,4 +1,3 @@
-var autoprefixer = require('autoprefixer-core')
 var webpack = require('webpack')
 
 var DedupePlugin = webpack.optimize.DedupePlugin
@@ -31,7 +30,7 @@ module.exports = {
         loader: [
           'style-loader',
           'css-loader?module&localIdentName=[hash:base64:5]',
-          '!postcss-loader'
+          'autoprefixer-loader'
         ].join('!')
       },
       {
@@ -42,6 +41,5 @@ module.exports = {
       }
     ]
   },
-  plugins: plugins,
-  postcss: [ autoprefixer ]
+  plugins: plugins
 }
