@@ -1,8 +1,8 @@
-function filterProps(obj, props: Array, excluded = false) {
+function filterProps(obj, propKeys: Array, excluded = false) {
   const filtered = {}
   for (const prop in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-      const isMatch = props.indexOf(prop) > -1
+      const isMatch = propKeys.indexOf(prop) > -1
       if (excluded && isMatch) {
         continue
       } else if (!excluded && !isMatch) {
@@ -16,10 +16,10 @@ function filterProps(obj, props: Array, excluded = false) {
   return filtered
 }
 
-export function pickProps(obj, props) {
-  return filterProps(obj, props)
+export function pickProps(obj, propKeys) {
+  return filterProps(obj, propKeys)
 }
 
-export function omitProps(obj, props) {
-  return filterProps(obj, props, true)
+export function omitProps(obj, propKeys) {
+  return filterProps(obj, propKeys, true)
 }
