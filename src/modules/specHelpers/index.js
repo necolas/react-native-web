@@ -4,90 +4,73 @@ import React from 'react/addons'
 const ReactTestUtils = React.addons.TestUtils
 
 export const assertProps = {
-  accessibilityLabel: function (Component) {
-    // no label
-    let dom = renderToDOM(<Component />)
-    assert.equal(dom.getAttribute('aria-label'), null)
+  accessibilityLabel: function (Component, props) {
     // with label
     const accessibilityLabel = 'accessibilityLabel'
-    dom = renderToDOM(<Component accessibilityLabel={accessibilityLabel} />)
+    const dom = renderToDOM(<Component {...props} accessibilityLabel={accessibilityLabel} />)
     assert.equal(dom.getAttribute('aria-label'), accessibilityLabel)
   },
 
-  accessibilityLiveRegion: function (Component) {
-    // no live
-    let dom = renderToDOM(<Component />)
-    assert.equal(dom.getAttribute('aria-live'), null)
-    // with live
+  accessibilityLiveRegion: function (Component, props) {
     const accessibilityLiveRegion = 'polite'
-    dom = renderToDOM(<Component accessibilityLiveRegion={accessibilityLiveRegion} />)
+    const dom = renderToDOM(<Component {...props} accessibilityLiveRegion={accessibilityLiveRegion} />)
     assert.equal(dom.getAttribute('aria-live'), accessibilityLiveRegion)
   },
 
-  accessibilityRole: function (Component) {
-    // no role
-    let dom = renderToDOM(<Component />)
-    assert.equal(dom.getAttribute('role'), null)
-    // with role
+  accessibilityRole: function (Component, props) {
     const accessibilityRole = 'main'
-    dom = renderToDOM(<Component accessibilityRole={accessibilityRole} />)
+    const dom = renderToDOM(<Component {...props} accessibilityRole={accessibilityRole} />)
     assert.equal(dom.getAttribute('role'), accessibilityRole)
   },
 
-  accessible: function (Component) {
+  accessible: function (Component, props) {
     // accessible
-    let dom = renderToDOM(<Component accessible />)
+    let dom = renderToDOM(<Component {...props} accessible />)
     assert.equal(dom.getAttribute('aria-hidden'), null)
     // not accessible
-    dom = renderToDOM(<Component accessible={false} />)
+    dom = renderToDOM(<Component {...props} accessible={false} />)
     assert.equal(dom.getAttribute('aria-hidden'), 'true')
   },
 
-  component: function (Component, defaultType) {
-    let dom, tagName
-    const type = 'a'
-    // no type (check default)
-    dom = renderToDOM(<Component />)
-    tagName = (dom.tagName).toLowerCase()
-    assert.equal(tagName, defaultType)
-    // with type
-    dom = renderToDOM(<Component component={type} />)
-    tagName = (dom.tagName).toLowerCase()
-    assert.equal(tagName, type)
+  component: function (Component, props) {
+    const component = 'main'
+    const dom = renderToDOM(<Component {...props} component={component} />)
+    const tagName = (dom.tagName).toLowerCase()
+    assert.equal(tagName, component)
   },
 
-  style: function (Component) {
+  style: function (Component, props) {
     let shallow
     // default styles
-    shallow = shallowRender(<Component />)
+    shallow = shallowRender(<Component {...props} />)
     assert.deepEqual(
       shallow.props.style,
       Component.defaultProps.style
     )
     // filtering of unsupported styles
     const styleToFilter = { unsupported: 'unsupported' }
-    shallow = shallowRender(<Component style={styleToFilter} />)
+    shallow = shallowRender(<Component {...props} style={styleToFilter} />)
     assert.deepEqual(
       shallow.props.style.unsupported,
-      null,
+      undefined,
       'unsupported "style" properties must not be transferred'
     )
     // merging of custom styles
     const styleToMerge = { margin: '10' }
-    shallow = shallowRender(<Component style={styleToMerge} />)
+    shallow = shallowRender(<Component {...props} style={styleToMerge} />)
     assert.deepEqual(
       shallow.props.style.margin,
       styleToMerge.margin,
     )
   },
 
-  testID: function (Component) {
+  testID: function (Component, props) {
     // no testID
-    let dom = renderToDOM(<Component />)
+    let dom = renderToDOM(<Component {...props} />)
     assert.equal(dom.getAttribute('data-testid'), null)
     // with testID
     const testID = 'Example.testID'
-    dom = renderToDOM(<Component testID={testID} />)
+    dom = renderToDOM(<Component {...props} testID={testID} />)
     assert.equal(dom.getAttribute('data-testid'), testID)
   }
 }
