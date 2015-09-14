@@ -11,6 +11,17 @@ the wrapped view can be decreased.
 Overrides the text that's read by the screen reader when the user interacts
 with the element.
 
+**accessibilityRole** oneOf(roles)
+
+Allows assistive technologies to present and support interaction with the view
+in a manner that is consistent with user expectations for similar views of that
+type. For example, marking a touchable view with an `accessibilityRole` of
+`button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
+
+Note: Avoid changing `accessibilityRole` values over time or after user
+actions. Generally, accessibility APIs do not provide a means of notifying
+assistive technologies of a `role` value change.
+
 **accessible** bool
 
 When `false`, the view is hidden from screenreaders. Default: `true`.

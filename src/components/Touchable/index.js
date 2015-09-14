@@ -2,6 +2,14 @@ import React, { PropTypes } from 'react'
 import Tappable from 'react-tappable'
 import View from '../View'
 
+const styles = {
+  initial: {
+    ...View.defaultProps.style,
+    cursor: 'pointer',
+    userSelect: undefined
+  }
+}
+
 class Touchable extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -17,6 +25,7 @@ class Touchable extends React.Component {
 
   static propTypes = {
     accessibilityLabel: PropTypes.string,
+    accessibilityRole: PropTypes.string,
     accessible: PropTypes.bool,
     activeHighlight: PropTypes.string,
     activeOpacity: PropTypes.number,
@@ -32,13 +41,14 @@ class Touchable extends React.Component {
   }
 
   static defaultProps = {
+    accessibilityRole: 'button',
     activeHighlight: 'transparent',
     activeOpacity: 1,
     component: 'div',
     delayLongPress: 1000,
     delayPressIn: 0,
     delayPressOut: 0,
-    style: View.defaultProps.style
+    style: styles.initial
   }
 
   _getChildren() {
@@ -46,7 +56,7 @@ class Touchable extends React.Component {
     return React.cloneElement(React.Children.only(children), {
       style: {
         ...children.props.style,
-        ...(this.state.isActive ? { opacity: activeOpacity } : {})
+        ...(this.state.isActive && { opacity: activeOpacity })
       }
     })
   }
@@ -79,6 +89,7 @@ class Touchable extends React.Component {
   render() {
     const {
       accessibilityLabel,
+      accessibilityRole,
       accessible,
       activeHighlight,
       delayLongPress,
@@ -94,6 +105,7 @@ class Touchable extends React.Component {
     return (
       <Tappable
         accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
         accessible={accessible}
         children={this._getChildren()}
         component={View}
@@ -109,10 +121,9 @@ class Touchable extends React.Component {
         pressDelay={delayLongPress}
         pressMoveThreshold={5}
         style={{
+          ...styles.initial,
           ...style,
-          backgroundColor: this.state.isActive ? activeHighlight : null,
-          cursor: 'pointer',
-          userSelect: undefined
+          backgroundColor: this.state.isActive ? activeHighlight : style.backgroundColor
         }}
         tabIndex='0'
       />
