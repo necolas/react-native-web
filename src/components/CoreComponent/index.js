@@ -33,7 +33,7 @@ class CoreComponent extends React.Component {
       <Component
         {...other}
         {...restyle({ className, style })}
-        data-testid={process.env.NODE_ENV === 'production' ? null : testID}
+        data-testid={testID}
       />
     )
   }
