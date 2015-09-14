@@ -6,6 +6,9 @@
 The core [React Native][react-native-url] components adapted and expanded upon
 for the web, backed by a precomputed CSS library. ~19KB minified and gzipped.
 
+* [Slack: reactiflux channel #react-native-web][slack-url]
+* [Gitter: react-native-web][gitter-url]
+
 ## Table of contents
 
 * [Install](#install)
@@ -180,8 +183,10 @@ license](http://www.opensource.org/licenses/mit-license.php).
 
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/CONTRIBUTING.md
 [flexbox-guide-url]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+[gitter-url]: https://gitter.im/necolas/react-native-web
 [npm-image]: https://badge.fury.io/js/react-native-web.svg
 [npm-url]: https://npmjs.org/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/
+[slack-url]: https://reactiflux.slack.com/messages/react-native-web/
 [travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
 [travis-url]: https://travis-ci.org/necolas/react-native-web
