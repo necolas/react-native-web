@@ -22,7 +22,7 @@ for the web, backed by a precomputed CSS library. ~19KB minified and gzipped.
 ## Install
 
 ```
-npm install --save react react-native-web
+npm install --save react-native-web
 ```
 
 ## Use
