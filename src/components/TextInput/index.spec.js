@@ -102,8 +102,8 @@ suite('TextInput', () => {
     )
     const height = dom.getBoundingClientRect().height
     // need a range because of cross-browser differences
-    assert.ok(height >= 60)
-    assert.ok(height <= 65)
+    assert.ok(height >= 60, height)
+    assert.ok(height <= 66, height)
   })
 
   test('prop "multiline"', () => {

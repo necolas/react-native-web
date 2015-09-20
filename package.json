@@ -13,7 +13,7 @@
     "prepublish": "NODE_ENV=publish npm run build",
     "test:specs": "NODE_ENV=test karma start config/karma.config.js",
     "test:specs:watch": "npm run test:specs -- --no-single-run",
-    "test": "npm run specs && npm run lint"
+    "test": "npm run test:specs && npm run lint"
   },
   "dependencies": {
     "react": ">=0.13.3",
