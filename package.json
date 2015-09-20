@@ -7,12 +7,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && NODE_ENV=publish webpack --config config/webpack.config.publish.js --sort-assets-by --progress",
+    "build": "rm -rf ./dist && webpack --config config/webpack.config.publish.js --sort-assets-by --progress",
     "dev": "webpack-dev-server --config config/webpack.config.example.js --inline --colors --quiet",
     "lint": "eslint config src",
-    "prepublish": "npm run build",
-    "specs": "NODE_ENV=test karma start config/karma.config.js",
-    "specs:watch": "npm run specs -- --no-single-run",
+    "prepublish": "NODE_ENV=publish npm run build",
+    "test:specs": "NODE_ENV=test karma start config/karma.config.js",
+    "test:specs:watch": "npm run test:specs -- --no-single-run",
     "test": "npm run specs && npm run lint"
   },
   "dependencies": {
