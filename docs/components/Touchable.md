@@ -4,14 +4,23 @@ A wrapper for making views respond to mouse, keyboard, and touch presses. On
 press in, the touchable area can display a highlight color, and the opacity of
 the wrapped view can be decreased.
 
+This component combines the various `Touchable*` components from React Native.
+
+Unsupported React Native props:
+`accessibilityComponentType` (android) – use `accessibilityRole`,
+`accessibilityTraits` (ios) – use `accessibilityRole`,
+`onHideUnderlay` – use `onPressOut`,
+`onShowUnderlay` – use `onPressIn`,
+`underlayColor` – use `activeUnderlayColor`
+
 ## Props
 
-**accessibilityLabel** string
+**accessibilityLabel**: string
 
 Overrides the text that's read by the screen reader when the user interacts
 with the element.
 
-**accessibilityRole** oneOf(roles)
+(web) **accessibilityRole**: oneOf(roles)
 
 Allows assistive technologies to present and support interaction with the view
 in a manner that is consistent with user expectations for similar views of that
@@ -22,45 +31,53 @@ Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
-**accessible** bool
+**accessible**: bool = true
 
-When `false`, the view is hidden from screenreaders. Default: `true`.
+When `false`, the view is hidden from screenreaders.
 
-**activeHighlight** string
-
-Sets the color of the background highlight when `onPressIn` is called. The
-highlight is removed when `onPressOut` is called. Default: `transparent`.
-
-**activeOpacity** number
+**activeOpacity**: number = 1
 
 Sets the opacity of the child view when `onPressIn` is called. The opacity is
-reset when `onPressOut` is called. Default: `1`.
+reset when `onPressOut` is called.
 
-**children** element
+(web) **activeUnderlayColor**: string = 'transparent'
+
+Sets the color of the background highlight when `onPressIn` is called. The
+highlight is removed when `onPressOut` is called.
+
+**children**: element
 
 A single child element.
 
-**delayLongPress** number
+**delayLongPress**: number = 1000
 
-Delay in ms, from `onPressIn`, before `onLongPress` is called. Default: `1000`.
+Delay in ms, from `onPressIn`, before `onLongPress` is called.
 
-**delayPressIn** number (TODO)
+**delayPressIn**: number = 0
 
-Delay in ms, from the start of the touch, before `onPressIn` is called. Default: `0`.
+(TODO)
 
-**delayPressOut** number (TODO)
+Delay in ms, from the start of the touch, before `onPressIn` is called.
 
-Delay in ms, from the release of the touch, before `onPressOut` is called. Default: `0`.
+**delayPressOut**: number = 0
 
-**onLongPress** function
+(TODO)
 
-**onPress** function
+Delay in ms, from the release of the touch, before `onPressOut` is called.
 
-**onPressIn** function
+**onLayout**: function
 
-**onPressOut** function
+(TODO)
 
-**style** style
+**onLongPress**: function
+
+**onPress**: function
+
+**onPressIn**: function
+
+**onPressOut**: function
+
+**style**: style
 
 [View](View.md) style
 

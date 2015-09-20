@@ -27,8 +27,8 @@ class Touchable extends React.Component {
     accessibilityLabel: PropTypes.string,
     accessibilityRole: PropTypes.string,
     accessible: PropTypes.bool,
-    activeHighlight: PropTypes.string,
     activeOpacity: PropTypes.number,
+    activeUnderlayColor: PropTypes.string,
     children: PropTypes.element,
     delayLongPress: PropTypes.number,
     delayPressIn: PropTypes.number,
@@ -42,8 +42,8 @@ class Touchable extends React.Component {
 
   static defaultProps = {
     accessibilityRole: 'button',
-    activeHighlight: 'transparent',
     activeOpacity: 1,
+    activeUnderlayColor: 'transparent',
     component: 'div',
     delayLongPress: 1000,
     delayPressIn: 0,
@@ -91,7 +91,7 @@ class Touchable extends React.Component {
       accessibilityLabel,
       accessibilityRole,
       accessible,
-      activeHighlight,
+      activeUnderlayColor,
       delayLongPress,
       style
     } = this.props
@@ -123,7 +123,7 @@ class Touchable extends React.Component {
         style={{
           ...styles.initial,
           ...style,
-          backgroundColor: this.state.isActive ? activeHighlight : style.backgroundColor
+          backgroundColor: this.state.isActive ? activeUnderlayColor : style.backgroundColor
         }}
         tabIndex='0'
       />
