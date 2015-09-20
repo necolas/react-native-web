@@ -59,8 +59,8 @@ export const assertProps = {
     const styleToMerge = { margin: '10' }
     shallow = shallowRender(<Component {...props} style={styleToMerge} />)
     assert.deepEqual(
-      shallow.props.style.margin,
-      styleToMerge.margin,
+      shallow.props.style,
+      { ...Component.defaultProps.style, ...styleToMerge }
     )
   },
 
@@ -84,6 +84,33 @@ export function render(element, container) {
 export function renderToDOM(element, container) {
   const result = render(element, container)
   return React.findDOMNode(result)
+}
+
+export function renderAndInject(element) {
+  const id = '_renderAndInject'
+  let div = document.getElementById(id)
+
+  if (!div) {
+    div = document.createElement('div')
+    div.id = id
+    document.body.appendChild(div)
+  } else {
+    div.innerHTML = ''
+  }
+
+  const result = render(element, div)
+  return React.findDOMNode(result)
+}
+
+export function requiresFocus(test, fallback) {
+  if (document.hasFocus && document.hasFocus()) {
+    test()
+  } else {
+    console.warn('Test was skipped as the document is not focused')
+    if (fallback) {
+      fallback()
+    }
+  }
 }
 
 export function shallowRender(component, context = {}) {

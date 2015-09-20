@@ -5,67 +5,130 @@ such as auto-complete, auto-focus, placeholder text, and event callbacks.
 
 Note: some props are exclusive to or excluded from `multiline`.
 
+Unsupported React Native props:
+`autoCapitalize`,
+`autoCorrect`,
+`onEndEditing`,
+`onSubmitEditing`,
+`clearButtonMode` (ios),
+`enablesReturnKeyAutomatically` (ios),
+`returnKeyType` (ios),
+`selectionState` (ios),
+`textAlign` (android),
+`textAlignVertical` (android),
+`underlineColorAndroid` (android)
+
 ## Props
 
-**autoComplete** bool
+(web) **accessibilityLabel**: string
+
+Defines the text label available to assistive technologies upon interaction
+with the element. (This is implemented using `aria-label`.)
+
+(web) **autoComplete**: bool = false
 
 Indicates whether the value of the control can be automatically completed by the browser.
 
-**autoFocus** bool
+**autoFocus**: bool = false
 
 If true, focuses the input on `componentDidMount`. Only the first form element
-in a document with `autofocus` is focused. Default: `false`.
+in a document with `autofocus` is focused.
 
-**defaultValue** string
+**clearTextOnFocus**: bool = false
+
+If `true`, clears the text field automatically when focused.
+
+**defaultValue**: string
 
 Provides an initial value that will change when the user starts typing. Useful
 for simple use-cases where you don't want to deal with listening to events and
 updating the `value` prop to keep the controlled state in sync.
 
-**editable** bool
+**editable**: bool = true
 
-If false, text is not editable. Default: `true`.
+If `false`, text is not editable (i.e., read-only).
 
-**keyboardType** oneOf('default', 'email', 'numeric', 'search', 'tel', 'url')
+**keyboardType**: oneOf('default', 'email-address', 'numeric', 'phone-pad', 'url') = 'default'
 
-Determines which keyboard to open, e.g. `email`. Default: `default`. (Not
-available when `multiline` is `true`.)
+Determines which keyboard to open.
 
-**multiline** bool
+(Not available when `multiline` is `true`.)
 
-If true, the text input can be multiple lines. Default: `false`.
+**maxLength**: number
 
-**onBlur** function
+Limits the maximum number of characters that can be entered.
+
+(web) **maxNumberOfLines**: number = numberOfLines
+
+Limits the maximum number of lines for a multiline `TextInput`.
+
+(Requires `multiline` to be `true`.)
+
+**multiline**: bool = false
+
+If true, the text input can be multiple lines.
+
+**numberOfLines**: number = 2
+
+Sets the initial number of lines for a multiline `TextInput`.
+
+(Requires `multiline` to be `true`.)
+
+**onBlur**: function
 
 Callback that is called when the text input is blurred.
 
-**onChange** function
+**onChange**: function
 
 Callback that is called when the text input's text changes.
 
-**onChangeText** function
+**onChangeText**: function
 
-Callback that is called when the text input's text changes. Changed text is
-passed as an argument to the callback handler.
+Callback that is called when the text input's text changes. The text is passed
+as an argument to the callback handler.
 
-**onFocus** function
+**onFocus**: function
 
 Callback that is called when the text input is focused.
 
-**placeholder** string
+**onLayout**: function
+
+TODO
+
+(web) **onSelectionChange**: function
+
+Callback that is called when the text input's selection changes. The following
+object is passed as an argument to the callback handler.
+
+```js
+{
+  selectionDirection,
+  selectionEnd,
+  selectionStart,
+  nativeEvent
+}
+```
+
+**placeholder**: string
 
 The string that will be rendered before text input has been entered.
 
-**placeholderTextColor** string
+**placeholderTextColor**: string
 
-The text color of the placeholder string.
+TODO. The text color of the placeholder string.
 
-**secureTextEntry** bool
+**secureTextEntry**: bool = false
 
 If true, the text input obscures the text entered so that sensitive text like
-passwords stay secure. Default: `false`. (Not available when `multiline` is `true`.)
+passwords stay secure.
 
-**style** style
+(Not available when `multiline` is `true`.)
+
+**selectTextOnFocus**: bool = false
+
+If `true`, all text will automatically be selected on focus.
+
+**style**: style
 
 [View](View.md) style
 
@@ -81,31 +144,60 @@ passwords stay secure. Default: `false`. (Not available when `multiline` is `tru
 + `textDecoration`
 + `textTransform`
 
-**testID** string
+**testID**: string
 
 Used to locate this view in end-to-end tests.
+
+**value**: string
+
+The value to show for the text input. `TextInput` is a controlled component,
+which means the native `value` will be forced to match this prop if provided.
+Read about how [React form
+components](https://facebook.github.io/react/docs/forms.html) work. To prevent
+user edits to the value set `editable={false}`.
 
 ## Examples
 
 ```js
 import React, { TextInput } from 'react-native-web'
 
-const { Component, PropTypes } = React
+const { Component } = React
 
 class AppTextInput extends Component {
-  static propTypes = {
+  constructor(props, context) {
+    super(props, context)
+    this.state = { isFocused: false }
   }
 
-  static defaultProps = {
+  _onFocus(e) {
+    this.setState({ isFocused: true })
   }
 
   render() {
     return (
-      <TextInput />
+      <TextInput
+        accessibilityLabel='Write a status update'
+        maxNumberOfLines={5}
+        multiline
+        numberOfLines={2}
+        onFocus={this._onFocus.bind(this)}
+        placeholder={`What's happening?`}
+        style={
+          ...styles.default
+          ...(this.state.isFocused && styles.focused)
+        }
+      />
     );
   }
 }
 
 const styles = {
+  default: {
+    borderColor: 'gray',
+    borderWidth: '0 0 2px 0'
+  },
+  focused: {
+    borderColor: 'blue'
+  }
 }
 ```

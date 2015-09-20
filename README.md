@@ -4,7 +4,7 @@
 [![npm version][npm-image]][npm-url]
 
 The core [React Native][react-native-url] components adapted and expanded upon
-for the web, backed by a precomputed CSS library. ~19KB minified and gzipped.
+for the web, backed by a precomputed CSS library. ~21KB minified and gzipped.
 
 * [Slack: reactiflux channel #react-native-web][slack-url]
 * [Gitter: react-native-web][gitter-url]

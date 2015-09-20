@@ -132,13 +132,20 @@ class Example extends Component {
           onChange={(e) => { console.log('TextInput.onChange', e) }}
           onChangeText={(e) => { console.log('TextInput.onChangeText', e) }}
           onFocus={(e) => { console.log('TextInput.onFocus', e) }}
+          onSelectionChange={(e) => { console.log('TextInput.onSelectionChange', e) }}
         />
         <TextInput secureTextEntry />
+        <TextInput defaultValue='read only' editable={false} />
+        <TextInput keyboardType='email-address' />
         <TextInput keyboardType='numeric' />
-        <TextInput keyboardType='tel' />
+        <TextInput keyboardType='phone-pad' />
         <TextInput keyboardType='url' />
-        <TextInput keyboardType='search' />
-        <TextInput defaultValue='default value' multiline />
+        <TextInput
+          defaultValue='default value'
+          maxNumberOfLines={10}
+          multiline
+          numberOfLines={5}
+        />
 
         <Heading level='2' size='large'>Touchable</Heading>
         <Touchable

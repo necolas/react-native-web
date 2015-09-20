@@ -5,7 +5,7 @@ var webpackConfig = require('./webpack.config.base')
 module.exports = function (config) {
   config.set({
     basePath: constants.ROOT_DIRECTORY,
-    browsers: [ process.env.TRAVIS ? 'Firefox' : 'Chrome' ],
+    browsers: process.env.TRAVIS ? [ 'Firefox' ] : [ 'Chrome' ],
     browserNoActivityTimeout: 60000,
     client: {
       captureConsole: true,
