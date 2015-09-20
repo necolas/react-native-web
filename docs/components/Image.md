@@ -3,51 +3,59 @@
 An accessibile image component with support for image resizing, default image,
 and child content.
 
+Unsupported React Native props:
+`capInsets` (ios),
+`onProgress` (ios)
+
 ## Props
 
-**accessibilityLabel** string
+**accessibilityLabel**: string
 
 The text that's read by a screenreader when someone interacts with the image.
 
-**accessible** bool
+**accessible**: bool
 
 When `false`, the view is hidden from screenreaders. Default: `true`.
 
-**children** any
+**children**: any
 
 Content to display over the image.
 
-**defaultSource** { uri: string }
+**defaultSource**: { uri: string }
 
 An image to display as a placeholder while downloading the final image off the network.
 
-**onError** function
+**onError**: function
 
 Invoked on load error with `{nativeEvent: {error}}`.
 
-**onLoad** function
+**onLayout**: function
+
+TODO
+
+**onLoad**: function
 
 Invoked when load completes successfully.
 
-**onLoadEnd** function
+**onLoadEnd**: function
 
 Invoked when load either succeeds or fails,
 
-**onLoadStart** function
+**onLoadStart**: function
 
 Invoked on load start.
 
-**resizeMode** oneOf('contain', 'cover', 'none', 'stretch')
+**resizeMode**: oneOf('contain', 'cover', 'none', 'stretch') = 'stretch'
 
 Determines how to resize the image when the frame doesn't match the raw image
-dimensions. Default: `stretch`.
+dimensions.
 
-**source** { uri: string }
+**source**: { uri: string }
 
 `uri` is a string representing the resource identifier for the image, which
 could be an http address or a base64 encoded image.
 
-**style** style
+**style**: style
 
 [View](View.md) style
 
@@ -60,7 +68,7 @@ Defaults:
 }
 ```
 
-**testID** string
+**testID**: string
 
 Used to locate a view in end-to-end tests.
 

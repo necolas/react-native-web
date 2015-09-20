@@ -4,25 +4,41 @@
 style, layout with flexbox, and accessibility controls. It can be nested
 inside another `View` and has 0-to-many children of any type.
 
+Unsupported React Native props:
+`accessibilityComponentType` (android) – use `accessibilityRole`,
+`accessibilityTraits` (ios) – use `accessibilityRole`,
+`collapsable` (android),
+`importantForAccessibility` (android),
+`needsOffscreenAlphaCompositing` (android),
+`onAccessibilityTap`,
+`onMagicTap`,
+`onMoveShouldSetResponder`,
+`onResponder*`,
+`onStartShouldSetResponder`,
+`onStartShouldSetResponderCapture`
+`removeClippedSubviews` (ios),
+`renderToHardwareTextureAndroid` (android),
+`shouldRasterizeIOS` (ios)
+
 ## Props
 
 NOTE: `View` will transfer all other props to the rendered HTML element.
 
-**accessibilityLabel** string
+**accessibilityLabel**: string
 
 Defines the text available to assistive technologies upon interaction with the
 element. (This is implemented using `aria-label`.)
 
-**accessibilityLiveRegion** oneOf('assertive', 'off', 'polite')
+**accessibilityLiveRegion**: oneOf('assertive', 'off', 'polite') = 'off'
 
 Indicates to assistive technologies whether to notify the user when the view
 changes. The values of this attribute are expressed in degrees of importance.
 When regions are specified as `polite` (recommended), updates take low
 priority. When regions are specified as `assertive`, assistive technologies
-will interrupt and immediately notify the user. Default: `off`. (This is
-implemented using [`aria-live`](http://www.w3.org/TR/wai-aria/states_and_properties#aria-live).)
+will interrupt and immediately notify the user. (This is implemented using
+[`aria-live`](http://www.w3.org/TR/wai-aria/states_and_properties#aria-live).)
 
-**accessibilityRole** oneOf(roles)
+(web) **accessibilityRole**: oneOf(roles)
 
 Allows assistive technologies to present and support interaction with the view
 in a manner that is consistent with user expectations for similar views of that
@@ -33,16 +49,20 @@ Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
-**accessible** bool
+**accessible**: bool = true
 
-When `false`, the view is hidden from assistive technologies. Default: `true`. (This is
+When `false`, the view is hidden from assistive technologies. (This is
 implemented using `aria-hidden`.)
 
-**component** function or string
+(web) **component**: function | string = 'div'
 
-The React Component for this view. Default: `div`.
+The React Component for this view.
 
-**pointerEvents** oneOf('auto', 'box-only', 'box-none', 'none')
+**onLayout**: function
+
+(TODO)
+
+**pointerEvents**: oneOf('auto', 'box-only', 'box-none', 'none') = 'auto'
 
 Configure the `pointerEvents` of the view. The enhanced `pointerEvents` modes
 provided are not part of the CSS spec, therefore, `pointerEvents` is excluded
@@ -62,7 +82,7 @@ from `style`.
 .box-only * { pointer-events: none }
 ```
 
-**style** style
+**style**: style
 
 + `alignContent`
 + `alignItems`
@@ -132,7 +152,7 @@ Default:
 
 (See [facebook/css-layout](https://github.com/facebook/css-layout)).
 
-**testID** string
+**testID**: string
 
 Used to locate this view in end-to-end tests.
 

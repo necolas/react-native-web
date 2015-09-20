@@ -1,64 +1,66 @@
 # Swipeable
 
+Unique to web.
+
 ## Props
 
-**delta** number
+**delta**: number = 10
 
-Number of pixels that must be swiped before events are dispatched. Default: `10`.
+Number of pixels that must be swiped before events are dispatched.
 
-**flickThreshold** number
+**flickThreshold**: number = 0.6
 
-The velocity threshold at which a swipe is considered a flick. Default: `0.6`.
+The velocity threshold at which a swipe is considered a flick.
 
-**onSwiped** function
+**onSwiped**: function
 
 (SyntheticTouchEvent, deltaX, deltaY, isFlick) => swipeHandler
 
 Called once a swipe has ended.
 
-**onSwipedDown** function
+**onSwipedDown**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called once a swipe-down has ended.
 
-**onSwipedLeft** function
+**onSwipedLeft**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called once a swipe-left has ended.
 
-**onSwipedUp** function
+**onSwipedUp**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called once a swipe-up has ended.
 
-**onSwipedRight** function
+**onSwipedRight**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called once a swipe-right has ended.
 
-**onSwipingDown** function
+**onSwipingDown**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called while a swipe-down is in progress.
 
-**onSwipingLeft** function
+**onSwipingLeft**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called while a swipe-left is in progress.
 
-**onSwipingRight** function
+**onSwipingRight**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
 Called while a swipe-right is in progress.
 
-**onSwipingUp** function
+**onSwipingUp**: function
 
 (SyntheticTouchEvent, delta, isFlick) => swipeHandler
 
