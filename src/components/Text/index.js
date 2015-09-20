@@ -24,6 +24,8 @@ const styles = {
 
 class Text extends React.Component {
   static propTypes = {
+    accessibilityLabel: PropTypes.string,
+    accessible: PropTypes.bool,
     children: PropTypes.any,
     component: CoreComponent.propTypes.component,
     numberOfLines: PropTypes.number,
@@ -45,6 +47,8 @@ class Text extends React.Component {
 
   render() {
     const {
+      accessibilityLabel,
+      accessible,
       children,
       component,
       numberOfLines,
@@ -59,6 +63,8 @@ class Text extends React.Component {
     return (
       <CoreComponent
         {...other}
+        aria-hidden={accessible ? null : true}
+        aria-label={accessibilityLabel}
         children={children}
         className={'Text'}
         component={component}

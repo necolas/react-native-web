@@ -10,27 +10,41 @@ The `Text` is unique relative to layout: child elements use text layout
 a `Text` are not rectangles, as they wrap when reaching the edge of their
 container.
 
+Unsupported React Native props:
+`allowFontScaling` (ios),
+`suppressHighlighting` (ios)
+
 ## Props
 
 NOTE: `Text` will transfer all other props to the rendered HTML element.
 
-**children** any
+(web) **accessibilityLabel**: string
+
+Defines the text available to assistive technologies upon interaction with the
+element. (This is implemented using `aria-label`.)
+
+(web) **accessible**: bool = true
+
+When `false`, the text is hidden from assistive technologies. (This is
+implemented using `aria-hidden`.)
+
+**children**: any
 
 Child content.
 
-**component** function or string
+(web) **component**: function | string = 'span'
 
-Default is `span`.
+Backing component.
 
-**numberOfLines** number.
+**numberOfLines**: number
 
-Truncates the text with an ellipsis after this many lines.
+Truncates the text with an ellipsis after this many lines. Currently only supports `1`.
 
-**onPress** function
+**onPress**: function
 
 This function is called on press.
 
-**style** style
+**style**: style
 
 + `backgroundColor`
 + `color`
@@ -49,7 +63,7 @@ This function is called on press.
 + `whiteSpace`
 + `wordWrap`
 
-**testID** string
+**testID**: string
 
 Used to locate this view in end-to-end tests.
 

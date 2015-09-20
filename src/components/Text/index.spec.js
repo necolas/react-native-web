@@ -7,6 +7,14 @@ import Text from '.'
 const ReactTestUtils = React.addons.TestUtils
 
 suite('Text', () => {
+  test('prop "accessibilityLabel"', () => {
+    assertProps.accessibilityLabel(Text)
+  })
+
+  test('prop "accessible"', () => {
+    assertProps.accessible(Text)
+  })
+
   test('prop "children"', () => {
     const children = 'children'
     const result = shallowRender(<Text>{children}</Text>)
