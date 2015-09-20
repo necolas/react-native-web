@@ -55,7 +55,7 @@ export default {
   float: string,
   font: string,
   fontFamily: string,
-  fontSize: string,
+  fontSize: numberOrString,
   fontStyle: string,
   fontWeight: string,
   height: numberOrString,
