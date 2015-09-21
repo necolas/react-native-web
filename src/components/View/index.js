@@ -30,6 +30,7 @@ const styles = {
 
 class View extends React.Component {
   static propTypes = {
+    _className: PropTypes.string, // escape-hatch for code migrations
     accessibilityLabel: PropTypes.string,
     accessibilityLiveRegion: PropTypes.oneOf(['assertive', 'off', 'polite']),
     accessibilityRole: PropTypes.string,
@@ -44,6 +45,7 @@ class View extends React.Component {
   static stylePropTypes = ViewStylePropTypes
 
   static defaultProps = {
+    _className: '',
     accessible: true,
     component: 'div',
     style: styles.initial
@@ -51,6 +53,7 @@ class View extends React.Component {
 
   render() {
     const {
+      _className,
       accessibilityLabel,
       accessibilityLiveRegion,
       accessibilityRole,
@@ -61,6 +64,7 @@ class View extends React.Component {
       ...other
     } = this.props
 
+    const className = `View ${_className}`.trim()
     const pointerEventsStyle = pointerEvents && { pointerEvents }
     const resolvedStyle = pickProps(style, viewStyleKeys)
 
@@ -70,10 +74,10 @@ class View extends React.Component {
         aria-hidden={accessible ? null : true}
         aria-label={accessibilityLabel}
         aria-live={accessibilityLiveRegion}
-        className={'View'}
+        className={className}
         role={accessibilityRole}
         style={{
-          ...(styles.initial),
+          ...styles.initial,
           ...resolvedStyle,
           ...pointerEventsStyle
         }}

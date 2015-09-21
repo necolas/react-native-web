@@ -24,6 +24,7 @@ const styles = {
 
 class Text extends React.Component {
   static propTypes = {
+    _className: PropTypes.string, // escape-hatch for code migrations
     accessibilityLabel: PropTypes.string,
     accessible: PropTypes.bool,
     children: PropTypes.any,
@@ -37,6 +38,7 @@ class Text extends React.Component {
   static stylePropTypes = TextStylePropTypes
 
   static defaultProps = {
+    _className: '',
     accessible: true,
     component: 'span',
     style: styles.initial
@@ -48,6 +50,7 @@ class Text extends React.Component {
 
   render() {
     const {
+      _className,
       accessibilityLabel,
       accessible,
       children,
@@ -59,6 +62,7 @@ class Text extends React.Component {
       ...other
     } = this.props
 
+    const className = `Text ${_className}`.trim()
     const resolvedStyle = pickProps(style, textStyleKeys)
 
     return (
@@ -67,11 +71,11 @@ class Text extends React.Component {
         aria-hidden={accessible ? null : true}
         aria-label={accessibilityLabel}
         children={children}
-        className={'Text'}
+        className={className}
         component={component}
         onClick={this._onPress.bind(this)}
         style={{
-          ...(styles.initial),
+          ...styles.initial,
           ...resolvedStyle,
           ...(numberOfLines === 1 && styles.singleLineStyle)
         }}
