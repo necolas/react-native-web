@@ -1,9 +1,8 @@
-import { assertProps, render, renderToDOM, shallowRender } from '../../modules/specHelpers'
+import { assertProps, render, renderToDOM } from '../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
 import Image from '.'
-import View from '../View'
 
 suite('Image', () => {
   test('default accessibility', () => {
