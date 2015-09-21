@@ -6,9 +6,9 @@ import Image from '.'
 import View from '../View'
 
 suite('Image', () => {
-  test('defaults', () => {
-    const result = shallowRender(<Image />)
-    assert.equal(result.type, View)
+  test('default accessibility', () => {
+    const dom = renderToDOM(<Image />)
+    assert.equal(dom.getAttribute('role'), 'img')
   })
 
   test('prop "accessibilityLabel"', () => {

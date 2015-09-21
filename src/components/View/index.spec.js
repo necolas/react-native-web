@@ -28,7 +28,7 @@ suite('View', () => {
   })
 
   test('prop "component"', () => {
-    assertProps.component(View, 'div')
+    assertProps.component(View)
   })
 
   test('prop "pointerEvents"', () => {
