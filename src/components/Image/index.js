@@ -190,10 +190,10 @@ class Image extends React.Component {
     return (
       <View
         accessibilityLabel={accessibilityLabel}
+        accessibilityRole='img'
         accessible={accessible}
         className={'Image'}
         component='div'
-        role='img'
         style={{
           ...(styles.initial),
           ...resolvedStyle,

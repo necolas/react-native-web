@@ -37,6 +37,7 @@ class Text extends React.Component {
   static stylePropTypes = TextStylePropTypes
 
   static defaultProps = {
+    accessible: true,
     component: 'span',
     style: styles.initial
   }
