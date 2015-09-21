@@ -18,7 +18,6 @@ suite('Text', () => {
   test('prop "children"', () => {
     const children = 'children'
     const result = shallowRender(<Text>{children}</Text>)
-
     assert.equal(result.props.children, children)
   })
 
@@ -31,9 +30,7 @@ suite('Text', () => {
   test('prop "onPress"', (done) => {
     const dom = renderToDOM(<Text onPress={onPress} />)
     ReactTestUtils.Simulate.click(dom)
-
     function onPress(e) {
-      assert(true, 'the "onPress" callback was never called')
       assert.ok(e.nativeEvent)
       done()
     }

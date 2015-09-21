@@ -84,11 +84,6 @@ export function render(element, container) {
     : ReactTestUtils.renderIntoDocument(element)
 }
 
-export function renderToDOM(element, container) {
-  const result = render(element, container)
-  return React.findDOMNode(result)
-}
-
 export function renderAndInject(element) {
   const id = '_renderAndInject'
   let div = document.getElementById(id)
@@ -102,6 +97,11 @@ export function renderAndInject(element) {
   }
 
   const result = render(element, div)
+  return React.findDOMNode(result)
+}
+
+export function renderToDOM(element, container) {
+  const result = render(element, container)
   return React.findDOMNode(result)
 }
 

@@ -29,30 +29,26 @@ suite('Image', () => {
 
   test('prop "onError"', function (done) {
     this.timeout(5000)
-
-    function onError(e) {
-      assert.equal(e.nativeEvent.type, 'error')
-      done()
-    }
-
     render(<Image
       onError={onError}
       source={{ uri: 'https://google.com/favicon.icox' }}
     />)
+    function onError(e) {
+      assert.equal(e.nativeEvent.type, 'error')
+      done()
+    }
   })
 
   test('prop "onLoad"', function (done) {
     this.timeout(5000)
-
-    function onLoad(e) {
-      assert.equal(e.nativeEvent.type, 'load')
-      done()
-    }
-
     render(<Image
       onLoad={onLoad}
       source={{ uri: 'https://google.com/favicon.ico' }}
     />)
+    function onLoad(e) {
+      assert.equal(e.nativeEvent.type, 'load')
+      done()
+    }
   })
 
   test.skip('prop "onLoadEnd"', () => { })
