@@ -51,6 +51,26 @@ const styles = {
 }
 ```
 
+### Server-side rendering
+
+The backing styles can be included as part of a prerendered page. This ensures
+there is no flash-of-unstyled-content before the JavaScript is downloaded and
+run.
+
+```
+// server.js
+import { injectStyles } from 'react-native-web'
+
+class Html extends React.Component {
+  return (
+    <html>
+      <meta charSet="utf-8" />
+      {injectStyles()}
+    </html>
+  )
+}
+```
+
 ## Components
 
 ### [`Image`](docs/components/Image.md)

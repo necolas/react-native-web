@@ -28,7 +28,6 @@ module.exports = {
       {
         test: /\.css$/,
         loader: [
-          'style-loader',
           'css-loader?module&localIdentName=[hash:base64:5]',
           'autoprefixer-loader'
         ].join('!')
