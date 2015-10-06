@@ -1,4 +1,5 @@
 import React from 'react'
+import { injectStyles } from './modules/styles'
 
 // components
 import Image from './components/Image'
@@ -10,9 +11,12 @@ import TextInput from './components/TextInput'
 import Touchable from './components/Touchable'
 import View from './components/View'
 
+injectStyles()
+
 export default React
 
 export {
+  injectStyles,
   Image,
   ListView,
   ScrollView,
