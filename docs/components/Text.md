@@ -23,6 +23,17 @@ NOTE: `Text` will transfer all other props to the rendered HTML element.
 Defines the text available to assistive technologies upon interaction with the
 element. (This is implemented using `aria-label`.)
 
+(web) **accessibilityRole**: oneOf(roles)
+
+Allows assistive technologies to present and support interaction with the view
+in a manner that is consistent with user expectations for similar views of that
+type. For example, marking a touchable view with an `accessibilityRole` of
+`button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
+
+Note: Avoid changing `accessibilityRole` values over time or after user
+actions. Generally, accessibility APIs do not provide a means of notifying
+assistive technologies of a `role` value change.
+
 (web) **accessible**: bool = true
 
 When `false`, the text is hidden from assistive technologies. (This is
@@ -31,10 +42,6 @@ implemented using `aria-hidden`.)
 **children**: any
 
 Child content.
-
-(web) **component**: function | string = 'span'
-
-Backing component.
 
 **numberOfLines**: number
 
@@ -70,7 +77,7 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { Text } from 'react-native-web'
+import React, { StyleSheet, Text } from 'react-native-web'
 
 const { Component, PropTypes } = React
 
@@ -104,7 +111,7 @@ class PrettyText extends Component {
   }
 }
 
-const localStyle = {
+const localStyle = StyleSheet.create({
   color: {
     white: { color: 'white' },
     gray: { color: 'gray' },
@@ -120,5 +127,5 @@ const localStyle = {
     normal: { fontWeight: '400' },
     bold: { fontWeight: '700' }
   }
-}
+})
 ```

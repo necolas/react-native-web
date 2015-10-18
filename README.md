@@ -6,7 +6,7 @@
 [React Native][react-native-url] components and APIs for the Web.
 ~17.7 KB minified and gzipped.
 
-* [Slack: reactiflux channel #react-native-web][slack-url]
+* [Slack: #react-native-web on reactiflux][slack-url]
 * [Gitter: react-native-web][gitter-url]
 
 ## Table of contents
@@ -16,6 +16,7 @@
 * [APIs](#apis)
 * [Components](#components)
 * [Styling](#styling)
+* [Accessibility](#accessibility)
 * [Contributing](#contributing)
 * [Thanks](#thanks)
 * [License](#license)
@@ -170,6 +171,19 @@ flexbox][flexbox-guide-url].
 
 Styling components can be achieved with inline styles or the use of
 [StyleSheet](docs/apis/StyleSheet.md).
+
+## Accessibility
+
+Major accessibility features are available through the following props:
+`accessible`, `accessibilityLabel`, `accessibilityLiveRegion`, and
+`accessibilityRole`. The `accessibilityRole` prop is used to determine the
+rendered DOM element. For example:
+
+* `<View accessibilityRole='banner' />` => `<header role='banner' />`.
+* `<View accessibilityRole='button' />` => `<button type='button' role='button' />`.
+* `<Text accessibilityRole='link' href='/' />` => `<a role='link' href='/' />`.
+
+See the component documentation for more details.
 
 ## Contributing
 

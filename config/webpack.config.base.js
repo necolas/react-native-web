@@ -1,11 +1,13 @@
 var webpack = require('webpack')
 
 var DedupePlugin = webpack.optimize.DedupePlugin
+var EnvironmentPlugin = webpack.EnvironmentPlugin
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
 var plugins = [
   new DedupePlugin(),
+  new EnvironmentPlugin('NODE_ENV'),
   new OccurenceOrderPlugin()
 ]
 

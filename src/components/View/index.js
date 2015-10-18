@@ -32,12 +32,11 @@ const styles = StyleSheet.create({
 class View extends React.Component {
   static propTypes = {
     _className: PropTypes.string, // escape-hatch for code migrations
-    accessibilityLabel: PropTypes.string,
-    accessibilityLiveRegion: PropTypes.oneOf(['assertive', 'off', 'polite']),
-    accessibilityRole: PropTypes.string,
-    accessible: PropTypes.bool,
+    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
+    accessibilityLiveRegion: CoreComponent.propTypes.accessibilityLiveRegion,
+    accessibilityRole: CoreComponent.propTypes.accessibilityRole,
+    accessible: CoreComponent.propTypes.accessible,
     children: PropTypes.any,
-    component: CoreComponent.propTypes.component,
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
     style: PropTypes.shape(ViewStylePropTypes),
     testID: CoreComponent.propTypes.testID
@@ -48,20 +47,14 @@ class View extends React.Component {
   static defaultProps = {
     _className: '',
     accessible: true,
-    component: 'div',
     style: styles.initial
   }
 
   render() {
     const {
       _className,
-      accessibilityLabel,
-      accessibilityLiveRegion,
-      accessibilityRole,
-      accessible,
       pointerEvents,
       style,
-      testID,
       ...other
     } = this.props
 
@@ -72,17 +65,12 @@ class View extends React.Component {
     return (
       <CoreComponent
         {...other}
-        aria-hidden={accessible ? null : true}
-        aria-label={accessibilityLabel}
-        aria-live={accessibilityLiveRegion}
         className={className}
-        role={accessibilityRole}
         style={{
           ...styles.initial,
           ...resolvedStyle,
           ...pointerEventsStyle
         }}
-        testID={testID}
       />
     )
   }

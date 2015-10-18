@@ -1,10 +1,10 @@
 import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '.'
 import ReactDOM from 'react-dom'
 
-const Heading = ({ children, level = '1', size = 'normal' }) => (
+const Heading = ({ children, size = 'normal' }) => (
   <Text
+    accessibilityRole='heading'
     children={children}
-    component={`h${level}`}
     style={headingStyles.size[size]}
   />
 )
@@ -36,15 +36,15 @@ class Example extends React.Component {
   render() {
     return (
       <View accessibilityRole='main' style={styles.root}>
-        <Heading level='1' size='xlarge'>React Native Web</Heading>
+        <Heading size='xlarge'>React Native Web</Heading>
         <Text>React Native Web takes the core components from <Text
-        component='a' href='https://facebook.github.io/react-native/'>React
+        accessibilityRole='link' href='https://facebook.github.io/react-native/'>React
         Native</Text> and brings them to the web. These components provide
         simple building blocks – touch handling, flexbox layout,
         scroll views – from which more complex components and apps can be
         constructed.</Text>
 
-        <Heading level='2' size='large'>Image</Heading>
+        <Heading size='large'>Image</Heading>
         <Image
           accessibilityLabel='accessible image'
           children={<Text>Inner content</Text>}
@@ -67,7 +67,7 @@ class Example extends React.Component {
           testID='Example.image'
         />
 
-        <Heading level='2' size='large'>Text</Heading>
+        <Heading size='large'>Text</Heading>
         <Text
           onPress={(e) => { console.log('Text.onPress', e) }}
           testID={'Example.text'}
@@ -92,7 +92,7 @@ class Example extends React.Component {
           hendrerit consequat.
         </Text>
 
-        <Heading level='2' size='large'>TextInput</Heading>
+        <Heading size='large'>TextInput</Heading>
         <TextInput
           keyboardType='default'
           onBlur={(e) => { console.log('TextInput.onBlur', e) }}
@@ -114,7 +114,7 @@ class Example extends React.Component {
           numberOfLines={5}
         />
 
-        <Heading level='2' size='large'>Touchable</Heading>
+        <Heading size='large'>Touchable</Heading>
         <Touchable
           accessibilityLabel={'Touchable element'}
           activeHighlight='lightblue'
@@ -129,8 +129,8 @@ class Example extends React.Component {
           </View>
         </Touchable>
 
-        <Heading level='2' size='large'>View</Heading>
-        <Heading level='3'>Default layout</Heading>
+        <Heading size='large'>View</Heading>
+        <Heading>Default layout</Heading>
         <View>
           {[ 1, 2, 3, 4, 5, 6 ].map((item, i) => {
             return (
@@ -141,7 +141,7 @@ class Example extends React.Component {
           })}
         </View>
 
-        <Heading level='3'>Row layout</Heading>
+        <Heading>Row layout</Heading>
         <View style={styles.row}>
           {[ 1, 2, 3, 4, 5, 6 ].map((item, i) => {
             return (
@@ -152,13 +152,13 @@ class Example extends React.Component {
           })}
         </View>
 
-        <Heading level='3'>pointerEvents</Heading>
+        <Heading>pointerEvents</Heading>
         <View style={styles.row}>
           {['box-none', 'box-only', 'none'].map((value, i) => {
             return (
               <View
+                accessibilityRole='link'
                 children={value}
-                component='a'
                 href='https://google.com'
                 key={i}
                 pointerEvents={value}

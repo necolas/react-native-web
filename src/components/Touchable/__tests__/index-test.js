@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { assertProps, shallowRender } from '../../../modules/specHelpers'
+import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
 
@@ -11,19 +11,25 @@ const requiredProps = { children }
 
 suite('components/Touchable', () => {
   test('prop "accessibilityLabel"', () => {
-    assertProps.accessibilityLabel(Touchable, requiredProps)
+    const accessibilityLabel = 'accessibilityLabel'
+    const result = utils.shallowRender(<Touchable {...requiredProps} accessibilityLabel={accessibilityLabel} />)
+    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
   })
 
   test('prop "accessibilityRole"', () => {
-    assertProps.accessibilityRole(Touchable, requiredProps)
+    const accessibilityRole = 'accessibilityRole'
+    const result = utils.shallowRender(<Touchable {...requiredProps} accessibilityRole={accessibilityRole} />)
+    assert.equal(result.props.accessibilityRole, accessibilityRole)
   })
 
   test('prop "accessible"', () => {
-    assertProps.accessible(Touchable, requiredProps)
+    const accessible = false
+    const result = utils.shallowRender(<Touchable {...requiredProps} accessible={accessible} />)
+    assert.equal(result.props.accessible, accessible)
   })
 
   test('prop "children"', () => {
-    const result = shallowRender(<Touchable {...requiredProps} />)
+    const result = utils.shallowRender(<Touchable {...requiredProps} />)
     assert.deepEqual(result.props.children, children)
   })
 })

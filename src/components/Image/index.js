@@ -64,8 +64,8 @@ class Image extends React.Component {
   }
 
   static propTypes = {
-    accessibilityLabel: PropTypes.string,
-    accessible: PropTypes.bool,
+    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
+    accessible: CoreComponent.propTypes.accessible,
     children: PropTypes.any,
     defaultSource: PropTypes.object,
     onError: PropTypes.func,
@@ -101,8 +101,8 @@ class Image extends React.Component {
 
   _destroyImageLoader() {
     if (this.image) {
-      this.image.onload = null
       this.image.onerror = null
+      this.image.onload = null
       this.image = null
     }
   }
@@ -123,8 +123,8 @@ class Image extends React.Component {
 
     this._destroyImageLoader()
     this.setState({ status: STATUS_LOADED })
-    this._onLoadEnd()
     if (onLoad) onLoad(event)
+    this._onLoadEnd()
   }
 
   _onLoadEnd() {
@@ -193,7 +193,6 @@ class Image extends React.Component {
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
-        component='div'
         style={{
           ...styles.initial,
           ...resolvedStyle,

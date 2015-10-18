@@ -9,7 +9,9 @@ import TextInput from '../'
 
 suite('components/TextInput', () => {
   test('prop "accessibilityLabel"', () => {
-    utils.assertProps.accessibilityLabel(TextInput)
+    const accessibilityLabel = 'accessibilityLabel'
+    const result = utils.shallowRender(<TextInput accessibilityLabel={accessibilityLabel} />)
+    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
   })
 
   test('prop "autoComplete"', () => {
@@ -208,7 +210,9 @@ suite('components/TextInput', () => {
   })
 
   test('prop "testID"', () => {
-    utils.assertProps.testID(TextInput)
+    const testID = 'testID'
+    const result = utils.shallowRender(<TextInput testID={testID} />)
+    assert.equal(result.props.testID, testID)
   })
 
   test('prop "value"', () => {

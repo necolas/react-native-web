@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { assertProps, render, renderToDOM } from '../../../modules/specHelpers'
+import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
 
@@ -8,30 +8,34 @@ import Image from '../'
 
 suite('components/Image', () => {
   test('default accessibility', () => {
-    const dom = renderToDOM(<Image />)
+    const dom = utils.renderToDOM(<Image />)
     assert.equal(dom.getAttribute('role'), 'img')
   })
 
   test('prop "accessibilityLabel"', () => {
-    assertProps.accessibilityLabel(Image)
+    const accessibilityLabel = 'accessibilityLabel'
+    const result = utils.shallowRender(<Image accessibilityLabel={accessibilityLabel} />)
+    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
   })
 
   test('prop "accessible"', () => {
-    assertProps.accessible(Image)
+    const accessible = false
+    const result = utils.shallowRender(<Image accessible={accessible} />)
+    assert.equal(result.props.accessible, accessible)
   })
 
   test('prop "children"')
 
   test('prop "defaultSource"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' }
-    const dom = renderToDOM(<Image defaultSource={defaultSource} />)
+    const dom = utils.renderToDOM(<Image defaultSource={defaultSource} />)
     const backgroundImage = dom.style.backgroundImage
     assert(backgroundImage.indexOf(defaultSource.uri) > -1)
   })
 
   test('prop "onError"', function (done) {
     this.timeout(5000)
-    render(<Image
+    utils.render(<Image
       onError={onError}
       source={{ uri: 'https://google.com/favicon.icox' }}
     />)
@@ -43,7 +47,7 @@ suite('components/Image', () => {
 
   test('prop "onLoad"', function (done) {
     this.timeout(5000)
-    render(<Image
+    utils.render(<Image
       onLoad={onLoad}
       source={{ uri: 'https://google.com/favicon.ico' }}
     />)
@@ -62,10 +66,12 @@ suite('components/Image', () => {
   test('prop "source"')
 
   test('prop "style"', () => {
-    assertProps.style(Image)
+    utils.assertProps.style(Image)
   })
 
   test('prop "testID"', () => {
-    assertProps.testID(Image)
+    const testID = 'testID'
+    const result = utils.shallowRender(<Image testID={testID} />)
+    assert.equal(result.props.testID, testID)
   })
 })

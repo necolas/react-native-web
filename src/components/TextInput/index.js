@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 class TextInput extends React.Component {
   static propTypes = {
-    accessibilityLabel: PropTypes.string,
+    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     autoComplete: PropTypes.bool,
     autoFocus: PropTypes.bool,
     clearTextOnFocus: PropTypes.bool,
@@ -136,7 +136,7 @@ class TextInput extends React.Component {
     }
 
     const propsCommon = {
-      'aria-label': accessibilityLabel,
+      accessibilityLabel,
       autoComplete: autoComplete && 'on',
       autoFocus,
       className: 'TextInput',

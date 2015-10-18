@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
 class Text extends React.Component {
   static propTypes = {
     _className: PropTypes.string, // escape-hatch for code migrations
-    accessibilityLabel: PropTypes.string,
-    accessible: PropTypes.bool,
+    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
+    accessibilityRole: CoreComponent.propTypes.accessibilityRole,
+    accessible: CoreComponent.propTypes.accessible,
     children: PropTypes.any,
-    component: CoreComponent.propTypes.component,
     numberOfLines: PropTypes.number,
     onPress: PropTypes.func,
     style: PropTypes.shape(TextStylePropTypes),
@@ -41,7 +41,6 @@ class Text extends React.Component {
   static defaultProps = {
     _className: '',
     accessible: true,
-    component: 'span',
     style: styles.initial
   }
 
@@ -52,14 +51,9 @@ class Text extends React.Component {
   render() {
     const {
       _className,
-      accessibilityLabel,
-      accessible,
-      children,
-      component,
       numberOfLines,
       onPress,
       style,
-      testID,
       ...other
     } = this.props
 
@@ -69,18 +63,14 @@ class Text extends React.Component {
     return (
       <CoreComponent
         {...other}
-        aria-hidden={accessible ? null : true}
-        aria-label={accessibilityLabel}
-        children={children}
         className={className}
-        component={component}
+        component='span'
         onClick={this._onPress.bind(this)}
         style={{
           ...styles.initial,
           ...resolvedStyle,
           ...(numberOfLines === 1 && styles.singleLineStyle)
         }}
-        testID={testID}
       />
     )
   }

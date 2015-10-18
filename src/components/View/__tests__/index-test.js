@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { assertProps, shallowRender } from '../../../modules/specHelpers'
+import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
 
@@ -8,41 +8,47 @@ import View from '../'
 
 suite('components/View', () => {
   test('prop "accessibilityLabel"', () => {
-    assertProps.accessibilityLabel(View)
+    const accessibilityLabel = 'accessibilityLabel'
+    const result = utils.shallowRender(<View accessibilityLabel={accessibilityLabel} />)
+    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
   })
 
   test('prop "accessibilityLiveRegion"', () => {
-    assertProps.accessibilityLiveRegion(View)
+    const accessibilityLiveRegion = 'polite'
+    const result = utils.shallowRender(<View accessibilityLiveRegion={accessibilityLiveRegion} />)
+    assert.equal(result.props.accessibilityLiveRegion, accessibilityLiveRegion)
   })
 
   test('prop "accessibilityRole"', () => {
-    assertProps.accessibilityRole(View)
+    const accessibilityRole = 'accessibilityRole'
+    const result = utils.shallowRender(<View accessibilityRole={accessibilityRole} />)
+    assert.equal(result.props.accessibilityRole, accessibilityRole)
   })
 
   test('prop "accessible"', () => {
-    assertProps.accessible(View)
+    const accessible = false
+    const result = utils.shallowRender(<View accessible={accessible} />)
+    assert.equal(result.props.accessible, accessible)
   })
 
   test('prop "children"', () => {
     const children = 'children'
-    const result = shallowRender(<View>{children}</View>)
+    const result = utils.shallowRender(<View>{children}</View>)
     assert.equal(result.props.children, children)
   })
 
-  test('prop "component"', () => {
-    assertProps.component(View)
-  })
-
   test('prop "pointerEvents"', () => {
-    const result = shallowRender(<View pointerEvents='box-only' />)
+    const result = utils.shallowRender(<View pointerEvents='box-only' />)
     assert.equal(result.props.style.pointerEvents, 'box-only')
   })
 
   test('prop "style"', () => {
-    assertProps.style(View)
+    utils.assertProps.style(View)
   })
 
   test('prop "testID"', () => {
-    assertProps.testID(View)
+    const testID = 'testID'
+    const result = utils.shallowRender(<View testID={testID} />)
+    assert.equal(result.props.testID, testID)
   })
 })

@@ -54,10 +54,6 @@ assistive technologies of a `role` value change.
 When `false`, the view is hidden from assistive technologies. (This is
 implemented using `aria-hidden`.)
 
-(web) **component**: function | string = 'div'
-
-The React Component for this view.
-
 **onLayout**: function
 
 (TODO)
@@ -159,7 +155,7 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { View } from 'react-native-web'
+import React, { StyleSheet, View } from 'react-native-web'
 
 const { Component, PropTypes } = React
 
@@ -177,14 +173,14 @@ class Example extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   row: {
     flexDirection: 'row'
   },
   cell: {
     flexGrow: 1
   }
-}
+})
 
 export default Example
 ```

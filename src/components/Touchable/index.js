@@ -25,9 +25,9 @@ class Touchable extends React.Component {
   }
 
   static propTypes = {
-    accessibilityLabel: PropTypes.string,
-    accessibilityRole: PropTypes.string,
-    accessible: PropTypes.bool,
+    accessibilityLabel: View.propTypes.accessibilityLabel,
+    accessibilityRole: View.propTypes.accessibilityRole,
+    accessible: View.propTypes.accessible,
     activeOpacity: PropTypes.number,
     activeUnderlayColor: PropTypes.string,
     children: PropTypes.element,
@@ -45,7 +45,6 @@ class Touchable extends React.Component {
     accessibilityRole: 'button',
     activeOpacity: 1,
     activeUnderlayColor: 'transparent',
-    component: 'div',
     delayLongPress: 1000,
     delayPressIn: 0,
     delayPressOut: 0,
