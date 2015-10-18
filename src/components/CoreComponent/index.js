@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import restyle from './modules/restyle'
-import stylePropTypes from './modules/stylePropTypes'
+import StylePropTypes from '../../modules/StylePropTypes'
+import StyleSheet from '../../modules/StyleSheet'
 
 class CoreComponent extends React.Component {
   static propTypes = {
@@ -13,18 +13,15 @@ class CoreComponent extends React.Component {
     testID: PropTypes.string
   }
 
-  static stylePropTypes = stylePropTypes;
-
   static defaultProps = {
-    className: '',
     component: 'div'
   }
 
+  static stylePropTypes = StylePropTypes;
+
   render() {
     const {
-      className,
       component: Component,
-      style,
       testID,
       ...other
     } = this.props
@@ -32,7 +29,7 @@ class CoreComponent extends React.Component {
     return (
       <Component
         {...other}
-        {...restyle({ className, style })}
+        {...StyleSheet.resolve(other)}
         data-testid={testID}
       />
     )

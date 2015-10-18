@@ -1,11 +1,12 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
+import StyleSheet from '../../modules/StyleSheet'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
 const viewStyleKeys = Object.keys(ViewStylePropTypes)
 
-const styles = {
+const styles = StyleSheet.create({
   // https://github.com/facebook/css-layout#default-values
   initial: {
     alignItems: 'stretch',
@@ -26,7 +27,7 @@ const styles = {
     font: 'inherit',
     textAlign: 'inherit'
   }
-}
+})
 
 class View extends React.Component {
   static propTypes = {

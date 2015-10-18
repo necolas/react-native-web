@@ -26,14 +26,6 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        loader: [
-          'style-loader',
-          'css-loader?module&localIdentName=[hash:base64:5]',
-          'autoprefixer-loader'
-        ].join('!')
-      },
-      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',

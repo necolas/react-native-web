@@ -3,8 +3,8 @@
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
 
-The core [React Native][react-native-url] components adapted and expanded upon
-for the web, backed by a precomputed CSS library. ~21KB minified and gzipped.
+[React Native][react-native-url] components and APIs for the Web.
+~19 KB minified and gzipped.
 
 * [Slack: reactiflux channel #react-native-web][slack-url]
 * [Gitter: react-native-web][gitter-url]
@@ -12,7 +12,8 @@ for the web, backed by a precomputed CSS library. ~21KB minified and gzipped.
 ## Table of contents
 
 * [Install](#install)
-* [Use](#use)
+* [Example](#example)
+* [APIs](#APIs)
 * [Components](#components)
 * [Styling](#styling)
 * [Contributing](#contributing)
@@ -25,31 +26,106 @@ for the web, backed by a precomputed CSS library. ~21KB minified and gzipped.
 npm install --save react react-native-web
 ```
 
-## Use
+## Example
 
 React Native for Web exports its components and a reference to the `React`
-installation. Styles are authored in JavaScript as plain objects.
+installation. Styles are defined with, and used as JavaScript objects.
+
+Component:
 
 ```js
-import React, { View } from 'react-native-web'
+import React, { Image, StyleSheet, Text, View } from 'react-native-web'
 
-class MyComponent extends React.Component {
+const Title = ({ children }) => <Text style={styles.title}>{children}</Text>
+
+const Summary = ({ children }) => (
+  <View style={styles.text}>
+    <Text style={styles.subtitle}>{children}</Text>
+  </View>
+)
+
+class App extends React.Component {
   render() {
     return (
-      <View style={styles.root} />
+      <View style={styles.row}>
+        <Image
+          source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
+          style={styles.image}
+        />
+        <Title>React Native Web</Title>
+        <Summary>Build high quality web apps using React</Summary>
+      </View>
     )
-  }
-}
+  },
+})
 
-const styles = {
-  root: {
-    borderColor: 'currentcolor'
-    borderWidth: '5px',
-    flexDirection: 'row'
-    height: '5em'
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    margin: 40
+  },
+  image: {
+    height: 40,
+    marginRight: 10,
+    width: 40,
+  },
+  text: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: '1.25rem',
+    fontWeight: 'bold'
+  },
+  subtitle: {
+    fontSize: '1rem'
   }
-}
+})
 ```
+
+Pre-render styles on the server:
+
+```js
+// server.js
+import App from './components/App'
+import React, { StyleSheet } from 'react-native-web'
+
+const html = React.renderToString(<App />);
+const css = StyleSheet.renderToString();
+
+const Html = () => (
+  <html>
+    <head>
+      <style id="react-stylesheet">{css}</style>
+    </head>
+    <body>
+      <div id="react-root" dangerouslySetInnerHTML={{ __html: html }} />
+    </body>
+  </html>
+)
+```
+
+Render styles on the client:
+
+```js
+// client.js
+import App from './components/App'
+import React, { StyleSheet } from 'react-native-web'
+
+React.render(
+  <App />,
+  document.getElementById('react-root')
+)
+
+document.getElementById('stylesheet').textContent = StyleSheet.renderToString()
+```
+
+## APIs
+
+### [`StyleSheet`](docs/apis/StyleSheet.md)
+
+StyleSheet is a style abstraction that transforms inline styles to CSS on the
+client or the server. It provides a minimal CSS reset.
 
 ## Components
 
@@ -88,78 +164,14 @@ The fundamental UI building block using flexbox for layout.
 
 ## Styling
 
-React Native for Web provides a mechanism to declare all your styles in
-JavaScript within your components. The `View` component makes it easy to build
-common layouts with flexbox, such as stacked and nested boxes with margin
-and padding. See this [guide to flexbox][flexbox-guide-url].
+React Native for Web relies on styles being defined in JavaScript.
 
-Authoring `style` is no different to the existing use of inline styles in
-React, but most inline styles are converted to single-purpose class names. The
-current implementation includes 300+ precomputed CSS declarations (~4.5KB
-gzipped) that covers many common property-value pairs. A more sophisticated
-build-time implementation may produce a slightly larger CSS file for large
-apps, and fall back to fewer inline styles. Read more about the [styling
-strategy](docs/style.md).
+The `View` component makes it easy to build common layouts with flexbox, such
+as stacked and nested boxes with margin and padding. See this [guide to
+flexbox][flexbox-guide-url].
 
-```js
-import React, { Image, Text, View } from 'react-native-web'
-
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.row}>
-        <Image
-          source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
-          style={styles.image}
-        />
-        <View style={styles.text}>
-          <Text style={styles.title}>
-            React Native Web
-          </Text>
-          <Text style={styles.subtitle}>
-            Build high quality web apps using React
-          </Text>
-        </View>
-      </View>
-    )
-  },
-})
-
-const styles = {
-  row: {
-    flexDirection: 'row',
-    margin: 40
-  },
-  image: {
-    height: 40,
-    marginRight: 10,
-    width: 40,
-  },
-  text: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 'bold'
-  },
-  subtitle: {
-    fontSize: '1rem'
-  }
-}
-```
-
-Combine and override style objects:
-
-```js
-import baseStyle from './baseStyle'
-
-const buttonStyle = {
-  ...baseStyle,
-  backgroundColor: '#333',
-  color: '#fff'
-}
-```
+Styling components can be achieved with inline styles or the use of
+[StyleSheet](docs/apis/StyleSheet.md).
 
 ## Contributing
 

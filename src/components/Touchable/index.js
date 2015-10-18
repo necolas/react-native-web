@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react'
 import Tappable from 'react-tappable'
 import View from '../View'
+import StyleSheet from '../../modules/StyleSheet'
 
-const styles = {
+const styles = StyleSheet.create({
   initial: {
     ...View.defaultProps.style,
     cursor: 'pointer',
     userSelect: undefined
   }
-}
+})
 
 class Touchable extends React.Component {
   constructor(props, context) {

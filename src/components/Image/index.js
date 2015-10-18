@@ -1,5 +1,6 @@
 /* global window */
 import { pickProps } from '../../modules/filterObjectProps'
+import StyleSheet from '../../modules/StyleSheet'
 import CoreComponent from '../CoreComponent'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { PropTypes } from 'react'
@@ -13,7 +14,7 @@ const STATUS_IDLE = 'IDLE'
 
 const imageStyleKeys = Object.keys(ImageStylePropTypes)
 
-const styles = {
+const styles = StyleSheet.create({
   initial: {
     alignSelf: 'flex-start',
     backgroundColor: 'lightgray',
@@ -49,7 +50,7 @@ const styles = {
       backgroundSize: '100% 100%'
     }
   }
-}
+})
 
 class Image extends React.Component {
   constructor(props, context) {
@@ -195,10 +196,10 @@ class Image extends React.Component {
         accessible={accessible}
         component='div'
         style={{
-          ...(styles.initial),
+          ...styles.initial,
           ...resolvedStyle,
           ...(backgroundImage && { backgroundImage }),
-          ...(styles.resizeMode[resizeMode])
+          ...styles.resizeMode[resizeMode]
         }}
         testID={testID}
       >

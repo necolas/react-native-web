@@ -68,7 +68,7 @@ not want to merge into the project.
 Development commands:
 
 * `npm run build` – build the library
-* `npm run dev` – start the dev server and develop against live examples
+* `npm run examples` – start the dev server and develop against live examples
 * `npm run lint` – run the linter
 * `npm run test` – run the linter and unit tests
 

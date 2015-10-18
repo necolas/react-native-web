@@ -1,11 +1,12 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
+import StyleSheet from '../../modules/StyleSheet'
 import TextStylePropTypes from './TextStylePropTypes'
 
 const textStyleKeys = Object.keys(TextStylePropTypes)
 
-const styles = {
+const styles = StyleSheet.create({
   initial: {
     color: 'inherit',
     display: 'inline-block',
@@ -20,7 +21,7 @@ const styles = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   }
-}
+})
 
 class Text extends React.Component {
   static propTypes = {

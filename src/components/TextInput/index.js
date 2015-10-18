@@ -1,12 +1,13 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
+import StyleSheet from '../../modules/StyleSheet'
 import TextareaAutosize from 'react-textarea-autosize'
 import TextInputStylePropTypes from './TextInputStylePropTypes'
 
 const textInputStyleKeys = Object.keys(TextInputStylePropTypes)
 
-const styles = {
+const styles = StyleSheet.create({
   initial: {
     appearance: 'none',
     backgroundColor: 'transparent',
@@ -17,7 +18,7 @@ const styles = {
     font: 'inherit',
     padding: 0
   }
-}
+})
 
 class TextInput extends React.Component {
   static propTypes = {

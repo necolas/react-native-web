@@ -1,12 +1,12 @@
-import React, { Image, Swipeable, Text, TextInput, Touchable, View } from '.'
+import React, { Image, StyleSheet, Swipeable, Text, TextInput, Touchable, View } from '.'
 
 const { Component, PropTypes } = React
 
-class Heading extends Component {
+class Heading extends React.Component {
   static propTypes = {
-    children: Text.propTypes.children,
-    level: PropTypes.oneOf(['1', '2', '3']),
-    size: PropTypes.oneOf(['xlarge', 'large', 'normal'])
+    children: PropTypes.any,
+    level: PropTypes.string,
+    size: PropTypes.string
   }
 
   static defaultProps = {
@@ -27,7 +27,7 @@ class Heading extends Component {
   }
 }
 
-const headingStyles = {
+const headingStyles = StyleSheet.create({
   size: {
     xlarge: {
       fontSize: '2rem',
@@ -44,7 +44,7 @@ const headingStyles = {
       marginTop: '0.5em'
     }
   }
-}
+})
 
 class Example extends Component {
   static propTypes = {
@@ -205,7 +205,7 @@ class Example extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   root: {
     maxWidth: '600px',
     margin: '0 auto'
@@ -226,7 +226,7 @@ const styles = {
   pointerEventsBox: {
     alignItems: 'center',
     borderWidth: '1px',
-    flexGrow: '1',
+    flexGrow: 1,
     height: '100px',
     justifyContent: 'center'
   },
@@ -236,6 +236,8 @@ const styles = {
     height: '200px',
     justifyContent: 'center'
   }
-}
+})
 
 React.render(<Example />, document.getElementById('react-root'))
+
+document.getElementById('react-stylesheet').textContent = StyleSheet.renderToString()

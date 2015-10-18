@@ -1,11 +1,7 @@
 import { PropTypes } from 'react'
 
-const numberOrString = PropTypes.oneOfType([
-  PropTypes.number,
-  PropTypes.string
-])
-
-const { string } = PropTypes
+const { number, string } = PropTypes
+const numberOrString = PropTypes.oneOfType([ number, string ])
 
 export default {
   alignContent: string,
@@ -20,21 +16,22 @@ export default {
   backgroundPosition: string,
   backgroundRepeat: string,
   backgroundSize: string,
-  borderColor: numberOrString,
-  borderBottomColor: numberOrString,
-  borderLeftColor: numberOrString,
-  borderRightColor: numberOrString,
-  borderTopColor: numberOrString,
+  border: string,
+  borderColor: string,
+  borderBottomColor: string,
+  borderLeftColor: string,
+  borderRightColor: string,
+  borderTopColor: string,
   borderRadius: numberOrString,
   borderTopLeftRadius: numberOrString,
   borderTopRightRadius: numberOrString,
   borderBottomLeftRadius: numberOrString,
   borderBottomRightRadius: numberOrString,
-  borderStyle: numberOrString,
-  borderBottomStyle: numberOrString,
-  borderLeftStyle: numberOrString,
-  borderRightStyle: numberOrString,
-  borderTopStyle: numberOrString,
+  borderStyle: string,
+  borderBottomStyle: string,
+  borderLeftStyle: string,
+  borderRightStyle: string,
+  borderTopStyle: string,
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
   borderLeftWidth: numberOrString,
@@ -47,6 +44,7 @@ export default {
   cursor: string,
   direction: string,
   display: string,
+  flex: string,
   flexBasis: string,
   flexDirection: string,
   flexGrow: numberOrString,
