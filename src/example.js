@@ -1,4 +1,4 @@
-import React, { Image, StyleSheet, Swipeable, Text, TextInput, Touchable, View } from '.'
+import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '.'
 
 const { Component, PropTypes } = React
 
@@ -58,7 +58,7 @@ class Example extends Component {
         <Text>React Native Web takes the core components from <Text
         component='a' href='https://facebook.github.io/react-native/'>React
         Native</Text> and brings them to the web. These components provide
-        simple building blocks – touch and swipe handling, flexbox layout,
+        simple building blocks – touch handling, flexbox layout,
         scroll views – from which more complex components and apps can be
         constructed.</Text>
 
@@ -84,21 +84,6 @@ class Example extends Component {
           }}
           testID='Example.image'
         />
-
-        <Heading level='2' size='large'>Swipeable</Heading>
-        <Swipeable
-          onSwiped={(e) => { console.log('Swipeable.onSwiped', e) }}
-          testID={'Example.swipeable'}
-        >
-          <View
-            style={{
-              backgroundColor: 'black',
-              alignSelf: 'center',
-              width: '200px',
-              height: '200px'
-            }}
-          />
-        </Swipeable>
 
         <Heading level='2' size='large'>Text</Heading>
         <Text

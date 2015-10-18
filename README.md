@@ -142,10 +142,6 @@ and child content.
 
 (TODO)
 
-### [`Swipeable`](docs/components/Swipeable.md)
-
-Touch bindings for swipe gestures.
-
 ### [`Text`](docs/components/Text.md)
 
 Displays text as an inline block and supports basic press handling.
@@ -183,10 +179,8 @@ welcome!
 Thanks to current and past members of the React and React Native teams (in
 particular Vjeux and Pete Hunt), and Tobias Koppers for Webpack and CSS loader.
 
-Thanks to [react-swipeable](https://github.com/dogfessional/react-swipeable/)
-for the current implementation of `Swipeable`, and to
-[react-tappable](https://github.com/JedWatson/react-tappable) for backing the
-current implementation of `Touchable`.
+Thanks to [react-tappable](https://github.com/JedWatson/react-tappable) for
+backing the current implementation of `Touchable`.
 
 ## License
 

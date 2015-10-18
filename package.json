@@ -18,7 +18,6 @@
   "dependencies": {
     "inline-style-prefixer": "^0.3.3",
     "react": ">=0.13.3",
-    "react-swipeable": "^3.0.2",
     "react-tappable": "^0.6.0",
     "react-textarea-autosize": "^2.5.3"
   },

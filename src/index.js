@@ -6,7 +6,6 @@ import StyleSheet from './modules/StyleSheet'
 import Image from './components/Image'
 import ListView from './components/ListView'
 import ScrollView from './components/ScrollView'
-import Swipeable from './components/Swipeable'
 import Text from './components/Text'
 import TextInput from './components/TextInput'
 import Touchable from './components/Touchable'
@@ -21,7 +20,6 @@ export {
   Image,
   ListView,
   ScrollView,
-  Swipeable,
   Text,
   TextInput,
   Touchable,
