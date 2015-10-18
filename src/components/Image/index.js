@@ -55,10 +55,9 @@ const styles = StyleSheet.create({
 class Image extends React.Component {
   constructor(props, context) {
     super(props, context)
-
+    const { uri } = props.source
     // state
-    this.state = { status: props.source.uri ? STATUS_PENDING : STATUS_IDLE }
-
+    this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
     // autobinding
     this._onError = this._onError.bind(this)
     this._onLoad = this._onLoad.bind(this)
