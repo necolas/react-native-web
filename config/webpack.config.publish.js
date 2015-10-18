@@ -7,7 +7,8 @@ module.exports = assign({}, base, {
     main: constants.SRC_DIRECTORY
   },
   externals: [{
-    react: true
+    'react': true,
+    'react-dom': true
   }],
   output: {
     filename: 'react-native-web.js',

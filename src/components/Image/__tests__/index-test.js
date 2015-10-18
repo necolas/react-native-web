@@ -2,7 +2,7 @@
 
 import { assertProps, render, renderToDOM } from '../../../modules/specHelpers'
 import assert from 'assert'
-import React from 'react/addons'
+import React from 'react'
 
 import Image from '../'
 

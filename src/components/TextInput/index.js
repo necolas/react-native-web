@@ -1,6 +1,7 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import StyleSheet from '../../modules/StyleSheet'
 import TextareaAutosize from 'react-textarea-autosize'
 import TextInputStylePropTypes from './TextInputStylePropTypes'
@@ -71,7 +72,7 @@ class TextInput extends React.Component {
 
   _onFocus(e) {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
-    const node = React.findDOMNode(this)
+    const node = ReactDOM.findDOMNode(this)
     if (clearTextOnFocus) node.value = ''
     if (selectTextOnFocus) node.select()
     if (onFocus) onFocus(e)
@@ -168,9 +169,10 @@ class TextInput extends React.Component {
       type
     }
 
-    return (multiline
-      ? <CoreComponent {...propsMultiline} />
-      : <CoreComponent {...propsSingleline} />
+    const props = multiline ? propsMultiline : propsSingleline
+
+    return (
+      <CoreComponent {...props} />
     )
   }
 }

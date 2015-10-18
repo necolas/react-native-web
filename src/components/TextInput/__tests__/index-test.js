@@ -2,11 +2,10 @@
 
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
-import React from 'react/addons'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 
 import TextInput from '../'
-
-const ReactTestUtils = React.addons.TestUtils
 
 suite('components/TextInput', () => {
   test('prop "accessibilityLabel"', () => {

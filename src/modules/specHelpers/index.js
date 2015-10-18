@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 
 import assert from 'assert'
-import React from 'react/addons'
-
-const ReactTestUtils = React.addons.TestUtils
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactTestUtils from 'react-addons-test-utils'
 
 export const assertProps = {
   accessibilityLabel: function (Component, props) {
@@ -82,7 +82,7 @@ export const assertProps = {
 
 export function render(element, container) {
   return container
-    ? React.render(element, container)
+    ? ReactDOM.render(element, container)
     : ReactTestUtils.renderIntoDocument(element)
 }
 
@@ -99,16 +99,16 @@ export function renderAndInject(element) {
   }
 
   const result = render(element, div)
-  return React.findDOMNode(result)
+  return ReactDOM.findDOMNode(result)
 }
 
 export function renderToDOM(element, container) {
   const result = render(element, container)
-  return React.findDOMNode(result)
+  return ReactDOM.findDOMNode(result)
 }
 
 export function shallowRender(component, context = {}) {
-  const shallowRenderer = React.addons.TestUtils.createRenderer()
+  const shallowRenderer = ReactTestUtils.createRenderer()
   shallowRenderer.render(component, context)
   return shallowRenderer.getRenderOutput()
 }

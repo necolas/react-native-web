@@ -2,11 +2,10 @@
 
 import { assertProps, renderToDOM, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
-import React from 'react/addons'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 
 import Text from '../'
-
-const ReactTestUtils = React.addons.TestUtils
 
 suite('components/Text', () => {
   test('prop "accessibilityLabel"', () => {

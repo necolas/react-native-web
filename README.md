@@ -4,7 +4,7 @@
 [![npm version][npm-image]][npm-url]
 
 [React Native][react-native-url] components and APIs for the Web.
-~19 KB minified and gzipped.
+~17.7 KB minified and gzipped.
 
 * [Slack: reactiflux channel #react-native-web][slack-url]
 * [Gitter: react-native-web][gitter-url]
@@ -23,7 +23,7 @@
 ## Install
 
 ```
-npm install --save react react-native-web
+npm install --save react react-dom react-native-web
 ```
 
 ## Example

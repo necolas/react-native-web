@@ -1,31 +1,13 @@
 import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '.'
+import ReactDOM from 'react-dom'
 
-const { Component, PropTypes } = React
-
-class Heading extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    level: PropTypes.string,
-    size: PropTypes.string
-  }
-
-  static defaultProps = {
-    level: '1',
-    size: 'normal'
-  }
-
-  render() {
-    const { children, level, size } = this.props
-
-    return (
-      <Text
-        children={children}
-        component={`h${level}`}
-        style={headingStyles.size[size]}
-      />
-    )
-  }
-}
+const Heading = ({ children, level = '1', size = 'normal' }) => (
+  <Text
+    children={children}
+    component={`h${level}`}
+    style={headingStyles.size[size]}
+  />
+)
 
 const headingStyles = StyleSheet.create({
   size: {
@@ -46,7 +28,7 @@ const headingStyles = StyleSheet.create({
   }
 })
 
-class Example extends Component {
+class Example extends React.Component {
   static propTypes = {
     style: View.propTypes.style
   }
@@ -124,7 +106,7 @@ class Example extends Component {
         <TextInput keyboardType='email-address' />
         <TextInput keyboardType='numeric' />
         <TextInput keyboardType='phone-pad' />
-        <TextInput keyboardType='url' />
+        <TextInput keyboardType='url' selectTextOnFocus />
         <TextInput
           defaultValue='default value'
           maxNumberOfLines={10}
@@ -223,6 +205,6 @@ const styles = StyleSheet.create({
   }
 })
 
-React.render(<Example />, document.getElementById('react-root'))
+ReactDOM.render(<Example />, document.getElementById('react-root'))
 
 document.getElementById('react-stylesheet').textContent = StyleSheet.renderToString()

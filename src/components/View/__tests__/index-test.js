@@ -2,7 +2,7 @@
 
 import { assertProps, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
-import React from 'react/addons'
+import React from 'react'
 
 import View from '../'
 
