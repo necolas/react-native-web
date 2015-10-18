@@ -1,4 +1,6 @@
-import { omitProps, pickProps } from '.'
+/* eslint-env mocha */
+
+import { omitProps, pickProps } from '..'
 import assert from 'assert'
 
 suite('pickProps', () => {

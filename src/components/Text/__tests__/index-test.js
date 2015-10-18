@@ -1,12 +1,14 @@
-import { assertProps, renderToDOM, shallowRender } from '../../modules/specHelpers'
+/* eslint-env mocha */
+
+import { assertProps, renderToDOM, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
-import Text from '.'
+import Text from '../'
 
 const ReactTestUtils = React.addons.TestUtils
 
-suite('Text', () => {
+suite('components/Text', () => {
   test('prop "accessibilityLabel"', () => {
     assertProps.accessibilityLabel(Text)
   })
@@ -25,7 +27,7 @@ suite('Text', () => {
     assertProps.component(Text, 'span')
   })
 
-  test.skip('prop "numberOfLines"', () => {})
+  test('prop "numberOfLines"')
 
   test('prop "onPress"', (done) => {
     const dom = renderToDOM(<Text onPress={onPress} />)

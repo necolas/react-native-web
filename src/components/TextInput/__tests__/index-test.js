@@ -1,12 +1,14 @@
-import * as utils from '../../modules/specHelpers'
+/* eslint-env mocha */
+
+import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
-import TextInput from '.'
+import TextInput from '../'
 
 const ReactTestUtils = React.addons.TestUtils
 
-suite('TextInput', () => {
+suite('components/TextInput', () => {
   test('prop "accessibilityLabel"', () => {
     utils.assertProps.accessibilityLabel(TextInput)
   })
@@ -29,18 +31,16 @@ suite('TextInput', () => {
     assert.deepEqual(document.activeElement, dom)
   })
 
-  test('prop "clearTextOnFocus"', () => {
+  utils.testIfDocumentFocused('prop "clearTextOnFocus"', () => {
     const defaultValue = 'defaultValue'
-    utils.requiresFocus(() => {
-      // false
-      let dom = utils.renderAndInject(<TextInput defaultValue={defaultValue} />)
-      dom.focus()
-      assert.equal(dom.value, defaultValue)
-      // true
-      dom = utils.renderAndInject(<TextInput clearTextOnFocus defaultValue={defaultValue} />)
-      dom.focus()
-      assert.equal(dom.value, '')
-    })
+    // false
+    let dom = utils.renderAndInject(<TextInput defaultValue={defaultValue} />)
+    dom.focus()
+    assert.equal(dom.value, defaultValue)
+    // true
+    dom = utils.renderAndInject(<TextInput clearTextOnFocus defaultValue={defaultValue} />)
+    dom.focus()
+    assert.equal(dom.value, '')
   })
 
   test('prop "defaultValue"', () => {
@@ -126,7 +126,7 @@ suite('TextInput', () => {
     const height = dom.getBoundingClientRect().height
     // need a range because of cross-browser differences
     assert.ok(height >= 40)
-    assert.ok(height <= 45)
+    assert.ok(height <= 46)
   })
 
   test('prop "onBlur"', (done) => {
@@ -166,7 +166,7 @@ suite('TextInput', () => {
     }
   })
 
-  test.skip('prop "onLayout"', () => {})
+  test('prop "onLayout"')
 
   test('prop "onSelectionChange"', (done) => {
     const input = utils.renderAndInject(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />)
@@ -178,9 +178,9 @@ suite('TextInput', () => {
     }
   })
 
-  test.skip('prop "placeholder"', () => {})
+  test('prop "placeholder"')
 
-  test.skip('prop "placeholderTextColor"', () => {})
+  test('prop "placeholderTextColor"')
 
   test('prop "secureTextEntry"', () => {
     let dom = utils.renderToDOM(<TextInput secureTextEntry />)
@@ -190,20 +190,18 @@ suite('TextInput', () => {
     assert.equal(dom.getAttribute('type'), undefined)
   })
 
-  test('prop "selectTextOnFocus"', () => {
+  utils.testIfDocumentFocused('prop "selectTextOnFocus"', () => {
     const text = 'Text'
-    utils.requiresFocus(() => {
-      // false
-      let dom = utils.renderAndInject(<TextInput defaultValue={text} />)
-      dom.focus()
-      assert.equal(dom.selectionEnd, 0)
-      assert.equal(dom.selectionStart, 0)
-      // true
-      dom = utils.renderAndInject(<TextInput defaultValue={text} selectTextOnFocus />)
-      dom.focus()
-      assert.equal(dom.selectionEnd, 4)
-      assert.equal(dom.selectionStart, 0)
-    })
+    // false
+    let dom = utils.renderAndInject(<TextInput defaultValue={text} />)
+    dom.focus()
+    assert.equal(dom.selectionEnd, 0)
+    assert.equal(dom.selectionStart, 0)
+    // true
+    dom = utils.renderAndInject(<TextInput defaultValue={text} selectTextOnFocus />)
+    dom.focus()
+    assert.equal(dom.selectionEnd, 4)
+    assert.equal(dom.selectionStart, 0)
   })
 
   test('prop "style"', () => {

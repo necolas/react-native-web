@@ -1,5 +1,7 @@
+/* eslint-env mocha */
+
 /*
-import { assertProps, renderToDOM, shallowRender } from '../../modules/specHelpers'
+import { assertProps, renderToDOM, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 

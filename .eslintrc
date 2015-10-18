@@ -3,9 +3,6 @@
   "parser": "babel-eslint",
   // based on https://github.com/feross/standard
   "extends": [ "standard", "standard-react" ],
-  "env": {
-    "mocha": true
-  },
   "rules": {
     // overrides of the standard style
     "space-before-function-paren": [ 2, { "anonymous": "always", "named": "never" } ],

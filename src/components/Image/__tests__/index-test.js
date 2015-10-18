@@ -1,10 +1,12 @@
-import { assertProps, render, renderToDOM } from '../../modules/specHelpers'
+/* eslint-env mocha */
+
+import { assertProps, render, renderToDOM } from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
-import Image from '.'
+import Image from '../'
 
-suite('Image', () => {
+suite('components/Image', () => {
   test('default accessibility', () => {
     const dom = renderToDOM(<Image />)
     assert.equal(dom.getAttribute('role'), 'img')
@@ -18,7 +20,7 @@ suite('Image', () => {
     assertProps.accessible(Image)
   })
 
-  test.skip('prop "children"', () => { })
+  test('prop "children"')
 
   test('prop "defaultSource"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' }
@@ -51,13 +53,13 @@ suite('Image', () => {
     }
   })
 
-  test.skip('prop "onLoadEnd"', () => { })
+  test('prop "onLoadEnd"')
 
-  test.skip('prop "onLoadStart"', () => { })
+  test('prop "onLoadStart"')
 
-  test.skip('prop "resizeMode"', () => { })
+  test('prop "resizeMode"')
 
-  test.skip('prop "source"', () => { })
+  test('prop "source"')
 
   test('prop "style"', () => {
     assertProps.style(Image)

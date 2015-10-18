@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import assert from 'assert'
 import React from 'react/addons'
 
@@ -105,19 +107,16 @@ export function renderToDOM(element, container) {
   return React.findDOMNode(result)
 }
 
-export function requiresFocus(test, fallback) {
-  if (document.hasFocus && document.hasFocus()) {
-    test()
-  } else {
-    console.warn('Test was skipped as the document is not focused')
-    if (fallback) {
-      fallback()
-    }
-  }
-}
-
 export function shallowRender(component, context = {}) {
   const shallowRenderer = React.addons.TestUtils.createRenderer()
   shallowRenderer.render(component, context)
   return shallowRenderer.getRenderOutput()
+}
+
+export function testIfDocumentFocused(message, fn) {
+  if (document.hasFocus && document.hasFocus()) {
+    test(message, fn)
+  } else {
+    test.skip(`${message} – WARNING: document is not focused`)
+  }
 }

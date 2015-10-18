@@ -1,8 +1,10 @@
+/* eslint-env mocha */
+
 /*
 import assert from 'assert'
 import React from 'react/addons'
 
-import ListView from '.'
+import ListView from '../'
 
 const ReactTestUtils = React.addons.TestUtils
 

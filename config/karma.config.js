@@ -1,6 +1,5 @@
-var assign = require('object-assign')
 var constants = require('./constants')
-var webpackConfig = require('./webpack.config.base')
+var webpack = require('webpack')
 
 module.exports = function (config) {
   config.set({
@@ -9,38 +8,48 @@ module.exports = function (config) {
     browserNoActivityTimeout: 60000,
     client: {
       captureConsole: true,
-      mocha: {
-        ui: 'tdd'
-      },
+      mocha: { ui: 'tdd' },
       useIframe: true
     },
     files: [
-      'src/specs.context.js'
+      constants.TEST_ENTRY
     ],
-    frameworks: [
-      'mocha'
-    ],
+    frameworks: [ 'mocha' ],
     plugins: [
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-mocha',
+      'karma-mocha-reporter',
       'karma-sourcemap-loader',
       'karma-webpack'
     ],
     preprocessors: {
-      'src/specs.context.js': [ 'webpack', 'sourcemap' ]
+      [constants.TEST_ENTRY]: [ 'webpack', 'sourcemap' ]
     },
-    reporters: [ 'dots' ],
+    reporters: process.env.TRAVIS ? [ 'dots' ] : [ 'mocha' ],
     singleRun: true,
-    webpack: assign({}, webpackConfig, { devtool: 'inline' }),
-    webpackMiddleware: {
-      stats: {
-        assetsSort: 'name',
-        colors: true,
-        children: false,
-        chunks: false,
-        modules: false
-      }
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: { cacheDirectory: true }
+          }
+        ]
+      },
+      plugins: [
+        new webpack.DefinePlugin({
+          'process.env': {
+            NODE_ENV: JSON.stringify('test')
+          }
+        })
+      ]
+    },
+    webpackServer: {
+      noInfo: true
     }
   })
 }

@@ -1,10 +1,12 @@
-import { assertProps, shallowRender } from '../../modules/specHelpers'
+/* eslint-env mocha */
+
+import { assertProps, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
-import View from '.'
+import View from '../'
 
-suite('View', () => {
+suite('components/View', () => {
   test('prop "accessibilityLabel"', () => {
     assertProps.accessibilityLabel(View)
   })

@@ -70,7 +70,7 @@ Development commands:
 * `npm run build` – build the library
 * `npm run dev` – start the dev server and develop against live examples
 * `npm run lint` – run the linter
-* `npm run test:specs` – run and watch the unit tests
+* `npm run test` – run the linter and unit tests
 
 Please follow this process for submitting a patch:
 

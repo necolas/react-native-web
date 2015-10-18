@@ -1,13 +1,15 @@
-import { assertProps, shallowRender } from '../../modules/specHelpers'
+/* eslint-env mocha */
+
+import { assertProps, shallowRender } from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react/addons'
 
-import Touchable from '.'
+import Touchable from '../'
 
 const children = <span style={{}}>children</span>
 const requiredProps = { children }
 
-suite('Touchable', () => {
+suite('components/Touchable', () => {
   test('prop "accessibilityLabel"', () => {
     assertProps.accessibilityLabel(Touchable, requiredProps)
   })
