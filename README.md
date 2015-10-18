@@ -13,7 +13,7 @@
 
 * [Install](#install)
 * [Example](#example)
-* [APIs](#APIs)
+* [APIs](#apis)
 * [Components](#components)
 * [Styling](#styling)
 * [Contributing](#contributing)
