@@ -96,7 +96,9 @@ const css = StyleSheet.renderToString();
 const Html = () => (
   <html>
     <head>
-      <style id="react-stylesheet">{css}</style>
+      <meta charSet="utf-8" />
+      <meta content="initial-scale=1,width=device-width" name="viewport" />
+      <style id="react-stylesheet" dangerouslySetInnerHTML={{ __html: css } />
     </head>
     <body>
       <div id="react-root" dangerouslySetInnerHTML={{ __html: html }} />
@@ -111,13 +113,13 @@ Render styles on the client:
 // client.js
 import App from './components/App'
 import React, { StyleSheet } from 'react-native-web'
+import ReactDOM from 'react-dom'
 
-React.render(
-  <App />,
-  document.getElementById('react-root')
-)
+const reactRoot = document.getElementById('react-root')
+const reactStyleSheet = document.getElementById('react-stylesheet')
 
-document.getElementById('stylesheet').textContent = StyleSheet.renderToString()
+ReactDOM.render(<App />, reactRoot)
+reactStyleSheet.textContent = StyleSheet.renderToString()
 ```
 
 ## APIs
@@ -177,7 +179,7 @@ welcome!
 ## Thanks
 
 Thanks to current and past members of the React and React Native teams (in
-particular Vjeux and Pete Hunt), and Tobias Koppers for Webpack and CSS loader.
+particular Vjeux and Pete Hunt).
 
 Thanks to [react-tappable](https://github.com/JedWatson/react-tappable) for
 backing the current implementation of `Touchable`.
