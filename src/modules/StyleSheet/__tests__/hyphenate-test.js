@@ -6,8 +6,11 @@ import hyphenate from '../hyphenate'
 suite('modules/StyleSheet/hyphenate', () => {
   test('style property', () => {
     assert.equal(hyphenate('alignItems'), 'align-items')
+    assert.equal(hyphenate('color'), 'color')
   })
   test('vendor prefixed style property', () => {
-    assert.equal(hyphenate('WebkitAppearance'), '-webkit-appearance')
+    assert.equal(hyphenate('MozTransition'), '-moz-transition')
+    assert.equal(hyphenate('msTransition'), '-ms-transition')
+    assert.equal(hyphenate('WebkitTransition'), '-webkit-transition')
   })
 })
