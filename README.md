@@ -163,31 +163,43 @@ The fundamental UI building block using flexbox for layout.
 
 ## Styling
 
-React Native for Web relies on styles being defined in JavaScript.
+React Native for Web relies on styles being defined in JavaScript. Styling
+components can be achieved with inline styles or the use of
+[StyleSheet](docs/apis/StyleSheet.md).
 
 The `View` component makes it easy to build common layouts with flexbox, such
 as stacked and nested boxes with margin and padding. See this [guide to
 flexbox][flexbox-guide-url].
 
-Styling components can be achieved with inline styles or the use of
-[StyleSheet](docs/apis/StyleSheet.md).
+### Media Queries, pseudo-classes, and pseudo-elements
+
+Pseudo-classes like `:hover` and `:focus` can be replaced with JavaScript
+events. Changing styles and the render tree in response to device adaptation
+should also be controlled in JavaScript, e.g., [stile's @resizeable and
+ResizeProvider](https://github.com/bloodyowl/stile),
+[media-query-fascade](https://github.com/tanem/media-query-facade), or
+[react-responsive](https://github.com/contra/react-responsive). This has the
+benefit of co-locating breakpoint-specific DOM and style changes.
+
+Pseudo-elements are not supported.
 
 ## Accessibility
 
 On the Web, assistive technologies derive useful information about the
-structure, purpose, and interactivity of apps from their HTML elements,
-attributes, and [ARIA in HTML](https://w3c.github.io/aria-in-html/).
+structure, purpose, and interactivity of apps from their [HTML
+elements][html-accessibility-url], attributes, and [ARIA in
+HTML][aria-in-html-url].
 
 The most common and best supported accessibility features of the Web are
 exposed as the props: `accessible`, `accessibilityLabel`,
 `accessibilityLiveRegion`, and `accessibilityRole`.
 
 React Native for Web does not provide a way to directly control the rendered
-HTML element. The `accessibilityRole` prop is used to infer an analogous [HTML5
-element](http://www.html5accessibility.com/) to use in addition, where
-possible. This also helps avoid certain HTML5 conformance errors and
-accessibility anti-patterns (e.g., giving a `heading` role to a `button`
-element).
+HTML element. The `accessibilityRole` prop is used to infer an [analogous HTML
+element][html-aria-url] to use in addition, where possible. While this may
+contradict some ARIA recommendations, it also helps avoid certain HTML5
+conformance errors and accessibility anti-patterns (e.g., giving a `heading`
+role to a `button` element).
 
 For example:
 
@@ -217,9 +229,12 @@ backing the current implementation of `Touchable`.
 Copyright (c) 2015 Nicolas Gallagher. Released under the [MIT
 license](http://www.opensource.org/licenses/mit-license.php).
 
+[aria-in-html-url]: https://w3c.github.io/aria-in-html/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/CONTRIBUTING.md
 [flexbox-guide-url]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 [gitter-url]: https://gitter.im/necolas/react-native-web
+[html-accessibility-url]: http://www.html5accessibility.com/
+[html-aria-url]: http://www.w3.org/TR/html-aria/
 [npm-image]: https://badge.fury.io/js/react-native-web.svg
 [npm-url]: https://npmjs.org/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/

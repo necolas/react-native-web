@@ -134,16 +134,6 @@ style sheet growth in a similar way. But they're CSS utility libraries, each wit
 particular set of classes and features to learn. All of them require developers
 to manually connect CSS classes for given styles.)
 
-### Media Queries, pseudo-classes, and pseudo-elements
-
-Media Queries in JavaScript can be used to modify the render tree and styles.
-This has the benefit of co-locating breakpoint-specific DOM and style changes.
-
-Pseudo-classes like `:hover` and `:focus` can be replaced with JavaScript
-events.
-
-Pseudo-elements are not supported.
-
 ### Reset
 
 React Native for Web includes a very small CSS reset taken from
