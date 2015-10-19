@@ -76,11 +76,11 @@ Used to locate a view in end-to-end tests.
 
 ```js
 import placeholderAvatar from './placeholderAvatar.png'
-import React, { Image } from 'react-native-web'
+import React, { Image, StyleSheet } from 'react-native-web'
 
 const { Component, PropTypes } = React;
 
-class Avatar extends Component {
+export default class Avatar extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = { loading: true }
@@ -118,7 +118,7 @@ class Avatar extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   base: {
     borderColor: 'white',
     borderRadius: '5px',
@@ -139,5 +139,5 @@ const styles = {
     height: '64px',
     width: '64px'
   }
-}
+})
 ```

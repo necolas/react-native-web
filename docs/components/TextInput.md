@@ -159,11 +159,9 @@ user edits to the value set `editable={false}`.
 ## Examples
 
 ```js
-import React, { TextInput } from 'react-native-web'
+import React, { StyleSheet, TextInput } from 'react-native-web'
 
-const { Component } = React
-
-class AppTextInput extends Component {
+export default class AppTextInput extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.state = { isFocused: false }
@@ -182,16 +180,16 @@ class AppTextInput extends Component {
         numberOfLines={2}
         onFocus={this._onFocus.bind(this)}
         placeholder={`What's happening?`}
-        style={
+        style={{
           ...styles.default
           ...(this.state.isFocused && styles.focused)
-        }
+        }}
       />
     );
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   default: {
     borderColor: 'gray',
     borderWidth: '0 0 2px 0'
@@ -199,5 +197,5 @@ const styles = {
   focused: {
     borderColor: 'blue'
   }
-}
+})
 ```
