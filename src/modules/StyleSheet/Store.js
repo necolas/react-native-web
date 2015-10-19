@@ -89,7 +89,7 @@ export default class Store {
     if (!exists) {
       this._counter += 1
       if (this._options.obfuscateClassNames) {
-        this._classNames[key] = `_rn_${this._counter}`
+        this._classNames[key] = `_s_${this._counter}`
       } else {
         const val = `${value}`.replace(/\s/g, '-')
         this._classNames[key] = `${property}:${val}`

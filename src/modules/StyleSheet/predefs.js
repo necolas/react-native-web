@@ -13,12 +13,12 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
  */
 export const predefinedCSS =
 `/* pointer-events */
-._rn_pe-a, ._rn_pe-bo, ._rn_pe-bn * {pointer-events:auto}
-._rn_pe-n, ._rn_pe-bo *, ._rn_pe-bn {pointer-events:none}`
+._s_pe-a, ._s_pe-bo, ._s_pe-bn * {pointer-events:auto}
+._s_pe-n, ._s_pe-bo *, ._s_pe-bn {pointer-events:none}`
 
 export const predefinedClassNames = {
-  'pointerEvents:auto': '_rn_pe-a',
-  'pointerEvents:box-none': '_rn_pe-bn',
-  'pointerEvents:box-only': '_rn_pe-bo',
-  'pointerEvents:none': '_rn_pe-n'
+  'pointerEvents:auto': '_s_pe-a',
+  'pointerEvents:box-none': '_s_pe-bn',
+  'pointerEvents:box-only': '_s_pe-bo',
+  'pointerEvents:none': '_s_pe-n'
 }

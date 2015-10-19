@@ -59,10 +59,10 @@ suite('modules/StyleSheet/Store', () => {
       store.set('flexGrow', 1)
       store.set('flexGrow', 2)
       assert.deepEqual(store._classNames, {
-        'alignItems:center': '_rn_1',
-        'flexGrow:0': '_rn_2',
-        'flexGrow:1': '_rn_3',
-        'flexGrow:2': '_rn_4'
+        'alignItems:center': '_s_1',
+        'flexGrow:0': '_s_2',
+        'flexGrow:1': '_s_3',
+        'flexGrow:2': '_s_4'
       })
     })
 
@@ -115,11 +115,11 @@ suite('modules/StyleSheet/Store', () => {
       store.set('margin', 3)
 
       const expected = '/* 5 unique declarations */\n' +
-          '._rn_1{align-items:center;}\n' +
-          '._rn_3{margin:1px;}\n' +
-          '._rn_4{margin:2px;}\n' +
-          '._rn_5{margin:3px;}\n' +
-          '._rn_2{margin-bottom:0px;}'
+          '._s_1{align-items:center;}\n' +
+          '._s_3{margin:1px;}\n' +
+          '._s_4{margin:2px;}\n' +
+          '._s_5{margin:3px;}\n' +
+          '._s_2{margin-bottom:0px;}'
 
       assert.equal(store.toString(), expected)
     })
