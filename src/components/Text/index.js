@@ -9,7 +9,7 @@ const textStyleKeys = Object.keys(TextStylePropTypes)
 const styles = StyleSheet.create({
   initial: {
     color: 'inherit',
-    display: 'inline-block',
+    display: 'inline',
     font: 'inherit',
     margin: 0,
     padding: 0,
