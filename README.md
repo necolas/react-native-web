@@ -174,14 +174,28 @@ Styling components can be achieved with inline styles or the use of
 
 ## Accessibility
 
-Major accessibility features are available through the following props:
-`accessible`, `accessibilityLabel`, `accessibilityLiveRegion`, and
-`accessibilityRole`. The `accessibilityRole` prop is used to determine the
-rendered DOM element. For example:
+On the Web, assistive technologies derive useful information about the
+structure, purpose, and interactivity of apps from their HTML elements,
+attributes, and [ARIA in HTML](https://w3c.github.io/aria-in-html/).
 
+The most common and best supported accessibility features of the Web are
+exposed as the props: `accessible`, `accessibilityLabel`,
+`accessibilityLiveRegion`, and `accessibilityRole`.
+
+React Native for Web does not provide a way to directly control the rendered
+HTML element. The `accessibilityRole` prop is used to infer an analogous [HTML5
+element](http://www.html5accessibility.com/) to use in addition, where
+possible. This also helps avoid certain HTML5 conformance errors and
+accessibility anti-patterns (e.g., giving a `heading` role to a `button`
+element).
+
+For example:
+
+* `<View accessibilityRole='article' />` => `<article role='article' />`.
 * `<View accessibilityRole='banner' />` => `<header role='banner' />`.
 * `<View accessibilityRole='button' />` => `<button type='button' role='button' />`.
 * `<Text accessibilityRole='link' href='/' />` => `<a role='link' href='/' />`.
+* `<View accessibilityRole='main' />` => `<main role='main' />`.
 
 See the component documentation for more details.
 
