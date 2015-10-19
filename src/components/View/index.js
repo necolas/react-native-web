@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
+    textDecoration: 'none',
     // button reset
     backgroundColor: 'transparent',
     color: 'inherit',
