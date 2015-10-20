@@ -4,5 +4,5 @@
  *
  * See: https://github.com/webpack/docs/wiki/context
  */
-var context = require.context('.', true, /-test\.js$/)
+var context = require.context('./src', true, /-test\.js$/)
 context.keys().forEach(context)
