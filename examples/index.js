@@ -1,4 +1,4 @@
-import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '.'
+import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '../src'
 import ReactDOM from 'react-dom'
 
 const Heading = ({ children, size = 'normal' }) => (

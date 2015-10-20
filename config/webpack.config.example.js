@@ -5,13 +5,13 @@ var path = require('path')
 
 module.exports = assign({}, base, {
   devServer: {
-    contentBase: constants.SRC_DIRECTORY
+    contentBase: constants.EXAMPLES_DIRECTORY
   },
   entry: {
-    example: path.join(constants.SRC_DIRECTORY, 'example')
+    example: path.join(constants.EXAMPLES_DIRECTORY, 'index')
   },
   output: {
-    filename: 'example.js',
+    filename: 'examples.js',
     path: constants.DIST_DIRECTORY
   }
 })
