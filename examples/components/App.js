@@ -1,12 +1,19 @@
 import GridView from './GridView'
 import Heading from './Heading'
 import MediaQueryWidget from './MediaQueryWidget'
-import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '../../src'
+import React, { Image, StyleSheet, ScrollView, Text, TextInput, Touchable, View } from '../../src'
 
 export default class App extends React.Component {
   static propTypes = {
     mediaQuery: React.PropTypes.object,
     style: View.propTypes.style
+  }
+
+  constructor(...args) {
+    super(...args)
+    this.state = {
+      scrollEnabled: true
+    }
   }
 
   render() {
@@ -152,6 +159,52 @@ export default class App extends React.Component {
             )
           })}
         </GridView>
+
+        <Heading size='large'>ScrollView</Heading>
+        <label>
+          <input
+            checked={this.state.scrollEnabled}
+            onChange={() => this.setState({
+              scrollEnabled: !this.state.scrollEnabled
+            })}
+            type='checkbox'
+          /> Enable scroll
+        </label>
+
+        <Heading>Default layout</Heading>
+        <View style={styles.scrollViewContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContentContainerStyle}
+            onScroll={e => console.log('ScrollView.onScroll', e)}
+            scrollEnabled={this.state.scrollEnabled}
+            scrollEventThrottle={1} // 1 event per second
+            style={styles.scrollViewStyle}
+          >
+            {Array.from({ length: 50 }).map((item, i) => (
+              <View key={i} style={styles.box}>
+                <Text>{i}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <Heading>Horizontal layout</Heading>
+        <View style={styles.scrollViewContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContentContainerStyle}
+            horizontal
+            onScroll={e => console.log('ScrollView.onScroll', e)}
+            scrollEnabled={this.state.scrollEnabled}
+            scrollEventThrottle={1} // 1 event per second
+            style={styles.scrollViewStyle}
+          >
+            {Array.from({ length: 50 }).map((item, i) => (
+              <View key={i} style={{...styles.box, ...styles.horizontalBox}}>
+                <Text>{i}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </View>
     )
   }
@@ -179,6 +232,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: '1px'
   },
+  horizontalBox: {
+    width: '50px'
+  },
   boxFull: {
     width: '100%'
   },
@@ -194,5 +250,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: '200px',
     justifyContent: 'center'
+  },
+  scrollViewContainer: {
+    height: '200px'
+  },
+  scrollViewStyle: {
+    borderWidth: '1px'
+  },
+  scrollViewContentContainerStyle: {
+    padding: '10px'
   }
 })
