@@ -1,4 +1,12 @@
-import React, { Image, StyleSheet, Text, TextInput, Touchable, View } from '../src'
+import React, {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  Touchable,
+  View
+} from '../src'
 import ReactDOM from 'react-dom'
 
 const Heading = ({ children, size = 'normal' }) => (
@@ -31,6 +39,13 @@ const headingStyles = StyleSheet.create({
 class Example extends React.Component {
   static propTypes = {
     style: View.propTypes.style
+  }
+
+  constructor(...args) {
+    super(...args)
+    this.state = {
+      scrollEnabled: true
+    }
   }
 
   render() {
@@ -167,6 +182,54 @@ class Example extends React.Component {
             )
           })}
         </View>
+
+        <Heading size='large'>ScrollView</Heading>
+        <label>
+          <input
+            checked={this.state.scrollEnabled}
+            onClick={() => this.setState({
+              scrollEnabled: !this.state.scrollEnabled
+            })}
+            type='checkbox'
+          /> Enable scroll
+        </label>
+
+        <Heading>Default layout</Heading>
+        <View style={styles.scrollViewContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContentContainerStyle}
+            onScroll={e => console.log(e)}
+            scrollEnabled={this.state.scrollEnabled}
+            style={styles.scrollViewStyle}
+          >
+            {Array.from({ length: 50 }).map((item, i) => {
+              return (
+                <View key={i} style={styles.box}>
+                  <Text>{i}</Text>
+                </View>
+              )
+            })}
+          </ScrollView>
+        </View>
+
+        <Heading>Horizontal layout</Heading>
+        <View style={styles.scrollViewContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContentContainerStyle}
+            horizontal
+            onScroll={e => console.log(e)}
+            scrollEnabled={this.state.scrollEnabled}
+            style={styles.scrollViewStyle}
+          >
+            {Array.from({ length: 50 }).map((item, i) => {
+              return (
+                <View key={i} style={{...styles.box, ...styles.horizontalBox}}>
+                  <Text>{i}</Text>
+                </View>
+              )
+            })}
+          </ScrollView>
+        </View>
       </View>
     )
   }
@@ -187,6 +250,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: '1px'
   },
+  horizontalBox: {
+    width: '50px'
+  },
   boxFull: {
     width: '100%'
   },
@@ -202,6 +268,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: '200px',
     justifyContent: 'center'
+  },
+  scrollViewContainer: {
+    height: '200px'
+  },
+  scrollViewStyle: {
+    borderWidth: '1px'
+  },
+  scrollViewContentContainerStyle: {
+    padding: '10px'
   }
 })
 
