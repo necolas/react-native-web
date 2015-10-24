@@ -2,11 +2,11 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
+![gzipped size](https://img.shields.io/badge/gzipped-~18.6k-blue.svg)
 
 [React Native][react-native-url] components and APIs for the Web.
-~17.7 KB minified and gzipped.
 
-* [Slack: #react-native-web on reactiflux][slack-url]
+* [Discord: #react-native-web on reactiflux][discord-url]
 * [Gitter: react-native-web][gitter-url]
 
 ## Table of contents
@@ -141,9 +141,9 @@ and child content.
 
 (TODO)
 
-### [`ScrollView`](docs/components/ListView.md)
+### [`ScrollView`](docs/components/ScrollView.md)
 
-(TODO)
+A scrollable view with event throttling.
 
 ### [`Text`](docs/components/Text.md)
 
@@ -173,13 +173,16 @@ flexbox][flexbox-guide-url].
 
 ### Media Queries, pseudo-classes, and pseudo-elements
 
-Pseudo-classes like `:hover` and `:focus` can be replaced with JavaScript
-events. Changing styles and the render tree in response to device adaptation
-should also be controlled in JavaScript, e.g., [stile's @resizeable and
-ResizeProvider](https://github.com/bloodyowl/stile),
+
+Changing styles and/or the render tree in response to device adaptation can be
+controlled in JavaScript, e.g.,
+[react-media-queries](https://github.com/bloodyowl/react-media-queries),
 [media-query-fascade](https://github.com/tanem/media-query-facade), or
 [react-responsive](https://github.com/contra/react-responsive). This has the
 benefit of co-locating breakpoint-specific DOM and style changes.
+
+Pseudo-classes like `:hover` and `:focus` can be implemented with the `onHover`
+and `onFocus` events.
 
 Pseudo-elements are not supported.
 
@@ -231,6 +234,7 @@ license](http://www.opensource.org/licenses/mit-license.php).
 
 [aria-in-html-url]: https://w3c.github.io/aria-in-html/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/CONTRIBUTING.md
+[discord-url]: http://join.reactiflux.com
 [flexbox-guide-url]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 [gitter-url]: https://gitter.im/necolas/react-native-web
 [html-accessibility-url]: http://www.html5accessibility.com/
@@ -238,6 +242,5 @@ license](http://www.opensource.org/licenses/mit-license.php).
 [npm-image]: https://badge.fury.io/js/react-native-web.svg
 [npm-url]: https://npmjs.org/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/
-[slack-url]: https://reactiflux.slack.com/messages/react-native-web/
 [travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
 [travis-url]: https://travis-ci.org/necolas/react-native-web
