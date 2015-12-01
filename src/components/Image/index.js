@@ -83,7 +83,7 @@ class Image extends React.Component {
   static defaultProps = {
     accessible: true,
     defaultSource: {},
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     source: {},
     style: styles.initial
   }
