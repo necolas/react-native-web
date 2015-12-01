@@ -88,17 +88,18 @@ suite('components/TextInput', () => {
 
   test('prop "maxNumberOfLines"', () => {
     const style = { borderWidth: 0, fontSize: 20, lineHeight: 1 }
-    const value = (() => {
+    const generateValue = () => {
       let str = ''
       while (str.length < 100) str += 'x'
       return str
-    }())
+    }
+
     let dom = utils.renderAndInject(
       <TextInput
         maxNumberOfLines={3}
         multiline
         style={style}
-        value={value}
+        value={generateValue()}
       />
     )
     const height = dom.getBoundingClientRect().height
