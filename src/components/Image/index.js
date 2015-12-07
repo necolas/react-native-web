@@ -17,7 +17,7 @@ const imageStyleKeys = Object.keys(ImageStylePropTypes)
 const styles = StyleSheet.create({
   initial: {
     alignSelf: 'flex-start',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'transparent',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover'
