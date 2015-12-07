@@ -64,7 +64,7 @@ Defaults:
 ```js
 {
   alignSelf: 'flex-start',
-  backgroundColor: 'lightGray'
+  backgroundColor: 'transparent'
 }
 ```
 
