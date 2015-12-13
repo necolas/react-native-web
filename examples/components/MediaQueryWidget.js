@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
     borderWidth: 1,
-    margin: '10px 0',
+    marginVertical: 10,
     padding: 10,
     textAlign: 'center'
   },

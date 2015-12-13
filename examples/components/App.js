@@ -213,7 +213,8 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   root: {
     common: {
-      margin: '0 auto'
+      marginVertical: 0,
+      marginHorizontal: 'auto'
     },
     mqSmall: {
       maxWidth: '400px'
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexGrow: 1,
     justifyContent: 'center',
-    borderWidth: '1px'
+    borderWidth: 1
   },
   horizontalBox: {
     width: '50px'

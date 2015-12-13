@@ -54,6 +54,8 @@ export default {
     'left',
     // margin
     'margin',
+    'marginHorizontal',
+    'marginVertical',
     'marginBottom',
     'marginLeft',
     'marginRight',
@@ -70,6 +72,8 @@ export default {
     'overflowY',
     // padding
     'padding',
+    'paddingHorizontal',
+    'paddingVertical',
     'paddingBottom',
     'paddingLeft',
     'paddingRight',

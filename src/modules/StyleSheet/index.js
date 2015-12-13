@@ -1,7 +1,9 @@
 import { resetCSS, predefinedCSS, predefinedClassNames } from './predefs'
+import expandStyle from './expandStyle'
 import getStyleObjects from './getStyleObjects'
 import prefixer from './prefixer'
 import Store from './Store'
+import StylePropTypes from '../StylePropTypes'
 
 /**
  * Initialize the store with pointer-event styles mapping to our custom pointer
@@ -17,11 +19,18 @@ let store = createStore()
  */
 const create = (styles: Object): Object => {
   const rules = getStyleObjects(styles)
+
   rules.forEach((rule) => {
-    Object.keys(rule).forEach(property => {
-      const value = rule[property]
-      // add each declaration to the store
-      store.set(property, value)
+    const style = expandStyle(rule)
+
+    Object.keys(style).forEach((property) => {
+      if (!StylePropTypes[property]) {
+        console.error(`ReactNativeWeb: the style property "${property}" is not supported`)
+      } else {
+        const value = style[property]
+        // add each declaration to the store
+        store.set(property, value)
+      }
     })
   })
   return styles
@@ -49,15 +58,19 @@ const renderToString = () => {
 const resolve = ({ className = '', style = {} }) => {
   let _className
   let _style = {}
+  const expandedStyle = expandStyle(style)
 
   const classList = [ className ]
-  for (const prop in style) {
-    let styleClass = store.get(prop, style[prop])
+  for (const prop in expandedStyle) {
+    if (!StylePropTypes[prop]) {
+      continue
+    }
+    let styleClass = store.get(prop, expandedStyle[prop])
 
     if (styleClass) {
       classList.push(styleClass)
     } else {
-      _style[prop] = style[prop]
+      _style[prop] = expandedStyle[prop]
     }
   }
 
