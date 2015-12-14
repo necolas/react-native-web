@@ -16,8 +16,9 @@ const fixture = {
       backgroundSize: 'contain'
     }
   },
-  ignored: {
-    pading: 0
+  position: {
+    left: { left: 0 },
+    right: { right: 0 }
   }
 }
 
@@ -27,7 +28,9 @@ suite('modules/StyleSheet/getStyleObjects', () => {
     assert.deepEqual(actual, [
       { margin: 0, padding: 0 },
       { backgroundSize: 'auto' },
-      { backgroundSize: 'contain' }
+      { backgroundSize: 'contain' },
+      { left: 0 },
+      { right: 0 }
     ])
   })
 })
