@@ -5,10 +5,9 @@ export default {
   ...pickProps(CoreComponent.stylePropTypes, [
     'backgroundColor',
     'color',
-    'direction',
-    'font',
     'fontFamily',
     'fontSize',
+    'fontStyle',
     'fontWeight',
     'letterSpacing',
     'lineHeight',
@@ -30,6 +29,7 @@ export default {
     'textDecoration',
     'textTransform',
     'whiteSpace',
-    'wordWrap'
+    'wordWrap',
+    'writingDirection'
   ])
 }

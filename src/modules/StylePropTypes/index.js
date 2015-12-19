@@ -3,6 +3,10 @@ import { PropTypes } from 'react'
 const { number, string } = PropTypes
 const numberOrString = PropTypes.oneOfType([ number, string ])
 
+/**
+ * Any properties marked @private are used internally in resets or property
+ * mappings.
+ */
 export default {
   alignContent: string,
   alignItems: string,
@@ -43,16 +47,16 @@ export default {
   clear: string,
   color: string,
   cursor: string,
-  direction: string,
   display: string,
-  flex: string,
+  direction: string, /* @private */
+  flex: string, /* @private */
   flexBasis: string,
   flexDirection: string,
   flexGrow: numberOrString,
   flexShrink: numberOrString,
   flexWrap: string,
   float: string,
-  font: string,
+  font: string, /* @private */
   fontFamily: string,
   fontSize: numberOrString,
   fontStyle: string,
@@ -99,5 +103,6 @@ export default {
   whiteSpace: string,
   width: numberOrString,
   wordWrap: string,
+  writingDirection: string,
   zIndex: numberOrString
 }

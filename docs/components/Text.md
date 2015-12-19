@@ -55,7 +55,6 @@ This function is called on press.
 
 + `backgroundColor`
 + `color`
-+ `direction`
 + `fontFamily`
 + `fontSize`
 + `fontStyle`
@@ -69,6 +68,7 @@ This function is called on press.
 + `textTransform`
 + `whiteSpace`
 + `wordWrap`
++ `writingDirection`
 
 **testID**: string
 
@@ -102,16 +102,16 @@ class PrettyText extends Component {
         ...other
         style={{
           ...style,
-          ...localStyle.color[color],
-          ...localStyle.size[size],
-          ...localStyle.weight[weight]
+          ...styles.color[color],
+          ...styles.size[size],
+          ...styles.weight[weight]
         }}
       />
     );
   }
 }
 
-const localStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   color: {
     white: { color: 'white' },
     gray: { color: 'gray' },

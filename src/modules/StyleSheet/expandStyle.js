@@ -8,7 +8,8 @@ const styleShortHands = {
   marginVertical: [ 'marginTop', 'marginBottom' ],
   padding: [ 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft' ],
   paddingHorizontal: [ 'paddingRight', 'paddingLeft' ],
-  paddingVertical: [ 'paddingTop', 'paddingBottom' ]
+  paddingVertical: [ 'paddingTop', 'paddingBottom' ],
+  writingDirection: [ 'direction' ]
 }
 
 /**
