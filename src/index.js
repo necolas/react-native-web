@@ -11,11 +11,7 @@ import TextInput from './components/TextInput'
 import Touchable from './components/Touchable'
 import View from './components/View'
 
-export default React
-
-export {
-  StyleSheet,
-
+const ReactNative = {
   // components
   Image,
   ListView,
@@ -23,5 +19,13 @@ export {
   Text,
   TextInput,
   Touchable,
-  View
+  View,
+
+  // apis
+  StyleSheet,
+
+  // React
+  ...React
 }
+
+module.exports = ReactNative
