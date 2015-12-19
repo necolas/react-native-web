@@ -42,8 +42,8 @@ export default class GridView extends Component {
 
     const contentContainerStyle = {
       ...styles.contentContainer,
-      margin: `0 calc(-0.5 * ${alley})`,
-      padding: `0 ${gutter}`
+      marginHorizontal: `calc(-0.5 * ${alley})`,
+      paddingHorizontal: `${gutter}`
     }
 
     const newChildren = React.Children.map(children, (child) => {
@@ -51,7 +51,7 @@ export default class GridView extends Component {
         style: {
           ...child.props.style,
           ...styles.column,
-          margin: `0 calc(0.5 * ${alley})`
+          marginHorizontal: `calc(0.5 * ${alley})`
         }
       })
     })
