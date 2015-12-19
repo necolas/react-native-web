@@ -1,9 +1,10 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
+import View from '../View'
 
 export default {
+  ...View.stylePropTypes,
   ...pickProps(CoreComponent.stylePropTypes, [
-    'backgroundColor',
     'color',
     'fontFamily',
     'fontSize',
@@ -11,20 +12,6 @@ export default {
     'fontWeight',
     'letterSpacing',
     'lineHeight',
-    'margin',
-    'marginHorizontal',
-    'marginVertical',
-    'marginBottom',
-    'marginLeft',
-    'marginRight',
-    'marginTop',
-    'padding',
-    'paddingHorizontal',
-    'paddingVertical',
-    'paddingBottom',
-    'paddingLeft',
-    'paddingRight',
-    'paddingTop',
     'textAlign',
     'textDecoration',
     'textTransform',
