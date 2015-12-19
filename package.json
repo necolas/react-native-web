@@ -10,7 +10,7 @@
     "build": "rm -rf ./dist && webpack --config config/webpack.config.publish.js --sort-assets-by --progress",
     "examples": "webpack-dev-server --config config/webpack.config.example.js --inline --hot --colors --quiet",
     "lint": "eslint config examples src",
-    "prepublish": "NODE_ENV=publish npm run build",
+    "prepublish": "npm run build",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "karma start config/karma.config.js",
     "test:watch": "npm run test:unit -- --no-single-run"

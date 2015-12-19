@@ -1,17 +1,21 @@
 var webpack = require('webpack')
 
 var DedupePlugin = webpack.optimize.DedupePlugin
-var EnvironmentPlugin = webpack.EnvironmentPlugin
+var DefinePlugin = webpack.DefinePlugin
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
 var plugins = [
   new DedupePlugin(),
-  new EnvironmentPlugin('NODE_ENV'),
   new OccurenceOrderPlugin()
 ]
 
 if (process.env.NODE_ENV === 'production') {
+  plugins.push(
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  )
   plugins.push(
     new UglifyJsPlugin({
       compress: {
