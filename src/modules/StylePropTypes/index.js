@@ -38,6 +38,7 @@ export default {
   borderRightWidth: numberOrString,
   borderTopWidth: numberOrString,
   bottom: numberOrString,
+  boxShadow: string,
   boxSizing: string,
   clear: string,
   color: string,
