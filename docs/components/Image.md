@@ -57,7 +57,7 @@ could be an http address or a base64 encoded image.
 
 **style**: style
 
-[View](View.md) style
++ ...[View#style](View.md)
 
 Defaults:
 
@@ -76,11 +76,9 @@ Used to locate a view in end-to-end tests.
 
 ```js
 import placeholderAvatar from './placeholderAvatar.png'
-import React, { Image, StyleSheet } from 'react-native-web'
+import React, { Component, Image, PropTypes, StyleSheet } from 'react-native-web'
 
-const { Component, PropTypes } = React;
-
-export default class Avatar extends Component {
+export default class ImageExample extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = { loading: true }
@@ -112,7 +110,11 @@ export default class Avatar extends Component {
         onLoad={this._onLoad.bind(this)}
         resizeMode='cover'
         source={{ uri: user.avatarUrl }}
-        style={{ ...styles.base, ...styles[size], ...loadingStyle }}
+        style={{
+          ...styles.base,
+          ...styles[size],
+          ...loadingStyle
+        }}
       />
     )
   }
@@ -121,23 +123,23 @@ export default class Avatar extends Component {
 const styles = StyleSheet.create({
   base: {
     borderColor: 'white',
-    borderRadius: '5px',
-    borderWidth: '5px'
+    borderRadius: 5,
+    borderWidth: 5
   },
   loading: {
     opacity: 0.5
   },
   small: {
-    height: '32px',
-    width: '32px'
+    height: 32,
+    width: 32
   },
   normal: {
-    height: '48px',
-    width: '48px'
+    height: 48,
+    width: 48
   },
   large: {
-    height: '64px',
-    width: '64px'
+    height: 64,
+    width: 64
   }
 })
 ```

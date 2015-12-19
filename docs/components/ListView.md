@@ -10,28 +10,17 @@ Content to display over the image.
 
 **style**: style
 
-+ `property` type
-
-Defaults:
-
-```js
-{
-}
-```
++ ...[View#style](View.md)
 
 ## Examples
 
 ```js
-import React, { ListView } from 'react-native-web'
+import React, { Component, ListView, PropTypes } from 'react-native-web'
 
-const { Component, PropTypes } = React;
+export default class ListViewExample extends Component {
+  static propTypes = {}
 
-class Example extends Component {
-  static propTypes = {
-  }
-
-  static defaultProps = {
-  }
+  static defaultProps = {}
 
   render() {
     return (

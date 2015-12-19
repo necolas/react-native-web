@@ -38,16 +38,15 @@ time the view is scrolled.
 
 **style**: style
 
-[View](View.md) style
++ ...[View#style](View.md)
 
 ## Examples
 
 ```js
-import React, { ScrollView, StyleSheet } from 'react-native-web'
-
+import React, { Component, ScrollView, StyleSheet } from 'react-native-web'
 import Item from './Item'
 
-export default class App extends React.Component {
+export default class ScrollViewExample extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
@@ -75,10 +74,10 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   root: {
-    borderWidth: '1px'
+    borderWidth: 1
   },
   container: {
-    padding: '10px'
+    padding: 10
   }
 })
 ```

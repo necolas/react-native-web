@@ -1,13 +1,11 @@
 # Text
 
 `Text` is component for displaying text. It supports style, basic touch
-handling, and inherits typographic styles from ancestor elements. In a
-divergence from React Native, components other than `Text` can be children of a
-`Text` component.
+handling, and inherits typographic styles from ancestor elements.
 
 The `Text` is unique relative to layout: child elements use text layout
-(`inline-block`) rather than flexbox layout. This means that elements inside of
-a `Text` are not rectangles, as they wrap when reaching the edge of their
+(`inline`) rather than flexbox layout. This means that elements inside of a
+`Text` are not rectangles, as they wrap when reaching the edge of their
 container.
 
 Unsupported React Native props:
@@ -53,7 +51,7 @@ This function is called on press.
 
 **style**: style
 
-+ `backgroundColor`
++ ...[View#style](View.md)
 + `color`
 + `fontFamily`
 + `fontSize`
@@ -61,8 +59,6 @@ This function is called on press.
 + `fontWeight`
 + `letterSpacing`
 + `lineHeight`
-+ `margin`
-+ `padding`
 + `textAlign`
 + `textDecoration`
 + `textTransform`
@@ -77,18 +73,18 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { StyleSheet, Text } from 'react-native-web'
+import React, { Component, PropTypes, StyleSheet, Text } from 'react-native-web'
 
-const { Component, PropTypes } = React
-
-class PrettyText extends Component {
+export default class PrettyText extends Component {
   static propTypes = {
+    ...Text.propTypes,
     color: PropTypes.oneOf(['white', 'gray', 'red']),
     size: PropTypes.oneOf(['small', 'normal', 'large']),
     weight: PropTypes.oneOf(['light', 'normal', 'bold'])
   }
 
   static defaultProps = {
+    ...Text.defaultProps,
     color: 'gray',
     size: 'normal',
     weight: 'normal'

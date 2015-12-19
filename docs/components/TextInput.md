@@ -130,8 +130,7 @@ If `true`, all text will automatically be selected on focus.
 
 **style**: style
 
-[View](View.md) style
-
++ ...[View#style](View.md)
 + `color`
 + `direction`
 + `fontFamily`
@@ -159,9 +158,9 @@ user edits to the value set `editable={false}`.
 ## Examples
 
 ```js
-import React, { StyleSheet, TextInput } from 'react-native-web'
+import React, { Component, StyleSheet, TextInput } from 'react-native-web'
 
-export default class AppTextInput extends React.Component {
+export default class TextInputExample extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = { isFocused: false }
@@ -192,7 +191,7 @@ export default class AppTextInput extends React.Component {
 const styles = StyleSheet.create({
   default: {
     borderColor: 'gray',
-    borderWidth: '0 0 2px 0'
+    borderBottomWidth: 2
   },
   focused: {
     borderColor: 'blue'

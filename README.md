@@ -128,7 +128,8 @@ reactStyleSheet.textContent = StyleSheet.renderToString()
 ### [`StyleSheet`](docs/apis/StyleSheet.md)
 
 StyleSheet is a style abstraction that transforms inline styles to CSS on the
-client or the server. It provides a minimal CSS reset.
+client or the server. It provides a minimal CSS reset targeting elements and
+pseudo-elements beyond the reach of React inline styles.
 
 ## Components
 
@@ -147,7 +148,7 @@ A scrollable view with event throttling.
 
 ### [`Text`](docs/components/Text.md)
 
-Displays text as an inline block and supports basic press handling.
+Displays text inline and supports basic press handling.
 
 ### [`TextInput`](docs/components/TextInput.md)
 

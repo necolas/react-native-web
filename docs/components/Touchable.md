@@ -79,21 +79,17 @@ Delay in ms, from the release of the touch, before `onPressOut` is called.
 
 **style**: style
 
-[View](View.md) style
++ ...[View#style](View.md)
 
 ## Examples
 
 ```js
-import React, { Touchable } from 'react-native-web'
+import React, { Component, PropTypes, Touchable } from 'react-native-web'
 
-const { Component, PropTypes } = React;
+export default class Example extends Component {
+  static propTypes = {}
 
-class Example extends Component {
-  static propTypes = {
-  }
-
-  static defaultProps = {
-  }
+  static defaultProps = {}
 
   render() {
     return (

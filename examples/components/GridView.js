@@ -1,6 +1,4 @@
-import React, { StyleSheet, View } from '../../src'
-
-const { Component, PropTypes } = React
+import React, { Component, PropTypes, StyleSheet, View } from '../../src'
 
 const styles = StyleSheet.create({
   root: {

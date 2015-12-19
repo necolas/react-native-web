@@ -109,6 +109,12 @@ from `style`.
 + `justifyContent`
 + `left`
 + `margin`
++ `marginBottom`
++ `marginHorizontal`
++ `marginLeft`
++ `marginRight`
++ `marginTop`
++ `marginVertical`
 + `maxHeight`
 + `maxWidth`
 + `minHeight`
@@ -119,6 +125,12 @@ from `style`.
 + `overflowX`
 + `overflowY`
 + `padding`
++ `paddingBottom`
++ `paddingHorizontal`
++ `paddingLeft`
++ `paddingRight`
++ `paddingTop`
++ `paddingVertical`
 + `position`
 + `right`
 + `top`
@@ -155,11 +167,9 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { StyleSheet, View } from 'react-native-web'
+import React, { Component, PropTypes, StyleSheet, View } from 'react-native-web'
 
-const { Component, PropTypes } = React
-
-class Example extends Component {
+export default class ViewExample extends Component {
   render() {
     return (
       <View style={styles.row}>
@@ -181,6 +191,4 @@ const styles = StyleSheet.create({
     flexGrow: 1
   }
 })
-
-export default Example
 ```
