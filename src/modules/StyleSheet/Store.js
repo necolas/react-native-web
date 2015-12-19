@@ -41,7 +41,7 @@ export default class Store {
     const getCssSelector = (property, value) => {
       let className = this.get(property, value)
       if (!obfuscate && className) {
-        className = className.replace(/[:?.%\\$#]/g, '\\$&')
+        className = className.replace(/[,":?.%\\$#]/g, '\\$&')
       }
       return className
     }

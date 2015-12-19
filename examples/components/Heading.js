@@ -1,7 +1,9 @@
-import React from 'react'
-import { StyleSheet, Text } from '../../src'
+import React, { StyleSheet, Text } from '../../src'
 
-const headingStyles = StyleSheet.create({
+const styles = StyleSheet.create({
+  root: {
+    fontFamily: '"Helvetica Neue", arial, sans-serif'
+  },
   size: {
     xlarge: {
       fontSize: '2rem',
@@ -24,7 +26,7 @@ const Heading = ({ children, size = 'normal' }) => (
   <Text
     accessibilityRole='heading'
     children={children}
-    style={headingStyles.size[size]}
+    style={{ ...styles.root, ...styles.size[size] }}
   />
 )
 

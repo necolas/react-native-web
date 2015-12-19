@@ -82,8 +82,9 @@ suite('modules/StyleSheet/Store', () => {
 
     test('replaces space characters', () => {
       const store = new Store()
+
       store.set('margin', '0 auto')
-      assert.deepEqual(store.get('margin', '0 auto'), 'margin:0-auto')
+      assert.equal(store.get('margin', '0 auto'), 'margin\:0-auto')
     })
   })
 
@@ -91,17 +92,17 @@ suite('modules/StyleSheet/Store', () => {
     test('human-readable style sheet', () => {
       const store = new Store()
       store.set('alignItems', 'center')
+      store.set('color', '#fff')
+      store.set('fontFamily', '"Helvetica Neue", Arial, sans-serif')
       store.set('marginBottom', 0)
-      store.set('margin', 1)
-      store.set('margin', 2)
-      store.set('margin', 3)
+      store.set('width', '100%')
 
       const expected = '/* 5 unique declarations */\n' +
           '.alignItems\\:center{align-items:center;}\n' +
-          '.margin\\:1px{margin:1px;}\n' +
-          '.margin\\:2px{margin:2px;}\n' +
-          '.margin\\:3px{margin:3px;}\n' +
-          '.marginBottom\\:0px{margin-bottom:0px;}'
+          '.color\\:\\#fff{color:#fff;}\n' +
+          '.fontFamily\\:\\"Helvetica-Neue\\"\\,-Arial\\,-sans-serif{font-family:"Helvetica Neue", Arial, sans-serif;}\n' +
+          '.marginBottom\\:0px{margin-bottom:0px;}\n' +
+          '.width\\:100\\%{width:100%;}'
 
       assert.equal(store.toString(), expected)
     })
