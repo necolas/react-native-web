@@ -11,6 +11,8 @@ const roleComponents = {
   form: 'form',
   heading: 'h1',
   link: 'a',
+  list: 'ul',
+  listitem: 'li',
   main: 'main',
   navigation: 'nav',
   region: 'section'

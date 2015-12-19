@@ -1,6 +1,4 @@
-import { pickProps } from '../filterObjectProps'
 import isObject from './isObject'
-import StylePropTypes from '../StylePropTypes'
 
 const isStyleObject = (obj) => {
   const values = Object.keys(obj).map((key) => obj[key])
