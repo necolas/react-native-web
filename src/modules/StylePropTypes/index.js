@@ -94,6 +94,7 @@ export default {
   textTransform: string,
   top: numberOrString,
   userSelect: string,
+  verticalAlign: string,
   visibility: string,
   whiteSpace: string,
   width: numberOrString,
