@@ -97,17 +97,14 @@ suite('components/TextInput', () => {
       return str
     }
 
-    let input = findInput(utils.renderAndInject(
+    const result = utils.shallowRender(
       <TextInput
         maxNumberOfLines={3}
         multiline
         value={generateValue()}
       />
-    ))
-    const height = input.getBoundingClientRect().height
-    // need a range because of cross-browser differences
-    assert.ok(height >= 42, height)
-    assert.ok(height <= 48, height)
+    )
+    assert.equal(findShallowInput(result).props.maxRows, 3)
   })
 
   test('prop "multiline"', () => {
@@ -126,10 +123,14 @@ suite('components/TextInput', () => {
     // with multiline
     input = findInput(utils.renderAndInject(<TextInput multiline numberOfLines={2} />))
     assert.equal(input.tagName, 'TEXTAREA')
-    const height = input.getBoundingClientRect().height
-    // need a range because of cross-browser differences
-    assert.ok(height >= 30, height)
-    assert.ok(height <= 36, height)
+
+    const result = utils.shallowRender(
+      <TextInput
+        multiline
+        numberOfLines={3}
+      />
+    )
+    assert.equal(findShallowInput(result).props.minRows, 3)
   })
 
   test('prop "onBlur"', (done) => {
