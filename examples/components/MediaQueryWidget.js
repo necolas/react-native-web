@@ -28,7 +28,7 @@ const MediaQueryWidget = ({ mediaQuery = {} }) => {
   return (
     <View style={styles.root}>
       <Text style={styles.heading}>Active Media Query</Text>
-      <Text>{`"${active.alias}"`} {active.mql.media}</Text>
+      <Text>{`"${active.alias}"`} {active.mql && active.mql.media}</Text>
     </View>
   )
 }

@@ -7,6 +7,10 @@ import ReactTestUtils from 'react-addons-test-utils'
 
 import TextInput from '../'
 
+const findInput = (dom) => dom.querySelector('input, textarea')
+const findShallowInput = (vdom) => vdom.props.children.props.children[0]
+const findShallowPlaceholder = (vdom) => vdom.props.children.props.children[1]
+
 suite('components/TextInput', () => {
   test('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel'
@@ -16,123 +20,120 @@ suite('components/TextInput', () => {
 
   test('prop "autoComplete"', () => {
     // off
-    let dom = utils.renderToDOM(<TextInput />)
-    assert.equal(dom.getAttribute('autocomplete'), undefined)
+    let input = findInput(utils.renderToDOM(<TextInput />))
+    assert.equal(input.getAttribute('autocomplete'), undefined)
     // on
-    dom = utils.renderToDOM(<TextInput autoComplete />)
-    assert.equal(dom.getAttribute('autocomplete'), 'on')
+    input = findInput(utils.renderToDOM(<TextInput autoComplete />))
+    assert.equal(input.getAttribute('autocomplete'), 'on')
   })
 
   test('prop "autoFocus"', () => {
     // false
-    let dom = utils.renderToDOM(<TextInput />)
+    let input = findInput(utils.renderToDOM(<TextInput />))
     assert.deepEqual(document.activeElement, document.body)
     // true
-    dom = utils.renderToDOM(<TextInput autoFocus />)
-    assert.deepEqual(document.activeElement, dom)
+    input = findInput(utils.renderToDOM(<TextInput autoFocus />))
+    assert.deepEqual(document.activeElement, input)
   })
 
   utils.testIfDocumentFocused('prop "clearTextOnFocus"', () => {
     const defaultValue = 'defaultValue'
     // false
-    let dom = utils.renderAndInject(<TextInput defaultValue={defaultValue} />)
-    dom.focus()
-    assert.equal(dom.value, defaultValue)
+    let input = findInput(utils.renderAndInject(<TextInput defaultValue={defaultValue} />))
+    input.focus()
+    assert.equal(input.value, defaultValue)
     // true
-    dom = utils.renderAndInject(<TextInput clearTextOnFocus defaultValue={defaultValue} />)
-    dom.focus()
-    assert.equal(dom.value, '')
+    input = findInput(utils.renderAndInject(<TextInput clearTextOnFocus defaultValue={defaultValue} />))
+    input.focus()
+    assert.equal(input.value, '')
   })
 
   test('prop "defaultValue"', () => {
     const defaultValue = 'defaultValue'
-    const result = utils.shallowRender(<TextInput defaultValue={defaultValue} />)
-    assert.equal(result.props.defaultValue, defaultValue)
+    const input = findShallowInput(utils.shallowRender(<TextInput defaultValue={defaultValue} />))
+    assert.equal(input.props.defaultValue, defaultValue)
   })
 
   test('prop "editable"', () => {
     // true
-    let dom = utils.renderToDOM(<TextInput />)
-    assert.equal(dom.getAttribute('readonly'), undefined)
+    let input = findInput(utils.renderToDOM(<TextInput />))
+    assert.equal(input.getAttribute('readonly'), undefined)
     // false
-    dom = utils.renderToDOM(<TextInput editable={false} />)
-    assert.equal(dom.getAttribute('readonly'), '')
+    input = findInput(utils.renderToDOM(<TextInput editable={false} />))
+    assert.equal(input.getAttribute('readonly'), '')
   })
 
   test('prop "keyboardType"', () => {
     // default
-    let dom = utils.renderToDOM(<TextInput />)
-    assert.equal(dom.getAttribute('type'), undefined)
-    dom = utils.renderToDOM(<TextInput keyboardType='default' />)
-    assert.equal(dom.getAttribute('type'), undefined)
+    let input = findInput(utils.renderToDOM(<TextInput />))
+    assert.equal(input.getAttribute('type'), undefined)
+    input = findInput(utils.renderToDOM(<TextInput keyboardType='default' />))
+    assert.equal(input.getAttribute('type'), undefined)
     // email-address
-    dom = utils.renderToDOM(<TextInput keyboardType='email-address' />)
-    assert.equal(dom.getAttribute('type'), 'email')
+    input = findInput(utils.renderToDOM(<TextInput keyboardType='email-address' />))
+    assert.equal(input.getAttribute('type'), 'email')
     // numeric
-    dom = utils.renderToDOM(<TextInput keyboardType='numeric' />)
-    assert.equal(dom.getAttribute('type'), 'number')
+    input = findInput(utils.renderToDOM(<TextInput keyboardType='numeric' />))
+    assert.equal(input.getAttribute('type'), 'number')
     // phone-pad
-    dom = utils.renderToDOM(<TextInput keyboardType='phone-pad' />)
-    assert.equal(dom.getAttribute('type'), 'tel')
+    input = findInput(utils.renderToDOM(<TextInput keyboardType='phone-pad' />))
+    assert.equal(input.getAttribute('type'), 'tel')
     // url
-    dom = utils.renderToDOM(<TextInput keyboardType='url' />)
-    assert.equal(dom.getAttribute('type'), 'url')
+    input = findInput(utils.renderToDOM(<TextInput keyboardType='url' />))
+    assert.equal(input.getAttribute('type'), 'url')
   })
 
   test('prop "maxLength"', () => {
-    let dom = utils.renderToDOM(<TextInput />)
-    assert.equal(dom.getAttribute('maxlength'), undefined)
-    dom = utils.renderToDOM(<TextInput maxLength={10} />)
-    assert.equal(dom.getAttribute('maxlength'), '10')
+    let input = findInput(utils.renderToDOM(<TextInput />))
+    assert.equal(input.getAttribute('maxlength'), undefined)
+    input = findInput(utils.renderToDOM(<TextInput maxLength={10} />))
+    assert.equal(input.getAttribute('maxlength'), '10')
   })
 
   test('prop "maxNumberOfLines"', () => {
-    const style = { borderWidth: 0, fontSize: 20, lineHeight: 1 }
     const generateValue = () => {
       let str = ''
       while (str.length < 100) str += 'x'
       return str
     }
 
-    let dom = utils.renderAndInject(
+    let input = findInput(utils.renderAndInject(
       <TextInput
         maxNumberOfLines={3}
         multiline
-        style={style}
         value={generateValue()}
       />
-    )
-    const height = dom.getBoundingClientRect().height
+    ))
+    const height = input.getBoundingClientRect().height
     // need a range because of cross-browser differences
-    assert.ok(height >= 60, height)
-    assert.ok(height <= 66, height)
+    assert.ok(height >= 42, height)
+    assert.ok(height <= 48, height)
   })
 
   test('prop "multiline"', () => {
     // false
-    let dom = utils.renderToDOM(<TextInput />)
-    assert.equal(dom.tagName, 'INPUT')
+    let input = findInput(utils.renderToDOM(<TextInput />))
+    assert.equal(input.tagName, 'INPUT')
     // true
-    dom = utils.renderToDOM(<TextInput multiline />)
-    assert.equal(dom.tagName, 'TEXTAREA')
+    input = findInput(utils.renderToDOM(<TextInput multiline />))
+    assert.equal(input.tagName, 'TEXTAREA')
   })
 
   test('prop "numberOfLines"', () => {
-    const style = { borderWidth: 0, fontSize: 20, lineHeight: 1 }
     // missing multiline
-    let dom = utils.renderToDOM(<TextInput numberOfLines={2} />)
-    assert.equal(dom.tagName, 'INPUT')
+    let input = findInput(utils.renderToDOM(<TextInput numberOfLines={2} />))
+    assert.equal(input.tagName, 'INPUT')
     // with multiline
-    dom = utils.renderAndInject(<TextInput multiline numberOfLines={2} style={style} />)
-    assert.equal(dom.tagName, 'TEXTAREA')
-    const height = dom.getBoundingClientRect().height
+    input = findInput(utils.renderAndInject(<TextInput multiline numberOfLines={2} />))
+    assert.equal(input.tagName, 'TEXTAREA')
+    const height = input.getBoundingClientRect().height
     // need a range because of cross-browser differences
-    assert.ok(height >= 40)
-    assert.ok(height <= 46)
+    assert.ok(height >= 30, height)
+    assert.ok(height <= 36, height)
   })
 
   test('prop "onBlur"', (done) => {
-    const input = utils.renderToDOM(<TextInput onBlur={onBlur} />)
+    const input = findInput(utils.renderToDOM(<TextInput onBlur={onBlur} />))
     ReactTestUtils.Simulate.blur(input)
     function onBlur(e) {
       assert.ok(e)
@@ -141,7 +142,7 @@ suite('components/TextInput', () => {
   })
 
   test('prop "onChange"', (done) => {
-    const input = utils.renderToDOM(<TextInput onChange={onChange} />)
+    const input = findInput(utils.renderToDOM(<TextInput onChange={onChange} />))
     ReactTestUtils.Simulate.change(input)
     function onChange(e) {
       assert.ok(e)
@@ -151,7 +152,7 @@ suite('components/TextInput', () => {
 
   test('prop "onChangeText"', (done) => {
     const newText = 'newText'
-    const input = utils.renderToDOM(<TextInput onChangeText={onChangeText} />)
+    const input = findInput(utils.renderToDOM(<TextInput onChangeText={onChangeText} />))
     ReactTestUtils.Simulate.change(input, { target: { value: newText } })
     function onChangeText(text) {
       assert.equal(text, newText)
@@ -160,7 +161,7 @@ suite('components/TextInput', () => {
   })
 
   test('prop "onFocus"', (done) => {
-    const input = utils.renderToDOM(<TextInput onFocus={onFocus} />)
+    const input = findInput(utils.renderToDOM(<TextInput onFocus={onFocus} />))
     ReactTestUtils.Simulate.focus(input)
     function onFocus(e) {
       assert.ok(e)
@@ -171,7 +172,7 @@ suite('components/TextInput', () => {
   test('prop "onLayout"')
 
   test('prop "onSelectionChange"', (done) => {
-    const input = utils.renderAndInject(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />)
+    const input = findInput(utils.renderAndInject(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />))
     ReactTestUtils.Simulate.select(input, { target: { selectionStart: 0, selectionEnd: 3 } })
     function onSelectionChange(e) {
       assert.equal(e.selectionEnd, 3)
@@ -180,30 +181,42 @@ suite('components/TextInput', () => {
     }
   })
 
-  test('prop "placeholder"')
+  test('prop "placeholder"', () => {
+    const placeholder = 'placeholder'
+    const result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} />))
+    assert.equal(result.props.children, placeholder)
+  })
 
-  test('prop "placeholderTextColor"')
+  test('prop "placeholderTextColor"', () => {
+    const placeholder = 'placeholder'
+
+    let result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} />))
+    assert.equal(result.props.style.color, 'darkgray')
+
+    result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} placeholderTextColor='red' />))
+    assert.equal(result.props.style.color, 'red')
+  })
 
   test('prop "secureTextEntry"', () => {
-    let dom = utils.renderToDOM(<TextInput secureTextEntry />)
-    assert.equal(dom.getAttribute('type'), 'password')
+    let input = findInput(utils.renderToDOM(<TextInput secureTextEntry />))
+    assert.equal(input.getAttribute('type'), 'password')
     // ignored for multiline
-    dom = utils.renderToDOM(<TextInput multiline secureTextEntry />)
-    assert.equal(dom.getAttribute('type'), undefined)
+    input = findInput(utils.renderToDOM(<TextInput multiline secureTextEntry />))
+    assert.equal(input.getAttribute('type'), undefined)
   })
 
   utils.testIfDocumentFocused('prop "selectTextOnFocus"', () => {
     const text = 'Text'
     // false
-    let dom = utils.renderAndInject(<TextInput defaultValue={text} />)
-    dom.focus()
-    assert.equal(dom.selectionEnd, 0)
-    assert.equal(dom.selectionStart, 0)
+    let input = findInput(utils.renderAndInject(<TextInput defaultValue={text} />))
+    input.focus()
+    assert.equal(input.selectionEnd, 0)
+    assert.equal(input.selectionStart, 0)
     // true
-    dom = utils.renderAndInject(<TextInput defaultValue={text} selectTextOnFocus />)
-    dom.focus()
-    assert.equal(dom.selectionEnd, 4)
-    assert.equal(dom.selectionStart, 0)
+    input = findInput(utils.renderAndInject(<TextInput defaultValue={text} selectTextOnFocus />))
+    input.focus()
+    assert.equal(input.selectionEnd, 4)
+    assert.equal(input.selectionStart, 0)
   })
 
   test('prop "style"', () => {
@@ -218,7 +231,7 @@ suite('components/TextInput', () => {
 
   test('prop "value"', () => {
     const value = 'value'
-    const result = utils.shallowRender(<TextInput value={value} />)
-    assert.equal(result.props.value, value)
+    const input = findShallowInput(utils.shallowRender(<TextInput value={value} />))
+    assert.equal(input.props.value, value)
   })
 })

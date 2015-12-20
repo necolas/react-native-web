@@ -48,9 +48,10 @@ updating the `value` prop to keep the controlled state in sync.
 
 If `false`, text is not editable (i.e., read-only).
 
-**keyboardType**: oneOf('default', 'email-address', 'numeric', 'phone-pad', 'url') = 'default'
+**keyboardType**: oneOf('default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search') = 'default'
 
-Determines which keyboard to open.
+Determines which keyboard to open. (NOTE: Safari iOS requires an ancestral
+`<form action>` element to display the `search` keyboard).
 
 (Not available when `multiline` is `true`.)
 
@@ -111,11 +112,12 @@ object is passed as an argument to the callback handler.
 
 **placeholder**: string
 
-The string that will be rendered before text input has been entered.
+The string that will be rendered in an empty `TextInput` before text has been
+entered.
 
 **placeholderTextColor**: string
 
-TODO. The text color of the placeholder string.
+The text color of the placeholder string.
 
 **secureTextEntry**: bool = false
 
@@ -130,18 +132,8 @@ If `true`, all text will automatically be selected on focus.
 
 **style**: style
 
-+ ...[View#style](View.md)
-+ `color`
-+ `direction`
-+ `fontFamily`
-+ `fontSize`
-+ `fontStyle`
-+ `fontWeight`
-+ `letterSpacing`
-+ `lineHeight`
-+ `textAlign`
-+ `textDecoration`
-+ `textTransform`
++ ...[Text#style](Text.md)
++ `outline`
 
 **testID**: string
 
@@ -166,6 +158,10 @@ export default class TextInputExample extends Component {
     this.state = { isFocused: false }
   }
 
+  _onBlur(e) {
+    this.setState({ isFocused: false })
+  }
+
   _onFocus(e) {
     this.setState({ isFocused: true })
   }
@@ -177,6 +173,7 @@ export default class TextInputExample extends Component {
         maxNumberOfLines={5}
         multiline
         numberOfLines={2}
+        onBlur={this._onBlur.bind(this)}
         onFocus={this._onFocus.bind(this)}
         placeholder={`What's happening?`}
         style={{

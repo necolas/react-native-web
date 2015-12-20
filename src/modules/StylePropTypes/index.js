@@ -80,6 +80,7 @@ export default {
   minWidth: numberOrString,
   opacity: numberOrString,
   order: numberOrString,
+  outline: string,
   overflow: string,
   overflowX: string,
   overflowY: string,

@@ -3,27 +3,50 @@ import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../modules/StyleSheet'
+import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
 import TextInputStylePropTypes from './TextInputStylePropTypes'
+import View from '../View'
 
 const textInputStyleKeys = Object.keys(TextInputStylePropTypes)
 
 const styles = StyleSheet.create({
   initial: {
+    ...View.defaultProps.style,
+    borderColor: 'black',
+    borderWidth: 1
+  },
+  input: {
     appearance: 'none',
     backgroundColor: 'transparent',
-    borderColor: 'black',
-    borderWidth: '1px',
+    borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
+    flexGrow: 1,
     font: 'inherit',
-    padding: 0
+    padding: 0,
+    zIndex: 1
+  },
+  placeholder: {
+    bottom: 0,
+    color: 'darkgray',
+    left: 0,
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    whiteSpace: 'pre'
   }
 })
 
 class TextInput extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = { showPlaceholder: !props.value && !props.defaultValue }
+  }
+
   static propTypes = {
-    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
+    ...View.propTypes,
     autoComplete: PropTypes.bool,
     autoFocus: PropTypes.bool,
     clearTextOnFocus: PropTypes.bool,
@@ -61,20 +84,26 @@ class TextInput extends React.Component {
 
   _onBlur(e) {
     const { onBlur } = this.props
+    const value = e.target.value
+    this.setState({ showPlaceholder: value === '' })
     if (onBlur) onBlur(e)
   }
 
   _onChange(e) {
     const { onChange, onChangeText } = this.props
-    if (onChangeText) onChangeText(e.target.value)
+    const value = e.target.value
+    this.setState({ showPlaceholder: value === '' })
+    if (onChangeText) onChangeText(value)
     if (onChange) onChange(e)
   }
 
   _onFocus(e) {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
-    const node = ReactDOM.findDOMNode(this)
+    const node = ReactDOM.findDOMNode(this.refs.input)
+    const value = e.target.value
     if (clearTextOnFocus) node.value = ''
     if (selectTextOnFocus) node.select()
+    this.setState({ showPlaceholder: value === '' })
     if (onFocus) onFocus(e)
   }
 
@@ -92,7 +121,9 @@ class TextInput extends React.Component {
 
   render() {
     const {
+      /* eslint-disable react/prop-types */
       accessibilityLabel,
+      /* eslint-enable react/prop-types */
       autoComplete,
       autoFocus,
       defaultValue,
@@ -102,11 +133,9 @@ class TextInput extends React.Component {
       maxNumberOfLines,
       multiline,
       numberOfLines,
-      onBlur,
-      onChange,
-      onChangeText,
       onSelectionChange,
       placeholder,
+      placeholderTextColor,
       secureTextEntry,
       style,
       testID,
@@ -126,6 +155,10 @@ class TextInput extends React.Component {
       case 'phone-pad':
         type = 'tel'
         break
+      case 'search':
+      case 'web-search':
+        type = 'search'
+        break
       case 'url':
         type = 'url'
         break
@@ -136,23 +169,16 @@ class TextInput extends React.Component {
     }
 
     const propsCommon = {
-      accessibilityLabel,
       autoComplete: autoComplete && 'on',
       autoFocus,
-      className: 'TextInput',
       defaultValue,
       maxLength,
-      onBlur: onBlur && this._onBlur.bind(this),
-      onChange: (onChange || onChangeText) && this._onChange.bind(this),
+      onBlur: this._onBlur.bind(this),
+      onChange: this._onChange.bind(this),
       onFocus: this._onFocus.bind(this),
       onSelect: onSelectionChange && this._onSelectionChange.bind(this),
-      placeholder,
       readOnly: !editable,
-      style: {
-        ...styles.initial,
-        ...resolvedStyle
-      },
-      testID,
+      style: { ...styles.input, outline: style.outline },
       value
     }
 
@@ -172,7 +198,26 @@ class TextInput extends React.Component {
     const props = multiline ? propsMultiline : propsSingleline
 
     return (
-      <CoreComponent {...props} />
+      <CoreComponent
+        accessibilityLabel={accessibilityLabel}
+        className='TextInput'
+        style={{
+          ...styles.initial,
+          ...resolvedStyle
+        }}
+        testID={testID}
+      >
+        <View style={{ flexGrow: 1 }}>
+          <CoreComponent {...props} ref='input' />
+          {placeholder && this.state.showPlaceholder && <Text
+            pointerEvents='none'
+            style={{
+              ...styles.placeholder,
+              ...(placeholderTextColor && { color: placeholderTextColor })
+            }}
+          >{placeholder}</Text>}
+        </View>
+      </CoreComponent>
     )
   }
 }

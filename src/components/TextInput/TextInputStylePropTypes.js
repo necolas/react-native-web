@@ -1,20 +1,7 @@
-import { pickProps } from '../../modules/filterObjectProps'
-import View from '../View'
-import CoreComponent from '../CoreComponent'
+import React from 'react'
+import Text from '../Text'
 
 export default {
-  ...(View.stylePropTypes),
-  ...pickProps(CoreComponent.stylePropTypes, [
-    'color',
-    'direction',
-    'fontFamily',
-    'fontSize',
-    'fontStyle',
-    'fontWeight',
-    'letterSpacing',
-    'lineHeight',
-    'textAlign',
-    'textDecoration',
-    'textTransform'
-  ])
+  ...Text.stylePropTypes,
+  outline: React.PropTypes.string
 }
