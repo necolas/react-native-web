@@ -6,6 +6,9 @@
 
 [React Native][react-native-url] components and APIs for the Web.
 
+Try it out in the [React Native for Web
+Playground](http://codepen.io/necolas/pen/PZzwBR) on CodePen.
+
 * [Discord: #react-native-web on reactiflux][discord-url]
 * [Gitter: react-native-web][gitter-url]
 
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   text: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center'
   },
   title: {
@@ -174,7 +177,6 @@ flexbox][flexbox-guide-url].
 
 ### Media Queries, pseudo-classes, and pseudo-elements
 
-
 Changing styles and/or the render tree in response to device adaptation can be
 controlled in JavaScript, e.g.,
 [react-media-queries](https://github.com/bloodyowl/react-media-queries),
@@ -185,7 +187,7 @@ benefit of co-locating breakpoint-specific DOM and style changes.
 Pseudo-classes like `:hover` and `:focus` can be implemented with the `onHover`
 and `onFocus` events.
 
-Pseudo-elements are not supported.
+Pseudo-elements are not supported; elements can be used instead.
 
 ## Accessibility
 

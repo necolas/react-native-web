@@ -21,14 +21,11 @@ const roleComponents = {
 class CoreComponent extends React.Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
-    accessibilityLiveRegion: PropTypes.oneOf(['assertive', 'off', 'polite']),
+    accessibilityLiveRegion: PropTypes.oneOf([ 'assertive', 'off', 'polite' ]),
     accessibilityRole: PropTypes.string,
     accessible: PropTypes.bool,
     className: PropTypes.string,
-    component: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
-    ]),
+    component: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
     style: PropTypes.object,
     testID: PropTypes.string,
     type: PropTypes.string

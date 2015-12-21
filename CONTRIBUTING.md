@@ -1,25 +1,24 @@
 # Contributing to this project
 
 The issue tracker is the preferred channel for [bug reports](#bugs),
-[features requests](#features) and [submitting pull
-requests](#pull-requests).
+[features requests](#features), and [submitting pull requests](#pull-requests).
 
 <a name="bugs"></a>
 ## Bug reports
 
 A bug is a _demonstrable problem_ that is caused by the code in the repository.
-Good bug reports are extremely helpful - thank you!
+Good bug reports are extremely helpful - thank you! You can compare the
+behaviour against that expected with React Native by using the [React Native
+Playground](https://rnplay.org/)
 
 Guidelines for bug reports:
 
 1. **Use the GitHub issue search** &mdash; check if the issue has already been
-   reported.
+   reported or fixed in `master`.
 
-2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
-   latest `master` or development branch in the repository.
-
-3. **Isolate the problem** &mdash; create a [reduced test
-   case](http://css-tricks.com/reduced-test-cases/) and a live example.
+2. **Isolate the problem** &mdash; create a [reduced test
+   case](http://css-tricks.com/reduced-test-cases/) using this
+   [codepen](https://codepen.io/necolas/pen/PZzwBR?editors=001).
 
 A good bug report contains as much detail as possible. What is your
 environment? What steps will reproduce the issue? What browser(s) and OS
@@ -49,9 +48,9 @@ Example:
 ## Feature requests
 
 Feature requests are welcome. But take a moment to find out whether your idea
-fits with the scope and aims of the project. It's up to *you* to make a strong
-case to convince the project's developers of the merits of this feature. Please
-provide as much detail and context as possible.
+fits with the scope and aims of the project (i.e., is this for parity with
+React Native? does it make sense on the Web?). Please provide as much detail
+and context as you think is necessary to make your case.
 
 
 <a name="pull-requests"></a>
@@ -70,7 +69,8 @@ Development commands:
 * `npm run build` – build the library
 * `npm run examples` – start the dev server and develop against live examples
 * `npm run lint` – run the linter
-* `npm run test` – run the linter and unit tests
+* `npm run test:watch` – run and watch the unit tests
+* `npm test` – run the linter and unit tests
 
 Please follow this process for submitting a patch:
 
