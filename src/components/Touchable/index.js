@@ -43,11 +43,11 @@ class Touchable extends React.Component {
 
   static defaultProps = {
     accessibilityRole: 'button',
-    activeOpacity: 1,
-    activeUnderlayColor: 'transparent',
-    delayLongPress: 1000,
+    activeOpacity: 0.8,
+    activeUnderlayColor: 'black',
+    delayLongPress: 500,
     delayPressIn: 0,
-    delayPressOut: 0,
+    delayPressOut: 100,
     style: styles.initial
   }
 
