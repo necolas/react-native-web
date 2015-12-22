@@ -8,12 +8,13 @@ module.exports = assign({}, base, {
   },
   externals: [{
     'react': true,
-    'react-dom': true
+    'react-dom': true,
+    'react-dom/server': true
   }],
   output: {
     filename: 'react-native-web.js',
     library: 'ReactNativeWeb',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
     path: constants.DIST_DIRECTORY
   }
 })

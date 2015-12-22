@@ -2,8 +2,7 @@ import { MediaProvider, matchMedia } from 'react-media-queries'
 import App from './components/App'
 import createGetter from 'react-media-queries/lib/createMediaQueryGetter'
 import createListener from 'react-media-queries/lib/createMediaQueryListener'
-import React, { StyleSheet } from '../src'
-import ReactDOM from 'react-dom'
+import React from '../src'
 
 const mediaQueries = {
   small: '(min-width: 300px)',
@@ -12,11 +11,9 @@ const mediaQueries = {
 }
 const ResponsiveApp = matchMedia()(App)
 
-ReactDOM.render(
+React.render(
   <MediaProvider getMedia={createGetter(mediaQueries)} listener={createListener(mediaQueries)}>
     <ResponsiveApp />
   </MediaProvider>,
   document.getElementById('react-root')
 )
-
-document.getElementById('react-stylesheet').textContent = StyleSheet.renderToString()
