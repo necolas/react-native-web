@@ -7,7 +7,8 @@ module.exports = {
   },
   externals: [{
     'react': true,
-    'react-dom': true
+    'react-dom': true,
+    'react-dom/server': true
   }],
   output: {
     filename: 'react-native-web.js',

@@ -32,8 +32,9 @@ npm install --save react react-dom react-native-web
 
 ## Example
 
-React Native for Web exports its components and a reference to the `React`
-installation. Styles are defined with, and used as JavaScript objects.
+React Native for Web exports its components, a reference to the `react`
+installation, and the `react-dom` methods (customized for Web). Styles are defined
+with, and used as JavaScript objects.
 
 Component:
 
@@ -87,22 +88,20 @@ const styles = StyleSheet.create({
 })
 ```
 
-Pre-render styles on the server:
+Pre-rendering on the server automatically includes your app styles:
 
 ```js
 // server.js
 import App from './components/App'
-import React, { StyleSheet } from 'react-native-web'
+import React from 'react-native-web'
 
 const html = React.renderToString(<App />);
-const css = StyleSheet.renderToString();
 
 const Html = () => (
   <html>
     <head>
       <meta charSet="utf-8" />
       <meta content="initial-scale=1,width=device-width" name="viewport" />
-      <style id="react-stylesheet" dangerouslySetInnerHTML={{ __html: css } />
     </head>
     <body>
       <div id="react-root" dangerouslySetInnerHTML={{ __html: html }} />
@@ -111,19 +110,14 @@ const Html = () => (
 )
 ```
 
-Render styles on the client:
+Rendering on the client automatically includes your app styles:
 
 ```js
 // client.js
 import App from './components/App'
-import React, { StyleSheet } from 'react-native-web'
-import ReactDOM from 'react-dom'
+import React from 'react-native-web'
 
-const reactRoot = document.getElementById('react-root')
-const reactStyleSheet = document.getElementById('react-stylesheet')
-
-ReactDOM.render(<App />, reactRoot)
-reactStyleSheet.textContent = StyleSheet.renderToString()
+React.render(<App />, document.getElementById('react-root'))
 ```
 
 ## APIs
