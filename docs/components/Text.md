@@ -61,6 +61,7 @@ This function is called on press.
 + `lineHeight`
 + `textAlign`
 + `textDecoration`
++ `textShadow`
 + `textTransform`
 + `whiteSpace`
 + `wordWrap`

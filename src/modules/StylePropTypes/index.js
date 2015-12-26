@@ -1,23 +1,25 @@
 import { PropTypes } from 'react'
 
-const { number, string } = PropTypes
-const numberOrString = PropTypes.oneOfType([ number, string ])
+const { number, oneOf, oneOfType, string } = PropTypes
+const numberOrString = oneOfType([ number, string ])
 
 /**
  * Any properties marked @private are used internally in resets or property
  * mappings.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
  */
 export default {
-  alignContent: string,
-  alignItems: string,
-  alignSelf: string,
+  alignContent: oneOf([ 'center', 'flex-end', 'flex-start', 'space-around', 'space-between', 'stretch' ]),
+  alignItems: oneOf([ 'baseline', 'center', 'flex-end', 'flex-start', 'stretch' ]),
+  alignSelf: oneOf([ 'auto', 'baseline', 'center', 'flex-end', 'flex-start', 'stretch' ]),
   appearance: string,
   backfaceVisibility: string,
-  backgroundAttachment: string,
+  backgroundAttachment: oneOf([ 'fixed', 'local', 'scroll' ]),
   backgroundClip: string,
   backgroundColor: string,
   backgroundImage: string,
-  backgroundOrigin: string,
+  backgroundOrigin: oneOf([ 'border-box', 'content-box', 'padding-box' ]),
   backgroundPosition: string,
   backgroundRepeat: string,
   backgroundSize: string,
@@ -43,7 +45,7 @@ export default {
   borderTopWidth: numberOrString,
   bottom: numberOrString,
   boxShadow: string,
-  boxSizing: string,
+  boxSizing: oneOf([ 'border-box', 'content-box' ]),
   clear: string,
   color: string,
   cursor: string,
@@ -51,18 +53,18 @@ export default {
   direction: string, /* @private */
   flex: number,
   flexBasis: string,
-  flexDirection: string,
+  flexDirection: oneOf([ 'column', 'column-reverse', 'row', 'row-reverse' ]),
   flexGrow: number,
   flexShrink: number,
-  flexWrap: string,
-  float: string,
+  flexWrap: oneOf([ 'nowrap', 'wrap', 'wrap-reverse' ]),
+  float: oneOf([ 'left', 'none', 'right' ]),
   font: string, /* @private */
   fontFamily: string,
   fontSize: numberOrString,
   fontStyle: string,
   fontWeight: string,
   height: numberOrString,
-  justifyContent: string,
+  justifyContent: oneOf([ 'center', 'flex-end', 'flex-start', 'space-around', 'space-between' ]),
   left: numberOrString,
   letterSpacing: string,
   lineHeight: numberOrString,
@@ -91,16 +93,17 @@ export default {
   paddingRight: numberOrString,
   paddingTop: numberOrString,
   paddingVertical: numberOrString,
-  position: string,
+  position: oneOf([ 'absolute', 'fixed', 'relative', 'static' ]),
   right: numberOrString,
-  textAlign: string,
+  textAlign: oneOf([ 'center', 'justify', 'justify-all', 'left', 'right' ]),
   textDecoration: string,
   textOverflow: string,
-  textTransform: string,
+  textShadow: string,
+  textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
   top: numberOrString,
   userSelect: string,
   verticalAlign: string,
-  visibility: string,
+  visibility: oneOf([ 'hidden', 'visible' ]),
   whiteSpace: string,
   width: numberOrString,
   wordWrap: string,

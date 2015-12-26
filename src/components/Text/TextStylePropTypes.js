@@ -14,6 +14,7 @@ export default {
     'lineHeight',
     'textAlign',
     'textDecoration',
+    'textShadow',
     'textTransform',
     'whiteSpace',
     'wordWrap',
