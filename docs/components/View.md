@@ -100,6 +100,7 @@ from `style`.
 + `boxShadow`
 + `boxSizing`
 + `cursor`
++ `flex` (number)
 + `flexBasis`
 + `flexDirection`
 + `flexGrow`
@@ -108,7 +109,7 @@ from `style`.
 + `height`
 + `justifyContent`
 + `left`
-+ `margin`
++ `margin` (single value)
 + `marginBottom`
 + `marginHorizontal`
 + `marginLeft`
@@ -124,7 +125,7 @@ from `style`.
 + `overflow`
 + `overflowX`
 + `overflowY`
-+ `padding`
++ `padding` (single value)
 + `paddingBottom`
 + `paddingHorizontal`
 + `paddingLeft`

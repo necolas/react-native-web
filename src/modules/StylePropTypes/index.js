@@ -49,11 +49,11 @@ export default {
   cursor: string,
   display: string,
   direction: string, /* @private */
-  flex: string, /* @private */
+  flex: number,
   flexBasis: string,
   flexDirection: string,
-  flexGrow: numberOrString,
-  flexShrink: numberOrString,
+  flexGrow: number,
+  flexShrink: number,
   flexWrap: string,
   float: string,
   font: string, /* @private */

@@ -42,6 +42,10 @@ const expandStyle = (style) => {
       expandedProps.forEach((prop, i) => {
         resolvedStyle[expandedProps[i]] = value
       })
+    } else if (key === 'flex') {
+      resolvedStyle.flexGrow = value
+      resolvedStyle.flexShrink = 1
+      resolvedStyle.flexBasis = 'auto'
     } else {
       resolvedStyle[key] = value
     }

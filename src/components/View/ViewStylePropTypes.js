@@ -44,6 +44,7 @@ export default {
     'boxShadow',
     'boxSizing',
     'cursor',
+    'flex',
     'flexBasis',
     'flexDirection',
     'flexGrow',

@@ -4,7 +4,7 @@ import assert from 'assert'
 import expandStyle from '../expandStyle'
 
 suite('modules/StyleSheet/expandStyle', () => {
-  test('style property', () => {
+  test('style resolution', () => {
     const initial = {
       borderTopWidth: 1,
       borderWidth: 2,
@@ -13,7 +13,7 @@ suite('modules/StyleSheet/expandStyle', () => {
       margin: 10
     }
 
-    const expectedStyle = {
+    const expected = {
       borderTopWidth: 1,
       borderLeftWidth: 2,
       borderRightWidth: 2,
@@ -24,6 +24,22 @@ suite('modules/StyleSheet/expandStyle', () => {
       marginRight: 10
     }
 
-    assert.deepEqual(expandStyle(initial), expectedStyle)
+    assert.deepEqual(expandStyle(initial), expected)
+  })
+
+  test('flex', () => {
+    const value = 10
+
+    const initial = {
+      flex: value
+    }
+
+    const expected = {
+      flexGrow: value,
+      flexShrink: 1,
+      flexBasis: 'auto'
+    }
+
+    assert.deepEqual(expandStyle(initial), expected)
   })
 })
