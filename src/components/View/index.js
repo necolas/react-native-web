@@ -59,7 +59,7 @@ class View extends React.Component {
       ...other
     } = this.props
 
-    const className = `View ${_className}`.trim()
+    const className = `${_className} View`.trim()
     const pointerEventsStyle = pointerEvents && { pointerEvents }
     const resolvedStyle = pickProps(style, viewStyleKeys)
 

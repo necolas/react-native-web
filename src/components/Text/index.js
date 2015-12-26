@@ -58,7 +58,7 @@ class Text extends React.Component {
       ...other
     } = this.props
 
-    const className = `Text ${_className}`.trim()
+    const className = `${_className} Text`.trim()
     const resolvedStyle = pickProps(style, textStyleKeys)
 
     return (

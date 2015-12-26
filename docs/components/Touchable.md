@@ -20,7 +20,7 @@ Unsupported React Native props:
 Overrides the text that's read by the screen reader when the user interacts
 with the element.
 
-(web) **accessibilityRole**: oneOf(roles)
+(web) **accessibilityRole**: oneOf(roles) = 'button'
 
 Allows assistive technologies to present and support interaction with the view
 in a manner that is consistent with user expectations for similar views of that
@@ -35,12 +35,12 @@ assistive technologies of a `role` value change.
 
 When `false`, the view is hidden from screenreaders.
 
-**activeOpacity**: number = 1
+**activeOpacity**: number = 0.8
 
 Sets the opacity of the child view when `onPressIn` is called. The opacity is
 reset when `onPressOut` is called.
 
-(web) **activeUnderlayColor**: string = 'transparent'
+(web) **activeUnderlayColor**: string = 'black'
 
 Sets the color of the background highlight when `onPressIn` is called. The
 highlight is removed when `onPressOut` is called.
@@ -49,7 +49,7 @@ highlight is removed when `onPressOut` is called.
 
 A single child element.
 
-**delayLongPress**: number = 1000
+**delayLongPress**: number = 500
 
 Delay in ms, from `onPressIn`, before `onLongPress` is called.
 
@@ -59,7 +59,7 @@ Delay in ms, from `onPressIn`, before `onLongPress` is called.
 
 Delay in ms, from the start of the touch, before `onPressIn` is called.
 
-**delayPressOut**: number = 0
+**delayPressOut**: number = 100
 
 (TODO)
 

@@ -201,10 +201,7 @@ class Image extends React.Component {
         }}
         testID={testID}
       >
-        <img
-          src={displayImage}
-          style={styles.img}
-        />
+        <img src={displayImage} style={styles.img} />
         {children ? (
           <View children={children} pointerEvents='box-none' style={styles.children} />
         ) : null}

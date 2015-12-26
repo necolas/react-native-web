@@ -3,11 +3,12 @@ import ScrollView from '../ScrollView'
 
 class ListView extends React.Component {
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
+    style: PropTypes.style
   }
 
   static defaultProps = {
-    className: ''
+    style: {}
   }
 
   render() {
