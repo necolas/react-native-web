@@ -95,7 +95,7 @@ export default {
   paddingVertical: numberOrString,
   position: oneOf([ 'absolute', 'fixed', 'relative', 'static' ]),
   right: numberOrString,
-  textAlign: oneOf([ 'center', 'justify', 'justify-all', 'left', 'right' ]),
+  textAlign: oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ]),
   textDecoration: string,
   textOverflow: string,
   textShadow: string,
