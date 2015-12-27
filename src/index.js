@@ -15,7 +15,7 @@ import Touchable from './components/Touchable'
 import View from './components/View'
 
 const renderStyle = () => {
-  return `<style id='react-stylesheet'>${StyleSheet.renderToString()}</style>`
+  return `<style id='react-stylesheet'>${StyleSheet._renderToString()}</style>`
 }
 
 const render = (element, container, callback) => {

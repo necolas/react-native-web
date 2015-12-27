@@ -13,6 +13,24 @@ const initialState = { classNames: predefinedClassNames }
 const options = { obfuscateClassNames: process.env.NODE_ENV === 'production' }
 const createStore = () => new Store(initialState, options)
 let store = createStore()
+let isRendered = false
+
+/**
+ * Destroy existing styles
+ */
+const _destroy = () => {
+  store = createStore()
+  isRendered = false
+}
+
+/**
+ * Render the styles as a CSS style sheet
+ */
+const _renderToString = () => {
+  const css = store.toString()
+  isRendered = true
+  return `${resetCSS}\n${predefinedCSS}\n${css}`
+}
 
 /**
  * Process all unique declarations
@@ -33,22 +51,18 @@ const create = (styles: Object): Object => {
       }
     })
   })
+
+  // update the style sheet in place
+  if (isRendered) {
+    const stylesheet = document.getElementById('react-stylesheet')
+    if (stylesheet) {
+      stylesheet.textContent = _renderToString()
+    } else if (process.env.NODE_ENV !== 'production') {
+      console.error('ReactNativeWeb: cannot find "react-stylesheet" element')
+    }
+  }
+
   return styles
-}
-
-/**
- * Destroy existing styles
- */
-const destroy = () => {
-  store = createStore()
-}
-
-/**
- * Render the styles as a CSS style sheet
- */
-const renderToString = () => {
-  const css = store.toString()
-  return `${resetCSS}\n${predefinedCSS}\n${css}`
 }
 
 /**
@@ -81,8 +95,8 @@ const resolve = ({ className = '', style = {} }) => {
 }
 
 export default {
+  _destroy,
+  _renderToString,
   create,
-  destroy,
-  renderToString,
   resolve
 }

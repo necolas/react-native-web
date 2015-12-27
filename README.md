@@ -110,7 +110,8 @@ const Html = () => (
 )
 ```
 
-Rendering on the client automatically includes your app styles:
+Rendering on the client automatically includes your app styles and supports
+progressive app loading (i.e. code-splitting / lazy bundle loading):
 
 ```js
 // client.js

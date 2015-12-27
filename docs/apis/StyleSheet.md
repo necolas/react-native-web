@@ -37,23 +37,9 @@ Use styles:
 </View>
 ```
 
-Render styles on the server or in the browser:
-
-```js
-StyleSheet.renderToString()
-```
-
 ## Methods
 
 **create**(obj: {[key: string]: any})
-
-**destroy**()
-
-Clears all style information.
-
-**renderToString**()
-
-Renders a CSS Style Sheet.
 
 ## About
 
@@ -71,9 +57,9 @@ CSS](https://speakerdeck.com/vjeux/react-css-in-js):
 6. Non-deterministic resolution
 7. Breaking isolation
 
-The strategy also minimizes the amount of generated CSS, making it more viable
-to inline the style sheet when pre-rendering pages on the server. There is one
-unique selector per unique style _declaration_.
+The strategy minimizes the amount of generated CSS, making it viable to inline
+the style sheet when pre-rendering pages on the server. There is one unique
+selector per unique style _declaration_.
 
 ```js
 // definition
@@ -88,7 +74,7 @@ unique selector per unique style _declaration_.
   }
 }
 
-// css
+// css output
 //
 // .a { color: gray; }
 // .b { font-size: 2rem; }
@@ -130,16 +116,17 @@ In production the class names are obfuscated.
 (CSS libraries like [Atomic CSS](http://acss.io/),
 [Basscss](http://www.basscss.com/), [SUIT CSS](https://suitcss.github.io/), and
 [tachyons](http://tachyons.io/) are attempts to limit style scope and limit
-style sheet growth in a similar way. But they're CSS utility libraries, each with a
-particular set of classes and features to learn. All of them require developers
-to manually connect CSS classes for given styles.)
+style sheet growth in a similar way. But they're CSS utility libraries, each
+with a particular set of classes and features to learn. And all of them require
+developers to manually connect CSS classes for given styles.)
 
 ### Reset
 
 React Native for Web includes a very small CSS reset taken from
-[normalize.css](https://necolas.github.io/normalize.css/). It removes unwanted
-User Agent styles from (pseudo-)elements beyond the reach of React (e.g.,
-`html`, `body`) or inline styles (e.g., `::-moz-focus-inner`).
+[normalize.css](https://necolas.github.io/normalize.css/) – **you do not need
+to include normalize.css**. It removes unwanted User Agent styles from
+(pseudo-)elements beyond the reach of React (e.g., `html`, `body`) or inline
+styles (e.g., `::-moz-focus-inner`).
 
 ```css
 html {
@@ -161,5 +148,11 @@ input::-moz-focus-inner {
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
+}
+
+ol,
+ul,
+li {
+  list-style:none
 }
 ```
