@@ -29,10 +29,10 @@ Use styles:
 ```js
 <View style={styles.container}>
   <Text
-    style={{
-      ...styles.title,
-      ...(this.props.isActive && styles.activeTitle)
-    }}
+    style={[
+      styles.title,
+      this.props.isActive && styles.activeTitle
+    ]}
   />
 </View>
 ```

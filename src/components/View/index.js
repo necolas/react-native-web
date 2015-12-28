@@ -1,8 +1,10 @@
+import makeStyleSheetPropTypes from '../../modules/StylePropTypes/makeStyleSheetPropTypes'
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
 import StyleSheet from '../../modules/StyleSheet'
 import ViewStylePropTypes from './ViewStylePropTypes'
+import flattenStyles from '../../modules/StyleSheet/flattenStyles'
 
 const viewStyleKeys = Object.keys(ViewStylePropTypes)
 
@@ -39,7 +41,7 @@ class View extends React.Component {
     accessible: CoreComponent.propTypes.accessible,
     children: PropTypes.any,
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
-    style: PropTypes.shape(ViewStylePropTypes),
+    style: makeStyleSheetPropTypes(ViewStylePropTypes),
     testID: CoreComponent.propTypes.testID
   };
 
@@ -61,17 +63,17 @@ class View extends React.Component {
 
     const className = `${_className} View`.trim()
     const pointerEventsStyle = pointerEvents && { pointerEvents }
-    const resolvedStyle = pickProps(style, viewStyleKeys)
+    const resolvedStyle = pickProps(flattenStyles(style), viewStyleKeys)
 
     return (
       <CoreComponent
         {...other}
         className={className}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle,
-          ...pointerEventsStyle
-        }}
+        style={[
+          styles.initial,
+          resolvedStyle,
+          pointerEventsStyle
+        ]}
       />
     )
   }

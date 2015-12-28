@@ -22,7 +22,10 @@ export default class GridView extends Component {
       PropTypes.arrayOf(PropTypes.element)
     ]),
     gutter: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ])
   }
 
   static defaultProps = {

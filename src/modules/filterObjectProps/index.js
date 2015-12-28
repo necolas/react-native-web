@@ -1,3 +1,5 @@
+import flattenStyles from '../StyleSheet/flattenStyles'
+
 function filterProps(obj, propKeys: Array, excluded = false) {
   const filtered = {}
   for (const prop in obj) {
@@ -17,7 +19,7 @@ function filterProps(obj, propKeys: Array, excluded = false) {
 }
 
 export function pickProps(obj, propKeys) {
-  return filterProps(obj, propKeys)
+  return filterProps(flattenStyles(obj), propKeys)
 }
 
 export function omitProps(obj, propKeys) {

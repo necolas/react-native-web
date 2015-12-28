@@ -176,10 +176,10 @@ export default class TextInputExample extends Component {
         onBlur={this._onBlur.bind(this)}
         onFocus={this._onFocus.bind(this)}
         placeholder={`What's happening?`}
-        style={{
-          ...styles.default
-          ...(this.state.isFocused && styles.focused)
-        }}
+        style={[
+          styles.default
+          this.state.isFocused && styles.focused
+        ]}
       />
     );
   }
