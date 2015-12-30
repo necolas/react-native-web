@@ -10,7 +10,7 @@ import StylePropTypes from '../StylePropTypes'
  * event classes
  */
 const initialState = { classNames: predefinedClassNames }
-const options = { obfuscateClassNames: process.env.NODE_ENV === 'production' }
+const options = { obfuscateClassNames: !(process.env.NODE_ENV !== 'production') }
 const createStore = () => new Store(initialState, options)
 let store = createStore()
 let isRendered = false
@@ -60,6 +60,21 @@ const create = (styles: Object): Object => {
     } else if (process.env.NODE_ENV !== 'production') {
       console.error('ReactNativeWeb: cannot find "react-stylesheet" element')
     }
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    const deepFreeze = (obj) => {
+      const propNames = Object.getOwnPropertyNames(obj)
+      propNames.forEach((name) => {
+        const prop = obj[name]
+        if (typeof prop === 'object' && prop !== null && !Object.isFrozen(prop)) {
+          deepFreeze(prop)
+        }
+      })
+      return Object.freeze(obj)
+    }
+
+    deepFreeze(styles)
   }
 
   return styles
