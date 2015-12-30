@@ -2,93 +2,65 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
-![gzipped size](https://img.shields.io/badge/gzipped-~18.9k-blue.svg)
+![gzipped size](https://img.shields.io/badge/gzipped-~19.3k-blue.svg)
 
-[React Native][react-native-url] components and APIs for the Web.
-
-Try it out in the [React Native for Web
-Playground](http://codepen.io/necolas/pen/PZzwBR) on CodePen.
+[React Native][react-native-url] components and APIs for the Web. Flexbox
+layout and JavaScript styling.
 
 * [Discord: #react-native-web on reactiflux][discord-url]
 * [Gitter: react-native-web][gitter-url]
 
 ## Table of contents
 
-* [Install](#install)
+* [Quick start](#quick-start)
+* [Overview](#overview)
 * [Example](#example)
 * [APIs](#apis)
 * [Components](#components)
-* [Styling](#styling)
-* [Accessibility](#accessibility)
 * [Contributing](#contributing)
 * [Thanks](#thanks)
 * [License](#license)
 
-## Install
+## Quick start
+
+You can [try the latest version on CodePen](http://codepen.io/necolas/pen/PZzwBR).
+
+To install in your app:
 
 ```
-npm install --save react react-dom react-native-web
+npm install --save react@0.14 react-dom@0.14 react-native-web
 ```
 
-## Example
+## Overview
 
-React Native for Web exports its components, a reference to the `react`
-installation, and the `react-dom` methods (customized for Web). Styles are defined
-with, and used as JavaScript objects.
+### Importing
 
-Component:
+All API's, components, and a Web-specific `React` are provided by the
+`react-native-web` module:
 
 ```js
 import React, { Image, StyleSheet, Text, View } from 'react-native-web'
-
-const Title = ({ children }) => <Text style={styles.title}>{children}</Text>
-
-const Summary = ({ children }) => (
-  <View style={styles.text}>
-    <Text style={styles.subtitle}>{children}</Text>
-  </View>
-)
-
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.row}>
-        <Image
-          source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
-          style={styles.image}
-        />
-        <Title>React Native Web</Title>
-        <Summary>Build high quality web apps using React</Summary>
-      </View>
-    )
-  },
-})
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    margin: 40
-  },
-  image: {
-    height: 40,
-    marginRight: 10,
-    width: 40,
-  },
-  text: {
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 'bold'
-  },
-  subtitle: {
-    fontSize: '1rem'
-  }
-})
 ```
 
-Pre-rendering on the server automatically includes your app styles:
+### Client-side rendering
+
+Client-side rendering requires that you use the module's `React` export.
+`React.render` is a thin wrapper around `ReactDOM.render` that renders your
+application and the style sheet. Styles are updated if new bundles are loaded
+asynchronously.
+
+```js
+// client.js
+import App from './components/App'
+import React from 'react-native-web'
+
+React.render(<App />, document.getElementById('react-root'))
+```
+
+### Server-side rendering
+
+Server-side rendering is done by calling `React.renderToString` or
+`React.renderToStaticMarkup`, the output of both includes the style sheet.
 
 ```js
 // server.js
@@ -110,15 +82,49 @@ const Html = () => (
 )
 ```
 
-Rendering on the client automatically includes your app styles and supports
-progressive app loading (i.e. code-splitting / lazy bundle loading):
+### Styling
+
+React Native for Web allows you to [define styles using
+JavaScript](docs/guides/style.md), either with inline styles or
+[`StyleSheet.create`](docs/apis/StyleSheet.md).
+
+The `View` component makes it easy to build common layouts with flexbox, such
+as stacked and nested boxes with margin and padding. See this [guide to
+flexbox][flexbox-guide-url].
+
+### Accessibility
+
+The most common and best supported [accessibility
+features](docs/guides/accessibility.md) of the Web are leveraged through 4
+props available on most components: `accessible`, `accessibilityLabel`,
+`accessibilityLiveRegion`, and `accessibilityRole`.
+
+## Example
+
+More examples can be found in the [`examples` directory](examples).
 
 ```js
-// client.js
-import App from './components/App'
-import React from 'react-native-web'
+import React, { Image, StyleSheet, Text, View } from 'react-native-web'
 
-React.render(<App />, document.getElementById('react-root'))
+const Card = ({ children }) => <View style={styles.card}>{children}</View>
+const Title = ({ children }) => <Text style={styles.title}>{children}</Text>
+const Photo = ({ uri }) => <Image source={{ uri }} style={styles.image} />
+
+const styles = StyleSheet.create({
+  card: {
+    flexGrow: 1,
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: '1.25rem',
+    fontWeight: 'bold'
+  },
+  image: {
+    height: 40,
+    marginRight: 10,
+    width: 40
+  }
+})
 ```
 
 ## APIs
@@ -160,58 +166,6 @@ Touch bindings for press and long press.
 
 The fundamental UI building block using flexbox for layout.
 
-## Styling
-
-React Native for Web relies on styles being defined in JavaScript. Styling
-components can be achieved with inline styles or the use of
-[StyleSheet](docs/apis/StyleSheet.md).
-
-The `View` component makes it easy to build common layouts with flexbox, such
-as stacked and nested boxes with margin and padding. See this [guide to
-flexbox][flexbox-guide-url].
-
-### Media Queries, pseudo-classes, and pseudo-elements
-
-Changing styles and/or the render tree in response to device adaptation can be
-controlled in JavaScript, e.g.,
-[react-media-queries](https://github.com/bloodyowl/react-media-queries),
-[media-query-fascade](https://github.com/tanem/media-query-facade), or
-[react-responsive](https://github.com/contra/react-responsive). This has the
-benefit of co-locating breakpoint-specific DOM and style changes.
-
-Pseudo-classes like `:hover` and `:focus` can be implemented with the `onHover`
-and `onFocus` events.
-
-Pseudo-elements are not supported; elements can be used instead.
-
-## Accessibility
-
-On the Web, assistive technologies derive useful information about the
-structure, purpose, and interactivity of apps from their [HTML
-elements][html-accessibility-url], attributes, and [ARIA in
-HTML][aria-in-html-url].
-
-The most common and best supported accessibility features of the Web are
-exposed as the props: `accessible`, `accessibilityLabel`,
-`accessibilityLiveRegion`, and `accessibilityRole`.
-
-React Native for Web does not provide a way to directly control the rendered
-HTML element. The `accessibilityRole` prop is used to infer an [analogous HTML
-element][html-aria-url] to use in addition, where possible. While this may
-contradict some ARIA recommendations, it also helps avoid certain HTML5
-conformance errors and accessibility anti-patterns (e.g., giving a `heading`
-role to a `button` element).
-
-For example:
-
-* `<View accessibilityRole='article' />` => `<article role='article' />`.
-* `<View accessibilityRole='banner' />` => `<header role='banner' />`.
-* `<View accessibilityRole='button' />` => `<button type='button' role='button' />`.
-* `<Text accessibilityRole='link' href='/' />` => `<a role='link' href='/' />`.
-* `<View accessibilityRole='main' />` => `<main role='main' />`.
-
-See the component documentation for more details.
-
 ## Contributing
 
 Please read the [contribution guidelines][contributing-url]. Contributions are
@@ -230,13 +184,10 @@ backing the current implementation of `Touchable`.
 Copyright (c) 2015 Nicolas Gallagher. Released under the [MIT
 license](http://www.opensource.org/licenses/mit-license.php).
 
-[aria-in-html-url]: https://w3c.github.io/aria-in-html/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/CONTRIBUTING.md
 [discord-url]: http://join.reactiflux.com
 [flexbox-guide-url]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 [gitter-url]: https://gitter.im/necolas/react-native-web
-[html-accessibility-url]: http://www.html5accessibility.com/
-[html-aria-url]: http://www.w3.org/TR/html-aria/
 [npm-image]: https://badge.fury.io/js/react-native-web.svg
 [npm-url]: https://npmjs.org/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/

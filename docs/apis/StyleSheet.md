@@ -1,9 +1,9 @@
 # StyleSheet
 
-React Native for Web will automatically vendor-prefix styles applied to the
-library's components. The `StyleSheet` abstraction converts predefined styles
-to CSS without a compile-time step. Some styles cannot be resolved outside of
-the render loop and are applied as inline styles.
+The `StyleSheet` abstraction converts predefined styles to (vendor-prefixed)
+CSS without requiring a compile-time step. Some styles cannot be resolved
+outside of the render loop and are applied as inline styles. Read more about to
+[how style your application](docs/guides/style).
 
 Create a new StyleSheet:
 
@@ -40,119 +40,3 @@ Use styles:
 ## Methods
 
 **create**(obj: {[key: string]: any})
-
-## About
-
-### Strategy
-
-React Native for Web uses a `style`-to-`className` conversion strategy that is
-designed to avoid issues arising from the [7 deadly sins of
-CSS](https://speakerdeck.com/vjeux/react-css-in-js):
-
-1. Global namespace
-2. Dependency hell
-3. Dead code elimination
-4. Code minification
-5. Sharing constants
-6. Non-deterministic resolution
-7. Breaking isolation
-
-The strategy minimizes the amount of generated CSS, making it viable to inline
-the style sheet when pre-rendering pages on the server. There is one unique
-selector per unique style _declaration_.
-
-```js
-// definition
-{
-  heading: {
-    color: 'gray',
-    fontSize: '2rem'
-  },
-  text: {
-    color: 'gray',
-    fontSize: '1.25rem'
-  }
-}
-
-// css output
-//
-// .a { color: gray; }
-// .b { font-size: 2rem; }
-// .c { font-size: 1.25rem; }
-```
-
-For example:
-
-```js
-<View style={styles.root}>...</View>
-
-const styles = StyleSheet.create({
-  root: {
-    background: 'transparent',
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'center'
-  }
-})
-```
-
-Yields (in development):
-
-```html
-<div className="background:transparent display:flex flexGrow:1 justifyContent:center">...</div>
-```
-
-And is backed by the following CSS:
-
-```css
-.background\:transparent {background:transparent;}
-.display\:flex {display:flex;}
-.flexGrow\:1 {flex-grow:1;}
-.justifyContext\:center {justify-content:center;}
-```
-
-In production the class names are obfuscated.
-
-(CSS libraries like [Atomic CSS](http://acss.io/),
-[Basscss](http://www.basscss.com/), [SUIT CSS](https://suitcss.github.io/), and
-[tachyons](http://tachyons.io/) are attempts to limit style scope and limit
-style sheet growth in a similar way. But they're CSS utility libraries, each
-with a particular set of classes and features to learn. And all of them require
-developers to manually connect CSS classes for given styles.)
-
-### Reset
-
-React Native for Web includes a very small CSS reset taken from
-[normalize.css](https://necolas.github.io/normalize.css/) – **you do not need
-to include normalize.css**. It removes unwanted User Agent styles from
-(pseudo-)elements beyond the reach of React (e.g., `html`, `body`) or inline
-styles (e.g., `::-moz-focus-inner`).
-
-```css
-html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-ol,
-ul,
-li {
-  list-style:none
-}
-```
