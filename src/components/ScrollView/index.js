@@ -31,7 +31,7 @@ class ScrollView extends React.Component {
     scrollEnabled: PropTypes.bool,
     scrollEventThrottle: PropTypes.number,
     style: PropTypes.shape(ScrollViewStylePropTypes)
-  }
+  };
 
   static defaultProps = {
     contentContainerStyle: styles.initialContentContainer,
@@ -39,7 +39,7 @@ class ScrollView extends React.Component {
     scrollEnabled: true,
     scrollEventThrottle: 0,
     style: styles.initial
-  }
+  };
 
   constructor(...args) {
     super(...args)

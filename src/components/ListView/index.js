@@ -5,11 +5,11 @@ class ListView extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     style: PropTypes.style
-  }
+  };
 
   static defaultProps = {
     style: {}
-  }
+  };
 
   render() {
     return (

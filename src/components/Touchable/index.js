@@ -39,7 +39,7 @@ class Touchable extends React.Component {
     onPressIn: PropTypes.func,
     onPressOut: PropTypes.func,
     style: View.propTypes.style
-  }
+  };
 
   static defaultProps = {
     accessibilityRole: 'button',
@@ -49,7 +49,7 @@ class Touchable extends React.Component {
     delayPressIn: 0,
     delayPressOut: 100,
     style: styles.initial
-  }
+  };
 
   _getChildren() {
     const { activeOpacity, children } = this.props

@@ -69,9 +69,9 @@ class TextInput extends React.Component {
     style: PropTypes.shape(TextInputStylePropTypes),
     testID: CoreComponent.propTypes.testID,
     value: PropTypes.string
-  }
+  };
 
-  static stylePropTypes = TextInputStylePropTypes
+  static stylePropTypes = TextInputStylePropTypes;
 
   static defaultProps = {
     editable: true,
@@ -80,7 +80,7 @@ class TextInput extends React.Component {
     numberOfLines: 2,
     secureTextEntry: false,
     style: styles.initial
-  }
+  };
 
   _onBlur(e) {
     const { onBlur } = this.props
