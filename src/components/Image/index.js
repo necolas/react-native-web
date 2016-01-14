@@ -76,9 +76,9 @@ class Image extends React.Component {
     source: PropTypes.object,
     style: PropTypes.shape(ImageStylePropTypes),
     testID: CoreComponent.propTypes.testID
-  }
+  };
 
-  static stylePropTypes = ImageStylePropTypes
+  static stylePropTypes = ImageStylePropTypes;
 
   static defaultProps = {
     accessible: true,
@@ -86,7 +86,7 @@ class Image extends React.Component {
     resizeMode: 'cover',
     source: {},
     style: styles.initial
-  }
+  };
 
   _createImageLoader() {
     const { source } = this.props

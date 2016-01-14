@@ -35,15 +35,15 @@ class Text extends React.Component {
     onPress: PropTypes.func,
     style: PropTypes.shape(TextStylePropTypes),
     testID: CoreComponent.propTypes.testID
-  }
+  };
 
-  static stylePropTypes = TextStylePropTypes
+  static stylePropTypes = TextStylePropTypes;
 
   static defaultProps = {
     _className: '',
     accessible: true,
     style: styles.initial
-  }
+  };
 
   _onPress(e) {
     if (this.props.onPress) this.props.onPress(e)

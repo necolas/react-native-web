@@ -41,15 +41,15 @@ class View extends React.Component {
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
     style: PropTypes.shape(ViewStylePropTypes),
     testID: CoreComponent.propTypes.testID
-  }
+  };
 
-  static stylePropTypes = ViewStylePropTypes
+  static stylePropTypes = ViewStylePropTypes;
 
   static defaultProps = {
     _className: '',
     accessible: true,
     style: styles.initial
-  }
+  };
 
   render() {
     const {

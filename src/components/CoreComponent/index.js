@@ -29,12 +29,12 @@ class CoreComponent extends React.Component {
     style: PropTypes.object,
     testID: PropTypes.string,
     type: PropTypes.string
-  }
+  };
 
   static defaultProps = {
     accessible: true,
     component: 'div'
-  }
+  };
 
   static stylePropTypes = StylePropTypes;
 
