@@ -1,5 +1,6 @@
 import { resetCSS, predefinedCSS, predefinedClassNames } from './predefs'
 import expandStyle from './expandStyle'
+import flattenStyles from './flattenStyles'
 import getStyleObjects from './getStyleObjects'
 import prefixer from './prefixer'
 import Store from './Store'
@@ -87,7 +88,7 @@ const create = (styles: Object): Object => {
 const resolve = ({ className = '', style = {} }) => {
   let _className
   let _style = {}
-  const expandedStyle = expandStyle(style)
+  const expandedStyle = expandStyle(flattenStyles(style))
 
   const classList = [ className ]
   for (const prop in expandedStyle) {

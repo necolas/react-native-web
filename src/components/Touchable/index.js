@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Tappable from 'react-tappable'
 import View from '../View'
 import StyleSheet from '../../modules/StyleSheet'
+import flattenStyles from '../../modules/StyleSheet/flattenStyles'
 
 const styles = StyleSheet.create({
   initial: {
@@ -54,10 +55,10 @@ class Touchable extends React.Component {
   _getChildren() {
     const { activeOpacity, children } = this.props
     return React.cloneElement(React.Children.only(children), {
-      style: {
-        ...children.props.style,
-        ...(this.state.isActive && { opacity: activeOpacity })
-      }
+      style: [
+        children.props.style,
+        this.state.isActive && { opacity: activeOpacity }
+      ]
     })
   }
 
@@ -120,11 +121,11 @@ class Touchable extends React.Component {
         onTouchStart={this._onPressIn}
         pressDelay={delayLongPress}
         pressMoveThreshold={5}
-        style={{
-          ...styles.initial,
-          ...style,
-          backgroundColor: this.state.isActive ? activeUnderlayColor : style.backgroundColor
-        }}
+        style={flattenStyles([
+          styles.initial,
+          style,
+          this.state.isActive && { backgroundColor: activeUnderlayColor }
+        ])}
         tabIndex='0'
       />
     )

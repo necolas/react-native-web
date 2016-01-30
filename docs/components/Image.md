@@ -110,11 +110,11 @@ export default class ImageExample extends Component {
         onLoad={this._onLoad.bind(this)}
         resizeMode='cover'
         source={{ uri: user.avatarUrl }}
-        style={{
-          ...styles.base,
-          ...styles[size],
-          ...loadingStyle
-        }}
+        style={[
+          styles.base,
+          styles[size],
+          loadingStyle
+        ]}
       />
     )
   }

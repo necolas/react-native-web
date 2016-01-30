@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 
 import assert from 'assert'
+import flattenStyles from '../StyleSheet/flattenStyles'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactTestUtils from 'react-addons-test-utils'
@@ -11,8 +12,8 @@ export const assertProps = {
     // default styles
     shallow = shallowRender(<Component {...props} />)
     assert.deepEqual(
-      shallow.props.style,
-      Component.defaultProps.style
+      flattenStyles(shallow.props.style),
+      flattenStyles(Component.defaultProps.style)
     )
     // filtering of unsupported styles
     const styleToFilter = { unsupported: 'unsupported' }
@@ -26,8 +27,8 @@ export const assertProps = {
     const styleToMerge = { margin: '10' }
     shallow = shallowRender(<Component {...props} style={styleToMerge} />)
     assert.deepEqual(
-      shallow.props.style,
-      { ...Component.defaultProps.style, ...styleToMerge }
+      flattenStyles(shallow.props.style),
+      flattenStyles({ ...Component.defaultProps.style, ...styleToMerge })
     )
   }
 }

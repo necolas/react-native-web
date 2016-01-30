@@ -97,12 +97,12 @@ export default class PrettyText extends Component {
     return (
       <Text
         ...other
-        style={{
-          ...style,
-          ...styles.color[color],
-          ...styles.size[size],
-          ...styles.weight[weight]
-        }}
+        style={[
+          style,
+          styles.color[color],
+          styles.size[size],
+          styles.weight[weight]
+        ]}
       />
     );
   }

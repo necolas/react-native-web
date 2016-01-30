@@ -1,3 +1,4 @@
+import makeStyleSheetPropTypes from '../../modules/StylePropTypes/makeStyleSheetPropTypes'
 import { pickProps } from '../../modules/filterObjectProps'
 import debounce from 'lodash.debounce'
 import React, { PropTypes } from 'react'
@@ -25,12 +26,15 @@ const styles = StyleSheet.create({
 class ScrollView extends React.Component {
   static propTypes = {
     children: PropTypes.any,
-    contentContainerStyle: PropTypes.shape(ScrollViewStylePropTypes),
+    contentContainerStyle: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape(ScrollViewStylePropTypes)),
+      PropTypes.shape(ScrollViewStylePropTypes)
+    ]),
     horizontal: PropTypes.bool,
     onScroll: PropTypes.func,
     scrollEnabled: PropTypes.bool,
     scrollEventThrottle: PropTypes.number,
-    style: PropTypes.shape(ScrollViewStylePropTypes)
+    style: makeStyleSheetPropTypes(ScrollViewStylePropTypes)
   };
 
   static defaultProps = {
@@ -117,19 +121,19 @@ class ScrollView extends React.Component {
         onScroll={(e) => this._onScroll(e)}
         onTouchMove={(e) => this._maybePreventScroll(e)}
         onWheel={(e) => this._maybePreventScroll(e)}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle
-        }}
+        style={[
+          styles.initial,
+          resolvedStyle
+        ]}
       >
         {children ? (
           <View
             children={children}
-            style={{
-              ...styles.initialContentContainer,
-              ...resolvedContentContainerStyle,
-              ...(horizontal && styles.row)
-            }}
+            style={[
+              styles.initialContentContainer,
+              resolvedContentContainerStyle,
+              horizontal && styles.row
+            ]}
           />
         ) : null}
       </View>

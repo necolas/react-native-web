@@ -30,6 +30,7 @@ suite('components/Touchable', () => {
 
   test('prop "children"', () => {
     const result = utils.shallowRender(<Touchable {...requiredProps} />)
-    assert.deepEqual(result.props.children, children)
+    assert.deepEqual(result.props.children,
+      <span style={[{}, false]}>children</span>)
   })
 })

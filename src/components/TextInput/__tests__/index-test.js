@@ -2,6 +2,7 @@
 
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
+import flattenStyles from '../../../modules/StyleSheet/flattenStyles'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 
@@ -192,10 +193,10 @@ suite('components/TextInput', () => {
     const placeholder = 'placeholder'
 
     let result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} />))
-    assert.equal(result.props.style.color, 'darkgray')
+    assert.equal(flattenStyles(result.props.style).color, 'darkgray')
 
     result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} placeholderTextColor='red' />))
-    assert.equal(result.props.style.color, 'red')
+    assert.equal(flattenStyles(result.props.style).color, 'red')
   })
 
   test('prop "secureTextEntry"', () => {

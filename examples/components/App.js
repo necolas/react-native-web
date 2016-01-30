@@ -18,11 +18,11 @@ export default class App extends React.Component {
 
   render() {
     const { mediaQuery } = this.props
-    const rootStyles = {
-      ...(styles.root.common),
-      ...(mediaQuery.small.matches && styles.root.mqSmall),
-      ...(mediaQuery.large.matches && styles.root.mqLarge)
-    }
+    const rootStyles = [
+      styles.root.common,
+      mediaQuery.small.matches && styles.root.mqSmall,
+      mediaQuery.large.matches && styles.root.mqLarge
+    ]
 
     return (
       <View accessibilityRole='main' style={rootStyles}>
@@ -199,7 +199,7 @@ export default class App extends React.Component {
             style={styles.scrollViewStyle}
           >
             {Array.from({ length: 50 }).map((item, i) => (
-              <View key={i} style={{...styles.box, ...styles.horizontalBox}}>
+              <View key={i} style={[styles.box, styles.horizontalBox]}>
                 <Text>{i}</Text>
               </View>
             ))}

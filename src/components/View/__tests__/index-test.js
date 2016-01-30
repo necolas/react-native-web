@@ -2,6 +2,7 @@
 
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
+import flattenStyles from '../../../modules/StyleSheet/flattenStyles'
 import React from 'react'
 
 import View from '../'
@@ -39,7 +40,7 @@ suite('components/View', () => {
 
   test('prop "pointerEvents"', () => {
     const result = utils.shallowRender(<View pointerEvents='box-only' />)
-    assert.equal(result.props.style.pointerEvents, 'box-only')
+    assert.equal(flattenStyles(result.props.style).pointerEvents, 'box-only')
   })
 
   test('prop "style"', () => {

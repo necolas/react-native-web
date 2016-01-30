@@ -1,3 +1,4 @@
+import makeStyleSheetPropTypes from '../../modules/StylePropTypes/makeStyleSheetPropTypes'
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
@@ -33,7 +34,7 @@ class Text extends React.Component {
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onPress: PropTypes.func,
-    style: PropTypes.shape(TextStylePropTypes),
+    style: makeStyleSheetPropTypes(TextStylePropTypes),
     testID: CoreComponent.propTypes.testID
   };
 
@@ -67,11 +68,11 @@ class Text extends React.Component {
         className={className}
         component='span'
         onClick={this._onPress.bind(this)}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle,
-          ...(numberOfLines === 1 && styles.singleLineStyle)
-        }}
+        style={[
+          styles.initial,
+          resolvedStyle,
+          numberOfLines === 1 && styles.singleLineStyle
+        ]}
       />
     )
   }

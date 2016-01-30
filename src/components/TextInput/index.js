@@ -1,3 +1,4 @@
+import makeStyleSheetPropTypes from '../../modules/StylePropTypes/makeStyleSheetPropTypes'
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
@@ -66,7 +67,7 @@ class TextInput extends React.Component {
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
     selectTextOnFocus: PropTypes.bool,
-    style: PropTypes.shape(TextInputStylePropTypes),
+    style: makeStyleSheetPropTypes(TextInputStylePropTypes),
     testID: CoreComponent.propTypes.testID,
     value: PropTypes.string
   };
@@ -201,20 +202,20 @@ class TextInput extends React.Component {
       <CoreComponent
         accessibilityLabel={accessibilityLabel}
         className='TextInput'
-        style={{
-          ...styles.initial,
-          ...resolvedStyle
-        }}
+        style={[
+          styles.initial,
+          resolvedStyle
+        ]}
         testID={testID}
       >
         <View style={{ flexGrow: 1 }}>
           <CoreComponent {...props} ref='input' />
           {placeholder && this.state.showPlaceholder && <Text
             pointerEvents='none'
-            style={{
-              ...styles.placeholder,
-              ...(placeholderTextColor && { color: placeholderTextColor })
-            }}
+            style={[
+              styles.placeholder,
+              placeholderTextColor && { color: placeholderTextColor }
+            ]}
           >{placeholder}</Text>}
         </View>
       </CoreComponent>

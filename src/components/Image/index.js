@@ -1,4 +1,5 @@
 /* global window */
+import makeStyleSheetPropTypes from '../../modules/StylePropTypes/makeStyleSheetPropTypes'
 import { pickProps } from '../../modules/filterObjectProps'
 import StyleSheet from '../../modules/StyleSheet'
 import CoreComponent from '../CoreComponent'
@@ -74,7 +75,7 @@ class Image extends React.Component {
     onLoadStart: PropTypes.func,
     resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
     source: PropTypes.object,
-    style: PropTypes.shape(ImageStylePropTypes),
+    style: makeStyleSheetPropTypes(ImageStylePropTypes),
     testID: CoreComponent.propTypes.testID
   };
 
@@ -193,12 +194,12 @@ class Image extends React.Component {
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle,
-          ...(backgroundImage && { backgroundImage }),
-          ...styles.resizeMode[resizeMode]
-        }}
+        style={[
+          styles.initial,
+          resolvedStyle,
+          backgroundImage && { backgroundImage },
+          styles.resizeMode[resizeMode]
+        ]}
         testID={testID}
       >
         <img src={displayImage} style={styles.img} />
