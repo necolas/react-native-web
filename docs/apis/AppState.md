@@ -27,10 +27,10 @@ Remove a handler by passing the change event `type` and the `handler`.
 
 ## Examples
 
-To see the current state, you can check `AppStateIOS.currentState`, which will
-be kept up-to-date. This example will only ever appear to say "Current state
-is: active" because the app is only visible to the user when in the `active`
-state, and the null state will happen only momentarily.
+To see the current state, you can check `AppState.currentState`, which will be
+kept up-to-date. This example will only ever appear to say "Current state is:
+active" because the app is only visible to the user when in the `active` state,
+and the null state will happen only momentarily.
 
 ```js
 class Example extends React.Component {

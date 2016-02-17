@@ -1,7 +1,7 @@
 import GridView from './GridView'
 import Heading from './Heading'
 import MediaQueryWidget from './MediaQueryWidget'
-import React, { Image, StyleSheet, ScrollView, Text, TextInput, Touchable, View } from '../../src'
+import React, { Image, StyleSheet, ScrollView, Text, TextInput, TouchableHighlight, View } from 'react-native'
 
 export default class App extends React.Component {
   static propTypes = {
@@ -25,7 +25,8 @@ export default class App extends React.Component {
     }
 
     return (
-      <View accessibilityRole='main' style={rootStyles}>
+      <ScrollView accessibilityRole='main'>
+        <View style={rootStyles}>
         <Heading size='xlarge'>React Native for Web</Heading>
         <Text>React Native Web takes the core components from <Text
         accessibilityRole='link' href='https://facebook.github.io/react-native/'>React
@@ -107,7 +108,7 @@ export default class App extends React.Component {
         />
 
         <Heading size='large'>Touchable</Heading>
-        <Touchable
+        <TouchableHighlight
           accessibilityLabel={'Touchable element'}
           activeHighlight='lightblue'
           activeOpacity={0.8}
@@ -119,7 +120,7 @@ export default class App extends React.Component {
           <View style={styles.touchableArea}>
             <Text>Touchable area (press, long press)</Text>
           </View>
-        </Touchable>
+        </TouchableHighlight>
 
         <Heading size='large'>View</Heading>
         <Heading>Default layout</Heading>
@@ -205,7 +206,8 @@ export default class App extends React.Component {
             ))}
           </ScrollView>
         </View>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 }

@@ -42,7 +42,7 @@ documentation of individual components.
 
 ## Using styles
 
-All the core components accept a `style` attribute.
+All the React Native components accept a `style` attribute.
 
 ```js
 <Text style={styles.text} />
@@ -52,20 +52,27 @@ All the core components accept a `style` attribute.
 A common pattern is to conditionally add style based on a condition:
 
 ```js
+// either
 <View style={{
   ...styles.base,
   ...(this.state.active && styles.active)
 }} />
+
+// or
+<View style={[
+  styles.base,
+  this.state.active && styles.active
+]} />
 ```
 
 ## Composing styles
 
 In order to let a call site customize the style of your component children, you
 can pass styles around. Use `View.propTypes.style` and `Text.propTypes.style` in
-order to make sure only styles are being passed.
+order to make sure only valid styles are being passed.
 
 ```js
-export default class List extends React.Component {
+class List extends React.Component {
   static propTypes = {
     style: View.propTypes.style,
     elementStyle: View.propTypes.style,
@@ -108,11 +115,11 @@ class List extends React.Component {
     return (
       <View
         children={children}
-        style={{
-          ...this.props.style,
+        style={[
+          this.props.style,
           // override border-color when scrolling
-          ...(isScrolling && { borderColor: 'transparent' })
-       }}
+          isScrolling && { borderColor: 'transparent' }
+        ]}
       />
     )
   }
@@ -125,19 +132,17 @@ class List extends React.Component {
 it does not concern itself with _where_ or _when_ those styles are applied to
 elements.
 
-Changing styles in response to device adaptation can be controlled using
-JavaScript Media Query API's. There are several React libraries that provide a
-means to do this, e.g.,
+There are various React libraries wrapping JavaScript Media Query API's, e.g.,
 [react-media-queries](https://github.com/bloodyowl/react-media-queries),
 [media-query-fascade](https://github.com/tanem/media-query-facade), or
-[react-responsive](https://github.com/contra/react-responsive). This approach
-has the benefit of co-locating breakpoint-specific DOM and style changes.
+[react-responsive](https://github.com/contra/react-responsive). This has the
+benefit of co-locating breakpoint-specific DOM and style changes.
 
 ## Pseudo-classes and pseudo-elements
 
-Pseudo-classes like `:hover` and `:focus` can be implemented with the `onHover`
-and `onFocus` events. Pseudo-elements are not supported; elements should be
-used instead.
+Pseudo-classes like `:hover` and `:focus` can be implemented with the events
+(e.g. `onFocus`). Pseudo-elements are not supported; elements should be used
+instead.
 
 ## How it works
 
@@ -149,7 +154,7 @@ corresponding `className`'s.
 By doing this, the total size of the generated CSS is determined by the
 total number of unique declarations (rather than the total number of rules in
 the application), making it viable to inline the style sheet when pre-rendering
-on the server.
+on the server. Styles are updated if new module bundle are loaded asynchronously.
 
 JavaScript definition:
 
