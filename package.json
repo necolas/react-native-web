@@ -12,12 +12,13 @@
     "examples": "webpack-dev-server --config config/webpack.config.example.js --inline --hot --colors --quiet",
     "lint": "eslint config examples src",
     "prepublish": "npm run build && npm run build:umd",
-    "test": "npm run lint && npm run test:unit",
-    "test:unit": "karma start config/karma.config.js",
+    "test": "karma start config/karma.config.js",
     "test:watch": "npm run test:unit -- --no-single-run"
   },
   "dependencies": {
+    "exenv": "^1.2.0",
     "inline-style-prefixer": "^0.5.3",
+    "invariant": "^2.2.0",
     "lodash.debounce": "^3.1.1",
     "react-tappable": "^0.7.1",
     "react-textarea-autosize": "^3.1.0"
@@ -53,8 +54,12 @@
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
+  "peerDependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  },
   "author": "Nicolas Gallagher",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git://github.com/necolas/react-native-web.git"

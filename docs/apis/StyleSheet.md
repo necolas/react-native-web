@@ -5,7 +5,11 @@ CSS without requiring a compile-time step. Some styles cannot be resolved
 outside of the render loop and are applied as inline styles. Read more about to
 [how style your application](docs/guides/style).
 
-Create a new StyleSheet:
+## Methods
+
+**create**(obj: {[key: string]: any})
+
+## Example
 
 ```js
 const styles = StyleSheet.create({
@@ -36,7 +40,3 @@ Use styles:
   />
 </View>
 ```
-
-## Methods
-
-**create**(obj: {[key: string]: any})
