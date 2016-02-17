@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ScrollView from '../ScrollView'
 
-class ListView extends React.Component {
+export default class ListView extends Component {
   static propTypes = {
     children: PropTypes.any,
     style: PropTypes.style
@@ -17,5 +17,3 @@ class ListView extends React.Component {
     )
   }
 }
-
-export default ListView

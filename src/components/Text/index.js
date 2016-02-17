@@ -1,6 +1,6 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import TextStylePropTypes from './TextStylePropTypes'
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class Text extends React.Component {
+export default class Text extends Component {
   static propTypes = {
     _className: PropTypes.string, // escape-hatch for code migrations
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
@@ -76,5 +76,3 @@ class Text extends React.Component {
     )
   }
 }
-
-export default Text

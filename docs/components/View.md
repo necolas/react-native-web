@@ -168,7 +168,7 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { Component, PropTypes, StyleSheet, View } from 'react-native-web'
+import React, { Component, PropTypes, StyleSheet, View } from 'react-native'
 
 export default class ViewExample extends Component {
   render() {

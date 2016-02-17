@@ -3,7 +3,7 @@ import { pickProps } from '../../modules/filterObjectProps'
 import StyleSheet from '../../apis/StyleSheet'
 import CoreComponent from '../CoreComponent'
 import ImageStylePropTypes from './ImageStylePropTypes'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import View from '../View'
 
 const STATUS_ERRORED = 'ERRORED'
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class Image extends React.Component {
+export default class Image extends Component {
   constructor(props, context) {
     super(props, context)
     const { uri } = props.source
@@ -209,5 +209,3 @@ class Image extends React.Component {
     )
   }
 }
-
-export default Image

@@ -74,7 +74,7 @@ Used to locate this view in end-to-end tests.
 ## Examples
 
 ```js
-import React, { Component, PropTypes, StyleSheet, Text } from 'react-native-web'
+import React, { Component, PropTypes, StyleSheet, Text } from 'react-native'
 
 export default class PrettyText extends Component {
   static propTypes = {

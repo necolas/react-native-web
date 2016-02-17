@@ -43,7 +43,7 @@ time the view is scrolled.
 ## Examples
 
 ```js
-import React, { Component, ScrollView, StyleSheet } from 'react-native-web'
+import React, { Component, ScrollView, StyleSheet } from 'react-native'
 import Item from './Item'
 
 export default class ScrollViewExample extends Component {

@@ -76,7 +76,7 @@ Used to locate a view in end-to-end tests.
 
 ```js
 import placeholderAvatar from './placeholderAvatar.png'
-import React, { Component, Image, PropTypes, StyleSheet } from 'react-native-web'
+import React, { Component, Image, PropTypes, StyleSheet } from 'react-native'
 
 export default class ImageExample extends Component {
   constructor(props, context) {

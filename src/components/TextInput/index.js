@@ -1,6 +1,6 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
 import Text from '../Text'
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class TextInput extends React.Component {
+export default class TextInput extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = { showPlaceholder: !props.value && !props.defaultValue }
@@ -221,5 +221,3 @@ class TextInput extends React.Component {
     )
   }
 }
-
-export default TextInput

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import StylePropTypes from '../../apis/StyleSheet/StylePropTypes'
 import StyleSheet from '../../apis/StyleSheet'
 
@@ -18,7 +18,7 @@ const roleComponents = {
   region: 'section'
 }
 
-class CoreComponent extends React.Component {
+export default class CoreComponent extends Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
     accessibilityLiveRegion: PropTypes.oneOf([ 'assertive', 'off', 'polite' ]),
@@ -66,5 +66,3 @@ class CoreComponent extends React.Component {
     )
   }
 }
-
-export default CoreComponent

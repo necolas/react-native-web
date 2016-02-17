@@ -20,34 +20,4 @@ suite('ReactNativeWeb', () => {
       assert.ok(React.renderToStaticMarkup)
     })
   })
-
-  suite('render methods', () => {
-    const id = 'test'
-    let div
-
-    setup(() => {
-      div = document.createElement('div')
-      div.id = id
-      document.body.appendChild(div)
-    })
-
-    teardown(() => {
-      document.body.removeChild(div)
-    })
-
-    test('"render" creates style sheet', () => {
-      React.render(<div />, div)
-      assert.ok(document.getElementById('react-stylesheet'))
-    })
-
-    test('"renderToString" creates style sheet', () => {
-      const result = React.renderToString(<div />)
-      assert.ok(result.indexOf('react-stylesheet') > -1)
-    })
-
-    test('"renderToStaticMarkup" creates style sheet', () => {
-      const result = React.renderToStaticMarkup(<div />)
-      assert.ok(result.indexOf('react-stylesheet') > -1)
-    })
-  })
 })

@@ -1,6 +1,6 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class View extends React.Component {
+export default class View extends Component {
   static propTypes = {
     _className: PropTypes.string, // escape-hatch for code migrations
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
@@ -76,5 +76,3 @@ class View extends React.Component {
     )
   }
 }
-
-export default View

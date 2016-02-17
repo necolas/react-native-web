@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Tappable from 'react-tappable'
 import View from '../View'
 import StyleSheet from '../../apis/StyleSheet'
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class Touchable extends React.Component {
+export default class Touchable extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
@@ -130,5 +130,3 @@ class Touchable extends React.Component {
     )
   }
 }
-
-export default Touchable

@@ -150,7 +150,7 @@ user edits to the value set `editable={false}`.
 ## Examples
 
 ```js
-import React, { Component, StyleSheet, TextInput } from 'react-native-web'
+import React, { Component, StyleSheet, TextInput } from 'react-native'
 
 export default class TextInputExample extends Component {
   constructor(props, context) {

@@ -1,6 +1,6 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import debounce from 'lodash.debounce'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ScrollViewStylePropTypes from './ScrollViewStylePropTypes'
 import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class ScrollView extends React.Component {
+export default class ScrollView extends Component {
   static propTypes = {
     children: PropTypes.any,
     contentContainerStyle: PropTypes.shape(ScrollViewStylePropTypes),
@@ -136,5 +136,3 @@ class ScrollView extends React.Component {
     )
   }
 }
-
-export default ScrollView
