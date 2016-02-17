@@ -1,7 +1,7 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
-import StyleSheet from '../../modules/StyleSheet'
+import StyleSheet from '../../apis/StyleSheet'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
 const viewStyleKeys = Object.keys(ViewStylePropTypes)

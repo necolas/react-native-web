@@ -6,7 +6,7 @@ import StyleSheet from '..'
 
 const styles = { root: { borderWidth: 1 } }
 
-suite('modules/StyleSheet', () => {
+suite('apis/StyleSheet', () => {
   setup(() => {
     StyleSheet._destroy()
   })

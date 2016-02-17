@@ -2,7 +2,7 @@ import { pickProps } from '../../modules/filterObjectProps'
 import debounce from 'lodash.debounce'
 import React, { PropTypes } from 'react'
 import ScrollViewStylePropTypes from './ScrollViewStylePropTypes'
-import StyleSheet from '../../modules/StyleSheet'
+import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
 
 const scrollViewStyleKeys = Object.keys(ScrollViewStylePropTypes)
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   initial: {
     flexGrow: 1,
     flexShrink: 1,
-    overflow: 'scroll'
+    overflow: 'auto'
   },
   initialContentContainer: {
     flexGrow: 1,

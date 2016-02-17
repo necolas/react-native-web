@@ -3,7 +3,7 @@
 import assert from 'assert'
 import isObject from '../isObject'
 
-suite('modules/StyleSheet/isObject', () => {
+suite('apis/StyleSheet/isObject', () => {
   test('returns "true" for objects', () => {
     assert.ok(isObject({}) === true)
   })

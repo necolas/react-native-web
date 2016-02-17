@@ -1,6 +1,6 @@
 /* global window */
 import { pickProps } from '../../modules/filterObjectProps'
-import StyleSheet from '../../modules/StyleSheet'
+import StyleSheet from '../../apis/StyleSheet'
 import CoreComponent from '../CoreComponent'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { PropTypes } from 'react'

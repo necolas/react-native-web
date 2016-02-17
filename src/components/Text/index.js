@@ -1,7 +1,7 @@
 import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { PropTypes } from 'react'
-import StyleSheet from '../../modules/StyleSheet'
+import StyleSheet from '../../apis/StyleSheet'
 import TextStylePropTypes from './TextStylePropTypes'
 
 const textStyleKeys = Object.keys(TextStylePropTypes)

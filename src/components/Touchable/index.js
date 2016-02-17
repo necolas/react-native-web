@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Tappable from 'react-tappable'
 import View from '../View'
-import StyleSheet from '../../modules/StyleSheet'
+import StyleSheet from '../../apis/StyleSheet'
 
 const styles = StyleSheet.create({
   initial: {

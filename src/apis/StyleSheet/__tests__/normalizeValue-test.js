@@ -3,7 +3,7 @@
 import assert from 'assert'
 import normalizeValue from '../normalizeValue'
 
-suite('modules/StyleSheet/normalizeValue', () => {
+suite('apis/StyleSheet/normalizeValue', () => {
   test('normalizes property values requiring units', () => {
     assert.deepEqual(normalizeValue('margin', 0), '0px')
   })

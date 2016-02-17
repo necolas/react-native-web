@@ -22,7 +22,7 @@ const fixture = {
   }
 }
 
-suite('modules/StyleSheet/getStyleObjects', () => {
+suite('apis/StyleSheet/getStyleObjects', () => {
   test('returns only style objects', () => {
     const actual = getStyleObjects(fixture)
     assert.deepEqual(actual, [

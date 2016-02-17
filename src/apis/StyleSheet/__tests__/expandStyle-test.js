@@ -3,7 +3,7 @@
 import assert from 'assert'
 import expandStyle from '../expandStyle'
 
-suite('modules/StyleSheet/expandStyle', () => {
+suite('apis/StyleSheet/expandStyle', () => {
   test('style resolution', () => {
     const initial = {
       borderTopWidth: 1,

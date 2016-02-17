@@ -3,7 +3,7 @@
 import assert from 'assert'
 import Store from '../Store'
 
-suite('modules/StyleSheet/Store', () => {
+suite('apis/StyleSheet/Store', () => {
   suite('the constructor', () => {
     test('initialState', () => {
       const initialState = { classNames: { 'alignItems:center': '__classname__' } }
@@ -92,13 +92,15 @@ suite('modules/StyleSheet/Store', () => {
     test('human-readable style sheet', () => {
       const store = new Store()
       store.set('alignItems', 'center')
+      store.set('backgroundColor', 'rgba(0,0,0,0)')
       store.set('color', '#fff')
       store.set('fontFamily', '"Helvetica Neue", Arial, sans-serif')
       store.set('marginBottom', 0)
       store.set('width', '100%')
 
-      const expected = '/* 5 unique declarations */\n' +
+      const expected = '/* 6 unique declarations */\n' +
           '.alignItems\\:center{align-items:center;}\n' +
+          '.backgroundColor\\:rgba\\(0\\,0\\,0\\,0\\){background-color:rgba(0,0,0,0);}\n' +
           '.color\\:\\#fff{color:#fff;}\n' +
           '.fontFamily\\:\\"Helvetica-Neue\\"\\,-Arial\\,-sans-serif{font-family:"Helvetica Neue", Arial, sans-serif;}\n' +
           '.marginBottom\\:0px{margin-bottom:0px;}\n' +

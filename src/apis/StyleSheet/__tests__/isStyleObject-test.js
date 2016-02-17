@@ -17,7 +17,7 @@ const styles = {
   }
 }
 
-suite('modules/StyleSheet/isStyleObject', () => {
+suite('apis/StyleSheet/isStyleObject', () => {
   test('returns "false" for non-style objects', () => {
     assert.ok(isStyleObject(styles) === false)
     assert.ok(isStyleObject(styles.align) === false)

@@ -3,7 +3,7 @@ import expandStyle from './expandStyle'
 import getStyleObjects from './getStyleObjects'
 import prefixer from './prefixer'
 import Store from './Store'
-import StylePropTypes from '../StylePropTypes'
+import StylePropTypes from './StylePropTypes'
 
 /**
  * Initialize the store with pointer-event styles mapping to our custom pointer
@@ -58,7 +58,7 @@ const create = (styles: Object): Object => {
     if (stylesheet) {
       stylesheet.textContent = _renderToString()
     } else if (process.env.NODE_ENV !== 'production') {
-      console.error('ReactNativeWeb: cannot find "react-stylesheet" element')
+      console.error('ReactNative: cannot find "react-stylesheet" element')
     }
   }
 

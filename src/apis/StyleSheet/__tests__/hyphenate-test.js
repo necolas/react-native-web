@@ -3,7 +3,7 @@
 import assert from 'assert'
 import hyphenate from '../hyphenate'
 
-suite('modules/StyleSheet/hyphenate', () => {
+suite('apis/StyleSheet/hyphenate', () => {
   test('style property', () => {
     assert.equal(hyphenate('alignItems'), 'align-items')
     assert.equal(hyphenate('color'), 'color')

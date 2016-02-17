@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import StylePropTypes from '../../modules/StylePropTypes'
-import StyleSheet from '../../modules/StyleSheet'
+import StylePropTypes from '../../apis/StyleSheet/StylePropTypes'
+import StyleSheet from '../../apis/StyleSheet'
 
 const roleComponents = {
   article: 'article',
