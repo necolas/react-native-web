@@ -1,125 +1,78 @@
-# Contributing to this project
+# Contributing
 
-The issue tracker is the preferred channel for [bug reports](#bugs),
-[features requests](#features), and [submitting pull requests](#pull-requests).
+We are open to, and grateful for, any contributions made by the community.
 
-<a name="bugs"></a>
-## Bug reports
+## Reporting Issues and Asking Questions
 
-A bug is a _demonstrable problem_ that is caused by the code in the repository.
-Good bug reports are extremely helpful - thank you! You can compare the
-behaviour against that expected with React Native by using the [React Native
-Playground](https://rnplay.org/)
+Before opening an issue, please search the [issue
+tracker](https://github.com/necolas/react-native-web/issues) to make sure your
+issue hasn't already been reported.
 
-Guidelines for bug reports:
+## Development
 
-1. **Use the GitHub issue search** &mdash; check if the issue has already been
-   reported or fixed in `master`.
+Visit the [Issue tracker](https://github.com/necolas/react-native-web/issues)
+to find a list of open issues that need attention.
 
-2. **Isolate the problem** &mdash; create a [reduced test
-   case](http://css-tricks.com/reduced-test-cases/) using this
-   [codepen](https://codepen.io/necolas/pen/PZzwBR?editors=001).
+Fork, then clone the repo:
 
-A good bug report contains as much detail as possible. What is your
-environment? What steps will reproduce the issue? What browser(s) and OS
-experience the problem? What would you expect to be the outcome? All these
-details really help!
+```
+git clone https://github.com/your-username/react-native-web.git
+```
 
-Example:
+Run the examples:
 
-> Short and descriptive example bug report title
->
-> A summary of the issue and the browser/OS environment in which it occurs. If
-> suitable, include the steps required to reproduce the bug.
->
-> 1. This is the first step
-> 2. This is the second step
-> 3. Further steps, etc.
->
-> `<url>` - a link to the reduced test case
->
-> Any other information you want to share that is relevant to the issue being
-> reported. This might include the lines of code that you have identified as
-> causing the bug, and potential solutions (and your opinions on their
-> merits).
+```
+npm run examples
+```
 
+### Building
 
-<a name="features"></a>
-## Feature requests
+```
+npm run build
+```
 
-Feature requests are welcome. But take a moment to find out whether your idea
-fits with the scope and aims of the project (i.e., is this for parity with
-React Native? does it make sense on the Web?). Please provide as much detail
-and context as you think is necessary to make your case.
+To create a UMD build:
 
+```
+npm run build:umd
+```
 
-<a name="pull-requests"></a>
-## Pull requests
+### Testing and Linting
 
-Good pull requests - patches, improvements, new features - are a fantastic
-help. Please keep them focused in scope and avoid containing unrelated commits.
+To run the tests:
 
-**Please ask first** before embarking on any significant pull request (e.g.
-implementing new features or components, refactoring code), otherwise you risk
-spending a lot of time working on something that the project's developers might
-not want to merge into the project.
+```
+npm run test
+```
 
-Development commands:
+To continuously watch and run tests, run the following:
 
-* `npm run build` – build the library
-* `npm run examples` – start the dev server and develop against live examples
-* `npm run lint` – run the linter
-* `npm run test:watch` – run and watch the unit tests
-* `npm test` – run the linter and unit tests
+```
+npm run test:watch
+```
 
-Please follow this process for submitting a patch:
+To perform linting, run the following:
 
-1. [Fork](http://help.github.com/fork-a-repo/) the project, clone your fork,
-   and configure the remotes:
+```
+npm run lint
+```
 
-   ```bash
-   # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/react-native-web
-   # Navigate to the newly cloned directory
-   cd react-native-web
-   # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/necolas/react-native-web
-   ```
+### New Features
 
-2. If you cloned a while ago, get the latest changes from upstream:
+Please open an issue with a proposal for a new feature or refactoring before
+starting on the work. We don't want you to waste your efforts on a pull request
+that we won't want to accept.
 
-   ```bash
-   git checkout master
-   git pull upstream master
-   ```
+## Submitting Changes
 
-3. Create a new topic branch (off the main project development branch) to
-   contain your feature, change, or fix:
+* Open a new issue in the [Issue tracker](https://github.com/necolas/react-native-web/issues).
+* Fork the repo.
+* Create a new feature branch based off the `master` branch.
+* Make sure all tests pass and there are no linting errors.
+* Submit a pull request, referencing any issues it addresses.
 
-   ```bash
-   git checkout -b <topic-branch-name>
-   ```
+Please try to keep your pull request focused in scope and avoid including unrelated commits.
 
-4. Commit your changes in logical chunks. Please adhere to these [git commit
-   message guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-   or your code is unlikely be merged into the main project. Use Git's
-   [interactive rebase](https://help.github.com/articles/interactive-rebase)
-   feature to tidy up your commits before making them public.
+After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
 
-5. Locally merge (or rebase) the upstream development branch into your topic branch:
-
-   ```bash
-   git pull [--rebase] upstream master
-   ```
-
-6. Push your topic branch up to your fork:
-
-   ```bash
-   git push origin <topic-branch-name>
-   ```
-
-7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
-    with a clear title and description.
-
-**IMPORTANT**: By submitting a patch, you agree to allow the project owner to
-license your work under the same license as that used by the project.
+Thank you for contributing!
