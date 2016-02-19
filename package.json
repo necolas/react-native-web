@@ -1,6 +1,6 @@
 {
   "name": "react-native-web",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
