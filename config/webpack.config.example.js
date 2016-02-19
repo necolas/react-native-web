@@ -1,5 +1,6 @@
-var constants = require('./constants')
-var webpack = require('webpack')
+const constants = require('./constants')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   devServer: {
@@ -30,7 +31,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'react-native': '../../src'
+      'react-native': path.join(__dirname, '../dist/react-native-web')
     }
   }
 }

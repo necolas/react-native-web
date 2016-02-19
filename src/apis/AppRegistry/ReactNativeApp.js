@@ -1,7 +1,7 @@
 import Portal from '../../components/Portal'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import StyleSheet from '../../apis/StyleSheet'
+import StyleSheet from '../StyleSheet'
 import View from '../../components/View'
 
 export default class ReactNativeApp extends Component {

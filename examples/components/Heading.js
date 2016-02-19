@@ -1,4 +1,12 @@
-import React, { StyleSheet, Text } from '../../src'
+import React, { StyleSheet, Text } from 'react-native'
+
+const Heading = ({ children, size = 'normal' }) => (
+  <Text
+    accessibilityRole='heading'
+    children={children}
+    style={{ ...styles.root, ...sizeStyles[size] }}
+  />
+)
 
 const sizeStyles = StyleSheet.create({
   xlarge: {
@@ -22,13 +30,5 @@ const styles = StyleSheet.create({
     fontFamily: '"Helvetica Neue", arial, sans-serif'
   }
 })
-
-const Heading = ({ children, size = 'normal' }) => (
-  <Text
-    accessibilityRole='heading'
-    children={children}
-    style={{ ...styles.root, ...sizeStyles[size] }}
-  />
-)
 
 export default Heading

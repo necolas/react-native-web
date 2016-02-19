@@ -1,21 +1,4 @@
-import React, { StyleSheet, Text, View } from '../../src'
-
-const styles = StyleSheet.create({
-  root: {
-    alignItems: 'center',
-    borderWidth: 1,
-    marginVertical: 10,
-    padding: 10
-  },
-  heading: {
-    fontWeight: 'bold',
-    padding: 5,
-    textAlign: 'center'
-  },
-  text: {
-    textAlign: 'center'
-  }
-})
+import React, { StyleSheet, Text, View } from 'react-native'
 
 const MediaQueryWidget = ({ mediaQuery = {} }) => {
   const active = Object.keys(mediaQuery).reduce((active, alias) => {
@@ -35,5 +18,22 @@ const MediaQueryWidget = ({ mediaQuery = {} }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    alignItems: 'center',
+    borderWidth: 1,
+    marginVertical: 10,
+    padding: 10
+  },
+  heading: {
+    fontWeight: 'bold',
+    padding: 5,
+    textAlign: 'center'
+  },
+  text: {
+    textAlign: 'center'
+  }
+})
 
 export default MediaQueryWidget

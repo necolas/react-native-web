@@ -1,18 +1,4 @@
-import React, { Component, PropTypes, StyleSheet, View } from '../../src'
-
-const styles = StyleSheet.create({
-  root: {
-    overflow: 'hidden'
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    flexGrow: 1
-  },
-  // distribute all space (rather than extra space)
-  column: {
-    flexBasis: '0%'
-  }
-})
+import React, { Component, PropTypes, StyleSheet, View } from 'react-native'
 
 export default class GridView extends Component {
   static propTypes = {
@@ -63,3 +49,17 @@ export default class GridView extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  root: {
+    overflow: 'hidden'
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    flexGrow: 1
+  },
+  // distribute all space (rather than extra space)
+  column: {
+    flexBasis: '0%'
+  }
+})

@@ -4,24 +4,6 @@ import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
-const styles = StyleSheet.create({
-  initial: {
-    color: 'inherit',
-    display: 'inline',
-    font: 'inherit',
-    margin: 0,
-    padding: 0,
-    textDecoration: 'none',
-    wordWrap: 'break-word'
-  },
-  singleLineStyle: {
-    maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-  }
-})
-
 export default class Text extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
@@ -64,3 +46,21 @@ export default class Text extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  initial: {
+    color: 'inherit',
+    display: 'inline',
+    font: 'inherit',
+    margin: 0,
+    padding: 0,
+    textDecoration: 'none',
+    wordWrap: 'break-word'
+  },
+  singleLineStyle: {
+    maxWidth: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  }
+})

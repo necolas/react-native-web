@@ -2,7 +2,7 @@ import { MediaProvider, matchMedia } from 'react-media-queries'
 import App from './components/App'
 import createGetter from 'react-media-queries/lib/createMediaQueryGetter'
 import createListener from 'react-media-queries/lib/createMediaQueryListener'
-import React, { AppRegistry } from '../src'
+import React, { AppRegistry } from 'react-native'
 
 const mediaQueries = {
   small: '(min-width: 300px)',

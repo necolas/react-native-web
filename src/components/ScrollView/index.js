@@ -3,19 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
 
-const styles = StyleSheet.create({
-  initial: {
-    flex: 1,
-    overflow: 'auto'
-  },
-  initialContentContainer: {
-    flex: 1
-  },
-  row: {
-    flexDirection: 'row'
-  }
-})
-
 export default class ScrollView extends Component {
   static propTypes = {
     children: PropTypes.any,
@@ -127,3 +114,16 @@ export default class ScrollView extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  initial: {
+    flex: 1,
+    overflow: 'auto'
+  },
+  initialContentContainer: {
+    flex: 1
+  },
+  row: {
+    flexDirection: 'row'
+  }
+})

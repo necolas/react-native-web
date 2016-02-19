@@ -75,3 +75,5 @@ const NetInfo = {
     }
   }
 }
+
+export default NetInfo
