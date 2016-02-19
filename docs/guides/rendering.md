@@ -1,5 +1,21 @@
 # Client and Server rendering
 
+It's recommended that you use a module loader that supports package aliases
+(e.g., webpack), and alias `react-native` to `react-native-web`.
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...other configuration
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
+  }
+}
+```
+
 ## Client-side rendering
 
 ```js

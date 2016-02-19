@@ -6,6 +6,8 @@
 
 [React Native][react-native-url] components and APIs for the Web.
 
+Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+
 ## Quick start
 
 To install in your app:
@@ -14,9 +16,7 @@ To install in your app:
 npm install --save react@0.14 react-dom@0.14 react-native-web
 ```
 
-Or [try it on CodePen](http://codepen.io/necolas/pen/PZzwBR).
-
-Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+Read the [Client and Server rendering](docs/guides/rendering.md) guide.
 
 ## Overview
 
@@ -29,9 +29,14 @@ common layouts with flexbox, such as stacked and nested boxes with margin and
 padding. And the [`StyleSheet`](docs/guides/style.md) API converts styles
 defined in JavaScript to "atomic" CSS.
 
-## Example
+## Examples
 
-More examples can be found in the [`examples` directory](examples).
+Demos:
+
+* [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
+* [TicTacToe](http://codepen.io/necolas/full/eJaLZd/)
+
+Example:
 
 ```js
 import React, { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
