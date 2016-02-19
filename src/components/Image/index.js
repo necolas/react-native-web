@@ -1,9 +1,9 @@
 /* global window */
-import { pickProps } from '../../modules/filterObjectProps'
 import StyleSheet from '../../apis/StyleSheet'
 import CoreComponent from '../CoreComponent'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { Component, PropTypes } from 'react'
+import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import View from '../View'
 
 const STATUS_ERRORED = 'ERRORED'
@@ -11,46 +11,6 @@ const STATUS_LOADED = 'LOADED'
 const STATUS_LOADING = 'LOADING'
 const STATUS_PENDING = 'PENDING'
 const STATUS_IDLE = 'IDLE'
-
-const imageStyleKeys = Object.keys(ImageStylePropTypes)
-
-const styles = StyleSheet.create({
-  initial: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'transparent',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
-  },
-  img: {
-    borderWidth: 0,
-    height: 'auto',
-    maxHeight: '100%',
-    maxWidth: '100%',
-    opacity: 0
-  },
-  children: {
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0
-  },
-  resizeMode: {
-    contain: {
-      backgroundSize: 'contain'
-    },
-    cover: {
-      backgroundSize: 'cover'
-    },
-    none: {
-      backgroundSize: 'auto'
-    },
-    stretch: {
-      backgroundSize: '100% 100%'
-    }
-  }
-})
 
 export default class Image extends Component {
   constructor(props, context) {
@@ -74,18 +34,15 @@ export default class Image extends Component {
     onLoadStart: PropTypes.func,
     resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
     source: PropTypes.object,
-    style: PropTypes.shape(ImageStylePropTypes),
+    style: StyleSheetPropType(ImageStylePropTypes),
     testID: CoreComponent.propTypes.testID
   };
-
-  static stylePropTypes = ImageStylePropTypes;
 
   static defaultProps = {
     accessible: true,
     defaultSource: {},
     resizeMode: 'cover',
-    source: {},
-    style: styles.initial
+    source: {}
   };
 
   _createImageLoader() {
@@ -177,7 +134,6 @@ export default class Image extends Component {
     const isLoaded = this.state.status === STATUS_LOADED
     const defaultImage = defaultSource.uri || null
     const displayImage = !isLoaded ? defaultImage : source.uri
-    const resolvedStyle = pickProps(style, imageStyleKeys)
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
 
     /**
@@ -189,16 +145,15 @@ export default class Image extends Component {
      */
     return (
       <View
-        _className='Image'
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle,
-          ...(backgroundImage && { backgroundImage }),
-          ...styles.resizeMode[resizeMode]
-        }}
+        style={[
+          styles.initial,
+          style,
+          backgroundImage && { backgroundImage },
+          resizeModeStyles[resizeMode]
+        ]}
         testID={testID}
       >
         <img src={displayImage} style={styles.img} />
@@ -209,3 +164,42 @@ export default class Image extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  initial: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'transparent',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
+  },
+  img: {
+    borderWidth: 0,
+    height: 'auto',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    opacity: 0
+  },
+  children: {
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0
+  }
+})
+
+const resizeModeStyles = StyleSheet.create({
+  contain: {
+    backgroundSize: 'contain'
+  },
+  cover: {
+    backgroundSize: 'cover'
+  },
+  none: {
+    backgroundSize: 'auto'
+  },
+  stretch: {
+    backgroundSize: '100% 100%'
+  }
+})

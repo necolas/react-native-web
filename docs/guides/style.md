@@ -1,8 +1,8 @@
 # Style
 
-React Native for Web relies on JavaScript to let you style your application.
-Along with a novel JS-to-CSS conversion strategy, this allows you to avoid
-issues arising from the [7 deadly sins of
+React Native for Web relies on JavaScript to define styles for your
+application. Along with a novel JS-to-CSS conversion strategy, this allows you
+to avoid issues arising from the [7 deadly sins of
 CSS](https://speakerdeck.com/vjeux/react-css-in-js):
 
 1. Global namespace
@@ -53,16 +53,16 @@ A common pattern is to conditionally add style based on a condition:
 
 ```js
 // either
-<View style={{
-  ...styles.base,
-  ...(this.state.active && styles.active)
-}} />
-
-// or
 <View style={[
   styles.base,
   this.state.active && styles.active
 ]} />
+
+// or
+<View style={{
+  ...styles.base,
+  ...(this.state.active && styles.active)
+}} />
 ```
 
 ## Composing styles
@@ -82,7 +82,7 @@ class List extends React.Component {
     return (
       <View style={this.props.style}>
         {elements.map((element) =>
-          <View style={{ ...styles.element, this.props.elementStyle }} />
+          <View style={[ styles.element, this.props.elementStyle ]} />
         )}
       </View>
     );

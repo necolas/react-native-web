@@ -65,10 +65,6 @@ suite('components/Image', () => {
 
   test('prop "source"')
 
-  test('prop "style"', () => {
-    utils.assertProps.style(Image)
-  })
-
   test('prop "testID"', () => {
     const testID = 'testID'
     const result = utils.shallowRender(<Image testID={testID} />)

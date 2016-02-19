@@ -23,11 +23,11 @@ const unitlessNumbers = {
   strokeWidth: true
 }
 
-const normalizeValues = (property, value) => {
+const normalizeValue = (property, value) => {
   if (!unitlessNumbers[property] && typeof value === 'number') {
     value = `${value}px`
   }
   return value
 }
 
-export default normalizeValues
+export default normalizeValue

@@ -1,9 +1,12 @@
 import { resetCSS, predefinedCSS, predefinedClassNames } from './predefs'
-import expandStyle from './expandStyle'
-import getStyleObjects from './getStyleObjects'
-import prefixer from './prefixer'
+import flattenStyle from './flattenStyle'
 import Store from './Store'
-import StylePropTypes from './StylePropTypes'
+import StyleSheetRegistry from './StyleSheetRegistry'
+import StyleSheetValidation from './StyleSheetValidation'
+
+const ELEMENT_ID = 'react-stylesheet'
+let isRendered = false
+let lastStyleSheet = ''
 
 /**
  * Initialize the store with pointer-event styles mapping to our custom pointer
@@ -13,7 +16,6 @@ const initialState = { classNames: predefinedClassNames }
 const options = { obfuscateClassNames: !(process.env.NODE_ENV !== 'production') }
 const createStore = () => new Store(initialState, options)
 let store = createStore()
-let isRendered = false
 
 /**
  * Destroy existing styles
@@ -32,49 +34,24 @@ const _renderToString = () => {
   return `${resetCSS}\n${predefinedCSS}\n${css}`
 }
 
-/**
- * Process all unique declarations
- */
 const create = (styles: Object): Object => {
-  const rules = getStyleObjects(styles)
-
-  rules.forEach((rule) => {
-    const style = expandStyle(rule)
-
-    Object.keys(style).forEach((property) => {
-      if (!StylePropTypes[property]) {
-        console.error(`ReactNativeWeb: the style property "${property}" is not supported`)
-      } else {
-        const value = style[property]
-        // add each declaration to the store
-        store.set(property, value)
-      }
-    })
-  })
+  for (const key in styles) {
+    StyleSheetValidation.validateStyle(key, styles)
+    StyleSheetRegistry.registerStyle(styles[key], store)
+  }
 
   // update the style sheet in place
   if (isRendered) {
-    const stylesheet = document.getElementById('react-stylesheet')
+    const stylesheet = document.getElementById(ELEMENT_ID)
     if (stylesheet) {
-      stylesheet.textContent = _renderToString()
+      const newStyleSheet = _renderToString()
+      if (lastStyleSheet !== newStyleSheet) {
+        stylesheet.textContent = newStyleSheet
+        lastStyleSheet = newStyleSheet
+      }
     } else if (process.env.NODE_ENV !== 'production') {
       console.error('ReactNative: cannot find "react-stylesheet" element')
     }
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-    const deepFreeze = (obj) => {
-      const propNames = Object.getOwnPropertyNames(obj)
-      propNames.forEach((name) => {
-        const prop = obj[name]
-        if (typeof prop === 'object' && prop !== null && !Object.isFrozen(prop)) {
-          deepFreeze(prop)
-        }
-      })
-      return Object.freeze(obj)
-    }
-
-    deepFreeze(styles)
   }
 
   return styles
@@ -84,34 +61,15 @@ const create = (styles: Object): Object => {
  * Accepts React props and converts inline styles to single purpose classes
  * where possible.
  */
-const resolve = ({ className = '', style = {} }) => {
-  let _className
-  let _style = {}
-  const expandedStyle = expandStyle(style)
-
-  const classList = [ className ]
-  for (const prop in expandedStyle) {
-    if (!StylePropTypes[prop]) {
-      continue
-    }
-    let styleClass = store.get(prop, expandedStyle[prop])
-
-    if (styleClass) {
-      classList.push(styleClass)
-    } else {
-      _style[prop] = expandedStyle[prop]
-    }
-  }
-
-  _className = classList.join(' ')
-  _style = prefixer.prefix(_style)
-
-  return { className: _className, style: _style }
+const resolve = ({ style = {} }) => {
+  return StyleSheetRegistry.getStyleAsNativeProps(style, store)
 }
 
 export default {
   _destroy,
   _renderToString,
   create,
+  elementId: ELEMENT_ID,
+  flatten: flattenStyle,
   resolve
 }

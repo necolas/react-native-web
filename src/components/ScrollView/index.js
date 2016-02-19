@@ -1,21 +1,15 @@
-import { pickProps } from '../../modules/filterObjectProps'
 import debounce from 'lodash.debounce'
 import React, { Component, PropTypes } from 'react'
-import ScrollViewStylePropTypes from './ScrollViewStylePropTypes'
 import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
 
-const scrollViewStyleKeys = Object.keys(ScrollViewStylePropTypes)
-
 const styles = StyleSheet.create({
   initial: {
-    flexGrow: 1,
-    flexShrink: 1,
+    flex: 1,
     overflow: 'auto'
   },
   initialContentContainer: {
-    flexGrow: 1,
-    flexShrink: 1
+    flex: 1
   },
   row: {
     flexDirection: 'row'
@@ -25,20 +19,20 @@ const styles = StyleSheet.create({
 export default class ScrollView extends Component {
   static propTypes = {
     children: PropTypes.any,
-    contentContainerStyle: PropTypes.shape(ScrollViewStylePropTypes),
+    contentContainerStyle: View.propTypes.style,
     horizontal: PropTypes.bool,
     onScroll: PropTypes.func,
     scrollEnabled: PropTypes.bool,
     scrollEventThrottle: PropTypes.number,
-    style: PropTypes.shape(ScrollViewStylePropTypes)
+    style: View.propTypes.style
   };
 
   static defaultProps = {
-    contentContainerStyle: styles.initialContentContainer,
+    contentContainerStyle: {},
     horizontal: false,
     scrollEnabled: true,
     scrollEventThrottle: 0,
-    style: styles.initial
+    style: {}
   };
 
   constructor(...args) {
@@ -108,28 +102,25 @@ export default class ScrollView extends Component {
       style
     } = this.props
 
-    const resolvedStyle = pickProps(style, scrollViewStyleKeys)
-    const resolvedContentContainerStyle = pickProps(contentContainerStyle, scrollViewStyleKeys)
-
     return (
       <View
         _className='ScrollView'
         onScroll={(e) => this._onScroll(e)}
         onTouchMove={(e) => this._maybePreventScroll(e)}
         onWheel={(e) => this._maybePreventScroll(e)}
-        style={{
-          ...styles.initial,
-          ...resolvedStyle
-        }}
+        style={[
+          styles.initial,
+          style
+        ]}
       >
         {children ? (
           <View
             children={children}
-            style={{
-              ...styles.initialContentContainer,
-              ...resolvedContentContainerStyle,
-              ...(horizontal && styles.row)
-            }}
+            style={[
+              styles.initialContentContainer,
+              contentContainerStyle,
+              horizontal && styles.row
+            ]}
           />
         ) : null}
       </View>

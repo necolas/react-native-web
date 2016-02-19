@@ -1,3 +1,5 @@
+import normalizeValue from './normalizeValue'
+
 const styleShortHands = {
   borderColor: [ 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor' ],
   borderRadius: [ 'borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius' ],
@@ -37,7 +39,8 @@ const expandStyle = (style) => {
 
   return sortedProps.reduce((resolvedStyle, key) => {
     const expandedProps = styleShortHands[key]
-    const value = style[key]
+    const value = normalizeValue(key, style[key])
+
     if (expandedProps) {
       expandedProps.forEach((prop, i) => {
         resolvedStyle[expandedProps[i]] = value

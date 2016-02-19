@@ -82,14 +82,14 @@ export default class PrettyText extends Component {
     color: PropTypes.oneOf(['white', 'gray', 'red']),
     size: PropTypes.oneOf(['small', 'normal', 'large']),
     weight: PropTypes.oneOf(['light', 'normal', 'bold'])
-  }
+  };
 
   static defaultProps = {
     ...Text.defaultProps,
     color: 'gray',
     size: 'normal',
     weight: 'normal'
-  }
+  };
 
   render() {
     const { color, size, style, weight, ...other } = this.props;
@@ -97,32 +97,32 @@ export default class PrettyText extends Component {
     return (
       <Text
         ...other
-        style={{
-          ...style,
-          ...styles.color[color],
-          ...styles.size[size],
-          ...styles.weight[weight]
-        }}
+        style={[
+          style,
+          colorStyles[color],
+          sizeStyles[size],
+          weightStyles[weight]
+        ]}
       />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  color: {
-    white: { color: 'white' },
-    gray: { color: 'gray' },
-    red: { color: 'red' }
-  },
-  size: {
-    small: { fontSize: '0.85rem', padding: '0.5rem' },
-    normal: { fontSize: '1rem', padding: '0.75rem' },
-    large: { fontSize: '1.5rem', padding: '1rem' }
-  },
-  weight: {
-    light: { fontWeight: '300' },
-    normal: { fontWeight: '400' },
-    bold: { fontWeight: '700' }
-  }
+const colorStyles = StyleSheet.create({
+  white: { color: 'white' },
+  gray: { color: 'gray' },
+  red: { color: 'red' }
+})
+
+const sizeStyles = StyleSheet.create({
+  small: { fontSize: '0.85rem', padding: '0.5rem' },
+  normal: { fontSize: '1rem', padding: '0.75rem' },
+  large: { fontSize: '1.5rem', padding: '1rem' }
+})
+
+const weightStyles = StyleSheet.create({
+  light: { fontWeight: '300' },
+  normal: { fontWeight: '400' },
+  bold: { fontWeight: '700' }
 })
 ```

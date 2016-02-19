@@ -5,12 +5,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     marginVertical: 10,
-    padding: 10,
-    textAlign: 'center'
+    padding: 10
   },
   heading: {
     fontWeight: 'bold',
-    padding: 5
+    padding: 5,
+    textAlign: 'center'
+  },
+  text: {
+    textAlign: 'center'
   }
 })
 
@@ -28,7 +31,7 @@ const MediaQueryWidget = ({ mediaQuery = {} }) => {
   return (
     <View style={styles.root}>
       <Text style={styles.heading}>Active Media Query</Text>
-      <Text>{`"${active.alias}"`} {active.mql && active.mql.media}</Text>
+      <Text style={styles.text}>{`"${active.alias}"`} {active.mql && active.mql.media}</Text>
     </View>
   )
 }

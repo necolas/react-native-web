@@ -14,14 +14,14 @@ suite('apis/StyleSheet/expandStyle', () => {
     }
 
     const expected = {
-      borderTopWidth: 1,
-      borderLeftWidth: 2,
-      borderRightWidth: 2,
-      borderBottomWidth: 2,
-      marginTop: 50,
-      marginBottom: 25,
-      marginLeft: 10,
-      marginRight: 10
+      borderTopWidth: '1px',
+      borderLeftWidth: '2px',
+      borderRightWidth: '2px',
+      borderBottomWidth: '2px',
+      marginTop: '50px',
+      marginBottom: '25px',
+      marginLeft: '10px',
+      marginRight: '10px'
     }
 
     assert.deepEqual(expandStyle(initial), expected)

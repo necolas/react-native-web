@@ -1,15 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+import StyleSheet from '../../apis/StyleSheet'
 import Tappable from 'react-tappable'
 import View from '../View'
-import StyleSheet from '../../apis/StyleSheet'
-
-const styles = StyleSheet.create({
-  initial: {
-    ...View.defaultProps.style,
-    cursor: 'pointer',
-    userSelect: undefined
-  }
-})
 
 export default class Touchable extends Component {
   constructor(props, context) {
@@ -48,16 +40,16 @@ export default class Touchable extends Component {
     delayLongPress: 500,
     delayPressIn: 0,
     delayPressOut: 100,
-    style: styles.initial
+    style: {}
   };
 
   _getChildren() {
     const { activeOpacity, children } = this.props
     return React.cloneElement(React.Children.only(children), {
-      style: {
-        ...children.props.style,
-        ...(this.state.isActive && { opacity: activeOpacity })
-      }
+      style: [
+        children.props.style,
+        this.state.isActive && { opacity: activeOpacity }
+      ]
     })
   }
 
@@ -97,7 +89,7 @@ export default class Touchable extends Component {
     } = this.props
 
     /**
-     * Creates a wrapping element that can receive beyboard focus. The
+     * Creates a wrapping element that can receive keyboard focus. The
      * highlight is applied as a background color on this wrapper. The opacity
      * is set on the child element, allowing it to have its own background
      * color.
@@ -120,13 +112,20 @@ export default class Touchable extends Component {
         onTouchStart={this._onPressIn}
         pressDelay={delayLongPress}
         pressMoveThreshold={5}
-        style={{
-          ...styles.initial,
-          ...style,
-          backgroundColor: this.state.isActive ? activeUnderlayColor : style.backgroundColor
-        }}
+        style={StyleSheet.flatten([
+          styles.initial,
+          style,
+          activeUnderlayColor && this.state.isActive && { backgroundColor: activeUnderlayColor }
+        ])}
         tabIndex='0'
       />
     )
   }
 }
+
+const styles = StyleSheet.create({
+  initial: {
+    cursor: 'pointer',
+    userSelect: undefined
+  }
+})

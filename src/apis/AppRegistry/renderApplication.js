@@ -13,14 +13,13 @@ import ReactDOMServer from 'react-dom/server'
 import ReactNativeApp from './ReactNativeApp'
 import StyleSheet from '../../apis/StyleSheet'
 
-const STYLESHEET_ID = 'react-stylesheet'
-const renderStyleSheetToString = () => `<style id="${STYLESHEET_ID}">${StyleSheet._renderToString()}</style>`
+const renderStyleSheetToString = () => `<style id="${StyleSheet.elementId}">${StyleSheet._renderToString()}</style>`
 
 export default function renderApplication(RootComponent: Component, initialProps: Object, rootTag: any) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag)
 
   // insert style sheet if needed
-  const styleElement = document.getElementById(STYLESHEET_ID)
+  const styleElement = document.getElementById(StyleSheet.elementId)
   if (!styleElement) { rootTag.insertAdjacentHTML('beforebegin', renderStyleSheetToString()) }
 
   const component = (

@@ -43,10 +43,6 @@ suite('components/Text', () => {
     }
   })
 
-  test('prop "style"', () => {
-    utils.assertProps.style(Text)
-  })
-
   test('prop "testID"', () => {
     const testID = 'testID'
     const result = utils.shallowRender(<Text testID={testID} />)

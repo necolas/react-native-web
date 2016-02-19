@@ -17,7 +17,7 @@ suite('apis/StyleSheet', () => {
     setup(() => {
       document.body.appendChild(div)
       StyleSheet.create(styles)
-      div.innerHTML = `<style id='react-stylesheet'>${StyleSheet._renderToString()}</style>`
+      div.innerHTML = `<style id='${StyleSheet.elementId}'>${StyleSheet._renderToString()}</style>`
     })
 
     teardown(() => {
@@ -32,7 +32,7 @@ suite('apis/StyleSheet', () => {
       StyleSheet.create({ root: { color: 'red' } })
 
       assert.equal(
-        document.getElementById('react-stylesheet').textContent,
+        document.getElementById(StyleSheet.elementId).textContent,
         `${resetCSS}\n${predefinedCSS}\n` +
         `/* 5 unique declarations */\n` +
         `.borderBottomWidth\\:1px{border-bottom-width:1px;}\n` +
@@ -45,8 +45,8 @@ suite('apis/StyleSheet', () => {
   })
 
   test('resolve', () => {
-    const props = { className: 'className', style: styles.root }
-    const expected = { className: 'className borderTopWidth:1px borderRightWidth:1px borderBottomWidth:1px borderLeftWidth:1px', style: {} }
+    const props = { style: styles.root }
+    const expected = { className: 'borderTopWidth:1px borderRightWidth:1px borderBottomWidth:1px borderLeftWidth:1px', style: {} }
     StyleSheet.create(styles)
     assert.deepEqual(StyleSheet.resolve(props), expected)
   })

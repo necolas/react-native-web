@@ -1,43 +1,10 @@
-import { pickProps } from '../../modules/filterObjectProps'
 import CoreComponent from '../CoreComponent'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
 import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
-import TextInputStylePropTypes from './TextInputStylePropTypes'
 import View from '../View'
-
-const textInputStyleKeys = Object.keys(TextInputStylePropTypes)
-
-const styles = StyleSheet.create({
-  initial: {
-    ...View.defaultProps.style,
-    borderColor: 'black',
-    borderWidth: 1
-  },
-  input: {
-    appearance: 'none',
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    boxSizing: 'border-box',
-    color: 'inherit',
-    flexGrow: 1,
-    font: 'inherit',
-    padding: 0,
-    zIndex: 1
-  },
-  placeholder: {
-    bottom: 0,
-    color: 'darkgray',
-    left: 0,
-    overflow: 'hidden',
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    whiteSpace: 'pre'
-  }
-})
 
 export default class TextInput extends Component {
   constructor(props, context) {
@@ -66,12 +33,10 @@ export default class TextInput extends Component {
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
     selectTextOnFocus: PropTypes.bool,
-    style: PropTypes.shape(TextInputStylePropTypes),
+    style: Text.propTypes.style,
     testID: CoreComponent.propTypes.testID,
     value: PropTypes.string
   };
-
-  static stylePropTypes = TextInputStylePropTypes;
 
   static defaultProps = {
     editable: true,
@@ -79,7 +44,7 @@ export default class TextInput extends Component {
     multiline: false,
     numberOfLines: 2,
     secureTextEntry: false,
-    style: styles.initial
+    style: {}
   };
 
   _onBlur(e) {
@@ -142,7 +107,6 @@ export default class TextInput extends Component {
       value
     } = this.props
 
-    const resolvedStyle = pickProps(style, textInputStyleKeys)
     let type
 
     switch (keyboardType) {
@@ -198,26 +162,56 @@ export default class TextInput extends Component {
     const props = multiline ? propsMultiline : propsSingleline
 
     return (
-      <CoreComponent
+      <View
         accessibilityLabel={accessibilityLabel}
-        className='TextInput'
-        style={{
-          ...styles.initial,
-          ...resolvedStyle
-        }}
+        style={[
+          styles.initial,
+          style
+        ]}
         testID={testID}
       >
-        <View style={{ flexGrow: 1 }}>
+        <View style={styles.wrapper}>
           <CoreComponent {...props} ref='input' />
           {placeholder && this.state.showPlaceholder && <Text
             pointerEvents='none'
-            style={{
-              ...styles.placeholder,
-              ...(placeholderTextColor && { color: placeholderTextColor })
-            }}
+            style={[
+              styles.placeholder,
+              placeholderTextColor && { color: placeholderTextColor }
+            ]}
           >{placeholder}</Text>}
         </View>
-      </CoreComponent>
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  initial: {
+    borderColor: 'black',
+    borderWidth: 1
+  },
+  wrapper: {
+    flexGrow: 1
+  },
+  input: {
+    appearance: 'none',
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    boxSizing: 'border-box',
+    color: 'inherit',
+    flexGrow: 1,
+    font: 'inherit',
+    padding: 0,
+    zIndex: 1
+  },
+  placeholder: {
+    bottom: 0,
+    color: 'darkgray',
+    left: 0,
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    whiteSpace: 'pre'
+  }
+})

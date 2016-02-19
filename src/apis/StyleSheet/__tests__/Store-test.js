@@ -66,20 +66,6 @@ suite('apis/StyleSheet/Store', () => {
       })
     })
 
-    test('value normalization', () => {
-      const store = new Store()
-      store.set('flexGrow', 0)
-      store.set('margin', 0)
-      assert.deepEqual(store._declarations, {
-        flexGrow: [ 0 ],
-        margin: [ '0px' ]
-      })
-      assert.deepEqual(store._classNames, {
-        'flexGrow:0': 'flexGrow:0',
-        'margin:0px': 'margin:0px'
-      })
-    })
-
     test('replaces space characters', () => {
       const store = new Store()
 
@@ -95,7 +81,7 @@ suite('apis/StyleSheet/Store', () => {
       store.set('backgroundColor', 'rgba(0,0,0,0)')
       store.set('color', '#fff')
       store.set('fontFamily', '"Helvetica Neue", Arial, sans-serif')
-      store.set('marginBottom', 0)
+      store.set('marginBottom', '0px')
       store.set('width', '100%')
 
       const expected = '/* 6 unique declarations */\n' +
@@ -112,10 +98,10 @@ suite('apis/StyleSheet/Store', () => {
     test('obfuscated style sheet', () => {
       const store = new Store({}, { obfuscateClassNames: true })
       store.set('alignItems', 'center')
-      store.set('marginBottom', 0)
-      store.set('margin', 1)
-      store.set('margin', 2)
-      store.set('margin', 3)
+      store.set('marginBottom', '0px')
+      store.set('margin', '1px')
+      store.set('margin', '2px')
+      store.set('margin', '3px')
 
       const expected = '/* 5 unique declarations */\n' +
           '._s_1{align-items:center;}\n' +

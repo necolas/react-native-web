@@ -1,23 +1,28 @@
-import { pickProps } from '../../modules/filterObjectProps'
-import CoreComponent from '../CoreComponent'
-import View from '../View'
+import { PropTypes } from 'react'
+import ColorPropType from '../../apis/StyleSheet/ColorPropType'
+import ViewStylePropTypes from '../View/ViewStylePropTypes'
+
+const { number, oneOf, oneOfType, string } = PropTypes
+const numberOrString = oneOfType([ number, string ])
 
 export default {
-  ...View.stylePropTypes,
-  ...pickProps(CoreComponent.stylePropTypes, [
-    'color',
-    'fontFamily',
-    'fontSize',
-    'fontStyle',
-    'fontWeight',
-    'letterSpacing',
-    'lineHeight',
-    'textAlign',
-    'textDecoration',
-    'textShadow',
-    'textTransform',
-    'whiteSpace',
-    'wordWrap',
-    'writingDirection'
-  ])
+  ...ViewStylePropTypes,
+  color: ColorPropType,
+  fontFamily: string,
+  fontSize: numberOrString,
+  fontStyle: string,
+  fontWeight: string,
+  letterSpacing: numberOrString,
+  lineHeight: numberOrString,
+  textAlign: oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ]),
+  /**
+   * @platform web
+   */
+  textDecoration: string,
+  textOverflow: string,
+  textShadow: string,
+  textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
+  whiteSpace: string,
+  wordWrap: string,
+  writingDirection: string
 }

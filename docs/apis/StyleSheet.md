@@ -9,6 +9,8 @@ outside of the render loop and are applied as inline styles. Read more about to
 
 **create**(obj: {[key: string]: any})
 
+Each key of the object passed to `create` must define a style object.
+
 ## Example
 
 ```js
@@ -24,11 +26,24 @@ const styles = StyleSheet.create({
   },
   activeTitle: {
     color: 'red',
-  },
+  }
 })
 ```
 
 Use styles:
+
+```js
+<View style={styles.container}>
+  <Text
+    style={[
+      styles.title,
+      this.props.isActive && styles.activeTitle
+    ]}
+  />
+</View>
+```
+
+Or:
 
 ```js
 <View style={styles.container}>

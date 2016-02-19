@@ -1,5 +1,4 @@
 import hyphenate from './hyphenate'
-import normalizeValue from './normalizeValue'
 import prefixer from './prefixer'
 
 export default class Store {
@@ -14,18 +13,16 @@ export default class Store {
   }
 
   get(property, value) {
-    const normalizedValue = normalizeValue(property, value)
-    const key = this._getDeclarationKey(property, normalizedValue)
+    const key = this._getDeclarationKey(property, value)
     return this._classNames[key]
   }
 
   set(property, value) {
     if (value != null) {
-      const normalizedValue = normalizeValue(property, value)
       const values = this._getPropertyValues(property) || []
-      if (values.indexOf(normalizedValue) === -1) {
-        values.push(normalizedValue)
-        this._setClassName(property, normalizedValue)
+      if (values.indexOf(value) === -1) {
+        values.push(value)
+        this._setClassName(property, value)
         this._setPropertyValues(property, values)
       }
     }
@@ -80,7 +77,7 @@ export default class Store {
   }
 
   _setPropertyValues(property, values) {
-    this._declarations[property] = values.map(value => normalizeValue(property, value))
+    this._declarations[property] = values.map(value => value)
   }
 
   _setClassName(property, value) {

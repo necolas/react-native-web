@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import StylePropTypes from '../../apis/StyleSheet/StylePropTypes'
 import StyleSheet from '../../apis/StyleSheet'
 
 const roleComponents = {
@@ -24,9 +23,8 @@ export default class CoreComponent extends Component {
     accessibilityLiveRegion: PropTypes.oneOf([ 'assertive', 'off', 'polite' ]),
     accessibilityRole: PropTypes.string,
     accessible: PropTypes.bool,
-    className: PropTypes.string,
     component: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
-    style: PropTypes.object,
+    style: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
     testID: PropTypes.string,
     type: PropTypes.string
   };
@@ -35,8 +33,6 @@ export default class CoreComponent extends Component {
     accessible: true,
     component: 'div'
   };
-
-  static stylePropTypes = StylePropTypes;
 
   render() {
     const {

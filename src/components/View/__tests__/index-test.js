@@ -3,6 +3,7 @@
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
+import StyleSheet from '../../../apis/StyleSheet'
 
 import View from '../'
 
@@ -39,11 +40,7 @@ suite('components/View', () => {
 
   test('prop "pointerEvents"', () => {
     const result = utils.shallowRender(<View pointerEvents='box-only' />)
-    assert.equal(result.props.style.pointerEvents, 'box-only')
-  })
-
-  test('prop "style"', () => {
-    utils.assertProps.style(View)
+    assert.equal(StyleSheet.flatten(result.props.style).pointerEvents, 'box-only')
   })
 
   test('prop "testID"', () => {

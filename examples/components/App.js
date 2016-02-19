@@ -18,15 +18,15 @@ export default class App extends React.Component {
 
   render() {
     const { mediaQuery } = this.props
-    const rootStyles = {
-      ...(styles.root.common),
-      ...(mediaQuery.small.matches && styles.root.mqSmall),
-      ...(mediaQuery.large.matches && styles.root.mqLarge)
-    }
+    const finalRootStyles = [
+      rootStyles.common,
+      mediaQuery.small.matches && rootStyles.mqSmall,
+      mediaQuery.large.matches && rootStyles.mqLarge
+    ]
 
     return (
       <ScrollView accessibilityRole='main'>
-        <View style={rootStyles}>
+        <View style={finalRootStyles}>
         <Heading size='xlarge'>React Native for Web</Heading>
         <Text>React Native Web takes the core components from <Text
         accessibilityRole='link' href='https://facebook.github.io/react-native/'>React
@@ -200,7 +200,7 @@ export default class App extends React.Component {
             style={styles.scrollViewStyle}
           >
             {Array.from({ length: 50 }).map((item, i) => (
-              <View key={i} style={{...styles.box, ...styles.horizontalBox}}>
+              <View key={i} style={[ styles.box, styles.horizontalBox ]}>
                 <Text>{i}</Text>
               </View>
             ))}
@@ -212,19 +212,20 @@ export default class App extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  root: {
-    common: {
-      marginVertical: 0,
-      marginHorizontal: 'auto'
-    },
-    mqSmall: {
-      maxWidth: '400px'
-    },
-    mqLarge: {
-      maxWidth: '600px'
-    }
+const rootStyles = StyleSheet.create({
+  common: {
+    marginVertical: 0,
+    marginHorizontal: 'auto'
   },
+  mqSmall: {
+    maxWidth: '400px'
+  },
+  mqLarge: {
+    maxWidth: '600px'
+  }
+})
+
+const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap'

@@ -24,7 +24,7 @@ export default class ActivityIndicator extends Component {
     color: PropTypes.string,
     hidesWhenStopped: PropTypes.bool,
     size: PropTypes.oneOf(['small', 'large']),
-    style: PropTypes.object
+    style: View.propTypes.style
   };
 
   static defaultProps = {
@@ -65,24 +65,19 @@ export default class ActivityIndicator extends Component {
     } = this.props
 
     return (
-      <View {...other} style={{ ...styles.container, ...style }}>
+      <View {...other} style={[ styles.container, style ]}>
         <View
           ref={(c) => { this._indicatorRef = c }}
-          style={{
-            ...styles.indicator[size],
-            ...(hidesWhenStopped && !animating && styles.hidesWhenStopped),
-            borderColor: color
-          }}
+          style={[
+            indicatorStyles[size],
+            hidesWhenStopped && !animating && styles.hidesWhenStopped,
+            { borderColor: color }
+          ]}
         />
       </View>
     )
   }
 }
-
-const indicatorStyle = StyleSheet.create({
-  borderRadius: 100,
-  borderWidth: 3
-})
 
 const styles = StyleSheet.create({
   container: {
@@ -91,18 +86,20 @@ const styles = StyleSheet.create({
   },
   hidesWhenStopped: {
     visibility: 'hidden'
+  }
+})
+
+const indicatorStyles = StyleSheet.create({
+  small: {
+    borderRadius: 100,
+    borderWidth: 3,
+    width: 20,
+    height: 20
   },
-  indicator: {
-    small: {
-      ...indicatorStyle,
-      width: 20,
-      height: 20
-    },
-    large: {
-      ...indicatorStyle,
-      borderWidth: 4,
-      width: 36,
-      height: 36
-    }
+  large: {
+    borderRadius: 100,
+    borderWidth: 4,
+    width: 36,
+    height: 36
   }
 })
