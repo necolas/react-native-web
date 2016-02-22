@@ -39,7 +39,7 @@ export default class StyleSheetRegistry {
     }
 
     _className = classList.join(' ')
-    _style = prefixer.prefix(_style)
+    _style = prefixer(_style)
 
     return { className: _className, style: _style }
   }

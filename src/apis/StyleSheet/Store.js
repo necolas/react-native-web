@@ -46,8 +46,9 @@ export default class Store {
     // transform the declarations into CSS rules with vendor-prefixes
     const buildCSSRules = (property, values) => {
       return values.reduce((cssRules, value) => {
-        const declarations = prefixer.prefix({ [property]: value })
+        const declarations = prefixer({ [property]: value })
         const cssDeclarations = Object.keys(declarations).reduce((str, prop) => {
+          const value = declarations[prop]
           str += `${hyphenate(prop)}:${value};`
           return str
         }, '')

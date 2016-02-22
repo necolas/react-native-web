@@ -1,3 +1,3 @@
 import Prefixer from 'inline-style-prefixer'
-const prefixer = new Prefixer()
+const prefixer = Prefixer.prefixAll
 export default prefixer
