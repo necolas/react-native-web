@@ -5,7 +5,7 @@
  *
  * @flow
  */
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 import expandStyle from './expandStyle'
 
 export default function flattenStyle(style): ?Object {

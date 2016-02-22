@@ -6,7 +6,7 @@
  * @flow
  */
 
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'

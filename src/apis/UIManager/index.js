@@ -1,9 +1,9 @@
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations'
 
 const measureAll = (node, callback, relativeToNativeNode) => {
-  const { height, left, top, width } = node.getBoundingClientRect()
   const relativeNode = relativeToNativeNode || node.parentNode
   const relativeRect = relativeNode.getBoundingClientRect()
+  const { height, left, top, width } = node.getBoundingClientRect()
   const x = left - relativeRect.left
   const y = top - relativeRect.top
   callback(x, y, width, height, left, top)

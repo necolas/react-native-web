@@ -7,7 +7,7 @@
  */
 
 import { Component } from 'react'
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 import ReactDOM from 'react-dom'
 import renderApplication, { prerenderApplication } from './renderApplication'
 
@@ -65,7 +65,7 @@ export default class AppRegistry {
   }
 
   static runApplication(appKey: string, appParameters?: Object): void {
-    const isDevelopment = process.env.NODE_ENV === 'development'
+    const isDevelopment = process.env.NODE_ENV !== 'production'
     const params = { ...appParameters }
     params.rootTag = `#${params.rootTag.id}`
 

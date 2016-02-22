@@ -6,7 +6,7 @@
  * @flow
  */
 
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 
 const connection = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection
 const eventTypes = [ 'change' ]

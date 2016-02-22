@@ -1,4 +1,4 @@
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 
 const listeners = {}
 const eventTypes = [ 'change' ]

@@ -1,4 +1,4 @@
-import { canUseDOM } from 'exenv'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 const Platform = {
   OS: 'web',

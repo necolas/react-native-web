@@ -10,7 +10,7 @@ import { PropTypes } from 'react'
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes'
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 
 export default class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
