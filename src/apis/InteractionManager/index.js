@@ -11,7 +11,7 @@ import invariant from 'fbjs/lib/invariant'
 const InteractionManager = {
   Events: keyMirror({
     interactionStart: true,
-    interactionComplete: true,
+    interactionComplete: true
   }),
 
   /**

@@ -1,4 +1,4 @@
-import keyMirror from 'fbjs/lib/keyMirror';
+import keyMirror from 'fbjs/lib/keyMirror'
 
 const ImageResizeMode = keyMirror({
   contain: null,
