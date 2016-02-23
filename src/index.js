@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
 
 // apis
+import Animated from './apis/Animated'
 import AppRegistry from './apis/AppRegistry'
 import AppState from './apis/AppState'
 import AsyncStorage from './apis/AsyncStorage'
 import Dimensions from './apis/Dimensions'
+import Easing from './apis/Easing'
+import InteractionManager from './apis/InteractionManager'
 import NetInfo from './apis/NetInfo'
+import PanResponder from './apis/PanResponder'
 import PixelRatio from './apis/PixelRatio'
 import Platform from './apis/Platform'
 import StyleSheet from './apis/StyleSheet'
@@ -25,11 +29,15 @@ import View from './components/View'
 
 const ReactNative = {
   // apis
+  Animated,
   AppRegistry,
   AppState,
   AsyncStorage,
   Dimensions,
+  Easing,
+  InteractionManager,
   NetInfo,
+  PanResponder,
   PixelRatio,
   Platform,
   StyleSheet,
@@ -42,6 +50,7 @@ const ReactNative = {
   ScrollView,
   Text,
   TextInput,
+  TouchableBounce: Touchable,
   TouchableHighlight: Touchable,
   TouchableOpacity: Touchable,
   TouchableWithoutFeedback: Touchable,
