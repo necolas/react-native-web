@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
 
+import './apis/PanResponder/injectResponderEventPlugin'
+
 // apis
 import Animated from './apis/Animated'
 import AppRegistry from './apis/AppRegistry'
