@@ -6,7 +6,7 @@
  * @flow
  */
 
-import invariant from 'invariant'
+import invariant from 'fbjs/lib/invariant'
 import Platform from '../../apis/Platform'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'

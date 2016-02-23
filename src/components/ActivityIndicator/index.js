@@ -1,3 +1,4 @@
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
@@ -18,6 +19,7 @@ const keyframeEffects = [
   { transform: 'scale(0.95)', opacity: 0.5 }
 ]
 
+@NativeMethodsDecorator
 export default class ActivityIndicator extends Component {
   static propTypes = {
     animating: PropTypes.bool,
@@ -39,19 +41,11 @@ export default class ActivityIndicator extends Component {
     if (document.documentElement.animate) {
       this._player = ReactDOM.findDOMNode(this._indicatorRef).animate(keyframeEffects, animationEffectTimingProperties)
     }
-    if (this.props.animating) {
-      this._player.play()
-    } else {
-      this._player.cancel()
-    }
+    this._manageAnimation()
   }
 
   componentDidUpdate() {
-    if (this.props.animating) {
-      this._player.play()
-    } else {
-      this._player.cancel()
-    }
+    this._manageAnimation()
   }
 
   render() {
@@ -76,6 +70,16 @@ export default class ActivityIndicator extends Component {
         />
       </View>
     )
+  }
+
+  _manageAnimation() {
+    if (this._player) {
+      if (this.props.animating) {
+        this._player.play()
+      } else {
+        this._player.cancel()
+      }
+    }
   }
 }
 

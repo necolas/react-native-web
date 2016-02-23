@@ -1,8 +1,10 @@
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import debounce from 'lodash.debounce'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
 
+@NativeMethodsDecorator
 export default class ScrollView extends Component {
   static propTypes = {
     children: PropTypes.any,
@@ -91,7 +93,6 @@ export default class ScrollView extends Component {
 
     return (
       <View
-        _className='ScrollView'
         onScroll={(e) => this._onScroll(e)}
         onTouchMove={(e) => this._maybePreventScroll(e)}
         onWheel={(e) => this._maybePreventScroll(e)}

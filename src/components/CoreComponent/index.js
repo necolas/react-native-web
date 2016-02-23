@@ -1,3 +1,4 @@
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 
@@ -17,6 +18,7 @@ const roleComponents = {
   region: 'section'
 }
 
+@NativeMethodsDecorator
 export default class CoreComponent extends Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,

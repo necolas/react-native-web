@@ -1,6 +1,8 @@
 /* global window */
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import StyleSheet from '../../apis/StyleSheet'
 import CoreComponent from '../CoreComponent'
+import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { Component, PropTypes } from 'react'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
@@ -12,17 +14,8 @@ const STATUS_LOADING = 'LOADING'
 const STATUS_PENDING = 'PENDING'
 const STATUS_IDLE = 'IDLE'
 
+@NativeMethodsDecorator
 export default class Image extends Component {
-  constructor(props, context) {
-    super(props, context)
-    const { uri } = props.source
-    // state
-    this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
-    // autobinding
-    this._onError = this._onError.bind(this)
-    this._onLoad = this._onLoad.bind(this)
-  }
-
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     accessible: CoreComponent.propTypes.accessible,
@@ -44,6 +37,18 @@ export default class Image extends Component {
     resizeMode: 'cover',
     source: {}
   };
+
+  static resizeMode = ImageResizeMode;
+
+  constructor(props, context) {
+    super(props, context)
+    const { uri } = props.source
+    // state
+    this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
+    // autobinding
+    this._onError = this._onError.bind(this)
+    this._onLoad = this._onLoad.bind(this)
+  }
 
   _createImageLoader() {
     const { source } = this.props

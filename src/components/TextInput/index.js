@@ -1,3 +1,4 @@
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import CoreComponent from '../CoreComponent'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
@@ -6,12 +7,8 @@ import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
 import View from '../View'
 
+@NativeMethodsDecorator
 export default class TextInput extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { showPlaceholder: !props.value && !props.defaultValue }
-  }
-
   static propTypes = {
     ...View.propTypes,
     autoComplete: PropTypes.bool,
@@ -46,6 +43,23 @@ export default class TextInput extends Component {
     secureTextEntry: false,
     style: {}
   };
+
+  constructor(props, context) {
+    super(props, context)
+    this.state = { showPlaceholder: !props.value && !props.defaultValue }
+  }
+
+  blur() {
+    this.refs.input.blur()
+  }
+
+  focus() {
+    this.refs.input.focus()
+  }
+
+  setNativeProps(props) {
+    this.refs.input.setNativeProps(props)
+  }
 
   _onBlur(e) {
     const { onBlur } = this.props

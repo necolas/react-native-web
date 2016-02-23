@@ -1,9 +1,11 @@
+import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
 import CoreComponent from '../CoreComponent'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
+@NativeMethodsDecorator
 export default class Text extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
