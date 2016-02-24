@@ -51,7 +51,7 @@ into `runApplication`
 
 ## Example
 
-```
+```js
 AppRegistry.registerComponent('MyApp', () => AppComponent)
 AppRegistry.runApplication('MyApp', {
   initialProps: {},

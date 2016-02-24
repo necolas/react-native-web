@@ -44,7 +44,7 @@ internet connectivity.
 
 Fetching the connection type:
 
-```
+```js
 NetInfo.fetch().then((connectionType) => {
   console.log('Connection type:', connectionType);
 });
