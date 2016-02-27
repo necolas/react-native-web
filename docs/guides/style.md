@@ -182,8 +182,8 @@ CSS output:
 Rendered HTML:
 
 ```html
-<span className="_s1 _s2">Heading</span>
-<span className="_s1 _s3">Text</span>
+<span class="_s1 _s2">Heading</span>
+<span class="_s1 _s3">Text</span>
 ```
 
 ### Reset
