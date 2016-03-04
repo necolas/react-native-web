@@ -6,6 +6,7 @@ import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { Component, PropTypes } from 'react'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import flattenStyle from '../../apis/StyleSheet/flattenStyle'
 import View from '../View'
 
 const STATUS_ERRORED = 'ERRORED'
@@ -34,7 +35,6 @@ export default class Image extends Component {
   static defaultProps = {
     accessible: true,
     defaultSource: {},
-    resizeMode: 'cover',
     source: {}
   };
 
@@ -130,16 +130,20 @@ export default class Image extends Component {
       accessible,
       children,
       defaultSource,
-      resizeMode,
       source,
-      style,
       testID
     } = this.props
+    const style = flattenStyle(this.props.style)
 
     const isLoaded = this.state.status === STATUS_LOADED
     const defaultImage = defaultSource.uri || null
     const displayImage = !isLoaded ? defaultImage : source.uri
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
+
+    const resizeMode = this.props.resizeMode || (style || {}).resizeMode || 'cover'
+    if (style && style.resizeMode) {
+      delete style.resizeMode // remove resizeMode style, as it is not supported by View
+    }
 
     /**
      * Image is a non-stretching View. The image is displayed as a background
