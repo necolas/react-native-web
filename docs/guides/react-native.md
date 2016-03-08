@@ -16,6 +16,24 @@ module.exports = {
 }
 ```
 
+## Image assets
+
+In order to require image assets (e.g. `require('assets/myimage.png')`), add an
+url-loader to the webpack config:
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...
+  module: {
+    loaders: {
+      // ...
+      {test: /\.(jpe?g|png|gif|svg)$/, loader: 'url?name=[path][name].[ext]'}
+    }
+  }
+```
+
 ## Web-specific code
 
 Minor platform differences can use the `Platform` module.
