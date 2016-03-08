@@ -29,6 +29,9 @@ import TextInput from './components/TextInput'
 import Touchable from './components/Touchable'
 import View from './components/View'
 
+// modules
+import NativeModules from './modules/NativeModules'
+
 const ReactNative = {
   // apis
   Animated,
@@ -57,6 +60,9 @@ const ReactNative = {
   TouchableOpacity: Touchable,
   TouchableWithoutFeedback: Touchable,
   View,
+
+  // modules
+  NativeModules,
 
   // React
   ...React,
