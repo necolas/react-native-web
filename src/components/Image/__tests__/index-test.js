@@ -36,6 +36,13 @@ suite('components/Image', () => {
     assert(backgroundImage.indexOf(defaultSource.uri) > -1)
   })
 
+  test('prop "defaultSource, no uri"', () => {
+    const defaultSource = 'https://google.com/favicon.ico'
+    const dom = utils.renderToDOM(<Image defaultSource={defaultSource} />)
+    const backgroundImage = dom.style.backgroundImage
+    assert(backgroundImage.indexOf(defaultSource) > -1)
+  })
+
   test('prop "onError"', function (done) {
     this.timeout(5000)
     utils.render(<Image
@@ -91,7 +98,17 @@ suite('components/Image', () => {
     })
   })
 
-  test('prop "source"')
+  test('prop "source", no uri', function (done) {
+    this.timeout(5000)
+    utils.render(<Image
+      onLoad={onLoad}
+      source={'https://google.com/favicon.ico'}
+    />)
+    function onLoad(e) {
+      assert.equal(e.nativeEvent.type, 'load')
+      done()
+    }
+  })
 
   suite('prop "style"', () => {
     test('converts "resizeMode" property', () => {
