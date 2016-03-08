@@ -12,7 +12,7 @@
 import assert from 'assert'
 import flattenStyle from '../flattenStyle'
 
-suite('flattenStyle', () => {
+suite('apis/StyleSheet/flattenStyle', () => {
   test('should merge style objects', () => {
     const style1 = {opacity: 1}
     const style2 = {order: 2}

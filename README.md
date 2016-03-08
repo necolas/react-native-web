@@ -2,7 +2,7 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
-![gzipped size](https://img.shields.io/badge/gzipped-~23k-blue.svg)
+![gzipped size](https://img.shields.io/badge/gzipped-~36.4k-blue.svg)
 
 [React Native][react-native-url] components and APIs for the Web.
 
@@ -35,6 +35,7 @@ Demos:
 
 * [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
 * [TicTacToe](http://codepen.io/necolas/full/eJaLZd/)
+* [2048](http://codepen.io/necolas/full/wMVvxj/)
 
 Example:
 

@@ -13,11 +13,11 @@
     "lint": "eslint config examples src",
     "prepublish": "npm run build && npm run build:umd",
     "test": "karma start config/karma.config.js",
-    "test:watch": "npm run test:unit -- --no-single-run"
+    "test:watch": "npm run test -- --no-single-run"
   },
   "dependencies": {
     "fbjs": "^0.7.2",
-    "inline-style-prefixer": "^0.6.7",
+    "inline-style-prefix-all": "^1.0.2",
     "lodash.debounce": "^3.1.1",
     "react-tappable": "^0.7.1",
     "react-textarea-autosize": "^3.1.0"

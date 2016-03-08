@@ -6,8 +6,8 @@
  * @flow
  */
 
+import prefixAll from 'inline-style-prefix-all'
 import flattenStyle from './flattenStyle'
-import prefixer from './prefixer'
 
 export default class StyleSheetRegistry {
   static registerStyle(style: Object, store): number {
@@ -39,7 +39,7 @@ export default class StyleSheetRegistry {
     }
 
     _className = classList.join(' ')
-    _style = prefixer(_style)
+    _style = prefixAll(_style)
 
     return { className: _className, style: _style }
   }

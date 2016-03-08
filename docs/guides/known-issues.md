@@ -12,17 +12,10 @@ cases it will be necessary to use a Web counterpart.
 ## Missing component props
 
 There are properties that do not work across all platforms. All web-specific
-props are annotated with `(web)` in the documentaiton.
+props are annotated with `(web)` in the documentation.
 
 ## Platform parity
 
 There are some known issues in React Native where APIs could be made more
 consistent between platforms. For example, React Native for Web includes
 `ActivityIndicator` and a horizontal `ProgressBar`.
-
-Other parts of React Native, such as the `Animated` and `PanResponder` APIs,
-are highly complex and have not yet been ported to React Native for Web. Given
-the difficulties keeping these APIs in sync with React Native, we'd prefer the
-APIs to be published as separate npm packages. If not, we will consider a web
-implementation, possibly using the [Web Animations
-API/polyfill](https://github.com/web-animations/web-animations-js)

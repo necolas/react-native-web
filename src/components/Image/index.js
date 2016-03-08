@@ -1,10 +1,10 @@
 /* global window */
 import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
-import StyleSheet from '../../apis/StyleSheet'
 import CoreComponent from '../CoreComponent'
 import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { Component, PropTypes } from 'react'
+import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import View from '../View'
 
@@ -34,8 +34,8 @@ export default class Image extends Component {
   static defaultProps = {
     accessible: true,
     defaultSource: {},
-    resizeMode: 'cover',
-    source: {}
+    source: {},
+    style: {}
   };
 
   static resizeMode = ImageResizeMode;
@@ -130,9 +130,7 @@ export default class Image extends Component {
       accessible,
       children,
       defaultSource,
-      resizeMode,
       source,
-      style,
       testID
     } = this.props
 
@@ -140,6 +138,11 @@ export default class Image extends Component {
     const defaultImage = defaultSource.uri || null
     const displayImage = !isLoaded ? defaultImage : source.uri
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
+    const style = StyleSheet.flatten(this.props.style)
+
+    const resizeMode = this.props.resizeMode || style.resizeMode || ImageResizeMode.cover
+    // remove resizeMode style, as it is not supported by View
+    delete style.resizeMode
 
     /**
      * Image is a non-stretching View. The image is displayed as a background

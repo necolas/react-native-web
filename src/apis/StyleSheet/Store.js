@@ -1,5 +1,5 @@
+import prefixAll from 'inline-style-prefix-all'
 import hyphenate from './hyphenate'
-import prefixer from './prefixer'
 
 export default class Store {
   constructor(
@@ -46,7 +46,7 @@ export default class Store {
     // transform the declarations into CSS rules with vendor-prefixes
     const buildCSSRules = (property, values) => {
       return values.reduce((cssRules, value) => {
-        const declarations = prefixer({ [property]: value })
+        const declarations = prefixAll({ [property]: value })
         const cssDeclarations = Object.keys(declarations).reduce((str, prop) => {
           const value = declarations[prop]
           str += `${hyphenate(prop)}:${value};`
