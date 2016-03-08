@@ -3,8 +3,11 @@
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
+import flattenStyle from '../../../apis/StyleSheet/flattenStyle'
 
 import Image from '../'
+
+const getStyleBackgroundSize = (element) => flattenStyle(element.props.style).backgroundSize
 
 suite('components/Image', () => {
   test('default accessibility', () => {
@@ -61,9 +64,46 @@ suite('components/Image', () => {
 
   test('prop "onLoadStart"')
 
-  test('prop "resizeMode"')
+  suite('prop "resizeMode"', () => {
+    test('value "contain"', () => {
+      const result = utils.shallowRender(<Image resizeMode={Image.resizeMode.contain} />)
+      assert.equal(getStyleBackgroundSize(result), 'contain')
+    })
+
+    test('value "cover"', () => {
+      const result = utils.shallowRender(<Image resizeMode={Image.resizeMode.cover} />)
+      assert.equal(getStyleBackgroundSize(result), 'cover')
+    })
+
+    test('value "none"', () => {
+      const result = utils.shallowRender(<Image resizeMode={Image.resizeMode.none} />)
+      assert.equal(getStyleBackgroundSize(result), 'auto')
+    })
+
+    test('value "stretch"', () => {
+      const result = utils.shallowRender(<Image resizeMode={Image.resizeMode.stretch} />)
+      assert.equal(getStyleBackgroundSize(result), '100% 100%')
+    })
+
+    test('no value', () => {
+      const result = utils.shallowRender(<Image />)
+      assert.equal(getStyleBackgroundSize(result), 'cover')
+    })
+  })
 
   test('prop "source"')
+
+  suite('prop "style"', () => {
+    test('converts "resizeMode" property', () => {
+      const result = utils.shallowRender(<Image style={{ resizeMode: Image.resizeMode.contain }} />)
+      assert.equal(getStyleBackgroundSize(result), 'contain')
+    })
+
+    test('removes "resizeMode" property', () => {
+      const result = utils.shallowRender(<Image style={{ resizeMode: Image.resizeMode.contain }} />)
+      assert.equal(flattenStyle(result.props.style).resizeMode, undefined)
+    })
+  })
 
   test('prop "testID"', () => {
     const testID = 'testID'
