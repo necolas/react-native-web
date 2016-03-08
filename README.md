@@ -35,6 +35,7 @@ Demos:
 
 * [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
 * [TicTacToe](http://codepen.io/necolas/full/eJaLZd/)
+* [2048](http://codepen.io/necolas/full/wMVvxj/)
 
 Example:
 
