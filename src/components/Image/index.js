@@ -6,7 +6,9 @@ import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import React, { Component, PropTypes } from 'react'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import flattenStyle from '../../apis/StyleSheet/flattenStyle'
 import View from '../View'
+import resolveAssetSource from './resolveAssetSource'
 
 const STATUS_ERRORED = 'ERRORED'
 const STATUS_LOADED = 'LOADED'
@@ -14,35 +16,39 @@ const STATUS_LOADING = 'LOADING'
 const STATUS_PENDING = 'PENDING'
 const STATUS_IDLE = 'IDLE'
 
+const ImageSourcePropType = PropTypes.oneOfType([
+  PropTypes.shape({
+    uri: PropTypes.string.isRequired
+  }),
+  PropTypes.string // Opaque type returned by require('./image.jpg')
+])
+
 @NativeMethodsDecorator
 export default class Image extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     accessible: CoreComponent.propTypes.accessible,
     children: PropTypes.any,
-    defaultSource: PropTypes.object,
+    defaultSource: ImageSourcePropType,
     onError: PropTypes.func,
     onLoad: PropTypes.func,
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
     resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
-    source: PropTypes.object,
+    source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes),
     testID: CoreComponent.propTypes.testID
   };
 
   static defaultProps = {
-    accessible: true,
-    defaultSource: {},
-    resizeMode: 'cover',
-    source: {}
+    accessible: true
   };
 
   static resizeMode = ImageResizeMode;
 
   constructor(props, context) {
     super(props, context)
-    const { uri } = props.source
+    const uri = resolveAssetSource(props.source)
     // state
     this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
     // autobinding
@@ -51,13 +57,13 @@ export default class Image extends Component {
   }
 
   _createImageLoader() {
-    const { source } = this.props
+    const uri = resolveAssetSource(this.props.source)
 
     this._destroyImageLoader()
     this.image = new window.Image()
     this.image.onerror = this._onError
     this.image.onload = this._onLoad
-    this.image.src = source.uri
+    this.image.src = uri
     this._onLoadStart()
   }
 
@@ -113,9 +119,10 @@ export default class Image extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.source.uri !== nextProps.source.uri) {
+    const nextUri = resolveAssetSource(nextProps.source)
+    if (resolveAssetSource(this.props.source) !== nextUri) {
       this.setState({
-        status: nextProps.source.uri ? STATUS_PENDING : STATUS_IDLE
+        status: nextUri ? STATUS_PENDING : STATUS_IDLE
       })
     }
   }
@@ -130,16 +137,19 @@ export default class Image extends Component {
       accessible,
       children,
       defaultSource,
-      resizeMode,
       source,
-      style,
       testID
     } = this.props
+    const style = flattenStyle(this.props.style)
 
     const isLoaded = this.state.status === STATUS_LOADED
-    const defaultImage = defaultSource.uri || null
-    const displayImage = !isLoaded ? defaultImage : source.uri
+    const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source)
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
+
+    const resizeMode = this.props.resizeMode || (style || {}).resizeMode || 'cover'
+    if (style && style.resizeMode) {
+      delete style.resizeMode // remove resizeMode style, as it is not supported by View
+    }
 
     /**
      * Image is a non-stretching View. The image is displayed as a background
