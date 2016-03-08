@@ -1,8 +1,5 @@
 # React Native
 
-This is an experimental feature to support: using community-developed React
-Native components on the Web; and rendering React Native apps to Web.
-
 Use a module loader that supports package aliases (e.g., webpack), and alias
 `react-native` to `react-native-web`.
 
@@ -10,6 +7,7 @@ Use a module loader that supports package aliases (e.g., webpack), and alias
 // webpack.config.js
 
 module.exports = {
+  // ...
   resolve: {
     alias: {
       'react-native': 'react-native-web'
@@ -18,8 +16,7 @@ module.exports = {
 }
 ```
 
-Web-specific implementations can use the `*.web.js` naming pattern, which
-webpack will resolve.
+## Web-specific code
 
 Minor platform differences can use the `Platform` module.
 
@@ -36,5 +33,27 @@ if (Platform.OS === 'web') {
   AppRegistry.runApplication('MyApp', {
     rootTag: document.getElementById('react-root')
   });
+}
+```
+
+More substantial Web-specific implementation code should be written in files
+with the extension `.web.js`, which webpack will automatically resolve.
+
+## Optimizations
+
+Production builds can benefit from dead-code elimination by defining the
+following variables:
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...
+  plugins: [
+    new webpack.DefinePlugin({
+      'Platform.OS': 'web',
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  }
 }
 ```
