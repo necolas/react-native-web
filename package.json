@@ -13,7 +13,7 @@
     "lint": "eslint config examples src",
     "prepublish": "npm run build && npm run build:umd",
     "test": "karma start config/karma.config.js",
-    "test:watch": "npm run test:unit -- --no-single-run"
+    "test:watch": "npm run test -- --no-single-run"
   },
   "dependencies": {
     "fbjs": "^0.7.2",
