@@ -83,7 +83,6 @@ suite('apis/StyleSheet/Store', () => {
       store.set('fontFamily', '"Helvetica Neue", Arial, sans-serif')
       store.set('marginBottom', '0px')
       store.set('width', '100%')
-      console.log(store.toString())
 
       const expected = '/* 6 unique declarations */\n' +
           '.backgroundColor\\:rgba\\(0\\,0\\,0\\,0\\){background-color:rgba(0,0,0,0);}\n' +
