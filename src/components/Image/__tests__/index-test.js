@@ -36,6 +36,14 @@ suite('components/Image', () => {
     assert(backgroundImage.indexOf(defaultSource.uri) > -1)
   })
 
+  test('prop "defaultSource" with string value"', () => {
+    // emulate require-ed asset
+    const defaultSource = 'https://google.com/favicon.ico'
+    const dom = utils.renderToDOM(<Image defaultSource={defaultSource} />)
+    const backgroundImage = dom.style.backgroundImage
+    assert(backgroundImage.indexOf(defaultSource) > -1)
+  })
+
   test('prop "onError"', function (done) {
     this.timeout(5000)
     utils.render(<Image
@@ -50,10 +58,7 @@ suite('components/Image', () => {
 
   test('prop "onLoad"', function (done) {
     this.timeout(5000)
-    utils.render(<Image
-      onLoad={onLoad}
-      source={{ uri: 'https://google.com/favicon.ico' }}
-    />)
+    utils.render(<Image onLoad={onLoad} source={{ uri: 'https://google.com/favicon.ico' }} />)
     function onLoad(e) {
       assert.equal(e.nativeEvent.type, 'load')
       done()
@@ -91,7 +96,28 @@ suite('components/Image', () => {
     })
   })
 
-  test('prop "source"')
+  test('prop "source"', function (done) {
+    this.timeout(5000)
+    const source = { uri: 'https://google.com/favicon.ico' }
+    utils.render(<Image onLoad={onLoad} source={source} />)
+    function onLoad(e) {
+      const src = e.nativeEvent.target.src
+      assert.equal(src, source.uri)
+      done()
+    }
+  })
+
+  test('prop "source" with string value', function (done) {
+    this.timeout(5000)
+    // emulate require-ed asset
+    const source = 'https://google.com/favicon.ico'
+    utils.render(<Image onLoad={onLoad} source={source} />)
+    function onLoad(e) {
+      const src = e.nativeEvent.target.src
+      assert.equal(src, source)
+      done()
+    }
+  })
 
   suite('prop "style"', () => {
     test('converts "resizeMode" property', () => {
