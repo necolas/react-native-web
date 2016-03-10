@@ -1,9 +1,10 @@
-var constants = require('./constants')
 var webpack = require('webpack')
+
+const DIST_DIRECTORY = './dist'
 
 module.exports = {
   entry: {
-    main: constants.DIST_DIRECTORY
+    main: DIST_DIRECTORY
   },
   externals: [{
     'react': true,
@@ -14,7 +15,7 @@ module.exports = {
     filename: 'react-native-web.js',
     library: 'ReactNativeWeb',
     libraryTarget: 'umd',
-    path: constants.DIST_DIRECTORY
+    path: DIST_DIRECTORY
   },
   plugins: [
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),

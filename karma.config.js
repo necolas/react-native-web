@@ -1,9 +1,9 @@
-var constants = require('./constants')
 var webpack = require('webpack')
+
+var testEntry = 'tests.webpack.js'
 
 module.exports = function (config) {
   config.set({
-    basePath: constants.ROOT_DIRECTORY,
     browsers: process.env.TRAVIS ? [ 'Firefox' ] : [ 'Chrome' ],
     browserNoActivityTimeout: 60000,
     client: {
@@ -12,7 +12,7 @@ module.exports = function (config) {
       useIframe: true
     },
     files: [
-      constants.TEST_ENTRY
+      testEntry
     ],
     frameworks: [ 'mocha' ],
     plugins: [
@@ -24,7 +24,7 @@ module.exports = function (config) {
       'karma-webpack'
     ],
     preprocessors: {
-      [constants.TEST_ENTRY]: [ 'webpack', 'sourcemap' ]
+      [testEntry]: [ 'webpack', 'sourcemap' ]
     },
     reporters: process.env.TRAVIS ? [ 'dots' ] : [ 'spec' ],
     singleRun: true,

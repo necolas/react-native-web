@@ -70,7 +70,6 @@ module.exports = {
   // ...
   plugins: [
     new webpack.DefinePlugin({
-      'Platform.OS': 'web',
       'process.env.NODE_ENV': JSON.stringify('production')
     })
   }

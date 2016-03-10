@@ -1,13 +1,14 @@
-const constants = require('./constants')
 const path = require('path')
 const webpack = require('webpack')
 
+const EXAMPLES_DIRECTORY = __dirname
+
 module.exports = {
   devServer: {
-    contentBase: constants.EXAMPLES_DIRECTORY
+    contentBase: EXAMPLES_DIRECTORY
   },
   entry: {
-    example: constants.EXAMPLES_DIRECTORY
+    example: EXAMPLES_DIRECTORY
   },
   module: {
     loaders: [
@@ -20,7 +21,7 @@ module.exports = {
     ]
   },
   output: {
-    filename: 'examples.js'
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.DefinePlugin({

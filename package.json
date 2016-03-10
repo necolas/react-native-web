@@ -8,11 +8,11 @@
   ],
   "scripts": {
     "build": "rm -rf ./dist && mkdir dist && babel src -d dist --ignore **/__tests__,src/modules/specHelpers",
-    "build:umd": "webpack --config config/webpack.config.js --sort-assets-by --progress",
-    "examples": "webpack-dev-server --config config/webpack.config.example.js --inline --hot --colors --quiet",
-    "lint": "eslint config src",
+    "build:umd": "webpack --config webpack.config.js --sort-assets-by --progress",
+    "examples": "webpack-dev-server --config examples/webpack.config.js --inline --hot --colors --quiet",
+    "lint": "eslint src",
     "prepublish": "npm run build && npm run build:umd",
-    "test": "karma start config/karma.config.js",
+    "test": "karma start karma.config.js",
     "test:watch": "npm run test -- --no-single-run"
   },
   "dependencies": {
