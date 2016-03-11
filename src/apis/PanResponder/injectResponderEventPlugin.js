@@ -4,6 +4,7 @@ import EventConstants from 'react/lib/EventConstants'
 import EventPluginRegistry from 'react/lib/EventPluginRegistry'
 import ResponderEventPlugin from 'react/lib/ResponderEventPlugin'
 import ResponderTouchHistoryStore from 'react/lib/ResponderTouchHistoryStore'
+import normalizeNativeEvent from './normalizeNativeEvent'
 
 const {
   topMouseDown,
@@ -37,53 +38,13 @@ ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies =
 ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [ topScroll ]
 ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies
 
-// Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
-const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).map((touch) => {
-  const identifier = touch.identifier > 20 ? (touch.identifier % 20) : touch.identifier
-
-  return {
-    clientX: touch.clientX,
-    clientY: touch.clientY,
-    force: touch.force,
-    identifier: identifier,
-    pageX: touch.pageX,
-    pageY: touch.pageY,
-    radiusX: touch.radiusX,
-    radiusY: touch.radiusY,
-    rotationAngle: touch.rotationAngle,
-    screenX: touch.screenX,
-    screenY: touch.screenY,
-    target: touch.target
-  }
-})
-
-const normalizeNativeEvent = (nativeEvent) => {
-  const changedTouches = normalizeTouches(nativeEvent.changedTouches)
-  const touches = normalizeTouches(nativeEvent.touches)
-
-  const event = {
-    changedTouches,
-    pageX: nativeEvent.pageX,
-    pageY: nativeEvent.pageY,
-    target: nativeEvent.target,
-    // normalize the timestamp
-    // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
-    timestamp: Date.now(),
-    touches
-  }
-
-  if (changedTouches[0]) {
-    event.identifier = changedTouches[0].identifier
-    event.pageX = changedTouches[0].pageX
-    event.pageY = changedTouches[0].pageY
-  }
-
-  return event
-}
-
 const originalRecordTouchTrack = ResponderTouchHistoryStore.recordTouchTrack
 
 ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
+  // Filter out mouse-move events when the mouse button is not down
+  if ((topLevelType === 'topMouseMove') && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
+    return
+  }
   originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizeNativeEvent(nativeEvent))
 }
 
