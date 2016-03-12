@@ -2,7 +2,7 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
-![gzipped size](https://img.shields.io/badge/gzipped-~36.4k-blue.svg)
+![gzipped size](https://img.shields.io/badge/gzipped-~36.7k-blue.svg)
 
 [React Native][react-native-url] components and APIs for the Web.
 
