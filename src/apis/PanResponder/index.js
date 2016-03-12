@@ -354,7 +354,6 @@ var PanResponder = {
         // Guard against the dispatch of two touch moves when there are two
         // simultaneously changed touches.
         if (gestureState._accountsForMovesUpTo === touchHistory.mostRecentTimeStamp) {
-          console.log('bail out')
           return;
         }
         // Filter out any touch moves past the first one - we would have
