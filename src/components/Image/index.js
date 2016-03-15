@@ -1,5 +1,5 @@
 /* global window */
-import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
+import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import resolveAssetSource from './resolveAssetSource'
 import CoreComponent from '../CoreComponent'
 import ImageResizeMode from './ImageResizeMode'

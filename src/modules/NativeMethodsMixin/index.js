@@ -90,11 +90,4 @@ const mountSafeCallback = (context: Component, callback: ?Function) => () => {
   return callback.apply(context, arguments)
 }
 
-export const NativeMethodsDecorator = (Component) => {
-  Object.keys(NativeMethodsMixin).forEach((method) => {
-    Component.prototype[method] = NativeMethodsMixin[method]
-  })
-  return Component
-}
-
-export default NativeMethodsMixin
+module.exports = NativeMethodsMixin

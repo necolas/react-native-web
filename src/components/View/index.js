@@ -1,4 +1,5 @@
-import { NativeMethodsDecorator } from '../../modules/NativeMethodsMixin'
+import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
+import normalizeNativeEvent from '../../apis/PanResponder/normalizeNativeEvent'
 import CoreComponent from '../CoreComponent'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
