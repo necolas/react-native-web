@@ -10,13 +10,11 @@ import { Component } from 'react'
 import ReactDOM from 'react-dom'
 import UIManager from '../../apis/UIManager'
 
-type MeasureOnSuccessCallback = (
+type MeasureInWindowOnSuccessCallback = (
   x: number,
   y: number,
   width: number,
   height: number,
-  pageX: number,
-  pageY: number
 ) => void
 
 type MeasureLayoutOnSuccessCallback = (
@@ -26,12 +24,21 @@ type MeasureLayoutOnSuccessCallback = (
   height: number
 ) => void
 
+type MeasureOnSuccessCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  pageX: number,
+  pageY: number
+) => void
+
 const NativeMethodsMixin = {
   /**
    * Removes focus from an input or view. This is the opposite of `focus()`.
    */
   blur() {
-    ReactDOM.findDOMNode(this).blur()
+    UIManager.blur(ReactDOM.findDOMNode(this))
   },
 
   /**
@@ -39,7 +46,7 @@ const NativeMethodsMixin = {
    * The exact behavior triggered will depend the type of view.
    */
   focus() {
-    ReactDOM.findDOMNode(this).focus()
+    UIManager.focus(ReactDOM.findDOMNode(this))
   },
 
   /**
@@ -53,10 +60,32 @@ const NativeMethodsMixin = {
   },
 
   /**
+   * Determines the location of the given view in the window and returns the
+   * values via an async callback. If the React root view is embedded in
+   * another native view, this will give you the absolute coordinates. If
+   * successful, the callback will be called be called with the following
+   * arguments:
+   *
+   *  - x
+   *  - y
+   *  - width
+   *  - height
+   *
+   * Note that these measurements are not available until after the rendering
+   * has been completed in native.
+   */
+  measureInWindow(callback: MeasureInWindowOnSuccessCallback) {
+    UIManager.measureInWindow(
+      ReactDOM.findDOMNode(this),
+      mountSafeCallback(this, callback)
+    )
+  },
+
+  /**
    * Measures the view relative to another view (usually an ancestor)
    */
   measureLayout(
-    relativeToNativeNode: number,
+    relativeToNativeNode: Object,
     onSuccess: MeasureLayoutOnSuccessCallback,
     onFail: () => void /* currently unused */
   ) {
