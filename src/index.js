@@ -17,6 +17,7 @@ import PanResponder from './apis/PanResponder'
 import PixelRatio from './apis/PixelRatio'
 import Platform from './apis/Platform'
 import StyleSheet from './apis/StyleSheet'
+import UIManager from './apis/UIManager'
 
 // components
 import ActivityIndicator from './components/ActivityIndicator'
@@ -26,11 +27,21 @@ import Portal from './components/Portal'
 import ScrollView from './components/ScrollView'
 import Text from './components/Text'
 import TextInput from './components/TextInput'
-import Touchable from './components/Touchable'
+import Touchable from './components/Touchable/Touchable'
+import TouchableBounce from './components/Touchable/TouchableBounce'
+import TouchableHighlight from './components/Touchable/TouchableHighlight'
+import TouchableOpacity from './components/Touchable/TouchableOpacity'
+import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback'
 import View from './components/View'
 
 // modules
 import NativeModules from './modules/NativeModules'
+
+// propTypes
+
+import ColorPropType from './apis/StyleSheet/ColorPropType'
+import EdgeInsetsPropType from './apis/StyleSheet/EdgeInsetsPropType'
+import PointPropType from './apis/StyleSheet/PointPropType'
 
 const ReactNative = {
   // apis
@@ -46,6 +57,7 @@ const ReactNative = {
   PixelRatio,
   Platform,
   StyleSheet,
+  UIManager,
 
   // components
   ActivityIndicator,
@@ -55,14 +67,20 @@ const ReactNative = {
   ScrollView,
   Text,
   TextInput,
-  TouchableBounce: Touchable,
-  TouchableHighlight: Touchable,
-  TouchableOpacity: Touchable,
-  TouchableWithoutFeedback: Touchable,
+  Touchable,
+  TouchableBounce,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 
   // modules
   NativeModules,
+
+  // propTypes
+  ColorPropType,
+  EdgeInsetsPropType,
+  PointPropType,
 
   // React
   ...React,
