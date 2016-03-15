@@ -56,4 +56,4 @@ const expandStyle = (style) => {
   }, {})
 }
 
-export default expandStyle
+module.exports = expandStyle

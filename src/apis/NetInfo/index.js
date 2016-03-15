@@ -76,4 +76,4 @@ const NetInfo = {
   }
 }
 
-export default NetInfo
+module.exports = NetInfo

@@ -6,7 +6,7 @@ import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
 @NativeMethodsDecorator
-export default class Text extends Component {
+class Text extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     accessibilityRole: CoreComponent.propTypes.accessibilityRole,
@@ -66,3 +66,5 @@ const styles = StyleSheet.create({
     whiteSpace: 'nowrap'
   }
 })
+
+module.exports = Text

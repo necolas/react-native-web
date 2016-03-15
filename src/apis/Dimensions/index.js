@@ -23,9 +23,11 @@ const dimensions = {
   }
 }
 
-export default class Dimensions {
+class Dimensions {
   static get(dimension: string): Object {
     invariant(dimensions[dimension], 'No dimension set for key ' + dimension)
     return dimensions[dimension]
   }
 }
+
+module.exports = Dimensions

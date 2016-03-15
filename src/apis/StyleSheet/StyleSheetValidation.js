@@ -12,7 +12,7 @@ import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
 import invariant from 'fbjs/lib/invariant'
 
-export default class StyleSheetValidation {
+class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
       if (allStylePropTypes[prop] === undefined) {
@@ -66,3 +66,5 @@ StyleSheetValidation.addValidStylePropTypes({
   listStyle: PropTypes.string,
   verticalAlign: PropTypes.string
 })
+
+module.exports = StyleSheetValidation

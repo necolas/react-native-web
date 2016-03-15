@@ -32,4 +32,4 @@ const UIManager = {
   }
 }
 
-export default UIManager
+module.exports = UIManager

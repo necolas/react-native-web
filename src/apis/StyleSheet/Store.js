@@ -1,7 +1,7 @@
 import prefixAll from 'inline-style-prefix-all'
 import hyphenate from './hyphenate'
 
-export default class Store {
+class Store {
   constructor(
     initialState:Object = {},
     options:Object = { obfuscateClassNames: false }
@@ -95,3 +95,5 @@ export default class Store {
     }
   }
 }
+
+module.exports = Store

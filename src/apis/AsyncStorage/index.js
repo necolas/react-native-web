@@ -12,7 +12,7 @@ const mergeLocalStorageItem = (key, value) => {
   window.localStorage.setItem(key, nextValue)
 }
 
-export default class AsyncStorage {
+class AsyncStorage {
   /**
    * Erases *all* AsyncStorage for the domain.
    */
@@ -157,3 +157,5 @@ export default class AsyncStorage {
     })
   }
 }
+
+module.exports = AsyncStorage

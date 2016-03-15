@@ -8,7 +8,7 @@
 import invariant from 'fbjs/lib/invariant'
 import expandStyle from './expandStyle'
 
-export default function flattenStyle(style): ?Object {
+module.exports = function flattenStyle(style): ?Object {
   if (!style) {
     return undefined
   }

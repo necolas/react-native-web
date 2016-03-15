@@ -22,7 +22,7 @@ import { Component, PropTypes } from 'react'
  * React reconciliation.
  */
 
-export default class StaticRenderer extends Component {
+class StaticRenderer extends Component {
   static propTypes = {
     render: PropTypes.func.isRequired,
     shouldUpdate: PropTypes.bool.isRequired
@@ -36,3 +36,5 @@ export default class StaticRenderer extends Component {
     return this.props.render()
   }
 }
+
+module.exports = StaticRenderer

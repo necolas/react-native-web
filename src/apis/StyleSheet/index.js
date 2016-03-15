@@ -65,7 +65,7 @@ const resolve = ({ style = {} }) => {
   return StyleSheetRegistry.getStyleAsNativeProps(style, store)
 }
 
-export default {
+module.exports = {
   _destroy,
   _renderToString,
   create,

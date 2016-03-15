@@ -22,4 +22,4 @@ const BorderPropTypes = {
   borderLeftStyle: BorderStylePropType
 }
 
-export default BorderPropTypes
+module.exports = BorderPropTypes

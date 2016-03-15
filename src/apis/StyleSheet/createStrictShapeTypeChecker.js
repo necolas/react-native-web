@@ -12,7 +12,7 @@
 import invariant from 'fbjs/lib/invariant'
 import ReactPropTypeLocationNames from 'react/lib/ReactPropTypeLocationNames'
 
-export default function createStrictShapeTypeChecker(shapeTypes) {
+module.exports = function createStrictShapeTypeChecker(shapeTypes) {
   function checkType(isRequired, props, propName, componentName, location?) {
     if (!props[propName]) {
       if (isRequired) {

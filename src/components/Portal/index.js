@@ -19,7 +19,7 @@ let lastUsedTag = 0
 /**
  * A container that renders all the modals on top of everything else in the application.
  */
-export default class Portal extends Component {
+class Portal extends Component {
   static propTypes = {
     onModalVisibilityChanged: PropTypes.func.isRequired
   };
@@ -154,3 +154,5 @@ const styles = StyleSheet.create({
     bottom: 0
   }
 })
+
+module.exports = Portal

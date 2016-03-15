@@ -8,7 +8,7 @@
 import createStrictShapeTypeChecker from './createStrictShapeTypeChecker'
 import flattenStyle from './flattenStyle'
 
-export default function StyleSheetPropType(shape) {
+module.exports = function StyleSheetPropType(shape) {
   const shapePropType = createStrictShapeTypeChecker(shape)
   return function (props, propName, componentName, location?) {
     let newProps = props

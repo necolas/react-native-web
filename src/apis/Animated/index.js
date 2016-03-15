@@ -11,7 +11,7 @@ import Image from '../../components/Image'
 import Text from '../../components/Text'
 import View from '../../components/View'
 
-export default {
+module.exports = {
   ...AnimatedImplementation,
   View: AnimatedImplementation.createAnimatedComponent(View),
   Text: AnimatedImplementation.createAnimatedComponent(Text),

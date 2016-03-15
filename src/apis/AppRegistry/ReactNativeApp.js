@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import StyleSheet from '../StyleSheet'
 import View from '../../components/View'
 
-export default class ReactNativeApp extends Component {
+class ReactNativeApp extends Component {
   static propTypes = {
     initialProps: PropTypes.object,
     rootComponent: PropTypes.any.isRequired,
@@ -45,3 +45,5 @@ const styles = StyleSheet.create({
     bottom: 0
   }
 })
+
+module.exports = ReactNativeApp

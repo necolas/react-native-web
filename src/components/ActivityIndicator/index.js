@@ -20,7 +20,7 @@ const keyframeEffects = [
 ]
 
 @NativeMethodsDecorator
-export default class ActivityIndicator extends Component {
+class ActivityIndicator extends Component {
   static propTypes = {
     animating: PropTypes.bool,
     color: PropTypes.string,
@@ -107,3 +107,5 @@ const indicatorStyles = StyleSheet.create({
     height: 36
   }
 })
+
+module.exports = ActivityIndicator

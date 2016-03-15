@@ -11,7 +11,7 @@ import Dimensions from '../Dimensions'
 /**
  * PixelRatio gives access to the device pixel density.
  */
-export default class PixelRatio {
+class PixelRatio {
   /**
    * Returns the device pixel density.
    */
@@ -45,3 +45,5 @@ export default class PixelRatio {
     return Math.round(layoutSize * ratio) / ratio
   }
 }
+
+module.exports = PixelRatio

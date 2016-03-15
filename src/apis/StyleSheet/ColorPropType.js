@@ -59,4 +59,4 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
 var ColorPropType = colorPropType.bind(null, false /* isRequired */);
 ColorPropType.isRequired = colorPropType.bind(null, true /* isRequired */);
 
-export default ColorPropType
+module.exports = ColorPropType

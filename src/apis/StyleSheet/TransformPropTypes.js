@@ -44,4 +44,4 @@ const TransformPropTypes = {
   transformMatrix: TransformMatrixPropType
 }
 
-export default TransformPropTypes
+module.exports = TransformPropTypes

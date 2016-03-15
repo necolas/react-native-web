@@ -51,4 +51,4 @@ const LayoutPropTypes = {
   top: numberOrString
 }
 
-export default LayoutPropTypes
+module.exports = LayoutPropTypes

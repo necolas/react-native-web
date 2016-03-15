@@ -6,7 +6,7 @@ import ImageResizeMode from './ImageResizeMode'
 
 const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ])
 
-export default {
+module.exports = {
   ...LayoutPropTypes,
   ...TransformPropTypes,
   backfaceVisibility: hiddenOrVisible,

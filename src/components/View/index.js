@@ -6,7 +6,7 @@ import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
 @NativeMethodsDecorator
-export default class View extends Component {
+class View extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     accessibilityLiveRegion: CoreComponent.propTypes.accessibilityLiveRegion,
@@ -185,3 +185,5 @@ const styles = StyleSheet.create({
     textAlign: 'inherit'
   }
 })
+
+module.exports = View

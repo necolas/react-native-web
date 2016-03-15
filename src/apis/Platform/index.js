@@ -5,4 +5,4 @@ const Platform = {
   userAgent: canUseDOM ? window.navigator.userAgent : ''
 }
 
-export default Platform
+module.exports = Platform

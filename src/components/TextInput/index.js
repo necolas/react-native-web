@@ -8,7 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import View from '../View'
 
 @NativeMethodsDecorator
-export default class TextInput extends Component {
+class TextInput extends Component {
   static propTypes = {
     ...View.propTypes,
     autoComplete: PropTypes.bool,
@@ -229,3 +229,5 @@ const styles = StyleSheet.create({
     whiteSpace: 'pre'
   }
 })
+
+module.exports = TextInput

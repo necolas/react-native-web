@@ -7,4 +7,4 @@ const ImageResizeMode = keyMirror({
   stretch: null
 })
 
-export default ImageResizeMode
+module.exports = ImageResizeMode

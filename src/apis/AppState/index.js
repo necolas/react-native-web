@@ -3,7 +3,7 @@ import invariant from 'fbjs/lib/invariant'
 const listeners = {}
 const eventTypes = [ 'change' ]
 
-export default class AppState {
+class AppState {
   static get currentState() {
     switch (document.visibilityState) {
       case 'hidden':
@@ -27,3 +27,5 @@ export default class AppState {
     delete listeners[handler]
   }
 }
+
+module.exports = AppState

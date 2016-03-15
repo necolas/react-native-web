@@ -5,7 +5,7 @@ import ViewStylePropTypes from '../View/ViewStylePropTypes'
 const { number, oneOf, oneOfType, string } = PropTypes
 const numberOrString = oneOfType([ number, string ])
 
-export default {
+module.exports = {
   ...ViewStylePropTypes,
   color: ColorPropType,
   fontFamily: string,

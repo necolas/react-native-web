@@ -9,7 +9,7 @@
 import prefixAll from 'inline-style-prefix-all'
 import flattenStyle from './flattenStyle'
 
-export default class StyleSheetRegistry {
+class StyleSheetRegistry {
   static registerStyle(style: Object, store): number {
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(style)
@@ -44,3 +44,5 @@ export default class StyleSheetRegistry {
     return { className: _className, style: _style }
   }
 }
+
+module.exports = StyleSheetRegistry

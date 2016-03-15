@@ -45,4 +45,4 @@ const InteractionManager = {
   addListener: () => {}
 }
 
-export default InteractionManager
+module.exports = InteractionManager

@@ -8,7 +8,7 @@ const { number, oneOf, string } = PropTypes
 const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ])
 const hiddenOrVisible = oneOf([ 'hidden', 'visible' ])
 
-export default {
+module.exports = {
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...TransformPropTypes,

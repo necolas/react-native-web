@@ -128,3 +128,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   }
 })
+
+module.exports = ScrollView

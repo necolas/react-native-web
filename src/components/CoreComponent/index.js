@@ -19,7 +19,7 @@ const roleComponents = {
 }
 
 @NativeMethodsDecorator
-export default class CoreComponent extends Component {
+class CoreComponent extends Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
     accessibilityLiveRegion: PropTypes.oneOf([ 'assertive', 'off', 'polite' ]),
@@ -64,3 +64,5 @@ export default class CoreComponent extends Component {
     )
   }
 }
+
+module.exports = CoreComponent

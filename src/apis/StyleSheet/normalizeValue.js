@@ -30,4 +30,4 @@ const normalizeValue = (property, value) => {
   return value
 }
 
-export default normalizeValue
+module.exports = normalizeValue

@@ -23,7 +23,7 @@ const ImageSourcePropType = PropTypes.oneOfType([
 ])
 
 @NativeMethodsDecorator
-export default class Image extends Component {
+class Image extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
     accessible: CoreComponent.propTypes.accessible,
@@ -217,3 +217,5 @@ const resizeModeStyles = StyleSheet.create({
     backgroundSize: '100% 100%'
   }
 })
+
+module.exports = Image
