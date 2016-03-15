@@ -18,9 +18,11 @@ const {
   topTouchStart
 } = EventConstants.topLevelTypes
 
-const endDependencies = [ topMouseUp, topTouchCancel, topTouchEnd ]
-const moveDependencies = [ topMouseMove, topTouchMove ]
-const startDependencies = [ topMouseDown, topTouchStart ]
+const supportsTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch
+
+const endDependencies = supportsTouch ? [ topTouchCancel, topTouchEnd ] : [ topMouseUp ]
+const moveDependencies = supportsTouch ? [ topTouchMove ] : [ topMouseMove ]
+const startDependencies = supportsTouch ? [ topTouchStart ] : [ topMouseDown ]
 
 /**
  * Setup ResponderEventPlugin dependencies
@@ -42,7 +44,7 @@ const originalRecordTouchTrack = ResponderTouchHistoryStore.recordTouchTrack
 
 ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
   // Filter out mouse-move events when the mouse button is not down
-  if ((topLevelType === 'topMouseMove') && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
+  if ((topLevelType === topMouseMove) && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
     return
   }
   originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizeNativeEvent(nativeEvent))
