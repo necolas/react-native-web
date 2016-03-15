@@ -105,16 +105,21 @@ const styles = StyleSheet.create({
     flexBasis: 'auto',
     flexDirection: 'column',
     flexShrink: 0,
-    listStyle: 'none',
     margin: 0,
     padding: 0,
     position: 'relative',
-    textDecoration: 'none',
-    // button reset
+    // button and anchor reset
     backgroundColor: 'transparent',
     color: 'inherit',
     font: 'inherit',
-    textAlign: 'inherit'
+    textAlign: 'inherit',
+    textDecoration: 'none',
+    // list reset
+    listStyle: 'none',
+    // fix flexbox bugs
+    maxWidth: '100%',
+    minHeight: 0,
+    minWidth: 0
   }
 })
 
