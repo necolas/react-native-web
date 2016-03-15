@@ -61,15 +61,15 @@ class View extends Component {
       <CoreComponent
         {...other}
         onClick={this._handleClick}
-        onClickCapture={this._normalizeEventForHandler('onClickCapture')}
-        onTouchCancel={this._normalizeEventForHandler('onTouchCancel')}
-        onTouchCancelCapture={this._normalizeEventForHandler('onTouchCancelCapture')}
-        onTouchEnd={this._normalizeEventForHandler('onTouchEnd')}
-        onTouchEndCapture={this._normalizeEventForHandler('onTouchEndCapture')}
-        onTouchMove={this._normalizeEventForHandler('onTouchMove')}
-        onTouchMoveCapture={this._normalizeEventForHandler('onTouchMoveCapture')}
-        onTouchStart={this._normalizeEventForHandler('onTouchStart')}
-        onTouchStartCapture={this._normalizeEventForHandler('onTouchStartCapture')}
+        onClickCapture={this._normalizeEventForHandler(this.props.onClickCapture)}
+        onTouchCancel={this._normalizeEventForHandler(this.props.onTouchCancel)}
+        onTouchCancelCapture={this._normalizeEventForHandler(this.props.onTouchCancelCapture)}
+        onTouchEnd={this._normalizeEventForHandler(this.props.onTouchEnd)}
+        onTouchEndCapture={this._normalizeEventForHandler(this.props.onTouchEndCapture)}
+        onTouchMove={this._normalizeEventForHandler(this.props.onTouchMove)}
+        onTouchMoveCapture={this._normalizeEventForHandler(this.props.onTouchMoveCapture)}
+        onTouchStart={this._normalizeEventForHandler(this.props.onTouchStart)}
+        onTouchStartCapture={this._normalizeEventForHandler(this.props.onTouchStartCapture)}
         style={[
           styles.initial,
           style,
@@ -89,7 +89,7 @@ class View extends Component {
       if (pageX === undefined) {
         e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
       }
-      this.props[handler] && this.props[handler](e)
+      handler && handler(e)
     }
   }
 }

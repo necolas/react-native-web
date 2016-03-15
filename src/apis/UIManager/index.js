@@ -39,23 +39,23 @@ const UIManager = {
       let nativeProp
       const value = props[prop]
 
-      switch(prop) {
+      switch (prop) {
         case 'style':
           // convert styles to DOM-styles
           CSSPropertyOperations.setValueForStyles(node, processTransform(flattenStyle(value)))
-          break;
+          break
         case 'class':
         case 'className':
           nativeProp = 'class'
           // prevent class names managed by React Native from being replaced
           const className = node.getAttribute(nativeProp) + ' ' + value
           node.setAttribute(nativeProp, className)
-          break;
+          break
         case 'text':
         case 'value':
           // native platforms use `text` prop to replace text input value
           node.value = value
-          break;
+          break
         default:
           node.setAttribute(prop, value)
       }
