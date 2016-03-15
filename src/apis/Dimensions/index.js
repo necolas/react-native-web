@@ -17,9 +17,9 @@ const dimensions = {
   },
   window: {
     fontScale: 1,
-    get height() { return document.documentElement.clientHeight },
+    get height() { return window.innerHeight },
     scale: window.devicePixelRatio || 1,
-    get width() { return document.documentElement.clientWidth }
+    get width() { return window.innerWidth }
   }
 }
 
