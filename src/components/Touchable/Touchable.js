@@ -340,7 +340,7 @@ var TouchableMixin = {
    * Must return true to start the process of `Touchable`.
    */
   touchableHandleStartShouldSetResponder: function() {
-    return true;
+    return !this.props.disabled;
   },
 
   /**
@@ -558,10 +558,10 @@ var TouchableMixin = {
    * @sideeffects
    * @private
    */
-  _remeasureMetricsOnActivation: function() {
+  _remeasureMetricsOnActivation: function(e) {
     /* @edit begin */
     UIManager.measure(
-      this.state.touchable.responderID,
+      e.nativeEvent.target,
       this._handleQueryLayout
     );
     /* @edit end */
@@ -603,18 +603,22 @@ var TouchableMixin = {
    * @sideeffects
    */
   _receiveSignal: function(signal, e) {
+    var responderID = this.state.touchable.responderID;
     var curState = this.state.touchable.touchState;
     var nextState = Transitions[curState] && Transitions[curState][signal];
+    if (!responderID && signal === Signals.RESPONDER_RELEASE) {
+      return;
+    }
     if (!nextState) {
       throw new Error(
         'Unrecognized signal `' + signal + '` or state `' + curState +
-        '` for Touchable responder `' + this.state.touchable.responderID + '`'
+        '` for Touchable responder `' + responderID + '`'
       );
     }
     if (nextState === States.ERROR) {
       throw new Error(
         'Touchable cannot transition from `' + curState + '` to `' + signal +
-        '` for responder `' + this.state.touchable.responderID + '`'
+        '` for responder `' + responderID + '`'
       );
     }
     if (curState !== nextState) {
@@ -672,7 +676,7 @@ var TouchableMixin = {
     }
 
     if (!IsActive[curState] && IsActive[nextState]) {
-      this._remeasureMetricsOnActivation();
+      this._remeasureMetricsOnActivation(e);
     }
 
     if (IsPressingIn[curState] && signal === Signals.LONG_PRESS_DETECTED) {
