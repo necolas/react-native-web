@@ -45,16 +45,7 @@ class View extends Component {
 
   constructor(props, context) {
     super(props, context)
-    this._handleClick = this._handleClick.bind(this)
-    this._handleClickCapture = this._handleClickCapture.bind(this)
-    this._handleTouchCancel = this._handleTouchCancel.bind(this)
-    this._handleTouchCancelCapture = this._handleTouchCancelCapture.bind(this)
-    this._handleTouchEnd = this._handleTouchEnd.bind(this)
-    this._handleTouchEndCapture = this._handleTouchEndCapture.bind(this)
-    this._handleTouchMove = this._handleTouchMove.bind(this)
-    this._handleTouchMoveCapture = this._handleTouchMoveCapture.bind(this)
-    this._handleTouchStart = this._handleTouchStart.bind(this)
-    this._handleTouchStartCapture = this._handleTouchStartCapture.bind(this)
+    this._normalizeEventForHandler = this._normalizeEventForHandler.bind(this)
   }
 
   render() {
@@ -70,15 +61,15 @@ class View extends Component {
       <CoreComponent
         {...other}
         onClick={this._handleClick}
-        onClickCapture={this._handleClickCapture}
-        onTouchCancel={this._handleTouchCancel}
-        onTouchCancelCapture={this._handleTouchCancelCapture}
-        onTouchEnd={this._handleTouchEnd}
-        onTouchEndCapture={this._handleTouchEndCapture}
-        onTouchMove={this._handleTouchMove}
-        onTouchMoveCapture={this._handleTouchMoveCapture}
-        onTouchStart={this._handleTouchStart}
-        onTouchStartCapture={this._handleTouchStartCapture}
+        onClickCapture={this._normalizeEventForHandler('onClickCapture')}
+        onTouchCancel={this._normalizeEventForHandler('onTouchCancel')}
+        onTouchCancelCapture={this._normalizeEventForHandler('onTouchCancelCapture')}
+        onTouchEnd={this._normalizeEventForHandler('onTouchEnd')}
+        onTouchEndCapture={this._normalizeEventForHandler('onTouchEndCapture')}
+        onTouchMove={this._normalizeEventForHandler('onTouchMove')}
+        onTouchMoveCapture={this._normalizeEventForHandler('onTouchMoveCapture')}
+        onTouchStart={this._normalizeEventForHandler('onTouchStart')}
+        onTouchStartCapture={this._normalizeEventForHandler('onTouchStartCapture')}
         style={[
           styles.initial,
           style,
@@ -92,73 +83,13 @@ class View extends Component {
    * React Native expects `pageX` and `pageY` to be on the `nativeEvent`, but
    * React doesn't include them for touch events.
    */
-  _normalizeTouchEvent(event) {
-    const { pageX, changedTouches } = event.nativeEvent
-    if (pageX === undefined) {
-      const { pageX, pageY } = changedTouches[0]
-      event.nativeEvent.pageX = pageX
-      event.nativeEvent.pageY = pageY
-    }
-    return event
-  }
-
-  _handleClick(e) {
-    if (this.props.onClick) {
-      this.props.onClick(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleClickCapture(e) {
-    if (this.props.onClickCapture) {
-      this.props.onClickCapture(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchCancel(e) {
-    if (this.props.onTouchCancel) {
-      this.props.onTouchCancel(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchCancelCapture(e) {
-    if (this.props.onTouchCancelCapture) {
-      this.props.onTouchCancelCapture(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchEnd(e) {
-    if (this.props.onTouchEnd) {
-      this.props.onTouchEnd(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchEndCapture(e) {
-    if (this.props.onTouchEndCapture) {
-      this.props.onTouchEndCapture(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchMove(e) {
-    if (this.props.onTouchMove) {
-      this.props.onTouchMove(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchMoveCapture(e) {
-    if (this.props.onTouchMoveCapture) {
-      this.props.onTouchMoveCapture(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchStart(e) {
-    if (this.props.onTouchStart) {
-      this.props.onTouchStart(this._normalizeTouchEvent(e))
-    }
-  }
-
-  _handleTouchStartCapture(e) {
-    if (this.props.onTouchStartCapture) {
-      this.props.onTouchStartCapture(this._normalizeTouchEvent(e))
+  _normalizeEventForHandler(handler) {
+    return (e) => {
+      const { pageX } = e.nativeEvent
+      if (pageX === undefined) {
+        e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
+      }
+      this.props[handler] && this.props[handler](e)
     }
   }
 }
