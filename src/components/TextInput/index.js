@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
 import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
+import TextInputState from './TextInputState'
 import View from '../View'
 
 @NativeMethodsDecorator
@@ -50,11 +51,15 @@ class TextInput extends Component {
   }
 
   blur() {
-    this.refs.input.blur()
+    TextInputState.blurTextInput(ReactDOM.findDOMNode(this.refs.input))
+  }
+
+  clear() {
+    this.setNativeProps({ text: '' })
   }
 
   focus() {
-    this.refs.input.focus()
+    TextInputState.focusTextInput(ReactDOM.findDOMNode(this.refs.input))
   }
 
   setNativeProps(props) {
@@ -63,27 +68,34 @@ class TextInput extends Component {
 
   _onBlur(e) {
     const { onBlur } = this.props
-    const value = e.target.value
-    this.setState({ showPlaceholder: value === '' })
+    const text = e.target.value
+    this.setState({ showPlaceholder: text === '' })
+    this.blur()
     if (onBlur) onBlur(e)
   }
 
   _onChange(e) {
     const { onChange, onChangeText } = this.props
-    const value = e.target.value
-    this.setState({ showPlaceholder: value === '' })
-    if (onChangeText) onChangeText(value)
+    const text = e.target.value
+    this.setState({ showPlaceholder: text === '' })
     if (onChange) onChange(e)
+    if (onChangeText) onChangeText(text)
+    if (!this.refs.input) {
+      // calling `this.props.onChange` or `this.props.onChangeText`
+      // may clean up the input itself. Exits here.
+      return
+    }
   }
 
   _onFocus(e) {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
     const node = ReactDOM.findDOMNode(this.refs.input)
-    const value = e.target.value
-    if (clearTextOnFocus) node.value = ''
-    if (selectTextOnFocus) node.select()
-    this.setState({ showPlaceholder: value === '' })
+    const text = e.target.value
+    this.focus()
     if (onFocus) onFocus(e)
+    if (clearTextOnFocus) this.clear()
+    if (selectTextOnFocus) node.select()
+    this.setState({ showPlaceholder: text === '' })
   }
 
   _onSelectionChange(e) {
