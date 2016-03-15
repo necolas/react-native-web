@@ -73,8 +73,28 @@ suite('apis/UIManager', () => {
     })
   })
 
+  suite('measureInWindow', () => {
+    test('provides correct layout to callback', () => {
+      const node = createNode({ height: '10px', width: '10px' })
+      const middle = createNode({ padding: '20px' })
+      const context = createNode({ padding: '20px' })
+      middle.appendChild(node)
+      context.appendChild(middle)
+      document.body.appendChild(context)
+
+      UIManager.measureInWindow(node, (x, y, width, height) => {
+        assert.equal(x, 40)
+        assert.equal(y, 40)
+        assert.equal(width, 10)
+        assert.equal(height, 10)
+      })
+
+      document.body.removeChild(context)
+    })
+  })
+
   suite('updateView', () => {
-    test('adds new className to existing className', () => {
+    test('add new className to existing className', () => {
       const node = createNode()
       node.className = 'existing'
       const props = { className: 'extra' }
@@ -89,7 +109,20 @@ suite('apis/UIManager', () => {
       assert.equal(node.getAttribute('style'), 'color: red; opacity: 0;')
     })
 
-    test('sets attribute values', () => {
+    test('replaces input and textarea text', () => {
+      const node = createNode()
+      node.value = 'initial'
+      const textProp = { text: 'expected-text' }
+      const valueProp = { value: 'expected-value' }
+
+      UIManager.updateView(node, textProp)
+      assert.equal(node.value, 'expected-text')
+
+      UIManager.updateView(node, valueProp)
+      assert.equal(node.value, 'expected-value')
+    })
+
+    test('sets other attribute values', () => {
       const node = createNode()
       const props = { 'aria-level': '4', 'data-of-type': 'string' }
       UIManager.updateView(node, props)
