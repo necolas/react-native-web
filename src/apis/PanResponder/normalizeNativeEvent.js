@@ -2,10 +2,16 @@
 const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).map((touch) => {
   const identifier = touch.identifier > 20 ? (touch.identifier % 20) : touch.identifier
 
+  const rect = touch.target && touch.target.getBoundingClientRect()
+  const locationX = touch.pageX - rect.left
+  const locationY = touch.pageY - rect.top
+
   return {
     clientX: touch.clientX,
     clientY: touch.clientY,
     force: touch.force,
+    locationX: locationX,
+    locationY: locationY,
     identifier: identifier,
     pageX: touch.pageX,
     pageY: touch.pageY,
@@ -41,9 +47,8 @@ function normalizeTouchEvent(nativeEvent) {
     event.identifier = changedTouches[0].identifier
     event.pageX = changedTouches[0].pageX
     event.pageY = changedTouches[0].pageY
-    const rect = changedTouches[0].target.getBoundingClientRect()
-    event.locationX = changedTouches[0].pageX - rect.left
-    event.locationY = changedTouches[0].pageY - rect.top
+    event.locationX = changedTouches[0].locationX
+    event.locationY = changedTouches[0].locationY
   }
 
   return event
@@ -54,6 +59,8 @@ function normalizeMouseEvent(nativeEvent) {
     clientX: nativeEvent.clientX,
     clientY: nativeEvent.clientY,
     force: nativeEvent.force,
+    locationX: nativeEvent.clientX,
+    locationY: nativeEvent.clientY,
     identifier: 0,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
