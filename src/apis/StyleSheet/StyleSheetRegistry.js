@@ -8,6 +8,7 @@
 
 import prefixAll from 'inline-style-prefix-all'
 import flattenStyle from './flattenStyle'
+import processTransform from './processTransform'
 
 class StyleSheetRegistry {
   static registerStyle(style: Object, store): number {
@@ -15,7 +16,7 @@ class StyleSheetRegistry {
       Object.freeze(style)
     }
 
-    const normalizedStyle = flattenStyle(style)
+    const normalizedStyle = processTransform(flattenStyle(style))
     Object.keys(normalizedStyle).forEach((prop) => {
       // add each declaration to the store
       store.set(prop, normalizedStyle[prop])
@@ -26,7 +27,7 @@ class StyleSheetRegistry {
     let _className
     let _style = {}
     const classList = []
-    const normalizedStyle = flattenStyle(style)
+    const normalizedStyle = processTransform(flattenStyle(style))
 
     for (const prop in normalizedStyle) {
       let styleClass = store.get(prop, normalizedStyle[prop])

@@ -38,7 +38,9 @@ const TransformPropTypes = {
       PropTypes.shape({ skewX: numberOrString }),
       PropTypes.shape({ skewY: numberOrString }),
       PropTypes.shape({ translateX: numberOrString }),
-      PropTypes.shape({ translateY: numberOrString })
+      PropTypes.shape({ translateY: numberOrString }),
+      PropTypes.shape({ translateZ: numberOrString }),
+      PropTypes.shape({ translate3d: PropTypes.string })
     ])
   ),
   transformMatrix: TransformMatrixPropType
