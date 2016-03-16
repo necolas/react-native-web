@@ -3,11 +3,10 @@
  */
 export const resetCSS =
 `/* React Native Web */
-html {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+html {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}
 body {margin:0}
 button::-moz-focus-inner, input::-moz-focus-inner {border:0;padding:0}
-input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {-webkit-appearance:none}
-ol,ul,li {list-style:none}`
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {-webkit-appearance:none}`
 
 /**
  * Custom pointer event styles
