@@ -11,6 +11,12 @@ outside of the render loop and are applied as inline styles. Read more about to
 
 Each key of the object passed to `create` must define a style object.
 
+## Properties
+
+**hairlineWidth**: number
+
+**flatten**: function
+
 ## Example
 
 ```js

@@ -70,6 +70,7 @@ module.exports = {
   _renderToString,
   create,
   elementId: ELEMENT_ID,
+  hairlineWidth: 1,
   flatten: flattenStyle,
   resolve
 }
