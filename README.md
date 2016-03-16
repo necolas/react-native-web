@@ -2,11 +2,28 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
-![gzipped size](https://img.shields.io/badge/gzipped-~36.7k-blue.svg)
+![gzipped size](https://img.shields.io/badge/gzipped-~41.0k-blue.svg)
 
 [React Native][react-native-url] components and APIs for the Web.
 
 Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+
+## Overview
+
+"React Native for Web" is a project to bring React Native's building blocks and
+touch handling to the Web.
+
+React Native provides a foundational layer to support interoperable,
+zero-configuration React component development. This is missing from React's
+web ecosystem where OSS components rely on inline styles (usually without
+vendor prefixes), or require build tool configuration. This project allows
+components built upon React Native to be run on the Web, and it manages all
+component styling out-of-the-box.
+
+For example, the [`View`](docs/apis/View.md) component makes it easy to build
+cross-browser layouts with flexbox, such as stacked and nested boxes with
+margin and padding. And the [`StyleSheet`](docs/guides/style.md) API converts
+styles defined in JavaScript into "Atomic CSS".
 
 ## Quick start
 
@@ -18,17 +35,6 @@ npm install --save react@0.14 react-dom@0.14 react-native-web
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
 
-## Overview
-
-This is a web implementation of React Native components and APIs. The React
-Native components are good web application building blocks, and provide a common
-foundation for component libraries.
-
-For example, the [`View`](docs/apis/View.md) component makes it easy to build
-common layouts with flexbox, such as stacked and nested boxes with margin and
-padding. And the [`StyleSheet`](docs/guides/style.md) API converts styles
-defined in JavaScript to "atomic" CSS.
-
 ## Examples
 
 Demos:
@@ -37,7 +43,7 @@ Demos:
 * [TicTacToe](http://codepen.io/necolas/full/eJaLZd/)
 * [2048](http://codepen.io/necolas/full/wMVvxj/)
 
-Example:
+Sample:
 
 ```js
 import React, { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
@@ -52,10 +58,6 @@ const App = () => (
     <Photo uri="/some-photo.jpg" />
   </Card>
 )
-
-// App registration and rendering
-AppRegistry.registerComponent('MyApp', () => App)
-AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-root') })
 
 // Styles
 const styles = StyleSheet.create({
@@ -73,6 +75,10 @@ const styles = StyleSheet.create({
     width: 40
   }
 })
+
+// App registration and rendering
+AppRegistry.registerComponent('MyApp', () => App)
+AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-root') })
 ```
 
 ## Documentation
@@ -96,8 +102,8 @@ Exported modules:
   * [`ScrollView`](docs/components/ScrollView.md)
   * [`Text`](docs/components/Text.md)
   * [`TextInput`](docs/components/TextInput.md)
-  * [`TouchableHighlight`](docs/components/TouchableHighlight.md)
-  * [`TouchableOpacity`](docs/components/TouchableOpacity.md)
+  * [`TouchableHighlight`](http://facebook.github.io/react-native/releases/0.22/docs/touchablehighlight.html) (mirrors React Native)
+  * [`TouchableOpacity`](http://facebook.github.io/react-native/releases/0.22/docs/touchableopacity.html) (mirrors React Native)
   * [`TouchableWithoutFeedback`](docs/components/TouchableWithoutFeedback.md)
   * [`View`](docs/components/View.md)
 * APIs

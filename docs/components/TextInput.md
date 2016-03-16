@@ -147,6 +147,20 @@ Read about how [React form
 components](https://facebook.github.io/react/docs/forms.html) work. To prevent
 user edits to the value set `editable={false}`.
 
+## Instance methods
+
+**blur()**
+
+Blur the underlying DOM input.
+
+**clear()**
+
+Clear the text from the underlying DOM input.
+
+**focus()**
+
+Focus the underlying DOM input.
+
 ## Examples
 
 ```js

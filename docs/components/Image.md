@@ -58,19 +58,21 @@ could be an http address or a base64 encoded image.
 **style**: style
 
 + ...[View#style](View.md)
-
-Defaults:
-
-```js
-{
-  alignSelf: 'flex-start',
-  backgroundColor: 'transparent'
-}
-```
++ `resizeMode`
 
 **testID**: string
 
 Used to locate a view in end-to-end tests.
+
+## Properties
+
+static **resizeMode**: Object
+
+Example usage:
+
+```
+<Image resizeMode={Image.resizeMode.contain} />
+```
 
 ## Examples
 
