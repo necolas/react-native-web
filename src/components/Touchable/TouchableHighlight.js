@@ -32,7 +32,7 @@ type Event = Object;
 
 var DEFAULT_PROPS = {
   activeOpacity: 0.8,
-  underlayColor: 'black',
+  underlayColor: 'black'
 };
 
 var PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
@@ -234,7 +234,7 @@ var TouchableHighlight = React.createClass({
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityRole={this.props.accessibilityRole || this.props.accessibilityTraits || 'button'}
         ref={UNDERLAY_REF}
-        style={[styles.root, this.state.underlayStyle, this.props.style]}
+        style={[styles.root, this.props.style]}
         onLayout={this.props.onLayout}
         hitSlop={this.props.hitSlop}
         onKeyDown={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressIn) }}
