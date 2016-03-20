@@ -2,6 +2,7 @@
 
 import EventConstants from 'react/lib/EventConstants'
 import EventPluginRegistry from 'react/lib/EventPluginRegistry'
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
 import ResponderEventPlugin from 'react/lib/ResponderEventPlugin'
 import ResponderTouchHistoryStore from 'react/lib/ResponderTouchHistoryStore'
 import normalizeNativeEvent from './normalizeNativeEvent'
@@ -18,7 +19,10 @@ const {
   topTouchStart
 } = EventConstants.topLevelTypes
 
-const supportsTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch
+const supportsTouch = ExecutionEnvironment.canUseDOM && (
+  'ontouchstart' in window ||
+  window.DocumentTouch && document instanceof window.DocumentTouch
+)
 
 const endDependencies = supportsTouch ? [ topTouchCancel, topTouchEnd ] : [ topMouseUp ]
 const moveDependencies = supportsTouch ? [ topTouchMove ] : [ topMouseMove ]

@@ -33,7 +33,7 @@ React.renderToStaticMarkup(<div />)
 
 Rendering using the `AppRegistry`:
 
-```
+```js
 // App.js
 
 import React, { AppRegistry } from 'react-native'
@@ -64,12 +64,12 @@ rendering.
 
 import React from 'react-native'
 
-const AppShell = (html, style) => (
+const AppShell = (html, styleElement) => (
   <html>
     <head>
       <meta charSet="utf-8" />
       <meta content="initial-scale=1,width=device-width" name="viewport" />
-      {style}
+      {styleElement}
     </head>
     <body>
       <div id="react-app" dangerouslySetInnerHTML={{ __html: html }} />
@@ -90,8 +90,8 @@ import AppShell from './AppShell'
 AppRegistry.registerComponent('App', () => App)
 
 // prerenders the app
-const { html, style } = AppRegistry.prerenderApplication('App', { initialProps })
+const { html, style, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 
 // renders the full-page markup
-const renderedApplicationHTML = React.renderToString(<AppShell html={html} style={style} />)
+const renderedApplicationHTML = React.renderToStaticMarkup(<AppShell html={html} styleElement={styleElement} />)
 ```
