@@ -40,7 +40,8 @@ class View extends Component {
   };
 
   static defaultProps = {
-    accessible: true
+    accessible: true,
+    style: {}
   };
 
   constructor(props, context) {
@@ -55,6 +56,7 @@ class View extends Component {
       ...other
     } = this.props
 
+    const flattenedStyle = StyleSheet.flatten(style)
     const pointerEventsStyle = pointerEvents && { pointerEvents }
 
     return (
@@ -73,6 +75,8 @@ class View extends Component {
         style={[
           styles.initial,
           style,
+          // 'View' needs to use 'flexShrink' in its reset when there is no 'flex' style provided
+          flattenedStyle.flex == null && styles.flexReset,
           pointerEventsStyle
         ]}
       />
@@ -104,7 +108,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexBasis: 'auto',
     flexDirection: 'column',
-    flexShrink: 0,
     margin: 0,
     padding: 0,
     position: 'relative',
@@ -113,13 +116,16 @@ const styles = StyleSheet.create({
     color: 'inherit',
     font: 'inherit',
     textAlign: 'inherit',
-    textDecoration: 'none',
+    textDecorationLine: 'none',
     // list reset
     listStyle: 'none',
     // fix flexbox bugs
     maxWidth: '100%',
     minHeight: 0,
     minWidth: 0
+  },
+  flexReset: {
+    flexShrink: 0
   }
 })
 

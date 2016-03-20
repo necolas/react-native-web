@@ -8,16 +8,19 @@ const styleShortHands = {
   margin: [ 'marginTop', 'marginRight', 'marginBottom', 'marginLeft' ],
   marginHorizontal: [ 'marginRight', 'marginLeft' ],
   marginVertical: [ 'marginTop', 'marginBottom' ],
+  overflow: [ 'overflowX', 'overflowY' ],
   padding: [ 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft' ],
   paddingHorizontal: [ 'paddingRight', 'paddingLeft' ],
   paddingVertical: [ 'paddingTop', 'paddingBottom' ],
+  textDecorationLine: [ 'textDecoration' ],
   writingDirection: [ 'direction' ]
 }
 
 /**
- * Alpha-sort properties, apart from shorthands which appear before the
- * properties they expand into. This ensures that more specific styles override
- * the shorthands, whatever the order in which they were originally declared.
+ * Alpha-sort properties, apart from shorthands – they must appear before the
+ * longhand properties that they expand into. This lets more specific styles
+ * override less specific styles, whatever the order in which they were
+ * originally declared.
  */
 const sortProps = (propsArray) => propsArray.sort((a, b) => {
   const expandedA = styleShortHands[a]
@@ -41,14 +44,17 @@ const expandStyle = (style) => {
     const expandedProps = styleShortHands[key]
     const value = normalizeValue(key, style[key])
 
-    if (expandedProps) {
-      expandedProps.forEach((prop, i) => {
-        resolvedStyle[expandedProps[i]] = value
-      })
-    } else if (key === 'flex') {
+    // React Native treats `flex:1` like `flex:1 1 auto`
+    if (key === 'flex') {
       resolvedStyle.flexGrow = value
       resolvedStyle.flexShrink = 1
       resolvedStyle.flexBasis = 'auto'
+    } else if (key === 'textAlignVertical') {
+      resolvedStyle.verticalAlign = (value === 'center' ? 'middle' : value)
+    } else if (expandedProps) {
+      expandedProps.forEach((prop, i) => {
+        resolvedStyle[expandedProps[i]] = value
+      })
     } else {
       resolvedStyle[key] = value
     }

@@ -13,7 +13,7 @@ import ReactDOMServer from 'react-dom/server'
 import ReactNativeApp from './ReactNativeApp'
 import StyleSheet from '../../apis/StyleSheet'
 
-const renderStyleSheetToString = () => StyleSheet._renderToString()
+const renderStyleSheetToString = () => StyleSheet.renderToString()
 const styleAsElement = (style) => <style dangerouslySetInnerHTML={{ __html: style }} id={StyleSheet.elementId} />
 const styleAsTagString = (style) => `<style id="${StyleSheet.elementId}">${style}</style>`
 

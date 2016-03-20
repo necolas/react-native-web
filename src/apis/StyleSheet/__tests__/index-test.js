@@ -4,7 +4,7 @@ import { resetCSS, predefinedCSS } from '../predefs'
 import assert from 'assert'
 import StyleSheet from '..'
 
-const styles = { root: { borderWidth: 1 } }
+const styles = { root: { opacity: 1 } }
 
 suite('apis/StyleSheet', () => {
   setup(() => {
@@ -12,55 +12,40 @@ suite('apis/StyleSheet', () => {
   })
 
   suite('create', () => {
-    const div = document.createElement('div')
-
-    setup(() => {
-      document.body.appendChild(div)
-      StyleSheet.create(styles)
-      div.innerHTML = `<style id='${StyleSheet.elementId}'>${StyleSheet._renderToString()}</style>`
-    })
-
-    teardown(() => {
-      document.body.removeChild(div)
-    })
-
     test('returns styles object', () => {
       assert.equal(StyleSheet.create(styles), styles)
     })
 
     test('updates already-rendered style sheet', () => {
-      StyleSheet.create({ root: { color: 'red' } })
+      // setup
+      const div = document.createElement('div')
+      document.body.appendChild(div)
+      StyleSheet.create(styles)
+      div.innerHTML = `<style id='${StyleSheet.elementId}'>${StyleSheet.renderToString()}</style>`
 
+      // test
+      StyleSheet.create({ root: { color: 'red' } })
       assert.equal(
         document.getElementById(StyleSheet.elementId).textContent,
         `${resetCSS}\n${predefinedCSS}\n` +
-        `/* 5 unique declarations */\n` +
-        `.borderBottomWidth\\:1px{border-bottom-width:1px;}\n` +
-        `.borderLeftWidth\\:1px{border-left-width:1px;}\n` +
-        `.borderRightWidth\\:1px{border-right-width:1px;}\n` +
-        `.borderTopWidth\\:1px{border-top-width:1px;}\n` +
-        `.color\\:red{color:red;}`
+        `/* 2 unique declarations */\n` +
+        `.__style1{opacity:1;}\n` +
+        `.__style2{color:red;}`
       )
+
+      // teardown
+      document.body.removeChild(div)
     })
   })
 
-  test('resolve', () => {
-    const props = { style: styles.root }
-    const expected = { className: 'borderTopWidth:1px borderRightWidth:1px borderBottomWidth:1px borderLeftWidth:1px', style: {} }
+  test('renderToString', () => {
     StyleSheet.create(styles)
-    assert.deepEqual(StyleSheet.resolve(props), expected)
-  })
 
-  test('_renderToString', () => {
-    StyleSheet.create(styles)
     assert.equal(
-      StyleSheet._renderToString(),
+      StyleSheet.renderToString(),
       `${resetCSS}\n${predefinedCSS}\n` +
-      `/* 4 unique declarations */\n` +
-      `.borderBottomWidth\\:1px{border-bottom-width:1px;}\n` +
-      `.borderLeftWidth\\:1px{border-left-width:1px;}\n` +
-      `.borderRightWidth\\:1px{border-right-width:1px;}\n` +
-      `.borderTopWidth\\:1px{border-top-width:1px;}`
+      `/* 1 unique declarations */\n` +
+      `.__style1{opacity:1;}`
     )
   })
 })

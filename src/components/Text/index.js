@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     font: 'inherit',
     margin: 0,
     padding: 0,
-    textDecoration: 'none',
+    textDecorationLine: 'none',
     wordWrap: 'break-word'
   },
   singleLineStyle: {

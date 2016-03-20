@@ -15,14 +15,17 @@ module.exports = {
   letterSpacing: numberOrString,
   lineHeight: numberOrString,
   textAlign: oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ]),
-  /**
-   * @platform web
-   */
-  textDecoration: string,
+  textAlignVertical: oneOf([ 'auto', 'bottom', 'center', 'top' ]),
+  textDecorationLine: string,
+  /* @platform web */
   textOverflow: string,
+  /* @platform web */
   textShadow: string,
+  /* @platform web */
   textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
+  /* @platform web */
   whiteSpace: string,
+  /* @platform web */
   wordWrap: string,
-  writingDirection: string
+  writingDirection: oneOf([ 'auto', 'ltr', 'rtl' ])
 }
