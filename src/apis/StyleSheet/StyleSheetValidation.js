@@ -63,8 +63,7 @@ StyleSheetValidation.addValidStylePropTypes({
   direction: PropTypes.string, /* @private */
   float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
   font: PropTypes.string, /* @private */
-  listStyle: PropTypes.string,
-  verticalAlign: PropTypes.string
+  listStyle: PropTypes.string
 })
 
 module.exports = StyleSheetValidation

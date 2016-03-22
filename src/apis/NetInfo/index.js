@@ -6,9 +6,15 @@
  * @flow
  */
 
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
 import invariant from 'fbjs/lib/invariant'
 
-const connection = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection
+const connection = ExecutionEnvironment.canUseDOM && (
+  window.navigator.connection ||
+  window.navigator.mozConnection ||
+  window.navigator.webkitConnection
+)
+
 const eventTypes = [ 'change' ]
 
 /**

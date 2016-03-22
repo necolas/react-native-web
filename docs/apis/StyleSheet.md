@@ -11,11 +11,17 @@ outside of the render loop and are applied as inline styles. Read more about to
 
 Each key of the object passed to `create` must define a style object.
 
+**flatten**: function
+
+Flattens an array of styles into a single style object.
+
+**renderToString**: function
+
+Returns a string of CSS used to style the application.
+
 ## Properties
 
 **hairlineWidth**: number
-
-**flatten**: function
 
 ## Example
 

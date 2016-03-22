@@ -6,7 +6,6 @@
  * @flow
  */
 import invariant from 'fbjs/lib/invariant'
-import expandStyle from './expandStyle'
 
 module.exports = function flattenStyle(style): ?Object {
   if (!style) {
@@ -16,9 +15,7 @@ module.exports = function flattenStyle(style): ?Object {
   invariant(style !== true, 'style may be false but not true')
 
   if (!Array.isArray(style)) {
-    // we must expand styles during the flattening because expanded styles
-    // override shorthands
-    return expandStyle(style)
+    return style
   }
 
   const result = {}

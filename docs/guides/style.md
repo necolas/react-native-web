@@ -174,16 +174,16 @@ const styles = StyleSheet.create({
 CSS output:
 
 ```css
-._s1 { color: gray; }
-._s2 { font-size: 2rem; }
-._s3 { font-size: 1.25rem; }
+.__style1 { color: gray; }
+.__style2 { font-size: 2rem; }
+.__style3 { font-size: 1.25rem; }
 ```
 
 Rendered HTML:
 
 ```html
-<span className="_s1 _s2">Heading</span>
-<span className="_s1 _s3">Text</span>
+<span className="__style1 __style2">Heading</span>
+<span className="__style1 __style3">Text</span>
 ```
 
 ### Reset
@@ -200,6 +200,7 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color:rgba(0,0,0,0)
 }
 
 body {
@@ -214,12 +215,6 @@ input::-moz-focus-inner {
 
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-ol,
-ul,
-li {
-  list-style:none
+  display: none;
 }
 ```

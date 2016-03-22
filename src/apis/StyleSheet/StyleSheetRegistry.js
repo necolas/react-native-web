@@ -7,42 +7,94 @@
  */
 
 import prefixAll from 'inline-style-prefix-all'
+import hyphenate from './hyphenate'
+import expandStyle from './expandStyle'
 import flattenStyle from './flattenStyle'
 import processTransform from './processTransform'
+import { predefinedClassNames } from './predefs'
+
+let stylesCache = {}
+let uniqueID = 0
+
+const getCacheKey = (prop, value) => `${prop}:${value}`
+
+const normalizeStyle = (style) => {
+  return processTransform(expandStyle(flattenStyle(style)))
+}
+
+const createCssDeclarations = (style) => {
+  return Object.keys(style).map((prop) => {
+    const property = hyphenate(prop)
+    const value = style[prop]
+    return `${property}:${value};`
+  }).sort().join('')
+}
 
 class StyleSheetRegistry {
-  static registerStyle(style: Object, store): number {
+  /* for testing */
+  static _reset() {
+    stylesCache = {}
+    uniqueID = 0
+  }
+
+  static renderToString() {
+    let str = `/* ${uniqueID} unique declarations */`
+
+    return Object.keys(stylesCache).reduce((str, key) => {
+      const id = stylesCache[key].id
+      const style = stylesCache[key].style
+      const declarations = createCssDeclarations(style)
+      const rule = `\n.${id}{${declarations}}`
+      str += rule
+      return str
+    }, str)
+  }
+
+  static registerStyle(style: Object): number {
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(style)
     }
 
-    const normalizedStyle = processTransform(flattenStyle(style))
+    const normalizedStyle = normalizeStyle(style)
+
     Object.keys(normalizedStyle).forEach((prop) => {
-      // add each declaration to the store
-      store.set(prop, normalizedStyle[prop])
+      const value = normalizedStyle[prop]
+      const cacheKey = getCacheKey(prop, value)
+      const exists = stylesCache[cacheKey] && stylesCache[cacheKey].id
+      if (!exists) {
+        const id = ++uniqueID
+        // add new declaration to the store
+        stylesCache[cacheKey] = {
+          id: `__style${id}`,
+          style: prefixAll({ [prop]: value })
+        }
+      }
     })
+
+    return style
   }
 
-  static getStyleAsNativeProps(style, store) {
-    let _className
-    let _style = {}
+  static getStyleAsNativeProps(styleSheetObject, canUseCSS = false) {
     const classList = []
-    const normalizedStyle = processTransform(flattenStyle(style))
+    const normalizedStyle = normalizeStyle(styleSheetObject)
+    let style = {}
 
     for (const prop in normalizedStyle) {
-      let styleClass = store.get(prop, normalizedStyle[prop])
+      const value = normalizedStyle[prop]
+      const cacheKey = getCacheKey(prop, value)
+      let selector = stylesCache[cacheKey] && stylesCache[cacheKey].id || predefinedClassNames[cacheKey]
 
-      if (styleClass) {
-        classList.push(styleClass)
+      if (selector && canUseCSS) {
+        classList.push(selector)
       } else {
-        _style[prop] = normalizedStyle[prop]
+        style[prop] = normalizedStyle[prop]
       }
     }
 
-    _className = classList.join(' ')
-    _style = prefixAll(_style)
-
-    return { className: _className, style: _style }
+    return {
+      className: classList.join(' '),
+      style: prefixAll(style)
+    }
   }
 }
 

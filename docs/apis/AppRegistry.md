@@ -16,8 +16,11 @@ into `runApplication`. These should always be used as a pair.
 (web) static **prerenderApplication**(appKey:string, appParameters: object)
 
 Renders the given application to an HTML string. Use this for server-side
-rendering. Return object is of type `{ html: string; style: string; }`, where
-`html` the prerendered HTML, and `style` is the prerendered style sheet.
+rendering. Return object is of type `{ html: string; style: string;
+styleElement: ReactComponent }`. `html` is the prerendered HTML, `style` is the
+prerendered style sheet, and `styleElement` is a React Component. It's
+recommended that you use `styleElement` to render the style sheet in an app
+shell.
 
 static **registerConfig**(config: Array<AppConfig>)
 

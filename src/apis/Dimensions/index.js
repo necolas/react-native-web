@@ -6,20 +6,23 @@
  * @flow
  */
 
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
 import invariant from 'fbjs/lib/invariant'
+
+const win = ExecutionEnvironment.canUseDOM ? window : { screen: {} }
 
 const dimensions = {
   screen: {
     fontScale: 1,
-    get height() { return window.screen.height },
-    scale: window.devicePixelRatio || 1,
-    get width() { return window.screen.width }
+    get height() { return win.screen.height },
+    scale: win.devicePixelRatio || 1,
+    get width() { return win.screen.width }
   },
   window: {
     fontScale: 1,
-    get height() { return window.innerHeight },
-    scale: window.devicePixelRatio || 1,
-    get width() { return window.innerWidth }
+    get height() { return win.innerHeight },
+    scale: win.devicePixelRatio || 1,
+    get width() { return win.innerWidth }
   }
 }
 

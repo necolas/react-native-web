@@ -60,7 +60,8 @@ This function is called on press.
 + `letterSpacing`
 + `lineHeight`
 + `textAlign`
-+ `textDecoration`
++ `textAlignVertical`
++ `textDecorationLine`
 + `textShadow`
 + `textTransform`
 + `whiteSpace`
