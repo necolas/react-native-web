@@ -18,7 +18,6 @@ const roleComponents = {
   region: 'section'
 }
 
-@NativeMethodsDecorator
 class CoreComponent extends Component {
   static propTypes = {
     accessibilityLabel: PropTypes.string,
@@ -65,5 +64,4 @@ class CoreComponent extends Component {
   }
 }
 
-module.exports = CoreComponent
 module.exports = NativeMethodsDecorator(CoreComponent)
