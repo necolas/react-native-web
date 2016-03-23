@@ -19,7 +19,6 @@ const keyframeEffects = [
   { transform: 'scale(0.95)', opacity: 0.5 }
 ]
 
-@NativeMethodsDecorator
 class ActivityIndicator extends Component {
   static propTypes = {
     animating: PropTypes.bool,
@@ -108,4 +107,4 @@ const indicatorStyles = StyleSheet.create({
   }
 })
 
-module.exports = ActivityIndicator
+module.exports = NativeMethodsDecorator(ActivityIndicator)

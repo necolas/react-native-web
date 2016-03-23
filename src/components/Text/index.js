@@ -5,7 +5,6 @@ import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
-@NativeMethodsDecorator
 class Text extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
@@ -67,4 +66,4 @@ const styles = StyleSheet.create({
   }
 })
 
-module.exports = Text
+module.exports = NativeMethodsDecorator(Text)
