@@ -2,7 +2,6 @@ import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import React, { Component, PropTypes } from 'react'
 import ScrollView from '../ScrollView'
 
-@NativeMethodsDecorator
 class ListView extends Component {
   static propTypes = {
     children: PropTypes.any,
@@ -20,4 +19,4 @@ class ListView extends Component {
   }
 }
 
-module.exports = ListView
+module.exports = NativeMethodsDecorator(ListView)

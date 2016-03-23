@@ -8,7 +8,6 @@ import TextareaAutosize from 'react-textarea-autosize'
 import TextInputState from './TextInputState'
 import View from '../View'
 
-@NativeMethodsDecorator
 class TextInput extends Component {
   static propTypes = {
     ...View.propTypes,
@@ -242,4 +241,4 @@ const styles = StyleSheet.create({
   }
 })
 
-module.exports = TextInput
+module.exports = NativeMethodsDecorator(TextInput)

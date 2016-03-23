@@ -66,3 +66,4 @@ class CoreComponent extends Component {
 }
 
 module.exports = CoreComponent
+module.exports = NativeMethodsDecorator(CoreComponent)

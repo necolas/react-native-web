@@ -6,7 +6,6 @@ import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
-@NativeMethodsDecorator
 class View extends Component {
   static propTypes = {
     accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
@@ -129,4 +128,4 @@ const styles = StyleSheet.create({
   }
 })
 
-module.exports = View
+module.exports = NativeMethodsDecorator(View)
