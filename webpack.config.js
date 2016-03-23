@@ -6,14 +6,9 @@ module.exports = {
   entry: {
     main: DIST_DIRECTORY
   },
-  externals: [{
-    'react': true,
-    'react-dom': true,
-    'react-dom/server': true
-  }],
   output: {
-    filename: 'react-native-web.js',
-    library: 'ReactNativeWeb',
+    filename: 'ReactNative.js',
+    library: 'React',
     libraryTarget: 'umd',
     path: DIST_DIRECTORY
   },
