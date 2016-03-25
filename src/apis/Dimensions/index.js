@@ -37,7 +37,7 @@ class Dimensions {
   }
 }
 
-Dimensions.set();
+Dimensions.set()
 ExecutionEnvironment.canUseDOM && window.addEventListener('resize', debounce(Dimensions.set, 50))
 
 module.exports = Dimensions
