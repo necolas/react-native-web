@@ -58,9 +58,10 @@ const renderToString = () => {
  */
 const resolve = ({ style = {}, className }) => {
   const styleProps = StyleSheetRegistry.getStyleAsNativeProps(style, isRendered)
+
   return {
     ...styleProps,
-    className: `${styleProps.className}${styleProps.className && className ? ' ' : ''}${className}`
+    className: `${styleProps.className}${styleProps.className && className ? ' ' : ''}${className || ''}`
   }
 }
 
