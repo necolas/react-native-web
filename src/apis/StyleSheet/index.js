@@ -56,8 +56,12 @@ const renderToString = () => {
  * Accepts React props and converts inline styles to single purpose classes
  * where possible.
  */
-const resolve = ({ style = {} }) => {
-  return StyleSheetRegistry.getStyleAsNativeProps(style, isRendered)
+const resolve = ({ style = {}, className }) => {
+  const styleProps = StyleSheetRegistry.getStyleAsNativeProps(style, isRendered)
+  return {
+    ...styleProps,
+    className: `${styleProps.className}${styleProps.className && className ? ' ' : ''}${className}`
+  }
 }
 
 module.exports = {
