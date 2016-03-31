@@ -20,7 +20,7 @@ vendor prefixes), or require build tool configuration. This project allows
 components built upon React Native to be run on the Web, and it manages all
 component styling out-of-the-box.
 
-For example, the [`View`](docs/apis/View.md) component makes it easy to build
+For example, the [`View`](docs/components/View.md) component makes it easy to build
 cross-browser layouts with flexbox, such as stacked and nested boxes with
 margin and padding. And the [`StyleSheet`](docs/guides/style.md) API converts
 styles defined in JavaScript into "Atomic CSS".
