@@ -56,8 +56,8 @@ const NetInfo = {
   isConnected: {
     addEventListener(type: string, handler: Function): { remove: () => void } {
       invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-      window.addEventListener('online', handler.bind(true), false)
-      window.addEventListener('offline', handler.bind(false), false)
+      window.addEventListener('online', handler.bind(null, true), false)
+      window.addEventListener('offline', handler.bind(null, false), false)
 
       return {
         remove: () => NetInfo.isConnected.removeEventListener(type, handler)
@@ -66,8 +66,8 @@ const NetInfo = {
 
     removeEventListener(type: string, handler: Function): void {
       invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-      window.removeEventListener('online', handler.bind(true), false)
-      window.removeEventListener('offline', handler.bind(false), false)
+      window.removeEventListener('online', handler.bind(null, true), false)
+      window.removeEventListener('offline', handler.bind(null, false), false)
     },
 
     fetch(): Promise {
