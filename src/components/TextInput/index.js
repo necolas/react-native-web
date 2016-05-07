@@ -198,13 +198,17 @@ class TextInput extends Component {
       >
         <View style={styles.wrapper}>
           <CoreComponent {...props} ref='input' />
-          {placeholder && this.state.showPlaceholder && <Text
+          {placeholder && this.state.showPlaceholder && <View
             pointerEvents='none'
-            style={[
-              styles.placeholder,
-              placeholderTextColor && { color: placeholderTextColor }
-            ]}
-          >{placeholder}</Text>}
+            style={styles.placeholder}
+          >
+            <Text
+              style={[
+                styles.placeholderText,
+                placeholderTextColor && { color: placeholderTextColor }
+              ]}
+            >{placeholder}</Text>
+          </View>}
         </View>
       </View>
     )
@@ -232,12 +236,15 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     bottom: 0,
-    color: 'darkgray',
+    justifyContent: 'center',
     left: 0,
-    overflow: 'hidden',
     position: 'absolute',
     right: 0,
-    top: 0,
+    top: 0
+  },
+  placeholderText: {
+    color: 'darkgray',
+    overflow: 'hidden',
     whiteSpace: 'pre'
   }
 })
