@@ -186,17 +186,17 @@ suite('components/TextInput', () => {
   test('prop "placeholder"', () => {
     const placeholder = 'placeholder'
     const result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} />))
-    assert.equal(result.props.children, placeholder)
+    assert.equal(result.props.children.props.children, placeholder)
   })
 
   test('prop "placeholderTextColor"', () => {
     const placeholder = 'placeholder'
 
     let result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} />))
-    assert.equal(StyleSheet.flatten(result.props.style).color, 'darkgray')
+    assert.equal(StyleSheet.flatten(result.props.children.props.style).color, 'darkgray')
 
     result = findShallowPlaceholder(utils.shallowRender(<TextInput placeholder={placeholder} placeholderTextColor='red' />))
-    assert.equal(StyleSheet.flatten(result.props.style).color, 'red')
+    assert.equal(StyleSheet.flatten(result.props.children.props.style).color, 'red')
   })
 
   test('prop "secureTextEntry"', () => {
