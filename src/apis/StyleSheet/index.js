@@ -57,7 +57,7 @@ const renderToString = () => {
  * where possible.
  */
 const resolve = ({ className, style = {} }) => {
-  const props = StyleSheetRegistry.getStyleAsNativeProps(style, isRendered);
+  const props = StyleSheetRegistry.getStyleAsNativeProps(style, isRendered)
   return {
     ...props,
     className: className ? `${props.className} ${className}`.trim() : props.className
