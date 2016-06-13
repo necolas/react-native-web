@@ -48,4 +48,14 @@ suite('apis/StyleSheet', () => {
       `.__style1{opacity:1;}`
     )
   })
+
+  test('resolve', () => {
+    assert.deepEqual(
+      StyleSheet.resolve({ className: 'test', style: styles.root }),
+      {
+        className: 'test',
+        style: { opacity: 1 }
+      }
+    )
+  })
 })
