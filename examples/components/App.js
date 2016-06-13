@@ -1,11 +1,9 @@
 import GridView from './GridView'
 import Heading from './Heading'
-import MediaQueryWidget from './MediaQueryWidget'
 import React, { Image, StyleSheet, ScrollView, Text, TextInput, TouchableHighlight, View } from 'react-native'
 
 export default class App extends React.Component {
   static propTypes = {
-    mediaQuery: React.PropTypes.object,
     style: View.propTypes.style
   }
 
@@ -17,11 +15,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { mediaQuery } = this.props
     const finalRootStyles = [
-      rootStyles.common,
-      mediaQuery.small.matches && rootStyles.mqSmall,
-      mediaQuery.large.matches && rootStyles.mqLarge
+      rootStyles.common
     ]
 
     return (
@@ -34,8 +29,6 @@ export default class App extends React.Component {
         simple building blocks – touch handling, flexbox layout,
         scroll views – from which more complex components and apps can be
         constructed.</Text>
-
-        <MediaQueryWidget mediaQuery={mediaQuery} />
 
         <Heading size='large'>Image</Heading>
         <Image
