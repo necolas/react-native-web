@@ -93,21 +93,22 @@ var TouchableHighlight = React.createClass({
   getDefaultProps: () => DEFAULT_PROPS,
 
   // Performance optimization to avoid constantly re-generating these objects.
-  computeSyntheticState: function(props) {
+  computeSyntheticState: (props) => {
+    const { activeOpacity, style, underlayColor } = props;
     return {
       activeProps: {
         style: {
-          opacity: props.activeOpacity,
+          opacity: activeOpacity,
         }
       },
       activeUnderlayProps: {
         style: {
-          backgroundColor: props.underlayColor,
+          backgroundColor: underlayColor,
         }
       },
       underlayProps: {
         style: {
-          backgroundColor: props.style.backgroundColor || null
+          backgroundColor: style && style.backgroundColor || null
         }
       }
     };
