@@ -40,11 +40,7 @@ module.exports = {
 Minor platform differences can use the `Platform` module.
 
 ```js
-import { AppRegistry, Platform, StyleSheet } from 'react-native'
-
-const styles = StyleSheet.create({
-  height: (Platform.OS === 'web') ? 200 : 100
-})
+import { AppRegistry, Platform } from 'react-native'
 
 AppRegistry.registerComponent('MyApp', () => MyApp)
 

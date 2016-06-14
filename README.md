@@ -46,7 +46,8 @@ Demos:
 Sample:
 
 ```js
-import React, { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
 
 // Components
 const Card = ({ children }) => <View style={styles.card}>{children}</View>

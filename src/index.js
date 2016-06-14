@@ -1,7 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
-
 import './apis/PanResponder/injectResponderEventPlugin'
 
 // apis
@@ -80,12 +76,7 @@ const ReactNative = {
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
-  PointPropType,
-
-  // React
-  ...React,
-  ...ReactDOM,
-  ...ReactDOMServer
+  PointPropType
 }
 
 module.exports = ReactNative

@@ -21,14 +21,15 @@ module.exports = {
 Rendering without using the `AppRegistry`:
 
 ```js
-import React from 'react-native'
+import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
 
 // DOM render
-React.render(<div />, document.getElementById('react-app'))
+ReactDOM.render(<div />, document.getElementById('react-app'))
 
 // Server render
-React.renderToString(<div />)
-React.renderToStaticMarkup(<div />)
+ReactDOMServer.renderToString(<div />)
+ReactDOMServer.renderToStaticMarkup(<div />)
 ```
 
 Rendering using the `AppRegistry`:
@@ -36,7 +37,7 @@ Rendering using the `AppRegistry`:
 ```js
 // App.js
 
-import React, { AppRegistry } from 'react-native'
+import React from 'react'
 
 // component that renders the app
 const AppContainer = (props) => { /* ... */ }
@@ -46,8 +47,8 @@ export default AppContainer
 ```js
 // client.js
 
-import React, { AppRegistry } from 'react-native'
 import App from './App'
+import { AppRegistry } from 'react-native'
 
 // registers the app
 AppRegistry.registerComponent('App', () => App)
@@ -62,7 +63,7 @@ rendering.
 ```js
 // AppShell.js
 
-import React from 'react-native'
+import React from 'react'
 
 const AppShell = (html, styleElement) => (
   <html>
@@ -82,9 +83,9 @@ export default AppShell
 ```js
 // server.js
 
-import React, { AppRegistry } from 'react-native'
 import App from './App'
 import AppShell from './AppShell'
+import { AppRegistry } from 'react-native'
 
 // registers the app
 AppRegistry.registerComponent('App', () => App)

@@ -33,7 +33,8 @@ React component to render.  This same tag can later be used in `closeModal`.
 ## Examples
 
 ```js
-import React, { Portal, Text, Touchable } from 'react-native'
+import React, { Component } from 'react'
+import { Portal, Text, Touchable } from 'react-native'
 
 export default class PortalExample extends Component {
   componentWillMount() {

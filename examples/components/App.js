@@ -1,6 +1,7 @@
 import GridView from './GridView'
 import Heading from './Heading'
-import React, { Image, StyleSheet, ScrollView, Text, TextInput, TouchableHighlight, View } from 'react-native'
+import React from 'react'
+import { Image, StyleSheet, ScrollView, Text, TextInput, TouchableHighlight, View } from 'react-native'
 
 export default class App extends React.Component {
   static propTypes = {

@@ -15,7 +15,8 @@ Content to display over the image.
 ## Examples
 
 ```js
-import React, { Component, ListView, PropTypes } from 'react-native'
+import React, { Component, PropTypes } from 'react'
+import { ListView } from 'react-native'
 
 export default class ListViewExample extends Component {
   static propTypes = {}

@@ -78,7 +78,8 @@ Example usage:
 
 ```js
 import placeholderAvatar from './placeholderAvatar.png'
-import React, { Component, Image, PropTypes, StyleSheet } from 'react-native'
+import React, { Component } from 'react'
+import { Image, PropTypes, StyleSheet } from 'react-native'
 
 export default class ImageExample extends Component {
   constructor(props, context) {

@@ -164,7 +164,8 @@ Focus the underlying DOM input.
 ## Examples
 
 ```js
-import React, { Component, StyleSheet, TextInput } from 'react-native'
+import React, { Component } from 'react'
+import { StyleSheet, TextInput } from 'react-native'
 
 export default class TextInputExample extends Component {
   constructor(props, context) {

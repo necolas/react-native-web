@@ -83,7 +83,8 @@ Scrolls to a given `x`, `y` offset (animation is not currently supported).
 ## Examples
 
 ```js
-import React, { Component, ScrollView, StyleSheet } from 'react-native'
+import React, { Component } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
 import Item from './Item'
 
 export default class ScrollViewExample extends Component {

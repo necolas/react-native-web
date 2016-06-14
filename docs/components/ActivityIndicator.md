@@ -23,7 +23,8 @@ Size of the indicator. Small has a height of `20`, large has a height of `36`.
 ## Examples
 
 ```js
-import React, { ActivityIndicator, Component, StyleSheet, View } from 'react-native'
+import React, { Component } from 'react'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 class ToggleAnimatingActivityIndicator extends Component {
   constructor(props) {
