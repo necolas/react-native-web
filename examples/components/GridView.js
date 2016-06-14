@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, StyleSheet, View } from 'react-native'
+import React, { Component, PropTypes } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 export default class GridView extends Component {
   static propTypes = {
@@ -12,8 +13,8 @@ export default class GridView extends Component {
   }
 
   static defaultProps = {
-    alley: '0',
-    gutter: '0'
+    alley: '0px',
+    gutter: '0px'
   }
 
   render() {

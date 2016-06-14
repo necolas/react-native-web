@@ -8,8 +8,8 @@ export default class App extends React.Component {
     style: View.propTypes.style
   }
 
-  constructor(...args) {
-    super(...args)
+  constructor(props) {
+    super(props)
     this.state = {
       scrollEnabled: true
     }

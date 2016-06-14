@@ -1,4 +1,5 @@
-import React, { StyleSheet, Text } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text } from 'react-native'
 
 const Heading = ({ children, size = 'normal' }) => (
   <Text
