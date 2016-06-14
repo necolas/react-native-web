@@ -19,14 +19,14 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-mocha',
+      'karma-mocha-reporter',
       'karma-sourcemap-loader',
-      'karma-spec-reporter',
       'karma-webpack'
     ],
     preprocessors: {
       [testEntry]: [ 'webpack', 'sourcemap' ]
     },
-    reporters: process.env.TRAVIS ? [ 'dots' ] : [ 'spec' ],
+    reporters: process.env.TRAVIS ? [ 'dots' ] : [ 'mocha' ],
     singleRun: true,
     webpack: {
       devtool: 'inline-source-map',

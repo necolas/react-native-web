@@ -33,7 +33,7 @@ class AppRegistry {
     invariant(
       runnables[appKey] && runnables[appKey].prerender,
       `Application ${appKey} has not been registered. ` +
-      `This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.`
+      'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     )
 
     return runnables[appKey].prerender(appParameters)
@@ -78,7 +78,7 @@ class AppRegistry {
     invariant(
       runnables[appKey] && runnables[appKey].run,
       `Application "${appKey}" has not been registered. ` +
-      `This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.`
+      'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     )
 
     runnables[appKey].run(appParameters)

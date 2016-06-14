@@ -61,7 +61,7 @@ class ActivityIndicator extends Component {
     return (
       <View {...other} style={[ styles.container, style ]}>
         <View
-          ref={(c) => { this._indicatorRef = c }}
+          ref={this._createIndicatorRef}
           style={[
             indicatorStyles[size],
             hidesWhenStopped && !animating && styles.hidesWhenStopped,
@@ -70,6 +70,10 @@ class ActivityIndicator extends Component {
         />
       </View>
     )
+  }
+
+  _createIndicatorRef = (component) => {
+    this._indicatorRef = component
   }
 
   _manageAnimation() {

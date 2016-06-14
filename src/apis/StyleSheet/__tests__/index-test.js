@@ -30,7 +30,7 @@ suite('apis/StyleSheet', () => {
         `${resetCSS}\n${predefinedCSS}\n` +
         `/* 2 unique declarations */\n` +
         `.__style1{opacity:1;}\n` +
-        `.__style2{color:red;}`
+        '.__style2{color:red;}'
       )
 
       // teardown
@@ -45,7 +45,7 @@ suite('apis/StyleSheet', () => {
       StyleSheet.renderToString(),
       `${resetCSS}\n${predefinedCSS}\n` +
       `/* 1 unique declarations */\n` +
-      `.__style1{opacity:1;}`
+      '.__style1{opacity:1;}'
     )
   })
 

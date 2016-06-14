@@ -11,24 +11,23 @@ class ReactNativeApp extends Component {
     rootTag: PropTypes.any
   };
 
-  constructor(props, context) {
-    super(props, context)
-    this._handleModalVisibilityChange = this._handleModalVisibilityChange.bind(this)
-  }
-
-  _handleModalVisibilityChange(modalVisible) {
-    ReactDOM.findDOMNode(this._root).setAttribute('aria-hidden', `${modalVisible}`)
-  }
-
   render() {
     const { initialProps, rootComponent: RootComponent, rootTag } = this.props
 
     return (
       <View style={styles.appContainer}>
-        <RootComponent {...initialProps} ref={(c) => { this._root = c }} rootTag={rootTag} />
+        <RootComponent {...initialProps} ref={this._createRootRef} rootTag={rootTag} />
         <Portal onModalVisibilityChanged={this._handleModalVisibilityChange} />
       </View>
     )
+  }
+
+  _createRootRef = (component) => {
+    this._root = component
+  }
+
+  _handleModalVisibilityChange = (modalVisible) => {
+    ReactDOM.findDOMNode(this._root).setAttribute('aria-hidden', `${modalVisible}`)
   }
 }
 

@@ -22,14 +22,16 @@ class Text extends Component {
     accessible: true
   };
 
-  _onPress(e) {
+  _onPress = (e) => {
     if (this.props.onPress) this.props.onPress(e)
   }
 
   render() {
     const {
       numberOfLines,
+      /* eslint-disable no-unused-vars */
       onPress,
+      /* eslint-enable no-unused-vars */
       style,
       ...other
     } = this.props
@@ -38,7 +40,7 @@ class Text extends Component {
       <CoreComponent
         {...other}
         component='span'
-        onClick={this._onPress.bind(this)}
+        onClick={this._onPress}
         style={[
           styles.initial,
           style,
