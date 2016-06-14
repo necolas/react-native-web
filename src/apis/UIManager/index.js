@@ -34,7 +34,7 @@ const UIManager = {
     _measureLayout(node, relativeTo, onSuccess)
   },
 
-  updateView(node, props) {
+  updateView(node, props, component /* only needed to surpress React errors in __DEV__ */) {
     for (const prop in props) {
       let nativeProp
       const value = props[prop]
@@ -42,7 +42,11 @@ const UIManager = {
       switch (prop) {
         case 'style':
           // convert styles to DOM-styles
-          CSSPropertyOperations.setValueForStyles(node, processTransform(flattenStyle(value)))
+          CSSPropertyOperations.setValueForStyles(
+            node,
+            processTransform(flattenStyle(value)),
+            component._reactInternalInstance
+          )
           break
         case 'class':
         case 'className':

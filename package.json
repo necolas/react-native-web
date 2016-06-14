@@ -16,10 +16,10 @@
     "test:watch": "npm run test -- --no-single-run"
   },
   "dependencies": {
-    "fbjs": "0.6.x || 0.7.x",
+    "fbjs": "^0.8.1",
     "inline-style-prefix-all": "1.0.5",
     "lodash.debounce": "^4.0.3",
-    "react-textarea-autosize": "^3.1.0",
+    "react-textarea-autosize": "^4.0.2",
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
@@ -47,16 +47,15 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.3.4",
     "node-libs-browser": "^0.5.3",
-    "react": "^0.14.3",
-    "react-addons-test-utils": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "react-media-queries": "^2.0.1",
+    "react": "^15.1.0",
+    "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.1.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
   "peerDependencies": {
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause",

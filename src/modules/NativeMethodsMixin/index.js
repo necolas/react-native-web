@@ -103,7 +103,8 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     UIManager.updateView(
       ReactDOM.findDOMNode(this),
-      nativeProps
+      nativeProps,
+      this
     )
   }
 }

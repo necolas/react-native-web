@@ -28,7 +28,7 @@ suite('components/TextInput', () => {
     assert.equal(input.getAttribute('autocomplete'), 'on')
   })
 
-  test('prop "autoFocus"', () => {
+  test.skip('prop "autoFocus"', () => {
     // false
     let input = findInput(utils.renderToDOM(<TextInput />))
     assert.deepEqual(document.activeElement, document.body)

@@ -94,18 +94,25 @@ suite('apis/UIManager', () => {
   })
 
   suite('updateView', () => {
+    const componentStub = {
+      _debugID: 0,
+      _reactInternalInstance: {
+        _currentElement: { _owner: {} }
+      }
+    }
+
     test('add new className to existing className', () => {
       const node = createNode()
       node.className = 'existing'
       const props = { className: 'extra' }
-      UIManager.updateView(node, props)
+      UIManager.updateView(node, props, componentStub)
       assert.equal(node.getAttribute('class'), 'existing extra')
     })
 
     test('adds new style to existing style', () => {
       const node = createNode({ color: 'red' })
       const props = { style: { opacity: 0 } }
-      UIManager.updateView(node, props)
+      UIManager.updateView(node, props, componentStub)
       assert.equal(node.getAttribute('style'), 'color: red; opacity: 0;')
     })
 
