@@ -1,17 +1,26 @@
 /* eslint-disable */
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Touchable
  */
 
 'use strict';
 
 /* @edit start */
-var BoundingDimensions = require('./BoundingDimensions');
-var Position = require('./Position');
-var TouchEventUtils = require('fbjs/lib/TouchEventUtils');
-var keyMirror = require('fbjs/lib/keyMirror');
-var UIManager = require('../../apis/UIManager');
+const BoundingDimensions = require('./BoundingDimensions');
+const keyMirror = require('fbjs/lib/keyMirror');
+const normalizeColor = require('../../apis/StyleSheet/normalizeColor');
+const Position = require('./Position');
+const React = require('react');
+const TouchEventUtils = require('fbjs/lib/TouchEventUtils');
+const UIManager = require('../../apis/UIManager');
+const View = require('../../components/View');
 /* @edit end */
 
 /**
@@ -353,10 +362,10 @@ var TouchableMixin = {
   /**
    * Place as callback for a DOM element's `onResponderGrant` event.
    * @param {SyntheticEvent} e Synthetic event from event system.
-   * @param {string} dispatchID ID of node that e was dispatched to.
    *
    */
-  touchableHandleResponderGrant: function(e, dispatchID) {
+  touchableHandleResponderGrant: function(e) {
+    var dispatchID = e.currentTarget;
     // Since e is used in a callback invoked on another event loop
     // (as in setTimeout etc), we need to call e.persist() on the
     // event to make sure it doesn't get reused in the event object pool.
@@ -717,7 +726,38 @@ var TouchableMixin = {
 };
 
 var Touchable = {
-  Mixin: TouchableMixin
+  Mixin: TouchableMixin,
+  TOUCH_TARGET_DEBUG: false, // Highlights all touchable targets. Toggle with Inspector.
+  /**
+   * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
+   */
+  renderDebugView: ({color, hitSlop}) => {
+    if (!Touchable.TOUCH_TARGET_DEBUG) {
+      return null;
+    }
+    if (!__DEV__) {
+      throw Error('Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!');
+    }
+    const debugHitSlopStyle = {};
+    hitSlop = hitSlop || {top: 0, bottom: 0, left: 0, right: 0};
+    for (const key in hitSlop) {
+      debugHitSlopStyle[key] = -hitSlop[key];
+    }
+    const hexColor = '#' + ('00000000' + normalizeColor(color).toString(16)).substr(-8);
+    return (
+      <View
+        pointerEvents="none"
+        style={{
+          position: 'absolute',
+          borderColor: hexColor.slice(0, -2) + '55', // More opaque
+          borderWidth: 1,
+          borderStyle: 'dashed',
+          backgroundColor: hexColor.slice(0, -2) + '0F', // Less opaque
+          ...debugHitSlopStyle
+        }}
+      />
+    );
+  }
 };
 
 module.exports = Touchable;
