@@ -35,6 +35,13 @@ npm install --save react@0.14 react-dom@0.14 react-native-web
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
 
+## React Native Web Starter
+
+You may also start a fresh React Native Web project from this starter. It provides a lean and familiar setup as it follows a standard React Native project structure.
+
+[>> React Native for Web Starter](https://github.com/grabcode/react-native-web-starter)
+
+
 ## Examples
 
 Demos:
