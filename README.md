@@ -35,6 +35,9 @@ npm install --save react@0.14 react-dom@0.14 react-native-web
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
 
+You can also bootstrap a standard React Native project structure for web by
+using [react-native-web-starter](https://github.com/grabcode/react-native-web-starter).
+
 ## Examples
 
 Demos:
