@@ -66,7 +66,7 @@ class TextInput extends Component {
     this.refs.input.setNativeProps(props)
   }
 
-  _onBlur(e) {
+  _onBlur = (e) => {
     const { onBlur } = this.props
     const text = e.target.value
     this.setState({ showPlaceholder: text === '' })
@@ -74,7 +74,7 @@ class TextInput extends Component {
     if (onBlur) onBlur(e)
   }
 
-  _onChange(e) {
+  _onChange = (e) => {
     const { onChange, onChangeText } = this.props
     const text = e.target.value
     this.setState({ showPlaceholder: text === '' })
@@ -87,7 +87,7 @@ class TextInput extends Component {
     }
   }
 
-  _onFocus(e) {
+  _onFocus = (e) => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
     const node = ReactDOM.findDOMNode(this.refs.input)
     const text = e.target.value
@@ -98,7 +98,7 @@ class TextInput extends Component {
     this.setState({ showPlaceholder: text === '' })
   }
 
-  _onSelectionChange(e) {
+  _onSelectionChange = (e) => {
     const { onSelectionChange } = this.props
     const { selectionDirection, selectionEnd, selectionStart } = e.target
     const event = {
@@ -163,10 +163,10 @@ class TextInput extends Component {
       autoFocus,
       defaultValue,
       maxLength,
-      onBlur: this._onBlur.bind(this),
-      onChange: this._onChange.bind(this),
-      onFocus: this._onFocus.bind(this),
-      onSelect: onSelectionChange && this._onSelectionChange.bind(this),
+      onBlur: this._onBlur,
+      onChange: this._onChange,
+      onFocus: this._onFocus,
+      onSelect: onSelectionChange && this._onSelectionChange,
       readOnly: !editable,
       style: { ...styles.input, outline: style.outline },
       value
