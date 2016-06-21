@@ -95,9 +95,9 @@ suite('apis/UIManager', () => {
 
   suite('updateView', () => {
     const componentStub = {
-      _debugID: 0,
       _reactInternalInstance: {
-        _currentElement: { _owner: {} }
+        _currentElement: { _owner: {} },
+        _debugID: 1
       }
     }
 
