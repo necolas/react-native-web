@@ -6,7 +6,7 @@
  * @flow
  */
 
-import debounce from 'lodash.debounce'
+import debounce from 'lodash/debounce'
 import React, { Component, PropTypes } from 'react'
 import View from '../View'
 

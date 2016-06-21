@@ -19,7 +19,7 @@
     "babel-runtime": "^6.9.2",
     "fbjs": "^0.8.1",
     "inline-style-prefix-all": "1.0.5",
-    "lodash.debounce": "^4.0.6",
+    "lodash": "^4.13.1",
     "react-textarea-autosize": "^4.0.2",
     "react-timer-mixin": "^0.13.3"
   },

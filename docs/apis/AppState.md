@@ -37,7 +37,6 @@ class Example extends React.Component {
   constructor(props) {
     super(props)
     this.state = { currentAppState: AppState.currentState }
-    this._handleAppStateChange = this._handleAppStateChange.bind(this)
   }
 
   componentDidMount() {
@@ -48,7 +47,7 @@ class Example extends React.Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
-  _handleAppStateChange(currentAppState) {
+  _handleAppStateChange = (currentAppState) => {
     this.setState({ currentAppState });
   }
 

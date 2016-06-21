@@ -1,30 +1,53 @@
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
+import findIndex from 'lodash/findIndex'
 import invariant from 'fbjs/lib/invariant'
 
-const listeners = {}
-const eventTypes = [ 'change' ]
+const EVENT_TYPES = [ 'change' ]
+const VISIBILITY_CHANGE_EVENT = 'visibilitychange'
+
+const AppStates = {
+  BACKGROUND: 'background',
+  ACTIVE: 'active'
+}
+
+const listeners = []
 
 class AppState {
+  static isSupported = ExecutionEnvironment.canUseDOM && document.visibilityState
+
   static get currentState() {
+    if (!AppState.isSupported) {
+      return AppState.ACTIVE
+    }
+
     switch (document.visibilityState) {
       case 'hidden':
       case 'prerender':
       case 'unloaded':
-        return 'background'
+        return AppStates.BACKGROUND
       default:
-        return 'active'
+        return AppStates.ACTIVE
     }
   }
 
   static addEventListener(type: string, handler: Function) {
-    listeners[handler] = () => handler(AppState.currentState)
-    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-    document.addEventListener('visibilitychange', listeners[handler], false)
+    if (AppState.isSupported) {
+      invariant(EVENT_TYPES.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
+      const callback = () => handler(AppState.currentState)
+      listeners.push([ handler, callback ])
+      document.addEventListener(VISIBILITY_CHANGE_EVENT, callback, false)
+    }
   }
 
   static removeEventListener(type: string, handler: Function) {
-    invariant(eventTypes.indexOf(type) !== -1, 'Trying to remove listener for unknown event: "%s"', type)
-    document.removeEventListener('visibilitychange', listeners[handler], false)
-    delete listeners[handler]
+    if (AppState.isSupported) {
+      invariant(EVENT_TYPES.indexOf(type) !== -1, 'Trying to remove listener for unknown event: "%s"', type)
+      const listenerIndex = findIndex(listeners, (pair) => pair[0] === handler)
+      invariant(listenerIndex !== -1, 'Trying to remove AppState listener for unregistered handler')
+      const callback = listeners[listenerIndex][1]
+      document.removeEventListener(VISIBILITY_CHANGE_EVENT, callback, false)
+      listeners.splice(listenerIndex, 1)
+    }
   }
 }
 
