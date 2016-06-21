@@ -1,5 +1,5 @@
+import createNativeComponent from '../../modules/createNativeComponent'
 import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
-import CoreComponent from '../CoreComponent'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
@@ -32,7 +32,7 @@ class TextInput extends Component {
     secureTextEntry: PropTypes.bool,
     selectTextOnFocus: PropTypes.bool,
     style: Text.propTypes.style,
-    testID: CoreComponent.propTypes.testID,
+    testID: Text.propTypes.testID,
     value: PropTypes.string
   };
 
@@ -197,7 +197,7 @@ class TextInput extends Component {
         testID={testID}
       >
         <View style={styles.wrapper}>
-          <CoreComponent {...props} ref='input' />
+          {createNativeComponent({ ...props, ref: 'input' })}
           {placeholder && this.state.showPlaceholder && <Text
             pointerEvents='none'
             style={[

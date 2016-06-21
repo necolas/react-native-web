@@ -3,35 +3,10 @@
 import * as utils from '../../../modules/specHelpers'
 import assert from 'assert'
 import React from 'react'
-import StyleSheet from '../../../apis/StyleSheet'
 
 import View from '../'
 
 suite('components/View', () => {
-  test('prop "accessibilityLabel"', () => {
-    const accessibilityLabel = 'accessibilityLabel'
-    const result = utils.shallowRender(<View accessibilityLabel={accessibilityLabel} />)
-    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
-  })
-
-  test('prop "accessibilityLiveRegion"', () => {
-    const accessibilityLiveRegion = 'polite'
-    const result = utils.shallowRender(<View accessibilityLiveRegion={accessibilityLiveRegion} />)
-    assert.equal(result.props.accessibilityLiveRegion, accessibilityLiveRegion)
-  })
-
-  test('prop "accessibilityRole"', () => {
-    const accessibilityRole = 'accessibilityRole'
-    const result = utils.shallowRender(<View accessibilityRole={accessibilityRole} />)
-    assert.equal(result.props.accessibilityRole, accessibilityRole)
-  })
-
-  test('prop "accessible"', () => {
-    const accessible = false
-    const result = utils.shallowRender(<View accessible={accessible} />)
-    assert.equal(result.props.accessible, accessible)
-  })
-
   test('prop "children"', () => {
     const children = 'children'
     const result = utils.shallowRender(<View>{children}</View>)
@@ -40,12 +15,20 @@ suite('components/View', () => {
 
   test('prop "pointerEvents"', () => {
     const result = utils.shallowRender(<View pointerEvents='box-only' />)
-    assert.equal(StyleSheet.flatten(result.props.style).pointerEvents, 'box-only')
+    assert.equal(result.props.className, '__style_pebo')
   })
 
-  test('prop "testID"', () => {
-    const testID = 'testID'
-    const result = utils.shallowRender(<View testID={testID} />)
-    assert.equal(result.props.testID, testID)
+  test('prop "style"', () => {
+    const noFlex = utils.shallowRender(<View />)
+    assert.equal(noFlex.props.style.flexShrink, 0)
+
+    const flex = utils.shallowRender(<View style={{ flex: 1 }} />)
+    assert.equal(flex.props.style.flexShrink, 1)
+
+    const flexShrink = utils.shallowRender(<View style={{ flexShrink: 1 }} />)
+    assert.equal(flexShrink.props.style.flexShrink, 1)
+
+    const flexAndShrink = utils.shallowRender(<View style={{ flex: 1, flexShrink: 2 }} />)
+    assert.equal(flexAndShrink.props.style.flexShrink, 2)
   })
 })

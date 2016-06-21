@@ -1,7 +1,7 @@
+import createNativeComponent from '../../modules/createNativeComponent'
 import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import normalizeNativeEvent from '../../apis/PanResponder/normalizeNativeEvent'
-import CoreComponent from '../CoreComponent'
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
@@ -9,10 +9,10 @@ import ViewStylePropTypes from './ViewStylePropTypes'
 @NativeMethodsDecorator
 class View extends Component {
   static propTypes = {
-    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
-    accessibilityLiveRegion: CoreComponent.propTypes.accessibilityLiveRegion,
-    accessibilityRole: CoreComponent.propTypes.accessibilityRole,
-    accessible: CoreComponent.propTypes.accessible,
+    accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
+    accessibilityLiveRegion: createNativeComponent.propTypes.accessibilityLiveRegion,
+    accessibilityRole: createNativeComponent.propTypes.accessibilityRole,
+    accessible: createNativeComponent.propTypes.accessible,
     children: PropTypes.any,
     onClick: PropTypes.func,
     onClickCapture: PropTypes.func,
@@ -36,7 +36,7 @@ class View extends Component {
     onTouchStartCapture: PropTypes.func,
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
     style: StyleSheetPropType(ViewStylePropTypes),
-    testID: CoreComponent.propTypes.testID
+    testID: createNativeComponent.propTypes.testID
   };
 
   static defaultProps = {
@@ -59,28 +59,28 @@ class View extends Component {
     const flattenedStyle = StyleSheet.flatten(style)
     const pointerEventsStyle = pointerEvents && { pointerEvents }
 
-    return (
-      <CoreComponent
-        {...other}
-        onClick={this._handleClick}
-        onClickCapture={this._normalizeEventForHandler(this.props.onClickCapture)}
-        onTouchCancel={this._normalizeEventForHandler(this.props.onTouchCancel)}
-        onTouchCancelCapture={this._normalizeEventForHandler(this.props.onTouchCancelCapture)}
-        onTouchEnd={this._normalizeEventForHandler(this.props.onTouchEnd)}
-        onTouchEndCapture={this._normalizeEventForHandler(this.props.onTouchEndCapture)}
-        onTouchMove={this._normalizeEventForHandler(this.props.onTouchMove)}
-        onTouchMoveCapture={this._normalizeEventForHandler(this.props.onTouchMoveCapture)}
-        onTouchStart={this._normalizeEventForHandler(this.props.onTouchStart)}
-        onTouchStartCapture={this._normalizeEventForHandler(this.props.onTouchStartCapture)}
-        style={[
-          styles.initial,
-          style,
-          // 'View' needs to use 'flexShrink' in its reset when there is no 'flex' style provided
-          flattenedStyle.flex == null && styles.flexReset,
-          pointerEventsStyle
-        ]}
-      />
-    )
+    const props = {
+      ...other,
+      onClick: this._handleClick,
+      onClickCapture: this._normalizeEventForHandler(this.props.onClickCapture),
+      onTouchCancel: this._normalizeEventForHandler(this.props.onTouchCancel),
+      onTouchCancelCapture: this._normalizeEventForHandler(this.props.onTouchCancelCapture),
+      onTouchEnd: this._normalizeEventForHandler(this.props.onTouchEnd),
+      onTouchEndCapture: this._normalizeEventForHandler(this.props.onTouchEndCapture),
+      onTouchMove: this._normalizeEventForHandler(this.props.onTouchMove),
+      onTouchMoveCapture: this._normalizeEventForHandler(this.props.onTouchMoveCapture),
+      onTouchStart: this._normalizeEventForHandler(this.props.onTouchStart),
+      onTouchStartCapture: this._normalizeEventForHandler(this.props.onTouchStartCapture),
+      style: [
+        styles.initial,
+        style,
+        // 'View' needs to use 'flexShrink' in its reset when there is no 'flex' style provided
+        (flattenedStyle.flex == null && flattenedStyle.flexShrink == null) && styles.flexReset,
+        pointerEventsStyle
+      ]
+    }
+
+    return createNativeComponent(props)
   }
 
   /**

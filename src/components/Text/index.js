@@ -1,6 +1,6 @@
+import createNativeComponent from '../../modules/createNativeComponent'
 import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
-import CoreComponent from '../CoreComponent'
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
@@ -8,14 +8,14 @@ import TextStylePropTypes from './TextStylePropTypes'
 @NativeMethodsDecorator
 class Text extends Component {
   static propTypes = {
-    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
-    accessibilityRole: CoreComponent.propTypes.accessibilityRole,
-    accessible: CoreComponent.propTypes.accessible,
+    accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
+    accessibilityRole: createNativeComponent.propTypes.accessibilityRole,
+    accessible: createNativeComponent.propTypes.accessible,
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onPress: PropTypes.func,
     style: StyleSheetPropType(TextStylePropTypes),
-    testID: CoreComponent.propTypes.testID
+    testID: createNativeComponent.propTypes.testID
   };
 
   static defaultProps = {
@@ -36,18 +36,16 @@ class Text extends Component {
       ...other
     } = this.props
 
-    return (
-      <CoreComponent
-        {...other}
-        component='span'
-        onClick={this._onPress}
-        style={[
-          styles.initial,
-          style,
-          numberOfLines === 1 && styles.singleLineStyle
-        ]}
-      />
-    )
+    return createNativeComponent({
+      ...other,
+      component: 'span',
+      onClick: this._onPress,
+      style: [
+        styles.initial,
+        style,
+        numberOfLines === 1 && styles.singleLineStyle
+      ]
+    })
   }
 }
 

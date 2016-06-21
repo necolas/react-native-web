@@ -1,9 +1,9 @@
 /* global window */
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
-import resolveAssetSource from './resolveAssetSource'
-import CoreComponent from '../CoreComponent'
+import createNativeComponent from '../../modules/createNativeComponent'
 import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
+import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
+import resolveAssetSource from './resolveAssetSource'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
@@ -25,8 +25,8 @@ const ImageSourcePropType = PropTypes.oneOfType([
 @NativeMethodsDecorator
 class Image extends Component {
   static propTypes = {
-    accessibilityLabel: CoreComponent.propTypes.accessibilityLabel,
-    accessible: CoreComponent.propTypes.accessible,
+    accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
+    accessible: createNativeComponent.propTypes.accessible,
     children: PropTypes.any,
     defaultSource: ImageSourcePropType,
     onError: PropTypes.func,
@@ -36,7 +36,7 @@ class Image extends Component {
     resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes),
-    testID: CoreComponent.propTypes.testID
+    testID: createNativeComponent.propTypes.testID
   };
 
   static defaultProps = {
@@ -170,7 +170,7 @@ class Image extends Component {
         ]}
         testID={testID}
       >
-        <img src={displayImage} style={styles.img} />
+        {createNativeComponent({ component: 'img', src: displayImage, style: styles.img })}
         {children ? (
           <View children={children} pointerEvents='box-none' style={styles.children} />
         ) : null}

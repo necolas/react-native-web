@@ -13,12 +13,6 @@ const findShallowInput = (vdom) => vdom.props.children.props.children[0]
 const findShallowPlaceholder = (vdom) => vdom.props.children.props.children[1]
 
 suite('components/TextInput', () => {
-  test('prop "accessibilityLabel"', () => {
-    const accessibilityLabel = 'accessibilityLabel'
-    const result = utils.shallowRender(<TextInput accessibilityLabel={accessibilityLabel} />)
-    assert.equal(result.props.accessibilityLabel, accessibilityLabel)
-  })
-
   test('prop "autoComplete"', () => {
     // off
     let input = findInput(utils.renderToDOM(<TextInput />))
@@ -219,12 +213,6 @@ suite('components/TextInput', () => {
     input.focus()
     assert.equal(input.selectionEnd, 4)
     assert.equal(input.selectionStart, 0)
-  })
-
-  test('prop "testID"', () => {
-    const testID = 'testID'
-    const result = utils.shallowRender(<TextInput testID={testID} />)
-    assert.equal(result.props.testID, testID)
   })
 
   test('prop "value"', () => {
