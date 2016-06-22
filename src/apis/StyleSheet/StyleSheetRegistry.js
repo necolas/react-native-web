@@ -26,7 +26,14 @@ const createCssDeclarations = (style) => {
   return Object.keys(style).map((prop) => {
     const property = hyphenate(prop)
     const value = style[prop]
-    return `${property}:${value};`
+    if (Array.isArray(value)) {
+      return value.reduce((acc, curr) => {
+        acc += `${property}:${curr};`
+        return acc
+      }, '')
+    } else {
+      return `${property}:${value};`
+    }
   }).sort().join('')
 }
 
@@ -91,9 +98,20 @@ class StyleSheetRegistry {
       }
     }
 
+    /**
+     * React 15 removed undocumented support for fallback values in
+     * inline-styles. For now, pick the last value and regress browser support
+     * for CSS features like flexbox.
+     */
+    const finalStyle = Object.keys(prefixAll(style)).reduce((acc, prop) => {
+      const value = style[prop]
+      acc[prop] = Array.isArray(value) ? value[value.length - 1] : value
+      return acc
+    }, {})
+
     return {
       className: classList.join(' '),
-      style: prefixAll(style)
+      style: finalStyle
     }
   }
 }
