@@ -1,6 +1,6 @@
-var webpack = require('webpack')
+const webpack = require('webpack')
 
-var testEntry = 'tests.webpack.js'
+const testEntry = 'tests.webpack.js'
 
 module.exports = function (config) {
   config.set({
@@ -30,6 +30,13 @@ module.exports = function (config) {
     singleRun: true,
     webpack: {
       devtool: 'inline-source-map',
+      // required by 'enzyme'
+      externals: {
+        'cheerio': 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
+      },
       module: {
         loaders: [
           {
