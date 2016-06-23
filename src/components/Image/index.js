@@ -49,61 +49,7 @@ class Image extends Component {
   constructor(props, context) {
     super(props, context)
     const uri = resolveAssetSource(props.source)
-    // state
     this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
-    // autobinding
-    this._onError = this._onError.bind(this)
-    this._onLoad = this._onLoad.bind(this)
-  }
-
-  _createImageLoader() {
-    const uri = resolveAssetSource(this.props.source)
-
-    this._destroyImageLoader()
-    this.image = new window.Image()
-    this.image.onerror = this._onError
-    this.image.onload = this._onLoad
-    this.image.src = uri
-    this._onLoadStart()
-  }
-
-  _destroyImageLoader() {
-    if (this.image) {
-      this.image.onerror = null
-      this.image.onload = null
-      this.image = null
-    }
-  }
-
-  _onError(e) {
-    const { onError } = this.props
-    const event = { nativeEvent: e }
-
-    this._destroyImageLoader()
-    this.setState({ status: STATUS_ERRORED })
-    this._onLoadEnd()
-    if (onError) onError(event)
-  }
-
-  _onLoad(e) {
-    const { onLoad } = this.props
-    const event = { nativeEvent: e }
-
-    this._destroyImageLoader()
-    this.setState({ status: STATUS_LOADED })
-    if (onLoad) onLoad(event)
-    this._onLoadEnd()
-  }
-
-  _onLoadEnd() {
-    const { onLoadEnd } = this.props
-    if (onLoadEnd) onLoadEnd()
-  }
-
-  _onLoadStart() {
-    const { onLoadStart } = this.props
-    this.setState({ status: STATUS_LOADING })
-    if (onLoadStart) onLoadStart()
   }
 
   componentDidMount() {
@@ -162,6 +108,7 @@ class Image extends Component {
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
+        ref='root'
         style={[
           styles.initial,
           style,
@@ -176,6 +123,56 @@ class Image extends Component {
         ) : null}
       </View>
     )
+  }
+
+  _createImageLoader() {
+    const uri = resolveAssetSource(this.props.source)
+
+    this._destroyImageLoader()
+    this.image = new window.Image()
+    this.image.onerror = this._onError
+    this.image.onload = this._onLoad
+    this.image.src = uri
+    this._onLoadStart()
+  }
+
+  _destroyImageLoader() {
+    if (this.image) {
+      this.image.onerror = null
+      this.image.onload = null
+      this.image = null
+    }
+  }
+
+  _onError = (e) => {
+    const { onError } = this.props
+    const event = { nativeEvent: e }
+
+    this._destroyImageLoader()
+    this.setState({ status: STATUS_ERRORED })
+    this._onLoadEnd()
+    if (onError) onError(event)
+  }
+
+  _onLoad = (e) => {
+    const { onLoad } = this.props
+    const event = { nativeEvent: e }
+
+    this._destroyImageLoader()
+    this.setState({ status: STATUS_LOADED })
+    if (onLoad) onLoad(event)
+    this._onLoadEnd()
+  }
+
+  _onLoadEnd() {
+    const { onLoadEnd } = this.props
+    if (onLoadEnd) onLoadEnd()
+  }
+
+  _onLoadStart() {
+    const { onLoadStart } = this.props
+    this.setState({ status: STATUS_LOADING })
+    if (onLoadStart) onLoadStart()
   }
 }
 
