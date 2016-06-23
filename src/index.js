@@ -1,5 +1,8 @@
 import './apis/PanResponder/injectResponderEventPlugin'
 
+import findNodeHandle from './modules/findNodeHandle'
+import ReactDOM from 'react-dom'
+
 // apis
 import Animated from './apis/Animated'
 import AppRegistry from './apis/AppRegistry'
@@ -40,6 +43,10 @@ import EdgeInsetsPropType from './apis/StyleSheet/EdgeInsetsPropType'
 import PointPropType from './apis/StyleSheet/PointPropType'
 
 const ReactNative = {
+  findNodeHandle,
+  render: ReactDOM.render,
+  unmountComponentAtNode: ReactDOM.unmountComponentAtNode,
+
   // apis
   Animated,
   AppRegistry,
