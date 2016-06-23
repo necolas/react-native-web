@@ -28,6 +28,11 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
     new webpack.optimize.DedupePlugin(),
+    // https://github.com/animatedjs/animated/issues/40
+    new webpack.NormalModuleReplacementPlugin(
+      /es6-set/,
+      path.join(__dirname, '../src/modules/polyfills/Set.js')
+    ),
     new webpack.optimize.OccurenceOrderPlugin()
   ],
   resolve: {

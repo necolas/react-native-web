@@ -16,6 +16,7 @@
     "test:watch": "npm run test -- --no-single-run"
   },
   "dependencies": {
+    "animated": "^0.1.3",
     "babel-runtime": "^6.9.2",
     "fbjs": "^0.8.1",
     "inline-style-prefix-all": "^2.0.2",

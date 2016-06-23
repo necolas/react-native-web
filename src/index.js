@@ -4,12 +4,12 @@ import findNodeHandle from './modules/findNodeHandle'
 import ReactDOM from 'react-dom'
 
 // apis
-import Animated from './apis/Animated'
+import Animated from 'animated'
 import AppRegistry from './apis/AppRegistry'
 import AppState from './apis/AppState'
 import AsyncStorage from './apis/AsyncStorage'
 import Dimensions from './apis/Dimensions'
-import Easing from './apis/Easing'
+import Easing from 'animated/lib/Easing'
 import InteractionManager from './apis/InteractionManager'
 import NetInfo from './apis/NetInfo'
 import PanResponder from './apis/PanResponder'
@@ -42,13 +42,20 @@ import ColorPropType from './apis/StyleSheet/ColorPropType'
 import EdgeInsetsPropType from './apis/StyleSheet/EdgeInsetsPropType'
 import PointPropType from './apis/StyleSheet/PointPropType'
 
+Animated.inject.FlattenStyle(StyleSheet.flatten)
+
 const ReactNative = {
   findNodeHandle,
   render: ReactDOM.render,
   unmountComponentAtNode: ReactDOM.unmountComponentAtNode,
 
   // apis
-  Animated,
+  Animated: {
+    ...Animated,
+    Image: Animated.createAnimatedComponent(Image),
+    Text: Animated.createAnimatedComponent(Text),
+    View: Animated.createAnimatedComponent(View)
+  },
   AppRegistry,
   AppState,
   AsyncStorage,
