@@ -2,6 +2,7 @@ import './apis/PanResponder/injectResponderEventPlugin'
 
 import findNodeHandle from './modules/findNodeHandle'
 import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
 
 // apis
 import Animated from 'animated'
@@ -45,9 +46,13 @@ import PointPropType from './apis/StyleSheet/PointPropType'
 Animated.inject.FlattenStyle(StyleSheet.flatten)
 
 const ReactNative = {
+  // top-level API
   findNodeHandle,
   render: ReactDOM.render,
   unmountComponentAtNode: ReactDOM.unmountComponentAtNode,
+  // web-only
+  renderToStaticMarkup: ReactDOMServer.renderToStaticMarkup,
+  renderToString: ReactDOMServer.renderToString,
 
   // apis
   Animated: {

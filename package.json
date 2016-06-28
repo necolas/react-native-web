@@ -21,6 +21,7 @@
     "fbjs": "^0.8.1",
     "inline-style-prefix-all": "^2.0.2",
     "lodash": "^4.13.1",
+    "react-dom": "^15.1.0",
     "react-textarea-autosize": "^4.0.2",
     "react-timer-mixin": "^0.13.3"
   },
@@ -53,13 +54,11 @@
     "node-libs-browser": "^0.5.3",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^15.1.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
   "peerDependencies": {
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react": "^15.1.0"
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause",

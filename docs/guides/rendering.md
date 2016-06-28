@@ -21,15 +21,14 @@ module.exports = {
 Rendering without using the `AppRegistry`:
 
 ```js
-import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
+import ReactNative from 'react-native'
 
 // DOM render
-ReactDOM.render(<div />, document.getElementById('react-app'))
+ReactNative.render(<div />, document.getElementById('react-app'))
 
 // Server render
-ReactDOMServer.renderToString(<div />)
-ReactDOMServer.renderToStaticMarkup(<div />)
+ReactNative.renderToString(<div />)
+ReactNative.renderToStaticMarkup(<div />)
 ```
 
 Rendering using the `AppRegistry`:
@@ -54,7 +53,10 @@ import { AppRegistry } from 'react-native'
 AppRegistry.registerComponent('App', () => App)
 
 // mounts and runs the app within the `rootTag` DOM node
-AppRegistry.runApplication('App', { initialProps, rootTag: document.getElementById('react-app') })
+AppRegistry.runApplication('App', {
+  initialProps: {},
+  rootTag: document.getElementById('react-app')
+})
 ```
 
 React Native for Web extends `AppRegistry` to provide support for server-side
@@ -85,7 +87,7 @@ export default AppShell
 
 import App from './App'
 import AppShell from './AppShell'
-import { AppRegistry } from 'react-native'
+import ReactNative, { AppRegistry } from 'react-native'
 
 // registers the app
 AppRegistry.registerComponent('App', () => App)
@@ -94,5 +96,5 @@ AppRegistry.registerComponent('App', () => App)
 const { html, style, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 
 // renders the full-page markup
-const renderedApplicationHTML = React.renderToStaticMarkup(<AppShell html={html} styleElement={styleElement} />)
+const renderedApplicationHTML = ReactNative.renderToStaticMarkup(<AppShell html={html} styleElement={styleElement} />)
 ```
