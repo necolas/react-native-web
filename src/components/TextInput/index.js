@@ -66,50 +66,6 @@ class TextInput extends Component {
     this.refs.input.setNativeProps(props)
   }
 
-  _onBlur = (e) => {
-    const { onBlur } = this.props
-    const text = e.target.value
-    this.setState({ showPlaceholder: text === '' })
-    this.blur()
-    if (onBlur) onBlur(e)
-  }
-
-  _onChange = (e) => {
-    const { onChange, onChangeText } = this.props
-    const text = e.target.value
-    this.setState({ showPlaceholder: text === '' })
-    if (onChange) onChange(e)
-    if (onChangeText) onChangeText(text)
-    if (!this.refs.input) {
-      // calling `this.props.onChange` or `this.props.onChangeText`
-      // may clean up the input itself. Exits here.
-      return
-    }
-  }
-
-  _onFocus = (e) => {
-    const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
-    const node = ReactDOM.findDOMNode(this.refs.input)
-    const text = e.target.value
-    this.focus()
-    if (onFocus) onFocus(e)
-    if (clearTextOnFocus) this.clear()
-    if (selectTextOnFocus) node.select()
-    this.setState({ showPlaceholder: text === '' })
-  }
-
-  _onSelectionChange = (e) => {
-    const { onSelectionChange } = this.props
-    const { selectionDirection, selectionEnd, selectionStart } = e.target
-    const event = {
-      selectionDirection,
-      selectionEnd,
-      selectionStart,
-      nativeEvent: e.nativeEvent
-    }
-    if (onSelectionChange) onSelectionChange(event)
-  }
-
   render() {
     const {
       /* eslint-disable react/prop-types */
@@ -163,10 +119,10 @@ class TextInput extends Component {
       autoFocus,
       defaultValue,
       maxLength,
-      onBlur: this._onBlur,
-      onChange: this._onChange,
-      onFocus: this._onFocus,
-      onSelect: onSelectionChange && this._onSelectionChange,
+      onBlur: this._handleBlur,
+      onChange: this._handleChange,
+      onFocus: this._handleFocus,
+      onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
       style: { ...styles.input, outline: style.outline },
       value
@@ -190,24 +146,75 @@ class TextInput extends Component {
     return (
       <View
         accessibilityLabel={accessibilityLabel}
-        style={[
-          styles.initial,
-          style
-        ]}
+        onClick={this._handleClick}
+        style={[ styles.initial, style ]}
         testID={testID}
       >
         <View style={styles.wrapper}>
           {createNativeComponent({ ...props, ref: 'input' })}
-          {placeholder && this.state.showPlaceholder && <Text
-            pointerEvents='none'
-            style={[
-              styles.placeholder,
-              placeholderTextColor && { color: placeholderTextColor }
-            ]}
-          >{placeholder}</Text>}
+          {placeholder && this.state.showPlaceholder && (
+            <View pointerEvents='none' style={styles.placeholder}>
+              <Text
+                children={placeholder}
+                style={[
+                  styles.placeholderText,
+                  placeholderTextColor && { color: placeholderTextColor }
+                ]}
+              />
+            </View>
+          )}
         </View>
       </View>
     )
+  }
+
+  _handleBlur = (e) => {
+    const { onBlur } = this.props
+    const text = e.target.value
+    this.setState({ showPlaceholder: text === '' })
+    this.blur()
+    if (onBlur) onBlur(e)
+  }
+
+  _handleChange = (e) => {
+    const { onChange, onChangeText } = this.props
+    const text = e.target.value
+    this.setState({ showPlaceholder: text === '' })
+    if (onChange) onChange(e)
+    if (onChangeText) onChangeText(text)
+    if (!this.refs.input) {
+      // calling `this.props.onChange` or `this.props.onChangeText`
+      // may clean up the input itself. Exits here.
+      return
+    }
+  }
+
+  _handleClick = (e) => {
+    this.focus()
+  }
+
+  _handleFocus = (e) => {
+    const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
+    const node = ReactDOM.findDOMNode(this.refs.input)
+    const text = e.target.value
+    if (onFocus) onFocus(e)
+    if (clearTextOnFocus) this.clear()
+    if (selectTextOnFocus) node.select()
+    this.setState({ showPlaceholder: text === '' })
+  }
+
+  _handleSelectionChange = (e) => {
+    const { onSelectionChange } = this.props
+    try {
+      const { selectionDirection, selectionEnd, selectionStart } = e.target
+      const event = {
+        selectionDirection,
+        selectionEnd,
+        selectionStart,
+        nativeEvent: e.nativeEvent
+      }
+      if (onSelectionChange) onSelectionChange(event)
+    } catch (e) {}
   }
 }
 
@@ -232,12 +239,15 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     bottom: 0,
-    color: 'darkgray',
+    justifyContent: 'center',
     left: 0,
-    overflow: 'hidden',
     position: 'absolute',
     right: 0,
-    top: 0,
+    top: 0
+  },
+  placeholderText: {
+    color: 'darkgray',
+    overflow: 'hidden',
     whiteSpace: 'pre'
   }
 })
