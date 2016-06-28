@@ -61,7 +61,7 @@ class View extends Component {
 
     const props = {
       ...other,
-      onClick: this._handleClick,
+      onClick: this._normalizeEventForHandler(this.props.onClick),
       onClickCapture: this._normalizeEventForHandler(this.props.onClickCapture),
       onTouchCancel: this._normalizeEventForHandler(this.props.onTouchCancel),
       onTouchCancelCapture: this._normalizeEventForHandler(this.props.onTouchCancelCapture),
