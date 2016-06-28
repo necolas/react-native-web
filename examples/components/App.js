@@ -90,7 +90,10 @@ export default class App extends React.Component {
         />
         <TextInput secureTextEntry />
         <TextInput defaultValue='read only' editable={false} />
-        <TextInput style={{ flex:1, height: 60, padding: 20 }} keyboardType='email-address' placeholder='you@domain.com' placeholderTextColor='red' />
+        <TextInput
+          style={{ flex:1, height: 60, padding: 20, fontSize: 20, textAlign: 'center' }}
+          keyboardType='email-address' placeholder='you@domain.com' placeholderTextColor='red'
+        />
         <TextInput keyboardType='numeric' />
         <TextInput keyboardType='phone-pad' />
         <TextInput defaultValue='https://delete-me' keyboardType='url' placeholder='https://www.some-website.com' selectTextOnFocus />

@@ -1,5 +1,7 @@
 import createNativeComponent from '../../modules/createNativeComponent'
 import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
+import omit from 'lodash/omit'
+import pick from 'lodash/pick'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
@@ -7,6 +9,9 @@ import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
 import TextInputState from './TextInputState'
 import View from '../View'
+import ViewStylePropTypes from '../View/ViewStylePropTypes'
+
+const viewStyleProps = Object.keys(ViewStylePropTypes)
 
 @NativeMethodsDecorator
 class TextInput extends Component {
@@ -114,6 +119,12 @@ class TextInput extends Component {
       type = 'password'
     }
 
+    // In order to support 'Text' styles on 'TextInput', we split the 'Text'
+    // and 'View' styles and apply them to the 'Text' and 'View' components
+    // used in the implementation
+    const rootStyles = pick(style, viewStyleProps)
+    const textStyles = omit(style, viewStyleProps)
+
     const propsCommon = {
       autoComplete: autoComplete && 'on',
       autoFocus,
@@ -124,7 +135,7 @@ class TextInput extends Component {
       onFocus: this._handleFocus,
       onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
-      style: { ...styles.input, outline: style.outline },
+      style: { ...styles.input, ...textStyles, outline: style.outline },
       value
     }
 
@@ -143,26 +154,29 @@ class TextInput extends Component {
 
     const props = multiline ? propsMultiline : propsSingleline
 
+    const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
+      <View pointerEvents='none' style={styles.placeholder}>
+        <Text
+          children={placeholder}
+          style={[
+            styles.placeholderText,
+            textStyles,
+            placeholderTextColor && { color: placeholderTextColor }
+          ]}
+        />
+      </View>
+    )
+
     return (
       <View
         accessibilityLabel={accessibilityLabel}
         onClick={this._handleClick}
-        style={[ styles.initial, style ]}
+        style={[ styles.initial, rootStyles ]}
         testID={testID}
       >
         <View style={styles.wrapper}>
           {createNativeComponent({ ...props, ref: 'input' })}
-          {placeholder && this.state.showPlaceholder && (
-            <View pointerEvents='none' style={styles.placeholder}>
-              <Text
-                children={placeholder}
-                style={[
-                  styles.placeholderText,
-                  placeholderTextColor && { color: placeholderTextColor }
-                ]}
-              />
-            </View>
-          )}
+          {optionalPlaceholder}
         </View>
       </View>
     )
