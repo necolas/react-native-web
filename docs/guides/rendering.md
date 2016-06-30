@@ -21,80 +21,38 @@ module.exports = {
 Rendering without using the `AppRegistry`:
 
 ```js
+import React from 'react'
 import ReactNative from 'react-native'
 
+// component that renders the app
+const AppHeaderContainer = (props) => { /* ... */ }
+
 // DOM render
-ReactNative.render(<div />, document.getElementById('react-app'))
+ReactNative.render(<AppHeaderContainer />, document.getElementById('react-app-header'))
 
 // Server render
-ReactNative.renderToString(<div />)
-ReactNative.renderToStaticMarkup(<div />)
+ReactNative.renderToString(<AppHeaderContainer />)
+ReactNative.renderToStaticMarkup(<AppHeaderContainer />)
 ```
 
 Rendering using the `AppRegistry`:
 
 ```js
-// App.js
-
 import React from 'react'
+import ReactNative, { AppRegistry } from 'react-native'
 
 // component that renders the app
 const AppContainer = (props) => { /* ... */ }
-export default AppContainer
-```
 
-```js
-// client.js
+// register the app
+AppRegistry.registerComponent('App', () => AppContainer)
 
-import App from './App'
-import { AppRegistry } from 'react-native'
-
-// registers the app
-AppRegistry.registerComponent('App', () => App)
-
-// mounts and runs the app within the `rootTag` DOM node
+// DOM render
 AppRegistry.runApplication('App', {
   initialProps: {},
   rootTag: document.getElementById('react-app')
 })
-```
 
-React Native for Web extends `AppRegistry` to provide support for server-side
-rendering.
-
-```js
-// AppShell.js
-
-import React from 'react'
-
-const AppShell = (html, styleElement) => (
-  <html>
-    <head>
-      <meta charSet="utf-8" />
-      <meta content="initial-scale=1,width=device-width" name="viewport" />
-      {styleElement}
-    </head>
-    <body>
-      <div id="react-app" dangerouslySetInnerHTML={{ __html: html }} />
-    </body>
-  </html>
-)
-export default AppShell
-```
-
-```js
-// server.js
-
-import App from './App'
-import AppShell from './AppShell'
-import ReactNative, { AppRegistry } from 'react-native'
-
-// registers the app
-AppRegistry.registerComponent('App', () => App)
-
-// prerenders the app
+// prerender the app
 const { html, style, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
-
-// renders the full-page markup
-const renderedApplicationHTML = ReactNative.renderToStaticMarkup(<AppShell html={html} styleElement={styleElement} />)
 ```
