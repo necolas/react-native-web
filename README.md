@@ -30,7 +30,7 @@ styles defined in JavaScript into "Atomic CSS".
 To install in your app:
 
 ```
-npm install --save react@0.15 react-native-web
+npm install --save react react-native-web
 ```
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
