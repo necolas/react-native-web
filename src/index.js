@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
 
 // apis
-import Animated from 'animated'
+import Animated from './apis/Animated'
 import AppRegistry from './apis/AppRegistry'
 import AppState from './apis/AppState'
 import AsyncStorage from './apis/AsyncStorage'
@@ -43,8 +43,6 @@ import ColorPropType from './apis/StyleSheet/ColorPropType'
 import EdgeInsetsPropType from './apis/StyleSheet/EdgeInsetsPropType'
 import PointPropType from './apis/StyleSheet/PointPropType'
 
-Animated.inject.FlattenStyle(StyleSheet.flatten)
-
 const ReactNative = {
   // top-level API
   findNodeHandle,
@@ -55,12 +53,7 @@ const ReactNative = {
   renderToString: ReactDOMServer.renderToString,
 
   // apis
-  Animated: {
-    ...Animated,
-    Image: Animated.createAnimatedComponent(Image),
-    Text: Animated.createAnimatedComponent(Text),
-    View: Animated.createAnimatedComponent(View)
-  },
+  Animated,
   AppRegistry,
   AppState,
   AsyncStorage,
