@@ -14,7 +14,7 @@
 
 // Note (avik): add @flow when Flow supports spread properties in propTypes
 
-var Animated = require('animated');
+var Animated = require('../../apis/Animated');
 var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
 var React = require('react');
 var StyleSheet = require('../../apis/StyleSheet');
