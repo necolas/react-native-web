@@ -1,4 +1,3 @@
-import Portal from '../../components/Portal'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../StyleSheet'
@@ -16,25 +15,15 @@ class ReactNativeApp extends Component {
 
     return (
       <View style={styles.appContainer}>
-        <RootComponent {...initialProps} ref={this._createRootRef} rootTag={rootTag} />
-        <Portal onModalVisibilityChanged={this._handleModalVisibilityChange} />
+        <RootComponent {...initialProps} rootTag={rootTag} />
       </View>
     )
-  }
-
-  _createRootRef = (component) => {
-    this._root = component
-  }
-
-  _handleModalVisibilityChange = (modalVisible) => {
-    ReactDOM.findDOMNode(this._root).setAttribute('aria-hidden', `${modalVisible}`)
   }
 }
 
 const styles = StyleSheet.create({
   /**
-   * Ensure that the application covers the whole screen. This prevents the
-   * Portal content from being clipped.
+   * Ensure that the application covers the whole screen.
    */
   appContainer: {
     position: 'absolute',

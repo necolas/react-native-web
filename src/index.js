@@ -23,7 +23,6 @@ import UIManager from './apis/UIManager'
 import ActivityIndicator from './components/ActivityIndicator'
 import Image from './components/Image'
 import ListView from './components/ListView'
-import Portal from './components/Portal'
 import ScrollView from './components/ScrollView'
 import Text from './components/Text'
 import TextInput from './components/TextInput'
@@ -71,7 +70,6 @@ const ReactNative = {
   ActivityIndicator,
   Image,
   ListView,
-  Portal,
   ScrollView,
   Text,
   TextInput,

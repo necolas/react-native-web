@@ -102,7 +102,6 @@ Exported modules:
   * [`ActivityIndicator`](docs/components/ActivityIndicator.md)
   * [`Image`](docs/components/Image.md)
   * [`ListView`](docs/components/ListView.md)
-  * [`Portal`](docs/components/Portal.md)
   * [`ScrollView`](docs/components/ScrollView.md)
   * [`Text`](docs/components/Text.md)
   * [`TextInput`](docs/components/TextInput.md)
