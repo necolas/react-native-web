@@ -1,4 +1,5 @@
 import { PropTypes } from 'react'
+import BorderPropTypes from '../../apis/StyleSheet/BorderPropTypes'
 import ColorPropType from '../../apis/StyleSheet/ColorPropType'
 import LayoutPropTypes from '../../apis/StyleSheet/LayoutPropTypes'
 import TransformPropTypes from '../../apis/StyleSheet/TransformPropTypes'
@@ -7,6 +8,7 @@ import ImageResizeMode from './ImageResizeMode'
 const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ])
 
 module.exports = {
+  ...BorderPropTypes,
   ...LayoutPropTypes,
   ...TransformPropTypes,
   backfaceVisibility: hiddenOrVisible,
