@@ -1,4 +1,4 @@
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import React, { Component } from 'react'
 import ScrollView from '../ScrollView'
 import ListViewDataSource from './ListViewDataSource'
@@ -6,7 +6,6 @@ import ListViewPropTypes from './ListViewPropTypes'
 
 const SCROLLVIEW_REF = 'listviewscroll'
 
-@NativeMethodsDecorator
 class ListView extends Component {
   static propTypes = ListViewPropTypes;
 
@@ -99,5 +98,7 @@ class ListView extends Component {
     }, header, children, footer)
   }
 }
+
+applyNativeMethods(ListView)
 
 module.exports = ListView

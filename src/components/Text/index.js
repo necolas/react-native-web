@@ -1,11 +1,10 @@
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import createNativeComponent from '../../modules/createNativeComponent'
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
-@NativeMethodsDecorator
 class Text extends Component {
   static propTypes = {
     accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
@@ -48,6 +47,8 @@ class Text extends Component {
     })
   }
 }
+
+applyNativeMethods(Text)
 
 const styles = StyleSheet.create({
   initial: {

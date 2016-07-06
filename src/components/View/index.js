@@ -1,12 +1,11 @@
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import createNativeComponent from '../../modules/createNativeComponent'
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import normalizeNativeEvent from '../../apis/PanResponder/normalizeNativeEvent'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
-@NativeMethodsDecorator
 class View extends Component {
   static propTypes = {
     accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
@@ -97,6 +96,8 @@ class View extends Component {
     }
   }
 }
+
+applyNativeMethods(View)
 
 const styles = StyleSheet.create({
   // https://github.com/facebook/css-layout#default-values

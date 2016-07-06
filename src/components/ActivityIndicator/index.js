@@ -1,4 +1,4 @@
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
@@ -19,7 +19,6 @@ const keyframeEffects = [
   { transform: 'scale(0.95)', opacity: 0.5 }
 ]
 
-@NativeMethodsDecorator
 class ActivityIndicator extends Component {
   static propTypes = {
     animating: PropTypes.bool,
@@ -86,6 +85,8 @@ class ActivityIndicator extends Component {
     }
   }
 }
+
+applyNativeMethods(ActivityIndicator)
 
 const styles = StyleSheet.create({
   container: {

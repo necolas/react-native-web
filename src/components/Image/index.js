@@ -1,8 +1,8 @@
 /* global window */
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import createNativeComponent from '../../modules/createNativeComponent'
 import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import resolveAssetSource from './resolveAssetSource'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
@@ -22,7 +22,6 @@ const ImageSourcePropType = PropTypes.oneOfType([
   PropTypes.string
 ])
 
-@NativeMethodsDecorator
 class Image extends Component {
   static propTypes = {
     accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
@@ -175,6 +174,8 @@ class Image extends Component {
     if (onLoadStart) onLoadStart()
   }
 }
+
+applyNativeMethods(Image)
 
 const styles = StyleSheet.create({
   initial: {

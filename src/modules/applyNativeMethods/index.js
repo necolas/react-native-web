@@ -7,7 +7,7 @@
 
 import NativeMethodsMixin from '../NativeMethodsMixin'
 
-const NativeMethodsDecorator = (Component) => {
+const applyNativeMethods = (Component) => {
   Object.keys(NativeMethodsMixin).forEach((method) => {
     if (!Component.prototype[method]) {
       Component.prototype[method] = NativeMethodsMixin[method]
@@ -16,4 +16,4 @@ const NativeMethodsDecorator = (Component) => {
   return Component
 }
 
-module.exports = NativeMethodsDecorator
+module.exports = applyNativeMethods

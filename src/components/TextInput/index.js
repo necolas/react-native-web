@@ -1,5 +1,5 @@
+import applyNativeMethods from '../../modules/applyNativeMethods'
 import createNativeComponent from '../../modules/createNativeComponent'
-import NativeMethodsDecorator from '../../modules/NativeMethodsDecorator'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
 import React, { Component, PropTypes } from 'react'
@@ -14,7 +14,6 @@ import ViewStylePropTypes from '../View/ViewStylePropTypes'
 
 const viewStyleProps = Object.keys(ViewStylePropTypes)
 
-@NativeMethodsDecorator
 class TextInput extends Component {
   static propTypes = {
     ...View.propTypes,
@@ -232,6 +231,8 @@ class TextInput extends Component {
     } catch (e) {}
   }
 }
+
+applyNativeMethods(TextInput)
 
 const styles = StyleSheet.create({
   initial: {
