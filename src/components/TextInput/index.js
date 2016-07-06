@@ -8,6 +8,7 @@ import StyleSheet from '../../apis/StyleSheet'
 import Text from '../Text'
 import TextareaAutosize from 'react-textarea-autosize'
 import TextInputState from './TextInputState'
+import UIManager from '../../apis/UIManager'
 import View from '../View'
 import ViewStylePropTypes from '../View/ViewStylePropTypes'
 
@@ -68,7 +69,7 @@ class TextInput extends Component {
   }
 
   setNativeProps(props) {
-    this.refs.input.setNativeProps(props)
+    UIManager.updateView(this.refs.input, props, this)
   }
 
   render() {
