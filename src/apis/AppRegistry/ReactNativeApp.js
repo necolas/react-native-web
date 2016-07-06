@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import StyleSheet from '../StyleSheet'
 import View from '../../components/View'
 
