@@ -1,6 +1,17 @@
+/**
+ * The browser implements the CSS cascade, where the order of properties is a
+ * factor in determining which styles to paint. React Native is different in
+ * giving precedence to the more specific styles. For example, the value of
+ * `paddingTop` takes precedence over that of `padding`.
+ *
+ * This module creates mutally exclusive style declarations by expanding all of
+ * React Native's supported shortform properties (e.g. `padding`) to their
+ * longfrom equivalents.
+ */
+
 import normalizeValue from './normalizeValue'
 
-const styleShortHands = {
+const styleShortFormProperties = {
   borderColor: [ 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor' ],
   borderRadius: [ 'borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius' ],
   borderStyle: [ 'borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle' ],
@@ -16,50 +27,46 @@ const styleShortHands = {
   writingDirection: [ 'direction' ]
 }
 
-/**
- * Alpha-sort properties, apart from shorthands – they must appear before the
- * longhand properties that they expand into. This lets more specific styles
- * override less specific styles, whatever the order in which they were
- * originally declared.
- */
-const sortProps = (propsArray) => propsArray.sort((a, b) => {
-  const expandedA = styleShortHands[a]
-  const expandedB = styleShortHands[b]
-  if (expandedA && expandedA.indexOf(b) > -1) {
-    return -1
-  } else if (expandedB && expandedB.indexOf(a) > -1) {
-    return 1
-  }
-  return a < b ? -1 : a > b ? 1 : 0
+const alphaSort = (arr) => arr.sort((a, b) => {
+  if (a < b) { return -1 }
+  if (a > b) { return 1 }
+  return 0
 })
 
-/**
- * Expand the shorthand properties to isolate every declaration from the others.
- */
-const expandStyle = (style) => {
-  const propsArray = Object.keys(style)
-  const sortedProps = sortProps(propsArray)
+const createStyleReducer = (originalStyle) => {
+  const originalStyleProps = Object.keys(originalStyle)
 
-  return sortedProps.reduce((resolvedStyle, key) => {
-    const expandedProps = styleShortHands[key]
-    const value = normalizeValue(key, style[key])
+  return (style, prop) => {
+    const value = normalizeValue(prop, originalStyle[prop])
+    const longFormProperties = styleShortFormProperties[prop]
 
     // React Native treats `flex:1` like `flex:1 1 auto`
-    if (key === 'flex') {
-      resolvedStyle.flexGrow = value
-      resolvedStyle.flexShrink = 1
-      resolvedStyle.flexBasis = 'auto'
-    } else if (key === 'textAlignVertical') {
-      resolvedStyle.verticalAlign = (value === 'center' ? 'middle' : value)
-    } else if (expandedProps) {
-      expandedProps.forEach((prop, i) => {
-        resolvedStyle[expandedProps[i]] = value
+    if (prop === 'flex') {
+      style.flexGrow = value
+      if (style.flexShrink == null) { style.flexShrink = 1 }
+      if (style.flexBasis == null) { style.flexBasis = 'auto' }
+    // React Native accepts 'center' as a value
+    } else if (prop === 'textAlignVertical') {
+      style.verticalAlign = (value === 'center' ? 'middle' : value)
+    } else if (longFormProperties) {
+      longFormProperties.forEach((longForm, i) => {
+        // the value of any longform property in the original styles takes
+        // precedence over the shortform's value
+        if (originalStyleProps.indexOf(longForm) === -1) {
+          style[longForm] = value
+        }
       })
     } else {
-      resolvedStyle[key] = value
+      style[prop] = value
     }
-    return resolvedStyle
-  }, {})
+    return style
+  }
+}
+
+const expandStyle = (style) => {
+  const sortedStyleProps = alphaSort(Object.keys(style))
+  const styleReducer = createStyleReducer(style)
+  return sortedStyleProps.reduce(styleReducer, {})
 }
 
 module.exports = expandStyle
