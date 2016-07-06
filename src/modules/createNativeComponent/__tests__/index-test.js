@@ -1,61 +1,59 @@
 /* eslint-env mocha */
 
-import * as utils from '../../specHelpers'
 import assert from 'assert'
-
-import createNativeComponent from '../'
+import createNativeComponent from '..'
+import { shallow } from 'enzyme'
 
 suite('modules/createNativeComponent', () => {
   test('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel'
-    const dom = utils.renderToDOM(createNativeComponent({ accessibilityLabel }))
-    assert.equal(dom.getAttribute('aria-label'), accessibilityLabel)
+    const element = shallow(createNativeComponent({ accessibilityLabel }))
+    assert.equal(element.prop('aria-label'), accessibilityLabel)
   })
 
   test('prop "accessibilityLiveRegion"', () => {
     const accessibilityLiveRegion = 'polite'
-    const dom = utils.renderToDOM(createNativeComponent({ accessibilityLiveRegion }))
-    assert.equal(dom.getAttribute('aria-live'), accessibilityLiveRegion)
+    const element = shallow(createNativeComponent({ accessibilityLiveRegion }))
+    assert.equal(element.prop('aria-live'), accessibilityLiveRegion)
   })
 
   test('prop "accessibilityRole"', () => {
     const accessibilityRole = 'banner'
-    let dom = utils.renderToDOM(createNativeComponent({ accessibilityRole }))
-    assert.equal(dom.getAttribute('role'), accessibilityRole)
-    assert.equal((dom.tagName).toLowerCase(), 'header')
+    let element = shallow(createNativeComponent({ accessibilityRole }))
+    assert.equal(element.prop('role'), accessibilityRole)
+    assert.equal(element.is('header'), true)
 
     const button = 'button'
-    dom = utils.renderToDOM(createNativeComponent({ accessibilityRole: 'button' }))
-    assert.equal(dom.getAttribute('type'), button)
-    assert.equal((dom.tagName).toLowerCase(), button)
+    element = shallow(createNativeComponent({ accessibilityRole: 'button' }))
+    assert.equal(element.prop('type'), button)
+    assert.equal(element.is('button'), true)
   })
 
   test('prop "accessible"', () => {
     // accessible (implicit)
-    let dom = utils.renderToDOM(createNativeComponent({}))
-    assert.equal(dom.getAttribute('aria-hidden'), null)
+    let element = shallow(createNativeComponent({}))
+    assert.equal(element.prop('aria-hidden'), null)
     // accessible (explicit)
-    dom = utils.renderToDOM(createNativeComponent({ accessible: true }))
-    assert.equal(dom.getAttribute('aria-hidden'), null)
+    element = shallow(createNativeComponent({ accessible: true }))
+    assert.equal(element.prop('aria-hidden'), null)
     // not accessible
-    dom = utils.renderToDOM(createNativeComponent({ accessible: false }))
-    assert.equal(dom.getAttribute('aria-hidden'), 'true')
+    element = shallow(createNativeComponent({ accessible: false }))
+    assert.equal(element.prop('aria-hidden'), true)
   })
 
   test('prop "component"', () => {
     const component = 'main'
-    const dom = utils.renderToDOM(createNativeComponent({ component }))
-    const tagName = (dom.tagName).toLowerCase()
-    assert.equal(tagName, component)
+    const element = shallow(createNativeComponent({ component }))
+    assert.equal(element.is('main'), true)
   })
 
   test('prop "testID"', () => {
     // no testID
-    let dom = utils.renderToDOM(createNativeComponent({}))
-    assert.equal(dom.getAttribute('data-testid'), null)
+    let element = shallow(createNativeComponent({}))
+    assert.equal(element.prop('data-testid'), null)
     // with testID
     const testID = 'Example.testID'
-    dom = utils.renderToDOM(createNativeComponent({ testID }))
-    assert.equal(dom.getAttribute('data-testid'), testID)
+    element = shallow(createNativeComponent({ testID }))
+    assert.equal(element.prop('data-testid'), testID)
   })
 })

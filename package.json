@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__,src/modules/specHelpers",
+    "build": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
     "build:umd": "webpack --config webpack.config.js --sort-assets-by --progress",
     "examples": "webpack-dev-server --config examples/webpack.config.js --inline --hot --colors --quiet",
     "lint": "eslint src",
