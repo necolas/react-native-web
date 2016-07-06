@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   wrapper: {
-    flexGrow: 1
+    flex: 1
   },
   input: {
     appearance: 'none',
@@ -248,8 +248,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
-    flexGrow: 1,
+    flex: 1,
     font: 'inherit',
+    minHeight: '100%', // center small inputs (fix #139)
     padding: 0,
     zIndex: 1
   },
