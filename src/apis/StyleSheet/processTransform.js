@@ -1,9 +1,21 @@
-import normalizeValue from './normalizeValue'
+const translateProperties = {
+  translateX: true,
+  translateY: true,
+  translateZ: true
+}
+
+const processTransformValue = (key, value) => {
+  if (translateProperties[key] && typeof value === 'number') {
+    value += 'px';
+  }
+  return value;
+}
 
 // { scale: 2 } => 'scale(2)'
+// { translateX: 20 } => 'translateX(20px)'
 const mapTransform = (transform) => {
   const type = Object.keys(transform)[0]
-  const value = normalizeValue('transform', transform[type])
+  const value = processTransformValue(type, transform[type])
   return `${type}(${value})`
 }
 
