@@ -6,9 +6,9 @@ const translateProperties = {
 
 const processTransformValue = (key, value) => {
   if (translateProperties[key] && typeof value === 'number') {
-    value += 'px';
+    value += 'px'
   }
-  return value;
+  return value
 }
 
 // { scale: 2 } => 'scale(2)'
