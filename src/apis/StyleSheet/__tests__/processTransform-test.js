@@ -14,7 +14,7 @@ suite('apis/StyleSheet/processTransform', () => {
 
     assert.deepEqual(
       processTransform(style),
-      { transform: 'scaleX(20) rotate(20deg)' }
+      { transform: 'scaleX(20px) rotate(20deg)' }
     )
   })
 
