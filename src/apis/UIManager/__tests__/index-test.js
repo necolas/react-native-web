@@ -111,9 +111,9 @@ suite('apis/UIManager', () => {
 
     test('adds new style to existing style', () => {
       const node = createNode({ color: 'red' })
-      const props = { style: { opacity: 0 } }
+      const props = { style: { marginVertical: 0, opacity: 0 } }
       UIManager.updateView(node, props, componentStub)
-      assert.equal(node.getAttribute('style'), 'color: red; opacity: 0;')
+      assert.equal(node.getAttribute('style'), 'color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;')
     })
 
     test('replaces input and textarea text', () => {

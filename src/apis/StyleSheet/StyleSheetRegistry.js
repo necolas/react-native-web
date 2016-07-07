@@ -6,21 +6,15 @@
  * @flow
  */
 
-import prefixAll from 'inline-style-prefix-all'
+import createReactStyleObject from './createReactStyleObject'
 import hyphenate from './hyphenate'
-import expandStyle from './expandStyle'
-import flattenStyle from './flattenStyle'
-import processTransform from './processTransform'
 import { predefinedClassNames } from './predefs'
+import prefixAll from 'inline-style-prefixer/static'
 
 let stylesCache = {}
 let uniqueID = 0
 
 const getCacheKey = (prop, value) => `${prop}:${value}`
-
-const normalizeStyle = (style) => {
-  return processTransform(expandStyle(flattenStyle(style)))
-}
 
 const createCssDeclarations = (style) => {
   return Object.keys(style).map((prop) => {
@@ -62,10 +56,10 @@ class StyleSheetRegistry {
       Object.freeze(style)
     }
 
-    const normalizedStyle = normalizeStyle(style)
+    const reactStyleObject = createReactStyleObject(style)
 
-    Object.keys(normalizedStyle).forEach((prop) => {
-      const value = normalizedStyle[prop]
+    Object.keys(reactStyleObject).forEach((prop) => {
+      const value = reactStyleObject[prop]
       const cacheKey = getCacheKey(prop, value)
       const exists = stylesCache[cacheKey] && stylesCache[cacheKey].id
       if (!exists) {
@@ -83,18 +77,18 @@ class StyleSheetRegistry {
 
   static getStyleAsNativeProps(styleSheetObject, canUseCSS = false) {
     const classList = []
-    const normalizedStyle = normalizeStyle(styleSheetObject)
+    const reactStyleObject = createReactStyleObject(styleSheetObject)
     let style = {}
 
-    for (const prop in normalizedStyle) {
-      const value = normalizedStyle[prop]
+    for (const prop in reactStyleObject) {
+      const value = reactStyleObject[prop]
       const cacheKey = getCacheKey(prop, value)
       let selector = stylesCache[cacheKey] && stylesCache[cacheKey].id || predefinedClassNames[cacheKey]
 
       if (selector && canUseCSS) {
         classList.push(selector)
       } else {
-        style[prop] = normalizedStyle[prop]
+        style[prop] = reactStyleObject[prop]
       }
     }
 
@@ -103,7 +97,7 @@ class StyleSheetRegistry {
      * inline-styles. For now, pick the last value and regress browser support
      * for CSS features like flexbox.
      */
-    const finalStyle = Object.keys(prefixAll(style)).reduce((acc, prop) => {
+    const vendorPrefixedStyle = Object.keys(prefixAll(style)).reduce((acc, prop) => {
       const value = style[prop]
       acc[prop] = Array.isArray(value) ? value[value.length - 1] : value
       return acc
@@ -111,7 +105,7 @@ class StyleSheetRegistry {
 
     return {
       className: classList.join(' '),
-      style: finalStyle
+      style: vendorPrefixedStyle
     }
   }
 }

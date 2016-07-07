@@ -1,6 +1,5 @@
+import createReactStyleObject from '../StyleSheet/createReactStyleObject'
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations'
-import flattenStyle from '../StyleSheet/flattenStyle'
-import processTransform from '../StyleSheet/processTransform'
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || node.parentNode
@@ -44,7 +43,7 @@ const UIManager = {
           // convert styles to DOM-styles
           CSSPropertyOperations.setValueForStyles(
             node,
-            processTransform(flattenStyle(value)),
+            createReactStyleObject(value),
             component._reactInternalInstance
           )
           break
