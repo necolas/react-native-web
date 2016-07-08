@@ -19,7 +19,12 @@ const unitlessNumbers = {
   fillOpacity: true,
   strokeDashoffset: true,
   strokeOpacity: true,
-  strokeWidth: true
+  strokeWidth: true,
+  // transform types
+  scale: true,
+  scaleX: true,
+  scaleY: true,
+  scaleZ: true
 }
 
 const normalizeValue = (property, value) => {
