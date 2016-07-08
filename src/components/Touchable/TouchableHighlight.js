@@ -14,7 +14,7 @@
 
 // Note (avik): add @flow when Flow supports spread properties in propTypes
 
-var ColorPropType = require('../../apis/StyleSheet/ColorPropType');
+var ColorPropType = require('../../propTypes/ColorPropType');
 var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
 var React = require('react');
 var StyleSheet = require('../../apis/StyleSheet');

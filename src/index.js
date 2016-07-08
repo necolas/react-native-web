@@ -38,9 +38,9 @@ import NativeModules from './modules/NativeModules'
 
 // propTypes
 
-import ColorPropType from './apis/StyleSheet/ColorPropType'
-import EdgeInsetsPropType from './apis/StyleSheet/EdgeInsetsPropType'
-import PointPropType from './apis/StyleSheet/PointPropType'
+import ColorPropType from './propTypes/ColorPropType'
+import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType'
+import PointPropType from './propTypes/PointPropType'
 
 const ReactNative = {
   // top-level API

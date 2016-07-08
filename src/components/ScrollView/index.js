@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom'
 import ScrollResponder from '../../modules/ScrollResponder'
 import ScrollViewBase from './ScrollViewBase'
 import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import View from '../View'
 import ViewStylePropTypes from '../View/ViewStylePropTypes'
 

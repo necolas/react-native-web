@@ -6,7 +6,7 @@
  */
 
 import createStrictShapeTypeChecker from './createStrictShapeTypeChecker'
-import flattenStyle from './flattenStyle'
+import flattenStyle from '../modules/flattenStyle'
 
 module.exports = function StyleSheetPropType(shape) {
   const shapePropType = createStrictShapeTypeChecker(shape)

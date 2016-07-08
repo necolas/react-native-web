@@ -3,7 +3,7 @@ import createNativeComponent from '../../modules/createNativeComponent'
 import normalizeNativeEvent from '../../apis/PanResponder/normalizeNativeEvent'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
 class View extends Component {

@@ -13,7 +13,7 @@
 'use strict';
 
 var Animated = require('../../apis/Animated');
-var EdgeInsetsPropType = require('../../apis/StyleSheet/EdgeInsetsPropType');
+var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
 var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
 var React = require('react');
 var StyleSheet = require('../../apis/StyleSheet');

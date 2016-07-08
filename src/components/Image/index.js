@@ -6,7 +6,7 @@ import ImageStylePropTypes from './ImageStylePropTypes'
 import resolveAssetSource from './resolveAssetSource'
 import React, { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import View from '../View'
 
 const STATUS_ERRORED = 'ERRORED'

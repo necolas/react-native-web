@@ -12,7 +12,7 @@
  */
 'use strict';
 
-var EdgeInsetsPropType = require('../../apis/StyleSheet/EdgeInsetsPropType');
+var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
