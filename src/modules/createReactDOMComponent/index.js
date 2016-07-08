@@ -27,7 +27,8 @@ const createReactDOMComponent = ({
   type,
   ...other
 }) => {
-  const Component = accessibilityRole && roleComponents[accessibilityRole] ? roleComponents[accessibilityRole] : component
+  const role = accessibilityRole
+  const Component = role && roleComponents[role] ? roleComponents[role] : component
 
   return (
     <Component
@@ -37,8 +38,8 @@ const createReactDOMComponent = ({
       aria-label={accessibilityLabel}
       aria-live={accessibilityLiveRegion}
       data-testid={testID}
-      role={accessibilityRole}
-      type={accessibilityRole === 'button' ? 'button' : type}
+      role={role}
+      type={role === 'button' ? 'button' : type}
     />
   )
 }

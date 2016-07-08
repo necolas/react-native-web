@@ -57,6 +57,8 @@ class View extends Component {
 
     const flattenedStyle = StyleSheet.flatten(style)
     const pointerEventsStyle = pointerEvents && { pointerEvents }
+    // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
+    const needsFlexReset = flattenedStyle.flex == null && flattenedStyle.flexShrink == null
 
     const props = {
       ...other,
@@ -73,8 +75,7 @@ class View extends Component {
       style: [
         styles.initial,
         style,
-        // 'View' needs to use 'flexShrink' in its reset when there is no 'flex' style provided
-        (flattenedStyle.flex == null && flattenedStyle.flexShrink == null) && styles.flexReset,
+        needsFlexReset && styles.flexReset,
         pointerEventsStyle
       ]
     }

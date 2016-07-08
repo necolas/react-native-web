@@ -23,7 +23,7 @@ var Touchable = require('./Touchable');
 var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
 
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var flattenStyle = require('../../apis/StyleSheet/flattenStyle');
+var flattenStyle = StyleSheet.flatten
 
 type Event = Object;
 
