@@ -17,7 +17,7 @@ const roleComponents = {
   region: 'section'
 }
 
-const createNativeComponent = ({
+const createReactDOMComponent = ({
   accessibilityLabel,
   accessibilityLiveRegion,
   accessibilityRole,
@@ -43,7 +43,7 @@ const createNativeComponent = ({
   )
 }
 
-createNativeComponent.propTypes = {
+createReactDOMComponent.propTypes = {
   accessibilityLabel: PropTypes.string,
   accessibilityLiveRegion: PropTypes.oneOf([ 'assertive', 'off', 'polite' ]),
   accessibilityRole: PropTypes.string,
@@ -54,4 +54,4 @@ createNativeComponent.propTypes = {
   type: PropTypes.string
 }
 
-module.exports = createNativeComponent
+module.exports = createReactDOMComponent

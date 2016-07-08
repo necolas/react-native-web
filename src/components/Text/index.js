@@ -1,5 +1,5 @@
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createNativeComponent from '../../modules/createNativeComponent'
+import createReactDOMComponent from '../../modules/createReactDOMComponent'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
@@ -7,14 +7,14 @@ import TextStylePropTypes from './TextStylePropTypes'
 
 class Text extends Component {
   static propTypes = {
-    accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
-    accessibilityRole: createNativeComponent.propTypes.accessibilityRole,
-    accessible: createNativeComponent.propTypes.accessible,
+    accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
+    accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
+    accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onPress: PropTypes.func,
     style: StyleSheetPropType(TextStylePropTypes),
-    testID: createNativeComponent.propTypes.testID
+    testID: createReactDOMComponent.propTypes.testID
   };
 
   static defaultProps = {
@@ -35,7 +35,7 @@ class Text extends Component {
       ...other
     } = this.props
 
-    return createNativeComponent({
+    return createReactDOMComponent({
       ...other,
       component: 'span',
       onClick: this._onPress,

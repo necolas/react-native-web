@@ -1,5 +1,5 @@
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createNativeComponent from '../../modules/createNativeComponent'
+import createReactDOMComponent from '../../modules/createReactDOMComponent'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
 import React, { Component, PropTypes } from 'react'
@@ -175,7 +175,7 @@ class TextInput extends Component {
         testID={testID}
       >
         <View style={styles.wrapper}>
-          {createNativeComponent({ ...props, ref: 'input' })}
+          {createReactDOMComponent({ ...props, ref: 'input' })}
           {optionalPlaceholder}
         </View>
       </View>
