@@ -6,7 +6,7 @@
 
 "use strict";
 
-import normalizeNativeEvent from './normalizeNativeEvent';
+import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 var TouchHistoryMath = require('./TouchHistoryMath');
 
 var currentCentroidXOfTouchesChangedAfter =

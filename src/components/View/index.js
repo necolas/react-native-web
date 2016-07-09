@@ -1,6 +1,6 @@
 import applyNativeMethods from '../../modules/applyNativeMethods'
 import createNativeComponent from '../../modules/createNativeComponent'
-import normalizeNativeEvent from '../../apis/PanResponder/normalizeNativeEvent'
+import normalizeNativeEvent from '../../modules/normalizeNativeEvent'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType'

@@ -1,4 +1,4 @@
-import './apis/PanResponder/injectResponderEventPlugin'
+import './modules/injectResponderEventPlugin'
 
 import findNodeHandle from './modules/findNodeHandle'
 import ReactDOM from 'react-dom'
