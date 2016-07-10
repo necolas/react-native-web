@@ -1,5 +1,6 @@
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createNativeComponent from '../../modules/createNativeComponent'
+import createReactDOMComponent from '../../modules/createReactDOMComponent'
+import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType'
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
@@ -8,13 +9,15 @@ import ViewStylePropTypes from './ViewStylePropTypes'
 
 class View extends Component {
   static propTypes = {
-    accessibilityLabel: createNativeComponent.propTypes.accessibilityLabel,
-    accessibilityLiveRegion: createNativeComponent.propTypes.accessibilityLiveRegion,
-    accessibilityRole: createNativeComponent.propTypes.accessibilityRole,
-    accessible: createNativeComponent.propTypes.accessible,
+    accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
+    accessibilityLiveRegion: createReactDOMComponent.propTypes.accessibilityLiveRegion,
+    accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
+    accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
+    hitSlop: EdgeInsetsPropType,
     onClick: PropTypes.func,
     onClickCapture: PropTypes.func,
+    onLayout: PropTypes.func,
     onMoveShouldSetResponder: PropTypes.func,
     onMoveShouldSetResponderCapture: PropTypes.func,
     onResponderGrant: PropTypes.func,
@@ -35,7 +38,7 @@ class View extends Component {
     onTouchStartCapture: PropTypes.func,
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
     style: StyleSheetPropType(ViewStylePropTypes),
-    testID: createNativeComponent.propTypes.testID
+    testID: createReactDOMComponent.propTypes.testID
   };
 
   static defaultProps = {
@@ -50,6 +53,8 @@ class View extends Component {
 
   render() {
     const {
+      hitSlop, // eslint-disable-line
+      onLayout, // eslint-disable-line
       pointerEvents,
       style,
       ...other
@@ -80,7 +85,7 @@ class View extends Component {
       ]
     }
 
-    return createNativeComponent(props)
+    return createReactDOMComponent(props)
   }
 
   /**
