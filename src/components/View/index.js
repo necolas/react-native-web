@@ -1,3 +1,4 @@
+import applyLayout from '../../modules/applyLayout'
 import applyNativeMethods from '../../modules/applyNativeMethods'
 import createReactDOMComponent from '../../modules/createReactDOMComponent'
 import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType'
@@ -8,6 +9,8 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
 class View extends Component {
+  static displayName = 'View'
+
   static propTypes = {
     accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
     accessibilityLiveRegion: createReactDOMComponent.propTypes.accessibilityLiveRegion,
@@ -105,7 +108,7 @@ class View extends Component {
   }
 }
 
-applyNativeMethods(View)
+applyLayout(applyNativeMethods(View))
 
 const styles = StyleSheet.create({
   // https://github.com/facebook/css-layout#default-values

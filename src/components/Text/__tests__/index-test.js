@@ -14,6 +14,15 @@ suite('components/Text', () => {
 
   test('prop "numberOfLines"')
 
+  test('prop "onLayout"', (done) => {
+    mount(<Text onLayout={onLayout} />)
+    function onLayout(e) {
+      const { layout } = e.nativeEvent
+      assert.deepEqual(layout, { x: 0, y: 0, width: 0, height: 0 })
+      done()
+    }
+  })
+
   test('prop "onPress"', (done) => {
     const text = mount(<Text onPress={onPress} />)
     text.simulate('click')

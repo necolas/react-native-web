@@ -9,6 +9,8 @@ several child components, wrap them in a View.
 
 ## Props
 
+[...View props](./View.md)
+
 **accessibilityLabel**: string
 
 Overrides the text that's read by the screen reader when the user interacts
@@ -21,6 +23,8 @@ Allows assistive technologies to present and support interaction with the view
 **accessible**: bool = true
 
 When `false`, the view is hidden from screenreaders.
+
+**children**: View
 
 **delayLongPress**: number
 
@@ -47,9 +51,8 @@ always takes precedence if a touch hits two overlapping views.
 
 **onLayout**: function
 
-Invoked on mount and layout changes with.
-
-`{nativeEvent: {layout: {x, y, width, height}}}`
+Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
+height } } }`, where `x` and `y` are the offsets from the parent node.
 
 **onLongPress**: function
 

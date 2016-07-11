@@ -33,7 +33,7 @@ const UIManager = {
     _measureLayout(node, relativeTo, onSuccess)
   },
 
-  updateView(node, props, component /* only needed to surpress React errors in __DEV__ */) {
+  updateView(node, props, component /* only needed to surpress React errors in development */) {
     for (const prop in props) {
       const value = props[prop]
 

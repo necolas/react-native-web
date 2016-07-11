@@ -31,7 +31,8 @@ Invoked on load error with `{nativeEvent: {error}}`.
 
 **onLayout**: function
 
-TODO
+Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
+height } } }`, where `x` and `y` are the offsets from the parent node.
 
 **onLoad**: function
 
@@ -57,7 +58,7 @@ could be an http address or a base64 encoded image.
 
 **style**: style
 
-+ ...[View#style](View.md)
++ ...[View#style](./View.md)
 + `resizeMode`
 
 **testID**: string

@@ -33,6 +33,7 @@ export default class App extends React.Component {
 
         <Heading size='large'>Image</Heading>
         <Image
+        onLayout={(e) => { console.log(e.nativeEvent.layout) }}
           accessibilityLabel='accessible image'
           children={<Text>Inner content</Text>}
           defaultSource={{
@@ -57,6 +58,7 @@ export default class App extends React.Component {
         <Heading size='large'>Text</Heading>
         <Text
           onPress={(e) => { console.log('Text.onPress', e) }}
+          onLayout={(e) => { console.log(e.nativeEvent.layout) }}
           testID={'Example.text'}
         >
           PRESS ME.

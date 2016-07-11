@@ -73,9 +73,7 @@ class TextInput extends Component {
 
   render() {
     const {
-      /* eslint-disable react/prop-types */
-      accessibilityLabel,
-      /* eslint-enable react/prop-types */
+      accessibilityLabel, // eslint-disable-line
       autoComplete,
       autoFocus,
       defaultValue,
@@ -85,6 +83,7 @@ class TextInput extends Component {
       maxNumberOfLines,
       multiline,
       numberOfLines,
+      onLayout,
       onSelectionChange,
       placeholder,
       placeholderTextColor,
@@ -171,6 +170,7 @@ class TextInput extends Component {
       <View
         accessibilityLabel={accessibilityLabel}
         onClick={this._handleClick}
+        onLayout={onLayout}
         style={[ styles.initial, rootStyles ]}
         testID={testID}
       >

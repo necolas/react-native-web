@@ -1,3 +1,4 @@
+import applyLayout from '../../modules/applyLayout'
 import applyNativeMethods from '../../modules/applyNativeMethods'
 import createReactDOMComponent from '../../modules/createReactDOMComponent'
 import { Component, PropTypes } from 'react'
@@ -6,12 +7,15 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import TextStylePropTypes from './TextStylePropTypes'
 
 class Text extends Component {
+  static displayName = 'Text'
+
   static propTypes = {
     accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
     accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
     accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
+    onLayout: PropTypes.func,
     onPress: PropTypes.func,
     style: StyleSheetPropType(TextStylePropTypes),
     testID: createReactDOMComponent.propTypes.testID
@@ -21,16 +25,11 @@ class Text extends Component {
     accessible: true
   };
 
-  _onPress = (e) => {
-    if (this.props.onPress) this.props.onPress(e)
-  }
-
   render() {
     const {
       numberOfLines,
-      /* eslint-disable no-unused-vars */
-      onPress,
-      /* eslint-enable no-unused-vars */
+      onLayout, // eslint-disable-line
+      onPress, // eslint-disable-line
       style,
       ...other
     } = this.props
@@ -46,9 +45,13 @@ class Text extends Component {
       ]
     })
   }
+
+  _onPress = (e) => {
+    if (this.props.onPress) this.props.onPress(e)
+  }
 }
 
-applyNativeMethods(Text)
+applyLayout(applyNativeMethods(Text))
 
 const styles = StyleSheet.create({
   initial: {

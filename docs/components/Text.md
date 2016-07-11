@@ -45,6 +45,11 @@ Child content.
 
 Truncates the text with an ellipsis after this many lines. Currently only supports `1`.
 
+**onLayout**: function
+
+Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
+height } } }`, where `x` and `y` are the offsets from the parent node.
+
 **onPress**: function
 
 This function is called on press.

@@ -23,12 +23,15 @@ const ImageSourcePropType = PropTypes.oneOfType([
 ])
 
 class Image extends Component {
+  static displayName = 'Image'
+
   static propTypes = {
     accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
     accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
     defaultSource: ImageSourcePropType,
     onError: PropTypes.func,
+    onLayout: PropTypes.func,
     onLoad: PropTypes.func,
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
@@ -82,6 +85,7 @@ class Image extends Component {
       accessible,
       children,
       defaultSource,
+      onLayout,
       source,
       testID
     } = this.props
@@ -107,6 +111,7 @@ class Image extends Component {
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
+        onLayout={onLayout}
         ref='root'
         style={[
           styles.initial,

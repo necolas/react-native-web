@@ -29,8 +29,6 @@ Determines whether the keyboard gets dismissed in response to a scroll drag.
 
 **onContentSizeChange**: function
 
-TODO
-
 Called when scrollable content view of the `ScrollView` changes. It's
 implemented using the `onLayout` handler attached to the content container
 which this `ScrollView` renders.

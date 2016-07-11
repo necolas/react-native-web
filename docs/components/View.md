@@ -48,7 +48,8 @@ implemented using `aria-hidden`.)
 
 **onLayout**: function
 
-(TODO)
+Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
+height } } }`, where `x` and `y` are the offsets from the parent node.
 
 **onMoveShouldSetResponder**: function
 

@@ -14,16 +14,11 @@ Unsupported React Native props:
 `enablesReturnKeyAutomatically` (ios),
 `returnKeyType` (ios),
 `selectionState` (ios),
-`textAlign` (android),
-`textAlignVertical` (android),
 `underlineColorAndroid` (android)
 
 ## Props
 
-(web) **accessibilityLabel**: string
-
-Defines the text label available to assistive technologies upon interaction
-with the element. (This is implemented using `aria-label`.)
+[...View props](./View.md)
 
 (web) **autoComplete**: bool = false
 
@@ -92,10 +87,6 @@ as an argument to the callback handler.
 
 Callback that is called when the text input is focused.
 
-**onLayout**: function
-
-TODO
-
 (web) **onSelectionChange**: function
 
 Callback that is called when the text input's selection changes. The following
@@ -132,7 +123,7 @@ If `true`, all text will automatically be selected on focus.
 
 **style**: style
 
-+ ...[Text#style](Text.md)
++ ...[Text#style](./Text.md)
 + `outline`
 
 **testID**: string

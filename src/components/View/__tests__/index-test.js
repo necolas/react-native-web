@@ -3,14 +3,23 @@
 import assert from 'assert'
 import includes from 'lodash/includes'
 import React from 'react'
-import { shallow } from 'enzyme'
 import View from '../'
+import { mount, shallow } from 'enzyme'
 
 suite('components/View', () => {
   test('prop "children"', () => {
     const children = 'children'
     const view = shallow(<View>{children}</View>)
     assert.equal(view.prop('children'), children)
+  })
+
+  test('prop "onLayout"', (done) => {
+    mount(<View onLayout={onLayout} />)
+    function onLayout(e) {
+      const { layout } = e.nativeEvent
+      assert.deepEqual(layout, { x: 0, y: 0, width: 0, height: 0 })
+      done()
+    }
   })
 
   test('prop "pointerEvents"', () => {
