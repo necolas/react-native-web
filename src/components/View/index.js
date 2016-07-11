@@ -14,6 +14,7 @@ class View extends Component {
     accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
     accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
+    collapsable: PropTypes.bool,
     hitSlop: EdgeInsetsPropType,
     onClick: PropTypes.func,
     onClickCapture: PropTypes.func,
@@ -53,6 +54,7 @@ class View extends Component {
 
   render() {
     const {
+      collapsable, // eslint-disable-line
       hitSlop, // eslint-disable-line
       onLayout, // eslint-disable-line
       pointerEvents,

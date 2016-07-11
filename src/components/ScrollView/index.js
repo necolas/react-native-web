@@ -121,16 +121,15 @@ const ScrollView = React.createClass({
   },
 
   render() {
-    const scrollViewStyle = [
-      styles.base,
-      this.props.horizontal && styles.baseHorizontal
-    ]
-
-    const contentContainerStyle = [
-      styles.contentContainer,
-      this.props.horizontal && styles.contentContainerHorizontal,
-      this.props.contentContainerStyle
-    ]
+    const {
+      contentContainerStyle,
+      horizontal,
+      keyboardDismissMode, // eslint-disable-line
+      onContentSizeChange,
+      onScroll, // eslint-disable-line
+      refreshControl,
+      ...other
+    } = this.props
 
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style)
@@ -143,7 +142,7 @@ const ScrollView = React.createClass({
     }
 
     let contentSizeChangeProps = {}
-    if (this.props.onContentSizeChange) {
+    if (onContentSizeChange) {
       contentSizeChangeProps = {
         onLayout: this._handleContentOnLayout
       }
@@ -155,13 +154,21 @@ const ScrollView = React.createClass({
         children={this.props.children}
         collapsable={false}
         ref={INNERVIEW}
-        style={contentContainerStyle}
+        style={[
+          styles.contentContainer,
+          horizontal && styles.contentContainerHorizontal,
+          contentContainerStyle
+        ]}
       />
     )
 
     const props = {
-      ...this.props,
-      style: [scrollViewStyle, this.props.style],
+      ...other,
+      style: [
+        styles.base,
+        horizontal && styles.baseHorizontal,
+        this.props.style
+      ],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -187,7 +194,6 @@ const ScrollView = React.createClass({
       'ScrollViewClass must not be undefined'
     )
 
-    var refreshControl = this.props.refreshControl
     if (refreshControl) {
       return React.cloneElement(
         refreshControl,

@@ -16,7 +16,11 @@ import View from '../View'
 export default class ScrollViewBase extends Component {
   static propTypes = {
     ...View.propTypes,
+    onMomentumScrollBegin: PropTypes.func,
+    onMomentumScrollEnd: PropTypes.func,
     onScroll: PropTypes.func,
+    onScrollBeginDrag: PropTypes.func,
+    onScrollEndDrag: PropTypes.func,
     onTouchMove: PropTypes.func,
     onWheel: PropTypes.func,
     scrollEnabled: PropTypes.bool,
@@ -30,12 +34,10 @@ export default class ScrollViewBase extends Component {
   constructor(props) {
     super(props)
     this._debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100)
-    this._handlePreventableScrollEvent = this._handlePreventableScrollEvent.bind(this)
-    this._handleScroll = this._handleScroll.bind(this)
     this._state = { isScrolling: false }
   }
 
-  _handlePreventableScrollEvent(handler) {
+  _handlePreventableScrollEvent = (handler) => {
     return (e) => {
       if (!this.props.scrollEnabled) {
         e.preventDefault()
@@ -45,7 +47,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _handleScroll(e) {
+  _handleScroll = (e) => {
     const { scrollEventThrottle } = this.props
     // A scroll happened, so the scroll bumps the debounce.
     this._debouncedOnScrollEnd(e)
@@ -83,9 +85,14 @@ export default class ScrollViewBase extends Component {
   }
 
   render() {
+    const {
+      onMomentumScrollBegin, onMomentumScrollEnd, onScrollBeginDrag, onScrollEndDrag, scrollEnabled, scrollEventThrottle, // eslint-disable-line
+      ...other
+    } = this.props
+
     return (
       <View
-        {...this.props}
+        {...other}
         onScroll={this._handleScroll}
         onTouchMove={this._handlePreventableScrollEvent(this.props.onTouchMove)}
         onWheel={this._handlePreventableScrollEvent(this.props.onWheel)}
