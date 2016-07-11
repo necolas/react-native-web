@@ -135,7 +135,7 @@ class TextInput extends Component {
       onFocus: this._handleFocus,
       onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
-      style: { ...styles.input, ...textStyles, outline: style.outline },
+      style: [ styles.input, textStyles, { outline: style.outline } ],
       value
     }
 

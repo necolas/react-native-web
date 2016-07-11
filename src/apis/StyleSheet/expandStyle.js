@@ -11,6 +11,7 @@
 
 import normalizeValue from './normalizeValue'
 
+const emptyObject = {}
 const styleShortFormProperties = {
   borderColor: [ 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor' ],
   borderRadius: [ 'borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius' ],
@@ -43,8 +44,8 @@ const createStyleReducer = (originalStyle) => {
     // React Native treats `flex:1` like `flex:1 1 auto`
     if (prop === 'flex') {
       style.flexGrow = value
-      if (style.flexShrink == null) { style.flexShrink = 1 }
-      if (style.flexBasis == null) { style.flexBasis = 'auto' }
+      style.flexShrink = 1
+      style.flexBasis = 'auto'
     // React Native accepts 'center' as a value
     } else if (prop === 'textAlignVertical') {
       style.verticalAlign = (value === 'center' ? 'middle' : value)
@@ -63,7 +64,7 @@ const createStyleReducer = (originalStyle) => {
   }
 }
 
-const expandStyle = (style) => {
+const expandStyle = (style = emptyObject) => {
   const sortedStyleProps = alphaSort(Object.keys(style))
   const styleReducer = createStyleReducer(style)
   return sortedStyleProps.reduce(styleReducer, {})

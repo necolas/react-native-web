@@ -35,7 +35,6 @@ const UIManager = {
 
   updateView(node, props, component /* only needed to surpress React errors in __DEV__ */) {
     for (const prop in props) {
-      let nativeProp
       const value = props[prop]
 
       switch (prop) {
@@ -48,12 +47,13 @@ const UIManager = {
           )
           break
         case 'class':
-        case 'className':
-          nativeProp = 'class'
+        case 'className': {
+          const nativeProp = 'class'
           // prevent class names managed by React Native from being replaced
           const className = node.getAttribute(nativeProp) + ' ' + value
           node.setAttribute(nativeProp, className)
           break
+        }
         case 'text':
         case 'value':
           // native platforms use `text` prop to replace text input value

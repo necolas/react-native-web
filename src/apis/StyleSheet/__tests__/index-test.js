@@ -1,60 +1,70 @@
 /* eslint-env mocha */
 
-import { resetCSS, predefinedCSS } from '../predefs'
 import assert from 'assert'
+import { defaultStyles } from '../predefs'
+import isPlainObject from 'lodash/isPlainObject'
 import StyleSheet from '..'
-
-const styles = { root: { opacity: 1 } }
 
 suite('apis/StyleSheet', () => {
   setup(() => {
-    StyleSheet._destroy()
+    StyleSheet._reset()
+  })
+
+  test('absoluteFill', () => {
+    assert(Number.isInteger(StyleSheet.absoluteFill) === true)
+  })
+
+  test('absoluteFillObject', () => {
+    assert.ok(isPlainObject(StyleSheet.absoluteFillObject) === true)
   })
 
   suite('create', () => {
-    test('returns styles object', () => {
-      assert.equal(StyleSheet.create(styles), styles)
+    test('replaces styles with numbers', () => {
+      const style = StyleSheet.create({ root: { opacity: 1 } })
+      assert(Number.isInteger(style.root) === true)
     })
 
-    test('updates already-rendered style sheet', () => {
-      // setup
-      const div = document.createElement('div')
-      document.body.appendChild(div)
-      StyleSheet.create(styles)
-      div.innerHTML = `<style id='${StyleSheet.elementId}'>${StyleSheet.renderToString()}</style>`
-
-      // test
+    test('renders a style sheet in the browser', () => {
       StyleSheet.create({ root: { color: 'red' } })
       assert.equal(
-        document.getElementById(StyleSheet.elementId).textContent,
-        `${resetCSS}\n${predefinedCSS}\n` +
-        `/* 2 unique declarations */\n` +
-        `.__style1{opacity:1;}\n` +
-        '.__style2{color:red;}'
+        document.getElementById('__react-native-style').textContent,
+        defaultStyles
       )
-
-      // teardown
-      document.body.removeChild(div)
     })
   })
 
-  test('renderToString', () => {
-    StyleSheet.create(styles)
+  test('flatten', () => {
+    assert(typeof StyleSheet.flatten === 'function')
+  })
 
+  test('hairlineWidth', () => {
+    assert(Number.isInteger(StyleSheet.hairlineWidth) === true)
+  })
+
+  test('render', () => {
     assert.equal(
-      StyleSheet.renderToString(),
-      `${resetCSS}\n${predefinedCSS}\n` +
-      `/* 1 unique declarations */\n` +
-      '.__style1{opacity:1;}'
+      StyleSheet.render().props.dangerouslySetInnerHTML.__html,
+      defaultStyles
     )
   })
 
   test('resolve', () => {
     assert.deepEqual(
-      StyleSheet.resolve({ className: 'test', style: styles.root }),
-      {
+      StyleSheet.resolve({
         className: 'test',
-        style: { opacity: 1 }
+        style: {
+          display: 'flex',
+          opacity: 1,
+          pointerEvents: 'box-none'
+        }
+      }),
+      {
+        className: 'test __style_df __style_pebn',
+        style: {
+          display: 'flex',
+          opacity: 1,
+          pointerEvents: 'box-none'
+        }
       }
     )
   })

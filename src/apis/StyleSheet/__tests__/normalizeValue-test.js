@@ -9,5 +9,6 @@ suite('apis/StyleSheet/normalizeValue', () => {
   })
   test('ignores unitless property values', () => {
     assert.deepEqual(normalizeValue('flexGrow', 1), 1)
+    assert.deepEqual(normalizeValue('scale', 2), 2)
   })
 })

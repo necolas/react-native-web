@@ -5,7 +5,7 @@ const Heading = ({ children, size = 'normal' }) => (
   <Text
     accessibilityRole='heading'
     children={children}
-    style={{ ...styles.root, ...sizeStyles[size] }}
+    style={[ styles.root, sizeStyles[size] ]}
   />
 )
 

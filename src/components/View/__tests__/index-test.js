@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 
 import assert from 'assert'
+import includes from 'lodash/includes'
 import React from 'react'
 import { shallow } from 'enzyme'
 import View from '../'
@@ -14,7 +15,7 @@ suite('components/View', () => {
 
   test('prop "pointerEvents"', () => {
     const view = shallow(<View pointerEvents='box-only' />)
-    assert.equal(view.prop('className'), '__style_pebo')
+    assert.ok(includes(view.prop('className'), '__style_pebo') === true)
   })
 
   test('prop "style"', () => {

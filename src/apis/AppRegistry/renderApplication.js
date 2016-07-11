@@ -13,16 +13,8 @@ import ReactDOMServer from 'react-dom/server'
 import ReactNativeApp from './ReactNativeApp'
 import StyleSheet from '../../apis/StyleSheet'
 
-const renderStyleSheetToString = () => StyleSheet.renderToString()
-const styleAsElement = (style) => <style dangerouslySetInnerHTML={{ __html: style }} id={StyleSheet.elementId} />
-const styleAsTagString = (style) => `<style id="${StyleSheet.elementId}">${style}</style>`
-
 export default function renderApplication(RootComponent: Component, initialProps: Object, rootTag: any) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag)
-
-  // insert style sheet if needed
-  const styleElement = document.getElementById(StyleSheet.elementId)
-  if (!styleElement) { rootTag.insertAdjacentHTML('beforebegin', styleAsTagString(renderStyleSheetToString())) }
 
   const component = (
     <ReactNativeApp
@@ -42,7 +34,6 @@ export function prerenderApplication(RootComponent: Component, initialProps: Obj
     />
   )
   const html = ReactDOMServer.renderToString(component)
-  const style = renderStyleSheetToString()
-  const styleElement = styleAsElement(style)
-  return { html, style, styleElement }
+  const styleElement = StyleSheet.render()
+  return { html, styleElement }
 }

@@ -20,24 +20,24 @@ export default class GridView extends Component {
   render() {
     const { alley, children, gutter, style, ...other } = this.props
 
-    const rootStyle = {
-      ...style,
-      ...styles.root
-    }
+    const rootStyle = [
+      style,
+      styles.root
+    ]
 
-    const contentContainerStyle = {
-      ...styles.contentContainer,
-      marginHorizontal: `calc(-0.5 * ${alley})`,
-      paddingHorizontal: `${gutter}`
-    }
+    const contentContainerStyle = [
+      styles.contentContainer,
+      { marginHorizontal: `calc(-0.5 * ${alley})` },
+      { paddingHorizontal: `${gutter}` }
+    ]
 
     const newChildren = React.Children.map(children, (child) => {
       return child && React.cloneElement(child, {
-        style: {
-          ...child.props.style,
-          ...styles.column,
-          marginHorizontal: `calc(0.5 * ${alley})`
-        }
+        style: [
+          child.props.style,
+          styles.column,
+          { marginHorizontal: `calc(0.5 * ${alley})` }
+        ]
       })
     })
 

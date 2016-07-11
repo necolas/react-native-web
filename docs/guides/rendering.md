@@ -54,5 +54,5 @@ AppRegistry.runApplication('App', {
 })
 
 // prerender the app
-const { html, style, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
+const { html, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 ```

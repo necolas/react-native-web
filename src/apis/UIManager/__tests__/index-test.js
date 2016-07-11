@@ -109,7 +109,7 @@ suite('apis/UIManager', () => {
       assert.equal(node.getAttribute('class'), 'existing extra')
     })
 
-    test('adds new style to existing style', () => {
+    test('adds correct DOM styles to existing style', () => {
       const node = createNode({ color: 'red' })
       const props = { style: { marginVertical: 0, opacity: 0 } }
       UIManager.updateView(node, props, componentStub)
