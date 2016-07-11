@@ -106,11 +106,10 @@ var TouchableHighlight = React.createClass({
           backgroundColor: underlayColor,
         }
       },
-      underlayProps: {
-        style: {
-          backgroundColor: style && style.backgroundColor || null
-        }
-      }
+      underlayStyle: [
+        INACTIVE_UNDERLAY_PROPS.style,
+        props.style,
+      ]
     };
   },
 
@@ -206,7 +205,10 @@ var TouchableHighlight = React.createClass({
     this._hideTimeout = null;
     if (this._hasPressHandler() && this.refs[UNDERLAY_REF]) {
       this.refs[CHILD_REF].setNativeProps(INACTIVE_CHILD_PROPS);
-      this.refs[UNDERLAY_REF].setNativeProps(this.state.underlayProps);
+      this.refs[UNDERLAY_REF].setNativeProps({
+        ...INACTIVE_UNDERLAY_PROPS,
+        style: this.state.underlayStyle,
+      });
       this.props.onHideUnderlay && this.props.onHideUnderlay();
     }
   },
@@ -263,6 +265,9 @@ var CHILD_REF = keyOf({childRef: null});
 var UNDERLAY_REF = keyOf({underlayRef: null});
 var INACTIVE_CHILD_PROPS = {
   style: StyleSheet.create({x: {opacity: 1.0}}).x,
+};
+var INACTIVE_UNDERLAY_PROPS = {
+  style: StyleSheet.create({x: {backgroundColor: 'transparent'}}).x,
 };
 
 var styles = StyleSheet.create({
