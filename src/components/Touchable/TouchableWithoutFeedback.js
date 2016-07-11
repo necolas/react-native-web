@@ -18,6 +18,7 @@ var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
 var View = require('../View');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
+var warning = require('fbjs/lib/warning');
 
 type Event = Object;
 
@@ -32,12 +33,12 @@ var PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
  * >
  * > If you wish to have several child components, wrap them in a View.
  */
-var TouchableWithoutFeedback = React.createClass({
+const TouchableWithoutFeedback = React.createClass({
   mixins: [TimerMixin, Touchable.Mixin],
 
   propTypes: {
-    accessible: React.PropTypes.bool,
-    accessibilityLabel: View.propTypes.accessibilityLabel,
+    accessible: View.propTypes.accessible,
+    aaccessibilityLabel: View.propTypes.accessibilityLabel,
     accessibilityRole: View.propTypes.accessibilityRole,
     /**
      * If true, disable all interactions for this component.
@@ -143,9 +144,25 @@ var TouchableWithoutFeedback = React.createClass({
     return this.props.delayPressOut || 0;
   },
 
-  render: function(): ReactElement {
+  render: function(): ReactElement<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
-    return (React: any).cloneElement(React.Children.only(this.props.children), {
+    const child = React.Children.only(this.props.children);
+    let children = child.props.children;
+    warning(
+      !child.type || child.type.displayName !== 'Text',
+      'TouchableWithoutFeedback does not work well with Text children. Wrap children in a View instead. See ' +
+        ((child._owner && child._owner.getName && child._owner.getName()) || '<unknown>')
+    );
+    if (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'View') {
+      if (!Array.isArray(children)) {
+        children = [children];
+      }
+      children.push(Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}));
+    }
+    const style = (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text') ?
+      [child.props.style, {color: 'red'}] :
+      child.props.style;
+    return (React: any).cloneElement(child, {
       accessible: this.props.accessible !== false,
       accessibilityLabel: this.props.accessibilityLabel,
       accessibilityRole: this.props.accessibilityRole,
@@ -158,6 +175,8 @@ var TouchableWithoutFeedback = React.createClass({
       onResponderMove: this.touchableHandleResponderMove,
       onResponderRelease: this.touchableHandleResponderRelease,
       onResponderTerminate: this.touchableHandleResponderTerminate,
+      style,
+      children,
       tabIndex: '0'
     });
   }

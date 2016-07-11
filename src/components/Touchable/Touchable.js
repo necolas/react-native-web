@@ -735,7 +735,7 @@ var Touchable = {
     if (!Touchable.TOUCH_TARGET_DEBUG) {
       return null;
     }
-    if (!__DEV__) {
+    if (process.env.NODE_ENV === 'production') {
       throw Error('Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!');
     }
     const debugHitSlopStyle = {};
