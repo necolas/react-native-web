@@ -10,7 +10,7 @@ import { PropTypes } from 'react'
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes'
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
-import invariant from 'fbjs/lib/invariant'
+import warning from 'fbjs/lib/warning'
 
 class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
@@ -19,10 +19,11 @@ class StyleSheetValidation {
         const message1 = `"${prop}" is not a valid style property.`
         const message2 = '\nValid style props: ' + JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ')
         styleError(message1, style, caller, message2)
-      }
-      const error = allStylePropTypes[prop](style, prop, caller, 'prop')
-      if (error) {
-        styleError(error.message, style, caller)
+      } else {
+        const error = allStylePropTypes[prop](style, prop, caller, 'prop')
+        if (error) {
+          styleError(error.message, style, caller)
+        }
       }
     }
   }
@@ -43,7 +44,7 @@ class StyleSheetValidation {
 }
 
 const styleError = (message1, style, caller, message2) => {
-  invariant(
+  warning(
     false,
     message1 + '\n' + (caller || '<<unknown>>') + ': ' +
     JSON.stringify(style, null, '  ') + (message2 || '')
