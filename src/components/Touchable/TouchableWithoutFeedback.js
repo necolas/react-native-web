@@ -19,6 +19,7 @@ var Touchable = require('./Touchable');
 var View = require('../View');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var warning = require('fbjs/lib/warning');
+var StyleSheet = require('../../apis/StyleSheet');
 
 type Event = Object;
 
@@ -160,8 +161,8 @@ const TouchableWithoutFeedback = React.createClass({
       children.push(Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}));
     }
     const style = (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text') ?
-      [child.props.style, {color: 'red'}] :
-      child.props.style;
+      [styles.root, child.props.style, {color: 'red'}] :
+      [styles.root, child.props.style];
     return (React: any).cloneElement(child, {
       accessible: this.props.accessible !== false,
       accessibilityLabel: this.props.accessibilityLabel,
@@ -179,6 +180,12 @@ const TouchableWithoutFeedback = React.createClass({
       children,
       tabIndex: '0'
     });
+  }
+});
+
+var styles = StyleSheet.create({
+  root: {
+    cursor: 'pointer'
   }
 });
 

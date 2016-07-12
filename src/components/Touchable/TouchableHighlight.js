@@ -247,7 +247,7 @@ var TouchableHighlight = React.createClass({
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
         ref={UNDERLAY_REF}
-        style={this.state.underlayStyle}
+        style={[ styles.root, this.state.underlayStyle ]}
         tabIndex='0'
         testID={this.props.testID}>
         {React.cloneElement(
