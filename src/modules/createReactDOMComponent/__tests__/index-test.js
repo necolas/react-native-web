@@ -43,7 +43,9 @@ suite('modules/createReactDOMComponent', () => {
 
   test('prop "component"', () => {
     const component = 'main'
-    const element = shallow(createReactDOMComponent({ component }))
+    let element = shallow(createReactDOMComponent({}))
+    assert.equal(element.is('span'), true, 'Default element must be a "span"')
+    element = shallow(createReactDOMComponent({ component }))
     assert.equal(element.is('main'), true)
   })
 

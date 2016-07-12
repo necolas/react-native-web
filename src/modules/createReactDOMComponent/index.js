@@ -22,7 +22,7 @@ const createReactDOMComponent = ({
   accessibilityLiveRegion,
   accessibilityRole,
   accessible = true,
-  component = 'div',
+  component = 'span',
   testID,
   type,
   ...other
