@@ -50,9 +50,18 @@ class View extends Component {
     style: {}
   };
 
-  constructor(props, context) {
-    super(props, context)
-    this._normalizeEventForHandler = this._normalizeEventForHandler.bind(this)
+  static childContextTypes = {
+    isInAButtonView: PropTypes.bool
+  };
+
+  static contextTypes = {
+    isInAButtonView: PropTypes.bool
+  };
+
+  getChildContext() {
+    return {
+      isInAButtonView: this.props.accessibilityRole === 'button'
+    }
   }
 
   render() {
@@ -72,6 +81,7 @@ class View extends Component {
 
     const props = {
       ...other,
+      component: this.context.isInAButtonView ? 'span' : 'div',
       onClick: this._normalizeEventForHandler(this.props.onClick),
       onClickCapture: this._normalizeEventForHandler(this.props.onClickCapture),
       onTouchCancel: this._normalizeEventForHandler(this.props.onTouchCancel),

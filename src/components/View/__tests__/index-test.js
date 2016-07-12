@@ -7,8 +7,20 @@ import View from '../'
 import { mount, shallow } from 'enzyme'
 
 suite('components/View', () => {
+  suite('rendered element', () => {
+    test('is a "div" by default', () => {
+      const view = shallow(<View />)
+      assert.equal(view.is('div'), true)
+    })
+
+    test('is a "span" when inside <View accessibilityRole="button" />', () => {
+      const view = mount(<View accessibilityRole='button'><View /></View>)
+      assert.equal(view.find('span').length, 1)
+    })
+  })
+
   test('prop "children"', () => {
-    const children = 'children'
+    const children = <View testID='1' />
     const view = shallow(<View>{children}</View>)
     assert.equal(view.prop('children'), children)
   })
