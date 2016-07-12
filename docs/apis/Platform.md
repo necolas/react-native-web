@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 ## Methods
 
-**select**: any
+**select**(object): any
 
 `Platform.select` takes an object containing `Platform.OS` as keys and returns
 the value for the platform you are currently running on.

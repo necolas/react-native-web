@@ -18,6 +18,7 @@ import PixelRatio from './apis/PixelRatio'
 import Platform from './apis/Platform'
 import StyleSheet from './apis/StyleSheet'
 import UIManager from './apis/UIManager'
+import Vibration from './apis/Vibration'
 
 // components
 import ActivityIndicator from './components/ActivityIndicator'
@@ -65,6 +66,7 @@ const ReactNative = {
   Platform,
   StyleSheet,
   UIManager,
+  Vibration,
 
   // components
   ActivityIndicator,

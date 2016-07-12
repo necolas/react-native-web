@@ -121,6 +121,7 @@ Exported modules:
   * [`PixelRatio`](docs/apis/PixelRatio.md)
   * [`Platform`](docs/apis/Platform.md)
   * [`StyleSheet`](docs/apis/StyleSheet.md)
+  * [`Vibration`](docs/apis/Vibration.md)
 
 ## License
 
