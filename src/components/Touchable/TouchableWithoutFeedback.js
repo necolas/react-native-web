@@ -38,7 +38,7 @@ const TouchableWithoutFeedback = React.createClass({
 
   propTypes: {
     accessible: View.propTypes.accessible,
-    aaccessibilityLabel: View.propTypes.accessibilityLabel,
+    accessibilityLabel: View.propTypes.accessibilityLabel,
     accessibilityRole: View.propTypes.accessibilityRole,
     /**
      * If true, disable all interactions for this component.
