@@ -32,7 +32,7 @@ Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
-(web) **accessible**: bool = true
+**accessible**: bool = true
 
 When `false`, the text is hidden from assistive technologies. (This is
 implemented using `aria-hidden`.)
@@ -53,6 +53,10 @@ height } } }`, where `x` and `y` are the offsets from the parent node.
 **onPress**: function
 
 This function is called on press.
+
+**selectable**: bool = true
+
+Lets the user select the text.
 
 **style**: style
 

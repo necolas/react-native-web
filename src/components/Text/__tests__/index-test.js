@@ -31,4 +31,11 @@ suite('components/Text', () => {
       done()
     }
   })
+
+  test('prop "selectable"', () => {
+    let text = shallow(<Text />)
+    assert.equal(text.prop('style').userSelect, undefined)
+    text = shallow(<Text selectable={false} />)
+    assert.equal(text.prop('style').userSelect, 'none')
+  })
 })

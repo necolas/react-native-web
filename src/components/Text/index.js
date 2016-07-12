@@ -11,18 +11,20 @@ class Text extends Component {
 
   static propTypes = {
     accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
-    accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
+    accessibilityRole: PropTypes.oneOf([ 'heading', 'link' ]),
     accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onLayout: PropTypes.func,
     onPress: PropTypes.func,
+    selectable: PropTypes.bool,
     style: StyleSheetPropType(TextStylePropTypes),
     testID: createReactDOMComponent.propTypes.testID
   };
 
   static defaultProps = {
-    accessible: true
+    accessible: true,
+    selectable: true
   };
 
   render() {
@@ -30,6 +32,7 @@ class Text extends Component {
       numberOfLines,
       onLayout, // eslint-disable-line
       onPress, // eslint-disable-line
+      selectable,
       style,
       ...other
     } = this.props
@@ -41,6 +44,7 @@ class Text extends Component {
       style: [
         styles.initial,
         style,
+        !selectable && styles.notSelectable,
         numberOfLines === 1 && styles.singleLineStyle
       ]
     })
@@ -62,6 +66,9 @@ const styles = StyleSheet.create({
     padding: 0,
     textDecorationLine: 'none',
     wordWrap: 'break-word'
+  },
+  notSelectable: {
+    userSelect: 'none'
   },
   singleLineStyle: {
     maxWidth: '100%',
