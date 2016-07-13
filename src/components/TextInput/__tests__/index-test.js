@@ -223,6 +223,19 @@ suite('components/TextInput', () => {
     // assert.equal(input.node.selectionStart, 0)
   })
 
+  test('prop "style"', () => {
+    const styles = StyleSheet.create({
+      root: {
+        borderWidth: 1,
+        textAlign: 'center'
+      }
+    })
+    const textInput = shallow(<TextInput style={styles.root} />)
+    const input = findNativeInput(textInput)
+    assert.equal(StyleSheet.flatten(textInput.prop('style')).borderWidth, 1, 'expected View styles to be applied to the "View"')
+    assert.equal(input.prop('style').textAlign, 'center', 'expected Text styles to be applied to the "input"')
+  })
+
   test('prop "value"', () => {
     const value = 'value'
     const input = findNativeInput(shallow(<TextInput value={value} />))

@@ -83,6 +83,7 @@ export default class App extends React.Component {
 
         <Heading size='large'>TextInput</Heading>
         <TextInput
+          defaultValue='Default textInput'
           keyboardType='default'
           onBlur={(e) => { console.log('TextInput.onBlur', e) }}
           onChange={(e) => { console.log('TextInput.onChange', e) }}
@@ -90,20 +91,21 @@ export default class App extends React.Component {
           onFocus={(e) => { console.log('TextInput.onFocus', e) }}
           onSelectionChange={(e) => { console.log('TextInput.onSelectionChange', e) }}
         />
-        <TextInput secureTextEntry />
-        <TextInput defaultValue='read only' editable={false} />
+        <TextInput secureTextEntry style={styles.textInput} />
+        <TextInput defaultValue='read only' editable={false} style={styles.textInput} />
         <TextInput
-          style={{ flex:1, height: 60, padding: 20, fontSize: 20, textAlign: 'center' }}
+          style={[ styles.textInput, { flex:1, height: 60, padding: 20, fontSize: 20, textAlign: 'center' } ]}
           keyboardType='email-address' placeholder='you@domain.com' placeholderTextColor='red'
         />
-        <TextInput keyboardType='numeric' />
-        <TextInput keyboardType='phone-pad' />
-        <TextInput defaultValue='https://delete-me' keyboardType='url' placeholder='https://www.some-website.com' selectTextOnFocus />
+        <TextInput keyboardType='numeric' style={styles.textInput} />
+        <TextInput keyboardType='phone-pad' style={styles.textInput} />
+        <TextInput defaultValue='https://delete-me' keyboardType='url' placeholder='https://www.some-website.com' selectTextOnFocus style={styles.textInput} />
         <TextInput
           defaultValue='default value'
           maxNumberOfLines={10}
           multiline
           numberOfLines={5}
+          style={styles.textInput}
         />
 
         <Heading size='large'>Touchable</Heading>
@@ -228,6 +230,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap'
+  },
+  textInput: {
+    borderWidth: 1
   },
   box: {
     alignItems: 'center',

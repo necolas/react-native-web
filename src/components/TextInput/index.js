@@ -121,8 +121,9 @@ class TextInput extends Component {
     // In order to support 'Text' styles on 'TextInput', we split the 'Text'
     // and 'View' styles and apply them to the 'Text' and 'View' components
     // used in the implementation
-    const rootStyles = pick(style, viewStyleProps)
-    const textStyles = omit(style, viewStyleProps)
+    const flattenedStyle = StyleSheet.flatten(style)
+    const rootStyles = pick(flattenedStyle, viewStyleProps)
+    const textStyles = omit(flattenedStyle, viewStyleProps)
 
     const propsCommon = {
       autoComplete: autoComplete && 'on',
@@ -236,8 +237,7 @@ applyNativeMethods(TextInput)
 
 const styles = StyleSheet.create({
   initial: {
-    borderColor: 'black',
-    borderWidth: 1
+    borderColor: 'black'
   },
   wrapper: {
     flex: 1
