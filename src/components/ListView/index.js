@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import ScrollView from '../ScrollView'
 import ListViewDataSource from './ListViewDataSource'
 import ListViewPropTypes from './ListViewPropTypes'
+import View from '../View'
+import pick from 'lodash/pick'
 
 const SCROLLVIEW_REF = 'listviewscroll'
 
@@ -64,7 +66,7 @@ class ListView extends Component {
       if (renderSectionHeader) {
         const section = dataSource.getSectionHeaderData(sectionIdx)
         const key = 's_' + sectionId
-        const child = <div key={key}>{renderSectionHeader(section, sectionId)}</div>
+        const child = <View key={key}>{renderSectionHeader(section, sectionId)}</View>
         children.push(child)
       }
 
@@ -73,7 +75,7 @@ class ListView extends Component {
         const rowId = rows[rowIdx]
         const row = dataSource.getRowData(sectionIdx, rowIdx)
         const key = 'r_' + sectionId + '_' + rowId
-        const child = <div key={key}>{renderRow(row, sectionId, rowId, this.onRowHighlighted)}</div>
+        const child = <View key={key}>{renderRow(row, sectionId, rowId, this.onRowHighlighted)}</View>
         children.push(child)
 
         // render optional separator
@@ -88,12 +90,9 @@ class ListView extends Component {
       }
     }
 
-    const {
-      renderScrollComponent,
-      ...props
-    } = this.props
+    const props = pick(ScrollView.propTypes, this.props)
 
-    return React.cloneElement(renderScrollComponent(props), {
+    return React.cloneElement(this.props.renderScrollComponent(props), {
       ref: SCROLLVIEW_REF
     }, header, children, footer)
   }
