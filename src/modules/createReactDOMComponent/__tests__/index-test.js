@@ -29,6 +29,18 @@ suite('modules/createReactDOMComponent', () => {
     assert.equal(element.is('button'), true)
   })
 
+  test('prop "type"', () => {
+    const accessibilityRole = 'button'
+    let element = shallow(createReactDOMComponent({ accessibilityRole }))
+    assert.equal(element.prop('type'), accessibilityRole)
+    assert.equal(element.is('button'), true)
+
+    const type = 'submit'
+    element = shallow(createReactDOMComponent({ accessibilityRole, type }))
+    assert.equal(element.prop('type'), type)
+    assert.equal(element.is('button'), true)
+  })
+
   test('prop "accessible"', () => {
     // accessible (implicit)
     let element = shallow(createReactDOMComponent({}))

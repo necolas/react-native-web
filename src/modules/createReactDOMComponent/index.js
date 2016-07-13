@@ -28,6 +28,9 @@ const createReactDOMComponent = ({
   ...other
 }) => {
   const role = accessibilityRole
+  const shouldTypeBeButton = (
+    role === 'button' && !(type === 'submit' || type === 'reset' || type === 'menu')
+  )
   const Component = role && roleComponents[role] ? roleComponents[role] : component
 
   return (
@@ -39,7 +42,7 @@ const createReactDOMComponent = ({
       aria-live={accessibilityLiveRegion}
       data-testid={testID}
       role={role}
-      type={role === 'button' ? 'button' : type}
+      type={shouldTypeBeButton ? 'button' : type}
     />
   )
 }
