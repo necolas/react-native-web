@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     // list reset
     listStyle: 'none',
     // fix flexbox bugs
-    maxWidth: '100%',
     minHeight: 0,
     minWidth: 0
   },
