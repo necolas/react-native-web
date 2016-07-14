@@ -8,10 +8,11 @@
   ],
   "scripts": {
     "build": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
+    "build:storybook": "build-storybook -o dist-storybook -c ./examples/.storybook",
     "build:umd": "webpack --config webpack.config.js --sort-assets-by --progress",
-    "examples": "webpack-dev-server --config examples/webpack.config.js --inline --hot --colors --quiet",
     "lint": "eslint src",
     "prepublish": "npm run build && npm run build:umd",
+    "storybook": "start-storybook -p 9001 -c ./examples/.storybook",
     "test": "karma start karma.config.js",
     "test:watch": "npm run test -- --no-single-run"
   },
@@ -26,6 +27,7 @@
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
+    "@kadira/storybook": "^1.38.0",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
@@ -39,6 +41,7 @@
     "eslint-plugin-promise": "^1.3.2",
     "eslint-plugin-react": "^5.1.1",
     "eslint-plugin-standard": "^1.3.2",
+    "file-loader": "^0.9.0",
     "karma": "^0.13.22",
     "karma-browserstack-launcher": "^1.0.1",
     "karma-chrome-launcher": "^1.0.1",
@@ -51,8 +54,8 @@
     "node-libs-browser": "^0.5.3",
     "react": "^15.2.0",
     "react-addons-test-utils": "^15.2.0",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1"
   },
   "peerDependencies": {
     "react": "^15.1.0"
