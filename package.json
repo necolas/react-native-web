@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
-    "build:storybook": "build-storybook -o dist-storybook -c ./examples/.storybook",
+    "build:storybook": "build-storybook -o storybook -c ./examples/.storybook",
+    "deploy:storybook": "git checkout gh-pages && git add -A && git commit -m \"Storybook deploy\" && git push origin gh-pages && git checkout -",
     "build:umd": "webpack --config webpack.config.js --sort-assets-by --progress",
     "lint": "eslint src",
     "prepublish": "npm run build && npm run build:umd",
