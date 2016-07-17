@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function (storyFn) {
-  return <View style={[ StyleSheet.absoluteFill, styles.root ]}>{storyFn()}</View>;
+export default function (renderStory) {
+  return (
+    <View style={[ StyleSheet.absoluteFill, styles.root ]}>
+      {renderStory()}
+    </View>
+  );
 }

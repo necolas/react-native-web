@@ -271,7 +271,7 @@ const examples = [
         <Text>
           auto (default) - english LTR
         </Text>
-        <Text>
+        <Text style={{ writingDirection: 'rtl' }}>
           أحب اللغة العربية auto (default) - arabic RTL
         </Text>
         <Text style={{textAlign: 'left'}}>
@@ -467,5 +467,6 @@ var styles = StyleSheet.create({
 
 examples.forEach((example) => {
   storiesOf('<Text>', module)
+    .addDecorator((renderStory) => <View style={{ width: 320 }}>{renderStory()}</View>)
     .add(example.title, () => example.render())
 })
