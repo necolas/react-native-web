@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf, action, addDecorator } from '@kadira/storybook';
 import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'react-native'
 
 /**
@@ -499,30 +499,26 @@ const examples = [
                     source={image}
                   />
                 </View>
-                { Platform.OS === 'ios' ?
-                  <View style={styles.leftMargin}>
-                    <Text style={[styles.resizeModeText]}>
-                      Repeat
-                    </Text>
-                    <Image
-                      style={styles.resizeMode}
-                      resizeMode={Image.resizeMode.repeat}
-                      source={image}
-                    />
-                  </View>
-                : null }
-                { Platform.OS === 'android' ?
-                  <View style={styles.leftMargin}>
-                    <Text style={[styles.resizeModeText]}>
-                      Center
-                    </Text>
-                    <Image
-                      style={styles.resizeMode}
-                      resizeMode={Image.resizeMode.center}
-                      source={image}
-                    />
-                  </View>
-                : null }
+                <View style={styles.leftMargin}>
+                  <Text style={[styles.resizeModeText]}>
+                    Repeat
+                  </Text>
+                  <Image
+                    style={styles.resizeMode}
+                    resizeMode={'repeat'}
+                    source={image}
+                  />
+                </View>
+                <View style={styles.leftMargin}>
+                  <Text style={[styles.resizeModeText]}>
+                    Center
+                  </Text>
+                  <Image
+                    style={styles.resizeMode}
+                    resizeMode={'center'}
+                    source={image}
+                  />
+                </View>
               </View>
             </View>
           );
@@ -654,5 +650,6 @@ var styles = StyleSheet.create({
 
 examples.forEach((example) => {
   storiesOf('<Image>', module)
+    .addDecorator((renderStory) => <View>{renderStory()}</View>)
     .add(example.title, () => example.render())
 })

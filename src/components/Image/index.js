@@ -35,7 +35,7 @@ class Image extends Component {
     onLoad: PropTypes.func,
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
-    resizeMode: PropTypes.oneOf(['contain', 'cover', 'none', 'stretch']),
+    resizeMode: PropTypes.oneOf(['center', 'contain', 'cover', 'none', 'repeat', 'stretch']),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes),
     testID: createReactDOMComponent.propTypes.testID
@@ -207,6 +207,10 @@ const styles = StyleSheet.create({
 })
 
 const resizeModeStyles = StyleSheet.create({
+  center: {
+    backgroundSize: 'auto',
+    backgroundPosition: 'center'
+  },
   contain: {
     backgroundSize: 'contain'
   },
@@ -215,6 +219,10 @@ const resizeModeStyles = StyleSheet.create({
   },
   none: {
     backgroundSize: 'auto'
+  },
+  repeat: {
+    backgroundSize: 'auto',
+    backgroundRepeat: 'repeat'
   },
   stretch: {
     backgroundSize: '100% 100%'
