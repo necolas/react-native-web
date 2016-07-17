@@ -193,6 +193,7 @@ function parsePercentage(str: string): number {
 
 var names = {
   /* @edit start */
+  currentcolor: 'currentcolor',
   inherit: 'inherit',
   /* @edit end */
   transparent: 0x00000000,
