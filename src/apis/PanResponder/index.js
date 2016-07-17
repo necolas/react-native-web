@@ -7,7 +7,7 @@
 "use strict";
 
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
-var TouchHistoryMath = require('./TouchHistoryMath');
+var TouchHistoryMath = require('react/lib/TouchHistoryMath');
 
 var currentCentroidXOfTouchesChangedAfter =
   TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
