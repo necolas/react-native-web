@@ -2,7 +2,6 @@
 
 import EventConstants from 'react/lib/EventConstants'
 import EventPluginRegistry from 'react/lib/EventPluginRegistry'
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
 import ResponderEventPlugin from 'react/lib/ResponderEventPlugin'
 import ResponderTouchHistoryStore from 'react/lib/ResponderTouchHistoryStore'
 import normalizeNativeEvent from './normalizeNativeEvent'
@@ -19,14 +18,9 @@ const {
   topTouchStart
 } = EventConstants.topLevelTypes
 
-const supportsTouch = ExecutionEnvironment.canUseDOM && (
-  'ontouchstart' in window ||
-  window.DocumentTouch && document instanceof window.DocumentTouch
-)
-
-const endDependencies = supportsTouch ? [ topTouchCancel, topTouchEnd ] : [ topMouseUp ]
-const moveDependencies = supportsTouch ? [ topTouchMove ] : [ topMouseMove ]
-const startDependencies = supportsTouch ? [ topTouchStart ] : [ topMouseDown ]
+const endDependencies = [ topTouchCancel, topTouchEnd, topMouseUp ]
+const moveDependencies = [ topTouchMove, topMouseMove ]
+const startDependencies = [ topTouchStart, topMouseDown ]
 
 /**
  * Setup ResponderEventPlugin dependencies
@@ -51,7 +45,15 @@ ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
   if ((topLevelType === topMouseMove) && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
     return
   }
-  originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizeNativeEvent(nativeEvent))
+  // Cancel mouse events that browsers fire after touch events
+  if (topLevelType === topTouchStart || topLevelType === topTouchMove || topLevelType === topTouchEnd) {
+    if (nativeEvent.target.getAttribute('href') !== undefined) {
+      nativeEvent.preventDefault()
+    }
+  }
+
+  const normalizedEvent = normalizeNativeEvent(nativeEvent)
+  originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizedEvent)
 }
 
 EventPluginRegistry.injectEventPluginsByName({
