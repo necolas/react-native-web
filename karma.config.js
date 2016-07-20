@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 
-const testEntry = 'tests.webpack.js'
+const testEntry = 'src/tests.webpack.js'
 
 module.exports = function (config) {
   config.set({
