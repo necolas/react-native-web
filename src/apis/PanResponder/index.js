@@ -6,7 +6,6 @@
 
 "use strict";
 
-import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 var TouchHistoryMath = require('react/lib/TouchHistoryMath');
 
 var currentCentroidXOfTouchesChangedAfter =
@@ -288,11 +287,11 @@ var PanResponder = {
     var panHandlers = {
       onStartShouldSetResponder: function(e) {
         return config.onStartShouldSetPanResponder === undefined ? false :
-          config.onStartShouldSetPanResponder(normalizeEvent(e), gestureState);
+          config.onStartShouldSetPanResponder(e, gestureState);
       },
       onMoveShouldSetResponder: function(e) {
         return config.onMoveShouldSetPanResponder === undefined ? false :
-          config.onMoveShouldSetPanResponder(normalizeEvent(e), gestureState);
+          config.onMoveShouldSetPanResponder(e, gestureState);
       },
       onStartShouldSetResponderCapture: function(e) {
         // TODO: Actually, we should reinitialize the state any time
@@ -302,12 +301,12 @@ var PanResponder = {
             PanResponder._initializeGestureState(gestureState);
           }
         }
-        else if (e.nativeEvent.type === 'mousedown') {
+        else if (e.nativeEvent.originalEvent && e.nativeEvent.originalEvent.type === 'mousedown') {
           PanResponder._initializeGestureState(gestureState);
         }
         gestureState.numberActiveTouches = e.touchHistory.numberActiveTouches;
         return config.onStartShouldSetPanResponderCapture !== undefined ?
-          config.onStartShouldSetPanResponderCapture(normalizeEvent(e), gestureState) : false;
+          config.onStartShouldSetPanResponderCapture(e, gestureState) : false;
       },
 
       onMoveShouldSetResponderCapture: function(e) {
@@ -320,7 +319,7 @@ var PanResponder = {
         }
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
         return config.onMoveShouldSetPanResponderCapture ?
-          config.onMoveShouldSetPanResponderCapture(normalizeEvent(e), gestureState) : false;
+          config.onMoveShouldSetPanResponderCapture(e, gestureState) : false;
       },
 
       onResponderGrant: function(e) {
@@ -328,25 +327,25 @@ var PanResponder = {
         gestureState.y0 = currentCentroidY(e.touchHistory);
         gestureState.dx = 0;
         gestureState.dy = 0;
-        config.onPanResponderGrant && config.onPanResponderGrant(normalizeEvent(e), gestureState);
+        config.onPanResponderGrant && config.onPanResponderGrant(e, gestureState);
         // TODO: t7467124 investigate if this can be removed
         return config.onShouldBlockNativeResponder === undefined ? true :
           config.onShouldBlockNativeResponder();
       },
 
       onResponderReject: function(e) {
-        config.onPanResponderReject && config.onPanResponderReject(normalizeEvent(e), gestureState);
+        config.onPanResponderReject && config.onPanResponderReject(e, gestureState);
       },
 
       onResponderRelease: function(e) {
-        config.onPanResponderRelease && config.onPanResponderRelease(normalizeEvent(e), gestureState);
+        config.onPanResponderRelease && config.onPanResponderRelease(e, gestureState);
         PanResponder._initializeGestureState(gestureState);
       },
 
       onResponderStart: function(e) {
         var touchHistory = e.touchHistory;
         gestureState.numberActiveTouches = touchHistory.numberActiveTouches;
-        config.onPanResponderStart && config.onPanResponderStart(normalizeEvent(e), gestureState);
+        config.onPanResponderStart && config.onPanResponderStart(e, gestureState);
       },
 
       onResponderMove: function(e) {
@@ -359,13 +358,13 @@ var PanResponder = {
         // Filter out any touch moves past the first one - we would have
         // already processed multi-touch geometry during the first event.
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
-        config.onPanResponderMove && config.onPanResponderMove(normalizeEvent(e), gestureState);
+        config.onPanResponderMove && config.onPanResponderMove(e, gestureState);
       },
 
       onResponderEnd: function(e) {
         var touchHistory = e.touchHistory;
         gestureState.numberActiveTouches = touchHistory.numberActiveTouches;
-        config.onPanResponderEnd && config.onPanResponderEnd(normalizeEvent(e), gestureState);
+        config.onPanResponderEnd && config.onPanResponderEnd(e, gestureState);
       },
 
       onResponderTerminate: function(e) {
@@ -376,17 +375,11 @@ var PanResponder = {
 
       onResponderTerminationRequest: function(e) {
         return config.onPanResponderTerminationRequest === undefined ? true :
-          config.onPanResponderTerminationRequest(normalizeEvent(e), gestureState);
+          config.onPanResponderTerminationRequest(e, gestureState);
       },
     };
     return {panHandlers: panHandlers};
   },
 };
-
-function normalizeEvent(e) {
-  const normalizedEvent = Object.create(e);
-  normalizedEvent.nativeEvent = normalizeNativeEvent(e.nativeEvent, e.type);
-  return normalizedEvent;
-}
 
 module.exports = PanResponder;

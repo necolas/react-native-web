@@ -8,6 +8,29 @@ import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
 import ViewStylePropTypes from './ViewStylePropTypes'
 
+const eventHandlerNames = [
+  'onClick',
+  'onClickCapture',
+  'onMoveShouldSetResponder',
+  'onMoveShouldSetResponderCapture',
+  'onResponderGrant',
+  'onResponderMove',
+  'onResponderReject',
+  'onResponderRelease',
+  'onResponderTerminate',
+  'onResponderTerminationRequest',
+  'onStartShouldSetResponder',
+  'onStartShouldSetResponderCapture',
+  'onTouchCancel',
+  'onTouchCancelCapture',
+  'onTouchEnd',
+  'onTouchEndCapture',
+  'onTouchMove',
+  'onTouchMoveCapture',
+  'onTouchStart',
+  'onTouchStartCapture'
+]
+
 class View extends Component {
   static displayName = 'View'
 
@@ -79,19 +102,18 @@ class View extends Component {
     // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
     const needsFlexReset = flattenedStyle.flex == null && flattenedStyle.flexShrink == null
 
+    const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
+      const handler = this.props[handlerName]
+      if (typeof handler === 'function') {
+        handlerProps[handlerName] = this._normalizeEventForHandler(handler)
+      }
+      return handlerProps
+    }, {})
+
     const props = {
       ...other,
+      ...normalizedEventHandlers,
       component: this.context.isInAButtonView ? 'span' : 'div',
-      onClick: this._normalizeEventForHandler(this.props.onClick),
-      onClickCapture: this._normalizeEventForHandler(this.props.onClickCapture),
-      onTouchCancel: this._normalizeEventForHandler(this.props.onTouchCancel),
-      onTouchCancelCapture: this._normalizeEventForHandler(this.props.onTouchCancelCapture),
-      onTouchEnd: this._normalizeEventForHandler(this.props.onTouchEnd),
-      onTouchEndCapture: this._normalizeEventForHandler(this.props.onTouchEndCapture),
-      onTouchMove: this._normalizeEventForHandler(this.props.onTouchMove),
-      onTouchMoveCapture: this._normalizeEventForHandler(this.props.onTouchMoveCapture),
-      onTouchStart: this._normalizeEventForHandler(this.props.onTouchStart),
-      onTouchStartCapture: this._normalizeEventForHandler(this.props.onTouchStartCapture),
       style: [
         styles.initial,
         style,
@@ -103,22 +125,14 @@ class View extends Component {
     return createReactDOMComponent(props)
   }
 
-  /**
-   * React Native expects `pageX` and `pageY` to be on the `nativeEvent`, but
-   * React doesn't include them for touch events.
-   */
   _normalizeEventForHandler(handler) {
-    return (e) => {
-      const { pageX } = e.nativeEvent
-      if (pageX === undefined) {
-        e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
-      }
-      handler && handler(e)
+    const callback = (e) => {
+      e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
+      return handler(e)
     }
+    return callback
   }
 }
-
-applyLayout(applyNativeMethods(View))
 
 const styles = StyleSheet.create({
   // https://github.com/facebook/css-layout#default-values
@@ -150,4 +164,4 @@ const styles = StyleSheet.create({
   }
 })
 
-module.exports = View
+module.exports = applyLayout(applyNativeMethods(View))
