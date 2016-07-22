@@ -1,0 +1,2 @@
+// NativeModules shim
+module.exports={};
