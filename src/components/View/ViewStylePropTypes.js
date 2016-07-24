@@ -31,6 +31,7 @@ module.exports = {
   outline: string,
   overflowX: autoOrHiddenOrVisible,
   overflowY: autoOrHiddenOrVisible,
+  transition: string,
   userSelect: string,
   visibility: hiddenOrVisible,
   zIndex: number

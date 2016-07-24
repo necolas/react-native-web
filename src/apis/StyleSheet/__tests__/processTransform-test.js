@@ -26,7 +26,10 @@ suite('apis/StyleSheet/processTransform', () => {
 
     assert.deepEqual(
       processTransform(style),
-      { transform: 'matrix3d(1,2,3,4,5,6)' }
+      {
+        transform: 'matrix3d(1,2,3,4,5,6)',
+        transformMatrix: null
+      }
     )
   })
 })

@@ -1,22 +1,18 @@
 import expandStyle from './expandStyle'
 import flattenStyle from '../../modules/flattenStyle'
 import prefixAll from 'inline-style-prefixer/static'
+import processTextShadow from './processTextShadow'
 import processTransform from './processTransform'
+import processVendorPrefixes from './processVendorPrefixes'
 
-const addVendorPrefixes = (style) => {
-  let prefixedStyles = prefixAll(style)
-  // React@15 removed undocumented support for fallback values in
-  // inline-styles. Revert array values to the standard CSS value
-  for (const prop in prefixedStyles) {
-    const value = prefixedStyles[prop]
-    if (Array.isArray(value)) {
-      prefixedStyles[prop] = value[value.length - 1]
-    }
-  }
-  return prefixedStyles
-}
+const plugins = [
+  processTextShadow,
+  processTransform,
+  processVendorPrefixes
+]
 
-const _createReactDOMStyleObject = (reactNativeStyle) => processTransform(expandStyle(flattenStyle(reactNativeStyle)))
-const createReactDOMStyleObject = (reactNativeStyle) => addVendorPrefixes(_createReactDOMStyleObject(reactNativeStyle))
+const applyPlugins = (style) => plugins.reduce((style, plugin) => plugin(style), style)
+
+const createReactDOMStyleObject = (reactNativeStyle) => applyPlugins(expandStyle(flattenStyle(reactNativeStyle)))
 
 module.exports = createReactDOMStyleObject

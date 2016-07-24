@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import ColorPropType from '../../propTypes/ColorPropType'
 import ViewStylePropTypes from '../View/ViewStylePropTypes'
 
-const { number, oneOf, oneOfType, string } = PropTypes
+const { number, oneOf, oneOfType, shape, string } = PropTypes
 const numberOrString = oneOfType([ number, string ])
 
 module.exports = {
@@ -19,8 +19,9 @@ module.exports = {
   textDecorationLine: string,
   /* @platform web */
   textOverflow: string,
-  /* @platform web */
-  textShadow: string,
+  textShadowColor: ColorPropType,
+  textShadowOffset: shape({ width: number, height: number }),
+  textShadowRadius: number,
   /* @platform web */
   textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
   /* @platform web */
