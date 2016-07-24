@@ -12,11 +12,13 @@ import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
 import warning from 'fbjs/lib/warning'
 
+const allStylePropTypes = {}
+
 class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
       if (allStylePropTypes[prop] === undefined) {
-        const message1 = `"${prop}" is not a valid style property.`
+        const message1 = `"${prop}" is not a valid style property on Web.`
         const message2 = '\nValid style props: ' + JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ')
         styleError(message1, style, caller, message2)
       } else {
@@ -50,8 +52,6 @@ const styleError = (message1, style, caller, message2) => {
     JSON.stringify(style, null, '  ') + (message2 || '')
   )
 }
-
-const allStylePropTypes = {}
 
 StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes)
 StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes)

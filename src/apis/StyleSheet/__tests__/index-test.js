@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import assert from 'assert'
-import { defaultStyles } from '../predefs'
+import { getDefaultStyleSheet } from '../css'
 import isPlainObject from 'lodash/isPlainObject'
 import StyleSheet from '..'
 
@@ -28,7 +28,7 @@ suite('apis/StyleSheet', () => {
       StyleSheet.create({ root: { color: 'red' } })
       assert.equal(
         document.getElementById('__react-native-style').textContent,
-        defaultStyles
+        getDefaultStyleSheet()
       )
     })
   })
@@ -44,7 +44,7 @@ suite('apis/StyleSheet', () => {
   test('render', () => {
     assert.equal(
       StyleSheet.render().props.dangerouslySetInnerHTML.__html,
-      defaultStyles
+      getDefaultStyleSheet()
     )
   })
 
@@ -61,9 +61,9 @@ suite('apis/StyleSheet', () => {
       {
         className: 'test __style_df __style_pebn',
         style: {
-          display: 'flex',
+          display: null,
           opacity: 1,
-          pointerEvents: 'box-none'
+          pointerEvents: null
         }
       }
     )
