@@ -1,6 +1,5 @@
 import expandStyle from './expandStyle'
 import flattenStyle from '../../modules/flattenStyle'
-import prefixAll from 'inline-style-prefixer/static'
 import processTextShadow from './processTextShadow'
 import processTransform from './processTransform'
 import processVendorPrefixes from './processVendorPrefixes'
