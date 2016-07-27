@@ -108,10 +108,26 @@ from `style`.
 + `backgroundPosition`
 + `backgroundRepeat`
 + `backgroundSize`
-+ `borderColor`
-+ `borderRadius`
-+ `borderStyle`
-+ `borderWidth`
++ `borderColor` (single value)
++ `borderTopColor`
++ `borderBottomColor`
++ `borderRightColor`‡
++ `borderLeftColor`‡
++ `borderRadius` (single value)
++ `borderTopLeftRadius`‡
++ `borderTopRightRadius`‡
++ `borderBottomLeftRadius`‡
++ `borderBottomRightRadius`‡
++ `borderStyle` (single value)
++ `borderTopStyle`
++ `borderRightStyle`‡
++ `borderBottomStyle`
++ `borderLeftStyle`‡
++ `borderWidth` (single value)
++ `borderBottomWidth`
++ `borderLeftWidth`‡
++ `borderRightWidth`‡
++ `borderTopWidth`
 + `bottom`
 + `boxShadow`
 + `boxSizing`
@@ -124,12 +140,12 @@ from `style`.
 + `flexWrap`
 + `height`
 + `justifyContent`
-+ `left`
++ `left`‡
 + `margin` (single value)
 + `marginBottom`
 + `marginHorizontal`
-+ `marginLeft`
-+ `marginRight`
++ `marginLeft`‡
++ `marginRight`‡
 + `marginTop`
 + `marginVertical`
 + `maxHeight`
@@ -144,12 +160,12 @@ from `style`.
 + `padding` (single value)
 + `paddingBottom`
 + `paddingHorizontal`
-+ `paddingLeft`
-+ `paddingRight`
++ `paddingLeft`‡
++ `paddingRight`‡
 + `paddingTop`
 + `paddingVertical`
 + `position`
-+ `right`
++ `right`‡
 + `top`
 + `transform`
 + `transformMatrix`
@@ -157,6 +173,8 @@ from `style`.
 + `visibility`
 + `width`
 + `zIndex`
+
+‡ This property can be suffixed with `$noflip` to prevent automatic bidi-flipping in RTL mode.
 
 Default:
 
