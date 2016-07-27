@@ -11,6 +11,7 @@ import AppState from './apis/AppState'
 import AsyncStorage from './apis/AsyncStorage'
 import Dimensions from './apis/Dimensions'
 import Easing from 'animated/lib/Easing'
+import I18nManager from './apis/I18nManager'
 import InteractionManager from './apis/InteractionManager'
 import NetInfo from './apis/NetInfo'
 import PanResponder from './apis/PanResponder'
@@ -59,6 +60,7 @@ const ReactNative = {
   AsyncStorage,
   Dimensions,
   Easing,
+  I18nManager,
   InteractionManager,
   NetInfo,
   PanResponder,

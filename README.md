@@ -115,6 +115,7 @@ Exported modules:
   * [`AppState`](docs/apis/AppState.md)
   * [`AsyncStorage`](docs/apis/AsyncStorage.md)
   * [`Dimensions`](docs/apis/Dimensions.md)
+  * [`I18nManager`](docs/apis/I18nManager.md)
   * [`NativeMethods`](docs/apis/NativeMethods.md)
   * [`NetInfo`](docs/apis/NetInfo.md)
   * [`PanResponder`](http://facebook.github.io/react-native/releases/0.20/docs/panresponder.html#content) (mirrors React Native)
