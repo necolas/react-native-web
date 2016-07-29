@@ -117,7 +117,7 @@ const ScrollView = React.createClass({
 
   _handleContentOnLayout(e: Object) {
     const { width, height } = e.nativeEvent.layout
-    this.props.onContentSizeChange && this.props.onContentSizeChange(width, height)
+    this.props.onContentSizeChange(width, height)
   },
 
   render() {

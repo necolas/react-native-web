@@ -7,6 +7,7 @@ const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).m
   const locationY = touch.pageY - rect.top
 
   return {
+    _normalized: true,
     clientX: touch.clientX,
     clientY: touch.clientY,
     force: touch.force,
@@ -32,10 +33,13 @@ function normalizeTouchEvent(nativeEvent) {
   const touches = normalizeTouches(nativeEvent.touches)
 
   const event = {
+    _normalized: true,
     changedTouches,
-    originalEvent: nativeEvent,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
+    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
+    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
+    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
     target: nativeEvent.target,
     // normalize the timestamp
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
@@ -56,6 +60,7 @@ function normalizeTouchEvent(nativeEvent) {
 
 function normalizeMouseEvent(nativeEvent) {
   const touches = [{
+    _normalized: true,
     clientX: nativeEvent.clientX,
     clientY: nativeEvent.clientY,
     force: nativeEvent.force,
@@ -70,13 +75,16 @@ function normalizeMouseEvent(nativeEvent) {
     timestamp: Date.now()
   }]
   return {
+    _normalized: true,
     changedTouches: touches,
     identifier: touches[0].identifier,
     locationX: nativeEvent.offsetX,
     locationY: nativeEvent.offsetY,
-    originalEvent: nativeEvent,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
+    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
+    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
+    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
     touches: (nativeEvent.type === 'mouseup') ? [] : touches
@@ -84,8 +92,8 @@ function normalizeMouseEvent(nativeEvent) {
 }
 
 function normalizeNativeEvent(nativeEvent) {
-  if (nativeEvent.originalEvent) { return nativeEvent }
-  const eventType = nativeEvent.type || (nativeEvent.originalEvent && nativeEvent.originalEvent.type) || ''
+  if (nativeEvent._normalized) { return nativeEvent }
+  const eventType = nativeEvent.type || ''
   const mouse = eventType.indexOf('mouse') >= 0
   return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent)
 }

@@ -105,7 +105,7 @@ class View extends Component {
     const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
       const handler = this.props[handlerName]
       if (typeof handler === 'function') {
-        handlerProps[handlerName] = this._normalizeEventForHandler(handler)
+        handlerProps[handlerName] = this._normalizeEventForHandler(handler, handlerName)
       }
       return handlerProps
     }, {})
@@ -125,12 +125,21 @@ class View extends Component {
     return createReactDOMComponent(props)
   }
 
-  _normalizeEventForHandler(handler) {
-    const callback = (e) => {
+  _normalizeEventForHandler(handler, handlerName) {
+    // Browsers fire mouse events after touch events. This causes the
+    // ResponderEvents and their handlers to fire twice for Touchables.
+    // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
+    // events.
+    const shouldCancelEvent = handlerName.indexOf('onResponder') === 0
+
+    return (e) => {
       e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
-      return handler(e)
+      const returnValue = handler(e)
+      if (shouldCancelEvent && e.cancelable) {
+        e.preventDefault()
+      }
+      return returnValue
     }
-    return callback
   }
 }
 

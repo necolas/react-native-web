@@ -45,12 +45,6 @@ ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
   if ((topLevelType === topMouseMove) && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
     return
   }
-  // Cancel mouse events that browsers fire after touch events
-  if (topLevelType === topTouchStart || topLevelType === topTouchMove || topLevelType === topTouchEnd) {
-    if (nativeEvent.target.getAttribute('href') !== undefined) {
-      nativeEvent.preventDefault()
-    }
-  }
 
   const normalizedEvent = normalizeNativeEvent(nativeEvent)
   originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizedEvent)
