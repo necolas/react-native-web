@@ -193,7 +193,8 @@ var TouchableOpacity = React.createClass({
 var styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
-    userSelect: 'none'
+    userSelect: 'none',
+    outline: 'none'
   }
 });
 
