@@ -16,6 +16,22 @@ module.exports = {
 }
 ```
 
+The `react-native-web` package also includes a `core` module that exports only
+`ReactNative`, `Image`, `StyleSheet`, `Text`, `TextInput`, and `View`.
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...other configuration
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web/core'
+    }
+  }
+}
+```
+
 ## Client-side rendering
 
 Rendering without using the `AppRegistry`:

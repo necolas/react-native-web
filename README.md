@@ -2,7 +2,6 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
-![gzipped size](https://img.shields.io/badge/gzipped-~48.6k-blue.svg)
 
 [React Native][react-native-url] components and APIs for the Web.
 
@@ -13,17 +12,18 @@ Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 "React Native for Web" is a project to bring React Native's building blocks and
 touch handling to the Web.
 
-React Native provides a foundational layer to support interoperable,
-zero-configuration React component development. This is missing from React's
-web ecosystem where OSS components rely on inline styles (usually without
-vendor prefixes), or require build tool configuration. This project allows
-components built upon React Native to be run on the Web, and it manages all
-component styling out-of-the-box.
+React Native – unlike React DOM – is a comprehensive UI framework for
+application developers. React Native's components are higher-level building
+blocks than those provided by React DOM. React Native also provides
+platform-agnostic JavaScript APIs for animating and styling components,
+responding to touch events, and interacting with the host environment.
 
-For example, the [`View`](docs/components/View.md) component makes it easy to build
-cross-browser layouts with flexbox, such as stacked and nested boxes with
-margin and padding. And the [`StyleSheet`](docs/guides/style.md) API converts
-styles defined in JavaScript into "Atomic CSS".
+Bringing the React Native APIs and components to the Web allows React Native
+components to be run on the Web platform. But it also solves several problems
+facing the React DOM ecosystem: no framework-level animation or styling
+solution; difficulty sharing and composing UI components (without pulling in
+their build or runtime dependencies); and the lack of high-level base
+components.
 
 ## Quick start
 
