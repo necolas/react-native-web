@@ -1,8 +1,7 @@
 # Style
 
 React Native for Web relies on JavaScript to define styles for your
-application. Along with a novel JS-to-CSS conversion strategy, this allows you
-to avoid issues arising from the [7 deadly sins of
+application. This allows you to avoid issues arising from the [7 deadly sins of
 CSS](https://speakerdeck.com/vjeux/react-css-in-js):
 
 1. Global namespace
@@ -33,9 +32,9 @@ const styles = StyleSheet.create({
 ```
 
 Using `StyleSheet.create` is optional but provides some key advantages: styles
-are immutable in development, styles are converted to CSS rather than applied
-as inline styles, and styles are only created once for the application and not
-on every render.
+are immutable in development, certain declarations are automatically converted
+to CSS rather than applied as inline styles, and styles are only created once
+for the application and not on every render.
 
 The attribute names and values are a subset of CSS. See the `style`
 documentation of individual components.
@@ -140,51 +139,8 @@ benefit of co-locating breakpoint-specific DOM and style changes.
 
 ## Pseudo-classes and pseudo-elements
 
-Pseudo-classes like `:hover` and `:focus` can be implemented with the events
-(e.g. `onFocus`). Pseudo-elements are not supported; elements should be used
-instead.
-
-## How it works
-
-Every call to `StyleSheet.create` extracts the unique _declarations_ and
-converts them to a unique CSS rule. This is sometimes referred to as "atomic
-CSS". All the core components map their `style` property-value pairs to the
-corresponding `className`'s.
-
-By doing this, the total size of the generated CSS is determined by the
-total number of unique declarations (rather than the total number of rules in
-the application), making it viable to inline the style sheet when pre-rendering
-on the server. Styles are updated if new module bundle are loaded asynchronously.
-
-JavaScript definition:
-
-```js
-const styles = StyleSheet.create({
-  heading: {
-    color: 'gray',
-    fontSize: '2rem'
-  },
-  text: {
-    color: 'gray',
-    fontSize: '1.25rem'
-  }
-})
-```
-
-CSS output:
-
-```css
-.__style1 { color: gray; }
-.__style2 { font-size: 2rem; }
-.__style3 { font-size: 1.25rem; }
-```
-
-Rendered HTML:
-
-```html
-<span className="__style1 __style2">Heading</span>
-<span className="__style1 __style3">Text</span>
-```
+Pseudo-classes like `:hover` and `:focus` can be implemented with events (e.g.
+`onFocus`). Pseudo-elements are not supported; elements should be used instead.
 
 ### Reset
 
@@ -194,27 +150,3 @@ You **do not** need to include a CSS reset or
 React Native for Web includes a very small CSS reset taken from normalize.css.
 It removes unwanted User Agent styles from (pseudo-)elements beyond the reach
 of React (e.g., `html`, `body`) or inline styles (e.g., `::-moz-focus-inner`).
-
-```css
-html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color:rgba(0,0,0,0)
-}
-
-body {
-  margin: 0;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-  display: none;
-}
-```
