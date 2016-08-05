@@ -61,7 +61,6 @@ StyleSheetValidation.addValidStylePropTypes({
   clear: PropTypes.string,
   cursor: PropTypes.string,
   display: PropTypes.string,
-  direction: PropTypes.string, /* @private */
   float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
   font: PropTypes.string, /* @private */
   listStyle: PropTypes.string

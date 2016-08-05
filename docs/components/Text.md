@@ -68,14 +68,21 @@ Lets the user select the text.
 + `fontWeight`
 + `letterSpacing`
 + `lineHeight`
-+ `textAlign`
++ `textAlign`‡
 + `textAlignVertical`
 + `textDecorationLine`
-+ `textShadow`
++ `textOverflow`
++ `textRendering`
++ `textShadowColor`
++ `textShadowOffset`‡
++ `textShadowRadius`
 + `textTransform`
++ `unicodeBidi`
 + `whiteSpace`
 + `wordWrap`
-+ `writingDirection`
++ `writingDirection`‡
+
+‡ This property can be suffixed with `$noflip` to prevent automatic bidi-flipping in RTL mode.
 
 **testID**: string
 

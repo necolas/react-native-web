@@ -19,7 +19,16 @@ const BorderPropTypes = {
   borderTopStyle: BorderStylePropType,
   borderRightStyle: BorderStylePropType,
   borderBottomStyle: BorderStylePropType,
-  borderLeftStyle: BorderStylePropType
+  borderLeftStyle: BorderStylePropType,
+  /* Props to opt-out of RTL flipping */
+  borderLeftColor$noflip: ColorPropType,
+  borderRightColor$noflip: ColorPropType,
+  borderTopLeftRadius$noflip: numberOrString,
+  borderTopRightRadius$noflip: numberOrString,
+  borderBottomLeftRadius$noflip: numberOrString,
+  borderBottomRightRadius$noflip: numberOrString,
+  borderLeftStyle$noflip: BorderStylePropType,
+  borderRightStyle$noflip: BorderStylePropType
 }
 
 module.exports = BorderPropTypes

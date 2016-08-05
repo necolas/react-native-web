@@ -29,7 +29,7 @@ static **removeEventListener**(eventName: ChangeEventName, handler: Function)
 
 ## Properties
 
-**isConnected**
+**isConnected**: bool = true
 
 Available on all user agents. Asynchronously fetch a boolean to determine
 internet connectivity.
