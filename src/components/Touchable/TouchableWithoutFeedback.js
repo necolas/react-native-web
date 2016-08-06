@@ -185,7 +185,9 @@ const TouchableWithoutFeedback = React.createClass({
 
 var styles = StyleSheet.create({
   root: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    userSelect: 'none',
+    outline: 'none'
   }
 });
 
