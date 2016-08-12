@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -8,50 +9,59 @@
 
 import { PropTypes } from 'react'
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes'
+import ReactPropTypeLocations from 'react/lib/ReactPropTypeLocations'
+import ReactPropTypesSecret from 'react/lib/ReactPropTypesSecret'
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
 import warning from 'fbjs/lib/warning'
-
-const allStylePropTypes = {}
 
 class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
       if (allStylePropTypes[prop] === undefined) {
-        const message1 = `"${prop}" is not a valid style property on Web.`
-        const message2 = '\nValid style props: ' + JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ')
-        styleError(message1, style, caller, message2)
-      } else {
-        const error = allStylePropTypes[prop](style, prop, caller, 'prop')
-        if (error) {
-          styleError(error.message, style, caller)
-        }
+        var message1 = '"' + prop + '" is not a valid style property.';
+        var message2 = '\nValid style props: ' +
+          JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
+        styleError(message1, style, caller, message2);
+      }
+      var error = allStylePropTypes[prop](
+        style,
+        prop,
+        caller,
+        ReactPropTypeLocations.prop,
+        null,
+        ReactPropTypesSecret
+      );
+      if (error) {
+        styleError(error.message, style, caller);
       }
     }
   }
 
   static validateStyle(name, styles) {
     if (process.env.NODE_ENV !== 'production') {
-      for (const prop in styles[name]) {
-        StyleSheetValidation.validateStyleProp(prop, styles[name], 'StyleSheet ' + name)
+      for (var prop in styles[name]) {
+        StyleSheetValidation.validateStyleProp(prop, styles[name], 'StyleSheet ' + name);
       }
     }
   }
 
   static addValidStylePropTypes(stylePropTypes) {
-    for (const key in stylePropTypes) {
-      allStylePropTypes[key] = stylePropTypes[key]
+    for (var key in stylePropTypes) {
+      allStylePropTypes[key] = stylePropTypes[key];
     }
   }
 }
 
-const styleError = (message1, style, caller, message2) => {
+var styleError = function(message1, style, caller?, message2?) {
   warning(
     false,
     message1 + '\n' + (caller || '<<unknown>>') + ': ' +
     JSON.stringify(style, null, '  ') + (message2 || '')
-  )
-}
+  );
+};
+
+var allStylePropTypes = {};
 
 StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes)
 StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes)
