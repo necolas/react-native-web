@@ -1,30 +1,20 @@
+import Animated from '../../apis/Animated'
 import applyNativeMethods from '../../modules/applyNativeMethods'
+import Easing from 'animated/lib/Easing'
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import StyleSheet from '../../apis/StyleSheet'
 import View from '../View'
 
 const GRAY = '#999999'
-
-const animationEffectTimingProperties = {
-  direction: 'alternate',
-  duration: 700,
-  easing: 'ease-in-out',
-  fill: 'forwards',
-  iterations: Infinity
-}
-
-const keyframeEffects = [
-  { transform: 'scale(1)', opacity: 1.0 },
-  { transform: 'scale(0.95)', opacity: 0.5 }
-]
+const opacityInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.5, 1 ] }
+const scaleInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.95, 1 ] }
 
 class ActivityIndicator extends Component {
   static propTypes = {
     animating: PropTypes.bool,
     color: PropTypes.string,
     hidesWhenStopped: PropTypes.bool,
-    size: PropTypes.oneOf(['small', 'large']),
+    size: PropTypes.oneOf([ 'small', 'large' ]),
     style: View.propTypes.style
   };
 
@@ -36,10 +26,14 @@ class ActivityIndicator extends Component {
     style: {}
   };
 
-  componentDidMount() {
-    if (document.documentElement.animate) {
-      this._player = ReactDOM.findDOMNode(this._indicatorRef).animate(keyframeEffects, animationEffectTimingProperties)
+  constructor(props) {
+    super(props)
+    this.state = {
+      animation: new Animated.Value(1)
     }
+  }
+
+  componentDidMount() {
     this._manageAnimation()
   }
 
@@ -57,36 +51,54 @@ class ActivityIndicator extends Component {
       ...other
     } = this.props
 
+    const { animation } = this.state
+
     return (
       <View {...other} style={[ styles.container, style ]}>
-        <View
-          ref={this._createIndicatorRef}
+        <Animated.View
           style={[
             indicatorStyles[size],
             hidesWhenStopped && !animating && styles.hidesWhenStopped,
-            { borderColor: color }
+            {
+              borderColor: color,
+              opacity: animation.interpolate(opacityInterpolation),
+              transform: [ { scale: animation.interpolate(scaleInterpolation) } ]
+            }
           ]}
         />
       </View>
     )
   }
 
-  _createIndicatorRef = (component) => {
-    this._indicatorRef = component
-  }
-
   _manageAnimation() {
-    if (this._player) {
-      if (this.props.animating) {
-        this._player.play()
-      } else {
-        this._player.cancel()
-      }
+    const { animation } = this.state
+
+    const cycleAnimation = () => {
+      Animated.sequence([
+        Animated.timing(animation, {
+          duration: 600,
+          easing: Easing.inOut(Easing.ease),
+          toValue: 0
+        }),
+        Animated.timing(animation, {
+          duration: 600,
+          easing: Easing.inOut(Easing.ease),
+          toValue: 1
+        })
+      ]).start((event) => {
+        if (event.finished) {
+          cycleAnimation()
+        }
+      })
+    }
+
+    if (this.props.animating) {
+      cycleAnimation()
+    } else {
+      animation.stopAnimation()
     }
   }
 }
-
-applyNativeMethods(ActivityIndicator)
 
 const styles = StyleSheet.create({
   container: {
@@ -113,4 +125,4 @@ const indicatorStyles = StyleSheet.create({
   }
 })
 
-module.exports = ActivityIndicator
+module.exports = applyNativeMethods(ActivityIndicator)
