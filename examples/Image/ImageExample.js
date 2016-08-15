@@ -406,6 +406,7 @@ const examples = [
       );
     },
   },
+  /*
   {
     title: 'Tint Color',
     description: 'The `tintColor` style prop changes all the non-alpha ' +
@@ -456,6 +457,7 @@ const examples = [
       );
     },
   },
+  */
   {
     title: 'Resize Mode',
     description: 'The `resizeMode` style prop controls how the image is ' +

@@ -51,17 +51,18 @@ class Image extends Component {
   constructor(props, context) {
     super(props, context)
     const uri = resolveAssetSource(props.source)
-    this.state = { status: uri ? STATUS_PENDING : STATUS_IDLE }
+    this._imageState = uri ? STATUS_PENDING : STATUS_IDLE
+    this.state = { isLoaded: false }
   }
 
   componentDidMount() {
-    if (this.state.status === STATUS_PENDING) {
+    if (this._imageState === STATUS_PENDING) {
       this._createImageLoader()
     }
   }
 
   componentDidUpdate() {
-    if (this.state.status === STATUS_PENDING && !this.image) {
+    if (this._imageState === STATUS_PENDING && !this.image) {
       this._createImageLoader()
     }
   }
@@ -69,9 +70,7 @@ class Image extends Component {
   componentWillReceiveProps(nextProps) {
     const nextUri = resolveAssetSource(nextProps.source)
     if (resolveAssetSource(this.props.source) !== nextUri) {
-      this.setState({
-        status: nextUri ? STATUS_PENDING : STATUS_IDLE
-      })
+      this._updateImageState(nextUri ? STATUS_PENDING : STATUS_IDLE)
     }
   }
 
@@ -80,6 +79,7 @@ class Image extends Component {
   }
 
   render() {
+    const { isLoaded } = this.state
     const {
       accessibilityLabel,
       accessible,
@@ -90,13 +90,13 @@ class Image extends Component {
       testID
     } = this.props
 
-    const isLoaded = this.state.status === STATUS_LOADED
     const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source)
     const backgroundImage = displayImage ? `url("${displayImage}")` : null
-    const style = StyleSheet.flatten(this.props.style)
+    let style = StyleSheet.flatten(this.props.style)
 
     const resizeMode = this.props.resizeMode || style.resizeMode || ImageResizeMode.cover
-    // remove resizeMode style, as it is not supported by View
+    // remove 'resizeMode' style, as it is not supported by View (N.B. styles are frozen in dev)
+    style = process.env.NODE_ENV !== 'production' ? { ...style } : style
     delete style.resizeMode
 
     /**
@@ -153,7 +153,7 @@ class Image extends Component {
     const event = { nativeEvent: e }
 
     this._destroyImageLoader()
-    this.setState({ status: STATUS_ERRORED })
+    this._updateImageState(STATUS_ERRORED)
     this._onLoadEnd()
     if (onError) onError(event)
   }
@@ -163,7 +163,7 @@ class Image extends Component {
     const event = { nativeEvent: e }
 
     this._destroyImageLoader()
-    this.setState({ status: STATUS_LOADED })
+    this._updateImageState(STATUS_LOADED)
     if (onLoad) onLoad(event)
     this._onLoadEnd()
   }
@@ -175,8 +175,16 @@ class Image extends Component {
 
   _onLoadStart() {
     const { onLoadStart } = this.props
-    this.setState({ status: STATUS_LOADING })
+    this._updateImageState(STATUS_LOADING)
     if (onLoadStart) onLoadStart()
+  }
+
+  _updateImageState(status) {
+    this._imageState = status
+    const isLoaded = this._imageState === STATUS_LOADED
+    if (isLoaded !== this.state.isLoaded) {
+      this.setState({ isLoaded })
+    }
   }
 }
 
