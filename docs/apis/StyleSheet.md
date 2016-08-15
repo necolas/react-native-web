@@ -2,8 +2,8 @@
 
 The `StyleSheet` abstraction converts predefined styles to (vendor-prefixed)
 CSS without requiring a compile-time step. Some styles cannot be resolved
-outside of the render loop and are applied as inline styles. Read more about to
-[how style your application](docs/guides/style).
+outside of the render loop and are applied as inline styles. Read more about
+[how to style your application](../guides/style.md).
 
 ## Methods
 
