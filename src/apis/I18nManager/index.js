@@ -1,3 +1,5 @@
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
+
 type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => {},
   forceRTL: (forceRTL: boolean) => {},
@@ -5,28 +7,38 @@ type I18nManagerStatus = {
   isRTL: boolean
 }
 
-let isApplicationLanguageRTL = false
+let isPreferredLanguageRTL = false
 let isRTLAllowed = true
 let isRTLForced = false
+
+const isRTL = () => {
+  if (isRTLForced) {
+    return true
+  }
+  return isRTLAllowed && isPreferredLanguageRTL
+}
+
+const onChange = () => {
+  if (ExecutionEnvironment.canUseDOM) {
+    document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr')
+  }
+}
 
 const I18nManager: I18nManagerStatus = {
   allowRTL(bool) {
     isRTLAllowed = bool
+    onChange()
   },
   forceRTL(bool) {
     isRTLForced = bool
+    onChange()
   },
-  setRTL(bool) {
-    isApplicationLanguageRTL = bool
+  setPreferredLanguageRTL(bool) {
+    isPreferredLanguageRTL = bool
+    onChange()
   },
   get isRTL() {
-    if (isRTLForced) {
-      return true
-    }
-    if (isRTLAllowed && isApplicationLanguageRTL) {
-      return true
-    }
-    return false
+    return isRTL()
   }
 }
 

@@ -1,8 +1,6 @@
 # I18nManager
 
-Control and set the layout and writing direction of the application. You must
-set `dir="rtl"` (and should set `lang="${lang}"`) on the root element of your
-app.
+Control and set the layout and writing direction of the application.
 
 ## Properties
 
@@ -16,12 +14,12 @@ static **allowRTL**(allowRTL: bool)
 
 Allow the application to display in RTL mode.
 
-static **forceRTL**(allowRTL: bool)
+static **forceRTL**(forceRTL: bool)
 
 Force the application to display in RTL mode.
 
-static **setRTL**(allowRTL: bool)
+static **setPreferredLanguageRTL**(isRTL: bool)
 
-Set the application to display in RTL mode. You will need to determine the
-user's preferred locale and if it is an RTL language. (This is best done on the
-server as it is notoriously inaccurate to deduce client-side.)
+Set the application's preferred writing direction to RTL. You will need to
+determine the user's preferred locale server-side (from HTTP headers) and
+decide whether it's an RTL language.
