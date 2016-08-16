@@ -161,12 +161,22 @@ const TouchableWithoutFeedback = React.createClass({
       children.push(Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}));
     }
     const style = (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text') ?
-      [styles.root, child.props.style, {color: 'red'}] :
-      [styles.root, child.props.style];
+      [
+        styles.root,
+        this.props.disabled && styles.disabled,
+        child.props.style,
+        {color: 'red'}
+      ] :
+      [
+        styles.root,
+        this.props.disabled && styles.disabled,
+        child.props.style
+      ];
     return (React: any).cloneElement(child, {
       accessible: this.props.accessible !== false,
       accessibilityLabel: this.props.accessibilityLabel,
       accessibilityRole: this.props.accessibilityRole,
+      disabled: this.props.disabled,
       testID: this.props.testID,
       onLayout: this.props.onLayout,
       hitSlop: this.props.hitSlop,
@@ -178,7 +188,7 @@ const TouchableWithoutFeedback = React.createClass({
       onResponderTerminate: this.touchableHandleResponderTerminate,
       style,
       children,
-      tabIndex: '0'
+      tabIndex: this.props.disabled ? null : '0'
     });
   }
 });
@@ -186,6 +196,9 @@ const TouchableWithoutFeedback = React.createClass({
 var styles = StyleSheet.create({
   root: {
     cursor: 'pointer'
+  },
+  disabled: {
+    cursor: 'default'
   }
 });
 

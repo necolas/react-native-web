@@ -64,6 +64,7 @@ var TouchableOpacity = React.createClass({
 
   getDefaultProps: function() {
     return {
+      accessibilityRole: 'button',
       activeOpacity: 0.2,
     };
   },
@@ -168,8 +169,14 @@ var TouchableOpacity = React.createClass({
       <Animated.View
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityRole={this.props.accessibilityRole || 'button'}
-        style={[styles.root, this.props.style, {opacity: this.state.anim}]}
+        accessibilityRole={this.props.accessibilityRole}
+        disabled={this.props.disabled}
+        style={[
+          styles.root,
+          this.props.disabled && styles.disabled,
+          this.props.style,
+          {opacity: this.state.anim}
+        ]}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
         hitSlop={this.props.hitSlop}
@@ -182,7 +189,7 @@ var TouchableOpacity = React.createClass({
         onResponderMove={this.touchableHandleResponderMove}
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
-        tabIndex='0'
+        tabIndex={this.props.disabled ? null : '0'}
       >
         {this.props.children}
       </Animated.View>
@@ -194,6 +201,9 @@ var styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
     userSelect: 'none'
+  },
+  disabled: {
+    cursor: 'default'
   }
 });
 

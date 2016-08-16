@@ -31,6 +31,7 @@ var merge = require('../../modules/merge');
 type Event = Object;
 
 var DEFAULT_PROPS = {
+  accessibilityRole: 'button',
   activeOpacity: 0.8,
   underlayColor: 'black'
 };
@@ -234,7 +235,8 @@ var TouchableHighlight = React.createClass({
       <View
         accessible={true}
         accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityRole={this.props.accessibilityRole || this.props.accessibilityTraits || 'button'}
+        accessibilityRole={this.props.accessibilityRole}
+        disabled={this.props.disabled}
         hitSlop={this.props.hitSlop}
         onKeyDown={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressIn) }}
         onKeyPress={(e) => { this._onKeyEnter(e, this.touchableHandlePress) }}
@@ -247,8 +249,12 @@ var TouchableHighlight = React.createClass({
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
         ref={UNDERLAY_REF}
-        style={[ styles.root, this.state.underlayStyle ]}
-        tabIndex='0'
+        style={[
+          styles.root,
+          this.props.disabled && styles.disabled,
+          this.state.underlayStyle
+        ]}
+        tabIndex={this.props.disabled ? null : '0'}
         testID={this.props.testID}>
         {React.cloneElement(
           React.Children.only(this.props.children),
@@ -274,6 +280,9 @@ var styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
     userSelect: 'none'
+  },
+  disabled: {
+    cursor: 'default'
   }
 });
 
