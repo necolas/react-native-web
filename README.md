@@ -7,23 +7,16 @@
 
 Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 
+[npm-image]: https://badge.fury.io/js/react-native-web.svg
+[npm-url]: https://npmjs.org/package/react-native-web
+[react-native-url]: https://facebook.github.io/react-native/
+[travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
+[travis-url]: https://travis-ci.org/necolas/react-native-web
+
 ## Overview
 
 "React Native for Web" is a project to bring React Native's building blocks and
-touch handling to the Web.
-
-React Native – unlike React DOM – is a comprehensive UI framework for
-application developers. React Native's components are higher-level building
-blocks than those provided by React DOM. React Native also provides
-platform-agnostic JavaScript APIs for animating and styling components,
-responding to touch events, and interacting with the host environment.
-
-Bringing the React Native APIs and components to the Web allows React Native
-components to be run on the Web platform. But it also solves several problems
-facing the React DOM ecosystem: no framework-level animation or styling
-solution; difficulty sharing and composing UI components (without pulling in
-their build or runtime dependencies); and the lack of high-level base
-components.
+touch handling to the Web. [Read more](#why).
 
 ## Quick start
 
@@ -40,11 +33,8 @@ using [react-native-web-starter](https://github.com/grabcode/react-native-web-st
 
 ## Examples
 
-Demos:
-
+* React Native [examples running on Web](https://necolas.github.io/react-native-web/storybook/)
 * [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
-* [TicTacToe](http://codepen.io/necolas/full/eJaLZd/)
-* [2048](http://codepen.io/necolas/full/wMVvxj/)
 
 Sample:
 
@@ -124,12 +114,40 @@ Exported modules:
   * [`StyleSheet`](docs/apis/StyleSheet.md)
   * [`Vibration`](docs/apis/Vibration.md)
 
+<span id="#why"></span>
+## Why?
+
+React Native is a comprehensive JavaScript framework for building application
+user interfaces. It provides high-level, platform-agnostic components and APIs
+– e.g., `Text`, `View`, `Touchable*`, `Animated`, `StyleSheet` - that simplify
+working with layout, gestures, animations, and styles. The entire React Native
+ecosystem can depend on these shared building blocks.
+
+In contrast, the React DOM ecosystem is limited by the lack of a higher-level
+framework. At Twitter, we want to seamlessly author and share React component
+libraries between different Web applications (with increasing interest from
+product teams for multi-platform solutions). This goal draws together multiple,
+inter-related problems including: styling, animation, gestures, themes,
+viewport adaptation, accessibility, diverse build processes, and RTL layouts.
+
+Almost all these problems are avoided, solved, or can be solved in React
+Native. Central to this is React Native's JavaScript style API (not strictly
+"CSS-in-JS") which avoids the key [problems with
+CSS](https://speakerdeck.com/vjeux/react-css-in-js). By giving up some of the
+complexity of CSS it also provides a reliable surface for style composition,
+animation, gestures, server-side rendering, RTL layout; and removes the
+requirement for CSS-specific build tools.
+
+Bringing the React Native APIs and components to the Web has the added benefit
+of allowing teams to explore code-sharing between Native and Web platforms.
+
+## Related projects
+
+* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
+* [react-native-web-player](https://github.com/dabbott/react-native-web-player)
+* [react-web](https://github.com/taobaofed/react-web)
+* [react-native-for-web](https://github.com/KodersLab/react-native-for-web)
+
 ## License
 
 React Native for Web is [BSD licensed](LICENSE).
-
-[npm-image]: https://badge.fury.io/js/react-native-web.svg
-[npm-url]: https://npmjs.org/package/react-native-web
-[react-native-url]: https://facebook.github.io/react-native/
-[travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
-[travis-url]: https://travis-ci.org/necolas/react-native-web
