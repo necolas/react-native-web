@@ -1,6 +1,7 @@
 import applyLayout from '../../modules/applyLayout'
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createReactDOMComponent from '../../modules/createReactDOMComponent'
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes'
+import createDOMElement from '../../modules/createDOMElement'
 import { Component, PropTypes } from 'react'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
@@ -10,16 +11,14 @@ class Text extends Component {
   static displayName = 'Text'
 
   static propTypes = {
-    accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
+    ...BaseComponentPropTypes,
     accessibilityRole: PropTypes.oneOf([ 'heading', 'link' ]),
-    accessible: createReactDOMComponent.propTypes.accessible,
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onLayout: PropTypes.func,
     onPress: PropTypes.func,
     selectable: PropTypes.bool,
-    style: StyleSheetPropType(TextStylePropTypes),
-    testID: createReactDOMComponent.propTypes.testID
+    style: StyleSheetPropType(TextStylePropTypes)
   };
 
   static defaultProps = {
@@ -37,9 +36,8 @@ class Text extends Component {
       ...other
     } = this.props
 
-    return createReactDOMComponent({
+    return createDOMElement('span', {
       ...other,
-      component: 'span',
       onClick: this._onPress,
       style: [
         styles.initial,

@@ -1,5 +1,5 @@
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createReactDOMComponent from '../../modules/createReactDOMComponent'
+import createDOMElement from '../../modules/createDOMElement'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
 import React, { Component, PropTypes } from 'react'
@@ -135,23 +135,23 @@ class TextInput extends Component {
       onFocus: this._handleFocus,
       onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
+      ref: 'input',
       style: [ styles.input, textStyles, { outline: style.outline } ],
       value
     }
 
     const propsMultiline = {
       ...propsCommon,
-      component: TextareaAutosize,
       maxRows: maxNumberOfLines || numberOfLines,
       minRows: numberOfLines
     }
 
     const propsSingleline = {
       ...propsCommon,
-      component: 'input',
       type
     }
 
+    const component = multiline ? TextareaAutosize : 'input'
     const props = multiline ? propsMultiline : propsSingleline
 
     const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
@@ -176,7 +176,7 @@ class TextInput extends Component {
         testID={testID}
       >
         <View style={styles.wrapper}>
-          {createReactDOMComponent({ ...props, ref: 'input' })}
+          {createDOMElement(component, props)}
           {optionalPlaceholder}
         </View>
       </View>

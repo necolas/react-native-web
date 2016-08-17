@@ -1,61 +1,60 @@
 /* eslint-env mocha */
 
 import assert from 'assert'
-import createReactDOMComponent from '..'
+import createDOMElement from '..'
 import { shallow } from 'enzyme'
 
-suite('modules/createReactDOMComponent', () => {
+suite('modules/createDOMElement', () => {
+  test('renders correct DOM element', () => {
+    let element = shallow(createDOMElement('span'))
+    assert.equal(element.is('span'), true)
+    element = shallow(createDOMElement('main'))
+    assert.equal(element.is('main'), true)
+  })
+
   test('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel'
-    const element = shallow(createReactDOMComponent({ accessibilityLabel }))
+    const element = shallow(createDOMElement('span', { accessibilityLabel }))
     assert.equal(element.prop('aria-label'), accessibilityLabel)
   })
 
   test('prop "accessibilityLiveRegion"', () => {
     const accessibilityLiveRegion = 'polite'
-    const element = shallow(createReactDOMComponent({ accessibilityLiveRegion }))
+    const element = shallow(createDOMElement('span', { accessibilityLiveRegion }))
     assert.equal(element.prop('aria-live'), accessibilityLiveRegion)
   })
 
   test('prop "accessibilityRole"', () => {
     const accessibilityRole = 'banner'
-    let element = shallow(createReactDOMComponent({ accessibilityRole }))
+    let element = shallow(createDOMElement('span', { accessibilityRole }))
     assert.equal(element.prop('role'), accessibilityRole)
     assert.equal(element.is('header'), true)
 
     const button = 'button'
-    element = shallow(createReactDOMComponent({ accessibilityRole: 'button' }))
+    element = shallow(createDOMElement('span', { accessibilityRole: 'button' }))
     assert.equal(element.prop('type'), button)
     assert.equal(element.is('button'), true)
   })
 
   test('prop "accessible"', () => {
     // accessible (implicit)
-    let element = shallow(createReactDOMComponent({}))
+    let element = shallow(createDOMElement('span', {}))
     assert.equal(element.prop('aria-hidden'), null)
     // accessible (explicit)
-    element = shallow(createReactDOMComponent({ accessible: true }))
+    element = shallow(createDOMElement('span', { accessible: true }))
     assert.equal(element.prop('aria-hidden'), null)
     // not accessible
-    element = shallow(createReactDOMComponent({ accessible: false }))
+    element = shallow(createDOMElement('span', { accessible: false }))
     assert.equal(element.prop('aria-hidden'), true)
-  })
-
-  test('prop "component"', () => {
-    const component = 'main'
-    let element = shallow(createReactDOMComponent({}))
-    assert.equal(element.is('span'), true, 'Default element must be a "span"')
-    element = shallow(createReactDOMComponent({ component }))
-    assert.equal(element.is('main'), true)
   })
 
   test('prop "testID"', () => {
     // no testID
-    let element = shallow(createReactDOMComponent({}))
+    let element = shallow(createDOMElement('span', {}))
     assert.equal(element.prop('data-testid'), null)
     // with testID
     const testID = 'Example.testID'
-    element = shallow(createReactDOMComponent({ testID }))
+    element = shallow(createDOMElement('span', { testID }))
     assert.equal(element.prop('data-testid'), testID)
   })
 })

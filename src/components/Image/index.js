@@ -1,6 +1,7 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createReactDOMComponent from '../../modules/createReactDOMComponent'
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes'
+import createDOMElement from '../../modules/createDOMElement'
 import ImageResizeMode from './ImageResizeMode'
 import ImageStylePropTypes from './ImageStylePropTypes'
 import resolveAssetSource from './resolveAssetSource'
@@ -26,8 +27,7 @@ class Image extends Component {
   static displayName = 'Image'
 
   static propTypes = {
-    accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
-    accessible: createReactDOMComponent.propTypes.accessible,
+    ...BaseComponentPropTypes,
     children: PropTypes.any,
     defaultSource: ImageSourcePropType,
     onError: PropTypes.func,
@@ -37,8 +37,7 @@ class Image extends Component {
     onLoadStart: PropTypes.func,
     resizeMode: PropTypes.oneOf(['center', 'contain', 'cover', 'none', 'repeat', 'stretch']),
     source: ImageSourcePropType,
-    style: StyleSheetPropType(ImageStylePropTypes),
-    testID: createReactDOMComponent.propTypes.testID
+    style: StyleSheetPropType(ImageStylePropTypes)
   };
 
   static defaultProps = {
@@ -121,7 +120,7 @@ class Image extends Component {
         ]}
         testID={testID}
       >
-        {createReactDOMComponent({ component: 'img', src: displayImage, style: styles.img })}
+        {createDOMElement('img', { src: displayImage, style: styles.img })}
         {children ? (
           <View children={children} pointerEvents='box-none' style={styles.children} />
         ) : null}

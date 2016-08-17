@@ -1,6 +1,7 @@
 import applyLayout from '../../modules/applyLayout'
 import applyNativeMethods from '../../modules/applyNativeMethods'
-import createReactDOMComponent from '../../modules/createReactDOMComponent'
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes'
+import createDOMElement from '../../modules/createDOMElement'
 import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType'
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent'
 import { Component, PropTypes } from 'react'
@@ -35,10 +36,7 @@ class View extends Component {
   static displayName = 'View'
 
   static propTypes = {
-    accessibilityLabel: createReactDOMComponent.propTypes.accessibilityLabel,
-    accessibilityLiveRegion: createReactDOMComponent.propTypes.accessibilityLiveRegion,
-    accessibilityRole: createReactDOMComponent.propTypes.accessibilityRole,
-    accessible: createReactDOMComponent.propTypes.accessible,
+    ...BaseComponentPropTypes,
     children: PropTypes.any,
     collapsable: PropTypes.bool,
     hitSlop: EdgeInsetsPropType,
@@ -64,8 +62,7 @@ class View extends Component {
     onTouchStart: PropTypes.func,
     onTouchStartCapture: PropTypes.func,
     pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
-    style: StyleSheetPropType(ViewStylePropTypes),
-    testID: createReactDOMComponent.propTypes.testID
+    style: StyleSheetPropType(ViewStylePropTypes)
   };
 
   static defaultProps = {
@@ -110,10 +107,10 @@ class View extends Component {
       return handlerProps
     }, {})
 
+    const component = this.context.isInAButtonView ? 'span' : 'div'
     const props = {
       ...other,
       ...normalizedEventHandlers,
-      component: this.context.isInAButtonView ? 'span' : 'div',
       style: [
         styles.initial,
         style,
@@ -122,7 +119,7 @@ class View extends Component {
       ]
     }
 
-    return createReactDOMComponent(props)
+    return createDOMElement(component, props)
   }
 
   _normalizeEventForHandler(handler, handlerName) {
