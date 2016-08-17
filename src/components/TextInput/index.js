@@ -22,7 +22,7 @@ class TextInput extends Component {
     clearTextOnFocus: PropTypes.bool,
     defaultValue: PropTypes.string,
     editable: PropTypes.bool,
-    keyboardType: PropTypes.oneOf(['default', 'email-address', 'numeric', 'phone-pad', 'url']),
+    keyboardType: PropTypes.oneOf(['default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search']),
     maxLength: PropTypes.number,
     maxNumberOfLines: PropTypes.number,
     multiline: PropTypes.bool,
