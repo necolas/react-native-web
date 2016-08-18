@@ -26,6 +26,7 @@ import ActivityIndicator from './components/ActivityIndicator'
 import Image from './components/Image'
 import ListView from './components/ListView'
 import ScrollView from './components/ScrollView'
+import Switch from './components/Switch'
 import Text from './components/Text'
 import TextInput from './components/TextInput'
 import Touchable from './components/Touchable/Touchable'
@@ -67,6 +68,7 @@ const ReactNative = {
   PixelRatio,
   Platform,
   StyleSheet,
+  Switch,
   UIManager,
   Vibration,
 

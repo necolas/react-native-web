@@ -1,6 +1,5 @@
 import I18nManager from '../I18nManager'
-
-const CSS_UNIT_RE = /^[+-]?\d*(?:\.\d+)?(?:[Ee][+-]?\d+)?(\w*)/
+import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue'
 
 /**
  * Map of property names to their BiDi equivalent.
@@ -37,15 +36,7 @@ const PROPERTIES_SWAP_LTR_RTL = {
 /**
  * Invert the sign of a numeric-like value
  */
-const additiveInverse = (value: String | Number) => {
-  if (typeof value === 'string') {
-    const number = parseFloat(value, 10) * -1
-    const unit = getUnit(value)
-    return `${number}${unit}`
-  } else if (isNumeric(value)) {
-    return value * -1
-  }
-}
+const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1)
 
 /**
  * BiDi flip the given property.
@@ -63,15 +54,6 @@ const flipTransform = (transform: Object): Object => {
     transform.translateX = additiveInverse(translateX)
   }
   return transform
-}
-
-/**
- * Get the CSS unit for string values
- */
-const getUnit = (str) => str.match(CSS_UNIT_RE)[1]
-
-const isNumeric = (n) => {
-  return !isNaN(parseFloat(n)) && isFinite(n)
 }
 
 const swapLeftRight = (value:String): String => {

@@ -93,6 +93,7 @@ Exported modules:
   * [`Image`](docs/components/Image.md)
   * [`ListView`](docs/components/ListView.md)
   * [`ScrollView`](docs/components/ScrollView.md)
+  * [`Switch`](docs/components/Switch.md)
   * [`Text`](docs/components/Text.md)
   * [`TextInput`](docs/components/TextInput.md)
   * [`TouchableHighlight`](http://facebook.github.io/react-native/releases/0.22/docs/touchablehighlight.html) (mirrors React Native)
