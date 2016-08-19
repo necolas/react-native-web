@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
-storiesOf('<ScrollView>', module)
+storiesOf('component: ScrollView', module)
   .add('vertical', () => (
     <View style={styles.scrollViewContainer}>
       <ScrollView

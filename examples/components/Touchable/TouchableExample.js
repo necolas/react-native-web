@@ -445,6 +445,6 @@ var styles = StyleSheet.create({
 });
 
 examples.forEach((example) => {
-  storiesOf('<Touchable*>', module)
+  storiesOf('component: Touchable*', module)
     .add(example.title, () => example.render())
 })

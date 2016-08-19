@@ -170,6 +170,6 @@ const styles = StyleSheet.create({
 });
 
 examples.forEach((example) => {
-  storiesOf('<ActivityIndicator>', module)
+  storiesOf('component: ActivityIndicator', module)
     .add(example.title, () => example.render())
 })

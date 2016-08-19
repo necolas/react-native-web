@@ -185,6 +185,6 @@ var examples = [
 ];
 
 examples.forEach((example) => {
-  storiesOf('<Switch>', module)
+  storiesOf('component: Switch', module)
     .add(example.title, () => example.render())
 })

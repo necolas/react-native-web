@@ -113,5 +113,5 @@ var styles = StyleSheet.create({
 });
 
 
-storiesOf('PanResponder', module)
+storiesOf('api: PanResponder', module)
   .add('example', () => <PanResponderExample />)

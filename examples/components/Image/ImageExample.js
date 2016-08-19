@@ -651,7 +651,7 @@ var styles = StyleSheet.create({
 });
 
 examples.forEach((example) => {
-  storiesOf('<Image>', module)
+  storiesOf('component: Image', module)
     .addDecorator((renderStory) => <View>{renderStory()}</View>)
     .add(example.title, () => example.render())
 })

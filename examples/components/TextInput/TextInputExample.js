@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { StyleSheet, TextInput, View } from 'react-native'
 
-storiesOf('<TextInput>', module)
+storiesOf('component: TextInput', module)
   .add('tbd', () => (
     <View>
       <TextInput

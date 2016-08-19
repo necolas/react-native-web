@@ -281,6 +281,6 @@ const examples = [
 ];
 
 examples.forEach((example) => {
-  storiesOf('<View> transforms', module)
+  storiesOf('component: View (transforms)', module)
     .add(example.title, () => example.render())
 })

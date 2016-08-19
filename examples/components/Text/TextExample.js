@@ -466,7 +466,7 @@ var styles = StyleSheet.create({
 });
 
 examples.forEach((example) => {
-  storiesOf('<Text>', module)
+  storiesOf('component: Text', module)
     .addDecorator((renderStory) => <View style={{ width: 320 }}>{renderStory()}</View>)
     .add(example.title, () => example.render())
 })
