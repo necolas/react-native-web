@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
 class RTLExample extends Component {
+  componentWillUnmount() {
+    I18nManager.setPreferredLanguageRTL(false)
+  }
+
   render() {
     return (
       <View style={styles.container}>
