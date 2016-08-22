@@ -94,19 +94,15 @@ class Switch extends Component {
       disabled && styles.disabledThumb
     ]
 
-    const nativeControl = createDOMElement('label', {
-      children: createDOMElement('input', {
-        checked: value,
-        disabled: disabled,
-        onBlur: this._handleFocusState,
-        onChange: this._handleChange,
-        onFocus: this._handleFocusState,
-        ref: this._setCheckboxRef,
-        style: styles.cursorInherit,
-        type: 'checkbox'
-      }),
-      pointerEvents: 'none',
-      style: [ styles.nativeControl, styles.cursorInherit ]
+    const nativeControl = createDOMElement('input', {
+      checked: value,
+      disabled: disabled,
+      onBlur: this._handleFocusState,
+      onChange: this._handleChange,
+      onFocus: this._handleFocusState,
+      ref: this._setCheckboxRef,
+      style: [ styles.nativeControl, styles.cursorInherit ],
+      type: 'checkbox'
     })
 
     return (
@@ -169,7 +165,11 @@ const styles = StyleSheet.create({
   },
   nativeControl: {
     ...StyleSheet.absoluteFillObject,
-    opacity: 0
+    height: '100%',
+    margin: 0,
+    opacity: 0,
+    padding: 0,
+    width: '100%'
   }
 })
 
