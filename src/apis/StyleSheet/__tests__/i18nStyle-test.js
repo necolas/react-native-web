@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 
-import assert from 'assert'
-import I18nManager from '../../I18nManager'
-import i18nStyle from '../i18nStyle'
+import assert from 'assert';
+import I18nManager from '../../I18nManager';
+import i18nStyle from '../i18nStyle';
 
 const initial = {
   borderLeftColor: 'red',
@@ -24,13 +24,13 @@ const initial = {
   textAlign: 'left',
   textShadowOffset: { width: '1rem', height: 10 },
   writingDirection: 'ltr'
-}
+};
 
 const initialNoI18n = Object.keys(initial).reduce((acc, prop) => {
-  const newProp = `${prop}$noI18n`
-  acc[newProp] = initial[prop]
-  return acc
-}, {})
+  const newProp = `${prop}$noI18n`;
+  acc[newProp] = initial[prop];
+  return acc;
+}, {});
 
 const expected = {
   borderLeftColor: 'blue',
@@ -52,40 +52,40 @@ const expected = {
   textAlign: 'right',
   textShadowOffset: { width: '-1rem', height: 10 },
   writingDirection: 'rtl'
-}
+};
 
 suite('apis/StyleSheet/i18nStyle', () => {
   suite('LTR mode', () => {
     setup(() => {
-      I18nManager.allowRTL(false)
-    })
+      I18nManager.allowRTL(false);
+    });
 
     teardown(() => {
-      I18nManager.allowRTL(true)
-    })
+      I18nManager.allowRTL(true);
+    });
 
     test('does not auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), initial)
-    })
+      assert.deepEqual(i18nStyle(initial), initial);
+    });
     test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial)
-    })
-  })
+      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+    });
+  });
 
   suite('RTL mode', () => {
     setup(() => {
-      I18nManager.forceRTL(true)
-    })
+      I18nManager.forceRTL(true);
+    });
 
     teardown(() => {
-      I18nManager.forceRTL(false)
-    })
+      I18nManager.forceRTL(false);
+    });
 
     test('does auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), expected)
-    })
+      assert.deepEqual(i18nStyle(initial), expected);
+    });
     test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial)
-    })
-  })
-})
+      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+    });
+  });
+});

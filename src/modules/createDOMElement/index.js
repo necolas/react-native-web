@@ -1,5 +1,5 @@
-import React from 'react'
-import StyleSheet from '../../apis/StyleSheet'
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
 
 const roleComponents = {
   article: 'article',
@@ -15,7 +15,7 @@ const roleComponents = {
   main: 'main',
   navigation: 'nav',
   region: 'section'
-}
+};
 
 const createDOMElement = (component, rnProps = {}) => {
   const {
@@ -26,10 +26,10 @@ const createDOMElement = (component, rnProps = {}) => {
     testID,
     type,
     ...other
-  } = rnProps
+  } = rnProps;
 
-  const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole]
-  const Component = accessibilityComponent || component
+  const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
+  const Component = accessibilityComponent || component;
 
   return (
     <Component
@@ -42,7 +42,7 @@ const createDOMElement = (component, rnProps = {}) => {
       role={accessibilityRole}
       type={accessibilityRole === 'button' ? 'button' : type}
     />
-  )
-}
+  );
+};
 
-module.exports = createDOMElement
+module.exports = createDOMElement;

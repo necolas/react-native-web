@@ -1,5 +1,5 @@
-import I18nManager from '../I18nManager'
-import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue'
+import I18nManager from '../I18nManager';
+import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 
 /**
  * Map of property names to their BiDi equivalent.
@@ -21,86 +21,86 @@ const PROPERTIES_TO_SWAP = {
   'paddingLeft': 'paddingRight',
   'paddingRight': 'paddingLeft',
   'right': 'left'
-}
+};
 
 const PROPERTIES_SWAP_LEFT_RIGHT = {
   'clear': true,
   'float': true,
   'textAlign': true
-}
+};
 
 const PROPERTIES_SWAP_LTR_RTL = {
   'writingDirection': true
-}
+};
 
 /**
  * Invert the sign of a numeric-like value
  */
-const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1)
+const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
 
 /**
  * BiDi flip the given property.
  */
 const flipProperty = (prop:String): String => {
-  return PROPERTIES_TO_SWAP.hasOwnProperty(prop) ? PROPERTIES_TO_SWAP[prop] : prop
-}
+  return PROPERTIES_TO_SWAP.hasOwnProperty(prop) ? PROPERTIES_TO_SWAP[prop] : prop;
+};
 
 /**
  * BiDi flip translateX
  */
 const flipTransform = (transform: Object): Object => {
-  const translateX = transform.translateX
+  const translateX = transform.translateX;
   if (translateX != null) {
-    transform.translateX = additiveInverse(translateX)
+    transform.translateX = additiveInverse(translateX);
   }
-  return transform
-}
+  return transform;
+};
 
 const swapLeftRight = (value:String): String => {
-  return value === 'left' ? 'right' : value === 'right' ? 'left' : value
-}
+  return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
+};
 
 const swapLtrRtl = (value:String): String => {
-  return value === 'ltr' ? 'rtl' : value === 'rtl' ? 'ltr' : value
-}
+  return value === 'ltr' ? 'rtl' : value === 'rtl' ? 'ltr' : value;
+};
 
 const i18nStyle = (style = {}) => {
-  const newStyle = {}
+  const newStyle = {};
   for (const prop in style) {
     if (style.hasOwnProperty(prop)) {
-      const indexOfNoFlip = prop.indexOf('$noI18n')
+      const indexOfNoFlip = prop.indexOf('$noI18n');
 
       if (I18nManager.isRTL) {
         if (PROPERTIES_TO_SWAP[prop]) {
-          const newProp = flipProperty(prop)
-          newStyle[newProp] = style[prop]
+          const newProp = flipProperty(prop);
+          newStyle[newProp] = style[prop];
         } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
-          newStyle[prop] = swapLeftRight(style[prop])
+          newStyle[prop] = swapLeftRight(style[prop]);
         } else if (PROPERTIES_SWAP_LTR_RTL[prop]) {
-          newStyle[prop] = swapLtrRtl(style[prop])
+          newStyle[prop] = swapLtrRtl(style[prop]);
         } else if (prop === 'textShadowOffset') {
-          newStyle[prop] = style[prop]
-          newStyle[prop].width = additiveInverse(style[prop].width)
+          newStyle[prop] = style[prop];
+          newStyle[prop].width = additiveInverse(style[prop].width);
         } else if (prop === 'transform') {
-          newStyle[prop] = style[prop].map(flipTransform)
+          newStyle[prop] = style[prop].map(flipTransform);
         } else if (indexOfNoFlip > -1) {
-          const newProp = prop.substring(0, indexOfNoFlip)
-          newStyle[newProp] = style[prop]
+          const newProp = prop.substring(0, indexOfNoFlip);
+          newStyle[newProp] = style[prop];
         } else {
-          newStyle[prop] = style[prop]
+          newStyle[prop] = style[prop];
         }
       } else {
         if (indexOfNoFlip > -1) {
-          const newProp = prop.substring(0, indexOfNoFlip)
-          newStyle[newProp] = style[prop]
+          const newProp = prop.substring(0, indexOfNoFlip);
+          newStyle[newProp] = style[prop];
         } else {
-          newStyle[prop] = style[prop]
+          newStyle[prop] = style[prop];
         }
       }
     }
   }
 
-  return newStyle
-}
+  return newStyle;
+};
 
-module.exports = i18nStyle
+module.exports = i18nStyle;

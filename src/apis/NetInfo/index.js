@@ -6,16 +6,16 @@
  * @flow
  */
 
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
-import invariant from 'fbjs/lib/invariant'
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+import invariant from 'fbjs/lib/invariant';
 
 const connection = ExecutionEnvironment.canUseDOM && (
   window.navigator.connection ||
   window.navigator.mozConnection ||
   window.navigator.webkitConnection
-)
+);
 
-const eventTypes = [ 'change' ]
+const eventTypes = [ 'change' ];
 
 /**
  * Navigator online: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
@@ -23,63 +23,63 @@ const eventTypes = [ 'change' ]
  */
 const NetInfo = {
   addEventListener(type: string, handler: Function): { remove: () => void } {
-    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
+    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
     if (!connection) {
-      console.error('Network Connection API is not supported. Not listening for connection type changes.')
+      console.error('Network Connection API is not supported. Not listening for connection type changes.');
       return {
         remove: () => {}
-      }
+      };
     }
 
-    connection.addEventListener(type, handler)
+    connection.addEventListener(type, handler);
     return {
       remove: () => NetInfo.removeEventListener(type, handler)
-    }
+    };
   },
 
   removeEventListener(type: string, handler: Function): void {
-    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-    if (!connection) { return }
-    connection.removeEventListener(type, handler)
+    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+    if (!connection) { return; }
+    connection.removeEventListener(type, handler);
   },
 
   fetch(): Promise {
     return new Promise((resolve, reject) => {
       try {
-        resolve(connection.type)
+        resolve(connection.type);
       } catch (err) {
-        resolve('unknown')
+        resolve('unknown');
       }
-    })
+    });
   },
 
   isConnected: {
     addEventListener(type: string, handler: Function): { remove: () => void } {
-      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-      window.addEventListener('online', handler.bind(null, true), false)
-      window.addEventListener('offline', handler.bind(null, false), false)
+      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+      window.addEventListener('online', handler.bind(null, true), false);
+      window.addEventListener('offline', handler.bind(null, false), false);
 
       return {
         remove: () => NetInfo.isConnected.removeEventListener(type, handler)
-      }
+      };
     },
 
     removeEventListener(type: string, handler: Function): void {
-      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type)
-      window.removeEventListener('online', handler.bind(null, true), false)
-      window.removeEventListener('offline', handler.bind(null, false), false)
+      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+      window.removeEventListener('online', handler.bind(null, true), false);
+      window.removeEventListener('offline', handler.bind(null, false), false);
     },
 
     fetch(): Promise {
       return new Promise((resolve, reject) => {
         try {
-          resolve(window.navigator.onLine)
+          resolve(window.navigator.onLine);
         } catch (err) {
-          resolve(true)
+          resolve(true);
         }
-      })
+      });
     }
   }
-}
+};
 
-module.exports = NetInfo
+module.exports = NetInfo;

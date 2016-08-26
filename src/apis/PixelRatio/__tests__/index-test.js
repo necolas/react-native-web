@@ -1,5 +1,5 @@
 /* eslint-env mocha */
 
 suite('apis/PixelRatio', () => {
-  test.skip('NO TEST COVERAGE', () => {})
-})
+  test.skip('NO TEST COVERAGE', () => {});
+});

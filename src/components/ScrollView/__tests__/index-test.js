@@ -1,5 +1,5 @@
 /* eslint-env mocha */
 
 suite('components/ScrollView', () => {
-  test('NO TEST COVERAGE')
-})
+  test('NO TEST COVERAGE');
+});

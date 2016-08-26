@@ -1,13 +1,13 @@
-import applyLayout from '../../modules/applyLayout'
-import applyNativeMethods from '../../modules/applyNativeMethods'
-import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes'
-import createDOMElement from '../../modules/createDOMElement'
-import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType'
-import normalizeNativeEvent from '../../modules/normalizeNativeEvent'
-import { Component, PropTypes } from 'react'
-import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
-import ViewStylePropTypes from './ViewStylePropTypes'
+import applyLayout from '../../modules/applyLayout';
+import applyNativeMethods from '../../modules/applyNativeMethods';
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
+import createDOMElement from '../../modules/createDOMElement';
+import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
+import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
+import StyleSheet from '../../apis/StyleSheet';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import ViewStylePropTypes from './ViewStylePropTypes';
+import { Component, PropTypes } from 'react';
 
 const eventHandlerNames = [
   'onClick',
@@ -30,7 +30,7 @@ const eventHandlerNames = [
   'onTouchMoveCapture',
   'onTouchStart',
   'onTouchStartCapture'
-]
+];
 
 class View extends Component {
   static displayName = 'View'
@@ -61,7 +61,7 @@ class View extends Component {
     onTouchMoveCapture: PropTypes.func,
     onTouchStart: PropTypes.func,
     onTouchStartCapture: PropTypes.func,
-    pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
+    pointerEvents: PropTypes.oneOf([ 'auto', 'box-none', 'box-only', 'none' ]),
     style: StyleSheetPropType(ViewStylePropTypes)
   };
 
@@ -81,7 +81,7 @@ class View extends Component {
   getChildContext() {
     return {
       isInAButtonView: this.props.accessibilityRole === 'button'
-    }
+    };
   }
 
   render() {
@@ -92,22 +92,22 @@ class View extends Component {
       pointerEvents,
       style,
       ...other
-    } = this.props
+    } = this.props;
 
-    const flattenedStyle = StyleSheet.flatten(style)
-    const pointerEventsStyle = pointerEvents && { pointerEvents }
+    const flattenedStyle = StyleSheet.flatten(style);
+    const pointerEventsStyle = pointerEvents && { pointerEvents };
     // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
-    const needsFlexReset = flattenedStyle.flex == null && flattenedStyle.flexShrink == null
+    const needsFlexReset = flattenedStyle.flex == null && flattenedStyle.flexShrink == null;
 
     const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
-      const handler = this.props[handlerName]
+      const handler = this.props[handlerName];
       if (typeof handler === 'function') {
-        handlerProps[handlerName] = this._normalizeEventForHandler(handler, handlerName)
+        handlerProps[handlerName] = this._normalizeEventForHandler(handler, handlerName);
       }
-      return handlerProps
-    }, {})
+      return handlerProps;
+    }, {});
 
-    const component = this.context.isInAButtonView ? 'span' : 'div'
+    const component = this.context.isInAButtonView ? 'span' : 'div';
     const props = {
       ...other,
       ...normalizedEventHandlers,
@@ -117,9 +117,9 @@ class View extends Component {
         needsFlexReset && styles.flexReset,
         pointerEventsStyle
       ]
-    }
+    };
 
-    return createDOMElement(component, props)
+    return createDOMElement(component, props);
   }
 
   _normalizeEventForHandler(handler, handlerName) {
@@ -127,16 +127,16 @@ class View extends Component {
     // ResponderEvents and their handlers to fire twice for Touchables.
     // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
     // events.
-    const shouldCancelEvent = handlerName.indexOf('onResponder') === 0
+    const shouldCancelEvent = handlerName.indexOf('onResponder') === 0;
 
     return (e) => {
-      e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
-      const returnValue = handler(e)
+      e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
+      const returnValue = handler(e);
       if (shouldCancelEvent && e.cancelable) {
-        e.preventDefault()
+        e.preventDefault();
       }
-      return returnValue
-    }
+      return returnValue;
+    };
   }
 }
 
@@ -168,6 +168,6 @@ const styles = StyleSheet.create({
   flexReset: {
     flexShrink: 0
   }
-})
+});
 
-module.exports = applyLayout(applyNativeMethods(View))
+module.exports = applyLayout(applyNativeMethods(View));

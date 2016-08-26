@@ -1,7 +1,7 @@
-import TextInputState from '../../components/TextInput/TextInputState'
+import TextInputState from '../../components/TextInput/TextInputState';
 
 const dismissKeyboard = () => {
-  TextInputState.blurTextInput(TextInputState.currentlyFocusedField())
-}
+  TextInputState.blurTextInput(TextInputState.currentlyFocusedField());
+};
 
-module.exports = dismissKeyboard
+module.exports = dismissKeyboard;

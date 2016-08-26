@@ -5,10 +5,10 @@
  * @flow
  */
 
-import { PropTypes } from 'react'
+import { PropTypes } from 'react';
 
-const { arrayOf, number, oneOfType, shape, string } = PropTypes
-const numberOrString = oneOfType([ number, string ])
+const { arrayOf, number, oneOfType, shape, string } = PropTypes;
+const numberOrString = oneOfType([ number, string ]);
 
 const TransformPropTypes = {
   transform: arrayOf(
@@ -29,6 +29,6 @@ const TransformPropTypes = {
       shape({ translate3d: string })
     ])
   )
-}
+};
 
-module.exports = TransformPropTypes
+module.exports = TransformPropTypes;

@@ -1,11 +1,11 @@
-import applyLayout from '../../modules/applyLayout'
-import applyNativeMethods from '../../modules/applyNativeMethods'
-import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes'
-import createDOMElement from '../../modules/createDOMElement'
-import { Component, PropTypes } from 'react'
-import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
-import TextStylePropTypes from './TextStylePropTypes'
+import applyLayout from '../../modules/applyLayout';
+import applyNativeMethods from '../../modules/applyNativeMethods';
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
+import createDOMElement from '../../modules/createDOMElement';
+import StyleSheet from '../../apis/StyleSheet';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import TextStylePropTypes from './TextStylePropTypes';
+import { Component, PropTypes } from 'react';
 
 class Text extends Component {
   static displayName = 'Text'
@@ -34,7 +34,7 @@ class Text extends Component {
       selectable,
       style,
       ...other
-    } = this.props
+    } = this.props;
 
     return createDOMElement('span', {
       ...other,
@@ -45,15 +45,13 @@ class Text extends Component {
         !selectable && styles.notSelectable,
         numberOfLines === 1 && styles.singleLineStyle
       ]
-    })
+    });
   }
 
   _onPress = (e) => {
-    if (this.props.onPress) this.props.onPress(e)
+    if (this.props.onPress) { this.props.onPress(e); }
   }
 }
-
-applyLayout(applyNativeMethods(Text))
 
 const styles = StyleSheet.create({
   initial: {
@@ -74,6 +72,6 @@ const styles = StyleSheet.create({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   }
-})
+});
 
-module.exports = Text
+module.exports = applyLayout(applyNativeMethods(Text));

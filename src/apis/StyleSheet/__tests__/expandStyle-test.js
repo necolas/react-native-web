@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
-import assert from 'assert'
-import expandStyle from '../expandStyle'
+import assert from 'assert';
+import expandStyle from '../expandStyle';
 
 suite('apis/StyleSheet/expandStyle', () => {
   test('shortform -> longform', () => {
@@ -14,7 +14,7 @@ suite('apis/StyleSheet/expandStyle', () => {
       marginTop: 50,
       marginVertical: 25,
       margin: 10
-    }
+    };
 
     const expected = {
       borderBottomStyle: 'solid',
@@ -31,36 +31,36 @@ suite('apis/StyleSheet/expandStyle', () => {
       marginBottom: '25px',
       marginLeft: '10px',
       marginRight: '10px'
-    }
+    };
 
-    assert.deepEqual(expandStyle(initial), expected)
-  })
+    assert.deepEqual(expandStyle(initial), expected);
+  });
 
   test('textAlignVertical', () => {
     const initial = {
       textAlignVertical: 'center'
-    }
+    };
 
     const expected = {
       verticalAlign: 'middle'
-    }
+    };
 
-    assert.deepEqual(expandStyle(initial), expected)
-  })
+    assert.deepEqual(expandStyle(initial), expected);
+  });
 
   test('flex', () => {
-    const value = 10
+    const value = 10;
 
     const initial = {
       flex: value
-    }
+    };
 
     const expected = {
       flexGrow: value,
       flexShrink: 1,
       flexBasis: 'auto'
-    }
+    };
 
-    assert.deepEqual(expandStyle(initial), expected)
-  })
-})
+    assert.deepEqual(expandStyle(initial), expected);
+  });
+});

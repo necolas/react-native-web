@@ -1,18 +1,18 @@
-import applyNativeMethods from '../../modules/applyNativeMethods'
-import createDOMElement from '../../modules/createDOMElement'
-import omit from 'lodash/omit'
-import pick from 'lodash/pick'
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import StyleSheet from '../../apis/StyleSheet'
-import Text from '../Text'
-import TextareaAutosize from 'react-textarea-autosize'
-import TextInputState from './TextInputState'
-import UIManager from '../../apis/UIManager'
-import View from '../View'
-import ViewStylePropTypes from '../View/ViewStylePropTypes'
+import applyNativeMethods from '../../modules/applyNativeMethods';
+import createDOMElement from '../../modules/createDOMElement';
+import omit from 'lodash/omit';
+import pick from 'lodash/pick';
+import ReactDOM from 'react-dom';
+import StyleSheet from '../../apis/StyleSheet';
+import Text from '../Text';
+import TextareaAutosize from 'react-textarea-autosize';
+import TextInputState from './TextInputState';
+import UIManager from '../../apis/UIManager';
+import View from '../View';
+import ViewStylePropTypes from '../View/ViewStylePropTypes';
+import React, { Component, PropTypes } from 'react';
 
-const viewStyleProps = Object.keys(ViewStylePropTypes)
+const viewStyleProps = Object.keys(ViewStylePropTypes);
 
 class TextInput extends Component {
   static propTypes = {
@@ -22,7 +22,9 @@ class TextInput extends Component {
     clearTextOnFocus: PropTypes.bool,
     defaultValue: PropTypes.string,
     editable: PropTypes.bool,
-    keyboardType: PropTypes.oneOf(['default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search']),
+    keyboardType: PropTypes.oneOf([
+      'default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search'
+    ]),
     maxLength: PropTypes.number,
     maxNumberOfLines: PropTypes.number,
     multiline: PropTypes.bool,
@@ -51,24 +53,24 @@ class TextInput extends Component {
   };
 
   constructor(props, context) {
-    super(props, context)
-    this.state = { showPlaceholder: !props.value && !props.defaultValue }
+    super(props, context);
+    this.state = { showPlaceholder: !props.value && !props.defaultValue };
   }
 
   blur() {
-    TextInputState.blurTextInput(ReactDOM.findDOMNode(this.refs.input))
+    TextInputState.blurTextInput(ReactDOM.findDOMNode(this._inputRef));
   }
 
   clear() {
-    this.setNativeProps({ text: '' })
+    this.setNativeProps({ text: '' });
   }
 
   focus() {
-    TextInputState.focusTextInput(ReactDOM.findDOMNode(this.refs.input))
+    TextInputState.focusTextInput(ReactDOM.findDOMNode(this._inputRef));
   }
 
   setNativeProps(props) {
-    UIManager.updateView(this.refs.input, props, this)
+    UIManager.updateView(this._inputRef, props, this);
   }
 
   render() {
@@ -91,39 +93,41 @@ class TextInput extends Component {
       style,
       testID,
       value
-    } = this.props
+    } = this.props;
 
-    let type
+    let type;
 
     switch (keyboardType) {
       case 'email-address':
-        type = 'email'
-        break
+        type = 'email';
+        break;
       case 'numeric':
-        type = 'number'
-        break
+        type = 'number';
+        break;
       case 'phone-pad':
-        type = 'tel'
-        break
+        type = 'tel';
+        break;
       case 'search':
       case 'web-search':
-        type = 'search'
-        break
+        type = 'search';
+        break;
       case 'url':
-        type = 'url'
-        break
+        type = 'url';
+        break;
+      default:
+        type = 'text';
     }
 
     if (secureTextEntry) {
-      type = 'password'
+      type = 'password';
     }
 
     // In order to support 'Text' styles on 'TextInput', we split the 'Text'
     // and 'View' styles and apply them to the 'Text' and 'View' components
     // used in the implementation
-    const flattenedStyle = StyleSheet.flatten(style)
-    const rootStyles = pick(flattenedStyle, viewStyleProps)
-    const textStyles = omit(flattenedStyle, viewStyleProps)
+    const flattenedStyle = StyleSheet.flatten(style);
+    const rootStyles = pick(flattenedStyle, viewStyleProps);
+    const textStyles = omit(flattenedStyle, viewStyleProps);
 
     const propsCommon = {
       autoComplete: autoComplete && 'on',
@@ -135,24 +139,24 @@ class TextInput extends Component {
       onFocus: this._handleFocus,
       onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
-      ref: 'input',
+      ref: this._setInputRef,
       style: [ styles.input, textStyles, { outline: style.outline } ],
       value
-    }
+    };
 
     const propsMultiline = {
       ...propsCommon,
       maxRows: maxNumberOfLines || numberOfLines,
       minRows: numberOfLines
-    }
+    };
 
     const propsSingleline = {
       ...propsCommon,
       type
-    }
+    };
 
-    const component = multiline ? TextareaAutosize : 'input'
-    const props = multiline ? propsMultiline : propsSingleline
+    const component = multiline ? TextareaAutosize : 'input';
+    const props = multiline ? propsMultiline : propsSingleline;
 
     const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
       <View pointerEvents='none' style={styles.placeholder}>
@@ -165,7 +169,7 @@ class TextInput extends Component {
           ]}
         />
       </View>
-    )
+    );
 
     return (
       <View
@@ -180,60 +184,64 @@ class TextInput extends Component {
           {optionalPlaceholder}
         </View>
       </View>
-    )
+    );
   }
 
   _handleBlur = (e) => {
-    const { onBlur } = this.props
-    const text = e.target.value
-    this.setState({ showPlaceholder: text === '' })
-    this.blur()
-    if (onBlur) onBlur(e)
+    const { onBlur } = this.props;
+    const text = e.target.value;
+    this.setState({ showPlaceholder: text === '' });
+    this.blur();
+    if (onBlur) { onBlur(e); }
   }
 
   _handleChange = (e) => {
-    const { onChange, onChangeText } = this.props
-    const text = e.target.value
-    this.setState({ showPlaceholder: text === '' })
-    if (onChange) onChange(e)
-    if (onChangeText) onChangeText(text)
-    if (!this.refs.input) {
+    const { onChange, onChangeText } = this.props;
+    const text = e.target.value;
+    this.setState({ showPlaceholder: text === '' });
+    if (onChange) { onChange(e); }
+    if (onChangeText) { onChangeText(text); }
+    if (!this._inputRef) {
       // calling `this.props.onChange` or `this.props.onChangeText`
       // may clean up the input itself. Exits here.
-      return
+      return;
     }
   }
 
   _handleClick = (e) => {
-    this.focus()
+    this.focus();
   }
 
   _handleFocus = (e) => {
-    const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props
-    const node = ReactDOM.findDOMNode(this.refs.input)
-    const text = e.target.value
-    if (onFocus) onFocus(e)
-    if (clearTextOnFocus) this.clear()
-    if (selectTextOnFocus) node.select()
-    this.setState({ showPlaceholder: text === '' })
+    const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
+    const node = ReactDOM.findDOMNode(this._inputRef);
+    const text = e.target.value;
+    if (onFocus) { onFocus(e); }
+    if (clearTextOnFocus) { this.clear(); }
+    if (selectTextOnFocus) { node.select(); }
+    this.setState({ showPlaceholder: text === '' });
   }
 
   _handleSelectionChange = (e) => {
-    const { onSelectionChange } = this.props
+    const { onSelectionChange } = this.props;
     try {
-      const { selectionDirection, selectionEnd, selectionStart } = e.target
+      const { selectionDirection, selectionEnd, selectionStart } = e.target;
       const event = {
         selectionDirection,
         selectionEnd,
         selectionStart,
         nativeEvent: e.nativeEvent
-      }
-      if (onSelectionChange) onSelectionChange(event)
+      };
+      if (onSelectionChange) { onSelectionChange(event); }
     } catch (e) {}
+  }
+
+  _setInputRef = (component) => {
+    this._inputRef = component;
   }
 }
 
-applyNativeMethods(TextInput)
+applyNativeMethods(TextInput);
 
 const styles = StyleSheet.create({
   initial: {
@@ -267,6 +275,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     whiteSpace: 'pre'
   }
-})
+});
 
-module.exports = TextInput
+module.exports = TextInput;

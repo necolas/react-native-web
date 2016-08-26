@@ -6,9 +6,9 @@
  * @flow
  */
 
-import { Component } from 'react'
-import ReactDOM from 'react-dom'
-import UIManager from '../../apis/UIManager'
+import { Component } from 'react';
+import ReactDOM from 'react-dom';
+import UIManager from '../../apis/UIManager';
 
 type MeasureInWindowOnSuccessCallback = (
   x: number,
@@ -38,7 +38,7 @@ const NativeMethodsMixin = {
    * Removes focus from an input or view. This is the opposite of `focus()`.
    */
   blur() {
-    UIManager.blur(ReactDOM.findDOMNode(this))
+    UIManager.blur(ReactDOM.findDOMNode(this));
   },
 
   /**
@@ -46,7 +46,7 @@ const NativeMethodsMixin = {
    * The exact behavior triggered will depend the type of view.
    */
   focus() {
-    UIManager.focus(ReactDOM.findDOMNode(this))
+    UIManager.focus(ReactDOM.findDOMNode(this));
   },
 
   /**
@@ -56,7 +56,7 @@ const NativeMethodsMixin = {
     UIManager.measure(
       ReactDOM.findDOMNode(this),
       mountSafeCallback(this, callback)
-    )
+    );
   },
 
   /**
@@ -78,7 +78,7 @@ const NativeMethodsMixin = {
     UIManager.measureInWindow(
       ReactDOM.findDOMNode(this),
       mountSafeCallback(this, callback)
-    )
+    );
   },
 
   /**
@@ -94,7 +94,7 @@ const NativeMethodsMixin = {
       relativeToNativeNode,
       mountSafeCallback(this, onFail),
       mountSafeCallback(this, onSuccess)
-    )
+    );
   },
 
   /**
@@ -105,9 +105,9 @@ const NativeMethodsMixin = {
       ReactDOM.findDOMNode(this),
       nativeProps,
       this
-    )
+    );
   }
-}
+};
 
 /**
  * In the future, we should cleanup callbacks by cancelling them instead of
@@ -115,9 +115,9 @@ const NativeMethodsMixin = {
  */
 const mountSafeCallback = (context: Component, callback: ?Function) => (...args) => {
   if (!callback) {
-    return undefined
+    return undefined;
   }
-  return callback.apply(context, args)
-}
+  return callback.apply(context, args);
+};
 
-module.exports = NativeMethodsMixin
+module.exports = NativeMethodsMixin;

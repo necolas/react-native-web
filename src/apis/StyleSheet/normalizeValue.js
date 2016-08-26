@@ -25,13 +25,13 @@ const unitlessNumbers = {
   scaleX: true,
   scaleY: true,
   scaleZ: true
-}
+};
 
 const normalizeValue = (property, value) => {
   if (!unitlessNumbers[property] && typeof value === 'number') {
-    value = `${value}px`
+    value = `${value}px`;
   }
-  return value
-}
+  return value;
+};
 
-module.exports = normalizeValue
+module.exports = normalizeValue;

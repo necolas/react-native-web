@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
-import assert from 'assert'
-import processTransform from '../processTransform'
+import assert from 'assert';
+import processTransform from '../processTransform';
 
 suite('apis/StyleSheet/processTransform', () => {
   test('transform', () => {
@@ -11,18 +11,18 @@ suite('apis/StyleSheet/processTransform', () => {
         { translateX: 20 },
         { rotate: '20deg' }
       ]
-    }
+    };
 
     assert.deepEqual(
       processTransform(style),
       { transform: 'scaleX(20) translateX(20px) rotate(20deg)' }
-    )
-  })
+    );
+  });
 
   test('transformMatrix', () => {
     const style = {
       transformMatrix: [ 1, 2, 3, 4, 5, 6 ]
-    }
+    };
 
     assert.deepEqual(
       processTransform(style),
@@ -30,6 +30,6 @@ suite('apis/StyleSheet/processTransform', () => {
         transform: 'matrix3d(1,2,3,4,5,6)',
         transformMatrix: null
       }
-    )
-  })
-})
+    );
+  });
+});

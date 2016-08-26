@@ -1,5 +1,5 @@
 /* eslint-env mocha */
 
 suite('components/StaticRenderer', () => {
-  test.skip('NO TEST COVERAGE', () => {})
-})
+  test.skip('NO TEST COVERAGE', () => {});
+});

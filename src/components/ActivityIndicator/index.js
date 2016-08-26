@@ -1,13 +1,13 @@
-import Animated from '../../apis/Animated'
-import applyNativeMethods from '../../modules/applyNativeMethods'
-import Easing from 'animated/lib/Easing'
-import React, { Component, PropTypes } from 'react'
-import StyleSheet from '../../apis/StyleSheet'
-import View from '../View'
+import Animated from '../../apis/Animated';
+import applyNativeMethods from '../../modules/applyNativeMethods';
+import Easing from 'animated/lib/Easing';
+import StyleSheet from '../../apis/StyleSheet';
+import View from '../View';
+import React, { Component, PropTypes } from 'react';
 
-const GRAY = '#999999'
-const opacityInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.5, 1 ] }
-const scaleInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.95, 1 ] }
+const GRAY = '#999999';
+const opacityInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.5, 1 ] };
+const scaleInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.95, 1 ] };
 
 class ActivityIndicator extends Component {
   static propTypes = {
@@ -27,18 +27,18 @@ class ActivityIndicator extends Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       animation: new Animated.Value(1)
-    }
+    };
   }
 
   componentDidMount() {
-    this._manageAnimation()
+    this._manageAnimation();
   }
 
   componentDidUpdate() {
-    this._manageAnimation()
+    this._manageAnimation();
   }
 
   render() {
@@ -49,9 +49,9 @@ class ActivityIndicator extends Component {
       size,
       style,
       ...other
-    } = this.props
+    } = this.props;
 
-    const { animation } = this.state
+    const { animation } = this.state;
 
     return (
       <View {...other} style={[ styles.container, style ]}>
@@ -67,11 +67,11 @@ class ActivityIndicator extends Component {
           ]}
         />
       </View>
-    )
+    );
   }
 
   _manageAnimation() {
-    const { animation } = this.state
+    const { animation } = this.state;
 
     const cycleAnimation = () => {
       Animated.sequence([
@@ -87,15 +87,15 @@ class ActivityIndicator extends Component {
         })
       ]).start((event) => {
         if (event.finished) {
-          cycleAnimation()
+          cycleAnimation();
         }
-      })
-    }
+      });
+    };
 
     if (this.props.animating) {
-      cycleAnimation()
+      cycleAnimation();
     } else {
-      animation.stopAnimation()
+      animation.stopAnimation();
     }
   }
 }
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   hidesWhenStopped: {
     visibility: 'hidden'
   }
-})
+});
 
 const indicatorStyles = StyleSheet.create({
   small: {
@@ -123,6 +123,6 @@ const indicatorStyles = StyleSheet.create({
     width: 36,
     height: 36
   }
-})
+});
 
-module.exports = applyNativeMethods(ActivityIndicator)
+module.exports = applyNativeMethods(ActivityIndicator);

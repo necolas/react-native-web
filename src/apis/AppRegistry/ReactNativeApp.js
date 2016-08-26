@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import StyleSheet from '../StyleSheet'
-import View from '../../components/View'
+import StyleSheet from '../StyleSheet';
+import View from '../../components/View';
+import React, { Component, PropTypes } from 'react';
 
 class ReactNativeApp extends Component {
   static propTypes = {
@@ -10,13 +10,13 @@ class ReactNativeApp extends Component {
   };
 
   render() {
-    const { initialProps, rootComponent: RootComponent, rootTag } = this.props
+    const { initialProps, rootComponent: RootComponent, rootTag } = this.props;
 
     return (
       <View style={styles.appContainer}>
         <RootComponent {...initialProps} rootTag={rootTag} />
       </View>
-    )
+    );
   }
 }
 
@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0
   }
-})
+});
 
-module.exports = ReactNativeApp
+module.exports = ReactNativeApp;

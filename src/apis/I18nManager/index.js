@@ -1,4 +1,4 @@
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => {},
@@ -7,39 +7,39 @@ type I18nManagerStatus = {
   isRTL: boolean
 }
 
-let isPreferredLanguageRTL = false
-let isRTLAllowed = true
-let isRTLForced = false
+let isPreferredLanguageRTL = false;
+let isRTLAllowed = true;
+let isRTLForced = false;
 
 const isRTL = () => {
   if (isRTLForced) {
-    return true
+    return true;
   }
-  return isRTLAllowed && isPreferredLanguageRTL
-}
+  return isRTLAllowed && isPreferredLanguageRTL;
+};
 
 const onChange = () => {
   if (ExecutionEnvironment.canUseDOM) {
-    document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr')
+    document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
   }
-}
+};
 
 const I18nManager: I18nManagerStatus = {
   allowRTL(bool) {
-    isRTLAllowed = bool
-    onChange()
+    isRTLAllowed = bool;
+    onChange();
   },
   forceRTL(bool) {
-    isRTLForced = bool
-    onChange()
+    isRTLForced = bool;
+    onChange();
   },
   setPreferredLanguageRTL(bool) {
-    isPreferredLanguageRTL = bool
-    onChange()
+    isPreferredLanguageRTL = bool;
+    onChange();
   },
   get isRTL() {
-    return isRTL()
+    return isRTL();
   }
-}
+};
 
-module.exports = I18nManager
+module.exports = I18nManager;

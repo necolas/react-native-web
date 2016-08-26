@@ -1,5 +1,5 @@
-import { PropTypes } from 'react'
-const { array, bool, number, object, oneOf, oneOfType, string } = PropTypes
+import { PropTypes } from 'react';
+const { array, bool, number, object, oneOf, oneOfType, string } = PropTypes;
 
 const BaseComponentPropTypes = {
   accessibilityLabel: string,
@@ -8,6 +8,6 @@ const BaseComponentPropTypes = {
   accessible: bool,
   style: oneOfType([ array, number, object ]),
   testID: string
-}
+};
 
-module.exports = BaseComponentPropTypes
+module.exports = BaseComponentPropTypes;

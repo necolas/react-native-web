@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
-import assert from 'assert'
-import processTextShadow from '../processTextShadow'
+import assert from 'assert';
+import processTextShadow from '../processTextShadow';
 
 suite('apis/StyleSheet/processTextShadow', () => {
   test('textShadowOffset', () => {
@@ -9,7 +9,7 @@ suite('apis/StyleSheet/processTextShadow', () => {
       textShadowColor: 'red',
       textShadowOffset: { width: 2, height: 2 },
       textShadowRadius: 5
-    }
+    };
 
     assert.deepEqual(
       processTextShadow(style),
@@ -19,6 +19,6 @@ suite('apis/StyleSheet/processTextShadow', () => {
         textShadowOffset: null,
         textShadowRadius: null
       }
-    )
-  })
-})
+    );
+  });
+});

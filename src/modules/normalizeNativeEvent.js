@@ -1,10 +1,10 @@
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
 const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).map((touch) => {
-  const identifier = touch.identifier > 20 ? (touch.identifier % 20) : touch.identifier
+  const identifier = touch.identifier > 20 ? (touch.identifier % 20) : touch.identifier;
 
-  const rect = touch.target && touch.target.getBoundingClientRect()
-  const locationX = touch.pageX - rect.left
-  const locationY = touch.pageY - rect.top
+  const rect = touch.target && touch.target.getBoundingClientRect();
+  const locationX = touch.pageX - rect.left;
+  const locationY = touch.pageY - rect.top;
 
   return {
     _normalized: true,
@@ -25,12 +25,12 @@ const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).m
     // normalize the timestamp
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
     timestamp: Date.now()
-  }
-})
+  };
+});
 
 function normalizeTouchEvent(nativeEvent) {
-  const changedTouches = normalizeTouches(nativeEvent.changedTouches)
-  const touches = normalizeTouches(nativeEvent.touches)
+  const changedTouches = normalizeTouches(nativeEvent.changedTouches);
+  const touches = normalizeTouches(nativeEvent.touches);
 
   const event = {
     _normalized: true,
@@ -45,21 +45,21 @@ function normalizeTouchEvent(nativeEvent) {
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
     timestamp: Date.now(),
     touches
-  }
+  };
 
   if (changedTouches[0]) {
-    event.identifier = changedTouches[0].identifier
-    event.pageX = changedTouches[0].pageX
-    event.pageY = changedTouches[0].pageY
-    event.locationX = changedTouches[0].locationX
-    event.locationY = changedTouches[0].locationY
+    event.identifier = changedTouches[0].identifier;
+    event.pageX = changedTouches[0].pageX;
+    event.pageY = changedTouches[0].pageY;
+    event.locationX = changedTouches[0].locationX;
+    event.locationY = changedTouches[0].locationY;
   }
 
-  return event
+  return event;
 }
 
 function normalizeMouseEvent(nativeEvent) {
-  const touches = [{
+  const touches = [ {
     _normalized: true,
     clientX: nativeEvent.clientX,
     clientY: nativeEvent.clientY,
@@ -73,7 +73,7 @@ function normalizeMouseEvent(nativeEvent) {
     screenY: nativeEvent.screenY,
     target: nativeEvent.target,
     timestamp: Date.now()
-  }]
+  } ];
   return {
     _normalized: true,
     changedTouches: touches,
@@ -88,14 +88,14 @@ function normalizeMouseEvent(nativeEvent) {
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
     touches: (nativeEvent.type === 'mouseup') ? [] : touches
-  }
+  };
 }
 
 function normalizeNativeEvent(nativeEvent) {
-  if (nativeEvent._normalized) { return nativeEvent }
-  const eventType = nativeEvent.type || ''
-  const mouse = eventType.indexOf('mouse') >= 0
-  return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent)
+  if (nativeEvent._normalized) { return nativeEvent; }
+  const eventType = nativeEvent.type || '';
+  const mouse = eventType.indexOf('mouse') >= 0;
+  return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent);
 }
 
-module.exports = normalizeNativeEvent
+module.exports = normalizeNativeEvent;

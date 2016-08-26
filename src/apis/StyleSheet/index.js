@@ -1,32 +1,32 @@
-import * as css from './css'
-import createReactStyleObject from './createReactStyleObject'
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment'
-import flattenStyle from '../../modules/flattenStyle'
-import React from 'react'
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry'
-import StyleSheetValidation from './StyleSheetValidation'
+import * as css from './css';
+import createReactStyleObject from './createReactStyleObject';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+import flattenStyle from '../../modules/flattenStyle';
+import React from 'react';
+import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import StyleSheetValidation from './StyleSheetValidation';
 
-let styleElement
-let shouldInsertStyleSheet = ExecutionEnvironment.canUseDOM
+let styleElement;
+let shouldInsertStyleSheet = ExecutionEnvironment.canUseDOM;
 
-const STYLE_SHEET_ID = '__react-native-style'
+const STYLE_SHEET_ID = '__react-native-style';
 
-const absoluteFillObject = { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }
+const absoluteFillObject = { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 };
 
-const defaultStyleSheet = css.getDefaultStyleSheet()
+const defaultStyleSheet = css.getDefaultStyleSheet();
 
 const insertStyleSheet = () => {
   // check if the server rendered the style sheet
-  styleElement = document.getElementById(STYLE_SHEET_ID)
+  styleElement = document.getElementById(STYLE_SHEET_ID);
   // if not, inject the style sheet
   if (!styleElement) {
     document.head.insertAdjacentHTML(
       'afterbegin',
       `<style id="${STYLE_SHEET_ID}">${defaultStyleSheet}</style>`
-    )
-    shouldInsertStyleSheet = false
+    );
+    shouldInsertStyleSheet = false;
   }
-}
+};
 
 module.exports = {
   /**
@@ -35,9 +35,9 @@ module.exports = {
    */
   _reset() {
     if (styleElement) {
-      document.head.removeChild(styleElement)
-      styleElement = null
-      shouldInsertStyleSheet = true
+      document.head.removeChild(styleElement);
+      styleElement = null;
+      shouldInsertStyleSheet = true;
     }
   },
 
@@ -47,15 +47,15 @@ module.exports = {
 
   create(styles) {
     if (shouldInsertStyleSheet) {
-      insertStyleSheet()
+      insertStyleSheet();
     }
 
-    const result = {}
+    const result = {};
     for (const key in styles) {
-      StyleSheetValidation.validateStyle(key, styles)
-      result[key] = ReactNativePropRegistry.register(styles[key])
+      StyleSheetValidation.validateStyle(key, styles);
+      result[key] = ReactNativePropRegistry.register(styles[key]);
     }
-    return result
+    return result;
   },
 
   hairlineWidth: 1,
@@ -64,7 +64,7 @@ module.exports = {
 
   /* @platform web */
   render() {
-    return <style dangerouslySetInnerHTML={{ __html: defaultStyleSheet }} id={STYLE_SHEET_ID} />
+    return <style dangerouslySetInnerHTML={{ __html: defaultStyleSheet }} id={STYLE_SHEET_ID} />;
   },
 
   /**
@@ -72,17 +72,17 @@ module.exports = {
    * @platform web
    */
   resolve(props) {
-    let className = props.className || ''
-    let style = createReactStyleObject(props.style)
+    let className = props.className || '';
+    const style = createReactStyleObject(props.style);
     for (const prop in style) {
-      const value = style[prop]
-      const replacementClassName = css.getStyleAsHelperClassName(prop, value)
+      const value = style[prop];
+      const replacementClassName = css.getStyleAsHelperClassName(prop, value);
       if (replacementClassName) {
-        className += ` ${replacementClassName}`
-        style[prop] = null
+        className += ` ${replacementClassName}`;
+        style[prop] = null;
       }
     }
 
-    return { className, style }
+    return { className, style };
   }
-}
+};

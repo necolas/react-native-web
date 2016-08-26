@@ -1,11 +1,11 @@
-import { PropTypes } from 'react'
-import BorderPropTypes from '../../propTypes/BorderPropTypes'
-import ColorPropType from '../../propTypes/ColorPropType'
-import LayoutPropTypes from '../../propTypes/LayoutPropTypes'
-import TransformPropTypes from '../../propTypes/TransformPropTypes'
-import ImageResizeMode from './ImageResizeMode'
+import BorderPropTypes from '../../propTypes/BorderPropTypes';
+import ColorPropType from '../../propTypes/ColorPropType';
+import ImageResizeMode from './ImageResizeMode';
+import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
+import { PropTypes } from 'react';
+import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
-const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ])
+const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ]);
 
 module.exports = {
   ...BorderPropTypes,
@@ -24,4 +24,4 @@ module.exports = {
    * @platform web
    */
   visibility: hiddenOrVisible
-}
+};

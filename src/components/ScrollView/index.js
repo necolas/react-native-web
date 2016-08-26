@@ -6,20 +6,18 @@
  * @flow
  */
 
-import dismissKeyboard from '../../modules/dismissKeyboard'
-import invariant from 'fbjs/lib/invariant'
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import ScrollResponder from '../../modules/ScrollResponder'
-import ScrollViewBase from './ScrollViewBase'
-import StyleSheet from '../../apis/StyleSheet'
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType'
-import View from '../View'
-import ViewStylePropTypes from '../View/ViewStylePropTypes'
+import dismissKeyboard from '../../modules/dismissKeyboard';
+import invariant from 'fbjs/lib/invariant';
+import ReactDOM from 'react-dom';
+import ScrollResponder from '../../modules/ScrollResponder';
+import ScrollViewBase from './ScrollViewBase';
+import StyleSheet from '../../apis/StyleSheet';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import View from '../View';
+import ViewStylePropTypes from '../View/ViewStylePropTypes';
+import React, { Component, PropTypes } from 'react';
 
-const INNERVIEW = 'InnerScrollView'
-const SCROLLVIEW = 'ScrollView'
-
+/* eslint-disable react/prefer-es6-class */
 const ScrollView = React.createClass({
   propTypes: {
     ...View.propTypes,
@@ -35,14 +33,14 @@ const ScrollView = React.createClass({
     style: StyleSheetPropType(ViewStylePropTypes)
   },
 
-  mixins: [ScrollResponder.Mixin],
+  mixins: [ ScrollResponder.Mixin ],
 
   getInitialState() {
-    return this.scrollResponderMixinGetInitialState()
+    return this.scrollResponderMixinGetInitialState();
   },
 
   setNativeProps(props: Object) {
-    this.refs[SCROLLVIEW].setNativeProps(props)
+    this._scrollViewRef.setNativeProps(props);
   },
 
   /**
@@ -52,15 +50,15 @@ const ScrollView = React.createClass({
    * to the underlying scroll responder's methods.
    */
   getScrollResponder(): Component {
-    return this
+    return this;
   },
 
   getScrollableNode(): any {
-    return ReactDOM.findDOMNode(this.refs[SCROLLVIEW])
+    return ReactDOM.findDOMNode(this._scrollViewRef);
   },
 
   getInnerViewNode(): any {
-    return ReactDOM.findDOMNode(this.refs[INNERVIEW])
+    return ReactDOM.findDOMNode(this._innerViewRef);
   },
 
   /**
@@ -79,45 +77,20 @@ const ScrollView = React.createClass({
     animated?: boolean
   ) {
     if (typeof y === 'number') {
-      console.warn('`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.')
+      console.warn('`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.');
     } else {
-      ({x, y, animated} = y || {})
+      ({ x, y, animated } = y || {});
     }
 
-    this.getScrollResponder().scrollResponderScrollTo({x: x || 0, y: y || 0, animated: animated !== false})
+    this.getScrollResponder().scrollResponderScrollTo({ x: x || 0, y: y || 0, animated: animated !== false });
   },
 
   /**
    * Deprecated, do not use.
    */
   scrollWithoutAnimationTo(y: number = 0, x: number = 0) {
-    console.warn('`scrollWithoutAnimationTo` is deprecated. Use `scrollTo` instead')
-    this.scrollTo({x, y, animated: false})
-  },
-
-  handleScroll(e: Object) {
-    if (process.env.NODE_ENV !== 'production') {
-      if (this.props.onScroll && !this.props.scrollEventThrottle) {
-        console.log(
-          'You specified `onScroll` on a <ScrollView> but not ' +
-          '`scrollEventThrottle`. You will only receive one event. ' +
-          'Using `16` you get all the events but be aware that it may ' +
-          'cause frame drops, use a bigger number if you don\'t need as ' +
-          'much precision.'
-        )
-      }
-    }
-
-    if (this.props.keyboardDismissMode === 'on-drag') {
-      dismissKeyboard()
-    }
-
-    this.scrollResponderHandleScroll(e)
-  },
-
-  _handleContentOnLayout(e: Object) {
-    const { width, height } = e.nativeEvent.layout
-    this.props.onContentSizeChange(width, height)
+    console.warn('`scrollWithoutAnimationTo` is deprecated. Use `scrollTo` instead');
+    this.scrollTo({ x, y, animated: false });
   },
 
   render() {
@@ -129,23 +102,23 @@ const ScrollView = React.createClass({
       onScroll, // eslint-disable-line
       refreshControl,
       ...other
-    } = this.props
+    } = this.props;
 
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
-      const style = StyleSheet.flatten(this.props.style)
-      const childLayoutProps = ['alignItems', 'justifyContent'].filter((prop) => style && style[prop] !== undefined)
+      const style = StyleSheet.flatten(this.props.style);
+      const childLayoutProps = [ 'alignItems', 'justifyContent' ].filter((prop) => style && style[prop] !== undefined);
       invariant(
         childLayoutProps.length === 0,
-        'ScrollView child layout (' + JSON.stringify(childLayoutProps) +
-          ') must be applied through the contentContainerStyle prop.'
-      )
+        `ScrollView child layout (${JSON.stringify(childLayoutProps)}) ` +
+        'must be applied through the contentContainerStyle prop.'
+      );
     }
 
-    let contentSizeChangeProps = {}
+    let contentSizeChangeProps = {};
     if (onContentSizeChange) {
       contentSizeChangeProps = {
         onLayout: this._handleContentOnLayout
-      }
+      };
     }
 
     const contentContainer = (
@@ -153,14 +126,14 @@ const ScrollView = React.createClass({
         {...contentSizeChangeProps}
         children={this.props.children}
         collapsable={false}
-        ref={INNERVIEW}
+        ref={this._setInnerViewRef}
         style={[
           styles.contentContainer,
           horizontal && styles.contentContainerHorizontal,
           contentContainerStyle
         ]}
       />
-    )
+    );
 
     const props = {
       ...other,
@@ -179,38 +152,71 @@ const ScrollView = React.createClass({
       onStartShouldSetResponder: this.scrollResponderHandleStartShouldSetResponder,
       onStartShouldSetResponderCapture: this.scrollResponderHandleStartShouldSetResponderCapture,
       onScrollShouldSetResponder: this.scrollResponderHandleScrollShouldSetResponder,
-      onScroll: this.handleScroll,
+      onScroll: this._handleScroll,
       onResponderGrant: this.scrollResponderHandleResponderGrant,
       onResponderTerminationRequest: this.scrollResponderHandleTerminationRequest,
       onResponderTerminate: this.scrollResponderHandleTerminate,
       onResponderRelease: this.scrollResponderHandleResponderRelease,
       onResponderReject: this.scrollResponderHandleResponderReject
-    }
+    };
 
-    const ScrollViewClass = ScrollViewBase
+    const ScrollViewClass = ScrollViewBase;
 
     invariant(
       ScrollViewClass !== undefined,
       'ScrollViewClass must not be undefined'
-    )
+    );
 
     if (refreshControl) {
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        <ScrollViewClass {...props} ref={SCROLLVIEW} style={styles.base}>
+        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={styles.base}>
           {contentContainer}
         </ScrollViewClass>
-      )
+      );
     }
 
     return (
-      <ScrollViewClass {...props} ref={SCROLLVIEW} style={props.style}>
+      <ScrollViewClass {...props} ref={this._setScrollViewRef} style={props.style}>
         {contentContainer}
       </ScrollViewClass>
-    )
+    );
+  },
+
+  _handleContentOnLayout(e: Object) {
+    const { width, height } = e.nativeEvent.layout;
+    this.props.onContentSizeChange(width, height);
+  },
+
+  _handleScroll(e: Object) {
+    if (process.env.NODE_ENV !== 'production') {
+      if (this.props.onScroll && !this.props.scrollEventThrottle) {
+        console.log(
+          'You specified `onScroll` on a <ScrollView> but not ' +
+          '`scrollEventThrottle`. You will only receive one event. ' +
+          'Using `16` you get all the events but be aware that it may ' +
+          'cause frame drops, use a bigger number if you don\'t need as ' +
+          'much precision.'
+        );
+      }
+    }
+
+    if (this.props.keyboardDismissMode === 'on-drag') {
+      dismissKeyboard();
+    }
+
+    this.scrollResponderHandleScroll(e);
+  },
+
+  _setInnerViewRef(component) {
+    this._innerViewRef = component;
+  },
+
+  _setScrollViewRef(component) {
+    this._scrollViewRef = component;
   }
-})
+});
 
 const styles = StyleSheet.create({
   base: {
@@ -228,6 +234,6 @@ const styles = StyleSheet.create({
   contentContainerHorizontal: {
     flexDirection: 'row'
   }
-})
+});
 
-module.exports = ScrollView
+module.exports = ScrollView;

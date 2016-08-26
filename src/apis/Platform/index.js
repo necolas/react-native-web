@@ -1,6 +1,6 @@
 const Platform = {
   OS: 'web',
   select: (obj: Object) => obj.web
-}
+};
 
-module.exports = Platform
+module.exports = Platform;

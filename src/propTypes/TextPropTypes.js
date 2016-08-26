@@ -1,12 +1,12 @@
-import ColorPropType from './ColorPropType'
-import { PropTypes } from 'react'
+import ColorPropType from './ColorPropType';
+import { PropTypes } from 'react';
 
-const { number, oneOf, oneOfType, shape, string } = PropTypes
-const numberOrString = oneOfType([ number, string ])
+const { number, oneOf, oneOfType, shape, string } = PropTypes;
+const numberOrString = oneOfType([ number, string ]);
 
-const ShadowOffsetPropType = shape({ width: number, height: number })
-const TextAlignPropType = oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ])
-const WritingDirectionPropType = oneOf([ 'auto', 'ltr', 'rtl' ])
+const ShadowOffsetPropType = shape({ width: number, height: number });
+const TextAlignPropType = oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ]);
+const WritingDirectionPropType = oneOf([ 'auto', 'ltr', 'rtl' ]);
 
 const TextPropTypes = {
   // box model
@@ -40,6 +40,6 @@ const TextPropTypes = {
   textAlign$noI18n: TextAlignPropType,
   textShadowOffset$noI18n: ShadowOffsetPropType,
   writingDirection$noI18n: WritingDirectionPropType
-}
+};
 
-module.exports = TextPropTypes
+module.exports = TextPropTypes;

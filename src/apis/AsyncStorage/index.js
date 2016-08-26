@@ -5,12 +5,12 @@
  */
 
 const mergeLocalStorageItem = (key, value) => {
-  const oldValue = window.localStorage.getItem(key)
-  const oldObject = JSON.parse(oldValue)
-  const newObject = JSON.parse(value)
-  const nextValue = JSON.stringify({ ...oldObject, ...newObject })
-  window.localStorage.setItem(key, nextValue)
-}
+  const oldValue = window.localStorage.getItem(key);
+  const oldObject = JSON.parse(oldValue);
+  const newObject = JSON.parse(value);
+  const nextValue = JSON.stringify({ ...oldObject, ...newObject });
+  window.localStorage.setItem(key, nextValue);
+};
 
 class AsyncStorage {
   /**
@@ -19,12 +19,12 @@ class AsyncStorage {
   static clear() {
     return new Promise((resolve, reject) => {
       try {
-        window.localStorage.clear()
-        resolve(null)
+        window.localStorage.clear();
+        resolve(null);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -33,17 +33,17 @@ class AsyncStorage {
   static getAllKeys() {
     return new Promise((resolve, reject) => {
       try {
-        const numberOfKeys = window.localStorage.length
-        const keys = []
+        const numberOfKeys = window.localStorage.length;
+        const keys = [];
         for (let i = 0; i < numberOfKeys; i += 1) {
-          const key = window.localStorage.key(i)
-          keys.push(key)
+          const key = window.localStorage.key(i);
+          keys.push(key);
         }
-        resolve(keys)
+        resolve(keys);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -52,12 +52,12 @@ class AsyncStorage {
   static getItem(key: string) {
     return new Promise((resolve, reject) => {
       try {
-        const value = window.localStorage.getItem(key)
-        resolve(value)
+        const value = window.localStorage.getItem(key);
+        resolve(value);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -66,12 +66,12 @@ class AsyncStorage {
   static mergeItem(key: string, value: string) {
     return new Promise((resolve, reject) => {
       try {
-        mergeLocalStorageItem(key, value)
-        resolve(null)
+        mergeLocalStorageItem(key, value);
+        resolve(null);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -81,12 +81,12 @@ class AsyncStorage {
    *   multiGet(['k1', 'k2']) -> [['k1', 'val1'], ['k2', 'val2']]
    */
   static multiGet(keys: Array<string>) {
-    const promises = keys.map((key) => AsyncStorage.getItem(key))
+    const promises = keys.map((key) => AsyncStorage.getItem(key));
 
     return Promise.all(promises).then(
       (result) => Promise.resolve(result.map((value, i) => [ keys[i], value ])),
       (error) => Promise.reject(error)
-    )
+    );
   }
 
   /**
@@ -96,24 +96,24 @@ class AsyncStorage {
    *   multiMerge([['k1', 'val1'], ['k2', 'val2']])
    */
   static multiMerge(keyValuePairs: Array<Array<string>>) {
-    const promises = keyValuePairs.map((item) => AsyncStorage.mergeItem(item[0], item[1]))
+    const promises = keyValuePairs.map((item) => AsyncStorage.mergeItem(item[0], item[1]));
 
     return Promise.all(promises).then(
       () => Promise.resolve(null),
       (error) => Promise.reject(error)
-    )
+    );
   }
 
   /**
    * Delete all the keys in the `keys` array.
    */
   static multiRemove(keys: Array<string>) {
-    const promises = keys.map((key) => AsyncStorage.removeItem(key))
+    const promises = keys.map((key) => AsyncStorage.removeItem(key));
 
     return Promise.all(promises).then(
       () => Promise.resolve(null),
       (error) => Promise.reject(error)
-    )
+    );
   }
 
   /**
@@ -121,12 +121,12 @@ class AsyncStorage {
    *   multiSet([['k1', 'val1'], ['k2', 'val2']])
    */
   static multiSet(keyValuePairs: Array<Array<string>>) {
-    const promises = keyValuePairs.map((item) => AsyncStorage.setItem(item[0], item[1]))
+    const promises = keyValuePairs.map((item) => AsyncStorage.setItem(item[0], item[1]));
 
     return Promise.all(promises).then(
       () => Promise.resolve(null),
       (error) => Promise.reject(error)
-    )
+    );
   }
 
   /**
@@ -135,12 +135,12 @@ class AsyncStorage {
   static removeItem(key: string) {
     return new Promise((resolve, reject) => {
       try {
-        window.localStorage.removeItem(key)
-        resolve(null)
+        window.localStorage.removeItem(key);
+        resolve(null);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -149,13 +149,13 @@ class AsyncStorage {
   static setItem(key: string, value: string) {
     return new Promise((resolve, reject) => {
       try {
-        window.localStorage.setItem(key, value)
-        resolve(null)
+        window.localStorage.setItem(key, value);
+        resolve(null);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 }
 
-module.exports = AsyncStorage
+module.exports = AsyncStorage;

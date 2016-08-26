@@ -1,7 +1,7 @@
-import { PropTypes } from 'react'
+import { PropTypes } from 'react';
 
-const { number, oneOf, oneOfType, string } = PropTypes
-const numberOrString = oneOfType([ number, string ])
+const { number, oneOf, oneOfType, string } = PropTypes;
+const numberOrString = oneOfType([ number, string ]);
 
 const LayoutPropTypes = {
   // box model
@@ -58,6 +58,6 @@ const LayoutPropTypes = {
   paddingLeft$noI18n: numberOrString,
   paddingRight$noI18n: numberOrString,
   right$noI18n: numberOrString
-}
+};
 
-module.exports = LayoutPropTypes
+module.exports = LayoutPropTypes;

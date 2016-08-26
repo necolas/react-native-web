@@ -6,7 +6,7 @@
  * @flow
  */
 
-import { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react';
 
 /**
  * Renders static content efficiently by allowing React to short-circuit the
@@ -29,12 +29,12 @@ class StaticRenderer extends Component {
   };
 
   shouldComponentUpdate(nextProps: { shouldUpdate: boolean }): boolean {
-    return nextProps.shouldUpdate
+    return nextProps.shouldUpdate;
   }
 
   render() {
-    return this.props.render()
+    return this.props.render();
   }
 }
 
-module.exports = StaticRenderer
+module.exports = StaticRenderer;

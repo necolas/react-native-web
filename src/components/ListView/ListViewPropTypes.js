@@ -1,6 +1,6 @@
-import { PropTypes } from 'react'
-import ScrollView from '../ScrollView'
-import ListViewDataSource from './ListViewDataSource'
+import ListViewDataSource from './ListViewDataSource';
+import { PropTypes } from 'react';
+import ScrollView from '../ScrollView';
 
 export default {
   ...ScrollView.propTypes,
@@ -19,4 +19,4 @@ export default {
   onChangeVisibleRows: PropTypes.func,
   removeClippedSubviews: PropTypes.bool,
   stickyHeaderIndices: PropTypes.arrayOf(PropTypes.number)
-}
+};

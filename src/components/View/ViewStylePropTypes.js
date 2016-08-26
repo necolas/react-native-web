@@ -1,12 +1,12 @@
-import { PropTypes } from 'react'
-import BorderPropTypes from '../../propTypes/BorderPropTypes'
-import ColorPropType from '../../propTypes/ColorPropType'
-import LayoutPropTypes from '../../propTypes/LayoutPropTypes'
-import TransformPropTypes from '../../propTypes/TransformPropTypes'
+import BorderPropTypes from '../../propTypes/BorderPropTypes';
+import ColorPropType from '../../propTypes/ColorPropType';
+import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
+import { PropTypes } from 'react';
+import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
-const { number, oneOf, string } = PropTypes
-const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ])
-const hiddenOrVisible = oneOf([ 'hidden', 'visible' ])
+const { number, oneOf, string } = PropTypes;
+const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ]);
+const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
 
 module.exports = {
   ...BorderPropTypes,
@@ -35,4 +35,4 @@ module.exports = {
   userSelect: string,
   visibility: hiddenOrVisible,
   zIndex: number
-}
+};

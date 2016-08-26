@@ -1,4 +1,4 @@
-import keyMirror from 'fbjs/lib/keyMirror'
+import keyMirror from 'fbjs/lib/keyMirror';
 
 const ImageResizeMode = keyMirror({
   center: null,
@@ -7,6 +7,6 @@ const ImageResizeMode = keyMirror({
   none: null,
   repeat: null,
   stretch: null
-})
+});
 
-module.exports = ImageResizeMode
+module.exports = ImageResizeMode;

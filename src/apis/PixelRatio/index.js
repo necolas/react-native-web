@@ -6,7 +6,7 @@
  * @flow
  */
 
-import Dimensions from '../Dimensions'
+import Dimensions from '../Dimensions';
 
 /**
  * PixelRatio gives access to the device pixel density.
@@ -16,14 +16,14 @@ class PixelRatio {
    * Returns the device pixel density.
    */
   static get(): number {
-    return Dimensions.get('window').scale
+    return Dimensions.get('window').scale;
   }
 
   /**
    * No equivalent for Web
    */
   static getFontScale(): number {
-    return Dimensions.get('window').fontScale || PixelRatio.get()
+    return Dimensions.get('window').fontScale || PixelRatio.get();
   }
 
   /**
@@ -31,7 +31,7 @@ class PixelRatio {
    * Guaranteed to return an integer number.
    */
   static getPixelSizeForLayoutSize(layoutSize: number): number {
-    return Math.round(layoutSize * PixelRatio.get())
+    return Math.round(layoutSize * PixelRatio.get());
   }
 
   /**
@@ -41,9 +41,9 @@ class PixelRatio {
    * exactly (8.33 * 3) = 25 pixels.
    */
   static roundToNearestPixel(layoutSize: number): number {
-    const ratio = PixelRatio.get()
-    return Math.round(layoutSize * ratio) / ratio
+    const ratio = PixelRatio.get();
+    return Math.round(layoutSize * ratio) / ratio;
   }
 }
 
-module.exports = PixelRatio
+module.exports = PixelRatio;
