@@ -14,6 +14,7 @@ storiesOf('component: TextInput', module)
         onFocus={(e) => { console.log('TextInput.onFocus', e) }}
         onSelectionChange={(e) => { console.log('TextInput.onSelectionChange', e) }}
       />
+      <TextInput keyboardType='search' style={styles.textInput} />
       <TextInput secureTextEntry style={styles.textInput} />
       <TextInput defaultValue='read only' editable={false} style={styles.textInput} />
       <TextInput

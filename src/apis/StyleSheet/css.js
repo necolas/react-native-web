@@ -8,10 +8,10 @@ const POINTER_EVENTS_NONE_CLASSNAME = '__style_pen';
 const CSS_RESET =
 // reset unwanted styles
 '/* React Native */\n' +
-'html {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}\n' +
-'body {margin:0}\n' +
-'button::-moz-focus-inner, input::-moz-focus-inner {border:0;padding:0}\n' +
-'input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {display:none}';
+'html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}\n' +
+'body{margin:0}\n' +
+'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}\n' +
+'input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration {display:none}';
 
 const CSS_HELPERS =
 // vendor prefix 'display:flex' until React supports fallback values for inline styles
