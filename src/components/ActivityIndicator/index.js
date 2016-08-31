@@ -5,9 +5,8 @@ import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 
-const GRAY = '#999999';
-const opacityInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.5, 1 ] };
-const scaleInterpolation = { inputRange: [ 0, 1 ], outputRange: [ 0.95, 1 ] };
+const DEFAULT_COLOR = '#1976D2';
+const rotationInterpolation = { inputRange: [ 0, 1 ], outputRange: [ '0deg', '360deg' ] };
 
 class ActivityIndicator extends Component {
   static propTypes = {
@@ -20,7 +19,7 @@ class ActivityIndicator extends Component {
 
   static defaultProps = {
     animating: true,
-    color: GRAY,
+    color: DEFAULT_COLOR,
     hidesWhenStopped: true,
     size: 'small',
     style: {}
@@ -29,7 +28,7 @@ class ActivityIndicator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animation: new Animated.Value(1)
+      animation: new Animated.Value(0)
     };
   }
 
@@ -53,16 +52,45 @@ class ActivityIndicator extends Component {
 
     const { animation } = this.state;
 
+    const svg = (
+      <svg height='100%' viewBox='0 0 32 32' width='100%'>
+        <circle
+          cx='16'
+          cy='16'
+          fill='none'
+          r='14'
+          strokeWidth='4'
+          style={{
+            stroke: color,
+            opacity: 0.2
+          }}
+        />
+        <circle
+          cx='16'
+          cy='16'
+          fill='none'
+          r='14'
+          strokeWidth='4'
+          style={{
+            stroke: color,
+            strokeDasharray: 80,
+            strokeDashoffset: 60
+          }}
+        />
+      </svg>
+    );
+
     return (
       <View {...other} style={[ styles.container, style ]}>
         <Animated.View
+          children={svg}
           style={[
             indicatorStyles[size],
             hidesWhenStopped && !animating && styles.hidesWhenStopped,
             {
-              borderColor: color,
-              opacity: animation.interpolate(opacityInterpolation),
-              transform: [ { scale: animation.interpolate(scaleInterpolation) } ]
+              transform: [
+                { rotate: animation.interpolate(rotationInterpolation) }
+              ]
             }
           ]}
         />
@@ -74,15 +102,11 @@ class ActivityIndicator extends Component {
     const { animation } = this.state;
 
     const cycleAnimation = () => {
+      animation.setValue(0);
       Animated.sequence([
         Animated.timing(animation, {
-          duration: 600,
-          easing: Easing.inOut(Easing.ease),
-          toValue: 0
-        }),
-        Animated.timing(animation, {
-          duration: 600,
-          easing: Easing.inOut(Easing.ease),
+          duration: 750,
+          easing: Easing.inOut(Easing.linear),
           toValue: 1
         })
       ]).start((event) => {
@@ -112,14 +136,10 @@ const styles = StyleSheet.create({
 
 const indicatorStyles = StyleSheet.create({
   small: {
-    borderRadius: 100,
-    borderWidth: 3,
     width: 20,
     height: 20
   },
   large: {
-    borderRadius: 100,
-    borderWidth: 4,
     width: 36,
     height: 36
   }

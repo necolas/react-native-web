@@ -59,12 +59,11 @@ const ToggleAnimatingActivityIndicator = React.createClass({
 
 const examples = [
   {
-    title: 'Default (small, white)',
+    title: 'Default',
     render() {
       return (
         <ActivityIndicator
-          style={[styles.centering, styles.gray]}
-          color="white"
+          style={[styles.centering]}
         />
       );
     }
@@ -78,7 +77,7 @@ const examples = [
             style={[styles.centering]}
           />
           <ActivityIndicator
-            style={[styles.centering, {backgroundColor: '#eeeeee'}]}
+            style={[styles.centering, styles.gray]}
           />
         </View>
       );
