@@ -23,17 +23,18 @@ class StyleSheetValidation {
         var message2 = '\nValid style props: ' +
           JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
         styleError(message1, style, caller, message2);
-      }
-      var error = allStylePropTypes[prop](
-        style,
-        prop,
-        caller,
-        ReactPropTypeLocations.prop,
-        null,
-        ReactPropTypesSecret
-      );
-      if (error) {
-        styleError(error.message, style, caller);
+      } else {
+        var error = allStylePropTypes[prop](
+          style,
+          prop,
+          caller,
+          ReactPropTypeLocations.prop,
+          null,
+          ReactPropTypesSecret
+        );
+        if (error) {
+          styleError(error.message, style, caller);
+        }
       }
     }
   }
