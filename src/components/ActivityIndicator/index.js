@@ -5,24 +5,22 @@ import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 
-const DEFAULT_COLOR = '#1976D2';
 const rotationInterpolation = { inputRange: [ 0, 1 ], outputRange: [ '0deg', '360deg' ] };
 
 class ActivityIndicator extends Component {
   static propTypes = {
+    ...View.propTypes,
     animating: PropTypes.bool,
     color: PropTypes.string,
     hidesWhenStopped: PropTypes.bool,
-    size: PropTypes.oneOf([ 'small', 'large' ]),
-    style: View.propTypes.style
+    size: PropTypes.oneOfType([ PropTypes.oneOf([ 'small', 'large' ]), PropTypes.number ])
   };
 
   static defaultProps = {
     animating: true,
-    color: DEFAULT_COLOR,
+    color: '#1976D2',
     hidesWhenStopped: true,
-    size: 'small',
-    style: {}
+    size: 'small'
   };
 
   constructor(props) {
@@ -81,7 +79,11 @@ class ActivityIndicator extends Component {
     );
 
     return (
-      <View {...other} style={[ styles.container, style ]}>
+      <View {...other} style={[
+        styles.container,
+        style,
+        size && { height: size, width: size }
+      ]}>
         <Animated.View
           children={svg}
           style={[
@@ -103,13 +105,11 @@ class ActivityIndicator extends Component {
 
     const cycleAnimation = () => {
       animation.setValue(0);
-      Animated.sequence([
-        Animated.timing(animation, {
-          duration: 750,
-          easing: Easing.inOut(Easing.linear),
-          toValue: 1
-        })
-      ]).start((event) => {
+      Animated.timing(animation, {
+        duration: 750,
+        easing: Easing.inOut(Easing.linear),
+        toValue: 1
+      }).start((event) => {
         if (event.finished) {
           cycleAnimation();
         }

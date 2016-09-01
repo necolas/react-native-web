@@ -6,17 +6,17 @@
 
 **animating**: bool = true
 
-Whether to show the indicator (true, the default) or hide it (false).
+Whether to show the indicator or hide it.
 
-**color**: string = #999999
+**color**: string = '#1976D2'
 
-The foreground color of the spinner (default is gray).
+The foreground color of the spinner.
 
 **hidesWhenStopped**: bool = true
 
-Whether the indicator should hide when not animating (true by default).
+Whether the indicator should hide when not animating.
 
-**size**: oneOf('small, 'large')
+**size**: oneOf('small, 'large') | number = 'small'
 
 Size of the indicator. Small has a height of `20`, large has a height of `36`.
 

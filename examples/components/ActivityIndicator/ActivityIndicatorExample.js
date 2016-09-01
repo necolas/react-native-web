@@ -69,21 +69,6 @@ const examples = [
     }
   },
   {
-    title: 'Gray',
-    render() {
-      return (
-        <View>
-          <ActivityIndicator
-            style={[styles.centering]}
-          />
-          <ActivityIndicator
-            style={[styles.centering, styles.gray]}
-          />
-        </View>
-      );
-    }
-  },
-  {
     title: 'Custom colors',
     render() {
       return (
@@ -143,10 +128,13 @@ const examples = [
     title: 'Custom size',
     render() {
       return (
-        <ActivityIndicator
-          style={[styles.centering, {transform: [{scale: 1.5}]}]}
-          size="large"
-        />
+        <View style={[styles.horizontal, styles.centering]}>
+          <ActivityIndicator size="40" />
+          <ActivityIndicator
+            style={{ marginLeft: 20, transform: [ {scale: 1.5} ] }}
+            size="large"
+          />
+        </View>
       );
     }
   },
