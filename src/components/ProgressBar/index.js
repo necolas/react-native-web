@@ -9,6 +9,8 @@ const indeterminateWidth = '25%';
 const translateInterpolation = { inputRange: [ 0, 1 ], outputRange: [ '-100%', '400%' ] };
 
 class ProgressBar extends Component {
+  static displayName = 'ProgressBar';
+
   static propTypes = {
     ...View.propTypes,
     color: ColorPropType,
@@ -27,7 +29,6 @@ class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animationScale: new Animated.Value(0),
       animationTranslate: new Animated.Value(0)
     };
   }

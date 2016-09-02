@@ -24,7 +24,7 @@ const ImageSourcePropType = PropTypes.oneOfType([
 ]);
 
 class Image extends Component {
-  static displayName = 'Image'
+  static displayName = 'Image';
 
   static propTypes = {
     ...BaseComponentPropTypes,
@@ -234,4 +234,3 @@ const resizeModeStyles = StyleSheet.create({
 });
 
 module.exports = applyNativeMethods(Image);
-

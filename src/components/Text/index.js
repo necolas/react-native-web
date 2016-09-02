@@ -8,7 +8,7 @@ import TextStylePropTypes from './TextStylePropTypes';
 import { Component, PropTypes } from 'react';
 
 class Text extends Component {
-  static displayName = 'Text'
+  static displayName = 'Text';
 
   static propTypes = {
     ...BaseComponentPropTypes,

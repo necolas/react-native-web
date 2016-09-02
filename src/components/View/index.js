@@ -33,7 +33,7 @@ const eventHandlerNames = [
 ];
 
 class View extends Component {
-  static displayName = 'View'
+  static displayName = 'View';
 
   static propTypes = {
     ...BaseComponentPropTypes,
