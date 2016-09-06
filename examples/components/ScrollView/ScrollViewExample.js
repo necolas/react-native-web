@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: '1px'
   },
   scrollViewContentContainerStyle: {
+    backgroundColor: '#eee',
     padding: '10px'
   }
 })

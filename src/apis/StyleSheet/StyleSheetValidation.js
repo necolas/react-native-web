@@ -74,7 +74,8 @@ StyleSheetValidation.addValidStylePropTypes({
   display: PropTypes.string,
   float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
   font: PropTypes.string, /* @private */
-  listStyle: PropTypes.string
+  listStyle: PropTypes.string,
+  WebkitOverflowScrolling: PropTypes.string /* @private */
 })
 
 module.exports = StyleSheetValidation

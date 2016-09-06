@@ -222,14 +222,16 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     overflowX: 'hidden',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    WebkitOverflowScrolling: 'touch'
   },
   baseHorizontal: {
+    flexDirection: 'row',
     overflowX: 'auto',
     overflowY: 'hidden'
   },
   contentContainer: {
-    flex: 1
+    flexGrow: 1
   },
   contentContainerHorizontal: {
     flexDirection: 'row'

@@ -16,6 +16,7 @@ module.exports = {
   backgroundColor: ColorPropType,
   opacity: number,
   overflow: autoOrHiddenOrVisible,
+  zIndex: number,
   /*
    * @platform web
    */
@@ -34,5 +35,5 @@ module.exports = {
   transition: string,
   userSelect: string,
   visibility: hiddenOrVisible,
-  zIndex: number
+  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
 };
