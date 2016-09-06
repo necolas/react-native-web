@@ -81,11 +81,16 @@ class ActivityIndicator extends Component {
     );
 
     return (
-      <View {...other} style={[
-        styles.container,
-        style,
-        size && { height: size, width: size }
-      ]}>
+      <View {...other}
+        accessibilityRole='progressbar'
+        aria-valuemax='1'
+        aria-valuemin='0'
+        style={[
+          styles.container,
+          style,
+          size && { height: size, width: size }
+        ]}
+      >
         <Animated.View
           children={svg}
           style={[
