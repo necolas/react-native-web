@@ -55,6 +55,7 @@ Exported modules:
   * [`ActivityIndicator`](docs/components/ActivityIndicator.md)
   * [`Image`](docs/components/Image.md)
   * [`ListView`](docs/components/ListView.md)
+  * [`ProgressBar`](docs/components/ProgressBar.md)
   * [`ScrollView`](docs/components/ScrollView.md)
   * [`Switch`](docs/components/Switch.md)
   * [`Text`](docs/components/Text.md)
