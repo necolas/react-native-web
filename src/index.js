@@ -38,12 +38,16 @@ import View from './components/View';
 
 // modules
 import NativeModules from './modules/NativeModules';
+import createDOMElement from './modules/createDOMElement'
+import applyNativeMethods from './modules/applyNativeMethods'
 
 // propTypes
 
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
 import PointPropType from './propTypes/PointPropType';
+import StyleSheetPropType from './propTypes/StyleSheetPropType';
+import BaseComponentPropTypes from './propTypes/BaseComponentPropTypes';
 
 const ReactNative = {
   // top-level API
@@ -88,11 +92,15 @@ const ReactNative = {
 
   // modules
   NativeModules,
+  createDOMElement,
+  applyNativeMethods,
 
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
-  PointPropType
+  PointPropType,
+  StyleSheetPropType,
+  BaseComponentPropTypes
 };
 
 module.exports = ReactNative;
