@@ -46,7 +46,7 @@ Invoked when load either succeeds or fails,
 
 Invoked on load start.
 
-**resizeMode**: oneOf('center', 'contain', 'cover', 'none', 'repeat', 'stretch') = 'stretch'
+**resizeMode**: oneOf('center', 'contain', 'cover', 'none', 'repeat', 'stretch') = 'cover'
 
 Determines how to resize the image when the frame doesn't match the raw image
 dimensions.
