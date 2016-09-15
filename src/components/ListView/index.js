@@ -2,6 +2,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import ListViewDataSource from './ListViewDataSource';
 import ListViewPropTypes from './ListViewPropTypes';
 import pick from 'lodash/pick';
+import keys from 'lodash/keys';
 import ScrollView from '../ScrollView';
 import View from '../View';
 import React, { Component } from 'react';
@@ -88,7 +89,7 @@ class ListView extends Component {
       }
     }
 
-    const props = pick(ScrollView.propTypes, this.props);
+    const props = pick(this.props, keys(ScrollView.propTypes));
 
     return React.cloneElement(this.props.renderScrollComponent(props), {
       ref: this._setScrollViewRef
