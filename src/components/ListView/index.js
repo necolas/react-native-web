@@ -95,7 +95,7 @@ class ListView extends Component {
     }, header, children, footer);
   }
 
-  _setScrollViewRef(component) {
+  _setScrollViewRef = (component) => {
     this._scrollViewRef = component;
   }
 }
