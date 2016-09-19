@@ -6,6 +6,8 @@ import ScrollView from '../ScrollView';
 import View from '../View';
 import React, { Component } from 'react';
 
+const scrollViewProps = Object.keys(ScrollView.propTypes);
+
 class ListView extends Component {
   static propTypes = ListViewPropTypes;
 
@@ -88,14 +90,14 @@ class ListView extends Component {
       }
     }
 
-    const props = pick(ScrollView.propTypes, this.props);
+    const props = pick(this.props, scrollViewProps);
 
     return React.cloneElement(this.props.renderScrollComponent(props), {
       ref: this._setScrollViewRef
     }, header, children, footer);
   }
 
-  _setScrollViewRef(component) {
+  _setScrollViewRef = (component) => {
     this._scrollViewRef = component;
   }
 }
