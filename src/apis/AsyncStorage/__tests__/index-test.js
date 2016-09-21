@@ -1,23 +1,25 @@
 /* eslint-env mocha */
-import _ from 'lodash'
-import assert from 'assert'
-import AsyncStorage from '..'
+import _ from 'lodash';
+import assert from 'assert';
+import AsyncStorage from '..';
 
 const waterfall = (fns, cb) => {
-  let args = [];
   const _waterfall = (...args) => {
-    let fn = (fns || []).shift();
+    const fn = (fns || []).shift();
     if (_.isFunction(fn)) {
       fn(...args, (err, ...nextArgs) => {
-        if (err) return cb(err);
-        else _waterfall(...nextArgs);
+        if (err) {
+          return cb(err);
+        } else {
+          return _waterfall(...nextArgs);
+        }
       });
     } else {
       cb(null, ...args);
     }
-  }
+  };
   _waterfall();
-}
+};
 
 suite('apis/AsyncStorage', () => {
   suite('mergeLocalStorageItem', () => {
@@ -26,11 +28,11 @@ suite('apis/AsyncStorage', () => {
       const UID123_object = {
         name: 'Chris',
         age: 30,
-        traits: {hair: 'brown', eyes: 'brown'},
+        traits: { hair: 'brown', eyes: 'brown' }
       };
       const UID123_delta = {
         age: 31,
-        traits: {eyes: 'blue', shoe_size: 10}
+        traits: { eyes: 'blue', shoe_size: 10 }
       };
       waterfall([
         (cb) => {
@@ -51,6 +53,7 @@ suite('apis/AsyncStorage', () => {
             .catch(cb);
         }
       ], (err, result) => {
+        assert.equal(err, null);
         assert.deepEqual(result, {
           'name': 'Chris', 'age': 31, 'traits': {
             'shoe_size': 10, 'hair': 'brown', 'eyes': 'blue'

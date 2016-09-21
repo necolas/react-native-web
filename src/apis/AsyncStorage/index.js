@@ -3,7 +3,7 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  */
-import _ from 'lodash'
+import _ from 'lodash';
 
 const mergeLocalStorageItem = (key, value) => {
   const oldValue = window.localStorage.getItem(key);
