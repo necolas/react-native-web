@@ -3,13 +3,13 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  */
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 const mergeLocalStorageItem = (key, value) => {
   const oldValue = window.localStorage.getItem(key);
   const oldObject = JSON.parse(oldValue);
   const newObject = JSON.parse(value);
-  const nextValue = JSON.stringify(_.merge({}, oldObject, newObject));
+  const nextValue = JSON.stringify(merge({}, oldObject, newObject));
   window.localStorage.setItem(key, nextValue);
 };
 

@@ -1,12 +1,11 @@
 /* eslint-env mocha */
-import _ from 'lodash';
 import assert from 'assert';
 import AsyncStorage from '..';
 
 const waterfall = (fns, cb) => {
   const _waterfall = (...args) => {
     const fn = (fns || []).shift();
-    if (_.isFunction(fn)) {
+    if (typeof fn === 'function') {
       fn(...args, (err, ...nextArgs) => {
         if (err) {
           return cb(err);
@@ -23,7 +22,7 @@ const waterfall = (fns, cb) => {
 
 suite('apis/AsyncStorage', () => {
   suite('mergeLocalStorageItem', () => {
-    test('should have same behavior as react-navtive', (done) => {
+    test('should have same behavior as react-native', (done) => {
       // https://facebook.github.io/react-native/docs/asyncstorage.html
       const UID123_object = {
         name: 'Chris',
