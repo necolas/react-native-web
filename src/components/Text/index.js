@@ -55,6 +55,7 @@ class Text extends Component {
 
 const styles = StyleSheet.create({
   initial: {
+    borderWidth: 0,
     color: 'inherit',
     display: 'inline',
     font: 'inherit',

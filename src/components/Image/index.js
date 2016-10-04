@@ -49,9 +49,9 @@ class Image extends Component {
 
   constructor(props, context) {
     super(props, context);
+    this.state = { isLoaded: false };
     const uri = resolveAssetSource(props.source);
     this._imageState = uri ? STATUS_PENDING : STATUS_IDLE;
-    this.state = { isLoaded: false };
   }
 
   componentDidMount() {
