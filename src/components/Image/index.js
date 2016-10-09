@@ -4,7 +4,6 @@ import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createDOMElement from '../../modules/createDOMElement';
 import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
-import resolveAssetSource from './resolveAssetSource';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
@@ -23,6 +22,10 @@ const ImageSourcePropType = PropTypes.oneOfType([
   PropTypes.string
 ]);
 
+const resolveAssetSource = (source) => {
+  return ((typeof source === 'object') ? source.uri : source) || null;
+};
+
 class Image extends Component {
   static displayName = 'Image';
 
@@ -35,7 +38,7 @@ class Image extends Component {
     onLoad: PropTypes.func,
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
-    resizeMode: PropTypes.oneOf([ 'center', 'contain', 'cover', 'none', 'repeat', 'stretch' ]),
+    resizeMode: PropTypes.oneOf(Object.keys(ImageResizeMode)),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes)
   };
