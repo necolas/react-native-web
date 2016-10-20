@@ -36,7 +36,7 @@ const LayoutPropTypes = {
   alignItems: oneOf([ 'baseline', 'center', 'flex-end', 'flex-start', 'stretch' ]),
   alignSelf: oneOf([ 'auto', 'baseline', 'center', 'flex-end', 'flex-start', 'stretch' ]),
   flex: number,
-  flexBasis: string,
+  flexBasis: numberOrString,
   flexDirection: oneOf([ 'column', 'column-reverse', 'row', 'row-reverse' ]),
   flexGrow: number,
   flexShrink: number,
