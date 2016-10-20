@@ -96,6 +96,13 @@ class Image extends Component {
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
     let style = StyleSheet.flatten(this.props.style);
 
+    //translateZ property triggers hardware acceleration for better rendering of the background-image property
+    const hasTranslateZ = style.transform && style.transform.reduce((acc, t) => acc || t && t.hasOwnProperty('translateZ'), false);
+    if(!hasTranslateZ) {
+      style.transform = Array.isArray(style.transform) ? style.transform : [];
+      style.transform.unshift({translateZ: 0}); //only add translateZ if not already present, so as not to override its value
+    }
+    
     const resizeMode = this.props.resizeMode || style.resizeMode || ImageResizeMode.cover;
     // remove 'resizeMode' style, as it is not supported by View (N.B. styles are frozen in dev)
     style = process.env.NODE_ENV !== 'production' ? { ...style } : style;
