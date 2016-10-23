@@ -218,7 +218,7 @@ const examples = [
     render: function() {
       return (
         <Image
-          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          source={{ uri: 'http://facebook.github.io/react/img/logo_og.png', width: 1200, height: 630 }}
           style={styles.base}
         />
       );

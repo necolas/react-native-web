@@ -17,10 +17,19 @@ const STATUS_IDLE = 'IDLE';
 
 const ImageSourcePropType = PropTypes.oneOfType([
   PropTypes.shape({
-    uri: PropTypes.string.isRequired
+    height: PropTypes.number,
+    uri: PropTypes.string.isRequired,
+    width: PropTypes.number
   }),
   PropTypes.string
 ]);
+
+const resolveAssetDimensions = (source) => {
+  if (typeof source === 'object') {
+    const { height, width } = source;
+    return { height, width };
+  }
+};
 
 const resolveAssetSource = (source) => {
   return ((typeof source === 'object') ? source.uri : source) || null;
@@ -93,12 +102,15 @@ class Image extends Component {
     } = this.props;
 
     const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source);
+    const imageSizeStyle = resolveAssetDimensions(!isLoaded ? defaultSource : source);
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
-    const flatStyle = StyleSheet.flatten(this.props.style);
-    const resizeMode = this.props.resizeMode || flatStyle.resizeMode || ImageResizeMode.cover;
+    const originalStyle = StyleSheet.flatten(this.props.style);
+    const resizeMode = this.props.resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
+
     const style = StyleSheet.flatten([
       styles.initial,
-      flatStyle,
+      imageSizeStyle,
+      originalStyle,
       backgroundImage && { backgroundImage },
       resizeModeStyles[resizeMode]
     ]);
@@ -147,14 +159,18 @@ class Image extends Component {
     }
   }
 
-  _onError = (e) => {
-    const { onError } = this.props;
-    const event = { nativeEvent: e };
-
+  _onError = () => {
+    const { onError, source } = this.props;
     this._destroyImageLoader();
-    this._updateImageState(STATUS_ERRORED);
     this._onLoadEnd();
-    if (onError) { onError(event); }
+    this._updateImageState(STATUS_ERRORED);
+    if (onError) {
+      onError({
+        nativeEvent: {
+          error: `Failed to load resource ${resolveAssetSource(source)} (404)`
+        }
+      });
+    }
   }
 
   _onLoad = (e) => {
@@ -189,7 +205,6 @@ class Image extends Component {
 
 const styles = StyleSheet.create({
   initial: {
-    alignSelf: 'flex-start',
     backgroundColor: 'transparent',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',

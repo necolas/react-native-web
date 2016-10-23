@@ -34,8 +34,8 @@ suite('components/Image', () => {
     test('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
       const image = shallow(<Image defaultSource={defaultSource} />);
-      const backgroundImage = StyleSheet.flatten(image.prop('style')).backgroundImage;
-      assert(backgroundImage.indexOf(defaultSource.uri) > -1);
+      const style = StyleSheet.flatten(image.prop('style'));
+      assert(style.backgroundImage.indexOf(defaultSource.uri) > -1);
     });
 
     test('sets background image when value is a string', () => {
@@ -45,13 +45,30 @@ suite('components/Image', () => {
       const backgroundImage = StyleSheet.flatten(image.prop('style')).backgroundImage;
       assert(backgroundImage.indexOf(defaultSource) > -1);
     });
+
+    test('sets "height" and "width" styles if missing', () => {
+      const defaultSource = { uri: 'https://google.com/favicon.ico', height: 10, width: 20 };
+      const image = mount(<Image defaultSource={defaultSource} />);
+      const html = image.html();
+      assert(html.indexOf('height: 10px') > -1);
+      assert(html.indexOf('width: 20px') > -1);
+    });
+
+    test('does not override "height" and "width" styles', () => {
+      const defaultSource = { uri: 'https://google.com/favicon.ico', height: 10, width: 20 };
+      const image = mount(<Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />);
+      const html = image.html();
+      assert(html.indexOf('height: 20px') > -1);
+      assert(html.indexOf('width: 40px') > -1);
+    });
   });
 
   test('prop "onError"', function (done) {
     this.timeout(5000);
-    mount(<Image onError={onError} source={{ uri: 'https://google.com/favicon.icox' }} />);
+    const image = mount(<Image onError={onError} source={{ uri: 'https://google.com/favicon.icox' }} />);
     function onError(e) {
-      assert.equal(e.nativeEvent.type, 'error');
+      assert.ok(e.nativeEvent.error);
+      image.unmount();
       done();
     }
   });
@@ -63,6 +80,7 @@ suite('components/Image', () => {
       assert.equal(e.nativeEvent.type, 'load');
       const hasBackgroundImage = (image.html()).indexOf('url(&quot;https://google.com/favicon.ico&quot;)') > -1;
       assert.equal(hasBackgroundImage, true);
+      image.unmount();
       done();
     }
   });
@@ -74,6 +92,7 @@ suite('components/Image', () => {
       assert.ok(true);
       const hasBackgroundImage = (image.html()).indexOf('url(&quot;https://google.com/favicon.ico&quot;)') > -1;
       assert.equal(hasBackgroundImage, true);
+      image.unmount();
       done();
     }
   });
@@ -121,10 +140,11 @@ suite('components/Image', () => {
 
     test('sets background image when value is an object', (done) => {
       const source = { uri: 'https://google.com/favicon.ico' };
-      mount(<Image onLoad={onLoad} source={source} />);
+      const image = mount(<Image onLoad={onLoad} source={source} />);
       function onLoad(e) {
         const src = e.nativeEvent.target.src;
         assert.equal(src, source.uri);
+        image.unmount();
         done();
       }
     });
@@ -132,10 +152,11 @@ suite('components/Image', () => {
     test('sets background image when value is a string', (done) => {
       // emulate require-ed asset
       const source = 'https://google.com/favicon.ico';
-      mount(<Image onLoad={onLoad} source={source} />);
+      const image = mount(<Image onLoad={onLoad} source={source} />);
       function onLoad(e) {
         const src = e.nativeEvent.target.src;
         assert.equal(src, source);
+        image.unmount();
         done();
       }
     });
