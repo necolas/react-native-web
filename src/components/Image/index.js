@@ -94,19 +94,22 @@ class Image extends Component {
 
     const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source);
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
-    let style = StyleSheet.flatten(this.props.style);
-
-    const resizeMode = this.props.resizeMode || style.resizeMode || ImageResizeMode.cover;
-    // remove 'resizeMode' style, as it is not supported by View (N.B. styles are frozen in dev)
-    style = process.env.NODE_ENV !== 'production' ? { ...style } : style;
+    const flatStyle = StyleSheet.flatten(this.props.style);
+    const resizeMode = this.props.resizeMode || flatStyle.resizeMode || ImageResizeMode.cover;
+    const style = StyleSheet.flatten([
+      styles.initial,
+      flatStyle,
+      backgroundImage && { backgroundImage },
+      resizeModeStyles[resizeMode]
+    ]);
+    // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;
 
     /**
-     * Image is a non-stretching View. The image is displayed as a background
-     * image to support `resizeMode`. The HTML image is hidden but used to
-     * provide the correct responsive image dimensions, and to support the
-     * image context menu. Child content is rendered into an element absolutely
-     * positioned over the image.
+     * The image is displayed as a background image to support `resizeMode`.
+     * The HTML image is hidden but used to provide the correct responsive
+     * image dimensions, and to support the image context menu. Child content
+     * is rendered into an element absolutely positioned over the image.
      */
     return (
       <View
@@ -114,12 +117,7 @@ class Image extends Component {
         accessibilityRole='img'
         accessible={accessible}
         onLayout={onLayout}
-        style={[
-          styles.initial,
-          style,
-          backgroundImage && { backgroundImage },
-          resizeModeStyles[resizeMode]
-        ]}
+        style={style}
         testID={testID}
       >
         {createDOMElement('img', { src: displayImage, style: styles.img })}
