@@ -72,3 +72,10 @@ AppRegistry.runApplication('App', {
 // prerender the app
 const { html, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 ```
+
+
+## Rendering within a React web application
+
+It can be convenient to include React Native components in a web application (for instance as a back-office application, to preview mobile rendering).
+As React Native web is implemented using ReactJS, you don't have to setup React Native Web within your React application.
+You can use directly the React Native components within your React application.
