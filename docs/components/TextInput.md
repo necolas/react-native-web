@@ -87,6 +87,11 @@ as an argument to the callback handler.
 
 Callback that is called when the text input is focused.
 
+**onKeyPress**: function
+
+Callback that is called when a key is pressed. Pressed key value is passed as
+an argument to the callback handler. Fires before `onChange` callbacks.
+
 (web) **onSelectionChange**: function
 
 Callback that is called when the text input's selection changes. The following

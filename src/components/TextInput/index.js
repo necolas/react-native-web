@@ -35,6 +35,7 @@ class TextInput extends Component {
     onChange: PropTypes.func,
     onChangeText: PropTypes.func,
     onFocus: PropTypes.func,
+    onKeyPress: PropTypes.func,
     onSelectionChange: PropTypes.func,
     placeholder: PropTypes.string,
     placeholderTextColor: PropTypes.string,
@@ -87,6 +88,7 @@ class TextInput extends Component {
       maxNumberOfLines,
       multiline,
       numberOfLines,
+      onKeyPress,
       onLayout,
       onSelectionChange,
       placeholder,
@@ -139,6 +141,7 @@ class TextInput extends Component {
       onBlur: this._handleBlur,
       onChange: this._handleChange,
       onFocus: this._handleFocus,
+      onKeyPress,
       onSelect: onSelectionChange && this._handleSelectionChange,
       readOnly: !editable,
       ref: this._setInputRef,
@@ -200,6 +203,7 @@ class TextInput extends Component {
   _handleChange = (e) => {
     const { onChange, onChangeText } = this.props;
     const text = e.target.value;
+    e.nativeEvent.text = text;
     this.setState({ showPlaceholder: text === '' });
     if (onChange) { onChange(e); }
     if (onChangeText) { onChangeText(text); }
