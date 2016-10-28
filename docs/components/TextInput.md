@@ -29,13 +29,18 @@ Automatically capitalize certain characters (only available in Chrome and iOS Sa
 * `sentences`: Automatically capitalize the first letter of sentences.
 * `words`: Automatically capitalize the first letter of words.
 
-(web) **autoComplete**: bool = false
+(web) **autoComplete**: string
 
-Indicates whether the value of the control can be automatically completed by the browser.
+Indicates whether the value of the control can be automatically completed by
+the browser. [Accepted values](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
+
+**autoCorrect**: bool = true
+
+Automatically correct spelling mistakes  (only available in iOS Safari).
 
 **autoFocus**: bool = false
 
-If true, focuses the input on `componentDidMount`. Only the first form element
+If `true`, focuses the input on `componentDidMount`. Only the first form element
 in a document with `autofocus` is focused.
 
 **clearTextOnFocus**: bool = false
