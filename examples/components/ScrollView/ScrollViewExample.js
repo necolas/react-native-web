@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
 storiesOf('component: ScrollView', module)
   .add('vertical', () => (
@@ -13,7 +13,7 @@ storiesOf('component: ScrollView', module)
       >
         {Array.from({ length: 50 }).map((item, i) => (
           <View key={i} style={styles.box}>
-            <Text>{i}</Text>
+            <TouchableHighlight onPress={() => {}}><Text>{i}</Text></TouchableHighlight>
           </View>
         ))}
       </ScrollView>
@@ -39,7 +39,6 @@ storiesOf('component: ScrollView', module)
 
 const styles = StyleSheet.create({
   box: {
-    alignItems: 'center',
     flexGrow: 1,
     justifyContent: 'center',
     borderWidth: 1

@@ -124,10 +124,10 @@ class View extends Component {
 
   _normalizeEventForHandler(handler, handlerName) {
     // Browsers fire mouse events after touch events. This causes the
-    // ResponderEvents and their handlers to fire twice for Touchables.
+    // 'onResponderRelease' handler to be called twice for Touchables.
     // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
     // events.
-    const shouldCancelEvent = handlerName.indexOf('onResponder') === 0;
+    const shouldCancelEvent = handlerName === 'onResponderRelease';
 
     return (e) => {
       e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
