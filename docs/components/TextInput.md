@@ -20,6 +20,15 @@ Unsupported React Native props:
 
 [...View props](./View.md)
 
+**autoCapitalize**: oneOf('characters', 'none', 'sentences', 'words') = 'sentences'
+
+Automatically capitalize certain characters (only available in Chrome and iOS Safari).
+
+* `characters`: Automatically capitalize all characters.
+* `none`: Completely disables automatic capitalization
+* `sentences`: Automatically capitalize the first letter of sentences.
+* `words`: Automatically capitalize the first letter of words.
+
 (web) **autoComplete**: bool = false
 
 Indicates whether the value of the control can be automatically completed by the browser.

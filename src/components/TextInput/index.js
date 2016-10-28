@@ -19,6 +19,7 @@ class TextInput extends Component {
 
   static propTypes = {
     ...View.propTypes,
+    autoCapitalize: PropTypes.oneOf([ 'characters', 'none', 'sentences', 'words' ]),
     autoComplete: PropTypes.bool,
     autoFocus: PropTypes.bool,
     clearTextOnFocus: PropTypes.bool,
@@ -47,6 +48,7 @@ class TextInput extends Component {
   };
 
   static defaultProps = {
+    autoCapitalize: 'sentences',
     editable: true,
     keyboardType: 'default',
     multiline: false,
@@ -83,6 +85,7 @@ class TextInput extends Component {
   render() {
     const {
       accessibilityLabel, // eslint-disable-line
+      autoCapitalize,
       autoComplete,
       autoFocus,
       defaultValue,
@@ -138,6 +141,7 @@ class TextInput extends Component {
     const textStyles = omit(flattenedStyle, viewStyleProps);
 
     const propsCommon = {
+      autoCapitalize,
       autoComplete: autoComplete && 'on',
       autoFocus,
       defaultValue,
