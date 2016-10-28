@@ -157,6 +157,10 @@ Clear the text from the underlying DOM input.
 
 Focus the underlying DOM input.
 
+**isFocused()**
+
+Returns `true` if the input is currently focused; `false` otherwise.
+
 ## Examples
 
 ```js

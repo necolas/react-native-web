@@ -72,6 +72,10 @@ class TextInput extends Component {
     TextInputState.focusTextInput(ReactDOM.findDOMNode(this._inputRef));
   }
 
+  isFocused() {
+    return TextInputState.currentlyFocusedField() === ReactDOM.findDOMNode(this._inputRef);
+  }
+
   setNativeProps(props) {
     UIManager.updateView(this._inputRef, props, this);
   }
@@ -247,8 +251,6 @@ class TextInput extends Component {
   }
 }
 
-applyNativeMethods(TextInput);
-
 const styles = StyleSheet.create({
   initial: {
     borderColor: 'black'
@@ -284,4 +286,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = TextInput;
+module.exports = applyNativeMethods(TextInput);
