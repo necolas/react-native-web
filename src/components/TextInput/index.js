@@ -1,8 +1,8 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
+import findNodeHandle from '../../modules/findNodeHandle';
 import omit from 'lodash/omit';
 import pick from 'lodash/pick';
-import ReactDOM from 'react-dom';
 import StyleSheet from '../../apis/StyleSheet';
 import Text from '../Text';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -74,7 +74,7 @@ class TextInput extends Component {
   }
 
   blur() {
-    TextInputState.blurTextInput(ReactDOM.findDOMNode(this._inputRef));
+    TextInputState.blurTextInput(findNodeHandle(this._inputRef));
   }
 
   clear() {
@@ -82,11 +82,11 @@ class TextInput extends Component {
   }
 
   focus() {
-    TextInputState.focusTextInput(ReactDOM.findDOMNode(this._inputRef));
+    TextInputState.focusTextInput(findNodeHandle(this._inputRef));
   }
 
   isFocused() {
-    return TextInputState.currentlyFocusedField() === ReactDOM.findDOMNode(this._inputRef);
+    return TextInputState.currentlyFocusedField() === findNodeHandle(this._inputRef);
   }
 
   setNativeProps(props) {
@@ -232,7 +232,7 @@ class TextInput extends Component {
   _handleFocus = (e) => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
     const { text } = e.nativeEvent;
-    const node = ReactDOM.findDOMNode(this._inputRef);
+    const node = findNodeHandle(this._inputRef);
     if (onFocus) { onFocus(e); }
     if (clearTextOnFocus) { this.clear(); }
     if (selectTextOnFocus) { node && node.select(); }
@@ -242,7 +242,7 @@ class TextInput extends Component {
   _handleKeyPress = (e) => {
     const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
-    const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit
+    const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
     if (onKeyPress) { onKeyPress(e); }
     if (!e.isDefaultPrevented() && e.which === 13) {
       if (onSubmitEditing) { onSubmitEditing(e); }
