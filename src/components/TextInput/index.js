@@ -14,6 +14,13 @@ import React, { Component, PropTypes } from 'react';
 
 const viewStyleProps = Object.keys(ViewStylePropTypes);
 
+const normalizeEventHandler = (handler) => (e) => {
+  if (handler) {
+    e.nativeEvent.text = e.target.value;
+    return handler(e);
+  }
+};
+
 class TextInput extends Component {
   static displayName = 'TextInput';
 
@@ -23,6 +30,7 @@ class TextInput extends Component {
     autoComplete: PropTypes.string,
     autoCorrect: PropTypes.bool,
     autoFocus: PropTypes.bool,
+    blurOnSubmit: PropTypes.bool,
     clearTextOnFocus: PropTypes.bool,
     defaultValue: PropTypes.string,
     editable: PropTypes.bool,
@@ -144,37 +152,32 @@ class TextInput extends Component {
     const rootStyles = pick(flattenedStyle, viewStyleProps);
     const textStyles = omit(flattenedStyle, viewStyleProps);
 
-    const propsCommon = {
+    const props = {
       autoCapitalize,
       autoComplete,
       autoCorrect: autoCorrect ? 'on' : 'off',
       autoFocus,
       defaultValue,
       maxLength,
-      onBlur: this._handleBlur,
-      onChange: this._handleChange,
-      onFocus: this._handleFocus,
-      onKeyPress,
-      onSelect: onSelectionChange && this._handleSelectionChange,
+      onBlur: normalizeEventHandler(this._handleBlur),
+      onChange: normalizeEventHandler(this._handleChange),
+      onFocus: normalizeEventHandler(this._handleFocus),
+      onKeyPress: normalizeEventHandler(this._handleKeyPress),
+      onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setInputRef,
       style: [ styles.input, textStyles, { outline: style.outline } ],
       value
     };
 
-    const propsMultiline = {
-      ...propsCommon,
-      maxRows: maxNumberOfLines || numberOfLines,
-      minRows: numberOfLines
-    };
-
-    const propsSingleline = {
-      ...propsCommon,
-      type
-    };
+    if (multiline) {
+      props.maxRows = maxNumberOfLines || numberOfLines;
+      props.minRows = numberOfLines;
+    } else {
+      props.type = type;
+    }
 
     const component = multiline ? TextareaAutosize : 'input';
-    const props = multiline ? propsMultiline : propsSingleline;
 
     const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
       <View pointerEvents='none' style={styles.placeholder}>
@@ -207,38 +210,44 @@ class TextInput extends Component {
 
   _handleBlur = (e) => {
     const { onBlur } = this.props;
-    const text = e.target.value;
+    const { text } = e.nativeEvent;
     this.setState({ showPlaceholder: text === '' });
-    this.blur();
     if (onBlur) { onBlur(e); }
   }
 
   _handleChange = (e) => {
     const { onChange, onChangeText } = this.props;
-    const text = e.target.value;
-    e.nativeEvent.text = text;
+    const { text } = e.nativeEvent;
     this.setState({ showPlaceholder: text === '' });
     if (onChange) { onChange(e); }
     if (onChangeText) { onChangeText(text); }
-    if (!this._inputRef) {
-      // calling `this.props.onChange` or `this.props.onChangeText`
-      // may clean up the input itself. Exits here.
-      return;
-    }
   }
 
   _handleClick = (e) => {
-    this.focus();
+    if (this.props.editable) {
+      this.focus();
+    }
   }
 
   _handleFocus = (e) => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
+    const { text } = e.nativeEvent;
     const node = ReactDOM.findDOMNode(this._inputRef);
-    const text = e.target.value;
     if (onFocus) { onFocus(e); }
     if (clearTextOnFocus) { this.clear(); }
-    if (selectTextOnFocus) { node.select(); }
+    if (selectTextOnFocus) { node && node.select(); }
     this.setState({ showPlaceholder: text === '' });
+  }
+
+  _handleKeyPress = (e) => {
+    const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
+    const blurOnSubmitDefault = !multiline;
+    const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit
+    if (onKeyPress) { onKeyPress(e); }
+    if (!e.isDefaultPrevented() && e.which === 13) {
+      if (onSubmitEditing) { onSubmitEditing(e); }
+      if (shouldBlurOnSubmit) { this.blur(); }
+    }
   }
 
   _handleSelectionChange = (e) => {
@@ -282,7 +291,6 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     bottom: 0,
-    justifyContent: 'center',
     left: 0,
     position: 'absolute',
     right: 0,

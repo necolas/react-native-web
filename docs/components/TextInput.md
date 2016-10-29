@@ -43,6 +43,14 @@ Automatically correct spelling mistakes  (only available in iOS Safari).
 If `true`, focuses the input on `componentDidMount`. Only the first form element
 in a document with `autofocus` is focused.
 
+**blurOnSubmit**: bool
+
+If `true`, the text field will blur when submitted. The default value is `true`
+for single-line fields and `false` for multiline fields. Note, for multiline
+fields setting `blurOnSubmit` to `true` means that pressing return will blur
+the field and trigger the `onSubmitEditing` event instead of inserting a
+newline into the field.
+
 **clearTextOnFocus**: bool = false
 
 If `true`, clears the text field automatically when focused.
@@ -106,10 +114,14 @@ Callback that is called when the text input is focused.
 Callback that is called when a key is pressed. Pressed key value is passed as
 an argument to the callback handler. Fires before `onChange` callbacks.
 
-(web) **onSelectionChange**: function
+**onSelectionChange**: function
 
 Callback that is called when the text input's selection changes. The following
 object is passed as an argument to the callback handler.
+
+**onSubmitEditing**: function
+
+Callback that is called when the keyboard's submit button is pressed.
 
 ```js
 {
