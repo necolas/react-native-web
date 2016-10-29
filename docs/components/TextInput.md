@@ -116,21 +116,12 @@ an argument to the callback handler. Fires before `onChange` callbacks.
 
 **onSelectionChange**: function
 
-Callback that is called when the text input's selection changes. The following
-object is passed as an argument to the callback handler.
+Callback that is called when the text input's selection changes. This will be called with
+`{ nativeEvent: { selection: { start, end } } }`.
 
 **onSubmitEditing**: function
 
 Callback that is called when the keyboard's submit button is pressed.
-
-```js
-{
-  selectionDirection,
-  selectionEnd,
-  selectionStart,
-  nativeEvent
-}
-```
 
 **placeholder**: string
 
@@ -147,6 +138,10 @@ If true, the text input obscures the text entered so that sensitive text like
 passwords stay secure.
 
 (Not available when `multiline` is `true`.)
+
+**selection**: { start: number, end: ?number }
+
+The start and end of the text input's selection. Set start and end to the same value to position the cursor.
 
 **selectTextOnFocus**: bool = false
 

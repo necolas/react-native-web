@@ -14,11 +14,40 @@ import React, { Component, PropTypes } from 'react';
 
 const viewStyleProps = Object.keys(ViewStylePropTypes);
 
+/**
+ * React Native events differ from W3C events.
+ */
 const normalizeEventHandler = (handler) => (e) => {
   if (handler) {
     e.nativeEvent.text = e.target.value;
     return handler(e);
   }
+};
+
+/**
+ * Determins whether a 'selection' prop differs from a node's existing
+ * selection state.
+ */
+const isSelectionStale = (node, selection) => {
+  if (node && selection) {
+    const { selectionEnd, selectionStart } = node;
+    const { start, end } = selection;
+    return start !== selectionStart || end !== selectionEnd;
+  }
+  return false;
+};
+
+/**
+ * Certain input types do no support 'selectSelectionRange' and will throw an
+ * error.
+ */
+const setSelection = (node, selection) => {
+  try {
+    if (isSelectionStale(node, selection)) {
+      const { start, end } = selection;
+      node.setSelectionRange(start, end || start);
+    }
+  } catch (e) {}
 };
 
 class TextInput extends Component {
@@ -50,6 +79,10 @@ class TextInput extends Component {
     placeholder: PropTypes.string,
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
+    selection: PropTypes.shape({
+      start: PropTypes.number.isRequired,
+      end: PropTypes.number
+    }),
     selectTextOnFocus: PropTypes.bool,
     style: Text.propTypes.style,
     testID: Text.propTypes.testID,
@@ -93,6 +126,14 @@ class TextInput extends Component {
     UIManager.updateView(this._inputRef, props, this);
   }
 
+  componentDidMount() {
+    setSelection(findNodeHandle(this._inputRef), this.props.selection);
+  }
+
+  componentDidUpdate() {
+    setSelection(findNodeHandle(this._inputRef), this.props.selection);
+  }
+
   render() {
     const {
       accessibilityLabel, // eslint-disable-line
@@ -107,9 +148,7 @@ class TextInput extends Component {
       maxNumberOfLines,
       multiline,
       numberOfLines,
-      onKeyPress,
       onLayout,
-      onSelectionChange,
       placeholder,
       placeholderTextColor,
       secureTextEntry,
@@ -251,17 +290,17 @@ class TextInput extends Component {
   }
 
   _handleSelectionChange = (e) => {
-    const { onSelectionChange } = this.props;
-    try {
-      const { selectionDirection, selectionEnd, selectionStart } = e.target;
-      const event = {
-        selectionDirection,
-        selectionEnd,
-        selectionStart,
-        nativeEvent: e.nativeEvent
-      };
-      if (onSelectionChange) { onSelectionChange(event); }
-    } catch (e) {}
+    const { onSelectionChange, selection = {} } = this.props;
+    if (onSelectionChange) {
+      try {
+        const node = e.target;
+        if (isSelectionStale(node, selection)) {
+          const { selectionStart, selectionEnd } = node;
+          e.nativeEvent.selection = { start: selectionStart, end: selectionEnd };
+          onSelectionChange(e);
+        }
+      } catch (e) {}
+    }
   }
 
   _setInputRef = (component) => {
