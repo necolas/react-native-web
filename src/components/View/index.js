@@ -66,8 +66,7 @@ class View extends Component {
   };
 
   static defaultProps = {
-    accessible: true,
-    style: {}
+    accessible: true
   };
 
   static childContextTypes = {
@@ -97,7 +96,7 @@ class View extends Component {
     const flattenedStyle = StyleSheet.flatten(style);
     const pointerEventsStyle = pointerEvents && { pointerEvents };
     // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
-    const needsFlexReset = flattenedStyle.flex == null && flattenedStyle.flexShrink == null;
+    const needsFlexReset = !flattenedStyle || (flattenedStyle.flex == null && flattenedStyle.flexShrink == null);
 
     const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
       const handler = this.props[handlerName];
