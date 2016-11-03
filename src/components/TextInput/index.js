@@ -79,11 +79,11 @@ class TextInput extends Component {
     placeholder: PropTypes.string,
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
+    selectTextOnFocus: PropTypes.bool,
     selection: PropTypes.shape({
       start: PropTypes.number.isRequired,
       end: PropTypes.number
     }),
-    selectTextOnFocus: PropTypes.bool,
     style: Text.propTypes.style,
     testID: Text.propTypes.testID,
     value: PropTypes.string

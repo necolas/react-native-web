@@ -22,12 +22,12 @@ const testIfDocumentIsFocused = (message, fn) => {
 
 suite('components/TextInput', () => {
   test('prop "autoComplete"', () => {
-    // off
-    let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.prop('autoComplete'), undefined);
     // on
-    input = findNativeInput(shallow(<TextInput autoComplete />));
+    let input = findNativeInput(shallow(<TextInput />));
     assert.equal(input.prop('autoComplete'), 'on');
+    // off
+    input = findNativeInput(shallow(<TextInput autoComplete='off' />));
+    assert.equal(input.prop('autoComplete'), 'off');
   });
 
   test('prop "autoFocus"', () => {
@@ -179,8 +179,8 @@ suite('components/TextInput', () => {
     const input = findNativeInput(mount(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />));
     input.simulate('select', { target: { selectionStart: 0, selectionEnd: 3 } });
     function onSelectionChange(e) {
-      assert.equal(e.selectionEnd, 3);
-      assert.equal(e.selectionStart, 0);
+      assert.equal(e.nativeEvent.selection.end, 3);
+      assert.equal(e.nativeEvent.selection.start, 0);
       done();
     }
   });
