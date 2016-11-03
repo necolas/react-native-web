@@ -76,7 +76,7 @@ const NetInfo = {
 
       const listenerIndex = findIndex(connectionListeners, (pair) => pair[0] === handler);
       invariant(listenerIndex !== -1, 'Trying to remove NetInfo connection listener for unregistered handler');
-      const [ onlineCallback, offlineCallback ] = connectionListeners[listenerIndex];
+      const [ , onlineCallback, offlineCallback ] = connectionListeners[listenerIndex];
 
       window.removeEventListener('online', onlineCallback, false);
       window.removeEventListener('offline', offlineCallback, false);
