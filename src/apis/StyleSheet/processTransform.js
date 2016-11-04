@@ -16,7 +16,7 @@ const convertTransformMatrix = (transformMatrix) => {
 
 const processTransform = (style) => {
   if (style) {
-    if (style.transform) {
+    if (style.transform && Array.isArray(style.transform)) {
       style.transform = style.transform.map(mapTransform).join(' ');
     } else if (style.transformMatrix) {
       style.transform = convertTransformMatrix(style.transformMatrix);
