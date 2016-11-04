@@ -1,5 +1,3 @@
-import './modules/injectResponderEventPlugin';
-
 import findNodeHandle from './modules/findNodeHandle';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
