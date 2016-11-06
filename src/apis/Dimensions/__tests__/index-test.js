@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('apis/Dimensions', () => {
-  test.skip('NO TEST COVERAGE', () => {});
+describe('apis/Dimensions', () => {
+  it.skip('NO TEST COVERAGE', () => {});
 });

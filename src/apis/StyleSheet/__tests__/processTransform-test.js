@@ -1,10 +1,9 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import processTransform from '../processTransform';
 
-suite('apis/StyleSheet/processTransform', () => {
-  test('transform', () => {
+describe('apis/StyleSheet/processTransform', () => {
+  it('transform', () => {
     const style = {
       transform: [
         { scaleX: 20 },
@@ -13,23 +12,17 @@ suite('apis/StyleSheet/processTransform', () => {
       ]
     };
 
-    assert.deepEqual(
-      processTransform(style),
-      { transform: 'scaleX(20) translateX(20px) rotate(20deg)' }
-    );
+    expect(processTransform(style)).toEqual({ transform: 'scaleX(20) translateX(20px) rotate(20deg)' });
   });
 
-  test('transformMatrix', () => {
+  it('transformMatrix', () => {
     const style = {
       transformMatrix: [ 1, 2, 3, 4, 5, 6 ]
     };
 
-    assert.deepEqual(
-      processTransform(style),
-      {
-        transform: 'matrix3d(1,2,3,4,5,6)',
-        transformMatrix: null
-      }
-    );
+    expect(processTransform(style)).toEqual({
+      transform: 'matrix3d(1,2,3,4,5,6)',
+      transformMatrix: null
+    });
   });
 });

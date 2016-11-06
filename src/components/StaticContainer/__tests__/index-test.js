@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('components/StaticContainer', () => {
-  test.skip('NO TEST COVERAGE', () => {});
+describe('components/StaticContainer', () => {
+  it.skip('NO TEST COVERAGE', () => {});
 });

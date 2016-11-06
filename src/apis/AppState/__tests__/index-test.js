@@ -1,31 +1,30 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
 import AppState from '..';
-import assert from 'assert';
 
-suite('apis/AppState', () => {
+describe('apis/AppState', () => {
   const handler = () => {};
 
-  teardown(() => {
+  afterEach(() => {
     try { AppState.removeEventListener('change', handler); } catch (e) {}
   });
 
-  suite('addEventListener', () => {
-    test('throws if the provided "eventType" is not supported', () => {
-      assert.throws(() => AppState.addEventListener('foo', handler));
-      assert.doesNotThrow(() => AppState.addEventListener('change', handler));
+  describe('addEventListener', () => {
+    it('throws if the provided "eventType" is not supported', () => {
+      expect(() => AppState.addEventListener('foo', handler)).toThrow();
+      expect(() => AppState.addEventListener('change', handler)).not.toThrow();
     });
   });
 
-  suite('removeEventListener', () => {
-    test('throws if the handler is not registered', () => {
-      assert.throws(() => AppState.removeEventListener('change', handler));
+  describe('removeEventListener', () => {
+    it('throws if the handler is not registered', () => {
+      expect(() => AppState.removeEventListener('change', handler)).toThrow();
     });
 
-    test('throws if the provided "eventType" is not supported', () => {
+    it('throws if the provided "eventType" is not supported', () => {
       AppState.addEventListener('change', handler);
-      assert.throws(() => AppState.removeEventListener('foo', handler));
-      assert.doesNotThrow(() => AppState.removeEventListener('change', handler));
+      expect(() => AppState.removeEventListener('foo', handler)).toThrow();
+      expect(() => AppState.removeEventListener('change', handler)).not.toThrow();
     });
   });
 });

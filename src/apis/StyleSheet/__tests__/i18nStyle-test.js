@@ -1,6 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import I18nManager from '../../I18nManager';
 import i18nStyle from '../i18nStyle';
 
@@ -54,38 +53,38 @@ const expected = {
   writingDirection: 'rtl'
 };
 
-suite('apis/StyleSheet/i18nStyle', () => {
-  suite('LTR mode', () => {
-    setup(() => {
+describe('apis/StyleSheet/i18nStyle', () => {
+  describe('LTR mode', () => {
+    beforeEach(() => {
       I18nManager.allowRTL(false);
     });
 
-    teardown(() => {
+    afterEach(() => {
       I18nManager.allowRTL(true);
     });
 
-    test('does not auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), initial);
+    it('does not auto-flip', () => {
+      expect(i18nStyle(initial)).toEqual(initial);
     });
-    test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+    it('normalizes properties', () => {
+      expect(i18nStyle(initialNoI18n)).toEqual(initial);
     });
   });
 
-  suite('RTL mode', () => {
-    setup(() => {
+  describe('RTL mode', () => {
+    beforeEach(() => {
       I18nManager.forceRTL(true);
     });
 
-    teardown(() => {
+    afterEach(() => {
       I18nManager.forceRTL(false);
     });
 
-    test('does auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), expected);
+    it('does auto-flip', () => {
+      expect(i18nStyle(initial)).toEqual(expected);
     });
-    test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+    it('normalizes properties', () => {
+      expect(i18nStyle(initialNoI18n)).toEqual(initial);
     });
   });
 });

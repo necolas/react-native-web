@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -9,43 +9,42 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import assert from 'assert';
 import flattenStyle from '..';
 
-suite('modules/flattenStyle', () => {
-  test('should merge style objects', () => {
+describe('modules/flattenStyle', () => {
+  it('should merge style objects', () => {
     const style1 = { opacity: 1 };
     const style2 = { order: 2 };
     const flatStyle = flattenStyle([ style1, style2 ]);
-    assert.equal(flatStyle.opacity, 1);
-    assert.equal(flatStyle.order, 2);
+    expect(flatStyle.opacity).toEqual(1);
+    expect(flatStyle.order).toEqual(2);
   });
 
-  test('should override style properties', () => {
+  it('should override style properties', () => {
     const style1 = { backgroundColor: '#000', order: 1 };
     const style2 = { backgroundColor: '#023c69', order: null };
     const flatStyle = flattenStyle([ style1, style2 ]);
-    assert.equal(flatStyle.backgroundColor, '#023c69');
-    assert.strictEqual(flatStyle.order, null);
+    expect(flatStyle.backgroundColor).toEqual('#023c69');
+    expect(flatStyle.order).toBe(null);
   });
 
-  test('should overwrite properties with `undefined`', () => {
+  it('should overwrite properties with `undefined`', () => {
     const style1 = { backgroundColor: '#000' };
     const style2 = { backgroundColor: undefined };
     const flatStyle = flattenStyle([ style1, style2 ]);
-    assert.strictEqual(flatStyle.backgroundColor, undefined);
+    expect(flatStyle.backgroundColor).toBe(undefined);
   });
 
-  test('should not fail on falsy values', () => {
-    assert.doesNotThrow(() => flattenStyle([ null, false, undefined ]));
+  it('should not fail on falsy values', () => {
+    expect(() => flattenStyle([ null, false, undefined ])).not.toThrow();
   });
 
-  test('should recursively flatten arrays', () => {
+  it('should recursively flatten arrays', () => {
     const style1 = { order: 2 };
     const style2 = { opacity: 1 };
     const style3 = { order: 3 };
     const flatStyle = flattenStyle([ null, [], [ style1, style2 ], style3 ]);
-    assert.equal(flatStyle.order, 3);
-    assert.equal(flatStyle.opacity, 1);
+    expect(flatStyle.order).toEqual(3);
+    expect(flatStyle.opacity).toEqual(1);
   });
 });

@@ -1,5 +1,4 @@
-/* eslint-env mocha */
-import assert from 'assert';
+/* eslint-env jasmine, jest */
 import AsyncStorage from '..';
 
 const waterfall = (fns, cb) => {
@@ -20,9 +19,9 @@ const waterfall = (fns, cb) => {
   _waterfall();
 };
 
-suite('apis/AsyncStorage', () => {
-  suite('mergeLocalStorageItem', () => {
-    test('should have same behavior as react-native', (done) => {
+describe('apis/AsyncStorage', () => {
+  describe('mergeLocalStorageItem', () => {
+    it('should have same behavior as react-native', (done) => {
       // https://facebook.github.io/react-native/docs/asyncstorage.html
       const UID123_object = {
         name: 'Chris',
@@ -52,8 +51,8 @@ suite('apis/AsyncStorage', () => {
             .catch(cb);
         }
       ], (err, result) => {
-        assert.equal(err, null);
-        assert.deepEqual(result, {
+        expect(err).toEqual(null);
+        expect(result).toEqual({
           'name': 'Chris', 'age': 31, 'traits': {
             'shoe_size': 10, 'hair': 'brown', 'eyes': 'blue'
           }

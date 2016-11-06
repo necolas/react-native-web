@@ -1,41 +1,40 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import React from 'react';
 import Text from '../';
 import { mount, shallow } from 'enzyme';
 
-suite('components/Text', () => {
-  test('prop "children"', () => {
+describe('components/Text', () => {
+  it('prop "children"', () => {
     const children = 'children';
     const text = shallow(<Text>{children}</Text>);
-    assert.equal(text.prop('children'), children);
+    expect(text.prop('children')).toEqual(children);
   });
 
-  test('prop "numberOfLines"');
+  it('prop "numberOfLines"');
 
-  test('prop "onLayout"', (done) => {
+  it('prop "onLayout"', (done) => {
     mount(<Text onLayout={onLayout} />);
     function onLayout(e) {
       const { layout } = e.nativeEvent;
-      assert.deepEqual(layout, { x: 0, y: 0, width: 0, height: 0 });
+      expect(layout).toEqual({ x: 0, y: 0, width: 0, height: 0 });
       done();
     }
   });
 
-  test('prop "onPress"', (done) => {
+  it('prop "onPress"', (done) => {
     const text = mount(<Text onPress={onPress} />);
     text.simulate('click');
     function onPress(e) {
-      assert.ok(e.nativeEvent);
+      expect(e.nativeEvent).toBeTruthy();
       done();
     }
   });
 
-  test('prop "selectable"', () => {
+  it('prop "selectable"', () => {
     let text = shallow(<Text />);
-    assert.equal(text.prop('style').userSelect, undefined);
+    expect(text.prop('style').userSelect).toEqual(undefined);
     text = shallow(<Text selectable={false} />);
-    assert.equal(text.prop('style').userSelect, 'none');
+    expect(text.prop('style').userSelect).toEqual('none');
   });
 });

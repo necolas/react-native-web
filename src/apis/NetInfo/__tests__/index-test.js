@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('apis/NetInfo', () => {
-  test.skip('NO TEST COVERAGE', () => {});
+describe('apis/NetInfo', () => {
+  it.skip('NO TEST COVERAGE', () => {});
 });

@@ -1,161 +1,160 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import Image from '../';
 import React from 'react';
 import StyleSheet from '../../../apis/StyleSheet';
 import { mount, shallow } from 'enzyme';
 
-suite('components/Image', () => {
-  test('sets correct accessibility role"', () => {
+describe('components/Image', () => {
+  it('sets correct accessibility role"', () => {
     const image = shallow(<Image />);
-    assert.equal(image.prop('accessibilityRole'), 'img');
+    expect(image.prop('accessibilityRole')).toEqual('img');
   });
 
-  test('prop "accessibilityLabel"', () => {
+  it('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const image = shallow(<Image accessibilityLabel={accessibilityLabel} />);
-    assert.equal(image.prop('accessibilityLabel'), accessibilityLabel);
+    expect(image.prop('accessibilityLabel')).toEqual(accessibilityLabel);
   });
 
-  test('prop "accessible"', () => {
+  it('prop "accessible"', () => {
     const accessible = false;
     const image = shallow(<Image accessible={accessible} />);
-    assert.equal(image.prop('accessible'), accessible);
+    expect(image.prop('accessible')).toEqual(accessible);
   });
 
-  test('prop "children"', () => {
+  it('prop "children"', () => {
     const children = <div className='unique' />;
     const wrapper = shallow(<Image>{children}</Image>);
-    assert.equal(wrapper.contains(children), true);
+    expect(wrapper.contains(children)).toEqual(true);
   });
 
-  suite('prop "defaultSource"', () => {
-    test('sets background image when value is an object', () => {
+  describe('prop "defaultSource"', () => {
+    it('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
       const image = shallow(<Image defaultSource={defaultSource} />);
       const backgroundImage = StyleSheet.flatten(image.prop('style')).backgroundImage;
-      assert(backgroundImage.indexOf(defaultSource.uri) > -1);
+      expect(backgroundImage.indexOf(defaultSource.uri) > -1).toBeTruthy();
     });
 
-    test('sets background image when value is a string', () => {
+    it('sets background image when value is a string', () => {
       // emulate require-ed asset
       const defaultSource = 'https://google.com/favicon.ico';
       const image = shallow(<Image defaultSource={defaultSource} />);
       const backgroundImage = StyleSheet.flatten(image.prop('style')).backgroundImage;
-      assert(backgroundImage.indexOf(defaultSource) > -1);
+      expect(backgroundImage.indexOf(defaultSource) > -1).toBeTruthy();
     });
   });
 
-  test('prop "onError"', function (done) {
+  it('prop "onError"', function (done) {
     this.timeout(5000);
     mount(<Image onError={onError} source={{ uri: 'https://google.com/favicon.icox' }} />);
     function onError(e) {
-      assert.equal(e.nativeEvent.type, 'error');
+      expect(e.nativeEvent.type).toEqual('error');
       done();
     }
   });
 
-  test('prop "onLoad"', function (done) {
+  it('prop "onLoad"', function (done) {
     this.timeout(5000);
     const image = mount(<Image onLoad={onLoad} source={{ uri: 'https://google.com/favicon.ico' }} />);
     function onLoad(e) {
-      assert.equal(e.nativeEvent.type, 'load');
+      expect(e.nativeEvent.type).toEqual('load');
       const hasBackgroundImage = (image.html()).indexOf('url(&quot;https://google.com/favicon.ico&quot;)') > -1;
-      assert.equal(hasBackgroundImage, true);
+      expect(hasBackgroundImage).toEqual(true);
       done();
     }
   });
 
-  test('prop "onLoadEnd"', function (done) {
+  it('prop "onLoadEnd"', function (done) {
     this.timeout(5000);
     const image = mount(<Image onLoadEnd={onLoadEnd} source={{ uri: 'https://google.com/favicon.ico' }} />);
     function onLoadEnd() {
-      assert.ok(true);
+      expect(true).toBeTruthy();
       const hasBackgroundImage = (image.html()).indexOf('url(&quot;https://google.com/favicon.ico&quot;)') > -1;
-      assert.equal(hasBackgroundImage, true);
+      expect(hasBackgroundImage).toEqual(true);
       done();
     }
   });
 
-  test('prop "onLoadStart"', function (done) {
+  it('prop "onLoadStart"', function (done) {
     this.timeout(5000);
     mount(<Image onLoadStart={onLoadStart} source={{ uri: 'https://google.com/favicon.ico' }} />);
     function onLoadStart() {
-      assert.ok(true);
+      expect(true).toBeTruthy();
       done();
     }
   });
 
-  suite('prop "resizeMode"', () => {
+  describe('prop "resizeMode"', () => {
     const getBackgroundSize = (image) => StyleSheet.flatten(image.prop('style')).backgroundSize;
 
-    test('value "contain"', () => {
+    it('value "contain"', () => {
       const image = shallow(<Image resizeMode={Image.resizeMode.contain} />);
-      assert.equal(getBackgroundSize(image), 'contain');
+      expect(getBackgroundSize(image)).toEqual('contain');
     });
 
-    test('value "cover"', () => {
+    it('value "cover"', () => {
       const image = shallow(<Image resizeMode={Image.resizeMode.cover} />);
-      assert.equal(getBackgroundSize(image), 'cover');
+      expect(getBackgroundSize(image)).toEqual('cover');
     });
 
-    test('value "none"', () => {
+    it('value "none"', () => {
       const image = shallow(<Image resizeMode={Image.resizeMode.none} />);
-      assert.equal(getBackgroundSize(image), 'auto');
+      expect(getBackgroundSize(image)).toEqual('auto');
     });
 
-    test('value "stretch"', () => {
+    it('value "stretch"', () => {
       const image = shallow(<Image resizeMode={Image.resizeMode.stretch} />);
-      assert.equal(getBackgroundSize(image), '100% 100%');
+      expect(getBackgroundSize(image)).toEqual('100% 100%');
     });
 
-    test('no value', () => {
+    it('no value', () => {
       const image = shallow(<Image />);
-      assert.equal(getBackgroundSize(image), 'cover');
+      expect(getBackgroundSize(image)).toEqual('cover');
     });
   });
 
-  suite('prop "source"', function () {
+  describe('prop "source"', function () {
     this.timeout(5000);
 
-    test('sets background image when value is an object', (done) => {
+    it('sets background image when value is an object', (done) => {
       const source = { uri: 'https://google.com/favicon.ico' };
       mount(<Image onLoad={onLoad} source={source} />);
       function onLoad(e) {
         const src = e.nativeEvent.target.src;
-        assert.equal(src, source.uri);
+        expect(src).toEqual(source.uri);
         done();
       }
     });
 
-    test('sets background image when value is a string', (done) => {
+    it('sets background image when value is a string', (done) => {
       // emulate require-ed asset
       const source = 'https://google.com/favicon.ico';
       mount(<Image onLoad={onLoad} source={source} />);
       function onLoad(e) {
         const src = e.nativeEvent.target.src;
-        assert.equal(src, source);
+        expect(src).toEqual(source);
         done();
       }
     });
   });
 
-  suite('prop "style"', () => {
-    test('converts "resizeMode" property', () => {
+  describe('prop "style"', () => {
+    it('converts "resizeMode" property', () => {
       const image = shallow(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
-      assert.equal(StyleSheet.flatten(image.prop('style')).backgroundSize, 'contain');
+      expect(StyleSheet.flatten(image.prop('style')).backgroundSize).toEqual('contain');
     });
 
-    test('removes "resizeMode" property', () => {
+    it('removes "resizeMode" property', () => {
       const image = shallow(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
-      assert.equal(StyleSheet.flatten(image.prop('style')).resizeMode, undefined);
+      expect(StyleSheet.flatten(image.prop('style')).resizeMode).toEqual(undefined);
     });
   });
 
-  test('prop "testID"', () => {
+  it('prop "testID"', () => {
     const testID = 'testID';
     const image = shallow(<Image testID={testID} />);
-    assert.equal(image.prop('testID'), testID);
+    expect(image.prop('testID')).toEqual(testID);
   });
 });

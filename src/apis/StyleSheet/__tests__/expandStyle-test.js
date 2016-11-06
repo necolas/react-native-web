@@ -1,10 +1,9 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import expandStyle from '../expandStyle';
 
-suite('apis/StyleSheet/expandStyle', () => {
-  test('shortform -> longform', () => {
+describe('apis/StyleSheet/expandStyle', () => {
+  it('shortform -> longform', () => {
     const initial = {
       borderStyle: 'solid',
       boxSizing: 'border-box',
@@ -33,10 +32,10 @@ suite('apis/StyleSheet/expandStyle', () => {
       marginRight: '10px'
     };
 
-    assert.deepEqual(expandStyle(initial), expected);
+    expect(expandStyle(initial)).toEqual(expected);
   });
 
-  test('textAlignVertical', () => {
+  it('textAlignVertical', () => {
     const initial = {
       textAlignVertical: 'center'
     };
@@ -45,10 +44,10 @@ suite('apis/StyleSheet/expandStyle', () => {
       verticalAlign: 'middle'
     };
 
-    assert.deepEqual(expandStyle(initial), expected);
+    expect(expandStyle(initial)).toEqual(expected);
   });
 
-  test('flex', () => {
+  it('flex', () => {
     const value = 10;
 
     const initial = {
@@ -61,6 +60,6 @@ suite('apis/StyleSheet/expandStyle', () => {
       flexBasis: 'auto'
     };
 
-    assert.deepEqual(expandStyle(initial), expected);
+    expect(expandStyle(initial)).toEqual(expected);
   });
 });

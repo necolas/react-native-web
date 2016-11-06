@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('components/ActivityIndicator', () => {
-  test.skip('NO TEST COVERAGE', () => {});
+describe('components/ActivityIndicator', () => {
+  it.skip('NO TEST COVERAGE', () => {});
 });

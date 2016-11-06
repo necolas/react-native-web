@@ -1,60 +1,59 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import createDOMElement from '..';
 import { shallow } from 'enzyme';
 
-suite('modules/createDOMElement', () => {
-  test('renders correct DOM element', () => {
+describe('modules/createDOMElement', () => {
+  it('renders correct DOM element', () => {
     let element = shallow(createDOMElement('span'));
-    assert.equal(element.is('span'), true);
+    expect(element.is('span')).toEqual(true);
     element = shallow(createDOMElement('main'));
-    assert.equal(element.is('main'), true);
+    expect(element.is('main')).toEqual(true);
   });
 
-  test('prop "accessibilityLabel"', () => {
+  it('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const element = shallow(createDOMElement('span', { accessibilityLabel }));
-    assert.equal(element.prop('aria-label'), accessibilityLabel);
+    expect(element.prop('aria-label')).toEqual(accessibilityLabel);
   });
 
-  test('prop "accessibilityLiveRegion"', () => {
+  it('prop "accessibilityLiveRegion"', () => {
     const accessibilityLiveRegion = 'polite';
     const element = shallow(createDOMElement('span', { accessibilityLiveRegion }));
-    assert.equal(element.prop('aria-live'), accessibilityLiveRegion);
+    expect(element.prop('aria-live')).toEqual(accessibilityLiveRegion);
   });
 
-  test('prop "accessibilityRole"', () => {
+  it('prop "accessibilityRole"', () => {
     const accessibilityRole = 'banner';
     let element = shallow(createDOMElement('span', { accessibilityRole }));
-    assert.equal(element.prop('role'), accessibilityRole);
-    assert.equal(element.is('header'), true);
+    expect(element.prop('role')).toEqual(accessibilityRole);
+    expect(element.is('header')).toEqual(true);
 
     const button = 'button';
     element = shallow(createDOMElement('span', { accessibilityRole: 'button' }));
-    assert.equal(element.prop('type'), button);
-    assert.equal(element.is('button'), true);
+    expect(element.prop('type')).toEqual(button);
+    expect(element.is('button')).toEqual(true);
   });
 
-  test('prop "accessible"', () => {
+  it('prop "accessible"', () => {
     // accessible (implicit)
     let element = shallow(createDOMElement('span', {}));
-    assert.equal(element.prop('aria-hidden'), null);
+    expect(element.prop('aria-hidden')).toEqual(null);
     // accessible (explicit)
     element = shallow(createDOMElement('span', { accessible: true }));
-    assert.equal(element.prop('aria-hidden'), null);
+    expect(element.prop('aria-hidden')).toEqual(null);
     // not accessible
     element = shallow(createDOMElement('span', { accessible: false }));
-    assert.equal(element.prop('aria-hidden'), true);
+    expect(element.prop('aria-hidden')).toEqual(true);
   });
 
-  test('prop "testID"', () => {
+  it('prop "testID"', () => {
     // no testID
     let element = shallow(createDOMElement('span', {}));
-    assert.equal(element.prop('data-testid'), null);
+    expect(element.prop('data-testid')).toEqual(null);
     // with testID
     const testID = 'Example.testID';
     element = shallow(createDOMElement('span', { testID }));
-    assert.equal(element.prop('data-testid'), testID);
+    expect(element.prop('data-testid')).toEqual(testID);
   });
 });

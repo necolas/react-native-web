@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('apis/PixelRatio', () => {
-  test.skip('NO TEST COVERAGE', () => {});
+describe('apis/PixelRatio', () => {
+  it.skip('NO TEST COVERAGE', () => {});
 });

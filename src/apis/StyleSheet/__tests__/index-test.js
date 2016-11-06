@@ -1,71 +1,61 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import { getDefaultStyleSheet } from '../css';
 import isPlainObject from 'lodash/isPlainObject';
 import StyleSheet from '..';
 
-suite('apis/StyleSheet', () => {
-  setup(() => {
+describe('apis/StyleSheet', () => {
+  beforeEach(() => {
     StyleSheet._reset();
   });
 
-  test('absoluteFill', () => {
-    assert(Number.isInteger(StyleSheet.absoluteFill) === true);
+  it('absoluteFill', () => {
+    expect(Number.isInteger(StyleSheet.absoluteFill) === true).toBeTruthy();
   });
 
-  test('absoluteFillObject', () => {
-    assert.ok(isPlainObject(StyleSheet.absoluteFillObject) === true);
+  it('absoluteFillObject', () => {
+    expect(isPlainObject(StyleSheet.absoluteFillObject) === true).toBeTruthy();
   });
 
-  suite('create', () => {
-    test('replaces styles with numbers', () => {
+  describe('create', () => {
+    it('replaces styles with numbers', () => {
       const style = StyleSheet.create({ root: { opacity: 1 } });
-      assert(Number.isInteger(style.root) === true);
+      expect(Number.isInteger(style.root) === true).toBeTruthy();
     });
 
-    test('renders a style sheet in the browser', () => {
+    it('renders a style sheet in the browser', () => {
       StyleSheet.create({ root: { color: 'red' } });
-      assert.equal(
-        document.getElementById('__react-native-style').textContent,
-        getDefaultStyleSheet()
-      );
+      expect(document.getElementById('__react-native-style').textContent).toEqual(getDefaultStyleSheet());
     });
   });
 
-  test('flatten', () => {
-    assert(typeof StyleSheet.flatten === 'function');
+  it('flatten', () => {
+    expect(typeof StyleSheet.flatten === 'function').toBeTruthy();
   });
 
-  test('hairlineWidth', () => {
-    assert(Number.isInteger(StyleSheet.hairlineWidth) === true);
+  it('hairlineWidth', () => {
+    expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
   });
 
-  test('render', () => {
-    assert.equal(
-      StyleSheet.render().props.dangerouslySetInnerHTML.__html,
-      getDefaultStyleSheet()
-    );
+  it('render', () => {
+    expect(StyleSheet.render().props.dangerouslySetInnerHTML.__html).toEqual(getDefaultStyleSheet());
   });
 
-  test('resolve', () => {
-    assert.deepEqual(
-      StyleSheet.resolve({
-        className: 'test',
-        style: {
-          display: 'flex',
-          opacity: 1,
-          pointerEvents: 'box-none'
-        }
-      }),
-      {
-        className: 'test __style_df __style_pebn',
-        style: {
-          display: null,
-          opacity: 1,
-          pointerEvents: null
-        }
+  it('resolve', () => {
+    expect(StyleSheet.resolve({
+      className: 'test',
+      style: {
+        display: 'flex',
+        opacity: 1,
+        pointerEvents: 'box-none'
       }
-    );
+    })).toEqual({
+      className: 'test __style_df __style_pebn',
+      style: {
+        display: null,
+        opacity: 1,
+        pointerEvents: null
+      }
+    });
   });
 });

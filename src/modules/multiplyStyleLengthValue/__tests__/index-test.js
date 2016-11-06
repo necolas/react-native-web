@@ -1,19 +1,18 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import multiplyStyleLengthValue from '..';
 
-suite('modules/multiplyStyleLengthValue', () => {
-  test('number', () => {
-    assert.equal(multiplyStyleLengthValue(2, -1), -2);
-    assert.equal(multiplyStyleLengthValue(2, 2), 4);
-    assert.equal(multiplyStyleLengthValue(2.5, 2), 5);
+describe('modules/multiplyStyleLengthValue', () => {
+  it('number', () => {
+    expect(multiplyStyleLengthValue(2, -1)).toEqual(-2);
+    expect(multiplyStyleLengthValue(2, 2)).toEqual(4);
+    expect(multiplyStyleLengthValue(2.5, 2)).toEqual(5);
   });
 
-  test('length', () => {
-    assert.equal(multiplyStyleLengthValue('2rem', -1), '-2rem');
-    assert.equal(multiplyStyleLengthValue('2px', 2), '4px');
-    assert.equal(multiplyStyleLengthValue('2.5em', 2), '5em');
-    assert.equal(multiplyStyleLengthValue('2e3px', 2), '4000px');
+  it('length', () => {
+    expect(multiplyStyleLengthValue('2rem', -1)).toEqual('-2rem');
+    expect(multiplyStyleLengthValue('2px', 2)).toEqual('4px');
+    expect(multiplyStyleLengthValue('2.5em', 2)).toEqual('5em');
+    expect(multiplyStyleLengthValue('2e3px', 2)).toEqual('4000px');
   });
 });
