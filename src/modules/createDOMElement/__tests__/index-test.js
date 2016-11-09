@@ -1,60 +1,50 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import createDOMElement from '..';
-import { shallow } from 'enzyme';
+import renderer from 'react-test-renderer';
 
-suite('modules/createDOMElement', () => {
+describe('modules/createDOMElement', () => {
   test('renders correct DOM element', () => {
-    let element = shallow(createDOMElement('span'));
-    assert.equal(element.is('span'), true);
-    element = shallow(createDOMElement('main'));
-    assert.equal(element.is('main'), true);
+    let component = renderer.create(createDOMElement('span'));
+    expect(component.toJSON()).toMatchSnapshot();
+    component = renderer.create(createDOMElement('main'));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "accessibilityLabel"', () => {
     const accessibilityLabel = 'accessibilityLabel';
-    const element = shallow(createDOMElement('span', { accessibilityLabel }));
-    assert.equal(element.prop('aria-label'), accessibilityLabel);
+    const component = renderer.create(createDOMElement('span', { accessibilityLabel }));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "accessibilityLiveRegion"', () => {
     const accessibilityLiveRegion = 'polite';
-    const element = shallow(createDOMElement('span', { accessibilityLiveRegion }));
-    assert.equal(element.prop('aria-live'), accessibilityLiveRegion);
+    const component = renderer.create(createDOMElement('span', { accessibilityLiveRegion }));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "accessibilityRole"', () => {
     const accessibilityRole = 'banner';
-    let element = shallow(createDOMElement('span', { accessibilityRole }));
-    assert.equal(element.prop('role'), accessibilityRole);
-    assert.equal(element.is('header'), true);
-
-    const button = 'button';
-    element = shallow(createDOMElement('span', { accessibilityRole: 'button' }));
-    assert.equal(element.prop('type'), button);
-    assert.equal(element.is('button'), true);
+    let component = renderer.create(createDOMElement('span', { accessibilityRole }));
+    expect(component.toJSON()).toMatchSnapshot();
+    component = renderer.create(createDOMElement('span', { accessibilityRole: 'button' }));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "accessible"', () => {
     // accessible (implicit)
-    let element = shallow(createDOMElement('span', {}));
-    assert.equal(element.prop('aria-hidden'), null);
+    let component = renderer.create(createDOMElement('span', {}));
+    expect(component.toJSON()).toMatchSnapshot();
     // accessible (explicit)
-    element = shallow(createDOMElement('span', { accessible: true }));
-    assert.equal(element.prop('aria-hidden'), null);
+    component = renderer.create(createDOMElement('span', { accessible: true }));
+    expect(component.toJSON()).toMatchSnapshot();
     // not accessible
-    element = shallow(createDOMElement('span', { accessible: false }));
-    assert.equal(element.prop('aria-hidden'), true);
+    component = renderer.create(createDOMElement('span', { accessible: false }));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "testID"', () => {
-    // no testID
-    let element = shallow(createDOMElement('span', {}));
-    assert.equal(element.prop('data-testid'), null);
-    // with testID
-    const testID = 'Example.testID';
-    element = shallow(createDOMElement('span', { testID }));
-    assert.equal(element.prop('data-testid'), testID);
+    const component = renderer.create(createDOMElement('span', { testID: 'Example.testID' }));
+    expect(component.toJSON()).toMatchSnapshot();
   });
 });

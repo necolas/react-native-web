@@ -1,0 +1,18 @@
+exports[`apis/StyleSheet/expandStyle shortform -> longform 1`] = `
+Object {
+  "borderBottomColor": "white",
+  "borderBottomStyle": "solid",
+  "borderBottomWidth": "1px",
+  "borderLeftStyle": "solid",
+  "borderLeftWidth": "0px",
+  "borderRightStyle": "solid",
+  "borderRightWidth": "0px",
+  "borderTopStyle": "solid",
+  "borderTopWidth": "0px",
+  "boxSizing": "border-box",
+  "marginBottom": "25px",
+  "marginLeft": "10px",
+  "marginRight": "10px",
+  "marginTop": "50px",
+}
+`;

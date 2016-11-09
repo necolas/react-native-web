@@ -1,71 +1,54 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import { getDefaultStyleSheet } from '../css';
 import isPlainObject from 'lodash/isPlainObject';
 import StyleSheet from '..';
 
-suite('apis/StyleSheet', () => {
-  setup(() => {
+describe('apis/StyleSheet', () => {
+  beforeEach(() => {
     StyleSheet._reset();
   });
 
   test('absoluteFill', () => {
-    assert(Number.isInteger(StyleSheet.absoluteFill) === true);
+    expect(Number.isInteger(StyleSheet.absoluteFill) === true).toBeTruthy();
   });
 
   test('absoluteFillObject', () => {
-    assert.ok(isPlainObject(StyleSheet.absoluteFillObject) === true);
+    expect(isPlainObject(StyleSheet.absoluteFillObject) === true).toBeTruthy();
   });
 
-  suite('create', () => {
+  describe('create', () => {
     test('replaces styles with numbers', () => {
       const style = StyleSheet.create({ root: { opacity: 1 } });
-      assert(Number.isInteger(style.root) === true);
+      expect(Number.isInteger(style.root) === true).toBeTruthy();
     });
 
     test('renders a style sheet in the browser', () => {
       StyleSheet.create({ root: { color: 'red' } });
-      assert.equal(
-        document.getElementById('__react-native-style').textContent,
-        getDefaultStyleSheet()
-      );
+      expect(document.getElementById('__react-native-style').textContent).toEqual(getDefaultStyleSheet());
     });
   });
 
   test('flatten', () => {
-    assert(typeof StyleSheet.flatten === 'function');
+    expect(typeof StyleSheet.flatten === 'function').toBeTruthy();
   });
 
   test('hairlineWidth', () => {
-    assert(Number.isInteger(StyleSheet.hairlineWidth) === true);
+    expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
   });
 
   test('render', () => {
-    assert.equal(
-      StyleSheet.render().props.dangerouslySetInnerHTML.__html,
-      getDefaultStyleSheet()
-    );
+    expect(StyleSheet.render().props.dangerouslySetInnerHTML.__html).toEqual(getDefaultStyleSheet());
   });
 
   test('resolve', () => {
-    assert.deepEqual(
-      StyleSheet.resolve({
-        className: 'test',
-        style: {
-          display: 'flex',
-          opacity: 1,
-          pointerEvents: 'box-none'
-        }
-      }),
-      {
-        className: 'test __style_df __style_pebn',
-        style: {
-          display: null,
-          opacity: 1,
-          pointerEvents: null
-        }
+    expect(StyleSheet.resolve({
+      className: 'test',
+      style: {
+        display: 'flex',
+        opacity: 1,
+        pointerEvents: 'box-none'
       }
-    );
+    })).toMatchSnapshot();
   });
 });

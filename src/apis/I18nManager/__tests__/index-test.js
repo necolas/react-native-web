@@ -1,45 +1,44 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import I18nManager from '..';
 
-suite('apis/I18nManager', () => {
-  suite('when RTL not enabled', () => {
-    setup(() => {
+describe('apis/I18nManager', () => {
+  describe('when RTL not enabled', () => {
+    beforeEach(() => {
       I18nManager.setPreferredLanguageRTL(false);
     });
 
     test('is "false" by default', () => {
-      assert.equal(I18nManager.isRTL, false);
-      assert.equal(document.documentElement.getAttribute('dir'), 'ltr');
+      expect(I18nManager.isRTL).toEqual(false);
+      expect(document.documentElement.getAttribute('dir')).toEqual('ltr');
     });
 
     test('is "true" when forced', () => {
       I18nManager.forceRTL(true);
-      assert.equal(I18nManager.isRTL, true);
-      assert.equal(document.documentElement.getAttribute('dir'), 'rtl');
+      expect(I18nManager.isRTL).toEqual(true);
+      expect(document.documentElement.getAttribute('dir')).toEqual('rtl');
       I18nManager.forceRTL(false);
     });
   });
 
-  suite('when RTL is enabled', () => {
-    setup(() => {
+  describe('when RTL is enabled', () => {
+    beforeEach(() => {
       I18nManager.setPreferredLanguageRTL(true);
     });
 
-    teardown(() => {
+    afterEach(() => {
       I18nManager.setPreferredLanguageRTL(false);
     });
 
     test('is "true" by default', () => {
-      assert.equal(I18nManager.isRTL, true);
-      assert.equal(document.documentElement.getAttribute('dir'), 'rtl');
+      expect(I18nManager.isRTL).toEqual(true);
+      expect(document.documentElement.getAttribute('dir')).toEqual('rtl');
     });
 
     test('is "false" when not allowed', () => {
       I18nManager.allowRTL(false);
-      assert.equal(I18nManager.isRTL, false);
-      assert.equal(document.documentElement.getAttribute('dir'), 'ltr');
+      expect(I18nManager.isRTL).toEqual(false);
+      expect(document.documentElement.getAttribute('dir')).toEqual('ltr');
       I18nManager.allowRTL(true);
     });
   });

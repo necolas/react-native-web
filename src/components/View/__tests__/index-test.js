@@ -1,55 +1,46 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
-import includes from 'lodash/includes';
 import React from 'react';
+import renderer from 'react-test-renderer';
 import View from '../';
-import { mount, shallow } from 'enzyme';
 
-suite('components/View', () => {
-  suite('rendered element', () => {
+jest.mock('react-dom');
+
+describe('components/View', () => {
+  describe('rendered element', () => {
     test('is a "div" by default', () => {
-      const view = shallow(<View />);
-      assert.equal(view.is('div'), true);
+      const component = renderer.create(<View />);
+      expect(component.toJSON()).toMatchSnapshot();
     });
 
     test('is a "span" when inside <View accessibilityRole="button" />', () => {
-      const view = mount(<View accessibilityRole='button'><View /></View>);
-      assert.equal(view.find('span').length, 1);
+      const component = renderer.create(<View accessibilityRole='button'><View /></View>);
+      expect(component.toJSON()).toMatchSnapshot();
     });
   });
 
   test('prop "children"', () => {
     const children = <View testID='1' />;
-    const view = shallow(<View>{children}</View>);
-    assert.equal(view.prop('children'), children);
-  });
-
-  test('prop "onLayout"', (done) => {
-    mount(<View onLayout={onLayout} />);
-    function onLayout(e) {
-      const { layout } = e.nativeEvent;
-      assert.deepEqual(layout, { x: 0, y: 0, width: 0, height: 0 });
-      done();
-    }
+    const component = renderer.create(<View>{children}</View>);
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "pointerEvents"', () => {
-    const view = shallow(<View pointerEvents='box-only' />);
-    assert.ok(includes(view.prop('className'), '__style_pebo') === true);
+    const component = renderer.create(<View pointerEvents='box-only' />);
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "style"', () => {
-    const view = shallow(<View />);
-    assert.equal(view.prop('style').flexShrink, 0);
+    let component = renderer.create(<View />);
+    expect(component.toJSON()).toMatchSnapshot();
 
-    const flexView = shallow(<View style={{ flex: 1 }} />);
-    assert.equal(flexView.prop('style').flexShrink, 1);
+    component = renderer.create(<View style={{ flex: 1 }} />);
+    expect(component.toJSON()).toMatchSnapshot();
 
-    const flexShrinkView = shallow(<View style={{ flexShrink: 1 }} />);
-    assert.equal(flexShrinkView.prop('style').flexShrink, 1);
+    component = renderer.create(<View style={{ flexShrink: 1 }} />);
+    expect(component.toJSON()).toMatchSnapshot();
 
-    const flexAndShrinkView = shallow(<View style={{ flex: 1, flexShrink: 2 }} />);
-    assert.equal(flexAndShrinkView.prop('style').flexShrink, 2);
+    component = renderer.create(<View style={{ flex: 1, flexShrink: 2 }} />);
+    expect(component.toJSON()).toMatchSnapshot();
   });
 });

@@ -1,0 +1,107 @@
+exports[`apis/StyleSheet/i18nStyle LTR mode does not auto-flip 1`] = `
+Object {
+  "borderBottomLeftRadius": 20,
+  "borderBottomRightRadius": "2rem",
+  "borderLeftColor": "red",
+  "borderLeftStyle": "solid",
+  "borderLeftWidth": 5,
+  "borderRightColor": "blue",
+  "borderRightStyle": "dotted",
+  "borderRightWidth": 6,
+  "borderTopLeftRadius": 10,
+  "borderTopRightRadius": "1rem",
+  "left": 1,
+  "marginLeft": 7,
+  "marginRight": 8,
+  "paddingLeft": 9,
+  "paddingRight": 10,
+  "right": 2,
+  "textAlign": "left",
+  "textShadowOffset": Object {
+    "height": 10,
+    "width": "1rem",
+  },
+  "writingDirection": "ltr",
+}
+`;
+
+exports[`apis/StyleSheet/i18nStyle LTR mode normalizes properties 1`] = `
+Object {
+  "borderBottomLeftRadius": 20,
+  "borderBottomRightRadius": "2rem",
+  "borderLeftColor": "red",
+  "borderLeftStyle": "solid",
+  "borderLeftWidth": 5,
+  "borderRightColor": "blue",
+  "borderRightStyle": "dotted",
+  "borderRightWidth": 6,
+  "borderTopLeftRadius": 10,
+  "borderTopRightRadius": "1rem",
+  "left": 1,
+  "marginLeft": 7,
+  "marginRight": 8,
+  "paddingLeft": 9,
+  "paddingRight": 10,
+  "right": 2,
+  "textAlign": "left",
+  "textShadowOffset": Object {
+    "height": 10,
+    "width": "1rem",
+  },
+  "writingDirection": "ltr",
+}
+`;
+
+exports[`apis/StyleSheet/i18nStyle RTL mode does auto-flip 1`] = `
+Object {
+  "borderBottomLeftRadius": "2rem",
+  "borderBottomRightRadius": 20,
+  "borderLeftColor": "blue",
+  "borderLeftStyle": "dotted",
+  "borderLeftWidth": 6,
+  "borderRightColor": "red",
+  "borderRightStyle": "solid",
+  "borderRightWidth": 5,
+  "borderTopLeftRadius": "1rem",
+  "borderTopRightRadius": 10,
+  "left": 2,
+  "marginLeft": 8,
+  "marginRight": 7,
+  "paddingLeft": 10,
+  "paddingRight": 9,
+  "right": 1,
+  "textAlign": "right",
+  "textShadowOffset": Object {
+    "height": 10,
+    "width": "-1rem",
+  },
+  "writingDirection": "rtl",
+}
+`;
+
+exports[`apis/StyleSheet/i18nStyle RTL mode normalizes properties 1`] = `
+Object {
+  "borderBottomLeftRadius": 20,
+  "borderBottomRightRadius": "2rem",
+  "borderLeftColor": "red",
+  "borderLeftStyle": "solid",
+  "borderLeftWidth": 5,
+  "borderRightColor": "blue",
+  "borderRightStyle": "dotted",
+  "borderRightWidth": 6,
+  "borderTopLeftRadius": 10,
+  "borderTopRightRadius": "1rem",
+  "left": 1,
+  "marginLeft": 7,
+  "marginRight": 8,
+  "paddingLeft": 9,
+  "paddingRight": 10,
+  "right": 2,
+  "textAlign": "left",
+  "textShadowOffset": Object {
+    "height": 10,
+    "width": "-1rem",
+  },
+  "writingDirection": "ltr",
+}
+`;

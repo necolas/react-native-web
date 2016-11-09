@@ -1,14 +1,13 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import normalizeValue from '../normalizeValue';
 
-suite('apis/StyleSheet/normalizeValue', () => {
+describe('apis/StyleSheet/normalizeValue', () => {
   test('normalizes property values requiring units', () => {
-    assert.deepEqual(normalizeValue('margin', 0), '0px');
+    expect(normalizeValue('margin', 0)).toEqual('0px');
   });
   test('ignores unitless property values', () => {
-    assert.deepEqual(normalizeValue('flexGrow', 1), 1);
-    assert.deepEqual(normalizeValue('scale', 2), 2);
+    expect(normalizeValue('flexGrow', 1)).toEqual(1);
+    expect(normalizeValue('scale', 2)).toEqual(2);
   });
 });

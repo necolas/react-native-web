@@ -1,0 +1,11 @@
+exports[`apis/AsyncStorage mergeLocalStorageItem should have same behavior as react-native 1`] = `
+Object {
+  "age": 31,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "brown",
+    "shoe_size": 10,
+  },
+}
+`;

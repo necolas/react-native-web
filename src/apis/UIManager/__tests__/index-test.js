@@ -1,6 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import UIManager from '..';
 
 const createNode = (style = {}) => {
@@ -13,47 +12,52 @@ const createNode = (style = {}) => {
 
 let defaultBodyMargin;
 
-suite('apis/UIManager', () => {
-  setup(() => {
+describe('apis/UIManager', () => {
+  beforeEach(() => {
     // remove default body margin so we can predict the measured offsets
     defaultBodyMargin = document.body.style.margin;
     document.body.style.margin = 0;
   });
 
-  teardown(() => {
+  afterEach(() => {
     document.body.style.margin = defaultBodyMargin;
   });
 
-  suite('measure', () => {
+  describe('measure', () => {
     test('provides correct layout to callback', () => {
       const node = createNode({ height: '5000px', left: '100px', position: 'relative', top: '100px', width: '5000px' });
       document.body.appendChild(node);
 
+      node.getBoundingClientRect = jest.fn(() => ({ width: 5000, height: 5000, top: 100, left: 100 }));
+
       UIManager.measure(node, (x, y, width, height, pageX, pageY) => {
-        assert.equal(x, 100);
-        assert.equal(y, 100);
-        assert.equal(width, 5000);
-        assert.equal(height, 5000);
-        assert.equal(pageX, 100);
-        assert.equal(pageY, 100);
+        expect(x).toEqual(100);
+        expect(y).toEqual(100);
+        expect(width).toEqual(5000);
+        expect(height).toEqual(5000);
+        expect(pageX).toEqual(100);
+        expect(pageY).toEqual(100);
       });
 
       // test values account for scroll position
       window.scrollTo(200, 200);
+      node.getBoundingClientRect = jest.fn(() => ({ width: 5000, height: 5000, top: -100, left: -100 }));
+      node.parentNode.getBoundingClientRect = jest.fn(() => ({ top: -200, left: -200 }));
+
       UIManager.measure(node, (x, y, width, height, pageX, pageY) => {
-        assert.equal(x, 100);
-        assert.equal(y, 100);
-        assert.equal(width, 5000);
-        assert.equal(height, 5000);
-        assert.equal(pageX, -100);
-        assert.equal(pageY, -100);
+        expect(x).toEqual(100);
+        expect(y).toEqual(100);
+        expect(width).toEqual(5000);
+        expect(height).toEqual(5000);
+        expect(pageX).toEqual(-100);
+        expect(pageY).toEqual(-100);
       });
 
       document.body.removeChild(node);
     });
   });
 
-  suite('measureLayout', () => {
+  describe('measureLayout', () => {
     test('provides correct layout to onSuccess callback', () => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
@@ -62,18 +66,25 @@ suite('apis/UIManager', () => {
       context.appendChild(middle);
       document.body.appendChild(context);
 
+      node.getBoundingClientRect = jest.fn(() => ({
+        width: 10,
+        height: 10,
+        top: 40,
+        left: 40
+      }));
+
       UIManager.measureLayout(node, context, () => {}, (x, y, width, height) => {
-        assert.equal(x, 40);
-        assert.equal(y, 40);
-        assert.equal(width, 10);
-        assert.equal(height, 10);
+        expect(x).toEqual(40);
+        expect(y).toEqual(40);
+        expect(width).toEqual(10);
+        expect(height).toEqual(10);
       });
 
       document.body.removeChild(context);
     });
   });
 
-  suite('measureInWindow', () => {
+  describe('measureInWindow', () => {
     test('provides correct layout to callback', () => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
@@ -82,18 +93,25 @@ suite('apis/UIManager', () => {
       context.appendChild(middle);
       document.body.appendChild(context);
 
+      node.getBoundingClientRect = jest.fn(() => ({
+        width: 10,
+        height: 10,
+        top: 40,
+        left: 40
+      }));
+
       UIManager.measureInWindow(node, (x, y, width, height) => {
-        assert.equal(x, 40);
-        assert.equal(y, 40);
-        assert.equal(width, 10);
-        assert.equal(height, 10);
+        expect(x).toEqual(40);
+        expect(y).toEqual(40);
+        expect(width).toEqual(10);
+        expect(height).toEqual(10);
       });
 
       document.body.removeChild(context);
     });
   });
 
-  suite('updateView', () => {
+  describe('updateView', () => {
     const componentStub = {
       _reactInternalInstance: {
         _currentElement: { _owner: {} },
@@ -106,14 +124,14 @@ suite('apis/UIManager', () => {
       node.className = 'existing';
       const props = { className: 'extra' };
       UIManager.updateView(node, props, componentStub);
-      assert.equal(node.getAttribute('class'), 'existing extra');
+      expect(node.getAttribute('class')).toEqual('existing extra');
     });
 
     test('adds correct DOM styles to existing style', () => {
       const node = createNode({ color: 'red' });
       const props = { style: { marginVertical: 0, opacity: 0 } };
       UIManager.updateView(node, props, componentStub);
-      assert.equal(node.getAttribute('style'), 'color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;');
+      expect(node.getAttribute('style')).toEqual('color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;');
     });
 
     test('replaces input and textarea text', () => {
@@ -123,18 +141,18 @@ suite('apis/UIManager', () => {
       const valueProp = { value: 'expected-value' };
 
       UIManager.updateView(node, textProp);
-      assert.equal(node.value, 'expected-text');
+      expect(node.value).toEqual('expected-text');
 
       UIManager.updateView(node, valueProp);
-      assert.equal(node.value, 'expected-value');
+      expect(node.value).toEqual('expected-value');
     });
 
     test('sets other attribute values', () => {
       const node = createNode();
       const props = { 'aria-level': '4', 'data-of-type': 'string' };
       UIManager.updateView(node, props);
-      assert.equal(node.getAttribute('aria-level'), '4');
-      assert.equal(node.getAttribute('data-of-type'), 'string');
+      expect(node.getAttribute('aria-level')).toEqual('4');
+      expect(node.getAttribute('data-of-type')).toEqual('string');
     });
   });
 });

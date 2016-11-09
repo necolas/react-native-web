@@ -1,0 +1,10 @@
+exports[`apis/StyleSheet resolve 1`] = `
+Object {
+  "className": "test __style_df __style_pebn",
+  "style": Object {
+    "display": null,
+    "opacity": 1,
+    "pointerEvents": null,
+  },
+}
+`;
