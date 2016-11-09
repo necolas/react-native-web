@@ -1,0 +1,66 @@
+exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
+<span
+  aria-label="accessibilityLabel"
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
+<span
+  aria-live="polite"
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" 1`] = `
+<header
+  className=""
+  role="banner"
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" 2`] = `
+<button
+  className=""
+  role="button"
+  style={Object {}}
+  type="button" />
+`;
+
+exports[`modules/createDOMElement prop "accessible" 1`] = `
+<span
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "accessible" 2`] = `
+<span
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "accessible" 3`] = `
+<span
+  aria-hidden={true}
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement prop "testID" 1`] = `
+<span
+  className=""
+  data-testid="Example.testID"
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement renders correct DOM element 1`] = `
+<span
+  className=""
+  style={Object {}} />
+`;
+
+exports[`modules/createDOMElement renders correct DOM element 2`] = `
+<main
+  className=""
+  style={Object {}} />
+`;

@@ -1,9 +1,8 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import processTextShadow from '../processTextShadow';
 
-suite('apis/StyleSheet/processTextShadow', () => {
+describe('apis/StyleSheet/processTextShadow', () => {
   test('textShadowOffset', () => {
     const style = {
       textShadowColor: 'red',
@@ -11,14 +10,11 @@ suite('apis/StyleSheet/processTextShadow', () => {
       textShadowRadius: 5
     };
 
-    assert.deepEqual(
-      processTextShadow(style),
-      {
-        textShadow: '2px 2px 5px red',
-        textShadowColor: null,
-        textShadowOffset: null,
-        textShadowRadius: null
-      }
-    );
+    expect(processTextShadow(style)).toEqual({
+      textShadow: '2px 2px 5px red',
+      textShadowColor: null,
+      textShadowOffset: null,
+      textShadowRadius: null
+    });
   });
 });

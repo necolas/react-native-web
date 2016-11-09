@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('components/ScrollView', () => {
+describe('components/ScrollView', () => {
   test('NO TEST COVERAGE');
 });

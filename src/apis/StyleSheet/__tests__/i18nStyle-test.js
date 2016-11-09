@@ -1,10 +1,9 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import I18nManager from '../../I18nManager';
 import i18nStyle from '../i18nStyle';
 
-const initial = {
+const style = {
   borderLeftColor: 'red',
   borderRightColor: 'blue',
   borderTopLeftRadius: 10,
@@ -26,66 +25,44 @@ const initial = {
   writingDirection: 'ltr'
 };
 
-const initialNoI18n = Object.keys(initial).reduce((acc, prop) => {
+const styleNoI18n = Object.keys(style).reduce((acc, prop) => {
   const newProp = `${prop}$noI18n`;
-  acc[newProp] = initial[prop];
+  acc[newProp] = style[prop];
   return acc;
 }, {});
 
-const expected = {
-  borderLeftColor: 'blue',
-  borderRightColor: 'red',
-  borderTopLeftRadius: '1rem',
-  borderTopRightRadius: 10,
-  borderBottomLeftRadius: '2rem',
-  borderBottomRightRadius: 20,
-  borderLeftStyle: 'dotted',
-  borderRightStyle: 'solid',
-  borderLeftWidth: 6,
-  borderRightWidth: 5,
-  left: 2,
-  marginLeft: 8,
-  marginRight: 7,
-  paddingLeft: 10,
-  paddingRight: 9,
-  right: 1,
-  textAlign: 'right',
-  textShadowOffset: { width: '-1rem', height: 10 },
-  writingDirection: 'rtl'
-};
-
-suite('apis/StyleSheet/i18nStyle', () => {
-  suite('LTR mode', () => {
-    setup(() => {
+describe('apis/StyleSheet/i18nStyle', () => {
+  describe('LTR mode', () => {
+    beforeEach(() => {
       I18nManager.allowRTL(false);
     });
 
-    teardown(() => {
+    afterEach(() => {
       I18nManager.allowRTL(true);
     });
 
     test('does not auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), initial);
+      expect(i18nStyle(style)).toMatchSnapshot();
     });
     test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+      expect(i18nStyle(styleNoI18n)).toMatchSnapshot();
     });
   });
 
-  suite('RTL mode', () => {
-    setup(() => {
+  describe('RTL mode', () => {
+    beforeEach(() => {
       I18nManager.forceRTL(true);
     });
 
-    teardown(() => {
+    afterEach(() => {
       I18nManager.forceRTL(false);
     });
 
     test('does auto-flip', () => {
-      assert.deepEqual(i18nStyle(initial), expected);
+      expect(i18nStyle(style)).toMatchSnapshot();
     });
     test('normalizes properties', () => {
-      assert.deepEqual(i18nStyle(initialNoI18n), initial);
+      expect(i18nStyle(styleNoI18n)).toMatchSnapshot();
     });
   });
 });

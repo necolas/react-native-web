@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('components/Touchable', () => {
+describe('components/Touchable', () => {
   test.skip('NO TEST COVERAGE', () => {});
 });

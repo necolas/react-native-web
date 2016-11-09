@@ -1,5 +1,4 @@
-/* eslint-env mocha */
-import assert from 'assert';
+/* eslint-env jasmine, jest */
 import AsyncStorage from '..';
 
 const waterfall = (fns, cb) => {
@@ -20,9 +19,21 @@ const waterfall = (fns, cb) => {
   _waterfall();
 };
 
-suite('apis/AsyncStorage', () => {
-  suite('mergeLocalStorageItem', () => {
+const obj = {};
+const mockLocalStorage = {
+  getItem(key) {
+    return obj[key];
+  },
+  setItem(key, value) {
+    obj[key] = value;
+  }
+};
+const originalLocalStorage = window.localStorage;
+
+describe('apis/AsyncStorage', () => {
+  describe('mergeLocalStorageItem', () => {
     test('should have same behavior as react-native', (done) => {
+      window.localStorage = mockLocalStorage;
       // https://facebook.github.io/react-native/docs/asyncstorage.html
       const UID123_object = {
         name: 'Chris',
@@ -33,6 +44,7 @@ suite('apis/AsyncStorage', () => {
         age: 31,
         traits: { eyes: 'blue', shoe_size: 10 }
       };
+
       waterfall([
         (cb) => {
           AsyncStorage.setItem('UID123', JSON.stringify(UID123_object))
@@ -52,12 +64,9 @@ suite('apis/AsyncStorage', () => {
             .catch(cb);
         }
       ], (err, result) => {
-        assert.equal(err, null);
-        assert.deepEqual(result, {
-          'name': 'Chris', 'age': 31, 'traits': {
-            'shoe_size': 10, 'hair': 'brown', 'eyes': 'blue'
-          }
-        });
+        expect(err).toEqual(null);
+        expect(result).toMatchSnapshot();
+        window.localStorage = originalLocalStorage;
         done();
       });
     });

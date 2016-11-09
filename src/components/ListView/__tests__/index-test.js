@@ -1,5 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-suite('components/ListView', () => {
+describe('components/ListView', () => {
   test('NO TEST COVERAGE');
 });

@@ -30,18 +30,24 @@ const createDOMElement = (component, rnProps = {}) => {
 
   const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
   const Component = accessibilityComponent || component;
+  const domProps = {
+    ...other,
+    ...StyleSheet.resolve(other)
+  };
+  if (!accessible) { domProps['aria-hidden'] = true; }
+  if (accessibilityLabel) { domProps['aria-label'] = accessibilityLabel; }
+  if (accessibilityLiveRegion) { domProps['aria-live'] = accessibilityLiveRegion; }
+  if (testID) { domProps['data-testid'] = testID; }
+  if (accessibilityRole) {
+    domProps.role = accessibilityRole;
+    if (accessibilityRole === 'button') {
+      domProps.type = 'button';
+    }
+  }
+  if (type) { domProps.type = type; }
 
   return (
-    <Component
-      {...other}
-      {...StyleSheet.resolve(other)}
-      aria-hidden={accessible ? null : true}
-      aria-label={accessibilityLabel}
-      aria-live={accessibilityLiveRegion}
-      data-testid={testID}
-      role={accessibilityRole}
-      type={accessibilityRole === 'button' ? 'button' : type}
-    />
+    <Component {...domProps} />
   );
 };
 

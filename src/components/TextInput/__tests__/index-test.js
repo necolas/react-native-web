@@ -1,6 +1,5 @@
-/* eslint-env mocha */
+/* eslint-env jasmine, jest */
 
-import assert from 'assert';
 import React from 'react';
 import StyleSheet from '../../../apis/StyleSheet';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -20,23 +19,23 @@ const testIfDocumentIsFocused = (message, fn) => {
   }
 };
 
-suite('components/TextInput', () => {
+describe('components/TextInput', () => {
   test('prop "autoComplete"', () => {
     // on
     let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.prop('autoComplete'), 'on');
+    expect(input.prop('autoComplete')).toEqual('on');
     // off
     input = findNativeInput(shallow(<TextInput autoComplete='off' />));
-    assert.equal(input.prop('autoComplete'), 'off');
+    expect(input.prop('autoComplete')).toEqual('off');
   });
 
   test('prop "autoFocus"', () => {
     // false
     let input = findNativeInput(mount(<TextInput />));
-    assert.equal(input.prop('autoFocus'), undefined);
+    expect(input.prop('autoFocus')).toEqual(undefined);
     // true
     input = findNativeInput(mount(<TextInput autoFocus />));
-    assert.equal(input.prop('autoFocus'), true);
+    expect(input.prop('autoFocus')).toEqual(true);
   });
 
   testIfDocumentIsFocused('prop "clearTextOnFocus"', () => {
@@ -44,53 +43,53 @@ suite('components/TextInput', () => {
     // false
     let input = findNativeInput(mount(<TextInput defaultValue={defaultValue} />));
     input.simulate('focus');
-    assert.equal(input.node.value, defaultValue);
+    expect(input.node.value).toEqual(defaultValue);
     // true
     input = findNativeInput(mount(<TextInput clearTextOnFocus defaultValue={defaultValue} />));
     input.simulate('focus');
-    assert.equal(input.node.value, '');
+    expect(input.node.value).toEqual('');
   });
 
   test('prop "defaultValue"', () => {
     const defaultValue = 'defaultValue';
     const input = findNativeInput(shallow(<TextInput defaultValue={defaultValue} />));
-    assert.equal(input.prop('defaultValue'), defaultValue);
+    expect(input.prop('defaultValue')).toEqual(defaultValue);
   });
 
   test('prop "editable"', () => {
     // true
     let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.prop('readOnly'), false);
+    expect(input.prop('readOnly')).toEqual(false);
     // false
     input = findNativeInput(shallow(<TextInput editable={false} />));
-    assert.equal(input.prop('readOnly'), true);
+    expect(input.prop('readOnly')).toEqual(true);
   });
 
   test('prop "keyboardType"', () => {
     // default
     let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.prop('type'), 'text');
+    expect(input.prop('type')).toEqual('text');
     input = findNativeInput(shallow(<TextInput keyboardType='default' />));
-    assert.equal(input.prop('type'), 'text');
+    expect(input.prop('type')).toEqual('text');
     // email-address
     input = findNativeInput(shallow(<TextInput keyboardType='email-address' />));
-    assert.equal(input.prop('type'), 'email');
+    expect(input.prop('type')).toEqual('email');
     // numeric
     input = findNativeInput(shallow(<TextInput keyboardType='numeric' />));
-    assert.equal(input.prop('type'), 'number');
+    expect(input.prop('type')).toEqual('number');
     // phone-pad
     input = findNativeInput(shallow(<TextInput keyboardType='phone-pad' />));
-    assert.equal(input.prop('type'), 'tel');
+    expect(input.prop('type')).toEqual('tel');
     // url
     input = findNativeInput(shallow(<TextInput keyboardType='url' />));
-    assert.equal(input.prop('type'), 'url');
+    expect(input.prop('type')).toEqual('url');
   });
 
   test('prop "maxLength"', () => {
     let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.prop('maxLength'), undefined);
+    expect(input.prop('maxLength')).toEqual(undefined);
     input = findNativeInput(shallow(<TextInput maxLength={10} />));
-    assert.equal(input.prop('maxLength'), '10');
+    expect(input.prop('maxLength')).toEqual(10);
   });
 
   test('prop "maxNumberOfLines"', () => {
@@ -107,25 +106,25 @@ suite('components/TextInput', () => {
         value={generateValue()}
       />
     ));
-    assert.equal(input.prop('maxRows'), 3);
+    expect(input.prop('maxRows')).toEqual(3);
   });
 
   test('prop "multiline"', () => {
     // false
     let input = findNativeInput(shallow(<TextInput />));
-    assert.equal(input.length, 1);
+    expect(input.length).toEqual(1);
     // true
     input = findNativeTextarea(shallow(<TextInput multiline />));
-    assert.equal(input.length, 1);
+    expect(input.length).toEqual(1);
   });
 
   test('prop "numberOfLines"', () => {
     // missing multiline
     let input = findNativeInput(shallow(<TextInput numberOfLines={2} />));
-    assert.equal(input.length, 1);
+    expect(input.length).toEqual(1);
     // with multiline
     input = findNativeTextarea(shallow(<TextInput multiline numberOfLines={2} />));
-    assert.equal(input.length, 1);
+    expect(input.length).toEqual(1);
 
     input = findNativeTextarea(shallow(
       <TextInput
@@ -133,14 +132,14 @@ suite('components/TextInput', () => {
         numberOfLines={3}
       />
     ));
-    assert.equal(input.prop('minRows'), 3);
+    expect(input.prop('minRows')).toEqual(3);
   });
 
   test('prop "onBlur"', (done) => {
     const input = findNativeInput(mount(<TextInput onBlur={onBlur} />));
     input.simulate('blur');
     function onBlur(e) {
-      assert.ok(e);
+      expect(e).toBeTruthy();
       done();
     }
   });
@@ -149,7 +148,7 @@ suite('components/TextInput', () => {
     const input = findNativeInput(mount(<TextInput onChange={onChange} />));
     input.simulate('change');
     function onChange(e) {
-      assert.ok(e);
+      expect(e).toBeTruthy();
       done();
     }
   });
@@ -159,7 +158,7 @@ suite('components/TextInput', () => {
     const input = findNativeInput(mount(<TextInput onChangeText={onChangeText} />));
     input.simulate('change', { target: { value: newText } });
     function onChangeText(text) {
-      assert.equal(text, newText);
+      expect(text).toEqual(newText);
       done();
     }
   });
@@ -168,7 +167,7 @@ suite('components/TextInput', () => {
     const input = findNativeInput(mount(<TextInput onFocus={onFocus} />));
     input.simulate('focus');
     function onFocus(e) {
-      assert.ok(e);
+      expect(e).toBeTruthy();
       done();
     }
   });
@@ -179,36 +178,36 @@ suite('components/TextInput', () => {
     const input = findNativeInput(mount(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />));
     input.simulate('select', { target: { selectionStart: 0, selectionEnd: 3 } });
     function onSelectionChange(e) {
-      assert.equal(e.nativeEvent.selection.end, 3);
-      assert.equal(e.nativeEvent.selection.start, 0);
+      expect(e.nativeEvent.selection.end).toEqual(3);
+      expect(e.nativeEvent.selection.start).toEqual(0);
       done();
     }
   });
 
   test('prop "placeholder"', () => {
     let textInput = shallow(<TextInput />);
-    assert.equal(findPlaceholder(textInput).length, 0);
+    expect(findPlaceholder(textInput).length).toEqual(0);
 
     textInput = shallow(<TextInput placeholder={placeholderText} />);
-    assert.equal(findPlaceholder(textInput).length, 1);
+    expect(findPlaceholder(textInput).length).toEqual(1);
   });
 
   test('prop "placeholderTextColor"', () => {
     let placeholderElement = findPlaceholder(shallow(<TextInput placeholder={placeholderText} />));
-    assert.equal(StyleSheet.flatten(placeholderElement.prop('style')).color, 'darkgray');
+    expect(StyleSheet.flatten(placeholderElement.prop('style')).color).toEqual('darkgray');
 
     placeholderElement = findPlaceholder(
       shallow(<TextInput placeholder={placeholderText} placeholderTextColor='red' />)
     );
-    assert.equal(StyleSheet.flatten(placeholderElement.prop('style')).color, 'red');
+    expect(StyleSheet.flatten(placeholderElement.prop('style')).color).toEqual('red');
   });
 
   test('prop "secureTextEntry"', () => {
     let input = findNativeInput(shallow(<TextInput secureTextEntry />));
-    assert.equal(input.prop('type'), 'password');
+    expect(input.prop('type')).toEqual('password');
     // ignored for multiline
     input = findNativeTextarea(shallow(<TextInput multiline secureTextEntry />));
-    assert.equal(input.prop('type'), undefined);
+    expect(input.prop('type')).toEqual(undefined);
   });
 
   testIfDocumentIsFocused('prop "selectTextOnFocus"', () => {
@@ -216,8 +215,8 @@ suite('components/TextInput', () => {
     // false
     let input = findNativeInput(mount(<TextInput defaultValue={text} />));
     input.node.focus();
-    assert.equal(input.node.selectionEnd, 4);
-    assert.equal(input.node.selectionStart, 4);
+    expect(input.node.selectionEnd).toEqual(4);
+    expect(input.node.selectionStart).toEqual(4);
     // true
     input = findNativeInput(mount(<TextInput defaultValue={text} selectTextOnFocus />));
     // input.node.focus()
@@ -235,13 +234,13 @@ suite('components/TextInput', () => {
     const textInput = shallow(<TextInput style={styles.root} />);
     const input = findNativeInput(textInput);
     const borderWidth = StyleSheet.flatten(textInput.prop('style')).borderWidth;
-    assert.equal(borderWidth, 1, 'expected View styles to be applied to the "View"');
-    assert.equal(input.prop('style').textAlign, 'center', 'expected Text styles to be applied to the "input"');
+    expect(borderWidth).toEqual(1);
+    expect(input.prop('style').textAlign).toEqual('center');
   });
 
   test('prop "value"', () => {
     const value = 'value';
     const input = findNativeInput(shallow(<TextInput value={value} />));
-    assert.equal(input.prop('value'), value);
+    expect(input.prop('value')).toEqual(value);
   });
 });
