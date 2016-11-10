@@ -111,6 +111,7 @@ class TextInput extends Component {
   }
 
   clear() {
+    this.setState({showPlaceholder: true})
     this.setNativeProps({ text: '' });
   }
 
@@ -218,7 +219,7 @@ class TextInput extends Component {
 
     const component = multiline ? TextareaAutosize : 'input';
 
-    const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
+    const optionalPlaceholder = placeholder && (this.state.showPlaceholder || !value) && (
       <View pointerEvents='none' style={styles.placeholder}>
         <Text
           children={placeholder}
