@@ -52,23 +52,7 @@ exports[`components/Image prop "accessibilityLabel" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "accessible" 1`] = `
@@ -125,23 +109,7 @@ exports[`components/Image prop "accessible" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "children" 1`] = `
@@ -198,78 +166,8 @@ exports[`components/Image prop "children" 1`] = `
       "textDecoration": "none",
     }
   }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
   <div
-    className=" __style_df __style_pebn"
-    style={
-      Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "alignItems": "stretch",
-        "backgroundColor": "transparent",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "bottom": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "left": "0px",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "pointerEvents": null,
-        "position": "absolute",
-        "right": "0px",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-        "top": "0px",
-      }
-    }>
-    <div
-      className="unique" />
-  </div>
+    className="unique" />
 </div>
 `;
 
@@ -329,23 +227,7 @@ exports[`components/Image prop "defaultSource" does not override "height" and "w
       "textDecoration": "none",
       "width": "40px",
     }
-  }>
-  <img
-    className=""
-    src="https://google.com/favicon.ico"
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "defaultSource" sets "height" and "width" styles if missing 1`] = `
@@ -404,23 +286,7 @@ exports[`components/Image prop "defaultSource" sets "height" and "width" styles 
       "textDecoration": "none",
       "width": "20px",
     }
-  }>
-  <img
-    className=""
-    src="https://google.com/favicon.ico"
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "defaultSource" sets background image when value is a string 1`] = `
@@ -477,23 +343,7 @@ exports[`components/Image prop "defaultSource" sets background image when value 
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src="https://google.com/favicon.ico"
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "defaultSource" sets background image when value is an object 1`] = `
@@ -552,23 +402,7 @@ exports[`components/Image prop "defaultSource" sets background image when value 
       "textDecoration": "none",
       "width": undefined,
     }
-  }>
-  <img
-    className=""
-    src="https://google.com/favicon.ico"
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "resizeMode" value "contain" 1`] = `
@@ -624,23 +458,7 @@ exports[`components/Image prop "resizeMode" value "contain" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "resizeMode" value "cover" 1`] = `
@@ -696,23 +514,7 @@ exports[`components/Image prop "resizeMode" value "cover" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "resizeMode" value "none" 1`] = `
@@ -768,23 +570,7 @@ exports[`components/Image prop "resizeMode" value "none" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "resizeMode" value "stretch" 1`] = `
@@ -840,23 +626,7 @@ exports[`components/Image prop "resizeMode" value "stretch" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "resizeMode" value "undefined" 1`] = `
@@ -912,23 +682,7 @@ exports[`components/Image prop "resizeMode" value "undefined" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "style" correctly supports "resizeMode" property 1`] = `
@@ -984,23 +738,7 @@ exports[`components/Image prop "style" correctly supports "resizeMode" property 
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image prop "testID" 1`] = `
@@ -1057,23 +795,7 @@ exports[`components/Image prop "testID" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;
 
 exports[`components/Image sets correct accessibility role" 1`] = `
@@ -1129,21 +851,5 @@ exports[`components/Image sets correct accessibility role" 1`] = `
       "textAlign": "inherit",
       "textDecoration": "none",
     }
-  }>
-  <img
-    className=""
-    src={null}
-    style={
-      Object {
-        "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
-        "borderRightWidth": "0px",
-        "borderTopWidth": "0px",
-        "height": "auto",
-        "maxHeight": "100%",
-        "maxWidth": "100%",
-        "opacity": 0,
-      }
-    } />
-</div>
+  } />
 `;

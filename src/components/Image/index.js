@@ -1,7 +1,6 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
-import createDOMElement from '../../modules/createDOMElement';
 import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import StyleSheet from '../../apis/StyleSheet';
@@ -53,7 +52,6 @@ class Image extends Component {
   };
 
   static defaultProps = {
-    accessible: true,
     style: {}
   };
 
@@ -64,12 +62,14 @@ class Image extends Component {
     this.state = { isLoaded: false };
     const uri = resolveAssetSource(props.source);
     this._imageState = uri ? STATUS_PENDING : STATUS_IDLE;
+    this._isMounted = false;
   }
 
   componentDidMount() {
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     }
+    this._isMounted = true;
   }
 
   componentDidUpdate() {
@@ -87,6 +87,7 @@ class Image extends Component {
 
   componentWillUnmount() {
     this._destroyImageLoader();
+    this._isMounted = false;
   }
 
   render() {
@@ -117,26 +118,16 @@ class Image extends Component {
     // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;
 
-    /**
-     * The image is displayed as a background image to support `resizeMode`.
-     * The HTML image is hidden but used to provide the correct responsive
-     * image dimensions, and to support the image context menu. Child content
-     * is rendered into an element absolutely positioned over the image.
-     */
     return (
       <View
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
+        children={children}
         onLayout={onLayout}
         style={style}
         testID={testID}
-      >
-        {createDOMElement('img', { src: displayImage, style: styles.img })}
-        {children ? (
-          <View children={children} pointerEvents='box-none' style={styles.children} />
-        ) : null}
-      </View>
+      />
     );
   }
 
@@ -198,7 +189,11 @@ class Image extends Component {
     this._imageState = status;
     const isLoaded = this._imageState === STATUS_LOADED;
     if (isLoaded !== this.state.isLoaded) {
-      this.setState({ isLoaded });
+      window.requestAnimationFrame(() => {
+        if (this._isMounted) {
+          this.setState({ isLoaded });
+        }
+      });
     }
   }
 }
@@ -209,20 +204,6 @@ const styles = StyleSheet.create({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover'
-  },
-  img: {
-    borderWidth: 0,
-    height: 'auto',
-    maxHeight: '100%',
-    maxWidth: '100%',
-    opacity: 0
-  },
-  children: {
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0
   }
 });
 
