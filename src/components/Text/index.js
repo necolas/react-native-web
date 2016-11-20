@@ -12,7 +12,7 @@ class Text extends Component {
 
   static propTypes = {
     ...BaseComponentPropTypes,
-    accessibilityRole: PropTypes.oneOf([ 'heading', 'link' ]),
+    accessibilityRole: PropTypes.oneOf([ 'button', 'heading', 'link', 'listitem' ]),
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onLayout: PropTypes.func,
