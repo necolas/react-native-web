@@ -23,7 +23,7 @@
     "fbjs": "^0.8.4",
     "inline-style-prefixer": "^2.0.1",
     "lodash": "^4.15.0",
-    "react-dom": "^15.3.2",
+    "react-dom": "~15.3.2",
     "react-textarea-autosize": "^4.0.4",
     "react-timer-mixin": "^0.13.3"
   },
@@ -43,14 +43,14 @@
     "file-loader": "^0.9.0",
     "jest": "^16.0.2",
     "node-libs-browser": "^0.5.3",
-    "react": "^15.3.2",
-    "react-addons-test-utils": "^15.3.2",
-    "react-test-renderer": "^15.3.2",
+    "react": "~15.3.2",
+    "react-addons-test-utils": "~15.3.2",
+    "react-test-renderer": "~15.3.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2"
   },
   "peerDependencies": {
-    "react": "^15.3.2"
+    "react": "~15.3.2"
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause",
