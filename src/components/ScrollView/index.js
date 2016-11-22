@@ -237,7 +237,8 @@ const styles = StyleSheet.create({
     overflowY: 'hidden'
   },
   contentContainer: {
-    flexGrow: 1
+    flexGrow: 1,
+    transform: [ { translateZ: 0 } ]
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
