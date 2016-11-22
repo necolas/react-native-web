@@ -23,12 +23,16 @@ export default class ScrollViewBase extends Component {
     onScrollEndDrag: PropTypes.func,
     onTouchMove: PropTypes.func,
     onWheel: PropTypes.func,
+    removeClippedSubviews: PropTypes.bool,
     scrollEnabled: PropTypes.bool,
-    scrollEventThrottle: PropTypes.number
+    scrollEventThrottle: PropTypes.number,
+    showsHorizontalScrollIndicator: PropTypes.bool,
+    showsVerticalScrollIndicator: PropTypes.bool
   };
 
   static defaultProps = {
-    scrollEnabled: true
+    scrollEnabled: true,
+    scrollEventThrottle: 0
   };
 
   constructor(props) {
@@ -48,6 +52,7 @@ export default class ScrollViewBase extends Component {
   }
 
   _handleScroll = (e) => {
+    e.persist();
     const { scrollEventThrottle } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
     this._debouncedOnScrollEnd(e);
@@ -81,12 +86,22 @@ export default class ScrollViewBase extends Component {
 
   _shouldEmitScrollEvent(lastTick, eventThrottle) {
     const timeSinceLastTick = Date.now() - lastTick;
-    return (eventThrottle > 0 && timeSinceLastTick >= (1000 / eventThrottle));
+    return (eventThrottle > 0 && timeSinceLastTick >= eventThrottle);
   }
 
   render() {
     const {
-      onMomentumScrollBegin, onMomentumScrollEnd, onScrollBeginDrag, onScrollEndDrag, scrollEnabled, scrollEventThrottle, // eslint-disable-line
+      /* eslint-disable */
+      onMomentumScrollBegin,
+      onMomentumScrollEnd,
+      onScrollBeginDrag,
+      onScrollEndDrag,
+      removeClippedSubviews,
+      scrollEnabled,
+      scrollEventThrottle,
+      showsHorizontalScrollIndicator,
+      showsVerticalScrollIndicator,
+      /* eslint-enable */
       ...other
     } = this.props;
 

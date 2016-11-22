@@ -7,8 +7,8 @@ storiesOf('component: ScrollView', module)
     <View style={styles.scrollViewContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
-        onScroll={e => console.log('ScrollView.onScroll', e)}
-        scrollEventThrottle={1} // 1 event per second
+        onScroll={e => { console.log('ScrollView.onScroll', e); } }
+        scrollEventThrottle={1000} // 1 event per second
         style={styles.scrollViewStyle}
       >
         {Array.from({ length: 50 }).map((item, i) => (

@@ -27,6 +27,7 @@ const ScrollView = React.createClass({
     keyboardDismissMode: PropTypes.oneOf([ 'none', 'interactive', 'on-drag' ]),
     onContentSizeChange: PropTypes.func,
     onScroll: PropTypes.func,
+    pagingEnabled: PropTypes.bool,
     refreshControl: PropTypes.element,
     scrollEnabled: PropTypes.bool,
     scrollEventThrottle: PropTypes.number,
@@ -97,10 +98,13 @@ const ScrollView = React.createClass({
     const {
       contentContainerStyle,
       horizontal,
-      keyboardDismissMode, // eslint-disable-line
       onContentSizeChange,
-      onScroll, // eslint-disable-line
       refreshControl,
+      /* eslint-disable */
+      keyboardDismissMode,
+      onScroll,
+      pagingEnabled,
+      /* eslint-enable */
       ...other
     } = this.props;
 
