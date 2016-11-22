@@ -14,11 +14,9 @@
 
 var PropTypes = require('react').PropTypes;
 
-var createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker');
-
-var PointPropType = createStrictShapeTypeChecker({
+var PointPropType = process.env.NODE_ENV !== 'production' ? require('./createStrictShapeTypeChecker')({
   x: PropTypes.number,
   y: PropTypes.number,
-});
+}) : function () {};
 
 module.exports = PointPropType;

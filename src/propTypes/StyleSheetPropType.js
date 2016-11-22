@@ -5,10 +5,10 @@
  * @flow
  */
 
-import createStrictShapeTypeChecker from './createStrictShapeTypeChecker';
-import flattenStyle from '../modules/flattenStyle';
+module.exports = process.env.NODE_ENV !== 'production' ? function StyleSheetPropType(shape) {
+  const createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker');
+  const flattenStyle = require('../modules/flattenStyle');
 
-module.exports = function StyleSheetPropType(shape) {
   const shapePropType = createStrictShapeTypeChecker(shape);
   return function (props, propName, componentName, location?) {
     let newProps = props;
@@ -19,4 +19,4 @@ module.exports = function StyleSheetPropType(shape) {
     }
     return shapePropType(newProps, propName, componentName, location);
   };
-};
+} : function () {};

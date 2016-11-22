@@ -7,7 +7,7 @@ import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
 const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ]);
 
-module.exports = {
+module.exports = process.env.NODE_ENV !== 'production' ? {
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...TransformPropTypes,
@@ -24,4 +24,4 @@ module.exports = {
    * @platform web
    */
   visibility: hiddenOrVisible
-};
+} : {};

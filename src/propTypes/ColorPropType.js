@@ -11,11 +11,10 @@
   */
 
 import { PropTypes } from 'react'
-import ReactPropTypeLocationNames from 'react/lib/ReactPropTypeLocationNames'
-
-var normalizeColor = require('../modules/normalizeColor');
 
 var colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
+  var normalizeColor = require('../modules/normalizeColor');
+  var ReactPropTypeLocationNames = require('react/lib/ReactPropTypeLocationNames');
   var color = props[propName];
   if (color === undefined || color === null) {
     if (isRequired) {
@@ -56,7 +55,11 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
   }
 };
 
-var ColorPropType = colorPropType.bind(null, false /* isRequired */);
-ColorPropType.isRequired = colorPropType.bind(null, true /* isRequired */);
+if (process.env.NODE_ENV !== 'production') {
+  var ColorPropType = colorPropType.bind(null, false /* isRequired */);
+  ColorPropType.isRequired = colorPropType.bind(null, true /* isRequired */);
+} else {
+  var ColorPropType = function () {}
+}
 
 module.exports = ColorPropType

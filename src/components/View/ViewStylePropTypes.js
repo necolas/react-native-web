@@ -8,7 +8,7 @@ const { number, oneOf, string } = PropTypes;
 const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ]);
 const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
 
-module.exports = {
+module.exports = process.env.NODE_ENV !== 'production' ? {
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...TransformPropTypes,
@@ -36,4 +36,4 @@ module.exports = {
   userSelect: string,
   visibility: hiddenOrVisible,
   WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
-};
+} : {};

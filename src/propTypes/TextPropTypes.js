@@ -8,7 +8,7 @@ const ShadowOffsetPropType = shape({ width: number, height: number });
 const TextAlignPropType = oneOf([ 'center', 'inherit', 'justify', 'justify-all', 'left', 'right' ]);
 const WritingDirectionPropType = oneOf([ 'auto', 'ltr', 'rtl' ]);
 
-const TextPropTypes = {
+const TextPropTypes = process.env.NODE_ENV !== 'production' ? {
   // box model
   color: ColorPropType,
   fontFamily: string,
@@ -40,6 +40,6 @@ const TextPropTypes = {
   textAlign$noI18n: TextAlignPropType,
   textShadowOffset$noI18n: ShadowOffsetPropType,
   writingDirection$noI18n: WritingDirectionPropType
-};
+} : {};
 
 module.exports = TextPropTypes;

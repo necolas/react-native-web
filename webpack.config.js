@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const DIST_DIRECTORY = './dist'
 
@@ -14,6 +15,7 @@ module.exports = {
     path: DIST_DIRECTORY
   },
   plugins: [
+    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
     new webpack.optimize.DedupePlugin(),
     // https://github.com/animatedjs/animated/issues/40
