@@ -1,15 +1,12 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import StyleSheet from '../../../apis/StyleSheet';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInput from '..';
 import { mount, shallow } from 'enzyme';
 
-const placeholderText = 'placeholderText';
 const findNativeInput = (wrapper) => wrapper.find('input');
 const findNativeTextarea = (wrapper) => wrapper.find(TextareaAutosize);
-const findPlaceholder = (wrapper) => wrapper.find({ children: placeholderText });
 
 const testIfDocumentIsFocused = (message, fn) => {
   if (document.hasFocus && document.hasFocus()) {
@@ -184,24 +181,6 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "placeholder"', () => {
-    let textInput = shallow(<TextInput />);
-    expect(findPlaceholder(textInput).length).toEqual(0);
-
-    textInput = shallow(<TextInput placeholder={placeholderText} />);
-    expect(findPlaceholder(textInput).length).toEqual(1);
-  });
-
-  test('prop "placeholderTextColor"', () => {
-    let placeholderElement = findPlaceholder(shallow(<TextInput placeholder={placeholderText} />));
-    expect(StyleSheet.flatten(placeholderElement.prop('style')).color).toEqual('darkgray');
-
-    placeholderElement = findPlaceholder(
-      shallow(<TextInput placeholder={placeholderText} placeholderTextColor='red' />)
-    );
-    expect(StyleSheet.flatten(placeholderElement.prop('style')).color).toEqual('red');
-  });
-
   test('prop "secureTextEntry"', () => {
     let input = findNativeInput(shallow(<TextInput secureTextEntry />));
     expect(input.prop('type')).toEqual('password');
@@ -222,20 +201,6 @@ describe('components/TextInput', () => {
     // input.node.focus()
     // assert.equal(input.node.selectionEnd, 4)
     // assert.equal(input.node.selectionStart, 0)
-  });
-
-  test('prop "style"', () => {
-    const styles = StyleSheet.create({
-      root: {
-        borderWidth: 1,
-        textAlign: 'center'
-      }
-    });
-    const textInput = shallow(<TextInput style={styles.root} />);
-    const input = findNativeInput(textInput);
-    const borderWidth = StyleSheet.flatten(textInput.prop('style')).borderWidth;
-    expect(borderWidth).toEqual(1);
-    expect(input.prop('style').textAlign).toEqual('center');
   });
 
   test('prop "value"', () => {

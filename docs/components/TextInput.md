@@ -6,12 +6,10 @@ such as auto-complete, auto-focus, placeholder text, and event callbacks.
 Note: some props are exclusive to or excluded from `multiline`.
 
 Unsupported React Native props:
-`autoCapitalize`,
-`autoCorrect`,
 `onEndEditing`,
-`onSubmitEditing`,
 `clearButtonMode` (ios),
 `enablesReturnKeyAutomatically` (ios),
+`placeholderTextColor`,
 `returnKeyType` (ios),
 `selectionState` (ios),
 `underlineColorAndroid` (android)
@@ -127,10 +125,6 @@ Callback that is called when the keyboard's submit button is pressed.
 
 The string that will be rendered in an empty `TextInput` before text has been
 entered.
-
-**placeholderTextColor**: string
-
-The text color of the placeholder string.
 
 **secureTextEntry**: bool = false
 

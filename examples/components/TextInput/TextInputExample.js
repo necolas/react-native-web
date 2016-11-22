@@ -210,25 +210,16 @@ class TokenizedTextExample extends React.Component {
     }
     parts.push(_text);
 
-    //highlight hashtags
-    parts = parts.map((text) => {
-      if (/^#/.test(text)) {
-        return <Text key={text} style={styles.hashtag}>{text}</Text>;
-      } else {
-        return text;
-      }
-    });
-
     return (
       <View>
         <TextInput
+          value={parts.join('')}
           multiline={true}
           style={styles.multiline}
           onChangeText={(text) => {
             this.setState({text});
-          }}>
-          <Text>{parts}</Text>
-        </TextInput>
+          }}
+        />
       </View>
     );
   }
@@ -279,7 +270,7 @@ class BlurOnSubmitExample extends React.Component {
         <TextInput
           ref="5"
           style={styles.default}
-          keyboardType="numbers-and-punctuation"
+          keyboardType="numeric"
           placeholder="blurOnSubmit = true"
           returnKeyType="done"
         />
@@ -519,15 +510,15 @@ const examples = [
     render: function() {
       var keyboardTypes = [
         'default',
-        'ascii-capable',
-        'numbers-and-punctuation',
+        //'ascii-capable',
+        //'numbers-and-punctuation',
         'url',
         'number-pad',
         'phone-pad',
-        'name-phone-pad',
+        //'name-phone-pad',
         'email-address',
-        'decimal-pad',
-        'twitter',
+        //'decimal-pad',
+        //'twitter',
         'web-search',
         'numeric',
       ];
@@ -776,14 +767,6 @@ const examples = [
             style={styles.multiline}
             dataDetectorTypes="phoneNumber"
           />
-          <TextInput
-            placeholder="multiline with children"
-            multiline={true}
-            enablesReturnKeyAutomatically={true}
-            returnKeyType="go"
-            style={styles.multiline}>
-            <View style={styles.multilineChild}/>
-          </TextInput>
         </View>
       );
     }

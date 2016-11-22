@@ -1,18 +1,14 @@
+import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
-import omit from 'lodash/omit';
-import pick from 'lodash/pick';
 import StyleSheet from '../../apis/StyleSheet';
 import Text from '../Text';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
-import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import React, { Component, PropTypes } from 'react';
-
-const viewStyleProps = Object.keys(ViewStylePropTypes);
+import { Component, PropTypes } from 'react';
 
 /**
  * React Native events differ from W3C events.
@@ -25,7 +21,7 @@ const normalizeEventHandler = (handler) => (e) => {
 };
 
 /**
- * Determins whether a 'selection' prop differs from a node's existing
+ * Determines whether a 'selection' prop differs from a node's existing
  * selection state.
  */
 const isSelectionStale = (node, selection) => {
@@ -64,7 +60,7 @@ class TextInput extends Component {
     defaultValue: PropTypes.string,
     editable: PropTypes.bool,
     keyboardType: PropTypes.oneOf([
-      'default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search'
+      'default', 'email-address', 'number-pad', 'numeric', 'phone-pad', 'search', 'url', 'web-search'
     ]),
     maxLength: PropTypes.number,
     maxNumberOfLines: PropTypes.number,
@@ -85,7 +81,6 @@ class TextInput extends Component {
       end: PropTypes.number
     }),
     style: Text.propTypes.style,
-    testID: Text.propTypes.testID,
     value: PropTypes.string
   };
 
@@ -101,60 +96,63 @@ class TextInput extends Component {
     style: {}
   };
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = { showPlaceholder: !props.value && !props.defaultValue };
-  }
-
   blur() {
-    TextInputState.blurTextInput(findNodeHandle(this._inputRef));
+    TextInputState.blurTextInput(this._node);
   }
 
   clear() {
-    this.setNativeProps({ text: '' });
+    this._node.value = '';
   }
 
   focus() {
-    TextInputState.focusTextInput(findNodeHandle(this._inputRef));
+    TextInputState.focusTextInput(this._node);
   }
 
   isFocused() {
-    return TextInputState.currentlyFocusedField() === findNodeHandle(this._inputRef);
+    return TextInputState.currentlyFocusedField() === this._node;
   }
 
   setNativeProps(props) {
-    UIManager.updateView(this._inputRef, props, this);
+    UIManager.updateView(this._node, props, this);
   }
 
   componentDidMount() {
-    setSelection(findNodeHandle(this._inputRef), this.props.selection);
+    setSelection(this._node, this.props.selection);
   }
 
   componentDidUpdate() {
-    setSelection(findNodeHandle(this._inputRef), this.props.selection);
+    setSelection(this._node, this.props.selection);
   }
 
   render() {
     const {
-      accessibilityLabel, // eslint-disable-line
-      autoCapitalize,
-      autoComplete,
       autoCorrect,
-      autoFocus,
-      defaultValue,
       editable,
       keyboardType,
-      maxLength,
       maxNumberOfLines,
       multiline,
       numberOfLines,
-      onLayout,
-      placeholder,
-      placeholderTextColor,
       secureTextEntry,
       style,
-      testID,
-      value
+      /* eslint-disable */
+      blurOnSubmit,
+      clearTextOnFocus,
+      dataDetectorTypes,
+      enablesReturnKeyAutomatically,
+      keyboardAppearance,
+      onChangeText,
+      onContentSizeChange,
+      onEndEditing,
+      onLayout,
+      onSelectionChange,
+      onSubmitEditing,
+      placeholderTextColor,
+      returnKeyType,
+      selection,
+      selectionColor,
+      selectTextOnFocus,
+      /* eslint-enable */
+      ...other
     } = this.props;
 
     let type;
@@ -163,6 +161,7 @@ class TextInput extends Component {
       case 'email-address':
         type = 'email';
         break;
+      case 'number-pad':
       case 'numeric':
         type = 'number';
         break;
@@ -184,29 +183,22 @@ class TextInput extends Component {
       type = 'password';
     }
 
-    // In order to support 'Text' styles on 'TextInput', we split the 'Text'
-    // and 'View' styles and apply them to the 'Text' and 'View' components
-    // used in the implementation
-    const flattenedStyle = StyleSheet.flatten(style);
-    const rootStyles = pick(flattenedStyle, viewStyleProps);
-    const textStyles = omit(flattenedStyle, viewStyleProps);
+    const component = multiline ? TextareaAutosize : 'input';
 
     const props = {
-      autoCapitalize,
-      autoComplete,
+      ...other,
       autoCorrect: autoCorrect ? 'on' : 'off',
-      autoFocus,
-      defaultValue,
-      maxLength,
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
       onKeyPress: normalizeEventHandler(this._handleKeyPress),
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
-      ref: this._setInputRef,
-      style: [ styles.input, textStyles, { outline: style.outline } ],
-      value
+      ref: this._setNode,
+      style: [
+        styles.initial,
+        style
+      ]
     };
 
     if (multiline) {
@@ -216,66 +208,27 @@ class TextInput extends Component {
       props.type = type;
     }
 
-    const component = multiline ? TextareaAutosize : 'input';
-
-    const optionalPlaceholder = placeholder && this.state.showPlaceholder && (
-      <View pointerEvents='none' style={styles.placeholder}>
-        <Text
-          children={placeholder}
-          style={[
-            styles.placeholderText,
-            textStyles,
-            placeholderTextColor && { color: placeholderTextColor }
-          ]}
-        />
-      </View>
-    );
-
-    return (
-      <View
-        accessibilityLabel={accessibilityLabel}
-        onClick={this._handleClick}
-        onLayout={onLayout}
-        style={[ styles.initial, rootStyles ]}
-        testID={testID}
-      >
-        <View style={styles.wrapper}>
-          {createDOMElement(component, props)}
-          {optionalPlaceholder}
-        </View>
-      </View>
-    );
+    return createDOMElement(component, props);
   }
 
   _handleBlur = (e) => {
     const { onBlur } = this.props;
-    const { text } = e.nativeEvent;
-    this.setState({ showPlaceholder: text === '' });
     if (onBlur) { onBlur(e); }
   }
 
   _handleChange = (e) => {
     const { onChange, onChangeText } = this.props;
     const { text } = e.nativeEvent;
-    this.setState({ showPlaceholder: text === '' });
     if (onChange) { onChange(e); }
     if (onChangeText) { onChangeText(text); }
   }
 
-  _handleClick = (e) => {
-    if (this.props.editable) {
-      this.focus();
-    }
-  }
-
   _handleFocus = (e) => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
-    const { text } = e.nativeEvent;
-    const node = findNodeHandle(this._inputRef);
+    const node = this._node;
     if (onFocus) { onFocus(e); }
     if (clearTextOnFocus) { this.clear(); }
     if (selectTextOnFocus) { node && node.select(); }
-    this.setState({ showPlaceholder: text === '' });
   }
 
   _handleKeyPress = (e) => {
@@ -303,43 +256,24 @@ class TextInput extends Component {
     }
   }
 
-  _setInputRef = (component) => {
-    this._inputRef = component;
+  _setNode = (component) => {
+    this._node = findNodeHandle(component);
   }
 }
 
 const styles = StyleSheet.create({
   initial: {
-    borderColor: 'black'
-  },
-  wrapper: {
-    flex: 1
-  },
-  input: {
     appearance: 'none',
     backgroundColor: 'transparent',
+    borderColor: 'black',
     borderRadius: 0,
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
     flex: 1,
     font: 'inherit',
-    minHeight: '100%', // center small inputs (fix #139)
-    padding: 0,
-    zIndex: 1
-  },
-  placeholder: {
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0
-  },
-  placeholderText: {
-    color: 'darkgray',
-    overflow: 'hidden',
-    whiteSpace: 'pre'
+    padding: 0
   }
 });
 
-module.exports = applyNativeMethods(TextInput);
+module.exports = applyLayout(applyNativeMethods(TextInput));

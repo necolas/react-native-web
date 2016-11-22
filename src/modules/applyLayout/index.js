@@ -12,13 +12,13 @@ const applyLayout = (Component) => {
   const componentDidUpdate = Component.prototype.componentDidUpdate || emptyFunction;
 
   Component.prototype.componentDidMount = function () {
-    componentDidMount();
+    componentDidMount.call(this);
     this._layoutState = {};
     this._handleLayout();
   };
 
   Component.prototype.componentDidUpdate = function () {
-    componentDidUpdate();
+    componentDidUpdate.call(this);
     this._handleLayout();
   };
 
