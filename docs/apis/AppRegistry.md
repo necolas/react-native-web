@@ -13,14 +13,11 @@ into `runApplication`. These should always be used as a pair.
 
 ## Methods
 
-(web) static **prerenderApplication**(appKey:string, appParameters: object)
+(web) static **getApplication**(appKey:string, appParameters: object)
 
-Renders the given application to an HTML string. Use this for server-side
-rendering. Return object is of type `{ html: string; style: string;
-styleElement: ReactComponent }`. `html` is the prerendered HTML, `style` is the
-prerendered style sheet, and `styleElement` is a React Component. It's
-recommended that you use `styleElement` to render the style sheet in an app
-shell.
+Returns the given application element. Use this for server-side rendering.
+Return object is of type `{ element: ReactElement; stylesheet: ReactElement }`.
+It's recommended that you use `sheetsheet` to render the style sheet in an app
 
 static **registerConfig**(config: Array<AppConfig>)
 

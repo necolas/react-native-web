@@ -43,12 +43,7 @@ import ReactNative from 'react-native'
 // component that renders the app
 const AppHeaderContainer = (props) => { /* ... */ }
 
-// DOM render
 ReactNative.render(<AppHeaderContainer />, document.getElementById('react-app-header'))
-
-// Server render
-ReactNative.renderToString(<AppHeaderContainer />)
-ReactNative.renderToStaticMarkup(<AppHeaderContainer />)
 ```
 
 Rendering using the `AppRegistry`:
@@ -63,7 +58,6 @@ const AppContainer = (props) => { /* ... */ }
 // register the app
 AppRegistry.registerComponent('App', () => AppContainer)
 
-// DOM render
 AppRegistry.runApplication('App', {
   initialProps: {},
   rootTag: document.getElementById('react-app')
@@ -72,3 +66,22 @@ AppRegistry.runApplication('App', {
 // prerender the app
 const { html, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 ```
+
+## Server-side rendering
+
+Rendering using the `AppRegistry`:
+
+```
+import ReactDOMServer from 'react-dom/server'
+import ReactNative, { AppRegistry } from 'react-native'
+
+// component that renders the app
+const AppContainer = (props) => { /* ... */ }
+
+// register the app
+AppRegistry.registerComponent('App', () => AppContainer)
+
+// prerender the app
+const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
+const initialHTML = ReactDOMServer.renderToString(element);
+ ```

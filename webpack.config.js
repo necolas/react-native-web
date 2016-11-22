@@ -8,6 +8,16 @@ module.exports = {
   entry: {
     main: DIST_DIRECTORY
   },
+  externals: [
+    {
+      react: {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      }
+    }
+  ],
   output: {
     filename: 'ReactNative.js',
     library: 'ReactNative',

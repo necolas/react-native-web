@@ -7,7 +7,7 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import ReactDOM from 'react-dom';
+import { render } from 'react/lib/ReactMount';
 import ReactDOMServer from 'react-dom/server';
 import ReactNativeApp from './ReactNativeApp';
 import StyleSheet from '../../apis/StyleSheet';
@@ -23,17 +23,16 @@ export default function renderApplication(RootComponent: Component, initialProps
       rootTag={rootTag}
     />
   );
-  ReactDOM.render(component, rootTag);
+  render(component, rootTag);
 }
 
-export function prerenderApplication(RootComponent: Component, initialProps: Object): string {
-  const component = (
+export function getApplication(RootComponent: Component, initialProps: Object): Object {
+  const element = (
     <ReactNativeApp
       initialProps={initialProps}
       rootComponent={RootComponent}
     />
   );
-  const html = ReactDOMServer.renderToString(component);
-  const styleElement = StyleSheet.render();
-  return { html, styleElement };
+  const stylesheet = StyleSheet.render();
+  return { element, stylesheet };
 }

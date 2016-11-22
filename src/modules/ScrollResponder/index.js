@@ -13,9 +13,9 @@
 'use strict';
 
 var Dimensions = require('../../apis/Dimensions');
+var findNodeHandle = require('../findNodeHandle');
 var Platform = require('../../apis/Platform');
 var React = require('react');
-var ReactDOM = require('react-dom');
 // var Subscribable = require('../Subscribable');
 var TextInputState = require('../../components/TextInput/TextInputState');
 var UIManager = require('../../apis/UIManager');
@@ -356,7 +356,7 @@ var ScrollResponderMixin = {
   scrollResponderGetScrollableNode: function(): any {
     return this.getScrollableNode ?
       this.getScrollableNode() :
-      ReactDOM.findDOMNode(this);
+      findNodeHandle(this);
   },
 
   /**
@@ -423,7 +423,7 @@ var ScrollResponderMixin = {
     this.preventNegativeScrollOffset = !!preventNegativeScrollOffset;
     UIManager.measureLayout(
       nodeHandle,
-      ReactDOM.findDOMNode(this.getInnerViewNode()),
+      findNodeHandle(this.getInnerViewNode()),
       this.scrollResponderTextInputFocusError,
       this.scrollResponderInputMeasureAndScrollToKeyboard
     );

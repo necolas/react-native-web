@@ -7,8 +7,8 @@
  */
 
 import dismissKeyboard from '../../modules/dismissKeyboard';
+import findNodeHandle from '../../modules/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
-import ReactDOM from 'react-dom';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../../apis/StyleSheet';
@@ -55,11 +55,11 @@ const ScrollView = React.createClass({
   },
 
   getScrollableNode(): any {
-    return ReactDOM.findDOMNode(this._scrollViewRef);
+    return findNodeHandle(this._scrollViewRef);
   },
 
   getInnerViewNode(): any {
-    return ReactDOM.findDOMNode(this._innerViewRef);
+    return findNodeHandle(this._innerViewRef);
   },
 
   /**

@@ -1,6 +1,5 @@
 import findNodeHandle from './modules/findNodeHandle';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
+import { render, unmountComponentAtNode } from 'react/lib/ReactMount';
 
 // APIs
 import I18nManager from './apis/I18nManager';
@@ -14,10 +13,8 @@ import View from './components/View';
 
 const ReactNativeCore = {
   findNodeHandle,
-  render: ReactDOM.render,
-  renderToStaticMarkup: ReactDOMServer.renderToStaticMarkup,
-  renderToString: ReactDOMServer.renderToString,
-  unmountComponentAtNode: ReactDOM.unmountComponentAtNode,
+  render,
+  unmountComponentAtNode,
   // APIs
   I18nManager,
   StyleSheet,

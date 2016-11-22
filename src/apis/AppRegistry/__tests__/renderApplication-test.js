@@ -1,15 +1,15 @@
 /* eslint-env jasmine, jest */
 
-import { prerenderApplication } from '../renderApplication';
+import { getApplication } from '../renderApplication';
 import React from 'react';
 
 const component = () => <div />;
 
 describe('apis/AppRegistry/renderApplication', () => {
-  test('prerenderApplication', () => {
-    const { html, styleElement } = prerenderApplication(component, {});
+  test('getApplication', () => {
+    const { element, stylesheet } = getApplication(component, {});
 
-    expect(html.indexOf('<div ') > -1).toBeTruthy();
-    expect(styleElement.type).toEqual('style');
+    expect(element).toBeTruthy();
+    expect(stylesheet.type).toEqual('style');
   });
 });

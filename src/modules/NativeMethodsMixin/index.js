@@ -7,7 +7,7 @@
  */
 
 import { Component } from 'react';
-import ReactDOM from 'react-dom';
+import findNodeHandle from '../findNodeHandle';
 import UIManager from '../../apis/UIManager';
 
 type MeasureInWindowOnSuccessCallback = (
@@ -38,7 +38,7 @@ const NativeMethodsMixin = {
    * Removes focus from an input or view. This is the opposite of `focus()`.
    */
   blur() {
-    UIManager.blur(ReactDOM.findDOMNode(this));
+    UIManager.blur(findNodeHandle(this));
   },
 
   /**
@@ -46,7 +46,7 @@ const NativeMethodsMixin = {
    * The exact behavior triggered will depend the type of view.
    */
   focus() {
-    UIManager.focus(ReactDOM.findDOMNode(this));
+    UIManager.focus(findNodeHandle(this));
   },
 
   /**
@@ -54,7 +54,7 @@ const NativeMethodsMixin = {
    */
   measure(callback: MeasureOnSuccessCallback) {
     UIManager.measure(
-      ReactDOM.findDOMNode(this),
+      findNodeHandle(this),
       mountSafeCallback(this, callback)
     );
   },
@@ -76,7 +76,7 @@ const NativeMethodsMixin = {
    */
   measureInWindow(callback: MeasureInWindowOnSuccessCallback) {
     UIManager.measureInWindow(
-      ReactDOM.findDOMNode(this),
+      findNodeHandle(this),
       mountSafeCallback(this, callback)
     );
   },
@@ -90,7 +90,7 @@ const NativeMethodsMixin = {
     onFail: () => void /* currently unused */
   ) {
     UIManager.measureLayout(
-      ReactDOM.findDOMNode(this),
+      findNodeHandle(this),
       relativeToNativeNode,
       mountSafeCallback(this, onFail),
       mountSafeCallback(this, onSuccess)
@@ -102,7 +102,7 @@ const NativeMethodsMixin = {
    */
   setNativeProps(nativeProps: Object) {
     UIManager.updateView(
-      ReactDOM.findDOMNode(this),
+      findNodeHandle(this),
       nativeProps,
       this
     );

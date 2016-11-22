@@ -1,6 +1,5 @@
 import findNodeHandle from './modules/findNodeHandle';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
+import { render, unmountComponentAtNode } from 'react/lib/ReactMount';
 
 // APIs
 import Animated from './apis/Animated';
@@ -47,11 +46,8 @@ import PointPropType from './propTypes/PointPropType';
 const ReactNative = {
   // top-level API
   findNodeHandle,
-  render: ReactDOM.render,
-  unmountComponentAtNode: ReactDOM.unmountComponentAtNode,
-  // web-only
-  renderToStaticMarkup: ReactDOMServer.renderToStaticMarkup,
-  renderToString: ReactDOMServer.renderToString,
+  render,
+  unmountComponentAtNode,
 
   // APIs
   Animated,

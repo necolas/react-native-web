@@ -8,7 +8,7 @@
 
 import { Component } from 'react';
 import invariant from 'fbjs/lib/invariant';
-import ReactDOM from 'react-dom';
+import { unmountComponentAtNode } from 'react/lib/ReactMount';
 import renderApplication, { prerenderApplication } from './renderApplication';
 
 const runnables = {};
@@ -29,20 +29,20 @@ class AppRegistry {
     return Object.keys(runnables);
   }
 
-  static prerenderApplication(appKey: string, appParameters?: Object): string {
+  static getApplication(appKey: string, appParameters?: Object): string {
     invariant(
-      runnables[appKey] && runnables[appKey].prerender,
+      runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +
       'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     );
 
-    return runnables[appKey].prerender(appParameters);
+    return runnables[appKey].getApplication(appParameters);
   }
 
   static registerComponent(appKey: string, getComponentFunc: ComponentProvider): string {
     runnables[appKey] = {
-      run: ({ initialProps, rootTag }) => renderApplication(getComponentFunc(), initialProps, rootTag),
-      prerender: ({ initialProps } = {}) => prerenderApplication(getComponentFunc(), initialProps)
+      getApplication: ({ initialProps } = {}) => getApplication(getComponentFunc(), initialProps),
+      run: ({ initialProps, rootTag }) => renderApplication(getComponentFunc(), initialProps, rootTag)
     };
     return appKey;
   }
@@ -85,7 +85,7 @@ class AppRegistry {
   }
 
   static unmountApplicationComponentAtRootTag(rootTag) {
-    ReactDOM.unmountComponentAtNode(rootTag);
+    unmountComponentAtNode(rootTag);
   }
 }
 
