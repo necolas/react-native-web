@@ -19,6 +19,12 @@ Fork, then clone the repo:
 git clone https://github.com/your-username/react-native-web.git
 ```
 
+Install dependencies (requires [yarn](https://yarnpkg.com/en/docs/install):
+
+```
+yarn
+```
+
 Run the examples:
 
 ```
