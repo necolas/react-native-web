@@ -8,7 +8,7 @@ import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 let styleElement;
 let shouldInsertStyleSheet = ExecutionEnvironment.canUseDOM;
 
-const STYLE_SHEET_ID = '__react-native-style';
+const STYLE_SHEET_ID = 'react-native-style__';
 
 const absoluteFillObject = { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 };
 

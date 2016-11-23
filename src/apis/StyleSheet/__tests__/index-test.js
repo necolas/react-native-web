@@ -35,7 +35,7 @@ describe('apis/StyleSheet', () => {
 
     test('renders a style sheet in the browser', () => {
       StyleSheet.create({ root: { color: 'red' } });
-      expect(document.getElementById('__react-native-style').textContent).toEqual(getDefaultStyleSheet());
+      expect(document.getElementById('react-native-style__').textContent).toEqual(getDefaultStyleSheet());
     });
   });
 
