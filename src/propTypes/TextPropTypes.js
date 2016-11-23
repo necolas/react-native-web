@@ -20,22 +20,19 @@ const TextPropTypes = process.env.NODE_ENV !== 'production' ? {
   textAlign: TextAlignPropType,
   textAlignVertical: oneOf([ 'auto', 'bottom', 'center', 'top' ]),
   textDecorationLine: string,
-  /* @platform web */
-  textOverflow: string,
-  /* @platform web */
-  textRendering: oneOf([ 'auto', 'geometricPrecision', 'optimizeLegibility', 'optimizeSpeed' ]),
   textShadowColor: ColorPropType,
   textShadowOffset: ShadowOffsetPropType,
   textShadowRadius: number,
-  /* @platform web */
-  textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
-  /* @platform web */
-  unicodeBidi: oneOf([ 'normal', 'bidi-override', 'embed', 'isolate', 'isolate-override', 'plaintext' ]),
-  /* @platform web */
-  whiteSpace: string,
-  /* @platform web */
-  wordWrap: string,
   writingDirection: WritingDirectionPropType,
+  /* @platform web */
+  textOverflow: string,
+  textRendering: oneOf([ 'auto', 'geometricPrecision', 'optimizeLegibility', 'optimizeSpeed' ]),
+  textTransform: oneOf([ 'capitalize', 'lowercase', 'none', 'uppercase' ]),
+  unicodeBidi: oneOf([ 'normal', 'bidi-override', 'embed', 'isolate', 'isolate-override', 'plaintext' ]),
+  whiteSpace: string,
+  wordWrap: string,
+  MozOsxFontSmoothing: string,
+  WebkitFontSmoothing: string,
   // opt-out of RTL flipping
   textAlign$noI18n: TextAlignPropType,
   textShadowOffset$noI18n: ShadowOffsetPropType,

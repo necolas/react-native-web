@@ -18,10 +18,12 @@ var ColorPropType = require('../../propTypes/ColorPropType');
 var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
 var React = require('react');
 var StyleSheet = require('../../apis/StyleSheet');
+var StyleSheetPropType = require('../../propTypes/StyleSheetPropType');
 var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
 var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
 var View = require('../View');
+var ViewStylePropTypes = require('../View/ViewStylePropTypes');
 
 var ensureComponentIsNative = require('./ensureComponentIsNative');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
@@ -77,7 +79,7 @@ var TouchableHighlight = React.createClass({
      * active.
      */
     underlayColor: ColorPropType,
-    style: React.PropTypes.style,
+    style: StyleSheetPropType(ViewStylePropTypes),
     /**
      * Called immediately after the underlay is shown
      */

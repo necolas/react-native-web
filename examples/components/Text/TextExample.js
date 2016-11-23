@@ -79,7 +79,7 @@ const examples = [
   title: 'Wrap',
   render: function() {
     return (
-      <Text>
+      <Text style={{ WebkitFontSmoothing: 'antialiased' }}>
         The text should wrap if it goes on multiple lines. See, this is going to
         the next line.
       </Text>
