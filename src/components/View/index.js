@@ -87,11 +87,18 @@ class View extends Component {
 
   render() {
     const {
-      collapsable, // eslint-disable-line
-      hitSlop, // eslint-disable-line
-      onLayout, // eslint-disable-line
       pointerEvents,
       style,
+      /* eslint-disable */
+      accessibilityComponentType,
+      accessibilityTraits,
+      collapsable,
+      hitSlop,
+      onAccessibilityTap,
+      onLayout,
+      onMagicTap,
+      removeClippedSubviews,
+      /* eslint-enable */
       ...other
     } = this.props;
 

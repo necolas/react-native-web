@@ -29,10 +29,17 @@ class Text extends Component {
   render() {
     const {
       numberOfLines,
-      onLayout, // eslint-disable-line
-      onPress, // eslint-disable-line
       selectable,
       style,
+      /* eslint-disable */
+      adjustsFontSizeToFit,
+      allowFontScaling,
+      ellipsizeMode,
+      minimumFontScale,
+      onLayout,
+      onPress,
+      suppressHighlighting,
+      /* eslint-enable */
       ...other
     } = this.props;
 
