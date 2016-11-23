@@ -77,7 +77,7 @@ var TouchableHighlight = React.createClass({
      * active.
      */
     underlayColor: ColorPropType,
-    style: View.propTypes.style,
+    style: React.PropTypes.style,
     /**
      * Called immediately after the underlay is shown
      */

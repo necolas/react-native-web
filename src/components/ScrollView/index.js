@@ -21,7 +21,6 @@ import React, { Component, PropTypes } from 'react';
 const ScrollView = React.createClass({
   propTypes: {
     ...View.propTypes,
-    children: View.propTypes.children,
     contentContainerStyle: StyleSheetPropType(ViewStylePropTypes),
     horizontal: PropTypes.bool,
     keyboardDismissMode: PropTypes.oneOf([ 'none', 'interactive', 'on-drag' ]),

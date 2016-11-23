@@ -16,7 +16,6 @@ var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
-var View = require('../View');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var warning = require('fbjs/lib/warning');
 var StyleSheet = require('../../apis/StyleSheet');
@@ -38,9 +37,9 @@ const TouchableWithoutFeedback = React.createClass({
   mixins: [TimerMixin, Touchable.Mixin],
 
   propTypes: {
-    accessible: View.propTypes.accessible,
-    accessibilityLabel: View.propTypes.accessibilityLabel,
-    accessibilityRole: View.propTypes.accessibilityRole,
+    accessible: React.PropTypes.bool,
+    accessibilityLabel: React.PropTypes.string,
+    accessibilityRole: React.PropTypes.string,
     /**
      * If true, disable all interactions for this component.
      */
