@@ -6,7 +6,7 @@
  * @flow
  */
 
-import debounce from 'lodash/debounce';
+import debounce from 'debounce';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 

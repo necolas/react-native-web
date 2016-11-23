@@ -9,7 +9,7 @@
 import { Component } from 'react';
 import invariant from 'fbjs/lib/invariant';
 import { unmountComponentAtNode } from 'react/lib/ReactMount';
-import renderApplication, { prerenderApplication } from './renderApplication';
+import renderApplication, { getApplication } from './renderApplication';
 
 const runnables = {};
 

@@ -1,8 +1,18 @@
 /* eslint-env jasmine, jest */
 
 import { getDefaultStyleSheet } from '../css';
-import isPlainObject from 'lodash/isPlainObject';
 import StyleSheet from '..';
+
+const isPlainObject = (x) => {
+  const toString = Object.prototype.toString;
+  let proto;
+  /* eslint-disable */
+  return (
+    toString.call(x) === '[object Object]' &&
+    (proto = Object.getPrototypeOf(x), proto === null || proto === Object.getPrototypeOf({}))
+  );
+  /* eslint-enable */
+};
 
 describe('apis/StyleSheet', () => {
   beforeEach(() => {

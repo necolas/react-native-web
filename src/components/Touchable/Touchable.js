@@ -14,7 +14,6 @@
 
 /* @edit start */
 const BoundingDimensions = require('./BoundingDimensions');
-const keyMirror = require('fbjs/lib/keyMirror');
 const normalizeColor = require('../../modules/normalizeColor');
 const Position = require('./Position');
 const React = require('react');
@@ -111,16 +110,16 @@ const View = require('../../components/View');
 /**
  * Touchable states.
  */
-var States = keyMirror({
-  NOT_RESPONDER: null,                   // Not the responder
-  RESPONDER_INACTIVE_PRESS_IN: null,     // Responder, inactive, in the `PressRect`
-  RESPONDER_INACTIVE_PRESS_OUT: null,    // Responder, inactive, out of `PressRect`
-  RESPONDER_ACTIVE_PRESS_IN: null,       // Responder, active, in the `PressRect`
-  RESPONDER_ACTIVE_PRESS_OUT: null,      // Responder, active, out of `PressRect`
-  RESPONDER_ACTIVE_LONG_PRESS_IN: null,  // Responder, active, in the `PressRect`, after long press threshold
-  RESPONDER_ACTIVE_LONG_PRESS_OUT: null, // Responder, active, out of `PressRect`, after long press threshold
-  ERROR: null
-});
+var States = {
+  NOT_RESPONDER: 'NOT_RESPONDER',                                     // Not the responder
+  RESPONDER_INACTIVE_PRESS_IN: 'RESPONDER_INACTIVE_PRESS_IN',         // Responder, inactive, in the `PressRect`
+  RESPONDER_INACTIVE_PRESS_OUT: 'RESPONDER_INACTIVE_PRESS_OUT',       // Responder, inactive, out of `PressRect`
+  RESPONDER_ACTIVE_PRESS_IN: 'RESPONDER_ACTIVE_PRESS_IN',             // Responder, active, in the `PressRect`
+  RESPONDER_ACTIVE_PRESS_OUT: 'RESPONDER_ACTIVE_PRESS_OUT',           // Responder, active, out of `PressRect`
+  RESPONDER_ACTIVE_LONG_PRESS_IN: 'RESPONDER_ACTIVE_LONG_PRESS_IN',   // Responder, active, in the `PressRect`, after long press threshold
+  RESPONDER_ACTIVE_LONG_PRESS_OUT: 'RESPONDER_ACTIVE_LONG_PRESS_OUT', // Responder, active, out of `PressRect`, after long press threshold
+  ERROR: 'ERROR'
+};
 
 /**
  * Quick lookup map for states that are considered to be "active"
@@ -147,15 +146,15 @@ var IsLongPressingIn = {
 /**
  * Inputs to the state machine.
  */
-var Signals = keyMirror({
-  DELAY: null,
-  RESPONDER_GRANT: null,
-  RESPONDER_RELEASE: null,
-  RESPONDER_TERMINATED: null,
-  ENTER_PRESS_RECT: null,
-  LEAVE_PRESS_RECT: null,
-  LONG_PRESS_DETECTED: null,
-});
+var Signals = {
+  DELAY: 'DELAY',
+  RESPONDER_GRANT: 'RESPONDER_GRANT',
+  RESPONDER_RELEASE: 'RESPONDER_RELEASE',
+  RESPONDER_TERMINATED: 'RESPONDER_TERMINATED',
+  ENTER_PRESS_RECT: 'ENTER_PRESS_RECT',
+  LEAVE_PRESS_RECT: 'LEAVE_PRESS_RECT',
+  LONG_PRESS_DETECTED: 'LONG_PRESS_DETECTED',
+};
 
 /**
  * Mapping from States x Signals => States

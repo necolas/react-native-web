@@ -26,7 +26,6 @@ var View = require('../View');
 var ensureComponentIsNative = require('./ensureComponentIsNative');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var keyOf = require('fbjs/lib/keyOf');
-var merge = require('../../modules/merge');
 
 type Event = Object;
 
@@ -115,7 +114,7 @@ var TouchableHighlight = React.createClass({
   },
 
   getInitialState: function() {
-    return merge(this.touchableGetInitialState(), this.computeSyntheticState(this.props))
+    return { ...this.touchableGetInitialState(), ...this.computeSyntheticState(this.props) }
   },
 
   componentDidMount: function() {

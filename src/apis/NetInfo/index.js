@@ -7,7 +7,7 @@
  */
 
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-import findIndex from 'lodash/findIndex';
+import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
 const connection = ExecutionEnvironment.canUseDOM && (

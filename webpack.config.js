@@ -25,7 +25,10 @@ module.exports = {
     path: DIST_DIRECTORY
   },
   plugins: [
-    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
+    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
     new webpack.optimize.DedupePlugin(),
     // https://github.com/animatedjs/animated/issues/40

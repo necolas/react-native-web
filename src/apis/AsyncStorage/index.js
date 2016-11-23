@@ -3,7 +3,7 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  */
-import merge from 'lodash/merge';
+import merge from 'deep-assign';
 
 const mergeLocalStorageItem = (key, value) => {
   const oldValue = window.localStorage.getItem(key);

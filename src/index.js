@@ -28,7 +28,6 @@ import Switch from './components/Switch';
 import Text from './components/Text';
 import TextInput from './components/TextInput';
 import Touchable from './components/Touchable/Touchable';
-import TouchableBounce from './components/Touchable/TouchableBounce';
 import TouchableHighlight from './components/Touchable/TouchableHighlight';
 import TouchableOpacity from './components/Touchable/TouchableOpacity';
 import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
@@ -76,7 +75,6 @@ const ReactNative = {
   Text,
   TextInput,
   Touchable,
-  TouchableBounce,
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,

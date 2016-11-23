@@ -4,7 +4,6 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import flattenStyle from '../../modules/flattenStyle';
 import React from 'react';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
-import StyleSheetValidation from './StyleSheetValidation';
 
 let styleElement;
 let shouldInsertStyleSheet = ExecutionEnvironment.canUseDOM;
@@ -52,7 +51,9 @@ module.exports = {
 
     const result = {};
     for (const key in styles) {
-      StyleSheetValidation.validateStyle(key, styles);
+      if (process.env.NODE_ENV !== 'production') {
+        require('./StyleSheetValidation').validateStyle(key, styles);
+      }
       result[key] = ReactNativePropRegistry.register(styles[key]);
     }
     return result;

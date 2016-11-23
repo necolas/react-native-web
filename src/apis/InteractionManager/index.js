@@ -6,13 +6,12 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import keyMirror from 'fbjs/lib/keyMirror';
 
 const InteractionManager = {
-  Events: keyMirror({
-    interactionStart: true,
-    interactionComplete: true
-  }),
+  Events: {
+    interactionStart: 'interactionStart',
+    interactionComplete: 'interactionComplete'
+  },
 
   /**
    * Schedule a function to run after all interactions have completed.

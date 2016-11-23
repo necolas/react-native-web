@@ -12,7 +12,6 @@
  */
 
 import invariant from 'fbjs/lib/invariant'
-import merge from '../modules/merge'
 import ReactPropTypeLocationNames from 'react/lib/ReactPropTypeLocationNames'
 import ReactPropTypesSecret from 'react/lib/ReactPropTypesSecret'
 
@@ -43,7 +42,7 @@ function createStrictShapeTypeChecker(
     }
     // We need to check all keys in case some are required but missing from
     // props.
-    var allKeys = merge(props[propName], shapeTypes);
+    var allKeys = { ...props[propName], ...shapeTypes };
     for (var key in allKeys) {
       var checker = shapeTypes[key];
       if (!checker) {

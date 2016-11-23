@@ -8,7 +8,6 @@
 
 import invariant from 'fbjs/lib/invariant';
 import { render } from 'react/lib/ReactMount';
-import ReactDOMServer from 'react-dom/server';
 import ReactNativeApp from './ReactNativeApp';
 import StyleSheet from '../../apis/StyleSheet';
 import React, { Component } from 'react';

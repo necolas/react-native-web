@@ -23,7 +23,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  TouchableBounce,
+  TouchableOpacity,
   View,
 } = ReactNative;
 
@@ -139,9 +139,9 @@ class GameEndOverlay extends React.Component {
     return (
       <View style={styles.overlay}>
         <Text style={styles.overlayMessage}>{message}</Text>
-        <TouchableBounce onPress={this.props.onRestart} style={styles.tryAgain}>
+        <TouchableOpacity onPress={this.props.onRestart} style={styles.tryAgain}>
           <Text style={styles.tryAgainText}>Try Again?</Text>
-        </TouchableBounce>
+        </TouchableOpacity>
       </View>
     );
   }
