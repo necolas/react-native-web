@@ -34,10 +34,10 @@ import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFee
 import View from './components/View';
 
 // modules
+import createDOMElement from './modules/createDOMElement';
 import NativeModules from './modules/NativeModules';
 
 // propTypes
-
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
 import PointPropType from './propTypes/PointPropType';
@@ -81,6 +81,7 @@ const ReactNative = {
   View,
 
   // modules
+  createDOMElement,
   NativeModules,
 
   // propTypes
