@@ -34,7 +34,7 @@ module.exports = {
     // https://github.com/animatedjs/animated/issues/40
     new webpack.NormalModuleReplacementPlugin(
       /es6-set/,
-      path.join(__dirname, 'src/modules/polyfills/Set.js')
+      path.join(__dirname, 'dist/modules/polyfills/Set.js')
     ),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({

@@ -1,5 +1,8 @@
 import findNodeHandle from './modules/findNodeHandle';
+import ReactDefaultInjection from 'react/lib/ReactDefaultInjection';
 import { render, unmountComponentAtNode } from 'react/lib/ReactMount';
+
+ReactDefaultInjection.inject();
 
 // APIs
 import Animated from './apis/Animated';
