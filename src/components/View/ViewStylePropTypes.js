@@ -1,6 +1,7 @@
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
+import ShadowStylePropTypes from '../../propTypes/ShadowStylePropTypes';
 import { PropTypes } from 'react';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
@@ -12,6 +13,7 @@ module.exports = process.env.NODE_ENV !== 'production' ? {
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...TransformPropTypes,
+  ...ShadowStylePropTypes,
   backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,
   opacity: number,
