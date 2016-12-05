@@ -1,20 +1,12 @@
-const ColorPropType = require('../../propTypes/ColorPropType');
-const Platform = require('../../apis/Platform');
-const StyleSheet = require('../../apis/StyleSheet');
-const TouchableOpacity = require('../Touchable/TouchableOpacity');
-const Text = require('../Text');
-const View = require('../View');
+import ColorPropType from '../../propTypes/ColorPropType';
 import React, { Component, PropTypes } from 'react';
-
-const invariant = require('fbjs/lib/invariant');
+import StyleSheet from '../../apis/StyleSheet';
+import TouchableOpacity from '../Touchable/TouchableOpacity';
+import Text from '../Text';
 
 class Button extends Component {
 
   static propTypes = {
-    /**
-     * Text to display for blindness accessibility features
-     */
-    accessibilityLabel: PropTypes.string,
     /**
      * Color of the text (iOS), or background color of the button (Android)
      */
@@ -35,18 +27,15 @@ class Button extends Component {
 
   render() {
     const {
-      accessibilityLabel,
       color,
+      disabled,
       onPress,
-      title,
-      disabled
+      title
     } = this.props;
     const buttonStyles = [ styles.button ];
     const textStyles = [ styles.text ];
 
-    if (color && Platform.OS === 'ios') {
-      textStyles.push({ color: color });
-    } else if (color) {
+    if (color) {
       buttonStyles.push({ backgroundColor: color });
     }
 
@@ -55,89 +44,37 @@ class Button extends Component {
       textStyles.push(styles.textDisabled);
     }
 
-    invariant(
-      typeof title === 'string',
-      'The title prop of a Button must be a string',
-    );
-
-    const formattedTitle = Platform.OS === 'android' ? title.toUpperCase() : title;
-
     return (
       <TouchableOpacity
-        accessibilityComponentType='button'
-        accessibilityLabel={accessibilityLabel}
-        accessibilityTraits={[ 'button' ]}
+        accessibilityRole={'button'}
         disabled={disabled}
-        onPress={onPress}>
-        <View style={buttonStyles}>
-          <Text style={textStyles}>{formattedTitle}</Text>
-        </View>
+        onPress={onPress}
+        style={buttonStyles}>
+        <Text style={textStyles}>{title}</Text>
       </TouchableOpacity>
     );
   }
 }
 
 // Material design blue from https://material.google.com/style/color.html#color-color-palette
-let defaultBlue = '#2196F3';
-if (Platform.OS === 'ios') {
-  // Measured default tintColor from iOS 10
-  defaultBlue = '#0C42FD';
-}
-
+const defaultBlue = '#2196F3';
 const styles = StyleSheet.create({
-  button: Platform.select({
-    ios: {},
-    android: {
-      elevation: 4,
-      backgroundColor: defaultBlue,
-      borderRadius: 2
-    },
-    web: {
-      backgroundColor: defaultBlue,
-      borderRadius: 2
-    }
-  }),
-  text: Platform.select({
-    ios: {
-      color: defaultBlue,
-      textAlign: 'center',
-      padding: 8,
-      fontSize: 18
-    },
-    android: {
-      textAlign: 'center',
-      color: 'white',
-      padding: 8,
-      fontWeight: '500'
-    },
-    web: {
-      textAlign: 'center',
-      color: 'white',
-      padding: 8,
-      fontWeight: '500'
-    }
-  }),
-  buttonDisabled: Platform.select({
-    ios: {},
-    android: {
-      elevation: 0,
-      backgroundColor: '#dfdfdf'
-    },
-    web: {
-      backgroundColor: '#dfdfdf'
-    }
-  }),
-  textDisabled: Platform.select({
-    ios: {
-      color: '#cdcdcd'
-    },
-    android: {
-      color: '#a1a1a1'
-    },
-    web: {
-      color: '#a1a1a1'
-    }
-  })
+  button: {
+    backgroundColor: defaultBlue,
+    borderRadius: 2
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    padding: 8,
+    fontWeight: '500'
+  },
+  buttonDisabled: {
+    backgroundColor: '#dfdfdf'
+  },
+  textDisabled: {
+    color: '#a1a1a1'
+  }
 });
 
 module.exports = Button;
