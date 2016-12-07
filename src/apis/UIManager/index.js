@@ -1,5 +1,5 @@
 import createReactStyleObject from '../StyleSheet/createReactStyleObject';
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
+import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || node.parentNode;
