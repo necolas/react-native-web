@@ -16,8 +16,9 @@
     "examples": "start-storybook -p 9001 -c ./examples/.storybook --dont-track",
     "lint": "eslint src",
     "prepublish": "npm run build && npm run build:umd",
-    "test": "jest",
-    "test:watch": "npm run test -- --watch"
+    "test": "npm run lint && npm run test:jest",
+    "test:jest": "jest",
+    "test:watch": "npm run test:jest -- --watch"
   },
   "dependencies": {
     "animated": "^0.1.3",

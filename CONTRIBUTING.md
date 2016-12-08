@@ -57,7 +57,7 @@ To continuously watch and run tests, run the following:
 npm run test:watch
 ```
 
-To perform linting, run the following:
+To perform only linting, run the following:
 
 ```
 npm run lint
