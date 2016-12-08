@@ -1,3 +1,60 @@
+exports[`components/Image passes other props through to underlying View 1`] = `
+<div
+  className=" __style_df"
+  onResponderGrant={[Function]}
+  role="img"
+  style={
+    Object {
+      "MozBoxSizing": "border-box",
+      "WebkitAlignItems": "stretch",
+      "WebkitBoxAlign": "stretch",
+      "WebkitBoxDirection": "normal",
+      "WebkitBoxOrient": "vertical",
+      "WebkitFlexBasis": "auto",
+      "WebkitFlexDirection": "column",
+      "WebkitFlexShrink": 0,
+      "alignItems": "stretch",
+      "backgroundColor": "transparent",
+      "backgroundPosition": "center",
+      "backgroundRepeat": "no-repeat",
+      "backgroundSize": "cover",
+      "borderBottomStyle": "solid",
+      "borderBottomWidth": "0px",
+      "borderLeftStyle": "solid",
+      "borderLeftWidth": "0px",
+      "borderRightStyle": "solid",
+      "borderRightWidth": "0px",
+      "borderTopStyle": "solid",
+      "borderTopWidth": "0px",
+      "boxSizing": "border-box",
+      "color": "inherit",
+      "display": null,
+      "flexBasis": "auto",
+      "flexDirection": "column",
+      "flexShrink": 0,
+      "font": "inherit",
+      "listStyle": "none",
+      "marginBottom": "0px",
+      "marginLeft": "0px",
+      "marginRight": "0px",
+      "marginTop": "0px",
+      "minHeight": "0px",
+      "minWidth": "0px",
+      "msFlexAlign": "stretch",
+      "msFlexDirection": "column",
+      "msFlexNegative": 0,
+      "msPreferredSize": "auto",
+      "paddingBottom": "0px",
+      "paddingLeft": "0px",
+      "paddingRight": "0px",
+      "paddingTop": "0px",
+      "position": "relative",
+      "textAlign": "inherit",
+      "textDecoration": "none",
+    }
+  } />
+`;
+
 exports[`components/Image prop "accessibilityLabel" 1`] = `
 <div
   aria-label="accessibilityLabel"

@@ -91,4 +91,9 @@ describe('components/Image', () => {
     const component = renderer.create(<Image testID='testID' />);
     expect(component.toJSON()).toMatchSnapshot();
   });
+
+  test('passes other props through to underlying View', () => {
+    const component = renderer.create(<Image onResponderGrant={() => {}} />);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });

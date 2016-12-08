@@ -1,6 +1,5 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import StyleSheet from '../../apis/StyleSheet';
@@ -38,7 +37,7 @@ class Image extends Component {
   static displayName = 'Image';
 
   static propTypes = {
-    ...BaseComponentPropTypes,
+    ...View.propTypes,
     children: PropTypes.any,
     defaultSource: ImageSourcePropType,
     onError: PropTypes.func,
@@ -99,27 +98,32 @@ class Image extends Component {
       defaultSource,
       onLayout,
       source,
-      testID
+      testID,
+      /* eslint-disable */
+      resizeMode,
+      /* eslint-enable */
+      ...other
     } = this.props;
 
     const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source);
     const imageSizeStyle = resolveAssetDimensions(!isLoaded ? defaultSource : source);
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
     const originalStyle = StyleSheet.flatten(this.props.style);
-    const resizeMode = this.props.resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
+    const finalResizeMode = resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
 
     const style = StyleSheet.flatten([
       styles.initial,
       imageSizeStyle,
       originalStyle,
       backgroundImage && { backgroundImage },
-      resizeModeStyles[resizeMode]
+      resizeModeStyles[finalResizeMode]
     ]);
     // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;
 
     return (
       <View
+        {...other}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole='img'
         accessible={accessible}
