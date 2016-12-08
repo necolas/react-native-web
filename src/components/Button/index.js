@@ -5,8 +5,11 @@ import TouchableOpacity from '../Touchable/TouchableOpacity';
 import Text from '../Text';
 
 class Button extends Component {
-
   static propTypes = {
+    /**
+     * Text to display for blindness accessibility features
+     */
+    accessibilityLabel: PropTypes.string,
     /**
      * Color of the text (iOS), or background color of the button (Android)
      */
@@ -27,6 +30,7 @@ class Button extends Component {
 
   render() {
     const {
+      accessibilityLabel,
       color,
       disabled,
       onPress,
@@ -46,6 +50,7 @@ class Button extends Component {
 
     return (
       <TouchableOpacity
+        accessibilityLabel={accessibilityLabel}
         accessibilityRole={'button'}
         disabled={disabled}
         onPress={onPress}
