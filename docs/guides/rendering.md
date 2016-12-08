@@ -62,16 +62,13 @@ AppRegistry.runApplication('App', {
   initialProps: {},
   rootTag: document.getElementById('react-app')
 })
-
-// prerender the app
-const { html, styleElement } = AppRegistry.prerenderApplication('App', { initialProps })
 ```
 
 ## Server-side rendering
 
 Rendering using the `AppRegistry`:
 
-```
+```js
 import ReactDOMServer from 'react-dom/server'
 import ReactNative, { AppRegistry } from 'react-native'
 
@@ -84,4 +81,4 @@ AppRegistry.registerComponent('App', () => AppContainer)
 // prerender the app
 const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
- ```
+```
