@@ -14,13 +14,13 @@
 
 // Note (avik): add @flow when Flow supports spread properties in propTypes
 
-var Animated = require('../../apis/Animated');
 var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
 var React = require('react');
 var StyleSheet = require('../../apis/StyleSheet');
 var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
 var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
+var View = require('../View');
 
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var flattenStyle = StyleSheet.flatten
@@ -70,10 +70,7 @@ var TouchableOpacity = React.createClass({
   },
 
   getInitialState: function() {
-    return {
-      ...this.touchableGetInitialState(),
-      anim: new Animated.Value(1),
-    };
+    return this.touchableGetInitialState();
   },
 
   componentDidMount: function() {
@@ -85,10 +82,11 @@ var TouchableOpacity = React.createClass({
   },
 
   setOpacityTo: function(value) {
-    Animated.timing(
-      this.state.anim,
-      {toValue: value, duration: 150}
-    ).start();
+    this.setNativeProps({
+      style: {
+        opacity: value
+      }
+    });
   },
 
   /**
@@ -166,7 +164,7 @@ var TouchableOpacity = React.createClass({
 
   render: function() {
     return (
-      <Animated.View
+      <View
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityRole={this.props.accessibilityRole}
@@ -174,8 +172,7 @@ var TouchableOpacity = React.createClass({
         style={[
           styles.root,
           this.props.disabled && styles.disabled,
-          this.props.style,
-          {opacity: this.state.anim}
+          this.props.style
         ]}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
@@ -192,7 +189,7 @@ var TouchableOpacity = React.createClass({
         tabIndex={this.props.disabled ? null : '0'}
       >
         {this.props.children}
-      </Animated.View>
+      </View>
     );
   },
 });
@@ -200,6 +197,7 @@ var TouchableOpacity = React.createClass({
 var styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
+    transition: 'opacity 0.15s',
     userSelect: 'none'
   },
   disabled: {
