@@ -88,9 +88,9 @@ class Switch extends Component {
     const thumbStyle = [
       styles.thumb,
       {
-        alignSelf: value ? 'flex-end' : 'flex-start',
         backgroundColor: thumbCurrentColor,
         height: thumbHeight,
+        transform: [ { translateX: value ? '100%' : '0%' } ],
         width: thumbWidth
       },
       disabled && styles.disabledThumb
@@ -151,16 +151,17 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '70%',
     margin: 'auto',
-    transition: 'background-color 0.1s',
+    transition: '0.1s',
     width: '90%'
   },
   disabledTrack: {
     backgroundColor: '#D5D5D5'
   },
   thumb: {
+    alignSelf: 'flex-start',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
-    transition: 'background-color 0.1s'
+    transition: '0.1s'
   },
   disabledThumb: {
     backgroundColor: '#BDBDBD'
