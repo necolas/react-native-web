@@ -72,16 +72,28 @@ export default class ScrollViewBase extends Component {
     this._state.scrollLastTick = Date.now();
   }
 
+  _normalizeEvent(e) {
+    return {
+      ...e,
+      nativeEvent: {
+        contentOffset: {
+          x: e.target.scrollLeft,
+          y: e.target.scrollTop
+        }
+      }
+    };
+  }
+
   _handleScrollTick(e) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
-    if (onScroll) { onScroll(e); }
+    if (onScroll) { onScroll(this._normalizeEvent(e)); }
   }
 
   _handleScrollEnd(e) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
-    if (onScroll) { onScroll(e); }
+    if (onScroll) { onScroll(this._normalizeEvent(e)); }
   }
 
   _shouldEmitScrollEvent(lastTick, eventThrottle) {

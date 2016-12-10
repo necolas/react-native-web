@@ -10,6 +10,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 const eventHandlerNames = [
   'onClick',
@@ -92,6 +93,7 @@ class View extends Component {
       /* eslint-disable */
       accessibilityComponentType,
       accessibilityTraits,
+      className,
       collapsable,
       hitSlop,
       onAccessibilityTap,
@@ -120,11 +122,14 @@ class View extends Component {
       ...other,
       ...normalizedEventHandlers,
       style: [
-        styles.initial,
         style,
-        needsFlexReset && styles.flexReset,
         pointerEventsStyle
-      ]
+      ],
+      className: classnames(
+        'rnw-View',
+        needsFlexReset && 'rnw-View-flexReset',
+        className
+      )
     };
 
     return createDOMElement(component, props);
@@ -147,35 +152,5 @@ class View extends Component {
     };
   }
 }
-
-const styles = StyleSheet.create({
-  // https://github.com/facebook/css-layout#default-values
-  initial: {
-    alignItems: 'stretch',
-    borderWidth: 0,
-    borderStyle: 'solid',
-    boxSizing: 'border-box',
-    display: 'flex',
-    flexBasis: 'auto',
-    flexDirection: 'column',
-    margin: 0,
-    padding: 0,
-    position: 'relative',
-    // button and anchor reset
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    font: 'inherit',
-    textAlign: 'inherit',
-    textDecorationLine: 'none',
-    // list reset
-    listStyle: 'none',
-    // fix flexbox bugs
-    minHeight: 0,
-    minWidth: 0
-  },
-  flexReset: {
-    flexShrink: 0
-  }
-});
 
 module.exports = applyLayout(applyNativeMethods(View));
