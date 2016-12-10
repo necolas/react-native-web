@@ -2,13 +2,13 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
-import StyleSheet from '../../apis/StyleSheet';
 import Text from '../Text';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
 import { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 /**
  * React Native events differ from W3C events.
@@ -127,13 +127,13 @@ class TextInput extends Component {
   render() {
     const {
       autoCorrect,
+      className,
       editable,
       keyboardType,
       maxNumberOfLines,
       multiline,
       numberOfLines,
       secureTextEntry,
-      style,
       /* eslint-disable */
       blurOnSubmit,
       clearTextOnFocus,
@@ -185,20 +185,19 @@ class TextInput extends Component {
 
     const component = multiline ? TextareaAutosize : 'input';
 
+    const combinedClassnames = classnames('.rnw-TextInput', className);
+
     const props = {
       ...other,
       autoCorrect: autoCorrect ? 'on' : 'off',
+      className: combinedClassnames,
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
       onKeyPress: normalizeEventHandler(this._handleKeyPress),
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
-      ref: this._setNode,
-      style: [
-        styles.initial,
-        style
-      ]
+      ref: this._setNode
     };
 
     if (multiline) {
@@ -260,20 +259,5 @@ class TextInput extends Component {
     this._node = findNodeHandle(component);
   }
 }
-
-const styles = StyleSheet.create({
-  initial: {
-    appearance: 'none',
-    backgroundColor: 'transparent',
-    borderColor: 'black',
-    borderRadius: 0,
-    borderWidth: 0,
-    boxSizing: 'border-box',
-    color: 'inherit',
-    flex: 1,
-    font: 'inherit',
-    padding: 0
-  }
-});
 
 module.exports = applyLayout(applyNativeMethods(TextInput));

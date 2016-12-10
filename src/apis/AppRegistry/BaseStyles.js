@@ -80,33 +80,17 @@ export default () =>
         flex-shrink: 0;
       }
       
-      .rnw-TextInput-wrapper {
-        flex-grow: 1;
-      }
       .rnw-TextInput {
         appearance: none;
-        flex-grow: 1;
-        padding: 0;
-        border-width: 0;
-        outline: none;
-        box-sizing: border-box;
+        backgroundColor: transparent;
+        borderColor: black;
+        borderRadius: 0;
+        borderWidth: 0;
+        boxSizing: border-box;
         color: inherit;
+        flex: 1;
         font: inherit;
-        z-index: 1;
-        background-color: transparent;
-      }
-      .rnw-TextInput-placeholder {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        justify-content: center;
-      }
-      .rnw-TextInput-placeholderText {
-        color: darkgray;
-        overflow: hidden;
-        white-space: pre;
+        padding: 0;
       }
     ` }}
   />;
