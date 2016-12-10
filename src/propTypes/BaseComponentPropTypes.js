@@ -6,6 +6,7 @@ const BaseComponentPropTypes = process.env.NODE_ENV !== 'production' ? {
   accessibilityLiveRegion: oneOf([ 'assertive', 'off', 'polite' ]),
   accessibilityRole: string,
   accessible: bool,
+  className: PropTypes.string,
   style: oneOfType([ array, number, object ]),
   testID: string
 } : {};

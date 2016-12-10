@@ -1,5 +1,6 @@
 import StyleSheet from '../StyleSheet';
 import View from '../../components/View';
+import BaseStyles from './BaseStyles';
 import React, { Component, PropTypes } from 'react';
 
 class ReactNativeApp extends Component {
@@ -14,6 +15,7 @@ class ReactNativeApp extends Component {
 
     return (
       <View style={styles.appContainer}>
+        <BaseStyles />
         <RootComponent {...initialProps} rootTag={rootTag} />
       </View>
     );
