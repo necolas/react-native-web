@@ -3,54 +3,33 @@ import React from 'react';
 export default () =>
   <style
     dangerouslySetInnerHTML={{ __html: `
-      html {
-        width: 100%;
-        height: 100%;
-      }
-      body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-      #root {
-        width 100%;
-        height: 100%;
-        display: flex;
-      }
-      
-      .rnw-Image-initial {
-        align-self: flex-start;
+      .rnw-Image {
         background-color: transparent;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
       }
-      .rnw-Image {
-        max-width: 100%;
-        max-height: 100%;
-        height: auto;
-        border-width: 0;
-        opacity: 0;
-      }
-      .rnw-Image-children {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
+      .rnw-Image-center {
+        backgroundSize: auto;
+        backgroundPosition: center;
       }
       .rnw-Image-contain {
         background-size: contain;
       }
-      .rnw-Image-cover: {
+      .rnw-Image-cover {
         background-size: cover;
       }
-      .rnw-Image-none: {
+      .rnw-Image-none {
         background-size: auto;
       }
-      .rnw-Image-stretch: {
+      .rnw-Image-repeat {
+        backgroundSize: auto;
+        backgroundRepeat: repeat;
+      }
+      .rnw-Image-stretch {
         background-size: 100% 100%;
       }
+      
       .rnw-Text {
         display: inline;
         padding: 0;
