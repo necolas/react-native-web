@@ -31,20 +31,25 @@ export default () =>
       }
       
       .rnw-Text {
-        display: inline;
-        padding: 0;
-        margin: 0;
+        borderWidth: 0;
         color: inherit;
+        display: inline;
         font: inherit;
-        text-decoration-line: none;
-        word-wrap: break-word;
-      }
+        margin: 0;
+        padding: 0;
+        textDecorationLine: none;
+        wordWrap: break-word;
+      },
+      .rnw-Text-notSelectable {
+        userSelect: none;
+      },
       .rnw-Text-singleLineStyle {
-        max-width: 100%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        maxWidth: 100%;
         overflow: hidden;
+        textOverflow: ellipsis;
+        whiteSpace: nowrap;
       }
+      
       .rnw-View {
         align-items: stretch;
         border-width: 0;
@@ -74,6 +79,7 @@ export default () =>
       .rnw-View-flexReset {
         flex-shrink: 0;
       }
+      
       .rnw-TextInput-wrapper {
         flex-grow: 1;
       }
