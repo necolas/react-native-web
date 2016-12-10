@@ -1,86 +1,22 @@
 exports[`components/Text prop "children" 1`] = `
 <span
-  className=""
+  className=".rnw-Text"
   onClick={[Function]}
-  style={
-    Object {
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "wordWrap": "break-word",
-    }
-  }>
+  style={Object {}}>
   children
 </span>
 `;
 
 exports[`components/Text prop "selectable" 1`] = `
 <span
-  className=""
+  className=".rnw-Text"
   onClick={[Function]}
-  style={
-    Object {
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "wordWrap": "break-word",
-    }
-  } />
+  style={Object {}} />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
 <span
-  className=""
+  className=".rnw-Text .rnw-Text-notSelectable"
   onClick={[Function]}
-  style={
-    Object {
-      "MozUserSelect": "none",
-      "WebkitUserSelect": "none",
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "userSelect": "none",
-      "wordWrap": "break-word",
-    }
-  } />
+  style={Object {}} />
 `;
