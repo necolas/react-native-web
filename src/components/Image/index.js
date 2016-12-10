@@ -6,6 +6,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 const STATUS_ERRORED = 'ERRORED';
 const STATUS_LOADED = 'LOADED';
@@ -95,6 +96,7 @@ class Image extends Component {
       accessibilityLabel,
       accessible,
       children,
+      className,
       defaultSource,
       onLayout,
       source,
@@ -112,14 +114,18 @@ class Image extends Component {
     const finalResizeMode = resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
 
     const style = StyleSheet.flatten([
-      styles.initial,
       imageSizeStyle,
       originalStyle,
-      backgroundImage && { backgroundImage },
-      resizeModeStyles[finalResizeMode]
+      backgroundImage && { backgroundImage }
     ]);
     // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;
+
+    const combinedClassnames = classnames(
+      'rnw-Image',
+      `rnw-Image-${finalResizeMode}`,
+      className
+    );
 
     return (
       <View
@@ -128,6 +134,7 @@ class Image extends Component {
         accessibilityRole='img'
         accessible={accessible}
         children={children}
+        className={combinedClassnames}
         onLayout={onLayout}
         style={style}
         testID={testID}
@@ -201,37 +208,5 @@ class Image extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  initial: {
-    backgroundColor: 'transparent',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
-  }
-});
-
-const resizeModeStyles = StyleSheet.create({
-  center: {
-    backgroundSize: 'auto',
-    backgroundPosition: 'center'
-  },
-  contain: {
-    backgroundSize: 'contain'
-  },
-  cover: {
-    backgroundSize: 'cover'
-  },
-  none: {
-    backgroundSize: 'auto'
-  },
-  repeat: {
-    backgroundSize: 'auto',
-    backgroundRepeat: 'repeat'
-  },
-  stretch: {
-    backgroundSize: '100% 100%'
-  }
-});
 
 module.exports = applyNativeMethods(Image);
