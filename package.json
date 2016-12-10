@@ -24,6 +24,7 @@
     "animated": "^0.1.3",
     "array-find-index": "^1.0.2",
     "babel-runtime": "^6.11.6",
+    "classnames": "^2.2.5",
     "debounce": "^1.0.0",
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.4",
