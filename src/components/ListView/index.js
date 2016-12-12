@@ -2,18 +2,27 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import ListViewDataSource from './ListViewDataSource';
 import ListViewPropTypes from './ListViewPropTypes';
 import ScrollView from '../ScrollView';
-import View from '../View';
-import React, { Component } from 'react';
+import StaticRenderer from '../StaticRenderer';
+import React, { Component, isEmpty, merge } from 'react';
+import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+
+const DEFAULT_PAGE_SIZE = 1;
+const DEFAULT_INITIAL_ROWS = 10;
+const DEFAULT_SCROLL_RENDER_AHEAD = 1000;
+const DEFAULT_END_REACHED_THRESHOLD = 1000;
+const DEFAULT_SCROLL_CALLBACK_THROTTLE = 50;
 
 class ListView extends Component {
   static propTypes = ListViewPropTypes;
 
   static defaultProps = {
-    initialListSize: 10,
-    pageSize: 1,
+    initialListSize: DEFAULT_INITIAL_ROWS,
+    pageSize: DEFAULT_PAGE_SIZE,
     renderScrollComponent: (props) => <ScrollView {...props} />,
-    scrollRenderAheadDistance: 1000,
-    onEndReachedThreshold: 1000,
+    scrollRenderAheadDistance: DEFAULT_SCROLL_RENDER_AHEAD,
+    onEndReachedThreshold: DEFAULT_END_REACHED_THRESHOLD,
+    scrollEventThrottle: DEFAULT_SCROLL_CALLBACK_THROTTLE,
+    removeClippedSubviews: true,
     stickyHeaderIndices: []
   };
 
@@ -26,6 +35,34 @@ class ListView extends Component {
       highlightedRow: {}
     };
     this.onRowHighlighted = (sectionId, rowId) => this._onRowHighlighted(sectionId, rowId);
+    this.scrollProperties = {};
+  }
+
+  componentWillMount() {
+    // this data should never trigger a render pass, so don't put in state
+    this.scrollProperties = {
+      visibleLength: null,
+      contentLength: null,
+      offset: 0
+    };
+    this._childFrames = [];
+    this._visibleRows = {};
+    this._prevRenderedRowsCount = 0;
+    this._sentEndForContentLength = null;
+  }
+
+  componentDidMount() {
+    // do this in animation frame until componentDidMount actually runs after
+    // the component is laid out
+    requestAnimationFrame(() => {
+      this._measureAndUpdateScrollProps();
+    });
+  }
+
+  componentDidUpdate() {
+    requestAnimationFrame(() => {
+      this._measureAndUpdateScrollProps();
+    });
   }
 
   getScrollResponder() {
@@ -40,57 +77,312 @@ class ListView extends Component {
     return this._scrollViewRef && this._scrollViewRef.setNativeProps(props);
   }
 
-  _onRowHighlighted(sectionId, rowId) {
+  _onRowHighlighted = (sectionId, rowId) => {
     this.setState({ highlightedRow: { sectionId, rowId } });
   }
 
+  renderSectionHeaderFn = (data, sectionID) => {
+    return () => this.props.renderSectionHeader(data, sectionID);
+  }
+
+  renderRowFn = (data, sectionID, rowID) => {
+    return () => this.props.renderRow(data, sectionID, rowID, this._onRowHighlighted);
+  }
+
   render() {
-    const dataSource = this.props.dataSource;
-    const header = this.props.renderHeader ? this.props.renderHeader() : undefined;
-    const footer = this.props.renderFooter ? this.props.renderFooter() : undefined;
-
-    // render sections and rows
     const children = [];
-    const sections = dataSource.rowIdentities;
-    const renderRow = this.props.renderRow;
-    const renderSectionHeader = this.props.renderSectionHeader;
-    const renderSeparator = this.props.renderSeparator;
-    for (let sectionIdx = 0, sectionCnt = sections.length; sectionIdx < sectionCnt; sectionIdx++) {
-      const rows = sections[sectionIdx];
-      const sectionId = dataSource.sectionIdentities[sectionIdx];
 
-      // render optional section header
-      if (renderSectionHeader) {
-        const section = dataSource.getSectionHeaderData(sectionIdx);
-        const key = `s_${sectionId}`;
-        const child = <View key={key}>{renderSectionHeader(section, sectionId)}</View>;
-        children.push(child);
+    const dataSource = this.props.dataSource;
+    const allRowIDs = dataSource.rowIdentities;
+    let rowCount = 0;
+    const sectionHeaderIndices = [];
+
+    const header = this.props.renderHeader && this.props.renderHeader();
+    const footer = this.props.renderFooter && this.props.renderFooter();
+    let totalIndex = header ? 1 : 0;
+
+    for (let sectionIdx = 0; sectionIdx < allRowIDs.length; sectionIdx++) {
+      const sectionID = dataSource.sectionIdentities[sectionIdx];
+      const rowIDs = allRowIDs[sectionIdx];
+      if (rowIDs.length === 0) {
+        if (this.props.enableEmptySections === undefined) {
+          const warning = require('fbjs/lib/warning');
+          warning(false, 'In next release empty section headers will be rendered.' +
+                  ' In this release you can use \'enableEmptySections\' flag to render empty section headers.');
+          continue;
+        } else {
+          const invariant = require('fbjs/lib/invariant');
+          invariant(
+            this.props.enableEmptySections,
+            'In next release \'enableEmptySections\' flag will be deprecated,' +
+            ' empty section headers will always be rendered. If empty section headers' +
+            ' are not desirable their indices should be excluded from sectionIDs object.' +
+            ' In this release \'enableEmptySections\' may only have value \'true\'' +
+            ' to allow empty section headers rendering.');
+        }
       }
 
-      // render rows
-      for (let rowIdx = 0, rowCnt = rows.length; rowIdx < rowCnt; rowIdx++) {
-        const rowId = rows[rowIdx];
-        const row = dataSource.getRowData(sectionIdx, rowIdx);
-        const key = `r_${sectionId}_${rowId}`;
-        const child = <View key={key}>{renderRow(row, sectionId, rowId, this.onRowHighlighted)}</View>;
-        children.push(child);
+      if (this.props.renderSectionHeader) {
+        const shouldUpdateHeader = rowCount >= this._prevRenderedRowsCount &&
+          dataSource.sectionHeaderShouldUpdate(sectionIdx);
+        children.push(
+          <StaticRenderer
+            key={`s_${sectionID}`}
+            render={this.renderSectionHeaderFn(
+              dataSource.getSectionHeaderData(sectionIdx),
+              sectionID
+            )}
+            shouldUpdate={!!shouldUpdateHeader}
+          />
+        );
+        sectionHeaderIndices.push(totalIndex++);
+      }
 
-        // render optional separator
-        if (renderSeparator && ((rowIdx !== rows.length - 1) || (sectionIdx === sections.length - 1))) {
+      for (let rowIdx = 0; rowIdx < rowIDs.length; rowIdx++) {
+        const rowID = rowIDs[rowIdx];
+        const comboID = `${sectionID}_${rowID}`;
+        const shouldUpdateRow = rowCount >= this._prevRenderedRowsCount &&
+          dataSource.rowShouldUpdate(sectionIdx, rowIdx);
+        const row =
+          <StaticRenderer
+            key={`r_${comboID}`}
+            render={this.renderRowFn(
+              dataSource.getRowData(sectionIdx, rowIdx),
+              sectionID,
+              rowID
+            )}
+            shouldUpdate={!!shouldUpdateRow}
+          />;
+        children.push(row);
+        totalIndex++;
+
+        if (this.props.renderSeparator &&
+            (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)) {
           const adjacentRowHighlighted =
-            this.state.highlightedRow.sectionID === sectionId && (
-              this.state.highlightedRow.rowID === rowId ||
-              this.state.highlightedRow.rowID === rows[rowIdx + 1]);
-          const separator = renderSeparator(sectionId, rowId, adjacentRowHighlighted);
-          children.push(separator);
+            this.state.highlightedRow.sectionID === sectionID && (
+              this.state.highlightedRow.rowID === rowID ||
+              this.state.highlightedRow.rowID === rowIDs[rowIdx + 1]
+            );
+          const separator = this.props.renderSeparator(
+            sectionID,
+            rowID,
+            adjacentRowHighlighted
+          );
+          if (separator) {
+            children.push(separator);
+            totalIndex++;
+          }
         }
+        if (++rowCount === this.state.curRenderedRowsCount) {
+          break;
+        }
+      }
+      if (rowCount >= this.state.curRenderedRowsCount) {
+        break;
       }
     }
 
-    return React.cloneElement(this.props.renderScrollComponent(this.props), {
-      ref: this._setScrollViewRef
+    const {
+      renderScrollComponent,
+      ...props
+    } = this.props;
+    Object.assign(props, {
+      onScroll: this._onScroll,
+      stickyHeaderIndices: this.props.stickyHeaderIndices.concat(sectionHeaderIndices),
+
+      // Do not pass these events downstream to ScrollView since they will be
+      // registered in ListView's own ScrollResponder.Mixin
+      onKeyboardWillShow: undefined,
+      onKeyboardWillHide: undefined,
+      onKeyboardDidShow: undefined,
+      onKeyboardDidHide: undefined
+    });
+
+    return React.cloneElement(renderScrollComponent(props), {
+      ref: this._setScrollViewRef,
+      onContentSizeChange: this._onContentSizeChange,
+      onLayout: this._onLayout
     }, header, children, footer);
   }
+
+  _measureAndUpdateScrollProps() {
+    const scrollComponent = this.getScrollResponder();
+    if (!scrollComponent || !scrollComponent.getInnerViewNode) {
+      return;
+    }
+
+    this._updateVisibleRows();
+  }
+
+  _onLayout = (event: Object) => {
+    const { width, height } = event.nativeEvent.layout;
+    const visibleLength = !this.props.horizontal ? height : width;
+    if (visibleLength !== this.scrollProperties.visibleLength) {
+      this.scrollProperties.visibleLength = visibleLength;
+      this._updateVisibleRows();
+      this._renderMoreRowsIfNeeded();
+    }
+    this.props.onLayout && this.props.onLayout(event);
+  }
+
+  _updateVisibleRows(updatedFrames?: Array<Object>) {
+    if (!this.props.onChangeVisibleRows) {
+      return; // No need to compute visible rows if there is no callback
+    }
+    if (updatedFrames) {
+      updatedFrames.forEach((newFrame) => {
+        this._childFrames[newFrame.index] = merge(newFrame);
+      });
+    }
+    const isVertical = !this.props.horizontal;
+    const dataSource = this.props.dataSource;
+    const visibleMin = this.scrollProperties.offset;
+    const visibleMax = visibleMin + this.scrollProperties.visibleLength;
+    const allRowIDs = dataSource.rowIdentities;
+
+    const header = this.props.renderHeader && this.props.renderHeader();
+    let totalIndex = header ? 1 : 0;
+    let visibilityChanged = false;
+    const changedRows = {};
+    for (let sectionIdx = 0; sectionIdx < allRowIDs.length; sectionIdx++) {
+      const rowIDs = allRowIDs[sectionIdx];
+      if (rowIDs.length === 0) {
+        continue;
+      }
+      const sectionID = dataSource.sectionIdentities[sectionIdx];
+      if (this.props.renderSectionHeader) {
+        totalIndex++;
+      }
+      let visibleSection = this._visibleRows[sectionID];
+      if (!visibleSection) {
+        visibleSection = {};
+      }
+      for (let rowIdx = 0; rowIdx < rowIDs.length; rowIdx++) {
+        const rowID = rowIDs[rowIdx];
+        const frame = this._childFrames[totalIndex];
+        totalIndex++;
+        if (this.props.renderSeparator &&
+           (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)) {
+          totalIndex++;
+        }
+        if (!frame) {
+          break;
+        }
+        const rowVisible = visibleSection[rowID];
+        const min = isVertical ? frame.y : frame.x;
+        const max = min + (isVertical ? frame.height : frame.width);
+        if ((!min && !max) || (min === max)) {
+          break;
+        }
+        if (min > visibleMax || max < visibleMin) {
+          if (rowVisible) {
+            visibilityChanged = true;
+            delete visibleSection[rowID];
+            if (!changedRows[sectionID]) {
+              changedRows[sectionID] = {};
+            }
+            changedRows[sectionID][rowID] = false;
+          }
+        } else if (!rowVisible) {
+          visibilityChanged = true;
+          visibleSection[rowID] = true;
+          if (!changedRows[sectionID]) {
+            changedRows[sectionID] = {};
+          }
+          changedRows[sectionID][rowID] = true;
+        }
+      }
+      if (!isEmpty(visibleSection)) {
+        this._visibleRows[sectionID] = visibleSection;
+      } else if (this._visibleRows[sectionID]) {
+        delete this._visibleRows[sectionID];
+      }
+    }
+    visibilityChanged && this.props.onChangeVisibleRows(this._visibleRows, changedRows);
+  }
+
+  _onContentSizeChange = (width: number, height: number) => {
+    const contentLength = !this.props.horizontal ? height : width;
+    if (contentLength !== this.scrollProperties.contentLength) {
+      this.scrollProperties.contentLength = contentLength;
+      this._updateVisibleRows();
+      this._renderMoreRowsIfNeeded();
+    }
+    this.props.onContentSizeChange && this.props.onContentSizeChange(width, height);
+  }
+
+  _getDistanceFromEnd(scrollProperties: Object) {
+    return scrollProperties.contentLength - scrollProperties.visibleLength - scrollProperties.offset;
+  }
+
+  _maybeCallOnEndReached(event?: Object) {
+    if (this.props.onEndReached &&
+        this.scrollProperties.contentLength !== this._sentEndForContentLength &&
+        this._getDistanceFromEnd(this.scrollProperties) < this.props.onEndReachedThreshold &&
+        this.state.curRenderedRowsCount === (this.props.enableEmptySections ?
+          this.props.dataSource.getRowAndSectionCount() : this.props.dataSource.getRowCount())) {
+      this._sentEndForContentLength = this.scrollProperties.contentLength;
+      this.props.onEndReached(event);
+      return true;
+    }
+    return false;
+  }
+
+  _renderMoreRowsIfNeeded() {
+    if (this.scrollProperties.contentLength === null ||
+      this.scrollProperties.visibleLength === null ||
+      this.state.curRenderedRowsCount === (this.props.enableEmptySections ?
+        this.props.dataSource.getRowAndSectionCount() : this.props.dataSource.getRowCount())) {
+      this._maybeCallOnEndReached();
+      return;
+    }
+
+    const distanceFromEnd = this._getDistanceFromEnd(this.scrollProperties);
+    if (distanceFromEnd < this.props.scrollRenderAheadDistance) {
+      this._pageInNewRows();
+    }
+  }
+
+  _pageInNewRows() {
+    this.setState((state, props) => {
+      const rowsToRender = Math.min(
+        state.curRenderedRowsCount + props.pageSize,
+        (props.enableEmptySections ? props.dataSource.getRowAndSectionCount() : props.dataSource.getRowCount())
+      );
+      this._prevRenderedRowsCount = state.curRenderedRowsCount;
+      return {
+        curRenderedRowsCount: rowsToRender
+      };
+    }, () => {
+      this._measureAndUpdateScrollProps();
+      this._prevRenderedRowsCount = this.state.curRenderedRowsCount;
+    });
+  }
+
+  _onScroll = (e: Object) => {
+    const isVertical = !this.props.horizontal;
+    this.scrollProperties.visibleLength = e.nativeEvent.layoutMeasurement[
+      isVertical ? 'height' : 'width'
+    ];
+    this.scrollProperties.contentLength = e.nativeEvent.contentSize[
+      isVertical ? 'height' : 'width'
+    ];
+    this.scrollProperties.offset = e.nativeEvent.contentOffset[
+      isVertical ? 'y' : 'x'
+    ];
+    this._updateVisibleRows(e.nativeEvent.updatedChildFrames);
+    if (!this._maybeCallOnEndReached(e)) {
+      this._renderMoreRowsIfNeeded();
+    }
+
+    if (this.props.onEndReached &&
+        this._getDistanceFromEnd(this.scrollProperties) > this.props.onEndReachedThreshold) {
+      // Scrolled out of the end zone, so it should be able to trigger again.
+      this._sentEndForContentLength = null;
+    }
+
+    this.props.onScroll && this.props.onScroll(e);
+  };
 
   _setScrollViewRef = (component) => {
     this._scrollViewRef = component;
