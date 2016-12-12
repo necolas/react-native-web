@@ -1,22 +1,28 @@
 exports[`components/Text prop "children" 1`] = `
 <span
   className=".rnw-Text"
-  onClick={[Function]}
   style={Object {}}>
   children
 </span>
 `;
 
+exports[`components/Text prop "onPress" 1`] = `
+<span
+  className=".rnw-Text .rnw-Text-pressable"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  style={Object {}}
+  tabIndex={0} />
+`;
+
 exports[`components/Text prop "selectable" 1`] = `
 <span
   className=".rnw-Text"
-  onClick={[Function]}
   style={Object {}} />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
 <span
   className=".rnw-Text .rnw-Text-notSelectable"
-  onClick={[Function]}
   style={Object {}} />
 `;
