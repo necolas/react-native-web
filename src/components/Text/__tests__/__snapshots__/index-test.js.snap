@@ -1,7 +1,6 @@
 exports[`components/Text prop "children" 1`] = `
 <span
   className=""
-  onClick={[Function]}
   style={
     Object {
       "borderBottomWidth": "0px",
@@ -27,10 +26,39 @@ exports[`components/Text prop "children" 1`] = `
 </span>
 `;
 
-exports[`components/Text prop "selectable" 1`] = `
+exports[`components/Text prop "onPress" 1`] = `
 <span
   className=""
   onClick={[Function]}
+  onKeyDown={[Function]}
+  style={
+    Object {
+      "borderBottomWidth": "0px",
+      "borderLeftWidth": "0px",
+      "borderRightWidth": "0px",
+      "borderTopWidth": "0px",
+      "color": "inherit",
+      "cursor": "pointer",
+      "display": "inline",
+      "font": "inherit",
+      "marginBottom": "0px",
+      "marginLeft": "0px",
+      "marginRight": "0px",
+      "marginTop": "0px",
+      "paddingBottom": "0px",
+      "paddingLeft": "0px",
+      "paddingRight": "0px",
+      "paddingTop": "0px",
+      "textDecoration": "none",
+      "wordWrap": "break-word",
+    }
+  }
+  tabIndex={0} />
+`;
+
+exports[`components/Text prop "selectable" 1`] = `
+<span
+  className=""
   style={
     Object {
       "borderBottomWidth": "0px",
@@ -57,7 +85,6 @@ exports[`components/Text prop "selectable" 1`] = `
 exports[`components/Text prop "selectable" 2`] = `
 <span
   className=""
-  onClick={[Function]}
   style={
     Object {
       "MozUserSelect": "none",

@@ -29,6 +29,7 @@ class Text extends Component {
   render() {
     const {
       numberOfLines,
+      onPress,
       selectable,
       style,
       /* eslint-disable */
@@ -37,26 +38,35 @@ class Text extends Component {
       ellipsizeMode,
       minimumFontScale,
       onLayout,
-      onPress,
       suppressHighlighting,
       /* eslint-enable */
       ...other
     } = this.props;
 
+    if (onPress) {
+      other.onClick = onPress;
+      other.onKeyDown = this._createEnterHandler(onPress);
+      other.tabIndex = 0;
+    }
+
     return createDOMElement('span', {
       ...other,
-      onClick: this._onPress,
       style: [
         styles.initial,
         style,
         !selectable && styles.notSelectable,
-        numberOfLines === 1 && styles.singleLineStyle
+        numberOfLines === 1 && styles.singleLineStyle,
+        onPress && styles.pressable
       ]
     });
   }
 
-  _onPress = (e) => {
-    if (this.props.onPress) { this.props.onPress(e); }
+  _createEnterHandler(fn) {
+    return (e) => {
+      if (e.keyCode === 13) {
+        fn && fn(e);
+      }
+    };
   }
 }
 
@@ -73,6 +83,9 @@ const styles = StyleSheet.create({
   },
   notSelectable: {
     userSelect: 'none'
+  },
+  pressable: {
+    cursor: 'pointer'
   },
   singleLineStyle: {
     maxWidth: '100%',

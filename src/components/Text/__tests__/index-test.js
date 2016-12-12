@@ -14,6 +14,12 @@ describe('components/Text', () => {
 
   test('prop "numberOfLines"');
 
+  test('prop "onPress"', () => {
+    const onPress = (e) => {};
+    const component = renderer.create(<Text onPress={onPress} />);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
   test('prop "selectable"', () => {
     let component = renderer.create(<Text />);
     expect(component.toJSON()).toMatchSnapshot();

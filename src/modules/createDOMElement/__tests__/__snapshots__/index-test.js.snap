@@ -12,19 +12,28 @@ exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
   style={Object {}} />
 `;
 
-exports[`modules/createDOMElement prop "accessibilityRole" 1`] = `
-<header
-  className=""
-  role="banner"
-  style={Object {}} />
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" 2`] = `
+exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
 <button
   className=""
   role="button"
   style={Object {}}
   type="button" />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
+<a
+  className=""
+  rel=" noopener noreferrer"
+  role="link"
+  style={Object {}}
+  target="_blank" />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" roles 1`] = `
+<header
+  className=""
+  role="banner"
+  style={Object {}} />
 `;
 
 exports[`modules/createDOMElement prop "accessible" 1`] = `

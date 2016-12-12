@@ -42,6 +42,8 @@ const createDOMElement = (component, rnProps = {}) => {
     domProps.role = accessibilityRole;
     if (accessibilityRole === 'button') {
       domProps.type = 'button';
+    } else if (accessibilityRole === 'link' && domProps.target === '_blank') {
+      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
     }
   }
   if (type) { domProps.type = type; }

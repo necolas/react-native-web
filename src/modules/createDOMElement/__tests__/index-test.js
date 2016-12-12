@@ -23,12 +23,21 @@ describe('modules/createDOMElement', () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  test('prop "accessibilityRole"', () => {
-    const accessibilityRole = 'banner';
-    let component = renderer.create(createDOMElement('span', { accessibilityRole }));
-    expect(component.toJSON()).toMatchSnapshot();
-    component = renderer.create(createDOMElement('span', { accessibilityRole: 'button' }));
-    expect(component.toJSON()).toMatchSnapshot();
+  describe('prop "accessibilityRole"', () => {
+    test('roles', () => {
+      const component = renderer.create(createDOMElement('span', { accessibilityRole: 'banner' }));
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    test('button', () => {
+      const component = renderer.create(createDOMElement('span', { accessibilityRole: 'button' }));
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    test('link and target="_blank"', () => {
+      const component = renderer.create(createDOMElement('span', { accessibilityRole: 'link', target: '_blank' }));
+      expect(component.toJSON()).toMatchSnapshot();
+    });
   });
 
   test('prop "accessible"', () => {
