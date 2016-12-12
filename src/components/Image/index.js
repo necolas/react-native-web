@@ -2,6 +2,7 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
+import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
@@ -193,7 +194,7 @@ class Image extends Component {
     this._imageState = status;
     const isLoaded = this._imageState === STATUS_LOADED;
     if (isLoaded !== this.state.isLoaded) {
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         if (this._isMounted) {
           this.setState({ isLoaded });
         }
