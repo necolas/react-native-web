@@ -1,13 +1,15 @@
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { action, storiesOf } from '@kadira/storybook';
 import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+
+const onScroll = action('ScrollView.onScroll');
 
 storiesOf('component: ScrollView', module)
   .add('vertical', () => (
     <View style={styles.scrollViewContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
-        onScroll={e => { console.log('ScrollView.onScroll', e); } }
+        onScroll={onScroll}
         scrollEventThrottle={1000} // 1 event per second
         style={styles.scrollViewStyle}
       >
@@ -24,8 +26,8 @@ storiesOf('component: ScrollView', module)
       <ScrollView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
         horizontal
-        onScroll={e => console.log('ScrollView.onScroll', e)}
-        scrollEventThrottle={1} // 1 event per second
+        onScroll={onScroll}
+        scrollEventThrottle={16} // ~60 events per second
         style={styles.scrollViewStyle}
       >
         {Array.from({ length: 50 }).map((item, i) => (
@@ -48,10 +50,10 @@ const styles = StyleSheet.create({
     width: 300
   },
   scrollViewStyle: {
-    borderWidth: '1px'
+    borderWidth: 1
   },
   scrollViewContentContainerStyle: {
     backgroundColor: '#eee',
-    padding: '10px'
+    padding: 10
   }
 })

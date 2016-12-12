@@ -38,6 +38,18 @@ which this `ScrollView` renders.
 Fires at most once per frame during scrolling. The frequency of the events can
 be contolled using the `scrollEventThrottle` prop.
 
+Invoked on scroll with the following event:
+
+```js
+{
+  nativeEvent: {
+    contentOffset: { x, y },
+    contentSize: { height, width },
+    layoutMeasurement: { height, width }
+  }
+}
+```
+
 **refreshControl**: element
 
 TODO
@@ -51,8 +63,8 @@ When false, the content does not scroll.
 
 **scrollEventThrottle**: number = 0
 
-This controls how often the scroll event will be fired while scrolling (in
-events per seconds). A higher number yields better accuracy for code that is
+This controls how often the scroll event will be fired while scrolling (as a
+time interval in ms). A lower number yields better accuracy for code that is
 tracking the scroll position, but can lead to scroll performance problems. The
 default value is `0`, which means the scroll event will be sent only once each
 time the view is scrolled.
@@ -104,7 +116,7 @@ export default class ScrollViewExample extends Component {
         contentContainerStyle={styles.container}
         horizontal
         onScroll={(e) => this.onScroll(e)}
-        scrollEventThrottle={60}
+        scrollEventThrottle={100}
         style={styles.root}
       />
     )
