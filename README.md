@@ -30,7 +30,7 @@ To install in your app:
 npm install --save react@15.3.2 react-native-web
 ```
 
-Currently, React 15.3.2 is required, but this will soon change (#255).
+Currently, React 15.3.2 is required, but this will soon change ([#255](https://github.com/necolas/react-native-web/pull/255)).
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
 
