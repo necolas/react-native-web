@@ -27,7 +27,7 @@ online with [React Native for Web: Playground](http://codepen.io/necolas/pen/PZz
 To install in your app:
 
 ```
-npm install --save react react-native-web
+npm install --save react@15.3 react-native-web
 ```
 
 Read the [Client and Server rendering](docs/guides/rendering.md) guide.
