@@ -2,10 +2,10 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createDOMElement from '../../modules/createDOMElement';
-import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextStylePropTypes from './TextStylePropTypes';
 import { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 class Text extends Component {
   static displayName = 'Text';
@@ -28,10 +28,10 @@ class Text extends Component {
 
   render() {
     const {
+      className,
       numberOfLines,
       onPress,
       selectable,
-      style,
       /* eslint-disable */
       adjustsFontSizeToFit,
       allowFontScaling,
@@ -49,15 +49,17 @@ class Text extends Component {
       other.tabIndex = 0;
     }
 
+    const combinedClassnames = classnames(
+      '.rnw-Text',
+      className,
+      !selectable && '.rnw-Text-notSelectable',
+      numberOfLines === 1 && '.rnw-Text-singleLineStyle',
+      onPress && '.rnw-Text-pressable'
+    );
+
     return createDOMElement('span', {
       ...other,
-      style: [
-        styles.initial,
-        style,
-        !selectable && styles.notSelectable,
-        numberOfLines === 1 && styles.singleLineStyle,
-        onPress && styles.pressable
-      ]
+      className: combinedClassnames
     });
   }
 
@@ -69,30 +71,5 @@ class Text extends Component {
     };
   }
 }
-
-const styles = StyleSheet.create({
-  initial: {
-    borderWidth: 0,
-    color: 'inherit',
-    display: 'inline',
-    font: 'inherit',
-    margin: 0,
-    padding: 0,
-    textDecorationLine: 'none',
-    wordWrap: 'break-word'
-  },
-  notSelectable: {
-    userSelect: 'none'
-  },
-  pressable: {
-    cursor: 'pointer'
-  },
-  singleLineStyle: {
-    maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-  }
-});
 
 module.exports = applyLayout(applyNativeMethods(Text));
