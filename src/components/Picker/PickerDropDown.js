@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PickerItem from './PickerItem';
+import { PICKER_PROPTYPES } from './proptypes';
 
 class PickerDropDown extends Component {
+  static propTypes = PICKER_PROPTYPES;
+
   childHasColor() {
     for (const item in this.props.children) {
       if (item && item.props && item.props.color) {
@@ -12,22 +15,25 @@ class PickerDropDown extends Component {
   }
 
   render() {
-    const { children = [], itemStyle, testID, style, selectedValue, onValueChange, enabled = true, prompt, ...rest } = this.props;
+    const {
+      children = [], itemStyle, testID, style,
+      selectedValue, onValueChange, enabled = true, prompt, ...rest
+    } = this.props;
     if (this.childHasColor()) {
       return null;
     }
     const change = {};
-    if(onValueChange){
-      change.onChange = e => onValueChange(e.target.value, e.target.selectedIndex)
+    if (onValueChange) {
+      change.onChange = (e) => onValueChange(e.target.value, e.target.selectedIndex);
     }
     return (
       <select
         {...rest}
-        title={prompt}
-        data-testID={testID}
-        style={style}
-        disabled={!enabled}
         {...change}
+        data-testID={testID}
+        disabled={!enabled}
+        style={style}
+        title={prompt}
         value={selectedValue}
       >
         {children.map((item, index) => {
@@ -45,15 +51,15 @@ class PickerDropDown extends Component {
 
 PickerDropDown.Item = class extends PickerItem {
   render() {
-    let { label, value, color, testID, ...rest } = this.props;
+    const { label, value, color, testID, ...rest } = this.props;
     if (color) {
       return null;
     }
     return (
-      <option value={ value } data-testID={testID} {...rest}>
+      <option {...rest} data-testID={testID} value={ value } >
         { label }
       </option>
-    )
+    );
   }
 };
 
