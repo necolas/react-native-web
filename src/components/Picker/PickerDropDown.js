@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import PickerItem from './PickerItem';
 
 class PickerDropDown extends Component {
