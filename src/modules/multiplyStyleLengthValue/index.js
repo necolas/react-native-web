@@ -1,4 +1,4 @@
-const CSS_UNIT_RE = /^[+-]?\d*(?:\.\d+)?(?:[Ee][+-]?\d+)?(\w*)/;
+const CSS_UNIT_RE = /^[+-]?\d*(?:\.\d+)?(?:[Ee][+-]?\d+)?(%|\w*)/;
 
 const getUnit = (str) => str.match(CSS_UNIT_RE)[1];
 

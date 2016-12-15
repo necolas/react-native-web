@@ -10,6 +10,35 @@ import debounce from 'debounce';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 
+const normalizeScrollEvent = (e) => ({
+  nativeEvent: {
+    contentOffset: {
+      get x() {
+        return e.target.scrollLeft;
+      },
+      get y() {
+        return e.target.scrollTop;
+      }
+    },
+    contentSize: {
+      get height() {
+        return e.target.scrollHeight;
+      },
+      get width() {
+        return e.target.scrollWidth;
+      }
+    },
+    layoutMeasurement: {
+      get height() {
+        return e.target.offsetHeight;
+      },
+      get width() {
+        return e.target.offsetWidth;
+      }
+    }
+  }
+});
+
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
@@ -75,13 +104,13 @@ export default class ScrollViewBase extends Component {
   _handleScrollTick(e) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
-    if (onScroll) { onScroll(e); }
+    if (onScroll) { onScroll(normalizeScrollEvent(e)); }
   }
 
   _handleScrollEnd(e) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
-    if (onScroll) { onScroll(e); }
+    if (onScroll) { onScroll(normalizeScrollEvent(e)); }
   }
 
   _shouldEmitScrollEvent(lastTick, eventThrottle) {

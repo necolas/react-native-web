@@ -13,6 +13,7 @@ import Dimensions from './apis/Dimensions';
 import Easing from 'animated/lib/Easing';
 import I18nManager from './apis/I18nManager';
 import InteractionManager from './apis/InteractionManager';
+import Linking from './apis/Linking';
 import NetInfo from './apis/NetInfo';
 import PanResponder from './apis/PanResponder';
 import PixelRatio from './apis/PixelRatio';
@@ -23,6 +24,7 @@ import Vibration from './apis/Vibration';
 
 // components
 import ActivityIndicator from './components/ActivityIndicator';
+import Button from './components/Button';
 import Image from './components/Image';
 import ListView from './components/ListView';
 import Picker from './components/Picker';
@@ -61,6 +63,7 @@ const ReactNative = {
   Easing,
   I18nManager,
   InteractionManager,
+  Linking,
   NetInfo,
   PanResponder,
   PixelRatio,
@@ -71,6 +74,7 @@ const ReactNative = {
 
   // components
   ActivityIndicator,
+  Button,
   Image,
   ListView,
   Picker,
