@@ -25,6 +25,7 @@ import Vibration from './apis/Vibration';
 import ActivityIndicator from './components/ActivityIndicator';
 import Image from './components/Image';
 import ListView from './components/ListView';
+import Picker from './components/Picker';
 import ProgressBar from './components/ProgressBar';
 import ScrollView from './components/ScrollView';
 import Switch from './components/Switch';
@@ -72,6 +73,7 @@ const ReactNative = {
   ActivityIndicator,
   Image,
   ListView,
+  Picker,
   ProgressBar,
   ScrollView,
   Switch,
