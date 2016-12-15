@@ -1,2 +1,2 @@
-export const MODE_DIALOG = MODE_DIALOG;
-export const MODE_DROPDOWN = MODE_DROPDOWN;
+export const MODE_DIALOG = 'dialog';
+export const MODE_DROPDOWN = 'dropdown';
