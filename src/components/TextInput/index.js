@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
-    flex: 1,
     font: 'inherit',
     padding: 0
   }
