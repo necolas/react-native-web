@@ -9,6 +9,7 @@ import Animated from './apis/Animated';
 import AppRegistry from './apis/AppRegistry';
 import AppState from './apis/AppState';
 import AsyncStorage from './apis/AsyncStorage';
+import Clipboard from './apis/Clipboard';
 import Dimensions from './apis/Dimensions';
 import Easing from 'animated/lib/Easing';
 import I18nManager from './apis/I18nManager';
@@ -58,6 +59,7 @@ const ReactNative = {
   AppRegistry,
   AppState,
   AsyncStorage,
+  Clipboard,
   Dimensions,
   Easing,
   I18nManager,
