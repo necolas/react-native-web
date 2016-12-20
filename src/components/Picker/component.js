@@ -8,7 +8,7 @@ import {
   MODE_DROPDOWN
 } from './constants';
 
-class Picker extends Component {
+export default class Picker extends Component {
   static MODE_DIALOG = MODE_DIALOG;
 
   static MODE_DROPDOWN = MODE_DROPDOWN;
@@ -18,6 +18,8 @@ class Picker extends Component {
   };
 
   static propTypes = PICKER_PROPTYPES;
+
+  static Item = PickerItem;
 
   render() {
     const { mode } = this.props;
@@ -29,11 +31,3 @@ class Picker extends Component {
     return null;
   }
 }
-
-/**
- * Individual selectable item in a Picker.
- */
-Picker.Item = PickerItem;
-
-export default Picker;
-

@@ -16,8 +16,15 @@ class PickerDropDown extends Component {
 
   render() {
     const {
-      children = [], itemStyle, testID, style,
-      selectedValue, onValueChange, enabled = true, prompt, ...rest
+      children = [],
+      itemStyle,
+      testID,
+      style,
+      selectedValue = '',
+      onValueChange,
+      enabled = true,
+      prompt,
+      ...rest
     } = this.props;
     if (this.childHasColor()) {
       return null;
