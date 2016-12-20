@@ -1,5 +1,5 @@
 {
-  "name": "react-native-web",
+  "name": "@zipwhip/react-native-web",
   "version": "0.0.60",
   "description": "React Native for Web",
   "main": "dist/index.js",
