@@ -169,8 +169,6 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "onLayout"');
-
   test('prop "onSelectionChange"', (done) => {
     const input = findNativeInput(mount(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />));
     input.simulate('select', { target: { selectionStart: 0, selectionEnd: 3 } });
@@ -179,6 +177,16 @@ describe('components/TextInput', () => {
       expect(e.nativeEvent.selection.start).toEqual(0);
       done();
     }
+  });
+
+  describe('prop "onSubmitEditing"', () => {
+    test('single-line input', (done) => {
+      const input = findNativeInput(mount(<TextInput defaultValue='12345' onSubmitEditing={onSubmitEditing} />));
+      input.simulate('keyPress', { which: 13 });
+      function onSubmitEditing(e) {
+        done();
+      }
+    });
   });
 
   test('prop "secureTextEntry"', () => {

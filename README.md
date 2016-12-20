@@ -70,6 +70,7 @@ Exported modules:
   * [`AppRegistry`](docs/apis/AppRegistry.md)
   * [`AppState`](docs/apis/AppState.md)
   * [`AsyncStorage`](docs/apis/AsyncStorage.md)
+  * [`Clipboard`](docs/apis/Clipboard.md)
   * [`Dimensions`](docs/apis/Dimensions.md)
   * [`I18nManager`](docs/apis/I18nManager.md)
   * [`NativeMethods`](docs/apis/NativeMethods.md)

@@ -72,6 +72,7 @@ class TextInput extends Component {
     onFocus: PropTypes.func,
     onKeyPress: PropTypes.func,
     onSelectionChange: PropTypes.func,
+    onSubmitEditing: PropTypes.func,
     placeholder: PropTypes.string,
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
@@ -188,6 +189,7 @@ class TextInput extends Component {
     const props = {
       ...other,
       autoCorrect: autoCorrect ? 'on' : 'off',
+      dir: 'auto',
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
@@ -270,7 +272,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
-    flex: 1,
     font: 'inherit',
     padding: 0
   }

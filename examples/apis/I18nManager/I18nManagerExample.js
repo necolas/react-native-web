@@ -1,8 +1,8 @@
+import { storiesOf } from '@kadira/storybook';
 import { I18nManager, StyleSheet, TouchableHighlight, Text, View } from 'react-native'
 import React, { Component } from 'react';
-import { storiesOf, action } from '@kadira/storybook';
 
-class RTLExample extends Component {
+class I18nManagerExample extends Component {
   componentWillUnmount() {
     I18nManager.setPreferredLanguageRTL(false)
   }
@@ -75,5 +75,5 @@ const styles = StyleSheet.create({
 
 storiesOf('api: I18nManager', module)
   .add('RTL layout', () => (
-    <RTLExample />
+    <I18nManagerExample />
   ))

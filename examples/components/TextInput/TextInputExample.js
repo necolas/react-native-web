@@ -59,7 +59,7 @@ class TextEventsExample extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{ alignItems: 'center' }}>
         <TextInput
           autoCapitalize="none"
           placeholder="Enter text to see events"
@@ -83,7 +83,7 @@ class TextEventsExample extends React.Component {
           onKeyPress={(event) => {
             this.updateText('onKeyPress key: ' + event.nativeEvent.key);
           }}
-          style={styles.default}
+          style={[ styles.default, { maxWidth: 200 } ]}
         />
         <Text style={styles.eventLabel}>
           {this.state.curText}{'\n'}
