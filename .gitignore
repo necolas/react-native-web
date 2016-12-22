@@ -1,3 +1,4 @@
 /dist
 /dist-examples
 /node_modules
+.idea/
