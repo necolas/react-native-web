@@ -59,6 +59,20 @@ class ListView extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps: Object) {
+    if (this.props.dataSource !== nextProps.dataSource || this.props.initialListSize !== nextProps.initialListSize) {
+      this.setState((state, props) => {
+        this._prevRenderedRowsCount = 0;
+        return {
+          curRenderedRowsCount: Math.min(
+            Math.max(state.curRenderedRowsCount, props.initialListSize),
+            props.enableEmptySections ? props.dataSource.getRowAndSectionCount() : props.dataSource.getRowCount()
+          )
+        };
+      }, () => this._renderMoreRowsIfNeeded());
+    }
+  }
+
   componentDidUpdate() {
     requestAnimationFrame(() => {
       this._measureAndUpdateScrollProps();
