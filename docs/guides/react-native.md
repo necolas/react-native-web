@@ -27,13 +27,47 @@ the `url-loader` to the webpack config:
 module.exports = {
   // ...
   module: {
-    loaders: {
-      test: /\.(gif|jpe?g|png|svg)$/,
-      loader: 'url-loader',
-      query: { name: '[name].[hash:16].[ext]' }
-    }
+    loaders: [
+      {
+        test: /\.(gif|jpe?g|png|svg)$/,
+        loader: 'url-loader',
+        query: { name: '[name].[hash:16].[ext]' }
+      }
+    ]
   }
+};
 ```
+
+## Dependencies
+
+Many OSS React Native packages are not compiled to ES5 before being published.
+This can result in webpack build errors. To avoid this issue you should
+configure webpack (or your bundler of choice) to run
+`babel-preset-react-native` over the necessary `node_module`. For example:
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...
+  module: {
+    loaders: [
+      {
+        // transpile to ES5
+        test: /\.jsx?$/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/react-native-something')
+        ],
+        loader: 'babel-loader',
+        query: { cacheDirectory: true }
+      }
+    ]
+  }
+};
+```
+
+Please refer to the webpack documentation for more information.
 
 ## Web-specific code
 

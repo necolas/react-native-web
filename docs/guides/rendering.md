@@ -16,8 +16,9 @@ module.exports = {
 }
 ```
 
-The `react-native-web` package also includes a `core` module that exports only
-`ReactNative`, `Image`, `StyleSheet`, `Text`, `TextInput`, and `View`.
+The `react-native-web` package also includes a `core` module that exports a
+subset of modules: `ReactNative`, `I18nManager`, `Platform`, `StyleSheet`,
+`Image`, `Text`, `TextInput`, `Touchable`, and `View`.
 
 ```js
 // webpack.config.js
