@@ -1,5 +1,7 @@
+const emptyArray = [];
+
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
-const normalizeTouches = (touches = []) => Array.prototype.slice.call(touches).map((touch) => {
+const normalizeTouches = (touches = emptyArray) => Array.prototype.slice.call(touches).map((touch) => {
   const identifier = touch.identifier > 20 ? (touch.identifier % 20) : touch.identifier;
 
   const rect = touch.target && touch.target.getBoundingClientRect();
@@ -59,21 +61,23 @@ function normalizeTouchEvent(nativeEvent) {
 }
 
 function normalizeMouseEvent(nativeEvent) {
-  const touches = [ {
-    _normalized: true,
-    clientX: nativeEvent.clientX,
-    clientY: nativeEvent.clientY,
-    force: nativeEvent.force,
-    locationX: nativeEvent.clientX,
-    locationY: nativeEvent.clientY,
-    identifier: 0,
-    pageX: nativeEvent.pageX,
-    pageY: nativeEvent.pageY,
-    screenX: nativeEvent.screenX,
-    screenY: nativeEvent.screenY,
-    target: nativeEvent.target,
-    timestamp: Date.now()
-  } ];
+  const touches = [
+    {
+      _normalized: true,
+      clientX: nativeEvent.clientX,
+      clientY: nativeEvent.clientY,
+      force: nativeEvent.force,
+      locationX: nativeEvent.clientX,
+      locationY: nativeEvent.clientY,
+      identifier: 0,
+      pageX: nativeEvent.pageX,
+      pageY: nativeEvent.pageY,
+      screenX: nativeEvent.screenX,
+      screenY: nativeEvent.screenY,
+      target: nativeEvent.target,
+      timestamp: Date.now()
+    }
+  ];
   return {
     _normalized: true,
     changedTouches: touches,
@@ -87,7 +91,7 @@ function normalizeMouseEvent(nativeEvent) {
     stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
-    touches: (nativeEvent.type === 'mouseup') ? [] : touches
+    touches: (nativeEvent.type === 'mouseup') ? emptyArray : touches
   };
 }
 

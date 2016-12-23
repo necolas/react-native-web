@@ -99,7 +99,7 @@ class View extends Component {
       onMagicTap,
       removeClippedSubviews,
       /* eslint-enable */
-      ...other
+      ...otherProps
     } = this.props;
 
     const flattenedStyle = StyleSheet.flatten(style);
@@ -107,27 +107,24 @@ class View extends Component {
     // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
     const needsFlexReset = !flattenedStyle || (flattenedStyle.flex == null && flattenedStyle.flexShrink == null);
 
-    const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
+    const component = this.context.isInAButtonView ? 'span' : 'div';
+
+    eventHandlerNames.reduce((props, handlerName) => {
       const handler = this.props[handlerName];
       if (typeof handler === 'function') {
-        handlerProps[handlerName] = this._normalizeEventForHandler(handler, handlerName);
+        props[handlerName] = this._normalizeEventForHandler(handler, handlerName);
       }
-      return handlerProps;
-    }, {});
+      return props;
+    }, otherProps);
 
-    const component = this.context.isInAButtonView ? 'span' : 'div';
-    const props = {
-      ...other,
-      ...normalizedEventHandlers,
-      style: [
-        styles.initial,
-        style,
-        needsFlexReset && styles.flexReset,
-        pointerEventsStyle
-      ]
-    };
+    otherProps.style = [
+      styles.initial,
+      style,
+      needsFlexReset && styles.flexReset,
+      pointerEventsStyle
+    ];
 
-    return createDOMElement(component, props);
+    return createDOMElement(component, otherProps);
   }
 
   _normalizeEventForHandler(handler, handlerName) {

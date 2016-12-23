@@ -10,6 +10,8 @@ import UIManager from '../../apis/UIManager';
 import View from '../View';
 import { Component, PropTypes } from 'react';
 
+const emptyObject = {};
+
 /**
  * React Native events differ from W3C events.
  */
@@ -94,7 +96,7 @@ class TextInput extends Component {
     multiline: false,
     numberOfLines: 2,
     secureTextEntry: false,
-    style: {}
+    style: emptyObject
   };
 
   blur() {
@@ -153,7 +155,7 @@ class TextInput extends Component {
       selectionColor,
       selectTextOnFocus,
       /* eslint-enable */
-      ...other
+      ...otherProps
     } = this.props;
 
     let type;
@@ -186,8 +188,7 @@ class TextInput extends Component {
 
     const component = multiline ? TextareaAutosize : 'input';
 
-    const props = {
-      ...other,
+    Object.assign(otherProps, {
       autoCorrect: autoCorrect ? 'on' : 'off',
       dir: 'auto',
       onBlur: normalizeEventHandler(this._handleBlur),
@@ -201,16 +202,16 @@ class TextInput extends Component {
         styles.initial,
         style
       ]
-    };
+    });
 
     if (multiline) {
-      props.maxRows = maxNumberOfLines || numberOfLines;
-      props.minRows = numberOfLines;
+      otherProps.maxRows = maxNumberOfLines || numberOfLines;
+      otherProps.minRows = numberOfLines;
     } else {
-      props.type = type;
+      otherProps.type = type;
     }
 
-    return createDOMElement(component, props);
+    return createDOMElement(component, otherProps);
   }
 
   _handleBlur = (e) => {
@@ -245,7 +246,7 @@ class TextInput extends Component {
   }
 
   _handleSelectionChange = (e) => {
-    const { onSelectionChange, selection = {} } = this.props;
+    const { onSelectionChange, selection = emptyObject } = this.props;
     if (onSelectionChange) {
       try {
         const node = e.target;

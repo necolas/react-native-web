@@ -105,6 +105,8 @@ var warning = require('fbjs/lib/warning');
  *   this.props.onKeyboardDidHide
  */
 
+const emptyObject = {};
+
 var IS_ANIMATING_TOUCH_START_THRESHOLD_MS = 16;
 
 type State = {
@@ -378,7 +380,7 @@ var ScrollResponderMixin = {
     if (typeof x === 'number') {
       console.warn('`scrollResponderScrollTo(x, y, animated)` is deprecated. Use `scrollResponderScrollTo({x: 5, y: 5, animated: true})` instead.');
     } else {
-      ({x, y, animated} = x || {});
+      ({x, y, animated} = x || emptyObject);
     }
     const node = this.scrollResponderGetScrollableNode()
     node.scrollLeft = x || 0

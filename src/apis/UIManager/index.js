@@ -35,8 +35,11 @@ const UIManager = {
 
   updateView(node, props, component /* only needed to surpress React errors in development */) {
     for (const prop in props) {
-      const value = props[prop];
+      if (!Object.prototype.hasOwnProperty.call(props, prop)) {
+        continue;
+      }
 
+      const value = props[prop];
       switch (prop) {
         case 'style':
           // convert styles to DOM-styles

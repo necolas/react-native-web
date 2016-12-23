@@ -17,6 +17,8 @@ import View from '../View';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import React, { Component, PropTypes } from 'react';
 
+const emptyObject = {};
+
 /* eslint-disable react/prefer-es6-class */
 const ScrollView = React.createClass({
   propTypes: {
@@ -79,7 +81,7 @@ const ScrollView = React.createClass({
     if (typeof y === 'number') {
       console.warn('`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.');
     } else {
-      ({ x, y, animated } = y || {});
+      ({ x, y, animated } = y || emptyObject);
     }
 
     this.getScrollResponder().scrollResponderScrollTo({ x: x || 0, y: y || 0, animated: animated !== false });

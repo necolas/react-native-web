@@ -7,13 +7,15 @@
 
 import emptyFunction from 'fbjs/lib/emptyFunction';
 
+const emptyObject = {};
+
 const applyLayout = (Component) => {
   const componentDidMount = Component.prototype.componentDidMount || emptyFunction;
   const componentDidUpdate = Component.prototype.componentDidUpdate || emptyFunction;
 
   Component.prototype.componentDidMount = function () {
     componentDidMount.call(this);
-    this._layoutState = {};
+    this._layoutState = emptyObject;
     this._handleLayout();
   };
 

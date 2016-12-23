@@ -8,6 +8,8 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 
+const emptyObject = {};
+
 const STATUS_ERRORED = 'ERRORED';
 const STATUS_LOADED = 'LOADED';
 const STATUS_LOADING = 'LOADING';
@@ -52,7 +54,7 @@ class Image extends Component {
   };
 
   static defaultProps = {
-    style: {}
+    style: emptyObject
   };
 
   static resizeMode = ImageResizeMode;

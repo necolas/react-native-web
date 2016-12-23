@@ -1,6 +1,8 @@
 import React from 'react';
 import StyleSheet from '../../apis/StyleSheet';
 
+const emptyObject = {};
+
 const roleComponents = {
   article: 'article',
   banner: 'header',
@@ -17,7 +19,7 @@ const roleComponents = {
   region: 'section'
 };
 
-const createDOMElement = (component, rnProps = {}) => {
+const createDOMElement = (component, rnProps = emptyObject) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
@@ -25,15 +27,14 @@ const createDOMElement = (component, rnProps = {}) => {
     accessible = true,
     testID,
     type,
-    ...other
+    ...domProps
   } = rnProps;
 
   const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
   const Component = accessibilityComponent || component;
-  const domProps = {
-    ...other,
-    ...StyleSheet.resolve(other)
-  };
+
+  Object.assign(domProps, StyleSheet.resolve(domProps));
+
   if (!accessible) { domProps['aria-hidden'] = true; }
   if (accessibilityLabel) { domProps['aria-label'] = accessibilityLabel; }
   if (accessibilityLiveRegion) { domProps['aria-live'] = accessibilityLiveRegion; }

@@ -7,6 +7,7 @@ import UIManager from '../../apis/UIManager';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 
+const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
@@ -28,7 +29,7 @@ class Switch extends Component {
     activeThumbColor: '#009688',
     activeTrackColor: '#A3D3CF',
     disabled: false,
-    style: {},
+    style: emptyObject,
     thumbColor: '#FAFAFA',
     trackColor: '#939393',
     value: false

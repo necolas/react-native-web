@@ -1,6 +1,8 @@
 import I18nManager from '../I18nManager';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 
+const emptyObject = {};
+
 /**
  * Map of property names to their BiDi equivalent.
  */
@@ -64,38 +66,40 @@ const swapLtrRtl = (value:String): String => {
   return value === 'ltr' ? 'rtl' : value === 'rtl' ? 'ltr' : value;
 };
 
-const i18nStyle = (style = {}) => {
+const i18nStyle = (style = emptyObject) => {
   const newStyle = {};
   for (const prop in style) {
-    if (style.hasOwnProperty(prop)) {
-      const indexOfNoFlip = prop.indexOf('$noI18n');
+    if (!Object.prototype.hasOwnProperty.call(style, prop)) {
+      continue;
+    }
 
-      if (I18nManager.isRTL) {
-        if (PROPERTIES_TO_SWAP[prop]) {
-          const newProp = flipProperty(prop);
-          newStyle[newProp] = style[prop];
-        } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
-          newStyle[prop] = swapLeftRight(style[prop]);
-        } else if (PROPERTIES_SWAP_LTR_RTL[prop]) {
-          newStyle[prop] = swapLtrRtl(style[prop]);
-        } else if (prop === 'textShadowOffset') {
-          newStyle[prop] = style[prop];
-          newStyle[prop].width = additiveInverse(style[prop].width);
-        } else if (prop === 'transform') {
-          newStyle[prop] = style[prop].map(flipTransform);
-        } else if (indexOfNoFlip > -1) {
-          const newProp = prop.substring(0, indexOfNoFlip);
-          newStyle[newProp] = style[prop];
-        } else {
-          newStyle[prop] = style[prop];
-        }
+    const indexOfNoFlip = prop.indexOf('$noI18n');
+
+    if (I18nManager.isRTL) {
+      if (PROPERTIES_TO_SWAP[prop]) {
+        const newProp = flipProperty(prop);
+        newStyle[newProp] = style[prop];
+      } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
+        newStyle[prop] = swapLeftRight(style[prop]);
+      } else if (PROPERTIES_SWAP_LTR_RTL[prop]) {
+        newStyle[prop] = swapLtrRtl(style[prop]);
+      } else if (prop === 'textShadowOffset') {
+        newStyle[prop] = style[prop];
+        newStyle[prop].width = additiveInverse(style[prop].width);
+      } else if (prop === 'transform') {
+        newStyle[prop] = style[prop].map(flipTransform);
+      } else if (indexOfNoFlip > -1) {
+        const newProp = prop.substring(0, indexOfNoFlip);
+        newStyle[newProp] = style[prop];
       } else {
-        if (indexOfNoFlip > -1) {
-          const newProp = prop.substring(0, indexOfNoFlip);
-          newStyle[newProp] = style[prop];
-        } else {
-          newStyle[prop] = style[prop];
-        }
+        newStyle[prop] = style[prop];
+      }
+    } else {
+      if (indexOfNoFlip > -1) {
+        const newProp = prop.substring(0, indexOfNoFlip);
+        newStyle[newProp] = style[prop];
+      } else {
+        newStyle[prop] = style[prop];
       }
     }
   }

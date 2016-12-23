@@ -11,6 +11,7 @@ import invariant from 'fbjs/lib/invariant';
 import { unmountComponentAtNode } from 'react/lib/ReactMount';
 import renderApplication, { getApplication } from './renderApplication';
 
+const emptyObject = {};
 const runnables = {};
 
 type ComponentProvider = () => Component<any, any, any>
@@ -41,8 +42,8 @@ class AppRegistry {
 
   static registerComponent(appKey: string, getComponentFunc: ComponentProvider): string {
     runnables[appKey] = {
-      getApplication: ({ initialProps } = {}) => getApplication(getComponentFunc(), initialProps),
-      run: ({ initialProps, rootTag }) => renderApplication(getComponentFunc(), initialProps, rootTag)
+      getApplication: ({ initialProps } = emptyObject) => getApplication(getComponentFunc(), initialProps),
+      run: ({ initialProps = emptyObject, rootTag }) => renderApplication(getComponentFunc(), initialProps, rootTag)
     };
     return appKey;
   }

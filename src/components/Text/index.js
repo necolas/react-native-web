@@ -40,25 +40,24 @@ class Text extends Component {
       onLayout,
       suppressHighlighting,
       /* eslint-enable */
-      ...other
+      ...otherProps
     } = this.props;
 
     if (onPress) {
-      other.onClick = onPress;
-      other.onKeyDown = this._createEnterHandler(onPress);
-      other.tabIndex = 0;
+      otherProps.onClick = onPress;
+      otherProps.onKeyDown = this._createEnterHandler(onPress);
+      otherProps.tabIndex = 0;
     }
 
-    return createDOMElement('span', {
-      ...other,
-      style: [
-        styles.initial,
-        style,
-        !selectable && styles.notSelectable,
-        numberOfLines === 1 && styles.singleLineStyle,
-        onPress && styles.pressable
-      ]
-    });
+    otherProps.style = [
+      styles.initial,
+      style,
+      !selectable && styles.notSelectable,
+      numberOfLines === 1 && styles.singleLineStyle,
+      onPress && styles.pressable
+    ];
+
+    return createDOMElement('span', otherProps);
   }
 
   _createEnterHandler(fn) {
