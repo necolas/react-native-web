@@ -2,6 +2,7 @@ import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
 import { PropTypes } from 'react';
+import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
 const { number, oneOf, string } = PropTypes;
@@ -11,6 +12,7 @@ const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
 module.exports = process.env.NODE_ENV !== 'production' ? {
   ...BorderPropTypes,
   ...LayoutPropTypes,
+  ...ShadowPropTypes,
   ...TransformPropTypes,
   backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,

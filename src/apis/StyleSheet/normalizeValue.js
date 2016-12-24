@@ -24,7 +24,9 @@ const unitlessNumbers = {
   scale: true,
   scaleX: true,
   scaleY: true,
-  scaleZ: true
+  scaleZ: true,
+  // RN properties
+  shadowOpacity: true
 };
 
 const normalizeValue = (property, value) => {

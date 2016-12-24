@@ -31,6 +31,17 @@ var styles = StyleSheet.create({
     borderColor: '#000033',
     borderWidth: 1,
   },
+  shadowBox: {
+    width: 100,
+    height: 100,
+    borderWidth: 2,
+  },
+  shadow: {
+    shadowOpacity: 0.5,
+    shadowColor: 'red',
+    shadowRadius: 3,
+    shadowOffset: { width: 3, height: 3 },
+  },
   zIndex: {
     justifyContent: 'space-around',
     width: 100,
@@ -242,6 +253,19 @@ const examples = [
       return <ZIndexExample />;
     },
   },
+  {
+    title: 'Basic shadow',
+    render() {
+      return <View style={[ styles.shadowBox, styles.shadow ]} />;
+    }
+  },
+  {
+    title: 'Shaped shadow',
+    description: 'borderRadius: 50',
+    render() {
+      return <View style={[ styles.shadowBox, styles.shadow, {borderRadius: 50} ]} />;
+    }
+  }
 ];
 
 examples.forEach((example) => {
