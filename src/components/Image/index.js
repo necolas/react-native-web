@@ -1,6 +1,7 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ImageResizeMode from './ImageResizeMode';
+import ImageLoader from '../../modules/ImageLoader';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 import StyleSheet from '../../apis/StyleSheet';
@@ -57,11 +58,19 @@ class Image extends Component {
     style: emptyObject
   };
 
+  static getSize(uri, success, failure) {
+    ImageLoader.getSize(uri, success, failure);
+  }
+
+  static prefetch(uri) {
+    return ImageLoader.prefetch(uri);
+  }
+
   static resizeMode = ImageResizeMode;
 
   constructor(props, context) {
     super(props, context);
-    this.state = { isLoaded: false };
+    this.state = { shouldDisplaySource: false };
     const uri = resolveAssetSource(props.source);
     this._imageState = uri ? STATUS_PENDING : STATUS_IDLE;
     this._isMounted = false;
@@ -75,7 +84,7 @@ class Image extends Component {
   }
 
   componentDidUpdate() {
-    if (this._imageState === STATUS_PENDING && !this.image) {
+    if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     }
   }
@@ -93,7 +102,7 @@ class Image extends Component {
   }
 
   render() {
-    const { isLoaded } = this.state;
+    const { shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
       accessible,
@@ -103,13 +112,17 @@ class Image extends Component {
       source,
       testID,
       /* eslint-disable */
+      onError,
+      onLoad,
+      onLoadEnd,
+      onLoadStart,
       resizeMode,
       /* eslint-enable */
       ...other
     } = this.props;
 
-    const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source);
-    const imageSizeStyle = resolveAssetDimensions(!isLoaded ? defaultSource : source);
+    const displayImage = resolveAssetSource(shouldDisplaySource ? source : defaultSource);
+    const imageSizeStyle = resolveAssetDimensions(shouldDisplaySource ? source : defaultSource);
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
     const originalStyle = StyleSheet.flatten(this.props.style);
     const finalResizeMode = resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
@@ -139,28 +152,21 @@ class Image extends Component {
   }
 
   _createImageLoader() {
-    const uri = resolveAssetSource(this.props.source);
-
     this._destroyImageLoader();
-    this.image = new window.Image();
-    this.image.onerror = this._onError;
-    this.image.onload = this._onLoad;
-    this.image.src = uri;
+    const uri = resolveAssetSource(this.props.source);
+    this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
     this._onLoadStart();
   }
 
   _destroyImageLoader() {
-    if (this.image) {
-      this.image.onerror = null;
-      this.image.onload = null;
-      this.image = null;
+    if (this._imageRequestId) {
+      ImageLoader.abort(this._imageRequestId);
+      this._imageRequestId = null;
     }
   }
 
   _onError = () => {
     const { onError, source } = this.props;
-    this._destroyImageLoader();
-    this._onLoadEnd();
     this._updateImageState(STATUS_ERRORED);
     if (onError) {
       onError({
@@ -169,13 +175,13 @@ class Image extends Component {
         }
       });
     }
+    this._onLoadEnd();
   }
 
   _onLoad = (e) => {
     const { onLoad } = this.props;
     const event = { nativeEvent: e };
 
-    this._destroyImageLoader();
     this._updateImageState(STATUS_LOADED);
     if (onLoad) { onLoad(event); }
     this._onLoadEnd();
@@ -194,11 +200,12 @@ class Image extends Component {
 
   _updateImageState(status) {
     this._imageState = status;
-    const isLoaded = this._imageState === STATUS_LOADED;
-    if (isLoaded !== this.state.isLoaded) {
+    const shouldDisplaySource = this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
+    // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
+    if (shouldDisplaySource !== this.state.shouldDisplaySource) {
       requestAnimationFrame(() => {
         if (this._isMounted) {
-          this.setState({ isLoaded });
+          this.setState({ shouldDisplaySource });
         }
       });
     }
