@@ -6,7 +6,7 @@
 
 "use strict";
 
-var TouchHistoryMath = require('react/lib/TouchHistoryMath');
+var TouchHistoryMath = require('react-dom/lib/TouchHistoryMath');
 
 var currentCentroidXOfTouchesChangedAfter =
   TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;

@@ -1,6 +1,6 @@
 import findNodeHandle from './modules/findNodeHandle';
-import ReactDefaultInjection from 'react/lib/ReactDefaultInjection';
-import { render, unmountComponentAtNode } from 'react/lib/ReactMount';
+import ReactDefaultInjection from 'react-dom/lib/ReactDefaultInjection';
+import { render, unmountComponentAtNode } from 'react-dom/lib/ReactMount';
 
 ReactDefaultInjection.inject();
 
