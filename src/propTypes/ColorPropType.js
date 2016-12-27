@@ -14,7 +14,7 @@ import { PropTypes } from 'react'
 
 var colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
   var normalizeColor = require('../modules/normalizeColor');
-  var ReactPropTypeLocationNames = require('react/lib/ReactPropTypeLocationNames');
+  var ReactPropTypeLocationNames = require('react-dom/lib/ReactPropTypeLocationNames');
   var color = props[propName];
   if (color === undefined || color === null) {
     if (isRequired) {

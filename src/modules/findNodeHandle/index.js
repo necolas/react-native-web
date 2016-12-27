@@ -1,2 +1,2 @@
-import findNodeHandle from 'react/lib/findDOMNode';
+import findNodeHandle from 'react-dom/lib/findDOMNode';
 export default findNodeHandle;

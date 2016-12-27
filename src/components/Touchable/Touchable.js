@@ -566,13 +566,13 @@ var TouchableMixin = {
    * @sideeffects
    * @private
    */
-  _remeasureMetricsOnActivation: function(e) {
-    /* @edit begin */
-    UIManager.measure(
-      e.nativeEvent.target,
-      this._handleQueryLayout
-    );
-    /* @edit end */
+  _remeasureMetricsOnActivation: function() {
+    const tag = this.state.touchable.responderID;
+    if (tag == null) {
+      return;
+    }
+
+    UIManager.measure(tag, this._handleQueryLayout);
   },
 
   _handleQueryLayout: function(l, t, w, h, globalX, globalY) {
@@ -684,7 +684,7 @@ var TouchableMixin = {
     }
 
     if (!IsActive[curState] && IsActive[nextState]) {
-      this._remeasureMetricsOnActivation(e);
+      this._remeasureMetricsOnActivation();
     }
 
     if (IsPressingIn[curState] && signal === Signals.LONG_PRESS_DETECTED) {
@@ -692,16 +692,9 @@ var TouchableMixin = {
     }
 
     if (newIsHighlight && !curIsHighlight) {
-      this._savePressInLocation(e);
-      this.touchableHandleActivePressIn && this.touchableHandleActivePressIn(e);
-    } else if (!newIsHighlight && curIsHighlight && this.touchableHandleActivePressOut) {
-      if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
-        this.pressOutDelayTimeout = setTimeout(() => {
-          this.touchableHandleActivePressOut(e);
-        }, this.touchableGetPressOutDelayMS());
-      } else {
-        this.touchableHandleActivePressOut(e);
-      }
+      this._startHighlight(e);
+    } else if (!newIsHighlight && curIsHighlight) {
+      this._endHighlight(e);
     }
 
     if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
@@ -714,49 +707,40 @@ var TouchableMixin = {
 
       var shouldInvokePress =  !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
       if (shouldInvokePress && this.touchableHandlePress) {
+        if (!newIsHighlight && !curIsHighlight) {
+          // we never highlighted because of delay, but we should highlight now
+          this._startHighlight(e);
+          this._endHighlight(e);
+        }
         this.touchableHandlePress(e);
       }
     }
 
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.touchableDelayTimeout = null;
-  }
+  },
+
+  _startHighlight: function(e) {
+    this._savePressInLocation(e);
+    this.touchableHandleActivePressIn && this.touchableHandleActivePressIn(e);
+  },
+
+  _endHighlight: function(e) {
+    if (this.touchableHandleActivePressOut) {
+      if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
+        this.pressOutDelayTimeout = setTimeout(() => {
+          this.touchableHandleActivePressOut(e);
+        }, this.touchableGetPressOutDelayMS());
+      } else {
+        this.touchableHandleActivePressOut(e);
+      }
+    }
+  },
 
 };
 
 var Touchable = {
-  Mixin: TouchableMixin,
-  TOUCH_TARGET_DEBUG: false, // Highlights all touchable targets. Toggle with Inspector.
-  /**
-   * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
-   */
-  renderDebugView: ({color, hitSlop}) => {
-    if (!Touchable.TOUCH_TARGET_DEBUG) {
-      return null;
-    }
-    if (process.env.NODE_ENV === 'production') {
-      throw Error('Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!');
-    }
-    const debugHitSlopStyle = {};
-    hitSlop = hitSlop || {top: 0, bottom: 0, left: 0, right: 0};
-    for (const key in hitSlop) {
-      debugHitSlopStyle[key] = -hitSlop[key];
-    }
-    const hexColor = '#' + ('00000000' + normalizeColor(color).toString(16)).substr(-8);
-    return (
-      <View
-        pointerEvents="none"
-        style={{
-          position: 'absolute',
-          borderColor: hexColor.slice(0, -2) + '55', // More opaque
-          borderWidth: 1,
-          borderStyle: 'dashed',
-          backgroundColor: hexColor.slice(0, -2) + '0F', // Less opaque
-          ...debugHitSlopStyle
-        }}
-      />
-    );
-  }
+  Mixin: TouchableMixin
 };
 
 module.exports = Touchable;

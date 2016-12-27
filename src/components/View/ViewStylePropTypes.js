@@ -34,7 +34,10 @@ module.exports = process.env.NODE_ENV !== 'production' ? {
   outline: string,
   overflowX: autoOrHiddenOrVisible,
   overflowY: autoOrHiddenOrVisible,
-  transition: string,
+  transitionDelay: string,
+  transitionDuration: string,
+  transitionProperty: string,
+  transitionTimingFunction: string,
   userSelect: string,
   visibility: hiddenOrVisible,
   WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])

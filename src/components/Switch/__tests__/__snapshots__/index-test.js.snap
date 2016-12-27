@@ -67,7 +67,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
         "WebkitFlexBasis": "auto",
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "backgroundColor": "#939393",
         "borderBottomLeftRadius": "10px",
@@ -112,7 +112,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "top": "0px",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "90%",
       }
     } />
@@ -130,7 +130,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "alignSelf": "flex-start",
         "backgroundColor": "#FAFAFA",
@@ -176,7 +176,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
@@ -281,7 +281,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
         "WebkitFlexBasis": "auto",
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "backgroundColor": "#D5D5D5",
         "borderBottomLeftRadius": "10px",
@@ -326,7 +326,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "top": "0px",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "90%",
       }
     } />
@@ -344,7 +344,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "alignSelf": "flex-start",
         "backgroundColor": "#BDBDBD",
@@ -390,7 +390,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
@@ -495,7 +495,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
         "WebkitFlexBasis": "auto",
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "backgroundColor": "#939393",
         "borderBottomLeftRadius": "10px",
@@ -540,7 +540,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "top": "0px",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "90%",
       }
     } />
@@ -558,7 +558,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "alignSelf": "flex-start",
         "backgroundColor": "#FAFAFA",
@@ -604,7 +604,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
         "textAlign": "inherit",
         "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
@@ -709,7 +709,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
         "WebkitFlexBasis": "auto",
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "backgroundColor": "#A3D3CF",
         "borderBottomLeftRadius": "10px",
@@ -754,7 +754,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
         "textAlign": "inherit",
         "textDecoration": "none",
         "top": "0px",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "90%",
       }
     } />
@@ -772,7 +772,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
         "WebkitFlexDirection": "column",
         "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(100%)",
-        "WebkitTransition": "0.1s",
+        "WebkitTransitionDuration": "0.1s",
         "alignItems": "stretch",
         "alignSelf": "flex-start",
         "backgroundColor": "#009688",
@@ -818,7 +818,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
         "textAlign": "inherit",
         "textDecoration": "none",
         "transform": "translateX(100%)",
-        "transition": "0.1s",
+        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />

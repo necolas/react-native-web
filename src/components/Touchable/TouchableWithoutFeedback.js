@@ -22,12 +22,12 @@ var StyleSheet = require('../../apis/StyleSheet');
 
 type Event = Object;
 
-var PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
+const PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
 
 /**
  * Do not use unless you have a very good reason. All the elements that
  * respond to press should have a visual feedback when touched. This is
- * one of the primary reason a "web" app doesn't feel "native".
+ * one of the primary reasons a "web" app doesn't feel "native".
  *
  * > **NOTE**: TouchableWithoutFeedback supports only one child
  * >
@@ -144,7 +144,7 @@ const TouchableWithoutFeedback = React.createClass({
     return this.props.delayPressOut || 0;
   },
 
-  render: function(): ReactElement<any> {
+  render: function(): React.Element<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
@@ -153,12 +153,6 @@ const TouchableWithoutFeedback = React.createClass({
       'TouchableWithoutFeedback does not work well with Text children. Wrap children in a View instead. See ' +
         ((child._owner && child._owner.getName && child._owner.getName()) || '<unknown>')
     );
-    if (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'View') {
-      if (!Array.isArray(children)) {
-        children = [children];
-      }
-      children.push(Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}));
-    }
     const style = (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text') ?
       [
         styles.root,

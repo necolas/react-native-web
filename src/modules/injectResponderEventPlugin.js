@@ -1,22 +1,19 @@
 // based on https://github.com/facebook/react/pull/4303/files
 
-import EventConstants from 'react/lib/EventConstants';
-import EventPluginRegistry from 'react/lib/EventPluginRegistry';
+import EventPluginRegistry from 'react-dom/lib/EventPluginRegistry';
 import normalizeNativeEvent from './normalizeNativeEvent';
-import ResponderEventPlugin from 'react/lib/ResponderEventPlugin';
-import ResponderTouchHistoryStore from 'react/lib/ResponderTouchHistoryStore';
+import ResponderEventPlugin from 'react-dom/lib/ResponderEventPlugin';
+import ResponderTouchHistoryStore from 'react-dom/lib/ResponderTouchHistoryStore';
 
-const {
-  topMouseDown,
-  topMouseMove,
-  topMouseUp,
-  topScroll,
-  topSelectionChange,
-  topTouchCancel,
-  topTouchEnd,
-  topTouchMove,
-  topTouchStart
-} = EventConstants.topLevelTypes;
+const topMouseDown = 'topMouseDown';
+const topMouseMove = 'topMouseMove';
+const topMouseUp = 'topMouseUp';
+const topScroll = 'topScroll';
+const topSelectionChange = 'topSelectionChange';
+const topTouchCancel = 'topTouchCancel';
+const topTouchEnd = 'topTouchEnd';
+const topTouchMove = 'topTouchMove';
+const topTouchStart = 'topTouchStart';
 
 const endDependencies = [ topTouchCancel, topTouchEnd, topMouseUp ];
 const moveDependencies = [ topTouchMove, topMouseMove ];

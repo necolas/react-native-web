@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '70%',
     margin: 'auto',
-    transition: '0.1s',
+    transitionDuration: '0.1s',
     width: '90%'
   },
   disabledTrack: {
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
-    transition: '0.1s'
+    transitionDuration: '0.1s'
   },
   disabledThumb: {
     backgroundColor: '#BDBDBD'
