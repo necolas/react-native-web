@@ -106,8 +106,8 @@ class Image extends Component {
       ...other
     } = this.props;
 
-    const displayImage = resolveAssetSource(source || defaultSource);
-    const imageSizeStyle = resolveAssetDimensions(source || defaultSource);
+    const displayImage = resolveAssetSource(!isLoaded ? defaultSource : source);
+    const imageSizeStyle = resolveAssetDimensions(!isLoaded ? defaultSource : source);
     const backgroundImage = displayImage ? `url("${displayImage}")` : null;
     const originalStyle = StyleSheet.flatten(this.props.style);
     const finalResizeMode = resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
