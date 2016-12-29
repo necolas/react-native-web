@@ -9,7 +9,6 @@ import preset from 'jss-preset-default';
 // I'm assuming this only needs to be setup once per app, not per file
 let jssSetup = false;
 
-console.log('-- JSS AS STYLESHEET LOADED');
 if (!jssSetup) {
   jss.setup(preset());
   jssSetup = true;
