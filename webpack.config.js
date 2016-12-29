@@ -24,6 +24,11 @@ module.exports = {
     libraryTarget: 'umd',
     path: DIST_DIRECTORY
   },
+  resolve: {
+    root: [
+      path.resolve('./dist')
+    ]
+  },
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',

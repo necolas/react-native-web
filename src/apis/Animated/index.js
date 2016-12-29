@@ -1,6 +1,6 @@
 import Animated from 'animated';
 import Image from '../../components/Image';
-import StyleSheet from '../StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import Text from '../../components/Text';
 import View from '../../components/View';
 

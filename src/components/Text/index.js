@@ -2,7 +2,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createDOMElement from '../../modules/createDOMElement';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextStylePropTypes from './TextStylePropTypes';
 import { Component, PropTypes } from 'react';

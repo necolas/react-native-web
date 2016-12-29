@@ -2,7 +2,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import Text from '../Text';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';

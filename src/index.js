@@ -20,7 +20,7 @@ import NetInfo from './apis/NetInfo';
 import PanResponder from './apis/PanResponder';
 import PixelRatio from './apis/PixelRatio';
 import Platform from './apis/Platform';
-import StyleSheet from './apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import UIManager from './apis/UIManager';
 import Vibration from './apis/Vibration';
 

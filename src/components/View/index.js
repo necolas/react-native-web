@@ -6,7 +6,7 @@ import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createDOMElement from '../../modules/createDOMElement';
 import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { Component, PropTypes } from 'react';

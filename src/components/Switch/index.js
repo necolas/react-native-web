@@ -2,7 +2,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import createDOMElement from '../../modules/createDOMElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';

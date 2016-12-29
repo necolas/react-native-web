@@ -1,5 +1,5 @@
 import React from 'react';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 
 const emptyObject = {};
 

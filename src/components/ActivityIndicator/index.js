@@ -1,7 +1,7 @@
 import Animated from '../../apis/Animated';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import Easing from 'animated/lib/Easing';
-import StyleSheet from '../../apis/StyleSheet';
+import StyleSheet from 'apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 

@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import { getDefaultStyleSheet } from '../css';
-import StyleSheet from '..';
+import StyleSheet from 'apis/StyleSheet';
 
 const isPlainObject = (x) => {
   const toString = Object.prototype.toString;
