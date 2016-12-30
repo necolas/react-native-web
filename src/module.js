@@ -5,6 +5,7 @@ import processColor from './modules/processColor';
 import { hydrate, render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
+import Alert from './apis/Alert';
 import Animated from './apis/Animated';
 import AppRegistry from './apis/AppRegistry';
 import AppState from './apis/AppState';
@@ -60,6 +61,7 @@ import ViewPropTypes from './components/View/ViewPropTypes';
 
 export {
   // top-level API
+  Alert,
   findNodeHandle,
   hydrate,
   render,
