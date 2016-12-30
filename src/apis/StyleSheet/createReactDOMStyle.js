@@ -15,8 +15,8 @@ const processors = [
 
 const applyProcessors = (style) => processors.reduce((style, processor) => processor(style), style);
 
-const createReactDOMStyleObject = (reactNativeStyle) => applyProcessors(
+const createReactDOMStyle = (reactNativeStyle) => applyProcessors(
   expandStyle(i18nStyle(flattenStyle(reactNativeStyle)))
 );
 
-module.exports = createReactDOMStyleObject;
+module.exports = createReactDOMStyle;

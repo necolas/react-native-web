@@ -1,5 +1,5 @@
 import * as css from './css';
-import createReactStyleObject from './createReactStyleObject';
+import createReactDOMStyle from './createReactDOMStyle';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import flattenStyle from '../../modules/flattenStyle';
 import React from 'react';
@@ -74,7 +74,7 @@ module.exports = {
    */
   resolve(props) {
     let className = props.className || '';
-    const style = createReactStyleObject(props.style);
+    const style = createReactDOMStyle(props.style);
     for (const prop in style) {
       const value = style[prop];
       const replacementClassName = css.getStyleAsHelperClassName(prop, value);

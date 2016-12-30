@@ -1,4 +1,4 @@
-import createReactStyleObject from '../StyleSheet/createReactStyleObject';
+import createReactDOMStyle from '../StyleSheet/createReactDOMStyle';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
@@ -45,7 +45,7 @@ const UIManager = {
           // convert styles to DOM-styles
           CSSPropertyOperations.setValueForStyles(
             node,
-            createReactStyleObject(value),
+            createReactDOMStyle(value),
             component._reactInternalInstance
           );
           break;
