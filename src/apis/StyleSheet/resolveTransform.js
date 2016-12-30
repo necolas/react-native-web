@@ -14,16 +14,14 @@ const convertTransformMatrix = (transformMatrix) => {
   return `matrix3d(${matrix})`;
 };
 
-const resolveTransform = (style) => {
-  if (style) {
-    if (style.transform && Array.isArray(style.transform)) {
-      style.transform = style.transform.map(mapTransform).join(' ');
-    } else if (style.transformMatrix) {
-      style.transform = convertTransformMatrix(style.transformMatrix);
-      style.transformMatrix = null;
-    }
+const resolveTransform = (resolvedStyle, style) => {
+  if (Array.isArray(style.transform)) {
+    const transform = style.transform.map(mapTransform).join(' ');
+    resolvedStyle.transform = transform;
+  } else if (style.transformMatrix) {
+    const transform = convertTransformMatrix(style.transformMatrix)
+    resolvedStyle.transform = transform;
   }
-  return style;
 };
 
 module.exports = resolveTransform;

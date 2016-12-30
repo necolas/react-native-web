@@ -438,7 +438,6 @@ exports[`components/Image prop "defaultSource" sets background image when value 
       "flexDirection": "column",
       "flexShrink": 0,
       "font": "inherit",
-      "height": undefined,
       "listStyle": "none",
       "marginBottom": "0px",
       "marginLeft": "0px",
@@ -457,7 +456,6 @@ exports[`components/Image prop "defaultSource" sets background image when value 
       "position": "relative",
       "textAlign": "inherit",
       "textDecoration": "none",
-      "width": undefined,
     }
   } />
 `;

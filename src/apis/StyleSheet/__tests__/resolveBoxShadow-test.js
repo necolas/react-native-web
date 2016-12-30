@@ -3,45 +3,58 @@
 import resolveBoxShadow from '../resolveBoxShadow';
 
 describe('apis/StyleSheet/resolveBoxShadow', () => {
-  test('missing shadowColor', () => {
-    const style = {
-      shadowOffset: { width: 1, height: 2 }
-    };
-
-    expect(resolveBoxShadow(style)).toEqual({});
-  });
-
   test('shadowColor only', () => {
-    const style = {
-      shadowColor: 'red'
-    };
+    const resolvedStyle = {};
+    const style = { shadowColor: 'red' };
+    resolveBoxShadow(resolvedStyle, style);
 
-    expect(resolveBoxShadow(style)).toEqual({
+    expect(resolvedStyle).toEqual({
       boxShadow: '0px 0px 0px rgba(255,0,0,1)'
     });
   });
 
   test('shadowColor and shadowOpacity only', () => {
-    const style = {
-      shadowColor: 'red',
-      shadowOpacity: 0.5
-    };
+    const resolvedStyle = {};
+    const style = { shadowColor: 'red', shadowOpacity: 0.5 };
+    resolveBoxShadow(resolvedStyle, style);
 
-    expect(resolveBoxShadow(style)).toEqual({
+    expect(resolvedStyle).toEqual({
       boxShadow: '0px 0px 0px rgba(255,0,0,0.5)'
     });
   });
 
-  test('shadowOffset, shadowRadius, shadowSpread', () => {
+  test('shadowOffset only', () => {
+    const resolvedStyle = {};
+    const style = { shadowOffset: { width: 1, height: 2 } };
+    resolveBoxShadow(resolvedStyle, style);
+
+    expect(resolvedStyle).toEqual({
+      boxShadow: '1px 2px 0px rgba(0,0,0,0)'
+    });
+  });
+
+  test('shadowRadius only', () => {
+    const resolvedStyle = {};
+    const style = { shadowRadius: 5 };
+    resolveBoxShadow(resolvedStyle, style);
+
+    expect(resolvedStyle).toEqual({
+      boxShadow: '0px 0px 5px rgba(0,0,0,0)'
+    });
+  });
+
+  test('shadowOffset, shadowRadius, shadowColor', () => {
+    const resolvedStyle = {};
     const style = {
       shadowColor: 'rgba(50,60,70,0.5)',
       shadowOffset: { width: 1, height: 2 },
       shadowOpacity: 0.5,
       shadowRadius: 3
     };
+    resolveBoxShadow(resolvedStyle, style);
 
-    expect(resolveBoxShadow(style)).toEqual({
-      boxShadow: '2px 1px 3px rgba(50,60,70,0.25)'
+    expect(resolvedStyle).toEqual({
+      boxShadow: '1px 2px 3px rgba(50,60,70,0.25)'
     });
   });
 });

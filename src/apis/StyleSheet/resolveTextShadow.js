@@ -1,19 +1,15 @@
 import normalizeValue from './normalizeValue';
 
-const resolveTextShadow = (style) => {
-  if (style && style.textShadowOffset) {
-    const { height, width } = style.textShadowOffset;
-    const offsetX = normalizeValue(null, height || 0);
-    const offsetY = normalizeValue(null, width || 0);
-    const blurRadius = normalizeValue(null, style.textShadowRadius || 0);
-    const color = style.textShadowColor || 'currentcolor';
+const defaultOffset = { height: 0, width: 0 };
 
-    style.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
-    style.textShadowColor = null;
-    style.textShadowOffset = null;
-    style.textShadowRadius = null;
-  }
-  return style;
+const resolveTextShadow = (resolvedStyle, style) => {
+  const { height, width } = style.textShadowOffset || defaultOffset;
+  const offsetX = normalizeValue(null, width);
+  const offsetY = normalizeValue(null, height);
+  const blurRadius = normalizeValue(null, style.textShadowRadius || 0);
+  const color = style.textShadowColor || 'currentcolor';
+
+  resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
 };
 
 module.exports = resolveTextShadow;

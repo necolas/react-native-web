@@ -4,17 +4,16 @@ import resolveTextShadow from '../resolveTextShadow';
 
 describe('apis/StyleSheet/resolveTextShadow', () => {
   test('textShadowOffset', () => {
+    const resolvedStyle = {};
     const style = {
       textShadowColor: 'red',
-      textShadowOffset: { width: 2, height: 2 },
+      textShadowOffset: { width: 1, height: 2 },
       textShadowRadius: 5
     };
+    resolveTextShadow(resolvedStyle, style);
 
-    expect(resolveTextShadow(style)).toEqual({
-      textShadow: '2px 2px 5px red',
-      textShadowColor: null,
-      textShadowOffset: null,
-      textShadowRadius: null
+    expect(resolvedStyle).toEqual({
+      textShadow: '1px 2px 5px red'
     });
   });
 });
