@@ -1,6 +1,6 @@
 import normalizeValue from './normalizeValue';
 
-const processTextShadow = (style) => {
+const resolveTextShadow = (style) => {
   if (style && style.textShadowOffset) {
     const { height, width } = style.textShadowOffset;
     const offsetX = normalizeValue(null, height || 0);
@@ -16,4 +16,4 @@ const processTextShadow = (style) => {
   return style;
 };
 
-module.exports = processTextShadow;
+module.exports = resolveTextShadow;

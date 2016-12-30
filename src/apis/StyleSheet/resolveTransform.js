@@ -14,7 +14,7 @@ const convertTransformMatrix = (transformMatrix) => {
   return `matrix3d(${matrix})`;
 };
 
-const processTransform = (style) => {
+const resolveTransform = (style) => {
   if (style) {
     if (style.transform && Array.isArray(style.transform)) {
       style.transform = style.transform.map(mapTransform).join(' ');
@@ -26,4 +26,4 @@ const processTransform = (style) => {
   return style;
 };
 
-module.exports = processTransform;
+module.exports = resolveTransform;

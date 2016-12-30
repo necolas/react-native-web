@@ -22,7 +22,7 @@ class ReactNativePropRegistry {
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(object);
     }
-    objects[id] = object;
+    objects[`${id}`] = object;
     return id;
   }
 
@@ -33,7 +33,7 @@ class ReactNativePropRegistry {
       return emptyObject;
     }
 
-    const object = objects[id];
+    const object = objects[`${id}`];
     if (!object) {
       console.warn('Invalid style with id `' + id + '`. Skipping ...');
       return emptyObject;

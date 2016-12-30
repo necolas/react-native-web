@@ -1,14 +1,14 @@
 /* eslint-env jasmine, jest */
 
-import processBoxShadow from '../processBoxShadow';
+import resolveBoxShadow from '../resolveBoxShadow';
 
-describe('apis/StyleSheet/processBoxShadow', () => {
+describe('apis/StyleSheet/resolveBoxShadow', () => {
   test('missing shadowColor', () => {
     const style = {
       shadowOffset: { width: 1, height: 2 }
     };
 
-    expect(processBoxShadow(style)).toEqual({});
+    expect(resolveBoxShadow(style)).toEqual({});
   });
 
   test('shadowColor only', () => {
@@ -16,7 +16,7 @@ describe('apis/StyleSheet/processBoxShadow', () => {
       shadowColor: 'red'
     };
 
-    expect(processBoxShadow(style)).toEqual({
+    expect(resolveBoxShadow(style)).toEqual({
       boxShadow: '0px 0px 0px rgba(255,0,0,1)'
     });
   });
@@ -27,7 +27,7 @@ describe('apis/StyleSheet/processBoxShadow', () => {
       shadowOpacity: 0.5
     };
 
-    expect(processBoxShadow(style)).toEqual({
+    expect(resolveBoxShadow(style)).toEqual({
       boxShadow: '0px 0px 0px rgba(255,0,0,0.5)'
     });
   });
@@ -40,7 +40,7 @@ describe('apis/StyleSheet/processBoxShadow', () => {
       shadowRadius: 3
     };
 
-    expect(processBoxShadow(style)).toEqual({
+    expect(resolveBoxShadow(style)).toEqual({
       boxShadow: '2px 1px 3px rgba(50,60,70,0.25)'
     });
   });

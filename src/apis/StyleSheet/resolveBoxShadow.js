@@ -12,7 +12,7 @@ const applyOpacity = (color, opacity) => {
 };
 
 // TODO: add inset and spread support
-const processBoxShadow = (style) => {
+const resolveBoxShadow = (style) => {
   if (style && style.shadowColor) {
     const { height, width } = style.shadowOffset || {};
     const opacity = style.shadowOpacity != null ? style.shadowOpacity : 1;
@@ -30,4 +30,4 @@ const processBoxShadow = (style) => {
   return style;
 };
 
-module.exports = processBoxShadow;
+module.exports = resolveBoxShadow;

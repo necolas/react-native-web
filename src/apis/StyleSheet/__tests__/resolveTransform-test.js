@@ -1,8 +1,8 @@
 /* eslint-env jasmine, jest */
 
-import processTransform from '../processTransform';
+import resolveTransform from '../resolveTransform';
 
-describe('apis/StyleSheet/processTransform', () => {
+describe('apis/StyleSheet/resolveTransform', () => {
   test('transform', () => {
     const style = {
       transform: [
@@ -12,7 +12,7 @@ describe('apis/StyleSheet/processTransform', () => {
       ]
     };
 
-    expect(processTransform(style)).toEqual({ transform: 'scaleX(20) translateX(20px) rotate(20deg)' });
+    expect(resolveTransform(style)).toEqual({ transform: 'scaleX(20) translateX(20px) rotate(20deg)' });
   });
 
   test('transformMatrix', () => {
@@ -20,7 +20,7 @@ describe('apis/StyleSheet/processTransform', () => {
       transformMatrix: [ 1, 2, 3, 4, 5, 6 ]
     };
 
-    expect(processTransform(style)).toEqual({
+    expect(resolveTransform(style)).toEqual({
       transform: 'matrix3d(1,2,3,4,5,6)',
       transformMatrix: null
     });

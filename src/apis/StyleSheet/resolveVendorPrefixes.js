@@ -1,6 +1,6 @@
 import prefixAll from 'inline-style-prefixer/static';
 
-const processVendorPrefixes = (style) => {
+const resolveVendorPrefixes = (style) => {
   const prefixedStyles = prefixAll(style);
   // React@15 removed undocumented support for fallback values in
   // inline-styles. Revert array values to the standard CSS value
@@ -13,4 +13,4 @@ const processVendorPrefixes = (style) => {
   return prefixedStyles;
 };
 
-module.exports = processVendorPrefixes;
+module.exports = resolveVendorPrefixes;

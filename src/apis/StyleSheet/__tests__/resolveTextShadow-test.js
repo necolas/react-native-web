@@ -1,8 +1,8 @@
 /* eslint-env jasmine, jest */
 
-import processTextShadow from '../processTextShadow';
+import resolveTextShadow from '../resolveTextShadow';
 
-describe('apis/StyleSheet/processTextShadow', () => {
+describe('apis/StyleSheet/resolveTextShadow', () => {
   test('textShadowOffset', () => {
     const style = {
       textShadowColor: 'red',
@@ -10,7 +10,7 @@ describe('apis/StyleSheet/processTextShadow', () => {
       textShadowRadius: 5
     };
 
-    expect(processTextShadow(style)).toEqual({
+    expect(resolveTextShadow(style)).toEqual({
       textShadow: '2px 2px 5px red',
       textShadowColor: null,
       textShadowOffset: null,

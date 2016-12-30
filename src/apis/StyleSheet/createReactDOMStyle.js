@@ -1,16 +1,16 @@
 import expandStyle from './expandStyle';
 import flattenStyle from './flattenStyle';
 import i18nStyle from './i18nStyle';
-import processBoxShadow from './processBoxShadow';
-import processTextShadow from './processTextShadow';
-import processTransform from './processTransform';
-import processVendorPrefixes from './processVendorPrefixes';
+import resolveBoxShadow from './resolveBoxShadow';
+import resolveTextShadow from './resolveTextShadow';
+import resolveTransform from './resolveTransform';
+import resolveVendorPrefixes from './resolveVendorPrefixes';
 
 const processors = [
-  processBoxShadow,
-  processTextShadow,
-  processTransform,
-  processVendorPrefixes
+  resolveBoxShadow,
+  resolveTextShadow,
+  resolveTransform,
+  resolveVendorPrefixes
 ];
 
 const applyProcessors = (style) => processors.reduce((style, processor) => processor(style), style);
