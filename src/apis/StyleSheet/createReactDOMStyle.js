@@ -1,5 +1,5 @@
 import expandStyle from './expandStyle';
-import flattenStyle from '../../modules/flattenStyle';
+import flattenStyle from './flattenStyle';
 import i18nStyle from './i18nStyle';
 import processBoxShadow from './processBoxShadow';
 import processTextShadow from './processTextShadow';

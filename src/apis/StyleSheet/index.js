@@ -1,7 +1,7 @@
 import * as css from './css';
 import createReactDOMStyle from './createReactDOMStyle';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-import flattenStyle from '../../modules/flattenStyle';
+import flattenStyle from './flattenStyle';
 import React from 'react';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 

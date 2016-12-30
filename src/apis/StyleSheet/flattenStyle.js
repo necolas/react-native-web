@@ -12,7 +12,7 @@
  */
 'use strict';
 
-var ReactNativePropRegistry = require('../ReactNativePropRegistry');
+var ReactNativePropRegistry = require('../../modules/ReactNativePropRegistry');
 var invariant = require('fbjs/lib/invariant');
 
 function getStyle(style) {

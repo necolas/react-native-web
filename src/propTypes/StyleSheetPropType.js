@@ -7,7 +7,7 @@
 
 module.exports = process.env.NODE_ENV !== 'production' ? function StyleSheetPropType(shape) {
   const createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker');
-  const flattenStyle = require('../modules/flattenStyle');
+  const StyleSheet = require('../apis/StyleSheet');
 
   const shapePropType = createStrictShapeTypeChecker(shape);
   return function (props, propName, componentName, location?) {
@@ -15,7 +15,7 @@ module.exports = process.env.NODE_ENV !== 'production' ? function StyleSheetProp
     if (props[propName]) {
       // Just make a dummy prop object with only the flattened style
       newProps = {};
-      newProps[propName] = flattenStyle(props[propName]);
+      newProps[propName] = StyleSheet.flatten(props[propName]);
     }
     return shapePropType(newProps, propName, componentName, location);
   };
