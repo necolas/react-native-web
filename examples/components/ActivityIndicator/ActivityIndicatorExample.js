@@ -129,7 +129,7 @@ const examples = [
     render() {
       return (
         <View style={[styles.horizontal, styles.centering]}>
-          <ActivityIndicator size="40" />
+          <ActivityIndicator size={40} />
           <ActivityIndicator
             style={{ marginLeft: 20, transform: [ {scale: 1.5} ] }}
             size="large"

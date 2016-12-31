@@ -15,7 +15,8 @@ describe('apis/StyleSheet/resolveTransform', () => {
     resolveTransform(resolvedStyle, style);
 
     expect(resolvedStyle).toEqual({
-      transform: 'scaleX(20) translateX(20px) rotate(20deg)' });
+      transform: 'scaleX(20) translateX(20px) rotate(20deg)'
+    });
   });
 
   test('transformMatrix', () => {
