@@ -13,5 +13,6 @@ https://github.com/necolas/react-native-web/CONTRIBUTING.md
 
 - [ ] includes documentation
 - [ ] includes tests
+- [ ] includes benchmark reports
 - [ ] includes an interactive example
 - [ ] includes screenshots/videos
