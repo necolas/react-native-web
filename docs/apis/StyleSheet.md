@@ -15,9 +15,9 @@ Each key of the object passed to `create` must define a style object.
 
 Flattens an array of styles into a single style object.
 
-**render**: function
+**renderToString**: function
 
-Returns a React `<style>` element for use in server-side rendering.
+Returns a string of the stylesheet for use in server-side rendering.
 
 ## Properties
 

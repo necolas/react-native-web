@@ -1,26 +1,14 @@
 exports[`components/Text prop "children" 1`] = `
 <span
-  className=""
+  className="rn-borderTopWidth:0px rn-borderRightWidth:0px rn-borderBottomWidth:0px rn-borderLeftWidth:0px rn-color:inherit rn-display:inline rn-font:inherit rn-marginTop:0px rn-marginRight:0px rn-marginBottom:0px rn-marginLeft:0px rn-paddingTop:0px rn-paddingRight:0px rn-paddingBottom:0px rn-paddingLeft:0px rn-textDecoration:none rn-whiteSpace:pre-wrap rn-wordWrap:break-word"
   style={
-    Object {
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "wordWrap": "break-word",
-    }
+    Array [
+      3,
+      undefined,
+      false,
+      false,
+      undefined,
+    ]
   }>
   children
 </span>
@@ -28,86 +16,67 @@ exports[`components/Text prop "children" 1`] = `
 
 exports[`components/Text prop "onPress" 1`] = `
 <span
-  className=""
+  className="
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-color:inherit
+rn-cursor:pointer
+rn-display:inline
+rn-font:inherit
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-textDecoration:none
+rn-whiteSpace:pre-wrap
+rn-wordWrap:break-word"
   onClick={[Function]}
   onKeyDown={[Function]}
-  style={
-    Object {
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "cursor": "pointer",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "wordWrap": "break-word",
-    }
-  }
+  style={Object {}}
   tabIndex={0} />
 `;
 
 exports[`components/Text prop "selectable" 1`] = `
 <span
-  className=""
+  className="rn-borderTopWidth:0px rn-borderRightWidth:0px rn-borderBottomWidth:0px rn-borderLeftWidth:0px rn-color:inherit rn-display:inline rn-font:inherit rn-marginTop:0px rn-marginRight:0px rn-marginBottom:0px rn-marginLeft:0px rn-paddingTop:0px rn-paddingRight:0px rn-paddingBottom:0px rn-paddingLeft:0px rn-textDecoration:none rn-whiteSpace:pre-wrap rn-wordWrap:break-word"
   style={
-    Object {
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "wordWrap": "break-word",
-    }
+    Array [
+      3,
+      undefined,
+      false,
+      false,
+      undefined,
+    ]
   } />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
 <span
-  className=""
-  style={
-    Object {
-      "MozUserSelect": "none",
-      "WebkitUserSelect": "none",
-      "borderBottomWidth": "0px",
-      "borderLeftWidth": "0px",
-      "borderRightWidth": "0px",
-      "borderTopWidth": "0px",
-      "color": "inherit",
-      "display": "inline",
-      "font": "inherit",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "textDecoration": "none",
-      "userSelect": "none",
-      "wordWrap": "break-word",
-    }
-  } />
+  className="
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-color:inherit
+rn-display:inline
+rn-font:inherit
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-textDecoration:none
+rn-userSelect:none
+rn-whiteSpace:pre-wrap
+rn-wordWrap:break-word"
+  style={Object {}} />
 `;

@@ -19,7 +19,7 @@ const resolveTransform = (resolvedStyle, style) => {
     const transform = style.transform.map(mapTransform).join(' ');
     resolvedStyle.transform = transform;
   } else if (style.transformMatrix) {
-    const transform = convertTransformMatrix(style.transformMatrix)
+    const transform = convertTransformMatrix(style.transformMatrix);
     resolvedStyle.transform = transform;
   }
 };

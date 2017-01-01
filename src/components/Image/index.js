@@ -131,8 +131,8 @@ class Image extends Component {
       styles.initial,
       imageSizeStyle,
       originalStyle,
-      backgroundImage && { backgroundImage },
-      resizeModeStyles[finalResizeMode]
+      resizeModeStyles[finalResizeMode],
+      backgroundImage && { backgroundImage }
     ]);
     // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;

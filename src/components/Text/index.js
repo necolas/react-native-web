@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     textDecorationLine: 'none',
+    whiteSpace: 'pre-wrap',
     wordWrap: 'break-word'
   },
   notSelectable: {

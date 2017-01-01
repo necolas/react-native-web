@@ -1,5 +1,7 @@
 import createReactDOMStyle from '../StyleSheet/createReactDOMStyle';
+import flattenStyle from '../StyleSheet/flattenStyle';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
+import prefixInlineStyles from '../StyleSheet/prefixInlineStyles';
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || node.parentNode;
@@ -41,14 +43,11 @@ const UIManager = {
 
       const value = props[prop];
       switch (prop) {
-        case 'style':
-          // convert styles to DOM-styles
-          CSSPropertyOperations.setValueForStyles(
-            node,
-            createReactDOMStyle(value),
-            component._reactInternalInstance
-          );
+        case 'style': {
+          const style = prefixInlineStyles(createReactDOMStyle(flattenStyle(value)));
+          CSSPropertyOperations.setValueForStyles(node, style, component._reactInternalInstance);
           break;
+        }
         case 'class':
         case 'className': {
           const nativeProp = 'class';

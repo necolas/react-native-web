@@ -1,0 +1,15 @@
+exports[`apis/StyleSheet/createReactDOMStyle converts ReactNative style to ReactDOM style 1`] = `
+Object {
+  "borderBottomWidth": "1px",
+  "borderLeftWidth": "1px",
+  "borderRightWidth": "1px",
+  "borderTopWidth": "1px",
+  "borderWidthLeft": "2px",
+  "borderWidthRight": "3px",
+  "boxShadow": "1px 1px 1px 1px #000, 1px 2px 0px rgba(255,0,0,1)",
+  "display": "flex",
+  "marginBottom": "0px",
+  "marginTop": "0px",
+  "opacity": 0,
+}
+`;

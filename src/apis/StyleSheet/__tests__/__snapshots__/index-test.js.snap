@@ -1,10 +1,14 @@
-exports[`apis/StyleSheet resolve 1`] = `
-Object {
-  "className": "test __style_df __style_pebn",
-  "style": Object {
-    "display": null,
-    "opacity": 1,
-    "pointerEvents": null,
-  },
-}
+exports[`apis/StyleSheet renderToString 1`] = `
+"<style id=\"react-native-stylesheet\">
+.rn-borderTopColor\\:red{border-top-color:red;}
+.rn-borderRightColor\\:red{border-right-color:red;}
+.rn-borderBottomColor\\:red{border-bottom-color:red;}
+.rn-borderLeftColor\\:red{border-left-color:red;}
+.rn-borderTopWidth\\:0px{border-top-width:0px;}
+.rn-borderRightWidth\\:0px{border-right-width:0px;}
+.rn-borderBottomWidth\\:0px{border-bottom-width:0px;}
+.rn-borderLeftWidth\\:0px{border-left-width:0px;}
+.rn-left\\:50px{left:50px;}
+.rn-position\\:absolute{position:absolute;}
+</style>"
 `;

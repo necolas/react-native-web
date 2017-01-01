@@ -1,525 +1,399 @@
 exports[`components/View prop "children" 1`] = `
 <div
-  className=" __style_df"
-  style={
-    Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-    }
-  }>
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
+  style={Object {}}>
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-backgroundColor:transparent
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none"
     data-testid="1"
-    style={
-      Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "alignItems": "stretch",
-        "backgroundColor": "transparent",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-      }
-    } />
+    style={Object {}} />
 </div>
 `;
 
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
-  className=" __style_df __style_pebo"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "pointerEvents": null,
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
+      "pointerEvents": "box-only",
     }
   } />
 `;
 
 exports[`components/View prop "style" 1`] = `
 <div
-  className=" __style_df"
-  style={
-    Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-    }
-  } />
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
+  style={Object {}} />
 `;
 
 exports[`components/View prop "style" 2`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+
+
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
       "WebkitFlexGrow": 1,
       "WebkitFlexShrink": 1,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
       "flexGrow": 1,
       "flexShrink": 1,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
       "msFlexNegative": 1,
       "msFlexPositive": 1,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
     }
   } />
 `;
 
 exports[`components/View prop "style" 3`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
       "WebkitFlexShrink": 1,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
       "flexShrink": 1,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
       "msFlexNegative": 1,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
     }
   } />
 `;
 
 exports[`components/View prop "style" 4`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+
+
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
       "WebkitFlexGrow": 1,
       "WebkitFlexShrink": 2,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
       "flexGrow": 1,
       "flexShrink": 2,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
       "msFlexNegative": 2,
       "msFlexPositive": 1,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
     }
   } />
 `;
 
 exports[`components/View rendered element is a "div" by default 1`] = `
 <div
-  className=" __style_df"
-  style={
-    Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-    }
-  } />
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
+  style={Object {}} />
 `;
 
 exports[`components/View rendered element is a "span" when inside <View accessibilityRole="button" /> 1`] = `
 <button
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
   role="button"
-  style={
-    Object {
-      "MozBoxSizing": "border-box",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-    }
-  }
+  style={Object {}}
   type="button">
   <span
-    className=" __style_df"
-    style={
-      Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "alignItems": "stretch",
-        "backgroundColor": "transparent",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-      }
-    } />
+    className="
+  rn-alignItems:stretch
+  rn-backgroundColor:transparent
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none"
+    style={Object {}} />
 </button>
 `;

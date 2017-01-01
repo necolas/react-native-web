@@ -2,11 +2,27 @@
 
 import createReactDOMStyle from '../createReactDOMStyle';
 
+const reactNativeStyle = {
+  boxShadow: '1px 1px 1px 1px #000',
+  borderWidthLeft: 2,
+  borderWidth: 1,
+  borderWidthRight: 3,
+  display: 'flex',
+  marginVertical: 0,
+  opacity: 0,
+  shadowColor: 'red',
+  shadowOffset: { width: 1, height: 2 },
+  resizeMode: 'contain'
+};
+
 describe('apis/StyleSheet/createReactDOMStyle', () => {
   test('converts ReactNative style to ReactDOM style', () => {
-    const reactNativeStyle = { display: 'flex', marginVertical: 0, opacity: 0 };
-    const expectedStyle = { display: 'flex', marginTop: '0px', marginBottom: '0px', opacity: 0 };
+    expect(createReactDOMStyle(reactNativeStyle)).toMatchSnapshot();
+  });
 
-    expect(createReactDOMStyle(reactNativeStyle)).toEqual(expectedStyle);
+  test('noop on DOM styles', () => {
+    const firstStyle = createReactDOMStyle(reactNativeStyle);
+    const secondStyle = createReactDOMStyle(firstStyle);
+    expect(firstStyle).toEqual(secondStyle);
   });
 });

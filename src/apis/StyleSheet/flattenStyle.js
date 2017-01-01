@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -10,10 +9,8 @@
  * @providesModule flattenStyle
  * @flow
  */
-'use strict';
-
-var ReactNativePropRegistry = require('../../modules/ReactNativePropRegistry');
-var invariant = require('fbjs/lib/invariant');
+import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import invariant from 'fbjs/lib/invariant';
 
 function getStyle(style) {
   if (typeof style === 'number') {
@@ -22,22 +19,26 @@ function getStyle(style) {
   return style;
 }
 
-function flattenStyle(style: ?StyleObj): ?Object {
+function flattenStyle(style) {
   if (!style) {
     return undefined;
   }
-  invariant(style !== true, 'style may be false but not true');
+
+  if (process.env.NODE !== 'production') {
+    invariant(style !== true, 'style may be false but not true');
+  }
 
   if (!Array.isArray(style)) {
     return getStyle(style);
   }
 
-  var result = {};
-  for (var i = 0, styleLength = style.length; i < styleLength; ++i) {
-    var computedStyle = flattenStyle(style[i]);
+  const result = {};
+  for (let i = 0, styleLength = style.length; i < styleLength; ++i) {
+    const computedStyle = flattenStyle(style[i]);
     if (computedStyle) {
-      for (var key in computedStyle) {
-        result[key] = computedStyle[key];
+      for (const key in computedStyle) {
+        const value = computedStyle[key];
+        result[key] = value;
       }
     }
   }

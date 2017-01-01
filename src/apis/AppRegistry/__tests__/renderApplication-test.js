@@ -10,6 +10,6 @@ describe('apis/AppRegistry/renderApplication', () => {
     const { element, stylesheet } = getApplication(component, {});
 
     expect(element).toBeTruthy();
-    expect(stylesheet.type).toEqual('style');
+    expect(stylesheet).toMatchSnapshot();
   });
 });
