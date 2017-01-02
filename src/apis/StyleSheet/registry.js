@@ -68,12 +68,6 @@ const registerStyle = (id, flatStyle) => {
 const resolveProps = (reactNativeStyle) => {
   const flatStyle = flattenStyle(reactNativeStyle);
 
-  if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
-    console.groupCollapsed('[render] deoptimized: resolving uncached styles');
-    console.log('source style\n', reactNativeStyle);
-    console.log('flattened style\n', flatStyle);
-  }
-
   const domStyle = createReactDOMStyle(flatStyle);
   const style = {};
 
@@ -99,7 +93,14 @@ const resolveProps = (reactNativeStyle) => {
   };
 
   if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
-    console.log('DOM props\n', props);
+    console.groupCollapsed('[StyleSheet] resolving uncached styles');
+    console.log(
+      `Slow operation. Resolving style objects (uncached result). ` +
+      `Occurs on first render and when using styles not registered with "StyleSheet.create"`
+    );
+    console.log('source => \n', reactNativeStyle);
+    console.log('flatten => \n', flatStyle);
+    console.log('resolve => \n', props);
     console.groupEnd();
   }
 
