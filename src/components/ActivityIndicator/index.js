@@ -72,7 +72,6 @@ class ActivityIndicator extends Component {
       >
         <View
           children={svg}
-          className='rn-ActivityIndicator-animation'
           style={[
             indicatorSizes[size],
             styles.animation,

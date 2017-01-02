@@ -38,7 +38,7 @@ rn-textDecoration:none"
   role="progressbar"
   style={Object {}}>
   <div
-    className="rn-ActivityIndicator-animation 
+    className="
   rn-alignItems:stretch
   rn-animationDuration:0.75s
   rn-animationIterationCount:infinite
@@ -151,7 +151,7 @@ rn-textDecoration:none"
   role="progressbar"
   style={Object {}}>
   <div
-    className="rn-ActivityIndicator-animation 
+    className="
   rn-alignItems:stretch
   rn-animationDuration:0.75s
   rn-animationIterationCount:infinite

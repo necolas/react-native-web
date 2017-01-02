@@ -1,12 +1,8 @@
-import Animated from '../../apis/Animated';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
-
-const indeterminateWidth = '25%';
-const translateInterpolation = { inputRange: [ 0, 1 ], outputRange: [ '-100%', '400%' ] };
 
 class ProgressBar extends Component {
   static displayName = 'ProgressBar';
@@ -26,21 +22,6 @@ class ProgressBar extends Component {
     trackColor: 'transparent'
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      animationTranslate: new Animated.Value(0)
-    };
-  }
-
-  componentDidMount() {
-    this._manageAnimation();
-  }
-
-  componentDidUpdate() {
-    this._manageAnimation();
-  }
-
   render() {
     const {
       color,
@@ -50,8 +31,6 @@ class ProgressBar extends Component {
       style,
       ...other
     } = this.props;
-
-    const { animationTranslate } = this.state;
 
     const percentageProgress = indeterminate ? 50 : progress * 100;
 
@@ -67,42 +46,15 @@ class ProgressBar extends Component {
           { backgroundColor: trackColor }
         ]}
       >
-        <Animated.View style={[
-          styles.progress,
-          { backgroundColor: color },
-          indeterminate ? {
-            transform: [
-              { translateX: animationTranslate.interpolate(translateInterpolation) }
-            ],
-            width: indeterminateWidth
-          } : {
-            width: `${percentageProgress}%`
-          }
-        ]} />
+        <View
+          style={[
+            styles.progress,
+            indeterminate ? styles.indeterminate : { width: `${percentageProgress}%` },
+            { backgroundColor: color }
+          ]}
+        />
       </View>
     );
-  }
-
-  _manageAnimation() {
-    const { animationTranslate } = this.state;
-
-    const cycleAnimation = (animation) => {
-      animation.setValue(0);
-      Animated.timing(animation, {
-        duration: 1000,
-        toValue: 1
-      }).start((event) => {
-        if (event.finished) {
-          cycleAnimation(animation);
-        }
-      });
-    };
-
-    if (this.props.indeterminate) {
-      cycleAnimation(animationTranslate);
-    } else {
-      animationTranslate.stopAnimation();
-    }
   }
 }
 
@@ -114,6 +66,13 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: '100%'
+  },
+  indeterminate: {
+    animationDuration: '1s',
+    animationName: 'rn-ProgressBar-animation',
+    animationTimingFunction: 'linear',
+    animationIterationCount: 'infinite',
+    width: '25%'
   }
 });
 
