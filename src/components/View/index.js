@@ -112,7 +112,7 @@ class View extends Component {
     eventHandlerNames.reduce((props, handlerName) => {
       const handler = this.props[handlerName];
       if (typeof handler === 'function') {
-        props[handlerName] = this._normalizeEventForHandler(handler, handlerName);
+        props[handlerName] = this._normalizeEventForHandler(handler);
       }
       return props;
     }, otherProps);
@@ -127,20 +127,10 @@ class View extends Component {
     return createDOMElement(component, otherProps);
   }
 
-  _normalizeEventForHandler(handler, handlerName) {
-    // Browsers fire mouse events after touch events. This causes the
-    // 'onResponderRelease' handler to be called twice for Touchables.
-    // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
-    // events.
-    const shouldCancelEvent = handlerName === 'onResponderRelease';
-
+  _normalizeEventForHandler(handler) {
     return (e) => {
       e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
-      const returnValue = handler(e);
-      if (shouldCancelEvent && e.cancelable) {
-        e.preventDefault();
-      }
-      return returnValue;
+      return handler(e);
     };
   }
 }

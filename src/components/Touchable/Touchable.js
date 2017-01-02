@@ -404,6 +404,13 @@ var TouchableMixin = {
    */
   touchableHandleResponderRelease: function(e) {
     this._receiveSignal(Signals.RESPONDER_RELEASE, e);
+    // Browsers fire mouse events after touch events. This causes the
+    // 'onResponderRelease' handler to be called twice for Touchables.
+    // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
+    // events.
+    if (e.cancelable && !e.isDefaultPrevented()) {
+      e.preventDefault();
+    }
   },
 
   /**
