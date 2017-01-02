@@ -95,8 +95,8 @@ const resolveProps = (reactNativeStyle) => {
   if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
     console.groupCollapsed('[StyleSheet] resolving uncached styles');
     console.log(
-      `Slow operation. Resolving style objects (uncached result). ` +
-      `Occurs on first render and when using styles not registered with "StyleSheet.create"`
+      'Slow operation. Resolving style objects (uncached result). ' +
+      'Occurs on first render and when using styles not registered with "StyleSheet.create"'
     );
     console.log('source => \n', reactNativeStyle);
     console.log('flatten => \n', flatStyle);
