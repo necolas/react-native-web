@@ -10,6 +10,9 @@
  */
 
 import normalizeValue from './normalizeValue';
+import resolveBoxShadow from './resolveBoxShadow';
+import resolveTextShadow from './resolveTextShadow';
+import resolveTransform from './resolveTransform';
 
 const emptyObject = {};
 const styleShortFormProperties = {
@@ -28,46 +31,83 @@ const styleShortFormProperties = {
   writingDirection: [ 'direction' ]
 };
 
-const alphaSort = (arr) => arr.sort((a, b) => {
+const alphaSortProps = (propsArray) => propsArray.sort((a, b) => {
   if (a < b) { return -1; }
   if (a > b) { return 1; }
   return 0;
 });
 
-const createStyleReducer = (originalStyle) => {
-  const originalStyleProps = Object.keys(originalStyle);
+const expandStyle = (style) => {
+  if (!style) { return emptyObject; }
+  const styleProps = Object.keys(style);
+  const sortedStyleProps = alphaSortProps(styleProps);
+  let hasResolvedBoxShadow = false;
+  let hasResolvedTextShadow = false;
 
-  return (style, prop) => {
-    const value = normalizeValue(prop, originalStyle[prop]);
-    const longFormProperties = styleShortFormProperties[prop];
+  const reducer = (resolvedStyle, prop) => {
+    const value = normalizeValue(prop, style[prop]);
+    if (value == null) { return resolvedStyle; }
 
-    // React Native treats `flex:1` like `flex:1 1 auto`
-    if (prop === 'flex') {
-      style.flexGrow = value;
-      style.flexShrink = 1;
-      style.flexBasis = 'auto';
-    // React Native accepts 'center' as a value
-    } else if (prop === 'textAlignVertical') {
-      style.verticalAlign = (value === 'center' ? 'middle' : value);
-    } else if (longFormProperties) {
-      longFormProperties.forEach((longForm, i) => {
-        // the value of any longform property in the original styles takes
-        // precedence over the shortform's value
-        if (originalStyleProps.indexOf(longForm) === -1) {
-          style[longForm] = value;
+    switch (prop) {
+      // ignore React Native styles
+      case 'elevation':
+      case 'resizeMode': {
+        break;
+      }
+      case 'flex': {
+        resolvedStyle.flexGrow = value;
+        resolvedStyle.flexShrink = 1;
+        resolvedStyle.flexBasis = 'auto';
+        break;
+      }
+      case 'shadowColor':
+      case 'shadowOffset':
+      case 'shadowOpacity':
+      case 'shadowRadius': {
+        if (!hasResolvedBoxShadow) {
+          resolveBoxShadow(resolvedStyle, style);
         }
-      });
-    } else {
-      style[prop] = value;
+        hasResolvedBoxShadow = true;
+        break;
+      }
+      case 'textAlignVertical': {
+        resolvedStyle.verticalAlign = (value === 'center' ? 'middle' : value);
+        break;
+      }
+      case 'textShadowColor':
+      case 'textShadowOffset':
+      case 'textShadowRadius': {
+        if (!hasResolvedTextShadow) {
+          resolveTextShadow(resolvedStyle, style);
+        }
+        hasResolvedTextShadow = true;
+        break;
+      }
+      case 'transform': {
+        resolveTransform(resolvedStyle, style);
+        break;
+      }
+      default: {
+        const longFormProperties = styleShortFormProperties[prop];
+        if (longFormProperties) {
+          longFormProperties.forEach((longForm, i) => {
+            // the value of any longform property in the original styles takes
+            // precedence over the shortform's value
+            if (styleProps.indexOf(longForm) === -1) {
+              resolvedStyle[longForm] = value;
+            }
+          });
+        } else {
+          resolvedStyle[prop] = value;
+        }
+      }
     }
-    return style;
-  };
-};
 
-const expandStyle = (style = emptyObject) => {
-  const sortedStyleProps = alphaSort(Object.keys(style));
-  const styleReducer = createStyleReducer(style);
-  return sortedStyleProps.reduce(styleReducer, {});
+    return resolvedStyle;
+  };
+
+  const resolvedStyle = sortedStyleProps.reduce(reducer, {});
+  return resolvedStyle;
 };
 
 module.exports = expandStyle;

@@ -1,7 +1,5 @@
 # Contributing
 
-We are open to, and grateful for, any contributions made by the community.
-
 ## Reporting Issues and Asking Questions
 
 Before opening an issue, please search the [issue
@@ -29,6 +27,12 @@ Run the examples:
 
 ```
 npm run examples
+```
+
+Run the benchmarks in a browser by opening `./performance/index.html` after running:
+
+```
+npm run build:performance
 ```
 
 ### Building

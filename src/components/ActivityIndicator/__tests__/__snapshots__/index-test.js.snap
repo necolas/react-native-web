@@ -1,0 +1,226 @@
+exports[`components/ActivityIndicator default render 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  className="
+rn-alignItems:center
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-justifyContent:center
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
+  role="progressbar"
+  style={Object {}}>
+  <div
+    className="
+  rn-alignItems:stretch
+  rn-animationDuration:0.75s
+  rn-animationIterationCount:infinite
+  rn-animationName:rn-ActivityIndicator-animation
+  rn-animationTimingFunction:linear
+  rn-backgroundColor:transparent
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:20px
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-width:20px"
+    style={Object {}}>
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%">
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        strokeWidth="4"
+        style={
+          Object {
+            "opacity": 0.2,
+            "stroke": "#1976D2",
+          }
+        } />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        strokeWidth="4"
+        style={
+          Object {
+            "stroke": "#1976D2",
+            "strokeDasharray": 80,
+            "strokeDashoffset": 60,
+          }
+        } />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator other render 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  className="
+rn-alignItems:center
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-justifyContent:center
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none"
+  role="progressbar"
+  style={Object {}}>
+  <div
+    className="
+  rn-alignItems:stretch
+  rn-animationDuration:0.75s
+  rn-animationIterationCount:infinite
+  rn-animationName:rn-ActivityIndicator-animation
+  rn-animationPlayState:paused
+  rn-animationTimingFunction:linear
+  rn-backgroundColor:transparent
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:36px
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-width:36px"
+    style={Object {}}>
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%">
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        strokeWidth="4"
+        style={
+          Object {
+            "opacity": 0.2,
+            "stroke": "#1976D2",
+          }
+        } />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        strokeWidth="4"
+        style={
+          Object {
+            "stroke": "#1976D2",
+            "strokeDasharray": 80,
+            "strokeDashoffset": 60,
+          }
+        } />
+    </svg>
+  </div>
+</div>
+`;

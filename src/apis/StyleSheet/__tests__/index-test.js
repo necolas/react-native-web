@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
-import { getDefaultStyleSheet } from '../css';
-import StyleSheet from '../../StyleSheet';
+import StyleSheet from '..';
+import StyleRegistry from '../registry';
 
 const isPlainObject = (x) => {
   const toString = Object.prototype.toString;
@@ -16,7 +16,7 @@ const isPlainObject = (x) => {
 
 describe('apis/StyleSheet', () => {
   beforeEach(() => {
-    StyleSheet._reset();
+    StyleRegistry.reset();
   });
 
   test('absoluteFill', () => {
@@ -32,11 +32,6 @@ describe('apis/StyleSheet', () => {
       const style = StyleSheet.create({ root: { opacity: 1 } });
       expect(Number.isInteger(style.root) === true).toBeTruthy();
     });
-
-    test('renders a style sheet in the browser', () => {
-      StyleSheet.create({ root: { color: 'red' } });
-      expect(document.getElementById('react-native-style__').textContent).toEqual(getDefaultStyleSheet());
-    });
   });
 
   test('flatten', () => {
@@ -47,18 +42,17 @@ describe('apis/StyleSheet', () => {
     expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
   });
 
-  test('render', () => {
-    expect(StyleSheet.render().props.dangerouslySetInnerHTML.__html).toEqual(getDefaultStyleSheet());
-  });
-
-  test('resolve', () => {
-    expect(StyleSheet.resolve({
-      className: 'test',
-      style: {
-        display: 'flex',
-        opacity: 1,
-        pointerEvents: 'box-none'
+  test('renderToString', () => {
+    StyleSheet.create({
+      a: {
+        borderWidth: 0,
+        borderColor: 'red'
+      },
+      b: {
+        position: 'absolute',
+        left: 50
       }
-    })).toMatchSnapshot();
+    });
+    expect(StyleSheet.renderToString()).toMatchSnapshot();
   });
 });

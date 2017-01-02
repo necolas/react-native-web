@@ -1,0 +1,48 @@
+exports[`apis/AppRegistry/renderApplication getApplication 1`] = `
+"<style id=\"react-native-stylesheet\">
+/* React Native StyleSheet*/
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{margin:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none}
+@keyframes rn-ActivityIndicator-animation{0%{-webkit-transform: rotate(0deg); transform: rotate(0deg);}100%{-webkit-transform: rotate(360deg); transform: rotate(360deg);}}
+@keyframes rn-ProgressBar-animation{0%{-webkit-transform: translateX(-100%); transform: translateX(-100%);}100%{-webkit-transform: translateX(400%); transform: translateX(400%);}}
+.rn_pointerEvents\\:auto,.rn_pointerEvents\\:box-only,.rn_pointerEvents\\:box-none *{pointer-events:auto}.rn_pointerEvents\\:none,.rn_pointerEvents\\:box-only *,.rn_pointerEvents\\:box-none{pointer-events:none}
+.rn-bottom\\:0px{bottom:0px;}
+.rn-left\\:0px{left:0px;}
+.rn-position\\:absolute{position:absolute;}
+.rn-right\\:0px{right:0px;}
+.rn-top\\:0px{top:0px;}
+.rn-alignItems\\:stretch{-webkit-align-items:stretch;-ms-flex-align:stretch;-webkit-box-align:stretch;align-items:stretch;}
+.rn-backgroundColor\\:transparent{background-color:transparent;}
+.rn-borderTopStyle\\:solid{border-top-style:solid;}
+.rn-borderRightStyle\\:solid{border-right-style:solid;}
+.rn-borderBottomStyle\\:solid{border-bottom-style:solid;}
+.rn-borderLeftStyle\\:solid{border-left-style:solid;}
+.rn-borderTopWidth\\:0px{border-top-width:0px;}
+.rn-borderRightWidth\\:0px{border-right-width:0px;}
+.rn-borderBottomWidth\\:0px{border-bottom-width:0px;}
+.rn-borderLeftWidth\\:0px{border-left-width:0px;}
+.rn-boxSizing\\:border-box{-moz-box-sizing:border-box;box-sizing:border-box;}
+.rn-color\\:inherit{color:inherit;}
+.rn-display\\:flex{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;}
+.rn-flexBasis\\:auto{-webkit-flex-basis:auto;-ms-preferred-size:auto;flex-basis:auto;}
+.rn-flexDirection\\:column{-webkit-flex-direction:column;-ms-flex-direction:column;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;}
+.rn-font\\:inherit{font:inherit;}
+.rn-listStyle\\:none{list-style:none;}
+.rn-marginTop\\:0px{margin-top:0px;}
+.rn-marginRight\\:0px{margin-right:0px;}
+.rn-marginBottom\\:0px{margin-bottom:0px;}
+.rn-marginLeft\\:0px{margin-left:0px;}
+.rn-minHeight\\:0px{min-height:0px;}
+.rn-minWidth\\:0px{min-width:0px;}
+.rn-paddingTop\\:0px{padding-top:0px;}
+.rn-paddingRight\\:0px{padding-right:0px;}
+.rn-paddingBottom\\:0px{padding-bottom:0px;}
+.rn-paddingLeft\\:0px{padding-left:0px;}
+.rn-position\\:relative{position:relative;}
+.rn-textAlign\\:inherit{text-align:inherit;}
+.rn-textDecoration\\:none{text-decoration:none;}
+.rn-flexShrink\\:0{-webkit-flex-shrink:0px;-ms-flex-negative:0px;flex-shrink:0;}
+</style>"
+`;

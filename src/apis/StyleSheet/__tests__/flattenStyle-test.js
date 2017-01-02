@@ -9,9 +9,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import flattenStyle from '..';
+import flattenStyle from '../flattenStyle';
 
-describe('modules/flattenStyle', () => {
+describe('apis/StyleSheet/flattenStyle', () => {
   test('should merge style objects', () => {
     const style = flattenStyle([
       { opacity: 1 },

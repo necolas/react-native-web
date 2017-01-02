@@ -1,75 +1,45 @@
 exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
 <span
-  aria-label="accessibilityLabel"
-  className=""
-  style={Object {}} />
+  aria-label="accessibilityLabel" />
 `;
 
 exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
 <span
-  aria-live="polite"
-  className=""
-  style={Object {}} />
+  aria-live="polite" />
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
 <button
-  className=""
   role="button"
-  style={Object {}}
   type="button" />
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
 <a
-  className=""
   rel=" noopener noreferrer"
   role="link"
-  style={Object {}}
   target="_blank" />
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" roles 1`] = `
 <header
-  className=""
-  role="banner"
-  style={Object {}} />
+  role="banner" />
 `;
 
-exports[`modules/createDOMElement prop "accessible" 1`] = `
-<span
-  className=""
-  style={Object {}} />
-`;
+exports[`modules/createDOMElement prop "accessible" 1`] = `<span />`;
 
-exports[`modules/createDOMElement prop "accessible" 2`] = `
-<span
-  className=""
-  style={Object {}} />
-`;
+exports[`modules/createDOMElement prop "accessible" 2`] = `<span />`;
 
 exports[`modules/createDOMElement prop "accessible" 3`] = `
 <span
-  aria-hidden={true}
-  className=""
-  style={Object {}} />
+  aria-hidden={true} />
 `;
 
 exports[`modules/createDOMElement prop "testID" 1`] = `
 <span
-  className=""
-  data-testid="Example.testID"
-  style={Object {}} />
+  data-testid="Example.testID" />
 `;
 
-exports[`modules/createDOMElement renders correct DOM element 1`] = `
-<span
-  className=""
-  style={Object {}} />
-`;
+exports[`modules/createDOMElement renders correct DOM element 1`] = `<span />`;
 
-exports[`modules/createDOMElement renders correct DOM element 2`] = `
-<main
-  className=""
-  style={Object {}} />
-`;
+exports[`modules/createDOMElement renders correct DOM element 2`] = `<main />`;

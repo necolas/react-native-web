@@ -50,7 +50,8 @@ const ToggleAnimatingActivityIndicator = React.createClass({
     return (
       <ActivityIndicator
         animating={this.state.animating}
-        style={[styles.centering, {height: 80}]}
+        style={styles.centering}
+        hidesWhenStopped={this.props.hidesWhenStopped}
         size="large"
       />
     );
@@ -121,7 +122,12 @@ const examples = [
   {
     title: 'Start/stop',
     render() {
-      return <ToggleAnimatingActivityIndicator />;
+      return (
+        <View style={[styles.horizontal, styles.centering]}>
+          <ToggleAnimatingActivityIndicator />
+          <ToggleAnimatingActivityIndicator hidesWhenStopped={false} />
+        </View>
+      );
     }
   },
   {
@@ -129,7 +135,7 @@ const examples = [
     render() {
       return (
         <View style={[styles.horizontal, styles.centering]}>
-          <ActivityIndicator size="40" />
+          <ActivityIndicator size={40} />
           <ActivityIndicator
             style={{ marginLeft: 20, transform: [ {scale: 1.5} ] }}
             size="large"

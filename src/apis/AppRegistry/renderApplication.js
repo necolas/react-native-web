@@ -32,6 +32,6 @@ export function getApplication(RootComponent: Component, initialProps: Object): 
       rootComponent={RootComponent}
     />
   );
-  const stylesheet = StyleSheet.render();
+  const stylesheet = StyleSheet.renderToString();
   return { element, stylesheet };
 }

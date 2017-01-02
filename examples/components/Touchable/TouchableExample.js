@@ -307,11 +307,11 @@ var TouchableDisabled = React.createClass({
   render: function() {
     return (
       <View>
-        <TouchableOpacity disabled={true} style={[styles.row, styles.block]}>
+        <TouchableOpacity disabled={true} style={[styles.row, styles.block]} onPress={action('TouchableOpacity')}>
           <Text style={styles.disabledButton}>Disabled TouchableOpacity</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity disabled={false} style={[styles.row, styles.block]}>
+        <TouchableOpacity disabled={false} style={[styles.row, styles.block]} onPress={action('TouchableOpacity')}>
           <Text style={styles.button}>Enabled TouchableOpacity</Text>
         </TouchableOpacity>
 
@@ -321,7 +321,7 @@ var TouchableDisabled = React.createClass({
           animationVelocity={0}
           underlayColor="rgb(210, 230, 255)"
           style={[styles.row, styles.block]}
-          onPress={() => console.log('custom THW text - highlight')}>
+          onPress={action('TouchableHighlight')}>
           <Text style={styles.disabledButton}>
             Disabled TouchableHighlight
           </Text>
@@ -332,7 +332,7 @@ var TouchableDisabled = React.createClass({
           animationVelocity={0}
           underlayColor="rgb(210, 230, 255)"
           style={[styles.row, styles.block]}
-          onPress={() => console.log('custom THW text - highlight')}>
+          onPress={action('TouchableHighlight')}>
           <Text style={styles.button}>
             Enabled TouchableHighlight
           </Text>

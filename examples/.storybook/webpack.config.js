@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 
+const DEV = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   module: {
     loaders: [
@@ -19,13 +21,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.__REACT_NATIVE_DEBUG_ENABLED__': DEV
     }),
-    // https://github.com/animatedjs/animated/issues/40
-    new webpack.NormalModuleReplacementPlugin(
-      /es6-set/,
-      path.join(__dirname, '../../src/modules/polyfills/Set.js')
-    ),
     new webpack.optimize.OccurenceOrderPlugin()
   ],
   resolve: {

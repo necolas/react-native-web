@@ -1,855 +1,705 @@
 exports[`components/Switch disabled when "false" a default checkbox is rendered 1`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-cursor:pointer
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none
+rn-userSelect:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "MozUserSelect": "none",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "WebkitUserSelect": "none",
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "cursor": "pointer",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
       "height": "20px",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-      "userSelect": "none",
       "width": "40px",
     }
   }>
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  
+  
+  
+  
+  
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-bottom:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:70%
+  rn-left:0px
+  rn-listStyle:none
+  rn-marginTop:auto
+  rn-marginRight:auto
+  rn-marginBottom:auto
+  rn-marginLeft:auto
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-top:0px
+  rn-transitionDuration:0.1s
+  rn-width:90%"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
         "backgroundColor": "#939393",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
         "borderTopLeftRadius": "10px",
         "borderTopRightRadius": "10px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "bottom": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "height": "70%",
-        "left": "0px",
-        "listStyle": "none",
-        "marginBottom": "auto",
-        "marginLeft": "auto",
-        "marginRight": "auto",
-        "marginTop": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-        "top": "0px",
-        "transitionDuration": "0.1s",
-        "width": "90%",
       }
     } />
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-alignSelf:flex-start
+  
+  rn-borderTopLeftRadius:100%
+  rn-borderTopRightRadius:100%
+  rn-borderBottomRightRadius:100%
+  rn-borderBottomLeftRadius:100%
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  
+  rn-transitionDuration:0.1s"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitAlignSelf": "flex-start",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
-        "alignSelf": "flex-start",
         "backgroundColor": "#FAFAFA",
-        "borderBottomLeftRadius": "100%",
-        "borderBottomRightRadius": "100%",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopLeftRadius": "100%",
-        "borderTopRightRadius": "100%",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxShadow": "0px 1px 3px rgba(0,0,0,0.5)",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
         "height": "20px",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexItemAlign": "start",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
         "msTransform": "translateX(0%)",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
   <input
     checked={false}
-    className=""
+    className="
+  rn-bottom:0px
+  rn-cursor:inherit
+  rn-height:100%
+  rn-left:0px
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-opacity:0
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={
-      Object {
-        "bottom": "0px",
-        "cursor": "inherit",
-        "height": "100%",
-        "left": "0px",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "opacity": 0,
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "top": "0px",
-        "width": "100%",
-      }
-    }
+    style={Object {}}
     type="checkbox" />
 </div>
 `;
 
 exports[`components/Switch disabled when "true" a disabled checkbox is rendered 1`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-cursor:default
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none
+rn-userSelect:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "MozUserSelect": "none",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "WebkitUserSelect": "none",
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "cursor": "default",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
       "height": "20px",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-      "userSelect": "none",
       "width": "40px",
     }
   }>
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-backgroundColor:#D5D5D5
+  
+  
+  
+  
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-bottom:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:70%
+  rn-left:0px
+  rn-listStyle:none
+  rn-marginTop:auto
+  rn-marginRight:auto
+  rn-marginBottom:auto
+  rn-marginLeft:auto
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-top:0px
+  rn-transitionDuration:0.1s
+  rn-width:90%"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
-        "backgroundColor": "#D5D5D5",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
         "borderTopLeftRadius": "10px",
         "borderTopRightRadius": "10px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "bottom": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "height": "70%",
-        "left": "0px",
-        "listStyle": "none",
-        "marginBottom": "auto",
-        "marginLeft": "auto",
-        "marginRight": "auto",
-        "marginTop": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-        "top": "0px",
-        "transitionDuration": "0.1s",
-        "width": "90%",
       }
     } />
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-alignSelf:flex-start
+  rn-backgroundColor:#BDBDBD
+  rn-borderTopLeftRadius:100%
+  rn-borderTopRightRadius:100%
+  rn-borderBottomRightRadius:100%
+  rn-borderBottomLeftRadius:100%
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  
+  rn-transitionDuration:0.1s"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitAlignSelf": "flex-start",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
-        "alignSelf": "flex-start",
-        "backgroundColor": "#BDBDBD",
-        "borderBottomLeftRadius": "100%",
-        "borderBottomRightRadius": "100%",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopLeftRadius": "100%",
-        "borderTopRightRadius": "100%",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxShadow": "0px 1px 3px rgba(0,0,0,0.5)",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
         "height": "20px",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexItemAlign": "start",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
         "msTransform": "translateX(0%)",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
   <input
     checked={false}
-    className=""
+    className="
+  rn-bottom:0px
+  rn-cursor:inherit
+  rn-height:100%
+  rn-left:0px
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-opacity:0
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%"
     disabled={true}
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={
-      Object {
-        "bottom": "0px",
-        "cursor": "inherit",
-        "height": "100%",
-        "left": "0px",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "opacity": 0,
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "top": "0px",
-        "width": "100%",
-      }
-    }
+    style={Object {}}
     type="checkbox" />
 </div>
 `;
 
 exports[`components/Switch value when "false" an unchecked checkbox is rendered 1`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-cursor:pointer
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none
+rn-userSelect:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "MozUserSelect": "none",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "WebkitUserSelect": "none",
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "cursor": "pointer",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
       "height": "20px",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-      "userSelect": "none",
       "width": "40px",
     }
   }>
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  
+  
+  
+  
+  
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-bottom:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:70%
+  rn-left:0px
+  rn-listStyle:none
+  rn-marginTop:auto
+  rn-marginRight:auto
+  rn-marginBottom:auto
+  rn-marginLeft:auto
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-top:0px
+  rn-transitionDuration:0.1s
+  rn-width:90%"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
         "backgroundColor": "#939393",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
         "borderTopLeftRadius": "10px",
         "borderTopRightRadius": "10px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "bottom": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "height": "70%",
-        "left": "0px",
-        "listStyle": "none",
-        "marginBottom": "auto",
-        "marginLeft": "auto",
-        "marginRight": "auto",
-        "marginTop": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-        "top": "0px",
-        "transitionDuration": "0.1s",
-        "width": "90%",
       }
     } />
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-alignSelf:flex-start
+  
+  rn-borderTopLeftRadius:100%
+  rn-borderTopRightRadius:100%
+  rn-borderBottomRightRadius:100%
+  rn-borderBottomLeftRadius:100%
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  
+  rn-transitionDuration:0.1s"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitAlignSelf": "flex-start",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(0%)",
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
-        "alignSelf": "flex-start",
         "backgroundColor": "#FAFAFA",
-        "borderBottomLeftRadius": "100%",
-        "borderBottomRightRadius": "100%",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopLeftRadius": "100%",
-        "borderTopRightRadius": "100%",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxShadow": "0px 1px 3px rgba(0,0,0,0.5)",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
         "height": "20px",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexItemAlign": "start",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
         "msTransform": "translateX(0%)",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
         "transform": "translateX(0%)",
-        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
   <input
     checked={false}
-    className=""
+    className="
+  rn-bottom:0px
+  rn-cursor:inherit
+  rn-height:100%
+  rn-left:0px
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-opacity:0
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={
-      Object {
-        "bottom": "0px",
-        "cursor": "inherit",
-        "height": "100%",
-        "left": "0px",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "opacity": 0,
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "top": "0px",
-        "width": "100%",
-      }
-    }
+    style={Object {}}
     type="checkbox" />
 </div>
 `;
 
 exports[`components/Switch value when "true" a checked checkbox is rendered 1`] = `
 <div
-  className=" __style_df"
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-cursor:pointer
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+rn-textAlign:inherit
+rn-textDecoration:none
+rn-userSelect:none"
   style={
     Object {
-      "MozBoxSizing": "border-box",
-      "MozUserSelect": "none",
-      "WebkitAlignItems": "stretch",
-      "WebkitBoxAlign": "stretch",
-      "WebkitBoxDirection": "normal",
-      "WebkitBoxOrient": "vertical",
-      "WebkitFlexBasis": "auto",
-      "WebkitFlexDirection": "column",
-      "WebkitFlexShrink": 0,
-      "WebkitUserSelect": "none",
-      "alignItems": "stretch",
-      "backgroundColor": "transparent",
-      "borderBottomStyle": "solid",
-      "borderBottomWidth": "0px",
-      "borderLeftStyle": "solid",
-      "borderLeftWidth": "0px",
-      "borderRightStyle": "solid",
-      "borderRightWidth": "0px",
-      "borderTopStyle": "solid",
-      "borderTopWidth": "0px",
-      "boxSizing": "border-box",
-      "color": "inherit",
-      "cursor": "pointer",
-      "display": null,
-      "flexBasis": "auto",
-      "flexDirection": "column",
-      "flexShrink": 0,
-      "font": "inherit",
       "height": "20px",
-      "listStyle": "none",
-      "marginBottom": "0px",
-      "marginLeft": "0px",
-      "marginRight": "0px",
-      "marginTop": "0px",
-      "minHeight": "0px",
-      "minWidth": "0px",
-      "msFlexAlign": "stretch",
-      "msFlexDirection": "column",
-      "msFlexNegative": 0,
-      "msPreferredSize": "auto",
-      "msUserSelect": "none",
-      "paddingBottom": "0px",
-      "paddingLeft": "0px",
-      "paddingRight": "0px",
-      "paddingTop": "0px",
-      "position": "relative",
-      "textAlign": "inherit",
-      "textDecoration": "none",
-      "userSelect": "none",
       "width": "40px",
     }
   }>
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  
+  
+  
+  
+  
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-bottom:0px
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  rn-height:70%
+  rn-left:0px
+  rn-listStyle:none
+  rn-marginTop:auto
+  rn-marginRight:auto
+  rn-marginBottom:auto
+  rn-marginLeft:auto
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  rn-top:0px
+  rn-transitionDuration:0.1s
+  rn-width:90%"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
         "backgroundColor": "#A3D3CF",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
         "borderTopLeftRadius": "10px",
         "borderTopRightRadius": "10px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "bottom": "0px",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
-        "height": "70%",
-        "left": "0px",
-        "listStyle": "none",
-        "marginBottom": "auto",
-        "marginLeft": "auto",
-        "marginRight": "auto",
-        "marginTop": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "textAlign": "inherit",
-        "textDecoration": "none",
-        "top": "0px",
-        "transitionDuration": "0.1s",
-        "width": "90%",
       }
     } />
   <div
-    className=" __style_df"
+    className="
+  rn-alignItems:stretch
+  rn-alignSelf:flex-start
+  
+  rn-borderTopLeftRadius:100%
+  rn-borderTopRightRadius:100%
+  rn-borderBottomRightRadius:100%
+  rn-borderBottomLeftRadius:100%
+  rn-borderTopStyle:solid
+  rn-borderRightStyle:solid
+  rn-borderBottomStyle:solid
+  rn-borderLeftStyle:solid
+  rn-borderTopWidth:0px
+  rn-borderRightWidth:0px
+  rn-borderBottomWidth:0px
+  rn-borderLeftWidth:0px
+  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
+  rn-boxSizing:border-box
+  rn-color:inherit
+  rn-display:flex
+  rn-flexBasis:auto
+  rn-flexDirection:column
+  rn-flexShrink:0
+  rn-font:inherit
+  
+  rn-listStyle:none
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-minHeight:0px
+  rn-minWidth:0px
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:relative
+  rn-textAlign:inherit
+  rn-textDecoration:none
+  
+  rn-transitionDuration:0.1s"
     style={
       Object {
-        "MozBoxSizing": "border-box",
-        "WebkitAlignItems": "stretch",
-        "WebkitAlignSelf": "flex-start",
-        "WebkitBoxAlign": "stretch",
-        "WebkitBoxDirection": "normal",
-        "WebkitBoxOrient": "vertical",
-        "WebkitFlexBasis": "auto",
-        "WebkitFlexDirection": "column",
-        "WebkitFlexShrink": 0,
         "WebkitTransform": "translateX(100%)",
-        "WebkitTransitionDuration": "0.1s",
-        "alignItems": "stretch",
-        "alignSelf": "flex-start",
         "backgroundColor": "#009688",
-        "borderBottomLeftRadius": "100%",
-        "borderBottomRightRadius": "100%",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "0px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopLeftRadius": "100%",
-        "borderTopRightRadius": "100%",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxShadow": "0px 1px 3px rgba(0,0,0,0.5)",
-        "boxSizing": "border-box",
-        "color": "inherit",
-        "display": null,
-        "flexBasis": "auto",
-        "flexDirection": "column",
-        "flexShrink": 0,
-        "font": "inherit",
         "height": "20px",
-        "listStyle": "none",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "minHeight": "0px",
-        "minWidth": "0px",
-        "msFlexAlign": "stretch",
-        "msFlexDirection": "column",
-        "msFlexItemAlign": "start",
-        "msFlexNegative": 0,
-        "msPreferredSize": "auto",
         "msTransform": "translateX(100%)",
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "relative",
-        "textAlign": "inherit",
-        "textDecoration": "none",
         "transform": "translateX(100%)",
-        "transitionDuration": "0.1s",
         "width": "20px",
       }
     } />
   <input
     checked={true}
-    className=""
+    className="
+  rn-bottom:0px
+  rn-cursor:inherit
+  rn-height:100%
+  rn-left:0px
+  rn-marginTop:0px
+  rn-marginRight:0px
+  rn-marginBottom:0px
+  rn-marginLeft:0px
+  rn-opacity:0
+  rn-paddingTop:0px
+  rn-paddingRight:0px
+  rn-paddingBottom:0px
+  rn-paddingLeft:0px
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={
-      Object {
-        "bottom": "0px",
-        "cursor": "inherit",
-        "height": "100%",
-        "left": "0px",
-        "marginBottom": "0px",
-        "marginLeft": "0px",
-        "marginRight": "0px",
-        "marginTop": "0px",
-        "opacity": 0,
-        "paddingBottom": "0px",
-        "paddingLeft": "0px",
-        "paddingRight": "0px",
-        "paddingTop": "0px",
-        "position": "absolute",
-        "right": "0px",
-        "top": "0px",
-        "width": "100%",
-      }
-    }
+    style={Object {}}
     type="checkbox" />
 </div>
 `;

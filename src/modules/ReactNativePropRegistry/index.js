@@ -14,7 +14,10 @@
 
 const emptyObject = {};
 const objects = {};
+const prefix = 'r';
 let uniqueID = 1;
+
+const createKey = (id) => `${prefix}${id}`;
 
 class ReactNativePropRegistry {
   static register(object: Object): number {
@@ -22,7 +25,8 @@ class ReactNativePropRegistry {
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(object);
     }
-    objects[id] = object;
+    const key = createKey(id);
+    objects[key] = object;
     return id;
   }
 
@@ -32,8 +36,8 @@ class ReactNativePropRegistry {
       // we want it to be a no-op when the value is false or null
       return emptyObject;
     }
-
-    const object = objects[id];
+    const key = createKey(id);
+    const object = objects[key];
     if (!object) {
       console.warn('Invalid style with id `' + id + '`. Skipping ...');
       return emptyObject;

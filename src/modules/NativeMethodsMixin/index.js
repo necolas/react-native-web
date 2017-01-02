@@ -6,32 +6,8 @@
  * @flow
  */
 
-import { Component } from 'react';
 import findNodeHandle from '../findNodeHandle';
 import UIManager from '../../apis/UIManager';
-
-type MeasureInWindowOnSuccessCallback = (
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-) => void
-
-type MeasureLayoutOnSuccessCallback = (
-  left: number,
-  top: number,
-  width: number,
-  height: number
-) => void
-
-type MeasureOnSuccessCallback = (
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  pageX: number,
-  pageY: number
-) => void
 
 const NativeMethodsMixin = {
   /**
@@ -52,11 +28,8 @@ const NativeMethodsMixin = {
   /**
    * Determines the position and dimensions of the view
    */
-  measure(callback: MeasureOnSuccessCallback) {
-    UIManager.measure(
-      findNodeHandle(this),
-      mountSafeCallback(this, callback)
-    );
+  measure(callback) {
+    UIManager.measure(findNodeHandle(this), callback);
   },
 
   /**
@@ -74,50 +47,23 @@ const NativeMethodsMixin = {
    * Note that these measurements are not available until after the rendering
    * has been completed in native.
    */
-  measureInWindow(callback: MeasureInWindowOnSuccessCallback) {
-    UIManager.measureInWindow(
-      findNodeHandle(this),
-      mountSafeCallback(this, callback)
-    );
+  measureInWindow(callback) {
+    UIManager.measureInWindow(findNodeHandle(this), callback);
   },
 
   /**
    * Measures the view relative to another view (usually an ancestor)
    */
-  measureLayout(
-    relativeToNativeNode: Object,
-    onSuccess: MeasureLayoutOnSuccessCallback,
-    onFail: () => void /* currently unused */
-  ) {
-    UIManager.measureLayout(
-      findNodeHandle(this),
-      relativeToNativeNode,
-      mountSafeCallback(this, onFail),
-      mountSafeCallback(this, onSuccess)
-    );
+  measureLayout(relativeToNativeNode, onSuccess, onFail) {
+    UIManager.measureLayout(findNodeHandle(this), relativeToNativeNode, onFail, onSuccess);
   },
 
   /**
    * This function sends props straight to the underlying DOM node.
    */
   setNativeProps(nativeProps: Object) {
-    UIManager.updateView(
-      findNodeHandle(this),
-      nativeProps,
-      this
-    );
+    UIManager.updateView(findNodeHandle(this), nativeProps, this);
   }
-};
-
-/**
- * In the future, we should cleanup callbacks by cancelling them instead of
- * using this.
- */
-const mountSafeCallback = (context: Component, callback: ?Function) => (...args) => {
-  if (!callback) {
-    return undefined;
-  }
-  return callback.apply(context, args);
 };
 
 module.exports = NativeMethodsMixin;

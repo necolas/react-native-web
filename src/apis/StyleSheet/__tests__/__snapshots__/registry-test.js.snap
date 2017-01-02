@@ -1,0 +1,179 @@
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 1`] = `
+Object {
+  "className": "
+rn-borderTopColor:red
+rn-borderRightColor:red
+rn-borderBottomColor:red
+rn-borderLeftColor:red
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute
+rn-width:100px",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 2`] = `
+Object {
+  "className": "
+rn-borderTopColor:red
+rn-borderRightColor:red
+rn-borderBottomColor:red
+rn-borderLeftColor:red
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute
+rn-width:200px",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 3`] = `
+Object {
+  "className": "
+rn-borderTopColor:red
+rn-borderRightColor:red
+rn-borderBottomColor:red
+rn-borderLeftColor:red
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute
+rn-width:100px",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 1`] = `
+Object {
+  "className": "
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 2`] = `
+Object {
+  "className": "
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute
+rn-width:200px",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 3`] = `
+Object {
+  "className": "
+rn-left:50px
+rn-pointerEvents:box-only
+rn-position:absolute",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 1`] = `
+Object {
+  "className": "
+",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "pointerEvents": "box-only",
+    "position": "absolute",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 2`] = `
+Object {
+  "className": "
+",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "pointerEvents": "box-only",
+    "position": "absolute",
+    "width": "200px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 3`] = `
+Object {
+  "className": "
+",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "pointerEvents": "box-only",
+    "position": "absolute",
+    "width": "100px",
+  },
+}
+`;
