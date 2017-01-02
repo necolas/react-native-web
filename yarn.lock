@@ -181,13 +181,12 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-animated@^0.1.3:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/animated/-/animated-0.1.4.tgz#1e7d119ea0027e1279b96ec309f5cb54935a915a"
+animated@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/animated/-/animated-0.1.5.tgz#83df8dc443d57abab7b0bb04818b0b655b31c9b9"
   dependencies:
-    es6-set "^0.1.4"
     invariant "^2.2.0"
-    tinycolor "0.0.1"
+    normalize-css-color "^1.0.1"
 
 ansi-escapes@^1.1.0, ansi-escapes@^1.4.0:
   version "1.4.0"
@@ -2045,7 +2044,7 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.0"
     event-emitter "~0.3.4"
 
-es6-set@^0.1.4, es6-set@~0.1.3:
+es6-set@~0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/es6-set/-/es6-set-0.1.4.tgz#9516b6761c2964b92ff479456233a247dc707ce8"
   dependencies:
@@ -4017,6 +4016,10 @@ nopt@3.x, nopt@~3.0.6:
   dependencies:
     abbrev "1"
 
+normalize-css-color@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/normalize-css-color/-/normalize-css-color-1.0.1.tgz#792f59cae25036950a9127cfcfddc073048f4f9d"
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.5.tgz#8d924f142960e1777e7ffe170543631cc7cb02df"
@@ -5451,10 +5454,6 @@ timers-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-1.4.2.tgz#c9c58b575be8407375cb5e2462dacee74359f41d"
   dependencies:
     process "~0.11.0"
-
-tinycolor@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/tinycolor/-/tinycolor-0.0.1.tgz#320b5a52d83abb5978d81a3e887d4aefb15a6164"
 
 tmpl@1.0.x:
   version "1.0.4"

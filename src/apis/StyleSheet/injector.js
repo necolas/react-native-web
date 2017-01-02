@@ -4,7 +4,6 @@
  */
 
 import asap from 'asap';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -27,7 +26,7 @@ const getStyleText = () => {
 
 // TODO: SSR support
 const getAvailableClassNames = () => {
-  if (ExecutionEnvironment.canUseDOM) {
+  if (global.document) {
     if (!styleNode) {
       styleNode = document.getElementById(STYLE_ELEMENT_ID);
     }
@@ -45,8 +44,7 @@ const getAvailableClassNames = () => {
 const createStyleHTML = (text) => `<style id="${STYLE_ELEMENT_ID}">${text}</style>`;
 
 const frame = () => {
-  if (!isDirty || !ExecutionEnvironment.canUseDOM) { return; }
-
+  if (!isDirty || !global.document) { return; }
   isDirty = false;
   styleNode = styleNode || document.getElementById(STYLE_ELEMENT_ID);
 
@@ -74,7 +72,7 @@ const addRule = (key, rule) => {
     registry[key] = rule;
     if (!isDirty) {
       isDirty = true;
-      if (ExecutionEnvironment.canUseDOM) {
+      if (global.document) {
         asap(frame);
       }
     }
