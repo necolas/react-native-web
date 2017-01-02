@@ -33,21 +33,21 @@ describe('apis/StyleSheet/registry', () => {
       expect(resolve3).not.toEqual(resolve4);
     };
 
-    test('with stylesheet, resolves to className', () => {
+    test('with register, resolves to className', () => {
       const a = StyleRegistry.register(styleA);
       const b = StyleRegistry.register(styleB);
       const c = StyleRegistry.register(styleC);
       testResolve(a, b, c);
     });
 
-    test('with stylesheet, resolves to mixed', () => {
+    test('with register, resolves to mixed', () => {
       const a = styleA;
       const b = StyleRegistry.register(styleB);
       const c = StyleRegistry.register(styleC);
       testResolve(a, b, c);
     });
 
-    test('without stylesheet, resolves to inline styles', () => {
+    test('without register, resolves to inline styles', () => {
       testResolve(styleA, styleB, styleC);
     });
   });

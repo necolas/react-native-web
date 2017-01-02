@@ -1,4 +1,4 @@
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 1`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 1`] = `
 Object {
   "className": "
 rn-borderTopColor:red
@@ -17,7 +17,7 @@ rn-width:100px",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 2`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 2`] = `
 Object {
   "className": "
 rn-borderTopColor:red
@@ -36,7 +36,7 @@ rn-width:200px",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to className 3`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 3`] = `
 Object {
   "className": "
 rn-borderTopColor:red
@@ -55,7 +55,7 @@ rn-width:100px",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 1`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 1`] = `
 Object {
   "className": "
 rn-left:50px
@@ -75,7 +75,7 @@ rn-position:absolute",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 2`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 2`] = `
 Object {
   "className": "
 rn-left:50px
@@ -95,7 +95,7 @@ rn-width:200px",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve with stylesheet, resolves to mixed 3`] = `
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 3`] = `
 Object {
   "className": "
 rn-left:50px
@@ -115,7 +115,7 @@ rn-position:absolute",
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 1`] = `
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 1`] = `
 Object {
   "className": "
 ",
@@ -136,7 +136,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 2`] = `
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 2`] = `
 Object {
   "className": "
 ",
@@ -157,7 +157,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/registry resolve without stylesheet, resolves to inline styles 3`] = `
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 3`] = `
 Object {
   "className": "
 ",

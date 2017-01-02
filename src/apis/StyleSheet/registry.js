@@ -67,7 +67,6 @@ const registerStyle = (id, flatStyle) => {
  */
 const resolveProps = (reactNativeStyle) => {
   const flatStyle = flattenStyle(reactNativeStyle);
-
   const domStyle = createReactDOMStyle(flatStyle);
   const style = {};
 
@@ -122,9 +121,8 @@ const resolvePropsIfNeeded = (key, style) => {
  * Web style registry
  */
 const StyleRegistry = {
-  initialize() {
-    const classNames = injector.getAvailableClassNames();
-    classNames.forEach((className) => { injectedClassNames[className] = true; });
+  initialize(classNames) {
+    injectedClassNames = classNames;
   },
 
   reset() {
