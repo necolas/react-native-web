@@ -1,11 +1,7 @@
-import Animated from '../../apis/Animated';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import Easing from 'animated/lib/Easing';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
-
-const rotationInterpolation = { inputRange: [ 0, 1 ], outputRange: [ '0deg', '360deg' ] };
 
 class ActivityIndicator extends Component {
   static displayName = 'ActivityIndicator';
@@ -25,21 +21,6 @@ class ActivityIndicator extends Component {
     size: 'small'
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      animation: new Animated.Value(0)
-    };
-  }
-
-  componentDidMount() {
-    this._manageAnimation();
-  }
-
-  componentDidUpdate() {
-    this._manageAnimation();
-  }
-
   render() {
     const {
       animating,
@@ -49,8 +30,6 @@ class ActivityIndicator extends Component {
       style,
       ...other
     } = this.props;
-
-    const { animation } = this.state;
 
     const svg = (
       <svg height='100%' viewBox='0 0 32 32' width='100%'>
@@ -88,46 +67,21 @@ class ActivityIndicator extends Component {
         style={[
           styles.container,
           style,
-          size && { height: size, width: size }
+          typeof size === 'number' && { height: size, width: size }
         ]}
       >
-        <Animated.View
+        <View
           children={svg}
+          className='rn-ActivityIndicator-animation'
           style={[
-            indicatorStyles[size],
-            hidesWhenStopped && !animating && styles.hidesWhenStopped,
-            {
-              transform: [
-                { rotate: animation.interpolate(rotationInterpolation) }
-              ]
-            }
+            indicatorSizes[size],
+            styles.animation,
+            !animating && styles.animationPause,
+            !animating && hidesWhenStopped && styles.hidesWhenStopped
           ]}
         />
       </View>
     );
-  }
-
-  _manageAnimation() {
-    const { animation } = this.state;
-
-    const cycleAnimation = () => {
-      animation.setValue(0);
-      Animated.timing(animation, {
-        duration: 750,
-        easing: Easing.inOut(Easing.linear),
-        toValue: 1
-      }).start((event) => {
-        if (event.finished) {
-          cycleAnimation();
-        }
-      });
-    };
-
-    if (this.props.animating) {
-      cycleAnimation();
-    } else {
-      animation.stopAnimation();
-    }
   }
 }
 
@@ -138,10 +92,19 @@ const styles = StyleSheet.create({
   },
   hidesWhenStopped: {
     visibility: 'hidden'
+  },
+  animation: {
+    animationDuration: '0.75s',
+    animationName: 'rn-ActivityIndicator-animation',
+    animationTimingFunction: 'linear',
+    animationIterationCount: 'infinite'
+  },
+  animationPause: {
+    animationPlayState: 'paused'
   }
 });
 
-const indicatorStyles = StyleSheet.create({
+const indicatorSizes = StyleSheet.create({
   small: {
     width: 20,
     height: 20

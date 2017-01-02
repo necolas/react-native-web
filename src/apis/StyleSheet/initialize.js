@@ -33,6 +33,14 @@ const initialize = () => {
     '.rn_pointerEvents\\:none, .rn_pointerEvents\\:box-only *, .rn_pointerEvents\\:box-none {pointer-events:none}'
   );
 
+  injector.addRule(
+    'activity-indicator-animation',
+    '@keyframes rn-ActivityIndicator-animation {' +
+    '0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }' +
+    '100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }' +
+    '}'
+  );
+
   StyleRegistry.initialize();
 };
 

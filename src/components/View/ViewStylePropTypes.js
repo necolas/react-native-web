@@ -1,3 +1,4 @@
+import AnimationPropTypes from '../../propTypes/AnimationPropTypes';
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
@@ -10,6 +11,7 @@ const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ]);
 const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
 
 module.exports = process.env.NODE_ENV !== 'production' ? {
+  ...AnimationPropTypes,
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...ShadowPropTypes,

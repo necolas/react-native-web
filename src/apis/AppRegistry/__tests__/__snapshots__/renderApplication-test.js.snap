@@ -5,6 +5,7 @@ body{margin:0}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none}
 .rn_pointerEvents\\:auto, .rn_pointerEvents\\:box-only, .rn_pointerEvents\\:box-none * {pointer-events:auto}.rn_pointerEvents\\:none, .rn_pointerEvents\\:box-only *, .rn_pointerEvents\\:box-none {pointer-events:none}
+@keyframes rn-ActivityIndicator-animation {0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }}
 .rn-bottom\\:0px{bottom:0px;}
 .rn-left\\:0px{left:0px;}
 .rn-position\\:absolute{position:absolute;}
