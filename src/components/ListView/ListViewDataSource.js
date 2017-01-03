@@ -222,6 +222,10 @@ class ListViewDataSource {
     return this._cachedRowCount;
   }
 
+  getRowAndSectionCount(): number {
+    return (this._cachedRowCount + this.sectionIdentities.length);
+  }
+
   /**
    * Returns if the row is dirtied and needs to be rerendered
    */
