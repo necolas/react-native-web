@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextStylePropTypes from '../Text/TextStylePropTypes';
@@ -13,6 +13,7 @@ const itemStylePropType = StyleSheetPropType(TextStylePropTypes);
 
 const pickerStyleType = StyleSheetPropType({
   ...ViewStylePropTypes,
+  ...TextStylePropTypes,
   color: ColorPropType
 });
 
@@ -34,7 +35,7 @@ export const PICKER_PROPTYPES = {
    *   - 'dropdown': Shows a dropdown anchored to the picker view
    *
    */
-  mode: React.PropTypes.oneOf([ MODE_DIALOG, MODE_DROPDOWN ]),
+  mode: React.PropTypes.oneOf([MODE_DIALOG, MODE_DROPDOWN]),
   /**
    * Callback for when an item is selected. This is called with the following parameters:
    *   - `itemValue`: the `value` prop of the item that was selected

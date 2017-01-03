@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import createDOMElement from '../../modules/createDOMElement';
 import PickerItem from './PickerItem';
 import { PICKER_PROPTYPES } from './proptypes';
 
@@ -26,6 +28,12 @@ class PickerDropDown extends Component {
       prompt,
       ...rest
     } = this.props;
+    let fixedStyle = {};
+    const base = { 'WebkitAppearance': 'none', 'MozAppearance': 'none' };
+    if (style) {
+      fixedStyle = [ base, style ];
+    }
+    const component = this.childHasColor() ? 'div' : 'select';
     if (this.childHasColor()) {
       return null;
     }
@@ -33,26 +41,24 @@ class PickerDropDown extends Component {
     if (onValueChange) {
       change.onChange = (e) => onValueChange(e.target.value, e.target.selectedIndex);
     }
-    return (
-      <select
-        {...rest}
-        {...change}
-        data-testID={testID}
-        disabled={!enabled}
-        style={style}
-        title={prompt}
-        value={selectedValue}
-      >
-        {children.map((item, index) => {
-          return (
-            <PickerDropDown.Item
-              key={`${testID}${index}`}
-              {...item.props}
-              {...itemStyle}
-            />);
-        })}
-      </select>
-    );
+    const props = {
+      ...rest,
+      ...change,
+      'data-testID': testID,
+      disabled: !enabled,
+      style: fixedStyle,
+      title: prompt,
+      value: selectedValue,
+      children: children.map((item, index) => {
+        return (
+          <PickerDropDown.Item
+            key={`${testID}${index}`}
+            {...item.props}
+            {...itemStyle}
+          />);
+      })
+    };
+    return createDOMElement(component, props);
   }
 }
 
