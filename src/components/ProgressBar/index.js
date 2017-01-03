@@ -22,6 +22,14 @@ class ProgressBar extends Component {
     trackColor: 'transparent'
   };
 
+  componentDidMount() {
+    this._updateProgressWidth();
+  }
+
+  componentDidUpdate() {
+    this._updateProgressWidth();
+  }
+
   render() {
     const {
       color,
@@ -32,7 +40,7 @@ class ProgressBar extends Component {
       ...other
     } = this.props;
 
-    const percentageProgress = indeterminate ? 50 : progress * 100;
+    const percentageProgress = progress * 100;
 
     return (
       <View {...other}
@@ -47,14 +55,28 @@ class ProgressBar extends Component {
         ]}
       >
         <View
+          ref={this._setProgressRef}
           style={[
             styles.progress,
-            indeterminate ? styles.indeterminate : { width: `${percentageProgress}%` },
+            indeterminate && styles.animation,
             { backgroundColor: color }
           ]}
         />
       </View>
     );
+  }
+
+  _setProgressRef = (component) => {
+    this._progressRef = component;
+  }
+
+  _updateProgressWidth = () => {
+    const { indeterminate, progress } = this.props;
+    const percentageProgress = indeterminate ? 50 : progress * 100;
+    const width = indeterminate ? '25%' : `${percentageProgress}%`;
+    this._progressRef.setNativeProps({
+      style: { width }
+    });
   }
 }
 
@@ -67,12 +89,11 @@ const styles = StyleSheet.create({
   progress: {
     height: '100%'
   },
-  indeterminate: {
+  animation: {
     animationDuration: '1s',
     animationName: 'rn-ProgressBar-animation',
     animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite',
-    width: '25%'
+    animationIterationCount: 'infinite'
   }
 });
 
