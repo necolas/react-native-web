@@ -82,6 +82,7 @@ Exported modules:
   * [`Vibration`](docs/apis/Vibration.md)
 
 <span id="#why"></span>
+
 ## Why?
 
 There are many different teams at Twitter building web applications with React.

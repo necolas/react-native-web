@@ -65,6 +65,10 @@ AppRegistry.runApplication('App', {
 })
 ```
 
+Setting `process.env.__REACT_NATIVE_DEBUG_ENABLED__` to `true` will expose some
+debugging logs. This can help track down when you're rendering without the
+performance benefit of cached styles.
+
 ## Server-side rendering
 
 Rendering using the `AppRegistry`:
