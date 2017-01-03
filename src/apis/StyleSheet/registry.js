@@ -203,7 +203,7 @@ const StyleRegistry = {
     // if (!hasValidKey) { key = null; }
 
     // cache resolved props when all styles are registered
-    const key = isArrayOfNumbers ? `${prefix}${flatArray.join('-')}` : null;
+    const key = isArrayOfNumbers ? `${prefix}-${flatArray.join('-')}` : null;
 
     return resolvePropsIfNeeded(key, flatArray);
   }
