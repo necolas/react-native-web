@@ -3,7 +3,8 @@ import ListViewDataSource from './ListViewDataSource';
 import ListViewPropTypes from './ListViewPropTypes';
 import ScrollView from '../ScrollView';
 import StaticRenderer from '../StaticRenderer';
-import React, { Component, isEmpty, merge } from 'react';
+import React, { Component } from 'react';
+import { isEmpty, merge } from 'lodash';
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 
 const DEFAULT_PAGE_SIZE = 1;
