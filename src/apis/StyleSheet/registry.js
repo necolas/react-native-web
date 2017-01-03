@@ -14,7 +14,7 @@ import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
 const prefix = 'r';
 const SPACE_REGEXP = /\s/g;
-const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#]/g;
+const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#*]/g;
 
 /**
  * Creates an HTML class name for use on elements
