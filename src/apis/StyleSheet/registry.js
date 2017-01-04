@@ -25,6 +25,14 @@ const createClassName = (prop, value) => {
 };
 
 /**
+ * Formatting improves debugging in devtools and snapshot
+ */
+const mapDeclarationsToClassName = (style, fn) => {
+  const result = mapKeyValue(style, fn).join('\n').trim();
+  return `\n${result}`;
+};
+
+/**
  * Inject a CSS rule for a given declaration and record the availability of the
  * resulting class name.
  */
@@ -50,11 +58,11 @@ const injectClassNameIfNeeded = (prop, value) => {
 let resolvedPropsCache = {};
 const registerStyle = (id, flatStyle) => {
   const style = createReactDOMStyle(flatStyle);
-  const className = mapKeyValue(style, (prop, value) => {
+  const className = mapDeclarationsToClassName(style, (prop, value) => {
     if (value != null) {
       return injectClassNameIfNeeded(prop, value);
     }
-  }).join(' ').trim();
+  });
 
   const key = `${prefix}-${id}`;
   resolvedPropsCache[key] = { className };
@@ -70,7 +78,7 @@ const resolveProps = (reactNativeStyle) => {
   const domStyle = createReactDOMStyle(flatStyle);
   const style = {};
 
-  const _className = mapKeyValue(domStyle, (prop, value) => {
+  const className = mapDeclarationsToClassName(domStyle, (prop, value) => {
     if (value != null) {
       const singleClassName = createClassName(prop, value);
       if (injectedClassNames[singleClassName]) {
@@ -80,12 +88,7 @@ const resolveProps = (reactNativeStyle) => {
         style[prop] = value;
       }
     }
-  })
-  // improves debugging in devtools and snapshots
-  .join('\n')
-  .trim();
-
-  const className = `\n${_className}`;
+  });
 
   const props = {
     className,

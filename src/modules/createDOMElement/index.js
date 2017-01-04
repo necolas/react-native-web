@@ -25,6 +25,7 @@ const createDOMElement = (component, rnProps = emptyObject) => {
     accessibilityLiveRegion,
     accessibilityRole,
     accessible = true,
+    style: rnStyle, // we need to remove the RN styles from 'domProps'
     testID,
     type,
     ...domProps
@@ -33,7 +34,7 @@ const createDOMElement = (component, rnProps = emptyObject) => {
   const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
   const Component = accessibilityComponent || component;
 
-  const { className, style } = StyleRegistry.resolve(domProps.style) || emptyObject;
+  const { className, style } = StyleRegistry.resolve(rnStyle) || emptyObject;
 
   if (!accessible) { domProps['aria-hidden'] = true; }
   if (accessibilityLabel) { domProps['aria-label'] = accessibilityLabel; }
@@ -53,7 +54,9 @@ const createDOMElement = (component, rnProps = emptyObject) => {
   if (style) {
     domProps.style = style;
   }
-  if (type) { domProps.type = type; }
+  if (type) {
+    domProps.type = type;
+  }
 
   return (
     <Component {...domProps} />
