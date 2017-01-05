@@ -4,7 +4,7 @@ import ListViewPropTypes from './ListViewPropTypes';
 import ScrollView from '../ScrollView';
 import StaticRenderer from '../StaticRenderer';
 import React, { Component } from 'react';
-import { isEmpty, merge } from 'lodash';
+import isEmpty from 'fbjs/lib/isEmpty';
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 
 const DEFAULT_PAGE_SIZE = 1;
@@ -246,7 +246,7 @@ class ListView extends Component {
     }
     if (updatedFrames) {
       updatedFrames.forEach((newFrame) => {
-        this._childFrames[newFrame.index] = merge(newFrame);
+        this._childFrames[newFrame.index] = Object.assign({}, newFrame);
       });
     }
     const isVertical = !this.props.horizontal;
