@@ -18,7 +18,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-textDecoration:none
 rn-whiteSpace:pre-wrap
-rn-wordWrap:break-word">
+rn-wordWrap:break-word"
+  dir="auto">
   children
 </span>
 `;
@@ -45,6 +46,7 @@ rn-paddingLeft:0px
 rn-textDecoration:none
 rn-whiteSpace:pre-wrap
 rn-wordWrap:break-word"
+  dir="auto"
   onClick={[Function]}
   onKeyDown={[Function]}
   style={Object {}}
@@ -71,7 +73,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-textDecoration:none
 rn-whiteSpace:pre-wrap
-rn-wordWrap:break-word" />
+rn-wordWrap:break-word"
+  dir="auto" />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
@@ -96,5 +99,6 @@ rn-textDecoration:none
 rn-userSelect:none
 rn-whiteSpace:pre-wrap
 rn-wordWrap:break-word"
+  dir="auto"
   style={Object {}} />
 `;

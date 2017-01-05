@@ -56,6 +56,8 @@ class Text extends Component {
       numberOfLines === 1 && styles.singleLineStyle,
       onPress && styles.pressable
     ];
+    // allow browsers to automatically infer the language writing direction
+    otherProps.dir = 'auto';
 
     return createDOMElement('span', otherProps);
   }
