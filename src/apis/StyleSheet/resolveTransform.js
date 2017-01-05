@@ -1,11 +1,22 @@
 import normalizeValue from './normalizeValue';
 
-// { scale: 2 } => 'scale(2)'
-// { translateX: 20 } => 'translateX(20px)'
-const mapTransform = (transform) => {
+// [ { perspective: 20 }, { scale: 2 }, { translateX: 20 } ]
+// => { perspective: 20px, transform: 'scale(2) translateX(20px)' }
+const reduceTransform = (resolvedStyle, transform) => {
   const type = Object.keys(transform)[0];
   const value = normalizeValue(type, transform[type]);
-  return `${type}(${value})`;
+
+  if (type === 'perspective') {
+    resolvedStyle.perspective = value;
+  } else {
+    const result = `${type}(${value})`;
+    if (resolvedStyle.transform) {
+      resolvedStyle.transform += ` ${result}`;
+    } else {
+      resolvedStyle.transform = result;
+    }
+  }
+  return resolvedStyle;
 };
 
 // [1,2,3,4,5,6] => 'matrix3d(1,2,3,4,5,6)'
@@ -16,8 +27,7 @@ const convertTransformMatrix = (transformMatrix) => {
 
 const resolveTransform = (resolvedStyle, style) => {
   if (Array.isArray(style.transform)) {
-    const transform = style.transform.map(mapTransform).join(' ');
-    resolvedStyle.transform = transform;
+    style.transform.reduce(reduceTransform, resolvedStyle);
   } else if (style.transformMatrix) {
     const transform = convertTransformMatrix(style.transformMatrix);
     resolvedStyle.transform = transform;

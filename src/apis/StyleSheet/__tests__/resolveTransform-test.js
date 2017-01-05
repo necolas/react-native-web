@@ -7,6 +7,7 @@ describe('apis/StyleSheet/resolveTransform', () => {
     const resolvedStyle = {};
     const style = {
       transform: [
+        { perspective: 50 },
         { scaleX: 20 },
         { translateX: 20 },
         { rotate: '20deg' }
@@ -15,6 +16,7 @@ describe('apis/StyleSheet/resolveTransform', () => {
     resolveTransform(resolvedStyle, style);
 
     expect(resolvedStyle).toEqual({
+      perspective: '50px',
       transform: 'scaleX(20) translateX(20px) rotate(20deg)'
     });
   });
