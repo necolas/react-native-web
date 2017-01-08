@@ -4024,7 +4024,7 @@ normalize-css-color@^1.0.1:
 
 normalize-css-color@^1.0.2:
   version "1.0.2"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/normalize-css-color/-/normalize-css-color-1.0.2.tgz#02991e97cccec6623fe573afbbf0de6a1f3e9f8d"
+  resolved "https://registry.yarnpkg.com/normalize-css-color/-/normalize-css-color-1.0.2.tgz#02991e97cccec6623fe573afbbf0de6a1f3e9f8d"
 
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
   version "2.3.5"
