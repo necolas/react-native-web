@@ -87,7 +87,7 @@ var TouchableOpacity = React.createClass({
     this.setNativeProps({
       style: {
         opacity: value,
-        transitionDuration: duration
+        transitionDuration: `${duration / 1000}s`
       }
     });
   },
