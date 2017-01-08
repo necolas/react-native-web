@@ -1,15 +1,18 @@
+import asap from 'asap';
 import createReactDOMStyle from '../StyleSheet/createReactDOMStyle';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 import prefixInlineStyles from '../StyleSheet/prefixInlineStyles';
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
-  const relativeNode = relativeToNativeNode || node.parentNode;
-  const relativeRect = relativeNode.getBoundingClientRect();
-  const { height, left, top, width } = node.getBoundingClientRect();
-  const x = left - relativeRect.left;
-  const y = top - relativeRect.top;
-  callback(x, y, width, height, left, top);
+  asap(() => {
+    const relativeNode = relativeToNativeNode || node.parentNode;
+    const relativeRect = relativeNode.getBoundingClientRect();
+    const { height, left, top, width } = node.getBoundingClientRect();
+    const x = left - relativeRect.left;
+    const y = top - relativeRect.top;
+    callback(x, y, width, height, left, top);
+  });
 };
 
 const UIManager = {
