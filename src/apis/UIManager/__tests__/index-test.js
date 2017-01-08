@@ -24,7 +24,7 @@ describe('apis/UIManager', () => {
   });
 
   describe('measure', () => {
-    test('provides correct layout to callback', () => {
+    test('provides correct layout to callback', (done) => {
       const node = createNode({ height: '5000px', left: '100px', position: 'relative', top: '100px', width: '5000px' });
       document.body.appendChild(node);
 
@@ -37,7 +37,14 @@ describe('apis/UIManager', () => {
         expect(height).toEqual(5000);
         expect(pageX).toEqual(100);
         expect(pageY).toEqual(100);
+        done();
+        document.body.removeChild(node);
       });
+    });
+
+    test('provides correct layout to callback', (done) => {
+      const node = createNode({ height: '5000px', left: '100px', position: 'relative', top: '100px', width: '5000px' });
+      document.body.appendChild(node);
 
       // test values account for scroll position
       window.scrollTo(200, 200);
@@ -51,14 +58,14 @@ describe('apis/UIManager', () => {
         expect(height).toEqual(5000);
         expect(pageX).toEqual(-100);
         expect(pageY).toEqual(-100);
+        done();
+        document.body.removeChild(node);
       });
-
-      document.body.removeChild(node);
     });
   });
 
   describe('measureLayout', () => {
-    test('provides correct layout to onSuccess callback', () => {
+    test('provides correct layout to onSuccess callback', (done) => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
       const context = createNode({ padding: '20px' });
@@ -78,14 +85,14 @@ describe('apis/UIManager', () => {
         expect(y).toEqual(40);
         expect(width).toEqual(10);
         expect(height).toEqual(10);
+        done();
+        document.body.removeChild(context);
       });
-
-      document.body.removeChild(context);
     });
   });
 
   describe('measureInWindow', () => {
-    test('provides correct layout to callback', () => {
+    test('provides correct layout to callback', (done) => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
       const context = createNode({ padding: '20px' });
@@ -105,9 +112,9 @@ describe('apis/UIManager', () => {
         expect(y).toEqual(40);
         expect(width).toEqual(10);
         expect(height).toEqual(10);
+        done();
+        document.body.removeChild(context);
       });
-
-      document.body.removeChild(context);
     });
   });
 
