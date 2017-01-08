@@ -99,6 +99,14 @@ from `style`.
 + `alignContent`
 + `alignItems`
 + `alignSelf`
++ `animationDelay`
++ `animationDirection`
++ `animationDuration`
++ `animationFillMode`
++ `animationIterationCount`
++ `animationName`
++ `animationPlayState`
++ `animationTimingFunction`
 + `backfaceVisibility`
 + `backgroundAttachment`
 + `backgroundClip`
@@ -168,6 +176,10 @@ from `style`.
 + `right`‡
 + `top`
 + `transform`
++ `transitionDelay`
++ `transitionDuration`
++ `transitionProperty`
++ `transitionTimingFunction`
 + `userSelect`
 + `visibility`
 + `width`
