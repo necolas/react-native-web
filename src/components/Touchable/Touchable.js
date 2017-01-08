@@ -14,7 +14,6 @@
 
 /* @edit start */
 const BoundingDimensions = require('./BoundingDimensions');
-const normalizeColor = require('../../modules/normalizeColor');
 const Position = require('./Position');
 const React = require('react');
 const TouchEventUtils = require('fbjs/lib/TouchEventUtils');

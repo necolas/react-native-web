@@ -13,7 +13,7 @@
 import { PropTypes } from 'react'
 
 var colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
-  var normalizeColor = require('../modules/normalizeColor');
+  var normalizeColor = require('normalize-css-color');
   var ReactPropTypeLocationNames = require('react-dom/lib/ReactPropTypeLocationNames');
   var color = props[propName];
   if (color === undefined || color === null) {
@@ -31,6 +31,10 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
     // Developers should not use a number, but we are using the prop type
     // both for user provided colors and for transformed ones. This isn't ideal
     // and should be fixed but will do for now...
+    return;
+  }
+
+  if (color === 'currentcolor' || color === 'inherit') {
     return;
   }
 
