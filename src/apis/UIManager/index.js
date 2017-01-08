@@ -53,10 +53,7 @@ const UIManager = {
         }
         case 'class':
         case 'className': {
-          const nativeProp = 'class';
-          // prevent class names managed by React Native from being replaced
-          const className = `${node.getAttribute(nativeProp)} ${value}`;
-          node.setAttribute(nativeProp, className);
+          node.classList.add(value);
           break;
         }
         case 'text':
