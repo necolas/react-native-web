@@ -7,7 +7,20 @@
  */
 
 import findNodeHandle from '../findNodeHandle';
+import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
+
+const REGEX_CLASSNAME_SPLIT = /\s+/;
+const REGEX_STYLE_PROP = /rn-(.*):.*/;
+
+const classNameFilter = (className) => { return className !== ''; };
+const classNameToList = (className = '') => className.split(REGEX_CLASSNAME_SPLIT).filter(classNameFilter);
+const getStyleProp = (className) => {
+  const match = className.match(REGEX_STYLE_PROP);
+  if (match) {
+    return match[1];
+  }
+};
 
 const NativeMethodsMixin = {
   /**
@@ -45,7 +58,7 @@ const NativeMethodsMixin = {
    *  - height
    *
    * Note that these measurements are not available until after the rendering
-   * has been completed in native.
+   * has been completed.
    */
   measureInWindow(callback) {
     UIManager.measureInWindow(findNodeHandle(this), callback);
@@ -60,9 +73,49 @@ const NativeMethodsMixin = {
 
   /**
    * This function sends props straight to the underlying DOM node.
+   * This works as if all styles were set as inline styles. Since a DOM node
+   * may aleady be styled with class names and inline styles, we need to get
+   * the initial styles from the DOM node and merge them with incoming props.
    */
   setNativeProps(nativeProps: Object) {
-    UIManager.updateView(findNodeHandle(this), nativeProps, this);
+    // DOM state
+    const node = findNodeHandle(this);
+    const domClassList = [ ...node.classList ];
+
+    // Resolved state
+    const resolvedProps = StyleRegistry.resolve(nativeProps.style);
+    const resolvedClassList = classNameToList(resolvedProps.className);
+
+    // Merged state
+    const classList = [];
+    const style = { ...resolvedProps.style };
+
+    // The node has class names that we need to override.
+    // Only pass on a class name when the style is unchanged.
+    domClassList.forEach((c) => {
+      const prop = getStyleProp(c);
+      if (resolvedProps.className.indexOf(prop) === -1) {
+        classList.push(c);
+      }
+    });
+
+    // The node has styles that we need to override.
+    // Remove any inline style that may collide with a new class name.
+    resolvedClassList.forEach((c) => {
+      const prop = getStyleProp(c);
+      classList.push(c);
+      style[prop] = null;
+    });
+
+    const className = `\n${classList.sort().join('\n')}`;
+
+    const props = {
+      ...nativeProps,
+      className,
+      style
+    };
+
+    UIManager.updateView(node, props, this);
   }
 };
 

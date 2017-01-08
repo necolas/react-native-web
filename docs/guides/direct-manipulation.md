@@ -4,7 +4,7 @@ It is sometimes necessary to make changes directly to a component without using
 state/props to trigger a re-render of the entire subtree – in the browser, this
 is done by directly modifying a DOM node. `setNativeProps` is the React Native
 equivalent to setting properties directly on a DOM node. Use direct
-manipulation when frequent re-rendering creates a performance bottleneck Direct
+manipulation when frequent re-rendering creates a performance bottleneck. Direct
 manipulation will not be a tool that you reach for frequently.
 
 ## `setNativeProps` and `shouldComponentUpdate`

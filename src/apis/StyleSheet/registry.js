@@ -95,6 +95,7 @@ const resolveProps = (reactNativeStyle) => {
     style: prefixInlineStyles(style)
   };
 
+  /*
   if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
     console.groupCollapsed('[StyleSheet] resolving uncached styles');
     console.log(
@@ -106,6 +107,7 @@ const resolveProps = (reactNativeStyle) => {
     console.log('resolve => \n', props);
     console.groupEnd();
   }
+  */
 
   return props;
 };
@@ -131,6 +133,7 @@ const StyleRegistry = {
   initialize(classNames) {
     injectedClassNames = classNames;
 
+    /*
     if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
       if (global.__REACT_NATIVE_DEBUG_ENABLED__styleRegistryTimer) {
         clearInterval(global.__REACT_NATIVE_DEBUG_ENABLED__styleRegistryTimer);
@@ -142,6 +145,7 @@ const StyleRegistry = {
         console.groupEnd();
       }, 30000);
     }
+    */
   },
 
   reset() {

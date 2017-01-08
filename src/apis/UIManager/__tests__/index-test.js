@@ -126,17 +126,16 @@ describe('apis/UIManager', () => {
       }
     };
 
-    test('add new className to existing className', () => {
+    test('supports className alias for class', () => {
       const node = createNode();
-      node.className = 'existing';
       const props = { className: 'extra' };
       UIManager.updateView(node, props, componentStub);
-      expect(node.getAttribute('class')).toEqual('existing extra');
+      expect(node.getAttribute('class')).toEqual('extra');
     });
 
     test('adds correct DOM styles to existing style', () => {
       const node = createNode({ color: 'red' });
-      const props = { style: { marginVertical: 0, opacity: 0 } };
+      const props = { style: { marginTop: 0, marginBottom: 0, opacity: 0 } };
       UIManager.updateView(node, props, componentStub);
       expect(node.getAttribute('style')).toEqual('color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;');
     });
