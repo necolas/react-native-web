@@ -28,7 +28,8 @@ const TransformPropTypes = process.env.NODE_ENV !== 'production' ? {
       shape({ translateZ: numberOrString }),
       shape({ translate3d: string })
     ])
-  )
+  ),
+  transformOrigin: string
 } : {};
 
 module.exports = TransformPropTypes;

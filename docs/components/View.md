@@ -172,10 +172,13 @@ from `style`.
 + `paddingRight`‡
 + `paddingTop`
 + `paddingVertical`
++ `perspective`
++ `perspectiveOrigin`
 + `position`
 + `right`‡
 + `top`
 + `transform`
++ `transformOrigin`
 + `transitionDelay`
 + `transitionDuration`
 + `transitionProperty`

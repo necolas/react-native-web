@@ -37,6 +37,8 @@ module.exports = process.env.NODE_ENV !== 'production' ? {
   outline: string,
   overflowX: autoOrHiddenOrVisible,
   overflowY: autoOrHiddenOrVisible,
+  perspective: PropTypes.oneOfType([ number, string ]),
+  perspectiveOrigin: string,
   transitionDelay: string,
   transitionDuration: string,
   transitionProperty: string,
