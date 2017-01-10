@@ -78,51 +78,50 @@ const NativeMethodsMixin = {
    * the initial styles from the DOM node and merge them with incoming props.
    */
   setNativeProps(nativeProps: Object) {
-      // DOM state
-      const node = findNodeHandle(this);
-      const domClassList = [ ...node.classList ];
+    // DOM state
+    const node = findNodeHandle(this);
+    const domClassList = [ ...node.classList ];
 
-      // Resolved state
-      const resolvedProps = StyleRegistry.resolve(nativeProps.style);
-      let resolvedClassList = []
+    // Resolved state
+    const resolvedProps = StyleRegistry.resolve(nativeProps.style);
+    let resolvedClassList = [];
 
-      // Merged state
-      const classList = [];
-      let style = {}
+    // Merged state
+    const classList = [];
+    let style = {};
 
-      // Check if props could be resolved
-      if( resolvedProps ) {
-          resolvedClassList = classNameToList(resolvedProps.className);
-          style = { ...resolvedProps.style };
+    // Check if props could be resolved
+    if (resolvedProps) {
+      resolvedClassList = classNameToList(resolvedProps.className);
+      style = { ...resolvedProps.style };
 
-          // The node has styles that we need to override.
-          // Remove any inline style that may collide with a new class name.
-          resolvedClassList.forEach((c) => {
-            const prop = getStyleProp(c);
-            classList.push(c);
-            style[prop] = null;
-          });
-      }
-
-
-      // The node has class names that we need to override.
-      // Only pass on a class name when the style is unchanged.
-      domClassList.forEach((c) => {
+      // The node has styles that we need to override.
+      // Remove any inline style that may collide with a new class name.
+      resolvedClassList.forEach((c) => {
         const prop = getStyleProp(c);
-        if (!resolvedProps || resolvedProps.className.indexOf(prop) === -1) {
-          classList.push(c);
-        }
+        classList.push(c);
+        style[prop] = null;
       });
+    }
 
-      const className = `\n${classList.sort().join('\n')}`;
+    // The node has class names that we need to override.
+    // Only pass on a class name when the style is unchanged.
+    domClassList.forEach((c) => {
+      const prop = getStyleProp(c);
+      if (!resolvedProps || resolvedProps.className.indexOf(prop) === -1) {
+        classList.push(c);
+      }
+    });
 
-      const props = {
-        ...nativeProps,
-        className,
-        style
-      };
+    const className = `\n${classList.sort().join('\n')}`;
 
-      UIManager.updateView(node, props, this);
+    const props = {
+      ...nativeProps,
+      className,
+      style
+    };
+
+    UIManager.updateView(node, props, this);
   }
 };
 
