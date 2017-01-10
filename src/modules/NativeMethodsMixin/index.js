@@ -84,27 +84,33 @@ const NativeMethodsMixin = {
 
     // Resolved state
     const resolvedProps = StyleRegistry.resolve(nativeProps.style);
-    const resolvedClassList = classNameToList(resolvedProps.className);
+    let resolvedClassList = [];
 
     // Merged state
     const classList = [];
-    const style = { ...resolvedProps.style };
+    let style = {};
+
+    // Check if props could be resolved
+    if (resolvedProps) {
+      resolvedClassList = classNameToList(resolvedProps.className);
+      style = { ...resolvedProps.style };
+
+      // The node has styles that we need to override.
+      // Remove any inline style that may collide with a new class name.
+      resolvedClassList.forEach((c) => {
+        const prop = getStyleProp(c);
+        classList.push(c);
+        style[prop] = null;
+      });
+    }
 
     // The node has class names that we need to override.
     // Only pass on a class name when the style is unchanged.
     domClassList.forEach((c) => {
       const prop = getStyleProp(c);
-      if (resolvedProps.className.indexOf(prop) === -1) {
+      if (!resolvedProps || resolvedProps.className.indexOf(prop) === -1) {
         classList.push(c);
       }
-    });
-
-    // The node has styles that we need to override.
-    // Remove any inline style that may collide with a new class name.
-    resolvedClassList.forEach((c) => {
-      const prop = getStyleProp(c);
-      classList.push(c);
-      style[prop] = null;
     });
 
     const className = `\n${classList.sort().join('\n')}`;
