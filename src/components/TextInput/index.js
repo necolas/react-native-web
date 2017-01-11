@@ -1,12 +1,12 @@
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
 import Text from '../Text';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
-import UIManager from '../../apis/UIManager';
 import View from '../View';
 import { Component, PropTypes } from 'react';
 
@@ -116,7 +116,7 @@ class TextInput extends Component {
   }
 
   setNativeProps(props) {
-    UIManager.updateView(this._node, props, this);
+    NativeMethodsMixin.setNativeProps.call(this, props);
   }
 
   componentDidMount() {

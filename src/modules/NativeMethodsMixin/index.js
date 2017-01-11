@@ -10,6 +10,7 @@ import findNodeHandle from '../findNodeHandle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
+const emptyObject = {};
 const REGEX_CLASSNAME_SPLIT = /\s+/;
 const REGEX_STYLE_PROP = /rn-(.*):.*/;
 
@@ -83,7 +84,7 @@ const NativeMethodsMixin = {
     const domClassList = [ ...node.classList ];
 
     // Resolved state
-    const resolvedProps = StyleRegistry.resolve(nativeProps.style);
+    const resolvedProps = StyleRegistry.resolve(nativeProps.style) || emptyObject;
     const resolvedClassList = classNameToList(resolvedProps.className);
 
     // Merged state
@@ -94,7 +95,8 @@ const NativeMethodsMixin = {
     // Only pass on a class name when the style is unchanged.
     domClassList.forEach((c) => {
       const prop = getStyleProp(c);
-      if (resolvedProps.className.indexOf(prop) === -1) {
+      const className = resolvedProps.className;
+      if (!className || className.indexOf(prop) === -1) {
         classList.push(c);
       }
     });
