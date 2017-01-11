@@ -28,8 +28,8 @@ const initialize = () => {
   );
   injector.addRule(
     'pointer-events',
-    '.rn-pointerEvents\\:auto,.rn_pointerEvents\\:box-only,.rn-pointerEvents\\:box-none *{pointer-events:auto}' +
-    '.rn-pointerEvents\\:none,.rn_pointerEvents\\:box-only *,.rn-pointerEvents\\:box-none{pointer-events:none}'
+    '.rn-pointerEvents\\:auto,.rn-pointerEvents\\:box-only,.rn-pointerEvents\\:box-none *{pointer-events:auto}' +
+    '.rn-pointerEvents\\:none,.rn-pointerEvents\\:box-only *,.rn-pointerEvents\\:box-none{pointer-events:none}'
   );
 
   const classNames = injector.getClassNames();
