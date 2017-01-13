@@ -58,7 +58,7 @@
     "react-test-renderer": "~15.4.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
-    "webpack-bundle-analyzer": "^1.5.3"
+    "webpack-bundle-analyzer": "^2.2.1"
   },
   "peerDependencies": {
     "react": "~15.4.1"
