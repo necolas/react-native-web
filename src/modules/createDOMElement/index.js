@@ -1,5 +1,5 @@
 import React from 'react';
-import StyleRegistry from '../../apis/StyleSheet/registry';
+import StyleRegistry from 'apis/StyleSheet/registry';
 
 const emptyObject = {};
 

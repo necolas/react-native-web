@@ -1,7 +1,7 @@
 import flattenStyle from './flattenStyle';
 import initialize from './initialize';
 import injector from './injector';
-import StyleRegistry from './registry';
+import StyleRegistry from 'apis/StyleSheet/registry';
 
 initialize();
 
