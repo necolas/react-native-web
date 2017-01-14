@@ -155,22 +155,14 @@ const StyleRegistry = {
   },
 
   register(styles) {
-    let result = {};
-
-    for(const key in styles) {
-      if (!styles.hasOwnProperty(key)) {
-        continue;
-      }
-
+    return Object.keys(styles).map((key) => {
       if (process.env.NODE_ENV !== 'production') {
         require('./StyleSheetValidation').validateStyle(key, styles[key]);
       }
-      let id = ReactNativePropRegistry.register(styles[key]);
+      const id = ReactNativePropRegistry.register(styles[key]);
 
-      result[key] = registerStyle(id, styles[key]);
-    }
-
-    return result;
+      return registerStyle(id, styles[key]);
+    });
   },
 
   resolve(props) {

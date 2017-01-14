@@ -25,7 +25,6 @@ const createDOMElement = (component, rnProps = emptyObject) => {
     accessibilityLiveRegion,
     accessibilityRole,
     accessible = true,
-    style: rnStyle, // we need to remove the RN styles from 'domProps'
     testID,
     type,
     ...domProps
