@@ -33,7 +33,7 @@ const createDOMElement = (component, rnProps = emptyObject) => {
   const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
   const Component = accessibilityComponent || component;
 
-  const { className, style } = StyleRegistry.resolve(domProps.style) || emptyObject;
+  const { className, style } = StyleRegistry.resolve(domProps) || emptyObject;
 
   if (!accessible) { domProps['aria-hidden'] = true; }
   if (accessibilityLabel) { domProps['aria-label'] = accessibilityLabel; }
