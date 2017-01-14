@@ -10,16 +10,7 @@ const absoluteFillObject = { position: 'absolute', left: 0, right: 0, top: 0, bo
 module.exports = {
   absoluteFill: StyleRegistry.register(absoluteFillObject),
   absoluteFillObject,
-  create(styles) {
-    const result = {};
-    Object.keys(styles).forEach((key) => {
-      if (process.env.NODE_ENV !== 'production') {
-        require('./StyleSheetValidation').validateStyle(key, styles);
-      }
-      result[key] = StyleRegistry.register(styles[key]);
-    });
-    return result;
-  },
+  create: StyleRegistry.register,
   hairlineWidth: 1,
   flatten: flattenStyle,
   renderToString: injector.getStyleSheetHtml
