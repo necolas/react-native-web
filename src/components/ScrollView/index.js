@@ -11,7 +11,7 @@ import findNodeHandle from '../../modules/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
-import StyleSheet from 'apis/StyleSheet';
+import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';

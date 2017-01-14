@@ -1,5 +1,5 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import StyleSheet from 'apis/StyleSheet';
+import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
 

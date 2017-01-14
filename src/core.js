@@ -7,7 +7,7 @@ ReactDefaultInjection.inject();
 // APIs
 import I18nManager from './apis/I18nManager';
 import Platform from './apis/Platform';
-import StyleSheet from 'apis/StyleSheet';
+import StyleSheet from './apis/StyleSheet';
 
 // components
 import Image from './components/Image';

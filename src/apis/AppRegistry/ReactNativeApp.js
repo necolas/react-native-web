@@ -1,4 +1,4 @@
-import StyleSheet from 'apis/StyleSheet';
+import StyleSheet from '../../apis/StyleSheet';
 import View from '../../components/View';
 import React, { Component, PropTypes } from 'react';
 

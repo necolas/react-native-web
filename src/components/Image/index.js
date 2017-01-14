@@ -4,7 +4,7 @@ import ImageResizeMode from './ImageResizeMode';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
-import StyleSheet from 'apis/StyleSheet';
+import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import React, { Component, PropTypes } from 'react';
