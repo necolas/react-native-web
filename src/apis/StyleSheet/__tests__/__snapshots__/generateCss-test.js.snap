@@ -1,1 +1,1 @@
-exports[`apis/StyleSheet/generateCss generates correct css 1`] = `"-webkit-transition-duration:0.1s;transition-duration:0.1s;position:absolute;border-width-right:3px;border-width-left:2px;box-shadow:1px 1px 1px 1px #000;"`;
+exports[`apis/StyleSheet/generateCss generates correct css 1`] = `"-webkit-transition-duration:0.1s;border-width-left:2px;border-width-right:3px;box-shadow:1px 1px 1px 1px #000;position:absolute;transition-duration:0.1s"`;

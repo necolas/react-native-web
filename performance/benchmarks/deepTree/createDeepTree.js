@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-const createDeepTree = ({ StyleSheet, View }) => {
+const createDeepTree = ({ StyleSheet, View }, options = {}) => {
   class DeepTree extends Component {
     static propTypes = {
       breadth: PropTypes.number.isRequired,
@@ -11,6 +11,7 @@ const createDeepTree = ({ StyleSheet, View }) => {
 
     render() {
       const { breadth, depth, id, wrap } = this.props;
+
       let result = (
         <View
           style={[
@@ -45,7 +46,7 @@ const createDeepTree = ({ StyleSheet, View }) => {
     }
   }
 
-  const styles = StyleSheet.create({
+  const stylesObject = {
     outer: {
       padding: 4
     },
@@ -77,7 +78,9 @@ const createDeepTree = ({ StyleSheet, View }) => {
     terminal2: {
       backgroundColor: 'red'
     }
-  });
+  };
+
+  const styles = options.registerStyles ? StyleSheet.create(stylesObject) : stylesObject;
 
   return DeepTree;
 };

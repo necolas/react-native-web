@@ -1,15 +1,25 @@
 exports[`components/Text prop "children" 1`] = `
 <span
-  className="rn-borderTopWidth:0px rn-borderRightWidth:0px rn-borderBottomWidth:0px rn-borderLeftWidth:0px rn-color:inherit rn-display:inline rn-font:inherit rn-marginTop:0px rn-marginRight:0px rn-marginBottom:0px rn-marginLeft:0px rn-paddingTop:0px rn-paddingRight:0px rn-paddingBottom:0px rn-paddingLeft:0px rn-textDecoration:none rn-whiteSpace:pre-wrap rn-wordWrap:break-word"
-  style={
-    Array [
-      3,
-      undefined,
-      false,
-      false,
-      undefined,
-    ]
-  }>
+  className="
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-color:inherit
+rn-display:inline
+rn-font:inherit
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-textDecoration:none
+rn-whiteSpace:pre-wrap
+rn-wordWrap:break-word"
+  dir="auto">
   children
 </span>
 `;
@@ -36,6 +46,7 @@ rn-paddingLeft:0px
 rn-textDecoration:none
 rn-whiteSpace:pre-wrap
 rn-wordWrap:break-word"
+  dir="auto"
   onClick={[Function]}
   onKeyDown={[Function]}
   style={Object {}}
@@ -44,16 +55,26 @@ rn-wordWrap:break-word"
 
 exports[`components/Text prop "selectable" 1`] = `
 <span
-  className="rn-borderTopWidth:0px rn-borderRightWidth:0px rn-borderBottomWidth:0px rn-borderLeftWidth:0px rn-color:inherit rn-display:inline rn-font:inherit rn-marginTop:0px rn-marginRight:0px rn-marginBottom:0px rn-marginLeft:0px rn-paddingTop:0px rn-paddingRight:0px rn-paddingBottom:0px rn-paddingLeft:0px rn-textDecoration:none rn-whiteSpace:pre-wrap rn-wordWrap:break-word"
-  style={
-    Array [
-      3,
-      undefined,
-      false,
-      false,
-      undefined,
-    ]
-  } />
+  className="
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-color:inherit
+rn-display:inline
+rn-font:inherit
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-textDecoration:none
+rn-whiteSpace:pre-wrap
+rn-wordWrap:break-word"
+  dir="auto" />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
@@ -78,5 +99,6 @@ rn-textDecoration:none
 rn-userSelect:none
 rn-whiteSpace:pre-wrap
 rn-wordWrap:break-word"
+  dir="auto"
   style={Object {}} />
 `;

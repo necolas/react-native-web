@@ -31,10 +31,9 @@ const styles = StyleSheet.create({
 })
 ```
 
-Using `StyleSheet.create` is optional but provides some key advantages: styles
-are immutable in development, certain declarations are automatically converted
-to CSS rather than applied as inline styles, and styles are only created once
-for the application and not on every render.
+Using `StyleSheet.create` is optional but provides the best performance
+(`style` is resolved to CSS stylesheets). Avoid creating unregistered style
+objects.
 
 The attribute names and values are a subset of CSS. See the `style`
 documentation of individual components.
@@ -56,12 +55,6 @@ A common pattern is to conditionally add style based on a condition:
   styles.base,
   this.state.active && styles.active
 ]} />
-
-// or
-<View style={{
-  ...styles.base,
-  ...(this.state.active && styles.active)
-}} />
 ```
 
 ## Composing styles

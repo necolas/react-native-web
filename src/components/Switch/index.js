@@ -91,7 +91,6 @@ class Switch extends Component {
       {
         backgroundColor: thumbCurrentColor,
         height: thumbHeight,
-        transform: [ { translateX: value ? '100%' : '0%' } ],
         width: thumbWidth
       },
       disabled && styles.disabledThumb
@@ -111,7 +110,16 @@ class Switch extends Component {
     return (
       <View {...other} style={rootStyle}>
         <View style={trackStyle} />
-        <View ref={this._setThumbRef} style={thumbStyle} />
+        <View
+          ref={this._setThumbRef}
+          style={[
+            thumbStyle,
+            value && styles.thumbOn,
+            {
+              marginLeft: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0
+            }
+          ]}
+        />
         {nativeControl}
       </View>
     );
@@ -162,7 +170,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
+    left: '0%',
+    transform: [
+      { translateZ: 0 }
+    ],
     transitionDuration: '0.1s'
+  },
+  thumbOn: {
+    left: '100%'
   },
   disabledThumb: {
     backgroundColor: '#BDBDBD'

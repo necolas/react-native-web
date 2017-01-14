@@ -27,7 +27,6 @@ var ViewStylePropTypes = require('../View/ViewStylePropTypes');
 
 var ensureComponentIsNative = require('./ensureComponentIsNative');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var keyOf = require('fbjs/lib/keyOf');
 
 type Event = Object;
 
@@ -268,8 +267,9 @@ var TouchableHighlight = React.createClass({
   }
 });
 
-var CHILD_REF = keyOf({childRef: null});
-var UNDERLAY_REF = keyOf({underlayRef: null});
+var CHILD_REF = 'childRef';
+var UNDERLAY_REF = 'underlayRef';
+
 var INACTIVE_CHILD_PROPS = {
   style: StyleSheet.create({x: {opacity: 1.0}}).x,
 };

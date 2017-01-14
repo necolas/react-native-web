@@ -14,7 +14,7 @@ import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
 const prefix = 'r';
 const SPACE_REGEXP = /\s/g;
-const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#]/g;
+const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#*]/g;
 
 /**
  * Creates an HTML class name for use on elements
@@ -22,6 +22,14 @@ const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#]/g;
 const createClassName = (prop, value) => {
   const val = `${value}`.replace(SPACE_REGEXP, '-');
   return `rn-${prop}:${val}`;
+};
+
+/**
+ * Formatting improves debugging in devtools and snapshot
+ */
+const mapDeclarationsToClassName = (style, fn) => {
+  const result = mapKeyValue(style, fn).join('\n').trim();
+  return `\n${result}`;
 };
 
 /**
@@ -50,13 +58,13 @@ const injectClassNameIfNeeded = (prop, value) => {
 let resolvedPropsCache = {};
 const registerStyle = (id, flatStyle) => {
   const style = createReactDOMStyle(flatStyle);
-  const className = mapKeyValue(style, (prop, value) => {
+  const className = mapDeclarationsToClassName(style, (prop, value) => {
     if (value != null) {
       return injectClassNameIfNeeded(prop, value);
     }
-  }).join(' ').trim();
+  });
 
-  const key = `${prefix}${id}`;
+  const key = `${prefix}-${id}`;
   resolvedPropsCache[key] = { className };
 
   return id;
@@ -67,41 +75,39 @@ const registerStyle = (id, flatStyle) => {
  */
 const resolveProps = (reactNativeStyle) => {
   const flatStyle = flattenStyle(reactNativeStyle);
-
-  if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
-    console.groupCollapsed('[render] deoptimized: resolving uncached styles');
-    console.log('source style\n', reactNativeStyle);
-    console.log('flattened style\n', flatStyle);
-  }
-
   const domStyle = createReactDOMStyle(flatStyle);
   const style = {};
 
-  const _className = mapKeyValue(domStyle, (prop, value) => {
+  const className = mapDeclarationsToClassName(domStyle, (prop, value) => {
     if (value != null) {
       const singleClassName = createClassName(prop, value);
       if (injectedClassNames[singleClassName]) {
         return singleClassName;
       } else {
+        // 4x slower render
         style[prop] = value;
       }
     }
-  })
-  // improves debugging in devtools and snapshots
-  .join('\n')
-  .trim();
-
-  const className = `\n${_className}`;
+  });
 
   const props = {
     className,
     style: prefixInlineStyles(style)
   };
 
+  /*
   if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
-    console.log('DOM props\n', props);
+    console.groupCollapsed('[StyleSheet] resolving uncached styles');
+    console.log(
+      'Slow operation. Resolving style objects (uncached result). ' +
+      'Occurs on first render and when using styles not registered with "StyleSheet.create"'
+    );
+    console.log('source => \n', reactNativeStyle);
+    console.log('flatten => \n', flatStyle);
+    console.log('resolve => \n', props);
     console.groupEnd();
   }
+  */
 
   return props;
 };
@@ -110,20 +116,36 @@ const resolveProps = (reactNativeStyle) => {
  * Caching layer over 'resolveProps'
  */
 const resolvePropsIfNeeded = (key, style) => {
-  if (!key || !resolvedPropsCache[key]) {
-    // slow: convert style object to props and cache
-    resolvedPropsCache[key] = resolveProps(style);
+  if (key) {
+    if (!resolvedPropsCache[key]) {
+      // slow: convert style object to props and cache
+      resolvedPropsCache[key] = resolveProps(style);
+    }
+    return resolvedPropsCache[key];
   }
-  return resolvedPropsCache[key];
+  return resolveProps(style);
 };
 
 /**
  * Web style registry
  */
 const StyleRegistry = {
-  initialize() {
-    const classNames = injector.getAvailableClassNames();
-    classNames.forEach((className) => { injectedClassNames[className] = true; });
+  initialize(classNames) {
+    injectedClassNames = classNames;
+
+    /*
+    if (process.env.__REACT_NATIVE_DEBUG_ENABLED__) {
+      if (global.__REACT_NATIVE_DEBUG_ENABLED__styleRegistryTimer) {
+        clearInterval(global.__REACT_NATIVE_DEBUG_ENABLED__styleRegistryTimer);
+      }
+      global.__REACT_NATIVE_DEBUG_ENABLED__styleRegistryTimer = setInterval(() => {
+        const entryCount = Object.keys(resolvedPropsCache).length;
+        console.groupCollapsed('[StyleSheet] resolved props cache snapshot:', entryCount, 'entries');
+        console.log(resolvedPropsCache);
+        console.groupEnd();
+      }, 30000);
+    }
+    */
   },
 
   reset() {
@@ -171,6 +193,7 @@ const StyleRegistry = {
     // flatten the array
     // [ 1, [ 2, 3 ], { prop: value }, 4, 5 ] => [ 1, 2, 3, { prop: value }, 4, 5 ];
     const flatArray = flattenArray(reactNativeStyle);
+
     let isArrayOfNumbers = true;
     for (let i = 0; i < flatArray.length; i++) {
       if (typeof flatArray[i] !== 'number') {
@@ -179,14 +202,32 @@ const StyleRegistry = {
       }
     }
 
-    if (isArrayOfNumbers) {
-      // cache resolved props
-      const key = `${prefix}${flatArray.join('-')}`;
-      return resolvePropsIfNeeded(key, flatArray);
-    } else {
-      // resolve
-      return resolveProps(flatArray);
-    }
+    // TODO: determine when/if to cache unregistered styles. This produces 2x
+    // faster benchmark results for unregistered styles. However, the cache
+    // could be filled with props that are never used again.
+    //
+    // let hasValidKey = true;
+    // let key = flatArray.reduce((keyParts, element) => {
+    //   if (typeof element === 'number') {
+    //     keyParts.push(element);
+    //   } else {
+    //     if (element.transform) {
+    //       hasValidKey = false;
+    //     } else {
+    //       const objectAsKey = Object.keys(element).map((prop) => `${prop}:${element[prop]}`).join(';');
+    //       if (objectAsKey !== '') {
+    //         keyParts.push(objectAsKey);
+    //       }
+    //     }
+    //   }
+    //   return keyParts;
+    // }, [ prefix ]).join('-');
+    // if (!hasValidKey) { key = null; }
+
+    // cache resolved props when all styles are registered
+    const key = isArrayOfNumbers ? `${prefix}-${flatArray.join('-')}` : null;
+
+    return resolvePropsIfNeeded(key, flatArray);
   }
 };
 

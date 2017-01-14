@@ -1,15 +1,15 @@
-import createReactDOMStyle from '../StyleSheet/createReactDOMStyle';
-import flattenStyle from '../StyleSheet/flattenStyle';
+import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
-import prefixInlineStyles from '../StyleSheet/prefixInlineStyles';
 
 const _measureLayout = (node, relativeToNativeNode, callback) => {
-  const relativeNode = relativeToNativeNode || node.parentNode;
-  const relativeRect = relativeNode.getBoundingClientRect();
-  const { height, left, top, width } = node.getBoundingClientRect();
-  const x = left - relativeRect.left;
-  const y = top - relativeRect.top;
-  callback(x, y, width, height, left, top);
+  asap(() => {
+    const relativeNode = relativeToNativeNode || node.parentNode;
+    const relativeRect = relativeNode.getBoundingClientRect();
+    const { height, left, top, width } = node.getBoundingClientRect();
+    const x = left - relativeRect.left;
+    const y = top - relativeRect.top;
+    callback(x, y, width, height, left, top);
+  });
 };
 
 const UIManager = {
@@ -44,16 +44,12 @@ const UIManager = {
       const value = props[prop];
       switch (prop) {
         case 'style': {
-          const style = prefixInlineStyles(createReactDOMStyle(flattenStyle(value)));
-          CSSPropertyOperations.setValueForStyles(node, style, component._reactInternalInstance);
+          CSSPropertyOperations.setValueForStyles(node, value, component._reactInternalInstance);
           break;
         }
         case 'class':
         case 'className': {
-          const nativeProp = 'class';
-          // prevent class names managed by React Native from being replaced
-          const className = `${node.getAttribute(nativeProp)} ${value}`;
-          node.setAttribute(nativeProp, className);
+          node.setAttribute('class', value);
           break;
         }
         case 'text':

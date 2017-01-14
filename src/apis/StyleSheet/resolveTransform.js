@@ -1,7 +1,7 @@
 import normalizeValue from './normalizeValue';
 
 // { scale: 2 } => 'scale(2)'
-// { translateX: 20 } => 'translateX(20px)'
+ // { translateX: 20 } => 'translateX(20px)'
 const mapTransform = (transform) => {
   const type = Object.keys(transform)[0];
   const value = normalizeValue(type, transform[type]);

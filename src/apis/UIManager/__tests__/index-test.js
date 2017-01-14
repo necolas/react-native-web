@@ -24,7 +24,7 @@ describe('apis/UIManager', () => {
   });
 
   describe('measure', () => {
-    test('provides correct layout to callback', () => {
+    test('provides correct layout to callback', (done) => {
       const node = createNode({ height: '5000px', left: '100px', position: 'relative', top: '100px', width: '5000px' });
       document.body.appendChild(node);
 
@@ -37,7 +37,14 @@ describe('apis/UIManager', () => {
         expect(height).toEqual(5000);
         expect(pageX).toEqual(100);
         expect(pageY).toEqual(100);
+        done();
+        document.body.removeChild(node);
       });
+    });
+
+    test('provides correct layout to callback', (done) => {
+      const node = createNode({ height: '5000px', left: '100px', position: 'relative', top: '100px', width: '5000px' });
+      document.body.appendChild(node);
 
       // test values account for scroll position
       window.scrollTo(200, 200);
@@ -51,14 +58,14 @@ describe('apis/UIManager', () => {
         expect(height).toEqual(5000);
         expect(pageX).toEqual(-100);
         expect(pageY).toEqual(-100);
+        done();
+        document.body.removeChild(node);
       });
-
-      document.body.removeChild(node);
     });
   });
 
   describe('measureLayout', () => {
-    test('provides correct layout to onSuccess callback', () => {
+    test('provides correct layout to onSuccess callback', (done) => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
       const context = createNode({ padding: '20px' });
@@ -78,14 +85,14 @@ describe('apis/UIManager', () => {
         expect(y).toEqual(40);
         expect(width).toEqual(10);
         expect(height).toEqual(10);
+        done();
+        document.body.removeChild(context);
       });
-
-      document.body.removeChild(context);
     });
   });
 
   describe('measureInWindow', () => {
-    test('provides correct layout to callback', () => {
+    test('provides correct layout to callback', (done) => {
       const node = createNode({ height: '10px', width: '10px' });
       const middle = createNode({ padding: '20px' });
       const context = createNode({ padding: '20px' });
@@ -105,9 +112,9 @@ describe('apis/UIManager', () => {
         expect(y).toEqual(40);
         expect(width).toEqual(10);
         expect(height).toEqual(10);
+        done();
+        document.body.removeChild(context);
       });
-
-      document.body.removeChild(context);
     });
   });
 
@@ -119,17 +126,16 @@ describe('apis/UIManager', () => {
       }
     };
 
-    test('add new className to existing className', () => {
+    test('supports className alias for class', () => {
       const node = createNode();
-      node.className = 'existing';
       const props = { className: 'extra' };
       UIManager.updateView(node, props, componentStub);
-      expect(node.getAttribute('class')).toEqual('existing extra');
+      expect(node.getAttribute('class')).toEqual('extra');
     });
 
     test('adds correct DOM styles to existing style', () => {
       const node = createNode({ color: 'red' });
-      const props = { style: { marginVertical: 0, opacity: 0 } };
+      const props = { style: { marginTop: 0, marginBottom: 0, opacity: 0 } };
       UIManager.updateView(node, props, componentStub);
       expect(node.getAttribute('style')).toEqual('color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;');
     });

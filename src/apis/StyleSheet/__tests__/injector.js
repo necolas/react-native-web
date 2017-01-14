@@ -2,7 +2,7 @@
 
 import injector from '../injector';
 
-describe('apis/StyleSheet', () => {
+describe('apis/StyleSheet/injector', () => {
   beforeEach(() => {
     document.head.insertAdjacentHTML('afterbegin', `
       <style id="react-native-stylesheet">
@@ -13,10 +13,10 @@ describe('apis/StyleSheet', () => {
   });
 
   test('hydrates from SSR', () => {
-    const classList = injector.getAvailableClassNames();
-    expect(classList).toEqual([
-      'rn-alignItems\\:stretch',
-      'rn-position\\:top'
-    ]);
+    const classList = injector.getClassNames();
+    expect(classList).toEqual({
+      'rn-alignItems\\:stretch': true,
+      'rn-position\\:top': true
+    });
   });
 });

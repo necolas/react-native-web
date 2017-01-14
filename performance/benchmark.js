@@ -56,8 +56,8 @@ const benchmark = ({ name, description, setup, teardown, task, runs }) => {
       }
     };
 
-    console.group();
-    console.log(`[benchmark] ${name}: ${description}`);
+    console.group(`[benchmark] ${name}`);
+    console.log(description);
     window.requestAnimationFrame(a);
   });
 };

@@ -1,4 +1,4 @@
-import normalizeColor from '../../modules/normalizeColor';
+import normalizeColor from 'normalize-css-color';
 import normalizeValue from './normalizeValue';
 
 const defaultOffset = { height: 0, width: 0 };
@@ -6,11 +6,9 @@ const defaultOffset = { height: 0, width: 0 };
 const applyOpacity = (color, opacity = 1) => {
   const nullableColor = normalizeColor(color);
   const colorInt = nullableColor === null ? 0x00000000 : nullableColor;
-  const r = Math.round(((colorInt & 0xff000000) >>> 24));
-  const g = Math.round(((colorInt & 0x00ff0000) >>> 16));
-  const b = Math.round(((colorInt & 0x0000ff00) >>> 8));
-  const a = (((colorInt & 0x000000ff) >>> 0) / 255).toFixed(2);
-  return `rgba(${r},${g},${b},${a * opacity})`;
+  const { r, g, b, a } = normalizeColor.rgba(colorInt);
+  const alpha = a.toFixed(2);
+  return `rgba(${r},${g},${b},${alpha * opacity})`;
 };
 
 // TODO: add inset and spread support

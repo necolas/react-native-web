@@ -113,7 +113,7 @@ var Cell = React.createClass({
       case 2:
         return styles.cellTextO;
       default:
-        return {};
+        return null;
     }
   },
 

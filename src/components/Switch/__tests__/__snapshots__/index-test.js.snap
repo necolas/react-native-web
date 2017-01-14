@@ -120,6 +120,7 @@ rn-userSelect:none"
   rn-flexShrink:0
   rn-font:inherit
   
+  rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
   rn-marginRight:0px
@@ -134,15 +135,12 @@ rn-userSelect:none"
   rn-position:relative
   rn-textAlign:inherit
   rn-textDecoration:none
-  
+  rn-transform:translateZ(0px)
   rn-transitionDuration:0.1s"
     style={
       Object {
-        "WebkitTransform": "translateX(0%)",
         "backgroundColor": "#FAFAFA",
         "height": "20px",
-        "msTransform": "translateX(0%)",
-        "transform": "translateX(0%)",
         "width": "20px",
       }
     } />
@@ -296,6 +294,7 @@ rn-userSelect:none"
   rn-flexShrink:0
   rn-font:inherit
   
+  rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
   rn-marginRight:0px
@@ -310,14 +309,11 @@ rn-userSelect:none"
   rn-position:relative
   rn-textAlign:inherit
   rn-textDecoration:none
-  
+  rn-transform:translateZ(0px)
   rn-transitionDuration:0.1s"
     style={
       Object {
-        "WebkitTransform": "translateX(0%)",
         "height": "20px",
-        "msTransform": "translateX(0%)",
-        "transform": "translateX(0%)",
         "width": "20px",
       }
     } />
@@ -472,6 +468,7 @@ rn-userSelect:none"
   rn-flexShrink:0
   rn-font:inherit
   
+  rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
   rn-marginRight:0px
@@ -486,15 +483,12 @@ rn-userSelect:none"
   rn-position:relative
   rn-textAlign:inherit
   rn-textDecoration:none
-  
+  rn-transform:translateZ(0px)
   rn-transitionDuration:0.1s"
     style={
       Object {
-        "WebkitTransform": "translateX(0%)",
         "backgroundColor": "#FAFAFA",
         "height": "20px",
-        "msTransform": "translateX(0%)",
-        "transform": "translateX(0%)",
         "width": "20px",
       }
     } />
@@ -649,11 +643,12 @@ rn-userSelect:none"
   rn-flexShrink:0
   rn-font:inherit
   
+  rn-left:100%
   rn-listStyle:none
   rn-marginTop:0px
   rn-marginRight:0px
   rn-marginBottom:0px
-  rn-marginLeft:0px
+  
   rn-minHeight:0px
   rn-minWidth:0px
   rn-paddingTop:0px
@@ -663,15 +658,13 @@ rn-userSelect:none"
   rn-position:relative
   rn-textAlign:inherit
   rn-textDecoration:none
-  
+  rn-transform:translateZ(0px)
   rn-transitionDuration:0.1s"
     style={
       Object {
-        "WebkitTransform": "translateX(100%)",
         "backgroundColor": "#009688",
         "height": "20px",
-        "msTransform": "translateX(100%)",
-        "transform": "translateX(100%)",
+        "marginLeft": "-20px",
         "width": "20px",
       }
     } />
