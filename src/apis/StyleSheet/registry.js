@@ -12,7 +12,7 @@ import mapKeyValue from '../../modules/mapKeyValue';
 import prefixInlineStyles from './prefixInlineStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
-const prefix = 'r';
+const prefix = 'r-';
 const SPACE_REGEXP = /\s/g;
 const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#*]/g;
 
@@ -64,7 +64,7 @@ const registerStyle = (id, flatStyle) => {
     }
   });
 
-  const key = `${prefix}-${id}`;
+  const key = `${prefix}${id}`;
   resolvedPropsCache[key] = { className };
 
   return id;
@@ -210,7 +210,7 @@ const StyleRegistry = {
     // if (!hasValidKey) { key = null; }
 
     // cache resolved props when all styles are registered
-    const key = isArrayOfNumbers ? `${prefix}-${flatArray.join('-')}` : null;
+    const key = isArrayOfNumbers ? `${prefix}${flatArray.join('-')}` : null;
 
     return resolvePropsIfNeeded(key, flatArray);
   }
