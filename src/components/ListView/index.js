@@ -107,20 +107,42 @@ class ListView extends Component {
   render() {
     const children = [];
 
-    const dataSource = this.props.dataSource;
+    const {
+      dataSource,
+      enableEmptySections,
+      renderFooter,
+      renderHeader,
+      renderScrollComponent,
+      renderSectionHeader,
+      renderSeparator,
+      /* eslint-disable */
+      initialListSize,
+      onEndReachedThreshold,
+      onKeyboardDidHide,
+      onKeyboardDidShow,
+      onKeyboardWillHide,
+      onKeyboardWillShow,
+      pageSize,
+      renderRow,
+      scrollRenderAheadDistance,
+      stickyHeaderIndices,
+      /* eslint-enable */
+      ...scrollProps
+    } = this.props;
+
     const allRowIDs = dataSource.rowIdentities;
     let rowCount = 0;
     const sectionHeaderIndices = [];
 
-    const header = this.props.renderHeader && this.props.renderHeader();
-    const footer = this.props.renderFooter && this.props.renderFooter();
+    const header = renderHeader && renderHeader();
+    const footer = renderFooter && renderFooter();
     let totalIndex = header ? 1 : 0;
 
     for (let sectionIdx = 0; sectionIdx < allRowIDs.length; sectionIdx++) {
       const sectionID = dataSource.sectionIdentities[sectionIdx];
       const rowIDs = allRowIDs[sectionIdx];
       if (rowIDs.length === 0) {
-        if (this.props.enableEmptySections === undefined) {
+        if (enableEmptySections === undefined) {
           const warning = require('fbjs/lib/warning');
           warning(false, 'In next release empty section headers will be rendered.' +
                   ' In this release you can use \'enableEmptySections\' flag to render empty section headers.');
@@ -128,7 +150,7 @@ class ListView extends Component {
         } else {
           const invariant = require('fbjs/lib/invariant');
           invariant(
-            this.props.enableEmptySections,
+            enableEmptySections,
             'In next release \'enableEmptySections\' flag will be deprecated,' +
             ' empty section headers will always be rendered. If empty section headers' +
             ' are not desirable their indices should be excluded from sectionIDs object.' +
@@ -137,7 +159,7 @@ class ListView extends Component {
         }
       }
 
-      if (this.props.renderSectionHeader) {
+      if (renderSectionHeader) {
         const shouldUpdateHeader = rowCount >= this._prevRenderedRowsCount &&
           dataSource.sectionHeaderShouldUpdate(sectionIdx);
         children.push(
@@ -171,14 +193,14 @@ class ListView extends Component {
         children.push(row);
         totalIndex++;
 
-        if (this.props.renderSeparator &&
+        if (renderSeparator &&
             (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)) {
           const adjacentRowHighlighted =
             this.state.highlightedRow.sectionID === sectionID && (
               this.state.highlightedRow.rowID === rowID ||
               this.state.highlightedRow.rowID === rowIDs[rowIdx + 1]
             );
-          const separator = this.props.renderSeparator(
+          const separator = renderSeparator(
             sectionID,
             rowID,
             adjacentRowHighlighted
@@ -196,24 +218,9 @@ class ListView extends Component {
         break;
       }
     }
+    scrollProps.onScroll = this._onScroll;
 
-    const {
-      renderScrollComponent,
-      ...props
-    } = this.props;
-    Object.assign(props, {
-      onScroll: this._onScroll,
-      stickyHeaderIndices: this.props.stickyHeaderIndices.concat(sectionHeaderIndices),
-
-      // Do not pass these events downstream to ScrollView since they will be
-      // registered in ListView's own ScrollResponder.Mixin
-      onKeyboardWillShow: undefined,
-      onKeyboardWillHide: undefined,
-      onKeyboardDidShow: undefined,
-      onKeyboardDidHide: undefined
-    });
-
-    return React.cloneElement(renderScrollComponent(props), {
+    return React.cloneElement(renderScrollComponent(scrollProps), {
       ref: this._setScrollViewRef,
       onContentSizeChange: this._onContentSizeChange,
       onLayout: this._onLayout
