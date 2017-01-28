@@ -1,8 +1,8 @@
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
-  canOpenUrl() { return true; },
-  getInitialUrl() { return ''; },
+  canOpenURL() { return true; },
+  getInitialURL() { return ''; },
   openURL(url) {
     iframeOpen(url);
   }
