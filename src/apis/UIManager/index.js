@@ -1,11 +1,19 @@
 import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
-const _measureLayout = (node, relativeToNativeNode, callback) => {
+const getRect = (node) => {
+  const height = node.offsetHeight;
+  const left = node.offsetLeft;
+  const top = node.offsetTop;
+  const width = node.offsetWidth;
+  return { height, left, top, width };
+};
+
+const measureLayout = (node, relativeToNativeNode, callback) => {
   asap(() => {
     const relativeNode = relativeToNativeNode || node.parentNode;
-    const relativeRect = relativeNode.getBoundingClientRect();
-    const { height, left, top, width } = node.getBoundingClientRect();
+    const relativeRect = getRect(relativeNode);
+    const { height, left, top, width } = getRect(node);
     const x = left - relativeRect.left;
     const y = top - relativeRect.top;
     callback(x, y, width, height, left, top);
@@ -22,17 +30,17 @@ const UIManager = {
   },
 
   measure(node, callback) {
-    _measureLayout(node, null, callback);
+    measureLayout(node, null, callback);
   },
 
   measureInWindow(node, callback) {
-    const { height, left, top, width } = node.getBoundingClientRect();
+    const { height, left, top, width } = getRect(node);
     callback(left, top, width, height);
   },
 
   measureLayout(node, relativeToNativeNode, onFail, onSuccess) {
     const relativeTo = relativeToNativeNode || node.parentNode;
-    _measureLayout(node, relativeTo, onSuccess);
+    measureLayout(node, relativeTo, onSuccess);
   },
 
   updateView(node, props, component /* only needed to surpress React errors in development */) {
