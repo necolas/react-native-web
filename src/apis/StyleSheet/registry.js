@@ -154,15 +154,22 @@ const StyleRegistry = {
     injector.reset();
   },
 
-  register(style) {
-    const id = ReactNativePropRegistry.register(style);
-    return registerStyle(id, style);
+  register(styles) {
+    return Object.keys(styles).map((key) => {
+      if (process.env.NODE_ENV !== 'production') {
+        require('./StyleSheetValidation').validateStyle(key, styles[key]);
+      }
+      const id = ReactNativePropRegistry.register(styles[key]);
+
+      return registerStyle(id, styles[key]);
+    });
   },
 
-  resolve(reactNativeStyle) {
-    if (!reactNativeStyle) {
+  resolve(props) {
+    if (!props || !props.style) {
       return undefined;
     }
+    const reactNativeStyle = props.style;
 
     // fast and cachable
     if (typeof reactNativeStyle === 'number') {
