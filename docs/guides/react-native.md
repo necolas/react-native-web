@@ -86,7 +86,19 @@ if (Platform.OS === 'web') {
 ```
 
 More substantial Web-specific implementation code should be written in files
-with the extension `.web.js`, which webpack will automatically resolve.
+with the extension `.web.js`. Webpack@1 will automatically resolve these files.
+Webpack@2 requires additional configuration.
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...
+  resolve: {
+    extensions: [ '.web.js', '.js' ]
+  }
+};
+```
 
 ## Optimizations
 
