@@ -7,7 +7,7 @@
  */
 
 import findNodeHandle from '../findNodeHandle';
-import StyleRegistry from '../../apis/StyleSheet/registry';
+import StyleRegistry from 'apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
 const emptyObject = {};
