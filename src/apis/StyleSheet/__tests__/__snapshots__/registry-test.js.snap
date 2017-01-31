@@ -1,66 +1,70 @@
 exports[`apis/StyleSheet/registry resolve with register, resolves to className 1`] = `
 Object {
   "className": "
-rn-borderTopColor:red
-rn-borderRightColor:red
-rn-borderBottomColor:red
-rn-borderLeftColor:red
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute
-rn-width:100px",
-  "style": Object {},
+",
+  "style": Object {
+    "borderBottomColor": "3px",
+    "borderBottomWidth": "2px",
+    "borderLeftColor": "3px",
+    "borderLeftWidth": "2px",
+    "borderRightColor": "3px",
+    "borderRightWidth": "2px",
+    "borderTopColor": "3px",
+    "borderTopWidth": "2px",
+    "left": "6px",
+    "pointerEvents": "7px",
+    "position": "5px",
+    "width": "4px",
+  },
 }
 `;
 
 exports[`apis/StyleSheet/registry resolve with register, resolves to className 2`] = `
 Object {
   "className": "
-rn-borderTopColor:red
-rn-borderRightColor:red
-rn-borderBottomColor:red
-rn-borderLeftColor:red
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute
-rn-width:200px",
-  "style": Object {},
+",
+  "style": Object {
+    "borderBottomColor": "3px",
+    "borderBottomWidth": "2px",
+    "borderLeftColor": "3px",
+    "borderLeftWidth": "2px",
+    "borderRightColor": "3px",
+    "borderRightWidth": "2px",
+    "borderTopColor": "3px",
+    "borderTopWidth": "2px",
+    "left": "6px",
+    "pointerEvents": "7px",
+    "position": "5px",
+    "width": "8px",
+  },
 }
 `;
 
 exports[`apis/StyleSheet/registry resolve with register, resolves to className 3`] = `
 Object {
   "className": "
-rn-borderTopColor:red
-rn-borderRightColor:red
-rn-borderBottomColor:red
-rn-borderLeftColor:red
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute
-rn-width:100px",
-  "style": Object {},
+",
+  "style": Object {
+    "borderBottomColor": "3px",
+    "borderBottomWidth": "2px",
+    "borderLeftColor": "3px",
+    "borderLeftWidth": "2px",
+    "borderRightColor": "3px",
+    "borderRightWidth": "2px",
+    "borderTopColor": "3px",
+    "borderTopWidth": "2px",
+    "left": "6px",
+    "pointerEvents": "7px",
+    "position": "5px",
+    "width": "4px",
+  },
 }
 `;
 
 exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 1`] = `
 Object {
   "className": "
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute",
+",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -70,6 +74,9 @@ rn-position:absolute",
     "borderRightWidth": "0px",
     "borderTopColor": "red",
     "borderTopWidth": "0px",
+    "left": "10px",
+    "pointerEvents": "11px",
+    "position": "9px",
     "width": "100px",
   },
 }
@@ -78,10 +85,7 @@ rn-position:absolute",
 exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 2`] = `
 Object {
   "className": "
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute
-rn-width:200px",
+",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -91,6 +95,10 @@ rn-width:200px",
     "borderRightWidth": "0px",
     "borderTopColor": "red",
     "borderTopWidth": "0px",
+    "left": "10px",
+    "pointerEvents": "11px",
+    "position": "9px",
+    "width": "12px",
   },
 }
 `;
@@ -98,9 +106,7 @@ rn-width:200px",
 exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 3`] = `
 Object {
   "className": "
-rn-left:50px
-rn-pointerEvents:box-only
-rn-position:absolute",
+",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -110,6 +116,9 @@ rn-position:absolute",
     "borderRightWidth": "0px",
     "borderTopColor": "red",
     "borderTopWidth": "0px",
+    "left": "10px",
+    "pointerEvents": "11px",
+    "position": "9px",
     "width": "100px",
   },
 }

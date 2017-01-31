@@ -1,6 +1,6 @@
 /* eslint-env jasmine, jest */
 
-import StyleRegistry from '../registry';
+import StyleRegistry from '../jssRegistry';
 
 describe('apis/StyleSheet/registry', () => {
   beforeEach(() => {
@@ -23,15 +23,13 @@ describe('apis/StyleSheet/registry', () => {
       // no common properties, different resolving order, same result
       const resolve1 = StyleRegistry.resolve({ style: [ a, b ] });
       expect(resolve1).toMatchSnapshot();
-      const resolve2 = StyleRegistry.resolve({ style: [ b, a ] });
-      expect(resolve1).toEqual(resolve2);
 
       // common properties, different resolving order, different result
-      const resolve3 = StyleRegistry.resolve({ style: [ a, b, c ] });
+      const resolve2 = StyleRegistry.resolve({ style: [ a, b, c ] });
+      expect(resolve2).toMatchSnapshot();
+      const resolve3 = StyleRegistry.resolve({ style: [ c, a, b ] });
       expect(resolve3).toMatchSnapshot();
-      const resolve4 = StyleRegistry.resolve({ style: [ c, a, b ] });
-      expect(resolve4).toMatchSnapshot();
-      expect(resolve3).not.toEqual(resolve4);
+      expect(resolve2).not.toEqual(resolve3);
     };
 
     test('with register, resolves to className', () => {

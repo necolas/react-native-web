@@ -1,0 +1,53 @@
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 1`] = `
+Object {
+  "className": "generated-class-1979046286 generated-class-2610877184",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 2`] = `
+Object {
+  "className": "generated-class-1979046286 generated-class-2610877184 generated-class-3490948633",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 3`] = `
+Object {
+  "className": "generated-class-3490948633 generated-class-1979046286 generated-class-2610877184",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 1`] = `
+Object {
+  "className": "generated-class-2380862855 generated-class-672126393",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 2`] = `
+Object {
+  "className": "generated-class-2380862855 generated-class-672126393 generated-class-2017829348",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 3`] = `
+Object {
+  "className": "generated-class-2017829348 generated-class-2380862855 generated-class-672126393",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 1`] = `
+Object {
+  "className": "generated-class-2380862855 generated-class-4055522805",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 2`] = `
+Object {
+  "className": "generated-class-2380862855 generated-class-4055522805 generated-class-2264792185",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 3`] = `
+Object {
+  "className": "generated-class-2264792185 generated-class-2380862855 generated-class-4055522805",
+}
+`;
