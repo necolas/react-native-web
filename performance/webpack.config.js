@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    performance: './index'
+    performance: './performance/index'
   },
   output: {
     path: path.resolve(__dirname, '../dist-performance'),
