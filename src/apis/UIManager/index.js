@@ -2,10 +2,15 @@ import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
 const getRect = (node) => {
-  const height = node.offsetHeight;
-  const left = node.offsetLeft;
-  const top = node.offsetTop;
-  const width = node.offsetWidth;
+  let height = node.offsetHeight;
+  let width = node.offsetWidth;
+  let left = 0;
+  let top = 0;
+  while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
+    left += node.offsetLeft;
+    top += node.offsetTop;
+    node = node.offsetParent;
+  }
   return { height, left, top, width };
 };
 
