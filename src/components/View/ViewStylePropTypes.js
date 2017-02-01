@@ -45,5 +45,6 @@ module.exports = process.env.NODE_ENV !== 'production' ? {
   transitionTimingFunction: string,
   userSelect: string,
   visibility: hiddenOrVisible,
-  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
+  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ]),
+  WebkitTapHighlightColor: ColorPropType
 } : {};
