@@ -16,6 +16,7 @@
     "build:jss": "del ./jss && mkdir jss && cross-env BABEL_ENV=jss babel src -d jss --ignore **/__tests__",
     "build:examples": "build-storybook -o dist-examples -c ./examples/.storybook",
     "build:performance": "webpack --config performance/webpack.config.js",
+    "build:jss-performance": "cross-env BABEL_ENV=jss npm run build:performance",
     "build:umd": "webpack --config webpack.config.js --sort-assets-by --progress",
     "deploy:examples": "git checkout gh-pages && rm -rf ./storybook && mv dist-examples storybook && git add -A && git commit -m \"Storybook deploy\" && git push origin gh-pages && git checkout -",
     "examples": "start-storybook -p 9001 -c ./examples/.storybook --dont-track",

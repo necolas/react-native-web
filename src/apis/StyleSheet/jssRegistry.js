@@ -2,13 +2,14 @@
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
  */
-import jss from 'jss';
+import jss, { sheets } from 'jss';
 import preset from 'jss-preset-default';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
 // I'm assuming this only needs to be setup once per app, not per file
 let jssSetup = false;
-const sheets = [];
+let generatedSheet;
+
 const sheetMapToRegistry = {};
 
 if (!jssSetup) {
@@ -26,15 +27,16 @@ const resolveClassName = (style) => {
       return rs && i > 0 ? ` ${rs}` : rs;
     }).join('');
   } else if (typeof style === 'object') {
-    const className = 'generated-class';
-    const styles = {
-      [className]: style // inline style object NOT from `StyleSheet.create()`
-    };
+    const name = 'generated-class';
+    const className = `${name}-${Math.floor(Math.random() * Date.now())}`;
 
-    const jssObj = jss.createStyleSheet(styles).attach(); // append generated selector+style to the DOM
-    sheets.push(jssObj);
+    if (!generatedSheet) {
+      generatedSheet = jss.createStyleSheet().attach();
+    }
 
-    return jssObj.classes[className];
+    const jssObj = generatedSheet.addRule(name, style, { className }); // append generated selector+style to the DOM
+
+    return jssObj.className;
   } else {
     return undefined;
   }
@@ -46,16 +48,13 @@ const resolveClassName = (style) => {
 const StyleRegistry = {
 
   reset() {
-    sheets.forEach((val, key) => {
-      jss.removeStyleSheet(sheets[key]);
-    });
+    sheets.reset();
+    generatedSheet = jss.createStyleSheet().attach();
   },
 
   register(style) {
     const jssObj = jss.createStyleSheet(style).attach();
     const result = {};
-
-    sheets.push(jssObj);
 
     for (const key in jssObj.classes) {
       const className = jssObj.classes[key];

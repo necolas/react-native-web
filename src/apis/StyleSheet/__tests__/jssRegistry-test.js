@@ -2,6 +2,18 @@
 
 import StyleRegistry from '../jssRegistry';
 
+let randomish = 0;
+
+Date.now = () => {
+  return 10000000000;
+};
+
+Math.random = () => {
+  randomish++;
+
+  return randomish;
+};
+
 describe('apis/StyleSheet/registry', () => {
   beforeEach(() => {
     StyleRegistry.reset();
