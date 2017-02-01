@@ -2,8 +2,8 @@ import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
 const getRect = (node) => {
-  let height = node.offsetHeight;
-  let width = node.offsetWidth;
+  const height = node.offsetHeight;
+  const width = node.offsetWidth;
   let left = 0;
   let top = 0;
   while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
