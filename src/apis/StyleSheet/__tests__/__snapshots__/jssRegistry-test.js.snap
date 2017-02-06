@@ -1,0 +1,53 @@
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 1`] = `
+Object {
+  "className": "generated-class-20000000000 generated-class-30000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 2`] = `
+Object {
+  "className": "generated-class-40000000000 generated-class-50000000000 generated-class-60000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to className 3`] = `
+Object {
+  "className": "generated-class-70000000000 generated-class-80000000000 generated-class-90000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 1`] = `
+Object {
+  "className": "generated-class-100000000000 generated-class-110000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 2`] = `
+Object {
+  "className": "generated-class-120000000000 generated-class-130000000000 generated-class-140000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve with register, resolves to mixed 3`] = `
+Object {
+  "className": "generated-class-150000000000 generated-class-160000000000 generated-class-170000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 1`] = `
+Object {
+  "className": "generated-class-180000000000 generated-class-190000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 2`] = `
+Object {
+  "className": "generated-class-200000000000 generated-class-210000000000 generated-class-220000000000",
+}
+`;
+
+exports[`apis/StyleSheet/registry resolve without register, resolves to inline styles 3`] = `
+Object {
+  "className": "generated-class-230000000000 generated-class-240000000000 generated-class-250000000000",
+}
+`;

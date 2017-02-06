@@ -3,6 +3,18 @@
     "react-native"
   ],
   "plugins": [
-    [ "transform-react-remove-prop-types", { "mode": "wrap" } ]
-  ]
+    [ "transform-react-remove-prop-types", { "mode": "wrap" } ],
+    [ "module-alias", [
+      {"src": "./src/apis/StyleSheet/registry.js", "expose": "apis/StyleSheet/registry"}
+    ]]
+  ],
+  "env": {
+    "jss": {
+      "plugins": [
+        [ "module-alias", [
+          {"src": "./src/apis/StyleSheet/jssRegistry.js", "expose": "apis/StyleSheet/registry"}
+        ]]
+      ]
+    }
+  }
 }

@@ -100,6 +100,24 @@ module.exports = {
 };
 ```
 
+## JSS Implementation
+
+An alternative approach to our StyleSheet api is available utilizing the [JSS](https://github.com/cssinjs/jss) library:
+
+```js
+// webpack.config.js
+
+module.exports = {
+  // ...
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web/jss'
+    }
+  }
+}
+```
+
+
 ## Optimizations
 
 Production builds can benefit from dead-code elimination by defining the
