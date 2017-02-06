@@ -7,6 +7,7 @@ import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
 const emptyObject = {};
@@ -41,7 +42,7 @@ class Image extends Component {
   static displayName = 'Image';
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     children: PropTypes.any,
     defaultSource: ImageSourcePropType,
     onError: PropTypes.func,

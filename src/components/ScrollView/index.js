@@ -14,6 +14,7 @@ import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import React, { Component, PropTypes } from 'react';
 
@@ -22,7 +23,7 @@ const emptyObject = {};
 /* eslint-disable react/prefer-es6-class */
 const ScrollView = React.createClass({
   propTypes: {
-    ...View.propTypes,
+    ...ViewPropTypes,
     contentContainerStyle: StyleSheetPropType(ViewStylePropTypes),
     horizontal: PropTypes.bool,
     keyboardDismissMode: PropTypes.oneOf([ 'none', 'interactive', 'on-drag' ]),

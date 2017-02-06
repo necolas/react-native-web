@@ -2,13 +2,14 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
 class ProgressBar extends Component {
   static displayName = 'ProgressBar';
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     color: ColorPropType,
     indeterminate: PropTypes.bool,
     progress: PropTypes.number,

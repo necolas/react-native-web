@@ -41,7 +41,7 @@
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
-    "babel-plugin-transform-react-remove-prop-types": "^0.2.11",
+    "babel-plugin-transform-react-remove-prop-types": "^0.3.0",
     "babel-preset-react-native": "^1.9.1",
     "del-cli": "^0.2.1",
     "enzyme": "^2.4.1",

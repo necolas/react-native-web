@@ -27,6 +27,7 @@ var ViewStylePropTypes = require('../View/ViewStylePropTypes');
 
 var ensureComponentIsNative = require('./ensureComponentIsNative');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
+var TouchableWithoutFeedbackPropTypes = TouchableWithoutFeedback.propTypes
 
 type Event = Object;
 
@@ -67,7 +68,7 @@ var PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
 
 var TouchableHighlight = React.createClass({
   propTypes: {
-    ...TouchableWithoutFeedback.propTypes,
+    ...TouchableWithoutFeedbackPropTypes,
     /**
      * Determines what the opacity of the wrapped view should be when touch is
      * active.

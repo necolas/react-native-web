@@ -8,6 +8,7 @@
 
 import debounce from 'debounce';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
 const normalizeScrollEvent = (e) => ({
@@ -44,7 +45,7 @@ const normalizeScrollEvent = (e) => ({
  */
 export default class ScrollViewBase extends Component {
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     onMomentumScrollBegin: PropTypes.func,
     onMomentumScrollEnd: PropTypes.func,
     onScroll: PropTypes.func,

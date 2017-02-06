@@ -4,10 +4,11 @@ import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
-import Text from '../Text';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import TextStylePropTypes from '../Text/TextStylePropTypes';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
-import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import { Component, PropTypes } from 'react';
 
 const emptyObject = {};
@@ -52,7 +53,7 @@ class TextInput extends Component {
   static displayName = 'TextInput';
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     autoCapitalize: PropTypes.oneOf([ 'characters', 'none', 'sentences', 'words' ]),
     autoComplete: PropTypes.string,
     autoCorrect: PropTypes.bool,
@@ -83,7 +84,7 @@ class TextInput extends Component {
       start: PropTypes.number.isRequired,
       end: PropTypes.number
     }),
-    style: Text.propTypes.style,
+    style: StyleSheetPropType(TextStylePropTypes),
     value: PropTypes.string
   };
 

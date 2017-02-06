@@ -5,6 +5,7 @@ import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../../apis/StyleSheet';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
 const emptyObject = {};
@@ -15,7 +16,7 @@ class Switch extends Component {
   static displayName = 'Switch';
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     activeThumbColor: ColorPropType,
     activeTrackColor: ColorPropType,
     disabled: PropTypes.bool,

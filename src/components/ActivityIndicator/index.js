@@ -1,13 +1,14 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
+import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
 class ActivityIndicator extends Component {
   static displayName = 'ActivityIndicator';
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     animating: PropTypes.bool,
     color: PropTypes.string,
     hidesWhenStopped: PropTypes.bool,
