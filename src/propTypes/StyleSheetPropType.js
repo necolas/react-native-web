@@ -5,7 +5,7 @@
  * @flow
  */
 
-module.exports = process.env.NODE_ENV !== 'production' ? function StyleSheetPropType(shape) {
+module.exports = function StyleSheetPropType(shape) {
   const createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker');
   const StyleSheet = require('../apis/StyleSheet');
 
@@ -19,4 +19,4 @@ module.exports = process.env.NODE_ENV !== 'production' ? function StyleSheetProp
     }
     return shapePropType(newProps, propName, componentName, location);
   };
-} : function () {};
+};

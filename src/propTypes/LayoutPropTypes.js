@@ -3,7 +3,7 @@ import { PropTypes } from 'react';
 const { number, oneOf, oneOfType, string } = PropTypes;
 const numberOrString = oneOfType([ number, string ]);
 
-const LayoutPropTypes = process.env.NODE_ENV !== 'production' ? {
+const LayoutPropTypes = {
   // box model
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
@@ -58,6 +58,6 @@ const LayoutPropTypes = process.env.NODE_ENV !== 'production' ? {
   paddingLeft$noI18n: numberOrString,
   paddingRight$noI18n: numberOrString,
   right$noI18n: numberOrString
-} : {};
+};
 
 module.exports = LayoutPropTypes;

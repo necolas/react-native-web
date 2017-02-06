@@ -10,7 +10,7 @@ import { PropTypes } from 'react';
 const { arrayOf, number, oneOfType, shape, string } = PropTypes;
 const numberOrString = oneOfType([ number, string ]);
 
-const TransformPropTypes = process.env.NODE_ENV !== 'production' ? {
+const TransformPropTypes = {
   transform: arrayOf(
     oneOfType([
       shape({ perspective: numberOrString }),
@@ -30,6 +30,6 @@ const TransformPropTypes = process.env.NODE_ENV !== 'production' ? {
     ])
   ),
   transformOrigin: string
-} : {};
+};
 
 module.exports = TransformPropTypes;
