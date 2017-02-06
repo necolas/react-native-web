@@ -1,6 +1,6 @@
 import ListViewDataSource from './ListViewDataSource';
 import { PropTypes } from 'react';
-import ScrollView, { propTypes as ScrollViewPropTypes } from '../ScrollView';
+import { propTypes as ScrollViewPropTypes } from '../ScrollView';
 
 export default {
   ...ScrollViewPropTypes,

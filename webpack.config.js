@@ -2,12 +2,11 @@ const path = require('path')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const SRC_DIRECTORY = './src'
 const DIST_DIRECTORY = './dist'
 
 module.exports = {
-  entry: {
-    main: DIST_DIRECTORY
-  },
+  entry: SRC_DIRECTORY,
   externals: [
     {
       react: {
@@ -18,6 +17,21 @@ module.exports = {
       }
     }
   ],
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: { cacheDirectory: true }
+      },
+      {
+        test: /\.(gif|jpe?g|png|svg)$/,
+        loader: 'url-loader',
+        query: { name: '[name].[ext]' }
+      }
+    ]
+  },
   output: {
     filename: 'ReactNative.js',
     library: 'ReactNative',
