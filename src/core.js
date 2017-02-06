@@ -1,8 +1,5 @@
 import findNodeHandle from './modules/findNodeHandle';
-import ReactDefaultInjection from 'react-dom/lib/ReactDefaultInjection';
-import { render, unmountComponentAtNode } from 'react-dom/lib/ReactMount';
-
-ReactDefaultInjection.inject();
+import { render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
 import I18nManager from './apis/I18nManager';
