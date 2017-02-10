@@ -686,3 +686,49 @@ rn-textDecoration:none"
   role="img"
   style={Object {}} />
 `;
+
+exports[`components/Image support shadow props 1`] = `
+<div
+  className="
+rn-alignItems:stretch
+rn-backgroundColor:transparent
+rn-backgroundPosition:center
+rn-backgroundRepeat:no-repeat
+rn-backgroundSize:cover
+rn-borderTopStyle:solid
+rn-borderRightStyle:solid
+rn-borderBottomStyle:solid
+rn-borderLeftStyle:solid
+rn-borderTopWidth:0px
+rn-borderRightWidth:0px
+rn-borderBottomWidth:0px
+rn-borderLeftWidth:0px
+rn-boxSizing:border-box
+rn-color:inherit
+rn-display:flex
+rn-flexBasis:auto
+rn-flexDirection:column
+rn-flexShrink:0
+rn-font:inherit
+rn-listStyle:none
+rn-marginTop:0px
+rn-marginRight:0px
+rn-marginBottom:0px
+rn-marginLeft:0px
+rn-minHeight:0px
+rn-minWidth:0px
+rn-paddingTop:0px
+rn-paddingRight:0px
+rn-paddingBottom:0px
+rn-paddingLeft:0px
+rn-position:relative
+
+rn-textAlign:inherit
+rn-textDecoration:none"
+  role="img"
+  style={
+    Object {
+      "boxShadow": "0px 0px 1px rgba(232,232,232,10)",
+    }
+  } />
+`;
