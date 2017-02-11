@@ -1,10 +1,19 @@
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
-  canOpenURL() { return true; },
-  getInitialURL() { return ''; },
+  canOpenURL() {
+    return Promise.resolve(true);
+  },
+  getInitialURL() {
+    return Promise.resolve('');
+  },
   openURL(url) {
-    iframeOpen(url);
+    try {
+      iframeOpen(url);
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 };
 
