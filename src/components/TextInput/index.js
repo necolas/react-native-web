@@ -5,7 +5,7 @@ import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
-import TextStylePropTypes from '../Text/TextStylePropTypes';
+import TextInputStylePropTypes from './TextInputStylePropTypes';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
@@ -84,7 +84,7 @@ class TextInput extends Component {
       start: PropTypes.number.isRequired,
       end: PropTypes.number
     }),
-    style: StyleSheetPropType(TextStylePropTypes),
+    style: StyleSheetPropType(TextInputStylePropTypes),
     value: PropTypes.string
   };
 
@@ -277,7 +277,8 @@ const styles = StyleSheet.create({
     boxSizing: 'border-box',
     color: 'inherit',
     font: 'inherit',
-    padding: 0
+    padding: 0,
+    resize: 'none'
   }
 });
 

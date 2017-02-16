@@ -11,6 +11,7 @@ import { PropTypes } from 'react'
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes'
 import ReactPropTypeLocations from 'react-dom/lib/ReactPropTypeLocations'
 import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret'
+import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes'
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
 import warning from 'fbjs/lib/warning'
@@ -66,6 +67,7 @@ var allStylePropTypes = {};
 
 StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes)
 StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes)
+StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes)
 StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes)
 StyleSheetValidation.addValidStylePropTypes({
   appearance: PropTypes.string,

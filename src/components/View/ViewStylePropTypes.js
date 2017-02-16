@@ -45,5 +45,5 @@ module.exports = {
   userSelect: string,
   visibility: hiddenOrVisible,
   willChange: string,
-  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ]),
+  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
 };
