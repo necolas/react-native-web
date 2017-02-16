@@ -33,7 +33,7 @@ const applyLayout = (Component) => {
         if (layout.x !== x || layout.y !== y || layout.width !== width || layout.height !== height) {
           const nextLayout = { x, y, width, height };
           const nativeEvent = { layout: nextLayout };
-          onLayout({ nativeEvent });
+          onLayout({ nativeEvent, timeStamp: Date.now() });
           this._layoutState = nextLayout;
         }
       });

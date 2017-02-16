@@ -37,7 +37,8 @@ const normalizeScrollEvent = (e) => ({
         return e.target.offsetWidth;
       }
     }
-  }
+  },
+  timeStamp: Date.now()
 });
 
 /**
