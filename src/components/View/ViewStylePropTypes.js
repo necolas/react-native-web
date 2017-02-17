@@ -45,5 +45,6 @@ module.exports = {
   transitionTimingFunction: string,
   userSelect: string,
   visibility: hiddenOrVisible,
-  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
+  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ]),
+  willChange: string
 };
