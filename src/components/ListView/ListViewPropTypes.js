@@ -1,9 +1,9 @@
 import ListViewDataSource from './ListViewDataSource';
 import { PropTypes } from 'react';
-import { propTypes as ScrollViewPropTypes } from '../ScrollView';
+import ScrollView from '../ScrollView';
 
 export default {
-  ...ScrollViewPropTypes,
+  ...ScrollView.propTypes,
   dataSource: PropTypes.instanceOf(ListViewDataSource).isRequired,
   renderSeparator: PropTypes.func,
   renderRow: PropTypes.func.isRequired,

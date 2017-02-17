@@ -24,7 +24,6 @@ var View = require('../View');
 
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var flattenStyle = StyleSheet.flatten
-var TouchableWithoutFeedbackPropTypes = TouchableWithoutFeedback.propTypes;
 
 type Event = Object;
 
@@ -55,7 +54,7 @@ var TouchableOpacity = React.createClass({
   mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
 
   propTypes: {
-    ...TouchableWithoutFeedbackPropTypes,
+    ...TouchableWithoutFeedback.propTypes,
     /**
      * Determines what the opacity of the wrapped view should be when touch is
      * active.
