@@ -19,7 +19,7 @@ const roleComponents = {
   region: 'section'
 };
 
-const createDOMElement = (component, rnProps = emptyObject) => {
+const createDOMElement = (component, rnProps) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
@@ -29,7 +29,7 @@ const createDOMElement = (component, rnProps = emptyObject) => {
     testID,
     type,
     ...domProps
-  } = rnProps;
+  } = rnProps || emptyObject;
 
   const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
   const Component = accessibilityComponent || component;
