@@ -13,7 +13,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-position\\:absolute{position:absolute}
 .rn-right\\:0px{right:0px}
 .rn-top\\:0px{top:0px}
-.rn-alignItems\\:stretch{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
+.rn-alignItems\\:stretch{-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
 .rn-backgroundColor\\:transparent{background-color:transparent}
 .rn-borderTopStyle\\:solid{border-top-style:solid}
 .rn-borderRightStyle\\:solid{border-right-style:solid}
@@ -23,11 +23,11 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-borderRightWidth\\:0px{border-right-width:0px}
 .rn-borderBottomWidth\\:0px{border-bottom-width:0px}
 .rn-borderLeftWidth\\:0px{border-left-width:0px}
-.rn-boxSizing\\:border-box{-moz-box-sizing:border-box;box-sizing:border-box}
+.rn-boxSizing\\:border-box{box-sizing:border-box}
 .rn-color\\:inherit{color:inherit}
 .rn-display\\:flex{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
-.rn-flexBasis\\:auto{-ms-preferred-size:auto;-webkit-flex-basis:auto;flex-basis:auto}
-.rn-flexDirection\\:column{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
+.rn-flexBasis\\:auto{-webkit-flex-basis:auto;flex-basis:auto}
+.rn-flexDirection\\:column{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
 .rn-font\\:inherit{font:inherit}
 .rn-listStyle\\:none{list-style:none}
 .rn-marginTop\\:0px{margin-top:0px}
@@ -43,6 +43,6 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-position\\:relative{position:relative}
 .rn-textAlign\\:inherit{text-align:inherit}
 .rn-textDecoration\\:none{text-decoration:none}
-.rn-flexShrink\\:0{-ms-flex-negative:0px;-webkit-flex-shrink:0px;flex-shrink:0}
+.rn-flexShrink\\:0{-webkit-flex-shrink:0px;flex-shrink:0}
 </style>"
 `;

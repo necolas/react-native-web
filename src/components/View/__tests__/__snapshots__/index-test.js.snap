@@ -191,8 +191,6 @@ rn-textDecoration:none"
       "WebkitFlexShrink": 1,
       "flexGrow": 1,
       "flexShrink": 1,
-      "msFlexNegative": 1,
-      "msFlexPositive": 1,
     }
   } />
 `;
@@ -235,7 +233,6 @@ rn-textDecoration:none"
     Object {
       "WebkitFlexShrink": 1,
       "flexShrink": 1,
-      "msFlexNegative": 1,
     }
   } />
 `;
@@ -281,8 +278,6 @@ rn-textDecoration:none"
       "WebkitFlexShrink": 2,
       "flexGrow": 1,
       "flexShrink": 2,
-      "msFlexNegative": 2,
-      "msFlexPositive": 1,
     }
   } />
 `;

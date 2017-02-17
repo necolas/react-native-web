@@ -29,7 +29,7 @@
     "debounce": "^1.0.0",
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.8",
-    "inline-style-prefixer": "^2.0.5",
+    "inline-style-prefixer": "^3.0.0",
     "normalize-css-color": "^1.0.2",
     "react-dom": "~15.4.1",
     "react-textarea-autosize": "^4.0.4",

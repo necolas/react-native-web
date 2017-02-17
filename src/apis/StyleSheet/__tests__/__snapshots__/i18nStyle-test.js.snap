@@ -21,7 +21,6 @@ Object {
     "height": 10,
     "width": "1rem",
   },
-  "writingDirection": "ltr",
 }
 `;
 
@@ -48,6 +47,5 @@ Object {
     "height": 10,
     "width": "-1rem",
   },
-  "writingDirection": "rtl",
 }
 `;
