@@ -24,7 +24,7 @@ function flattenStyle(style) {
     return undefined;
   }
 
-  if (process.env.NODE !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     invariant(style !== true, 'style may be false but not true');
   }
 
