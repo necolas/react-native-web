@@ -100,6 +100,8 @@ class TextInput extends Component {
     style: emptyObject
   };
 
+  static State = TextInputState;
+
   blur() {
     TextInputState.blurTextInput(this._node);
   }
