@@ -119,22 +119,22 @@ from `style`.
 + `borderColor` (single value)
 + `borderTopColor`
 + `borderBottomColor`
-+ `borderRightColor`‡
-+ `borderLeftColor`‡
++ `borderRightColor`
++ `borderLeftColor`
 + `borderRadius` (single value)
-+ `borderTopLeftRadius`‡
-+ `borderTopRightRadius`‡
-+ `borderBottomLeftRadius`‡
-+ `borderBottomRightRadius`‡
++ `borderTopLeftRadius`
++ `borderTopRightRadius`
++ `borderBottomLeftRadius`
++ `borderBottomRightRadius`
 + `borderStyle` (single value)
 + `borderTopStyle`
-+ `borderRightStyle`‡
++ `borderRightStyle`
 + `borderBottomStyle`
-+ `borderLeftStyle`‡
++ `borderLeftStyle`
 + `borderWidth` (single value)
 + `borderBottomWidth`
-+ `borderLeftWidth`‡
-+ `borderRightWidth`‡
++ `borderLeftWidth`
++ `borderRightWidth`
 + `borderTopWidth`
 + `bottom`
 + `boxShadow`
@@ -148,12 +148,12 @@ from `style`.
 + `flexWrap`
 + `height`
 + `justifyContent`
-+ `left`‡
++ `left`
 + `margin` (single value)
 + `marginBottom`
 + `marginHorizontal`
-+ `marginLeft`‡
-+ `marginRight`‡
++ `marginLeft`
++ `marginRight`
 + `marginTop`
 + `marginVertical`
 + `maxHeight`
@@ -168,14 +168,14 @@ from `style`.
 + `padding` (single value)
 + `paddingBottom`
 + `paddingHorizontal`
-+ `paddingLeft`‡
-+ `paddingRight`‡
++ `paddingLeft`
++ `paddingRight`
 + `paddingTop`
 + `paddingVertical`
 + `perspective`
 + `perspectiveOrigin`
 + `position`
-+ `right`‡
++ `right`
 + `top`
 + `transform`
 + `transformOrigin`
@@ -187,9 +187,6 @@ from `style`.
 + `visibility`
 + `width`
 + `zIndex`
-
-‡ This property can be suffixed with `$noI18n` to prevent automatic
-bidi-flipping in RTL mode. This is only supported if `Platform.OS === 'web'`.
 
 Default:
 

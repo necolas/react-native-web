@@ -37,14 +37,11 @@ const alphaSortProps = (propsArray) => propsArray.sort((a, b) => {
   return 0;
 });
 
-const expandStyle = (style) => {
-  if (!style) { return emptyObject; }
-  const styleProps = Object.keys(style);
-  const sortedStyleProps = alphaSortProps(styleProps);
+const createReducer = (style, styleProps) => {
   let hasResolvedBoxShadow = false;
   let hasResolvedTextShadow = false;
 
-  const reducer = (resolvedStyle, prop) => {
+  return (resolvedStyle, prop) => {
     const value = normalizeValue(prop, style[prop]);
     if (value == null) { return resolvedStyle; }
 
@@ -105,7 +102,13 @@ const expandStyle = (style) => {
 
     return resolvedStyle;
   };
+};
 
+const expandStyle = (style) => {
+  if (!style) { return emptyObject; }
+  const styleProps = Object.keys(style);
+  const sortedStyleProps = alphaSortProps(styleProps);
+  const reducer = createReducer(style, styleProps);
   const resolvedStyle = sortedStyleProps.reduce(reducer, {});
   return resolvedStyle;
 };

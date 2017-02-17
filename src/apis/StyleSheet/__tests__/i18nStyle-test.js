@@ -21,15 +21,8 @@ const style = {
   paddingRight: 10,
   right: 2,
   textAlign: 'left',
-  textShadowOffset: { width: '1rem', height: 10 },
-  writingDirection: 'ltr'
+  textShadowOffset: { width: '1rem', height: 10 }
 };
-
-const styleNoI18n = Object.keys(style).reduce((acc, prop) => {
-  const newProp = `${prop}$noI18n`;
-  acc[newProp] = style[prop];
-  return acc;
-}, {});
 
 describe('apis/StyleSheet/i18nStyle', () => {
   describe('LTR mode', () => {
@@ -44,9 +37,6 @@ describe('apis/StyleSheet/i18nStyle', () => {
     test('does not auto-flip', () => {
       expect(i18nStyle(style)).toMatchSnapshot();
     });
-    test('normalizes properties', () => {
-      expect(i18nStyle(styleNoI18n)).toMatchSnapshot();
-    });
   });
 
   describe('RTL mode', () => {
@@ -60,9 +50,6 @@ describe('apis/StyleSheet/i18nStyle', () => {
 
     test('does auto-flip', () => {
       expect(i18nStyle(style)).toMatchSnapshot();
-    });
-    test('normalizes properties', () => {
-      expect(i18nStyle(styleNoI18n)).toMatchSnapshot();
     });
   });
 });

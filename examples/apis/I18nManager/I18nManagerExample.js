@@ -14,14 +14,22 @@ class I18nManagerExample extends Component {
           LTR/RTL layout example!
         </Text>
         <Text style={styles.text}>
-          This is sample text. The writing direction can be changed by pressing the button below.
-        </Text>
-        <Text style={[ styles.text, styles.ltrText ]}>
-          This is text that will always display LTR.
+          The writing direction of text is automatically determined by the browser, independent of the global writing direction of the app.
         </Text>
         <Text style={[ styles.text, styles.rtlText ]}>
-          This is text that will always display RTL.
+          أحب اللغة العربية
         </Text>
+        <Text style={[ styles.text, styles.textAlign ]}>
+          textAlign toggles
+        </Text>
+        <View style={styles.horizontal}>
+          <View style={[ styles.box, { backgroundColor: 'lightblue' } ]}>
+            <Text>One</Text>
+          </View>
+          <View style={[ styles.box ]}>
+            <Text>Two</Text>
+          </View>
+        </View>
         <TouchableHighlight
           onPress={this._handleToggle}
           style={styles.toggle}
@@ -34,8 +42,8 @@ class I18nManagerExample extends Component {
   }
 
   _handleToggle = () => {
-    this._isRTL = !this._isRTL
-    I18nManager.setPreferredLanguageRTL(this._isRTL)
+    I18nManager.setPreferredLanguageRTL(!I18nManager.isRTL)
+    this.forceUpdate();
   }
 }
 
@@ -55,13 +63,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 5
   },
-  ltrText: {
-    textAlign$noI18n: 'left',
-    writingDirection$noI18n: 'ltr'
+  textAlign: {
+    textAlign: 'left'
   },
-  rtlText: {
-    textAlign$noI18n: 'right',
-    writingDirection$noI18n: 'rtl'
+  horizontal: {
+    flexDirection: 'row',
+    marginVertical: 10
+  },
+  box: {
+    borderWidth: 1,
+    flex: 1
   },
   toggle: {
     alignSelf: 'center',

@@ -32,11 +32,7 @@ const TextOnlyStylePropTypes = {
   whiteSpace: string,
   wordWrap: string,
   MozOsxFontSmoothing: string,
-  WebkitFontSmoothing: string,
-  // opt-out of RTL flipping
-  textAlign$noI18n: TextAlignPropType,
-  textShadowOffset$noI18n: ShadowOffsetPropType,
-  writingDirection$noI18n: WritingDirectionPropType
+  WebkitFontSmoothing: string
 };
 
 module.exports = {

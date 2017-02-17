@@ -68,22 +68,19 @@ Lets the user select the text.
 + `fontWeight`
 + `letterSpacing`
 + `lineHeight`
-+ `textAlign`‡
++ `textAlign`
 + `textAlignVertical`
 + `textDecorationLine`
 + `textOverflow`
 + `textRendering`
 + `textShadowColor`
-+ `textShadowOffset`‡
++ `textShadowOffset`
 + `textShadowRadius`
 + `textTransform`
 + `unicodeBidi`
 + `whiteSpace`
 + `wordWrap`
-+ `writingDirection`‡
-
-‡ This property can be suffixed with `$noI18n` to prevent automatic
-bidi-flipping in RTL mode. This is only supported if `Platform.OS === 'web'`.
++ `writingDirection`
 
 **testID**: string
 

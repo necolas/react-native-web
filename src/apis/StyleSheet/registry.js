@@ -7,14 +7,19 @@ import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import generateCss from './generateCss';
+import I18nManager from '../I18nManager';
 import injector from './injector';
 import mapKeyValue from '../../modules/mapKeyValue';
 import prefixInlineStyles from './prefixInlineStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
-const prefix = 'r-';
 const SPACE_REGEXP = /\s/g;
 const ESCAPE_SELECTOR_CHARS_REGEXP = /[(),":?.%\\$#*]/g;
+
+const createCacheKey = (id) => {
+  const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
+  return `${prefix}-${id}`;
+};
 
 /**
  * Creates an HTML class name for use on elements
@@ -64,7 +69,7 @@ const registerStyle = (id, flatStyle) => {
     }
   });
 
-  const key = `${prefix}${id}`;
+  const key = createCacheKey(id);
   resolvedPropsCache[key] = { className };
 
   return id;
@@ -166,7 +171,7 @@ const StyleRegistry = {
 
     // fast and cachable
     if (typeof reactNativeStyle === 'number') {
-      const key = `${prefix}${reactNativeStyle}`;
+      const key = createCacheKey(reactNativeStyle);
       return resolvePropsIfNeeded(key, reactNativeStyle);
     }
 
@@ -187,30 +192,8 @@ const StyleRegistry = {
       }
     }
 
-    // TODO: determine when/if to cache unregistered styles. This produces 2x
-    // faster benchmark results for unregistered styles. However, the cache
-    // could be filled with props that are never used again.
-    //
-    // let hasValidKey = true;
-    // let key = flatArray.reduce((keyParts, element) => {
-    //   if (typeof element === 'number') {
-    //     keyParts.push(element);
-    //   } else {
-    //     if (element.transform) {
-    //       hasValidKey = false;
-    //     } else {
-    //       const objectAsKey = Object.keys(element).map((prop) => `${prop}:${element[prop]}`).join(';');
-    //       if (objectAsKey !== '') {
-    //         keyParts.push(objectAsKey);
-    //       }
-    //     }
-    //   }
-    //   return keyParts;
-    // }, [ prefix ]).join('-');
-    // if (!hasValidKey) { key = null; }
-
     // cache resolved props when all styles are registered
-    const key = isArrayOfNumbers ? `${prefix}${flatArray.join('-')}` : null;
+    const key = isArrayOfNumbers ? createCacheKey(flatArray.join('-')) : null;
 
     return resolvePropsIfNeeded(key, flatArray);
   }

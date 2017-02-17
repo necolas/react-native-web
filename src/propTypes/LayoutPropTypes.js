@@ -48,16 +48,7 @@ const LayoutPropTypes = {
   left: numberOrString,
   position: oneOf([ 'absolute', 'fixed', 'relative', 'static' ]),
   right: numberOrString,
-  top: numberOrString,
-  // opt-out of RTL flipping
-  borderLeftWidth$noI18n: numberOrString,
-  borderRightWidth$noI18n: numberOrString,
-  left$noI18n: numberOrString,
-  marginLeft$noI18n: numberOrString,
-  marginRight$noI18n: numberOrString,
-  paddingLeft$noI18n: numberOrString,
-  paddingRight$noI18n: numberOrString,
-  right$noI18n: numberOrString
+  top: numberOrString
 };
 
 module.exports = LayoutPropTypes;

@@ -271,7 +271,7 @@ const examples = [
         <Text>
           auto (default) - english LTR
         </Text>
-        <Text style={{ writingDirection$noI18n: 'rtl' }}>
+        <Text>
           أحب اللغة العربية auto (default) - arabic RTL
         </Text>
         <Text style={{textAlign: 'left'}}>
