@@ -71,12 +71,10 @@ StyleSheetValidation.addValidStylePropTypes({
   appearance: PropTypes.string,
   clear: PropTypes.string,
   cursor: PropTypes.string,
-  display: PropTypes.string,
   float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
   font: PropTypes.string, /* @private */
   listStyle: PropTypes.string,
-  pointerEvents: PropTypes.string,
-  WebkitOverflowScrolling: PropTypes.string /* @private */
+  pointerEvents: PropTypes.string
 })
 
 module.exports = StyleSheetValidation

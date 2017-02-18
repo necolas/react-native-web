@@ -12,6 +12,7 @@ const WritingDirectionPropType = oneOf([ 'auto', 'ltr', 'rtl' ]);
 const TextOnlyStylePropTypes = {
   color: ColorPropType,
   fontFamily: string,
+  fontFeatureSettings: string,
   fontSize: numberOrString,
   fontStyle: string,
   fontWeight: string,

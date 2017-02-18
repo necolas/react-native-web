@@ -63,6 +63,7 @@ Lets the user select the text.
 + ...[View#style](View.md)
 + `color`
 + `fontFamily`
++ `fontFeatureSettings` ‡
 + `fontSize`
 + `fontStyle`
 + `fontWeight`
