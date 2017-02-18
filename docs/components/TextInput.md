@@ -144,7 +144,6 @@ If `true`, all text will automatically be selected on focus.
 **style**: style
 
 + ...[Text#style](./Text.md)
-+ `outline`
 
 **testID**: string
 

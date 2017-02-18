@@ -71,16 +71,18 @@ Lets the user select the text.
 + `textAlign`
 + `textAlignVertical`
 + `textDecorationLine`
-+ `textOverflow`
-+ `textRendering`
++ `textOverflow` ‡
++ `textRendering` ‡
 + `textShadowColor`
 + `textShadowOffset`
 + `textShadowRadius`
-+ `textTransform`
-+ `unicodeBidi`
++ `textTransform` ‡
++ `unicodeBidi` ‡
 + `whiteSpace`
-+ `wordWrap`
++ `wordWrap` ‡
 + `writingDirection`
+
+‡ web only.
 
 **testID**: string
 

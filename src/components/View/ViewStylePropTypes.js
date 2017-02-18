@@ -33,7 +33,6 @@ module.exports = {
   backgroundSize: string,
   boxShadow: string,
   cursor: string,
-  display: string,
   outline: string,
   overflowX: autoOrHiddenOrVisible,
   overflowY: autoOrHiddenOrVisible,
@@ -45,6 +44,6 @@ module.exports = {
   transitionTimingFunction: string,
   userSelect: string,
   visibility: hiddenOrVisible,
+  willChange: string,
   WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ]),
-  willChange: string
 };

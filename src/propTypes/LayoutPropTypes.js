@@ -11,6 +11,7 @@ const LayoutPropTypes = {
   borderRightWidth: numberOrString,
   borderTopWidth: numberOrString,
   boxSizing: string,
+  display: string,
   height: numberOrString,
   margin: numberOrString,
   marginBottom: numberOrString,

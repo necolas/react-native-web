@@ -99,23 +99,23 @@ from `style`.
 + `alignContent`
 + `alignItems`
 + `alignSelf`
-+ `animationDelay`
-+ `animationDirection`
-+ `animationDuration`
-+ `animationFillMode`
-+ `animationIterationCount`
-+ `animationName`
-+ `animationPlayState`
-+ `animationTimingFunction`
++ `animationDelay` ‡
++ `animationDirection` ‡
++ `animationDuration` ‡
++ `animationFillMode` ‡
++ `animationIterationCount` ‡
++ `animationName` ‡
++ `animationPlayState` ‡
++ `animationTimingFunction` ‡
 + `backfaceVisibility`
-+ `backgroundAttachment`
-+ `backgroundClip`
++ `backgroundAttachment` ‡
++ `backgroundClip` ‡
 + `backgroundColor`
-+ `backgroundImage`
-+ `backgroundOrigin`
-+ `backgroundPosition`
-+ `backgroundRepeat`
-+ `backgroundSize`
++ `backgroundImage` ‡
++ `backgroundOrigin` ‡
++ `backgroundPosition` ‡
++ `backgroundRepeat` ‡
++ `backgroundSize` ‡
 + `borderColor` (single value)
 + `borderTopColor`
 + `borderBottomColor`
@@ -139,7 +139,8 @@ from `style`.
 + `bottom`
 + `boxShadow`
 + `boxSizing`
-+ `cursor`
++ `cursor` ‡
++ `display` ‡
 + `flex` (number)
 + `flexBasis`
 + `flexDirection`
@@ -162,9 +163,10 @@ from `style`.
 + `minWidth`
 + `opacity`
 + `order`
++ `outline` ‡
 + `overflow`
-+ `overflowX`
-+ `overflowY`
++ `overflowX` ‡
++ `overflowY` ‡
 + `padding` (single value)
 + `paddingBottom`
 + `paddingHorizontal`
@@ -172,21 +174,24 @@ from `style`.
 + `paddingRight`
 + `paddingTop`
 + `paddingVertical`
-+ `perspective`
-+ `perspectiveOrigin`
++ `perspective` ‡
++ `perspectiveOrigin` ‡
 + `position`
 + `right`
 + `top`
 + `transform`
-+ `transformOrigin`
-+ `transitionDelay`
-+ `transitionDuration`
-+ `transitionProperty`
-+ `transitionTimingFunction`
-+ `userSelect`
-+ `visibility`
++ `transformOrigin` ‡
++ `transitionDelay` ‡
++ `transitionDuration` ‡
++ `transitionProperty` ‡
++ `transitionTimingFunction` ‡
++ `userSelect` ‡
++ `visibility` ‡
 + `width`
++ `willChange` ‡
 + `zIndex`
+
+‡ web only.
 
 Default:
 
