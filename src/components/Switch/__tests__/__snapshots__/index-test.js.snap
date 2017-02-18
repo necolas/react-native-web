@@ -15,11 +15,10 @@ rn-boxSizing:border-box
 rn-color:inherit
 rn-cursor:pointer
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
-
 rn-listStyle:none
 rn-marginTop:0px
 rn-marginRight:0px
@@ -44,11 +43,6 @@ rn-userSelect:none"
   <div
     className="
   rn-alignItems:stretch
-  
-  
-  
-  
-  
   rn-borderTopStyle:solid
   rn-borderRightStyle:solid
   rn-borderBottomStyle:solid
@@ -61,9 +55,9 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:70%
   rn-left:0px
@@ -98,7 +92,6 @@ rn-userSelect:none"
     className="
   rn-alignItems:stretch
   rn-alignSelf:flex-start
-  
   rn-borderTopLeftRadius:100%
   rn-borderTopRightRadius:100%
   rn-borderBottomRightRadius:100%
@@ -115,11 +108,10 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
-  
   rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
@@ -190,11 +182,10 @@ rn-boxSizing:border-box
 rn-color:inherit
 rn-cursor:default
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
-
 rn-listStyle:none
 rn-marginTop:0px
 rn-marginRight:0px
@@ -220,10 +211,6 @@ rn-userSelect:none"
     className="
   rn-alignItems:stretch
   rn-backgroundColor:#D5D5D5
-  
-  
-  
-  
   rn-borderTopStyle:solid
   rn-borderRightStyle:solid
   rn-borderBottomStyle:solid
@@ -236,9 +223,9 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:70%
   rn-left:0px
@@ -289,11 +276,10 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
-  
   rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
@@ -363,11 +349,10 @@ rn-boxSizing:border-box
 rn-color:inherit
 rn-cursor:pointer
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
-
 rn-listStyle:none
 rn-marginTop:0px
 rn-marginRight:0px
@@ -392,11 +377,6 @@ rn-userSelect:none"
   <div
     className="
   rn-alignItems:stretch
-  
-  
-  
-  
-  
   rn-borderTopStyle:solid
   rn-borderRightStyle:solid
   rn-borderBottomStyle:solid
@@ -409,9 +389,9 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:70%
   rn-left:0px
@@ -446,7 +426,6 @@ rn-userSelect:none"
     className="
   rn-alignItems:stretch
   rn-alignSelf:flex-start
-  
   rn-borderTopLeftRadius:100%
   rn-borderTopRightRadius:100%
   rn-borderBottomRightRadius:100%
@@ -463,11 +442,10 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
-  
   rn-left:0%
   rn-listStyle:none
   rn-marginTop:0px
@@ -538,11 +516,10 @@ rn-boxSizing:border-box
 rn-color:inherit
 rn-cursor:pointer
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
-
 rn-listStyle:none
 rn-marginTop:0px
 rn-marginRight:0px
@@ -567,11 +544,6 @@ rn-userSelect:none"
   <div
     className="
   rn-alignItems:stretch
-  
-  
-  
-  
-  
   rn-borderTopStyle:solid
   rn-borderRightStyle:solid
   rn-borderBottomStyle:solid
@@ -584,9 +556,9 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:70%
   rn-left:0px
@@ -621,7 +593,6 @@ rn-userSelect:none"
     className="
   rn-alignItems:stretch
   rn-alignSelf:flex-start
-  
   rn-borderTopLeftRadius:100%
   rn-borderTopRightRadius:100%
   rn-borderBottomRightRadius:100%
@@ -638,17 +609,15 @@ rn-userSelect:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
-  
   rn-left:100%
   rn-listStyle:none
   rn-marginTop:0px
   rn-marginRight:0px
   rn-marginBottom:0px
-  
   rn-minHeight:0px
   rn-minWidth:0px
   rn-paddingTop:0px

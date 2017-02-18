@@ -4,7 +4,8 @@ const mapKeyValue = (obj, fn) => {
   const result = [];
   for (const key in obj) {
     if (hasOwnProperty.call(obj, key)) {
-      result.push(fn(key, obj[key]));
+      const r = fn(key, obj[key]);
+      r && result.push(r);
     }
   }
   return result;

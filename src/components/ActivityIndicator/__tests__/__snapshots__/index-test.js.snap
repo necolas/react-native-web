@@ -16,9 +16,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-justifyContent:center
 rn-listStyle:none
@@ -56,9 +56,9 @@ rn-textDecoration:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:20px
   rn-listStyle:none
@@ -129,9 +129,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-justifyContent:center
 rn-listStyle:none
@@ -170,9 +170,9 @@ rn-textDecoration:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-height:36px
   rn-listStyle:none

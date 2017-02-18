@@ -26,6 +26,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-boxSizing\\:border-box{box-sizing:border-box}
 .rn-color\\:inherit{color:inherit}
 .rn-display\\:flex{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
+.rn-flexShrink\\:0{-webkit-flex-shrink:0px;flex-shrink:0}
 .rn-flexBasis\\:auto{-webkit-flex-basis:auto;flex-basis:auto}
 .rn-flexDirection\\:column{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
 .rn-font\\:inherit{font:inherit}
@@ -43,6 +44,9 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-position\\:relative{position:relative}
 .rn-textAlign\\:inherit{text-align:inherit}
 .rn-textDecoration\\:none{text-decoration:none}
-.rn-flexShrink\\:0{-webkit-flex-shrink:0px;flex-shrink:0}
+.rn-pointerEvents\\:auto{pointer-events:auto}
+.rn-pointerEvents\\:box-none{pointer-events:box-none}
+.rn-pointerEvents\\:box-only{pointer-events:box-only}
+.rn-pointerEvents\\:none{pointer-events:none}
 </style>"
 `;

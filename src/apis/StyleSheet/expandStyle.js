@@ -46,6 +46,18 @@ const createReducer = (style, styleProps) => {
     if (value == null) { return resolvedStyle; }
 
     switch (prop) {
+      case 'display': {
+        resolvedStyle.display = value;
+        // default of 'flexShrink:0' has lowest precedence
+        if (
+          style.display === 'flex' &&
+          style.flex == null &&
+          style.flexShrink == null
+        ) {
+          resolvedStyle.flexShrink = 0;
+        }
+        break;
+      }
       // ignore React Native styles
       case 'elevation':
       case 'resizeMode': {

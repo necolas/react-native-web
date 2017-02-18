@@ -31,6 +31,20 @@ const eventHandlerNames = [
   'onTouchStartCapture'
 ];
 
+const _normalizeEventForHandler = (handler) => (e) => {
+  e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
+  return handler(e);
+};
+
+const normalizeEventHandlers = (props) => {
+  eventHandlerNames.forEach((handlerName) => {
+    const handler = props[handlerName];
+    if (typeof handler === 'function') {
+      props[handlerName] = _normalizeEventForHandler(handler);
+    }
+  });
+};
+
 class View extends Component {
   static displayName = 'View';
 
@@ -71,36 +85,18 @@ class View extends Component {
       ...otherProps
     } = this.props;
 
-    const flattenedStyle = StyleSheet.flatten(style);
-    const pointerEventsStyle = pointerEvents && { pointerEvents };
-    // 'View' needs to set 'flexShrink:0' only when there is no 'flex' or 'flexShrink' style provided
-    const needsFlexReset = !flattenedStyle || (flattenedStyle.flex == null && flattenedStyle.flexShrink == null);
-
     const component = this.context.isInAButtonView ? 'span' : 'div';
 
-    eventHandlerNames.reduce((props, handlerName) => {
-      const handler = this.props[handlerName];
-      if (typeof handler === 'function') {
-        props[handlerName] = this._normalizeEventForHandler(handler);
-      }
-      return props;
-    }, otherProps);
+    // DOM events need to be normalized to expect RN format
+    normalizeEventHandlers(otherProps);
 
     otherProps.style = [
       styles.initial,
       style,
-      needsFlexReset && styles.flexReset,
-      pointerEventsStyle
+      pointerEvents && pointerEventStyles[pointerEvents]
     ];
 
     return createDOMElement(component, otherProps);
-  }
-
-  _normalizeEventForHandler(handler) {
-    return (e) => {
-      e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
-      return handler(e);
-    };
   }
 }
 
@@ -131,6 +127,21 @@ const styles = StyleSheet.create({
   },
   flexReset: {
     flexShrink: 0
+  }
+});
+
+const pointerEventStyles = StyleSheet.create({
+  'auto': {
+    pointerEvents: 'auto'
+  },
+  'box-none': {
+    pointerEvents: 'box-none'
+  },
+  'box-only': {
+    pointerEvents: 'box-only'
+  },
+  'none': {
+    pointerEvents: 'none'
   }
 });
 

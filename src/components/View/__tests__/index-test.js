@@ -29,18 +29,4 @@ describe('components/View', () => {
     const component = renderer.create(<View pointerEvents='box-only' />);
     expect(component.toJSON()).toMatchSnapshot();
   });
-
-  test('prop "style"', () => {
-    let component = renderer.create(<View />);
-    expect(component.toJSON()).toMatchSnapshot();
-
-    component = renderer.create(<View style={{ flex: 1 }} />);
-    expect(component.toJSON()).toMatchSnapshot();
-
-    component = renderer.create(<View style={{ flexShrink: 1 }} />);
-    expect(component.toJSON()).toMatchSnapshot();
-
-    component = renderer.create(<View style={{ flex: 1, flexShrink: 2 }} />);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
 });

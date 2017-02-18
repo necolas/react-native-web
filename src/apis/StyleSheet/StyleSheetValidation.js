@@ -75,6 +75,7 @@ StyleSheetValidation.addValidStylePropTypes({
   float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
   font: PropTypes.string, /* @private */
   listStyle: PropTypes.string,
+  pointerEvents: PropTypes.string,
   WebkitOverflowScrolling: PropTypes.string /* @private */
 })
 

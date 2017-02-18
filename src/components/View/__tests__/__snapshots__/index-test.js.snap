@@ -14,9 +14,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-listStyle:none
 rn-marginTop:0px
@@ -31,8 +31,7 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  style={Object {}}>
+rn-textDecoration:none">
   <div
     className="
   rn-alignItems:stretch
@@ -48,9 +47,9 @@ rn-textDecoration:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-listStyle:none
   rn-marginTop:0px
@@ -66,8 +65,7 @@ rn-textDecoration:none"
   rn-position:relative
   rn-textAlign:inherit
   rn-textDecoration:none"
-    data-testid="1"
-    style={Object {}} />
+    data-testid="1" />
 </div>
 `;
 
@@ -87,9 +85,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-listStyle:none
 rn-marginTop:0px
@@ -102,184 +100,11 @@ rn-paddingTop:0px
 rn-paddingRight:0px
 rn-paddingBottom:0px
 rn-paddingLeft:0px
-
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
-  style={
-    Object {
-      "pointerEvents": "box-only",
-    }
-  } />
-`;
-
-exports[`components/View prop "style" 1`] = `
-<div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-flexShrink:0
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
+rn-pointerEvents:box-only
 rn-position:relative
 rn-textAlign:inherit
 rn-textDecoration:none"
   style={Object {}} />
-`;
-
-exports[`components/View prop "style" 2`] = `
-<div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-
-
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
-  style={
-    Object {
-      "WebkitFlexGrow": 1,
-      "WebkitFlexShrink": 1,
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
-  } />
-`;
-
-exports[`components/View prop "style" 3`] = `
-<div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-rn-flexBasis:auto
-rn-flexDirection:column
-
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
-  style={
-    Object {
-      "WebkitFlexShrink": 1,
-      "flexShrink": 1,
-    }
-  } />
-`;
-
-exports[`components/View prop "style" 4`] = `
-<div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-
-
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
-  style={
-    Object {
-      "WebkitFlexGrow": 1,
-      "WebkitFlexShrink": 2,
-      "flexGrow": 1,
-      "flexShrink": 2,
-    }
-  } />
 `;
 
 exports[`components/View rendered element is a "div" by default 1`] = `
@@ -298,9 +123,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-listStyle:none
 rn-marginTop:0px
@@ -315,8 +140,7 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  style={Object {}} />
+rn-textDecoration:none" />
 `;
 
 exports[`components/View rendered element is a "span" when inside <View accessibilityRole="button" /> 1`] = `
@@ -335,9 +159,9 @@ rn-borderLeftWidth:0px
 rn-boxSizing:border-box
 rn-color:inherit
 rn-display:flex
+rn-flexShrink:0
 rn-flexBasis:auto
 rn-flexDirection:column
-rn-flexShrink:0
 rn-font:inherit
 rn-listStyle:none
 rn-marginTop:0px
@@ -354,7 +178,6 @@ rn-position:relative
 rn-textAlign:inherit
 rn-textDecoration:none"
   role="button"
-  style={Object {}}
   type="button">
   <span
     className="
@@ -371,9 +194,9 @@ rn-textDecoration:none"
   rn-boxSizing:border-box
   rn-color:inherit
   rn-display:flex
+  rn-flexShrink:0
   rn-flexBasis:auto
   rn-flexDirection:column
-  rn-flexShrink:0
   rn-font:inherit
   rn-listStyle:none
   rn-marginTop:0px
@@ -388,7 +211,6 @@ rn-textDecoration:none"
   rn-paddingLeft:0px
   rn-position:relative
   rn-textAlign:inherit
-  rn-textDecoration:none"
-    style={Object {}} />
+  rn-textDecoration:none" />
 </button>
 `;

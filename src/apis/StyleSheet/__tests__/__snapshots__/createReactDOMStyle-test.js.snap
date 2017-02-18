@@ -8,6 +8,7 @@ Object {
   "borderWidthRight": "3px",
   "boxShadow": "1px 1px 1px 1px #000, 1px 2px 0px rgba(255,0,0,1)",
   "display": "flex",
+  "flexShrink": 0,
   "marginBottom": "0px",
   "marginTop": "0px",
   "opacity": 0,
