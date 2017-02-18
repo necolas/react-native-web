@@ -39,12 +39,15 @@ import View from './components/View';
 
 // modules
 import createDOMElement from './modules/createDOMElement';
+import modality from './modules/modality';
 import NativeModules from './modules/NativeModules';
 
 // propTypes
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
 import PointPropType from './propTypes/PointPropType';
+
+modality();
 
 const ReactNative = {
   // top-level API

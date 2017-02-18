@@ -18,6 +18,9 @@ import View from './components/View';
 
 // modules
 import createDOMElement from './modules/createDOMElement';
+import modality from './modules/modality';
+
+modality();
 
 const ReactNativeCore = {
   createDOMElement,
