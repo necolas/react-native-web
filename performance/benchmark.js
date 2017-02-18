@@ -6,24 +6,27 @@ const measure = (name, fn) => {
   marky.mark(name);
   fn();
   const performanceMeasure = marky.stop(name);
-  return performanceMeasure;
+  return performanceMeasure.duration;
 };
 
 const benchmark = ({ name, description, setup, teardown, task, runs }) => {
   return new Promise((resolve) => {
-    const performanceMeasures = [];
+    const durations = [];
     let i = 0;
+
+    console.group(`[benchmark] ${name}`);
+    console.log(description);
 
     setup();
     const first = measure('first', task);
     teardown();
 
     const done = () => {
-      const mean = performanceMeasures.reduce((sum, performanceMeasure) => {
-        return sum + performanceMeasure.duration;
+      const mean = durations.reduce((sum, duration) => {
+        return sum + duration;
       }, 0) / runs;
 
-      const firstDuration = fmt(first.duration);
+      const firstDuration = fmt(first);
       const meanDuration = fmt(mean);
 
       console.log(`First: ${firstDuration}`);
@@ -38,8 +41,9 @@ const benchmark = ({ name, description, setup, teardown, task, runs }) => {
     };
 
     const b = () => {
-      performanceMeasures.push(measure('mean', task));
-      window.requestAnimationFrame(c);
+      const duration = measure('mean', task);
+      durations.push(duration);
+      c();
     };
 
     const c = () => {
@@ -56,8 +60,6 @@ const benchmark = ({ name, description, setup, teardown, task, runs }) => {
       }
     };
 
-    console.group(`[benchmark] ${name}`);
-    console.log(description);
     window.requestAnimationFrame(a);
   });
 };
