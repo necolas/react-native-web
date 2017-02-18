@@ -4,15 +4,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactNative from 'react-native';
 
-const deepTreeBenchmark = ({ breadth, depth, registerStyles = true, runs, wrap }, node) => () => {
+const deepTreeBenchmark = (config, node) => () => {
+  const { breadth, depth, leafComponent = 'View', registerStyles = true, runs, wrap } = config;
+
   // React Native for Web implementation of the tree
   const DeepTree = createDeepTree(ReactNative, { registerStyles });
 
   const setup = () => {};
   const teardown = () => ReactDOM.unmountComponentAtNode(node);
 
+  let name = `DeepTree: ${leafComponent}`;
+  if (!registerStyles) {
+    name += ' (unregistered styles)';
+  }
+
   return benchmark({
-    name: `DeepTree (${registerStyles ? 'registered' : 'unregistered'}) styles)`,
+    name,
     description: `depth=${depth}, breadth=${breadth}, wrap=${wrap}`,
     runs,
     setup,
