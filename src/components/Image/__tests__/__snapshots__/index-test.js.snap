@@ -34,9 +34,9 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
+rn-textDecoration:none
+rn-zIndex:0"
   onResponderGrant={[Function]}
-  role="img"
   style={Object {}} />
 `;
 
@@ -77,8 +77,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -119,8 +119,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -160,8 +160,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}}>
   <div
     className="unique" />
@@ -204,15 +204,29 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={
     Object {
       "backgroundImage": "url(\"https://google.com/favicon.ico\")",
       "height": "20px",
       "width": "40px",
     }
-  } />
+  }>
+  <img
+    className="
+  rn-bottom:0px
+  rn-height:100%
+  rn-left:0px
+  rn-opacity:0
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%
+  rn-zIndex:-1"
+    src="https://google.com/favicon.ico"
+    style={Object {}} />
+</div>
 `;
 
 exports[`components/Image prop "defaultSource" sets "height" and "width" styles if missing 1`] = `
@@ -251,15 +265,29 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={
     Object {
       "backgroundImage": "url(\"https://google.com/favicon.ico\")",
       "height": "10px",
       "width": "20px",
     }
-  } />
+  }>
+  <img
+    className="
+  rn-bottom:0px
+  rn-height:100%
+  rn-left:0px
+  rn-opacity:0
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%
+  rn-zIndex:-1"
+    src="https://google.com/favicon.ico"
+    style={Object {}} />
+</div>
 `;
 
 exports[`components/Image prop "defaultSource" sets background image when value is a string 1`] = `
@@ -298,13 +326,27 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={
     Object {
       "backgroundImage": "url(\"https://google.com/favicon.ico\")",
     }
-  } />
+  }>
+  <img
+    className="
+  rn-bottom:0px
+  rn-height:100%
+  rn-left:0px
+  rn-opacity:0
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%
+  rn-zIndex:-1"
+    src="https://google.com/favicon.ico"
+    style={Object {}} />
+</div>
 `;
 
 exports[`components/Image prop "defaultSource" sets background image when value is an object 1`] = `
@@ -343,13 +385,27 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={
     Object {
       "backgroundImage": "url(\"https://google.com/favicon.ico\")",
     }
-  } />
+  }>
+  <img
+    className="
+  rn-bottom:0px
+  rn-height:100%
+  rn-left:0px
+  rn-opacity:0
+  rn-position:absolute
+  rn-right:0px
+  rn-top:0px
+  rn-width:100%
+  rn-zIndex:-1"
+    src="https://google.com/favicon.ico"
+    style={Object {}} />
+</div>
 `;
 
 exports[`components/Image prop "resizeMode" value "contain" 1`] = `
@@ -388,8 +444,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -429,8 +485,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -470,8 +526,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -511,8 +567,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -552,8 +608,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -593,8 +649,8 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;
 
@@ -634,9 +690,9 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
+rn-textDecoration:none
+rn-zIndex:0"
   data-testid="testID"
-  role="img"
   style={Object {}} />
 `;
 
@@ -676,7 +732,7 @@ rn-paddingBottom:0px
 rn-paddingLeft:0px
 rn-position:relative
 rn-textAlign:inherit
-rn-textDecoration:none"
-  role="img"
+rn-textDecoration:none
+rn-zIndex:0"
   style={Object {}} />
 `;

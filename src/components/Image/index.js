@@ -139,17 +139,24 @@ class Image extends Component {
     // View doesn't support 'resizeMode' as a style
     delete style.resizeMode;
 
+    // Allows users to trigger the browser's image context menu
+    const hiddenImage = displayImage ? createDOMElement('img', {
+      src: displayImage,
+      style: [ StyleSheet.absoluteFill, styles.img ]
+    }) : null;
+
     return (
       <View
         {...other}
         accessibilityLabel={accessibilityLabel}
-        accessibilityRole='img'
         accessible={accessible}
-        children={children}
         onLayout={onLayout}
         style={style}
         testID={testID}
-      />
+      >
+        {hiddenImage}
+        {children}
+      </View>
     );
   }
 
@@ -224,7 +231,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    zIndex: 0
+  },
+  img: {
+    height: '100%',
+    opacity: 0,
+    width: '100%',
+    zIndex: -1
   }
 });
 
