@@ -1,9 +1,10 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import createDOMElement from '../../modules/createDOMElement';
 import ImageResizeMode from './ImageResizeMode';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageStylePropTypes from './ImageStylePropTypes';
-import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+import requestIdleCallback, { cancelIdleCallback } from '../../modules/requestIdleCallback';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
@@ -153,13 +154,20 @@ class Image extends Component {
   }
 
   _createImageLoader() {
-    this._destroyImageLoader();
-    const uri = resolveAssetSource(this.props.source);
-    this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
-    this._onLoadStart();
+    this._loadRequest = requestIdleCallback(() => {
+      this._destroyImageLoader();
+      const uri = resolveAssetSource(this.props.source);
+      this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
+      this._onLoadStart();
+    });
   }
 
   _destroyImageLoader() {
+    if (this._loadRequest) {
+      cancelIdleCallback(this._loadRequest);
+      this._loadRequest = null;
+    }
+
     if (this._imageRequestId) {
       ImageLoader.abort(this._imageRequestId);
       this._imageRequestId = null;
@@ -204,11 +212,9 @@ class Image extends Component {
     const shouldDisplaySource = this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
     // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
     if (shouldDisplaySource !== this.state.shouldDisplaySource) {
-      requestAnimationFrame(() => {
-        if (this._isMounted) {
-          this.setState({ shouldDisplaySource });
-        }
-      });
+      if (this._isMounted) {
+        this.setState(() => ({ shouldDisplaySource }));
+      }
     }
   }
 }
