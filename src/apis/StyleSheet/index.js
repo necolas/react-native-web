@@ -1,14 +1,11 @@
 import flattenStyle from './flattenStyle';
-import initialize from './initialize';
-import injector from './injector';
 import StyleRegistry from './registry';
 
-initialize();
-
 const absoluteFillObject = { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 };
+const absoluteFill = StyleRegistry.register(absoluteFillObject);
 
 module.exports = {
-  absoluteFill: StyleRegistry.register(absoluteFillObject),
+  absoluteFill,
   absoluteFillObject,
   create(styles) {
     const result = {};
@@ -22,5 +19,7 @@ module.exports = {
   },
   hairlineWidth: 1,
   flatten: flattenStyle,
-  renderToString: injector.getStyleSheetHtml
+  renderToString() {
+    return StyleRegistry.getStyleSheetHtml();
+  }
 };

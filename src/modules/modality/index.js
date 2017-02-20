@@ -45,10 +45,13 @@ const modality = () => {
   /**
    * Disable the focus ring by default
    */
-  const id = 'modality__';
-  const style = `<style id="${id}">:focus { outline: none; }</style>`;
-  document.head.insertAdjacentHTML('afterbegin', style);
-  const styleElement = document.getElementById(id);
+  const id = 'react-native-modality';
+  let styleElement = document.getElementById(id);
+  if (!styleElement) {
+    const style = `<style id="${id}">:focus { outline: none; }</style>`;
+    document.head.insertAdjacentHTML('afterbegin', style);
+    styleElement = document.getElementById(id);
+  }
 
   const disableFocus = () => {
     if (styleElement) {
