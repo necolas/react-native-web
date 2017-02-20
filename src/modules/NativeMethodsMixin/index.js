@@ -10,19 +10,6 @@ import findNodeHandle from '../findNodeHandle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
-const emptyObject = {};
-const REGEX_CLASSNAME_SPLIT = /\s+/;
-const REGEX_STYLE_PROP = /rn-(.*):.*/;
-
-const classNameFilter = (className) => { return className !== ''; };
-const classNameToList = (className = '') => className.split(REGEX_CLASSNAME_SPLIT).filter(classNameFilter);
-const getStyleProp = (className) => {
-  const match = className.match(REGEX_STYLE_PROP);
-  if (match) {
-    return match[1];
-  }
-};
-
 const NativeMethodsMixin = {
   /**
    * Removes focus from an input or view. This is the opposite of `focus()`.
@@ -81,41 +68,10 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     // DOM state
     const node = findNodeHandle(this);
-    const domClassList = [ ...node.classList ];
+    const classList = [ ...node.classList ];
 
-    // Resolved state
-    const resolvedProps = StyleRegistry.resolve(nativeProps.style) || emptyObject;
-    const resolvedClassList = classNameToList(resolvedProps.className);
-
-    // Merged state
-    const classList = [];
-    const style = { ...resolvedProps.style };
-
-    // The node has class names that we need to override.
-    // Only pass on a class name when the style is unchanged.
-    domClassList.forEach((c) => {
-      const prop = getStyleProp(c);
-      const className = resolvedProps.className;
-      if (!className || className.indexOf(prop) === -1) {
-        classList.push(c);
-      }
-    });
-
-    // The node has styles that we need to override.
-    // Remove any inline style that may collide with a new class name.
-    resolvedClassList.forEach((c) => {
-      const prop = getStyleProp(c);
-      classList.push(c);
-      style[prop] = null;
-    });
-
-    const className = `\n${classList.sort().join('\n')}`;
-
-    const props = {
-      ...nativeProps,
-      className,
-      style
-    };
+    const { className, style } = StyleRegistry.resolveStateful(nativeProps.style, classList);
+    const props = { ...nativeProps, className, style };
 
     UIManager.updateView(node, props, this);
   }

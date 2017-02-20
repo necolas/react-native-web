@@ -1,3 +1,12 @@
-const RE_1 = /([A-Z])/g;
-const RE_2 = /^ms-/;
-module.exports = (s) => s.replace(RE_1, '-$1').toLowerCase().replace(RE_2, '-ms-');
+const cache = {};
+const MS_REGEXP = /^ms-/;
+const UPPERCASE_REGEXP = /([A-Z])/g;
+
+const hyphenateStyleProp = (prop) => {
+  if (!cache.hasOwnProperty(prop)) {
+    cache[prop] = prop.replace(UPPERCASE_REGEXP, '-$&').toLowerCase().replace(MS_REGEXP, '-ms-');
+  }
+  return cache[prop];
+};
+
+module.exports = hyphenateStyleProp;

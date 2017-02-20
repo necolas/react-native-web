@@ -1,7 +1,6 @@
 /* eslint-env jasmine, jest */
 
 import StyleSheet from '..';
-import StyleRegistry from '../registry';
 
 const isPlainObject = (x) => {
   const toString = Object.prototype.toString;
@@ -15,10 +14,6 @@ const isPlainObject = (x) => {
 };
 
 describe('apis/StyleSheet', () => {
-  beforeEach(() => {
-    StyleRegistry.reset();
-  });
-
   test('absoluteFill', () => {
     expect(Number.isInteger(StyleSheet.absoluteFill) === true).toBeTruthy();
   });
@@ -29,7 +24,7 @@ describe('apis/StyleSheet', () => {
 
   describe('create', () => {
     test('replaces styles with numbers', () => {
-      const style = StyleSheet.create({ root: { opacity: 1 } });
+      const style = StyleSheet.create({ root: { position: 'absolute' } });
       expect(Number.isInteger(style.root) === true).toBeTruthy();
     });
   });
@@ -43,16 +38,6 @@ describe('apis/StyleSheet', () => {
   });
 
   test('renderToString', () => {
-    StyleSheet.create({
-      a: {
-        borderWidth: 0,
-        borderColor: 'red'
-      },
-      b: {
-        position: 'absolute',
-        left: 50
-      }
-    });
     expect(StyleSheet.renderToString()).toMatchSnapshot();
   });
 });
