@@ -2,80 +2,11 @@ exports[`components/ActivityIndicator default render 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
-  className="
-rn-alignItems:center
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-justifyContent:center
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
+  className="rn-alignItems-1awozwy rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-justifyContent-1777fci rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4"
   role="progressbar"
   style={Object {}}>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-animationDuration:0.75s
-  rn-animationIterationCount:infinite
-  rn-animationName:rn-ActivityIndicator-animation
-  rn-animationTimingFunction:linear
-  rn-backgroundColor:transparent
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:20px
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-width:20px"
+    className="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationTimingFunction-1ldzwu0 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-z80fyv rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-width-19wmn03"
     style={Object {}}>
     <svg
       height="100%"
@@ -115,81 +46,11 @@ exports[`components/ActivityIndicator other render 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
-  className="
-rn-alignItems:center
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-justifyContent:center
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none"
+  className="rn-alignItems-1awozwy rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-justifyContent-1777fci rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4"
   role="progressbar"
   style={Object {}}>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-animationDuration:0.75s
-  rn-animationIterationCount:infinite
-  rn-animationName:rn-ActivityIndicator-animation
-  rn-animationPlayState:paused
-  rn-animationTimingFunction:linear
-  rn-backgroundColor:transparent
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:36px
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-width:36px"
+    className="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationPlayState-1abnn5w rn-animationTimingFunction-1ldzwu0 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1r8g8re rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-width-1acpoxo"
     style={Object {}}>
     <svg
       height="100%"

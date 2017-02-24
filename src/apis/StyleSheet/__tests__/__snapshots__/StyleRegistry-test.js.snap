@@ -1,0 +1,227 @@
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 1`] = `
+Object {
+  "classList": Array [
+    "rn-borderTopColor-1gxhl28",
+    "rn-borderRightColor-knoah9",
+    "rn-borderBottomColor-1ani3fp",
+    "rn-borderLeftColor-ribj9x",
+    "rn-borderTopWidth-13yce4e",
+    "rn-borderRightWidth-fnigne",
+    "rn-borderBottomWidth-ndvcnb",
+    "rn-borderLeftWidth-gxnn5r",
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+    "rn-width-b8lwoo",
+  ],
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-b8lwoo",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 2`] = `
+Object {
+  "classList": Array [
+    "rn-borderTopColor-1gxhl28",
+    "rn-borderRightColor-knoah9",
+    "rn-borderBottomColor-1ani3fp",
+    "rn-borderLeftColor-ribj9x",
+    "rn-borderTopWidth-13yce4e",
+    "rn-borderRightWidth-fnigne",
+    "rn-borderBottomWidth-ndvcnb",
+    "rn-borderLeftWidth-gxnn5r",
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+    "rn-width-l0gwng",
+  ],
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-l0gwng",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 3`] = `
+Object {
+  "classList": Array [
+    "rn-borderTopColor-1gxhl28",
+    "rn-borderRightColor-knoah9",
+    "rn-borderBottomColor-1ani3fp",
+    "rn-borderLeftColor-ribj9x",
+    "rn-borderTopWidth-13yce4e",
+    "rn-borderRightWidth-fnigne",
+    "rn-borderBottomWidth-ndvcnb",
+    "rn-borderLeftWidth-gxnn5r",
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+    "rn-width-b8lwoo",
+  ],
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-b8lwoo",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 1`] = `
+Object {
+  "classList": Array [
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+  ],
+  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 2`] = `
+Object {
+  "classList": Array [
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+    "rn-width-l0gwng",
+  ],
+  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-l0gwng",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 3`] = `
+Object {
+  "classList": Array [
+    "rn-left-1tsx3h3",
+    "rn-pointerEvents-ah5dr5",
+    "rn-position-u8s1d",
+  ],
+  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 1`] = `
+Object {
+  "classList": Array [
+    "rn-pointerEvents-ah5dr5",
+  ],
+  "className": "rn-pointerEvents-ah5dr5",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "position": "absolute",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 2`] = `
+Object {
+  "classList": Array [
+    "rn-pointerEvents-ah5dr5",
+  ],
+  "className": "rn-pointerEvents-ah5dr5",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "position": "absolute",
+    "width": "200px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 3`] = `
+Object {
+  "classList": Array [
+    "rn-pointerEvents-ah5dr5",
+  ],
+  "className": "rn-pointerEvents-ah5dr5",
+  "style": Object {
+    "borderBottomColor": "red",
+    "borderBottomWidth": "0px",
+    "borderLeftColor": "red",
+    "borderLeftWidth": "0px",
+    "borderRightColor": "red",
+    "borderRightWidth": "0px",
+    "borderTopColor": "red",
+    "borderTopWidth": "0px",
+    "left": "50px",
+    "position": "absolute",
+    "width": "100px",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolveStateful 1`] = `
+Array [
+  "external-className",
+  "rn-borderTopColor-1gxhl28",
+  "rn-borderRightColor-knoah9",
+  "rn-borderBottomColor-1ani3fp",
+  "rn-borderLeftColor-ribj9x",
+  "rn-borderTopWidth-13yce4e",
+  "rn-borderRightWidth-fnigne",
+  "rn-borderBottomWidth-ndvcnb",
+  "rn-borderLeftWidth-gxnn5r",
+  "rn-width-b8lwoo",
+]
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolveStateful 2`] = `
+Object {
+  "className": "rn-borderBottomColor-1ani3fp rn-borderBottomWidth-ndvcnb rn-borderLeftColor-ribj9x rn-borderLeftWidth-gxnn5r rn-borderRightColor-knoah9 rn-borderRightWidth-fnigne rn-borderTopColor-1gxhl28 rn-borderTopWidth-13yce4e rn-width-b8lwoo external-className",
+  "style": Object {
+    "borderBottomColor": null,
+    "borderBottomWidth": null,
+    "borderLeftColor": null,
+    "borderLeftWidth": null,
+    "borderRightColor": null,
+    "borderRightWidth": null,
+    "borderTopColor": null,
+    "borderTopWidth": null,
+    "opacity": 1,
+    "width": null,
+  },
+}
+`;

@@ -1,39 +1,6 @@
 exports[`components/Switch disabled when "false" a default checkbox is rendered 1`] = `
 <div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-cursor:pointer
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none
-rn-userSelect:none"
+  className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-cursor-1loqt21 rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-userSelect-lrvibr"
   style={
     Object {
       "height": "20px",
@@ -41,44 +8,7 @@ rn-userSelect:none"
     }
   }>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-bottom:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:70%
-  rn-left:0px
-  rn-listStyle:none
-  rn-marginTop:auto
-  rn-marginRight:auto
-  rn-marginBottom:auto
-  rn-marginLeft:auto
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-top:0px
-  rn-transitionDuration:0.1s
-  rn-width:90%"
+    className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
         "backgroundColor": "#939393",
@@ -89,46 +19,7 @@ rn-userSelect:none"
       }
     } />
   <div
-    className="
-  rn-alignItems:stretch
-  rn-alignSelf:flex-start
-  rn-borderTopLeftRadius:100%
-  rn-borderTopRightRadius:100%
-  rn-borderBottomRightRadius:100%
-  rn-borderBottomLeftRadius:100%
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-left:0%
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-transform:translateZ(0px)
-  rn-transitionDuration:0.1s"
+    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
         "backgroundColor": "#FAFAFA",
@@ -138,24 +29,7 @@ rn-userSelect:none"
     } />
   <input
     checked={false}
-    className="
-  rn-bottom:0px
-  rn-cursor:inherit
-  rn-height:100%
-  rn-left:0px
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-opacity:0
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-top:0px
-  rn-width:100%"
+    className="rn-bottom-1p0dtai rn-cursor-1ei5mc7 rn-height-1pi2tsx rn-left-1d2f490 rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-opacity-1272l3b rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -167,40 +41,7 @@ rn-userSelect:none"
 
 exports[`components/Switch disabled when "true" a disabled checkbox is rendered 1`] = `
 <div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-cursor:default
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none
-rn-userSelect:none"
+  className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-cursor-7q8q6z rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-userSelect-lrvibr"
   style={
     Object {
       "height": "20px",
@@ -208,45 +49,7 @@ rn-userSelect:none"
     }
   }>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-backgroundColor:#D5D5D5
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-bottom:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:70%
-  rn-left:0px
-  rn-listStyle:none
-  rn-marginTop:auto
-  rn-marginRight:auto
-  rn-marginBottom:auto
-  rn-marginLeft:auto
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-top:0px
-  rn-transitionDuration:0.1s
-  rn-width:90%"
+    className="rn-alignItems-1oszu61 rn-backgroundColor-1i8mn1y rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
         "borderBottomLeftRadius": "10px",
@@ -256,47 +59,7 @@ rn-userSelect:none"
       }
     } />
   <div
-    className="
-  rn-alignItems:stretch
-  rn-alignSelf:flex-start
-  rn-backgroundColor:#BDBDBD
-  rn-borderTopLeftRadius:100%
-  rn-borderTopRightRadius:100%
-  rn-borderBottomRightRadius:100%
-  rn-borderBottomLeftRadius:100%
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-left:0%
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-transform:translateZ(0px)
-  rn-transitionDuration:0.1s"
+    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-backgroundColor-1jvdyr1 rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
         "height": "20px",
@@ -305,24 +68,7 @@ rn-userSelect:none"
     } />
   <input
     checked={false}
-    className="
-  rn-bottom:0px
-  rn-cursor:inherit
-  rn-height:100%
-  rn-left:0px
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-opacity:0
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-top:0px
-  rn-width:100%"
+    className="rn-bottom-1p0dtai rn-cursor-1ei5mc7 rn-height-1pi2tsx rn-left-1d2f490 rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-opacity-1272l3b rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu"
     disabled={true}
     onBlur={[Function]}
     onChange={[Function]}
@@ -334,40 +80,7 @@ rn-userSelect:none"
 
 exports[`components/Switch value when "false" an unchecked checkbox is rendered 1`] = `
 <div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-cursor:pointer
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none
-rn-userSelect:none"
+  className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-cursor-1loqt21 rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-userSelect-lrvibr"
   style={
     Object {
       "height": "20px",
@@ -375,44 +88,7 @@ rn-userSelect:none"
     }
   }>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-bottom:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:70%
-  rn-left:0px
-  rn-listStyle:none
-  rn-marginTop:auto
-  rn-marginRight:auto
-  rn-marginBottom:auto
-  rn-marginLeft:auto
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-top:0px
-  rn-transitionDuration:0.1s
-  rn-width:90%"
+    className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
         "backgroundColor": "#939393",
@@ -423,46 +99,7 @@ rn-userSelect:none"
       }
     } />
   <div
-    className="
-  rn-alignItems:stretch
-  rn-alignSelf:flex-start
-  rn-borderTopLeftRadius:100%
-  rn-borderTopRightRadius:100%
-  rn-borderBottomRightRadius:100%
-  rn-borderBottomLeftRadius:100%
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-left:0%
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-transform:translateZ(0px)
-  rn-transitionDuration:0.1s"
+    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
         "backgroundColor": "#FAFAFA",
@@ -472,24 +109,7 @@ rn-userSelect:none"
     } />
   <input
     checked={false}
-    className="
-  rn-bottom:0px
-  rn-cursor:inherit
-  rn-height:100%
-  rn-left:0px
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-opacity:0
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-top:0px
-  rn-width:100%"
+    className="rn-bottom-1p0dtai rn-cursor-1ei5mc7 rn-height-1pi2tsx rn-left-1d2f490 rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-opacity-1272l3b rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -501,40 +121,7 @@ rn-userSelect:none"
 
 exports[`components/Switch value when "true" a checked checkbox is rendered 1`] = `
 <div
-  className="
-rn-alignItems:stretch
-rn-backgroundColor:transparent
-rn-borderTopStyle:solid
-rn-borderRightStyle:solid
-rn-borderBottomStyle:solid
-rn-borderLeftStyle:solid
-rn-borderTopWidth:0px
-rn-borderRightWidth:0px
-rn-borderBottomWidth:0px
-rn-borderLeftWidth:0px
-rn-boxSizing:border-box
-rn-color:inherit
-rn-cursor:pointer
-rn-display:flex
-rn-flexShrink:0
-rn-flexBasis:auto
-rn-flexDirection:column
-rn-font:inherit
-rn-listStyle:none
-rn-marginTop:0px
-rn-marginRight:0px
-rn-marginBottom:0px
-rn-marginLeft:0px
-rn-minHeight:0px
-rn-minWidth:0px
-rn-paddingTop:0px
-rn-paddingRight:0px
-rn-paddingBottom:0px
-rn-paddingLeft:0px
-rn-position:relative
-rn-textAlign:inherit
-rn-textDecoration:none
-rn-userSelect:none"
+  className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-cursor-1loqt21 rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-userSelect-lrvibr"
   style={
     Object {
       "height": "20px",
@@ -542,44 +129,7 @@ rn-userSelect:none"
     }
   }>
   <div
-    className="
-  rn-alignItems:stretch
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-bottom:0px
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-height:70%
-  rn-left:0px
-  rn-listStyle:none
-  rn-marginTop:auto
-  rn-marginRight:auto
-  rn-marginBottom:auto
-  rn-marginLeft:auto
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-top:0px
-  rn-transitionDuration:0.1s
-  rn-width:90%"
+    className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
         "backgroundColor": "#A3D3CF",
@@ -590,45 +140,7 @@ rn-userSelect:none"
       }
     } />
   <div
-    className="
-  rn-alignItems:stretch
-  rn-alignSelf:flex-start
-  rn-borderTopLeftRadius:100%
-  rn-borderTopRightRadius:100%
-  rn-borderBottomRightRadius:100%
-  rn-borderBottomLeftRadius:100%
-  rn-borderTopStyle:solid
-  rn-borderRightStyle:solid
-  rn-borderBottomStyle:solid
-  rn-borderLeftStyle:solid
-  rn-borderTopWidth:0px
-  rn-borderRightWidth:0px
-  rn-borderBottomWidth:0px
-  rn-borderLeftWidth:0px
-  rn-boxShadow:0px-1px-3px-rgba(0,0,0,0.5)
-  rn-boxSizing:border-box
-  rn-color:inherit
-  rn-display:flex
-  rn-flexShrink:0
-  rn-flexBasis:auto
-  rn-flexDirection:column
-  rn-font:inherit
-  rn-left:100%
-  rn-listStyle:none
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-minHeight:0px
-  rn-minWidth:0px
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:relative
-  rn-textAlign:inherit
-  rn-textDecoration:none
-  rn-transform:translateZ(0px)
-  rn-transitionDuration:0.1s"
+    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-7b7h2f rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
         "backgroundColor": "#009688",
@@ -639,24 +151,7 @@ rn-userSelect:none"
     } />
   <input
     checked={true}
-    className="
-  rn-bottom:0px
-  rn-cursor:inherit
-  rn-height:100%
-  rn-left:0px
-  rn-marginTop:0px
-  rn-marginRight:0px
-  rn-marginBottom:0px
-  rn-marginLeft:0px
-  rn-opacity:0
-  rn-paddingTop:0px
-  rn-paddingRight:0px
-  rn-paddingBottom:0px
-  rn-paddingLeft:0px
-  rn-position:absolute
-  rn-right:0px
-  rn-top:0px
-  rn-width:100%"
+    className="rn-bottom-1p0dtai rn-cursor-1ei5mc7 rn-height-1pi2tsx rn-left-1d2f490 rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-opacity-1272l3b rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
