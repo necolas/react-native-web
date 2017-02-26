@@ -3765,10 +3765,6 @@ marked@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
-marky@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/marky/-/marky-1.1.1.tgz#dcd1eba3e2c6412619a76981f635b3698a8761e8"
-
 math-expression-evaluator@^1.2.14:
   version "1.2.14"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.14.tgz#39511771ed9602405fba9affff17eb4d2a3843ab"

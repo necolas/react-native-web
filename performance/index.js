@@ -1,16 +1,28 @@
-import createDeepTree from './benchmarks/deepTree/createDeepTree';
-import deepTree from './benchmarks/deepTree';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactNative from 'react-native';
+import cssModules from './implementations/css-modules';
+import glamor from './implementations/glamor';
+import reactNative from './implementations/react-native-web';
+import reactNativeLite from './implementations/react-native-web/lite';
+import styledComponents from './implementations/styled-components';
 
-const node = document.querySelector('.root');
-const DeepTree = createDeepTree(ReactNative);
+import renderDeepTree from './tests/renderDeepTree';
+import renderWideTree from './tests/renderWideTree';
 
-Promise.resolve()
-  .then(deepTree({ wrap: 4, depth: 3, breadth: 10, runs: 5, registerStyles: false }, node))
-  .then(deepTree({ wrap: 4, depth: 3, breadth: 10, runs: 5 }, node))
-  .then(deepTree({ wrap: 4, depth: 3, breadth: 10, runs: 5, leafComponent: 'Image' }, node))
-  .then(deepTree({ wrap: 1, depth: 5, breadth: 3, runs: 10 }, node))
-  .then(() => ReactDOM.render(<DeepTree breadth={3} depth={5} id={0} wrap={1} />, node));
+const tests = [
+  // deep tree
+  () => renderDeepTree('css-modules', cssModules),
+  () => renderDeepTree('react-native-web/lite', reactNativeLite),
+  () => renderDeepTree('react-native-web', reactNative),
+  () => renderDeepTree('styled-components', styledComponents),
+  () => renderDeepTree('glamor', glamor),
+  // wide tree
+  () => renderWideTree('css-modules', cssModules),
+  () => renderWideTree('react-native-web/lite', reactNativeLite),
+  () => renderWideTree('react-native-web', reactNative),
+  () => renderWideTree('styled-components', styledComponents),
+  () => renderWideTree('glamor', glamor)
+];
 
+// run benchmarks
+tests.reduce((promise, test) => {
+  return promise.then(test());
+}, Promise.resolve());

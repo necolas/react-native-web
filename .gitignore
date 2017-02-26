@@ -1,4 +1,3 @@
-/dist
-/dist-examples
-/dist-performance
-/node_modules
+node_modules
+dist
+dist-examples

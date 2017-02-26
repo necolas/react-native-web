@@ -1,0 +1,36 @@
+.outer {
+  padding: 4px;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.color0 {
+  background-color: #222;
+}
+
+.color1 {
+  background-color: #666;
+}
+
+.color2 {
+  background-color: #999;
+}
+
+.color3 {
+  background-color: blue;
+}
+
+.color4 {
+  background-color: orange;
+}
+
+.color5 {
+  background-color: red;
+}
+
+.fixed {
+  width: 20px;
+  height: 20px;
+}
