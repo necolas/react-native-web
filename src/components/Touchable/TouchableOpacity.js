@@ -157,7 +157,7 @@ var TouchableOpacity = React.createClass({
 
   _onKeyEnter(e, callback) {
     var ENTER = 13
-    if (e.keyCode === ENTER) {
+    if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e)
     }
   },
