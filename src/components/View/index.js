@@ -124,9 +124,6 @@ const styles = StyleSheet.create({
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
-  },
-  flexReset: {
-    flexShrink: 0
   }
 });
 
