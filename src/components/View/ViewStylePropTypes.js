@@ -21,6 +21,7 @@ module.exports = {
   opacity: number,
   overflow: autoOrHiddenOrVisible,
   zIndex: number,
+  elevation: number,
   /*
    * @platform web
    */
