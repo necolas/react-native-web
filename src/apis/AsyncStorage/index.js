@@ -82,12 +82,13 @@ class AsyncStorage {
    *   multiGet(['k1', 'k2']) -> [['k1', 'val1'], ['k2', 'val2']]
    */
   static multiGet(keys: Array<string>) {
-    const promises = keys.map((key) => AsyncStorage.getItem(key));
+    const promises = keys.map(key => AsyncStorage.getItem(key));
 
-    return Promise.all(promises).then(
-      (result) => Promise.resolve(result.map((value, i) => [ keys[i], value ])),
-      (error) => Promise.reject(error)
-    );
+    return Promise.all(promises)
+      .then(
+        result => Promise.resolve(result.map((value, i) => [keys[i], value])),
+        error => Promise.reject(error)
+      );
   }
 
   /**
@@ -97,24 +98,18 @@ class AsyncStorage {
    *   multiMerge([['k1', 'val1'], ['k2', 'val2']])
    */
   static multiMerge(keyValuePairs: Array<Array<string>>) {
-    const promises = keyValuePairs.map((item) => AsyncStorage.mergeItem(item[0], item[1]));
+    const promises = keyValuePairs.map(item => AsyncStorage.mergeItem(item[0], item[1]));
 
-    return Promise.all(promises).then(
-      () => Promise.resolve(null),
-      (error) => Promise.reject(error)
-    );
+    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
   }
 
   /**
    * Delete all the keys in the `keys` array.
    */
   static multiRemove(keys: Array<string>) {
-    const promises = keys.map((key) => AsyncStorage.removeItem(key));
+    const promises = keys.map(key => AsyncStorage.removeItem(key));
 
-    return Promise.all(promises).then(
-      () => Promise.resolve(null),
-      (error) => Promise.reject(error)
-    );
+    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
   }
 
   /**
@@ -122,12 +117,9 @@ class AsyncStorage {
    *   multiSet([['k1', 'val1'], ['k2', 'val2']])
    */
   static multiSet(keyValuePairs: Array<Array<string>>) {
-    const promises = keyValuePairs.map((item) => AsyncStorage.setItem(item[0], item[1]));
+    const promises = keyValuePairs.map(item => AsyncStorage.setItem(item[0], item[1]));
 
-    return Promise.all(promises).then(
-      () => Promise.resolve(null),
-      (error) => Promise.reject(error)
-    );
+    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
   }
 
   /**

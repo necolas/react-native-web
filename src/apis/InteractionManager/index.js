@@ -17,10 +17,7 @@ const InteractionManager = {
    * Schedule a function to run after all interactions have completed.
    */
   runAfterInteractions(callback: Function) {
-    invariant(
-      typeof callback === 'function',
-      'Must specify a function to schedule.'
-    );
+    invariant(typeof callback === 'function', 'Must specify a function to schedule.');
     callback();
   },
 
@@ -35,10 +32,7 @@ const InteractionManager = {
    * Notify manager that an interaction has completed.
    */
   clearInteractionHandle(handle) {
-    invariant(
-      !!handle,
-      'Must provide a handle to clear.'
-    );
+    invariant(!!handle, 'Must provide a handle to clear.');
   },
 
   addListener: () => {}

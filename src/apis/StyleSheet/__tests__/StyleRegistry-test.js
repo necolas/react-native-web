@@ -17,20 +17,24 @@ describe('apis/StyleSheet/StyleRegistry', () => {
 
   describe('resolve', () => {
     const styleA = { borderWidth: 0, borderColor: 'red', width: 100 };
-    const styleB = { position: 'absolute', left: 50, pointerEvents: 'box-only' };
+    const styleB = {
+      position: 'absolute',
+      left: 50,
+      pointerEvents: 'box-only'
+    };
     const styleC = { width: 200 };
 
     const testResolve = (a, b, c) => {
       // no common properties, different resolving order, same result
-      const resolve1 = styleRegistry.resolve([ a, b ]);
+      const resolve1 = styleRegistry.resolve([a, b]);
       expect(resolve1).toMatchSnapshot();
-      const resolve2 = styleRegistry.resolve([ b, a ]);
+      const resolve2 = styleRegistry.resolve([b, a]);
       expect(resolve1).toEqual(resolve2);
 
       // common properties, different resolving order, different result
-      const resolve3 = styleRegistry.resolve([ a, b, c ]);
+      const resolve3 = styleRegistry.resolve([a, b, c]);
       expect(resolve3).toMatchSnapshot();
-      const resolve4 = styleRegistry.resolve([ c, a, b ]);
+      const resolve4 = styleRegistry.resolve([c, a, b]);
       expect(resolve4).toMatchSnapshot();
       expect(resolve3).not.toEqual(resolve4);
     };
@@ -56,7 +60,11 @@ describe('apis/StyleSheet/StyleRegistry', () => {
 
   test('resolveStateful', () => {
     // generate a classList to act as pre-existing DOM state
-    const mockStyle = styleRegistry.register({ borderWidth: 0, borderColor: 'red', width: 100 });
+    const mockStyle = styleRegistry.register({
+      borderWidth: 0,
+      borderColor: 'red',
+      width: 100
+    });
     const { classList: domClassList } = styleRegistry.resolve(mockStyle);
     domClassList.unshift('external-className');
     expect(domClassList).toMatchSnapshot();

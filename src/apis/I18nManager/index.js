@@ -5,7 +5,7 @@ type I18nManagerStatus = {
   forceRTL: (forceRTL: boolean) => {},
   setRTL: (setRTL: boolean) => {},
   isRTL: boolean
-}
+};
 
 let isPreferredLanguageRTL = false;
 let isRTLAllowed = true;

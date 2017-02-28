@@ -2,14 +2,12 @@
 
 import StyleSheet from '..';
 
-const isPlainObject = (x) => {
+const isPlainObject = x => {
   const toString = Object.prototype.toString;
   let proto;
   /* eslint-disable */
-  return (
-    toString.call(x) === '[object Object]' &&
-    (proto = Object.getPrototypeOf(x), proto === null || proto === Object.getPrototypeOf({}))
-  );
+  return toString.call(x) === '[object Object]' &&
+    (proto = Object.getPrototypeOf(x), proto === null || proto === Object.getPrototypeOf({}));
   /* eslint-enable */
 };
 

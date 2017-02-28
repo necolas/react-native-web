@@ -32,7 +32,7 @@ const originalLocalStorage = window.localStorage;
 
 describe('apis/AsyncStorage', () => {
   describe('mergeLocalStorageItem', () => {
-    test('should have same behavior as react-native', (done) => {
+    test('should have same behavior as react-native', done => {
       window.localStorage = mockLocalStorage;
       // https://facebook.github.io/react-native/docs/asyncstorage.html
       const UID123_object = {
@@ -45,30 +45,33 @@ describe('apis/AsyncStorage', () => {
         traits: { eyes: 'blue', shoe_size: 10 }
       };
 
-      waterfall([
-        (cb) => {
-          AsyncStorage.setItem('UID123', JSON.stringify(UID123_object))
-            .then(() => cb(null))
-            .catch(cb);
-        },
-        (cb) => {
-          AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta))
-            .then(() => cb(null))
-            .catch(cb);
-        },
-        (cb) => {
-          AsyncStorage.getItem('UID123')
-            .then((result) => {
-              cb(null, JSON.parse(result));
-            })
-            .catch(cb);
+      waterfall(
+        [
+          cb => {
+            AsyncStorage.setItem('UID123', JSON.stringify(UID123_object))
+              .then(() => cb(null))
+              .catch(cb);
+          },
+          cb => {
+            AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta))
+              .then(() => cb(null))
+              .catch(cb);
+          },
+          cb => {
+            AsyncStorage.getItem('UID123')
+              .then(result => {
+                cb(null, JSON.parse(result));
+              })
+              .catch(cb);
+          }
+        ],
+        (err, result) => {
+          expect(err).toEqual(null);
+          expect(result).toMatchSnapshot();
+          window.localStorage = originalLocalStorage;
+          done();
         }
-      ], (err, result) => {
-        expect(err).toEqual(null);
-        expect(result).toMatchSnapshot();
-        window.localStorage = originalLocalStorage;
-        done();
-      });
+      );
     });
   });
 });

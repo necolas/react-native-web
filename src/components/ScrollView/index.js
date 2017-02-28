@@ -26,7 +26,7 @@ const ScrollView = React.createClass({
     ...ViewPropTypes,
     contentContainerStyle: StyleSheetPropType(ViewStylePropTypes),
     horizontal: PropTypes.bool,
-    keyboardDismissMode: PropTypes.oneOf([ 'none', 'interactive', 'on-drag' ]),
+    keyboardDismissMode: PropTypes.oneOf(['none', 'interactive', 'on-drag']),
     onContentSizeChange: PropTypes.func,
     onScroll: PropTypes.func,
     pagingEnabled: PropTypes.bool,
@@ -36,7 +36,7 @@ const ScrollView = React.createClass({
     style: StyleSheetPropType(ViewStylePropTypes)
   },
 
-  mixins: [ ScrollResponder.Mixin ],
+  mixins: [ScrollResponder.Mixin],
 
   getInitialState() {
     return this.scrollResponderMixinGetInitialState();
@@ -80,12 +80,18 @@ const ScrollView = React.createClass({
     animated?: boolean
   ) {
     if (typeof y === 'number') {
-      console.warn('`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.');
+      console.warn(
+        '`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.'
+      );
     } else {
       ({ x, y, animated } = y || emptyObject);
     }
 
-    this.getScrollResponder().scrollResponderScrollTo({ x: x || 0, y: y || 0, animated: animated !== false });
+    this.getScrollResponder().scrollResponderScrollTo({
+      x: x || 0,
+      y: y || 0,
+      animated: animated !== false
+    });
   },
 
   /**
@@ -112,11 +118,13 @@ const ScrollView = React.createClass({
 
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style);
-      const childLayoutProps = [ 'alignItems', 'justifyContent' ].filter((prop) => style && style[prop] !== undefined);
+      const childLayoutProps = ['alignItems', 'justifyContent'].filter(
+        prop => style && style[prop] !== undefined
+      );
       invariant(
         childLayoutProps.length === 0,
         `ScrollView child layout (${JSON.stringify(childLayoutProps)}) ` +
-        'must be applied through the contentContainerStyle prop.'
+          'must be applied through the contentContainerStyle prop.'
       );
     }
 
@@ -143,11 +151,7 @@ const ScrollView = React.createClass({
 
     const props = {
       ...other,
-      style: [
-        styles.base,
-        horizontal && styles.baseHorizontal,
-        this.props.style
-      ],
+      style: [styles.base, horizontal && styles.baseHorizontal, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -168,20 +172,15 @@ const ScrollView = React.createClass({
 
     const ScrollViewClass = ScrollViewBase;
 
-    invariant(
-      ScrollViewClass !== undefined,
-      'ScrollViewClass must not be undefined'
-    );
+    invariant(ScrollViewClass !== undefined, 'ScrollViewClass must not be undefined');
 
     if (refreshControl) {
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        (
-          <ScrollViewClass {...props} ref={this._setScrollViewRef} style={styles.base}>
-            {contentContainer}
-          </ScrollViewClass>
-        )
+        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={styles.base}>
+          {contentContainer}
+        </ScrollViewClass>
       );
     }
 
@@ -202,10 +201,10 @@ const ScrollView = React.createClass({
       if (this.props.onScroll && !this.props.scrollEventThrottle) {
         console.log(
           'You specified `onScroll` on a <ScrollView> but not ' +
-          '`scrollEventThrottle`. You will only receive one event. ' +
-          'Using `16` you get all the events but be aware that it may ' +
-          'cause frame drops, use a bigger number if you don\'t need as ' +
-          'much precision.'
+            '`scrollEventThrottle`. You will only receive one event. ' +
+            'Using `16` you get all the events but be aware that it may ' +
+            "cause frame drops, use a bigger number if you don't need as " +
+            'much precision.'
         );
       }
     }
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
     overflowY: 'hidden'
   },
   contentContainer: {
-    transform: [ { translateZ: 0 } ]
+    transform: [{ translateZ: 0 }]
   },
   contentContainerHorizontal: {
     flexDirection: 'row'

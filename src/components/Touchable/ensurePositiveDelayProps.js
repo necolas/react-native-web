@@ -16,8 +16,7 @@ var invariant = require('fbjs/lib/invariant');
 
 var ensurePositiveDelayProps = function(props: any) {
   invariant(
-    !(props.delayPressIn < 0 || props.delayPressOut < 0 ||
-      props.delayLongPress < 0),
+    !(props.delayPressIn < 0 || props.delayPressOut < 0 || props.delayLongPress < 0),
     'Touchable components cannot have negative delay properties'
   );
 };

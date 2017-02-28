@@ -11,7 +11,9 @@ describe('components/ActivityIndicator', () => {
   });
 
   test('other render', () => {
-    const component = renderer.create(<ActivityIndicator animating={false} hidesWhenStopped={false} size='large' />);
+    const component = renderer.create(
+      <ActivityIndicator animating={false} hidesWhenStopped={false} size="large" />
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
 });

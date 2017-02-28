@@ -10,13 +10,12 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
-const connection = ExecutionEnvironment.canUseDOM && (
-  window.navigator.connection ||
-  window.navigator.mozConnection ||
-  window.navigator.webkitConnection
-);
+const connection = ExecutionEnvironment.canUseDOM &&
+  (window.navigator.connection ||
+    window.navigator.mozConnection ||
+    window.navigator.webkitConnection);
 
-const eventTypes = [ 'change' ];
+const eventTypes = ['change'];
 
 const connectionListeners = [];
 
@@ -28,7 +27,9 @@ const NetInfo = {
   addEventListener(type: string, handler: Function): { remove: () => void } {
     invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
     if (!connection) {
-      console.error('Network Connection API is not supported. Not listening for connection type changes.');
+      console.error(
+        'Network Connection API is not supported. Not listening for connection type changes.'
+      );
       return {
         remove: () => {}
       };
@@ -42,7 +43,9 @@ const NetInfo = {
 
   removeEventListener(type: string, handler: Function): void {
     invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
-    if (!connection) { return; }
+    if (!connection) {
+      return;
+    }
     connection.removeEventListener(type, handler);
   },
 
@@ -58,10 +61,14 @@ const NetInfo = {
 
   isConnected: {
     addEventListener(type: string, handler: Function): { remove: () => void } {
-      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+      invariant(
+        eventTypes.indexOf(type) !== -1,
+        'Trying to subscribe to unknown event: "%s"',
+        type
+      );
       const onlineCallback = () => handler(true);
       const offlineCallback = () => handler(false);
-      connectionListeners.push([ handler, onlineCallback, offlineCallback ]);
+      connectionListeners.push([handler, onlineCallback, offlineCallback]);
 
       window.addEventListener('online', onlineCallback, false);
       window.addEventListener('offline', offlineCallback, false);
@@ -72,11 +79,18 @@ const NetInfo = {
     },
 
     removeEventListener(type: string, handler: Function): void {
-      invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+      invariant(
+        eventTypes.indexOf(type) !== -1,
+        'Trying to subscribe to unknown event: "%s"',
+        type
+      );
 
-      const listenerIndex = findIndex(connectionListeners, (pair) => pair[0] === handler);
-      invariant(listenerIndex !== -1, 'Trying to remove NetInfo connection listener for unregistered handler');
-      const [ , onlineCallback, offlineCallback ] = connectionListeners[listenerIndex];
+      const listenerIndex = findIndex(connectionListeners, pair => pair[0] === handler);
+      invariant(
+        listenerIndex !== -1,
+        'Trying to remove NetInfo connection listener for unregistered handler'
+      );
+      const [, onlineCallback, offlineCallback] = connectionListeners[listenerIndex];
 
       window.removeEventListener('online', onlineCallback, false);
       window.removeEventListener('offline', offlineCallback, false);

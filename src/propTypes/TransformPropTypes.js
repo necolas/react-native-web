@@ -8,7 +8,7 @@
 import { PropTypes } from 'react';
 
 const { arrayOf, number, oneOfType, shape, string } = PropTypes;
-const numberOrString = oneOfType([ number, string ]);
+const numberOrString = oneOfType([number, string]);
 
 const TransformPropTypes = {
   transform: arrayOf(

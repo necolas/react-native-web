@@ -1,8 +1,8 @@
 import ColorPropType from './ColorPropType';
 import { PropTypes } from 'react';
 
-const numberOrString = PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]);
-const BorderStylePropType = PropTypes.oneOf([ 'solid', 'dotted', 'dashed' ]);
+const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
+const BorderStylePropType = PropTypes.oneOf(['solid', 'dotted', 'dashed']);
 
 const BorderPropTypes = {
   borderColor: ColorPropType,

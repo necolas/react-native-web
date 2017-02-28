@@ -23,7 +23,7 @@ describe('components/Image', () => {
   });
 
   test('prop "accessibilityLabel"', () => {
-    const component = renderer.create(<Image accessibilityLabel='accessibilityLabel' />);
+    const component = renderer.create(<Image accessibilityLabel="accessibilityLabel" />);
     expect(component.toJSON()).toMatchSnapshot();
   });
 
@@ -33,7 +33,7 @@ describe('components/Image', () => {
   });
 
   test('prop "children"', () => {
-    const children = <div className='unique' />;
+    const children = <div className="unique" />;
     const component = renderer.create(<Image children={children} />);
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -53,14 +53,24 @@ describe('components/Image', () => {
     });
 
     test('sets "height" and "width" styles if missing', () => {
-      const defaultSource = { uri: 'https://google.com/favicon.ico', height: 10, width: 20 };
+      const defaultSource = {
+        uri: 'https://google.com/favicon.ico',
+        height: 10,
+        width: 20
+      };
       const component = renderer.create(<Image defaultSource={defaultSource} />);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     test('does not override "height" and "width" styles', () => {
-      const defaultSource = { uri: 'https://google.com/favicon.ico', height: 10, width: 20 };
-      const component = renderer.create(<Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />);
+      const defaultSource = {
+        uri: 'https://google.com/favicon.ico',
+        height: 10,
+        width: 20
+      };
+      const component = renderer.create(
+        <Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />
+      );
       expect(component.toJSON()).toMatchSnapshot();
     });
   });
@@ -72,7 +82,7 @@ describe('components/Image', () => {
       Image.resizeMode.none,
       Image.resizeMode.stretch,
       undefined
-    ].forEach((resizeMode) => {
+    ].forEach(resizeMode => {
       test(`value "${resizeMode}"`, () => {
         const component = renderer.create(<Image resizeMode={resizeMode} />);
         expect(component.toJSON()).toMatchSnapshot();
@@ -88,7 +98,7 @@ describe('components/Image', () => {
   });
 
   test('prop "testID"', () => {
-    const component = renderer.create(<Image testID='testID' />);
+    const component = renderer.create(<Image testID="testID" />);
     expect(component.toJSON()).toMatchSnapshot();
   });
 

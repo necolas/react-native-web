@@ -7,8 +7,8 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
 const { number, oneOf, string } = PropTypes;
-const autoOrHiddenOrVisible = oneOf([ 'auto', 'hidden', 'visible' ]);
-const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
+const autoOrHiddenOrVisible = oneOf(['auto', 'hidden', 'visible']);
+const hiddenOrVisible = oneOf(['hidden', 'visible']);
 
 module.exports = {
   ...AnimationPropTypes,
@@ -31,7 +31,7 @@ module.exports = {
   backgroundAttachment: string,
   backgroundClip: string,
   backgroundImage: string,
-  backgroundOrigin: oneOf([ 'border-box', 'content-box', 'padding-box' ]),
+  backgroundOrigin: oneOf(['border-box', 'content-box', 'padding-box']),
   backgroundPosition: string,
   backgroundRepeat: string,
   backgroundSize: string,
@@ -40,7 +40,7 @@ module.exports = {
   outline: string,
   overflowX: autoOrHiddenOrVisible,
   overflowY: autoOrHiddenOrVisible,
-  perspective: PropTypes.oneOfType([ number, string ]),
+  perspective: PropTypes.oneOfType([number, string]),
   perspectiveOrigin: string,
   transitionDelay: string,
   transitionDuration: string,
@@ -49,5 +49,5 @@ module.exports = {
   userSelect: string,
   visibility: hiddenOrVisible,
   willChange: string,
-  WebkitOverflowScrolling: oneOf([ 'auto', 'touch' ])
+  WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };

@@ -23,6 +23,4 @@ const tests = [
 ];
 
 // run benchmarks
-tests.reduce((promise, test) => {
-  return promise.then(test());
-}, Promise.resolve());
+tests.reduce((promise, test) => promise.then(test()), Promise.resolve());

@@ -15,7 +15,7 @@ describe('components/Text', () => {
   test('prop "numberOfLines"');
 
   test('prop "onPress"', () => {
-    const onPress = (e) => {};
+    const onPress = e => {};
     const component = renderer.create(<Text onPress={onPress} />);
     expect(component.toJSON()).toMatchSnapshot();
   });

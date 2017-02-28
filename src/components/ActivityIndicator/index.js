@@ -12,7 +12,7 @@ class ActivityIndicator extends Component {
     animating: PropTypes.bool,
     color: PropTypes.string,
     hidesWhenStopped: PropTypes.bool,
-    size: PropTypes.oneOfType([ PropTypes.oneOf([ 'small', 'large' ]), PropTypes.number ])
+    size: PropTypes.oneOfType([PropTypes.oneOf(['small', 'large']), PropTypes.number])
   };
 
   static defaultProps = {
@@ -33,24 +33,24 @@ class ActivityIndicator extends Component {
     } = this.props;
 
     const svg = (
-      <svg height='100%' viewBox='0 0 32 32' width='100%'>
+      <svg height="100%" viewBox="0 0 32 32" width="100%">
         <circle
-          cx='16'
-          cy='16'
-          fill='none'
-          r='14'
-          strokeWidth='4'
+          cx="16"
+          cy="16"
+          fill="none"
+          r="14"
+          strokeWidth="4"
           style={{
             stroke: color,
             opacity: 0.2
           }}
         />
         <circle
-          cx='16'
-          cy='16'
-          fill='none'
-          r='14'
-          strokeWidth='4'
+          cx="16"
+          cy="16"
+          fill="none"
+          r="14"
+          strokeWidth="4"
           style={{
             stroke: color,
             strokeDasharray: 80,
@@ -61,15 +61,12 @@ class ActivityIndicator extends Component {
     );
 
     return (
-      <View {...other}
-        accessibilityRole='progressbar'
-        aria-valuemax='1'
-        aria-valuemin='0'
-        style={[
-          styles.container,
-          style,
-          typeof size === 'number' && { height: size, width: size }
-        ]}
+      <View
+        {...other}
+        accessibilityRole="progressbar"
+        aria-valuemax="1"
+        aria-valuemin="0"
+        style={[styles.container, style, typeof size === 'number' && { height: size, width: size }]}
       >
         <View
           children={svg}

@@ -16,7 +16,7 @@ const emptyObject = {};
 /**
  * React Native events differ from W3C events.
  */
-const normalizeEventHandler = (handler) => (e) => {
+const normalizeEventHandler = handler => e => {
   if (handler) {
     e.nativeEvent.text = e.target.value;
     return handler(e);
@@ -54,7 +54,7 @@ class TextInput extends Component {
 
   static propTypes = {
     ...ViewPropTypes,
-    autoCapitalize: PropTypes.oneOf([ 'characters', 'none', 'sentences', 'words' ]),
+    autoCapitalize: PropTypes.oneOf(['characters', 'none', 'sentences', 'words']),
     autoComplete: PropTypes.string,
     autoCorrect: PropTypes.bool,
     autoFocus: PropTypes.bool,
@@ -63,7 +63,14 @@ class TextInput extends Component {
     defaultValue: PropTypes.string,
     editable: PropTypes.bool,
     keyboardType: PropTypes.oneOf([
-      'default', 'email-address', 'number-pad', 'numeric', 'phone-pad', 'search', 'url', 'web-search'
+      'default',
+      'email-address',
+      'number-pad',
+      'numeric',
+      'phone-pad',
+      'search',
+      'url',
+      'web-search'
     ]),
     maxLength: PropTypes.number,
     maxNumberOfLines: PropTypes.number,
@@ -201,10 +208,7 @@ class TextInput extends Component {
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setNode,
-      style: [
-        styles.initial,
-        style
-      ]
+      style: [styles.initial, style]
     });
 
     if (multiline) {
@@ -217,54 +221,75 @@ class TextInput extends Component {
     return createDOMElement(component, otherProps);
   }
 
-  _handleBlur = (e) => {
+  _handleBlur = e => {
     const { onBlur } = this.props;
-    if (onBlur) { onBlur(e); }
-  }
+    if (onBlur) {
+      onBlur(e);
+    }
+  };
 
-  _handleChange = (e) => {
+  _handleChange = e => {
     const { onChange, onChangeText } = this.props;
     const { text } = e.nativeEvent;
-    if (onChange) { onChange(e); }
-    if (onChangeText) { onChangeText(text); }
-  }
+    if (onChange) {
+      onChange(e);
+    }
+    if (onChangeText) {
+      onChangeText(text);
+    }
+  };
 
-  _handleFocus = (e) => {
+  _handleFocus = e => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
     const node = this._node;
-    if (onFocus) { onFocus(e); }
-    if (clearTextOnFocus) { this.clear(); }
-    if (selectTextOnFocus) { node && node.select(); }
-  }
+    if (onFocus) {
+      onFocus(e);
+    }
+    if (clearTextOnFocus) {
+      this.clear();
+    }
+    if (selectTextOnFocus) {
+      node && node.select();
+    }
+  };
 
-  _handleKeyPress = (e) => {
+  _handleKeyPress = e => {
     const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
-    if (onKeyPress) { onKeyPress(e); }
-    if (!e.isDefaultPrevented() && e.which === 13) {
-      if (onSubmitEditing) { onSubmitEditing(e); }
-      if (shouldBlurOnSubmit) { this.blur(); }
+    if (onKeyPress) {
+      onKeyPress(e);
     }
-  }
+    if (!e.isDefaultPrevented() && e.which === 13) {
+      if (onSubmitEditing) {
+        onSubmitEditing(e);
+      }
+      if (shouldBlurOnSubmit) {
+        this.blur();
+      }
+    }
+  };
 
-  _handleSelectionChange = (e) => {
+  _handleSelectionChange = e => {
     const { onSelectionChange, selection = emptyObject } = this.props;
     if (onSelectionChange) {
       try {
         const node = e.target;
         if (isSelectionStale(node, selection)) {
           const { selectionStart, selectionEnd } = node;
-          e.nativeEvent.selection = { start: selectionStart, end: selectionEnd };
+          e.nativeEvent.selection = {
+            start: selectionStart,
+            end: selectionEnd
+          };
           onSelectionChange(e);
         }
       } catch (e) {}
     }
-  }
+  };
 
-  _setNode = (component) => {
+  _setNode = component => {
     this._node = findNodeHandle(component);
-  }
+  };
 }
 
 const styles = StyleSheet.create({

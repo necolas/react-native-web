@@ -17,7 +17,7 @@ const objects = {};
 const prefix = 'r';
 let uniqueID = 1;
 
-const createKey = (id) => `${prefix}-${id}`;
+const createKey = id => `${prefix}-${id}`;
 
 class ReactNativePropRegistry {
   static register(object: Object): number {

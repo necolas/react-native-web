@@ -4,7 +4,7 @@ import UIManager from '..';
 
 const createNode = (style = {}) => {
   const root = document.createElement('div');
-  Object.keys(style).forEach((prop) => {
+  Object.keys(style).forEach(prop => {
     root.style[prop] = style[prop];
   });
   return root;
@@ -30,7 +30,9 @@ describe('apis/UIManager', () => {
       const node = createNode({ color: 'red' });
       const props = { style: { marginTop: 0, marginBottom: 0, opacity: 0 } };
       UIManager.updateView(node, props, componentStub);
-      expect(node.getAttribute('style')).toEqual('color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;');
+      expect(node.getAttribute('style')).toEqual(
+        'color: red; margin-top: 0px; margin-bottom: 0px; opacity: 0;'
+      );
     });
 
     test('replaces input and textarea text', () => {

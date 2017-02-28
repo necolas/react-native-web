@@ -4,12 +4,12 @@ const { number, oneOf, oneOfType, string } = PropTypes;
 
 const AnimationPropTypes = {
   animationDelay: string,
-  animationDirection: oneOf([ 'alternate', 'alternate-reverse', 'normal', 'reverse' ]),
+  animationDirection: oneOf(['alternate', 'alternate-reverse', 'normal', 'reverse']),
   animationDuration: string,
-  animationFillMode: oneOf([ 'none', 'forwards', 'backwards', 'both' ]),
-  animationIterationCount: oneOfType([ number, oneOf([ 'infinite' ]) ]),
+  animationFillMode: oneOf(['none', 'forwards', 'backwards', 'both']),
+  animationIterationCount: oneOfType([number, oneOf(['infinite'])]),
   animationName: string,
-  animationPlayState: oneOf([ 'paused', 'running' ]),
+  animationPlayState: oneOf(['paused', 'running']),
   animationTimingFunction: string
 };
 

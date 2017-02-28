@@ -1,4 +1,4 @@
-const vibrate = (pattern) => {
+const vibrate = pattern => {
   if ('vibrate' in window.navigator) {
     if (typeof pattern === 'number' || Array.isArray(pattern)) {
       window.navigator.vibrate(pattern);

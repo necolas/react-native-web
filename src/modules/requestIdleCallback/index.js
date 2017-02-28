@@ -1,19 +1,22 @@
 /* global window */
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const _requestIdleCallback = function (cb) {
-  return setTimeout(() => {
-    const start = Date.now();
-    cb({
-      didTimeout: false,
-      timeRemaining() {
-        return Math.max(0, 50 - (Date.now() - start));
-      }
-    });
-  }, 1);
+const _requestIdleCallback = function(cb) {
+  return setTimeout(
+    () => {
+      const start = Date.now();
+      cb({
+        didTimeout: false,
+        timeRemaining() {
+          return Math.max(0, 50 - (Date.now() - start));
+        }
+      });
+    },
+    1
+  );
 };
 
-const _cancelIdleCallback = function (id) {
+const _cancelIdleCallback = function(id) {
   clearTimeout(id);
 };
 

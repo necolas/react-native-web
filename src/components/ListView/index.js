@@ -19,7 +19,7 @@ class ListView extends Component {
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: (props) => <ScrollView {...props} />,
+    renderScrollComponent: props => <ScrollView {...props} />,
     scrollRenderAheadDistance: DEFAULT_SCROLL_RENDER_AHEAD,
     onEndReachedThreshold: DEFAULT_END_REACHED_THRESHOLD,
     scrollEventThrottle: DEFAULT_SCROLL_CALLBACK_THROTTLE,
@@ -61,16 +61,24 @@ class ListView extends Component {
   }
 
   componentWillReceiveProps(nextProps: Object) {
-    if (this.props.dataSource !== nextProps.dataSource || this.props.initialListSize !== nextProps.initialListSize) {
-      this.setState((state, props) => {
-        this._prevRenderedRowsCount = 0;
-        return {
-          curRenderedRowsCount: Math.min(
-            Math.max(state.curRenderedRowsCount, props.initialListSize),
-            props.enableEmptySections ? props.dataSource.getRowAndSectionCount() : props.dataSource.getRowCount()
-          )
-        };
-      }, () => this._renderMoreRowsIfNeeded());
+    if (
+      this.props.dataSource !== nextProps.dataSource ||
+      this.props.initialListSize !== nextProps.initialListSize
+    ) {
+      this.setState(
+        (state, props) => {
+          this._prevRenderedRowsCount = 0;
+          return {
+            curRenderedRowsCount: Math.min(
+              Math.max(state.curRenderedRowsCount, props.initialListSize),
+              props.enableEmptySections
+                ? props.dataSource.getRowAndSectionCount()
+                : props.dataSource.getRowCount()
+            )
+          };
+        },
+        () => this._renderMoreRowsIfNeeded()
+      );
     }
   }
 
@@ -94,15 +102,15 @@ class ListView extends Component {
 
   _onRowHighlighted = (sectionId, rowId) => {
     this.setState({ highlightedRow: { sectionId, rowId } });
-  }
+  };
 
   renderSectionHeaderFn = (data, sectionID) => {
     return () => this.props.renderSectionHeader(data, sectionID);
-  }
+  };
 
   renderRowFn = (data, sectionID, rowID) => {
     return () => this.props.renderRow(data, sectionID, rowID, this._onRowHighlighted);
-  }
+  };
 
   render() {
     const children = [];
@@ -144,18 +152,22 @@ class ListView extends Component {
       if (rowIDs.length === 0) {
         if (enableEmptySections === undefined) {
           const warning = require('fbjs/lib/warning');
-          warning(false, 'In next release empty section headers will be rendered.' +
-                  ' In this release you can use \'enableEmptySections\' flag to render empty section headers.');
+          warning(
+            false,
+            'In next release empty section headers will be rendered.' +
+              " In this release you can use 'enableEmptySections' flag to render empty section headers."
+          );
           continue;
         } else {
           const invariant = require('fbjs/lib/invariant');
           invariant(
             enableEmptySections,
-            'In next release \'enableEmptySections\' flag will be deprecated,' +
-            ' empty section headers will always be rendered. If empty section headers' +
-            ' are not desirable their indices should be excluded from sectionIDs object.' +
-            ' In this release \'enableEmptySections\' may only have value \'true\'' +
-            ' to allow empty section headers rendering.');
+            "In next release 'enableEmptySections' flag will be deprecated," +
+              ' empty section headers will always be rendered. If empty section headers' +
+              ' are not desirable their indices should be excluded from sectionIDs object.' +
+              " In this release 'enableEmptySections' may only have value 'true'" +
+              ' to allow empty section headers rendering.'
+          );
         }
       }
 
@@ -172,7 +184,7 @@ class ListView extends Component {
             shouldUpdate={!!shouldUpdateHeader}
           />
         );
-        sectionHeaderIndices.push(totalIndex++);
+        sectionHeaderIndices.push((totalIndex++));
       }
 
       for (let rowIdx = 0; rowIdx < rowIDs.length; rowIdx++) {
@@ -180,31 +192,23 @@ class ListView extends Component {
         const comboID = `${sectionID}_${rowID}`;
         const shouldUpdateRow = rowCount >= this._prevRenderedRowsCount &&
           dataSource.rowShouldUpdate(sectionIdx, rowIdx);
-        const row =
+        const row = (
           <StaticRenderer
             key={`r_${comboID}`}
-            render={this.renderRowFn(
-              dataSource.getRowData(sectionIdx, rowIdx),
-              sectionID,
-              rowID
-            )}
+            render={this.renderRowFn(dataSource.getRowData(sectionIdx, rowIdx), sectionID, rowID)}
             shouldUpdate={!!shouldUpdateRow}
-          />;
+          />
+        );
         children.push(row);
         totalIndex++;
 
-        if (renderSeparator &&
-            (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)) {
-          const adjacentRowHighlighted =
-            this.state.highlightedRow.sectionID === sectionID && (
-              this.state.highlightedRow.rowID === rowID ||
-              this.state.highlightedRow.rowID === rowIDs[rowIdx + 1]
-            );
-          const separator = renderSeparator(
-            sectionID,
-            rowID,
-            adjacentRowHighlighted
-          );
+        if (
+          renderSeparator && (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)
+        ) {
+          const adjacentRowHighlighted = this.state.highlightedRow.sectionID === sectionID &&
+            (this.state.highlightedRow.rowID === rowID ||
+              this.state.highlightedRow.rowID === rowIDs[rowIdx + 1]);
+          const separator = renderSeparator(sectionID, rowID, adjacentRowHighlighted);
           if (separator) {
             children.push(separator);
             totalIndex++;
@@ -220,11 +224,17 @@ class ListView extends Component {
     }
     scrollProps.onScroll = this._onScroll;
 
-    return React.cloneElement(renderScrollComponent(scrollProps), {
-      ref: this._setScrollViewRef,
-      onContentSizeChange: this._onContentSizeChange,
-      onLayout: this._onLayout
-    }, header, children, footer);
+    return React.cloneElement(
+      renderScrollComponent(scrollProps),
+      {
+        ref: this._setScrollViewRef,
+        onContentSizeChange: this._onContentSizeChange,
+        onLayout: this._onLayout
+      },
+      header,
+      children,
+      footer
+    );
   }
 
   _measureAndUpdateScrollProps() {
@@ -245,14 +255,14 @@ class ListView extends Component {
       this._renderMoreRowsIfNeeded();
     }
     this.props.onLayout && this.props.onLayout(event);
-  }
+  };
 
   _updateVisibleRows(updatedFrames?: Array<Object>) {
     if (!this.props.onChangeVisibleRows) {
       return; // No need to compute visible rows if there is no callback
     }
     if (updatedFrames) {
-      updatedFrames.forEach((newFrame) => {
+      updatedFrames.forEach(newFrame => {
         this._childFrames[newFrame.index] = Object.assign({}, newFrame);
       });
     }
@@ -283,8 +293,10 @@ class ListView extends Component {
         const rowID = rowIDs[rowIdx];
         const frame = this._childFrames[totalIndex];
         totalIndex++;
-        if (this.props.renderSeparator &&
-           (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)) {
+        if (
+          this.props.renderSeparator &&
+          (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)
+        ) {
           totalIndex++;
         }
         if (!frame) {
@@ -293,7 +305,7 @@ class ListView extends Component {
         const rowVisible = visibleSection[rowID];
         const min = isVertical ? frame.y : frame.x;
         const max = min + (isVertical ? frame.height : frame.width);
-        if ((!min && !max) || (min === max)) {
+        if ((!min && !max) || min === max) {
           break;
         }
         if (min > visibleMax || max < visibleMin) {
@@ -331,18 +343,24 @@ class ListView extends Component {
       this._renderMoreRowsIfNeeded();
     }
     this.props.onContentSizeChange && this.props.onContentSizeChange(width, height);
-  }
+  };
 
   _getDistanceFromEnd(scrollProperties: Object) {
-    return scrollProperties.contentLength - scrollProperties.visibleLength - scrollProperties.offset;
+    return scrollProperties.contentLength -
+      scrollProperties.visibleLength -
+      scrollProperties.offset;
   }
 
   _maybeCallOnEndReached(event?: Object) {
-    if (this.props.onEndReached &&
-        this.scrollProperties.contentLength !== this._sentEndForContentLength &&
-        this._getDistanceFromEnd(this.scrollProperties) < this.props.onEndReachedThreshold &&
-        this.state.curRenderedRowsCount === (this.props.enableEmptySections ?
-          this.props.dataSource.getRowAndSectionCount() : this.props.dataSource.getRowCount())) {
+    if (
+      this.props.onEndReached &&
+      this.scrollProperties.contentLength !== this._sentEndForContentLength &&
+      this._getDistanceFromEnd(this.scrollProperties) < this.props.onEndReachedThreshold &&
+      this.state.curRenderedRowsCount ===
+        (this.props.enableEmptySections
+          ? this.props.dataSource.getRowAndSectionCount()
+          : this.props.dataSource.getRowCount())
+    ) {
       this._sentEndForContentLength = this.scrollProperties.contentLength;
       this.props.onEndReached(event);
       return true;
@@ -351,10 +369,14 @@ class ListView extends Component {
   }
 
   _renderMoreRowsIfNeeded() {
-    if (this.scrollProperties.contentLength === null ||
+    if (
+      this.scrollProperties.contentLength === null ||
       this.scrollProperties.visibleLength === null ||
-      this.state.curRenderedRowsCount === (this.props.enableEmptySections ?
-        this.props.dataSource.getRowAndSectionCount() : this.props.dataSource.getRowCount())) {
+      this.state.curRenderedRowsCount ===
+        (this.props.enableEmptySections
+          ? this.props.dataSource.getRowAndSectionCount()
+          : this.props.dataSource.getRowCount())
+    ) {
       this._maybeCallOnEndReached();
       return;
     }
@@ -366,19 +388,24 @@ class ListView extends Component {
   }
 
   _pageInNewRows() {
-    this.setState((state, props) => {
-      const rowsToRender = Math.min(
-        state.curRenderedRowsCount + props.pageSize,
-        (props.enableEmptySections ? props.dataSource.getRowAndSectionCount() : props.dataSource.getRowCount())
-      );
-      this._prevRenderedRowsCount = state.curRenderedRowsCount;
-      return {
-        curRenderedRowsCount: rowsToRender
-      };
-    }, () => {
-      this._measureAndUpdateScrollProps();
-      this._prevRenderedRowsCount = this.state.curRenderedRowsCount;
-    });
+    this.setState(
+      (state, props) => {
+        const rowsToRender = Math.min(
+          state.curRenderedRowsCount + props.pageSize,
+          props.enableEmptySections
+            ? props.dataSource.getRowAndSectionCount()
+            : props.dataSource.getRowCount()
+        );
+        this._prevRenderedRowsCount = state.curRenderedRowsCount;
+        return {
+          curRenderedRowsCount: rowsToRender
+        };
+      },
+      () => {
+        this._measureAndUpdateScrollProps();
+        this._prevRenderedRowsCount = this.state.curRenderedRowsCount;
+      }
+    );
   }
 
   _onScroll = (e: Object) => {
@@ -389,16 +416,16 @@ class ListView extends Component {
     this.scrollProperties.contentLength = e.nativeEvent.contentSize[
       isVertical ? 'height' : 'width'
     ];
-    this.scrollProperties.offset = e.nativeEvent.contentOffset[
-      isVertical ? 'y' : 'x'
-    ];
+    this.scrollProperties.offset = e.nativeEvent.contentOffset[isVertical ? 'y' : 'x'];
     this._updateVisibleRows(e.nativeEvent.updatedChildFrames);
     if (!this._maybeCallOnEndReached(e)) {
       this._renderMoreRowsIfNeeded();
     }
 
-    if (this.props.onEndReached &&
-        this._getDistanceFromEnd(this.scrollProperties) > this.props.onEndReachedThreshold) {
+    if (
+      this.props.onEndReached &&
+      this._getDistanceFromEnd(this.scrollProperties) > this.props.onEndReachedThreshold
+    ) {
       // Scrolled out of the end zone, so it should be able to trigger again.
       this._sentEndForContentLength = null;
     }
@@ -406,9 +433,9 @@ class ListView extends Component {
     this.props.onScroll && this.props.onScroll(e);
   };
 
-  _setScrollViewRef = (component) => {
+  _setScrollViewRef = component => {
     this._scrollViewRef = component;
-  }
+  };
 }
 
 module.exports = applyNativeMethods(ListView);

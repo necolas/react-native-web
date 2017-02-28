@@ -28,15 +28,15 @@ const ImageSourcePropType = PropTypes.oneOfType([
   PropTypes.string
 ]);
 
-const resolveAssetDimensions = (source) => {
+const resolveAssetDimensions = source => {
   if (typeof source === 'object') {
     const { height, width } = source;
     return { height, width };
   }
 };
 
-const resolveAssetSource = (source) => {
-  return ((typeof source === 'object') ? source.uri : source) || null;
+const resolveAssetSource = source => {
+  return (typeof source === 'object' ? source.uri : source) || null;
 };
 
 class Image extends Component {
@@ -140,10 +140,12 @@ class Image extends Component {
     delete style.resizeMode;
 
     // Allows users to trigger the browser's image context menu
-    const hiddenImage = displayImage ? createDOMElement('img', {
-      src: displayImage,
-      style: [ StyleSheet.absoluteFill, styles.img ]
-    }) : null;
+    const hiddenImage = displayImage
+      ? createDOMElement('img', {
+          src: displayImage,
+          style: [StyleSheet.absoluteFill, styles.img]
+        })
+      : null;
 
     return (
       <View
@@ -192,31 +194,38 @@ class Image extends Component {
       });
     }
     this._onLoadEnd();
-  }
+  };
 
-  _onLoad = (e) => {
+  _onLoad = e => {
     const { onLoad } = this.props;
     const event = { nativeEvent: e };
 
     this._updateImageState(STATUS_LOADED);
-    if (onLoad) { onLoad(event); }
+    if (onLoad) {
+      onLoad(event);
+    }
     this._onLoadEnd();
-  }
+  };
 
   _onLoadEnd() {
     const { onLoadEnd } = this.props;
-    if (onLoadEnd) { onLoadEnd(); }
+    if (onLoadEnd) {
+      onLoadEnd();
+    }
   }
 
   _onLoadStart() {
     const { onLoadStart } = this.props;
     this._updateImageState(STATUS_LOADING);
-    if (onLoadStart) { onLoadStart(); }
+    if (onLoadStart) {
+      onLoadStart();
+    }
   }
 
   _updateImageState(status) {
     this._imageState = status;
-    const shouldDisplaySource = this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
+    const shouldDisplaySource = this._imageState === STATUS_LOADED ||
+      this._imageState === STATUS_LOADING;
     // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
     if (shouldDisplaySource !== this.state.shouldDisplaySource) {
       if (this._isMounted) {

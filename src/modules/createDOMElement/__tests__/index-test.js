@@ -35,7 +35,12 @@ describe('modules/createDOMElement', () => {
     });
 
     test('link and target="_blank"', () => {
-      const component = renderer.create(createDOMElement('span', { accessibilityRole: 'link', target: '_blank' }));
+      const component = renderer.create(
+        createDOMElement('span', {
+          accessibilityRole: 'link',
+          target: '_blank'
+        })
+      );
       expect(component.toJSON()).toMatchSnapshot();
     });
   });

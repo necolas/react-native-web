@@ -36,10 +36,18 @@ const createDOMElement = (component, rnProps) => {
 
   const { className, style } = StyleRegistry.resolve(rnStyle) || emptyObject;
 
-  if (!accessible) { domProps['aria-hidden'] = true; }
-  if (accessibilityLabel) { domProps['aria-label'] = accessibilityLabel; }
-  if (accessibilityLiveRegion) { domProps['aria-live'] = accessibilityLiveRegion; }
-  if (testID) { domProps['data-testid'] = testID; }
+  if (!accessible) {
+    domProps['aria-hidden'] = true;
+  }
+  if (accessibilityLabel) {
+    domProps['aria-label'] = accessibilityLabel;
+  }
+  if (accessibilityLiveRegion) {
+    domProps['aria-live'] = accessibilityLiveRegion;
+  }
+  if (testID) {
+    domProps['data-testid'] = testID;
+  }
   if (accessibilityRole) {
     domProps.role = accessibilityRole;
     if (accessibilityRole === 'button') {
@@ -58,9 +66,7 @@ const createDOMElement = (component, rnProps) => {
     domProps.type = type;
   }
 
-  return (
-    <Component {...domProps} />
-  );
+  return <Component {...domProps} />;
 };
 
 module.exports = createDOMElement;

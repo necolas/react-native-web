@@ -14,12 +14,12 @@ import renderApplication, { getApplication } from './renderApplication';
 const emptyObject = {};
 const runnables = {};
 
-type ComponentProvider = () => Component<any, any, any>
+type ComponentProvider = () => Component<any, any, any>;
 
 type AppConfig = {
-  appKey: string;
-  component?: ComponentProvider;
-  run?: Function;
+  appKey: string,
+  component?: ComponentProvider,
+  run?: Function
 };
 
 /**
@@ -34,7 +34,7 @@ class AppRegistry {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +
-      'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
+        'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     );
 
     return runnables[appKey].getApplication(appParameters);
@@ -42,8 +42,10 @@ class AppRegistry {
 
   static registerComponent(appKey: string, getComponentFunc: ComponentProvider): string {
     runnables[appKey] = {
-      getApplication: ({ initialProps } = emptyObject) => getApplication(getComponentFunc(), initialProps),
-      run: ({ initialProps = emptyObject, rootTag }) => renderApplication(getComponentFunc(), initialProps, rootTag)
+      getApplication: ({ initialProps } = emptyObject) =>
+        getApplication(getComponentFunc(), initialProps),
+      run: ({ initialProps = emptyObject, rootTag }) =>
+        renderApplication(getComponentFunc(), initialProps, rootTag)
     };
     return appKey;
   }
@@ -72,14 +74,14 @@ class AppRegistry {
 
     console.log(
       `Running application "${appKey}" with appParams: ${JSON.stringify(params)}. ` +
-      `development-level warnings are ${isDevelopment ? 'ON' : 'OFF'}, ` +
-      `performance optimizations are ${isDevelopment ? 'OFF' : 'ON'}`
+        `development-level warnings are ${isDevelopment ? 'ON' : 'OFF'}, ` +
+        `performance optimizations are ${isDevelopment ? 'OFF' : 'ON'}`
     );
 
     invariant(
       runnables[appKey] && runnables[appKey].run,
       `Application "${appKey}" has not been registered. ` +
-      'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
+        'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     );
 
     runnables[appKey].run(appParameters);

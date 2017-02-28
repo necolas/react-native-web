@@ -23,11 +23,11 @@ var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
 var View = require('../View');
 
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var flattenStyle = StyleSheet.flatten
+var flattenStyle = StyleSheet.flatten;
 
 type Event = Object;
 
-var PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
+var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
@@ -131,8 +131,7 @@ var TouchableOpacity = React.createClass({
   },
 
   touchableGetLongPressDelayMS: function() {
-    return this.props.delayLongPress === 0 ? 0 :
-      this.props.delayLongPress || 500;
+    return this.props.delayLongPress === 0 ? 0 : this.props.delayLongPress || 500;
   },
 
   touchableGetPressOutDelayMS: function() {
@@ -145,10 +144,7 @@ var TouchableOpacity = React.createClass({
 
   _opacityInactive: function(duration: number) {
     var childStyle = flattenStyle(this.props.style) || {};
-    this.setOpacityTo(
-      childStyle.opacity === undefined ? 1 : childStyle.opacity,
-      duration
-    );
+    this.setOpacityTo(childStyle.opacity === undefined ? 1 : childStyle.opacity, duration);
   },
 
   _opacityFocused: function() {
@@ -156,9 +152,9 @@ var TouchableOpacity = React.createClass({
   },
 
   _onKeyEnter(e, callback) {
-    var ENTER = 13
+    var ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
-      callback && callback(e)
+      callback && callback(e);
     }
   },
 
@@ -182,14 +178,16 @@ var TouchableOpacity = React.createClass({
     return (
       <View
         {...other}
-        style={[
-          styles.root,
-          this.props.disabled && styles.disabled,
-          this.props.style
-        ]}
-        onKeyDown={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressIn) }}
-        onKeyPress={(e) => { this._onKeyEnter(e, this.touchableHandlePress) }}
-        onKeyUp={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressOut) }}
+        style={[styles.root, this.props.disabled && styles.disabled, this.props.style]}
+        onKeyDown={e => {
+          this._onKeyEnter(e, this.touchableHandleActivePressIn);
+        }}
+        onKeyPress={e => {
+          this._onKeyEnter(e, this.touchableHandlePress);
+        }}
+        onKeyUp={e => {
+          this._onKeyEnter(e, this.touchableHandleActivePressOut);
+        }}
         onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
         onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
         onResponderGrant={this.touchableHandleResponderGrant}
@@ -199,7 +197,7 @@ var TouchableOpacity = React.createClass({
         tabIndex={this.props.disabled ? null : '0'}
       />
     );
-  },
+  }
 });
 
 var styles = StyleSheet.create({

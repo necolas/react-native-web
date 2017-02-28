@@ -7,28 +7,28 @@ const emptyObject = {};
  * Map of property names to their BiDi equivalent.
  */
 const PROPERTIES_TO_SWAP = {
-  'borderTopLeftRadius': 'borderTopRightRadius',
-  'borderTopRightRadius': 'borderTopLeftRadius',
-  'borderBottomLeftRadius': 'borderBottomRightRadius',
-  'borderBottomRightRadius': 'borderBottomLeftRadius',
-  'borderLeftColor': 'borderRightColor',
-  'borderLeftStyle': 'borderRightStyle',
-  'borderLeftWidth': 'borderRightWidth',
-  'borderRightColor': 'borderLeftColor',
-  'borderRightWidth': 'borderLeftWidth',
-  'borderRightStyle': 'borderLeftStyle',
-  'left': 'right',
-  'marginLeft': 'marginRight',
-  'marginRight': 'marginLeft',
-  'paddingLeft': 'paddingRight',
-  'paddingRight': 'paddingLeft',
-  'right': 'left'
+  borderTopLeftRadius: 'borderTopRightRadius',
+  borderTopRightRadius: 'borderTopLeftRadius',
+  borderBottomLeftRadius: 'borderBottomRightRadius',
+  borderBottomRightRadius: 'borderBottomLeftRadius',
+  borderLeftColor: 'borderRightColor',
+  borderLeftStyle: 'borderRightStyle',
+  borderLeftWidth: 'borderRightWidth',
+  borderRightColor: 'borderLeftColor',
+  borderRightWidth: 'borderLeftWidth',
+  borderRightStyle: 'borderLeftStyle',
+  left: 'right',
+  marginLeft: 'marginRight',
+  marginRight: 'marginLeft',
+  paddingLeft: 'paddingRight',
+  paddingRight: 'paddingLeft',
+  right: 'left'
 };
 
 const PROPERTIES_SWAP_LEFT_RIGHT = {
-  'clear': true,
-  'float': true,
-  'textAlign': true
+  clear: true,
+  float: true,
+  textAlign: true
 };
 
 /**
@@ -54,11 +54,11 @@ const flipTransform = (transform: Object): Object => {
   return transform;
 };
 
-const swapLeftRight = (value:String): String => {
+const swapLeftRight = (value: String): String => {
   return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
 };
 
-const i18nStyle = (originalStyle) => {
+const i18nStyle = originalStyle => {
   if (!I18nManager.isRTL) {
     return originalStyle;
   }

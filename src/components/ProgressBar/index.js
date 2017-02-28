@@ -44,32 +44,25 @@ class ProgressBar extends Component {
     const percentageProgress = progress * 100;
 
     return (
-      <View {...other}
-        accessibilityRole='progressbar'
-        aria-valuemax='100'
-        aria-valuemin='0'
+      <View
+        {...other}
+        accessibilityRole="progressbar"
+        aria-valuemax="100"
+        aria-valuemin="0"
         aria-valuenow={indeterminate ? null : percentageProgress}
-        style={[
-          styles.track,
-          style,
-          { backgroundColor: trackColor }
-        ]}
+        style={[styles.track, style, { backgroundColor: trackColor }]}
       >
         <View
           ref={this._setProgressRef}
-          style={[
-            styles.progress,
-            indeterminate && styles.animation,
-            { backgroundColor: color }
-          ]}
+          style={[styles.progress, indeterminate && styles.animation, { backgroundColor: color }]}
         />
       </View>
     );
   }
 
-  _setProgressRef = (component) => {
+  _setProgressRef = component => {
     this._progressRef = component;
-  }
+  };
 
   _updateProgressWidth = () => {
     const { indeterminate, progress } = this.props;
@@ -78,7 +71,7 @@ class ProgressBar extends Component {
     this._progressRef.setNativeProps({
       style: { width }
     });
-  }
+  };
 }
 
 const styles = StyleSheet.create({
