@@ -6,7 +6,8 @@ import { PropTypes } from 'react';
 import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
-const hiddenOrVisible = PropTypes.oneOf([ 'hidden', 'visible' ]);
+const { number, oneOf, string } = PropTypes;
+const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
 
 module.exports = {
   ...BorderPropTypes,
@@ -15,15 +16,17 @@ module.exports = {
   ...TransformPropTypes,
   backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,
-  resizeMode: PropTypes.oneOf(Object.keys(ImageResizeMode)),
-  /**
-   * @platform web
-   */
-  boxShadow: PropTypes.string,
-  opacity: PropTypes.number,
+  opacity: number,
   overflow: hiddenOrVisible,
+  resizeMode: oneOf(Object.keys(ImageResizeMode)),
+  /**
+   * @platform unsupported
+   */
+  overlayColor: string,
+  tintColor: ColorPropType,
   /**
    * @platform web
    */
+  boxShadow: string,
   visibility: hiddenOrVisible
 };
