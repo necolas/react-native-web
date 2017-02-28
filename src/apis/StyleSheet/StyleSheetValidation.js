@@ -7,14 +7,14 @@
  * @flow
  */
 
-import { PropTypes } from 'react'
-import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes'
-import ReactPropTypeLocations from 'react-dom/lib/ReactPropTypeLocations'
-import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret'
-import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes'
-import TextStylePropTypes from '../../components/Text/TextStylePropTypes'
-import ViewStylePropTypes from '../../components/View/ViewStylePropTypes'
-import warning from 'fbjs/lib/warning'
+import { PropTypes } from 'react';
+import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
+import ReactPropTypeLocations from 'react-dom/lib/ReactPropTypeLocations';
+import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret';
+import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes';
+import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
+import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
+import warning from 'fbjs/lib/warning';
 
 class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
@@ -58,25 +58,29 @@ class StyleSheetValidation {
 var styleError = function(message1, style, caller?, message2?) {
   warning(
     false,
-    message1 + '\n' + (caller || '<<unknown>>') + ': ' +
-    JSON.stringify(style, null, '  ') + (message2 || '')
+    message1 +
+      '\n' +
+      (caller || '<<unknown>>') +
+      ': ' +
+      JSON.stringify(style, null, '  ') +
+      (message2 || '')
   );
 };
 
 var allStylePropTypes = {};
 
-StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes)
-StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes)
-StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes)
-StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes)
+StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes);
+StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes);
+StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes);
+StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes({
   appearance: PropTypes.string,
   clear: PropTypes.string,
   cursor: PropTypes.string,
-  float: PropTypes.oneOf([ 'left', 'none', 'right' ]),
-  font: PropTypes.string, /* @private */
+  float: PropTypes.oneOf(['left', 'none', 'right']),
+  font: PropTypes.string /* @private */,
   listStyle: PropTypes.string,
   pointerEvents: PropTypes.string
-})
+});
 
-module.exports = StyleSheetValidation
+module.exports = StyleSheetValidation;

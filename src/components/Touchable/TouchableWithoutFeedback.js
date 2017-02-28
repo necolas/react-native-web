@@ -22,7 +22,7 @@ var StyleSheet = require('../../apis/StyleSheet');
 
 type Event = Object;
 
-const PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * Do not use unless you have a very good reason. All the elements that
@@ -88,7 +88,7 @@ const TouchableWithoutFeedback = React.createClass({
      * of sibling views always takes precedence if a touch hits two overlapping
      * views.
      */
-    hitSlop: EdgeInsetsPropType,
+    hitSlop: EdgeInsetsPropType
   },
 
   getInitialState: function() {
@@ -136,8 +136,7 @@ const TouchableWithoutFeedback = React.createClass({
   },
 
   touchableGetLongPressDelayMS: function(): number {
-    return this.props.delayLongPress === 0 ? 0 :
-      this.props.delayLongPress || 500;
+    return this.props.delayLongPress === 0 ? 0 : this.props.delayLongPress || 500;
   },
 
   touchableGetPressOutDelayMS: function(): number {
@@ -159,7 +158,6 @@ const TouchableWithoutFeedback = React.createClass({
       ...other
     } = this.props;
 
-
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
@@ -168,18 +166,9 @@ const TouchableWithoutFeedback = React.createClass({
       'TouchableWithoutFeedback does not work well with Text children. Wrap children in a View instead. See ' +
         ((child._owner && child._owner.getName && child._owner.getName()) || '<unknown>')
     );
-    const style = (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text') ?
-      [
-        styles.root,
-        this.props.disabled && styles.disabled,
-        child.props.style,
-        {color: 'red'}
-      ] :
-      [
-        styles.root,
-        this.props.disabled && styles.disabled,
-        child.props.style
-      ];
+    const style = Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
+      ? [styles.root, this.props.disabled && styles.disabled, child.props.style, { color: 'red' }]
+      : [styles.root, this.props.disabled && styles.disabled, child.props.style];
     return (React: any).cloneElement(child, {
       ...other,
       onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,

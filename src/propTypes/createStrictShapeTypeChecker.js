@@ -11,28 +11,26 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant'
-import ReactPropTypeLocationNames from 'react-dom/lib/ReactPropTypeLocationNames'
-import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret'
+import invariant from 'fbjs/lib/invariant';
+import ReactPropTypeLocationNames from 'react-dom/lib/ReactPropTypeLocationNames';
+import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret';
 
 function createStrictShapeTypeChecker(
-  shapeTypes: {[key: string]: ReactPropsCheckType}
+  shapeTypes: { [key: string]: ReactPropsCheckType }
 ): ReactPropsChainableTypeChecker {
   function checkType(isRequired, props, propName, componentName, location?) {
     if (!props[propName]) {
       if (isRequired) {
         invariant(
           false,
-          `Required object \`${propName}\` was not specified in ` +
-          `\`${componentName}\`.`
+          `Required object \`${propName}\` was not specified in ` + `\`${componentName}\`.`
         );
       }
       return;
     }
     var propValue = props[propName];
     var propType = typeof propValue;
-    var locationName =
-      location && ReactPropTypeLocationNames[location] || '(unknown)';
+    var locationName = (location && ReactPropTypeLocationNames[location]) || '(unknown)';
     if (propType !== 'object') {
       invariant(
         false,
@@ -49,22 +47,23 @@ function createStrictShapeTypeChecker(
         invariant(
           false,
           `Invalid props.${propName} key \`${key}\` supplied to \`${componentName}\`.` +
-            `\nBad object: ` + JSON.stringify(props[propName], null, '  ') +
-            `\nValid keys: ` + JSON.stringify(Object.keys(shapeTypes), null, '  ')
+            `\nBad object: ` +
+            JSON.stringify(props[propName], null, '  ') +
+            `\nValid keys: ` +
+            JSON.stringify(Object.keys(shapeTypes), null, '  ')
         );
       }
       var error = checker(propValue, key, componentName, location, null, ReactPropTypesSecret);
       if (error) {
         invariant(
           false,
-          error.message +
-            `\nBad object: ` + JSON.stringify(props[propName], null, '  ')
+          error.message + `\nBad object: ` + JSON.stringify(props[propName], null, '  ')
         );
       }
     }
   }
   function chainedCheckType(
-    props: {[key: string]: any},
+    props: { [key: string]: any },
     propName: string,
     componentName: string,
     location?: string

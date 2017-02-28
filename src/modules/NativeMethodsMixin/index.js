@@ -68,7 +68,7 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     // DOM state
     const node = findNodeHandle(this);
-    const classList = [ ...node.classList ];
+    const classList = [...node.classList];
 
     const { className, style } = StyleRegistry.resolveStateful(nativeProps.style, classList);
     const props = { ...nativeProps, className, style };

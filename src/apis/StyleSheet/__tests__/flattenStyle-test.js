@@ -13,10 +13,7 @@ import flattenStyle from '../flattenStyle';
 
 describe('apis/StyleSheet/flattenStyle', () => {
   test('should merge style objects', () => {
-    const style = flattenStyle([
-      { opacity: 1 },
-      { order: 2 }
-    ]);
+    const style = flattenStyle([{ opacity: 1 }, { order: 2 }]);
     expect(style).toMatchSnapshot();
   });
 
@@ -29,24 +26,16 @@ describe('apis/StyleSheet/flattenStyle', () => {
   });
 
   test('should overwrite properties with `undefined`', () => {
-    const style = flattenStyle([
-      { backgroundColor: '#000' },
-      { backgroundColor: undefined }
-    ]);
+    const style = flattenStyle([{ backgroundColor: '#000' }, { backgroundColor: undefined }]);
     expect(style).toMatchSnapshot();
   });
 
   test('should not fail on falsy values', () => {
-    expect(() => flattenStyle([ null, false, undefined ])).not.toThrow();
+    expect(() => flattenStyle([null, false, undefined])).not.toThrow();
   });
 
   test('should recursively flatten arrays', () => {
-    const style = flattenStyle([
-      null,
-      [],
-      [ { order: 2 }, { opacity: 1 } ],
-      { order: 3 }
-    ]);
+    const style = flattenStyle([null, [], [{ order: 2 }, { opacity: 1 }], { order: 3 }]);
     expect(style).toMatchSnapshot();
   });
 });

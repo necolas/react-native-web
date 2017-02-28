@@ -25,8 +25,7 @@ const pointerEvents = {
   none: createClassName('pointerEvents', 'none')
 };
 
-const pointerEventsCss =
-  `.${pointerEvents.auto}{pointer-events:auto;}\n` +
+const pointerEventsCss = `.${pointerEvents.auto}{pointer-events:auto;}\n` +
   `.${pointerEvents.boxNone}{pointer-events:none;}\n` +
   `.${pointerEvents.boxNone} *{pointer-events:auto;}\n` +
   `.${pointerEvents.boxOnly}{pointer-events:auto;}\n` +
@@ -41,16 +40,22 @@ class StyleManager {
     this.cache = {
       byClassName: {
         [pointerEvents.auto]: { prop: pointerEventsPropName, value: 'auto' },
-        [pointerEvents.boxNone]: { prop: pointerEventsPropName, value: 'box-none' },
-        [pointerEvents.boxOnly]: { prop: pointerEventsPropName, value: 'box-only' },
+        [pointerEvents.boxNone]: {
+          prop: pointerEventsPropName,
+          value: 'box-none'
+        },
+        [pointerEvents.boxOnly]: {
+          prop: pointerEventsPropName,
+          value: 'box-only'
+        },
         [pointerEvents.none]: { prop: pointerEventsPropName, value: 'none' }
       },
       byProp: {
         pointerEvents: {
-          'auto': pointerEvents.auto,
+          auto: pointerEvents.auto,
           'box-none': pointerEvents.boxNone,
           'box-only': pointerEvents.boxOnly,
-          'none': pointerEvents.none
+          none: pointerEvents.none
         }
       }
     };
@@ -80,15 +85,20 @@ class StyleManager {
   getStyleSheetHtml() {
     const cache = this.cache.byProp;
 
-    const mainSheetTextContext = Object.keys(cache).reduce((rules, prop) => {
-      if (prop !== 'pointerEvents') {
-        Object.keys(cache[prop]).forEach((value) => {
-          const className = this.getClassName(prop, value);
-          rules.push(createCssRule(className, prop, value));
-        });
-      }
-      return rules;
-    }, []).join('\n');
+    const mainSheetTextContext = Object.keys(cache)
+      .reduce(
+        (rules, prop) => {
+          if (prop !== 'pointerEvents') {
+            Object.keys(cache[prop]).forEach(value => {
+              const className = this.getClassName(prop, value);
+              rules.push(createCssRule(className, prop, value));
+            });
+          }
+          return rules;
+        },
+        []
+      )
+      .join('\n');
 
     const staticSheet = `<style id="react-native-stylesheet-static">\n${staticCss}\n${pointerEventsCss}\n</style>`;
     const mainSheet = `<style id="${STYLE_ELEMENT_ID}">\n${mainSheetTextContext}\n</style>`;

@@ -16,24 +16,33 @@ import resolveTransform from './resolveTransform';
 
 const emptyObject = {};
 const styleShortFormProperties = {
-  borderColor: [ 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor' ],
-  borderRadius: [ 'borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius' ],
-  borderStyle: [ 'borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle' ],
-  borderWidth: [ 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth' ],
-  margin: [ 'marginTop', 'marginRight', 'marginBottom', 'marginLeft' ],
-  marginHorizontal: [ 'marginRight', 'marginLeft' ],
-  marginVertical: [ 'marginTop', 'marginBottom' ],
-  overflow: [ 'overflowX', 'overflowY' ],
-  padding: [ 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft' ],
-  paddingHorizontal: [ 'paddingRight', 'paddingLeft' ],
-  paddingVertical: [ 'paddingTop', 'paddingBottom' ],
-  textDecorationLine: [ 'textDecoration' ],
-  writingDirection: [ 'direction' ]
+  borderColor: ['borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor'],
+  borderRadius: [
+    'borderTopLeftRadius',
+    'borderTopRightRadius',
+    'borderBottomRightRadius',
+    'borderBottomLeftRadius'
+  ],
+  borderStyle: ['borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle'],
+  borderWidth: ['borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'],
+  margin: ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],
+  marginHorizontal: ['marginRight', 'marginLeft'],
+  marginVertical: ['marginTop', 'marginBottom'],
+  overflow: ['overflowX', 'overflowY'],
+  padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
+  paddingHorizontal: ['paddingRight', 'paddingLeft'],
+  paddingVertical: ['paddingTop', 'paddingBottom'],
+  textDecorationLine: ['textDecoration'],
+  writingDirection: ['direction']
 };
 
-const alphaSortProps = (propsArray) => propsArray.sort((a, b) => {
-  if (a < b) { return -1; }
-  if (a > b) { return 1; }
+const alphaSortProps = propsArray => propsArray.sort((a, b) => {
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
   return 0;
 });
 
@@ -43,17 +52,15 @@ const createReducer = (style, styleProps) => {
 
   return (resolvedStyle, prop) => {
     const value = normalizeValue(prop, style[prop]);
-    if (value == null) { return resolvedStyle; }
+    if (value == null) {
+      return resolvedStyle;
+    }
 
     switch (prop) {
       case 'display': {
         resolvedStyle.display = value;
         // default of 'flexShrink:0' has lowest precedence
-        if (
-          style.display === 'flex' &&
-          style.flex == null &&
-          style.flexShrink == null
-        ) {
+        if (style.display === 'flex' && style.flex == null && style.flexShrink == null) {
           resolvedStyle.flexShrink = 0;
         }
         break;
@@ -82,7 +89,7 @@ const createReducer = (style, styleProps) => {
         break;
       }
       case 'textAlignVertical': {
-        resolvedStyle.verticalAlign = (value === 'center' ? 'middle' : value);
+        resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
         break;
       }
       case 'textShadowColor':
@@ -118,8 +125,10 @@ const createReducer = (style, styleProps) => {
   };
 };
 
-const expandStyle = (style) => {
-  if (!style) { return emptyObject; }
+const expandStyle = style => {
+  if (!style) {
+    return emptyObject;
+  }
   const styleProps = Object.keys(style);
   const sortedStyleProps = alphaSortProps(styleProps);
   const reducer = createReducer(style, styleProps);

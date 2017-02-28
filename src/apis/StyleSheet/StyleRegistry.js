@@ -11,12 +11,12 @@ import prefixInlineStyles from './prefixInlineStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
-const createCacheKey = (id) => {
+const createCacheKey = id => {
   const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
   return `${prefix}-${id}`;
 };
 
-const classListToString = (list) => list.join(' ').trim();
+const classListToString = list => list.join(' ').trim();
 
 class StyleRegistry {
   constructor() {
@@ -89,7 +89,7 @@ class StyleRegistry {
 
     // Convert the existing classList to a React Native style and preserve any
     // unrecognized classNames.
-    domClassList.forEach((className) => {
+    domClassList.forEach(className => {
       const { prop, value } = this.styleManager.getDeclaration(className);
       if (prop) {
         previousReactNativeStyle[prop] = value;
@@ -99,11 +99,11 @@ class StyleRegistry {
     });
 
     // Resolve the two React Native styles.
-    const { classList, style = {} } = this.resolve([ previousReactNativeStyle, reactNativeStyle ]);
+    const { classList, style = {} } = this.resolve([previousReactNativeStyle, reactNativeStyle]);
 
     // Because this is used in stateful operations we need to remove any
     // existing inline styles that would override the classNames.
-    classList.forEach((className) => {
+    classList.forEach(className => {
       const { prop } = this.styleManager.getDeclaration(className);
       style[prop] = null;
     });

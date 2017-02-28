@@ -71,12 +71,7 @@ class Switch extends Component {
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
-    const rootStyle = [
-      styles.root,
-      style,
-      { height, width },
-      disabled && styles.cursorDefault
-    ];
+    const rootStyle = [styles.root, style, { height, width }, disabled && styles.cursorDefault];
 
     const trackStyle = [
       styles.track,
@@ -104,7 +99,7 @@ class Switch extends Component {
       onChange: this._handleChange,
       onFocus: this._handleFocusState,
       ref: this._setCheckboxRef,
-      style: [ styles.nativeControl, styles.cursorInherit ],
+      style: [styles.nativeControl, styles.cursorInherit],
       type: 'checkbox'
     });
 
@@ -129,21 +124,21 @@ class Switch extends Component {
   _handleChange = (event: Object) => {
     const { onValueChange } = this.props;
     onValueChange && onValueChange(event.nativeEvent.target.checked);
-  }
+  };
 
   _handleFocusState = (event: Object) => {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     this._thumb.setNativeProps({ style: { boxShadow } });
-  }
+  };
 
-  _setCheckboxRef = (component) => {
+  _setCheckboxRef = component => {
     this._checkbox = component;
-  }
+  };
 
-  _setThumbRef = (component) => {
+  _setThumbRef = component => {
     this._thumb = component;
-  }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -172,9 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
     left: '0%',
-    transform: [
-      { translateZ: 0 }
-    ],
+    transform: [{ translateZ: 0 }],
     transitionDuration: '0.1s'
   },
   thumbOn: {

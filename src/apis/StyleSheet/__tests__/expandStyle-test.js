@@ -47,19 +47,35 @@ describe('apis/StyleSheet/expandStyle', () => {
   });
 
   test('flex', () => {
-    expect(expandStyle({ display: 'flex' }))
-      .toEqual({ display: 'flex', flexShrink: 0 });
+    expect(expandStyle({ display: 'flex' })).toEqual({
+      display: 'flex',
+      flexShrink: 0
+    });
 
-    expect(expandStyle({ display: 'flex', flex: 1 }))
-      .toEqual({ display: 'flex', flexGrow: 1, flexShrink: 1, flexBasis: 'auto' });
+    expect(expandStyle({ display: 'flex', flex: 1 })).toEqual({
+      display: 'flex',
+      flexGrow: 1,
+      flexShrink: 1,
+      flexBasis: 'auto'
+    });
 
-    expect(expandStyle({ display: 'flex', flex: 10 }))
-      .toEqual({ display: 'flex', flexGrow: 10, flexShrink: 1, flexBasis: 'auto' });
+    expect(expandStyle({ display: 'flex', flex: 10 })).toEqual({
+      display: 'flex',
+      flexGrow: 10,
+      flexShrink: 1,
+      flexBasis: 'auto'
+    });
 
-    expect(expandStyle({ display: 'flex', flexShrink: 1 }))
-      .toEqual({ display: 'flex', flexShrink: 1 });
+    expect(expandStyle({ display: 'flex', flexShrink: 1 })).toEqual({
+      display: 'flex',
+      flexShrink: 1
+    });
 
-    expect(expandStyle({ display: 'flex', flex: 1, flexShrink: 2 }))
-      .toEqual({ display: 'flex', flexGrow: 1, flexShrink: 2, flexBasis: 'auto' });
+    expect(expandStyle({ display: 'flex', flex: 1, flexShrink: 2 })).toEqual({
+      display: 'flex',
+      flexGrow: 1,
+      flexShrink: 2,
+      flexBasis: 'auto'
+    });
   });
 });

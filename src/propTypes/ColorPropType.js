@@ -1,5 +1,5 @@
 /* eslint-disable */
- /**
+/**
   * Copyright (c) 2015-present, Facebook, Inc.
   * All rights reserved.
   *
@@ -10,7 +10,7 @@
   * @providesModule ColorPropType
   */
 
-import { PropTypes } from 'react'
+import { PropTypes } from 'react';
 
 var colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
   var normalizeColor = require('normalize-css-color');
@@ -20,8 +20,13 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
     if (isRequired) {
       var locationName = ReactPropTypeLocationNames[location];
       return new Error(
-        'Required ' + locationName + ' `' + (propFullName || propName) +
-        '` was not specified in `' + componentName + '`.'
+        'Required ' +
+          locationName +
+          ' `' +
+          (propFullName || propName) +
+          '` was not specified in `' +
+          componentName +
+          '`.'
       );
     }
     return;
@@ -41,9 +46,16 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
   if (normalizeColor(color) === null) {
     var locationName = ReactPropTypeLocationNames[location];
     return new Error(
-      'Invalid ' + locationName + ' `' + (propFullName || propName) +
-      '` supplied to `' + componentName + '`: ' + color + '\n' +
-`Valid color formats are
+      'Invalid ' +
+        locationName +
+        ' `' +
+        (propFullName || propName) +
+        '` supplied to `' +
+        componentName +
+        '`: ' +
+        color +
+        '\n' +
+        `Valid color formats are
   - '#f0f' (#rgb)
   - '#f0fc' (#rgba)
   - '#ff00ff' (#rrggbb)
@@ -55,7 +67,8 @@ var colorPropType = function(isRequired, props, propName, componentName, locatio
   - 'transparent'
   - 'red'
   - 0xff00ff00 (0xrrggbbaa)
-`);
+`
+    );
   }
 };
 
@@ -63,7 +76,7 @@ if (process.env.NODE_ENV !== 'production') {
   var ColorPropType = colorPropType.bind(null, false /* isRequired */);
   ColorPropType.isRequired = colorPropType.bind(null, true /* isRequired */);
 } else {
-  var ColorPropType = function () {}
+  var ColorPropType = function() {};
 }
 
-module.exports = ColorPropType
+module.exports = ColorPropType;

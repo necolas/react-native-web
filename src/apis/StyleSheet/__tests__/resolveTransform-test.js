@@ -6,12 +6,7 @@ describe('apis/StyleSheet/resolveTransform', () => {
   test('transform', () => {
     const resolvedStyle = {};
     const style = {
-      transform: [
-        { perspective: 50 },
-        { scaleX: 20 },
-        { translateX: 20 },
-        { rotate: '20deg' }
-      ]
+      transform: [{ perspective: 50 }, { scaleX: 20 }, { translateX: 20 }, { rotate: '20deg' }]
     };
     resolveTransform(resolvedStyle, style);
 
@@ -22,7 +17,7 @@ describe('apis/StyleSheet/resolveTransform', () => {
 
   test('transformMatrix', () => {
     const resolvedStyle = {};
-    const style = { transformMatrix: [ 1, 2, 3, 4, 5, 6 ] };
+    const style = { transformMatrix: [1, 2, 3, 4, 5, 6] };
     resolveTransform(resolvedStyle, style);
 
     expect(resolvedStyle).toEqual({

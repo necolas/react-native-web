@@ -20,7 +20,10 @@ const modality = () => {
    * Determine whether the keyboard is required when an element is focused
    */
   const proto = window.Element.prototype;
-  const matcher = proto.matches || proto.mozMatchesSelector || proto.msMatchesSelector || proto.webkitMatchesSelector;
+  const matcher = proto.matches ||
+    proto.mozMatchesSelector ||
+    proto.msMatchesSelector ||
+    proto.webkitMatchesSelector;
   const keyboardModalityWhitelist = [
     'input:not([type])',
     'input[type=text]',
@@ -34,7 +37,7 @@ const modality = () => {
     '[supports-modality=keyboard]'
   ].join(',');
 
-  const focusTriggersKeyboardModality = (el) => {
+  const focusTriggersKeyboardModality = el => {
     if (matcher) {
       return matcher.call(el, keyboardModalityWhitelist) && matcher.call(el, ':not([readonly])');
     } else {
@@ -72,29 +75,44 @@ const modality = () => {
   let hadKeyboardEvent = false;
 
   // track when the keyboard is in use
-  document.body.addEventListener('keydown', () => {
-    hadKeyboardEvent = true;
-    if (keyboardTimer) {
-      clearTimeout(keyboardTimer);
-    }
-    keyboardTimer = setTimeout(() => {
-      hadKeyboardEvent = false;
-    }, 100);
-  }, true);
+  document.body.addEventListener(
+    'keydown',
+    () => {
+      hadKeyboardEvent = true;
+      if (keyboardTimer) {
+        clearTimeout(keyboardTimer);
+      }
+      keyboardTimer = setTimeout(
+        () => {
+          hadKeyboardEvent = false;
+        },
+        100
+      );
+    },
+    true
+  );
 
   // disable focus style reset when the keyboard is in use
-  document.body.addEventListener('focus', (e) => {
-    if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-      enableFocus();
-    }
-  }, true);
+  document.body.addEventListener(
+    'focus',
+    e => {
+      if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
+        enableFocus();
+      }
+    },
+    true
+  );
 
   // enable focus style reset when keyboard is no longer in use
-  document.body.addEventListener('blur', () => {
-    if (!hadKeyboardEvent) {
-      disableFocus();
-    }
-  }, true);
+  document.body.addEventListener(
+    'blur',
+    () => {
+      if (!hadKeyboardEvent) {
+        disableFocus();
+      }
+    },
+    true
+  );
 };
 
 export default modality;

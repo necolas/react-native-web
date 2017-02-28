@@ -5,8 +5,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import TextInput from '..';
 import { mount, shallow } from 'enzyme';
 
-const findNativeInput = (wrapper) => wrapper.find('input');
-const findNativeTextarea = (wrapper) => wrapper.find(TextareaAutosize);
+const findNativeInput = wrapper => wrapper.find('input');
+const findNativeTextarea = wrapper => wrapper.find(TextareaAutosize);
 
 const testIfDocumentIsFocused = (message, fn) => {
   if (document.hasFocus && document.hasFocus()) {
@@ -22,7 +22,7 @@ describe('components/TextInput', () => {
     let input = findNativeInput(shallow(<TextInput />));
     expect(input.prop('autoComplete')).toEqual('on');
     // off
-    input = findNativeInput(shallow(<TextInput autoComplete='off' />));
+    input = findNativeInput(shallow(<TextInput autoComplete="off" />));
     expect(input.prop('autoComplete')).toEqual('off');
   });
 
@@ -66,19 +66,19 @@ describe('components/TextInput', () => {
     // default
     let input = findNativeInput(shallow(<TextInput />));
     expect(input.prop('type')).toEqual('text');
-    input = findNativeInput(shallow(<TextInput keyboardType='default' />));
+    input = findNativeInput(shallow(<TextInput keyboardType="default" />));
     expect(input.prop('type')).toEqual('text');
     // email-address
-    input = findNativeInput(shallow(<TextInput keyboardType='email-address' />));
+    input = findNativeInput(shallow(<TextInput keyboardType="email-address" />));
     expect(input.prop('type')).toEqual('email');
     // numeric
-    input = findNativeInput(shallow(<TextInput keyboardType='numeric' />));
+    input = findNativeInput(shallow(<TextInput keyboardType="numeric" />));
     expect(input.prop('type')).toEqual('number');
     // phone-pad
-    input = findNativeInput(shallow(<TextInput keyboardType='phone-pad' />));
+    input = findNativeInput(shallow(<TextInput keyboardType="phone-pad" />));
     expect(input.prop('type')).toEqual('tel');
     // url
-    input = findNativeInput(shallow(<TextInput keyboardType='url' />));
+    input = findNativeInput(shallow(<TextInput keyboardType="url" />));
     expect(input.prop('type')).toEqual('url');
   });
 
@@ -92,17 +92,15 @@ describe('components/TextInput', () => {
   test('prop "maxNumberOfLines"', () => {
     const generateValue = () => {
       let str = '';
-      while (str.length < 100) { str += 'x'; }
+      while (str.length < 100) {
+        str += 'x';
+      }
       return str;
     };
 
-    const input = findNativeTextarea(shallow(
-      <TextInput
-        maxNumberOfLines={3}
-        multiline
-        value={generateValue()}
-      />
-    ));
+    const input = findNativeTextarea(
+      shallow(<TextInput maxNumberOfLines={3} multiline value={generateValue()} />)
+    );
     expect(input.prop('maxRows')).toEqual(3);
   });
 
@@ -123,16 +121,11 @@ describe('components/TextInput', () => {
     input = findNativeTextarea(shallow(<TextInput multiline numberOfLines={2} />));
     expect(input.length).toEqual(1);
 
-    input = findNativeTextarea(shallow(
-      <TextInput
-        multiline
-        numberOfLines={3}
-      />
-    ));
+    input = findNativeTextarea(shallow(<TextInput multiline numberOfLines={3} />));
     expect(input.prop('minRows')).toEqual(3);
   });
 
-  test('prop "onBlur"', (done) => {
+  test('prop "onBlur"', done => {
     const input = findNativeInput(mount(<TextInput onBlur={onBlur} />));
     input.simulate('blur');
     function onBlur(e) {
@@ -141,7 +134,7 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "onChange"', (done) => {
+  test('prop "onChange"', done => {
     const input = findNativeInput(mount(<TextInput onChange={onChange} />));
     input.simulate('change');
     function onChange(e) {
@@ -150,7 +143,7 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "onChangeText"', (done) => {
+  test('prop "onChangeText"', done => {
     const newText = 'newText';
     const input = findNativeInput(mount(<TextInput onChangeText={onChangeText} />));
     input.simulate('change', { target: { value: newText } });
@@ -160,7 +153,7 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "onFocus"', (done) => {
+  test('prop "onFocus"', done => {
     const input = findNativeInput(mount(<TextInput onFocus={onFocus} />));
     input.simulate('focus');
     function onFocus(e) {
@@ -169,9 +162,13 @@ describe('components/TextInput', () => {
     }
   });
 
-  test('prop "onSelectionChange"', (done) => {
-    const input = findNativeInput(mount(<TextInput defaultValue='12345' onSelectionChange={onSelectionChange} />));
-    input.simulate('select', { target: { selectionStart: 0, selectionEnd: 3 } });
+  test('prop "onSelectionChange"', done => {
+    const input = findNativeInput(
+      mount(<TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />)
+    );
+    input.simulate('select', {
+      target: { selectionStart: 0, selectionEnd: 3 }
+    });
     function onSelectionChange(e) {
       expect(e.nativeEvent.selection.end).toEqual(3);
       expect(e.nativeEvent.selection.start).toEqual(0);
@@ -180,8 +177,10 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', (done) => {
-      const input = findNativeInput(mount(<TextInput defaultValue='12345' onSubmitEditing={onSubmitEditing} />));
+    test('single-line input', done => {
+      const input = findNativeInput(
+        mount(<TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />)
+      );
       input.simulate('keyPress', { which: 13 });
       function onSubmitEditing(e) {
         done();

@@ -30,7 +30,7 @@ const ViewPropTypes = {
   onTouchMoveCapture: PropTypes.func,
   onTouchStart: PropTypes.func,
   onTouchStartCapture: PropTypes.func,
-  pointerEvents: PropTypes.oneOf([ 'auto', 'box-none', 'box-only', 'none' ]),
+  pointerEvents: PropTypes.oneOf(['auto', 'box-none', 'box-only', 'none']),
   style: StyleSheetPropType(ViewStylePropTypes)
 };
 

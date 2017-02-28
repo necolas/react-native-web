@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import View from '../View';
 
-const getColor = (color) => {
+const getColor = color => {
   switch (color) {
     case 0:
       return '#222';
@@ -21,11 +21,11 @@ const getColor = (color) => {
 };
 
 const Box = styled(View)`
-  flex-direction: ${(props) => props.layout === 'column' ? 'column' : 'row'};
-  padding: ${(props) => props.outer ? '4px' : '0'};
-  height: ${(props) => props.fixed ? '20px' : 'auto'};
-  width: ${(props) => props.fixed ? '20px' : 'auto'};
-  background-color: ${(props) => getColor(props.color)};
+  flex-direction: ${props => props.layout === 'column' ? 'column' : 'row'};
+  padding: ${props => props.outer ? '4px' : '0'};
+  height: ${props => props.fixed ? '20px' : 'auto'};
+  width: ${props => props.fixed ? '20px' : 'auto'};
+  background-color: ${props => getColor(props.color)};
 `;
 
 module.exports = Box;

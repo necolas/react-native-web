@@ -31,13 +31,13 @@ const eventHandlerNames = [
   'onTouchStartCapture'
 ];
 
-const _normalizeEventForHandler = (handler) => (e) => {
+const _normalizeEventForHandler = handler => e => {
   e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
   return handler(e);
 };
 
-const normalizeEventHandlers = (props) => {
-  eventHandlerNames.forEach((handlerName) => {
+const normalizeEventHandlers = props => {
+  eventHandlerNames.forEach(handlerName => {
     const handler = props[handlerName];
     if (typeof handler === 'function') {
       props[handlerName] = _normalizeEventForHandler(handler);
@@ -90,11 +90,7 @@ class View extends Component {
     // DOM events need to be normalized to expect RN format
     normalizeEventHandlers(otherProps);
 
-    otherProps.style = [
-      styles.initial,
-      style,
-      pointerEvents && pointerEventStyles[pointerEvents]
-    ];
+    otherProps.style = [styles.initial, style, pointerEvents && pointerEventStyles[pointerEvents]];
 
     return createDOMElement(component, otherProps);
   }
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
 });
 
 const pointerEventStyles = StyleSheet.create({
-  'auto': {
+  auto: {
     pointerEvents: 'auto'
   },
   'box-none': {
@@ -137,7 +133,7 @@ const pointerEventStyles = StyleSheet.create({
   'box-only': {
     pointerEvents: 'box-only'
   },
-  'none': {
+  none: {
     pointerEvents: 'none'
   }
 });

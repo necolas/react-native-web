@@ -15,9 +15,9 @@ const topTouchEnd = 'topTouchEnd';
 const topTouchMove = 'topTouchMove';
 const topTouchStart = 'topTouchStart';
 
-const endDependencies = [ topTouchCancel, topTouchEnd, topMouseUp ];
-const moveDependencies = [ topTouchMove, topMouseMove ];
-const startDependencies = [ topTouchStart, topMouseDown ];
+const endDependencies = [topTouchCancel, topTouchEnd, topMouseUp];
+const moveDependencies = [topTouchMove, topMouseMove];
+const startDependencies = [topTouchStart, topMouseDown];
 
 /**
  * Setup ResponderEventPlugin dependencies
@@ -31,15 +31,17 @@ ResponderEventPlugin.eventTypes.responderGrant.dependencies = [];
 ResponderEventPlugin.eventTypes.responderReject.dependencies = [];
 ResponderEventPlugin.eventTypes.responderTerminate.dependencies = [];
 ResponderEventPlugin.eventTypes.moveShouldSetResponder.dependencies = moveDependencies;
-ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies = [ topSelectionChange ];
-ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [ topScroll ];
+ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies = [
+  topSelectionChange
+];
+ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [topScroll];
 ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies;
 
 const originalRecordTouchTrack = ResponderTouchHistoryStore.recordTouchTrack;
 
 ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
   // Filter out mouse-move events when the mouse button is not down
-  if ((topLevelType === topMouseMove) && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
+  if (topLevelType === topMouseMove && !ResponderTouchHistoryStore.touchHistory.touchBank.length) {
     return;
   }
 

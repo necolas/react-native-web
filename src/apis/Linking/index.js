@@ -27,7 +27,7 @@ const Linking = {
  *
  * https://mathiasbynens.github.io/rel-noopener/
  */
-const iframeOpen = (url) => {
+const iframeOpen = url => {
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   document.body.appendChild(iframe);

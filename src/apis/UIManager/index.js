@@ -1,7 +1,7 @@
 import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 
-const getRect = (node) => {
+const getRect = node => {
   const height = node.offsetHeight;
   const width = node.offsetWidth;
   let left = 0;
@@ -27,11 +27,15 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
 
 const UIManager = {
   blur(node) {
-    try { node.blur(); } catch (err) {}
+    try {
+      node.blur();
+    } catch (err) {}
   },
 
   focus(node) {
-    try { node.focus(); } catch (err) {}
+    try {
+      node.focus();
+    } catch (err) {}
   },
 
   measure(node, callback) {

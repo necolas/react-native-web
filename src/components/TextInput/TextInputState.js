@@ -14,7 +14,7 @@ import UIManager from '../../apis/UIManager';
  * should be funneled through here
  */
 const TextInputState = {
-   /**
+  /**
    * Internal state
    */
   _currentlyFocusedNode: (null: ?Object),

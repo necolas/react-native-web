@@ -11,7 +11,7 @@ import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component, PropTypes } from 'react';
 
-const normalizeScrollEvent = (e) => ({
+const normalizeScrollEvent = e => ({
   nativeEvent: {
     contentOffset: {
       get x() {
@@ -72,17 +72,19 @@ export default class ScrollViewBase extends Component {
     this._state = { isScrolling: false };
   }
 
-  _handlePreventableScrollEvent = (handler) => {
-    return (e) => {
+  _handlePreventableScrollEvent = handler => {
+    return e => {
       if (!this.props.scrollEnabled) {
         e.preventDefault();
       } else {
-        if (handler) { handler(e); }
+        if (handler) {
+          handler(e);
+        }
       }
     };
-  }
+  };
 
-  _handleScroll = (e) => {
+  _handleScroll = e => {
     e.persist();
     const { scrollEventThrottle } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
@@ -96,7 +98,7 @@ export default class ScrollViewBase extends Component {
       // Weren't scrolling, so we must have just started
       this._handleScrollStart(e);
     }
-  }
+  };
 
   _handleScrollStart(e) {
     this._state.isScrolling = true;
@@ -106,18 +108,22 @@ export default class ScrollViewBase extends Component {
   _handleScrollTick(e) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
-    if (onScroll) { onScroll(normalizeScrollEvent(e)); }
+    if (onScroll) {
+      onScroll(normalizeScrollEvent(e));
+    }
   }
 
   _handleScrollEnd(e) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
-    if (onScroll) { onScroll(normalizeScrollEvent(e)); }
+    if (onScroll) {
+      onScroll(normalizeScrollEvent(e));
+    }
   }
 
   _shouldEmitScrollEvent(lastTick, eventThrottle) {
     const timeSinceLastTick = Date.now() - lastTick;
-    return (eventThrottle > 0 && timeSinceLastTick >= eventThrottle);
+    return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
   }
 
   render() {

@@ -7,7 +7,9 @@ describe('apis/NetInfo', () => {
     const handler = () => {};
 
     afterEach(() => {
-      try { NetInfo.isConnected.removeEventListener('change', handler); } catch (e) {}
+      try {
+        NetInfo.isConnected.removeEventListener('change', handler);
+      } catch (e) {}
     });
 
     describe('addEventListener', () => {

@@ -17,7 +17,10 @@ describe('apis/StyleSheet/StyleManager', () => {
 
   test('getDeclaration', () => {
     const className = styleManager.setDeclaration('width', '100px');
-    expect(styleManager.getDeclaration(className)).toEqual({ prop: 'width', value: '100px' });
+    expect(styleManager.getDeclaration(className)).toEqual({
+      prop: 'width',
+      value: '100px'
+    });
   });
 
   test('getStyleSheetHtml', () => {

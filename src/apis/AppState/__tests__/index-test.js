@@ -6,7 +6,9 @@ describe('apis/AppState', () => {
   const handler = () => {};
 
   afterEach(() => {
-    try { AppState.removeEventListener('change', handler); } catch (e) {}
+    try {
+      AppState.removeEventListener('change', handler);
+    } catch (e) {}
   });
 
   describe('addEventListener', () => {

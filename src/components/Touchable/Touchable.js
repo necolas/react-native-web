@@ -110,12 +110,12 @@ const View = require('../../components/View');
  * Touchable states.
  */
 var States = {
-  NOT_RESPONDER: 'NOT_RESPONDER',                                     // Not the responder
-  RESPONDER_INACTIVE_PRESS_IN: 'RESPONDER_INACTIVE_PRESS_IN',         // Responder, inactive, in the `PressRect`
-  RESPONDER_INACTIVE_PRESS_OUT: 'RESPONDER_INACTIVE_PRESS_OUT',       // Responder, inactive, out of `PressRect`
-  RESPONDER_ACTIVE_PRESS_IN: 'RESPONDER_ACTIVE_PRESS_IN',             // Responder, active, in the `PressRect`
-  RESPONDER_ACTIVE_PRESS_OUT: 'RESPONDER_ACTIVE_PRESS_OUT',           // Responder, active, out of `PressRect`
-  RESPONDER_ACTIVE_LONG_PRESS_IN: 'RESPONDER_ACTIVE_LONG_PRESS_IN',   // Responder, active, in the `PressRect`, after long press threshold
+  NOT_RESPONDER: 'NOT_RESPONDER', // Not the responder
+  RESPONDER_INACTIVE_PRESS_IN: 'RESPONDER_INACTIVE_PRESS_IN', // Responder, inactive, in the `PressRect`
+  RESPONDER_INACTIVE_PRESS_OUT: 'RESPONDER_INACTIVE_PRESS_OUT', // Responder, inactive, out of `PressRect`
+  RESPONDER_ACTIVE_PRESS_IN: 'RESPONDER_ACTIVE_PRESS_IN', // Responder, active, in the `PressRect`
+  RESPONDER_ACTIVE_PRESS_OUT: 'RESPONDER_ACTIVE_PRESS_OUT', // Responder, active, out of `PressRect`
+  RESPONDER_ACTIVE_LONG_PRESS_IN: 'RESPONDER_ACTIVE_LONG_PRESS_IN', // Responder, active, in the `PressRect`, after long press threshold
   RESPONDER_ACTIVE_LONG_PRESS_OUT: 'RESPONDER_ACTIVE_LONG_PRESS_OUT', // Responder, active, out of `PressRect`, after long press threshold
   ERROR: 'ERROR'
 };
@@ -135,11 +135,11 @@ var IsActive = {
 var IsPressingIn = {
   RESPONDER_INACTIVE_PRESS_IN: true,
   RESPONDER_ACTIVE_PRESS_IN: true,
-  RESPONDER_ACTIVE_LONG_PRESS_IN: true,
+  RESPONDER_ACTIVE_LONG_PRESS_IN: true
 };
 
 var IsLongPressingIn = {
-  RESPONDER_ACTIVE_LONG_PRESS_IN: true,
+  RESPONDER_ACTIVE_LONG_PRESS_IN: true
 };
 
 /**
@@ -152,7 +152,7 @@ var Signals = {
   RESPONDER_TERMINATED: 'RESPONDER_TERMINATED',
   ENTER_PRESS_RECT: 'ENTER_PRESS_RECT',
   LEAVE_PRESS_RECT: 'LEAVE_PRESS_RECT',
-  LONG_PRESS_DETECTED: 'LONG_PRESS_DETECTED',
+  LONG_PRESS_DETECTED: 'LONG_PRESS_DETECTED'
 };
 
 /**
@@ -166,7 +166,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.ERROR,
     ENTER_PRESS_RECT: States.ERROR,
     LEAVE_PRESS_RECT: States.ERROR,
-    LONG_PRESS_DETECTED: States.ERROR,
+    LONG_PRESS_DETECTED: States.ERROR
   },
   RESPONDER_INACTIVE_PRESS_IN: {
     DELAY: States.RESPONDER_ACTIVE_PRESS_IN,
@@ -175,7 +175,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.ERROR,
+    LONG_PRESS_DETECTED: States.ERROR
   },
   RESPONDER_INACTIVE_PRESS_OUT: {
     DELAY: States.RESPONDER_ACTIVE_PRESS_OUT,
@@ -184,7 +184,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_INACTIVE_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.ERROR,
+    LONG_PRESS_DETECTED: States.ERROR
   },
   RESPONDER_ACTIVE_PRESS_IN: {
     DELAY: States.ERROR,
@@ -193,7 +193,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
+    LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
   },
   RESPONDER_ACTIVE_PRESS_OUT: {
     DELAY: States.ERROR,
@@ -202,7 +202,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.ERROR,
+    LONG_PRESS_DETECTED: States.ERROR
   },
   RESPONDER_ACTIVE_LONG_PRESS_IN: {
     DELAY: States.ERROR,
@@ -211,7 +211,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
+    LONG_PRESS_DETECTED: States.RESPONDER_ACTIVE_LONG_PRESS_IN
   },
   RESPONDER_ACTIVE_LONG_PRESS_OUT: {
     DELAY: States.ERROR,
@@ -220,7 +220,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_IN,
     LEAVE_PRESS_RECT: States.RESPONDER_ACTIVE_LONG_PRESS_OUT,
-    LONG_PRESS_DETECTED: States.ERROR,
+    LONG_PRESS_DETECTED: States.ERROR
   },
   error: {
     DELAY: States.NOT_RESPONDER,
@@ -229,7 +229,7 @@ var Transitions = {
     RESPONDER_TERMINATED: States.NOT_RESPONDER,
     ENTER_PRESS_RECT: States.NOT_RESPONDER,
     LEAVE_PRESS_RECT: States.NOT_RESPONDER,
-    LONG_PRESS_DETECTED: States.NOT_RESPONDER,
+    LONG_PRESS_DETECTED: States.NOT_RESPONDER
   }
 };
 
@@ -331,7 +331,7 @@ var TouchableMixin = {
    */
   touchableGetInitialState: function() {
     return {
-      touchable: {touchState: undefined, responderID: null}
+      touchable: { touchState: undefined, responderID: null }
     };
   },
 
@@ -353,7 +353,7 @@ var TouchableMixin = {
   /**
    * Return true to cancel press on long press.
    */
-  touchableLongPressCancelsPress: function () {
+  touchableLongPressCancelsPress: function() {
     return true;
   },
 
@@ -375,22 +375,19 @@ var TouchableMixin = {
     this.state.touchable.touchState = States.NOT_RESPONDER;
     this.state.touchable.responderID = dispatchID;
     this._receiveSignal(Signals.RESPONDER_GRANT, e);
-    var delayMS =
-      this.touchableGetHighlightDelayMS !== undefined ?
-      Math.max(this.touchableGetHighlightDelayMS(), 0) : HIGHLIGHT_DELAY_MS;
+    var delayMS = this.touchableGetHighlightDelayMS !== undefined
+      ? Math.max(this.touchableGetHighlightDelayMS(), 0)
+      : HIGHLIGHT_DELAY_MS;
     delayMS = isNaN(delayMS) ? HIGHLIGHT_DELAY_MS : delayMS;
     if (delayMS !== 0) {
-      this.touchableDelayTimeout = setTimeout(
-        this._handleDelay.bind(this, e),
-        delayMS
-      );
+      this.touchableDelayTimeout = setTimeout(this._handleDelay.bind(this, e), delayMS);
     } else {
       this._handleDelay(e);
     }
 
-    var longDelayMS =
-      this.touchableGetLongPressDelayMS !== undefined ?
-      Math.max(this.touchableGetLongPressDelayMS(), 10) : LONG_PRESS_DELAY_MS;
+    var longDelayMS = this.touchableGetLongPressDelayMS !== undefined
+      ? Math.max(this.touchableGetLongPressDelayMS(), 10)
+      : LONG_PRESS_DELAY_MS;
     longDelayMS = isNaN(longDelayMS) ? LONG_PRESS_DELAY_MS : longDelayMS;
     this.longPressDelayTimeout = setTimeout(
       this._handleLongDelay.bind(this, e),
@@ -436,21 +433,21 @@ var TouchableMixin = {
 
     var positionOnActivate = this.state.touchable.positionOnActivate;
     var dimensionsOnActivate = this.state.touchable.dimensionsOnActivate;
-    var pressRectOffset = this.touchableGetPressRectOffset ?
-      this.touchableGetPressRectOffset() : {
-        left: PRESS_EXPAND_PX,
-        right: PRESS_EXPAND_PX,
-        top: PRESS_EXPAND_PX,
-        bottom: PRESS_EXPAND_PX
-      };
+    var pressRectOffset = this.touchableGetPressRectOffset
+      ? this.touchableGetPressRectOffset()
+      : {
+          left: PRESS_EXPAND_PX,
+          right: PRESS_EXPAND_PX,
+          top: PRESS_EXPAND_PX,
+          bottom: PRESS_EXPAND_PX
+        };
 
     var pressExpandLeft = pressRectOffset.left;
     var pressExpandTop = pressRectOffset.top;
     var pressExpandRight = pressRectOffset.right;
     var pressExpandBottom = pressRectOffset.bottom;
 
-    var hitSlop = this.touchableGetHitSlop ?
-      this.touchableGetHitSlop() : null;
+    var hitSlop = this.touchableGetHitSlop ? this.touchableGetHitSlop() : null;
 
     if (hitSlop) {
       pressExpandLeft += hitSlop.left;
@@ -464,23 +461,21 @@ var TouchableMixin = {
     var pageY = touch && touch.pageY;
 
     if (this.pressInLocation) {
-      var movedDistance = this._getDistanceBetweenPoints(pageX, pageY, this.pressInLocation.pageX, this.pressInLocation.pageY);
+      var movedDistance = this._getDistanceBetweenPoints(
+        pageX,
+        pageY,
+        this.pressInLocation.pageX,
+        this.pressInLocation.pageY
+      );
       if (movedDistance > LONG_PRESS_ALLOWED_MOVEMENT) {
         this._cancelLongPressDelayTimeout();
       }
     }
 
-    var isTouchWithinActive =
-        pageX > positionOnActivate.left - pressExpandLeft &&
-        pageY > positionOnActivate.top - pressExpandTop &&
-        pageX <
-          positionOnActivate.left +
-          dimensionsOnActivate.width +
-          pressExpandRight &&
-        pageY <
-          positionOnActivate.top +
-          dimensionsOnActivate.height +
-          pressExpandBottom;
+    var isTouchWithinActive = pageX > positionOnActivate.left - pressExpandLeft &&
+      pageY > positionOnActivate.top - pressExpandTop &&
+      pageX < positionOnActivate.left + dimensionsOnActivate.width + pressExpandRight &&
+      pageY < positionOnActivate.top + dimensionsOnActivate.height + pressExpandBottom;
     if (isTouchWithinActive) {
       this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
       var curState = this.state.touchable.touchState;
@@ -556,8 +551,6 @@ var TouchableMixin = {
    * touchableGetPressRectOffset: function
    */
 
-
-
   // ==== Internal Logic ====
 
   /**
@@ -598,11 +591,18 @@ var TouchableMixin = {
   _handleLongDelay: function(e) {
     this.longPressDelayTimeout = null;
     var curState = this.state.touchable.touchState;
-    if (curState !== States.RESPONDER_ACTIVE_PRESS_IN &&
-        curState !== States.RESPONDER_ACTIVE_LONG_PRESS_IN) {
-      console.error('Attempted to transition from state `' + curState + '` to `' +
-        States.RESPONDER_ACTIVE_LONG_PRESS_IN + '`, which is not supported. This is ' +
-        'most likely due to `Touchable.longPressDelayTimeout` not being cancelled.');
+    if (
+      curState !== States.RESPONDER_ACTIVE_PRESS_IN &&
+      curState !== States.RESPONDER_ACTIVE_LONG_PRESS_IN
+    ) {
+      console.error(
+        'Attempted to transition from state `' +
+          curState +
+          '` to `' +
+          States.RESPONDER_ACTIVE_LONG_PRESS_IN +
+          '`, which is not supported. This is ' +
+          'most likely due to `Touchable.longPressDelayTimeout` not being cancelled.'
+      );
     } else {
       this._receiveSignal(Signals.LONG_PRESS_DETECTED, e);
     }
@@ -625,14 +625,24 @@ var TouchableMixin = {
     }
     if (!nextState) {
       throw new Error(
-        'Unrecognized signal `' + signal + '` or state `' + curState +
-        '` for Touchable responder `' + responderID + '`'
+        'Unrecognized signal `' +
+          signal +
+          '` or state `' +
+          curState +
+          '` for Touchable responder `' +
+          responderID +
+          '`'
       );
     }
     if (nextState === States.ERROR) {
       throw new Error(
-        'Touchable cannot transition from `' + curState + '` to `' + signal +
-        '` for responder `' + responderID + '`'
+        'Touchable cannot transition from `' +
+          curState +
+          '` to `' +
+          signal +
+          '` for responder `' +
+          responderID +
+          '`'
       );
     }
     if (curState !== nextState) {
@@ -641,14 +651,14 @@ var TouchableMixin = {
     }
   },
 
-  _cancelLongPressDelayTimeout: function () {
+  _cancelLongPressDelayTimeout: function() {
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
     this.longPressDelayTimeout = null;
   },
 
-  _isHighlight: function (state) {
+  _isHighlight: function(state) {
     return state === States.RESPONDER_ACTIVE_PRESS_IN ||
-           state === States.RESPONDER_ACTIVE_LONG_PRESS_IN;
+      state === States.RESPONDER_ACTIVE_LONG_PRESS_IN;
   },
 
   _savePressInLocation: function(e) {
@@ -657,10 +667,10 @@ var TouchableMixin = {
     var pageY = touch && touch.pageY;
     var locationX = touch && touch.locationX;
     var locationY = touch && touch.locationY;
-    this.pressInLocation = {pageX, pageY, locationX, locationY};
+    this.pressInLocation = { pageX, pageY, locationX, locationY };
   },
 
-  _getDistanceBetweenPoints: function (aX, aY, bX, bY) {
+  _getDistanceBetweenPoints: function(aX, aY, bX, bY) {
     var deltaX = aX - bX;
     var deltaY = aY - bY;
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -681,8 +691,7 @@ var TouchableMixin = {
     var curIsHighlight = this._isHighlight(curState);
     var newIsHighlight = this._isHighlight(nextState);
 
-    var isFinalSignal =
-      signal === Signals.RESPONDER_TERMINATED ||
+    var isFinalSignal = signal === Signals.RESPONDER_TERMINATED ||
       signal === Signals.RESPONDER_RELEASE;
 
     if (isFinalSignal) {
@@ -705,13 +714,11 @@ var TouchableMixin = {
 
     if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
       var hasLongPressHandler = !!this.props.onLongPress;
-      var pressIsLongButStillCallOnPress =
-        IsLongPressingIn[curState] && (    // We *are* long pressing..
-          !hasLongPressHandler ||          // But either has no long handler
-          !this.touchableLongPressCancelsPress() // or we're told to ignore it.
-        );
+      var pressIsLongButStillCallOnPress = IsLongPressingIn[curState] && // We *are* long pressing..
+        (!hasLongPressHandler || // But either has no long handler
+          !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
 
-      var shouldInvokePress =  !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
+      var shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
       if (shouldInvokePress && this.touchableHandlePress) {
         if (!newIsHighlight && !curIsHighlight) {
           // we never highlighted because of delay, but we should highlight now
@@ -734,15 +741,17 @@ var TouchableMixin = {
   _endHighlight: function(e) {
     if (this.touchableHandleActivePressOut) {
       if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
-        this.pressOutDelayTimeout = setTimeout(() => {
-          this.touchableHandleActivePressOut(e);
-        }, this.touchableGetPressOutDelayMS());
+        this.pressOutDelayTimeout = setTimeout(
+          () => {
+            this.touchableHandleActivePressOut(e);
+          },
+          this.touchableGetPressOutDelayMS()
+        );
       } else {
         this.touchableHandleActivePressOut(e);
       }
     }
-  },
-
+  }
 };
 
 var Touchable = {

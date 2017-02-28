@@ -7,7 +7,7 @@ const createDeclarationString = (prop, val) => {
   const name = hyphenate(prop);
   const value = normalizeValue(prop, val);
   if (Array.isArray(val)) {
-    return val.map((v) => `${name}:${v}`).join(';');
+    return val.map(v => `${name}:${v}`).join(';');
   }
   return `${name}:${value}`;
 };
@@ -18,6 +18,7 @@ const createDeclarationString = (prop, val) => {
  * generateCss({ width: 20, color: 'blue' });
  * // => 'color:blue;width:20px'
  */
-const generateCss = (style) => mapKeyValue(prefixAll(style), createDeclarationString).sort().join(';');
+const generateCss = style =>
+  mapKeyValue(prefixAll(style), createDeclarationString).sort().join(';');
 
 module.exports = generateCss;

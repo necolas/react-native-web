@@ -1,7 +1,7 @@
 import createDOMElement from 'react-native/modules/createDOMElement';
 import StyleSheet from 'react-native/apis/StyleSheet';
 
-const View = (props) => createDOMElement('div', { ...props, style: [ styles.initial, props.style ] });
+const View = props => createDOMElement('div', { ...props, style: [styles.initial, props.style] });
 
 const styles = StyleSheet.create({
   initial: {

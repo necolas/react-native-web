@@ -12,7 +12,7 @@ class Text extends Component {
 
   static propTypes = {
     ...BaseComponentPropTypes,
-    accessibilityRole: PropTypes.oneOf([ 'button', 'heading', 'link', 'listitem' ]),
+    accessibilityRole: PropTypes.oneOf(['button', 'heading', 'link', 'listitem']),
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
     onLayout: PropTypes.func,
@@ -63,7 +63,7 @@ class Text extends Component {
   }
 
   _createEnterHandler(fn) {
-    return (e) => {
+    return e => {
       if (e.keyCode === 13) {
         fn && fn(e);
       }

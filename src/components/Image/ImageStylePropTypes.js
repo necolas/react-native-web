@@ -7,7 +7,7 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 
 const { number, oneOf, string } = PropTypes;
-const hiddenOrVisible = oneOf([ 'hidden', 'visible' ]);
+const hiddenOrVisible = oneOf(['hidden', 'visible']);
 
 module.exports = {
   ...BorderPropTypes,

@@ -32,11 +32,9 @@ class Button extends Component {
           styles.button,
           color && { backgroundColor: color },
           disabled && styles.buttonDisabled
-        ]}>
-        <Text style={[
-          styles.text,
-          disabled && styles.textDisabled
-        ]}>
+        ]}
+      >
+        <Text style={[styles.text, disabled && styles.textDisabled]}>
           {title}
         </Text>
       </TouchableOpacity>

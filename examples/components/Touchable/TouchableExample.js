@@ -57,7 +57,6 @@ const examples = [
           <TouchableHighlight
             style={styles.wrapper}
             activeOpacity={1}
-            animationVelocity={0}
             underlayColor="rgb(210, 230, 255)"
             onPress={() => console.log('custom THW text - highlight')}>
             <View style={styles.wrapperCustom}>

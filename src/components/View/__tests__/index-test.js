@@ -14,19 +14,19 @@ describe('components/View', () => {
     });
 
     test('is a "span" when inside <View accessibilityRole="button" />', () => {
-      const component = renderer.create(<View accessibilityRole='button'><View /></View>);
+      const component = renderer.create(<View accessibilityRole="button"><View /></View>);
       expect(component.toJSON()).toMatchSnapshot();
     });
   });
 
   test('prop "children"', () => {
-    const children = <View testID='1' />;
+    const children = <View testID="1" />;
     const component = renderer.create(<View>{children}</View>);
     expect(component.toJSON()).toMatchSnapshot();
   });
 
   test('prop "pointerEvents"', () => {
-    const component = renderer.create(<View pointerEvents='box-only' />);
+    const component = renderer.create(<View pointerEvents="box-only" />);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });

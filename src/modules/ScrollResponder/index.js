@@ -110,11 +110,11 @@ const emptyObject = {};
 var IS_ANIMATING_TOUCH_START_THRESHOLD_MS = 16;
 
 type State = {
-    isTouching: boolean;
-    lastMomentumScrollBeginTime: number;
-    lastMomentumScrollEndTime: number;
-    observedScrollSinceBecomingResponder: boolean;
-    becameResponderWhileAnimating: boolean;
+  isTouching: boolean,
+  lastMomentumScrollBeginTime: number,
+  lastMomentumScrollEndTime: number,
+  observedScrollSinceBecomingResponder: boolean,
+  becameResponderWhileAnimating: boolean
 };
 type Event = Object;
 
@@ -132,7 +132,7 @@ var ScrollResponderMixin = {
       // - Determine if releasing should dismiss the keyboard when we are in
       // tap-to-dismiss mode (!this.props.keyboardShouldPersistTaps).
       observedScrollSinceBecomingResponder: false,
-      becameResponderWhileAnimating: false,
+      becameResponderWhileAnimating: false
     };
   },
 
@@ -247,11 +247,13 @@ var ScrollResponderMixin = {
     // By default scroll views will unfocus a textField
     // if another touch occurs outside of it
     var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
-    if (!this.props.keyboardShouldPersistTaps &&
+    if (
+      !this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
-      e.target !== currentlyFocusedTextInput  &&
+      e.target !== currentlyFocusedTextInput &&
       !this.state.observedScrollSinceBecomingResponder &&
-      !this.state.becameResponderWhileAnimating) {
+      !this.state.becameResponderWhileAnimating
+    ) {
       this.props.onScrollResponderKeyboardDismissed &&
         this.props.onScrollResponderKeyboardDismissed(e);
       TextInputState.blurTextInput(currentlyFocusedTextInput);
@@ -356,9 +358,7 @@ var ScrollResponderMixin = {
    * function otherwise `this` is used.
    */
   scrollResponderGetScrollableNode: function(): any {
-    return this.getScrollableNode ?
-      this.getScrollableNode() :
-      findNodeHandle(this);
+    return this.getScrollableNode ? this.getScrollableNode() : findNodeHandle(this);
   },
 
   /**
@@ -373,26 +373,30 @@ var ScrollResponderMixin = {
    * This is deprecated due to ambiguity (y before x), and SHOULD NOT BE USED.
    */
   scrollResponderScrollTo: function(
-    x?: number | { x?: number; y?: number; animated?: boolean },
+    x?: number | { x?: number, y?: number, animated?: boolean },
     y?: number,
     animated?: boolean
   ) {
     if (typeof x === 'number') {
-      console.warn('`scrollResponderScrollTo(x, y, animated)` is deprecated. Use `scrollResponderScrollTo({x: 5, y: 5, animated: true})` instead.');
+      console.warn(
+        '`scrollResponderScrollTo(x, y, animated)` is deprecated. Use `scrollResponderScrollTo({x: 5, y: 5, animated: true})` instead.'
+      );
     } else {
-      ({x, y, animated} = x || emptyObject);
+      ({ x, y, animated } = x || emptyObject);
     }
-    const node = this.scrollResponderGetScrollableNode()
-    node.scrollLeft = x || 0
-    node.scrollTop = y || 0
+    const node = this.scrollResponderGetScrollableNode();
+    node.scrollLeft = x || 0;
+    node.scrollTop = y || 0;
   },
 
   /**
    * Deprecated, do not use.
    */
   scrollResponderScrollWithoutAnimationTo: function(offsetX: number, offsetY: number) {
-    console.warn('`scrollResponderScrollWithoutAnimationTo` is deprecated. Use `scrollResponderScrollTo` instead');
-    this.scrollResponderScrollTo({x: offsetX, y: offsetY, animated: false});
+    console.warn(
+      '`scrollResponderScrollWithoutAnimationTo` is deprecated. Use `scrollResponderScrollTo` instead'
+    );
+    this.scrollResponderScrollTo({ x: offsetX, y: offsetY, animated: false });
   },
 
   /**
@@ -402,7 +406,13 @@ var ScrollResponderMixin = {
    * @platform ios
    */
   scrollResponderZoomTo: function(
-    rect: { x: number; y: number; width: number; height: number; animated?: boolean },
+    rect: {
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      animated?: boolean
+    },
     animated?: boolean // deprecated, put this inside the rect argument instead
   ) {
     if (Platform.OS !== 'ios') {
@@ -420,7 +430,11 @@ var ScrollResponderMixin = {
    * @param {bool} preventNegativeScrolling Whether to allow pulling the content
    *        down to make it meet the keyboard's top. Default is false.
    */
-  scrollResponderScrollNativeHandleToKeyboard: function(nodeHandle: any, additionalOffset?: number, preventNegativeScrollOffset?: bool) {
+  scrollResponderScrollNativeHandleToKeyboard: function(
+    nodeHandle: any,
+    additionalOffset?: number,
+    preventNegativeScrollOffset?: boolean
+  ) {
     this.additionalScrollOffset = additionalOffset || 0;
     this.preventNegativeScrollOffset = !!preventNegativeScrollOffset;
     UIManager.measureLayout(
@@ -441,7 +455,12 @@ var ScrollResponderMixin = {
    * @param {number} width Width of the text input.
    * @param {number} height Height of the text input.
    */
-  scrollResponderInputMeasureAndScrollToKeyboard: function(left: number, top: number, width: number, height: number) {
+  scrollResponderInputMeasureAndScrollToKeyboard: function(
+    left: number,
+    top: number,
+    width: number,
+    height: number
+  ) {
     var keyboardScreenY = Dimensions.get('window').height;
     if (this.keyboardWillOpenTo) {
       keyboardScreenY = this.keyboardWillOpenTo.endCoordinates.screenY;
@@ -455,7 +474,7 @@ var ScrollResponderMixin = {
     if (this.preventNegativeScrollOffset) {
       scrollOffsetY = Math.max(0, scrollOffsetY);
     }
-    this.scrollResponderScrollTo({x: 0, y: scrollOffsetY, animated: true});
+    this.scrollResponderScrollTo({ x: 0, y: scrollOffsetY, animated: true });
 
     this.additionalOffset = 0;
     this.preventNegativeScrollOffset = false;
@@ -534,7 +553,7 @@ var ScrollResponderMixin = {
 };
 
 var ScrollResponder = {
-  Mixin: ScrollResponderMixin,
+  Mixin: ScrollResponderMixin
 };
 
 module.exports = ScrollResponder;

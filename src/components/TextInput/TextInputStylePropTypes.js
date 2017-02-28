@@ -5,7 +5,7 @@ const { oneOf } = PropTypes;
 
 const TextInputOnlyStylePropTypes = {
   /* @platform web */
-  resize: oneOf([ 'none', 'vertical', 'horizontal', 'both' ])
+  resize: oneOf(['none', 'vertical', 'horizontal', 'both'])
 };
 
 module.exports = {
