@@ -231,17 +231,30 @@ var TouchableHighlight = React.createClass({
   },
 
   render: function() {
+    const {
+      /* eslint-disable */
+      activeOpacity,
+      onHideUnderlay,
+      onShowUnderlay,
+      underlayColor,
+      delayLongPress,
+      delayPressIn,
+      delayPressOut,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      pressRetentionOffset,
+      /* eslint-enable */
+      ...other
+    } = this.props;
+
     return (
       <View
-        accessible={true}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityRole={this.props.accessibilityRole}
-        disabled={this.props.disabled}
-        hitSlop={this.props.hitSlop}
+        {...other}
         onKeyDown={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressIn) }}
         onKeyPress={(e) => { this._onKeyEnter(e, this.touchableHandlePress) }}
         onKeyUp={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressOut) }}
-        onLayout={this.props.onLayout}
         onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
         onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
         onResponderGrant={this.touchableHandleResponderGrant}
@@ -255,7 +268,7 @@ var TouchableHighlight = React.createClass({
           this.state.underlayStyle
         ]}
         tabIndex={this.props.disabled ? null : '0'}
-        testID={this.props.testID}>
+      >
         {React.cloneElement(
           React.Children.only(this.props.children),
           {

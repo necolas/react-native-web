@@ -145,6 +145,21 @@ const TouchableWithoutFeedback = React.createClass({
   },
 
   render: function(): React.Element<any> {
+    const {
+      /* eslint-disable */
+      delayLongPress,
+      delayPressIn,
+      delayPressOut,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      pressRetentionOffset,
+      /* eslint-enable */
+      ...other
+    } = this.props;
+
+
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
@@ -166,13 +181,7 @@ const TouchableWithoutFeedback = React.createClass({
         child.props.style
       ];
     return (React: any).cloneElement(child, {
-      accessible: this.props.accessible !== false,
-      accessibilityLabel: this.props.accessibilityLabel,
-      accessibilityRole: this.props.accessibilityRole,
-      disabled: this.props.disabled,
-      testID: this.props.testID,
-      onLayout: this.props.onLayout,
-      hitSlop: this.props.hitSlop,
+      ...other,
       onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
       onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
       onResponderGrant: this.touchableHandleResponderGrant,

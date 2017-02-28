@@ -163,20 +163,30 @@ var TouchableOpacity = React.createClass({
   },
 
   render: function() {
+    const {
+      /* eslint-disable */
+      activeOpacity,
+      focusedOpacity,
+      delayLongPress,
+      delayPressIn,
+      delayPressOut,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      pressRetentionOffset,
+      /* eslint-enable */
+      ...other
+    } = this.props;
+
     return (
       <View
-        accessible={this.props.accessible !== false}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityRole={this.props.accessibilityRole}
-        disabled={this.props.disabled}
+        {...other}
         style={[
           styles.root,
           this.props.disabled && styles.disabled,
           this.props.style
         ]}
-        testID={this.props.testID}
-        onLayout={this.props.onLayout}
-        hitSlop={this.props.hitSlop}
         onKeyDown={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressIn) }}
         onKeyPress={(e) => { this._onKeyEnter(e, this.touchableHandlePress) }}
         onKeyUp={(e) => { this._onKeyEnter(e, this.touchableHandleActivePressOut) }}
@@ -187,9 +197,7 @@ var TouchableOpacity = React.createClass({
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
         tabIndex={this.props.disabled ? null : '0'}
-      >
-        {this.props.children}
-      </View>
+      />
     );
   },
 });

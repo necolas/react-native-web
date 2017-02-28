@@ -318,7 +318,6 @@ var TouchableDisabled = React.createClass({
         <TouchableHighlight
           activeOpacity={1}
           disabled={true}
-          animationVelocity={0}
           underlayColor="rgb(210, 230, 255)"
           style={[styles.row, styles.block]}
           onPress={action('TouchableHighlight')}>
@@ -329,7 +328,6 @@ var TouchableDisabled = React.createClass({
 
         <TouchableHighlight
           activeOpacity={1}
-          animationVelocity={0}
           underlayColor="rgb(210, 230, 255)"
           style={[styles.row, styles.block]}
           onPress={action('TouchableHighlight')}>
