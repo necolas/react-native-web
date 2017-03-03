@@ -125,6 +125,8 @@ class ListView extends Component {
       renderSeparator,
       /* eslint-disable */
       initialListSize,
+      onChangeVisibleRows,
+      onEndReached,
       onEndReachedThreshold,
       onKeyboardDidHide,
       onKeyboardDidShow,
