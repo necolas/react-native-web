@@ -1,10 +1,10 @@
-import hyphenate from './hyphenate';
+import hyphenateStyleName from 'hyphenate-style-name';
 import mapKeyValue from '../../modules/mapKeyValue';
 import normalizeValue from './normalizeValue';
 import prefixAll from 'inline-style-prefixer/static';
 
 const createDeclarationString = (prop, val) => {
-  const name = hyphenate(prop);
+  const name = hyphenateStyleName(prop);
   const value = normalizeValue(prop, val);
   if (Array.isArray(val)) {
     return val.map(v => `${name}:${v}`).join(';');
