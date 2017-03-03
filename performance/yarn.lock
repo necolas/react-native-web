@@ -73,7 +73,7 @@ browserslist@^1.0.1, browserslist@^1.5.2, browserslist@^1.7.5:
     caniuse-db "^1.0.30000624"
     electron-to-chromium "^1.2.3"
 
-buffer@^5.0.2:
+buffer@^5.0.3:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.0.5.tgz#35c9393244a90aff83581063d16f0882cecc9418"
   dependencies:
@@ -316,7 +316,7 @@ fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
 
-fbjs@^0.8.5, fbjs@^0.8.7, fbjs@^0.8.8:
+fbjs@^0.8.5, fbjs@^0.8.8, fbjs@^0.8.9:
   version "0.8.9"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.9.tgz#180247fbd347dcc9004517b904f865400a0c8f14"
   dependencies:
@@ -336,7 +336,7 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-glamor@^2.20.12, glamor@^2.20.24:
+glamor@^2.20.22, glamor@^2.20.24:
   version "2.20.24"
   resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.24.tgz#a299af2eec687322634ba38e4a0854d8743d2041"
   dependencies:
@@ -900,24 +900,29 @@ style-loader@^0.13.2:
   dependencies:
     loader-utils "^1.0.2"
 
-styled-components@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-1.4.3.tgz#83fa44e553882aaa3ddc4363ccc435814d690706"
+styled-components@2.0.0-5:
+  version "2.0.0-5"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.0.0-5.tgz#df802d110cfb1a08a37e7746ecff11c765075e34"
   dependencies:
-    buffer "^5.0.2"
+    buffer "^5.0.3"
     css-to-react-native "^1.0.6"
-    fbjs "^0.8.7"
-    glamor "^2.20.12"
+    fbjs "^0.8.9"
+    glamor "^2.20.22"
     inline-style-prefixer "^2.0.5"
     is-function "^1.0.1"
     is-plain-object "^2.0.1"
-    supports-color "^3.1.2"
+    stylis "^1.1.13"
+    supports-color "^3.2.3"
+
+stylis@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-1.1.13.tgz#e15095d0027f49683f7556e31df184c1eafe1d6d"
 
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.2, supports-color@^3.2.3:
+supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
