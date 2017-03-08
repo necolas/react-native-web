@@ -12,6 +12,6 @@ module.exports = 'html{' + // css reset
   '100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}' +
   '}\n' +
   '@keyframes rn-ProgressBar-animation{' +
-  '0%{-webkit-transform:translateX(-100%);transform:translateX(-100%)};' +
-  '100%{-webkit-transform:translateX(400%);transform:translateX(400%)};' +
+  '0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}' +
+  '100%{-webkit-transform:translateX(400%);transform:translateX(400%);}' +
   '}';
