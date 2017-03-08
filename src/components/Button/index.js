@@ -6,6 +6,7 @@ import Text from '../Text';
 
 class Button extends Component {
   static propTypes = {
+    testID: PropTypes.string,
     accessibilityLabel: PropTypes.string,
     color: ColorPropType,
     disabled: PropTypes.bool,
@@ -15,6 +16,7 @@ class Button extends Component {
 
   render() {
     const {
+      testID,
       accessibilityLabel,
       color,
       disabled,
@@ -24,6 +26,7 @@ class Button extends Component {
 
     return (
       <TouchableOpacity
+        testID={testID}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole={'button'}
         disabled={disabled}
