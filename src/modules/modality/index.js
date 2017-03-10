@@ -1,5 +1,7 @@
 /* global document, window */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 /**
  * Adapts focus styles based on the user's active input modality (i.e., how
  * they are interacting with the UI right now).
@@ -16,6 +18,10 @@
  * Based on https://github.com/WICG/modality
  */
 const modality = () => {
+  if (!canUseDOM) {
+    return;
+  }
+
   /**
    * Determine whether the keyboard is required when an element is focused
    */
