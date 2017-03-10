@@ -10,6 +10,7 @@ class Button extends Component {
     color: ColorPropType,
     disabled: PropTypes.bool,
     onPress: PropTypes.func.isRequired,
+    testID: PropTypes.string,
     title: PropTypes.string.isRequired
   };
 
@@ -19,13 +20,14 @@ class Button extends Component {
       color,
       disabled,
       onPress,
+      testID,
       title
     } = this.props;
 
     return (
       <TouchableOpacity
         accessibilityLabel={accessibilityLabel}
-        accessibilityRole={'button'}
+        accessibilityRole="button"
         disabled={disabled}
         onPress={onPress}
         style={[
@@ -33,6 +35,7 @@ class Button extends Component {
           color && { backgroundColor: color },
           disabled && styles.buttonDisabled
         ]}
+        testID={testID}
       >
         <Text style={[styles.text, disabled && styles.textDisabled]}>
           {title}
