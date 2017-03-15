@@ -23,14 +23,12 @@ more direct comparison with the `css-modules` baseline.
 
 Typical render timings*: mean / two standard deviations
 
-Version: 0.0.73
-
-| Implementation        | Deep tree (ms)    | Wide tree (ms)    |
+| Implementation               | Deep tree (ms)    | Wide tree (ms)    |
 | :--- | ---: | ---: |
-| css-modules           |  `80.47` `±18.04` | `166.91` `±19.90` |
-| react-native-web/lite |  `87.91` `±13.37` | `181.45` `±20.06` |
-| react-native-web      | `113.45` `±09.27` | `237.33` `±38.77` |
-| styled-components     | `170.86` `±15.67` | `378.83` `±36.11` |
-| glamor                | `275.41` `±19.56` | `474.76` `±29.02` |
+| css-modules                  |  `75.40` `±15.93` | `162.15` `±22.20` |
+| react-native-web/lite@0.0.77 |  `83.93` `±13.80` | `177.57` `±20.045` |
+| react-native-web@0.0.77      | `106.72` `±15.48` | `217.63` `±25.70` |
+| styled-components@2.0.0-7    | `255.19` `±35.09` | `569.74` `±59.94` |
+| glamor@3.0.0-1               | `268.94` `±38.96` | `458.69` `±32.30` |
 
 *MacBook Pro (13-inch, Early 2011); 2.7 GHz Intel Core i7; 16 GB 1600 MHz DDR3. Google Chrome 56.
