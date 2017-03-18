@@ -1,5 +1,5 @@
-import asap from 'asap';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
+import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 
 const getRect = node => {
   const height = node.offsetHeight;
@@ -15,13 +15,15 @@ const getRect = node => {
 };
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
-  asap(() => {
-    const relativeNode = relativeToNativeNode || node.parentNode;
-    const relativeRect = getRect(relativeNode);
-    const { height, left, top, width } = getRect(node);
-    const x = left - relativeRect.left;
-    const y = top - relativeRect.top;
-    callback(x, y, width, height, left, top);
+  requestAnimationFrame(() => {
+    const relativeNode = relativeToNativeNode || (node && node.parentNode);
+    if (node && relativeNode) {
+      const relativeRect = getRect(relativeNode);
+      const { height, left, top, width } = getRect(node);
+      const x = left - relativeRect.left;
+      const y = top - relativeRect.top;
+      callback(x, y, width, height, left, top);
+    }
   });
 };
 
@@ -43,13 +45,16 @@ const UIManager = {
   },
 
   measureInWindow(node, callback) {
-    const { height, left, top, width } = getRect(node);
-    callback(left, top, width, height);
+    requestAnimationFrame(() => {
+      if (node) {
+        const { height, left, top, width } = getRect(node);
+        callback(left, top, width, height);
+      }
+    });
   },
 
   measureLayout(node, relativeToNativeNode, onFail, onSuccess) {
-    const relativeTo = relativeToNativeNode || node.parentNode;
-    measureLayout(node, relativeTo, onSuccess);
+    measureLayout(node, relativeToNativeNode, onSuccess);
   },
 
   updateView(node, props, component /* only needed to surpress React errors in development */) {

@@ -6,11 +6,11 @@
  * @flow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 
-const win = ExecutionEnvironment.canUseDOM ? window : { screen: {} };
+const win = canUseDOM ? window : { screen: {} };
 
 const dimensions = {};
 
@@ -38,6 +38,9 @@ class Dimensions {
 }
 
 Dimensions.set();
-ExecutionEnvironment.canUseDOM && window.addEventListener('resize', debounce(Dimensions.set, 50));
+
+if (canUseDOM) {
+  window.addEventListener('resize', debounce(Dimensions.set, 16), false);
+}
 
 module.exports = Dimensions;

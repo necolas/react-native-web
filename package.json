@@ -25,7 +25,6 @@
   "dependencies": {
     "animated": "^0.2.0",
     "array-find-index": "^1.0.2",
-    "asap": "^2.0.5",
     "babel-runtime": "^6.23.0",
     "debounce": "^1.0.0",
     "deep-assign": "^2.0.0",
