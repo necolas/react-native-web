@@ -1,49 +1,11 @@
-import '../../modules/injectResponderEventPlugin';
-
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
-import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import { Component, PropTypes } from 'react';
 
-const eventHandlerNames = [
-  'onClick',
-  'onClickCapture',
-  'onMoveShouldSetResponder',
-  'onMoveShouldSetResponderCapture',
-  'onResponderGrant',
-  'onResponderMove',
-  'onResponderReject',
-  'onResponderRelease',
-  'onResponderTerminate',
-  'onResponderTerminationRequest',
-  'onStartShouldSetResponder',
-  'onStartShouldSetResponderCapture',
-  'onTouchCancel',
-  'onTouchCancelCapture',
-  'onTouchEnd',
-  'onTouchEndCapture',
-  'onTouchMove',
-  'onTouchMoveCapture',
-  'onTouchStart',
-  'onTouchStartCapture'
-];
-
-const _normalizeEventForHandler = handler => e => {
-  e.nativeEvent = normalizeNativeEvent(e.nativeEvent);
-  return handler(e);
-};
-
-const normalizeEventHandlers = props => {
-  eventHandlerNames.forEach(handlerName => {
-    const handler = props[handlerName];
-    if (typeof handler === 'function') {
-      props[handlerName] = _normalizeEventForHandler(handler);
-    }
-  });
-};
+const emptyObject = {};
 
 class View extends Component {
   static displayName = 'View';
@@ -63,9 +25,9 @@ class View extends Component {
   };
 
   getChildContext() {
-    return {
-      isInAButtonView: this.props.accessibilityRole === 'button'
-    };
+    const isInAButtonView = this.props.accessibilityRole === 'button' ||
+      this.context.isInAButtonView;
+    return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
 
   render() {
@@ -86,9 +48,6 @@ class View extends Component {
     } = this.props;
 
     const component = this.context.isInAButtonView ? 'span' : 'div';
-
-    // DOM events need to be normalized to expect RN format
-    normalizeEventHandlers(otherProps);
 
     otherProps.style = [styles.initial, style, pointerEvents && pointerEventStyles[pointerEvents]];
 
