@@ -14,6 +14,28 @@ exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
   type="button" />
 `;
 
+exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 1`] = `
+<button
+  role="button"
+  type="button" />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 2`] = `
+<a
+  role="link" />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 1`] = `
+<button
+  role="button"
+  type="button" />
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 2`] = `
+<a
+  role="link" />
+`;
+
 exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
 <a
   rel=" noopener noreferrer"

@@ -50,5 +50,6 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-paddingLeft-gy4na3{padding-left:0px}
 .rn-textAlign-1ttztb7{text-align:inherit}
 .rn-textDecoration-bauka4{text-decoration:none}
+.rn-appearance-30o5oe{-moz-appearance:none;-webkit-appearance:none;appearance:none}
 </style>"
 `;

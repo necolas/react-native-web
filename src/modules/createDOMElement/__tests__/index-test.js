@@ -43,6 +43,35 @@ describe('modules/createDOMElement', () => {
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
+
+    describe('compatibility with', () => {
+      test('accessibilityComponentType', () => {
+        let component = renderer.create(
+          createDOMElement('span', { accessibilityComponentType: 'button' })
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+
+        component = renderer.create(
+          createDOMElement('span', {
+            accessibilityComponentType: 'button',
+            accessibilityRole: 'link'
+          })
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+      });
+
+      test('accessibilityTraits', () => {
+        let component = renderer.create(
+          createDOMElement('span', { accessibilityTraits: 'button' })
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+
+        component = renderer.create(
+          createDOMElement('span', { accessibilityTraits: 'button', accessibilityRole: 'link' })
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+      });
+    });
   });
 
   test('prop "accessible"', () => {

@@ -1,6 +1,7 @@
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
+import getAccessibilityRole from '../../modules/getAccessibilityRole';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import { Component, PropTypes } from 'react';
@@ -25,7 +26,7 @@ class View extends Component {
   };
 
   getChildContext() {
-    const isInAButtonView = this.props.accessibilityRole === 'button' ||
+    const isInAButtonView = getAccessibilityRole(this.props) === 'button' ||
       this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
@@ -35,8 +36,6 @@ class View extends Component {
       pointerEvents,
       style,
       /* eslint-disable */
-      accessibilityComponentType,
-      accessibilityTraits,
       collapsable,
       hitSlop,
       onAccessibilityTap,
@@ -47,10 +46,17 @@ class View extends Component {
       ...otherProps
     } = this.props;
 
-    const component = this.context.isInAButtonView ? 'span' : 'div';
+    const { isInAButtonView } = this.context;
+    const isButton = getAccessibilityRole(this.props) === 'button';
 
-    otherProps.style = [styles.initial, style, pointerEvents && pointerEventStyles[pointerEvents]];
+    otherProps.style = [
+      styles.initial,
+      isButton && styles.buttonOnly,
+      style,
+      pointerEvents && pointerEventStyles[pointerEvents]
+    ];
 
+    const component = isInAButtonView ? 'span' : 'div';
     return createDOMElement(component, otherProps);
   }
 }
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
-    // button and anchor reset
+    // button and anchor resets
     backgroundColor: 'transparent',
     color: 'inherit',
     font: 'inherit',
@@ -79,6 +85,9 @@ const styles = StyleSheet.create({
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
+  },
+  buttonOnly: {
+    appearance: 'none'
   }
 });
 

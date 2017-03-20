@@ -1,5 +1,6 @@
 import '../injectResponderEventPlugin';
 
+import getAccessibilityRole from '../getAccessibilityRole';
 import normalizeNativeEvent from '../normalizeNativeEvent';
 import React from 'react';
 import StyleRegistry from '../../apis/StyleSheet/registry';
@@ -54,16 +55,21 @@ const createDOMElement = (component, rnProps) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessibilityRole,
     accessible = true,
     style: rnStyle,
     testID,
     type,
+    /* eslint-disable */
+    accessibilityComponentType,
+    accessibilityRole,
+    accessibilityTraits,
+    /* eslint-enable */
     ...domProps
   } = rnProps || emptyObject;
 
   // use equivalent platform elements where possible
-  const accessibilityComponent = accessibilityRole && roleComponents[accessibilityRole];
+  const role = getAccessibilityRole(rnProps || emptyObject);
+  const accessibilityComponent = role && roleComponents[role];
   const Component = accessibilityComponent || component;
 
   // convert React Native styles to DOM styles
@@ -89,22 +95,22 @@ const createDOMElement = (component, rnProps) => {
   if (accessibilityLiveRegion) {
     domProps['aria-live'] = accessibilityLiveRegion;
   }
-  if (testID) {
-    domProps['data-testid'] = testID;
-  }
-  if (accessibilityRole) {
-    domProps.role = accessibilityRole;
-    if (accessibilityRole === 'button') {
-      domProps.type = 'button';
-    } else if (accessibilityRole === 'link' && domProps.target === '_blank') {
-      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
-    }
-  }
   if (className && className !== '') {
     domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
   }
+  if (role) {
+    domProps.role = role;
+    if (role === 'button') {
+      domProps.type = 'button';
+    } else if (role === 'link' && domProps.target === '_blank') {
+      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
+    }
+  }
   if (style) {
     domProps.style = style;
+  }
+  if (testID) {
+    domProps['data-testid'] = testID;
   }
   if (type) {
     domProps.type = type;
