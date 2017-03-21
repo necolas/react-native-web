@@ -42,13 +42,13 @@ class AsyncStorage {
         }
 
         if (cb) {
-          cb(keys);
+          cb(null, keys);
         }
 
         resolve(keys);
       } catch (err) {
         if (cb) {
-          cb(err);
+          cb(err, null);
         }
 
         reject(err);

@@ -58,13 +58,16 @@ describe('apis/AsyncStorage', () => {
       expect(keys).toEqual(['UID123']);
     });
 
-    test('should have same callback behavior as react-native', async () => {
+    test.only('should have same callback behavior as react-native', async () => {
       let keys = null;
+      let err  = true;
 
-      await AsyncStorage.getAllKeys((result) => {
+      await AsyncStorage.getAllKeys((e, result) => {
+        err = e;
         keys = result;
       });
 
+      expect(err).toEqual(null);
       expect(keys).toEqual(['UID123']);
     });
   });
