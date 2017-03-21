@@ -42,7 +42,7 @@ describe('apis/AsyncStorage', () => {
     traits: { hair: 'brown', eyes: 'brown' }
   };
 
-  describe.only('getAllKeys', () => {
+  describe('getAllKeys', () => {
     beforeEach(async () => {
       window.localStorage = mockLocalStorage;
       await AsyncStorage.setItem('UID123', JSON.stringify(UID123_object));
