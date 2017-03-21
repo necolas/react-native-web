@@ -6,6 +6,7 @@
  * @flow
  */
 
+import createDOMProps from '../createDOMProps';
 import findNodeHandle from '../findNodeHandle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
@@ -70,10 +71,9 @@ const NativeMethodsMixin = {
     const node = findNodeHandle(this);
     const classList = [...node.classList];
 
-    const { className, style } = StyleRegistry.resolveStateful(nativeProps.style, classList);
-    const props = { ...nativeProps, className, style };
-
-    UIManager.updateView(node, props, this);
+    const domProps = createDOMProps(nativeProps, style =>
+      StyleRegistry.resolveStateful(style, classList));
+    UIManager.updateView(node, domProps, this);
   }
 };
 

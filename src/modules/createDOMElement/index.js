@@ -1,5 +1,6 @@
 import '../injectResponderEventPlugin';
 
+import createDOMProps from '../createDOMProps';
 import getAccessibilityRole from '../getAccessibilityRole';
 import normalizeNativeEvent from '../normalizeNativeEvent';
 import React from 'react';
@@ -52,28 +53,12 @@ const wrapEventHandler = handler => e => {
 };
 
 const createDOMElement = (component, rnProps) => {
-  const {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessible = true,
-    style: rnStyle,
-    testID,
-    type,
-    /* eslint-disable */
-    accessibilityComponentType,
-    accessibilityRole,
-    accessibilityTraits,
-    /* eslint-enable */
-    ...domProps
-  } = rnProps || emptyObject;
-
   // use equivalent platform elements where possible
   const role = getAccessibilityRole(rnProps || emptyObject);
   const accessibilityComponent = role && roleComponents[role];
   const Component = accessibilityComponent || component;
 
-  // convert React Native styles to DOM styles
-  const { className, style } = StyleRegistry.resolve(rnStyle) || emptyObject;
+  const domProps = createDOMProps(rnProps, style => StyleRegistry.resolve(style));
 
   // normalize DOM events to match React Native events
   // TODO: move this out of the render path
@@ -84,36 +69,6 @@ const createDOMElement = (component, rnProps) => {
         domProps[prop] = wrapEventHandler(prop);
       }
     }
-  }
-
-  if (!accessible) {
-    domProps['aria-hidden'] = true;
-  }
-  if (accessibilityLabel) {
-    domProps['aria-label'] = accessibilityLabel;
-  }
-  if (accessibilityLiveRegion) {
-    domProps['aria-live'] = accessibilityLiveRegion;
-  }
-  if (className && className !== '') {
-    domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
-  }
-  if (role) {
-    domProps.role = role;
-    if (role === 'button') {
-      domProps.type = 'button';
-    } else if (role === 'link' && domProps.target === '_blank') {
-      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
-    }
-  }
-  if (style) {
-    domProps.style = style;
-  }
-  if (testID) {
-    domProps['data-testid'] = testID;
-  }
-  if (type) {
-    domProps.type = type;
   }
 
   return <Component {...domProps} />;
