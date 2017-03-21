@@ -33,7 +33,6 @@ class View extends Component {
 
   render() {
     const {
-      pointerEvents,
       style,
       /* eslint-disable */
       collapsable,
@@ -49,12 +48,7 @@ class View extends Component {
     const { isInAButtonView } = this.context;
     const isButton = getAccessibilityRole(this.props) === 'button';
 
-    otherProps.style = [
-      styles.initial,
-      isButton && styles.buttonOnly,
-      style,
-      pointerEvents && pointerEventStyles[pointerEvents]
-    ];
+    otherProps.style = [styles.initial, isButton && styles.buttonOnly, style];
 
     const component = isInAButtonView ? 'span' : 'div';
     return createDOMElement(component, otherProps);
@@ -88,21 +82,6 @@ const styles = StyleSheet.create({
   },
   buttonOnly: {
     appearance: 'none'
-  }
-});
-
-const pointerEventStyles = StyleSheet.create({
-  auto: {
-    pointerEvents: 'auto'
-  },
-  'box-none': {
-    pointerEvents: 'box-none'
-  },
-  'box-only': {
-    pointerEvents: 'box-only'
-  },
-  none: {
-    pointerEvents: 'none'
   }
 });
 
