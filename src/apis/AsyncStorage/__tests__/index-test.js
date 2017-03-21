@@ -58,7 +58,7 @@ describe('apis/AsyncStorage', () => {
       expect(keys).toEqual(['UID123']);
     });
 
-    test.only('should have same callback behavior as react-native', async () => {
+    test('should have same callback behavior as react-native', async () => {
       let keys = null;
       let err  = true;
 
@@ -70,6 +70,37 @@ describe('apis/AsyncStorage', () => {
       expect(err).toEqual(null);
       expect(keys).toEqual(['UID123']);
     });
+  });
+
+  describe('getItem', () => {
+    beforeEach(async () => {
+      window.localStorage = mockLocalStorage;
+      await AsyncStorage.setItem('UID123', JSON.stringify(UID123_object));
+    });
+
+    afterEach(() => {
+      window.localStorage = originalLocalStorage;
+    });
+
+    test('should have same Promise behavior as react-native', async () => {
+      const result = await AsyncStorage.getItem('UID123');
+
+      expect(JSON.parse(result)).toMatchSnapshot();
+    });
+
+    test('should have same callback behavior as react-native', async () => {
+      let item = null;
+      let err  = true;
+
+      await AsyncStorage.getItem('UID123', (e, result) => {
+        err = e;
+        item = result;
+      });
+
+      expect(err).toEqual(null);
+      expect(JSON.parse(item)).toMatchSnapshot();
+    });
+
   });
 
   describe('mergeLocalStorageItem', () => {
