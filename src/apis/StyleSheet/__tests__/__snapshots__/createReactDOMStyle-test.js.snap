@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`apis/StyleSheet/createReactDOMStyle converts ReactNative style to ReactDOM style 1`] = `
 Object {
   "borderBottomWidth": "1px",

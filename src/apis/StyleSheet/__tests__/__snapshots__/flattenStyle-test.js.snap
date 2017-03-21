@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`apis/StyleSheet/flattenStyle should merge style objects 1`] = `
 Object {
   "opacity": 1,

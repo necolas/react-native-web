@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`apis/AsyncStorage mergeLocalStorageItem should have same behavior as react-native 1`] = `
 Object {
   "age": 31,

@@ -1,30 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`components/Image passes other props through to underlying View 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   onResponderGrant={[Function]}
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "accessibilityLabel" 1`] = `
 <div
   aria-label="accessibilityLabel"
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "accessible" 1`] = `
 <div
   aria-hidden={true}
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "children" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}}>
+  style={Object {}}
+>
   <div
-    className="unique" />
+    className="unique"
+  />
 </div>
 `;
 
@@ -33,15 +40,17 @@ exports[`components/Image prop "defaultSource" does not override "height" and "w
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   style={
     Object {
-      "backgroundImage": "url(\"https://google.com/favicon.ico\")",
+      "backgroundImage": "url(\\"https://google.com/favicon.ico\\")",
       "height": "20px",
       "width": "40px",
     }
-  }>
+  }
+>
   <img
     className="rn-bottom-1p0dtai rn-height-1pi2tsx rn-left-1d2f490 rn-opacity-1272l3b rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu rn-zIndex-1wyyakw"
     src="https://google.com/favicon.ico"
-    style={Object {}} />
+    style={Object {}}
+  />
 </div>
 `;
 
@@ -50,15 +59,17 @@ exports[`components/Image prop "defaultSource" sets "height" and "width" styles 
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   style={
     Object {
-      "backgroundImage": "url(\"https://google.com/favicon.ico\")",
+      "backgroundImage": "url(\\"https://google.com/favicon.ico\\")",
       "height": "10px",
       "width": "20px",
     }
-  }>
+  }
+>
   <img
     className="rn-bottom-1p0dtai rn-height-1pi2tsx rn-left-1d2f490 rn-opacity-1272l3b rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu rn-zIndex-1wyyakw"
     src="https://google.com/favicon.ico"
-    style={Object {}} />
+    style={Object {}}
+  />
 </div>
 `;
 
@@ -67,13 +78,15 @@ exports[`components/Image prop "defaultSource" sets background image when value 
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   style={
     Object {
-      "backgroundImage": "url(\"https://google.com/favicon.ico\")",
+      "backgroundImage": "url(\\"https://google.com/favicon.ico\\")",
     }
-  }>
+  }
+>
   <img
     className="rn-bottom-1p0dtai rn-height-1pi2tsx rn-left-1d2f490 rn-opacity-1272l3b rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu rn-zIndex-1wyyakw"
     src="https://google.com/favicon.ico"
-    style={Object {}} />
+    style={Object {}}
+  />
 </div>
 `;
 
@@ -82,61 +95,71 @@ exports[`components/Image prop "defaultSource" sets background image when value 
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   style={
     Object {
-      "backgroundImage": "url(\"https://google.com/favicon.ico\")",
+      "backgroundImage": "url(\\"https://google.com/favicon.ico\\")",
     }
-  }>
+  }
+>
   <img
     className="rn-bottom-1p0dtai rn-height-1pi2tsx rn-left-1d2f490 rn-opacity-1272l3b rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu rn-zIndex-1wyyakw"
     src="https://google.com/favicon.ico"
-    style={Object {}} />
+    style={Object {}}
+  />
 </div>
 `;
 
 exports[`components/Image prop "resizeMode" value "contain" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-ehq7j7 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "resizeMode" value "cover" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "resizeMode" value "none" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-1sxrcry rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "resizeMode" value "stretch" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-x3cy2q rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "resizeMode" value "undefined" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "style" correctly supports "resizeMode" property 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-ehq7j7 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image prop "testID" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
   data-testid="testID"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;
 
 exports[`components/Image sets correct accessibility role" 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-backgroundColor-wib322 rn-backgroundPosition-vvn4in rn-backgroundRepeat-u6sd8q rn-backgroundSize-4gszlv rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-zIndex-1lgpqti"
-  style={Object {}} />
+  style={Object {}}
+/>
 `;

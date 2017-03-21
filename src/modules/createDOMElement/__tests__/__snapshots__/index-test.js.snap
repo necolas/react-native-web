@@ -1,51 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
 <span
-  aria-label="accessibilityLabel" />
+  aria-label="accessibilityLabel"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
 <span
-  aria-live="polite" />
+  aria-live="polite"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
 <button
   role="button"
-  type="button" />
+  type="button"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 1`] = `
 <button
   role="button"
-  type="button" />
+  type="button"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 2`] = `
 <a
-  role="link" />
+  role="link"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 1`] = `
 <button
   role="button"
-  type="button" />
+  type="button"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 2`] = `
 <a
-  role="link" />
+  role="link"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
 <a
   rel=" noopener noreferrer"
   role="link"
-  target="_blank" />
+  target="_blank"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" roles 1`] = `
 <header
-  role="banner" />
+  role="banner"
+/>
 `;
 
 exports[`modules/createDOMElement prop "accessible" 1`] = `<span />`;
@@ -54,12 +65,14 @@ exports[`modules/createDOMElement prop "accessible" 2`] = `<span />`;
 
 exports[`modules/createDOMElement prop "accessible" 3`] = `
 <span
-  aria-hidden={true} />
+  aria-hidden={true}
+/>
 `;
 
 exports[`modules/createDOMElement prop "testID" 1`] = `
 <span
-  data-testid="Example.testID" />
+  data-testid="Example.testID"
+/>
 `;
 
 exports[`modules/createDOMElement renders correct DOM element 1`] = `<span />`;
