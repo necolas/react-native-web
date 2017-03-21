@@ -36,6 +36,7 @@ class Text extends Component {
       adjustsFontSizeToFit,
       allowFontScaling,
       ellipsizeMode,
+      lineBreakMode,
       minimumFontScale,
       onLayout,
       suppressHighlighting,
