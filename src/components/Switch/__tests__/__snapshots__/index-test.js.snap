@@ -39,7 +39,6 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={Object {}}
     type="checkbox"
   />
 </div>
@@ -82,7 +81,6 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={Object {}}
     type="checkbox"
   />
 </div>
@@ -127,7 +125,6 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={Object {}}
     type="checkbox"
   />
 </div>
@@ -173,7 +170,6 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
     onBlur={[Function]}
     onChange={[Function]}
     onFocus={[Function]}
-    style={Object {}}
     type="checkbox"
   />
 </div>

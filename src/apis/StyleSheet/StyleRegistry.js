@@ -127,16 +127,20 @@ class StyleRegistry {
         if (className) {
           props.classList.push(className);
         } else {
+          if (!props.style) {
+            props.style = {};
+          }
           // 4x slower render
           props.style[styleProp] = value;
         }
       }
       return props;
-    }, { classList: [], style: {} });
+    }, { classList: [] });
 
-    const style = prefixInlineStyles(props.style);
     props.className = classListToString(props.classList);
-    props.style = style;
+    if (props.style) {
+      props.style = prefixInlineStyles(props.style);
+    }
     return props;
   }
 
