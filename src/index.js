@@ -41,11 +41,15 @@ import View from './components/View';
 import createDOMElement from './modules/createDOMElement';
 import modality from './modules/modality';
 import NativeModules from './modules/NativeModules';
+import createDOMElement from './modules/createDOMElement'
+import applyNativeMethods from './modules/applyNativeMethods'
 
 // propTypes
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
 import PointPropType from './propTypes/PointPropType';
+import StyleSheetPropType from './propTypes/StyleSheetPropType';
+import BaseComponentPropTypes from './propTypes/BaseComponentPropTypes';
 
 modality();
 
@@ -94,11 +98,15 @@ const ReactNative = {
   // modules
   createDOMElement,
   NativeModules,
+  createDOMElement,
+  applyNativeMethods,
 
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
-  PointPropType
+  PointPropType,
+  StyleSheetPropType,
+  BaseComponentPropTypes
 };
 
 module.exports = ReactNative;
