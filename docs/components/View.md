@@ -18,8 +18,10 @@ NOTE: `View` will transfer all other props to the rendered HTML element.
 
 **accessibilityLabel**: string
 
-Defines the text available to assistive technologies upon interaction with the
-element. (This is implemented using `aria-label`.)
+Overrides the text that's read by the screen reader when the user interacts
+with the element. By default, the label is constructed by traversing all the
+children and accumulating all the `Text` nodes separated by space. (This is
+implemented using `aria-label`.)
 
 **accessibilityLiveRegion**: oneOf('assertive', 'off', 'polite') = 'off'
 
@@ -45,6 +47,15 @@ assistive technologies of a `role` value change.
 
 When `false`, the view is hidden from assistive technologies. (This is
 implemented using `aria-hidden`.)
+
+**hitSlop**: {top: number, left: number, bottom: number, right: number}
+
+This defines how far a touch event can start away from the view. Typical
+interface guidelines recommend touch targets that are at least 30 - 40
+points/density-independent pixels.
+
+For example, if a touchable view has a height of 20 the touchable height can be
+extended to 40 with `hitSlop={{top: 10, bottom: 10, left: 0, right: 0}}`.
 
 **onLayout**: function
 

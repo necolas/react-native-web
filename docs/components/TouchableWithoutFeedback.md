@@ -45,9 +45,7 @@ If true, disable all interactions for this component.
 **hitSlop**: `{top: number, left: number, bottom: number, right: number}`
 
 This defines how far your touch can start away from the button. This is added
-to `pressRetentionOffset` when moving off of the button. **NOTE**: The touch
-area never extends past the parent view bounds and the z-index of sibling views
-always takes precedence if a touch hits two overlapping views.
+to `pressRetentionOffset` when moving off of the button.
 
 **onLayout**: function
 

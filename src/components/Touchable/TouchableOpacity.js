@@ -160,6 +160,7 @@ var TouchableOpacity = React.createClass({
 
   render: function() {
     const {
+      children,
       /* eslint-disable */
       activeOpacity,
       focusedOpacity,
@@ -195,7 +196,10 @@ var TouchableOpacity = React.createClass({
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
         tabIndex={this.props.disabled ? null : '0'}
-      />
+      >
+        {children}
+        {Touchable.renderDebugView({ color: 'blue', hitSlop: this.props.hitSlop })}
+      </View>
     );
   }
 });

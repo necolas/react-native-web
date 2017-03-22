@@ -231,6 +231,7 @@ var TouchableHighlight = React.createClass({
 
   render: function() {
     const {
+      children,
       /* eslint-disable */
       activeOpacity,
       onHideUnderlay,
@@ -270,9 +271,10 @@ var TouchableHighlight = React.createClass({
         style={[styles.root, this.props.disabled && styles.disabled, this.state.underlayStyle]}
         tabIndex={this.props.disabled ? null : '0'}
       >
-        {React.cloneElement(React.Children.only(this.props.children), {
+        {React.cloneElement(React.Children.only(children), {
           ref: CHILD_REF
         })}
+        {Touchable.renderDebugView({ color: 'green', hitSlop: this.props.hitSlop })}
       </View>
     );
   }

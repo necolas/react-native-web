@@ -4,9 +4,20 @@ import createDOMElement from '../../modules/createDOMElement';
 import getAccessibilityRole from '../../modules/getAccessibilityRole';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
-import { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 const emptyObject = {};
+
+const calculateHitSlopStyle = hitSlop => {
+  const hitStyle = {};
+  for (const prop in hitSlop) {
+    if (hitSlop.hasOwnProperty(prop)) {
+      const value = hitSlop[prop];
+      hitStyle[prop] = value > 0 ? (-1) * value : 0;
+    }
+  }
+  return hitStyle;
+};
 
 class View extends Component {
   static displayName = 'View';
@@ -33,10 +44,10 @@ class View extends Component {
 
   render() {
     const {
+      hitSlop,
       style,
       /* eslint-disable */
       collapsable,
-      hitSlop,
       onAccessibilityTap,
       onLayout,
       onMagicTap,
@@ -49,6 +60,14 @@ class View extends Component {
     const isButton = getAccessibilityRole(this.props) === 'button';
 
     otherProps.style = [styles.initial, isButton && styles.buttonOnly, style];
+
+    if (hitSlop) {
+      const hitSlopStyle = calculateHitSlopStyle(hitSlop);
+      const hitSlopChild = createDOMElement('span', { style: [styles.hitSlop, hitSlopStyle] });
+      otherProps.children = React.Children.toArray(otherProps.children);
+      otherProps.children.unshift(hitSlopChild);
+      otherProps.style.unshift(styles.hasHitSlop);
+    }
 
     const component = isInAButtonView ? 'span' : 'div';
     return createDOMElement(component, otherProps);
@@ -82,6 +101,15 @@ const styles = StyleSheet.create({
   },
   buttonOnly: {
     appearance: 'none'
+  },
+  // this zIndex ordering positions the hitSlop above the View but behind
+  // its children
+  hasHitSlop: {
+    zIndex: 0
+  },
+  hitSlop: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1
   }
 });
 
