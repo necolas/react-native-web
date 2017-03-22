@@ -52,13 +52,13 @@ describe('apis/AsyncStorage', () => {
       window.localStorage = originalLocalStorage;
     });
 
-    test('should have same Promise behavior as react-native', async () => {
+    test('should return the keys in a Promise', async () => {
       const keys = await AsyncStorage.getAllKeys();
 
       expect(keys).toEqual(['UID123']);
     });
 
-    test('should have same callback behavior as react-native', async () => {
+    test('should return the keys in a callback', async () => {
       let keys = null;
       let err  = true;
 
@@ -82,13 +82,13 @@ describe('apis/AsyncStorage', () => {
       window.localStorage = originalLocalStorage;
     });
 
-    test('should have same Promise behavior as react-native', async () => {
+    test('should return the item as a Promise', async () => {
       const result = await AsyncStorage.getItem('UID123');
 
       expect(JSON.parse(result)).toMatchSnapshot();
     });
 
-    test('should have same callback behavior as react-native', async () => {
+    test('should return the item in a callback', async () => {
       let item = null;
       let err  = true;
 
