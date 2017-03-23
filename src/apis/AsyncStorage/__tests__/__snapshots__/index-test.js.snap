@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/AsyncStorage getItem should have same Promise behavior as react-native 1`] = `
+exports[`apis/AsyncStorage getItem should return the item as a Promise 1`] = `
 Object {
   "age": 30,
   "name": "Chris",
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`apis/AsyncStorage getItem should have same callback behavior as react-native 1`] = `
+exports[`apis/AsyncStorage getItem should return the item in a callback 1`] = `
 Object {
   "age": 30,
   "name": "Chris",
