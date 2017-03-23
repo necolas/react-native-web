@@ -8,7 +8,7 @@ Object {
   "borderTopWidth": "1px",
   "borderWidthLeft": "2px",
   "borderWidthRight": "3px",
-  "boxShadow": "1px 1px 1px 1px #000, 1px 2px 0px rgba(255,0,0,1)",
+  "boxShadow": "1px 1px 1px 1px #000, 1px 2px 0px red",
   "display": "flex",
   "flexShrink": 0,
   "marginBottom": "0px",

@@ -9,7 +9,7 @@ describe('apis/StyleSheet/resolveBoxShadow', () => {
     resolveBoxShadow(resolvedStyle, style);
 
     expect(resolvedStyle).toEqual({
-      boxShadow: '0px 0px 0px rgba(255,0,0,1)'
+      boxShadow: '0px 0px 0px red'
     });
   });
 
@@ -28,9 +28,7 @@ describe('apis/StyleSheet/resolveBoxShadow', () => {
     const style = { shadowOffset: { width: 1, height: 2 } };
     resolveBoxShadow(resolvedStyle, style);
 
-    expect(resolvedStyle).toEqual({
-      boxShadow: '1px 2px 0px rgba(0,0,0,0)'
-    });
+    expect(resolvedStyle).toEqual({});
   });
 
   test('shadowRadius only', () => {
@@ -38,9 +36,7 @@ describe('apis/StyleSheet/resolveBoxShadow', () => {
     const style = { shadowRadius: 5 };
     resolveBoxShadow(resolvedStyle, style);
 
-    expect(resolvedStyle).toEqual({
-      boxShadow: '0px 0px 5px rgba(0,0,0,0)'
-    });
+    expect(resolvedStyle).toEqual({});
   });
 
   test('shadowOffset, shadowRadius, shadowColor', () => {
