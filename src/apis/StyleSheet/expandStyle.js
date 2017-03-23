@@ -10,7 +10,7 @@
  */
 
 import normalizeValue from './normalizeValue';
-import processColor from './processColor';
+import processColor from '../../modules/processColor';
 import resolveBoxShadow from './resolveBoxShadow';
 import resolveTextShadow from './resolveTextShadow';
 import resolveTransform from './resolveTransform';

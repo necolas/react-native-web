@@ -1,4 +1,8 @@
+import createDOMElement from './modules/createDOMElement';
 import findNodeHandle from './modules/findNodeHandle';
+import modality from './modules/modality';
+import NativeModules from './modules/NativeModules';
+import processColor from './modules/processColor';
 import { render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
@@ -37,11 +41,6 @@ import TouchableOpacity from './components/Touchable/TouchableOpacity';
 import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
 import View from './components/View';
 
-// modules
-import createDOMElement from './modules/createDOMElement';
-import modality from './modules/modality';
-import NativeModules from './modules/NativeModules';
-
 // propTypes
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
@@ -54,6 +53,11 @@ const ReactNative = {
   findNodeHandle,
   render,
   unmountComponentAtNode,
+
+  // modules
+  createDOMElement,
+  NativeModules,
+  processColor,
 
   // APIs
   Animated,
@@ -90,10 +94,6 @@ const ReactNative = {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-
-  // modules
-  createDOMElement,
-  NativeModules,
 
   // propTypes
   ColorPropType,

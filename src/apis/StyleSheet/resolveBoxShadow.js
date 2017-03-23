@@ -1,5 +1,5 @@
 import normalizeValue from './normalizeValue';
-import processColor from './processColor';
+import processColor from '../../modules/processColor';
 
 const defaultOffset = { height: 0, width: 0 };
 

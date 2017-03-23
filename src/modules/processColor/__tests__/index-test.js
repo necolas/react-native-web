@@ -1,6 +1,6 @@
 /* eslint-env jasmine, jest */
 
-import processColor from '../processColor';
+import processColor from '..';
 
 describe('apis/StyleSheet/processColor', () => {
   describe('predefined color names', () => {
