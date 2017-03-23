@@ -65,7 +65,6 @@ var TouchableOpacity = React.createClass({
 
   getDefaultProps: function() {
     return {
-      accessibilityRole: 'button',
       activeOpacity: 0.2,
       focusedOpacity: 0.7
     };

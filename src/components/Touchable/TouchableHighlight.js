@@ -31,7 +31,6 @@ var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 type Event = Object;
 
 var DEFAULT_PROPS = {
-  accessibilityRole: 'button',
   activeOpacity: 0.85,
   underlayColor: 'black'
 };
