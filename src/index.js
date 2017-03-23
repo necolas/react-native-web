@@ -45,6 +45,7 @@ import View from './components/View';
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
 import PointPropType from './propTypes/PointPropType';
+import ViewPropTypes from './components/View/ViewPropTypes';
 
 modality();
 
@@ -98,7 +99,8 @@ const ReactNative = {
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
-  PointPropType
+  PointPropType,
+  ViewPropTypes
 };
 
 module.exports = ReactNative;
