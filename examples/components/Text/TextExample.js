@@ -455,6 +455,23 @@ const examples = [
       </View>
     );
   },
+},{
+  title: 'Heading levels',
+  render: function() {
+    return (
+      <View>
+        <Text style={{marginBottom: 10}}>
+          This is an example of multiple accessible heading levels. These are styled as regular text, but if inspected they are {`<h1>`} through {`<h6>`}.
+        </Text>
+        <Text accessibilityRole="heading" style={{}}>H1 Example</Text>
+        <Text accessibilityRole="heading" accessibilityLevel={2}>H2 Example</Text>
+        <Text accessibilityRole="heading" accessibilityLevel={3}>H3 Example</Text>
+        <Text accessibilityRole="heading" accessibilityLevel={4}>H4 Example</Text>
+        <Text accessibilityRole="heading" accessibilityLevel={5}>H5 Example</Text>
+        <Text accessibilityRole="heading" accessibilityLevel={6}>H6 Example</Text>
+      </View>
+    )
+  },
 }];
 
 var styles = StyleSheet.create({

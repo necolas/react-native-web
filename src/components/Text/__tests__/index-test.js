@@ -26,4 +26,17 @@ describe('components/Text', () => {
     component = renderer.create(<Text selectable={false} />);
     expect(component.toJSON()).toMatchSnapshot();
   });
+
+  test('prop `accessibilityRole=heading`', () => {
+    const component = renderer.create(<Text accessibilityRole='heading'/>);
+    expect(component.toJSON().type).toEqual('h1');
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  test('prop `accessibilityLevel`', () => {
+    // when used with accessibilityRole=heading, should render heading of `level`
+    const component = renderer.create(<Text accessibilityLevel={2} accessibilityRole='heading' />);
+    expect(component.toJSON().type).toEqual('h2');
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });
