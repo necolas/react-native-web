@@ -45,6 +45,19 @@ exports[`modules/createDOMElement prop "accessibilityRole" compatibility with ac
 />
 `;
 
+exports[`modules/createDOMElement prop "accessibilityRole" headings 1`] = `
+<h1
+  role="heading"
+/>
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" headings 2`] = `
+<h3
+  aria-level="3"
+  role="heading"
+/>
+`;
+
 exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
 <a
   rel=" noopener noreferrer"

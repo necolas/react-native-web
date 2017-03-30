@@ -34,6 +34,16 @@ describe('modules/createDOMElement', () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
 
+    test('headings', () => {
+      let component = renderer.create(createDOMElement('div', { accessibilityRole: 'heading' }));
+      expect(component.toJSON()).toMatchSnapshot();
+
+      component = renderer.create(
+        createDOMElement('div', { accessibilityRole: 'heading', 'aria-level': '3' })
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
     test('link and target="_blank"', () => {
       const component = renderer.create(
         createDOMElement('span', {
