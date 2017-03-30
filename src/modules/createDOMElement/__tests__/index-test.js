@@ -18,8 +18,7 @@ describe('modules/createDOMElement', () => {
   });
 
   test('prop "accessibilityLiveRegion"', () => {
-    const accessibilityLiveRegion = 'none';
-    const component = render(createDOMElement('span', { accessibilityLiveRegion }));
+    const component = render(createDOMElement('span', { accessibilityLiveRegion: 'none' }));
     expect(component).toMatchSnapshot();
   });
 
