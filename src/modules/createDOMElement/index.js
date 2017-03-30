@@ -57,7 +57,7 @@ const getAccessibilityComponent = (props = emptyObject) => {
     const level = props['aria-level'] || 1;
     return `h${level}`;
   }
-  return roleComponents[role]
+  return roleComponents[role];
 };
 
 const createDOMElement = (component, rnProps) => {

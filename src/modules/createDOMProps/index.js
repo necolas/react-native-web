@@ -45,8 +45,8 @@ const createDOMProps = (rnProps, resolveStyle) => {
   if (accessibilityLabel) {
     domProps['aria-label'] = accessibilityLabel;
   }
-  if (accessibilityLiveRegion) {
-    domProps['aria-live'] = accessibilityLiveRegion;
+  if (typeof accessibilityLiveRegion === 'string') {
+    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
   if (className && className !== '') {
     domProps.className = domProps.className ? `${domProps.className} ${className}` : className;

@@ -18,7 +18,7 @@ describe('modules/createDOMElement', () => {
   });
 
   test('prop "accessibilityLiveRegion"', () => {
-    const accessibilityLiveRegion = 'polite';
+    const accessibilityLiveRegion = 'none';
     const component = renderer.create(createDOMElement('span', { accessibilityLiveRegion }));
     expect(component.toJSON()).toMatchSnapshot();
   });

@@ -8,7 +8,7 @@ exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
 
 exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
 <span
-  aria-live="polite"
+  aria-live="off"
 />
 `;
 
