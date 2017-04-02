@@ -20,7 +20,7 @@ touch handling to the Web. [Read more](#why).
 
 Browse the UI Explorer to see React Native [examples running on
 Web](https://necolas.github.io/react-native-web/storybook/). Or try it out
-online with [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
+online with [React Native for Web: Playground](https://www.webpackbin.com/bins/-KgucwxRbn7HRU-V-3Bc).
 
 ## Quick start
 
@@ -144,7 +144,6 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
-* [rhinos-app](https://github.com/rhinos-app/rhinos-app-dev)
 
 ## License
 

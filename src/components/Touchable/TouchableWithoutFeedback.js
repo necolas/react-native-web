@@ -182,6 +182,7 @@ const TouchableWithoutFeedback = createReactClass({
       : [styles.root, this.props.disabled && styles.disabled, child.props.style];
     return (React: any).cloneElement(child, {
       ...other,
+      accessible: this.props.accessible !== false,
       onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
       onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
       onResponderGrant: this.touchableHandleResponderGrant,
@@ -189,8 +190,7 @@ const TouchableWithoutFeedback = createReactClass({
       onResponderRelease: this.touchableHandleResponderRelease,
       onResponderTerminate: this.touchableHandleResponderTerminate,
       style,
-      children,
-      tabIndex: this.props.disabled ? null : '0'
+      children
     });
   }
 });

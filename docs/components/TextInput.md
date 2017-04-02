@@ -18,7 +18,7 @@ Unsupported React Native props:
 
 [...View props](./View.md)
 
-**autoCapitalize**: oneOf('characters', 'none', 'sentences', 'words') = 'sentences'
+**autoCapitalize**: ?enum('characters', 'none', 'sentences', 'words') = 'sentences'
 
 Automatically capitalize certain characters (only available in Chrome and iOS Safari).
 
@@ -27,21 +27,21 @@ Automatically capitalize certain characters (only available in Chrome and iOS Sa
 * `sentences`: Automatically capitalize the first letter of sentences.
 * `words`: Automatically capitalize the first letter of words.
 
-(web) **autoComplete**: string
+(web) **autoComplete**: ?string
 
 Indicates whether the value of the control can be automatically completed by
 the browser. [Accepted values](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
 
-**autoCorrect**: bool = true
+**autoCorrect**: ?boolean = true
 
 Automatically correct spelling mistakes  (only available in iOS Safari).
 
-**autoFocus**: bool = false
+**autoFocus**: ?boolean = false
 
 If `true`, focuses the input on `componentDidMount`. Only the first form element
 in a document with `autofocus` is focused.
 
-**blurOnSubmit**: bool
+**blurOnSubmit**: ?boolean
 
 If `true`, the text field will blur when submitted. The default value is `true`
 for single-line fields and `false` for multiline fields. Note, for multiline
@@ -49,104 +49,104 @@ fields setting `blurOnSubmit` to `true` means that pressing return will blur
 the field and trigger the `onSubmitEditing` event instead of inserting a
 newline into the field.
 
-**clearTextOnFocus**: bool = false
+**clearTextOnFocus**: ?boolean = false
 
 If `true`, clears the text field automatically when focused.
 
-**defaultValue**: string
+**defaultValue**: ?string
 
 Provides an initial value that will change when the user starts typing. Useful
 for simple use-cases where you don't want to deal with listening to events and
 updating the `value` prop to keep the controlled state in sync.
 
-**editable**: bool = true
+**editable**: ?boolean = true
 
 If `false`, text is not editable (i.e., read-only).
 
-**keyboardType**: oneOf('default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search') = 'default'
+**keyboardType**: enum('default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search') = 'default'
 
 Determines which keyboard to open. (NOTE: Safari iOS requires an ancestral
 `<form action>` element to display the `search` keyboard).
 
 (Not available when `multiline` is `true`.)
 
-**maxLength**: number
+**maxLength**: ?number
 
 Limits the maximum number of characters that can be entered.
 
-**multiline**: bool = false
+**multiline**: ?boolean = false
 
 If true, the text input can be multiple lines.
 
-**numberOfLines**: number = 2
+**numberOfLines**: ?number = 2
 
 Sets the number of lines for a multiline `TextInput`.
 
 (Requires `multiline` to be `true`.)
 
-**onBlur**: function
+**onBlur**: ?function
 
 Callback that is called when the text input is blurred.
 
-**onChange**: function
+**onChange**: ?function
 
 Callback that is called when the text input's text changes.
 
-**onChangeText**: function
+**onChangeText**: ?function
 
 Callback that is called when the text input's text changes. The text is passed
 as an argument to the callback handler.
 
-**onFocus**: function
+**onFocus**: ?function
 
 Callback that is called when the text input is focused.
 
-**onKeyPress**: function
+**onKeyPress**: ?function
 
 Callback that is called when a key is pressed. Pressed key value is passed as
 an argument to the callback handler. Fires before `onChange` callbacks.
 
-**onSelectionChange**: function
+**onSelectionChange**: ?function
 
 Callback that is called when the text input's selection changes. This will be called with
 `{ nativeEvent: { selection: { start, end } } }`.
 
-**onSubmitEditing**: function
+**onSubmitEditing**: ?function
 
 Callback that is called when the keyboard's submit button is pressed.
 
-**placeholder**: string
+**placeholder**: ?string
 
 The string that will be rendered in an empty `TextInput` before text has been
 entered.
 
-**secureTextEntry**: bool = false
+**secureTextEntry**: ?boolean = false
 
 If true, the text input obscures the text entered so that sensitive text like
 passwords stay secure.
 
 (Not available when `multiline` is `true`.)
 
-**selection**: { start: number, end: ?number }
+**selection**: ?{ start: number, end: ?number }
 
 The start and end of the text input's selection. Set start and end to the same value to position the cursor.
 
-**selectTextOnFocus**: bool = false
+**selectTextOnFocus**: ?boolean = false
 
 If `true`, all text will automatically be selected on focus.
 
-**style**: style
+**style**: ?style
 
 + ...[Text#style](./Text.md)
 + `resize` ‡
 
 ‡ web only.
 
-**testID**: string
+**testID**: ?string
 
 Used to locate this view in end-to-end tests.
 
-**value**: string
+**value**: ?string
 
 The value to show for the text input. `TextInput` is a controlled component,
 which means the native `value` will be forced to match this prop if provided.

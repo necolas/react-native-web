@@ -1,8 +1,8 @@
+import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import createDOMElement from '../../modules/createDOMElement';
-import getAccessibilityRole from '../../modules/getAccessibilityRole';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import React, { Component } from 'react';
@@ -25,10 +25,6 @@ class View extends Component {
 
   static propTypes = ViewPropTypes;
 
-  static defaultProps = {
-    accessible: true
-  };
-
   static childContextTypes = {
     isInAButtonView: bool
   };
@@ -39,7 +35,7 @@ class View extends Component {
 
   getChildContext() {
     const isInAButtonView =
-      getAccessibilityRole(this.props) === 'button' || this.context.isInAButtonView;
+      AccessibilityUtil.propsToAriaRole(this.props) === 'button' || this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
 
@@ -58,7 +54,7 @@ class View extends Component {
     } = this.props;
 
     const { isInAButtonView } = this.context;
-    const isButton = getAccessibilityRole(this.props) === 'button';
+    const isButton = AccessibilityUtil.propsToAriaRole(this.props) === 'button';
 
     otherProps.style = [styles.initial, isButton && styles.buttonOnly, style];
 

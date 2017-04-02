@@ -232,12 +232,12 @@ var TouchableHighlight = createReactClass({
     var ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
+      e.stopPropagation();
     }
   },
 
   render: function() {
     const {
-      children,
       /* eslint-disable */
       activeOpacity,
       onHideUnderlay,
@@ -258,6 +258,7 @@ var TouchableHighlight = createReactClass({
     return (
       <View
         {...other}
+        accessible={this.props.accessible !== false}
         onKeyDown={e => {
           this._onKeyEnter(e, this.touchableHandleActivePressIn);
         }}
@@ -275,9 +276,8 @@ var TouchableHighlight = createReactClass({
         onResponderTerminate={this.touchableHandleResponderTerminate}
         ref={UNDERLAY_REF}
         style={[styles.root, this.props.disabled && styles.disabled, this.state.underlayStyle]}
-        tabIndex={this.props.disabled ? null : '0'}
       >
-        {React.cloneElement(React.Children.only(children), {
+        {React.cloneElement(React.Children.only(this.props.children), {
           ref: CHILD_REF
         })}
         {Touchable.renderDebugView({ color: 'green', hitSlop: this.props.hitSlop })}

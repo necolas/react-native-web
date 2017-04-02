@@ -80,14 +80,26 @@ describe('modules/createDOMElement', () => {
   });
 
   test('prop "accessible"', () => {
-    // accessible (implicit)
-    let component = render(createDOMElement('span', {}));
+    let component = render(createDOMElement('span', { accessible: true }));
     expect(component).toMatchSnapshot();
-    // accessible (explicit)
-    component = render(createDOMElement('span', { accessible: true }));
-    expect(component).toMatchSnapshot();
-    // not accessible
+
     component = render(createDOMElement('span', { accessible: false }));
+    expect(component).toMatchSnapshot();
+  });
+
+  test('prop "importantForAccessibility"', () => {
+    let component = render(createDOMElement('span', { importantForAccessibility: 'auto' }));
+    expect(component).toMatchSnapshot();
+
+    component = render(createDOMElement('span', { importantForAccessibility: 'no' }));
+    expect(component).toMatchSnapshot();
+
+    component = render(
+      createDOMElement('span', { importantForAccessibility: 'no-hide-descendants' })
+    );
+    expect(component).toMatchSnapshot();
+
+    component = render(createDOMElement('span', { importantForAccessibility: 'yes' }));
     expect(component).toMatchSnapshot();
   });
 

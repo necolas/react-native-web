@@ -7,23 +7,20 @@ inside another `View` and has 0-to-many children of any type.
 Also, refer to React Native's documentation about the [Gesture Responder
 System](http://facebook.github.io/react-native/releases/0.22/docs/gesture-responder-system.html).
 
-Unsupported React Native props:
-`onAccessibilityTap`,
-`hitSlop`,
-`onMagicTap`
+Unsupported React Native props: `collapsable`, `onAccessibilityTap`, `onMagicTap`.
 
 ## Props
 
 NOTE: `View` will transfer all other props to the rendered HTML element.
 
-**accessibilityLabel**: string
+**accessibilityLabel**: ?string
 
-Overrides the text that's read by the screen reader when the user interacts
-with the element. By default, the label is constructed by traversing all the
-children and accumulating all the `Text` nodes separated by space. (This is
-implemented using `aria-label`.)
+Overrides the text that's read by a screen reader when the user interacts
+with the element. (This is implemented using `aria-label`.)
 
-**accessibilityLiveRegion**: oneOf('assertive', 'off', 'polite') = 'off'
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+**accessibilityLiveRegion**: ?enum('assertive', 'none', 'polite')
 
 Indicates to assistive technologies whether to notify the user when the view
 changes. The values of this attribute are expressed in degrees of importance.
@@ -32,64 +29,105 @@ priority. When regions are specified as `assertive`, assistive technologies
 will interrupt and immediately notify the user. (This is implemented using
 [`aria-live`](http://www.w3.org/TR/wai-aria/states_and_properties#aria-live).)
 
-(web) **accessibilityRole**: oneOf(roles)
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+(web) **accessibilityRole**: ?enum(roles)
 
 Allows assistive technologies to present and support interaction with the view
 in a manner that is consistent with user expectations for similar views of that
 type. For example, marking a touchable view with an `accessibilityRole` of
 `button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
 
-Note: Avoid changing `accessibilityRole` values over time or after user
-actions. Generally, accessibility APIs do not provide a means of notifying
-assistive technologies of a `role` value change.
+See the [Accessibility guide](../guides/accessibility) for more information.
 
-**accessible**: bool = true
+**accessible**: ?boolean
 
-When `false`, the view is hidden from assistive technologies. (This is
-implemented using `aria-hidden`.)
+When `true`, indicates that the view is an accessibility element (i.e.,
+focusable) and groups its child content. By default, all the touchable elements
+and elements with `accessibilityRole` of `button` and `link` are accessible.
+(This is implemented using `tabindex`.)
 
-**hitSlop**: {top: number, left: number, bottom: number, right: number}
+See the [Accessibility guide](../guides/accessibility) for more information.
 
-This defines how far a touch event can start away from the view. Typical
-interface guidelines recommend touch targets that are at least 30 - 40
+**children**: ?element
+
+Child content.
+
+**hitSlop**: ?object
+
+This defines how far a touch event can start away from the view (in pixels).
+Typical interface guidelines recommend touch targets that are at least 30 - 40
 points/density-independent pixels.
 
-For example, if a touchable view has a height of 20 the touchable height can be
-extended to 40 with `hitSlop={{top: 10, bottom: 10, left: 0, right: 0}}`.
+For example, if a touchable view has a height of `20` the touchable height can
+be extended to `40` with `hitSlop={{top: 10, bottom: 10, left: 0, right: 0}}`.
 
-**onLayout**: function
+**importantForAccessibility**: ?enum('auto', 'no', 'no-hide-descendants', 'yes')
+
+A value of `no` will remove the element from the tab flow.
+
+A value of `no-hide-descendants` will hide the element and its children from
+assistive technologies. (This is implemented using `aria-hidden`.)
+
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+**onLayout**: ?function
 
 Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
 height } } }`, where `x` and `y` are the offsets from the parent node.
 
-**onMoveShouldSetResponder**: function
+**onMoveShouldSetResponder**: ?function => boolean
 
-**onMoveShouldSetResponderCapture**: function
+Does this view want to "claim" touch responsiveness? This is called for every
+touch move on the `View` when it is not the responder.
 
-**onResponderGrant**: function
+**onMoveShouldSetResponderCapture**: ?function => boolean
 
-For most touch interactions, you'll simply want to wrap your component in
-`TouchableHighlight` or `TouchableOpacity`.
+If a parent `View` wants to prevent a child `View` from becoming responder on a
+move, it should have this handler return `true`.
 
-**onResponderMove**: function
+**onResponderGrant**: ?function
 
-**onResponderReject**: function
+The `View` is now responding to touch events. This is the time to highlight and
+show the user what is happening.  For most touch interactions, you'll simply
+want to wrap your component in `TouchableHighlight` or `TouchableOpacity`.
 
-**onResponderRelease**: function
+**onResponderMove**: ?function
 
-**onResponderTerminate**: function
+The user is moving their finger.
 
-**onResponderTerminationRequest**: function
+**onResponderReject**: ?function
 
-**onStartShouldSetResponder**: function
+Another responder is already active and will not release it to the `View`
+asking to be the responder.
 
-**onStartShouldSetResponderCapture**: function
+**onResponderRelease**: ?function
 
-**pointerEvents**: oneOf('auto', 'box-only', 'box-none', 'none') = 'auto'
+Fired at the end of the touch.
 
-Configure the `pointerEvents` of the view. The enhanced `pointerEvents` modes
-provided are not part of the CSS spec, therefore, `pointerEvents` is excluded
-from `style`.
+**onResponderTerminate**: ?function
+
+The responder has been taken from the `View`.
+
+**onResponderTerminationRequest**: ?function
+
+Some other `View` wants to become responder and is asking this `View` to
+release its responder. Returning `true` allows its release.
+
+**onStartShouldSetResponder**: ?function => boolean
+
+Does this view want to become responder on the start of a touch?
+
+**onStartShouldSetResponderCapture**: ?function => boolean
+
+If a parent `View` wants to prevent a child `View` from becoming the responder
+on a touch start, it should have this handler return `true`.
+
+**pointerEvents**: ?enum('auto', 'box-only', 'box-none', 'none') = 'auto'
+
+Controls whether the View can be the target of touch events. The enhanced
+`pointerEvents` modes provided are not part of the CSS spec, therefore,
+`pointerEvents` is excluded from `style`.
 
 `box-none` is the equivalent of:
 
@@ -105,7 +143,7 @@ from `style`.
 .box-only * { pointer-events: none }
 ```
 
-**style**: style
+**style**: ?style
 
 + `alignContent`
 + `alignItems`
@@ -151,7 +189,7 @@ from `style`.
 + `boxShadow`
 + `boxSizing`
 + `cursor` ‡
-+ `display` ‡
++ `display`
 + `flex` (number)
 + `flexBasis`
 + `flexDirection`
@@ -224,7 +262,7 @@ Default:
 
 (See [facebook/css-layout](https://github.com/facebook/css-layout)).
 
-**testID**: string
+**testID**: ?string
 
 Used to locate this view in end-to-end tests.
 

@@ -9,65 +9,66 @@ Unsupported React Native props:
 
 ## Props
 
-**accessibilityLabel**: string
+**accessibilityLabel**: ?string
 
 The text that's read by a screenreader when someone interacts with the image.
 
-**accessible**: bool
+**accessible**: ?boolean
 
-When `false`, the view is hidden from screenreaders. Default: `true`.
+When `true`, indicates the image is an accessibility element.
 
-**children**: any
+**children**: ?any
 
 Content to display over the image.
 
-**defaultSource**: { uri: string }
+**defaultSource**: ?object
 
-An image to display as a placeholder while downloading the final image off the network.
+An image to display as a placeholder while downloading the final image off the
+network. `{ uri: string, width, height }`
 
-**onError**: function
+**onError**: ?function
 
 Invoked on load error with `{nativeEvent: {error}}`.
 
-**onLayout**: function
+**onLayout**: ?function
 
 Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
 height } } }`, where `x` and `y` are the offsets from the parent node.
 
-**onLoad**: function
+**onLoad**: ?function
 
 Invoked when load completes successfully.
 
-**onLoadEnd**: function
+**onLoadEnd**: ?function
 
 Invoked when load either succeeds or fails,
 
-**onLoadStart**: function
+**onLoadStart**: ?function
 
 Invoked on load start.
 
-**resizeMode**: oneOf('center', 'contain', 'cover', 'none', 'repeat', 'stretch') = 'cover'
+**resizeMode**: ?enum('center', 'contain', 'cover', 'none', 'repeat', 'stretch') = 'cover'
 
 Determines how to resize the image when the frame doesn't match the raw image
 dimensions.
 
-**source**: { uri: string }
+**source**: ?object
 
 `uri` is a string representing the resource identifier for the image, which
-could be an http address or a base64 encoded image.
+could be an http address or a base64 encoded image. `{ uri: string, width, height }`
 
-**style**: style
+**style**: ?style
 
 + ...[View#style](./View.md)
 + `resizeMode`
 
-**testID**: string
+**testID**: ?string
 
 Used to locate a view in end-to-end tests.
 
 ## Properties
 
-static **resizeMode**: Object
+static **resizeMode**: object
 
 Example usage:
 

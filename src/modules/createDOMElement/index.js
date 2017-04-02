@@ -1,27 +1,9 @@
 import '../injectResponderEventPlugin';
 
+import AccessibilityUtil from '../AccessibilityUtil';
 import createDOMProps from '../createDOMProps';
-import getAccessibilityRole from '../getAccessibilityRole';
 import normalizeNativeEvent from '../normalizeNativeEvent';
 import React from 'react';
-import StyleRegistry from '../../apis/StyleSheet/registry';
-
-const emptyObject = {};
-
-const roleComponents = {
-  article: 'article',
-  banner: 'header',
-  button: 'button',
-  complementary: 'aside',
-  contentinfo: 'footer',
-  form: 'form',
-  link: 'a',
-  list: 'ul',
-  listitem: 'li',
-  main: 'main',
-  navigation: 'nav',
-  region: 'section'
-};
 
 const eventHandlerNames = {
   onClick: true,
@@ -51,21 +33,11 @@ const wrapEventHandler = handler => e => {
   return handler(e);
 };
 
-const getAccessibilityComponent = (props = emptyObject) => {
-  const role = getAccessibilityRole(props);
-  if (role === 'heading') {
-    const level = props['aria-level'] || 1;
-    return `h${level}`;
-  }
-  return roleComponents[role];
-};
-
-const createDOMElement = (component, rnProps) => {
+const createDOMElement = (component, props) => {
   // use equivalent platform elements where possible
-  const accessibilityComponent = getAccessibilityComponent(rnProps);
+  const accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
   const Component = accessibilityComponent || component;
-
-  const domProps = createDOMProps(rnProps, style => StyleRegistry.resolve(style));
+  const domProps = createDOMProps(props);
 
   // normalize DOM events to match React Native events
   // TODO: move this out of the render path

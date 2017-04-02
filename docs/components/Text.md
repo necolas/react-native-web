@@ -16,49 +16,62 @@ Unsupported React Native props:
 
 NOTE: `Text` will transfer all other props to the rendered HTML element.
 
-(web) **accessibilityLabel**: string
+(web) **accessibilityLabel**: ?string
 
-Defines the text available to assistive technologies upon interaction with the
-element. (This is implemented using `aria-label`.)
+Overrides the text that's read by a screen reader when the user interacts
+with the element. (This is implemented using `aria-label`.)
 
-(web) **accessibilityRole**: oneOf(roles)
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+(web) **accessibilityRole**: ?oneOf(roles)
 
 Allows assistive technologies to present and support interaction with the view
 in a manner that is consistent with user expectations for similar views of that
 type. For example, marking a touchable view with an `accessibilityRole` of
 `button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
 
-Note: Avoid changing `accessibilityRole` values over time or after user
-actions. Generally, accessibility APIs do not provide a means of notifying
-assistive technologies of a `role` value change.
+See the [Accessibility guide](../guides/accessibility) for more information.
 
-**accessible**: bool = true
+**accessible**: ?boolean
 
-When `false`, the text is hidden from assistive technologies. (This is
-implemented using `aria-hidden`.)
+When `true`, indicates that the view is an accessibility element (i.e.,
+focusable) and groups its child content. By default, all the touchable elements
+and elements with `accessibilityRole` of `button` and `link` are accessible.
+(This is implemented using `tabindex`.)
 
-**children**: any
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+**children**: ?any
 
 Child content.
 
-**numberOfLines**: number
+**importantForAccessibility**: ?enum('auto', 'no-hide-descendants', 'yes')
+
+A value of `no` will remove the element from the tab flow.
+
+A value of `no-hide-descendants` will hide the element and its children from
+assistive technologies. (This is implemented using `aria-hidden`.)
+
+See the [Accessibility guide](../guides/accessibility) for more information.
+
+**numberOfLines**: ?number
 
 Truncates the text with an ellipsis after this many lines. Currently only supports `1`.
 
-**onLayout**: function
+**onLayout**: ?function
 
 Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
 height } } }`, where `x` and `y` are the offsets from the parent node.
 
-**onPress**: function
+**onPress**: ?function
 
 This function is called on press.
 
-**selectable**: bool = true
+**selectable**: ?boolean
 
-Lets the user select the text.
+When `false`, the text is not selectable.
 
-**style**: style
+**style**: ?style
 
 + ...[View#style](View.md)
 + `color`
@@ -85,7 +98,7 @@ Lets the user select the text.
 
 ‡ web only.
 
-**testID**: string
+**testID**: ?string
 
 Used to locate this view in end-to-end tests.
 

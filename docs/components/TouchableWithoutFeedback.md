@@ -11,58 +11,33 @@ several child components, wrap them in a View.
 
 [...View props](./View.md)
 
-**accessibilityLabel**: string
-
-Overrides the text that's read by the screen reader when the user interacts
-with the element.
-
-(web) **accessibilityRole**: oneOf(roles) = 'button'
-
-Allows assistive technologies to present and support interaction with the view
-
-**accessible**: bool = true
-
-When `false`, the view is hidden from screenreaders.
-
-**children**: View
-
-**delayLongPress**: number
+**delayLongPress**: ?number
 
 Delay in ms, from `onPressIn`, before `onLongPress` is called.
 
-**delayPressIn**: number
+**delayPressIn**: ?number
 
 Delay in ms, from the start of the touch, before `onPressIn` is called.
 
-**delayPressOut**: number
+**delayPressOut**: ?number
 
 Delay in ms, from the release of the touch, before `onPressOut` is called.
 
-**disabled**: bool
+**disabled**: ?boolean
 
-If true, disable all interactions for this component.
+If `true`, disable all interactions for this component.
 
-**hitSlop**: `{top: number, left: number, bottom: number, right: number}`
+**onLongPress**: ?function
 
-This defines how far your touch can start away from the button. This is added
-to `pressRetentionOffset` when moving off of the button.
-
-**onLayout**: function
-
-Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width,
-height } } }`, where `x` and `y` are the offsets from the parent node.
-
-**onLongPress**: function
-
-**onPress**: function
+**onPress**: ?function
 
 Called when the touch is released, but not if cancelled (e.g. by a scroll that steals the responder lock).
 
-**onPressIn**: function
+**onPressIn**: ?function
 
-**onPressOut**: function
+**onPressOut**: ?function
 
-**pressRetentionOffset**: `{top: number, left: number, bottom: number, right: number}`
+**pressRetentionOffset**: ?`{top: number, left: number, bottom: number, right: number}`
 
 When the scroll view is disabled, this defines how far your touch may move off
 of the button, before deactivating the button. Once deactivated, try moving it

@@ -156,12 +156,12 @@ var TouchableOpacity = createReactClass({
     var ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
+      e.stopPropagation();
     }
   },
 
   render: function() {
     const {
-      children,
       /* eslint-disable */
       activeOpacity,
       focusedOpacity,
@@ -180,6 +180,7 @@ var TouchableOpacity = createReactClass({
     return (
       <View
         {...other}
+        accessible={this.props.accessible !== false}
         style={[styles.root, this.props.disabled && styles.disabled, this.props.style]}
         onKeyDown={e => {
           this._onKeyEnter(e, this.touchableHandleActivePressIn);
@@ -196,9 +197,8 @@ var TouchableOpacity = createReactClass({
         onResponderMove={this.touchableHandleResponderMove}
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
-        tabIndex={this.props.disabled ? null : '0'}
       >
-        {children}
+        {this.props.children}
         {Touchable.renderDebugView({ color: 'blue', hitSlop: this.props.hitSlop })}
       </View>
     );

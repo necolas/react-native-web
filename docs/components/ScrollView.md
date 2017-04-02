@@ -9,17 +9,17 @@ view directly (discouraged) or make sure all parent views have bounded height
 
 [...View props](./View.md)
 
-**contentContainerStyle**: style
+**contentContainerStyle**: ?style
 
 These styles will be applied to the scroll view content container which wraps
 all of the child views.
 
-**horizontal**: bool = false
+**horizontal**: ?boolean = false
 
-When true, the scroll view's children are arranged horizontally in a row
+When `true`, the scroll view's children are arranged horizontally in a row
 instead of vertically in a column.
 
-**keyboardDismissMode**: oneOf('none', 'on-drag') = 'none'
+**keyboardDismissMode**: ?enum('none', 'on-drag') = 'none'
 
 Determines whether the keyboard gets dismissed in response to a scroll drag.
 
@@ -27,13 +27,13 @@ Determines whether the keyboard gets dismissed in response to a scroll drag.
 * `on-drag`, the keyboard is dismissed when a drag begins.
 * `interactive` (not supported on web; same as `none`)
 
-**onContentSizeChange**: function
+**onContentSizeChange**: ?function
 
 Called when scrollable content view of the `ScrollView` changes. It's
 implemented using the `onLayout` handler attached to the content container
 which this `ScrollView` renders.
 
-**onScroll**: function
+**onScroll**: ?function
 
 Fires at most once per frame during scrolling. The frequency of the events can
 be contolled using the `scrollEventThrottle` prop.
@@ -50,18 +50,18 @@ Invoked on scroll with the following event:
 }
 ```
 
-**refreshControl**: element
+**refreshControl**: ?element
 
 TODO
 
 A [RefreshControl](../RefreshControl) component, used to provide
 pull-to-refresh functionality for the `ScrollView`.
 
-**scrollEnabled**: bool = true
+**scrollEnabled**: ?boolean = true
 
 When false, the content does not scroll.
 
-**scrollEventThrottle**: number = 0
+**scrollEventThrottle**: ?number = 0
 
 This controls how often the scroll event will be fired while scrolling (as a
 time interval in ms). A lower number yields better accuracy for code that is

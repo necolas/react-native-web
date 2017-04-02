@@ -6,22 +6,26 @@ build your own custom button using `TouchableOpacity` or
 
 ## Props
 
-**accessibilityLabel**: string
+**accessibilityLabel**: ?string
 
-Defines the text available to assistive technologies upon interaction with the
-element. (This is implemented using `aria-label`.)
+Overrides the text that's read by a screen reader when the user interacts
+with the element.
 
-**color**: string
+**color**: ?string
 
 Background color of the button.
 
-**disabled**: bool = false
+**disabled**: ?boolean
 
-If true, disable all interactions for this component
+If `true`, disable all interactions for this element.
 
 **onPress**: function
 
 This function is called on press.
+
+testID: ?string
+
+Used to locate this view in end-to-end tests.
 
 **title**: string
 

@@ -72,15 +72,25 @@ exports[`modules/createDOMElement prop "accessibilityRole" roles 1`] = `
 />
 `;
 
-exports[`modules/createDOMElement prop "accessible" 1`] = `<span />`;
+exports[`modules/createDOMElement prop "accessible" 1`] = `
+<span
+  tabindex="0"
+/>
+`;
 
 exports[`modules/createDOMElement prop "accessible" 2`] = `<span />`;
 
-exports[`modules/createDOMElement prop "accessible" 3`] = `
+exports[`modules/createDOMElement prop "importantForAccessibility" 1`] = `<span />`;
+
+exports[`modules/createDOMElement prop "importantForAccessibility" 2`] = `<span />`;
+
+exports[`modules/createDOMElement prop "importantForAccessibility" 3`] = `
 <span
   aria-hidden="true"
 />
 `;
+
+exports[`modules/createDOMElement prop "importantForAccessibility" 4`] = `<span />`;
 
 exports[`modules/createDOMElement prop "testID" 1`] = `
 <span

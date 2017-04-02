@@ -6,18 +6,22 @@ Display an activity progress bar.
 
 [...View props](./View.md)
 
-**color**: string = '#1976D2'
+**color**: ?string = '#1976D2'
 
 Color of the progress bar.
 
-**indeterminate**: bool = true
+**indeterminate**: ?boolean = true
 
 Whether the progress bar will show indeterminate progress.
 
-**progress**: number
+**progress**: ?number
 
 The progress value (between 0 and 1).
 
-(web) **trackColor**: string = 'transparent'
+**testID**: ?string
+
+Used to locate this view in end-to-end tests.
+
+(web) **trackColor**: ?string = 'transparent'
 
 Color of the track bar.

@@ -5,6 +5,7 @@ const BaseComponentPropTypes = {
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRole: string,
   accessible: bool,
+  importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
   style: oneOfType([array, number, object]),
   testID: string
 };

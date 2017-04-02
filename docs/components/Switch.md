@@ -9,31 +9,31 @@ supplied `value` prop instead of the expected result of any user actions.
 
 [...View props](./View.md)
 
-**disabled**: bool = false
+**disabled**: ?boolean = false
 
 If `true` the user won't be able to interact with the switch.
 
-**onValueChange**: func
+**onValueChange**: ?function
 
 Invoked with the new value when the value changes.
 
-**value**: bool = false
+**value**: ?boolean = false
 
 The value of the switch. If `true` the switch will be turned on.
 
-(web) **activeThumbColor**: color = #009688
+(web) **activeThumbColor**: ?color = #009688
 
 The color of the thumb grip when the switch is turned on.
 
-(web) **activeTrackColor**: color = #A3D3CF
+(web) **activeTrackColor**: ?color = #A3D3CF
 
 The color of the track when the switch is turned on.
 
-(web) **thumbColor**: color = #FAFAFA
+(web) **thumbColor**: ?color = #FAFAFA
 
 The color of the thumb grip when the switch is turned off.
 
-(web) **trackColor**: color = #939393
+(web) **trackColor**: ?color = #939393
 
 The color of the track when the switch is turned off.
 
