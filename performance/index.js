@@ -1,13 +1,16 @@
-import cssModules from './implementations/css-modules';
-import glamor from './implementations/glamor';
-import platform from './implementations/platform';
-import reactNative from './implementations/react-native-web';
-import styledComponents from './implementations/styled-components';
+import cssModules from './components/css-modules';
+import glamor from './components/glamor';
+import platform from './components/platform';
+import reactNative from './components/react-native-web';
+import styledComponents from './components/styled-components';
 
 import renderDeepTree from './tests/renderDeepTree';
+import renderTweet from './tests/renderTweet';
 import renderWideTree from './tests/renderWideTree';
 
 const tests = [
+  // tweet
+  () => renderTweet('react-native-web', reactNative),
   // deep tree
   () => renderDeepTree('platform', platform),
   () => renderDeepTree('css-modules', cssModules),
