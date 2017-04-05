@@ -14,6 +14,7 @@
 
 /* @edit start */
 const BoundingDimensions = require('./BoundingDimensions');
+const normalizeColor = require('normalize-css-color');
 const Position = require('./Position');
 const React = require('react');
 const TouchEventUtils = require('fbjs/lib/TouchEventUtils');
@@ -755,7 +756,40 @@ var TouchableMixin = {
 };
 
 var Touchable = {
-  Mixin: TouchableMixin
+  Mixin: TouchableMixin,
+  TOUCH_TARGET_DEBUG: false, // Highlights all touchable targets. Toggle with Inspector.
+  /**
+   * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
+   */
+  renderDebugView: ({ color, hitSlop }) => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (!Touchable.TOUCH_TARGET_DEBUG) {
+        return null;
+      }
+
+      const debugHitSlopStyle = {};
+      hitSlop = hitSlop || { top: 0, bottom: 0, left: 0, right: 0 };
+      for (const key in hitSlop) {
+        debugHitSlopStyle[key] = -hitSlop[key];
+      }
+
+      const hexColor = '#' + ('00000000' + normalizeColor(color).toString(16)).substr(-8);
+
+      return (
+        <View
+          pointerEvents="none"
+          style={{
+            position: 'absolute',
+            borderColor: hexColor.slice(0, -2) + '55', // More opaque
+            borderWidth: 1,
+            borderStyle: 'dashed',
+            backgroundColor: hexColor.slice(0, -2) + '0F', // Less opaque
+            ...debugHitSlopStyle
+          }}
+        />
+      );
+    }
+  }
 };
 
 module.exports = Touchable;

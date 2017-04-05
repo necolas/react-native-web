@@ -18,7 +18,7 @@ describe('modules/createDOMElement', () => {
   });
 
   test('prop "accessibilityLiveRegion"', () => {
-    const accessibilityLiveRegion = 'polite';
+    const accessibilityLiveRegion = 'none';
     const component = renderer.create(createDOMElement('span', { accessibilityLiveRegion }));
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -31,6 +31,16 @@ describe('modules/createDOMElement', () => {
 
     test('button', () => {
       const component = renderer.create(createDOMElement('span', { accessibilityRole: 'button' }));
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    test('headings', () => {
+      let component = renderer.create(createDOMElement('div', { accessibilityRole: 'heading' }));
+      expect(component.toJSON()).toMatchSnapshot();
+
+      component = renderer.create(
+        createDOMElement('div', { accessibilityRole: 'heading', 'aria-level': '3' })
+      );
       expect(component.toJSON()).toMatchSnapshot();
     });
 

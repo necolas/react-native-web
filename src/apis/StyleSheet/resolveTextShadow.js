@@ -1,4 +1,5 @@
 import normalizeValue from './normalizeValue';
+import processColor from '../../modules/processColor';
 
 const defaultOffset = { height: 0, width: 0 };
 
@@ -7,9 +8,11 @@ const resolveTextShadow = (resolvedStyle, style) => {
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
   const blurRadius = normalizeValue(null, style.textShadowRadius || 0);
-  const color = style.textShadowColor || 'currentcolor';
+  const color = processColor(style.textShadowColor);
 
-  resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  if (color) {
+    resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  }
 };
 
 module.exports = resolveTextShadow;

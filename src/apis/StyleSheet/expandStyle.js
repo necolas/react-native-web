@@ -10,6 +10,7 @@
  */
 
 import normalizeValue from './normalizeValue';
+import processColor from '../../modules/processColor';
 import resolveBoxShadow from './resolveBoxShadow';
 import resolveTextShadow from './resolveTextShadow';
 import resolveTransform from './resolveTransform';
@@ -34,6 +35,16 @@ const styleShortFormProperties = {
   paddingVertical: ['paddingTop', 'paddingBottom'],
   textDecorationLine: ['textDecoration'],
   writingDirection: ['direction']
+};
+
+const colorProps = {
+  backgroundColor: true,
+  borderColor: true,
+  borderTopColor: true,
+  borderRightColor: true,
+  borderBottomColor: true,
+  borderLeftColor: true,
+  color: true
 };
 
 const alphaSortProps = propsArray => propsArray.sort((a, b) => {
@@ -106,17 +117,23 @@ const createReducer = (style, styleProps) => {
         break;
       }
       default: {
+        // normalize color values
+        let finalValue = value;
+        if (colorProps[prop]) {
+          finalValue = processColor(value);
+        }
+
         const longFormProperties = styleShortFormProperties[prop];
         if (longFormProperties) {
           longFormProperties.forEach((longForm, i) => {
             // the value of any longform property in the original styles takes
             // precedence over the shortform's value
             if (styleProps.indexOf(longForm) === -1) {
-              resolvedStyle[longForm] = value;
+              resolvedStyle[longForm] = finalValue;
             }
           });
         } else {
-          resolvedStyle[prop] = value;
+          resolvedStyle[prop] = finalValue;
         }
       }
     }

@@ -14,7 +14,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
     className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
-        "backgroundColor": "#939393",
+        "backgroundColor": "rgba(147,147,147,1)",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
         "borderTopLeftRadius": "10px",
@@ -26,7 +26,7 @@ exports[`components/Switch disabled when "false" a default checkbox is rendered 
     className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
-        "backgroundColor": "#FAFAFA",
+        "backgroundColor": "rgba(250,250,250,1)",
         "height": "20px",
         "width": "20px",
       }
@@ -55,7 +55,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
   }
 >
   <div
-    className="rn-alignItems-1oszu61 rn-backgroundColor-1i8mn1y rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
+    className="rn-alignItems-1oszu61 rn-backgroundColor-1hj8efq rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
         "borderBottomLeftRadius": "10px",
@@ -66,7 +66,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
     }
   />
   <div
-    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-backgroundColor-1jvdyr1 rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
+    className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-backgroundColor-1bgzomc rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
         "height": "20px",
@@ -100,7 +100,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
     className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
-        "backgroundColor": "#939393",
+        "backgroundColor": "rgba(147,147,147,1)",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
         "borderTopLeftRadius": "10px",
@@ -112,7 +112,7 @@ exports[`components/Switch value when "false" an unchecked checkbox is rendered 
     className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-1fe0xdi rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
-        "backgroundColor": "#FAFAFA",
+        "backgroundColor": "rgba(250,250,250,1)",
         "height": "20px",
         "width": "20px",
       }
@@ -144,7 +144,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
     className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-bottom-1p0dtai rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-height-1dernwh rn-left-1d2f490 rn-listStyle-1ebb2ja rn-marginTop-1t01tom rn-marginRight-lchren rn-marginBottom-1qahzrx rn-marginLeft-1jj8364 rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-top-ipm5af rn-transitionDuration-13tjlyg rn-width-e7q0ms"
     style={
       Object {
-        "backgroundColor": "#A3D3CF",
+        "backgroundColor": "rgba(163,211,207,1)",
         "borderBottomLeftRadius": "10px",
         "borderBottomRightRadius": "10px",
         "borderTopLeftRadius": "10px",
@@ -156,7 +156,7 @@ exports[`components/Switch value when "true" a checked checkbox is rendered 1`] 
     className="rn-alignItems-1oszu61 rn-alignSelf-k200y rn-borderTopLeftRadius-jt3ufn rn-borderTopRightRadius-1e868j9 rn-borderBottomRightRadius-ujv9e3 rn-borderBottomLeftRadius-1hakmuk rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxShadow-1ewcgjf rn-boxSizing-deolkf rn-color-homxoj rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-font-1lw9tu2 rn-left-7b7h2f rn-listStyle-1ebb2ja rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-textAlign-1ttztb7 rn-textDecoration-bauka4 rn-transform-emqnss rn-transitionDuration-13tjlyg"
     style={
       Object {
-        "backgroundColor": "#009688",
+        "backgroundColor": "rgba(0,150,136,1)",
         "height": "20px",
         "marginLeft": "-20px",
         "width": "20px",

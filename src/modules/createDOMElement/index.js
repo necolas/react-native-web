@@ -15,7 +15,6 @@ const roleComponents = {
   complementary: 'aside',
   contentinfo: 'footer',
   form: 'form',
-  heading: 'h1',
   link: 'a',
   list: 'ul',
   listitem: 'li',
@@ -52,10 +51,18 @@ const wrapEventHandler = handler => e => {
   return handler(e);
 };
 
+const getAccessibilityComponent = (props = emptyObject) => {
+  const role = getAccessibilityRole(props);
+  if (role === 'heading') {
+    const level = props['aria-level'] || 1;
+    return `h${level}`;
+  }
+  return roleComponents[role];
+};
+
 const createDOMElement = (component, rnProps) => {
   // use equivalent platform elements where possible
-  const role = getAccessibilityRole(rnProps || emptyObject);
-  const accessibilityComponent = role && roleComponents[role];
+  const accessibilityComponent = getAccessibilityComponent(rnProps);
   const Component = accessibilityComponent || component;
 
   const domProps = createDOMProps(rnProps, style => StyleRegistry.resolve(style));

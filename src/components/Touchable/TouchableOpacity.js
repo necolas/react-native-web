@@ -65,7 +65,6 @@ var TouchableOpacity = React.createClass({
 
   getDefaultProps: function() {
     return {
-      accessibilityRole: 'button',
       activeOpacity: 0.2,
       focusedOpacity: 0.7
     };
@@ -160,6 +159,7 @@ var TouchableOpacity = React.createClass({
 
   render: function() {
     const {
+      children,
       /* eslint-disable */
       activeOpacity,
       focusedOpacity,
@@ -195,7 +195,10 @@ var TouchableOpacity = React.createClass({
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
         tabIndex={this.props.disabled ? null : '0'}
-      />
+      >
+        {children}
+        {Touchable.renderDebugView({ color: 'blue', hitSlop: this.props.hitSlop })}
+      </View>
     );
   }
 });

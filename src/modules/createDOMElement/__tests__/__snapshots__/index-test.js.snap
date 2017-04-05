@@ -8,7 +8,7 @@ exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
 
 exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
 <span
-  aria-live="polite"
+  aria-live="off"
 />
 `;
 
@@ -42,6 +42,19 @@ exports[`modules/createDOMElement prop "accessibilityRole" compatibility with ac
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 2`] = `
 <a
   role="link"
+/>
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" headings 1`] = `
+<h1
+  role="heading"
+/>
+`;
+
+exports[`modules/createDOMElement prop "accessibilityRole" headings 2`] = `
+<h3
+  aria-level="3"
+  role="heading"
 />
 `;
 
