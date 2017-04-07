@@ -2,6 +2,7 @@ import AnimationPropTypes from '../../propTypes/AnimationPropTypes';
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
+import ShadowStylePropTypes from '../../propTypes/ShadowStylePropTypes';
 import { PropTypes } from 'react';
 import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
@@ -16,6 +17,7 @@ module.exports = {
   ...LayoutPropTypes,
   ...ShadowPropTypes,
   ...TransformPropTypes,
+  ...ShadowStylePropTypes,
   backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,
   opacity: number,
