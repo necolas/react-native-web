@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { css } from 'glamor';
 import React from 'react';
 import View from '../View/index.glamor';
 
@@ -16,34 +15,34 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
 );
 
 const styles = {
-  outer: css({
+  outer: {
     padding: 4
-  }),
-  row: css({
+  },
+  row: {
     flexDirection: 'row'
-  }),
-  color0: css({
+  },
+  color0: {
     backgroundColor: '#222'
-  }),
-  color1: css({
+  },
+  color1: {
     backgroundColor: '#666'
-  }),
-  color2: css({
+  },
+  color2: {
     backgroundColor: '#999'
-  }),
-  color3: css({
+  },
+  color3: {
     backgroundColor: 'blue'
-  }),
-  color4: css({
+  },
+  color4: {
     backgroundColor: 'orange'
-  }),
-  color5: css({
+  },
+  color5: {
     backgroundColor: 'red'
-  }),
-  fixed: css({
+  },
+  fixed: {
     width: 20,
     height: 20
-  })
+  }
 };
 
 module.exports = Box;
