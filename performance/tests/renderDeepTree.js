@@ -1,5 +1,5 @@
 import createRenderBenchmark from '../createRenderBenchmark';
-import NestedTree from '../components/NestedTree';
+import NestedTree from '../src/components/NestedTree';
 import React from 'react';
 
 const renderDeepTree = (label, components) => createRenderBenchmark({

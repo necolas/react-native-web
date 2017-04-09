@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import View from '../View/index.styled';
+import View from '../View/styled-components';
 
 const getColor = color => {
   switch (color) {

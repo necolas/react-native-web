@@ -1,29 +1,46 @@
-import cssModules from './components/css-modules';
-import glamor from './components/glamor';
-import platform from './components/platform';
-import reactNative from './components/react-native-web';
-import styledComponents from './components/styled-components';
+import aphrodite from './src/aphrodite';
+import cssModules from './src/css-modules';
+import glamor from './src/glamor';
+import jss from './src/jss';
+import reactNative from './src/react-native';
+import reactNativeStyleSheet from './src/react-native-stylesheet';
+import styledComponents from './src/styled-components';
+import xp from './src/reactxp';
 
 import renderDeepTree from './tests/renderDeepTree';
 import renderTweet from './tests/renderTweet';
 import renderWideTree from './tests/renderWideTree';
 
-const tests = [
-  // tweet
+const testAll = window.location.search === '?all';
+
+const coreTests = [
   () => renderTweet('react-native-web', reactNative),
-  // deep tree
-  () => renderDeepTree('platform', platform),
+
   () => renderDeepTree('css-modules', cssModules),
-  () => renderDeepTree('react-native-web', reactNative),
-  () => renderDeepTree('styled-components', styledComponents),
-  () => renderDeepTree('glamor', glamor),
-  // wide tree
-  () => renderWideTree('platform', platform),
   () => renderWideTree('css-modules', cssModules),
-  () => renderWideTree('react-native-web', reactNative),
-  () => renderWideTree('styled-components', styledComponents),
-  () => renderWideTree('glamor', glamor)
+  () => renderDeepTree('react-native-web/stylesheet', reactNativeStyleSheet),
+  () => renderWideTree('react-native-web/stylesheet', reactNativeStyleSheet),
+  () => renderDeepTree('react-native-web', reactNative),
+  () => renderWideTree('react-native-web', reactNative)
 ];
+
+/**
+ * Optionally run tests using other libraries
+ */
+const extraTests = [
+  () => renderDeepTree('aphrodite', aphrodite),
+  () => renderWideTree('aphrodite', aphrodite),
+  () => renderDeepTree('glamor', glamor),
+  () => renderWideTree('glamor', glamor),
+  () => renderDeepTree('jss', jss),
+  () => renderWideTree('jss', jss),
+  () => renderDeepTree('reactxp', xp),
+  () => renderWideTree('reactxp', xp),
+  () => renderDeepTree('styled-components', styledComponents),
+  () => renderWideTree('styled-components', styledComponents)
+];
+
+const tests = testAll ? coreTests.concat(extraTests) : coreTests;
 
 // run benchmarks
 tests.reduce((promise, test) => promise.then(test()), Promise.resolve());

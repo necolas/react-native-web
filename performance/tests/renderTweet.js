@@ -1,5 +1,5 @@
 import createRenderBenchmark from '../createRenderBenchmark';
-import Tweet from '../components/Tweet';
+import Tweet from '../src/components/Tweet';
 import React from 'react';
 
 const tweet1 = {

@@ -2,7 +2,7 @@
 import { css } from 'glamor';
 import React from 'react';
 
-const View = ({ style, ...props}) => <div {...props} className={css(viewStyle, ...style)} />;
+const View = ({ style, ...other }) => <div {...other} className={css(viewStyle, ...style)} />;
 
 const viewStyle = {
   alignItems: 'stretch',

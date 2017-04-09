@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import View from '../View/index.glamor';
+import { Styles, View } from 'reactxp';
 
 const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) => (
   <View
@@ -15,34 +15,34 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
 );
 
 const styles = {
-  outer: {
+  outer: Styles.createViewStyle({
     padding: 4
-  },
-  row: {
+  }),
+  row: Styles.createViewStyle({
     flexDirection: 'row'
-  },
-  color0: {
+  }),
+  color0: Styles.createViewStyle({
     backgroundColor: '#222'
-  },
-  color1: {
+  }),
+  color1: Styles.createViewStyle({
     backgroundColor: '#666'
-  },
-  color2: {
+  }),
+  color2: Styles.createViewStyle({
     backgroundColor: '#999'
-  },
-  color3: {
+  }),
+  color3: Styles.createViewStyle({
     backgroundColor: 'blue'
-  },
-  color4: {
+  }),
+  color4: Styles.createViewStyle({
     backgroundColor: 'orange'
-  },
-  color5: {
+  }),
+  color5: Styles.createViewStyle({
     backgroundColor: 'red'
-  },
-  fixed: {
+  }),
+  fixed: Styles.createViewStyle({
     width: 20,
     height: 20
-  }
+  })
 };
 
 module.exports = Box;
