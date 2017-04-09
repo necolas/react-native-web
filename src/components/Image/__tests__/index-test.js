@@ -107,4 +107,18 @@ describe('components/Image', () => {
     const component = renderer.create(<Image onResponderGrant={fn} />);
     expect(component.toJSON()).toMatchSnapshot();
   });
+
+  test('support shadow props', () => {
+    const style = {
+      shadowColor: 'rgb(232, 232, 232)',
+      shadowOffset: {
+        width: 0,
+        height: 0
+      },
+      shadowOpacity: 10,
+      shadowRadius: 1
+    };
+    const component = renderer.create(<Image style={style} />);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });
