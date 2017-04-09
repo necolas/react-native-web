@@ -21,6 +21,13 @@ NOTE: `Text` will transfer all other props to the rendered HTML element.
 Defines the text available to assistive technologies upon interaction with the
 element. (This is implemented using `aria-label`.)
 
+(web) **accessibilityLevel**: number
+
+Allows the user to set a heading's level (h1 through h6) when used alongside `accessibilityRole='heading'`.
+This will render out the actual `<h1>` through `<h6>` DOM elements, and thus may break current styling of elements.
+
+- Must be used alongside `accessibilityRole='heading'`
+
 (web) **accessibilityRole**: oneOf(roles)
 
 Allows assistive technologies to present and support interaction with the view

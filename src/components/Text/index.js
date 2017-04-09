@@ -12,6 +12,7 @@ class Text extends Component {
 
   static propTypes = {
     ...BaseComponentPropTypes,
+    accessibilityLevel: PropTypes.number,
     accessibilityRole: PropTypes.oneOf(['button', 'heading', 'link', 'listitem']),
     children: PropTypes.any,
     numberOfLines: PropTypes.number,
@@ -60,6 +61,13 @@ class Text extends Component {
     // allow browsers to automatically infer the language writing direction
     otherProps.dir = 'auto';
 
+    if (otherProps.accessibilityRole === 'heading' && typeof otherProps.accessibilityLevel === 'number'){
+      const level = otherProps.accessibilityLevel;
+      delete otherProps.accessibilityLevel; delete otherProps.accessibilityRole;
+      return createDOMElement(`h${level}`, otherProps);
+    }
+
+    delete otherProps.accessibilityLevel;
     return createDOMElement('span', otherProps);
   }
 
