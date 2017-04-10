@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -6,7 +7,7 @@
 
 'use strict';
 
-var PooledClass = require('react-dom/lib/PooledClass');
+var PooledClass = require('../../vendor/PooledClass');
 
 var twoArgumentPooler = PooledClass.twoArgumentPooler;
 

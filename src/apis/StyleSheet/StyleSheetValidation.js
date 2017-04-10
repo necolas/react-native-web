@@ -9,8 +9,8 @@
 
 import { PropTypes } from 'react';
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
-import ReactPropTypeLocations from 'react-dom/lib/ReactPropTypeLocations';
-import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret';
+import ReactPropTypeLocationNames from '../../vendor/ReactPropTypeLocationNames';
+import ReactPropTypesSecret from '../../vendor/ReactPropTypesSecret';
 import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes';
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
@@ -29,7 +29,7 @@ class StyleSheetValidation {
           style,
           prop,
           caller,
-          ReactPropTypeLocations.prop,
+          ReactPropTypeLocationNames.prop,
           null,
           ReactPropTypesSecret
         );

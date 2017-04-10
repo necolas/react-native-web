@@ -12,8 +12,8 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import ReactPropTypeLocationNames from 'react-dom/lib/ReactPropTypeLocationNames';
-import ReactPropTypesSecret from 'react-dom/lib/ReactPropTypesSecret';
+import ReactPropTypeLocationNames from '../vendor/ReactPropTypeLocationNames';
+import ReactPropTypesSecret from '../vendor/ReactPropTypesSecret';
 
 function createStrictShapeTypeChecker(
   shapeTypes: { [key: string]: ReactPropsCheckType }

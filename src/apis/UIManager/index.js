@@ -1,5 +1,5 @@
-import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+import setValueForStyles from '../../vendor/setValueForStyles';
 
 const getRect = node => {
   const height = node.offsetHeight;
@@ -66,7 +66,7 @@ const UIManager = {
       const value = props[prop];
       switch (prop) {
         case 'style': {
-          CSSPropertyOperations.setValueForStyles(node, value, component._reactInternalInstance);
+          setValueForStyles(node, value, component._reactInternalInstance);
           break;
         }
         case 'class':

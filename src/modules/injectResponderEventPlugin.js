@@ -1,6 +1,6 @@
 // based on https://github.com/facebook/react/pull/4303/files
 
-import EventPluginRegistry from 'react-dom/lib/EventPluginRegistry';
+import EventPluginHub from 'react-dom/lib/EventPluginHub';
 import normalizeNativeEvent from './normalizeNativeEvent';
 import ResponderEventPlugin from 'react-dom/lib/ResponderEventPlugin';
 import ResponderTouchHistoryStore from 'react-dom/lib/ResponderTouchHistoryStore';
@@ -49,6 +49,6 @@ ResponderTouchHistoryStore.recordTouchTrack = (topLevelType, nativeEvent) => {
   originalRecordTouchTrack.call(ResponderTouchHistoryStore, topLevelType, normalizedEvent);
 };
 
-EventPluginRegistry.injectEventPluginsByName({
+EventPluginHub.injection.injectEventPluginsByName({
   ResponderEventPlugin
 });
