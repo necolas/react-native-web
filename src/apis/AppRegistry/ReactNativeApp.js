@@ -1,12 +1,13 @@
 import StyleSheet from '../StyleSheet';
 import View from '../../components/View';
-import React, { Component, PropTypes } from 'react';
+import { any, object } from 'prop-types';
+import React, { Component } from 'react';
 
 class ReactNativeApp extends Component {
   static propTypes = {
-    initialProps: PropTypes.object,
-    rootComponent: PropTypes.any.isRequired,
-    rootTag: PropTypes.any
+    initialProps: object,
+    rootComponent: any.isRequired,
+    rootTag: any
   };
 
   render() {

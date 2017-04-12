@@ -21,6 +21,8 @@ var TimerMixin = require('react-timer-mixin');
 var Touchable = require('./Touchable');
 var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
 var View = require('../View');
+import createReactClass from 'create-react-class';
+import { number } from 'prop-types';
 
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var flattenStyle = StyleSheet.flatten;
@@ -50,7 +52,7 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * },
  * ```
  */
-var TouchableOpacity = React.createClass({
+var TouchableOpacity = createReactClass({
   mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
 
   propTypes: {
@@ -59,8 +61,8 @@ var TouchableOpacity = React.createClass({
      * Determines what the opacity of the wrapped view should be when touch is
      * active.
      */
-    activeOpacity: React.PropTypes.number,
-    focusedOpacity: React.PropTypes.number
+    activeOpacity: number,
+    focusedOpacity: number
   },
 
   getDefaultProps: function() {

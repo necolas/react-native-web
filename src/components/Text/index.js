@@ -1,23 +1,24 @@
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
+import { Component } from 'react';
 import createDOMElement from '../../modules/createDOMElement';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextStylePropTypes from './TextStylePropTypes';
-import { Component, PropTypes } from 'react';
+import { any, bool, func, number, oneOf } from 'prop-types';
 
 class Text extends Component {
   static displayName = 'Text';
 
   static propTypes = {
     ...BaseComponentPropTypes,
-    accessibilityRole: PropTypes.oneOf(['button', 'heading', 'link', 'listitem']),
-    children: PropTypes.any,
-    numberOfLines: PropTypes.number,
-    onLayout: PropTypes.func,
-    onPress: PropTypes.func,
-    selectable: PropTypes.bool,
+    accessibilityRole: oneOf(['button', 'heading', 'link', 'listitem']),
+    children: any,
+    numberOfLines: number,
+    onLayout: func,
+    onPress: func,
+    selectable: bool,
     style: StyleSheetPropType(TextStylePropTypes)
   };
 

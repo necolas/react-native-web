@@ -12,11 +12,11 @@
  */
 'use strict';
 
-var PropTypes = require('react').PropTypes;
+import { number } from 'prop-types';
 
 var PointPropType = require('./createStrictShapeTypeChecker')({
-  x: PropTypes.number,
-  y: PropTypes.number
+  x: number,
+  y: number
 });
 
 module.exports = PointPropType;

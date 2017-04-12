@@ -1,5 +1,6 @@
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import { Component } from 'react';
 import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
@@ -9,7 +10,7 @@ import TextInputStylePropTypes from './TextInputStylePropTypes';
 import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { Component, PropTypes } from 'react';
+import { bool, func, number, oneOf, shape, string } from 'prop-types';
 
 const emptyObject = {};
 
@@ -54,15 +55,15 @@ class TextInput extends Component {
 
   static propTypes = {
     ...ViewPropTypes,
-    autoCapitalize: PropTypes.oneOf(['characters', 'none', 'sentences', 'words']),
-    autoComplete: PropTypes.string,
-    autoCorrect: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    blurOnSubmit: PropTypes.bool,
-    clearTextOnFocus: PropTypes.bool,
-    defaultValue: PropTypes.string,
-    editable: PropTypes.bool,
-    keyboardType: PropTypes.oneOf([
+    autoCapitalize: oneOf(['characters', 'none', 'sentences', 'words']),
+    autoComplete: string,
+    autoCorrect: bool,
+    autoFocus: bool,
+    blurOnSubmit: bool,
+    clearTextOnFocus: bool,
+    defaultValue: string,
+    editable: bool,
+    keyboardType: oneOf([
       'default',
       'email-address',
       'number-pad',
@@ -72,27 +73,27 @@ class TextInput extends Component {
       'url',
       'web-search'
     ]),
-    maxLength: PropTypes.number,
-    maxNumberOfLines: PropTypes.number,
-    multiline: PropTypes.bool,
-    numberOfLines: PropTypes.number,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onChangeText: PropTypes.func,
-    onFocus: PropTypes.func,
-    onKeyPress: PropTypes.func,
-    onSelectionChange: PropTypes.func,
-    onSubmitEditing: PropTypes.func,
-    placeholder: PropTypes.string,
-    placeholderTextColor: PropTypes.string,
-    secureTextEntry: PropTypes.bool,
-    selectTextOnFocus: PropTypes.bool,
-    selection: PropTypes.shape({
-      start: PropTypes.number.isRequired,
-      end: PropTypes.number
+    maxLength: number,
+    maxNumberOfLines: number,
+    multiline: bool,
+    numberOfLines: number,
+    onBlur: func,
+    onChange: func,
+    onChangeText: func,
+    onFocus: func,
+    onKeyPress: func,
+    onSelectionChange: func,
+    onSubmitEditing: func,
+    placeholder: string,
+    placeholderTextColor: string,
+    secureTextEntry: bool,
+    selectTextOnFocus: bool,
+    selection: shape({
+      start: number.isRequired,
+      end: number
     }),
     style: StyleSheetPropType(TextInputStylePropTypes),
-    value: PropTypes.string
+    value: string
   };
 
   static defaultProps = {

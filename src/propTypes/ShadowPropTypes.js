@@ -1,7 +1,5 @@
 import ColorPropType from './ColorPropType';
-import { PropTypes } from 'react';
-
-const { number, oneOfType, shape, string } = PropTypes;
+import { number, oneOfType, shape, string } from 'prop-types';
 const numberOrString = oneOfType([number, string]);
 
 const ShadowPropTypes = {

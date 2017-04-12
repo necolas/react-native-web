@@ -10,8 +10,6 @@
   * @providesModule ColorPropType
   */
 
-import { PropTypes } from 'react';
-
 var colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
   var normalizeColor = require('normalize-css-color');
   var ReactPropTypeLocationNames = require('../vendor/ReactPropTypeLocationNames');

@@ -1,5 +1,6 @@
 'use strict';
 
+import createReactClass from 'create-react-class';
 import { storiesOf, action } from '@kadira/storybook';
 
 var React = require('react');
@@ -12,7 +13,7 @@ var {
 
 var CIRCLE_SIZE = 80;
 
-var PanResponderExample = React.createClass({
+var PanResponderExample = createReactClass({
   _panResponder: {},
   _previousLeft: 0,
   _previousTop: 0,

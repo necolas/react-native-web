@@ -2,17 +2,18 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import { bool, number, oneOf, oneOfType, string } from 'prop-types';
+import React, { Component } from 'react';
 
 class ActivityIndicator extends Component {
   static displayName = 'ActivityIndicator';
 
   static propTypes = {
     ...ViewPropTypes,
-    animating: PropTypes.bool,
-    color: PropTypes.string,
-    hidesWhenStopped: PropTypes.bool,
-    size: PropTypes.oneOfType([PropTypes.oneOf(['small', 'large']), PropTypes.number])
+    animating: bool,
+    color: string,
+    hidesWhenStopped: bool,
+    size: oneOfType([oneOf(['small', 'large']), number])
   };
 
   static defaultProps = {

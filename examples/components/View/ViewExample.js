@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
@@ -50,7 +51,7 @@ var styles = StyleSheet.create({
   },
 });
 
-var ViewBorderStyleExample = React.createClass({
+var ViewBorderStyleExample = createReactClass({
   getInitialState() {
     return {
       showBorder: true
@@ -91,7 +92,7 @@ var ViewBorderStyleExample = React.createClass({
   }
 });
 
-var ZIndexExample = React.createClass({
+var ZIndexExample = createReactClass({
   getInitialState() {
     return {
       flipped: false

@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { Animated, StyleSheet, Text, View } from 'react-native'
@@ -24,7 +25,7 @@ import { Animated, StyleSheet, Text, View } from 'react-native'
  * @flow
  */
 
-var Flip = React.createClass({
+var Flip = createReactClass({
   getInitialState() {
     return {
       theta: new Animated.Value(45),

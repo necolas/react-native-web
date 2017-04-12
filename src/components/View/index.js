@@ -1,10 +1,11 @@
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import { bool } from 'prop-types';
 import createDOMElement from '../../modules/createDOMElement';
 import getAccessibilityRole from '../../modules/getAccessibilityRole';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 const emptyObject = {};
 
@@ -29,11 +30,11 @@ class View extends Component {
   };
 
   static childContextTypes = {
-    isInAButtonView: PropTypes.bool
+    isInAButtonView: bool
   };
 
   static contextTypes = {
-    isInAButtonView: PropTypes.bool
+    isInAButtonView: bool
   };
 
   getChildContext() {

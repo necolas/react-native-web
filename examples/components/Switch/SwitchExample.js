@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import { Platform, Switch, Text, View } from 'react-native'
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
@@ -25,7 +26,7 @@ import { storiesOf, action } from '@kadira/storybook';
  * @flow
  */
 
-var BasicSwitchExample = React.createClass({
+var BasicSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,
@@ -49,7 +50,7 @@ var BasicSwitchExample = React.createClass({
   }
 });
 
-var DisabledSwitchExample = React.createClass({
+var DisabledSwitchExample = createReactClass({
   render() {
     return (
       <View>
@@ -65,7 +66,7 @@ var DisabledSwitchExample = React.createClass({
   },
 });
 
-var ColorSwitchExample = React.createClass({
+var ColorSwitchExample = createReactClass({
   getInitialState() {
     return {
       colorTrueSwitchIsOn: true,
@@ -95,7 +96,7 @@ var ColorSwitchExample = React.createClass({
   },
 });
 
-var EventSwitchExample = React.createClass({
+var EventSwitchExample = createReactClass({
   getInitialState() {
     return {
       eventSwitchIsOn: false,
@@ -132,7 +133,7 @@ var EventSwitchExample = React.createClass({
   }
 });
 
-var SizeSwitchExample = React.createClass({
+var SizeSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,

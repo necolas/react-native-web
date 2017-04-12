@@ -1,7 +1,5 @@
 import TextStylePropTypes from '../Text/TextStylePropTypes';
-import { PropTypes } from 'react';
-
-const { oneOf } = PropTypes;
+import { oneOf } from 'prop-types';
 
 const TextInputOnlyStylePropTypes = {
   /* @platform web */

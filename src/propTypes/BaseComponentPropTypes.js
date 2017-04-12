@@ -1,5 +1,4 @@
-import { PropTypes } from 'react';
-const { array, bool, number, object, oneOf, oneOfType, string } = PropTypes;
+import { array, bool, number, object, oneOf, oneOfType, string } from 'prop-types';
 
 const BaseComponentPropTypes = {
   accessibilityLabel: string,

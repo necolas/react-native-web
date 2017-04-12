@@ -3,7 +3,8 @@ import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { bool, number } from 'prop-types';
 
 class ProgressBar extends Component {
   static displayName = 'ProgressBar';
@@ -11,8 +12,8 @@ class ProgressBar extends Component {
   static propTypes = {
     ...ViewPropTypes,
     color: ColorPropType,
-    indeterminate: PropTypes.bool,
-    progress: PropTypes.number,
+    indeterminate: bool,
+    progress: number,
     trackColor: ColorPropType
   };
 

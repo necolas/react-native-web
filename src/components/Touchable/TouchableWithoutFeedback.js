@@ -19,6 +19,8 @@ var Touchable = require('./Touchable');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var warning = require('fbjs/lib/warning');
 var StyleSheet = require('../../apis/StyleSheet');
+import createReactClass from 'create-react-class';
+import { bool, func, number, string } from 'prop-types';
 
 type Event = Object;
 
@@ -33,45 +35,45 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * >
  * > If you wish to have several child components, wrap them in a View.
  */
-const TouchableWithoutFeedback = React.createClass({
+const TouchableWithoutFeedback = createReactClass({
   mixins: [TimerMixin, Touchable.Mixin],
 
   propTypes: {
-    accessible: React.PropTypes.bool,
-    accessibilityLabel: React.PropTypes.string,
-    accessibilityRole: React.PropTypes.string,
+    accessible: bool,
+    accessibilityLabel: string,
+    accessibilityRole: string,
     /**
      * If true, disable all interactions for this component.
      */
-    disabled: React.PropTypes.bool,
+    disabled: bool,
     /**
      * Called when the touch is released, but not if cancelled (e.g. by a scroll
      * that steals the responder lock).
      */
-    onPress: React.PropTypes.func,
-    onPressIn: React.PropTypes.func,
-    onPressOut: React.PropTypes.func,
+    onPress: func,
+    onPressIn: func,
+    onPressOut: func,
     /**
      * Invoked on mount and layout changes with
      *
      *   `{nativeEvent: {layout: {x, y, width, height}}}`
      */
-    onLayout: React.PropTypes.func,
+    onLayout: func,
 
-    onLongPress: React.PropTypes.func,
+    onLongPress: func,
 
     /**
      * Delay in ms, from the start of the touch, before onPressIn is called.
      */
-    delayPressIn: React.PropTypes.number,
+    delayPressIn: number,
     /**
      * Delay in ms, from the release of the touch, before onPressOut is called.
      */
-    delayPressOut: React.PropTypes.number,
+    delayPressOut: number,
     /**
      * Delay in ms, from onPressIn, before onLongPress is called.
      */
-    delayLongPress: React.PropTypes.number,
+    delayLongPress: number,
     /**
      * When the scroll view is disabled, this defines how far your touch may
      * move off of the button, before deactivating the button. Once deactivated,

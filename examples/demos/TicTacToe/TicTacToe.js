@@ -16,6 +16,7 @@
  */
 'use strict';
 
+import createReactClass from 'create-react-class';
 var React = require('react');
 var ReactNative = require('react-native');
 var {
@@ -94,7 +95,7 @@ class Board {
   }
 }
 
-var Cell = React.createClass({
+var Cell = createReactClass({
   cellStyle() {
     switch (this.props.player) {
       case 1:
@@ -144,7 +145,7 @@ var Cell = React.createClass({
   }
 });
 
-var GameEndOverlay = React.createClass({
+var GameEndOverlay = createReactClass({
   render() {
     var board = this.props.board;
 
@@ -177,7 +178,7 @@ var GameEndOverlay = React.createClass({
   }
 });
 
-var TicTacToeApp = React.createClass({
+var TicTacToeApp = createReactClass({
   getInitialState() {
     return { board: new Board(), player: 1 };
   },

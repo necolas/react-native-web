@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
@@ -26,7 +27,7 @@ import TimerMixin from 'react-timer-mixin';
  * @flow
  */
 
-const ToggleAnimatingActivityIndicator = React.createClass({
+const ToggleAnimatingActivityIndicator = createReactClass({
   mixins: [TimerMixin],
 
   getInitialState() {

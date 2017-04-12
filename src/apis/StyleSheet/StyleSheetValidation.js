@@ -7,7 +7,6 @@
  * @flow
  */
 
-import { PropTypes } from 'react';
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
 import ReactPropTypeLocationNames from '../../vendor/ReactPropTypeLocationNames';
 import ReactPropTypesSecret from '../../vendor/ReactPropTypesSecret';
@@ -15,6 +14,7 @@ import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePr
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
 import warning from 'fbjs/lib/warning';
+import { oneOf, string } from 'prop-types';
 
 class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
@@ -74,13 +74,13 @@ StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes({
-  appearance: PropTypes.string,
-  clear: PropTypes.string,
-  cursor: PropTypes.string,
-  float: PropTypes.oneOf(['left', 'none', 'right']),
-  font: PropTypes.string /* @private */,
-  listStyle: PropTypes.string,
-  pointerEvents: PropTypes.string
+  appearance: string,
+  clear: string,
+  cursor: string,
+  float: oneOf(['left', 'none', 'right']),
+  font: string /* @private */,
+  listStyle: string,
+  pointerEvents: string
 });
 
 module.exports = StyleSheetValidation;

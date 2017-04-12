@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import { ProgressBar, StyleSheet, View } from 'react-native'
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
@@ -26,7 +27,7 @@ import TimerMixin from 'react-timer-mixin';
  * @flow
  */
 
-var ProgressBarExample = React.createClass({
+var ProgressBarExample = createReactClass({
   mixins: [TimerMixin],
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import {
@@ -112,7 +113,7 @@ const examples = [
    },
  }];
 
-var TextOnPressBox = React.createClass({
+var TextOnPressBox = createReactClass({
   getInitialState: function() {
     return {
       timesPressed: 0,
@@ -148,7 +149,7 @@ var TextOnPressBox = React.createClass({
   }
 });
 
-var TouchableFeedbackEvents = React.createClass({
+var TouchableFeedbackEvents = createReactClass({
   getInitialState: function() {
     return {
       eventLog: [],
@@ -187,7 +188,7 @@ var TouchableFeedbackEvents = React.createClass({
   },
 });
 
-var TouchableDelayEvents = React.createClass({
+var TouchableDelayEvents = createReactClass({
   getInitialState: function() {
     return {
       eventLog: [],
@@ -226,7 +227,7 @@ var TouchableDelayEvents = React.createClass({
   },
 });
 
-var ForceTouchExample = React.createClass({
+var ForceTouchExample = createReactClass({
   getInitialState: function() {
     return {
       force: 0,
@@ -260,7 +261,7 @@ var ForceTouchExample = React.createClass({
   },
 });
 
-var TouchableHitSlop = React.createClass({
+var TouchableHitSlop = createReactClass({
   getInitialState: function() {
     return {
       timesPressed: 0,
@@ -302,7 +303,7 @@ var TouchableHitSlop = React.createClass({
   }
 });
 
-var TouchableDisabled = React.createClass({
+var TouchableDisabled = createReactClass({
   render: function() {
     return (
       <View>

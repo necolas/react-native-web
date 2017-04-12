@@ -6,7 +6,8 @@
  * @flow
  */
 
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import { bool, func } from 'prop-types';
 
 /**
  * Renders static content efficiently by allowing React to short-circuit the
@@ -24,8 +25,8 @@ import { Component, PropTypes } from 'react';
 
 class StaticRenderer extends Component {
   static propTypes = {
-    render: PropTypes.func.isRequired,
-    shouldUpdate: PropTypes.bool.isRequired
+    render: func.isRequired,
+    shouldUpdate: bool.isRequired
   };
 
   shouldComponentUpdate(nextProps: { shouldUpdate: boolean }): boolean {

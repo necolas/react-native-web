@@ -2,11 +2,10 @@ import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import ImageResizeMode from './ImageResizeMode';
 import LayoutPropTypes from '../../propTypes/LayoutPropTypes';
-import { PropTypes } from 'react';
 import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
+import { number, oneOf, string } from 'prop-types';
 
-const { number, oneOf, string } = PropTypes;
 const hiddenOrVisible = oneOf(['hidden', 'visible']);
 
 module.exports = {

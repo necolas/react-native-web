@@ -5,9 +5,7 @@
  * @flow
  */
 
-import { PropTypes } from 'react';
-
-const { arrayOf, number, oneOfType, shape, string } = PropTypes;
+import { arrayOf, number, oneOfType, shape, string } from 'prop-types';
 const numberOrString = oneOfType([number, string]);
 
 const TransformPropTypes = {

@@ -1,3 +1,4 @@
+import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import { Image, StyleSheet, Text, View } from 'react-native'
@@ -25,7 +26,7 @@ import { Image, StyleSheet, Text, View } from 'react-native'
  * @flow
  */
 
-var Entity = React.createClass({
+var Entity = createReactClass({
   render: function() {
     return (
       <Text style={{fontWeight: '500', color: '#527fe4'}}>
@@ -35,7 +36,7 @@ var Entity = React.createClass({
   }
 });
 
-var AttributeToggler = React.createClass({
+var AttributeToggler = createReactClass({
   getInitialState: function() {
     return {fontWeight: 'bold', fontSize: 15};
   },

@@ -1,8 +1,7 @@
 import ColorPropType from '../../propTypes/ColorPropType';
-import { PropTypes } from 'react';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
+import { number, oneOf, oneOfType, shape, string } from 'prop-types';
 
-const { number, oneOf, oneOfType, shape, string } = PropTypes;
 const numberOrString = oneOfType([number, string]);
 
 const ShadowOffsetPropType = shape({ width: number, height: number });

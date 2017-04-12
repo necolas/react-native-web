@@ -1,17 +1,18 @@
 import ColorPropType from '../../propTypes/ColorPropType';
-import React, { Component, PropTypes } from 'react';
 import StyleSheet from '../../apis/StyleSheet';
 import TouchableOpacity from '../Touchable/TouchableOpacity';
 import Text from '../Text';
+import { bool, func, string } from 'prop-types';
+import React, { Component } from 'react';
 
 class Button extends Component {
   static propTypes = {
-    accessibilityLabel: PropTypes.string,
+    accessibilityLabel: string,
     color: ColorPropType,
-    disabled: PropTypes.bool,
-    onPress: PropTypes.func.isRequired,
-    testID: PropTypes.string,
-    title: PropTypes.string.isRequired
+    disabled: bool,
+    onPress: func.isRequired,
+    testID: string,
+    title: string.isRequired
   };
 
   render() {

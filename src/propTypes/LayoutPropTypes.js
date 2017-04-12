@@ -1,6 +1,4 @@
-import { PropTypes } from 'react';
-
-const { number, oneOf, oneOfType, string } = PropTypes;
+import { number, oneOf, oneOfType, string } from 'prop-types';
 const numberOrString = oneOfType([number, string]);
 
 const LayoutPropTypes = {

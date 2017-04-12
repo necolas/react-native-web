@@ -24,6 +24,8 @@ var Touchable = require('./Touchable');
 var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
 var View = require('../View');
 var ViewStylePropTypes = require('../View/ViewStylePropTypes');
+import createReactClass from 'create-react-class';
+import { func, number } from 'prop-types';
 
 var ensureComponentIsNative = require('./ensureComponentIsNative');
 var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
@@ -64,14 +66,14 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * > If you wish to have several child components, wrap them in a View.
  */
 
-var TouchableHighlight = React.createClass({
+var TouchableHighlight = createReactClass({
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
     /**
      * Determines what the opacity of the wrapped view should be when touch is
      * active.
      */
-    activeOpacity: React.PropTypes.number,
+    activeOpacity: number,
     /**
      * The color of the underlay that will show through when the touch is
      * active.
@@ -81,11 +83,11 @@ var TouchableHighlight = React.createClass({
     /**
      * Called immediately after the underlay is shown
      */
-    onShowUnderlay: React.PropTypes.func,
+    onShowUnderlay: func,
     /**
      * Called immediately after the underlay is hidden
      */
-    onHideUnderlay: React.PropTypes.func
+    onHideUnderlay: func
   },
 
   mixins: [NativeMethodsMixin, TimerMixin, Touchable.Mixin],
@@ -120,6 +122,7 @@ var TouchableHighlight = React.createClass({
   componentDidMount: function() {
     ensurePositiveDelayProps(this.props);
     ensureComponentIsNative(this.refs[CHILD_REF]);
+    this._isMounted = true;
   },
 
   componentDidUpdate: function() {
@@ -135,6 +138,10 @@ var TouchableHighlight = React.createClass({
     ) {
       this.setState(this.computeSyntheticState(nextProps));
     }
+  },
+
+  componentWillUnmount: function() {
+    this._isMounted = false;
   },
 
   // viewConfig: {
@@ -192,7 +199,7 @@ var TouchableHighlight = React.createClass({
   },
 
   _showUnderlay: function() {
-    if (!this.isMounted() || !this._hasPressHandler()) {
+    if (!this._isMounted || !this._hasPressHandler()) {
       return;
     }
 

@@ -9,7 +9,8 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import { any, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
+import React, { Component } from 'react';
 
 const emptyObject = {};
 
@@ -19,13 +20,13 @@ const STATUS_LOADING = 'LOADING';
 const STATUS_PENDING = 'PENDING';
 const STATUS_IDLE = 'IDLE';
 
-const ImageSourcePropType = PropTypes.oneOfType([
-  PropTypes.shape({
-    height: PropTypes.number,
-    uri: PropTypes.string.isRequired,
-    width: PropTypes.number
+const ImageSourcePropType = oneOfType([
+  shape({
+    height: number,
+    uri: string.isRequired,
+    width: number
   }),
-  PropTypes.string
+  string
 ]);
 
 const resolveAssetDimensions = source => {
@@ -44,14 +45,14 @@ class Image extends Component {
 
   static propTypes = {
     ...ViewPropTypes,
-    children: PropTypes.any,
+    children: any,
     defaultSource: ImageSourcePropType,
-    onError: PropTypes.func,
-    onLayout: PropTypes.func,
-    onLoad: PropTypes.func,
-    onLoadEnd: PropTypes.func,
-    onLoadStart: PropTypes.func,
-    resizeMode: PropTypes.oneOf(Object.keys(ImageResizeMode)),
+    onError: func,
+    onLayout: func,
+    onLoad: func,
+    onLoadEnd: func,
+    onLoadStart: func,
+    resizeMode: oneOf(Object.keys(ImageResizeMode)),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes)
   };

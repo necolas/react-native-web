@@ -6,6 +6,7 @@
  * @flow
  */
 
+import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
 import findNodeHandle from '../../modules/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
@@ -16,23 +17,24 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { bool, element, func, number, oneOf } from 'prop-types';
 
 const emptyObject = {};
 
-/* eslint-disable react/prefer-es6-class */
-const ScrollView = React.createClass({
+/* eslint-disable react/prefer-es6-class, react/prop-types */
+const ScrollView = createReactClass({
   propTypes: {
     ...ViewPropTypes,
     contentContainerStyle: StyleSheetPropType(ViewStylePropTypes),
-    horizontal: PropTypes.bool,
-    keyboardDismissMode: PropTypes.oneOf(['none', 'interactive', 'on-drag']),
-    onContentSizeChange: PropTypes.func,
-    onScroll: PropTypes.func,
-    pagingEnabled: PropTypes.bool,
-    refreshControl: PropTypes.element,
-    scrollEnabled: PropTypes.bool,
-    scrollEventThrottle: PropTypes.number,
+    horizontal: bool,
+    keyboardDismissMode: oneOf(['none', 'interactive', 'on-drag']),
+    onContentSizeChange: func,
+    onScroll: func,
+    pagingEnabled: bool,
+    refreshControl: element,
+    scrollEnabled: bool,
+    scrollEventThrottle: number,
     style: StyleSheetPropType(ViewStylePropTypes)
   },
 

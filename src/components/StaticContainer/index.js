@@ -6,7 +6,8 @@
  * @flow
  */
 
-import React, { Component, PropTypes } from 'react';
+import { any, bool } from 'prop-types';
+import { Children, Component } from 'react';
 
 /**
  * Renders static content efficiently by allowing React to short-circuit the
@@ -25,8 +26,8 @@ import React, { Component, PropTypes } from 'react';
  */
 class StaticContainer extends Component {
   static propTypes = {
-    children: PropTypes.any.isRequired,
-    shouldUpdate: PropTypes.bool.isRequired
+    children: any.isRequired,
+    shouldUpdate: bool.isRequired
   };
 
   shouldComponentUpdate(nextProps: { shouldUpdate: boolean }): boolean {
@@ -35,7 +36,7 @@ class StaticContainer extends Component {
 
   render() {
     const child = this.props.children;
-    return child === null || child === false ? null : React.Children.only(child);
+    return child === null || child === false ? null : Children.only(child);
   }
 }
 

@@ -6,24 +6,25 @@ import StyleSheet from '../../apis/StyleSheet';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import { bool, func } from 'prop-types';
 
 const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-class Switch extends Component {
+class Switch extends PureComponent {
   static displayName = 'Switch';
 
   static propTypes = {
     ...ViewPropTypes,
     activeThumbColor: ColorPropType,
     activeTrackColor: ColorPropType,
-    disabled: PropTypes.bool,
-    onValueChange: PropTypes.func,
+    disabled: bool,
+    onValueChange: func,
     thumbColor: ColorPropType,
     trackColor: ColorPropType,
-    value: PropTypes.bool
+    value: bool
   };
 
   static defaultProps = {

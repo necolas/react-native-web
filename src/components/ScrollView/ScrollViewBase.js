@@ -9,7 +9,8 @@
 import debounce from 'debounce';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { bool, func, number } from 'prop-types';
 
 const normalizeScrollEvent = e => ({
   nativeEvent: {
@@ -47,18 +48,18 @@ const normalizeScrollEvent = e => ({
 export default class ScrollViewBase extends Component {
   static propTypes = {
     ...ViewPropTypes,
-    onMomentumScrollBegin: PropTypes.func,
-    onMomentumScrollEnd: PropTypes.func,
-    onScroll: PropTypes.func,
-    onScrollBeginDrag: PropTypes.func,
-    onScrollEndDrag: PropTypes.func,
-    onTouchMove: PropTypes.func,
-    onWheel: PropTypes.func,
-    removeClippedSubviews: PropTypes.bool,
-    scrollEnabled: PropTypes.bool,
-    scrollEventThrottle: PropTypes.number,
-    showsHorizontalScrollIndicator: PropTypes.bool,
-    showsVerticalScrollIndicator: PropTypes.bool
+    onMomentumScrollBegin: func,
+    onMomentumScrollEnd: func,
+    onScroll: func,
+    onScrollBeginDrag: func,
+    onScrollEndDrag: func,
+    onTouchMove: func,
+    onWheel: func,
+    removeClippedSubviews: bool,
+    scrollEnabled: bool,
+    scrollEventThrottle: number,
+    showsHorizontalScrollIndicator: bool,
+    showsVerticalScrollIndicator: bool
   };
 
   static defaultProps = {
