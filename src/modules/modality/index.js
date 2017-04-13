@@ -15,110 +15,130 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
  * 1. a keydown event occurred immediately before a focus event;
  * 2. a focus event happened on an element which requires keyboard interaction (e.g., a text field);
  *
- * Based on https://github.com/WICG/modality
+ * Based on https://github.com/WICG/focus-ring
  */
 const modality = () => {
   if (!canUseDOM) {
     return;
   }
 
-  /**
-   * Determine whether the keyboard is required when an element is focused
-   */
+  let styleElement;
+  let hadKeyboardEvent = false;
+  let keyboardThrottleTimeoutID = 0;
+
   const proto = window.Element.prototype;
-  const matcher = proto.matches ||
+  const matches = proto.matches ||
     proto.mozMatchesSelector ||
     proto.msMatchesSelector ||
     proto.webkitMatchesSelector;
+
+  // These elements should always have a focus ring drawn, because they are
+  // associated with switching to a keyboard modality.
   const keyboardModalityWhitelist = [
     'input:not([type])',
     'input[type=text]',
+    'input[type=search]',
+    'input[type=url]',
+    'input[type=tel]',
+    'input[type=email]',
+    'input[type=password]',
     'input[type=number]',
     'input[type=date]',
+    'input[type=month]',
+    'input[type=week]',
     'input[type=time]',
     'input[type=datetime]',
+    'input[type=datetime-local]',
     'textarea',
     '[role=textbox]',
-    // indicates that a custom element supports the keyboard
-    '[supports-modality=keyboard]'
   ].join(',');
 
+  /**
+   * Disable the focus ring by default
+   */
+  const initialize = () => {
+    // check if the style sheet needs to be created
+    const id = 'react-native-modality';
+    styleElement = document.getElementById(id);
+    if (!styleElement) {
+      // removes focus styles by default
+      const style = `<style id="${id}">:focus { outline: none; }</style>`;
+      document.head.insertAdjacentHTML('afterbegin', style);
+      styleElement = document.getElementById(id);
+    }
+  }
+
+  /**
+   * Computes whether the given element should automatically trigger the
+   * `focus-ring`.
+   */
   const focusTriggersKeyboardModality = el => {
-    if (matcher) {
-      return matcher.call(el, keyboardModalityWhitelist) && matcher.call(el, ':not([readonly])');
+    if (matches) {
+      return matches.call(el, keyboardModalityWhitelist) && matches.call(el, ':not([readonly])');
     } else {
       return false;
     }
   };
 
   /**
-   * Disable the focus ring by default
+   * Add the focus ring to the focused element
    */
-  const id = 'react-native-modality';
-  let styleElement = document.getElementById(id);
-  if (!styleElement) {
-    const style = `<style id="${id}">:focus { outline: none; }</style>`;
-    document.head.insertAdjacentHTML('afterbegin', style);
-    styleElement = document.getElementById(id);
+  const addFocusRing = () => {
+    if (styleElement) {
+      styleElement.disabled = true;
+    }
   }
 
-  const disableFocus = () => {
+  /**
+   * Remove the focus ring
+   */
+  const removeFocusRing = () => {
     if (styleElement) {
       styleElement.disabled = false;
     }
   };
 
-  const enableFocus = () => {
-    if (styleElement) {
-      styleElement.disabled = true;
+  /**
+   * On `keydown`, set `hadKeyboardEvent`, to be removed 100ms later if there
+   * are no further keyboard events. The 100ms throttle handles cases where
+   * focus is redirected programmatically after a keyboard event, such as
+   * opening a menu or dialog.
+   */
+  const handleKeyDown = (e) => {
+    hadKeyboardEvent = true;
+    if (keyboardThrottleTimeoutID !== 0) {
+      clearTimeout(keyboardThrottleTimeoutID);
+    }
+    keyboardThrottleTimeoutID = setTimeout(() => {
+      hadKeyboardEvent = false;
+      keyboardThrottleTimeoutID = 0;
+    }, 100);
+  };
+
+  /**
+   * Display the focus-ring when the keyboard was used to focus
+   */
+  const handleFocus = (e) => {
+    if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
+      addFocusRing();
     }
   };
 
   /**
-   * Manage the modality focus state
+   * Remove the focus-ring when the keyboard was used to focus
    */
-  let keyboardTimer;
-  let hadKeyboardEvent = false;
+  const handleBlur = () => {
+    if (!hadKeyboardEvent) {
+      removeFocusRing();
+    }
+  };
 
-  // track when the keyboard is in use
-  document.body.addEventListener(
-    'keydown',
-    () => {
-      hadKeyboardEvent = true;
-      if (keyboardTimer) {
-        clearTimeout(keyboardTimer);
-      }
-      keyboardTimer = setTimeout(
-        () => {
-          hadKeyboardEvent = false;
-        },
-        100
-      );
-    },
-    true
-  );
-
-  // disable focus style reset when the keyboard is in use
-  document.body.addEventListener(
-    'focus',
-    e => {
-      if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-        enableFocus();
-      }
-    },
-    true
-  );
-
-  // enable focus style reset when keyboard is no longer in use
-  document.body.addEventListener(
-    'blur',
-    () => {
-      if (!hadKeyboardEvent) {
-        disableFocus();
-      }
-    },
-    true
-  );
+  if (document.body && document.body.addEventListener) {
+    initialize();
+    document.body.addEventListener('keydown', handleKeyDown, true);
+    document.body.addEventListener('focus', handleFocus, true);
+    document.body.addEventListener('blur', handleBlur, true);
+  }
 };
 
 export default modality;
