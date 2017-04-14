@@ -74,19 +74,13 @@ Determines which keyboard to open. (NOTE: Safari iOS requires an ancestral
 
 Limits the maximum number of characters that can be entered.
 
-(web) **maxNumberOfLines**: number = numberOfLines
-
-Limits the maximum number of lines for a multiline `TextInput`.
-
-(Requires `multiline` to be `true`.)
-
 **multiline**: bool = false
 
 If true, the text input can be multiple lines.
 
 **numberOfLines**: number = 2
 
-Sets the initial number of lines for a multiline `TextInput`.
+Sets the number of lines for a multiline `TextInput`.
 
 (Requires `multiline` to be `true`.)
 

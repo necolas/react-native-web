@@ -5254,10 +5254,6 @@ react-test-renderer@^15.5.4:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react-textarea-autosize@^4.0.4:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.0.5.tgz#55379f6a6fa575fc87d1b8de2756e57e3b6c995d"
-
 react-timer-mixin@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"

@@ -1,12 +1,11 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
 import TextInput from '..';
 import { mount, shallow } from 'enzyme';
 
 const findNativeInput = wrapper => wrapper.find('input');
-const findNativeTextarea = wrapper => wrapper.find(TextareaAutosize);
+const findNativeTextarea = wrapper => wrapper.find('textarea');
 
 const testIfDocumentIsFocused = (message, fn) => {
   if (document.hasFocus && document.hasFocus()) {
@@ -89,21 +88,6 @@ describe('components/TextInput', () => {
     expect(input.prop('maxLength')).toEqual(10);
   });
 
-  test('prop "maxNumberOfLines"', () => {
-    const generateValue = () => {
-      let str = '';
-      while (str.length < 100) {
-        str += 'x';
-      }
-      return str;
-    };
-
-    const input = findNativeTextarea(
-      shallow(<TextInput maxNumberOfLines={3} multiline value={generateValue()} />)
-    );
-    expect(input.prop('maxRows')).toEqual(3);
-  });
-
   test('prop "multiline"', () => {
     // false
     let input = findNativeInput(shallow(<TextInput />));
@@ -122,7 +106,7 @@ describe('components/TextInput', () => {
     expect(input.length).toEqual(1);
 
     input = findNativeTextarea(shallow(<TextInput multiline numberOfLines={3} />));
-    expect(input.prop('minRows')).toEqual(3);
+    expect(input.prop('rows')).toEqual(3);
   });
 
   test('prop "onBlur"', done => {

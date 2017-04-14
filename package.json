@@ -34,7 +34,6 @@
     "inline-style-prefixer": "^3.0.2",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.8",
-    "react-textarea-autosize": "^4.0.4",
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
