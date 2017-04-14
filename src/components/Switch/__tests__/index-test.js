@@ -1,22 +1,19 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
-// import { shallow } from 'enzyme';
+import { render } from 'enzyme';
 import Switch from '..';
-
-jest.mock('react-dom');
 
 describe('components/Switch', () => {
   describe('disabled', () => {
     test('when "false" a default checkbox is rendered', () => {
-      const component = renderer.create(<Switch />);
-      expect(component.toJSON()).toMatchSnapshot();
+      const component = render(<Switch />);
+      expect(component).toMatchSnapshot();
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
-      const component = renderer.create(<Switch disabled />);
-      expect(component.toJSON()).toMatchSnapshot();
+      const component = render(<Switch disabled />);
+      expect(component).toMatchSnapshot();
     });
   });
 
@@ -38,13 +35,13 @@ describe('components/Switch', () => {
 
   describe('value', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
-      const component = renderer.create(<Switch value={false} />);
-      expect(component.toJSON()).toMatchSnapshot();
+      const component = render(<Switch value={false} />);
+      expect(component).toMatchSnapshot();
     });
 
     test('when "true" a checked checkbox is rendered', () => {
-      const component = renderer.create(<Switch value />);
-      expect(component.toJSON()).toMatchSnapshot();
+      const component = render(<Switch value />);
+      expect(component).toMatchSnapshot();
     });
   });
 });

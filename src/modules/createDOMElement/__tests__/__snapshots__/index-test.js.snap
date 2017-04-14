@@ -78,7 +78,7 @@ exports[`modules/createDOMElement prop "accessible" 2`] = `<span />`;
 
 exports[`modules/createDOMElement prop "accessible" 3`] = `
 <span
-  aria-hidden={true}
+  aria-hidden="true"
 />
 `;
 

@@ -1,29 +1,27 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from 'enzyme';
 import Text from '../';
-
-jest.mock('react-dom');
 
 describe('components/Text', () => {
   test('prop "children"', () => {
-    const component = renderer.create(<Text>children</Text>);
-    expect(component.toJSON()).toMatchSnapshot();
+    const component = render(<Text>children</Text>);
+    expect(component).toMatchSnapshot();
   });
 
   test('prop "numberOfLines"');
 
   test('prop "onPress"', () => {
     const onPress = e => {};
-    const component = renderer.create(<Text onPress={onPress} />);
-    expect(component.toJSON()).toMatchSnapshot();
+    const component = render(<Text onPress={onPress} />);
+    expect(component).toMatchSnapshot();
   });
 
   test('prop "selectable"', () => {
-    let component = renderer.create(<Text />);
-    expect(component.toJSON()).toMatchSnapshot();
-    component = renderer.create(<Text selectable={false} />);
-    expect(component.toJSON()).toMatchSnapshot();
+    let component = render(<Text />);
+    expect(component).toMatchSnapshot();
+    component = render(<Text selectable={false} />);
+    expect(component).toMatchSnapshot();
   });
 });
