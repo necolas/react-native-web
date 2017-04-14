@@ -23,8 +23,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.__REACT_NATIVE_DEBUG_ENABLED__': DEV
-    }),
-    new webpack.optimize.OccurenceOrderPlugin()
+    })
   ],
   resolve: {
     alias: {

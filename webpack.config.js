@@ -2,8 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const SRC_DIRECTORY = './src'
-const DIST_DIRECTORY = './dist'
+const SRC_DIRECTORY = path.resolve(__dirname, 'src');
+const DIST_DIRECTORY = path.resolve(__dirname, 'dist');
 
 module.exports = {
   entry: SRC_DIRECTORY,
@@ -18,17 +18,21 @@ module.exports = {
     }
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { cacheDirectory: true }
+        use: {
+          loader: 'babel-loader',
+          query: { cacheDirectory: true }
+        }
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
-        loader: 'url-loader',
-        query: { name: '[name].[ext]' }
+        use: {
+          loader: 'url-loader',
+          query: { name: '[name].[ext]' }
+        }
       }
     ]
   },
@@ -44,14 +48,12 @@ module.exports = {
       openAnalyzer: false
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         dead_code: true,
         drop_console: true,
         screw_ie8: true,
-        warnings: true
+        warnings: false
       }
     })
   ]
