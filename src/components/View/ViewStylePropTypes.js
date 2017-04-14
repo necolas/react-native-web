@@ -6,20 +6,14 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 import { number, oneOf, oneOfType, string } from 'prop-types';
 
-const autoOrHiddenOrVisible = oneOf(['auto', 'hidden', 'visible']);
-const hiddenOrVisible = oneOf(['hidden', 'visible']);
-
 module.exports = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...ShadowPropTypes,
   ...TransformPropTypes,
-  backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,
   opacity: number,
-  overflow: autoOrHiddenOrVisible,
-  zIndex: number,
   /**
    * @platform unsupported
    */
@@ -37,8 +31,6 @@ module.exports = {
   boxShadow: string,
   cursor: string,
   outline: string,
-  overflowX: autoOrHiddenOrVisible,
-  overflowY: autoOrHiddenOrVisible,
   perspective: oneOfType([number, string]),
   perspectiveOrigin: string,
   transitionDelay: string,
@@ -46,7 +38,6 @@ module.exports = {
   transitionProperty: string,
   transitionTimingFunction: string,
   userSelect: string,
-  visibility: hiddenOrVisible,
   willChange: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };

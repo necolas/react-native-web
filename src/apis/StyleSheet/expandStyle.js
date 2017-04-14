@@ -78,6 +78,7 @@ const createReducer = (style, styleProps) => {
         break;
       }
       // ignore React Native styles
+      case 'aspectRatio':
       case 'elevation':
       case 'overlayColor':
       case 'resizeMode':

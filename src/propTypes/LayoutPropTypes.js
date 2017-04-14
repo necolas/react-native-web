@@ -1,16 +1,39 @@
 import { number, oneOf, oneOfType, string } from 'prop-types';
+const OverflowPropType = oneOf(['auto', 'hidden', 'scroll', 'visible']);
+const hiddenOrVisible = oneOf(['hidden', 'visible']);
 const numberOrString = oneOfType([number, string]);
 
 const LayoutPropTypes = {
-  // box model
+  alignContent: oneOf([
+    'center',
+    'flex-end',
+    'flex-start',
+    'space-around',
+    'space-between',
+    'stretch'
+  ]),
+  alignItems: oneOf(['baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
+  alignSelf: oneOf(['auto', 'baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
+  aspectRatio: number,
+  backfaceVisibility: hiddenOrVisible,
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
   borderLeftWidth: numberOrString,
   borderRightWidth: numberOrString,
   borderTopWidth: numberOrString,
+  bottom: numberOrString,
   boxSizing: string,
+  direction: oneOf(['inherit', 'ltr', 'rtl']),
   display: string,
+  flex: number,
+  flexBasis: numberOrString,
+  flexDirection: oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
+  flexGrow: number,
+  flexShrink: number,
+  flexWrap: oneOf(['nowrap', 'wrap', 'wrap-reverse']),
   height: numberOrString,
+  justifyContent: oneOf(['center', 'flex-end', 'flex-start', 'space-around', 'space-between']),
+  left: numberOrString,
   margin: numberOrString,
   marginBottom: numberOrString,
   marginHorizontal: numberOrString,
@@ -22,6 +45,10 @@ const LayoutPropTypes = {
   maxWidth: numberOrString,
   minHeight: numberOrString,
   minWidth: numberOrString,
+  order: number,
+  overflow: OverflowPropType,
+  overflowX: OverflowPropType,
+  overflowY: OverflowPropType,
   padding: numberOrString,
   paddingBottom: numberOrString,
   paddingHorizontal: numberOrString,
@@ -29,32 +56,12 @@ const LayoutPropTypes = {
   paddingRight: numberOrString,
   paddingTop: numberOrString,
   paddingVertical: numberOrString,
-  width: numberOrString,
-  // flexbox
-  alignContent: oneOf([
-    'center',
-    'flex-end',
-    'flex-start',
-    'space-around',
-    'space-between',
-    'stretch'
-  ]),
-  alignItems: oneOf(['baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
-  alignSelf: oneOf(['auto', 'baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
-  flex: number,
-  flexBasis: numberOrString,
-  flexDirection: oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
-  flexGrow: number,
-  flexShrink: number,
-  flexWrap: oneOf(['nowrap', 'wrap', 'wrap-reverse']),
-  justifyContent: oneOf(['center', 'flex-end', 'flex-start', 'space-around', 'space-between']),
-  order: number,
-  // position
-  bottom: numberOrString,
-  left: numberOrString,
   position: oneOf(['absolute', 'fixed', 'relative', 'static']),
   right: numberOrString,
-  top: numberOrString
+  top: numberOrString,
+  visibility: hiddenOrVisible,
+  width: numberOrString,
+  zIndex: number
 };
 
 module.exports = LayoutPropTypes;
