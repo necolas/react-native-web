@@ -30,7 +30,7 @@ To install in your app:
 npm install --save react@15.4 react-dom@15.4 react-native-web
 ```
 
-Read the [Client and Server rendering](docs/guides/rendering.md) guide.
+Read the [Getting Started](docs/guides/getting-started.md) guide.
 
 Alternatively, you can quickly setup a local project
 using [create-react-app](https://github.com/facebookincubator/create-react-app)
@@ -41,12 +41,11 @@ using [create-react-app](https://github.com/facebookincubator/create-react-app)
 
 Guides:
 
+* [Getting started](docs/guides/getting-started.md)
 * [Accessibility](docs/guides/accessibility.md)
-* [Client and server rendering](docs/guides/rendering.md)
 * [Direct manipulation](docs/guides/direct-manipulation.md)
 * [Internationalization](docs/guides/internationalization.md)
 * [Known issues](docs/guides/known-issues.md)
-* [React Native](docs/guides/react-native.md)
 * [Style](docs/guides/style.md)
 
 Exported modules:
@@ -143,8 +142,8 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
+* [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
-* [react-native-for-web](https://github.com/KodersLab/react-native-for-web)
 * [rhinos-app](https://github.com/rhinos-app/rhinos-app-dev)
 
 ## License
