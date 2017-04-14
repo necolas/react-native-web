@@ -55,7 +55,7 @@
     "file-loader": "^0.11.1",
     "jest": "^19.0.2",
     "node-libs-browser": "^0.5.3",
-    "prettier": "^1.0.2",
+    "prettier": "^1.1.0",
     "react": "~15.4.1",
     "react-addons-test-utils": "~15.4.1",
     "react-dom": "~15.4.1",
