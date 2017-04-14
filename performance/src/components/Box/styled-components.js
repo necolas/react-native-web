@@ -21,10 +21,10 @@ const getColor = color => {
 };
 
 const Box = styled(View)`
-  flex-direction: ${props => props.layout === 'column' ? 'column' : 'row'};
-  padding: ${props => props.outer ? '4px' : '0'};
-  height: ${props => props.fixed ? '20px' : 'auto'};
-  width: ${props => props.fixed ? '20px' : 'auto'};
+  flex-direction: ${props => (props.layout === 'column' ? 'column' : 'row')};
+  padding: ${props => (props.outer ? '4px' : '0')};
+  height: ${props => (props.fixed ? '20px' : 'auto')};
+  width: ${props => (props.fixed ? '20px' : 'auto')};
   background-color: ${props => getColor(props.color)};
 `;
 

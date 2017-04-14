@@ -225,8 +225,8 @@ class Image extends Component {
 
   _updateImageState(status) {
     this._imageState = status;
-    const shouldDisplaySource = this._imageState === STATUS_LOADED ||
-      this._imageState === STATUS_LOADING;
+    const shouldDisplaySource =
+      this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
     // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
     if (shouldDisplaySource !== this.state.shouldDisplaySource) {
       if (this._isMounted) {

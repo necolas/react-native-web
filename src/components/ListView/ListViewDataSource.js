@@ -357,7 +357,8 @@ class ListViewDataSource {
       for (var rIndex = 0; rIndex < this.rowIdentities[sIndex].length; rIndex++) {
         var rowID = this.rowIdentities[sIndex][rIndex];
         // dirty if the section is new, row is new or _rowHasChanged is true
-        dirty = !prevSectionsHash[sectionID] ||
+        dirty =
+          !prevSectionsHash[sectionID] ||
           !prevRowsHash[sectionID][rowID] ||
           this._rowHasChanged(
             this._getRowData(prevDataBlob, sectionID, rowID),

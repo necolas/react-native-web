@@ -96,17 +96,18 @@ const tweet2 = {
   }
 };
 
-const renderTweet = (label, components) => createRenderBenchmark({
-  name: `Tweet [${label}]`,
-  runs: 10,
-  getElement() {
-    return (
-      <div style={{ width: 500 }}>
-        <Tweet tweet={tweet1} />
-        <Tweet tweet={tweet2} />
-      </div>
-    );
-  }
-});
+const renderTweet = (label, components) =>
+  createRenderBenchmark({
+    name: `Tweet [${label}]`,
+    runs: 10,
+    getElement() {
+      return (
+        <div style={{ width: 500 }}>
+          <Tweet tweet={tweet1} />
+          <Tweet tweet={tweet2} />
+        </div>
+      );
+    }
+  });
 
 export default renderTweet;

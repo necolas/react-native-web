@@ -15,15 +15,7 @@ class AppText extends PureComponent {
   };
 
   render() {
-    const {
-      align,
-      color,
-      fontStyle,
-      size,
-      uppercase,
-      weight,
-      ...other
-    } = this.props;
+    const { align, color, fontStyle, size, uppercase, weight, ...other } = this.props;
 
     const style = [
       styles.root,

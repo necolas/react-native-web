@@ -47,15 +47,16 @@ const colorProps = {
   color: true
 };
 
-const alphaSortProps = propsArray => propsArray.sort((a, b) => {
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-});
+const alphaSortProps = propsArray =>
+  propsArray.sort((a, b) => {
+    if (a < b) {
+      return -1;
+    }
+    if (a > b) {
+      return 1;
+    }
+    return 0;
+  });
 
 const createReducer = (style, styleProps) => {
   let hasResolvedBoxShadow = false;

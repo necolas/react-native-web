@@ -18,14 +18,7 @@ class UserNames extends PureComponent {
   };
 
   render() {
-    const {
-      fullName,
-      layout,
-      onPress,
-      screenName,
-      style,
-      ...other
-    } = this.props;
+    const { fullName, layout, onPress, screenName, style, ...other } = this.props;
 
     return (
       <AppText

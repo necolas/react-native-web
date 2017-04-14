@@ -473,7 +473,8 @@ var TouchableMixin = {
       }
     }
 
-    var isTouchWithinActive = pageX > positionOnActivate.left - pressExpandLeft &&
+    var isTouchWithinActive =
+      pageX > positionOnActivate.left - pressExpandLeft &&
       pageY > positionOnActivate.top - pressExpandTop &&
       pageX < positionOnActivate.left + dimensionsOnActivate.width + pressExpandRight &&
       pageY < positionOnActivate.top + dimensionsOnActivate.height + pressExpandBottom;
@@ -658,8 +659,9 @@ var TouchableMixin = {
   },
 
   _isHighlight: function(state) {
-    return state === States.RESPONDER_ACTIVE_PRESS_IN ||
-      state === States.RESPONDER_ACTIVE_LONG_PRESS_IN;
+    return (
+      state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN
+    );
   },
 
   _savePressInLocation: function(e) {
@@ -692,8 +694,8 @@ var TouchableMixin = {
     var curIsHighlight = this._isHighlight(curState);
     var newIsHighlight = this._isHighlight(nextState);
 
-    var isFinalSignal = signal === Signals.RESPONDER_TERMINATED ||
-      signal === Signals.RESPONDER_RELEASE;
+    var isFinalSignal =
+      signal === Signals.RESPONDER_TERMINATED || signal === Signals.RESPONDER_RELEASE;
 
     if (isFinalSignal) {
       this._cancelLongPressDelayTimeout();
@@ -715,7 +717,8 @@ var TouchableMixin = {
 
     if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
       var hasLongPressHandler = !!this.props.onLongPress;
-      var pressIsLongButStillCallOnPress = IsLongPressingIn[curState] && // We *are* long pressing..
+      var pressIsLongButStillCallOnPress =
+        IsLongPressingIn[curState] && // We *are* long pressing..
         (!hasLongPressHandler || // But either has no long handler
           !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
 
@@ -742,12 +745,9 @@ var TouchableMixin = {
   _endHighlight: function(e) {
     if (this.touchableHandleActivePressOut) {
       if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
-        this.pressOutDelayTimeout = setTimeout(
-          () => {
-            this.touchableHandleActivePressOut(e);
-          },
-          this.touchableGetPressOutDelayMS()
-        );
+        this.pressOutDelayTimeout = setTimeout(() => {
+          this.touchableHandleActivePressOut(e);
+        }, this.touchableGetPressOutDelayMS());
       } else {
         this.touchableHandleActivePressOut(e);
       }

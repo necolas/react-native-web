@@ -40,31 +40,25 @@ const applyLayout = Component => {
   const componentDidUpdate = Component.prototype.componentDidUpdate;
   const componentWillUnmount = Component.prototype.componentWillUnmount;
 
-  Component.prototype.componentDidMount = safeOverride(
-    componentDidMount,
-    function componentDidMount() {
-      this._layoutState = emptyObject;
-      this._isMounted = true;
-      this._onLayoutId = guid();
-      registry[this._onLayoutId] = this;
-      this._handleLayout();
-    }
-  );
+  Component.prototype
+    .componentDidMount = safeOverride(componentDidMount, function componentDidMount() {
+    this._layoutState = emptyObject;
+    this._isMounted = true;
+    this._onLayoutId = guid();
+    registry[this._onLayoutId] = this;
+    this._handleLayout();
+  });
 
-  Component.prototype.componentDidUpdate = safeOverride(
-    componentDidUpdate,
-    function componentDidUpdate() {
-      this._handleLayout();
-    }
-  );
+  Component.prototype
+    .componentDidUpdate = safeOverride(componentDidUpdate, function componentDidUpdate() {
+    this._handleLayout();
+  });
 
-  Component.prototype.componentWillUnmount = safeOverride(
-    componentWillUnmount,
-    function componentWillUnmount() {
-      this._isMounted = false;
-      delete registry[this._onLayoutId];
-    }
-  );
+  Component.prototype
+    .componentWillUnmount = safeOverride(componentWillUnmount, function componentWillUnmount() {
+    this._isMounted = false;
+    delete registry[this._onLayoutId];
+  });
 
   Component.prototype._handleLayout = function() {
     const layout = this._layoutState;

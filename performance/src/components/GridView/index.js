@@ -17,10 +17,12 @@ class GridView extends Component {
     return (
       <View {...other} style={[style, styles.root, hasGap && styles.hasGap]}>
         {React.Children.map(children, child => {
-          return child &&
+          return (
+            child &&
             React.cloneElement(child, {
               style: [child.props.style, styles.column, hasGap && styles.hasGapColumn]
-            });
+            })
+          );
         })}
       </View>
     );
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     minWidth: 0 // 2
   },
   hasGap: {
-    marginHorizontal: theme.createLength(theme.spaceX * (-0.5), 'rem')
+    marginHorizontal: theme.createLength(theme.spaceX * -0.5, 'rem')
   },
   hasGapColumn: {
     marginHorizontal: theme.createLength(theme.spaceX * 0.5, 'rem')

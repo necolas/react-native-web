@@ -174,7 +174,8 @@ class ListView extends Component {
       }
 
       if (renderSectionHeader) {
-        const shouldUpdateHeader = rowCount >= this._prevRenderedRowsCount &&
+        const shouldUpdateHeader =
+          rowCount >= this._prevRenderedRowsCount &&
           dataSource.sectionHeaderShouldUpdate(sectionIdx);
         children.push(
           <StaticRenderer
@@ -186,14 +187,14 @@ class ListView extends Component {
             shouldUpdate={!!shouldUpdateHeader}
           />
         );
-        sectionHeaderIndices.push((totalIndex++));
+        sectionHeaderIndices.push(totalIndex++);
       }
 
       for (let rowIdx = 0; rowIdx < rowIDs.length; rowIdx++) {
         const rowID = rowIDs[rowIdx];
         const comboID = `${sectionID}_${rowID}`;
-        const shouldUpdateRow = rowCount >= this._prevRenderedRowsCount &&
-          dataSource.rowShouldUpdate(sectionIdx, rowIdx);
+        const shouldUpdateRow =
+          rowCount >= this._prevRenderedRowsCount && dataSource.rowShouldUpdate(sectionIdx, rowIdx);
         const row = (
           <StaticRenderer
             key={`r_${comboID}`}
@@ -207,7 +208,8 @@ class ListView extends Component {
         if (
           renderSeparator && (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)
         ) {
-          const adjacentRowHighlighted = this.state.highlightedRow.sectionID === sectionID &&
+          const adjacentRowHighlighted =
+            this.state.highlightedRow.sectionID === sectionID &&
             (this.state.highlightedRow.rowID === rowID ||
               this.state.highlightedRow.rowID === rowIDs[rowIdx + 1]);
           const separator = renderSeparator(sectionID, rowID, adjacentRowHighlighted);
@@ -348,9 +350,9 @@ class ListView extends Component {
   };
 
   _getDistanceFromEnd(scrollProperties: Object) {
-    return scrollProperties.contentLength -
-      scrollProperties.visibleLength -
-      scrollProperties.offset;
+    return (
+      scrollProperties.contentLength - scrollProperties.visibleLength - scrollProperties.offset
+    );
   }
 
   _maybeCallOnEndReached(event?: Object) {
@@ -412,12 +414,10 @@ class ListView extends Component {
 
   _onScroll = (e: Object) => {
     const isVertical = !this.props.horizontal;
-    this.scrollProperties.visibleLength = e.nativeEvent.layoutMeasurement[
-      isVertical ? 'height' : 'width'
-    ];
-    this.scrollProperties.contentLength = e.nativeEvent.contentSize[
-      isVertical ? 'height' : 'width'
-    ];
+    this.scrollProperties.visibleLength =
+      e.nativeEvent.layoutMeasurement[isVertical ? 'height' : 'width'];
+    this.scrollProperties.contentLength =
+      e.nativeEvent.contentSize[isVertical ? 'height' : 'width'];
     this.scrollProperties.offset = e.nativeEvent.contentOffset[isVertical ? 'y' : 'x'];
     this._updateVisibleRows(e.nativeEvent.updatedChildFrames);
     if (!this._maybeCallOnEndReached(e)) {

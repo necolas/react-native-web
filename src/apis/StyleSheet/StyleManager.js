@@ -25,7 +25,8 @@ const pointerEvents = {
   none: createClassName('pointerEvents', 'none')
 };
 
-const pointerEventsCss = `.${pointerEvents.auto}{pointer-events:auto;}\n` +
+const pointerEventsCss =
+  `.${pointerEvents.auto}{pointer-events:auto;}\n` +
   `.${pointerEvents.boxNone}{pointer-events:none;}\n` +
   `.${pointerEvents.boxNone} *{pointer-events:auto;}\n` +
   `.${pointerEvents.boxOnly}{pointer-events:auto;}\n` +
@@ -86,18 +87,15 @@ class StyleManager {
     const cache = this.cache.byProp;
 
     const mainSheetTextContext = Object.keys(cache)
-      .reduce(
-        (rules, prop) => {
-          if (prop !== 'pointerEvents') {
-            Object.keys(cache[prop]).forEach(value => {
-              const className = this.getClassName(prop, value);
-              rules.push(createCssRule(className, prop, value));
-            });
-          }
-          return rules;
-        },
-        []
-      )
+      .reduce((rules, prop) => {
+        if (prop !== 'pointerEvents') {
+          Object.keys(cache[prop]).forEach(value => {
+            const className = this.getClassName(prop, value);
+            rules.push(createCssRule(className, prop, value));
+          });
+        }
+        return rules;
+      }, [])
       .join('\n');
 
     const staticSheet = `<style id="react-native-stylesheet-static">\n${staticCss}\n${pointerEventsCss}\n</style>`;

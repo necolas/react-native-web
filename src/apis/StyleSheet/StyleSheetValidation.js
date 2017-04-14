@@ -21,7 +21,8 @@ class StyleSheetValidation {
     if (process.env.NODE_ENV !== 'production') {
       if (allStylePropTypes[prop] === undefined) {
         var message1 = '"' + prop + '" is not a valid style property.';
-        var message2 = '\nValid style props: ' +
+        var message2 =
+          '\nValid style props: ' +
           JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
         styleError(message1, style, caller, message2);
       } else {

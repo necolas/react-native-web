@@ -120,22 +120,25 @@ class StyleRegistry {
   _resolveStyle(reactNativeStyle) {
     const domStyle = createReactDOMStyle(flattenStyle(reactNativeStyle));
 
-    const props = Object.keys(domStyle).reduce((props, styleProp) => {
-      const value = domStyle[styleProp];
-      if (value != null) {
-        const className = this.styleManager.getClassName(styleProp, value);
-        if (className) {
-          props.classList.push(className);
-        } else {
-          if (!props.style) {
-            props.style = {};
+    const props = Object.keys(domStyle).reduce(
+      (props, styleProp) => {
+        const value = domStyle[styleProp];
+        if (value != null) {
+          const className = this.styleManager.getClassName(styleProp, value);
+          if (className) {
+            props.classList.push(className);
+          } else {
+            if (!props.style) {
+              props.style = {};
+            }
+            // 4x slower render
+            props.style[styleProp] = value;
           }
-          // 4x slower render
-          props.style[styleProp] = value;
         }
-      }
-      return props;
-    }, { classList: [] });
+        return props;
+      },
+      { classList: [] }
+    );
 
     props.className = classListToString(props.classList);
     if (props.style) {

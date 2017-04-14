@@ -33,7 +33,8 @@ const createDOMProps = (rnProps, resolveStyle) => {
     accessibilityTraits,
     /* eslint-enable */
     ...domProps
-  } = rnProps || emptyObject;
+  } =
+    rnProps || emptyObject;
 
   const pointerEventStyle = pointerEvents && pointerEventStyles[pointerEvents];
   const { className, style } = resolveStyle([rnStyle, pointerEventStyle]) || emptyObject;

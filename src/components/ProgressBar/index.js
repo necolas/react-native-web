@@ -33,14 +33,7 @@ class ProgressBar extends Component {
   }
 
   render() {
-    const {
-      color,
-      indeterminate,
-      progress,
-      trackColor,
-      style,
-      ...other
-    } = this.props;
+    const { color, indeterminate, progress, trackColor, style, ...other } = this.props;
 
     const percentageProgress = progress * 100;
 

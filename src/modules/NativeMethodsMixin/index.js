@@ -72,7 +72,8 @@ const NativeMethodsMixin = {
     const classList = [...node.classList];
 
     const domProps = createDOMProps(nativeProps, style =>
-      StyleRegistry.resolveStateful(style, classList));
+      StyleRegistry.resolveStateful(style, classList)
+    );
     UIManager.updateView(node, domProps, this);
   }
 };

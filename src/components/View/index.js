@@ -14,7 +14,7 @@ const calculateHitSlopStyle = hitSlop => {
   for (const prop in hitSlop) {
     if (hitSlop.hasOwnProperty(prop)) {
       const value = hitSlop[prop];
-      hitStyle[prop] = value > 0 ? (-1) * value : 0;
+      hitStyle[prop] = value > 0 ? -1 * value : 0;
     }
   }
   return hitStyle;
@@ -38,8 +38,8 @@ class View extends Component {
   };
 
   getChildContext() {
-    const isInAButtonView = getAccessibilityRole(this.props) === 'button' ||
-      this.context.isInAButtonView;
+    const isInAButtonView =
+      getAccessibilityRole(this.props) === 'button' || this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
 

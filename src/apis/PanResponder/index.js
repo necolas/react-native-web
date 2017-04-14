@@ -10,8 +10,10 @@ var TouchHistoryMath = require('../../vendor/TouchHistoryMath');
 
 var currentCentroidXOfTouchesChangedAfter = TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
 var currentCentroidYOfTouchesChangedAfter = TouchHistoryMath.currentCentroidYOfTouchesChangedAfter;
-var previousCentroidXOfTouchesChangedAfter = TouchHistoryMath.previousCentroidXOfTouchesChangedAfter;
-var previousCentroidYOfTouchesChangedAfter = TouchHistoryMath.previousCentroidYOfTouchesChangedAfter;
+var previousCentroidXOfTouchesChangedAfter =
+  TouchHistoryMath.previousCentroidXOfTouchesChangedAfter;
+var previousCentroidYOfTouchesChangedAfter =
+  TouchHistoryMath.previousCentroidYOfTouchesChangedAfter;
 var currentCentroidX = TouchHistoryMath.currentCentroidX;
 var currentCentroidY = TouchHistoryMath.currentCentroidY;
 

@@ -27,7 +27,8 @@ const modality = () => {
   let keyboardThrottleTimeoutID = 0;
 
   const proto = window.Element.prototype;
-  const matches = proto.matches ||
+  const matches =
+    proto.matches ||
     proto.mozMatchesSelector ||
     proto.msMatchesSelector ||
     proto.webkitMatchesSelector;
@@ -50,7 +51,7 @@ const modality = () => {
     'input[type=datetime]',
     'input[type=datetime-local]',
     'textarea',
-    '[role=textbox]',
+    '[role=textbox]'
   ].join(',');
 
   /**
@@ -66,7 +67,7 @@ const modality = () => {
       document.head.insertAdjacentHTML('afterbegin', style);
       styleElement = document.getElementById(id);
     }
-  }
+  };
 
   /**
    * Computes whether the given element should automatically trigger the
@@ -87,7 +88,7 @@ const modality = () => {
     if (styleElement) {
       styleElement.disabled = true;
     }
-  }
+  };
 
   /**
    * Remove the focus ring
@@ -104,7 +105,7 @@ const modality = () => {
    * focus is redirected programmatically after a keyboard event, such as
    * opening a menu or dialog.
    */
-  const handleKeyDown = (e) => {
+  const handleKeyDown = e => {
     hadKeyboardEvent = true;
     if (keyboardThrottleTimeoutID !== 0) {
       clearTimeout(keyboardThrottleTimeoutID);
@@ -118,7 +119,7 @@ const modality = () => {
   /**
    * Display the focus-ring when the keyboard was used to focus
    */
-  const handleFocus = (e) => {
+  const handleFocus = e => {
     if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
       addFocusRing();
     }

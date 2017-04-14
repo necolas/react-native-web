@@ -23,7 +23,7 @@ const median = values => {
   }
 
   const numbers = [...values].sort((a, b) => a - b);
-  return (numbers[numbers.length - 1 >> 1] + numbers[numbers.length >> 1]) / 2;
+  return (numbers[(numbers.length - 1) >> 1] + numbers[numbers.length >> 1]) / 2;
 };
 
 const standardDeviation = values => {
