@@ -34,7 +34,6 @@
     "inline-style-prefixer": "^3.0.2",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.8",
-    "react-dom": "~15.4.1",
     "react-textarea-autosize": "^4.0.4",
     "react-timer-mixin": "^0.13.3"
   },
@@ -59,13 +58,15 @@
     "prettier": "^1.0.2",
     "react": "~15.4.1",
     "react-addons-test-utils": "~15.4.1",
+    "react-dom": "~15.4.1",
     "react-test-renderer": "^15.5.4",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.3",
     "webpack-bundle-analyzer": "^2.4.0"
   },
   "peerDependencies": {
-    "react": "~15.4.1"
+    "react": "15.4.x || 15.5.x",
+    "react-dom": "15.4.x || 15.5.x"
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause",
