@@ -1,77 +1,83 @@
 # Getting started
 
-## Webpack
+## Webpack and Babel
 
-Working with React Native for Web is easiest with webpack.
-
-### alias
-
-Alias `react-native-web` to `react-native` in order to load the web
-implementation when importing `react-native`.
+[Webpack](webpack.js.org) is a popular build tool for web apps. Below is an
+example of how to configure a build that uses [Babel](https://babeljs.io/) to
+compile your JavaScript for the web.
 
 ```js
 // webpack.config.js
 
-module.exports = {
-  // ...rest of config
-  resolve: {
-    alias: {
-      'react-native': 'react-native-web'
+// This is needed for webpack to compile JavaScript.
+// Many OSS React Native packages are not compiled to ES5 before being
+// published. If you depend on uncompiled packages they may cause webpack build
+// errors. To fix this webpack can be configured to compile to the necessary
+// `node_module`.
+const babelLoaderConfiguration = {
+  test: /\.js$/,
+  // Add every directory that needs to be compiled by Babel during the build
+  include: [
+    path.resolve(__dirname, 'src'),
+    path.resolve(__dirname, 'node_modules/react-native-uncompiled')
+  ],
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      // The 'react-native' preset is recommended
+      presets: ['react-native']
     }
   }
-}
-```
+};
 
-### loaders
-
-
-In order to require image assets (e.g. `require('assets/myimage.png')`), add
-the `url-loader` to the webpack config:
-
-To support modern ES features, use the `babel-loader`. Many OSS React Native
-packages are not compiled to ES5 before being published.  This can result in
-webpack build errors. To avoid this issue you should configure webpack (or your
-bundler of choice) to run `babel-preset-react-native` over the necessary
-`node_module`.
-
-
-```js
-// webpack.config.js
-
-module.exports = {
-  // ...
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        include: [
-          // local app code
-          path.resolve(__dirname, 'src'),
-          // dependency that wasn't transpiled to ES5
-          path.resolve(__dirname, 'node_modules/react-native-something')
-        ],
-        use: {
-          loader: 'babel-loader',
-          query: { cacheDirectory: true }
-        }
-      },
-      {
-        test: /\.(gif|jpe?g|png|svg)$/,
-        use: {
-          loader: 'url-loader',
-          query: { name: '[name].[ext]' }
-        }
-      }
-    ]
+// This is needed for webpack to import static images in JavaScript files
+const imageLoaderConfiguration = {
+  test: /\.(gif|jpe?g|png|svg)$/,
+  use: {
+    loader: 'url-loader',
+    options: {
+      name: '[name].[ext]'
+    }
   }
 };
+
+module.exports = {
+  // ...the rest of your config
+
+  module: {
+    rules: [
+      babelLoaderConfiguration,
+      imageLoaderConfiguration
+    ]
+  },
+
+  plugins: [
+    // `process.env.NODE_ENV === 'production'` must be `true` for production
+    // builds to eliminate development checks and reduce build size.
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  },
+
+  resolve: {
+    // Maps the 'react-native' import to 'react-native-web'.
+    alias: {
+      'react-native': 'react-native-web'
+    },
+    // If you're working on a multi-platform React Native app, web-specific
+    // module implementations should be written in files using the extension
+    // `.web.js`.
+    extensions: [ '.web.js', '.js' ]
+  }
+}
 ```
 
 Please refer to the Webpack documentation for more information.
 
 ## Jest
 
-Alias `react-native-web` to `react-native` in your Jest config.
+[Jest](https://facebook.github.io/jest/) also needs to map `react-native` to `react-native-web`.
 
 ```
 "jest": {
@@ -99,42 +105,9 @@ if (Platform.OS === 'web') {
 }
 ```
 
-More substantial Web-specific implementation code should be written in files
-with the extension `.web.js`. Webpack@1 will automatically resolve these files.
-Webpack@2 requires additional configuration.
-
-```js
-// webpack.config.js
-
-module.exports = {
-  // ...
-  resolve: {
-    extensions: [ '.web.js', '.js' ]
-  }
-};
-```
-
-## Build optimizations
-
-Production builds can benefit from dead-code elimination by defining the
-following variables:
-
-```js
-// webpack.config.js
-
-module.exports = {
-  // ...
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
-  }
-}
-```
-
 ## Client-side rendering
 
-Rendering without using the `AppRegistry`:
+Rendering using `ReactNative`:
 
 ```js
 import React from 'react'
@@ -146,7 +119,7 @@ const AppHeaderContainer = (props) => { /* ... */ }
 ReactNative.render(<AppHeaderContainer />, document.getElementById('react-app-header'))
 ```
 
-Rendering using the `AppRegistry`:
+Rendering using `AppRegistry`:
 
 ```js
 import React from 'react'
@@ -163,6 +136,9 @@ AppRegistry.runApplication('App', {
   rootTag: document.getElementById('react-app')
 })
 ```
+
+Rendering within `ReactDOM.render` also works when introduce `react-native-web`
+to an existing web app, but it is not recommended oherwise.
 
 ## Server-side rendering
 

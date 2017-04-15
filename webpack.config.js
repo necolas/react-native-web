@@ -24,14 +24,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          query: { cacheDirectory: true }
+          options: { cacheDirectory: true }
         }
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: {
           loader: 'url-loader',
-          query: { name: '[name].[ext]' }
+          options: { name: '[name].[ext]' }
         }
       }
     ]

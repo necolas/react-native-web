@@ -26,7 +26,7 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          query: { cacheDirectory: true }
+          options: { cacheDirectory: true }
         }
       }
     ]
