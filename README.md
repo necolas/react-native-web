@@ -145,6 +145,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
 * [rhinos-app](https://github.com/rhinos-app/rhinos-app-dev)
+* [react-native-web-webpack-starter](https://github.com/agrcrobles/react-native-web-webpack-starter)
 
 ## License
 
