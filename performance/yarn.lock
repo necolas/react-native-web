@@ -228,9 +228,9 @@ css-selector-tokenizer@^0.7.0:
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
 
-css-to-react-native@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.0.1.tgz#179b25cba8cab7798118b1679b81f4d6b3fa0de3"
+css-to-react-native@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.0.3.tgz#7d3a11409ac283acef447a13d3bbd09980c68a4f"
   dependencies:
     css-color-keywords "^1.0.0"
     fbjs "^0.8.5"
@@ -351,14 +351,6 @@ function-bind@^1.0.2:
 glamor@3.0.0-1:
   version "3.0.0-1"
   resolved "https://registry.yarnpkg.com/glamor/-/glamor-3.0.0-1.tgz#60f489e96d96c12620803d3677ac26413cb76a95"
-  dependencies:
-    babel-runtime "^6.18.0"
-    fbjs "^0.8.8"
-    object-assign "^4.1.0"
-
-glamor@^2.20.22:
-  version "2.20.24"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.24.tgz#a299af2eec687322634ba38e4a0854d8743d2041"
   dependencies:
     babel-runtime "^6.18.0"
     fbjs "^0.8.8"
@@ -889,7 +881,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.8:
+prop-types@^15.5.4, prop-types@^15.5.8:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -1022,23 +1014,23 @@ style-loader@^0.16.1:
   dependencies:
     loader-utils "^1.0.2"
 
-styled-components@2.0.0-7:
-  version "2.0.0-7"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.0.0-7.tgz#a420b99622eacec26ae3d62c1c75985791d9691b"
+styled-components@2.0.0-15:
+  version "2.0.0-15"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.0.0-15.tgz#77843c9f5267c60a97e28c97719d1ee89ea28be1"
   dependencies:
     buffer "^5.0.3"
-    css-to-react-native "2.0.1"
+    css-to-react-native "^2.0.3"
     fbjs "^0.8.9"
-    glamor "^2.20.22"
     inline-style-prefixer "^2.0.5"
     is-function "^1.0.1"
     is-plain-object "^2.0.1"
-    stylis "^1.2.0"
+    prop-types "^15.5.4"
+    stylis "^2.0.0"
     supports-color "^3.2.3"
 
-stylis@^1.2.0:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-1.2.8.tgz#feba55055a8a1bf8a76a659084a91d729920fa92"
+stylis@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-2.0.3.tgz#054b0ad1f636181664246c103adf506c84b502e7"
 
 supports-color@^2.0.0:
   version "2.0.0"

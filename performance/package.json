@@ -8,7 +8,7 @@
     "marky": "^1.2.0",
     "react-jss": "^6.1.1",
     "reactxp": "^0.34.3",
-    "styled-components": "2.0.0-7"
+    "styled-components": "2.0.0-15"
   },
   "devDependencies": {
     "css-loader": "^0.28.0",
