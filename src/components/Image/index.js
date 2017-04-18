@@ -1,9 +1,10 @@
 /* global window */
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
-import ImageResizeMode from './ImageResizeMode';
 import ImageLoader from '../../modules/ImageLoader';
+import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
+import ImageUriCache from './ImageUriCache';
 import requestIdleCallback, { cancelIdleCallback } from '../../modules/requestIdleCallback';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
@@ -28,6 +29,10 @@ const ImageSourcePropType = oneOfType([
   }),
   string
 ]);
+
+const getImageState = (uri, isPreviouslyLoaded) => {
+  return isPreviouslyLoaded ? STATUS_LOADED : uri ? STATUS_PENDING : STATUS_IDLE;
+};
 
 const resolveAssetDimensions = source => {
   if (typeof source === 'object') {
@@ -73,17 +78,20 @@ class Image extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = { shouldDisplaySource: false };
+    // If an image has been loaded before, render it immediately
     const uri = resolveAssetSource(props.source);
-    this._imageState = uri ? STATUS_PENDING : STATUS_IDLE;
+    const isPreviouslyLoaded = ImageUriCache.has(uri);
+    this.state = { shouldDisplaySource: isPreviouslyLoaded };
+    this._imageState = getImageState(uri, isPreviouslyLoaded);
+    isPreviouslyLoaded && ImageUriCache.add(uri);
     this._isMounted = false;
   }
 
   componentDidMount() {
+    this._isMounted = true;
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     }
-    this._isMounted = true;
   }
 
   componentDidUpdate() {
@@ -93,13 +101,18 @@ class Image extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const uri = resolveAssetSource(this.props.source);
     const nextUri = resolveAssetSource(nextProps.source);
-    if (resolveAssetSource(this.props.source) !== nextUri) {
-      this._updateImageState(nextUri ? STATUS_PENDING : STATUS_IDLE);
+    if (uri !== nextUri) {
+      ImageUriCache.remove(uri);
+      const isPreviouslyLoaded = ImageUriCache.has(nextUri);
+      isPreviouslyLoaded && ImageUriCache.add(uri);
+      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
     }
   }
 
   componentWillUnmount() {
+    ImageUriCache.remove(resolveAssetSource(this.props.source));
     this._destroyImageLoader();
     this._isMounted = false;
   }
@@ -164,8 +177,8 @@ class Image extends Component {
   }
 
   _createImageLoader() {
+    this._destroyImageLoader();
     this._loadRequest = requestIdleCallback(() => {
-      this._destroyImageLoader();
       const uri = resolveAssetSource(this.props.source);
       this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
       this._onLoadStart();
@@ -198,9 +211,9 @@ class Image extends Component {
   };
 
   _onLoad = e => {
-    const { onLoad } = this.props;
+    const { onLoad, source } = this.props;
     const event = { nativeEvent: e };
-
+    ImageUriCache.add(resolveAssetSource(source));
     this._updateImageState(STATUS_LOADED);
     if (onLoad) {
       onLoad(event);
