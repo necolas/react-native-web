@@ -1,8 +1,9 @@
 /* eslint-env jasmine, jest */
 
 import Image from '../';
+import ImageUriCache from '../ImageUriCache';
 import React from 'react';
-import { render } from 'enzyme';
+import { mount, render } from 'enzyme';
 
 const originalImage = window.Image;
 
@@ -85,6 +86,32 @@ describe('components/Image', () => {
         const component = render(<Image resizeMode={resizeMode} />);
         expect(component).toMatchSnapshot();
       });
+    });
+  });
+
+  describe('prop "source"', () => {
+    test('is not set immediately if the image has not already been loaded', () => {
+      const uri = 'https://google.com/favicon.ico';
+      const source = { uri };
+      const component = render(<Image source={source} />);
+      expect(component.find('img')).toBeUndefined;
+    });
+
+    test('is set immediately if the image has already been loaded', () => {
+      const uriOne = 'https://google.com/favicon.ico';
+      const uriTwo = 'https://twitter.com/favicon.ico';
+      ImageUriCache.add(uriOne);
+      ImageUriCache.add(uriTwo);
+
+      // initial render
+      const component = mount(<Image source={{ uri: uriOne }} />);
+      ImageUriCache.remove(uriOne);
+      expect(component.render().find('img').attr('src')).toBe(uriOne);
+
+      // props update
+      component.setProps({ source: { uri: uriTwo } });
+      ImageUriCache.remove(uriTwo);
+      expect(component.render().find('img').attr('src')).toBe(uriTwo);
     });
   });
 
