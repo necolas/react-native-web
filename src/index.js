@@ -31,6 +31,7 @@ import Button from './components/Button';
 import Image from './components/Image';
 import ListView from './components/ListView';
 import ProgressBar from './components/ProgressBar';
+import Picker from './components/Picker';
 import ScrollView from './components/ScrollView';
 import Switch from './components/Switch';
 import Text from './components/Text';
@@ -39,6 +40,7 @@ import Touchable from './components/Touchable/Touchable';
 import TouchableHighlight from './components/Touchable/TouchableHighlight';
 import TouchableOpacity from './components/Touchable/TouchableOpacity';
 import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
+import TouchableNativeFeedback from './components/Touchable/TouchableNativeFeedback';
 import View from './components/View';
 
 // propTypes
@@ -86,6 +88,7 @@ const ReactNative = {
   Image,
   ListView,
   ProgressBar,
+  Picker,
   ScrollView,
   Switch,
   Text,
@@ -94,6 +97,7 @@ const ReactNative = {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  TouchableNativeFeedback,
   View,
 
   // propTypes
