@@ -190,7 +190,7 @@ const TouchableWithoutFeedback = createReactClass({
       onResponderTerminate: this.touchableHandleResponderTerminate,
       style,
       children,
-      tabIndex: this.props.disabled ? null : '0'
+      tabIndex: this.props.disabled ? null : (this.props.tabIndex || '0')
     });
   }
 });
