@@ -4,6 +4,24 @@ import StyleRegistry from '../../apis/StyleSheet/registry';
 
 const emptyObject = {};
 
+const styles = StyleSheet.create({
+  buttonReset: {
+    appearance: 'none',
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    font: 'inherit',
+    textAlign: 'inherit'
+  },
+  linkReset: {
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    textDecorationLine: 'none'
+  },
+  listReset: {
+    listStyle: 'none'
+  }
+});
+
 const pointerEventStyles = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
@@ -40,9 +58,17 @@ const createDOMProps = (rnProps, resolveStyle = resolver) => {
     ...domProps
   } = props;
 
-  const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
-  const { className, style } = resolveStyle([rnStyle, pointerEventStyle]) || emptyObject;
+  // MOVE TEXT / VIEW BUTTON RESET HERE
   const role = AccessibilityUtil.propsToAriaRole(props);
+  const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
+  const reactNativeStyle = [
+    (role === 'button' && styles.buttonReset) ||
+      (role === 'link' && styles.linkReset) ||
+      (role === 'list' && styles.listReset),
+    rnStyle,
+    pointerEventStyle
+  ];
+  const { className, style } = resolveStyle(reactNativeStyle) || emptyObject;
 
   if (accessible === true) {
     domProps.tabIndex = AccessibilityUtil.propsToTabIndex(props);

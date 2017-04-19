@@ -54,9 +54,8 @@ class View extends Component {
     } = this.props;
 
     const { isInAButtonView } = this.context;
-    const isButton = AccessibilityUtil.propsToAriaRole(this.props) === 'button';
 
-    otherProps.style = [styles.initial, isButton && styles.buttonOnly, style];
+    otherProps.style = [styles.initial, style];
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
@@ -84,20 +83,9 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
-    // button and anchor resets
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    font: 'inherit',
-    textAlign: 'inherit',
-    textDecorationLine: 'none',
-    // list reset
-    listStyle: 'none',
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
-  },
-  buttonOnly: {
-    appearance: 'none'
   },
   // this zIndex ordering positions the hitSlop above the View but behind
   // its children

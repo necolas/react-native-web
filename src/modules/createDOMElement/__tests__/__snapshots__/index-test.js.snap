@@ -14,6 +14,7 @@ exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
 
 exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
 <button
+  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
   role="button"
   type="button"
 />
@@ -21,6 +22,7 @@ exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 1`] = `
 <button
+  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
   role="button"
   type="button"
 />
@@ -28,12 +30,14 @@ exports[`modules/createDOMElement prop "accessibilityRole" compatibility with ac
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 2`] = `
 <a
+  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
   role="link"
 />
 `;
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 1`] = `
 <button
+  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
   role="button"
   type="button"
 />
@@ -41,6 +45,7 @@ exports[`modules/createDOMElement prop "accessibilityRole" compatibility with ac
 
 exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 2`] = `
 <a
+  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
   role="link"
 />
 `;
@@ -60,6 +65,7 @@ exports[`modules/createDOMElement prop "accessibilityRole" headings 2`] = `
 
 exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
 <a
+  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
   rel=" noopener noreferrer"
   role="link"
   target="_blank"

@@ -1,4 +1,3 @@
-import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
@@ -64,7 +63,6 @@ class Text extends Component {
     otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
       styles.initial,
-      AccessibilityUtil.propsToAriaRole(this.props) === 'button' && styles.buttonReset,
       this.context.isInAParentText !== true && styles.preserveWhitespace,
       style,
       selectable === false && styles.notSelectable,
@@ -97,11 +95,6 @@ const styles = StyleSheet.create({
   },
   preserveWhitespace: {
     whiteSpace: 'pre-wrap'
-  },
-  // reset browser default button styles
-  buttonReset: {
-    backgroundColor: 'transparent',
-    textAlign: 'inherit'
   },
   notSelectable: {
     userSelect: 'none'
