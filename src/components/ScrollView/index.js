@@ -144,7 +144,6 @@ const ScrollView = createReactClass({
         collapsable={false}
         ref={this._setInnerViewRef}
         style={[
-          styles.contentContainer,
           horizontal && styles.contentContainerHorizontal,
           contentContainerStyle
         ]}
@@ -232,15 +231,16 @@ const styles = StyleSheet.create({
     flex: 1,
     overflowX: 'hidden',
     overflowY: 'auto',
-    WebkitOverflowScrolling: 'touch'
+    WebkitOverflowScrolling: 'touch',
+    // Enable hardware compositing in modern browsers.
+    // Creates a new layer with its own backing surface that can significantly
+    // improve scroll performance.
+    transform: [{ translateZ: 0 }]
   },
   baseHorizontal: {
     flexDirection: 'row',
     overflowX: 'auto',
     overflowY: 'hidden'
-  },
-  contentContainer: {
-    transform: [{ translateZ: 0 }]
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
