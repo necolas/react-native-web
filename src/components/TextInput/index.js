@@ -147,6 +147,7 @@ class TextInput extends Component {
       style,
       /* eslint-disable */
       blurOnSubmit,
+      caretHidden,
       clearButtonMode,
       clearTextOnFocus,
       dataDetectorTypes,
@@ -163,6 +164,8 @@ class TextInput extends Component {
       selection,
       selectionColor,
       selectTextOnFocus,
+      textBreakStrategy,
+      underlineColorAndroid,
       /* eslint-enable */
       ...otherProps
     } = this.props;
