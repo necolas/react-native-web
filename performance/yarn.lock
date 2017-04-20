@@ -408,7 +408,7 @@ inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-inline-style-prefixer@^2.0.5:
+inline-style-prefixer@^2.0.1, inline-style-prefixer@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-2.0.5.tgz#c153c7e88fd84fef5c602e95a8168b2770671fe7"
   dependencies:
@@ -1027,6 +1027,22 @@ styled-components@2.0.0-15:
     prop-types "^15.5.4"
     stylis "^2.0.0"
     supports-color "^3.2.3"
+
+styletron-client@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-2.5.1.tgz#df0b6fd65965b035d2ff58df61b422aa80e23577"
+  dependencies:
+    styletron-core "^2.5.1"
+
+styletron-core@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-2.5.1.tgz#bf9e8aebc41461b81fdd22b1062f6e25862286fd"
+
+styletron-utils@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-2.5.4.tgz#f08cca7d58ee0338ce85e408cb32900e65620240"
+  dependencies:
+    inline-style-prefixer "^2.0.1"
 
 stylis@^2.0.0:
   version "2.0.3"

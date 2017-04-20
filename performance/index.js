@@ -5,6 +5,7 @@ import jss from './src/jss';
 import reactNative from './src/react-native';
 import reactNativeStyleSheet from './src/react-native-stylesheet';
 import styledComponents from './src/styled-components';
+import styletron from './src/styletron';
 import xp from './src/reactxp';
 
 import renderDeepTree from './tests/renderDeepTree';
@@ -28,12 +29,14 @@ const coreTests = [
  * Optionally run tests using other libraries
  */
 const extraTests = [
+  () => renderDeepTree('styletron', styletron),
+  () => renderWideTree('styletron', styletron),
   () => renderDeepTree('aphrodite', aphrodite),
   () => renderWideTree('aphrodite', aphrodite),
   () => renderDeepTree('glamor', glamor),
   () => renderWideTree('glamor', glamor),
-  () => renderDeepTree('jss', jss),
-  () => renderWideTree('jss', jss),
+  () => renderDeepTree('react-jss', jss),
+  () => renderWideTree('react-jss', jss),
   () => renderDeepTree('reactxp', xp),
   () => renderWideTree('reactxp', xp),
   () => renderDeepTree('styled-components', styledComponents),

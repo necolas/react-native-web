@@ -8,7 +8,9 @@
     "marky": "^1.2.0",
     "react-jss": "^6.1.1",
     "reactxp": "^0.34.3",
-    "styled-components": "2.0.0-15"
+    "styled-components": "2.0.0-15",
+    "styletron-client": "^2.5.1",
+    "styletron-utils": "^2.5.4"
   },
   "devDependencies": {
     "css-loader": "^0.28.0",
