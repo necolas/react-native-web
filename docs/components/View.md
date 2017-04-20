@@ -213,6 +213,7 @@ Controls whether the View can be the target of touch events. The enhanced
 + `opacity`
 + `order`
 + `outline` ‡
++ `outlineColor` ‡
 + `overflow`
 + `overflowX` ‡
 + `overflowY` ‡

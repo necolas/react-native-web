@@ -31,6 +31,7 @@ module.exports = {
   boxShadow: string,
   cursor: string,
   outline: string,
+  outlineColor: ColorPropType,
   perspective: oneOfType([number, string]),
   perspectiveOrigin: string,
   transitionDelay: string,
