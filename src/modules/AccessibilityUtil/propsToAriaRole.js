@@ -6,6 +6,7 @@ const accessibilityComponentTypeToRole = {
 const accessibilityTraitsToRole = {
   adjustable: 'slider',
   button: 'button',
+  header: 'heading',
   image: 'img',
   link: 'link',
   none: 'presentation',
