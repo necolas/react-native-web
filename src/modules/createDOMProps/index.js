@@ -58,7 +58,6 @@ const createDOMProps = (rnProps, resolveStyle = resolver) => {
     ...domProps
   } = props;
 
-  // MOVE TEXT / VIEW BUTTON RESET HERE
   const role = AccessibilityUtil.propsToAriaRole(props);
   const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
   const reactNativeStyle = [

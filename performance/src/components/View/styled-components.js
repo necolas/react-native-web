@@ -12,12 +12,6 @@ const View = styled.div`
   margin: 0;
   padding: 0;
   position: relative;
-  background-color: transparent;
-  color: inherit;
-  font: inherit;
-  text-align: inherit;
-  text-decoration: none;
-  list-style: none;
   min-height: 0;
   min-width: 0;
 `;

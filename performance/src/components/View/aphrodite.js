@@ -17,14 +17,6 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
-    // button and anchor reset
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    font: 'inherit',
-    textAlign: 'inherit',
-    textDecoration: 'none',
-    // list reset
-    listStyle: 'none',
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
