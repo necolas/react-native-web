@@ -17,7 +17,7 @@
     "examples": "start-storybook -p 9001 -c ./examples/.storybook --dont-track",
     "fmt": "find performance src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs prettier --print-width=100 --single-quote --write",
     "lint": "eslint performance src --ignore-path .gitignore",
-    "prepare": "npm run build && npm run build:umd",
+    "release": "npm run build && npm run build:umd && npm publish",
     "test": "npm run lint && npm run test:jest",
     "test:jest": "jest",
     "test:watch": "npm run test:jest -- --watch"
