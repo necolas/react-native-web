@@ -40,5 +40,6 @@ module.exports = {
   transitionTimingFunction: string,
   userSelect: string,
   willChange: string,
+  WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };
