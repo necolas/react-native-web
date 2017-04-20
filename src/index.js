@@ -30,6 +30,7 @@ import ActivityIndicator from './components/ActivityIndicator';
 import Button from './components/Button';
 import Image from './components/Image';
 import ListView from './components/ListView';
+import Modal from './components/Modal';
 import ProgressBar from './components/ProgressBar';
 import ScrollView from './components/ScrollView';
 import StatusBar from './components/StatusBar';
@@ -86,6 +87,7 @@ const ReactNative = {
   Button,
   Image,
   ListView,
+  Modal,
   ProgressBar,
   ScrollView,
   StatusBar,
