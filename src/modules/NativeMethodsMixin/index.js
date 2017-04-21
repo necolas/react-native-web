@@ -69,7 +69,7 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     // DOM state
     const node = findNodeHandle(this);
-    const classList = [...node.classList];
+    const classList = Array.prototype.slice.call(node.classList);
 
     const domProps = createDOMProps(nativeProps, style =>
       StyleRegistry.resolveStateful(style, classList)

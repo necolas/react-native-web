@@ -1,5 +1,8 @@
 # Getting started
 
+It is recommended that your application provide a `Promise` and `Array.from`
+polyfill.
+
 ## Webpack and Babel
 
 [Webpack](webpack.js.org) is a popular build tool for web apps. Below is an
