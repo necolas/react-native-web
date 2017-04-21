@@ -31,7 +31,7 @@ class AsyncStorage {
   /**
    * Gets *all* keys known to the app, for all callers, libraries, etc.
    */
-  static getAllKeys() {
+  static getAllKeys(cb) {
     return new Promise((resolve, reject) => {
       try {
         const numberOfKeys = window.localStorage.length;
@@ -40,8 +40,17 @@ class AsyncStorage {
           const key = window.localStorage.key(i);
           keys.push(key);
         }
+
+        if (cb) {
+          cb(null, keys);
+        }
+
         resolve(keys);
       } catch (err) {
+        if (cb) {
+          cb(err, null);
+        }
+
         reject(err);
       }
     });
@@ -50,12 +59,21 @@ class AsyncStorage {
   /**
    * Fetches `key` value.
    */
-  static getItem(key: string) {
+  static getItem(key: string, cb) {
     return new Promise((resolve, reject) => {
       try {
         const value = window.localStorage.getItem(key);
+
+        if (cb) {
+          cb(null, value);
+        }
+
         resolve(value);
       } catch (err) {
+        if (cb) {
+          cb(err, null);
+        }
+
         reject(err);
       }
     });

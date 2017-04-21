@@ -21,25 +21,92 @@ const waterfall = (fns, cb) => {
 
 const obj = {};
 const mockLocalStorage = {
+  length: 0,
   getItem(key) {
     return obj[key];
   },
   setItem(key, value) {
     obj[key] = value;
+    mockLocalStorage.length = Object.keys(obj).length;
+  },
+  key(index) {
+    return Object.keys(obj)[index];
   }
 };
 const originalLocalStorage = window.localStorage;
 
 describe('apis/AsyncStorage', () => {
+  const UID123_object = {
+    name: 'Chris',
+    age: 30,
+    traits: { hair: 'brown', eyes: 'brown' }
+  };
+
+  describe('getAllKeys', () => {
+    beforeEach(async () => {
+      window.localStorage = mockLocalStorage;
+      await AsyncStorage.setItem('UID123', JSON.stringify(UID123_object));
+    });
+
+    afterEach(() => {
+      window.localStorage = originalLocalStorage;
+    });
+
+    test('should return the keys in a Promise', async () => {
+      const keys = await AsyncStorage.getAllKeys();
+
+      expect(keys).toEqual(['UID123']);
+    });
+
+    test('should return the keys in a callback', async () => {
+      let keys = null;
+      let err  = true;
+
+      await AsyncStorage.getAllKeys((e, result) => {
+        err = e;
+        keys = result;
+      });
+
+      expect(err).toEqual(null);
+      expect(keys).toEqual(['UID123']);
+    });
+  });
+
+  describe('getItem', () => {
+    beforeEach(async () => {
+      window.localStorage = mockLocalStorage;
+      await AsyncStorage.setItem('UID123', JSON.stringify(UID123_object));
+    });
+
+    afterEach(() => {
+      window.localStorage = originalLocalStorage;
+    });
+
+    test('should return the item as a Promise', async () => {
+      const result = await AsyncStorage.getItem('UID123');
+
+      expect(JSON.parse(result)).toMatchSnapshot();
+    });
+
+    test('should return the item in a callback', async () => {
+      let item = null;
+      let err  = true;
+
+      await AsyncStorage.getItem('UID123', (e, result) => {
+        err = e;
+        item = result;
+      });
+
+      expect(err).toEqual(null);
+      expect(JSON.parse(item)).toMatchSnapshot();
+    });
+
+  });
+
   describe('mergeLocalStorageItem', () => {
     test('should have same behavior as react-native', done => {
       window.localStorage = mockLocalStorage;
       // https://facebook.github.io/react-native/docs/asyncstorage.html
-      const UID123_object = {
-        name: 'Chris',
-        age: 30,
-        traits: { hair: 'brown', eyes: 'brown' }
-      };
       const UID123_delta = {
         age: 31,
         traits: { eyes: 'blue', shoe_size: 10 }

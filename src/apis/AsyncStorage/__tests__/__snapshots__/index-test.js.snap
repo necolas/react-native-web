@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`apis/AsyncStorage getItem should return the item as a Promise 1`] = `
+Object {
+  "age": 30,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "brown",
+    "hair": "brown",
+  },
+}
+`;
+
+exports[`apis/AsyncStorage getItem should return the item in a callback 1`] = `
+Object {
+  "age": 30,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "brown",
+    "hair": "brown",
+  },
+}
+`;
+
 exports[`apis/AsyncStorage mergeLocalStorageItem should have same behavior as react-native 1`] = `
 Object {
   "age": 31,
