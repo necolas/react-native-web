@@ -2,8 +2,11 @@ import '../injectResponderEventPlugin';
 
 import AccessibilityUtil from '../AccessibilityUtil';
 import createDOMProps from '../createDOMProps';
+import modality from '../modality';
 import normalizeNativeEvent from '../normalizeNativeEvent';
 import React from 'react';
+
+modality();
 
 const eventHandlerNames = {
   onClick: true,
