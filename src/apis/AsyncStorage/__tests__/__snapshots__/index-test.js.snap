@@ -1,12 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/AsyncStorage mergeLocalStorageItem should have same behavior as react-native 1`] = `
+exports[`apis/AsyncStorage mergeItem calls callback after setting item 1`] = `
 Object {
   "age": 31,
   "name": "Chris",
   "traits": Object {
     "eyes": "blue",
     "hair": "brown",
+    "shoe_size": 10,
+  },
+}
+`;
+
+exports[`apis/AsyncStorage mergeItem promise after setting item 1`] = `
+Object {
+  "age": 31,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "brown",
+    "shoe_size": 10,
+  },
+}
+`;
+
+exports[`apis/AsyncStorage multiMerge calls callback after setting items 1`] = `
+Object {
+  "age": 31,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "brown",
+    "shoe_size": 10,
+  },
+}
+`;
+
+exports[`apis/AsyncStorage multiMerge calls callback after setting items 2`] = `
+Object {
+  "age": 31,
+  "name": "Amy",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "black",
+    "shoe_size": 10,
+  },
+}
+`;
+
+exports[`apis/AsyncStorage multiMerge promise after setting items 1`] = `
+Object {
+  "age": 31,
+  "name": "Chris",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "brown",
+    "shoe_size": 10,
+  },
+}
+`;
+
+exports[`apis/AsyncStorage multiMerge promise after setting items 2`] = `
+Object {
+  "age": 31,
+  "name": "Amy",
+  "traits": Object {
+    "eyes": "blue",
+    "hair": "black",
     "shoe_size": 10,
   },
 }

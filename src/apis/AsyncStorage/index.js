@@ -13,66 +13,69 @@ const mergeLocalStorageItem = (key, value) => {
   window.localStorage.setItem(key, nextValue);
 };
 
+const createPromise = (getValue, callback) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const value = getValue();
+      if (callback) {
+        callback(null, value);
+      }
+      resolve(value);
+    } catch (err) {
+      if (callback) {
+        callback(err);
+      }
+      reject(err);
+    }
+  });
+};
+
+const createPromiseAll = (promises, callback, processResult) => {
+  return Promise.all(promises).then(
+    result => {
+      const value = processResult ? processResult(result) : null;
+      callback && callback(null, value);
+      return Promise.resolve(value);
+    },
+    errors => {
+      callback && callback(errors);
+      return Promise.reject(errors);
+    }
+  );
+};
+
 class AsyncStorage {
   /**
    * Erases *all* AsyncStorage for the domain.
    */
-  static clear() {
-    return new Promise((resolve, reject) => {
-      try {
-        window.localStorage.clear();
-        resolve(null);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  static clear(callback) {
+    return createPromise(() => {
+      window.localStorage.clear();
+    }, callback);
   }
 
   /**
    * Gets *all* keys known to the app, for all callers, libraries, etc.
    */
-  static getAllKeys() {
-    return new Promise((resolve, reject) => {
-      try {
-        const numberOfKeys = window.localStorage.length;
-        const keys = [];
-        for (let i = 0; i < numberOfKeys; i += 1) {
-          const key = window.localStorage.key(i);
-          keys.push(key);
-        }
-        resolve(keys);
-      } catch (err) {
-        reject(err);
+  static getAllKeys(callback) {
+    return createPromise(() => {
+      const numberOfKeys = window.localStorage.length;
+      const keys = [];
+      for (let i = 0; i < numberOfKeys; i += 1) {
+        const key = window.localStorage.key(i);
+        keys.push(key);
       }
-    });
+      return keys;
+    }, callback);
   }
 
   /**
    * Fetches `key` value.
    */
-  static getItem(key: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        const value = window.localStorage.getItem(key);
-        resolve(value);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  /**
-   * Merges existing value with input value, assuming they are stringified JSON.
-   */
-  static mergeItem(key: string, value: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        mergeLocalStorageItem(key, value);
-        resolve(null);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  static getItem(key: string, callback) {
+    return createPromise(() => {
+      return window.localStorage.getItem(key);
+    }, callback);
   }
 
   /**
@@ -81,13 +84,37 @@ class AsyncStorage {
    *
    *   multiGet(['k1', 'k2']) -> [['k1', 'val1'], ['k2', 'val2']]
    */
-  static multiGet(keys: Array<string>) {
+  static multiGet(keys: Array<string>, callback) {
     const promises = keys.map(key => AsyncStorage.getItem(key));
+    const processResult = result => result.map((value, i) => [keys[i], value]);
+    return createPromiseAll(promises, callback, processResult);
+  }
 
-    return Promise.all(promises).then(
-      result => Promise.resolve(result.map((value, i) => [keys[i], value])),
-      error => Promise.reject(error)
-    );
+  /**
+   * Sets `value` for `key`.
+   */
+  static setItem(key: string, value: string, callback) {
+    return createPromise(() => {
+      window.localStorage.setItem(key, value);
+    }, callback);
+  }
+
+  /**
+   * Takes an array of key-value array pairs.
+   *   multiSet([['k1', 'val1'], ['k2', 'val2']])
+   */
+  static multiSet(keyValuePairs: Array<Array<string>>, callback) {
+    const promises = keyValuePairs.map(item => AsyncStorage.setItem(item[0], item[1]));
+    return createPromiseAll(promises, callback);
+  }
+
+  /**
+   * Merges existing value with input value, assuming they are stringified JSON.
+   */
+  static mergeItem(key: string, value: string, callback) {
+    return createPromise(() => {
+      mergeLocalStorageItem(key, value);
+    }, callback);
   }
 
   /**
@@ -96,57 +123,26 @@ class AsyncStorage {
    *
    *   multiMerge([['k1', 'val1'], ['k2', 'val2']])
    */
-  static multiMerge(keyValuePairs: Array<Array<string>>) {
+  static multiMerge(keyValuePairs: Array<Array<string>>, callback) {
     const promises = keyValuePairs.map(item => AsyncStorage.mergeItem(item[0], item[1]));
-
-    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
-  }
-
-  /**
-   * Delete all the keys in the `keys` array.
-   */
-  static multiRemove(keys: Array<string>) {
-    const promises = keys.map(key => AsyncStorage.removeItem(key));
-
-    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
-  }
-
-  /**
-   * Takes an array of key-value array pairs.
-   *   multiSet([['k1', 'val1'], ['k2', 'val2']])
-   */
-  static multiSet(keyValuePairs: Array<Array<string>>) {
-    const promises = keyValuePairs.map(item => AsyncStorage.setItem(item[0], item[1]));
-
-    return Promise.all(promises).then(() => Promise.resolve(null), error => Promise.reject(error));
+    return createPromiseAll(promises, callback);
   }
 
   /**
    * Removes a `key`
    */
-  static removeItem(key: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        window.localStorage.removeItem(key);
-        resolve(null);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  static removeItem(key: string, callback) {
+    return createPromise(() => {
+      return window.localStorage.removeItem(key);
+    }, callback);
   }
 
   /**
-   * Sets `value` for `key`.
+   * Delete all the keys in the `keys` array.
    */
-  static setItem(key: string, value: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        window.localStorage.setItem(key, value);
-        resolve(null);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  static multiRemove(keys: Array<string>, callback) {
+    const promises = keys.map(key => AsyncStorage.removeItem(key));
+    return createPromiseAll(promises, callback);
   }
 }
 
