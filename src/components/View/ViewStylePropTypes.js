@@ -30,6 +30,7 @@ module.exports = {
   backgroundSize: string,
   boxShadow: string,
   cursor: string,
+  filter: string,
   outline: string,
   outlineColor: ColorPropType,
   perspective: oneOfType([number, string]),

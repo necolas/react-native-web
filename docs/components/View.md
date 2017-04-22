@@ -190,6 +190,7 @@ Controls whether the View can be the target of touch events. The enhanced
 + `boxSizing`
 + `cursor` ‡
 + `display`
++ `filter` ‡
 + `flex` (number)
 + `flexBasis`
 + `flexDirection`
