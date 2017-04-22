@@ -6,6 +6,8 @@
     "classnames": "^2.2.5",
     "glamor": "3.0.0-1",
     "marky": "^1.2.0",
+    "preact": "^8.1.0",
+    "preact-compat": "^3.15.0",
     "react-jss": "^6.1.1",
     "reactxp": "^0.34.3",
     "styled-components": "2.0.0-15",

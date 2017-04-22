@@ -1,4 +1,4 @@
-import '../injectResponderEventPlugin';
+// import '../injectResponderEventPlugin';
 
 import AccessibilityUtil from '../AccessibilityUtil';
 import createDOMProps from '../createDOMProps';

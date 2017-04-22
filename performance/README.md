@@ -20,15 +20,21 @@ simple `View` without much of React Native's functionality.
 
 Typical render timings*: mean ± two standard deviations
 
-| Implementation                       | Deep tree (ms)    | Wide tree (ms)    | Tweets (ms)       |
+| React Implementation                 | Deep tree (ms)    | Wide tree (ms)    | Tweets (ms)       |
 | :--- | ---: | ---: | ---: |
 | `css-modules`                        |  `87.67` `±15.22` | `170.85` `±16.87` | |
 | `react-native-web/stylesheet@0.0.84` |  `90.02` `±13.16` | `186.66` `±19.23` | |
 | `react-native-web@0.0.84`            | `102.72` `±19.26` | `222.35` `±18.95` | `12.81` `±5.45ms` |
 
+| Preact Implementation                | Deep tree (ms)      | Wide tree (ms)      | Tweets (ms)       |
+| :--- | ---: | ---: | ---: |
+| `css-modules`                        |  `744.47` `±284.78` | `2006.23` `±214.00` | |
+| `react-native-web/stylesheet@0.0.86` | `1109.43` `±126.15` | `2677.19` `±301.84` | |
+| `react-native-web@0.0.86`            | `1601.87` `±207.56` | `3963.18` `±396.18` | `17.11` `±7.90ms` |
+
 Other libraries
 
-| Implementation                       | Deep tree (ms)    | Wide tree (ms)    |
+| React Implementation                       | Deep tree (ms)    | Wide tree (ms)    |
 | :--- | ---: | ---: |
 | `styletron@2.5.1`                    |  `88.48` `±12.00` | `171.89` `±13.28` |
 | `aphrodite@1.2.0`                    | `101.32` `±20.33` | `220.33` `±31.41` |

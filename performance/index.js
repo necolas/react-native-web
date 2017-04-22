@@ -6,7 +6,7 @@ import reactNative from './src/react-native';
 import reactNativeStyleSheet from './src/react-native-stylesheet';
 import styledComponents from './src/styled-components';
 import styletron from './src/styletron';
-import xp from './src/reactxp';
+// import xp from './src/reactxp';
 
 import renderDeepTree from './tests/renderDeepTree';
 import renderTweet from './tests/renderTweet';
@@ -37,8 +37,8 @@ const extraTests = [
   () => renderWideTree('glamor', glamor),
   () => renderDeepTree('react-jss', jss),
   () => renderWideTree('react-jss', jss),
-  () => renderDeepTree('reactxp', xp),
-  () => renderWideTree('reactxp', xp),
+  // () => renderDeepTree('reactxp', xp),
+  // () => renderWideTree('reactxp', xp),
   () => renderDeepTree('styled-components', styledComponents),
   () => renderWideTree('styled-components', styledComponents)
 ];

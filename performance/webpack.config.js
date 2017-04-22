@@ -49,7 +49,9 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'react-native': path.join(__dirname, '../src/module')
+      react: path.join(__dirname, 'node_modules/preact-compat/dist/preact-compat.js'),
+      'react-dom': path.join(__dirname, 'node_modules/preact-compat/dist/preact-compat.js'),
+      'react-native': path.join(__dirname, '../src')
     }
   }
 };
