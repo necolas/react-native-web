@@ -186,7 +186,7 @@ Controls whether the View can be the target of touch events. The enhanced
 + `borderRightWidth`
 + `borderTopWidth`
 + `bottom`
-+ `boxShadow`
++ `boxShadow` ‡
 + `boxSizing`
 + `clip` ‡
 + `cursor` ‡
@@ -198,6 +198,18 @@ Controls whether the View can be the target of touch events. The enhanced
 + `flexGrow`
 + `flexShrink`
 + `flexWrap`
++ `gridAutoColumns` ‡
++ `gridAutoFlow` ‡
++ `gridAutoRows` ‡
++ `gridColumnEnd` ‡
++ `gridColumnGap` ‡
++ `gridColumnStart` ‡
++ `gridRowEnd` ‡
++ `gridRowGap` ‡
++ `gridRowStart` ‡
++ `gridTemplateColumns` ‡
++ `gridTemplateRows` ‡
++ `gridTemplateAreas` ‡
 + `height`
 + `justifyContent`
 + `left`
@@ -230,6 +242,10 @@ Controls whether the View can be the target of touch events. The enhanced
 + `perspectiveOrigin` ‡
 + `position`
 + `right`
++ `shadowColor`
++ `shadowOffset`
++ `shadowOpacity`
++ `shadowRadius`
 + `top`
 + `transform`
 + `transformOrigin` ‡

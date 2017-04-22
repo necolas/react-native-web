@@ -18,7 +18,7 @@ module.exports = {
    * @platform unsupported
    */
   elevation: number,
-  /*
+  /**
    * @platform web
    */
   backgroundAttachment: string,

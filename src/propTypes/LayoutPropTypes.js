@@ -14,7 +14,6 @@ const LayoutPropTypes = {
   ]),
   alignItems: oneOf(['baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
   alignSelf: oneOf(['auto', 'baseline', 'center', 'flex-end', 'flex-start', 'stretch']),
-  aspectRatio: number,
   backfaceVisibility: hiddenOrVisible,
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
@@ -61,7 +60,26 @@ const LayoutPropTypes = {
   top: numberOrString,
   visibility: hiddenOrVisible,
   width: numberOrString,
-  zIndex: number
+  zIndex: number,
+  /**
+   * @platform unsupported
+   */
+  aspectRatio: number,
+  /**
+   * @platform web
+   */
+  gridAutoColumns: string,
+  gridAutoFlow: string,
+  gridAutoRows: string,
+  gridColumnEnd: string,
+  gridColumnGap: string,
+  gridColumnStart: string,
+  gridRowEnd: string,
+  gridRowGap: string,
+  gridRowStart: string,
+  gridTemplateColumns: string,
+  gridTemplateRows: string,
+  gridTemplateAreas: string
 };
 
 module.exports = LayoutPropTypes;
