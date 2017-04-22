@@ -28,6 +28,7 @@ const Linking = {
  * https://mathiasbynens.github.io/rel-noopener/
  */
 const iframeOpen = url => {
+  const noOpener = url.indexOf('mailto:') !== 0;
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
@@ -36,7 +37,7 @@ const iframeOpen = url => {
   const script = iframeDoc.createElement('script');
   script.text = `
     window.parent = null; window.top = null; window.frameElement = null;
-    var child = window.open("${url}"); child.opener = null;
+    var child = window.open("${url}"); ${noOpener && 'child.opener = null'};
   `;
   iframeDoc.body.appendChild(script);
   document.body.removeChild(iframe);
