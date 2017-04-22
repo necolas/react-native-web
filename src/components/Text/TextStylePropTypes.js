@@ -25,6 +25,7 @@ const TextOnlyStylePropTypes = {
   textShadowRadius: number,
   writingDirection: WritingDirectionPropType,
   /* @platform web */
+  textIndent: numberOrString,
   textOverflow: string,
   textRendering: oneOf(['auto', 'geometricPrecision', 'optimizeLegibility', 'optimizeSpeed']),
   textTransform: oneOf(['capitalize', 'lowercase', 'none', 'uppercase']),

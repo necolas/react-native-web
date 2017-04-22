@@ -85,6 +85,7 @@ When `false`, the text is not selectable.
 + `textAlign`
 + `textAlignVertical`
 + `textDecorationLine`
++ `textIndent` ‡
 + `textOverflow` ‡
 + `textRendering` ‡
 + `textShadowColor`

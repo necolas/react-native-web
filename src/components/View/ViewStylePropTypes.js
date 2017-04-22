@@ -29,6 +29,7 @@ module.exports = {
   backgroundRepeat: string,
   backgroundSize: string,
   boxShadow: string,
+  clip: string,
   cursor: string,
   filter: string,
   outline: string,

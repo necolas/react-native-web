@@ -188,6 +188,7 @@ Controls whether the View can be the target of touch events. The enhanced
 + `bottom`
 + `boxShadow`
 + `boxSizing`
++ `clip` ‡
 + `cursor` ‡
 + `display`
 + `filter` ‡
