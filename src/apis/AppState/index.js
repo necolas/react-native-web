@@ -13,10 +13,10 @@ const AppStates = {
 const listeners = [];
 
 class AppState {
-  static isSupported = ExecutionEnvironment.canUseDOM && document.visibilityState;
+  static isAvailable = ExecutionEnvironment.canUseDOM && document.visibilityState;
 
   static get currentState() {
-    if (!AppState.isSupported) {
+    if (!AppState.isAvailable) {
       return AppState.ACTIVE;
     }
 
@@ -31,7 +31,7 @@ class AppState {
   }
 
   static addEventListener(type: string, handler: Function) {
-    if (AppState.isSupported) {
+    if (AppState.isAvailable) {
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
         'Trying to subscribe to unknown event: "%s"',
@@ -44,7 +44,7 @@ class AppState {
   }
 
   static removeEventListener(type: string, handler: Function) {
-    if (AppState.isSupported) {
+    if (AppState.isAvailable) {
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
         'Trying to remove listener for unknown event: "%s"',
