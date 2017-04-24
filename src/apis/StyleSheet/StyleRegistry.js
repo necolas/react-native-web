@@ -88,10 +88,10 @@ class StyleRegistry {
    * To determine the next style, some of the existing DOM state must be
    * converted back into React Native styles.
    */
-  resolveStateful(rnStyleNext, domStyleProps) {
+  resolveStateful(rnStyleNext, { classList: domClassList, style: domStyle }) {
     // Convert the DOM classList back into a React Native form
     // Preserves unrecognized class names.
-    const rnStyleProps = domStyleProps.classList.reduce(
+    const { classList: rnClassList, style: rnStyle } = domClassList.reduce(
       (styleProps, className) => {
         const { prop, value } = this.styleManager.getDeclaration(className);
         if (prop) {
@@ -106,8 +106,8 @@ class StyleRegistry {
 
     // DOM style may include vendor prefixes and properties set by other libraries.
     // Preserve it but transform back into React DOM style.
-    const rdomStyle = Object.keys(domStyleProps.style).reduce((acc, styleName) => {
-      const value = domStyleProps.style[styleName];
+    const rdomStyle = Object.keys(domStyle).reduce((acc, styleName) => {
+      const value = domStyle[styleName];
       if (value !== '') {
         const reactStyleName = vendorPrefixPattern.test(styleName)
           ? styleName.charAt(0).toUpperCase() + styleName.slice(1)
@@ -119,11 +119,9 @@ class StyleRegistry {
 
     // Create next DOM style props from current and next RN styles
     const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
-      rnStyleProps.style,
+      rnStyle,
       rnStyleNext
     ]);
-    // Add the current class names not managed by React Native
-    rdomClassListNext.push(...rnStyleProps.classList);
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
     rdomClassListNext.forEach(className => {
@@ -134,7 +132,8 @@ class StyleRegistry {
     });
     // Next inline styles take priority over current inline styles
     Object.assign(style, rdomStyleNext);
-    const className = classListToString(rdomClassListNext);
+    // Add the current class names not managed by React Native
+    const className = classListToString(rdomClassListNext.concat(rnClassList));
 
     return { className, style };
   }
