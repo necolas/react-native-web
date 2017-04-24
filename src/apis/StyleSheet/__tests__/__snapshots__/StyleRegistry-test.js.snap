@@ -192,35 +192,39 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful 1`] = `
-Array [
-  "external-className",
-  "rn-borderTopColor-1gxhl28",
-  "rn-borderRightColor-knoah9",
-  "rn-borderBottomColor-1ani3fp",
-  "rn-borderLeftColor-ribj9x",
-  "rn-borderTopWidth-13yce4e",
-  "rn-borderRightWidth-fnigne",
-  "rn-borderBottomWidth-ndvcnb",
-  "rn-borderLeftWidth-gxnn5r",
-  "rn-width-b8lwoo",
-]
+exports[`apis/StyleSheet/StyleRegistry resolveStateful next class names have priority over current inline styles 1`] = `
+Object {
+  "className": "rn-opacity-6dt33c",
+  "style": Object {
+    "opacity": "",
+  },
+}
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful 2`] = `
+exports[`apis/StyleSheet/StyleRegistry resolveStateful next inline styles have priority over current inline styles 1`] = `
 Object {
-  "className": "rn-borderBottomColor-1ani3fp rn-borderBottomWidth-ndvcnb rn-borderLeftColor-ribj9x rn-borderLeftWidth-gxnn5r rn-borderRightColor-knoah9 rn-borderRightWidth-fnigne rn-borderTopColor-1gxhl28 rn-borderTopWidth-13yce4e rn-width-b8lwoo external-className",
+  "className": "",
   "style": Object {
-    "borderBottomColor": null,
-    "borderBottomWidth": null,
-    "borderLeftColor": null,
-    "borderLeftWidth": null,
-    "borderRightColor": null,
-    "borderRightWidth": null,
-    "borderTopColor": null,
-    "borderTopWidth": null,
+    "WebkitTransform": "scale(2)",
     "opacity": 1,
-    "width": null,
+    "transform": "scale(2)",
+  },
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolveStateful preserves unrelated class names 1`] = `
+Object {
+  "className": "unknown-class-1 unknown-class-2",
+  "style": Object {},
+}
+`;
+
+exports[`apis/StyleSheet/StyleRegistry resolveStateful preserves unrelated inline styles 1`] = `
+Object {
+  "className": "",
+  "style": Object {
+    "fontSize": "20px",
+    "opacity": 1,
   },
 }
 `;

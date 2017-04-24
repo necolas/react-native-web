@@ -11,6 +11,8 @@ import prefixInlineStyles from './prefixInlineStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
+const vendorPrefixPattern = /^(webkit|moz|ms)/;
+
 const createCacheKey = id => {
   const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
   return `${prefix}-${id}`;
@@ -81,36 +83,59 @@ class StyleRegistry {
 
   /**
    * Resolves a React Native style object to DOM attributes, accounting for
-   * the existing styles applied to the DOM node
+   * the existing styles applied to the DOM node.
+   *
+   * To determine the next style, some of the existing DOM state must be
+   * converted back into React Native styles.
    */
-  resolveStateful(reactNativeStyle, domClassList) {
-    const previousReactNativeStyle = {};
-    const preservedClassNames = [];
+  resolveStateful(rnStyleNext, domStyleProps) {
+    // Convert the DOM classList back into a React Native form
+    // Preserves unrecognized class names.
+    const rnStyleProps = domStyleProps.classList.reduce(
+      (styleProps, className) => {
+        const { prop, value } = this.styleManager.getDeclaration(className);
+        if (prop) {
+          styleProps.style[prop] = value;
+        } else {
+          styleProps.classList.push(className);
+        }
+        return styleProps;
+      },
+      { classList: [], style: {} }
+    );
 
-    // Convert the existing classList to a React Native style and preserve any
-    // unrecognized classNames.
-    domClassList.forEach(className => {
-      const { prop, value } = this.styleManager.getDeclaration(className);
-      if (prop) {
-        previousReactNativeStyle[prop] = value;
-      } else {
-        preservedClassNames.push(className);
+    // DOM style may include vendor prefixes and properties set by other libraries.
+    // Preserve it but transform back into React DOM style.
+    const rdomStyle = Object.keys(domStyleProps.style).reduce((acc, styleName) => {
+      const value = domStyleProps.style[styleName];
+      if (value !== '') {
+        const reactStyleName = vendorPrefixPattern.test(styleName)
+          ? styleName.charAt(0).toUpperCase() + styleName.slice(1)
+          : styleName;
+        acc[reactStyleName] = value;
+      }
+      return acc;
+    }, {});
+
+    // Create next DOM style props from current and next RN styles
+    const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
+      rnStyleProps.style,
+      rnStyleNext
+    ]);
+    // Add the current class names not managed by React Native
+    rdomClassListNext.push(...rnStyleProps.classList);
+    // Next class names take priority over current inline styles
+    const style = { ...rdomStyle };
+    rdomClassListNext.forEach(className => {
+      const { prop } = this.styleManager.getDeclaration(className);
+      if (style[prop]) {
+        style[prop] = '';
       }
     });
+    // Next inline styles take priority over current inline styles
+    Object.assign(style, rdomStyleNext);
+    const className = classListToString(rdomClassListNext);
 
-    // Resolve the two React Native styles.
-    const { classList, style = {} } = this.resolve([previousReactNativeStyle, reactNativeStyle]);
-
-    // Because this is used in stateful operations we need to remove any
-    // existing inline styles that would override the classNames.
-    classList.forEach(className => {
-      const { prop } = this.styleManager.getDeclaration(className);
-      style[prop] = null;
-    });
-
-    classList.push(preservedClassNames);
-
-    const className = classListToString(classList);
     return { className, style };
   }
 
