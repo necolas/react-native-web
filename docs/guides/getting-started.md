@@ -9,6 +9,9 @@ polyfill.
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
 
+See [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack) for
+a production-ready config, including code-splitting and offline support.
+
 ```js
 // webpack.config.js
 
