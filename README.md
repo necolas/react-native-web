@@ -144,6 +144,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
+* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 
 ## License
 
