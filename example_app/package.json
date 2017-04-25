@@ -1,0 +1,46 @@
+{
+	"name": "ExampleApp",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest",
+		"web:build:vendor-dev": "rm -rf web/vendor-dev; NODE_ENV=development webpack --config web/vendor.webpack.config.js || rm -rf web/vendor-dev",
+		"web": "[ -d web/vendor-dev ] || npm run web:build:vendor-dev && NODE_ENV=development webpack-dev-server -d --host 0.0.0.0 --port 3000 --config web/webpack.config.js --inline --hot --colors",
+		"web:clean": "rm -rf web/vendor web/vendor-dev web/build",
+		"web:build:vendor": "rm -rf web/vendor; NODE_ENV=production webpack --config web/vendor.webpack.config.js",
+		"web:build:app": "rm -rf web/build; NODE_ENV=production webpack --config web/webpack.config.js",
+		"web:build": "npm run web:build:vendor && npm run web:build:app",
+		"web:serve": "http-serve -p 3001 --gzip true ./web/build"
+	},
+	"dependencies": {
+		"react": "16.0.0-alpha.6",
+		"react-native": "0.43.4",
+		"react-native-web": "^0.0.88"
+	},
+	"devDependencies": {
+		"add-asset-html-webpack-plugin": "^2.0.1",
+		"babel-jest": "19.0.0",
+		"babel-loader": "^7.0.0",
+		"babel-preset-react-native": "1.9.1",
+		"compression-webpack-plugin": "^0.4.0",
+		"copy-webpack-plugin": "^4.0.1",
+		"html-webpack-plugin": "^2.28.0",
+		"http-serve": "^1.0.1",
+		"jest": "19.0.2",
+		"json-loader": "^0.5.4",
+		"offline-plugin": "^4.7.0",
+		"react-dom": "^15.4.2",
+		"react-hot-loader": "^1.3.1",
+		"react-test-renderer": "16.0.0-alpha.6",
+		"url-loader": "^0.5.8",
+		"webpack": "^2.4.1",
+		"webpack-dev-server": "^2.4.2"
+	},
+	"jest": {
+		"preset": "react-native",
+		"moduleNameMapper": {
+			"react-native": "<rootDir>/../"
+		}
+	}
+}
