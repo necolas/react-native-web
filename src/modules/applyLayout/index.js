@@ -75,7 +75,10 @@ const applyLayout = Component => {
         if (!this._isMounted) return;
 
         if (
-          layout.x !== x || layout.y !== y || layout.width !== width || layout.height !== height
+          layout.x !== x ||
+          layout.y !== y ||
+          layout.width !== width ||
+          layout.height !== height
         ) {
           this._layoutState = { x, y, width, height };
           const nativeEvent = { layout: this._layoutState };
