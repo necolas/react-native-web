@@ -71,6 +71,9 @@ const NativeMethodsMixin = {
     const node = findNodeHandle(this);
     const classList = Array.prototype.slice.call(node.classList);
     const style = { ...node.style };
+    // See #454
+    delete style.length;
+
     const domStyleProps = { classList, style };
 
     // Next DOM state
