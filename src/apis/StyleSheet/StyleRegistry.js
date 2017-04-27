@@ -7,7 +7,7 @@ import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
 import mapKeyValue from '../../modules/mapKeyValue';
-import prefixInlineStyles from './prefixInlineStyles';
+import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 

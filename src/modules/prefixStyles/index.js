@@ -1,6 +1,8 @@
 import prefixAll from 'inline-style-prefixer/static';
 
-const prefixInlineStyles = style => {
+export default prefixAll;
+
+export const prefixInlineStyles = style => {
   const prefixedStyles = prefixAll(style);
 
   // React@15 removed undocumented support for fallback values in
@@ -14,5 +16,3 @@ const prefixInlineStyles = style => {
 
   return prefixedStyles;
 };
-
-module.exports = prefixInlineStyles;

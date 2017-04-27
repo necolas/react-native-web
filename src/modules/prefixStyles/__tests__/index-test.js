@@ -1,9 +1,9 @@
 /* eslint-env jasmine, jest */
 
-import prefixInlineStyles from '../prefixInlineStyles';
+import { prefixInlineStyles } from '..';
 
-describe('apis/StyleSheet/prefixInlineStyles', () => {
-  test('handles array values', () => {
+describe('modules/prefixStyles', () => {
+  test('handles array values for inline styles', () => {
     const style = {
       display: ['-webkit-flex', 'flex']
     };
