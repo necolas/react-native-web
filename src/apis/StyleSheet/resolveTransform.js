@@ -15,13 +15,13 @@ const convertTransformMatrix = transformMatrix => {
 };
 
 const resolveTransform = (resolvedStyle, style) => {
+  let transform = style.transform;
   if (Array.isArray(style.transform)) {
-    const transform = style.transform.map(mapTransform).join(' ');
-    resolvedStyle.transform = transform;
+    transform = style.transform.map(mapTransform).join(' ');
   } else if (style.transformMatrix) {
-    const transform = convertTransformMatrix(style.transformMatrix);
-    resolvedStyle.transform = transform;
+    transform = convertTransformMatrix(style.transformMatrix);
   }
+  resolvedStyle.transform = transform;
 };
 
 module.exports = resolveTransform;

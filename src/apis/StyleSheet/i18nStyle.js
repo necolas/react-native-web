@@ -71,15 +71,17 @@ const i18nStyle = originalStyle => {
       continue;
     }
 
+    const value = style[prop];
+
     if (PROPERTIES_TO_SWAP[prop]) {
       const newProp = flipProperty(prop);
-      nextStyle[newProp] = style[prop];
+      nextStyle[newProp] = value;
     } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
-      nextStyle[prop] = swapLeftRight(style[prop]);
+      nextStyle[prop] = swapLeftRight(value);
     } else if (prop === 'textShadowOffset') {
-      nextStyle[prop] = style[prop];
-      nextStyle[prop].width = additiveInverse(style[prop].width);
-    } else if (prop === 'transform') {
+      nextStyle[prop] = value;
+      nextStyle[prop].width = additiveInverse(value.width);
+    } else if (prop === 'transform' && Array.isArray(value)) {
       nextStyle[prop] = style[prop].map(flipTransform);
     } else {
       nextStyle[prop] = style[prop];
