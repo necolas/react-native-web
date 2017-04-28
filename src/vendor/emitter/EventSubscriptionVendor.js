@@ -36,8 +36,7 @@ class EventSubscriptionVendor {
    * @param {string} eventType
    * @param {EventSubscription} subscription
    */
-  addSubscription(
-    eventType: String, subscription: EventSubscription): EventSubscription {
+  addSubscription(eventType: String, subscription: EventSubscription): EventSubscription {
     invariant(
       subscription.subscriber === this,
       'The subscriber of the subscription is incorrectly set.');

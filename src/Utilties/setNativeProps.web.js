@@ -29,12 +29,13 @@ function convertTransform(style) {
 
       transform += ( 'matrix3d(' + style[k].join(',') + ') ' );
 
-    } if (k === 'transform') {
+    }
+    if (k === 'transform') {
       let value = style[k];
       if (Array.isArray(value)) {
 
         var transformations = [];
-        value.forEach(function(transformation) {
+        value.forEach(function (transformation) {
 
           var key = Object.keys(transformation)[0];
           var val = transformation[key];
@@ -48,7 +49,7 @@ function convertTransform(style) {
               key += '3d';
             }
 
-            val = val.map(function(v) {
+            val = val.map(function (v) {
               return processTransformValue(v, key);
             }).join(',');
 

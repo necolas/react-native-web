@@ -57,8 +57,7 @@ class EventEmitter {
    * @param {*} context - Optional context object to use when invoking the
    *   listener
    */
-  addListener(
-    eventType: String, listener, context: ?Object): EmitterSubscription {
+  addListener(eventType: String, listener, context: ?Object): EmitterSubscription {
     return this._subscriber.addSubscription(
       eventType,
       new EmitterSubscription(this._subscriber, listener, context));
@@ -76,7 +75,7 @@ class EventEmitter {
    */
   once(eventType: String, listener, context: ?Object): EmitterSubscription {
     var emitter = this;
-    return this.addListener(eventType, function() {
+    return this.addListener(eventType, function () {
       emitter.removeCurrentListener();
       listener.apply(context, arguments);
     });
@@ -133,9 +132,9 @@ class EventEmitter {
     var subscriptions = this._subscriber.getSubscriptionsForType(eventType);
     return subscriptions
       ? subscriptions.filter(emptyFunction.thatReturnsTrue).map(
-          function(subscription) {
-            return subscription.listener;
-          })
+      function (subscription) {
+        return subscription.listener;
+      })
       : [];
   }
 

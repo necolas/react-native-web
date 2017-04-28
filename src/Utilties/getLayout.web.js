@@ -17,8 +17,8 @@ function getCumulativeOffset(obj) {
     } while (obj = obj.offsetParent);
   }
   return {
-    x : left,
-    y : top
+    x: left,
+    y: top
   };
 }
 

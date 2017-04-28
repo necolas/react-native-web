@@ -29,7 +29,7 @@ var NativeMethodsMixin = {
    * possible, consider using the [`onLayout`
    * prop](/react-native/docs/view.html#onlayout) instead.
    */
-  measure: function(callback) {
+  measure: function (callback) {
     UIManager.measure(
       ReactDOM.findDOMNode(this),
       mountSafeCallback(this, callback)
@@ -44,7 +44,7 @@ var NativeMethodsMixin = {
    * As always, to obtain a native node handle for a component, you can use
    * `ReactDOM.findDOMNode(component)`.
    */
-  measureLayout: function(relativeToNativeNode, onSuccess, onFail) {
+  measureLayout: function (relativeToNativeNode, onSuccess, onFail) {
     UIManager.measureLayout(
       ReactDOM.findDOMNode(this),
       relativeToNativeNode,
@@ -59,7 +59,7 @@ var NativeMethodsMixin = {
    * next render, they will remain active (see [Direct
    * Manipulation](/react-native/docs/direct-manipulation.html)).
    */
-  setNativeProps: function(nativeProps) {
+  setNativeProps: function (nativeProps) {
     setNativeProps(ReactDOM.findDOMNode(this), nativeProps, this._reactInternalInstance);
   },
 
@@ -67,14 +67,14 @@ var NativeMethodsMixin = {
    * Requests focus for the given input or view. The exact behavior triggered
    * will depend on the platform and type of view.
    */
-  focus: function() {
+  focus: function () {
     ReactDOM.findDOMNode(this).focus();
   },
 
   /**
    * Removes focus from an input or view. This is the opposite of `focus()`.
    */
-  blur: function() {
+  blur: function () {
     ReactDOM.findDOMNode(this).blur();
   }
 };
@@ -83,8 +83,8 @@ var NativeMethodsMixin = {
  * In the future, we should cleanup callbacks by cancelling them instead of
  * using this.
  */
-var mountSafeCallback = function(context, callback) {
-  return function() {
+var mountSafeCallback = function (context, callback) {
+  return function () {
     if (!callback || context.isMounted && !context.isMounted()) {
       return;
     }
@@ -92,4 +92,4 @@ var mountSafeCallback = function(context, callback) {
   };
 };
 
-module.exports = { Mixin: NativeMethodsMixin };
+module.exports = {Mixin: NativeMethodsMixin};

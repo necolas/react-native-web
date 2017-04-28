@@ -38,7 +38,7 @@ var EventValidator = {
    *   var types = {someEvent: true, anotherEvent: true};
    *   var emitter = EventValidator.addValidation(emitter, types);
    */
-  addValidation: function(emitter: Object, types: Object) {
+  addValidation: function (emitter: Object, types: Object) {
     var eventTypes = Object.keys(types);
     var emitterWithValidation = Object.create(emitter);
 
@@ -70,7 +70,7 @@ function errorMessageFor(type, allowedTypes) {
 
 // Allow for good error messages
 if (__DEV__) {
-  var recommendationFor = function(type, allowedTypes) {
+  var recommendationFor = function (type, allowedTypes) {
     var closestTypeRecommendation = closestTypeFor(type, allowedTypes);
     if (isCloseEnough(closestTypeRecommendation, type)) {
       return 'Did you mean "' + closestTypeRecommendation.type + '"? ';
@@ -79,21 +79,21 @@ if (__DEV__) {
     }
   };
 
-  var closestTypeFor = function(type, allowedTypes) {
+  var closestTypeFor = function (type, allowedTypes) {
     var typeRecommendations = allowedTypes.map(
       typeRecommendationFor.bind(this, type)
     );
     return typeRecommendations.sort(recommendationSort)[0];
   };
 
-  var typeRecommendationFor = function(type, recomendedType) {
+  var typeRecommendationFor = function (type, recomendedType) {
     return {
       type: recomendedType,
       distance: damerauLevenshteinDistance(type, recomendedType)
     };
   };
 
-  var recommendationSort = function(recommendationA, recommendationB) {
+  var recommendationSort = function (recommendationA, recommendationB) {
     if (recommendationA.distance < recommendationB.distance) {
       return -1;
     } else if (recommendationA.distance > recommendationB.distance) {
@@ -103,11 +103,11 @@ if (__DEV__) {
     }
   };
 
-  var isCloseEnough = function(closestType, actualType) {
+  var isCloseEnough = function (closestType, actualType) {
     return (closestType.distance / actualType.length) < 0.334;
   };
 
-  var damerauLevenshteinDistance = function(a, b) {
+  var damerauLevenshteinDistance = function (a, b) {
     var i, j;
     var d = [];
 
@@ -130,8 +130,8 @@ if (__DEV__) {
         );
 
         if (i > 1 && j > 1 &&
-            a.charAt(i - 1) == b.charAt(j - 2) &&
-            a.charAt(i - 2) == b.charAt(j - 1)) {
+          a.charAt(i - 1) == b.charAt(j - 2) &&
+          a.charAt(i - 2) == b.charAt(j - 1)) {
           d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + cost);
         }
       }

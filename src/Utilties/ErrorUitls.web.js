@@ -9,20 +9,20 @@
  */
 
 /* eslint global-strict:0 */
-(function(global) {
+(function (global) {
   var ErrorUtils = {
     _inGuard: 0,
     _globalHandler: null,
-    setGlobalHandler: function(fun) {
+    setGlobalHandler: function (fun) {
       ErrorUtils._globalHandler = fun;
     },
-    reportError: function(error) {
+    reportError: function (error) {
       ErrorUtils._globalHandler && ErrorUtils._globalHandler(error);
     },
-    reportFatalError: function(error) {
+    reportFatalError: function (error) {
       ErrorUtils._globalHandler && ErrorUtils._globalHandler(error, true);
     },
-    applyWithGuard: function(fun, context, args) {
+    applyWithGuard: function (fun, context, args) {
       try {
         ErrorUtils._inGuard++;
         return fun.apply(context, args);
@@ -32,17 +32,17 @@
         ErrorUtils._inGuard--;
       }
     },
-    applyWithGuardIfNeeded: function(fun, context, args) {
+    applyWithGuardIfNeeded: function (fun, context, args) {
       if (ErrorUtils.inGuard()) {
         return fun.apply(context, args);
       } else {
         ErrorUtils.applyWithGuard(fun, context, args);
       }
     },
-    inGuard: function() {
+    inGuard: function () {
       return ErrorUtils._inGuard;
     },
-    guard: function(fun, name, context) {
+    guard: function (fun, name, context) {
       if (typeof fun !== 'function') {
         console.warn('A function must be passed to ErrorUtils.guard, got ', fun);
         return null;
@@ -70,7 +70,7 @@
    * when loading a module.
    */
   function setupErrorGuard() {
-    var onError = function(e) {
+    var onError = function (e) {
       global.console.error(
         'Error: ' +
         '\n stack: ' + e.stack +

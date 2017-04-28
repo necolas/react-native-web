@@ -11,19 +11,19 @@ import ReactDOM from 'react-dom';
 import getLayout from 'ReactGetLayout';
 
 var LayoutMixin = {
-  getInitialState: function() {
+  getInitialState: function () {
     return {layout: {}};
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.layoutHandle();
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate: function () {
     this.layoutHandle();
   },
 
-  layoutHandle: function() {
+  layoutHandle: function () {
     if (this.props.onLayout) {
 
       var layout = getLayout(ReactDOM.findDOMNode(this));

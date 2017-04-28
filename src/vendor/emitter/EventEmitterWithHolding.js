@@ -78,8 +78,7 @@ class EventEmitterWithHolding {
    *     console.log(message);
    *   }); // logs 'abc'
    */
-  addRetroactiveListener(
-    eventType: String, listener, context: ?Object): EmitterSubscription {
+  addRetroactiveListener(eventType: String, listener, context: ?Object): EmitterSubscription {
     var subscription = this._emitter.addListener(eventType, listener, context);
 
     this._emittingHeldEvents = true;

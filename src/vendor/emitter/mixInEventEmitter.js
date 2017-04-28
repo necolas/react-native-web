@@ -75,23 +75,23 @@ function mixInEventEmitter(klass, types) {
 }
 
 var EventEmitterMixin = {
-  emit: function(eventType, a, b, c, d, e, _) {
+  emit: function (eventType, a, b, c, d, e, _) {
     return this.__getEventEmitter().emit(eventType, a, b, c, d, e, _);
   },
 
-  emitAndHold: function(eventType, a, b, c, d, e, _) {
+  emitAndHold: function (eventType, a, b, c, d, e, _) {
     return this.__getEventEmitter().emitAndHold(eventType, a, b, c, d, e, _);
   },
 
-  addListener: function(eventType, listener, context) {
+  addListener: function (eventType, listener, context) {
     return this.__getEventEmitter().addListener(eventType, listener, context);
   },
 
-  once: function(eventType, listener, context) {
+  once: function (eventType, listener, context) {
     return this.__getEventEmitter().once(eventType, listener, context);
   },
 
-  addRetroactiveListener: function(eventType, listener, context) {
+  addRetroactiveListener: function (eventType, listener, context) {
     return this.__getEventEmitter().addRetroactiveListener(
       eventType,
       listener,
@@ -99,27 +99,27 @@ var EventEmitterMixin = {
     );
   },
 
-  addListenerMap: function(listenerMap, context) {
+  addListenerMap: function (listenerMap, context) {
     return this.__getEventEmitter().addListenerMap(listenerMap, context);
   },
 
-  addRetroactiveListenerMap: function(listenerMap, context) {
+  addRetroactiveListenerMap: function (listenerMap, context) {
     return this.__getEventEmitter().addListenerMap(listenerMap, context);
   },
 
-  removeAllListeners: function() {
+  removeAllListeners: function () {
     this.__getEventEmitter().removeAllListeners();
   },
 
-  removeCurrentListener: function() {
+  removeCurrentListener: function () {
     this.__getEventEmitter().removeCurrentListener();
   },
 
-  releaseHeldEventType: function(eventType) {
+  releaseHeldEventType: function (eventType) {
     this.__getEventEmitter().releaseHeldEventType(eventType);
   },
 
-  __getEventEmitter: function() {
+  __getEventEmitter: function () {
     if (!this.__eventEmitter) {
       var emitter = new EventEmitter();
       emitter = EventValidator.addValidation(emitter, this.__types);
