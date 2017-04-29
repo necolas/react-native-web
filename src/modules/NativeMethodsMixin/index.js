@@ -11,6 +11,9 @@ import findNodeHandle from '../findNodeHandle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
+const hyphenPattern = /-([a-z])/g;
+const toCamelCase = str => str.replace(hyphenPattern, m => m[1].toUpperCase());
+
 const NativeMethodsMixin = {
   /**
    * Removes focus from an input or view. This is the opposite of `focus()`.
@@ -69,11 +72,17 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     // Copy of existing DOM state
     const node = findNodeHandle(this);
+    const nodeStyle = node.style;
     const classList = Array.prototype.slice.call(node.classList);
-    const style = { ...node.style };
-    // See #454
-    delete style.length;
-
+    const style = {};
+    // DOM style is a CSSStyleDeclaration
+    // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
+    for (let i = node.style.length; i > 0; i -= 1) {
+      const property = nodeStyle.item(i);
+      // DOM style uses hyphenated prop names and may include vendor prefixes
+      // Transform back into React DOM style.
+      style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
+    }
     const domStyleProps = { classList, style };
 
     // Next DOM state

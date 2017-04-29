@@ -82,7 +82,7 @@ describe('apis/StyleSheet/StyleRegistry', () => {
       // note: this also checks for correctly uppercasing the first letter of DOM vendor prefixes
       const domStyleProps = {
         classList: [],
-        style: { opacity: 0.5, webkitTransform: 'scale(1)', transform: 'scale(1)' }
+        style: { opacity: 0.5, WebkitTransform: 'scale(1)', transform: 'scale(1)' }
       };
       const domStyleNextProps = styleRegistry.resolveStateful(
         { opacity: 1, transform: [{ scale: 2 }] },

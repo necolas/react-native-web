@@ -11,8 +11,6 @@ import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
-const vendorPrefixPattern = /^(webkit|moz|ms)/;
-
 const createCacheKey = id => {
   const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
   return `${prefix}-${id}`;
@@ -88,10 +86,10 @@ class StyleRegistry {
    * To determine the next style, some of the existing DOM state must be
    * converted back into React Native styles.
    */
-  resolveStateful(rnStyleNext, { classList: domClassList, style: domStyle }) {
+  resolveStateful(rnStyleNext, { classList: rdomClassList, style: rdomStyle }) {
     // Convert the DOM classList back into a React Native form
     // Preserves unrecognized class names.
-    const { classList: rnClassList, style: rnStyle } = domClassList.reduce(
+    const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
       (styleProps, className) => {
         const { prop, value } = this.styleManager.getDeclaration(className);
         if (prop) {
@@ -104,24 +102,12 @@ class StyleRegistry {
       { classList: [], style: {} }
     );
 
-    // DOM style may include vendor prefixes and properties set by other libraries.
-    // Preserve it but transform back into React DOM style.
-    const rdomStyle = Object.keys(domStyle).reduce((acc, styleName) => {
-      const value = domStyle[styleName];
-      if (value !== '') {
-        const reactStyleName = vendorPrefixPattern.test(styleName)
-          ? styleName.charAt(0).toUpperCase() + styleName.slice(1)
-          : styleName;
-        acc[reactStyleName] = value;
-      }
-      return acc;
-    }, {});
-
     // Create next DOM style props from current and next RN styles
     const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
       rnStyle,
       rnStyleNext
     ]);
+
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
     rdomClassListNext.forEach(className => {
@@ -130,8 +116,10 @@ class StyleRegistry {
         style[prop] = '';
       }
     });
+
     // Next inline styles take priority over current inline styles
     Object.assign(style, rdomStyleNext);
+
     // Add the current class names not managed by React Native
     const className = classListToString(rdomClassListNext.concat(rnClassList));
 
