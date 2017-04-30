@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`apis/StyleSheet/StyleRegistry resolve with register before RTL, resolves to className 1`] = `
+Object {
+  "classList": Array [],
+  "className": "",
+  "style": Object {
+    "marginRight": "10px",
+    "right": "12.34%",
+    "textAlign": "right",
+  },
+}
+`;
+
 exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 1`] = `
 Object {
   "classList": Array [

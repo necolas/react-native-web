@@ -1,5 +1,6 @@
 /* eslint-env jasmine, jest */
 
+import I18nManager from '../../I18nManager';
 import StyleRegistry from '../StyleRegistry';
 
 let styleRegistry;
@@ -44,6 +45,16 @@ describe('apis/StyleSheet/StyleRegistry', () => {
       const b = styleRegistry.register(styleB);
       const c = styleRegistry.register(styleC);
       testResolve(a, b, c);
+    });
+
+    test('with register before RTL, resolves to className', () => {
+      const a = styleRegistry.register({ left: '12.34%' });
+      const b = styleRegistry.register({ textAlign: 'left' });
+      const c = styleRegistry.register({ marginLeft: 10 });
+      I18nManager.forceRTL(true);
+      const resolved = styleRegistry.resolve([a, b, c]);
+      I18nManager.forceRTL(false);
+      expect(resolved).toMatchSnapshot();
     });
 
     test('with register, resolves to mixed', () => {

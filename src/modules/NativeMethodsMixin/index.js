@@ -8,6 +8,7 @@
 
 import createDOMProps from '../createDOMProps';
 import findNodeHandle from '../findNodeHandle';
+import i18nStyle from '../../apis/StyleSheet/i18nStyle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
@@ -88,8 +89,8 @@ const NativeMethodsMixin = {
     const domStyleProps = { classList, style };
 
     // Next DOM state
-    const domProps = createDOMProps(nativeProps, style =>
-      StyleRegistry.resolveStateful(style, domStyleProps)
+    const domProps = createDOMProps(i18nStyle(nativeProps), style =>
+      StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);
   }

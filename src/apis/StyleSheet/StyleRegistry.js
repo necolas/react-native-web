@@ -49,7 +49,7 @@ class StyleRegistry {
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  resolve(reactNativeStyle) {
+  resolve(reactNativeStyle, options) {
     if (!reactNativeStyle) {
       return undefined;
     }
@@ -57,12 +57,12 @@ class StyleRegistry {
     // fast and cachable
     if (typeof reactNativeStyle === 'number') {
       const key = createCacheKey(reactNativeStyle);
-      return this._resolveStyleIfNeeded(key, reactNativeStyle);
+      return this._resolveStyleIfNeeded(reactNativeStyle, { key, ...options });
     }
 
     // resolve a plain RN style object
     if (!Array.isArray(reactNativeStyle)) {
-      return this._resolveStyle(reactNativeStyle);
+      return this._resolveStyle(reactNativeStyle, options);
     }
 
     // flatten the style array
@@ -77,7 +77,7 @@ class StyleRegistry {
       }
     }
     const key = isArrayOfNumbers ? createCacheKey(flatArray.join('-')) : null;
-    return this._resolveStyleIfNeeded(key, flatArray);
+    return this._resolveStyleIfNeeded(flatArray, { key, ...options });
   }
 
   /**
@@ -87,7 +87,9 @@ class StyleRegistry {
    * To determine the next style, some of the existing DOM state must be
    * converted back into React Native styles.
    */
-  resolveStateful(rnStyleNext, { classList: rdomClassList, style: rdomStyle }) {
+  resolveStateful(rnStyleNext, domStyleProps, options) {
+    const { classList: rdomClassList, style: rdomStyle } = domStyleProps;
+
     // Convert the DOM classList back into a React Native form
     // Preserves unrecognized class names.
     const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
@@ -104,10 +106,10 @@ class StyleRegistry {
     );
 
     // Create next DOM style props from current and next RN styles
-    const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
-      rnStyle,
-      rnStyleNext
-    ]);
+    const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve(
+      [rnStyle, rnStyleNext],
+      options
+    );
 
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
@@ -130,8 +132,9 @@ class StyleRegistry {
   /**
    * Resolves a React Native style object
    */
-  _resolveStyle(reactNativeStyle) {
-    const domStyle = createReactDOMStyle(i18nStyle(flattenStyle(reactNativeStyle)));
+  _resolveStyle(reactNativeStyle, options) {
+    const flatStyle = flattenStyle(reactNativeStyle);
+    const domStyle = createReactDOMStyle(options.i18n === false ? flatStyle : i18nStyle(flatStyle));
 
     const props = Object.keys(domStyle).reduce(
       (props, styleProp) => {
@@ -163,15 +166,15 @@ class StyleRegistry {
   /**
   * Caching layer over 'resolveStyle'
    */
-  _resolveStyleIfNeeded(key, style) {
+  _resolveStyleIfNeeded(style, { key, ...rest }) {
     if (key) {
       if (!this.cache[key]) {
         // slow: convert style object to props and cache
-        this.cache[key] = this._resolveStyle(style);
+        this.cache[key] = this._resolveStyle(style, rest);
       }
       return this.cache[key];
     }
-    return this._resolveStyle(style);
+    return this._resolveStyle(style, rest);
   }
 }
 
