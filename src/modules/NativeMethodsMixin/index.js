@@ -77,11 +77,13 @@ const NativeMethodsMixin = {
     const style = {};
     // DOM style is a CSSStyleDeclaration
     // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
-    for (let i = node.style.length; i > 0; i -= 1) {
+    for (let i = 0; i < node.style.length; i += 1) {
       const property = nodeStyle.item(i);
-      // DOM style uses hyphenated prop names and may include vendor prefixes
-      // Transform back into React DOM style.
-      style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
+      if (property) {
+        // DOM style uses hyphenated prop names and may include vendor prefixes
+        // Transform back into React DOM style.
+        style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
+      }
     }
     const domStyleProps = { classList, style };
 
