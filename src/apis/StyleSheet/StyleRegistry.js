@@ -6,6 +6,7 @@ import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
+import i18nStyle from './i18nStyle';
 import mapKeyValue from '../../modules/mapKeyValue';
 import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
@@ -34,7 +35,7 @@ class StyleRegistry {
   register(flatStyle) {
     const id = ReactNativePropRegistry.register(flatStyle);
     const key = createCacheKey(id);
-    const style = createReactDOMStyle(flatStyle);
+    const style = createReactDOMStyle(i18nStyle(flatStyle));
     const classList = mapKeyValue(style, (prop, value) => {
       if (value != null) {
         return this.styleManager.setDeclaration(prop, value);
@@ -130,7 +131,7 @@ class StyleRegistry {
    * Resolves a React Native style object
    */
   _resolveStyle(reactNativeStyle) {
-    const domStyle = createReactDOMStyle(flattenStyle(reactNativeStyle));
+    const domStyle = createReactDOMStyle(i18nStyle(flattenStyle(reactNativeStyle)));
 
     const props = Object.keys(domStyle).reduce(
       (props, styleProp) => {
