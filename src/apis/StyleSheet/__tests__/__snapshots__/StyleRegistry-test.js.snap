@@ -2,13 +2,12 @@
 
 exports[`apis/StyleSheet/StyleRegistry resolve with register before RTL, resolves to className 1`] = `
 Object {
-  "classList": Array [],
-  "className": "",
-  "style": Object {
-    "marginRight": "10px",
-    "right": "12.34%",
-    "textAlign": "right",
-  },
+  "classList": Array [
+    "rn-marginRight-zso239",
+    "rn-right-1bnbe1j",
+    "rn-textAlign-1ff274t",
+  ],
+  "className": "rn-marginRight-zso239 rn-right-1bnbe1j rn-textAlign-1ff274t",
 }
 `;
 

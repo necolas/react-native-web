@@ -7,13 +7,14 @@ import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
 import i18nStyle from './i18nStyle';
-import mapKeyValue from '../../modules/mapKeyValue';
 import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
+const emptyObject = {};
+
 const createCacheKey = id => {
-  const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
+  const prefix = 'rn';
   return `${prefix}-${id}`;
 };
 
@@ -21,7 +22,7 @@ const classListToString = list => list.join(' ').trim();
 
 class StyleRegistry {
   constructor() {
-    this.cache = {};
+    this.cache = { ltr: {}, rtl: {} };
     this.styleManager = new StyleManager();
   }
 
@@ -34,30 +35,38 @@ class StyleRegistry {
    */
   register(flatStyle) {
     const id = ReactNativePropRegistry.register(flatStyle);
-    const key = createCacheKey(id);
-    const style = createReactDOMStyle(i18nStyle(flatStyle));
-    const classList = mapKeyValue(style, (prop, value) => {
-      if (value != null) {
-        return this.styleManager.setDeclaration(prop, value);
-      }
-    });
-    const className = classList.join(' ').trim();
-    this.cache[key] = { classList, className };
+    this._registerById(id);
     return id;
+  }
+
+  _registerById(id) {
+    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+    if (!this.cache[dir][id]) {
+      const style = flattenStyle(id);
+      const domStyle = createReactDOMStyle(i18nStyle(style));
+      Object.keys(domStyle).forEach(styleProp => {
+        const value = domStyle[styleProp];
+        if (value != null) {
+          this.styleManager.setDeclaration(styleProp, value);
+        }
+      });
+      this.cache[dir][id] = true;
+    }
   }
 
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  resolve(reactNativeStyle, options) {
+  resolve(reactNativeStyle, options = emptyObject) {
     if (!reactNativeStyle) {
       return undefined;
     }
 
     // fast and cachable
     if (typeof reactNativeStyle === 'number') {
+      this._registerById(reactNativeStyle);
       const key = createCacheKey(reactNativeStyle);
-      return this._resolveStyleIfNeeded(reactNativeStyle, { key, ...options });
+      return this._resolveStyleIfNeeded(reactNativeStyle, options, key);
     }
 
     // resolve a plain RN style object
@@ -71,13 +80,15 @@ class StyleRegistry {
     const flatArray = flattenArray(reactNativeStyle);
     let isArrayOfNumbers = true;
     for (let i = 0; i < flatArray.length; i++) {
-      if (typeof flatArray[i] !== 'number') {
+      const id = flatArray[i];
+      if (typeof id !== 'number') {
         isArrayOfNumbers = false;
-        break;
+      } else {
+        this._registerById(id);
       }
     }
     const key = isArrayOfNumbers ? createCacheKey(flatArray.join('-')) : null;
-    return this._resolveStyleIfNeeded(flatArray, { key, ...options });
+    return this._resolveStyleIfNeeded(flatArray, options, key);
   }
 
   /**
@@ -166,15 +177,16 @@ class StyleRegistry {
   /**
   * Caching layer over 'resolveStyle'
    */
-  _resolveStyleIfNeeded(style, { key, ...rest }) {
+  _resolveStyleIfNeeded(style, options, key) {
+    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
     if (key) {
-      if (!this.cache[key]) {
+      if (!this.cache[dir][key]) {
         // slow: convert style object to props and cache
-        this.cache[key] = this._resolveStyle(style, rest);
+        this.cache[dir][key] = this._resolveStyle(style, options);
       }
-      return this.cache[key];
+      return this.cache[dir][key];
     }
-    return this._resolveStyle(style, rest);
+    return this._resolveStyle(style, options);
   }
 }
 

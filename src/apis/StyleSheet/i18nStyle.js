@@ -43,17 +43,6 @@ const flipProperty = (prop: String): String => {
   return PROPERTIES_TO_SWAP.hasOwnProperty(prop) ? PROPERTIES_TO_SWAP[prop] : prop;
 };
 
-/**
- * BiDi flip translateX
- */
-const flipTransform = (transform: Object): Object => {
-  const translateX = transform.translateX;
-  if (translateX != null) {
-    transform.translateX = additiveInverse(translateX);
-  }
-  return transform;
-};
-
 const swapLeftRight = (value: String): String => {
   return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
 };
@@ -81,8 +70,6 @@ const i18nStyle = originalStyle => {
     } else if (prop === 'textShadowOffset') {
       nextStyle[prop] = value;
       nextStyle[prop].width = additiveInverse(value.width);
-    } else if (prop === 'transform' && Array.isArray(value)) {
-      nextStyle[prop] = style[prop].map(flipTransform);
     } else {
       nextStyle[prop] = style[prop];
     }
