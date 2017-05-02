@@ -1,11 +1,11 @@
-import AccessibilityUtil from '../../modules/AccessibilityUtil';
-import applyLayout from '../../modules/applyLayout';
-import applyNativeMethods from '../../modules/applyNativeMethods';
-import { bool } from 'prop-types';
-import createDOMElement from '../../modules/createDOMElement';
-import StyleSheet from '../../apis/StyleSheet';
-import ViewPropTypes from './ViewPropTypes';
-import React, { Component } from 'react';
+import AccessibilityUtil from "../../modules/AccessibilityUtil";
+import applyLayout from "../../modules/applyLayout";
+import applyNativeMethods from "../../modules/applyNativeMethods";
+import { bool } from "prop-types";
+import createDOMElement from "../../modules/createDOMElement";
+import StyleSheet from "../../apis/StyleSheet";
+import ViewPropTypes from "./ViewPropTypes";
+import React, { Component } from "react";
 
 const emptyObject = {};
 
@@ -21,9 +21,11 @@ const calculateHitSlopStyle = hitSlop => {
 };
 
 class View extends Component {
-  static displayName = 'View';
+  static displayName = "View";
 
   static propTypes = ViewPropTypes;
+
+  domRef = undefined;
 
   static childContextTypes = {
     isInAButtonView: bool
@@ -35,9 +37,14 @@ class View extends Component {
 
   getChildContext() {
     const isInAButtonView =
-      AccessibilityUtil.propsToAriaRole(this.props) === 'button' || this.context.isInAButtonView;
+      AccessibilityUtil.propsToAriaRole(this.props) === "button" ||
+      this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
+
+  bindRef = element => {
+    this.domRef = element;
+  };
 
   render() {
     const {
@@ -56,16 +63,19 @@ class View extends Component {
     const { isInAButtonView } = this.context;
 
     otherProps.style = [styles.initial, style];
+    otherProps.ref = this.bindRef;
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
-      const hitSlopChild = createDOMElement('span', { style: [styles.hitSlop, hitSlopStyle] });
+      const hitSlopChild = createDOMElement("span", {
+        style: [styles.hitSlop, hitSlopStyle]
+      });
       otherProps.children = React.Children.toArray(otherProps.children);
       otherProps.children.unshift(hitSlopChild);
       otherProps.style.unshift(styles.hasHitSlop);
     }
 
-    const component = isInAButtonView ? 'span' : 'div';
+    const component = isInAButtonView ? "span" : "div";
     return createDOMElement(component, otherProps);
   }
 }
@@ -73,16 +83,16 @@ class View extends Component {
 const styles = StyleSheet.create({
   // https://github.com/facebook/css-layout#default-values
   initial: {
-    alignItems: 'stretch',
+    alignItems: "stretch",
     borderWidth: 0,
-    borderStyle: 'solid',
-    boxSizing: 'border-box',
-    display: 'flex',
-    flexBasis: 'auto',
-    flexDirection: 'column',
+    borderStyle: "solid",
+    boxSizing: "border-box",
+    display: "flex",
+    flexBasis: "auto",
+    flexDirection: "column",
     margin: 0,
     padding: 0,
-    position: 'relative',
+    position: "relative",
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0

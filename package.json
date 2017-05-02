@@ -32,6 +32,7 @@
     "fbjs": "^0.8.8",
     "hyphenate-style-name": "^1.0.2",
     "inline-style-prefixer": "^3.0.2",
+    "lodash": "^4.17.4",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.8",
     "react-timer-mixin": "^0.13.3"
@@ -53,12 +54,14 @@
     "eslint-plugin-react": "^6.10.3",
     "file-loader": "^0.11.1",
     "jest": "^19.0.2",
+    "jest-enzyme": "^3.0.1",
     "node-libs-browser": "^0.5.3",
     "prettier": "^1.1.0",
     "react": "~15.4.1",
     "react-addons-test-utils": "~15.4.1",
     "react-dom": "~15.4.1",
     "react-test-renderer": "^15.5.4",
+    "simulant": "^0.2.2",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.3",
     "webpack-bundle-analyzer": "^2.4.0"
@@ -83,6 +86,7 @@
     "web"
   ],
   "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
     "testEnvironment": "jsdom",
     "timers": "fake",
     "snapshotSerializers": [

@@ -45,13 +45,15 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  VirtualizedList,
+  FlatList,
 
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
   ViewPropTypes
-} from './module';
+} from "./module";
 
 const ReactNative = {
   // top-level API
@@ -100,6 +102,8 @@ const ReactNative = {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  VirtualizedList,
+  FlatList,
 
   // propTypes
   ColorPropType,
