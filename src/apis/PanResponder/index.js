@@ -299,7 +299,8 @@ var PanResponder = {
             PanResponder._initializeGestureState(gestureState);
           }
         } else if (
-          e.nativeEvent.originalEvent && e.nativeEvent.originalEvent.type === 'mousedown'
+          e.nativeEvent.originalEvent &&
+          e.nativeEvent.originalEvent.type === 'mousedown'
         ) {
           PanResponder._initializeGestureState(gestureState);
         }

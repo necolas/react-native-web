@@ -1,18 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/StyleSheet/createReactDOMStyle converts ReactNative style to ReactDOM style 1`] = `
+exports[`apis/StyleSheet/createReactDOMStyle shortform -> longform 1`] = `
 Object {
+  "borderBottomColor": "white",
+  "borderBottomStyle": "solid",
   "borderBottomWidth": "1px",
-  "borderLeftWidth": "1px",
-  "borderRightWidth": "1px",
-  "borderTopWidth": "1px",
-  "borderWidthLeft": "2px",
-  "borderWidthRight": "3px",
-  "boxShadow": "1px 1px 1px 1px #000, 1px 2px 0px red",
-  "display": "flex",
-  "flexShrink": 0,
-  "marginBottom": "0px",
-  "marginTop": "0px",
-  "opacity": 0,
+  "borderLeftStyle": "solid",
+  "borderLeftWidth": "0px",
+  "borderRightStyle": "solid",
+  "borderRightWidth": "0px",
+  "borderTopStyle": "solid",
+  "borderTopWidth": "0px",
+  "boxSizing": "border-box",
+  "marginBottom": "25px",
+  "marginLeft": "10px",
+  "marginRight": "10px",
+  "marginTop": "50px",
 }
 `;

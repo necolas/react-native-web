@@ -8,8 +8,12 @@
 
 import createDOMProps from '../createDOMProps';
 import findNodeHandle from '../findNodeHandle';
+import i18nStyle from '../../apis/StyleSheet/i18nStyle';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
+
+const hyphenPattern = /-([a-z])/g;
+const toCamelCase = str => str.replace(hyphenPattern, m => m[1].toUpperCase());
 
 const NativeMethodsMixin = {
   /**
@@ -69,13 +73,24 @@ const NativeMethodsMixin = {
   setNativeProps(nativeProps: Object) {
     // Copy of existing DOM state
     const node = findNodeHandle(this);
+    const nodeStyle = node.style;
     const classList = Array.prototype.slice.call(node.classList);
-    const style = { ...node.style };
+    const style = {};
+    // DOM style is a CSSStyleDeclaration
+    // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
+    for (let i = 0; i < node.style.length; i += 1) {
+      const property = nodeStyle.item(i);
+      if (property) {
+        // DOM style uses hyphenated prop names and may include vendor prefixes
+        // Transform back into React DOM style.
+        style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
+      }
+    }
     const domStyleProps = { classList, style };
 
     // Next DOM state
-    const domProps = createDOMProps(nativeProps, style =>
-      StyleRegistry.resolveStateful(style, domStyleProps)
+    const domProps = createDOMProps(i18nStyle(nativeProps), style =>
+      StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);
   }

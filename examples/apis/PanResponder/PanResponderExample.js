@@ -104,7 +104,6 @@ var styles = StyleSheet.create({
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
     position: 'absolute',
-    left: 0,
     top: 0,
   },
   container: {

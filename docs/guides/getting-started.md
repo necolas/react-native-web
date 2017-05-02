@@ -76,6 +76,10 @@ module.exports = {
 }
 ```
 
+A more complex example setup for web apps can be found in various starter kits
+(e.g., create-react-app and
+[react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack))
+
 Please refer to the Webpack documentation for more information.
 
 ## Jest

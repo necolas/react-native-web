@@ -87,6 +87,7 @@ export default class ScrollViewBase extends Component {
 
   _handleScroll = e => {
     e.persist();
+    e.stopPropagation();
     const { scrollEventThrottle } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
     this._debouncedOnScrollEnd(e);

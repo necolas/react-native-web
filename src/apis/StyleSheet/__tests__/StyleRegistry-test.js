@@ -1,5 +1,6 @@
 /* eslint-env jasmine, jest */
 
+import I18nManager from '../../I18nManager';
 import StyleRegistry from '../StyleRegistry';
 
 let styleRegistry;
@@ -46,6 +47,16 @@ describe('apis/StyleSheet/StyleRegistry', () => {
       testResolve(a, b, c);
     });
 
+    test('with register before RTL, resolves to className', () => {
+      const a = styleRegistry.register({ left: '12.34%' });
+      const b = styleRegistry.register({ textAlign: 'left' });
+      const c = styleRegistry.register({ marginLeft: 10 });
+      I18nManager.forceRTL(true);
+      const resolved = styleRegistry.resolve([a, b, c]);
+      I18nManager.forceRTL(false);
+      expect(resolved).toMatchSnapshot();
+    });
+
     test('with register, resolves to mixed', () => {
       const a = styleA;
       const b = styleRegistry.register(styleB);
@@ -82,7 +93,7 @@ describe('apis/StyleSheet/StyleRegistry', () => {
       // note: this also checks for correctly uppercasing the first letter of DOM vendor prefixes
       const domStyleProps = {
         classList: [],
-        style: { opacity: 0.5, webkitTransform: 'scale(1)', transform: 'scale(1)' }
+        style: { opacity: 0.5, WebkitTransform: 'scale(1)', transform: 'scale(1)' }
       };
       const domStyleNextProps = styleRegistry.resolveStateful(
         { opacity: 1, transform: [{ scale: 2 }] },

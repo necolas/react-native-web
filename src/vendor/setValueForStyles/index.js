@@ -158,7 +158,9 @@ function dangerousStyleValue(name, value, component) {
 
   var isNonNumeric = isNaN(value);
   if (
-    isNonNumeric || value === 0 || (unitlessNumbers.hasOwnProperty(name) && unitlessNumbers[name])
+    isNonNumeric ||
+    value === 0 ||
+    (unitlessNumbers.hasOwnProperty(name) && unitlessNumbers[name])
   ) {
     return '' + value; // cast to string
   }
