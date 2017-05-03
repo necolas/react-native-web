@@ -53,6 +53,14 @@ export default class ListPage extends Component {
     }
   }
 
+  shouldComponentUpdate (nextProps) {
+    if (!this.props.show && !nextProps.show) {
+      return false
+    }
+
+    return true
+  }
+
   showPage() {
     this.setState({
       showPage: true

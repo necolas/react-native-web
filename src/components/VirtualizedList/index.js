@@ -117,9 +117,7 @@ class VirtualizedList extends Component {
       passedItems = Array.apply(
         null,
         Array(getItemCount(data))
-      ).map((i, index) => {
-        return getItem(data, index);
-      });
+      ).map((i, index) => getItem(data, index));
     }
 
     return chunk(passedItems, initialNumToRender).map((items, pageIndex) => {
@@ -282,22 +280,22 @@ class VirtualizedList extends Component {
     this.scrollToIndex(this.props.data.length - 1);
   };
 
-  scrollToItem = (item) => {
+  scrollToItem = item => {
     if (this.props.data.indexOf) {
-      const index = this.props.data.indexOf(item)
+      const index = this.props.data.indexOf(item);
 
       if (index >= 0) {
-        this.scrollToIndex(index)
+        this.scrollToIndex(index);
       }
     }
-  }
+  };
 
-  scrollToOffset = (offset) => {
-    this.listRef.scrollTop = offset
-  }
+  scrollToOffset = offset => {
+    this.listRef.scrollTop = offset;
+  };
 
   // noop for compatibility with React Native
-  recordInteraction () {}
+  recordInteraction() {}
 
   render() {
     const itemPages = this.state.pages.map(page => {
