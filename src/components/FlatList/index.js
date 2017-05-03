@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import flatten from "lodash/flatten";
-import VirtualizedList from "../VirtualizedList";
+import React, { Component } from 'react';
+import flatten from 'lodash/flatten';
+import VirtualizedList from '../VirtualizedList';
 import VirtualizedListPropTypes
-  from "../VirtualizedList/VirtualizedListPropTypes";
+  from '../VirtualizedList/VirtualizedListPropTypes';
 
 import FlatListPropTypes from './FlatListPropTypes'
 
-import applyNativeMethods from "../../modules/applyNativeMethods";
+import applyNativeMethods from '../../modules/applyNativeMethods';
 
 const FLAT_LIST_PROP_KEYS = Object.keys(FlatListPropTypes)
 

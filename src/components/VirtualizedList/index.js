@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import chunk from "lodash/chunk";
-import difference from "lodash/difference";
-import requestAnimationFrame from "fbjs/lib/requestAnimationFrame";
-import invariant from "fbjs/lib/invariant";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import chunk from 'lodash/chunk';
+import difference from 'lodash/difference';
+import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+import invariant from 'fbjs/lib/invariant';
 
-import VirtualizedListPropTypes from "./VirtualizedListPropTypes";
-import ListPage from "./ListPage";
-import View from "../View";
+import VirtualizedListPropTypes from './VirtualizedListPropTypes';
+import ListPage from './ListPage';
+import View from '../View';
 
-import applyNativeMethods from "../../modules/applyNativeMethods";
+import applyNativeMethods from '../../modules/applyNativeMethods';
 
 const PROP_TYPE_KEYS = Object.keys(VirtualizedListPropTypes);
 
@@ -37,7 +37,7 @@ class VirtualizedList extends Component {
     invariant(
       (!props.getItem && !props.getItemCount) ||
         (props.getItem && props.getItemCount),
-      "You need to specify both getItem and getItemCount."
+      'You need to specify both getItem and getItemCount.'
     );
 
     this.state = {
@@ -54,7 +54,7 @@ class VirtualizedList extends Component {
       this.handleScrollEvents();
     });
 
-    this.listRef.addEventListener("scroll", this.handleScroll);
+    this.listRef.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {

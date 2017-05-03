@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import View from "../View";
+import View from '../View';
 
 export default class ListCell extends Component {
   static propTypes = {

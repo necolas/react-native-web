@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import StyleSheet from "../../apis/StyleSheet";
-import View from "../View";
+import StyleSheet from '../../apis/StyleSheet';
+import View from '../View';
 
-import ListCell from "./ListCell";
+import ListCell from './ListCell';
 
 export default class ListPage extends Component {
   static propTypes = {
@@ -81,7 +81,7 @@ export default class ListPage extends Component {
     if (getItemLayout) {
       const pageHeight = this.props.items.reduce((memo, item, index) => {
         return (
-          memo + getItemLayout(this.props.fullData, this.props.index + index)
+          memo + getItemLayout(this.props.fullData, this.props.index + index).length
         );
       }, 0);
 

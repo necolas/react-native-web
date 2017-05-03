@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export default {
-  data: PropTypes.arrayOf(PropTypes.any),
+  data: PropTypes.any,
   debug: PropTypes.bool, // has no effect on this implementation
   getItem: PropTypes.func,
   getItemCount: PropTypes.func,

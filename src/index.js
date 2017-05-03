@@ -53,7 +53,7 @@ import {
   EdgeInsetsPropType,
   PointPropType,
   ViewPropTypes
-} from "./module";
+} from './module';
 
 const ReactNative = {
   // top-level API

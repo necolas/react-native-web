@@ -1,23 +1,23 @@
 /* eslint-env jasmine, jest */
 
-import FlatList from "..";
-import VirtualizedList from "../../VirtualizedList";
-import View from "../../View";
-import React from "react";
-import { mount, render } from "enzyme";
+import FlatList from '..';
+import VirtualizedList from '../../VirtualizedList';
+import View from '../../View';
+import React from 'react';
+import { mount, render } from 'enzyme';
 
-describe("components/FlatList", () => {
-  const data = [{ name: "1" }, { name: "2" }, { name: "3" }];
+describe('components/FlatList', () => {
+  const data = [{ name: '1' }, { name: '2' }, { name: '3' }];
   const renderItem = ({ item, index }) => (
     <View className="item">{item.name}</View>
   );
   const defaultProps = { data, renderItem };
 
   // Props
-  describe("ItemSeparatorComponent", () => {
+  describe('ItemSeparatorComponent', () => {
     const SeparatorComponent = () => <View className="separator" />;
 
-    test("renders the item between every list item", () => {
+    test('renders the item between every list item', () => {
       const wrapper = render(
         <FlatList
           {...defaultProps}
@@ -25,37 +25,37 @@ describe("components/FlatList", () => {
         />
       );
 
-      expect(wrapper.find(".separator")).toHaveLength(2);
+      expect(wrapper.find('.separator')).toHaveLength(2);
     });
   });
-  describe("ListFooterComponent", () => {
+  describe('ListFooterComponent', () => {
     const FooterComponent = () => <View className="footer" />;
 
-    test("renders 1 footer", () => {
+    test('renders 1 footer', () => {
       const wrapper = render(
         <FlatList {...defaultProps} ListFooterComponent={FooterComponent} />
       );
 
-      expect(wrapper.find(".footer")).toHaveLength(1);
+      expect(wrapper.find('.footer')).toHaveLength(1);
     });
   });
-  describe("ListHeaderComponent", () => {
+  describe('ListHeaderComponent', () => {
     const HeaderComponent = () => <View className="header" />;
 
-    test("renders 1 header", () => {
+    test('renders 1 header', () => {
       const wrapper = render(
         <FlatList {...defaultProps} ListHeaderComponent={HeaderComponent} />
       );
 
-      expect(wrapper.find(".header")).toHaveLength(1);
+      expect(wrapper.find('.header')).toHaveLength(1);
     });
   });
   // describe("columnWrapperStyle"); // not supported
   // describe("numColumns"); // not supported
 
   // Methods
-  describe("scrollToEnd", () => {
-    test("exists", () => {
+  describe('scrollToEnd', () => {
+    test('exists', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -63,7 +63,7 @@ describe("components/FlatList", () => {
       expect(list.scrollToEnd).toBeTruthy();
     });
 
-    test("calls the VirtualizedList scrollToEnd", () => {
+    test('calls the VirtualizedList scrollToEnd', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -76,8 +76,8 @@ describe("components/FlatList", () => {
       expect(mockFn).toHaveBeenCalled();
     });
   });
-  describe("scrollToIndex", () => {
-    test("exists", () => {
+  describe('scrollToIndex', () => {
+    test('exists', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -85,7 +85,7 @@ describe("components/FlatList", () => {
       expect(list.scrollToIndex).toBeTruthy();
     });
 
-    test("calls the VirtualizedList scrollToIndex", () => {
+    test('calls the VirtualizedList scrollToIndex', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -98,8 +98,8 @@ describe("components/FlatList", () => {
       expect(mockFn).toHaveBeenCalled();
     });
   });
-  describe("scrollToItem", () => {
-    test("exists", () => {
+  describe('scrollToItem', () => {
+    test('exists', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -107,7 +107,7 @@ describe("components/FlatList", () => {
       expect(list.scrollToItem).toBeTruthy();
     });
 
-    test("calls the VirtualizedList scrollToItem", () => {
+    test('calls the VirtualizedList scrollToItem', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -120,8 +120,8 @@ describe("components/FlatList", () => {
       expect(mockFn).toHaveBeenCalled();
     });
   });
-  describe("scrollToOffset", () => {
-    test("exists", () => {
+  describe('scrollToOffset', () => {
+    test('exists', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -129,7 +129,7 @@ describe("components/FlatList", () => {
       expect(list.scrollToOffset).toBeTruthy();
     });
 
-    test("calls the VirtualizedList scrollToOffset", () => {
+    test('calls the VirtualizedList scrollToOffset', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -142,8 +142,8 @@ describe("components/FlatList", () => {
       expect(mockFn).toHaveBeenCalled();
     });
   });
-  describe("recordInteraction", () => {
-    test("exists", () => {
+  describe('recordInteraction', () => {
+    test('exists', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
@@ -151,7 +151,7 @@ describe("components/FlatList", () => {
       expect(list.recordInteraction).toBeTruthy();
     });
 
-    test("calls the VirtualizedList recordInteraction", () => {
+    test('calls the VirtualizedList recordInteraction', () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
