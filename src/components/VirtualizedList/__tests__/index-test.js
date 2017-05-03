@@ -8,10 +8,10 @@ import { mount, render } from "enzyme";
 import simulant from "simulant";
 
 describe("components/VirtualizedList", () => {
-  const data = [1, 2, 3];
-  const renderItem = item => {
-    return <View className="item">{item}</View>;
-  };
+  const data = [{ name: "1" }, { name: "2" }, { name: "3" }];
+  const renderItem = ({ item, index }) => (
+    <View className="item">{item.name}</View>
+  );
   const styles = StyleSheet.create({
     container: {
       height: 200,
@@ -25,7 +25,7 @@ describe("components/VirtualizedList", () => {
     renderItem
   };
 
-  const longListOfData = Array.from(Array(100).keys());
+  const longListOfData = Array.from(Array(100).keys()).map(i => ({ name: i }));
 
   // Props
   describe("data", () => {
@@ -252,7 +252,9 @@ describe("components/VirtualizedList", () => {
   // describe("refreshing"); // has no effect in this implementation
   // describe("removeClippedSubviews"); // has no effect in this implementation
   describe("renderItem", () => {
-    const renderItem = item => <View className="customItem">{item + 5}</View>;
+    const renderItem = ({ item }) => (
+      <View className="customItem">{parseInt(item.name, 10) + 5}</View>
+    );
 
     test("renders the item as described", () => {
       const wrapper = render(
@@ -270,7 +272,7 @@ describe("components/VirtualizedList", () => {
       const wrapper = mount(
         <VirtualizedList
           {...defaultProps}
-          data={[1, 2, 3]}
+          data={[{ name: "1" }, { name: "2" }, { name: "3" }]}
           shouldItemUpdate={shouldItemUpdate}
         />
       );
@@ -282,7 +284,7 @@ describe("components/VirtualizedList", () => {
       ]);
 
       wrapper.setProps({
-        data: [4, 5, 6]
+        data: [{ name: "4" }, { name: "5" }, { name: "6" }]
       });
 
       expect(wrapper.find(".item").map(node => node.text())).toEqual([
@@ -296,13 +298,13 @@ describe("components/VirtualizedList", () => {
 
     test("only updates certain items", () => {
       const shouldItemUpdate = jest.fn(
-        (props, nextProps) => props.item === 1 || nextProps.index === 2
+        (props, nextProps) => props.item.name === "1" || nextProps.index === 2
       );
 
       const wrapper = mount(
         <VirtualizedList
           {...defaultProps}
-          data={[1, 2, 3]}
+          data={[{ name: "1" }, { name: "2" }, { name: "3" }]}
           shouldItemUpdate={shouldItemUpdate}
         />
       );
@@ -314,7 +316,13 @@ describe("components/VirtualizedList", () => {
       ]);
 
       wrapper.setProps({
-        data: [4, 5, 6, 7, 8]
+        data: [
+          { name: "4" },
+          { name: "5" },
+          { name: "6" },
+          { name: "7" },
+          { name: "8" }
+        ]
       });
 
       expect(wrapper.find(".item").map(node => node.text())).toEqual([
@@ -393,6 +401,6 @@ describe("components/VirtualizedList", () => {
       const list = wrapper.get(0);
 
       expect(list.recordInteraction).toBeTruthy();
-    })
+    });
   });
 });

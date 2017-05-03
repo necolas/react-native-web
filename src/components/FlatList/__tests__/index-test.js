@@ -7,10 +7,10 @@ import React from "react";
 import { mount, render } from "enzyme";
 
 describe("components/FlatList", () => {
-  const data = [1, 2, 3];
-  const renderItem = item => {
-    return <View className="item">{item}</View>;
-  };
+  const data = [{ name: "1" }, { name: "2" }, { name: "3" }];
+  const renderItem = ({ item, index }) => (
+    <View className="item">{item.name}</View>
+  );
   const defaultProps = { data, renderItem };
 
   // Props
@@ -67,9 +67,9 @@ describe("components/FlatList", () => {
       const wrapper = mount(<FlatList {...defaultProps} />);
 
       const list = wrapper.get(0);
-      const mockFn = jest.fn(list.listRef.scrollToEnd)
+      const mockFn = jest.fn(list.listRef.scrollToEnd);
 
-      list.listRef.scrollToEnd = mockFn
+      list.listRef.scrollToEnd = mockFn;
 
       list.scrollToEnd();
 
@@ -86,17 +86,17 @@ describe("components/FlatList", () => {
     });
 
     test("calls the VirtualizedList scrollToIndex", () => {
-      const wrapper = mount(<FlatList {...defaultProps} />)
+      const wrapper = mount(<FlatList {...defaultProps} />);
 
-      const list = wrapper.get(0)
-      const mockFn = jest.fn(list.listRef.scrollToIndex)
+      const list = wrapper.get(0);
+      const mockFn = jest.fn(list.listRef.scrollToIndex);
 
-      list.listRef.scrollToIndex = mockFn
+      list.listRef.scrollToIndex = mockFn;
 
-      list.scrollToIndex(10)
+      list.scrollToIndex(10);
 
-      expect(mockFn).toHaveBeenCalled()
-    })
+      expect(mockFn).toHaveBeenCalled();
+    });
   });
   describe("scrollToItem", () => {
     test("exists", () => {
@@ -108,17 +108,17 @@ describe("components/FlatList", () => {
     });
 
     test("calls the VirtualizedList scrollToItem", () => {
-      const wrapper = mount(<FlatList {...defaultProps} />)
+      const wrapper = mount(<FlatList {...defaultProps} />);
 
-      const list = wrapper.get(0)
-      const mockFn = jest.fn(list.listRef.scrollToItem)
+      const list = wrapper.get(0);
+      const mockFn = jest.fn(list.listRef.scrollToItem);
 
-      list.listRef.scrollToItem = mockFn
+      list.listRef.scrollToItem = mockFn;
 
-      list.scrollToItem(0)
+      list.scrollToItem(0);
 
-      expect(mockFn).toHaveBeenCalled()
-    })
+      expect(mockFn).toHaveBeenCalled();
+    });
   });
   describe("scrollToOffset", () => {
     test("exists", () => {
@@ -130,17 +130,17 @@ describe("components/FlatList", () => {
     });
 
     test("calls the VirtualizedList scrollToOffset", () => {
-      const wrapper = mount(<FlatList {...defaultProps} />)
+      const wrapper = mount(<FlatList {...defaultProps} />);
 
-      const list = wrapper.get(0)
-      const mockFn = jest.fn(list.listRef.scrollToOffset)
+      const list = wrapper.get(0);
+      const mockFn = jest.fn(list.listRef.scrollToOffset);
 
-      list.listRef.scrollToOffset = mockFn
+      list.listRef.scrollToOffset = mockFn;
 
-      list.scrollToOffset(0)
+      list.scrollToOffset(0);
 
-      expect(mockFn).toHaveBeenCalled()
-    })
+      expect(mockFn).toHaveBeenCalled();
+    });
   });
   describe("recordInteraction", () => {
     test("exists", () => {
@@ -152,16 +152,16 @@ describe("components/FlatList", () => {
     });
 
     test("calls the VirtualizedList recordInteraction", () => {
-      const wrapper = mount(<FlatList {...defaultProps} />)
+      const wrapper = mount(<FlatList {...defaultProps} />);
 
-      const list = wrapper.get(0)
-      const mockFn = jest.fn(list.listRef.recordInteraction)
+      const list = wrapper.get(0);
+      const mockFn = jest.fn(list.listRef.recordInteraction);
 
-      list.listRef.recordInteraction = mockFn
+      list.listRef.recordInteraction = mockFn;
 
-      list.recordInteraction()
+      list.recordInteraction();
 
-      expect(mockFn).toHaveBeenCalled()
-    })
+      expect(mockFn).toHaveBeenCalled();
+    });
   });
 });

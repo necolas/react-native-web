@@ -74,7 +74,7 @@ class FlatList extends Component {
     this.listRef = element
   }
 
-  renderItem = (item, index) => {
+  renderItem = (info) => {
     const {
       ItemSeparatorComponent,
       ListFooterComponent,
@@ -82,7 +82,7 @@ class FlatList extends Component {
       renderItem
     } = this.props;
 
-    switch (item) {
+    switch (info.item) {
       case ItemSeparatorComponent:
         return <ItemSeparatorComponent />;
       case ListFooterComponent:
@@ -90,7 +90,7 @@ class FlatList extends Component {
       case ListHeaderComponent:
         return <ListHeaderComponent />;
       default:
-        return renderItem(item, index);
+        return renderItem(info);
     }
   };
 

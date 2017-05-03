@@ -32,9 +32,11 @@ export default class ListCell extends Component {
   };
 
   render() {
+    const { renderItem, item, index } = this.props;
+
     return (
       <View ref={this.bindCellRef}>
-        {this.props.renderItem(this.props.item, this.props.index)}
+        {renderItem({ item, index })}
       </View>
     );
   }
