@@ -1,5 +1,7 @@
 # React Native for Web
 
+[![Join the chat at https://gitter.im/necolas/react-native-web](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/necolas/react-native-web?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
 
