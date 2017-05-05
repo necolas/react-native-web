@@ -1,11 +1,7 @@
-import Animated from '../../apis/Animated';
-import Dimensions from '../../apis/Dimensions';
-import StyleSheet from '../../apis/StyleSheet';
+import React, { Component } from 'react';
 import View from '../View';
-import React, { Component, PropTypes } from 'react';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import ModalPropTypes from './ModalPropTypes';
-import RenderToTopLayer from './RenderToTopLayout';
+import RenderToTopLayer from './RenderToTopLayer';
 
 const StyleComponent = ()=>
   <style
@@ -48,14 +44,13 @@ const StyleComponent = ()=>
         }
       `
     }}
-  >
-  </style>;
+   />;
 
 
 class Modal extends Component {
   static displayName = 'Modal';
 
-  static propTypes = ModalProptypes;
+  // static propTypes = ModalProptypes;
 
   static defaultProps = {
     animationType: 'none',
@@ -64,17 +59,24 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible } = this.props;
-    return (<RenderToTopLayer transparent={transparent}>
-      <StyleComponent/>
-      <CSSTransitionGroup
-        transitionName={ animationType }
-        transitionEnter = { animationType!="none" }
-        transitionLeave = { animationType!="none" }
+    console.log(this.props);
+    return (
+      <RenderToTopLayer
+        transparent={transparent}
       >
-        {visible && ...this.props.children}
+      <CSSTransitionGroup component="div" style={{display:'flex',flex:1}}
+        transitionEnter = { animationType != 'none' }
+        transitionLeave = { animationType != 'none' }
+        transitionName={ animationType }
+      >
+        {visible && this.props.children}
         </CSSTransitionGroup>
     </RenderToTopLayer>)
   }
 }
+
+
+{/*<RenderToLayer render={this.renderLayer} open={true} useLayerForClickAway={false} />*/}
+
 
 export default Modal;
