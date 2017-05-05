@@ -25,6 +25,8 @@ class View extends Component {
 
   static propTypes = ViewPropTypes;
 
+  domRef = undefined;
+
   static childContextTypes = {
     isInAButtonView: bool
   };
@@ -35,9 +37,14 @@ class View extends Component {
 
   getChildContext() {
     const isInAButtonView =
-      AccessibilityUtil.propsToAriaRole(this.props) === 'button' || this.context.isInAButtonView;
+      AccessibilityUtil.propsToAriaRole(this.props) === 'button' ||
+      this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
+
+  bindRef = element => {
+    this.domRef = element;
+  };
 
   render() {
     const {
@@ -56,10 +63,13 @@ class View extends Component {
     const { isInAButtonView } = this.context;
 
     otherProps.style = [styles.initial, style];
+    otherProps.ref = this.bindRef;
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
-      const hitSlopChild = createDOMElement('span', { style: [styles.hitSlop, hitSlopStyle] });
+      const hitSlopChild = createDOMElement('span', {
+        style: [styles.hitSlop, hitSlopStyle]
+      });
       otherProps.children = React.Children.toArray(otherProps.children);
       otherProps.children.unshift(hitSlopChild);
       otherProps.style.unshift(styles.hasHitSlop);

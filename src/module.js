@@ -36,12 +36,18 @@ export { default as Switch } from './components/Switch';
 export { default as Text } from './components/Text';
 export { default as TextInput } from './components/TextInput';
 export { default as Touchable } from './components/Touchable/Touchable';
-export { default as TouchableHighlight } from './components/Touchable/TouchableHighlight';
-export { default as TouchableOpacity } from './components/Touchable/TouchableOpacity';
+export {
+  default as TouchableHighlight
+} from './components/Touchable/TouchableHighlight';
+export {
+  default as TouchableOpacity
+} from './components/Touchable/TouchableOpacity';
 export {
   default as TouchableWithoutFeedback
 } from './components/Touchable/TouchableWithoutFeedback';
 export { default as View } from './components/View';
+export { default as VirtualizedList } from './components/VirtualizedList';
+export { default as FlatList } from './components/FlatList';
 
 // propTypes
 export { default as ColorPropType } from './propTypes/ColorPropType';

@@ -13,7 +13,8 @@ import TextInput from './components/TextInput';
 import Touchable from './components/Touchable/Touchable';
 import TouchableHighlight from './components/Touchable/TouchableHighlight';
 import TouchableOpacity from './components/Touchable/TouchableOpacity';
-import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
+import TouchableWithoutFeedback
+  from './components/Touchable/TouchableWithoutFeedback';
 import View from './components/View';
 
 // modules
