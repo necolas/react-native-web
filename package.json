@@ -60,7 +60,7 @@
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.3",
+    "webpack": "^2.5.0",
     "webpack-bundle-analyzer": "^2.4.0"
   },
   "peerDependencies": {
