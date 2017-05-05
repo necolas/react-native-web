@@ -23,7 +23,7 @@ If `true`, disable all interactions for this element.
 
 This function is called on press.
 
-testID: ?string
+**testID**: ?string
 
 Used to locate this view in end-to-end tests.
 
