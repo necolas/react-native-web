@@ -15,9 +15,9 @@ import invariant from 'fbjs/lib/invariant';
 import ReactPropTypeLocationNames from '../vendor/ReactPropTypeLocationNames';
 import ReactPropTypesSecret from '../vendor/ReactPropTypesSecret';
 
-function createStrictShapeTypeChecker(
-  shapeTypes: { [key: string]: ReactPropsCheckType }
-): ReactPropsChainableTypeChecker {
+function createStrictShapeTypeChecker(shapeTypes: {
+  [key: string]: ReactPropsCheckType
+}): ReactPropsChainableTypeChecker {
   function checkType(isRequired, props, propName, componentName, location?) {
     if (!props[propName]) {
       if (isRequired) {
