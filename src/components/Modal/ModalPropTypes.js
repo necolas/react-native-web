@@ -1,12 +1,8 @@
-import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
-import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
-import ViewStylePropTypes from './ViewStylePropTypes';
-import { any, bool, func, oneOf ,arrayOf } from 'prop-types';
+import { bool, func, oneOf ,arrayOf , deprecatedPropType } from 'prop-types';
 /**
  * Copy from react-native
  */
-export default ModalPropTypes = {
+const ModalPropTypes = {
     /**
      * The `animationType` prop controls how the modal animates.
      *
@@ -34,7 +30,7 @@ export default ModalPropTypes = {
      * The `onRequestClose` callback is called when the user taps the hardware back button.
      * @platform android
      */
-    onRequestClose: Platform.OS === 'android' ? func.isRequired : func,
+    onRequestClose: func,
     /**
      * The `onShow` prop allows passing a function that will be called once the modal has been shown.
      */
@@ -57,3 +53,4 @@ export default ModalPropTypes = {
     onOrientationChange: func,
 }
 
+export default ModalPropTypes;

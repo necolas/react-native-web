@@ -1,14 +1,10 @@
-import Animated from '../../apis/Animated';
-import Dimensions from '../../apis/Dimensions';
-import StyleSheet from '../../apis/StyleSheet';
-import View from '../View';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import ModalPropTypes from './ModalPropTypes';
 import RenderToTopLayer from './RenderToTopLayout';
 
-const StyleComponent = ()=>
-  <style
+const StyleComponent = ()=> {
+  return <style
     dangerouslySetInnerHTML={{
       __html:`
         .slide-enter {
@@ -48,14 +44,14 @@ const StyleComponent = ()=>
         }
       `
     }}
-  >
-  </style>;
+  />
+}
 
 
 class Modal extends Component {
   static displayName = 'Modal';
 
-  static propTypes = ModalProptypes;
+  static propTypes = ModalPropTypes;
 
   static defaultProps = {
     animationType: 'none',
@@ -64,14 +60,14 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible } = this.props;
-    return (<RenderToTopLayer transparent={transparent}>
+    return (<RenderToTopLayer transparent={ transparent }>
       <StyleComponent/>
       <CSSTransitionGroup
+        transitionEnter = { animationType!=='none' }
+        transitionLeave = { animationType!=='none' }
         transitionName={ animationType }
-        transitionEnter = { animationType!="none" }
-        transitionLeave = { animationType!="none" }
       >
-        {visible && ...this.props.children}
+        { visible && this.props.children }
         </CSSTransitionGroup>
     </RenderToTopLayer>)
   }
