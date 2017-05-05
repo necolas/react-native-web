@@ -9,6 +9,7 @@ import StyleSheet from './apis/StyleSheet';
 // components
 import Image from './components/Image';
 import Text from './components/Text';
+import Modal from './components/Modal';
 import TextInput from './components/TextInput';
 import Touchable from './components/Touchable/Touchable';
 import TouchableHighlight from './components/Touchable/TouchableHighlight';
@@ -33,6 +34,7 @@ const ReactNativeCore = {
   StyleSheet,
   // components
   Image,
+  Modal,
   Text,
   TextInput,
   Touchable,

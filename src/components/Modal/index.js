@@ -3,8 +3,8 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import ModalPropTypes from './ModalPropTypes';
 import RenderToTopLayer from './RenderToTopLayout';
 
-const StyleComponent = ()=> {
-  return <style
+const StyleComponent = ()=>
+  <style
     dangerouslySetInnerHTML={{
       __html:`
         .slide-enter {
@@ -44,8 +44,7 @@ const StyleComponent = ()=> {
         }
       `
     }}
-  />
-}
+   />;
 
 
 class Modal extends Component {
@@ -60,14 +59,16 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible } = this.props;
-    return (<RenderToTopLayer transparent={ transparent }>
-      <StyleComponent/>
-      <CSSTransitionGroup
-        transitionEnter = { animationType!=='none' }
-        transitionLeave = { animationType!=='none' }
+    return (
+      <RenderToTopLayer
+        transparent={transparent}
+      >
+      <CSSTransitionGroup component="div" style={{display:'flex',flex:1}}
+        transitionEnter = { animationType != 'none' }
+        transitionLeave = { animationType != 'none' }
         transitionName={ animationType }
       >
-        { visible && this.props.children }
+        {visible && this.props.children}
         </CSSTransitionGroup>
     </RenderToTopLayer>)
   }
