@@ -37,6 +37,10 @@ using [create-react-app](https://github.com/facebookincubator/create-react-app)
 (which supports `react-native-web` out-of-the-box once installed) and
 [react-native-web-starter](https://github.com/grabcode/react-native-web-starter).
 
+## Example App
+
+This repo contains an [example app](/example_app) with a complete webpack configuration. See the [README](/example_app/README.md) for more information.
+
 ## Documentation
 
 Guides:

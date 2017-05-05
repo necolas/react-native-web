@@ -5,9 +5,11 @@ polyfill.
 
 ## Webpack and Babel
 
-[Webpack](webpack.js.org) is a popular build tool for web apps. Below is an
-example of how to configure a build that uses [Babel](https://babeljs.io/) to
+[Webpack](webpack.js.org) is a popular build tool for web apps. Below is a
+basic example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
+
+See the [example app](/example_app/README.md) for a complete webpack configuration that is optimized for development and production.
 
 ```js
 // webpack.config.js
