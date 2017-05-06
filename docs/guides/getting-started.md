@@ -1,5 +1,14 @@
 # Getting started
 
+This guide will help you to correctly configure build and test tools to work
+with React Native for Web.
+
+Alternatively, you can quickly setup a local project using
+[create-react-app](https://github.com/facebookincubator/create-react-app)
+(which supports `react-native-web` out-of-the-box once installed),
+[react-native-web-starter](https://github.com/grabcode/react-native-web-starter),
+or [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack).
+
 It is recommended that your application provide a `Promise` and `Array.from`
 polyfill.
 
@@ -76,10 +85,6 @@ module.exports = {
 }
 ```
 
-A more complex example setup for web apps can be found in various starter kits
-(e.g., create-react-app and
-[react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack))
-
 Please refer to the Webpack documentation for more information.
 
 ## Jest
@@ -144,8 +149,8 @@ AppRegistry.runApplication('App', {
 })
 ```
 
-Rendering within `ReactDOM.render` also works when introduce `react-native-web`
-to an existing web app, but it is not recommended oherwise.
+Rendering within `ReactDOM.render` also works when introducing
+`react-native-web` to an existing web app, but otherwise it is not recommended.
 
 ## Server-side rendering
 
@@ -164,4 +169,15 @@ AppRegistry.registerComponent('App', () => AppContainer)
 // prerender the app
 const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
+
+// construct HTML document
+const document = `
+<!DOCTYPE html>
+<html>
+<head>
+${stylesheet}
+</head>
+<body>
+${initialHTML}
+`
 ```
