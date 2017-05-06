@@ -2,11 +2,16 @@
 import React from 'react';
 import StyleSheet from 'react-native/apis/StyleSheet';
 import registry from 'react-native/apis/StyleSheet/registry';
-import createDOMProps from 'react-native/modules/createDOMProps';
 
-const View = props => (
-  <div {...createDOMProps(props, style => registry.resolve([styles.root, style]))} />
-);
+const emptyObject = {};
+
+class View extends React.Component {
+  render() {
+    const { style, ...other } = this.props;
+    const styleProps = registry.resolve([styles.root, style]) || emptyObject;
+    return <div {...other} {...styleProps} />;
+  }
+}
 
 const styles = StyleSheet.create({
   root: {

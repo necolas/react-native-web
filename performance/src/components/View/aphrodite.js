@@ -2,7 +2,12 @@
 import React from 'react';
 import { css, StyleSheet } from 'aphrodite';
 
-const View = ({ style, ...other }) => <div {...other} className={css(styles.root, style)} />;
+class View extends React.Component {
+  render() {
+    const { style, ...other } = this.props;
+    return <div {...other} className={css(styles.root, style)} />;
+  }
+}
 
 const styles = StyleSheet.create({
   root: {

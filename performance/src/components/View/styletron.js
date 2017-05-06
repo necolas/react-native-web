@@ -6,9 +6,12 @@ import React from 'react';
 
 export const styletron = new Styletron();
 
-const View = ({ style, ...other }) => (
-  <div {...other} className={classnames(viewStyle, ...style)} />
-);
+class View extends React.Component {
+  render() {
+    const { style, ...other } = this.props;
+    return <div {...other} className={classnames(viewStyle, ...style)} />;
+  }
+}
 
 const viewStyle = injectStylePrefixed(styletron, {
   alignItems: 'stretch',

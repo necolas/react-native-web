@@ -3,9 +3,12 @@ import classnames from 'classnames';
 import injectSheet from 'react-jss';
 import React from 'react';
 
-const View = ({ classes, className, ...other }) => (
-  <div {...other} className={classnames(classes.root, className)} />
-);
+class View extends React.Component {
+  render() {
+    const { classes, className, ...other } = this.props;
+    return <div {...other} className={classnames(classes.root, className)} />;
+  }
+}
 
 const styles = {
   root: {
