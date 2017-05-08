@@ -1,4 +1,4 @@
-import { bool, func, oneOf ,arrayOf , deprecatedPropType } from 'prop-types';
+import { bool, func, oneOf ,arrayOf } from 'prop-types';
 /**
  * Copy from react-native
  */
@@ -35,10 +35,6 @@ const ModalPropTypes = {
      * The `onShow` prop allows passing a function that will be called once the modal has been shown.
      */
     onShow: func,
-    animated: deprecatedPropType(
-      bool,
-      'Use the `animationType` prop instead.'
-    ),
     /**
      * The `supportedOrientations` prop allows the modal to be rotated to any of the specified orientations.
      * On iOS, the modal is still restricted by what's specified in your app's Info.plist's UISupportedInterfaceOrientations field.

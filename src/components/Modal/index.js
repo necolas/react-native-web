@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import ModalPropTypes from './ModalPropTypes';
-import RenderToTopLayer from './RenderToTopLayout';
+import RenderToTopLayer from './RenderToTopLayer';
 
 const StyleComponent = ()=>
   <style
