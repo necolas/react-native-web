@@ -1,11 +1,15 @@
-import {Component} from 'react';
-import PropTypes from 'prop-types';
-import {unstable_renderSubtreeIntoContainer, unmountComponentAtNode} from 'react-dom';
+import { Component } from 'react';
+import { bool, number, func } from 'prop-types';
+import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 
-// import Dom from '../utils/dom';
-
-// heavily inspired by https://github.com/Khan/react-components/blob/master/js/layered-component-mixin.jsx
 class RenderToLayer extends Component {
+  static propTypes = {
+    closeTimeout: number,
+    onShow: func,
+    showTimeout: number,
+    transparent: bool,
+    visible: bool,
+  }
 
   componentDidMount() {
     this.renderLayer();
@@ -17,27 +21,10 @@ class RenderToLayer extends Component {
 
   componentWillUnmount() {
     this.unrenderLayer();
+    if (this.closeHandler) {
+      clearTimeout(this.closeHandler);
+    }
   }
-
-/*  onClickAway = (event) => {
-    if (event.defaultPrevented) {
-      return;
-    }
-
-    if (!this.props.componentClickAway) {
-      return;
-    }
-
-    if (!this.props.open) {
-      return;
-    }
-
-    const el = this.layer;
-    if (event.target !== el && event.target === window ||
-      (document.documentElement.contains(event.target))) {
-      this.props.componentClickAway(event);
-    }
-  };*/
 
   getLayer() {
     return this.layer;
@@ -48,36 +35,63 @@ class RenderToLayer extends Component {
       return;
     }
 
-      this.layer.style.position = 'relative';
-      this.layer.removeEventListener('touchstart', this.onClickAway);
-      this.layer.removeEventListener('click', this.onClickAway);
     unmountComponentAtNode(this.layer);
     document.body.removeChild(this.layer);
     this.layer = null;
   }
 
-  /**
-   * By calling this method in componentDidMount() and
-   * componentDidUpdate(), you're effectively creating a "wormhole" that
-   * funnels React's hierarchical updates through to a DOM node on an
-   * entirely different part of the page.
-   */
   renderLayer() {
-      if (!this.layer) {
-        this.layer = document.createElement('div');
-        document.body.appendChild(this.layer);
+    if (!this.layer) {
+      this.layer = document.createElement('div');
+      document.body.appendChild(this.layer);
+      this.layer.style.display = 'flex';
+      this.layer.style.position = 'fixed';
+      this.layer.style.top = 0;
+      this.layer.style.bottom = 0;
+      this.layer.style.left = 0;
+      this.layer.style.right = 0;
+    }
+    if (this.props.transparent) {
+      this.layer.style['background-color'] = 'transparent';
+    } else {
+      this.layer.style['background-color'] = 'white';
+    }
 
-          this.layer.addEventListener('touchstart', this.onClickAway);
-          this.layer.addEventListener('click', this.onClickAway);
-          this.layer.style.display='flex';
-          this.layer.style.position = 'fixed';
-          this.layer.style.top = 0;
-          this.layer.style.bottom = 0;
-          this.layer.style.left = 0;
-          this.layer.style.right = 0;
-      }
-      const layerElement = this.props.children;
-      this.layerElement = unstable_renderSubtreeIntoContainer(this, layerElement, this.layer);
+    if (this.props.visible) {
+      this.layer.style.display = 'flex';
+      this.showRequest();
+    } else {
+      this.closeRequest();
+    }
+    const layerElement = this.props.children;
+    this.layerElement = unstable_renderSubtreeIntoContainer(this, layerElement, this.layer);
+  }
+
+  closeCallback() {
+    if (this.layer) {
+      this.layer.style.display = 'none';
+    }
+    this.closeHandler = null;
+  }
+
+  closeRequest() {
+    if (this.closeHandler)
+      return;
+    this.closeHandler = setTimeout(() => this.closeCallback(), this.props.closeTimeout || 0);
+  }
+
+  showCallback() {
+    if (this.props.onShow) {
+      this.props.onShow();
+    }
+    this.showHandler = null;
+  }
+
+  showRequest() {
+    if (this.showHandler) {
+      return;
+    }
+    this.showHandler = setTimeout(() => this.showCallback(), this.props.showTimeout || 0);
   }
 
   render() {

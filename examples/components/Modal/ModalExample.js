@@ -19,33 +19,63 @@ class ModalExample extends Component {
     super(props);
     this.state = {
       modalVisible: false,
+      animationType: 'none',
+      transparent: false,
     }
-    this.setModalVisible = this.setModalVisible.bind(this);
-  }
-
-  setModalVisible(visible) {
-    console.log(visible);
-    this.setState({modalVisible: visible});
   }
 
   render() {
     return (
       <View style={{display:'flex',flex:1}}>
         <Modal
-          animationType={'slide'}
-          transparent={false}
+          animationType={this.state.animationType}
+          transparent={this.state.transparent}
           visible={this.state.modalVisible}
+          onShow={this.state.onShow}
         >
           <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-            <View>
+            <View style={{backgroundColor:'gray',alignItems:'center',justifyContent:'center',width:200,height:100}}>
               <Text>Modal!</Text>
+              <Button onPress={()=>{
+                  this.setState({
+                    modalVisible:false
+                  })
+                }} title="Close"/>
             </View>
           </View>
         </Modal>
         <Button onPress={() => {
-          console.log('Press');
-          this.setModalVisible(true)
-        }} title="dialog"/>
+                  this.setState({
+                    modalVisible:true,
+                    animationType:'slide'
+                  })
+        }} title="animation slide"/>
+        <Button onPress={() => {
+                  this.setState({
+                    modalVisible:true,
+                    animationType:'fade'
+                  })
+        }} title="animation fade"/>
+        <Button onPress={() => {
+                  this.setState({
+                    modalVisible:true,
+                    animationType:'none'
+                  })
+        }} title="animation none"/>
+        <Button onPress={() => {
+                  this.setState({
+                    transparent:!this.state.transparent
+                  })
+        }} title="change transparent"/>
+        <Button onPress={() => {
+                  this.setState({
+                    modalVisible:true,
+                    animationType:'none',
+                    onShow:function(){
+                      alert('aaa');
+                    }
+                  })
+        }} title="with onShow"/>
       </View>
     );
   }
