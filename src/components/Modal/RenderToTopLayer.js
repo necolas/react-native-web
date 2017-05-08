@@ -76,7 +76,6 @@ class RenderToLayer extends Component {
           this.layer.style.left = 0;
           this.layer.style.right = 0;
       }
-      console.log('ddd');
       const layerElement = this.props.children;
       this.layerElement = unstable_renderSubtreeIntoContainer(this, layerElement, this.layer);
   }
