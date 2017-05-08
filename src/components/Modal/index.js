@@ -62,18 +62,18 @@ class Modal extends Component {
     const { animationType, transparent, visible, onShow } = this.props;
     return (
       <RenderToTopLayer
-        transparent={transparent}
         closeTimeout={animationType === 'none' ? 0 : 300}
-        showTimeout={animationType === 'none' ? 0 : 500}
-        visible={visible}
         onShow={onShow}
+        showTimeout={animationType === 'none' ? 0 : 500}
+        transparent={transparent}
+        visible={visible}
       >
         <View style={{ flexDirection: 'column', flex: 1 }}>
           <StyleComponent />
           <CSSTransitionGroup component="div" style={{ display: 'flex', flex: 1 }}
-            transitionEnter={animationType != 'none'}
+            transitionEnter={animationType !== 'none'}
             transitionEnterTimeout={500}
-            transitionLeave={animationType != 'none'}
+            transitionLeave={animationType !== 'none'}
             transitionLeaveTimeout={300}
             transitionName={animationType}
           >

@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import { bool, number, func } from 'prop-types';
-import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
+import { bool, number, func , element } from 'prop-types';
+import { unstable_renderSubtreeIntoContainer , unmountComponentAtNode } from 'react-dom';
 
 class RenderToLayer extends Component {
   static propTypes = {
+    children: element.isRequired,
     closeTimeout: number,
     onShow: func,
     showTimeout: number,
@@ -51,19 +52,20 @@ class RenderToLayer extends Component {
       this.layer.style.left = 0;
       this.layer.style.right = 0;
     }
-    if (this.props.transparent) {
+    const { transparent=true , visible =true , children } = this.props;
+    if (transparent) {
       this.layer.style['background-color'] = 'transparent';
     } else {
       this.layer.style['background-color'] = 'white';
     }
 
-    if (this.props.visible) {
+    if (visible) {
       this.layer.style.display = 'flex';
       this.showRequest();
     } else {
       this.closeRequest();
     }
-    const layerElement = this.props.children;
+    const layerElement = children;
     this.layerElement = unstable_renderSubtreeIntoContainer(this, layerElement, this.layer);
   }
 
