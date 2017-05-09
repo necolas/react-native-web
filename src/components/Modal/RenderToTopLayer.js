@@ -2,13 +2,12 @@ import { Component } from 'react';
 import { bool, number, func , element } from 'prop-types';
 import { unstable_renderSubtreeIntoContainer , unmountComponentAtNode } from 'react-dom';
 
-class RenderToLayer extends Component {
+class RenderToTopLayer extends Component {
   static propTypes = {
     children: element.isRequired,
     closeTimeout: number,
     onShow: func,
     showTimeout: number,
-    transparent: bool,
     visible: bool,
   }
 
@@ -45,19 +44,8 @@ class RenderToLayer extends Component {
     if (!this.layer) {
       this.layer = document.createElement('div');
       document.body.appendChild(this.layer);
-      this.layer.style.display = 'flex';
-      this.layer.style.position = 'fixed';
-      this.layer.style.top = 0;
-      this.layer.style.bottom = 0;
-      this.layer.style.left = 0;
-      this.layer.style.right = 0;
     }
-    const { transparent=true , visible =true , children } = this.props;
-    if (transparent) {
-      this.layer.style['background-color'] = 'transparent';
-    } else {
-      this.layer.style['background-color'] = 'white';
-    }
+    const { visible =true , children } = this.props;
 
     if (visible) {
       this.layer.style.display = 'flex';
@@ -101,4 +89,4 @@ class RenderToLayer extends Component {
   }
 }
 
-export default RenderToLayer;
+export default RenderToTopLayer;
