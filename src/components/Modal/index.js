@@ -61,7 +61,7 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible, onShow } = this.props;
-    var contentStyles = [ styles.modalConent ];
+    const contentStyles = [ styles.modalConent ];
     contentStyles.push(transparent?styles.transparent:styles.noTransparent);
     return (
       <RenderToTopLayer
