@@ -29,6 +29,10 @@ static **getInitialURL**()
 
 A promise that gives the current URL.
 
+static **openURL**(url: string)
+
+Returns a Promise that resolves if it successfully opens the URL, and rejects if not.
+
 ## Examples
 
 In this example, let's say your app lives on `https://app.com`. When you call `window.postMessage('foobar', 'https://app.com')`

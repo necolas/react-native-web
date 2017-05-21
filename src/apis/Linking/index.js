@@ -35,7 +35,7 @@ class Linking {
     return Promise.resolve(window.location.href);
   }
 
-  static openURL(url) {
+  static openURL(url: string) {
     try {
       iframeOpen(url);
       return Promise.resolve();
