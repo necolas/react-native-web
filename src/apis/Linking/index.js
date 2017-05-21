@@ -46,7 +46,7 @@ class Linking {
 }
 
 const onMessage = (nativeEvent: NativeEventType, handler: HandlerFunctionType) => {
-  const url = document.location.href;
+  const url = window.location.href;
   handler({ url, nativeEvent });
 };
 
