@@ -84,6 +84,7 @@
   ],
   "jest": {
     "testEnvironment": "jsdom",
+    "testURL": "https://github.com/necolas/react-native-web",
     "timers": "fake",
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"

@@ -29,4 +29,10 @@ describe('apis/Linking', () => {
       expect(() => Linking.removeEventListener('url', handler)).not.toThrow();
     });
   });
+
+  describe('getInitialURL', () => {
+    test('returns the current URL', () => {
+      return Linking.getInitialURL().then(url => expect(url).toEqual('https://github.com/necolas/react-native-web'));
+    });
+  });
 });

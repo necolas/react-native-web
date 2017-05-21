@@ -32,7 +32,7 @@ class Linking {
   }
 
   static getInitialURL() {
-    return Promise.resolve('');
+    return Promise.resolve(window.location.href);
   }
 
   static openURL(url) {
