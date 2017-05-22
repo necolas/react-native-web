@@ -99,6 +99,8 @@ class Switch extends PureComponent {
       onBlur: this._handleFocusState,
       onChange: this._handleChange,
       onFocus: this._handleFocusState,
+      onTouchStart: this._handleTouchStart,
+      onTouchEnd: this._handleTouchEnd,
       ref: this._setCheckboxRef,
       style: [styles.nativeControl, styles.cursorInherit],
       type: 'checkbox'
@@ -128,10 +130,16 @@ class Switch extends PureComponent {
   };
 
   _handleFocusState = (event: Object) => {
-    const isFocused = event.nativeEvent.type === 'focus';
-    const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
-    this._thumb.setNativeProps({ style: { boxShadow } });
+
   };
+
+  _handleTouchStart = (event: Object) => {
+    this._switchBoxShadow(event);
+  }
+
+  _handleTouchEnd = (event: Object) => {
+    this._switchBoxShadow(event);
+  }
 
   _setCheckboxRef = component => {
     this._checkbox = component;
@@ -139,6 +147,12 @@ class Switch extends PureComponent {
 
   _setThumbRef = component => {
     this._thumb = component;
+  };
+
+  _switchBoxShadow = (event: Object) => {
+    const isTouchStart = event.nativeEvent.type === 'touchstart';
+    const boxShadow = isTouchStart ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
+    this._thumb.setNativeProps({ style: { boxShadow } });
   };
 }
 
