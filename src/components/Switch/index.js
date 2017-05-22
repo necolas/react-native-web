@@ -96,11 +96,13 @@ class Switch extends PureComponent {
     const nativeControl = createDOMElement('input', {
       checked: value,
       disabled: disabled,
-      onBlur: this._handleFocusState,
       onChange: this._handleChange,
       onFocus: this._handleFocusState,
       onTouchStart: this._handleTouchStart,
       onTouchEnd: this._handleTouchEnd,
+      onClick: this._handleClick,
+      onMouseUp: this._handleMouseUp,
+      onMouseDown: this._handleMouseDown,
       ref: this._setCheckboxRef,
       style: [styles.nativeControl, styles.cursorInherit],
       type: 'checkbox'
@@ -129,8 +131,12 @@ class Switch extends PureComponent {
     onValueChange && onValueChange(event.nativeEvent.target.checked);
   };
 
-  _handleFocusState = (event: Object) => {
+  _handleMouseUp = (event: Object) => {
+    this._switchBoxShadow(event);
+  };
 
+  _handleMouseDown = (event: Object) => {
+    this._switchBoxShadow(event);
   };
 
   _handleTouchStart = (event: Object) => {
@@ -150,7 +156,8 @@ class Switch extends PureComponent {
   };
 
   _switchBoxShadow = (event: Object) => {
-    const isTouchStart = event.nativeEvent.type === 'touchstart';
+    const isTouchStart = event.nativeEvent.type === 'touchstart' ||
+                         event.nativeEvent.type === 'mousedown';
     const boxShadow = isTouchStart ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     this._thumb.setNativeProps({ style: { boxShadow } });
   };
