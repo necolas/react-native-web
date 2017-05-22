@@ -117,6 +117,20 @@ if (Platform.OS === 'web') {
 }
 ```
 
+When your platform-specific code is more complex, you should consider splitting the code out into separate files. React Native will detect when a file has a `.ios.`, `.android.` or `.web` extension and load the relevant platform file when required from other components. Please make sure, you have [correctly configured webpack](https://github.com/necolas/react-native-web/blob/master/docs/guides/getting-started.md#webpack-and-babel).
+
+For example, say you have the following files in your project:
+```
+BigButton.ios.js
+BigButton.android.js
+BigButton.web.js
+```
+You can then require the component as follows:
+```
+const BigButton = require('./BigButton');
+```
+React Native will automatically pick up the right file based on the running platform.
+
 ## Client-side rendering
 
 Rendering using `ReactNative`:
