@@ -117,6 +117,26 @@ if (Platform.OS === 'web') {
 }
 ```
 
+More significant platform differences should use platform-specific files (see
+the webpack configuration above for resolving `*.web.js` files):
+
+For example, with the following files in your project:
+
+```
+MyComponent.android.js
+MyComponent.ios.js
+MyComponent.web.js
+```
+
+And the following import:
+
+```js
+import MyComponent from './MyComponent';
+```
+
+React Native will automatically import the correct variant for each specific
+target platform.
+
 ## Client-side rendering
 
 Rendering using `ReactNative`:
