@@ -44,20 +44,4 @@ describe('components/Switch', () => {
   });
 
   // TODO: testing the grey circle
-  // describe('grey circle', () => {
-  //   const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
-  //   const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
-
-  //   test('it should show grey circle when user touch / clicks', () => {
-  //     const component = shallow(<Switch value={false} />);
-  //     component.find('input').simulate('click');
-
-  //     const style = component.props().children[1];
-  //     console.log(style);
-  //   });
-
-  //   test('it should dismiss grey circle immediately', () => {
-
-  //   });
-  // });
 });
