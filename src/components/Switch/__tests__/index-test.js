@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { render } from 'enzyme';
+import { render, shallow } from 'enzyme';
 import Switch from '..';
 
 describe('components/Switch', () => {
@@ -17,7 +17,6 @@ describe('components/Switch', () => {
     });
   });
 
-  /*
   describe('onValueChange', () => {
     test('when value is "false" it receives "true"', () => {
       const handleValueChange = (value) => expect(value === true).toBeTruthy();
@@ -31,7 +30,6 @@ describe('components/Switch', () => {
       component.find('input').simulate('click');
     });
   });
-  */
 
   describe('value', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
@@ -42,6 +40,16 @@ describe('components/Switch', () => {
     test('when "true" a checked checkbox is rendered', () => {
       const component = render(<Switch value />);
       expect(component).toMatchSnapshot();
+    });
+  });
+
+  describe('grey circle', () => {
+    test('it should show grey circle when user touch / clicks', () => {
+      const component = shallow
+    });
+
+    test('it should dismiss grey circle immediately', () => {
+
     });
   });
 });

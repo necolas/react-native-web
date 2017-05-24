@@ -98,10 +98,6 @@ class Switch extends PureComponent {
       disabled: disabled,
       onChange: this._handleChange,
       onFocus: this._handleFocusState,
-      onTouchStart: this._handleTouchStart,
-      onTouchEnd: this._handleTouchEnd,
-      onClick: this._handleClick,
-      onMouseUp: this._handleMouseUp,
       onMouseDown: this._handleMouseDown,
       ref: this._setCheckboxRef,
       style: [styles.nativeControl, styles.cursorInherit],
@@ -129,23 +125,15 @@ class Switch extends PureComponent {
   _handleChange = (event: Object) => {
     const { onValueChange } = this.props;
     onValueChange && onValueChange(event.nativeEvent.target.checked);
-  };
 
-  _handleMouseUp = (event: Object) => {
-    this._switchBoxShadow(event);
+    setTimeout(() => {
+      this._switchBoxShadow(false);
+    }, 250);
   };
 
   _handleMouseDown = (event: Object) => {
-    this._switchBoxShadow(event);
+    this._switchBoxShadow(true);
   };
-
-  _handleTouchStart = (event: Object) => {
-    this._switchBoxShadow(event);
-  }
-
-  _handleTouchEnd = (event: Object) => {
-    this._switchBoxShadow(event);
-  }
 
   _setCheckboxRef = component => {
     this._checkbox = component;
@@ -155,10 +143,8 @@ class Switch extends PureComponent {
     this._thumb = component;
   };
 
-  _switchBoxShadow = (event: Object) => {
-    const isTouchStart = event.nativeEvent.type === 'touchstart' ||
-                         event.nativeEvent.type === 'mousedown';
-    const boxShadow = isTouchStart ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
+  _switchBoxShadow = (on) => {
+    const boxShadow = on ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     this._thumb.setNativeProps({ style: { boxShadow } });
   };
 }
