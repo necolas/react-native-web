@@ -19,7 +19,7 @@
 // NB: Taken straight from: https://github.com/IvanVergiliev/2048-react/blob/master/src/board.js
 //     with no modification except to format it for CommonJS and fix lint/flow errors
 
-var rotateLeft = function (matrix) {
+var rotateLeft = function(matrix) {
   var rows = matrix.length;
   var columns = matrix[0].length;
   var res = [];
@@ -32,7 +32,7 @@ var rotateLeft = function (matrix) {
   return res;
 };
 
-var Tile = function (value?: number, row?: number, column?: number) {
+var Tile = function(value?: number, row?: number, column?: number) {
   this.value = value || 0;
   this.row = row || -1;
 
@@ -46,39 +46,42 @@ var Tile = function (value?: number, row?: number, column?: number) {
 
 Tile.id = 0;
 
-Tile.prototype.moveTo = function (row, column) {
+Tile.prototype.moveTo = function(row, column) {
   this.oldRow = this.row;
   this.oldColumn = this.column;
   this.row = row;
   this.column = column;
 };
 
-Tile.prototype.isNew = function () {
+Tile.prototype.isNew = function() {
   return this.oldRow === -1 && !this.mergedInto;
 };
 
-Tile.prototype.hasMoved = function () {
-  return (this.fromRow() !== -1 && (this.fromRow() !== this.toRow() || this.fromColumn() !== this.toColumn())) ||
-    this.mergedInto;
+Tile.prototype.hasMoved = function() {
+  return (
+    (this.fromRow() !== -1 &&
+      (this.fromRow() !== this.toRow() || this.fromColumn() !== this.toColumn())) ||
+    this.mergedInto
+  );
 };
 
-Tile.prototype.fromRow = function () {
+Tile.prototype.fromRow = function() {
   return this.mergedInto ? this.row : this.oldRow;
 };
 
-Tile.prototype.fromColumn = function () {
+Tile.prototype.fromColumn = function() {
   return this.mergedInto ? this.column : this.oldColumn;
 };
 
-Tile.prototype.toRow = function () {
+Tile.prototype.toRow = function() {
   return this.mergedInto ? this.mergedInto.row : this.row;
 };
 
-Tile.prototype.toColumn = function () {
+Tile.prototype.toColumn = function() {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function () {
+var Board = function() {
   this.tiles = [];
   this.cells = [];
   for (var i = 0; i < Board.size; ++i) {
@@ -89,7 +92,7 @@ var Board = function () {
   this.won = false;
 };
 
-Board.prototype.addTile = function () {
+Board.prototype.addTile = function() {
   var res = new Tile();
   Tile.apply(res, arguments);
   this.tiles.push(res);
@@ -98,10 +101,12 @@ Board.prototype.addTile = function () {
 
 Board.size = 4;
 
-Board.prototype.moveLeft = function () {
+Board.prototype.moveLeft = function() {
   var hasChanged = false;
   for (var row = 0; row < Board.size; ++row) {
-    var currentRow = this.cells[row].filter(function (tile) { return tile.value !== 0; });
+    var currentRow = this.cells[row].filter(function(tile) {
+      return tile.value !== 0;
+    });
     var resultRow = [];
     for (var target = 0; target < Board.size; ++target) {
       var targetTile = currentRow.length ? currentRow.shift() : this.addTile();
@@ -114,17 +119,17 @@ Board.prototype.moveLeft = function () {
         targetTile.value += tile2.value;
       }
       resultRow[target] = targetTile;
-      this.won = this.won || (targetTile.value === 2048);
-      hasChanged = hasChanged || (targetTile.value !== this.cells[row][target].value);
+      this.won = this.won || targetTile.value === 2048;
+      hasChanged = hasChanged || targetTile.value !== this.cells[row][target].value;
     }
     this.cells[row] = resultRow;
   }
   return hasChanged;
 };
 
-Board.prototype.setPositions = function () {
-  this.cells.forEach(function (row, rowIndex) {
-    row.forEach(function (tile, columnIndex) {
+Board.prototype.setPositions = function() {
+  this.cells.forEach(function(row, rowIndex) {
+    row.forEach(function(tile, columnIndex) {
       tile.oldRow = tile.row;
       tile.oldColumn = tile.column;
       tile.row = rowIndex;
@@ -136,12 +141,12 @@ Board.prototype.setPositions = function () {
 
 Board.fourProbability = 0.1;
 
-Board.prototype.addRandomTile = function () {
+Board.prototype.addRandomTile = function() {
   var emptyCells = [];
   for (var r = 0; r < Board.size; ++r) {
     for (var c = 0; c < Board.size; ++c) {
       if (this.cells[r][c].value === 0) {
-        emptyCells.push({r: r, c: c});
+        emptyCells.push({ r: r, c: c });
       }
     }
   }
@@ -151,7 +156,7 @@ Board.prototype.addRandomTile = function () {
   this.cells[cell.r][cell.c] = this.addTile(newValue);
 };
 
-Board.prototype.move = function (direction) {
+Board.prototype.move = function(direction) {
   // 0 -> left, 1 -> up, 2 -> right, 3 -> down
   this.clearOldTiles();
   for (var i = 0; i < direction; ++i) {
@@ -168,30 +173,34 @@ Board.prototype.move = function (direction) {
   return this;
 };
 
-Board.prototype.clearOldTiles = function () {
-  this.tiles = this.tiles.filter(function (tile) { return tile.markForDeletion === false; });
-  this.tiles.forEach(function (tile) { tile.markForDeletion = true; });
+Board.prototype.clearOldTiles = function() {
+  this.tiles = this.tiles.filter(function(tile) {
+    return tile.markForDeletion === false;
+  });
+  this.tiles.forEach(function(tile) {
+    tile.markForDeletion = true;
+  });
 };
 
-Board.prototype.hasWon = function () {
+Board.prototype.hasWon = function() {
   return this.won;
 };
 
 Board.deltaX = [-1, 0, 1, 0];
 Board.deltaY = [0, -1, 0, 1];
 
-Board.prototype.hasLost = function () {
+Board.prototype.hasLost = function() {
   var canMove = false;
   for (var row = 0; row < Board.size; ++row) {
     for (var column = 0; column < Board.size; ++column) {
-      canMove = canMove || (this.cells[row][column].value === 0);
+      canMove = canMove || this.cells[row][column].value === 0;
       for (var dir = 0; dir < 4; ++dir) {
         var newRow = row + Board.deltaX[dir];
         var newColumn = column + Board.deltaY[dir];
         if (newRow < 0 || newRow >= Board.size || newColumn < 0 || newColumn >= Board.size) {
           continue;
         }
-        canMove = canMove || (this.cells[row][column].value === this.cells[newRow][newColumn].value);
+        canMove = canMove || this.cells[row][column].value === this.cells[newRow][newColumn].value;
       }
     }
   }

@@ -1,5 +1,5 @@
 import createReactClass from 'create-react-class';
-import { Platform, Switch, Text, View } from 'react-native'
+import { Platform, Switch, Text, View } from 'react-native';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
@@ -30,19 +30,19 @@ var BasicSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,
-      falseSwitchIsOn: false,
+      falseSwitchIsOn: false
     };
   },
   render() {
     return (
       <View>
         <Switch
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginBottom: 10}}
+          onValueChange={value => this.setState({ falseSwitchIsOn: value })}
+          style={{ marginBottom: 10 }}
           value={this.state.falseSwitchIsOn}
         />
         <Switch
-          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+          onValueChange={value => this.setState({ trueSwitchIsOn: value })}
           value={this.state.trueSwitchIsOn}
         />
       </View>
@@ -54,23 +54,18 @@ var DisabledSwitchExample = createReactClass({
   render() {
     return (
       <View>
-        <Switch
-          disabled={true}
-          style={{marginBottom: 10}}
-          value={true} />
-        <Switch
-          disabled={true}
-          value={false} />
+        <Switch disabled={true} style={{ marginBottom: 10 }} value={true} />
+        <Switch disabled={true} value={false} />
       </View>
     );
-  },
+  }
 });
 
 var ColorSwitchExample = createReactClass({
   getInitialState() {
     return {
       colorTrueSwitchIsOn: true,
-      colorFalseSwitchIsOn: false,
+      colorFalseSwitchIsOn: false
     };
   },
   render() {
@@ -79,28 +74,28 @@ var ColorSwitchExample = createReactClass({
         <Switch
           activeThumbColor="#428bca"
           activeTrackColor="#A0C4E3"
-          onValueChange={(value) => this.setState({colorFalseSwitchIsOn: value})}
-          style={{marginBottom: 10}}
+          onValueChange={value => this.setState({ colorFalseSwitchIsOn: value })}
+          style={{ marginBottom: 10 }}
           value={this.state.colorFalseSwitchIsOn}
         />
         <Switch
           activeThumbColor="#5CB85C"
           activeTrackColor="#ADDAAD"
-          onValueChange={(value) => this.setState({colorTrueSwitchIsOn: value})}
+          onValueChange={value => this.setState({ colorTrueSwitchIsOn: value })}
           thumbColor="#EBA9A7"
           trackColor="#D9534F"
           value={this.state.colorTrueSwitchIsOn}
         />
       </View>
     );
-  },
+  }
 });
 
 var EventSwitchExample = createReactClass({
   getInitialState() {
     return {
       eventSwitchIsOn: false,
-      eventSwitchRegressionIsOn: true,
+      eventSwitchRegressionIsOn: true
     };
   },
   render() {
@@ -108,24 +103,28 @@ var EventSwitchExample = createReactClass({
       <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
         <View>
           <Switch
-            onValueChange={(value) => this.setState({eventSwitchIsOn: value})}
-            style={{marginBottom: 10}}
-            value={this.state.eventSwitchIsOn} />
+            onValueChange={value => this.setState({ eventSwitchIsOn: value })}
+            style={{ marginBottom: 10 }}
+            value={this.state.eventSwitchIsOn}
+          />
           <Switch
-            onValueChange={(value) => this.setState({eventSwitchIsOn: value})}
-            style={{marginBottom: 10}}
-            value={this.state.eventSwitchIsOn} />
+            onValueChange={value => this.setState({ eventSwitchIsOn: value })}
+            style={{ marginBottom: 10 }}
+            value={this.state.eventSwitchIsOn}
+          />
           <Text>{this.state.eventSwitchIsOn ? 'On' : 'Off'}</Text>
         </View>
         <View>
           <Switch
-            onValueChange={(value) => this.setState({eventSwitchRegressionIsOn: value})}
-            style={{marginBottom: 10}}
-            value={this.state.eventSwitchRegressionIsOn} />
+            onValueChange={value => this.setState({ eventSwitchRegressionIsOn: value })}
+            style={{ marginBottom: 10 }}
+            value={this.state.eventSwitchRegressionIsOn}
+          />
           <Switch
-            onValueChange={(value) => this.setState({eventSwitchRegressionIsOn: value})}
-            style={{marginBottom: 10}}
-            value={this.state.eventSwitchRegressionIsOn} />
+            onValueChange={value => this.setState({ eventSwitchRegressionIsOn: value })}
+            style={{ marginBottom: 10 }}
+            value={this.state.eventSwitchRegressionIsOn}
+          />
           <Text>{this.state.eventSwitchRegressionIsOn ? 'On' : 'Off'}</Text>
         </View>
       </View>
@@ -137,20 +136,20 @@ var SizeSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,
-      falseSwitchIsOn: false,
+      falseSwitchIsOn: false
     };
   },
   render() {
     return (
       <View>
         <Switch
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginBottom: 10, height: '3rem' }}
+          onValueChange={value => this.setState({ falseSwitchIsOn: value })}
+          style={{ marginBottom: 10, height: '3rem' }}
           value={this.state.falseSwitchIsOn}
         />
         <Switch
-          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          style={{marginBottom: 10, width: 150 }}
+          onValueChange={value => this.setState({ trueSwitchIsOn: value })}
+          style={{ marginBottom: 10, width: 150 }}
           value={this.state.trueSwitchIsOn}
         />
       </View>
@@ -161,31 +160,42 @@ var SizeSwitchExample = createReactClass({
 var examples = [
   {
     title: 'set to true or false',
-    render(): ReactElement<any> { return <BasicSwitchExample />; }
+    render(): ReactElement<any> {
+      return <BasicSwitchExample />;
+    }
   },
   {
     title: 'disabled',
-    render(): ReactElement<any> { return <DisabledSwitchExample />; }
+    render(): ReactElement<any> {
+      return <DisabledSwitchExample />;
+    }
   },
   {
     title: 'change events',
-    render(): ReactElement<any> { return <EventSwitchExample />; }
+    render(): ReactElement<any> {
+      return <EventSwitchExample />;
+    }
   },
   {
     title: 'custom colors',
-    render(): ReactElement<any> { return <ColorSwitchExample />; }
+    render(): ReactElement<any> {
+      return <ColorSwitchExample />;
+    }
   },
   {
     title: 'custom size',
-    render(): ReactElement<any> { return <SizeSwitchExample />; }
+    render(): ReactElement<any> {
+      return <SizeSwitchExample />;
+    }
   },
   {
     title: 'controlled component',
-    render(): ReactElement<any> { return <Switch />; }
+    render(): ReactElement<any> {
+      return <Switch />;
+    }
   }
 ];
 
-examples.forEach((example) => {
-  storiesOf('component: Switch', module)
-    .add(example.title, () => example.render())
-})
+examples.forEach(example => {
+  storiesOf('component: Switch', module).add(example.title, () => example.render());
+});

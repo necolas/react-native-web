@@ -1,5 +1,5 @@
 import createReactClass from 'create-react-class';
-import { ProgressBar, StyleSheet, View } from 'react-native'
+import { ProgressBar, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import TimerMixin from 'react-timer-mixin';
@@ -32,7 +32,7 @@ var ProgressBarExample = createReactClass({
 
   getInitialState() {
     return {
-      progress: 0,
+      progress: 0
     };
   },
 
@@ -60,30 +60,29 @@ var ProgressBarExample = createReactClass({
         <ProgressBar style={styles.progressView} color="yellow" progress={this.getProgress(0.8)} />
       </View>
     );
-  },
+  }
 });
 
-const examples = [{
-  title: 'progress',
-  render() {
-    return (
-      <ProgressBarExample />
-    );
+const examples = [
+  {
+    title: 'progress',
+    render() {
+      return <ProgressBarExample />;
+    }
   },
-}, {
-  title: 'indeterminate',
-  render() {
-    return (
-      <ProgressBar indeterminate style={styles.progressView} trackColor='#D1E3F6' />
-    );
+  {
+    title: 'indeterminate',
+    render() {
+      return <ProgressBar indeterminate style={styles.progressView} trackColor="#D1E3F6" />;
+    }
   }
-}];
+];
 
 var styles = StyleSheet.create({
   container: {
     minWidth: 200,
     marginTop: -20,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   progressView: {
     marginTop: 20,
@@ -91,7 +90,6 @@ var styles = StyleSheet.create({
   }
 });
 
-examples.forEach((example) => {
-  storiesOf('component: ProgressBar', module)
-    .add(example.title, () => example.render())
-})
+examples.forEach(example => {
+  storiesOf('component: ProgressBar', module).add(example.title, () => example.render());
+});

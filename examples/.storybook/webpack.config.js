@@ -1,5 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
 const DEV = process.env.NODE_ENV !== 'production';
 
@@ -30,4 +30,4 @@ module.exports = {
       'react-native': path.join(__dirname, '../../src/module')
     }
   }
-}
+};

@@ -1,8 +1,5 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import Game2048 from './Game2048'
+import Game2048 from './Game2048';
 
-storiesOf('demo: Game2048', module)
-  .add('the game', () => (
-    <Game2048 />
-  ))
+storiesOf('demo: Game2048', module).add('the game', () => <Game2048 />);

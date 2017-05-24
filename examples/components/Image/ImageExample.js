@@ -1,7 +1,7 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action, addDecorator } from '@kadira/storybook';
-import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'react-native';
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -26,7 +26,8 @@ import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'reac
  * @flow
  */
 
-var base64Icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
+var base64Icon =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
 
 //var ImageCapInsetsExample = require('./ImageCapInsetsExample');
 const IMAGE_PREFETCH_URL = 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now();
@@ -37,12 +38,12 @@ var NetworkImageCallbackExample = createReactClass({
     return {
       events: [],
       startLoadPrefetched: false,
-      mountTime: new Date(),
+      mountTime: new Date()
     };
   },
 
   componentWillMount() {
-    this.setState({mountTime: new Date()});
+    this.setState({ mountTime: new Date() });
   },
 
   render: function() {
@@ -52,30 +53,36 @@ var NetworkImageCallbackExample = createReactClass({
       <View>
         <Image
           source={this.props.source}
-          style={[styles.base, {overflow: 'visible'}]}
+          style={[styles.base, { overflow: 'visible' }]}
           onLoadStart={() => this._loadEventFired(`✔ onLoadStart (+${new Date() - mountTime}ms)`)}
           onLoad={() => this._loadEventFired(`✔ onLoad (+${new Date() - mountTime}ms)`)}
           onLoadEnd={() => {
             this._loadEventFired(`✔ onLoadEnd (+${new Date() - mountTime}ms)`);
-            this.setState({startLoadPrefetched: true}, () => {
-              prefetchTask.then(() => {
-                this._loadEventFired(`✔ Prefetch OK (+${new Date() - mountTime}ms)`);
-              }, error => {
-                this._loadEventFired(`✘ Prefetch failed (+${new Date() - mountTime}ms)`);
-              });
+            this.setState({ startLoadPrefetched: true }, () => {
+              prefetchTask.then(
+                () => {
+                  this._loadEventFired(`✔ Prefetch OK (+${new Date() - mountTime}ms)`);
+                },
+                error => {
+                  this._loadEventFired(`✘ Prefetch failed (+${new Date() - mountTime}ms)`);
+                }
+              );
             });
           }}
         />
-        {this.state.startLoadPrefetched ?
-          <Image
-            source={this.props.prefetchedSource}
-            style={[styles.base, {overflow: 'visible'}]}
-            onLoadStart={() => this._loadEventFired(`✔ (prefetched) onLoadStart (+${new Date() - mountTime}ms)`)}
-            onLoad={() => this._loadEventFired(`✔ (prefetched) onLoad (+${new Date() - mountTime}ms)`)}
-            onLoadEnd={() => this._loadEventFired(`✔ (prefetched) onLoadEnd (+${new Date() - mountTime}ms)`)}
-          />
+        {this.state.startLoadPrefetched
+          ? <Image
+              source={this.props.prefetchedSource}
+              style={[styles.base, { overflow: 'visible' }]}
+              onLoadStart={() =>
+                this._loadEventFired(`✔ (prefetched) onLoadStart (+${new Date() - mountTime}ms)`)}
+              onLoad={() =>
+                this._loadEventFired(`✔ (prefetched) onLoad (+${new Date() - mountTime}ms)`)}
+              onLoadEnd={() =>
+                this._loadEventFired(`✔ (prefetched) onLoadEnd (+${new Date() - mountTime}ms)`)}
+            />
           : null}
-        <Text style={{marginTop: 20}}>
+        <Text style={{ marginTop: 20 }}>
           {this.state.events.join('\n')}
         </Text>
       </View>
@@ -83,8 +90,8 @@ var NetworkImageCallbackExample = createReactClass({
   },
 
   _loadEventFired(event) {
-    this.setState((state) => {
-      return state.events = [...state.events, event];
+    this.setState(state => {
+      return (state.events = [...state.events, event]);
     });
   }
 });
@@ -98,22 +105,27 @@ var NetworkImageExample = createReactClass({
     };
   },
   render: function() {
-    var loader = this.state.loading ?
-      <View style={styles.progress}>
-        <Text>{this.state.progress}%</Text>
-        <ActivityIndicator style={{marginLeft:5}} />
-      </View> : null;
-    return this.state.error ?
-      <Text>{this.state.error}</Text> :
-      <Image
-        source={this.props.source}
-        style={[styles.base, {overflow: 'visible'}]}
-        onLoadStart={(e) => this.setState({loading: true})}
-        onError={(e) => this.setState({error: e.nativeEvent.error, loading: false})}
-        onProgress={(e) => this.setState({progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)})}
-        onLoad={() => this.setState({loading: false, error: false})}>
-        {loader}
-      </Image>;
+    var loader = this.state.loading
+      ? <View style={styles.progress}>
+          <Text>{this.state.progress}%</Text>
+          <ActivityIndicator style={{ marginLeft: 5 }} />
+        </View>
+      : null;
+    return this.state.error
+      ? <Text>{this.state.error}</Text>
+      : <Image
+          source={this.props.source}
+          style={[styles.base, { overflow: 'visible' }]}
+          onLoadStart={e => this.setState({ loading: true })}
+          onError={e => this.setState({ error: e.nativeEvent.error, loading: false })}
+          onProgress={e =>
+            this.setState({
+              progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)
+            })}
+          onLoad={() => this.setState({ loading: false, error: false })}
+        >
+          {loader}
+        </Image>;
   }
 });
 
@@ -121,12 +133,12 @@ var ImageSizeExample = createReactClass({
   getInitialState: function() {
     return {
       width: 0,
-      height: 0,
+      height: 0
     };
   },
   componentDidMount: function() {
     Image.getSize(this.props.source.uri, (width, height) => {
-      this.setState({width, height});
+      this.setState({ width, height });
     });
   },
   render: function() {
@@ -147,7 +159,7 @@ var ImageSizeExample = createReactClass({
         />
       </View>
     );
-  },
+  }
 });
 
 /*
@@ -213,20 +225,24 @@ const examples = [
   {
     title: 'Plain Network Image',
     description: 'If the `source` prop `uri` property is prefixed with ' +
-    '"http", then it will be downloaded from the network.',
+      '"http", then it will be downloaded from the network.',
     render: function() {
       return (
         <Image
-          source={{ uri: 'http://facebook.github.io/react/img/logo_og.png', width: 1200, height: 630 }}
+          source={{
+            uri: 'http://facebook.github.io/react/img/logo_og.png',
+            width: 1200,
+            height: 630
+          }}
           style={styles.base}
         />
       );
-    },
+    }
   },
   {
     title: 'Plain Static Image',
     description: 'Static assets should be placed in the source code tree, and ' +
-    'required in the same way as JavaScript modules.',
+      'required in the same way as JavaScript modules.',
     render: function() {
       return (
         <View style={styles.horizontal}>
@@ -236,36 +252,40 @@ const examples = [
           {/*<Image source={require('./uie_comment_highlighted.png')} style={styles.icon} />*/}
         </View>
       );
-    },
+    }
   },
   {
     title: 'Image Loading Events',
     render: function() {
       return (
         <NetworkImageCallbackExample
-          source={{uri: 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now()}}
-          prefetchedSource={{uri: IMAGE_PREFETCH_URL}}
+          source={{ uri: 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now() }}
+          prefetchedSource={{ uri: IMAGE_PREFETCH_URL }}
         />
       );
-    },
+    }
   },
   {
     title: 'Error Handler',
     render: function() {
       return (
-        <NetworkImageExample source={{uri: 'http://TYPO_ERROR_facebook.github.io/react/img/logo_og.png'}} />
+        <NetworkImageExample
+          source={{ uri: 'http://TYPO_ERROR_facebook.github.io/react/img/logo_og.png' }}
+        />
       );
     },
-    platform: 'ios',
+    platform: 'ios'
   },
   {
     title: 'Image Download Progress',
     render: function() {
       return (
-        <NetworkImageExample source={{uri: 'http://origami.design/public/images/bird-logo.png?r=1'}}/>
+        <NetworkImageExample
+          source={{ uri: 'http://origami.design/public/images/bird-logo.png?r=1' }}
+        />
       );
     },
-    platform: 'ios',
+    platform: 'ios'
   },
   {
     title: 'defaultSource',
@@ -274,12 +294,12 @@ const examples = [
       return (
         <Image
           defaultSource={require('./bunny.png')}
-          source={{uri: 'http://facebook.github.io/origami/public/images/birds.jpg'}}
+          source={{ uri: 'http://facebook.github.io/origami/public/images/birds.jpg' }}
           style={styles.base}
         />
       );
     },
-    platform: 'ios',
+    platform: 'ios'
   },
   {
     title: 'Border Color',
@@ -288,15 +308,11 @@ const examples = [
         <View style={styles.horizontal}>
           <Image
             source={smallImage}
-            style={[
-              styles.base,
-              styles.background,
-              {borderWidth: 3, borderColor: '#f099f0'}
-            ]}
+            style={[styles.base, styles.background, { borderWidth: 3, borderColor: '#f099f0' }]}
           />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Border Width',
@@ -305,32 +321,25 @@ const examples = [
         <View style={styles.horizontal}>
           <Image
             source={smallImage}
-            style={[
-              styles.base,
-              styles.background,
-              {borderWidth: 5, borderColor: '#f099f0'}
-            ]}
+            style={[styles.base, styles.background, { borderWidth: 5, borderColor: '#f099f0' }]}
           />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Border Radius',
     render: function() {
       return (
         <View style={styles.horizontal}>
+          <Image style={[styles.base, { borderRadius: 5 }]} source={fullImage} />
           <Image
-            style={[styles.base, {borderRadius: 5}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {borderRadius: 19}]}
+            style={[styles.base, styles.leftMargin, { borderRadius: 19 }]}
             source={fullImage}
           />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Background Color',
@@ -339,71 +348,47 @@ const examples = [
         <View style={styles.horizontal}>
           <Image source={smallImage} style={styles.base} />
           <Image
-            style={[
-              styles.base,
-              styles.leftMargin,
-              {backgroundColor: 'rgba(0, 0, 100, 0.25)'}
-            ]}
+            style={[styles.base, styles.leftMargin, { backgroundColor: 'rgba(0, 0, 100, 0.25)' }]}
             source={smallImage}
           />
           <Image
-            style={[styles.base, styles.leftMargin, {backgroundColor: 'red'}]}
+            style={[styles.base, styles.leftMargin, { backgroundColor: 'red' }]}
             source={smallImage}
           />
           <Image
-            style={[styles.base, styles.leftMargin, {backgroundColor: 'black'}]}
+            style={[styles.base, styles.leftMargin, { backgroundColor: 'black' }]}
             source={smallImage}
           />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Opacity',
     render: function() {
       return (
         <View style={styles.horizontal}>
-          <Image
-            style={[styles.base, {opacity: 1}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {opacity: 0.8}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {opacity: 0.6}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {opacity: 0.4}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {opacity: 0.2}]}
-            source={fullImage}
-          />
-          <Image
-            style={[styles.base, styles.leftMargin, {opacity: 0}]}
-            source={fullImage}
-          />
+          <Image style={[styles.base, { opacity: 1 }]} source={fullImage} />
+          <Image style={[styles.base, styles.leftMargin, { opacity: 0.8 }]} source={fullImage} />
+          <Image style={[styles.base, styles.leftMargin, { opacity: 0.6 }]} source={fullImage} />
+          <Image style={[styles.base, styles.leftMargin, { opacity: 0.4 }]} source={fullImage} />
+          <Image style={[styles.base, styles.leftMargin, { opacity: 0.2 }]} source={fullImage} />
+          <Image style={[styles.base, styles.leftMargin, { opacity: 0 }]} source={fullImage} />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Nesting',
     render: function() {
       return (
-        <Image
-          style={{width: 60, height: 60, backgroundColor: 'transparent'}}
-          source={fullImage}>
+        <Image style={{ width: 60, height: 60, backgroundColor: 'transparent' }} source={fullImage}>
           <Text style={styles.nestedText}>
             React
           </Text>
         </Image>
       );
-    },
+    }
   },
   /*
   {
@@ -466,67 +451,59 @@ const examples = [
         <View>
           {[smallImage, fullImage].map((image, index) => {
             return (
-            <View key={index}>
-              <View style={styles.horizontal}>
-                <View>
-                  <Text style={[styles.resizeModeText]}>
-                    Contain
-                  </Text>
-                  <Image
-                    style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.contain}
-                    source={image}
-                  />
+              <View key={index}>
+                <View style={styles.horizontal}>
+                  <View>
+                    <Text style={[styles.resizeModeText]}>
+                      Contain
+                    </Text>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode={Image.resizeMode.contain}
+                      source={image}
+                    />
+                  </View>
+                  <View style={styles.leftMargin}>
+                    <Text style={[styles.resizeModeText]}>
+                      Cover
+                    </Text>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode={Image.resizeMode.cover}
+                      source={image}
+                    />
+                  </View>
                 </View>
-                <View style={styles.leftMargin}>
-                  <Text style={[styles.resizeModeText]}>
-                    Cover
-                  </Text>
-                  <Image
-                    style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.cover}
-                    source={image}
-                  />
-                </View>
-              </View>
-              <View style={styles.horizontal}>
-                <View>
-                  <Text style={[styles.resizeModeText]}>
-                    Stretch
-                  </Text>
-                  <Image
-                    style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.stretch}
-                    source={image}
-                  />
-                </View>
-                <View style={styles.leftMargin}>
-                  <Text style={[styles.resizeModeText]}>
-                    Repeat
-                  </Text>
-                  <Image
-                    style={styles.resizeMode}
-                    resizeMode={'repeat'}
-                    source={image}
-                  />
-                </View>
-                <View style={styles.leftMargin}>
-                  <Text style={[styles.resizeModeText]}>
-                    Center
-                  </Text>
-                  <Image
-                    style={styles.resizeMode}
-                    resizeMode={'center'}
-                    source={image}
-                  />
+                <View style={styles.horizontal}>
+                  <View>
+                    <Text style={[styles.resizeModeText]}>
+                      Stretch
+                    </Text>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode={Image.resizeMode.stretch}
+                      source={image}
+                    />
+                  </View>
+                  <View style={styles.leftMargin}>
+                    <Text style={[styles.resizeModeText]}>
+                      Repeat
+                    </Text>
+                    <Image style={styles.resizeMode} resizeMode={'repeat'} source={image} />
+                  </View>
+                  <View style={styles.leftMargin}>
+                    <Text style={[styles.resizeModeText]}>
+                      Center
+                    </Text>
+                    <Image style={styles.resizeMode} resizeMode={'center'} source={image} />
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
         </View>
       );
-    },
+    }
   },
   {
     title: 'Animated GIF',
@@ -534,23 +511,20 @@ const examples = [
       return (
         <Image
           style={styles.gif}
-          source={{uri: 'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'}}
+          source={{
+            uri: 'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'
+          }}
         />
       );
     },
-    platform: 'ios',
+    platform: 'ios'
   },
   {
     title: 'Base64 image',
     render: function() {
-      return (
-        <Image
-          style={styles.base64}
-          source={{uri: base64Icon, scale: 3}}
-        />
-      );
+      return <Image style={styles.base64} source={{ uri: base64Icon, scale: 3 }} />;
     },
-    platform: 'ios',
+    platform: 'ios'
   },
   /*
   {
@@ -569,9 +543,15 @@ const examples = [
   {
     title: 'Image Size',
     render: function() {
-      return <ImageSizeExample source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chestnut-mandibled_Toucan.jpg' }} />;
-    },
-  },
+      return (
+        <ImageSizeExample
+          source={{
+            uri: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chestnut-mandibled_Toucan.jpg'
+          }}
+        />
+      );
+    }
+  }
   /*
   {
     title: 'MultipleSourcesExample',
@@ -586,13 +566,13 @@ const examples = [
   */
 ];
 
-var fullImage = {uri: 'http://facebook.github.io/react/img/logo_og.png'};
-var smallImage = {uri: 'http://facebook.github.io/react/img/logo_small_2x.png'};
+var fullImage = { uri: 'http://facebook.github.io/react/img/logo_og.png' };
+var smallImage = { uri: 'http://facebook.github.io/react/img/logo_small_2x.png' };
 
 var styles = StyleSheet.create({
   base: {
     width: 38,
-    height: 38,
+    height: 38
   },
   progress: {
     flex: 1,
@@ -601,13 +581,13 @@ var styles = StyleSheet.create({
     width: 100
   },
   leftMargin: {
-    marginLeft: 10,
+    marginLeft: 10
   },
   background: {
     backgroundColor: '#222222'
   },
   sectionText: {
-    marginVertical: 6,
+    marginVertical: 6
   },
   nestedText: {
     marginLeft: 12,
@@ -623,32 +603,32 @@ var styles = StyleSheet.create({
   },
   resizeModeText: {
     fontSize: 11,
-    marginBottom: 3,
+    marginBottom: 3
   },
   icon: {
     width: 15,
-    height: 15,
+    height: 15
   },
   horizontal: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   gif: {
     flex: 1,
-    height: 200,
+    height: 200
   },
   base64: {
     flex: 1,
     height: 50,
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   touchableText: {
     fontWeight: '500',
-    color: 'blue',
-  },
+    color: 'blue'
+  }
 });
 
-examples.forEach((example) => {
+examples.forEach(example => {
   storiesOf('component: Image', module)
-    .addDecorator((renderStory) => <View style={{ width: '100%' }}>{renderStory()}</View>)
-    .add(example.title, () => example.render())
-})
+    .addDecorator(renderStory => <View style={{ width: '100%' }}>{renderStory()}</View>)
+    .add(example.title, () => example.render());
+});

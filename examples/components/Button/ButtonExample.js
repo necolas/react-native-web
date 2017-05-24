@@ -18,7 +18,7 @@ const examples = [
           accessibilityLabel="See an informative alert"
         />
       );
-    },
+    }
   },
   {
     title: 'Adjusted color',
@@ -34,15 +34,14 @@ const examples = [
           accessibilityLabel="Learn more about purple"
         />
       );
-    },
+    }
   },
   {
     title: 'Fit to text layout',
-    description: 'This layout strategy lets the title define the width of ' +
-      'the button',
+    description: 'This layout strategy lets the title define the width of ' + 'the button',
     render: function() {
       return (
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
             onPress={onButtonPress}
             title="This looks great!"
@@ -56,7 +55,7 @@ const examples = [
           />
         </View>
       );
-    },
+    }
   },
   {
     title: 'Disabled Button',
@@ -70,11 +69,10 @@ const examples = [
           accessibilityLabel="See an informative alert"
         />
       );
-    },
-  },
+    }
+  }
 ];
 
-examples.forEach((example) => {
-  storiesOf('component: Button', module)
-    .add(example.title, () => example.render());
+examples.forEach(example => {
+  storiesOf('component: Button', module).add(example.title, () => example.render());
 });

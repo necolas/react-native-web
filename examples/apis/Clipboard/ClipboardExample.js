@@ -1,4 +1,4 @@
-import { Clipboard, Text, TextInput, View } from 'react-native'
+import { Clipboard, Text, TextInput, View } from 'react-native';
 import React, { Component } from 'react';
 import { action, storiesOf } from '@kadira/storybook';
 
@@ -12,13 +12,17 @@ class ClipboardExample extends Component {
           placeholder={'Try pasting here afterwards'}
           style={{ borderWidth: 1, height: 200, marginVertical: 20 }}
         />
-        <Text onPress={this._handleGet}>(Clipboard.getString returns a Promise that always resolves to an empty string on web)</Text>
+        <Text onPress={this._handleGet}>
+          (Clipboard.getString returns a Promise that always resolves to an empty string on web)
+        </Text>
       </View>
-    )
+    );
   }
 
   _handleGet() {
-    Clipboard.getString().then((value) => { console.log(`Clipboard value: ${value}`) });
+    Clipboard.getString().then(value => {
+      console.log(`Clipboard value: ${value}`);
+    });
   }
 
   _handleSet() {
@@ -27,7 +31,4 @@ class ClipboardExample extends Component {
   }
 }
 
-storiesOf('api: Clipboard', module)
-  .add('setString', () => (
-    <ClipboardExample />
-  ));
+storiesOf('api: Clipboard', module).add('setString', () => <ClipboardExample />);

@@ -1,50 +1,50 @@
 import { storiesOf } from '@kadira/storybook';
-import { I18nManager, StyleSheet, TouchableHighlight, Text, View } from 'react-native'
+import { I18nManager, StyleSheet, TouchableHighlight, Text, View } from 'react-native';
 import React, { Component } from 'react';
 
 class I18nManagerExample extends Component {
   componentWillUnmount() {
-    I18nManager.setPreferredLanguageRTL(false)
+    I18nManager.setPreferredLanguageRTL(false);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text accessibilityRole='heading' style={styles.welcome}>
+        <Text accessibilityRole="heading" style={styles.welcome}>
           LTR/RTL layout example!
         </Text>
         <Text style={styles.text}>
           The writing direction of text is automatically determined by the browser, independent of the global writing direction of the app.
         </Text>
-        <Text style={[ styles.text, styles.rtlText ]}>
+        <Text style={[styles.text, styles.rtlText]}>
           أحب اللغة العربية
         </Text>
-        <Text style={[ styles.text, styles.textAlign ]}>
+        <Text style={[styles.text, styles.textAlign]}>
           textAlign toggles
         </Text>
         <View style={styles.horizontal}>
-          <View style={[ styles.box, { backgroundColor: 'lightblue' } ]}>
+          <View style={[styles.box, { backgroundColor: 'lightblue' }]}>
             <Text>One</Text>
           </View>
-          <View style={[ styles.box ]}>
+          <View style={[styles.box]}>
             <Text>Two</Text>
           </View>
         </View>
         <TouchableHighlight
           onPress={this._handleToggle}
           style={styles.toggle}
-          underlayColor='rgba(0,0,0,0.25)'
+          underlayColor="rgba(0,0,0,0.25)"
         >
           <Text>Toggle LTR/RTL</Text>
         </TouchableHighlight>
       </View>
-    )
+    );
   }
 
   _handleToggle = () => {
-    I18nManager.setPreferredLanguageRTL(!I18nManager.isRTL)
+    I18nManager.setPreferredLanguageRTL(!I18nManager.isRTL);
     this.forceUpdate();
-  }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10
   }
-})
+});
 
-storiesOf('api: I18nManager', module)
-  .add('RTL layout', () => (
-    <I18nManagerExample />
-  ))
+storiesOf('api: I18nManager', module).add('RTL layout', () => <I18nManagerExample />);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   root: {
@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function (renderStory) {
+export default function(renderStory) {
   return (
-    <View style={[ StyleSheet.absoluteFill, styles.root ]}>
+    <View style={[StyleSheet.absoluteFill, styles.root]}>
       {renderStory()}
     </View>
   );

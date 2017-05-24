@@ -1,6 +1,6 @@
 import React from 'react';
 import { action, storiesOf } from '@kadira/storybook';
-import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 const onScroll = action('ScrollView.onScroll');
 
@@ -31,13 +31,13 @@ storiesOf('component: ScrollView', module)
         style={styles.scrollViewStyle}
       >
         {Array.from({ length: 50 }).map((item, i) => (
-          <View key={i} style={[ styles.box, styles.horizontalBox ]}>
+          <View key={i} style={[styles.box, styles.horizontalBox]}>
             <Text>{i}</Text>
           </View>
         ))}
       </ScrollView>
     </View>
-  ))
+  ));
 
 const styles = StyleSheet.create({
   box: {
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     padding: 10
   }
-})
+});

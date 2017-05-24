@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -43,16 +43,16 @@ class TextEventsExample extends React.Component {
     curText: '<No Event>',
     prevText: '<No Event>',
     prev2Text: '<No Event>',
-    prev3Text: '<No Event>',
+    prev3Text: '<No Event>'
   };
 
-  updateText = (text) => {
-    this.setState((state) => {
+  updateText = text => {
+    this.setState(state => {
       return {
         curText: text,
         prevText: state.curText,
         prev2Text: state.prevText,
-        prev3Text: state.prev2Text,
+        prev3Text: state.prev2Text
       };
     });
   };
@@ -66,24 +66,21 @@ class TextEventsExample extends React.Component {
           autoCorrect={false}
           onFocus={() => this.updateText('onFocus')}
           onBlur={() => this.updateText('onBlur')}
-          onChange={(event) => this.updateText(
-            'onChange text: ' + event.nativeEvent.text
-          )}
-          onEndEditing={(event) => this.updateText(
-            'onEndEditing text: ' + event.nativeEvent.text
-          )}
-          onSubmitEditing={(event) => this.updateText(
-            'onSubmitEditing text: ' + event.nativeEvent.text
-          )}
-          onSelectionChange={(event) => this.updateText(
-            'onSelectionChange range: ' +
-              event.nativeEvent.selection.start + ',' +
-              event.nativeEvent.selection.end
-          )}
-          onKeyPress={(event) => {
+          onChange={event => this.updateText('onChange text: ' + event.nativeEvent.text)}
+          onEndEditing={event => this.updateText('onEndEditing text: ' + event.nativeEvent.text)}
+          onSubmitEditing={event =>
+            this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)}
+          onSelectionChange={event =>
+            this.updateText(
+              'onSelectionChange range: ' +
+                event.nativeEvent.selection.start +
+                ',' +
+                event.nativeEvent.selection.end
+            )}
+          onKeyPress={event => {
             this.updateText('onKeyPress key: ' + event.nativeEvent.key);
           }}
-          style={[ styles.default, { maxWidth: 200 } ]}
+          style={[styles.default, { maxWidth: 200 }]}
         />
         <Text style={styles.eventLabel}>
           {this.state.curText}{'\n'}
@@ -103,7 +100,7 @@ class AutoExpandingTextInput extends React.Component {
     super(props);
     this.state = {
       text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. The focus of React Native is on developer efficiency across all the platforms you care about — learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.',
-      height: 0,
+      height: 0
     };
   }
   render() {
@@ -111,13 +108,13 @@ class AutoExpandingTextInput extends React.Component {
       <TextInput
         {...this.props}
         multiline={true}
-        onChangeText={(text) => {
-          this.setState({text});
+        onChangeText={text => {
+          this.setState({ text });
         }}
-        onContentSizeChange={(event) => {
-          this.setState({height: event.nativeEvent.contentSize.height});
+        onContentSizeChange={event => {
+          this.setState({ height: event.nativeEvent.contentSize.height });
         }}
-        style={[styles.default, {height: Math.max(35, this.state.height)}]}
+        style={[styles.default, { height: Math.max(35, this.state.height) }]}
         value={this.state.text}
       />
     );
@@ -129,7 +126,7 @@ class RewriteExample extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = { text: '' };
   }
   render() {
     var limit = 20;
@@ -140,14 +137,14 @@ class RewriteExample extends React.Component {
         <TextInput
           multiline={false}
           maxLength={limit}
-          onChangeText={(text) => {
+          onChangeText={text => {
             text = text.replace(/ /g, '_');
-            this.setState({text});
+            this.setState({ text });
           }}
           style={styles.default}
           value={this.state.text}
         />
-        <Text style={[styles.remainder, {color: remainderColor}]}>
+        <Text style={[styles.remainder, { color: remainderColor }]}>
           {remainder}
         </Text>
       </View>
@@ -160,15 +157,15 @@ class RewriteExampleInvalidCharacters extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = { text: '' };
   }
   render() {
     return (
       <View style={styles.rewriteContainer}>
         <TextInput
           multiline={false}
-          onChangeText={(text) => {
-            this.setState({text: text.replace(/\s/g, '')});
+          onChangeText={text => {
+            this.setState({ text: text.replace(/\s/g, '') });
           }}
           style={styles.default}
           value={this.state.text}
@@ -183,10 +180,9 @@ class TokenizedTextExample extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: 'Hello #World'};
+    this.state = { text: 'Hello #World' };
   }
   render() {
-
     //define delimiter
     let delimiter = /\s+/;
 
@@ -216,8 +212,8 @@ class TokenizedTextExample extends React.Component {
           value={parts.join('')}
           multiline={true}
           style={styles.multiline}
-          onChangeText={(text) => {
-            this.setState({text});
+          onChangeText={text => {
+            this.setState({ text });
           }}
         />
       </View>
@@ -226,7 +222,7 @@ class TokenizedTextExample extends React.Component {
 }
 
 class BlurOnSubmitExample extends React.Component {
-  focusNextField = (nextField) => {
+  focusNextField = nextField => {
     this.refs[nextField].focus();
   };
 
@@ -281,10 +277,10 @@ class BlurOnSubmitExample extends React.Component {
 
 type SelectionExampleState = {
   selection: {
-    start: number;
-    end?: number;
-  };
-  value: string;
+    start: number,
+    end?: number
+  },
+  value: string
 };
 
 class SelectionExample extends React.Component {
@@ -295,13 +291,13 @@ class SelectionExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: {start: 0, end: 0},
+      selection: { start: 0, end: 0 },
       value: props.value
     };
   }
 
-  onSelectionChange({nativeEvent: {selection}}) {
-    this.setState({selection});
+  onSelectionChange({ nativeEvent: { selection } }) {
+    this.setState({ selection });
   }
 
   getRandomPosition() {
@@ -311,7 +307,7 @@ class SelectionExample extends React.Component {
 
   select(start, end) {
     this._textInput.focus();
-    this.setState({selection: {start, end}});
+    this.setState({ selection: { start, end } });
   }
 
   selectRandom() {
@@ -334,7 +330,7 @@ class SelectionExample extends React.Component {
       <View>
         <TextInput
           multiline={this.props.multiline}
-          onChangeText={(value) => this.setState({value})}
+          onChangeText={value => this.setState({ value })}
           onSelectionChange={this.onSelectionChange.bind(this)}
           ref={textInput => (this._textInput = textInput)}
           selection={this.state.selection}
@@ -368,7 +364,7 @@ class SelectionExample extends React.Component {
 
 var styles = StyleSheet.create({
   page: {
-    paddingBottom: 300,
+    paddingBottom: 300
   },
   default: {
     height: 26,
@@ -376,7 +372,7 @@ var styles = StyleSheet.create({
     borderColor: '#0f0f0f',
     flex: 1,
     fontSize: 13,
-    padding: 4,
+    padding: 4
   },
   multiline: {
     borderWidth: 0.5,
@@ -385,49 +381,49 @@ var styles = StyleSheet.create({
     fontSize: 13,
     height: 50,
     padding: 4,
-    marginBottom: 4,
+    marginBottom: 4
   },
   multilineWithFontStyles: {
     color: 'blue',
     fontWeight: 'bold',
     fontSize: 18,
     fontFamily: 'Cochin',
-    height: 60,
+    height: 60
   },
   multilineChild: {
     width: 50,
     height: 40,
     position: 'absolute',
     right: 5,
-    backgroundColor: 'red',
+    backgroundColor: 'red'
   },
   eventLabel: {
     margin: 3,
-    fontSize: 12,
+    fontSize: 12
   },
   labelContainer: {
     flexDirection: 'row',
     marginVertical: 2,
-    flex: 1,
+    flex: 1
   },
   label: {
     width: 115,
     alignItems: 'flex-end',
     marginRight: 10,
-    paddingTop: 2,
+    paddingTop: 2
   },
   rewriteContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   remainder: {
     textAlign: 'right',
-    width: 24,
+    width: 24
   },
   hashtag: {
     color: 'blue',
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 });
 
 const examples = [
@@ -463,28 +459,16 @@ const examples = [
       return (
         <View>
           <WithLabel label="none">
-            <TextInput
-              autoCapitalize="none"
-              style={styles.default}
-            />
+            <TextInput autoCapitalize="none" style={styles.default} />
           </WithLabel>
           <WithLabel label="sentences">
-            <TextInput
-              autoCapitalize="sentences"
-              style={styles.default}
-            />
+            <TextInput autoCapitalize="sentences" style={styles.default} />
           </WithLabel>
           <WithLabel label="words">
-            <TextInput
-              autoCapitalize="words"
-              style={styles.default}
-            />
+            <TextInput autoCapitalize="words" style={styles.default} />
           </WithLabel>
           <WithLabel label="characters">
-            <TextInput
-              autoCapitalize="characters"
-              style={styles.default}
-            />
+            <TextInput autoCapitalize="characters" style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -520,15 +504,12 @@ const examples = [
         //'decimal-pad',
         //'twitter',
         'web-search',
-        'numeric',
+        'numeric'
       ];
-      var examples = keyboardTypes.map((type) => {
+      var examples = keyboardTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
-            <TextInput
-              keyboardType={type}
-              style={styles.default}
-            />
+            <TextInput keyboardType={type} style={styles.default} />
           </WithLabel>
         );
       });
@@ -538,18 +519,11 @@ const examples = [
   {
     title: 'Keyboard appearance',
     render: function() {
-      var keyboardAppearance = [
-        'default',
-        'light',
-        'dark',
-      ];
-      var examples = keyboardAppearance.map((type) => {
+      var keyboardAppearance = ['default', 'light', 'dark'];
+      var examples = keyboardAppearance.map(type => {
         return (
           <WithLabel key={type} label={type}>
-            <TextInput
-              keyboardAppearance={type}
-              style={styles.default}
-            />
+            <TextInput keyboardAppearance={type} style={styles.default} />
           </WithLabel>
         );
       });
@@ -570,15 +544,12 @@ const examples = [
         'send',
         'yahoo',
         'done',
-        'emergency-call',
+        'emergency-call'
       ];
-      var examples = returnKeyTypes.map((type) => {
+      var examples = returnKeyTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
-            <TextInput
-              returnKeyType={type}
-              style={styles.default}
-            />
+            <TextInput returnKeyType={type} style={styles.default} />
           </WithLabel>
         );
       });
@@ -611,21 +582,17 @@ const examples = [
   },
   {
     title: 'Event handling',
-    render: function(): React.Element<any> { return <TextEventsExample />; },
+    render: function(): React.Element<any> {
+      return <TextEventsExample />;
+    }
   },
   {
     title: 'Colored input text',
     render: function() {
       return (
         <View>
-          <TextInput
-            style={[styles.default, {color: 'blue'}]}
-            defaultValue="Blue"
-          />
-          <TextInput
-            style={[styles.default, {color: 'green'}]}
-            defaultValue="Green"
-          />
+          <TextInput style={[styles.default, { color: 'blue' }]} defaultValue="Blue" />
+          <TextInput style={[styles.default, { color: 'green' }]} defaultValue="Green" />
         </View>
       );
     }
@@ -635,14 +602,10 @@ const examples = [
     render: function() {
       return (
         <View>
+          <TextInput style={styles.default} selectionColor={'green'} defaultValue="Highlight me" />
           <TextInput
             style={styles.default}
-            selectionColor={"green"}
-            defaultValue="Highlight me"
-          />
-          <TextInput
-            style={styles.default}
-            selectionColor={"rgba(86, 76, 205, 1)"}
+            selectionColor={'rgba(86, 76, 205, 1)'}
             defaultValue="Highlight me"
           />
         </View>
@@ -651,32 +614,20 @@ const examples = [
   },
   {
     title: 'Clear button mode',
-    render: function () {
+    render: function() {
       return (
         <View>
           <WithLabel label="never">
-            <TextInput
-              style={styles.default}
-              clearButtonMode="never"
-            />
+            <TextInput style={styles.default} clearButtonMode="never" />
           </WithLabel>
           <WithLabel label="while editing">
-            <TextInput
-              style={styles.default}
-              clearButtonMode="while-editing"
-            />
+            <TextInput style={styles.default} clearButtonMode="while-editing" />
           </WithLabel>
           <WithLabel label="unless editing">
-            <TextInput
-              style={styles.default}
-              clearButtonMode="unless-editing"
-            />
+            <TextInput style={styles.default} clearButtonMode="unless-editing" />
           </WithLabel>
           <WithLabel label="always">
-            <TextInput
-              style={styles.default}
-              clearButtonMode="always"
-            />
+            <TextInput style={styles.default} clearButtonMode="always" />
           </WithLabel>
         </View>
       );
@@ -709,7 +660,9 @@ const examples = [
   },
   {
     title: 'Blur on submit',
-    render: function(): React.Element<any> { return <BlurOnSubmitExample />; },
+    render: function(): React.Element<any> {
+      return <BlurOnSubmitExample />;
+    }
   },
   {
     title: 'Multiline blur on submit',
@@ -733,11 +686,7 @@ const examples = [
     render: function() {
       return (
         <View>
-          <TextInput
-            placeholder="multiline text input"
-            multiline={true}
-            style={styles.multiline}
-          />
+          <TextInput placeholder="multiline text input" multiline={true} style={styles.multiline} />
           <TextInput
             placeholder="multiline text input with font styles and placeholder"
             multiline={true}
@@ -779,7 +728,7 @@ const examples = [
           <TextInput
             multiline={true}
             numberOfLines={4}
-            style={[ styles.multiline, { height: 'auto' } ]}
+            style={[styles.multiline, { height: 'auto' }]}
           />
         </View>
       );
@@ -810,14 +759,11 @@ const examples = [
     render: function() {
       return (
         <View>
-          <SelectionExample
-            style={styles.default}
-            value="text selection can be changed"
-          />
+          <SelectionExample style={styles.default} value="text selection can be changed" />
           <SelectionExample
             multiline
             style={styles.multiline}
-            value={"multiline text selection\ncan also be changed"}
+            value={'multiline text selection\ncan also be changed'}
           />
         </View>
       );
@@ -829,31 +775,16 @@ const examples = [
       return (
         <View>
           <WithLabel label="maxLength: 5">
-            <TextInput
-              maxLength={5}
-              style={styles.default}
-            />
+            <TextInput maxLength={5} style={styles.default} />
           </WithLabel>
           <WithLabel label="maxLength: 5 with placeholder">
-            <TextInput
-              maxLength={5}
-              placeholder="ZIP code entry"
-              style={styles.default}
-            />
+            <TextInput maxLength={5} placeholder="ZIP code entry" style={styles.default} />
           </WithLabel>
           <WithLabel label="maxLength: 5 with default value already set">
-            <TextInput
-              maxLength={5}
-              defaultValue="94025"
-              style={styles.default}
-            />
+            <TextInput maxLength={5} defaultValue="94025" style={styles.default} />
           </WithLabel>
           <WithLabel label="maxLength: 5 with very long default value already set">
-            <TextInput
-              maxLength={5}
-              defaultValue="9402512345"
-              style={styles.default}
-            />
+            <TextInput maxLength={5} defaultValue="9402512345" style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -861,7 +792,6 @@ const examples = [
   }
 ];
 
-examples.forEach((example) => {
-  storiesOf('component: TextInput', module)
-    .add(example.title, () => example.render())
+examples.forEach(example => {
+  storiesOf('component: TextInput', module).add(example.title, () => example.render());
 });

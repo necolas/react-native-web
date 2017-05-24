@@ -1,7 +1,7 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
 
 /**
@@ -32,13 +32,13 @@ const ToggleAnimatingActivityIndicator = createReactClass({
 
   getInitialState() {
     return {
-      animating: true,
+      animating: true
     };
   },
 
   setToggleTimeout() {
     this.setTimeout(() => {
-      this.setState({animating: !this.state.animating});
+      this.setState({ animating: !this.state.animating });
       this.setToggleTimeout();
     }, 2000);
   },
@@ -63,11 +63,7 @@ const examples = [
   {
     title: 'Default',
     render() {
-      return (
-        <ActivityIndicator
-          style={[styles.centering]}
-        />
-      );
+      return <ActivityIndicator style={[styles.centering]} />;
     }
   },
   {
@@ -87,11 +83,7 @@ const examples = [
     title: 'Large',
     render() {
       return (
-        <ActivityIndicator
-          style={[styles.centering, styles.gray]}
-          color="white"
-          size="large"
-        />
+        <ActivityIndicator style={[styles.centering, styles.gray]} color="white" size="large" />
       );
     }
   },
@@ -100,22 +92,10 @@ const examples = [
     render() {
       return (
         <View style={styles.horizontal}>
-          <ActivityIndicator
-            size="large"
-            color="#0000ff"
-          />
-          <ActivityIndicator
-            size="large"
-            color="#aa00aa"
-          />
-          <ActivityIndicator
-            size="large"
-            color="#aa3300"
-          />
-          <ActivityIndicator
-            size="large"
-            color="#00aa00"
-          />
+          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#aa00aa" />
+          <ActivityIndicator size="large" color="#aa3300" />
+          <ActivityIndicator size="large" color="#00aa00" />
         </View>
       );
     }
@@ -137,33 +117,29 @@ const examples = [
       return (
         <View style={[styles.horizontal, styles.centering]}>
           <ActivityIndicator size={40} />
-          <ActivityIndicator
-            style={{ marginLeft: 20, transform: [ {scale: 1.5} ] }}
-            size="large"
-          />
+          <ActivityIndicator style={{ marginLeft: 20, transform: [{ scale: 1.5 }] }} size="large" />
         </View>
       );
     }
-  },
+  }
 ];
 
 const styles = StyleSheet.create({
   centering: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 8,
+    padding: 8
   },
   gray: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#cccccc'
   },
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 8,
-  },
+    padding: 8
+  }
 });
 
-examples.forEach((example) => {
-  storiesOf('component: ActivityIndicator', module)
-    .add(example.title, () => example.render())
-})
+examples.forEach(example => {
+  storiesOf('component: ActivityIndicator', module).add(example.title, () => example.render());
+});
