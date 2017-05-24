@@ -45,7 +45,7 @@ describe('components/Switch', () => {
 
   describe('grey circle', () => {
     test('it should show grey circle when user touch / clicks', () => {
-      const component = shallow
+
     });
 
     test('it should dismiss grey circle immediately', () => {
