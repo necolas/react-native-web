@@ -39,7 +39,11 @@ const pointerEventStyles = StyleSheet.create({
 
 const resolver = style => StyleRegistry.resolve(style);
 
-const createDOMProps = (rnProps, resolveStyle = resolver) => {
+const createDOMProps = (rnProps, resolveStyle) => {
+  if (!resolveStyle) {
+    resolveStyle = resolver
+  }
+
   const props = rnProps || emptyObject;
   const {
     accessibilityLabel,
@@ -72,19 +76,19 @@ const createDOMProps = (rnProps, resolveStyle = resolver) => {
   if (accessible === true) {
     domProps.tabIndex = AccessibilityUtil.propsToTabIndex(props);
   }
-  if (typeof accessibilityLabel === 'string') {
+  if (accessibilityLabel && accessibilityLabel.constructor === String) {
     domProps['aria-label'] = accessibilityLabel;
   }
-  if (typeof accessibilityLiveRegion === 'string') {
+  if (accessibilityLiveRegion && accessibilityLiveRegion.constructor === String) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (typeof className === 'string' && className !== '') {
+  if (className && className.constructor === String) {
     domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
   }
   if (importantForAccessibility === 'no-hide-descendants') {
     domProps['aria-hidden'] = true;
   }
-  if (typeof role === 'string') {
+  if (role && role.constructor === String) {
     domProps.role = role;
     if (role === 'button') {
       domProps.type = 'button';
@@ -92,13 +96,13 @@ const createDOMProps = (rnProps, resolveStyle = resolver) => {
       domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
     }
   }
-  if (style != null) {
+  if (style) {
     domProps.style = style;
   }
-  if (typeof testID === 'string') {
+  if (testID && testID.constructor === String) {
     domProps['data-testid'] = testID;
   }
-  if (typeof type === 'string') {
+  if (type && type.constructor === String) {
     domProps.type = type;
   }
 

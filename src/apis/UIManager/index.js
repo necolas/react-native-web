@@ -1,4 +1,5 @@
 import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+import setImmediate from 'fbjs/lib/setImmediate';
 import setValueForStyles from '../../vendor/setValueForStyles';
 
 const getRect = node => {
@@ -14,8 +15,13 @@ const getRect = node => {
   return { height, left, top, width };
 };
 
-const measureLayout = (node, relativeToNativeNode, callback) => {
-  requestAnimationFrame(() => {
+let hasRequestedAnimationFrame = false;
+let measureLayoutQueue = [];
+
+const processLayoutQueue = () => {
+  measureLayoutQueue.splice(0, 250).forEach((item) => {
+    const [node, relativeToNativeNode, callback] = item
+
     const relativeNode = relativeToNativeNode || (node && node.parentNode);
     if (node && relativeNode) {
       const relativeRect = getRect(relativeNode);
@@ -24,7 +30,24 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
       const y = top - relativeRect.top;
       callback(x, y, width, height, left, top);
     }
-  });
+  })
+
+  if (measureLayoutQueue.length > 0) {
+    setImmediate(processLayoutQueue)
+  }
+}
+
+const measureLayout = (node, relativeToNativeNode, callback) => {
+  if (!hasRequestedAnimationFrame) {
+    requestAnimationFrame(() => {
+      hasRequestedAnimationFrame = false;
+
+      processLayoutQueue();
+    });
+  }
+
+  hasRequestedAnimationFrame = true;
+  measureLayoutQueue.push([node, relativeToNativeNode, callback]);
 };
 
 const UIManager = {
