@@ -20,7 +20,7 @@ let measureLayoutQueue = [];
 
 const processLayoutQueue = () => {
   measureLayoutQueue.splice(0, 250).forEach((item) => {
-    const [node, relativeToNativeNode, callback] = item
+    const [node, relativeToNativeNode, callback] = item;
 
     const relativeNode = relativeToNativeNode || (node && node.parentNode);
     if (node && relativeNode) {
@@ -33,7 +33,7 @@ const processLayoutQueue = () => {
   })
 
   if (measureLayoutQueue.length > 0) {
-    setImmediate(processLayoutQueue)
+    setImmediate(processLayoutQueue);
   }
 }
 

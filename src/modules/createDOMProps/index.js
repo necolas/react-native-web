@@ -41,7 +41,7 @@ const resolver = style => StyleRegistry.resolve(style);
 
 const createDOMProps = (rnProps, resolveStyle) => {
   if (!resolveStyle) {
-    resolveStyle = resolver
+    resolveStyle = resolver;
   }
 
   const props = rnProps || emptyObject;

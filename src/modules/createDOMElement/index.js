@@ -49,7 +49,7 @@ const createDOMElement = (component, props) => {
     if (isEventHandler) {
       domProps[prop] = wrapEventHandler(prop);
     }
-  })
+  });
 
   return <Component {...domProps} />;
 };
