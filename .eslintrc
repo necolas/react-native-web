@@ -120,9 +120,6 @@
 
     // react
     "react/display-name": 0,
-    "react/jsx-handler-names": [2, {
-      "eventHandlerPrefix": "_handle"
-    }],
     "react/jsx-no-bind": 2,
     "react/jsx-no-duplicate-props": 2,
     "react/jsx-no-undef": 2,
