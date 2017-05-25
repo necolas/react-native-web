@@ -61,9 +61,16 @@ To continuously watch and run tests, run the following:
 npm run test:watch
 ```
 
-To perform only linting, run the following:
+Before create a commit run:
 
 ```
+npm run precommit
+```
+
+To format or lint the entire project:
+
+```
+npm run fmt
 npm run lint
 ```
 
