@@ -14,8 +14,19 @@ class VirtualizedListExample extends Component {
     this.getItemLayout = this.getItemLayout.bind(this)
   }
 
+  componentDidMount () {
+    setInterval(() => {
+      this.setState({
+        data: [
+          { key: this.state.data.length.toString() },
+          ...this.state.data,
+        ]
+      })
+    }, 1000)
+  }
+
   getItemLayout (data, index) {
-    return { length: 50, offset: 50 * index, index: index }
+    return { length: 18, offset: 18 * index, index: index }
   }
 
   renderItem ({item, index}) {
@@ -27,7 +38,6 @@ class VirtualizedListExample extends Component {
       style={styles.container}
       data={this.state.data}
       renderItem={this.renderItem}
-      getItemLayout={this.getItemLayout}
     />
   }
 }
