@@ -16,7 +16,7 @@ const getRect = node => {
 };
 
 let hasRequestedAnimationFrame = false;
-let measureLayoutQueue = [];
+const measureLayoutQueue = [];
 
 const processLayoutQueue = () => {
   measureLayoutQueue.splice(0, 250).forEach((item) => {
