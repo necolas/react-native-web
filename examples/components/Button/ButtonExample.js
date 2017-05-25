@@ -1,6 +1,6 @@
 import React from 'react';
 import { action, storiesOf } from '@kadira/storybook';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, View } from 'react-native';
 
 const onButtonPress = action('Button has been pressed!');
 
@@ -13,9 +13,9 @@ const examples = [
     render: function() {
       return (
         <Button
+          accessibilityLabel="See an informative alert"
           onPress={onButtonPress}
           title="Press Me"
-          accessibilityLabel="See an informative alert"
         />
       );
     }
@@ -28,30 +28,30 @@ const examples = [
     render: function() {
       return (
         <Button
+          accessibilityLabel="Learn more about purple"
+          color="#841584"
           onPress={onButtonPress}
           title="Press Purple"
-          color="#841584"
-          accessibilityLabel="Learn more about purple"
         />
       );
     }
   },
   {
     title: 'Fit to text layout',
-    description: 'This layout strategy lets the title define the width of ' + 'the button',
+    description: 'This layout strategy lets the title define the width of the button',
     render: function() {
       return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
+            accessibilityLabel="This sounds great!"
             onPress={onButtonPress}
             title="This looks great!"
-            accessibilityLabel="This sounds great!"
           />
           <Button
+            accessibilityLabel="Ok, Great!"
+            color="#841584"
             onPress={onButtonPress}
             title="Ok!"
-            color="#841584"
-            accessibilityLabel="Ok, Great!"
           />
         </View>
       );
@@ -63,10 +63,10 @@ const examples = [
     render: function() {
       return (
         <Button
+          accessibilityLabel="See an informative alert"
           disabled
           onPress={onButtonPress}
           title="I Am Disabled"
-          accessibilityLabel="See an informative alert"
         />
       );
     }

@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf, action, addDecorator } from '@kadira/storybook';
-import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react/jsx-no-bind */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -26,14 +23,19 @@ import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'reac
  * @flow
  */
 
-var base64Icon =
+import createReactClass from 'create-react-class';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+
+const base64Icon =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
 
 //var ImageCapInsetsExample = require('./ImageCapInsetsExample');
 const IMAGE_PREFETCH_URL = 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now();
-var prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
+const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 
-var NetworkImageCallbackExample = createReactClass({
+const NetworkImageCallbackExample = createReactClass({
   getInitialState: function() {
     return {
       events: [],
@@ -47,14 +49,11 @@ var NetworkImageCallbackExample = createReactClass({
   },
 
   render: function() {
-    var { mountTime } = this.state;
+    const { mountTime } = this.state;
 
     return (
       <View>
         <Image
-          source={this.props.source}
-          style={[styles.base, { overflow: 'visible' }]}
-          onLoadStart={() => this._loadEventFired(`✔ onLoadStart (+${new Date() - mountTime}ms)`)}
           onLoad={() => this._loadEventFired(`✔ onLoad (+${new Date() - mountTime}ms)`)}
           onLoadEnd={() => {
             this._loadEventFired(`✔ onLoadEnd (+${new Date() - mountTime}ms)`);
@@ -65,21 +64,25 @@ var NetworkImageCallbackExample = createReactClass({
                 },
                 error => {
                   this._loadEventFired(`✘ Prefetch failed (+${new Date() - mountTime}ms)`);
+                  console.log(error);
                 }
               );
             });
           }}
+          onLoadStart={() => this._loadEventFired(`✔ onLoadStart (+${new Date() - mountTime}ms)`)}
+          source={this.props.source}
+          style={[styles.base, { overflow: 'visible' }]}
         />
         {this.state.startLoadPrefetched
           ? <Image
-              source={this.props.prefetchedSource}
-              style={[styles.base, { overflow: 'visible' }]}
-              onLoadStart={() =>
-                this._loadEventFired(`✔ (prefetched) onLoadStart (+${new Date() - mountTime}ms)`)}
               onLoad={() =>
                 this._loadEventFired(`✔ (prefetched) onLoad (+${new Date() - mountTime}ms)`)}
               onLoadEnd={() =>
                 this._loadEventFired(`✔ (prefetched) onLoadEnd (+${new Date() - mountTime}ms)`)}
+              onLoadStart={() =>
+                this._loadEventFired(`✔ (prefetched) onLoadStart (+${new Date() - mountTime}ms)`)}
+              source={this.props.prefetchedSource}
+              style={[styles.base, { overflow: 'visible' }]}
             />
           : null}
         <Text style={{ marginTop: 20 }}>
@@ -96,7 +99,7 @@ var NetworkImageCallbackExample = createReactClass({
   }
 });
 
-var NetworkImageExample = createReactClass({
+const NetworkImageExample = createReactClass({
   getInitialState: function() {
     return {
       error: false,
@@ -105,7 +108,7 @@ var NetworkImageExample = createReactClass({
     };
   },
   render: function() {
-    var loader = this.state.loading
+    const loader = this.state.loading
       ? <View style={styles.progress}>
           <Text>{this.state.progress}%</Text>
           <ActivityIndicator style={{ marginLeft: 5 }} />
@@ -114,22 +117,22 @@ var NetworkImageExample = createReactClass({
     return this.state.error
       ? <Text>{this.state.error}</Text>
       : <Image
-          source={this.props.source}
-          style={[styles.base, { overflow: 'visible' }]}
-          onLoadStart={e => this.setState({ loading: true })}
           onError={e => this.setState({ error: e.nativeEvent.error, loading: false })}
+          onLoad={() => this.setState({ loading: false, error: false })}
+          onLoadStart={e => this.setState({ loading: true })}
           onProgress={e =>
             this.setState({
               progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)
             })}
-          onLoad={() => this.setState({ loading: false, error: false })}
+          source={this.props.source}
+          style={[styles.base, { overflow: 'visible' }]}
         >
           {loader}
         </Image>;
   }
 });
 
-var ImageSizeExample = createReactClass({
+const ImageSizeExample = createReactClass({
   getInitialState: function() {
     return {
       width: 0,
@@ -259,8 +262,8 @@ const examples = [
     render: function() {
       return (
         <NetworkImageCallbackExample
-          source={{ uri: 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now() }}
           prefetchedSource={{ uri: IMAGE_PREFETCH_URL }}
+          source={{ uri: 'http://origami.design/public/images/bird-logo.png?r=1&t=' + Date.now() }}
         />
       );
     }
@@ -332,10 +335,10 @@ const examples = [
     render: function() {
       return (
         <View style={styles.horizontal}>
-          <Image style={[styles.base, { borderRadius: 5 }]} source={fullImage} />
+          <Image source={fullImage} style={[styles.base, { borderRadius: 5 }]} />
           <Image
-            style={[styles.base, styles.leftMargin, { borderRadius: 19 }]}
             source={fullImage}
+            style={[styles.base, styles.leftMargin, { borderRadius: 19 }]}
           />
         </View>
       );
@@ -348,16 +351,16 @@ const examples = [
         <View style={styles.horizontal}>
           <Image source={smallImage} style={styles.base} />
           <Image
+            source={smallImage}
             style={[styles.base, styles.leftMargin, { backgroundColor: 'rgba(0, 0, 100, 0.25)' }]}
-            source={smallImage}
           />
           <Image
+            source={smallImage}
             style={[styles.base, styles.leftMargin, { backgroundColor: 'red' }]}
-            source={smallImage}
           />
           <Image
-            style={[styles.base, styles.leftMargin, { backgroundColor: 'black' }]}
             source={smallImage}
+            style={[styles.base, styles.leftMargin, { backgroundColor: 'black' }]}
           />
         </View>
       );
@@ -368,12 +371,12 @@ const examples = [
     render: function() {
       return (
         <View style={styles.horizontal}>
-          <Image style={[styles.base, { opacity: 1 }]} source={fullImage} />
-          <Image style={[styles.base, styles.leftMargin, { opacity: 0.8 }]} source={fullImage} />
-          <Image style={[styles.base, styles.leftMargin, { opacity: 0.6 }]} source={fullImage} />
-          <Image style={[styles.base, styles.leftMargin, { opacity: 0.4 }]} source={fullImage} />
-          <Image style={[styles.base, styles.leftMargin, { opacity: 0.2 }]} source={fullImage} />
-          <Image style={[styles.base, styles.leftMargin, { opacity: 0 }]} source={fullImage} />
+          <Image source={fullImage} style={[styles.base, { opacity: 1 }]} />
+          <Image source={fullImage} style={[styles.base, styles.leftMargin, { opacity: 0.8 }]} />
+          <Image source={fullImage} style={[styles.base, styles.leftMargin, { opacity: 0.6 }]} />
+          <Image source={fullImage} style={[styles.base, styles.leftMargin, { opacity: 0.4 }]} />
+          <Image source={fullImage} style={[styles.base, styles.leftMargin, { opacity: 0.2 }]} />
+          <Image source={fullImage} style={[styles.base, styles.leftMargin, { opacity: 0 }]} />
         </View>
       );
     }
@@ -382,7 +385,7 @@ const examples = [
     title: 'Nesting',
     render: function() {
       return (
-        <Image style={{ width: 60, height: 60, backgroundColor: 'transparent' }} source={fullImage}>
+        <Image source={fullImage} style={{ width: 60, height: 60, backgroundColor: 'transparent' }}>
           <Text style={styles.nestedText}>
             React
           </Text>
@@ -458,9 +461,9 @@ const examples = [
                       Contain
                     </Text>
                     <Image
-                      style={styles.resizeMode}
                       resizeMode={Image.resizeMode.contain}
                       source={image}
+                      style={styles.resizeMode}
                     />
                   </View>
                   <View style={styles.leftMargin}>
@@ -468,9 +471,9 @@ const examples = [
                       Cover
                     </Text>
                     <Image
-                      style={styles.resizeMode}
                       resizeMode={Image.resizeMode.cover}
                       source={image}
+                      style={styles.resizeMode}
                     />
                   </View>
                 </View>
@@ -480,22 +483,22 @@ const examples = [
                       Stretch
                     </Text>
                     <Image
-                      style={styles.resizeMode}
                       resizeMode={Image.resizeMode.stretch}
                       source={image}
+                      style={styles.resizeMode}
                     />
                   </View>
                   <View style={styles.leftMargin}>
                     <Text style={[styles.resizeModeText]}>
                       Repeat
                     </Text>
-                    <Image style={styles.resizeMode} resizeMode={'repeat'} source={image} />
+                    <Image resizeMode={'repeat'} source={image} style={styles.resizeMode} />
                   </View>
                   <View style={styles.leftMargin}>
                     <Text style={[styles.resizeModeText]}>
                       Center
                     </Text>
-                    <Image style={styles.resizeMode} resizeMode={'center'} source={image} />
+                    <Image resizeMode={'center'} source={image} style={styles.resizeMode} />
                   </View>
                 </View>
               </View>
@@ -510,10 +513,10 @@ const examples = [
     render: function() {
       return (
         <Image
-          style={styles.gif}
           source={{
             uri: 'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'
           }}
+          style={styles.gif}
         />
       );
     },
@@ -522,7 +525,7 @@ const examples = [
   {
     title: 'Base64 image',
     render: function() {
-      return <Image style={styles.base64} source={{ uri: base64Icon, scale: 3 }} />;
+      return <Image source={{ uri: base64Icon, scale: 3 }} style={styles.base64} />;
     },
     platform: 'ios'
   },
@@ -566,10 +569,10 @@ const examples = [
   */
 ];
 
-var fullImage = { uri: 'http://facebook.github.io/react/img/logo_og.png' };
-var smallImage = { uri: 'http://facebook.github.io/react/img/logo_small_2x.png' };
+const fullImage = { uri: 'http://facebook.github.io/react/img/logo_og.png' };
+const smallImage = { uri: 'http://facebook.github.io/react/img/logo_small_2x.png' };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   base: {
     width: 38,
     height: 38

@@ -1,6 +1,6 @@
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import React, { Component } from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 

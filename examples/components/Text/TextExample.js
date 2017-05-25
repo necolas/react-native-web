@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import { Image, StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react/jsx-no-bind */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -26,7 +23,12 @@ import { Image, StyleSheet, Text, View } from 'react-native';
  * @flow
  */
 
-var Entity = createReactClass({
+import createReactClass from 'create-react-class';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { Image, Text, View } from 'react-native';
+
+const Entity = createReactClass({
   render: function() {
     return (
       <Text style={{ fontWeight: '500', color: '#527fe4' }}>
@@ -36,7 +38,7 @@ var Entity = createReactClass({
   }
 });
 
-var AttributeToggler = createReactClass({
+const AttributeToggler = createReactClass({
   getInitialState: function() {
     return { fontWeight: 'bold', fontSize: 15 };
   },
@@ -51,7 +53,7 @@ var AttributeToggler = createReactClass({
     });
   },
   render: function() {
-    var curStyle = { fontWeight: this.state.fontWeight, fontSize: this.state.fontSize };
+    const curStyle = { fontWeight: this.state.fontWeight, fontSize: this.state.fontSize };
     return (
       <View>
         <Text style={curStyle}>
@@ -60,10 +62,10 @@ var AttributeToggler = createReactClass({
         <Text>
           <Text>See how it will even work on <Text style={curStyle}>this nested text</Text></Text>
         </Text>
-        <Text style={{ backgroundColor: '#ffaaaa', marginTop: 5 }} onPress={this.toggleWeight}>
+        <Text onPress={this.toggleWeight} style={{ backgroundColor: '#ffaaaa', marginTop: 5 }}>
           Toggle Weight
         </Text>
-        <Text style={{ backgroundColor: '#aaaaff', marginTop: 5 }} onPress={this.increaseSize}>
+        <Text onPress={this.increaseSize} style={{ backgroundColor: '#aaaaff', marginTop: 5 }}>
           Increase Size
         </Text>
       </View>
@@ -387,7 +389,7 @@ const examples = [
   },
   {
     title: 'Toggling Attributes',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <AttributeToggler />;
     }
   },
@@ -447,9 +449,9 @@ const examples = [
             Lorem ipsum dolor sit amet,
             {' '}
             <Text
-              suppressHighlighting={false}
-              style={{ backgroundColor: 'white', textDecorationLine: 'underline', color: 'blue' }}
               onPress={() => null}
+              style={{ backgroundColor: 'white', textDecorationLine: 'underline', color: 'blue' }}
+              suppressHighlighting={false}
             >
               consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             </Text>
@@ -555,14 +557,6 @@ const examples = [
     }
   }
 ];
-
-var styles = StyleSheet.create({
-  backgroundColorText: {
-    margin: 5,
-    marginBottom: 0,
-    backgroundColor: 'rgba(100, 100, 100, 0.3)'
-  }
-});
 
 examples.forEach(example => {
   storiesOf('component: Text', module)

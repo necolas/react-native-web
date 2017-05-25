@@ -1,6 +1,6 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 
 /**
@@ -25,7 +25,7 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
  * @flow
  */
 
-var Flip = createReactClass({
+const Flip = createReactClass({
   getInitialState() {
     return {
       theta: new Animated.Value(45)
@@ -95,7 +95,7 @@ var Flip = createReactClass({
   }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   box1: {
     left: 0,
     backgroundColor: 'green',
@@ -199,7 +199,7 @@ const examples = [
   {
     title: 'Perspective',
     description: 'perspective: 850, rotateX: Animated.timing(0 -> 360)',
-    render(): ReactElement<any> {
+    render() {
       return <Flip />;
     }
   },

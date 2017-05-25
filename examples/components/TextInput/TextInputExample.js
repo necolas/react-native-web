@@ -1,6 +1,4 @@
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+/* eslint-disable react/jsx-no-bind */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -25,7 +23,17 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
  * @flow
  */
 
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { any, bool, object, string } from 'prop-types';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+
 class WithLabel extends React.Component {
+  static propTypes = {
+    children: any,
+    label: string
+  };
+
   render() {
     return (
       <View style={styles.labelContainer}>
@@ -62,14 +70,14 @@ class TextEventsExample extends React.Component {
       <View style={{ alignItems: 'center' }}>
         <TextInput
           autoCapitalize="none"
-          placeholder="Enter text to see events"
           autoCorrect={false}
-          onFocus={() => this.updateText('onFocus')}
           onBlur={() => this.updateText('onBlur')}
           onChange={event => this.updateText('onChange text: ' + event.nativeEvent.text)}
           onEndEditing={event => this.updateText('onEndEditing text: ' + event.nativeEvent.text)}
-          onSubmitEditing={event =>
-            this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)}
+          onFocus={() => this.updateText('onFocus')}
+          onKeyPress={event => {
+            this.updateText('onKeyPress key: ' + event.nativeEvent.key);
+          }}
           onSelectionChange={event =>
             this.updateText(
               'onSelectionChange range: ' +
@@ -77,9 +85,9 @@ class TextEventsExample extends React.Component {
                 ',' +
                 event.nativeEvent.selection.end
             )}
-          onKeyPress={event => {
-            this.updateText('onKeyPress key: ' + event.nativeEvent.key);
-          }}
+          onSubmitEditing={event =>
+            this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)}
+          placeholder="Enter text to see events"
           style={[styles.default, { maxWidth: 200 }]}
         />
         <Text style={styles.eventLabel}>
@@ -103,6 +111,7 @@ class AutoExpandingTextInput extends React.Component {
       height: 0
     };
   }
+
   render() {
     return (
       <TextInput
@@ -128,15 +137,16 @@ class RewriteExample extends React.Component {
     super(props);
     this.state = { text: '' };
   }
+
   render() {
-    var limit = 20;
-    var remainder = limit - this.state.text.length;
-    var remainderColor = remainder > 5 ? 'blue' : 'red';
+    const limit = 20;
+    const remainder = limit - this.state.text.length;
+    const remainderColor = remainder > 5 ? 'blue' : 'red';
     return (
       <View style={styles.rewriteContainer}>
         <TextInput
-          multiline={false}
           maxLength={limit}
+          multiline={false}
           onChangeText={text => {
             text = text.replace(/ /g, '_');
             this.setState({ text });
@@ -159,6 +169,7 @@ class RewriteExampleInvalidCharacters extends React.Component {
     super(props);
     this.state = { text: '' };
   }
+
   render() {
     return (
       <View style={styles.rewriteContainer}>
@@ -182,13 +193,15 @@ class TokenizedTextExample extends React.Component {
     super(props);
     this.state = { text: 'Hello #World' };
   }
+
   render() {
     //define delimiter
-    let delimiter = /\s+/;
+    const delimiter = /\s+/;
 
     //split string
     let _text = this.state.text;
-    let token, index, parts = [];
+    let token, index;
+    const parts = [];
     while (_text) {
       delimiter.lastIndex = 0;
       token = delimiter.exec(_text);
@@ -209,12 +222,12 @@ class TokenizedTextExample extends React.Component {
     return (
       <View>
         <TextInput
-          value={parts.join('')}
           multiline={true}
-          style={styles.multiline}
           onChangeText={text => {
             this.setState({ text });
           }}
+          style={styles.multiline}
+          value={parts.join('')}
         />
       </View>
     );
@@ -222,53 +235,68 @@ class TokenizedTextExample extends React.Component {
 }
 
 class BlurOnSubmitExample extends React.Component {
+  constructor(props) {
+    super(props);
+    this._nodes = {};
+  }
+
   focusNextField = nextField => {
-    this.refs[nextField].focus();
+    this._nodes[nextField].focus();
   };
 
   render() {
     return (
       <View>
         <TextInput
-          ref="1"
-          style={styles.default}
-          placeholder="blurOnSubmit = false"
-          returnKeyType="next"
           blurOnSubmit={false}
           onSubmitEditing={() => this.focusNextField('2')}
+          placeholder="blurOnSubmit = false"
+          ref={c => {
+            this._nodes['1'] = c;
+          }}
+          returnKeyType="next"
+          style={styles.default}
         />
         <TextInput
-          ref="2"
-          style={styles.default}
+          blurOnSubmit={false}
           keyboardType="email-address"
-          placeholder="blurOnSubmit = false"
-          returnKeyType="next"
-          blurOnSubmit={false}
           onSubmitEditing={() => this.focusNextField('3')}
-        />
-        <TextInput
-          ref="3"
-          style={styles.default}
-          keyboardType="url"
           placeholder="blurOnSubmit = false"
+          ref={c => {
+            this._nodes['2'] = c;
+          }}
           returnKeyType="next"
+          style={styles.default}
+        />
+        <TextInput
           blurOnSubmit={false}
+          keyboardType="url"
           onSubmitEditing={() => this.focusNextField('4')}
-        />
-        <TextInput
-          ref="4"
-          style={styles.default}
-          keyboardType="numeric"
           placeholder="blurOnSubmit = false"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this.focusNextField('5')}
+          ref={c => {
+            this._nodes['3'] = c;
+          }}
+          returnKeyType="next"
+          style={styles.default}
         />
         <TextInput
-          ref="5"
+          blurOnSubmit={false}
+          keyboardType="numeric"
+          onSubmitEditing={() => this.focusNextField('5')}
+          placeholder="blurOnSubmit = false"
+          ref={c => {
+            this._nodes['4'] = c;
+          }}
           style={styles.default}
+        />
+        <TextInput
           keyboardType="numeric"
           placeholder="blurOnSubmit = true"
+          ref={c => {
+            this._nodes['5'] = c;
+          }}
           returnKeyType="done"
+          style={styles.default}
         />
       </View>
     );
@@ -288,6 +316,12 @@ class SelectionExample extends React.Component {
 
   _textInput: any;
 
+  static propTypes = {
+    multiline: bool,
+    style: object,
+    value: string
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -301,7 +335,7 @@ class SelectionExample extends React.Component {
   }
 
   getRandomPosition() {
-    var length = this.state.value.length;
+    const length = this.state.value.length;
     return Math.round(Math.random() * length);
   }
 
@@ -311,7 +345,7 @@ class SelectionExample extends React.Component {
   }
 
   selectRandom() {
-    var positions = [this.getRandomPosition(), this.getRandomPosition()].sort();
+    const positions = [this.getRandomPosition(), this.getRandomPosition()].sort();
     this.select(...positions);
   }
 
@@ -324,7 +358,7 @@ class SelectionExample extends React.Component {
   }
 
   render() {
-    var length = this.state.value.length;
+    const length = this.state.value.length;
 
     return (
       <View>
@@ -362,7 +396,7 @@ class SelectionExample extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   page: {
     paddingBottom: 300
   },
@@ -433,9 +467,9 @@ const examples = [
       return (
         <View>
           <TextInput
+            accessibilityLabel="I am the accessibility label for text input"
             autoFocus={true}
             style={styles.default}
-            accessibilityLabel="I am the accessibility label for text input"
           />
         </View>
       );
@@ -492,7 +526,7 @@ const examples = [
   {
     title: 'Keyboard types',
     render: function() {
-      var keyboardTypes = [
+      const keyboardTypes = [
         'default',
         //'ascii-capable',
         //'numbers-and-punctuation',
@@ -506,7 +540,7 @@ const examples = [
         'web-search',
         'numeric'
       ];
-      var examples = keyboardTypes.map(type => {
+      const examples = keyboardTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput keyboardType={type} style={styles.default} />
@@ -519,8 +553,8 @@ const examples = [
   {
     title: 'Keyboard appearance',
     render: function() {
-      var keyboardAppearance = ['default', 'light', 'dark'];
-      var examples = keyboardAppearance.map(type => {
+      const keyboardAppearance = ['default', 'light', 'dark'];
+      const examples = keyboardAppearance.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput keyboardAppearance={type} style={styles.default} />
@@ -533,7 +567,7 @@ const examples = [
   {
     title: 'Return key types',
     render: function() {
-      var returnKeyTypes = [
+      const returnKeyTypes = [
         'default',
         'go',
         'google',
@@ -546,7 +580,7 @@ const examples = [
         'done',
         'emergency-call'
       ];
-      var examples = returnKeyTypes.map(type => {
+      const examples = returnKeyTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput returnKeyType={type} style={styles.default} />
@@ -574,7 +608,7 @@ const examples = [
       return (
         <View>
           <WithLabel label="true">
-            <TextInput secureTextEntry={true} style={styles.default} defaultValue="abc" />
+            <TextInput defaultValue="abc" secureTextEntry={true} style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -591,8 +625,8 @@ const examples = [
     render: function() {
       return (
         <View>
-          <TextInput style={[styles.default, { color: 'blue' }]} defaultValue="Blue" />
-          <TextInput style={[styles.default, { color: 'green' }]} defaultValue="Green" />
+          <TextInput defaultValue="Blue" style={[styles.default, { color: 'blue' }]} />
+          <TextInput defaultValue="Green" style={[styles.default, { color: 'green' }]} />
         </View>
       );
     }
@@ -602,11 +636,11 @@ const examples = [
     render: function() {
       return (
         <View>
-          <TextInput style={styles.default} selectionColor={'green'} defaultValue="Highlight me" />
+          <TextInput defaultValue="Highlight me" selectionColor={'green'} style={styles.default} />
           <TextInput
-            style={styles.default}
-            selectionColor={'rgba(86, 76, 205, 1)'}
             defaultValue="Highlight me"
+            selectionColor={'rgba(86, 76, 205, 1)'}
+            style={styles.default}
           />
         </View>
       );
@@ -618,16 +652,16 @@ const examples = [
       return (
         <View>
           <WithLabel label="never">
-            <TextInput style={styles.default} clearButtonMode="never" />
+            <TextInput clearButtonMode="never" style={styles.default} />
           </WithLabel>
           <WithLabel label="while editing">
-            <TextInput style={styles.default} clearButtonMode="while-editing" />
+            <TextInput clearButtonMode="while-editing" style={styles.default} />
           </WithLabel>
           <WithLabel label="unless editing">
-            <TextInput style={styles.default} clearButtonMode="unless-editing" />
+            <TextInput clearButtonMode="unless-editing" style={styles.default} />
           </WithLabel>
           <WithLabel label="always">
-            <TextInput style={styles.default} clearButtonMode="always" />
+            <TextInput clearButtonMode="always" style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -640,18 +674,18 @@ const examples = [
         <View>
           <WithLabel label="clearTextOnFocus">
             <TextInput
-              placeholder="text is cleared on focus"
-              defaultValue="text is cleared on focus"
-              style={styles.default}
               clearTextOnFocus={true}
+              defaultValue="text is cleared on focus"
+              placeholder="text is cleared on focus"
+              style={styles.default}
             />
           </WithLabel>
           <WithLabel label="selectTextOnFocus">
             <TextInput
-              placeholder="text is selected on focus"
               defaultValue="text is selected on focus"
-              style={styles.default}
+              placeholder="text is selected on focus"
               selectTextOnFocus={true}
+              style={styles.default}
             />
           </WithLabel>
         </View>
@@ -670,12 +704,14 @@ const examples = [
       return (
         <View>
           <TextInput
-            style={styles.multiline}
-            placeholder="blurOnSubmit = true"
-            returnKeyType="next"
             blurOnSubmit={true}
             multiline={true}
-            onSubmitEditing={event => alert(event.nativeEvent.text)}
+            onSubmitEditing={event => {
+              console.log(event.nativeEvent.text);
+            }}
+            placeholder="blurOnSubmit = true"
+            returnKeyType="next"
+            style={styles.multiline}
           />
         </View>
       );
@@ -686,35 +722,35 @@ const examples = [
     render: function() {
       return (
         <View>
-          <TextInput placeholder="multiline text input" multiline={true} style={styles.multiline} />
+          <TextInput multiline={true} placeholder="multiline text input" style={styles.multiline} />
           <TextInput
-            placeholder="multiline text input with font styles and placeholder"
-            multiline={true}
-            clearTextOnFocus={true}
-            autoCorrect={true}
             autoCapitalize="words"
-            placeholderTextColor="red"
+            autoCorrect={true}
+            clearTextOnFocus={true}
             keyboardType="url"
+            multiline={true}
+            placeholder="multiline text input with font styles and placeholder"
+            placeholderTextColor="red"
             style={[styles.multiline, styles.multilineWithFontStyles]}
           />
           <TextInput
-            placeholder="multiline text input with max length"
             maxLength={5}
             multiline={true}
+            placeholder="multiline text input with max length"
             style={styles.multiline}
           />
           <TextInput
-            placeholder="uneditable multiline text input"
             editable={false}
             multiline={true}
+            placeholder="uneditable multiline text input"
             style={styles.multiline}
           />
           <TextInput
+            dataDetectorTypes="phoneNumber"
             defaultValue="uneditable multiline text input with phone number detection: 88888888."
             editable={false}
             multiline={true}
             style={styles.multiline}
-            dataDetectorTypes="phoneNumber"
           />
         </View>
       );
@@ -740,8 +776,8 @@ const examples = [
       return (
         <View>
           <AutoExpandingTextInput
-            placeholder="height increases with content"
             enablesReturnKeyAutomatically={true}
+            placeholder="height increases with content"
             returnKeyType="default"
           />
         </View>
@@ -781,10 +817,10 @@ const examples = [
             <TextInput maxLength={5} placeholder="ZIP code entry" style={styles.default} />
           </WithLabel>
           <WithLabel label="maxLength: 5 with default value already set">
-            <TextInput maxLength={5} defaultValue="94025" style={styles.default} />
+            <TextInput defaultValue="94025" maxLength={5} style={styles.default} />
           </WithLabel>
           <WithLabel label="maxLength: 5 with very long default value already set">
-            <TextInput maxLength={5} defaultValue="9402512345" style={styles.default} />
+            <TextInput defaultValue="9402512345" maxLength={5} style={styles.default} />
           </WithLabel>
         </View>
       );

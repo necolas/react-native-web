@@ -19,20 +19,20 @@
 // NB: Taken straight from: https://github.com/IvanVergiliev/2048-react/blob/master/src/board.js
 //     with no modification except to format it for CommonJS and fix lint/flow errors
 
-var rotateLeft = function(matrix) {
-  var rows = matrix.length;
-  var columns = matrix[0].length;
-  var res = [];
-  for (var row = 0; row < rows; ++row) {
+const rotateLeft = function(matrix) {
+  const rows = matrix.length;
+  const columns = matrix[0].length;
+  const res = [];
+  for (let row = 0; row < rows; ++row) {
     res.push([]);
-    for (var column = 0; column < columns; ++column) {
+    for (let column = 0; column < columns; ++column) {
       res[row][column] = matrix[column][columns - row - 1];
     }
   }
   return res;
 };
 
-var Tile = function(value?: number, row?: number, column?: number) {
+const Tile = function(value?: number, row?: number, column?: number) {
   this.value = value || 0;
   this.row = row || -1;
 
@@ -81,10 +81,10 @@ Tile.prototype.toColumn = function() {
   return this.mergedInto ? this.mergedInto.column : this.column;
 };
 
-var Board = function() {
+const Board = function() {
   this.tiles = [];
   this.cells = [];
-  for (var i = 0; i < Board.size; ++i) {
+  for (let i = 0; i < Board.size; ++i) {
     this.cells[i] = [this.addTile(), this.addTile(), this.addTile(), this.addTile()];
   }
   this.addRandomTile();
@@ -92,9 +92,9 @@ var Board = function() {
   this.won = false;
 };
 
-Board.prototype.addTile = function() {
-  var res = new Tile();
-  Tile.apply(res, arguments);
+Board.prototype.addTile = function(...args) {
+  const res = new Tile();
+  Tile.apply(res, args);
   this.tiles.push(res);
   return res;
 };
@@ -102,19 +102,19 @@ Board.prototype.addTile = function() {
 Board.size = 4;
 
 Board.prototype.moveLeft = function() {
-  var hasChanged = false;
-  for (var row = 0; row < Board.size; ++row) {
-    var currentRow = this.cells[row].filter(function(tile) {
+  let hasChanged = false;
+  for (let row = 0; row < Board.size; ++row) {
+    const currentRow = this.cells[row].filter(function(tile) {
       return tile.value !== 0;
     });
-    var resultRow = [];
-    for (var target = 0; target < Board.size; ++target) {
-      var targetTile = currentRow.length ? currentRow.shift() : this.addTile();
+    const resultRow = [];
+    for (let target = 0; target < Board.size; ++target) {
+      let targetTile = currentRow.length ? currentRow.shift() : this.addTile();
       if (currentRow.length > 0 && currentRow[0].value === targetTile.value) {
-        var tile1 = targetTile;
+        const tile1 = targetTile;
         targetTile = this.addTile(targetTile.value);
         tile1.mergedInto = targetTile;
-        var tile2 = currentRow.shift();
+        const tile2 = currentRow.shift();
         tile2.mergedInto = targetTile;
         targetTile.value += tile2.value;
       }
@@ -142,28 +142,28 @@ Board.prototype.setPositions = function() {
 Board.fourProbability = 0.1;
 
 Board.prototype.addRandomTile = function() {
-  var emptyCells = [];
-  for (var r = 0; r < Board.size; ++r) {
-    for (var c = 0; c < Board.size; ++c) {
+  const emptyCells = [];
+  for (let r = 0; r < Board.size; ++r) {
+    for (let c = 0; c < Board.size; ++c) {
       if (this.cells[r][c].value === 0) {
         emptyCells.push({ r: r, c: c });
       }
     }
   }
-  var index = Math.floor(Math.random() * emptyCells.length);
-  var cell = emptyCells[index];
-  var newValue = Math.random() < Board.fourProbability ? 4 : 2;
+  const index = Math.floor(Math.random() * emptyCells.length);
+  const cell = emptyCells[index];
+  const newValue = Math.random() < Board.fourProbability ? 4 : 2;
   this.cells[cell.r][cell.c] = this.addTile(newValue);
 };
 
 Board.prototype.move = function(direction) {
   // 0 -> left, 1 -> up, 2 -> right, 3 -> down
   this.clearOldTiles();
-  for (var i = 0; i < direction; ++i) {
+  for (let i = 0; i < direction; ++i) {
     this.cells = rotateLeft(this.cells);
   }
-  var hasChanged = this.moveLeft();
-  for (var i = direction; i < 4; ++i) {
+  const hasChanged = this.moveLeft();
+  for (let i = direction; i < 4; ++i) {
     this.cells = rotateLeft(this.cells);
   }
   if (hasChanged) {
@@ -190,13 +190,13 @@ Board.deltaX = [-1, 0, 1, 0];
 Board.deltaY = [0, -1, 0, 1];
 
 Board.prototype.hasLost = function() {
-  var canMove = false;
-  for (var row = 0; row < Board.size; ++row) {
-    for (var column = 0; column < Board.size; ++column) {
+  let canMove = false;
+  for (let row = 0; row < Board.size; ++row) {
+    for (let column = 0; column < Board.size; ++column) {
       canMove = canMove || this.cells[row][column].value === 0;
-      for (var dir = 0; dir < 4; ++dir) {
-        var newRow = row + Board.deltaX[dir];
-        var newColumn = column + Board.deltaY[dir];
+      for (let dir = 0; dir < 4; ++dir) {
+        const newRow = row + Board.deltaX[dir];
+        const newColumn = column + Board.deltaY[dir];
         if (newRow < 0 || newRow >= Board.size || newColumn < 0 || newColumn >= Board.size) {
           continue;
         }

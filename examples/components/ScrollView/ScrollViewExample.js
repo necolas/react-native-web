@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+
 import React from 'react';
 import { action, storiesOf } from '@kadira/storybook';
 import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';

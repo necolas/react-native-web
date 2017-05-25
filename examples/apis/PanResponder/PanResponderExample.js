@@ -1,15 +1,13 @@
-'use strict';
+/* eslint-disable react/jsx-no-bind */
 
 import createReactClass from 'create-react-class';
-import { storiesOf, action } from '@kadira/storybook';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { PanResponder, StyleSheet, View } from 'react-native';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var { PanResponder, StyleSheet, View } = ReactNative;
+const CIRCLE_SIZE = 80;
 
-var CIRCLE_SIZE = 80;
-
-var PanResponderExample = createReactClass({
+const PanResponderExample = createReactClass({
   _panResponder: {},
   _previousLeft: 0,
   _previousTop: 0,
@@ -93,7 +91,7 @@ var PanResponderExample = createReactClass({
   }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   circle: {
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,

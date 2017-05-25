@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import { Platform, Switch, Text, View } from 'react-native';
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+/* eslint-disable react/jsx-no-bind */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -26,7 +23,12 @@ import { storiesOf, action } from '@kadira/storybook';
  * @flow
  */
 
-var BasicSwitchExample = createReactClass({
+import createReactClass from 'create-react-class';
+import { Switch, Text, View } from 'react-native';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+
+const BasicSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,
@@ -50,7 +52,7 @@ var BasicSwitchExample = createReactClass({
   }
 });
 
-var DisabledSwitchExample = createReactClass({
+const DisabledSwitchExample = createReactClass({
   render() {
     return (
       <View>
@@ -61,7 +63,7 @@ var DisabledSwitchExample = createReactClass({
   }
 });
 
-var ColorSwitchExample = createReactClass({
+const ColorSwitchExample = createReactClass({
   getInitialState() {
     return {
       colorTrueSwitchIsOn: true,
@@ -91,7 +93,7 @@ var ColorSwitchExample = createReactClass({
   }
 });
 
-var EventSwitchExample = createReactClass({
+const EventSwitchExample = createReactClass({
   getInitialState() {
     return {
       eventSwitchIsOn: false,
@@ -132,7 +134,7 @@ var EventSwitchExample = createReactClass({
   }
 });
 
-var SizeSwitchExample = createReactClass({
+const SizeSwitchExample = createReactClass({
   getInitialState() {
     return {
       trueSwitchIsOn: true,
@@ -157,40 +159,40 @@ var SizeSwitchExample = createReactClass({
   }
 });
 
-var examples = [
+const examples = [
   {
     title: 'set to true or false',
-    render(): ReactElement<any> {
+    render() {
       return <BasicSwitchExample />;
     }
   },
   {
     title: 'disabled',
-    render(): ReactElement<any> {
+    render() {
       return <DisabledSwitchExample />;
     }
   },
   {
     title: 'change events',
-    render(): ReactElement<any> {
+    render() {
       return <EventSwitchExample />;
     }
   },
   {
     title: 'custom colors',
-    render(): ReactElement<any> {
+    render() {
       return <ColorSwitchExample />;
     }
   },
   {
     title: 'custom size',
-    render(): ReactElement<any> {
+    render() {
       return <SizeSwitchExample />;
     }
   },
   {
     title: 'controlled component',
-    render(): ReactElement<any> {
+    render() {
       return <Switch />;
     }
   }

@@ -1,16 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  Platform,
-  TouchableNativeFeedback,
-  View
-} from 'react-native';
+/* eslint-disable react/jsx-no-bind */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -35,6 +23,19 @@ import {
  * @flow
  */
 
+import React from 'react';
+import { storiesOf, action } from '@kadira/storybook';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  Platform,
+  TouchableNativeFeedback,
+  View
+} from 'react-native';
+
 const examples = [
   {
     title: '<TouchableHighlight>',
@@ -48,16 +49,16 @@ const examples = [
         <View>
           <View style={styles.row}>
             <TouchableHighlight
-              style={styles.wrapper}
               onPress={() => console.log('stock THW image - highlight')}
+              style={styles.wrapper}
             >
               <Image source={heartImage} style={styles.image} />
             </TouchableHighlight>
             <TouchableHighlight
-              style={styles.wrapper}
               activeOpacity={1}
-              underlayColor="rgb(210, 230, 255)"
               onPress={() => console.log('custom THW text - highlight')}
+              style={styles.wrapper}
+              underlayColor="rgb(210, 230, 255)"
             >
               <View style={styles.wrapperCustom}>
                 <Text style={styles.text}>
@@ -72,7 +73,7 @@ const examples = [
   },
   {
     title: '<Text onPress={fn}> with highlight',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <TextOnPressBox />;
     }
   },
@@ -80,7 +81,7 @@ const examples = [
     title: 'Touchable feedback events',
     description: '<Touchable*> components accept onPress, onPressIn, ' +
       'onPressOut, and onLongPress as props.',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <TouchableFeedbackEvents />;
     }
   },
@@ -89,14 +90,14 @@ const examples = [
     description: '<Touchable*> components also accept delayPressIn, ' +
       'delayPressOut, and delayLongPress as props. These props impact the ' +
       'timing of feedback events.',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <TouchableDelayEvents />;
     }
   },
   {
     title: '3D Touch / Force Touch',
     description: 'iPhone 6s and 6s plus support 3D touch, which adds a force property to touches',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <ForceTouchExample />;
     },
     platform: 'ios'
@@ -105,7 +106,7 @@ const examples = [
     title: 'Touchable Hit Slop',
     description: '<Touchable*> components accept hitSlop prop which extends the touch area ' +
       'without changing the view bounds.',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <TouchableHitSlop />;
     }
   },
@@ -113,25 +114,26 @@ const examples = [
     title: 'Disabled Touchable*',
     description: '<Touchable*> components accept disabled prop which prevents ' +
       'any interaction with component',
-    render: function(): ReactElement<any> {
+    render: function() {
       return <TouchableDisabled />;
     }
   }
 ];
 
-var TextOnPressBox = createReactClass({
-  getInitialState: function() {
-    return {
-      timesPressed: 0
-    };
-  },
-  textOnPress: function() {
+class TextOnPressBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { timesPressed: 0 };
+  }
+
+  _handlePress = () => {
     this.setState({
       timesPressed: this.state.timesPressed + 1
     });
-  },
-  render: function() {
-    var textLog = '';
+  };
+
+  render() {
+    let textLog = '';
     if (this.state.timesPressed > 1) {
       textLog = this.state.timesPressed + 'x text onPress';
     } else if (this.state.timesPressed > 0) {
@@ -140,79 +142,80 @@ var TextOnPressBox = createReactClass({
 
     return (
       <View>
-        <Text style={styles.textBlock} onPress={this.textOnPress}>
+        <Text onPress={this._handlePress} style={styles.textBlock}>
           Text has built-in onPress handling
         </Text>
         <View style={styles.logBox}>
-          <Text>
-            {textLog}
-          </Text>
+          <Text>{textLog}</Text>
         </View>
       </View>
     );
   }
-});
+}
 
-var TouchableFeedbackEvents = createReactClass({
-  getInitialState: function() {
-    return {
-      eventLog: []
-    };
-  },
-  render: function() {
+class TouchableFeedbackEvents extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { eventLog: [] };
+  }
+
+  render() {
     return (
       <View testID="touchable_feedback_events">
         <View style={[styles.row, { justifyContent: 'center' }]}>
           <TouchableOpacity
-            style={styles.wrapper}
-            testID="touchable_feedback_events_button"
+            accessibilityComponentType="button"
             accessibilityLabel="touchable feedback events"
             accessibilityTraits="button"
-            accessibilityComponentType="button"
-            onPress={() => this._appendEvent('press')}
-            onPressIn={() => this._appendEvent('pressIn')}
-            onPressOut={() => this._appendEvent('pressOut')}
-            onLongPress={() => this._appendEvent('longPress')}
+            onLongPress={this._createPressHandler('longPress')}
+            onPress={this._createPressHandler('press')}
+            onPressIn={this._createPressHandler('pressIn')}
+            onPressOut={this._createPressHandler('pressOut')}
+            style={styles.wrapper}
+            testID="touchable_feedback_events_button"
           >
             <Text style={styles.button}>
               Press Me
             </Text>
           </TouchableOpacity>
         </View>
-        <View testID="touchable_feedback_events_console" style={styles.eventLogBox}>
+        <View style={styles.eventLogBox} testID="touchable_feedback_events_console">
           {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
         </View>
       </View>
     );
-  },
-  _appendEvent: function(eventName) {
-    var limit = 6;
-    var eventLog = this.state.eventLog.slice(0, limit - 1);
-    eventLog.unshift(eventName);
-    this.setState({ eventLog });
   }
-});
 
-var TouchableDelayEvents = createReactClass({
-  getInitialState: function() {
-    return {
-      eventLog: []
+  _createPressHandler = eventName => {
+    return () => {
+      const limit = 6;
+      const eventLog = this.state.eventLog.slice(0, limit - 1);
+      eventLog.unshift(eventName);
+      this.setState({ eventLog });
     };
-  },
-  render: function() {
+  };
+}
+
+class TouchableDelayEvents extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { eventLog: [] };
+  }
+
+  render() {
     return (
       <View testID="touchable_delay_events">
         <View style={[styles.row, { justifyContent: 'center' }]}>
           <TouchableOpacity
+            delayLongPress={800}
+            delayPressIn={400}
+            delayPressOut={1000}
+            onLongPress={this._createPressHandler('longPress - 800ms delay')}
+            onPress={this._createPressHandler('press')}
+            onPressIn={this._createPressHandler('pressIn - 400ms delay')}
+            onPressOut={this._createPressHandler('pressOut - 1000ms delay')}
             style={styles.wrapper}
             testID="touchable_delay_events_button"
-            onPress={() => this._appendEvent('press')}
-            delayPressIn={400}
-            onPressIn={() => this._appendEvent('pressIn - 400ms delay')}
-            delayPressOut={1000}
-            onPressOut={() => this._appendEvent('pressOut - 1000ms delay')}
-            delayLongPress={800}
-            onLongPress={() => this._appendEvent('longPress - 800ms delay')}
           >
             <Text style={styles.button}>
               Press Me
@@ -224,27 +227,31 @@ var TouchableDelayEvents = createReactClass({
         </View>
       </View>
     );
-  },
-  _appendEvent: function(eventName) {
-    var limit = 6;
-    var eventLog = this.state.eventLog.slice(0, limit - 1);
-    eventLog.unshift(eventName);
-    this.setState({ eventLog });
   }
-});
 
-var ForceTouchExample = createReactClass({
-  getInitialState: function() {
-    return {
-      force: 0
+  _createPressHandler = eventName => {
+    return () => {
+      const limit = 6;
+      const eventLog = this.state.eventLog.slice(0, limit - 1);
+      eventLog.unshift(eventName);
+      this.setState({ eventLog });
     };
-  },
-  _renderConsoleText: function() {
+  };
+}
+
+class ForceTouchExample extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { force: 0 };
+  }
+
+  _renderConsoleText() {
     return View.forceTouchAvailable
       ? 'Force: ' + this.state.force.toFixed(3)
       : '3D Touch is not available on this device';
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <View testID="touchable_3dtouch_event">
         <View style={styles.forceTouchBox} testID="touchable_3dtouch_output">
@@ -252,11 +259,11 @@ var ForceTouchExample = createReactClass({
         </View>
         <View style={[styles.row, { justifyContent: 'center' }]}>
           <View
-            style={styles.wrapper}
-            testID="touchable_3dtouch_button"
-            onStartShouldSetResponder={() => true}
             onResponderMove={event => this.setState({ force: event.nativeEvent.force })}
             onResponderRelease={event => this.setState({ force: 0 })}
+            onStartShouldSetResponder={() => true}
+            style={styles.wrapper}
+            testID="touchable_3dtouch_button"
           >
             <Text style={styles.button}>
               Press Me
@@ -266,21 +273,22 @@ var ForceTouchExample = createReactClass({
       </View>
     );
   }
-});
+}
 
-var TouchableHitSlop = createReactClass({
-  getInitialState: function() {
-    return {
-      timesPressed: 0
-    };
-  },
-  onPress: function() {
+class TouchableHitSlop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { timesPressed: 0 };
+  }
+
+  _handlePress = () => {
     this.setState({
       timesPressed: this.state.timesPressed + 1
     });
-  },
-  render: function() {
-    var log = '';
+  };
+
+  render() {
+    let log = '';
     if (this.state.timesPressed > 1) {
       log = this.state.timesPressed + 'x onPress';
     } else if (this.state.timesPressed > 0) {
@@ -291,9 +299,9 @@ var TouchableHitSlop = createReactClass({
       <View testID="touchable_hit_slop">
         <View style={[styles.row, { justifyContent: 'center' }]}>
           <TouchableOpacity
-            onPress={this.onPress}
-            style={styles.hitSlopWrapper}
             hitSlop={{ top: 30, bottom: 30, left: 60, right: 60 }}
+            onPress={this._handlePress}
+            style={styles.hitSlopWrapper}
             testID="touchable_hit_slop_button"
           >
             <Text style={styles.hitSlopButton}>
@@ -309,24 +317,24 @@ var TouchableHitSlop = createReactClass({
       </View>
     );
   }
-});
+}
 
-var TouchableDisabled = createReactClass({
-  render: function() {
+class TouchableDisabled extends React.Component {
+  render() {
     return (
       <View>
         <TouchableOpacity
           disabled={true}
-          style={[styles.row, styles.block]}
           onPress={action('TouchableOpacity')}
+          style={[styles.row, styles.block]}
         >
           <Text style={styles.disabledButton}>Disabled TouchableOpacity</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           disabled={false}
-          style={[styles.row, styles.block]}
           onPress={action('TouchableOpacity')}
+          style={[styles.row, styles.block]}
         >
           <Text style={styles.button}>Enabled TouchableOpacity</Text>
         </TouchableOpacity>
@@ -334,9 +342,9 @@ var TouchableDisabled = createReactClass({
         <TouchableHighlight
           activeOpacity={1}
           disabled={true}
-          underlayColor="rgb(210, 230, 255)"
-          style={[styles.row, styles.block]}
           onPress={action('TouchableHighlight')}
+          style={[styles.row, styles.block]}
+          underlayColor="rgb(210, 230, 255)"
         >
           <Text style={styles.disabledButton}>
             Disabled TouchableHighlight
@@ -345,9 +353,9 @@ var TouchableDisabled = createReactClass({
 
         <TouchableHighlight
           activeOpacity={1}
-          underlayColor="rgb(210, 230, 255)"
-          style={[styles.row, styles.block]}
           onPress={action('TouchableHighlight')}
+          style={[styles.row, styles.block]}
+          underlayColor="rgb(210, 230, 255)"
         >
           <Text style={styles.button}>
             Enabled TouchableHighlight
@@ -356,9 +364,9 @@ var TouchableDisabled = createReactClass({
 
         {Platform.OS === 'android' &&
           <TouchableNativeFeedback
-            style={[styles.row, styles.block]}
-            onPress={() => console.log('custom TNF has been clicked')}
             background={TouchableNativeFeedback.SelectableBackground()}
+            onPress={() => console.log('custom TNF has been clicked')}
+            style={[styles.row, styles.block]}
           >
             <View>
               <Text style={[styles.button, styles.nativeFeedbackButton]}>
@@ -369,10 +377,10 @@ var TouchableDisabled = createReactClass({
 
         {Platform.OS === 'android' &&
           <TouchableNativeFeedback
-            disabled={true}
-            style={[styles.row, styles.block]}
-            onPress={() => console.log('custom TNF has been clicked')}
             background={TouchableNativeFeedback.SelectableBackground()}
+            disabled={true}
+            onPress={() => console.log('custom TNF has been clicked')}
+            style={[styles.row, styles.block]}
           >
             <View>
               <Text style={[styles.disabledButton, styles.nativeFeedbackButton]}>
@@ -383,11 +391,11 @@ var TouchableDisabled = createReactClass({
       </View>
     );
   }
-});
+}
 
-var heartImage = { uri: 'https://pbs.twimg.com/media/BlXBfT3CQAA6cVZ.png:small' };
+const heartImage = { uri: 'https://pbs.twimg.com/media/BlXBfT3CQAA6cVZ.png:small' };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
     flexDirection: 'row'

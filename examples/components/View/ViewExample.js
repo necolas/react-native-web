@@ -1,6 +1,6 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 /**
@@ -26,7 +26,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
  * @flow
  */
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   box: {
     backgroundColor: '#527FE4',
     borderColor: '#000033',
@@ -51,7 +51,7 @@ var styles = StyleSheet.create({
   }
 });
 
-var ViewBorderStyleExample = createReactClass({
+const ViewBorderStyleExample = createReactClass({
   getInitialState() {
     return {
       showBorder: true
@@ -96,7 +96,7 @@ var ViewBorderStyleExample = createReactClass({
   }
 });
 
-var ZIndexExample = createReactClass({
+const ZIndexExample = createReactClass({
   getInitialState() {
     return {
       flipped: false

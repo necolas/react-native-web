@@ -1,7 +1,7 @@
 import createReactClass from 'create-react-class';
 import { ProgressBar, StyleSheet, View } from 'react-native';
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import TimerMixin from 'react-timer-mixin';
 
 /**
@@ -27,7 +27,7 @@ import TimerMixin from 'react-timer-mixin';
  * @flow
  */
 
-var ProgressBarExample = createReactClass({
+const ProgressBarExample = createReactClass({
   mixins: [TimerMixin],
 
   getInitialState() {
@@ -41,23 +41,23 @@ var ProgressBarExample = createReactClass({
   },
 
   updateProgress() {
-    var progress = this.state.progress + 0.01;
+    const progress = this.state.progress + 0.01;
     this.setState({ progress });
     this.requestAnimationFrame(() => this.updateProgress());
   },
 
   getProgress(offset) {
-    var progress = this.state.progress + offset;
+    const progress = this.state.progress + offset;
     return Math.sin(progress % Math.PI) % 1;
   },
 
   render() {
     return (
       <View style={styles.container}>
-        <ProgressBar style={styles.progressView} color="purple" progress={this.getProgress(0.2)} />
-        <ProgressBar style={styles.progressView} color="red" progress={this.getProgress(0.4)} />
-        <ProgressBar style={styles.progressView} color="orange" progress={this.getProgress(0.6)} />
-        <ProgressBar style={styles.progressView} color="yellow" progress={this.getProgress(0.8)} />
+        <ProgressBar color="purple" progress={this.getProgress(0.2)} style={styles.progressView} />
+        <ProgressBar color="red" progress={this.getProgress(0.4)} style={styles.progressView} />
+        <ProgressBar color="orange" progress={this.getProgress(0.6)} style={styles.progressView} />
+        <ProgressBar color="yellow" progress={this.getProgress(0.8)} style={styles.progressView} />
       </View>
     );
   }
@@ -78,7 +78,7 @@ const examples = [
   }
 ];
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     minWidth: 200,
     marginTop: -20,

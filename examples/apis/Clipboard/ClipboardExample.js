@@ -1,6 +1,6 @@
 import { Clipboard, Text, TextInput, View } from 'react-native';
 import React, { Component } from 'react';
-import { action, storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 class ClipboardExample extends Component {
   render() {

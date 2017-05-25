@@ -1,9 +1,3 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import TimerMixin from 'react-timer-mixin';
-
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -26,6 +20,12 @@ import TimerMixin from 'react-timer-mixin';
  *
  * @flow
  */
+
+import createReactClass from 'create-react-class';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import TimerMixin from 'react-timer-mixin';
 
 const ToggleAnimatingActivityIndicator = createReactClass({
   mixins: [TimerMixin],
@@ -51,9 +51,9 @@ const ToggleAnimatingActivityIndicator = createReactClass({
     return (
       <ActivityIndicator
         animating={this.state.animating}
-        style={styles.centering}
         hidesWhenStopped={this.props.hidesWhenStopped}
         size="large"
+        style={styles.centering}
       />
     );
   }
@@ -83,7 +83,7 @@ const examples = [
     title: 'Large',
     render() {
       return (
-        <ActivityIndicator style={[styles.centering, styles.gray]} color="white" size="large" />
+        <ActivityIndicator color="white" size="large" style={[styles.centering, styles.gray]} />
       );
     }
   },
@@ -92,10 +92,10 @@ const examples = [
     render() {
       return (
         <View style={styles.horizontal}>
-          <ActivityIndicator size="large" color="#0000ff" />
-          <ActivityIndicator size="large" color="#aa00aa" />
-          <ActivityIndicator size="large" color="#aa3300" />
-          <ActivityIndicator size="large" color="#00aa00" />
+          <ActivityIndicator color="#0000ff" size="large" />
+          <ActivityIndicator color="#aa00aa" size="large" />
+          <ActivityIndicator color="#aa3300" size="large" />
+          <ActivityIndicator color="#00aa00" size="large" />
         </View>
       );
     }
@@ -117,7 +117,7 @@ const examples = [
       return (
         <View style={[styles.horizontal, styles.centering]}>
           <ActivityIndicator size={40} />
-          <ActivityIndicator style={{ marginLeft: 20, transform: [{ scale: 1.5 }] }} size="large" />
+          <ActivityIndicator size="large" style={{ marginLeft: 20, transform: [{ scale: 1.5 }] }} />
         </View>
       );
     }

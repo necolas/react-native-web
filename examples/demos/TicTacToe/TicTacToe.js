@@ -17,20 +17,20 @@
 'use strict';
 
 import createReactClass from 'create-react-class';
-var React = require('react');
-var ReactNative = require('react-native');
-var { AppRegistry, StyleSheet, Text, TouchableHighlight, View } = ReactNative;
+const React = require('react');
+const ReactNative = require('react-native');
+const { AppRegistry, StyleSheet, Text, TouchableHighlight, View } = ReactNative;
 
 class Board {
   grid: Array<Array<number>>;
   turn: number;
 
   constructor() {
-    var size = 3;
-    var grid = Array(size);
-    for (var i = 0; i < size; i++) {
-      var row = Array(size);
-      for (var j = 0; j < size; j++) {
+    const size = 3;
+    const grid = Array(size);
+    for (let i = 0; i < size; i++) {
+      const row = Array(size);
+      for (let j = 0; j < size; j++) {
         row[j] = 0;
       }
       grid[i] = row;
@@ -50,7 +50,7 @@ class Board {
   }
 
   winner(): ?number {
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (
         this.grid[i][0] !== 0 &&
         this.grid[i][0] === this.grid[i][1] &&
@@ -60,7 +60,7 @@ class Board {
       }
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (
         this.grid[0][i] !== 0 &&
         this.grid[0][i] === this.grid[1][i] &&
@@ -90,8 +90,8 @@ class Board {
   }
 
   tie(): boolean {
-    for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 3; j++) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
         if (this.grid[i][j] === 0) {
           return false;
         }
@@ -101,7 +101,7 @@ class Board {
   }
 }
 
-var Cell = createReactClass({
+const Cell = createReactClass({
   cellStyle() {
     switch (this.props.player) {
       case 1:
@@ -138,9 +138,9 @@ var Cell = createReactClass({
   render() {
     return (
       <TouchableHighlight
+        activeOpacity={0.5}
         onPress={this.props.onPress}
         underlayColor="transparent"
-        activeOpacity={0.5}
       >
         <View style={[styles.cell, this.cellStyle()]}>
           <Text style={[styles.cellText, this.textStyle()]}>
@@ -152,17 +152,17 @@ var Cell = createReactClass({
   }
 });
 
-var GameEndOverlay = createReactClass({
+const GameEndOverlay = createReactClass({
   render() {
-    var board = this.props.board;
+    const board = this.props.board;
 
-    var tie = board.tie();
-    var winner = board.winner();
+    const tie = board.tie();
+    const winner = board.winner();
     if (!winner && !tie) {
       return <View />;
     }
 
-    var message;
+    let message;
     if (tie) {
       message = "It's a tie!";
     } else {
@@ -173,9 +173,9 @@ var GameEndOverlay = createReactClass({
       <View style={styles.overlay}>
         <Text style={styles.overlayMessage}>{message}</Text>
         <TouchableHighlight
+          activeOpacity={0.5}
           onPress={this.props.onRestart}
           underlayColor="transparent"
-          activeOpacity={0.5}
         >
           <View style={styles.newGame}>
             <Text style={styles.newGameText}>New Game</Text>
@@ -186,9 +186,9 @@ var GameEndOverlay = createReactClass({
   }
 });
 
-var TicTacToeApp = createReactClass({
+const TicTacToeApp = createReactClass({
   getInitialState() {
-    return { board: new Board(), player: 1 };
+    return { board: new Board(), player: 1 }
   },
 
   restartGame() {
@@ -211,14 +211,10 @@ var TicTacToeApp = createReactClass({
   },
 
   render() {
-    var rows = this.state.board.grid.map((cells, row) => (
+    const rows = this.state.board.grid.map((cells, row) => (
       <View key={'row' + row} style={styles.row}>
         {cells.map((player, col) => (
-          <Cell
-            key={'cell' + col}
-            player={player}
-            onPress={this.handleCellPress.bind(this, row, col)}
-          />
+          <Cell key={'cell' + col} onPress={this.handleCellPress.bind(this, row, col)} player={player} />
         ))}
       </View>
     ));
@@ -235,7 +231,7 @@ var TicTacToeApp = createReactClass({
   }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
