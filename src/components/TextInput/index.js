@@ -4,6 +4,7 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
@@ -15,6 +16,7 @@ import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
 import { bool, func, number, oneOf, shape, string } from 'prop-types';
 
+const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
 const emptyObject = {};
 
 /**
@@ -48,7 +50,12 @@ const setSelection = (node, selection) => {
   try {
     if (isSelectionStale(node, selection)) {
       const { start, end } = selection;
-      node.setSelectionRange(start, end || start);
+      // workaround for Blink on Android: see https://github.com/text-mask/text-mask/issues/300
+      if (isAndroid) {
+        setTimeout(() => node.setSelectionRange(start, end || start), 10);
+      } else {
+        node.setSelectionRange(start, end || start);
+      }
     }
   } catch (e) {}
 };

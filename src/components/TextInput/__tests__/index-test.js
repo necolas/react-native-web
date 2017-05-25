@@ -199,4 +199,23 @@ describe('components/TextInput', () => {
     const input = findNativeInput(shallow(<TextInput value={value} />));
     expect(input.prop('value')).toEqual(value);
   });
+
+  describe('prop "selection"', () => {
+    test('set cursor location', () => {
+      const cursorLocation = { start: 3, end: 3 };
+
+      const inputDefaultSelection = findNativeInput(mount(<TextInput defaultValue="12345" />));
+      const inputCustomSelection = findNativeInput(
+        mount(<TextInput defaultValue="12345" selection={cursorLocation} />)
+      );
+
+      // default selection is 0
+      expect(inputDefaultSelection.node.selectionStart).toEqual(0);
+      expect(inputDefaultSelection.node.selectionEnd).toEqual(0);
+
+      // custom selection sets cursor at custom position
+      expect(inputCustomSelection.node.selectionStart).toEqual(cursorLocation.start);
+      expect(inputCustomSelection.node.selectionEnd).toEqual(cursorLocation.end);
+    });
+  });
 });
