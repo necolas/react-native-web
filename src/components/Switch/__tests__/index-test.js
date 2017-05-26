@@ -42,6 +42,4 @@ describe('components/Switch', () => {
       expect(component).toMatchSnapshot();
     });
   });
-
-  // TODO: testing the grey circle
 });
