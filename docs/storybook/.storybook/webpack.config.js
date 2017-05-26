@@ -27,7 +27,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'react-native': path.join(__dirname, '../../src/module')
+      'react-native': path.join(__dirname, '../../../src/module')
     }
   }
 };

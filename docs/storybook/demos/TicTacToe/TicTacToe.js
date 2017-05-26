@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+
 /**
  * The examples provided by Facebook are for non-commercial testing and
  * evaluation purposes only.
@@ -14,12 +16,10 @@
  * @providesModule TicTacToeApp
  * @flow
  */
-'use strict';
 
 import createReactClass from 'create-react-class';
-const React = require('react');
-const ReactNative = require('react-native');
-const { AppRegistry, StyleSheet, Text, TouchableHighlight, View } = ReactNative;
+import React from 'react';
+import { AppRegistry, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 class Board {
   grid: Array<Array<number>>;

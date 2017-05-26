@@ -6,7 +6,7 @@ Before opening an issue, please search the [issue
 tracker](https://github.com/necolas/react-native-web/issues) to make sure your
 issue hasn't already been reported.
 
-## Development
+## Getting started
 
 Visit the [Issue tracker](https://github.com/necolas/react-native-web/issues)
 to find a list of open issues that need attention.
@@ -23,51 +23,63 @@ Install dependencies (requires [yarn](https://yarnpkg.com/en/docs/install):
 yarn
 ```
 
-Run the examples:
+## Unit tests
+
+To run the unit tests:
 
 ```
-npm run examples
+npm test
 ```
 
-Run the benchmarks in a browser by opening `./performance/index.html` after running:
-
-```
-npm run build:performance
-```
-
-### Building
-
-```
-npm run build
-```
-
-To create a UMD build:
-
-```
-npm run build:umd
-```
-
-### Testing and Linting
-
-To run the tests:
-
-```
-npm run test
-```
-
-To continuously watch and run tests, run the following:
+…in watch mode:
 
 ```
 npm run test:watch
 ```
 
-Before create a commit run:
+## Visual tests
+
+Run the interactive storybook:
+
+```
+npm run docs:start
+```
+
+Run generate a static build of the storybook:
+
+```
+npm run docs:build
+```
+
+Run the performance benchmarks in a browser (opening `./performance/index.html`):
+
+```
+npm run benchmarks
+```
+
+## Compile and build
+
+Compile the source code to `dist`:
+
+```
+npm run compile
+```
+
+To create a UMD bundle of the library:
+
+```
+npm run build
+```
+
+### Pre-commit
+
+Before creating a commit run:
 
 ```
 npm run precommit
 ```
 
-To format or lint the entire project:
+To format and lint the entire project:
 
 ```
 npm run fmt
@@ -88,8 +100,10 @@ that we won't want to accept.
 * Make sure all tests pass and there are no linting errors.
 * Submit a pull request, referencing any issues it addresses.
 
-Please try to keep your pull request focused in scope and avoid including unrelated commits.
+Please try to keep your pull request focused in scope and avoid including
+unrelated commits.
 
-After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
+After you have submitted your pull request, we'll try to get back to you as
+soon as possible. We may suggest some changes or improvements.
 
 Thank you for contributing!
