@@ -192,7 +192,7 @@ inline styles.
 
 All this allows React Native for Web to support the rich functionality of React
 Native styles (including RTL layouts and `setNativeProps`) while providing one
-of the [fastest](https://github.com/necolas/react-native-web/blob/master/performance/README.md),
+of the [fastest](https://github.com/necolas/react-native-web/blob/master/benchmarks/README.md),
 safest, and most efficient styles-in-JavaScript solutions.
 
 ## FAQs
