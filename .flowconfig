@@ -1,7 +1,7 @@
 [ignore]
 .*/__tests__/.*
-.*/examples/.*
-.*/performance/.*
+.*/benchmarks/.*
+.*/docs/.*
 .*/node_modules/animated/*
 
 [include]

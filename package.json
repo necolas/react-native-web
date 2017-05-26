@@ -25,6 +25,14 @@
     "test": "jest",
     "test:watch": "npm run test -- --watch"
   },
+  "babel": {
+    "presets": [
+      "react-native"
+    ],
+    "plugins": [
+      [ "transform-react-remove-prop-types", { "mode": "wrap" } ]
+    ]
+  },
   "jest": {
     "testEnvironment": "jsdom",
     "timers": "fake",
