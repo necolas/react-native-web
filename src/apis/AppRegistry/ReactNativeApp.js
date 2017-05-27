@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import StyleSheet from '../StyleSheet';
 import View from '../../components/View';
 import { any, object } from 'prop-types';

@@ -8,11 +8,7 @@
  */
 
 declare module 'fbjs/lib/invariant' {
-  declare function exports<T>(
-    condition: any,
-    message: string,
-    ...args: Array<any>
-  ): void;
+  declare function exports<T>(condition: any, message: string, ...args: Array<any>): void;
 }
 
 declare module 'fbjs/lib/nullthrows' {

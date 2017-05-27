@@ -188,7 +188,7 @@ const GameEndOverlay = createReactClass({
 
 const TicTacToeApp = createReactClass({
   getInitialState() {
-    return { board: new Board(), player: 1 }
+    return { board: new Board(), player: 1 };
   },
 
   restartGame() {
@@ -214,7 +214,11 @@ const TicTacToeApp = createReactClass({
     const rows = this.state.board.grid.map((cells, row) => (
       <View key={'row' + row} style={styles.row}>
         {cells.map((player, col) => (
-          <Cell key={'cell' + col} onPress={this.handleCellPress.bind(this, row, col)} player={player} />
+          <Cell
+            key={'cell' + col}
+            onPress={this.handleCellPress.bind(this, row, col)}
+            player={player}
+          />
         ))}
       </View>
     ));

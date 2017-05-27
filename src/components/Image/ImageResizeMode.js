@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 const ImageResizeMode = {
   center: 'center',
   contain: 'contain',

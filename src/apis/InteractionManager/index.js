@@ -31,7 +31,7 @@ const InteractionManager = {
   /**
    * Notify manager that an interaction has completed.
    */
-  clearInteractionHandle(handle) {
+  clearInteractionHandle(handle: number) {
     invariant(!!handle, 'Must provide a handle to clear.');
   },
 

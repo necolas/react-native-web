@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
@@ -17,7 +21,7 @@ class AppState {
 
   static get currentState() {
     if (!AppState.isAvailable) {
-      return AppState.ACTIVE;
+      return AppStates.ACTIVE;
     }
 
     switch (document.visibilityState) {

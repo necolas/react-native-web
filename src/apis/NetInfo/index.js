@@ -50,7 +50,7 @@ const NetInfo = {
     connection.removeEventListener(type, handler);
   },
 
-  fetch(): Promise {
+  fetch(): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         resolve(connection.type);
@@ -99,7 +99,7 @@ const NetInfo = {
       connectionListeners.splice(listenerIndex, 1);
     },
 
-    fetch(): Promise {
+    fetch(): Promise<any> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);

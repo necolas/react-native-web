@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import AnimationPropTypes from '../../propTypes/AnimationPropTypes';
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';

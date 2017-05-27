@@ -1,4 +1,8 @@
 /* global window */
+/**
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import ImageLoader from '../../modules/ImageLoader';
@@ -42,10 +46,12 @@ const resolveAssetDimensions = source => {
 };
 
 const resolveAssetSource = source => {
-  return (typeof source === 'object' ? source.uri : source) || null;
+  return (typeof source === 'object' ? source.uri : source) || '';
 };
 
 class Image extends Component {
+  state: { shouldDisplaySource: boolean };
+
   static displayName = 'Image';
 
   static propTypes = {
@@ -76,6 +82,11 @@ class Image extends Component {
 
   static resizeMode = ImageResizeMode;
 
+  _imageRequestId = null;
+  _imageState = null;
+  _isMounted = false;
+  _loadRequest = null;
+
   constructor(props, context) {
     super(props, context);
     // If an image has been loaded before, render it immediately
@@ -84,7 +95,6 @@ class Image extends Component {
     this.state = { shouldDisplaySource: isPreviouslyLoaded };
     this._imageState = getImageState(uri, isPreviouslyLoaded);
     isPreviouslyLoaded && ImageUriCache.add(uri);
-    this._isMounted = false;
   }
 
   componentDidMount() {

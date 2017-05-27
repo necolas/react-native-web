@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';

@@ -8,10 +8,8 @@
  *
  * web stub for BackAndroid.android.js
  *
- * @providesModule BackAndroid
+ * @flow
  */
-
-'use strict';
 
 function emptyFunction() {}
 

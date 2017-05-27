@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import { Component } from 'react';
 
 class StatusBar extends Component {

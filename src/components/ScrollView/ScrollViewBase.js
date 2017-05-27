@@ -67,14 +67,11 @@ export default class ScrollViewBase extends Component {
     scrollEventThrottle: 0
   };
 
-  constructor(props) {
-    super(props);
-    this._debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
-    this._state = { isScrolling: false };
-  }
+  _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
+  _state = { isScrolling: false, scrollLastTick: 0 };
 
-  _handlePreventableScrollEvent = handler => {
-    return e => {
+  _handlePreventableScrollEvent = (handler: Function) => {
+    return (e: Object) => {
       if (!this.props.scrollEnabled) {
         e.preventDefault();
       } else {
@@ -85,7 +82,7 @@ export default class ScrollViewBase extends Component {
     };
   };
 
-  _handleScroll = e => {
+  _handleScroll = (e: SyntheticEvent) => {
     e.persist();
     e.stopPropagation();
     const { scrollEventThrottle } = this.props;
@@ -102,12 +99,12 @@ export default class ScrollViewBase extends Component {
     }
   };
 
-  _handleScrollStart(e) {
+  _handleScrollStart(e: Object) {
     this._state.isScrolling = true;
     this._state.scrollLastTick = Date.now();
   }
 
-  _handleScrollTick(e) {
+  _handleScrollTick(e: Object) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
     if (onScroll) {
@@ -115,7 +112,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _handleScrollEnd(e) {
+  _handleScrollEnd(e: Object) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
     if (onScroll) {
@@ -123,7 +120,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _shouldEmitScrollEvent(lastTick, eventThrottle) {
+  _shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
     const timeSinceLastTick = Date.now() - lastTick;
     return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
   }

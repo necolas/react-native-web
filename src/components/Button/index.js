@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
 import TouchableOpacity from '../Touchable/TouchableOpacity';

@@ -24,7 +24,16 @@
   "globals": {
     "document": false,
     "navigator": false,
-    "window": false
+    "window": false,
+    // Flow global types
+    "HTMLInputElement": false,
+    "ReactClass": false,
+    "ReactComponent": false,
+    "ReactElement": false,
+    "ReactPropsChainableTypeChecker": false,
+    "ReactPropsCheckType": false,
+    "ReactPropTypes": false,
+    "SyntheticEvent": false
   },
   "rules": {
     "camelcase": 0,

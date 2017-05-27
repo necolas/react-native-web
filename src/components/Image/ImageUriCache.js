@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
