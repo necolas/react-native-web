@@ -22,6 +22,10 @@ Browse the [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
 to see React Native examples running on Web. Or try it out online with [React
 Native for Web: Playground](https://www.webpackbin.com/bins/-KgucwxRbn7HRU-V-3Bc).
 
+Alternatively you can install [Estructor](https://github.com/msand/estructor),
+to use an in-browser React UI Builder, and, a stack enabling cross platform 
+development of components, pages and universal apps, based on React Native for Web.
+
 ## Quick start
 
 To install in your app:
@@ -135,6 +139,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 
 ## Related projects
 
+* [Estructor](https://github.com/msand/estructor)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
