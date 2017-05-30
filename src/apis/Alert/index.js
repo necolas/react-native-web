@@ -2,7 +2,7 @@ import React from 'react';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../../components/View';
 import Text from '../../components/Text';
-import TouchableOpacity from '../../components/Touchable/TouchableOpacity';
+import TouchableHighlight from '../../components/Touchable/TouchableHighlight';
 
 let instance;
 
@@ -18,55 +18,45 @@ const styles = StyleSheet.create({
   },
   container: {
     overflow: 'hidden',
-    borderRadius: 10,
     backgroundColor: '#f8f8f8'
   },
   textContainer: {
-    paddingTop: 20,
-    paddingHorizontal: 50,
-    alignItems: 'center',
+    padding: 20,
     justifyContent: 'space-around'
   },
   title: {
     color: '#2b3137',
-    borderRadius: 2,
-    fontSize: 21,
-    fontWeight: 'bold'
+    fontSize: 17,
+    fontWeight: '600'
   },
   message: {
     color: '#2b3137',
     marginTop: 4,
-    fontSize: 18,
-    maxWidth: 200,
-    textAlign: 'center'
+    fontSize: 14,
+    maxWidth: 300,
   },
   buttonContainer: {
-    borderTopColor: '#dbdbdb',
+    alignSelf: 'flex-end',
     flexDirection: 'row',
-    borderTopWidth: 1,
     flex: 1,
-    marginTop: 20
+    paddingRight: 14,
+    paddingBottom: 6,
   },
-  buttonContainerMulti: {
-    flexDirection: 'column'
-  },
+  buttonContainerMulti: { },
   button: {
-    paddingVertical: 16,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'space-around',
     flex: 1
   },
   buttonSpacer: {
-    borderRightColor: '#dbdbdb',
-    borderRightWidth: 1
   },
   buttonSpacerMulti: {
-    borderBottomColor: '#dbdbdb',
-    borderBottomWidth: 1
   },
   buttonLabel: {
     color: '#4b8ffe',
-    fontSize: 21
+    fontSize: 14
   }
 });
 
@@ -120,20 +110,21 @@ class AlertViewClass extends React.Component {
             {
               buttons.map(
                 ({ text, onPress }, i) => (
-                  <TouchableOpacity
+                  <TouchableHighlight
                     key={i}
                     onPress={this.onButtonPress(onPress)}
                     style={[
                       styles.button,
                       ((i < buttons.length - 1) && (isMultiButton ? styles.buttonSpacerMulti : styles.buttonSpacer))
                     ]}
+                    underlayColor="#f0f0f0"
                   >
                     <Text
                       style={styles.buttonLabel}
                     >
                       { text }
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableHighlight>
                 )
               )
             }
