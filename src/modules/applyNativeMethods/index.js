@@ -7,7 +7,7 @@
 
 import NativeMethodsMixin from '../NativeMethodsMixin';
 
-const applyNativeMethods = Component => {
+const applyNativeMethods = (Component: ReactClass<any>) => {
   Object.keys(NativeMethodsMixin).forEach(method => {
     if (!Component.prototype[method]) {
       Component.prototype[method] = NativeMethodsMixin[method];

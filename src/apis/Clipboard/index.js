@@ -1,4 +1,7 @@
 /* global window */
+/**
+ * @flow
+ */
 
 class Clipboard {
   static isSupported() {

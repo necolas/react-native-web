@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import ImageResizeMode from './ImageResizeMode';

@@ -1,0 +1,20 @@
+{
+  "name": "performance",
+  "private": true,
+  "dependencies": {
+    "aphrodite": "^1.2.1",
+    "classnames": "^2.2.5",
+    "glamor": "2.20.25",
+    "marky": "^1.2.0",
+    "react-jss": "^6.1.1",
+    "reactxp": "^0.34.3",
+    "styled-components": "2.0.0-17",
+    "styletron-client": "^2.5.7",
+    "styletron-utils": "^2.5.4"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.1",
+    "react-addons-perf": "^15.4.2",
+    "style-loader": "^0.17.0"
+  }
+}

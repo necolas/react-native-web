@@ -10,7 +10,17 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
 import invariant from 'fbjs/lib/invariant';
 
-const win = canUseDOM ? window : { screen: {} };
+const win = canUseDOM
+  ? window
+  : {
+      devicePixelRatio: undefined,
+      innerHeight: undefined,
+      innerWidth: undefined,
+      screen: {
+        height: undefined,
+        width: undefined
+      }
+    };
 
 const dimensions = {};
 

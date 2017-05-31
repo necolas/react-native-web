@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import createDOMElement from '../../modules/createDOMElement';
@@ -14,6 +18,8 @@ const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
 class Switch extends PureComponent {
+  _checkbox: HTMLInputElement;
+
   static displayName = 'Switch';
 
   static propTypes = {

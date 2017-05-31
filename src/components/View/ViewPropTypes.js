@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';

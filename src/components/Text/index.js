@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';

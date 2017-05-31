@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { Component } from 'react';
@@ -50,6 +54,8 @@ const setSelection = (node, selection) => {
 };
 
 class TextInput extends Component {
+  _node: HTMLInputElement;
+
   static displayName = 'TextInput';
 
   static propTypes = {

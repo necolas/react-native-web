@@ -20,7 +20,7 @@ var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var warning = require('fbjs/lib/warning');
 var StyleSheet = require('../../apis/StyleSheet');
 import createReactClass from 'create-react-class';
-import { bool, func, number, string } from 'prop-types';
+import { bool, element, func, number, string } from 'prop-types';
 
 type Event = Object;
 
@@ -42,6 +42,7 @@ const TouchableWithoutFeedback = createReactClass({
     accessible: bool,
     accessibilityLabel: string,
     accessibilityRole: string,
+    children: element,
     /**
      * If true, disable all interactions for this component.
      */

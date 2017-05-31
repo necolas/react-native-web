@@ -12,6 +12,9 @@
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import invariant from 'fbjs/lib/invariant';
 
+type Atom = number | boolean | Object | Array<?Atom>;
+type StyleObj = Atom;
+
 function getStyle(style) {
   if (typeof style === 'number') {
     return ReactNativePropRegistry.getByID(style);
@@ -19,7 +22,7 @@ function getStyle(style) {
   return style;
 }
 
-function flattenStyle(style) {
+function flattenStyle(style: ?StyleObj): ?Object {
   if (!style) {
     return undefined;
   }

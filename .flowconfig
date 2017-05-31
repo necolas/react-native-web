@@ -1,0 +1,13 @@
+[ignore]
+.*/__tests__/.*
+.*/benchmarks/.*
+.*/docs/.*
+.*/node_modules/animated/*
+
+[include]
+
+[libs]
+types
+
+[options]
+unsafe.enable_getters_and_setters=true

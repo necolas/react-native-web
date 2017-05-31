@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import TextStylePropTypes from '../Text/TextStylePropTypes';
 import { oneOf } from 'prop-types';
 

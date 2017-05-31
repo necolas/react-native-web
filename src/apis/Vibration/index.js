@@ -1,4 +1,10 @@
-const vibrate = pattern => {
+/**
+ * @flow
+ */
+
+type VibratePattern = number | Array<number>;
+
+const vibrate = (pattern: VibratePattern) => {
   if ('vibrate' in window.navigator) {
     if (typeof pattern === 'number' || Array.isArray(pattern)) {
       window.navigator.vibrate(pattern);
@@ -12,7 +18,7 @@ const Vibration = {
   cancel() {
     vibrate(0);
   },
-  vibrate(pattern) {
+  vibrate(pattern: VibratePattern) {
     vibrate(pattern);
   }
 };

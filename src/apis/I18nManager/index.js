@@ -1,9 +1,13 @@
+/**
+ * @flow
+ */
+
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type I18nManagerStatus = {
-  allowRTL: (allowRTL: boolean) => {},
-  forceRTL: (forceRTL: boolean) => {},
-  setRTL: (setRTL: boolean) => {},
+  allowRTL: (allowRTL: boolean) => void,
+  forceRTL: (forceRTL: boolean) => void,
+  setPreferredLanguageRTL: (setRTL: boolean) => void,
   isRTL: boolean
 };
 

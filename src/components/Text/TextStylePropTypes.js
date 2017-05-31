@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import ColorPropType from '../../propTypes/ColorPropType';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import { number, oneOf, oneOfType, shape, string } from 'prop-types';

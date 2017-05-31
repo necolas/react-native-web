@@ -10,11 +10,18 @@
  * @providesModule EdgeInsetsPropType
  * @flow
  */
-'use strict';
 
+import createStrictShapeTypeChecker from './createStrictShapeTypeChecker';
 import { number } from 'prop-types';
 
-var EdgeInsetsPropType = require('./createStrictShapeTypeChecker')({
+export type EdgeInsetsProp = {
+  top: number,
+  left: number,
+  bottom: number,
+  right: number
+};
+
+const EdgeInsetsPropType = createStrictShapeTypeChecker({
   top: number,
   left: number,
   bottom: number,

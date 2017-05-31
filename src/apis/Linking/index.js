@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
@@ -7,7 +11,7 @@ const Linking = {
   getInitialURL() {
     return Promise.resolve('');
   },
-  openURL(url) {
+  openURL(url: string) {
     try {
       iframeOpen(url);
       return Promise.resolve();
@@ -35,9 +39,10 @@ const iframeOpen = url => {
 
   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
   const script = iframeDoc.createElement('script');
+  const openerExpression = noOpener ? 'child.opener = null' : '';
   script.text = `
     window.parent = null; window.top = null; window.frameElement = null;
-    var child = window.open("${url}"); ${noOpener && 'child.opener = null'};
+    var child = window.open("${url}"); ${openerExpression};
   `;
   iframeDoc.body.appendChild(script);
   document.body.removeChild(iframe);
