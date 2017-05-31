@@ -25,6 +25,14 @@ class VirtualizedListExample extends Component {
     }, 1000)
   }
 
+  getItem (data, index) {
+    return data[index]
+  }
+
+  getItemCount (data) {
+    return data.length
+  }
+
   getItemLayout (data, index) {
     return { length: 18, offset: 18 * index, index: index }
   }
@@ -38,6 +46,8 @@ class VirtualizedListExample extends Component {
       style={styles.container}
       data={this.state.data}
       renderItem={this.renderItem}
+      getItem={this.getItem}
+      getItemCount={this.getItemCount}
     />
   }
 }
