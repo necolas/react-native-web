@@ -15,6 +15,7 @@ import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
 import { bool, func, number, oneOf, shape, string } from 'prop-types';
 
+const isAndroid = /Android/i.test(navigator && navigator.userAgent)
 const emptyObject = {};
 
 /**
@@ -43,12 +44,22 @@ const isSelectionStale = (node, selection) => {
 /**
  * Certain input types do no support 'selectSelectionRange' and will throw an
  * error.
+ *
+ * Also handles Android specific issue: see https://github.com/text-mask/text-mask/issues/300
  */
 const setSelection = (node, selection) => {
   try {
     if (isSelectionStale(node, selection)) {
       const { start, end } = selection;
-      node.setSelectionRange(start, end || start);
+      
+      if(isAndroid){
+        setTimeout(() => node.setSelectionRange(start,end||start), 10);
+      }
+
+      else{
+        node.setSelectionRange(start, end || start);
+      }
+
     }
   } catch (e) {}
 };
