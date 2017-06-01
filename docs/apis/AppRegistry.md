@@ -3,8 +3,7 @@
 `AppRegistry` is the control point for registering, running, prerendering, and
 unmounting all apps. App root components should register themselves with
 `AppRegistry.registerComponent`. Apps can be run by invoking
-`AppRegistry.runApplication` (see the [client and server rendering
-guide](../guides/rendering.md) for more details).
+`AppRegistry.runApplication` (see the [getting started guide](../guides/getting-started.md) for more details).
 
 To "stop" an application when a view should be destroyed, call
 `AppRegistry.unmountApplicationComponentAtRootTag` with the tag that was passed
