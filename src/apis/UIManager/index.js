@@ -19,7 +19,7 @@ let hasRequestedAnimationFrame = false;
 const measureLayoutQueue = [];
 
 const processLayoutQueue = () => {
-  measureLayoutQueue.splice(0, 250).forEach((item) => {
+  measureLayoutQueue.splice(0, 250).forEach(item => {
     const [node, relativeToNativeNode, callback] = item;
     const relativeNode = relativeToNativeNode || (node && node.parentNode);
 
@@ -30,12 +30,12 @@ const processLayoutQueue = () => {
       const y = top - relativeRect.top;
       callback(x, y, width, height, left, top);
     }
-  })
+  });
 
   if (measureLayoutQueue.length > 0) {
     setImmediate(processLayoutQueue);
   }
-}
+};
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
   if (!hasRequestedAnimationFrame) {

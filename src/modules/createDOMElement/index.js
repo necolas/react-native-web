@@ -44,7 +44,7 @@ const createDOMElement = (component, props) => {
 
   // normalize DOM events to match React Native events
   // TODO: move this out of the render path
-  Object.keys(domProps).forEach((prop) => {
+  Object.keys(domProps).forEach(prop => {
     const isEventHandler = typeof prop === 'function' && eventHandlerNames[prop];
     if (isEventHandler) {
       domProps[prop] = wrapEventHandler(prop);
