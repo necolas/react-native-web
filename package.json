@@ -21,7 +21,7 @@
     "lint": "npm run lint:cmd -- benchmarks docs src",
     "lint:cmd": "eslint --fix --ignore-path .gitignore",
     "precommit": "lint-staged",
-    "release": "npm run compile && npm run build && npm publish",
+    "release": "npm run lint && npm run test && npm run compile && npm run build && npm publish",
     "test": "jest",
     "test:watch": "npm run test -- --watch"
   },
