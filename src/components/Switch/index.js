@@ -18,7 +18,8 @@ const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
 class Switch extends PureComponent {
-  _checkbox: HTMLInputElement;
+  _checkboxElement: HTMLInputElement;
+  _thumbElement = null;
 
   static displayName = 'Switch';
 
@@ -44,11 +45,11 @@ class Switch extends PureComponent {
   };
 
   blur() {
-    UIManager.blur(this._checkbox);
+    UIManager.blur(this._checkboxElement);
   }
 
   focus() {
-    UIManager.focus(this._checkbox);
+    UIManager.focus(this._checkboxElement);
   }
 
   render() {
@@ -136,15 +137,17 @@ class Switch extends PureComponent {
   _handleFocusState = (event: Object) => {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
-    this._thumb.setNativeProps({ style: { boxShadow } });
+    if (this._thumbElement) {
+      this._thumbElement.setNativeProps({ style: { boxShadow } });
+    }
   };
 
-  _setCheckboxRef = component => {
-    this._checkbox = component;
+  _setCheckboxRef = element => {
+    this._checkboxElement = element;
   };
 
-  _setThumbRef = component => {
-    this._thumb = component;
+  _setThumbRef = element => {
+    this._thumbElement = element;
   };
 }
 

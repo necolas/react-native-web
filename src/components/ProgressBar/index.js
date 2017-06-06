@@ -11,6 +11,8 @@ import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
 
 class ProgressBar extends Component {
+  _progressElement = null;
+
   static displayName = 'ProgressBar';
 
   static propTypes = {
@@ -58,17 +60,19 @@ class ProgressBar extends Component {
     );
   }
 
-  _setProgressRef = component => {
-    this._progressRef = component;
+  _setProgressRef = element => {
+    this._progressElement = element;
   };
 
   _updateProgressWidth = () => {
     const { indeterminate, progress } = this.props;
     const percentageProgress = indeterminate ? 50 : progress * 100;
     const width = indeterminate ? '25%' : `${percentageProgress}%`;
-    this._progressRef.setNativeProps({
-      style: { width }
-    });
+    if (this._progressElement) {
+      this._progressElement.setNativeProps({
+        style: { width }
+      });
+    }
   };
 }
 

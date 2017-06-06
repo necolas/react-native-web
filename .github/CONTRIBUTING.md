@@ -23,35 +23,47 @@ Install dependencies (requires [yarn](https://yarnpkg.com/en/docs/install):
 yarn
 ```
 
-## Unit tests
+## Automated tests
+
+To run flow:
+
+```
+npm run flow
+```
 
 To run the unit tests:
 
 ```
-npm test
+npm run jest
 ```
 
 …in watch mode:
 
 ```
-npm run test:watch
+npm run jest:watch
+```
+
+To run all automated tests:
+
+```
+npm test
 ```
 
 ## Visual tests
 
-Run the interactive storybook:
+To run the interactive storybook:
 
 ```
 npm run docs:start
 ```
 
-Run generate a static build of the storybook:
+To generate a static build of the storybook:
 
 ```
 npm run docs:build
 ```
 
-Run the performance benchmarks in a browser (opening `./performance/index.html`):
+To run the performance benchmarks in a browser (opening `./benchmarks/index.html`):
 
 ```
 npm run benchmarks
@@ -59,7 +71,7 @@ npm run benchmarks
 
 ## Compile and build
 
-Compile the source code to `dist`:
+To compile the source code to `dist`:
 
 ```
 npm run compile
@@ -73,7 +85,7 @@ npm run build
 
 ### Pre-commit
 
-Before creating a commit run:
+To format and lint code before commit:
 
 ```
 npm run precommit

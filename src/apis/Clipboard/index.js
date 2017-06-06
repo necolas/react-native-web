@@ -16,30 +16,33 @@ class Clipboard {
 
   static setString(text) {
     let success = false;
+    const body = document.body;
 
-    // add the text to a hidden node
-    const node = document.createElement('span');
-    node.textContent = text;
-    node.style.position = 'absolute';
-    node.style.opacity = '0';
-    document.body.appendChild(node);
+    if (body) {
+      // add the text to a hidden node
+      const node = document.createElement('span');
+      node.textContent = text;
+      node.style.position = 'absolute';
+      node.style.opacity = '0';
+      body.appendChild(node);
 
-    // select the text
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    const range = document.createRange();
-    range.selectNodeContents(node);
-    selection.addRange(range);
+      // select the text
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      selection.addRange(range);
 
-    // attempt to copy
-    try {
-      document.execCommand('copy');
-      success = true;
-    } catch (e) {}
+      // attempt to copy
+      try {
+        document.execCommand('copy');
+        success = true;
+      } catch (e) {}
 
-    // remove selection and node
-    selection.removeAllRanges();
-    document.body.removeChild(node);
+      // remove selection and node
+      selection.removeAllRanges();
+      body.removeChild(node);
+    }
 
     return success;
   }

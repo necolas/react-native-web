@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`apis/AppRegistry/renderApplication getApplication 1`] = `
+<AppContainer
+  rootTag={Object {}}
+>
+  <RootComponent />
+</AppContainer>
+`;
+
+exports[`apis/AppRegistry/renderApplication getApplication 2`] = `
 "<style id=\\"react-native-stylesheet-static\\">
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
@@ -41,6 +49,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-boxSizing-deolkf{box-sizing:border-box}
 .rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
 .rn-flexShrink-1qe8dj5{-webkit-flex-shrink:0;flex-shrink:0}
+.rn-flexShrink-1wbh5a2{-webkit-flex-shrink:1;flex-shrink:1}
 .rn-flexBasis-1mlwlqe{-webkit-flex-basis:auto;flex-basis:auto}
 .rn-flexDirection-eqz5dr{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
 .rn-marginTop-1mnahxq{margin-top:0px}
@@ -55,5 +64,6 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-paddingLeft-gy4na3{padding-left:0px}
 .rn-zIndex-1lgpqti{z-index:0}
 .rn-zIndex-1wyyakw{z-index:-1}
+.rn-flexGrow-16y2uox{-webkit-flex-grow:1;flex-grow:1}
 </style>"
 `;

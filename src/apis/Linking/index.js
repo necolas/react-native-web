@@ -33,19 +33,25 @@ const Linking = {
  */
 const iframeOpen = url => {
   const noOpener = url.indexOf('mailto:') !== 0;
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
+  const body = document.body;
+  if (body) {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    body.appendChild(iframe);
 
-  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-  const script = iframeDoc.createElement('script');
-  const openerExpression = noOpener ? 'child.opener = null' : '';
-  script.text = `
-    window.parent = null; window.top = null; window.frameElement = null;
-    var child = window.open("${url}"); ${openerExpression};
-  `;
-  iframeDoc.body.appendChild(script);
-  document.body.removeChild(iframe);
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    const iframeBody = iframeDoc.body;
+    if (iframeBody) {
+      const script = iframeDoc.createElement('script');
+      const openerExpression = noOpener ? 'child.opener = null' : '';
+      script.text = `
+        window.parent = null; window.top = null; window.frameElement = null;
+        var child = window.open("${url}"); ${openerExpression};
+      `;
+      iframeBody.appendChild(script);
+    }
+    body.removeChild(iframe);
+  }
 };
 
 module.exports = Linking;

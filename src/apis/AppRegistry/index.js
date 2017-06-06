@@ -6,7 +6,6 @@
  * @flow
  */
 
-import { Component } from 'react';
 import invariant from 'fbjs/lib/invariant';
 import { unmountComponentAtNode } from 'react-dom';
 import renderApplication, { getApplication } from './renderApplication';
@@ -14,9 +13,9 @@ import renderApplication, { getApplication } from './renderApplication';
 const emptyObject = {};
 const runnables = {};
 
-type ComponentProvider = () => Component<any, any, any>;
+export type ComponentProvider = () => ReactClass<any>;
 
-type AppConfig = {
+export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
   run?: Function

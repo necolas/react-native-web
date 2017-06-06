@@ -18,19 +18,25 @@
     "flow": "flow",
     "fmt": "find benchmarks docs src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs npm run fmt:cmd",
     "fmt:cmd": "prettier --print-width=100 --single-quote --write",
+    "jest": "jest",
+    "jest:watch": "npm run test -- --watch",
     "lint": "npm run lint:cmd -- benchmarks docs src",
     "lint:cmd": "eslint --fix --ignore-path .gitignore",
     "precommit": "lint-staged",
     "release": "npm run lint && npm run test && npm run compile && npm run build && npm publish",
-    "test": "jest",
-    "test:watch": "npm run test -- --watch"
+    "test": "flow && jest"
   },
   "babel": {
     "presets": [
       "react-native"
     ],
     "plugins": [
-      [ "transform-react-remove-prop-types", { "mode": "wrap" } ]
+      [
+        "transform-react-remove-prop-types",
+        {
+          "mode": "wrap"
+        }
+      ]
     ]
   },
   "jest": {
@@ -77,7 +83,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "file-loader": "^0.11.1",
-    "flow-bin": "^0.46.0",
+    "flow-bin": "^0.47.0",
     "jest": "^19.0.2",
     "lint-staged": "^3.4.2",
     "node-libs-browser": "^0.5.3",

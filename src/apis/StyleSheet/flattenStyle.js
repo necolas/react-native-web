@@ -23,7 +23,7 @@ function getStyle(style) {
 }
 
 function flattenStyle(style: ?StyleObj): ?Object {
-  if (!style) {
+  if (style == null || typeof style === 'boolean') {
     return undefined;
   }
 

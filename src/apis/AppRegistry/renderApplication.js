@@ -8,25 +8,31 @@
 
 import invariant from 'fbjs/lib/invariant';
 import { render } from 'react-dom';
-import ReactNativeApp from './ReactNativeApp';
+import AppContainer from './AppContainer';
 import StyleSheet from '../../apis/StyleSheet';
-import React, { Component } from 'react';
+import React from 'react';
 
 export default function renderApplication(
-  RootComponent: Component,
+  RootComponent: ReactClass<Object>,
   initialProps: Object,
   rootTag: any
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
-  const component = (
-    <ReactNativeApp initialProps={initialProps} rootComponent={RootComponent} rootTag={rootTag} />
+  render(
+    <AppContainer rootTag={rootTag}>
+      <RootComponent {...initialProps} />
+    </AppContainer>,
+    rootTag
   );
-  render(component, rootTag);
 }
 
-export function getApplication(RootComponent: Component, initialProps: Object): Object {
-  const element = <ReactNativeApp initialProps={initialProps} rootComponent={RootComponent} />;
+export function getApplication(RootComponent: ReactClass<Object>, initialProps: Object): Object {
+  const element = (
+    <AppContainer rootTag={{}}>
+      <RootComponent {...initialProps} />
+    </AppContainer>
+  );
   const stylesheet = StyleSheet.renderToString();
   return { element, stylesheet };
 }

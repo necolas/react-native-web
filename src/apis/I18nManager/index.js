@@ -24,7 +24,9 @@ const isRTL = () => {
 
 const onChange = () => {
   if (ExecutionEnvironment.canUseDOM) {
-    document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
+    if (document.documentElement && document.documentElement.setAttribute) {
+      document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
+    }
   }
 };
 
