@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import createDOMElement from '..';
-import { render } from 'enzyme';
+import { shallow, render } from 'enzyme';
 
 describe('modules/createDOMElement', () => {
   test('renders correct DOM element', () => {
@@ -101,6 +101,22 @@ describe('modules/createDOMElement', () => {
 
     component = render(createDOMElement('span', { importantForAccessibility: 'yes' }));
     expect(component).toMatchSnapshot();
+  });
+
+  test('onClick', done => {
+    const onClick = e => {
+      e.nativeEvent.timestamp = 1496876171255;
+      expect(e.nativeEvent).toMatchSnapshot();
+      done();
+    };
+    const component = shallow(createDOMElement('span', { onClick }));
+    component.find('span').simulate('click', {
+      nativeEvent: {
+        preventDefault() {},
+        stopImmediatePropagation() {},
+        stopPropagation() {}
+      }
+    });
   });
 
   test('prop "testID"', () => {

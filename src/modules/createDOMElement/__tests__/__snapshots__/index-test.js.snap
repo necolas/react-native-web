@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`modules/createDOMElement onClick 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [],
+  "pageX": undefined,
+  "pageY": undefined,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
+`;
+
 exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
 <span
   aria-label="accessibilityLabel"
