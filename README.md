@@ -140,6 +140,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
+* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 
 ## License
 
