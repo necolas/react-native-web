@@ -48,3 +48,6 @@ export { default as ColorPropType } from './propTypes/ColorPropType';
 export { default as EdgeInsetsPropType } from './propTypes/EdgeInsetsPropType';
 export { default as PointPropType } from './propTypes/PointPropType';
 export { default as ViewPropTypes } from './components/View/ViewPropTypes';
+
+// vendor
+export { default as EventEmitter} from './vendor/emitter/EventEmitter';

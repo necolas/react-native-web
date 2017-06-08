@@ -50,7 +50,10 @@ import {
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
-  ViewPropTypes
+  ViewPropTypes,
+
+  // vendor
+  EventEmitter,
 } from './module';
 
 const ReactNative = {
@@ -106,7 +109,10 @@ const ReactNative = {
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
-  ViewPropTypes
+  ViewPropTypes,
+
+  // vendor
+  EventEmitter,
 };
 
 module.exports = ReactNative;
