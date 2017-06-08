@@ -25,6 +25,7 @@ module.exports = {
   /**
    * @platform web
    */
+  appearance: string,
   backgroundAttachment: string,
   backgroundClip: string,
   backgroundImage: string,
