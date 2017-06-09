@@ -57,14 +57,14 @@
     "animated": "^0.2.0",
     "array-find-index": "^1.0.2",
     "babel-runtime": "^6.23.0",
-    "create-react-class": "^15.5.2",
+    "create-react-class": "^15.5.3",
     "debounce": "1.0.2",
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.12",
     "hyphenate-style-name": "^1.0.2",
-    "inline-style-prefixer": "^3.0.3",
+    "inline-style-prefixer": "^3.0.5",
     "normalize-css-color": "^1.0.2",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.10",
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
