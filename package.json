@@ -70,11 +70,11 @@
   "devDependencies": {
     "@kadira/storybook": "^2.5.1",
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
+    "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.2",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.2",
-    "babel-preset-react-native": "^1.9.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.5",
+    "babel-preset-react-native": "^1.9.2",
     "del-cli": "^0.2.1",
     "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
@@ -82,7 +82,7 @@
     "eslint-config-prettier": "^1.7.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
-    "file-loader": "^0.11.1",
+    "file-loader": "^0.11.2",
     "flow-bin": "^0.47.0",
     "jest": "^19.0.2",
     "lint-staged": "^3.4.2",
@@ -93,8 +93,8 @@
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4",
     "url-loader": "^0.5.8",
-    "webpack": "^2.5.0",
-    "webpack-bundle-analyzer": "^2.4.0"
+    "webpack": "^2.6.1",
+    "webpack-bundle-analyzer": "^2.8.2"
   },
   "peerDependencies": {
     "react": "15.4.x || 15.5.x",
