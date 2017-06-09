@@ -65,7 +65,8 @@
     "inline-style-prefixer": "^3.0.3",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.8",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "react-transition-group": "^1.1.3"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.5.1",

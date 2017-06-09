@@ -29,6 +29,7 @@ export { default as ActivityIndicator } from './components/ActivityIndicator';
 export { default as Button } from './components/Button';
 export { default as Image } from './components/Image';
 export { default as ListView } from './components/ListView';
+export { default as Modal } from './components/Modal';
 export { default as ProgressBar } from './components/ProgressBar';
 export { default as ScrollView } from './components/ScrollView';
 export { default as StatusBar } from './components/StatusBar';
