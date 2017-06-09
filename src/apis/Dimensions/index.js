@@ -19,8 +19,13 @@ const win = canUseDOM
       screen: {
         height: undefined,
         width: undefined
-      }
+      },
+      addEventListener(type, handler, useCapture) {},
+      removeEventListener(type, handler) {},
+      dispatchEvent(event) {}
     };
+
+const EVENT_CHANGE = 'rn-dimensions-change';
 
 const dimensions = {};
 
@@ -44,13 +49,28 @@ class Dimensions {
       scale: win.devicePixelRatio || 1,
       width: win.screen.width
     };
+
+    const change: window.Event = new window.Event(EVENT_CHANGE);
+    (change: any).window = dimensions.window;
+    (change: any).screen = dimensions.screen;
+    win.dispatchEvent(change);
+  }
+
+  static addEventListener(type, handler): void {
+    if (type === 'change') {
+      win.addEventListener(EVENT_CHANGE, handler);
+    }
+  }
+
+  static removeEventListener(type, handler): void {
+    if (type === 'change') {
+      win.removeEventListener(EVENT_CHANGE, handler);
+    }
   }
 }
 
 Dimensions.set();
 
-if (canUseDOM) {
-  window.addEventListener('resize', debounce(Dimensions.set, 16), false);
-}
+win.addEventListener('resize', debounce(Dimensions.set, 16), false);
 
 module.exports = Dimensions;
