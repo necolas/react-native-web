@@ -26,6 +26,8 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
+import ViewTransformsExample from './ViewTransformsExample';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -288,8 +290,12 @@ const examples = [
       return <View style={[styles.shadowBox, styles.shadow, { borderRadius: 50 }]} />;
     }
   }
-];
+].concat(ViewTransformsExample);
 
-examples.forEach(example => {
-  storiesOf('component: View', module).add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('View', () =>
+  <UIExplorer
+    examples={examples}
+    title="View"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/View.md"
+  />
+);

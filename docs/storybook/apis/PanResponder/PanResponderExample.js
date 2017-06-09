@@ -3,6 +3,7 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 import { PanResponder, StyleSheet, View } from 'react-native';
 
 const CIRCLE_SIZE = 80;
@@ -97,12 +98,23 @@ const styles = StyleSheet.create({
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
     position: 'absolute',
+    left: 0,
     top: 0
   },
   container: {
     flex: 1,
+    minHeight: 400,
     paddingTop: 64
   }
 });
 
-storiesOf('api: PanResponder', module).add('example', () => <PanResponderExample />);
+const examples = [
+  {
+    title: 'Draggable circle',
+    render: () => <PanResponderExample />
+  }
+];
+
+storiesOf('APIs', module).add('PanResponder', () =>
+  <UIExplorer examples={examples} title="PanResponder" />
+);

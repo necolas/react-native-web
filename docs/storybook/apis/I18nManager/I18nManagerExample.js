@@ -1,4 +1,5 @@
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 import { I18nManager, StyleSheet, TouchableHighlight, Text, View } from 'react-native';
 import React, { Component } from 'react';
 
@@ -85,4 +86,13 @@ const styles = StyleSheet.create({
   }
 });
 
-storiesOf('api: I18nManager', module).add('RTL layout', () => <I18nManagerExample />);
+const examples = [
+  {
+    title: 'RTL toggle',
+    render: () => <I18nManagerExample />
+  }
+];
+
+storiesOf('APIs', module).add('I18nManager', () =>
+  <UIExplorer examples={examples} title="I18nManager" />
+);

@@ -22,21 +22,20 @@
  * @flow
  */
 
-import createReactClass from 'create-react-class';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 
-const Flip = createReactClass({
-  getInitialState() {
-    return {
+class Flip extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
       theta: new Animated.Value(45)
     };
-  },
+  }
 
   componentDidMount() {
     this._animate();
-  },
+  }
 
   _animate() {
     this.state.theta.setValue(0);
@@ -44,7 +43,7 @@ const Flip = createReactClass({
       toValue: 360,
       duration: 5000
     }).start(this._animate);
-  },
+  }
 
   render() {
     return (
@@ -95,7 +94,7 @@ const Flip = createReactClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   box1: {
@@ -256,6 +255,4 @@ const examples = [
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: View (transforms)', module).add(example.title, () => example.render());
-});
+module.exports = examples;

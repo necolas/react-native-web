@@ -26,8 +26,9 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
+import UIExplorer from '../../UIExplorer';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 const ToggleAnimatingActivityIndicator = createReactClass({
   mixins: [TimerMixin],
@@ -64,62 +65,59 @@ const ToggleAnimatingActivityIndicator = createReactClass({
 const examples = [
   {
     title: 'Default',
+    description: 'Renders small and blue',
     render() {
-      return <ActivityIndicator style={[styles.centering]} />;
+      return (
+        <View style={styles.horizontal}>
+          <ActivityIndicator />
+        </View>
+      );
     }
   },
   {
     title: 'Custom colors',
+    description: 'Any color value is supported',
     render() {
       return (
         <View style={styles.horizontal}>
-          <ActivityIndicator color="#0000ff" />
-          <ActivityIndicator color="#aa00aa" />
-          <ActivityIndicator color="#aa3300" />
-          <ActivityIndicator color="#00aa00" />
+          <ActivityIndicator color="#1DA1F2" style={styles.rightPadding} />
+          <ActivityIndicator color="#17BF63" style={styles.rightPadding} />
+          <ActivityIndicator color="#F45D22" style={styles.rightPadding} />
+          <ActivityIndicator color="#794BC4" style={styles.rightPadding} />
+          <ActivityIndicator color="#E0245E" style={styles.rightPadding} />
+          <ActivityIndicator color="#FFAD1F" style={styles.rightPadding} />
         </View>
       );
     }
   },
   {
-    title: 'Large',
-    render() {
-      return (
-        <ActivityIndicator color="white" size="large" style={[styles.centering, styles.gray]} />
-      );
-    }
-  },
-  {
-    title: 'Large, custom colors',
+    title: 'Custom sizes',
+    description:
+      'There are 2 predefined sizes: "small" and "large". The size can be further customized as a number (pixels) or using scale transforms',
     render() {
       return (
         <View style={styles.horizontal}>
-          <ActivityIndicator color="#0000ff" size="large" />
-          <ActivityIndicator color="#aa00aa" size="large" />
-          <ActivityIndicator color="#aa3300" size="large" />
-          <ActivityIndicator color="#00aa00" size="large" />
+          <ActivityIndicator size={20} style={styles.rightPadding} />
+          <ActivityIndicator size="small" style={styles.rightPadding} />
+          <ActivityIndicator size={36} style={styles.rightPadding} />
+          <ActivityIndicator size="large" style={styles.rightPadding} />
+          <ActivityIndicator size={60} style={styles.rightPadding} />
+          <ActivityIndicator
+            size="large"
+            style={{ marginLeft: 20, transform: [{ scale: 1.75 }] }}
+          />
         </View>
       );
     }
   },
   {
-    title: 'Start/stop',
+    title: 'Animation controls (start, pause, hide)',
+    description: 'The animation can be paused, and the component hidden',
     render() {
       return (
-        <View style={[styles.horizontal, styles.centering]}>
+        <View style={[styles.horizontal]}>
+          <ToggleAnimatingActivityIndicator hidesWhenStopped={false} style={styles.rightPadding} />
           <ToggleAnimatingActivityIndicator />
-          <ToggleAnimatingActivityIndicator hidesWhenStopped={false} />
-        </View>
-      );
-    }
-  },
-  {
-    title: 'Custom size',
-    render() {
-      return (
-        <View style={[styles.horizontal, styles.centering]}>
-          <ActivityIndicator size={40} />
-          <ActivityIndicator size="large" style={{ marginLeft: 20, transform: [{ scale: 1.5 }] }} />
         </View>
       );
     }
@@ -127,21 +125,23 @@ const examples = [
 ];
 
 const styles = StyleSheet.create({
-  centering: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8
-  },
   gray: {
     backgroundColor: '#cccccc'
   },
   horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 8
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  rightPadding: {
+    paddingRight: 10
   }
 });
 
-examples.forEach(example => {
-  storiesOf('component: ActivityIndicator', module).add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('ActivityIndicator', () =>
+  <UIExplorer
+    description="Displays a customizable activity indicator"
+    examples={examples}
+    title="ActivityIndicator"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/ActivityIndicator.md"
+  />
+);

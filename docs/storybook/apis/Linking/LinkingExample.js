@@ -1,6 +1,7 @@
+import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import React, { Component } from 'react';
-import { storiesOf } from '@kadira/storybook';
 
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
@@ -36,4 +37,11 @@ const styles = StyleSheet.create({
   }
 });
 
-storiesOf('api: Linking', module).add('Safe linking', () => <LinkingExample />);
+const examples = [
+  {
+    title: 'Safe external links',
+    render: () => <LinkingExample />
+  }
+];
+
+storiesOf('APIs', module).add('Linking', () => <UIExplorer examples={examples} title="Linking" />);

@@ -26,6 +26,7 @@
 import createReactClass from 'create-react-class';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 import { Image, Text, View } from 'react-native';
 
 const Entity = createReactClass({
@@ -561,8 +562,10 @@ const examples = [
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: Text', module)
-    .addDecorator(renderStory => <View style={{ width: 320 }}>{renderStory()}</View>)
-    .add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('Text', () =>
+  <UIExplorer
+    examples={examples}
+    title="Text"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/Text.md"
+  />
+);
