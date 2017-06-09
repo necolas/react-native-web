@@ -18,7 +18,7 @@ NOTE: `View` will transfer all other props to the rendered HTML element.
 Overrides the text that's read by a screen reader when the user interacts
 with the element. (This is implemented using `aria-label`.)
 
-See the [Accessibility guide](../guides/accessibility) for more information.
+See the [Accessibility guide](../guides/accessibility.md) for more information.
 
 **accessibilityLiveRegion**: ?enum('assertive', 'none', 'polite')
 
@@ -29,7 +29,7 @@ priority. When regions are specified as `assertive`, assistive technologies
 will interrupt and immediately notify the user. (This is implemented using
 [`aria-live`](http://www.w3.org/TR/wai-aria/states_and_properties#aria-live).)
 
-See the [Accessibility guide](../guides/accessibility) for more information.
+See the [Accessibility guide](../guides/accessibility.md) for more information.
 
 (web) **accessibilityRole**: ?enum(roles)
 
@@ -38,7 +38,7 @@ in a manner that is consistent with user expectations for similar views of that
 type. For example, marking a touchable view with an `accessibilityRole` of
 `button`. (This is implemented using [ARIA roles](http://www.w3.org/TR/wai-aria/roles#role_definitions)).
 
-See the [Accessibility guide](../guides/accessibility) for more information.
+See the [Accessibility guide](../guides/accessibility.md) for more information.
 
 **accessible**: ?boolean
 
@@ -47,7 +47,7 @@ focusable) and groups its child content. By default, all the touchable elements
 and elements with `accessibilityRole` of `button` and `link` are accessible.
 (This is implemented using `tabindex`.)
 
-See the [Accessibility guide](../guides/accessibility) for more information.
+See the [Accessibility guide](../guides/accessibility.md) for more information.
 
 **children**: ?element
 
@@ -69,7 +69,7 @@ A value of `no` will remove the element from the tab flow.
 A value of `no-hide-descendants` will hide the element and its children from
 assistive technologies. (This is implemented using `aria-hidden`.)
 
-See the [Accessibility guide](../guides/accessibility) for more information.
+See the [Accessibility guide](../guides/accessibility.md) for more information.
 
 **onLayout**: ?function
 
@@ -279,7 +279,7 @@ Default:
 };
 ```
 
-(See [facebook/css-layout](https://github.com/facebook/css-layout)).
+(See [facebook/yoga](https://github.com/facebook/yoga)).
 
 **testID**: ?string
 
