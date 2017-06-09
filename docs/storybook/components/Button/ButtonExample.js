@@ -7,9 +7,10 @@ const onButtonPress = action('Button has been pressed!');
 const examples = [
   {
     title: 'Simple Button',
-    description: 'The title and onPress handler are required. It is ' +
-      'recommended to set accessibilityLabel to help make your app usable by ' +
-      'everyone.',
+    description:
+      'The title and onPress handler are required. It is ' +
+        'recommended to set accessibilityLabel to help make your app usable by ' +
+        'everyone.',
     render: function() {
       return (
         <Button
@@ -22,9 +23,10 @@ const examples = [
   },
   {
     title: 'Adjusted color',
-    description: 'Adjusts the color in a way that looks standard on each ' +
-      'platform. On iOS, the color prop controls the color of the text. On ' +
-      'Android, the color adjusts the background color of the button.',
+    description:
+      'Adjusts the color in a way that looks standard on each ' +
+        'platform. On iOS, the color prop controls the color of the text. On ' +
+        'Android, the color adjusts the background color of the button.',
     render: function() {
       return (
         <Button

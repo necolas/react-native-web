@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class */
 
 import createReactClass from 'create-react-class';
 import React from 'react';

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class, react/prop-types */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -227,8 +227,9 @@ var MultipleSourcesExample = createReactClass({
 const examples = [
   {
     title: 'Plain Network Image',
-    description: 'If the `source` prop `uri` property is prefixed with ' +
-      '"http", then it will be downloaded from the network.',
+    description:
+      'If the `source` prop `uri` property is prefixed with ' +
+        '"http", then it will be downloaded from the network.',
     render: function() {
       return (
         <Image
@@ -244,8 +245,9 @@ const examples = [
   },
   {
     title: 'Plain Static Image',
-    description: 'Static assets should be placed in the source code tree, and ' +
-      'required in the same way as JavaScript modules.',
+    description:
+      'Static assets should be placed in the source code tree, and ' +
+        'required in the same way as JavaScript modules.',
     render: function() {
       return (
         <View style={styles.horizontal}>
@@ -447,8 +449,7 @@ const examples = [
   */
   {
     title: 'Resize Mode',
-    description: 'The `resizeMode` style prop controls how the image is ' +
-      'rendered within the frame.',
+    description: 'The `resizeMode` style prop controls how the image is rendered within the frame.',
     render: function() {
       return (
         <View>
@@ -514,7 +515,8 @@ const examples = [
       return (
         <Image
           source={{
-            uri: 'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'
+            uri:
+              'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'
           }}
           style={styles.gif}
         />

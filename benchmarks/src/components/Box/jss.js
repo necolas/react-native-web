@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import React from 'react';
 import View from '../View/jss';
 
-const Box = ({ classes, color, fixed = false, layout = 'column', outer = false, ...other }) => (
+const Box = ({ classes, color, fixed = false, layout = 'column', outer = false, ...other }) =>
   <View
     {...other}
     className={classnames({
@@ -13,8 +13,7 @@ const Box = ({ classes, color, fixed = false, layout = 'column', outer = false, 
       [classes.row]: layout === 'row',
       [classes.outer]: outer
     })}
-  />
-);
+  />;
 
 const styles = {
   outer: {

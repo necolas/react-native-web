@@ -13,7 +13,10 @@
  */
 
 function murmurhash2_32_gc(str, seed) {
-  var l = str.length, h = seed ^ l, i = 0, k;
+  var l = str.length,
+    h = seed ^ l,
+    i = 0,
+    k;
 
   while (l >= 4) {
     k =

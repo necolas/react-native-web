@@ -1,8 +1,4 @@
-import createReactClass from 'create-react-class';
-import { ProgressBar, StyleSheet, View } from 'react-native';
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import TimerMixin from 'react-timer-mixin';
+/* eslint-disable react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -26,6 +22,12 @@ import TimerMixin from 'react-timer-mixin';
  *
  * @flow
  */
+
+import createReactClass from 'create-react-class';
+import { ProgressBar, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import TimerMixin from 'react-timer-mixin';
 
 const ProgressBarExample = createReactClass({
   mixins: [TimerMixin],

@@ -1,3 +1,5 @@
+/* eslint-disable react/prefer-es6-class, react/prop-types */
+
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.

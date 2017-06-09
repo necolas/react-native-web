@@ -222,10 +222,12 @@ var TouchableHighlight = createReactClass({
   },
 
   _hasPressHandler: function() {
-    return !!(this.props.onPress ||
+    return !!(
+      this.props.onPress ||
       this.props.onPressIn ||
       this.props.onPressOut ||
-      this.props.onLongPress);
+      this.props.onLongPress
+    );
   },
 
   _onKeyEnter(e, callback) {

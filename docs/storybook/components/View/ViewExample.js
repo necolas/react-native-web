@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+/* eslint-disable react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -25,6 +22,11 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
  *
  * @flow
  */
+
+import createReactClass from 'create-react-class';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 const styles = StyleSheet.create({
   box: {

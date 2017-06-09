@@ -7,7 +7,7 @@ import { ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-na
 const onScroll = action('ScrollView.onScroll');
 
 storiesOf('component: ScrollView', module)
-  .add('vertical', () => (
+  .add('vertical', () =>
     <View style={styles.scrollViewContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -15,15 +15,15 @@ storiesOf('component: ScrollView', module)
         scrollEventThrottle={1000} // 1 event per second
         style={styles.scrollViewStyle}
       >
-        {Array.from({ length: 50 }).map((item, i) => (
+        {Array.from({ length: 50 }).map((item, i) =>
           <View key={i} style={styles.box}>
             <TouchableHighlight onPress={() => {}}><Text>{i}</Text></TouchableHighlight>
           </View>
-        ))}
+        )}
       </ScrollView>
     </View>
-  ))
-  .add('horizontal', () => (
+  )
+  .add('horizontal', () =>
     <View style={styles.scrollViewContainer}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -32,14 +32,14 @@ storiesOf('component: ScrollView', module)
         scrollEventThrottle={16} // ~60 events per second
         style={styles.scrollViewStyle}
       >
-        {Array.from({ length: 50 }).map((item, i) => (
+        {Array.from({ length: 50 }).map((item, i) =>
           <View key={i} style={[styles.box, styles.horizontalBox]}>
             <Text>{i}</Text>
           </View>
-        ))}
+        )}
       </ScrollView>
     </View>
-  ));
+  );
 
 const styles = StyleSheet.create({
   box: {

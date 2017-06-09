@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class, react/prop-types */
 
 /**
  * The examples provided by Facebook are for non-commercial testing and
@@ -211,17 +211,17 @@ const TicTacToeApp = createReactClass({
   },
 
   render() {
-    const rows = this.state.board.grid.map((cells, row) => (
+    const rows = this.state.board.grid.map((cells, row) =>
       <View key={'row' + row} style={styles.row}>
-        {cells.map((player, col) => (
+        {cells.map((player, col) =>
           <Cell
             key={'cell' + col}
             onPress={this.handleCellPress.bind(this, row, col)}
             player={player}
           />
-        ))}
+        )}
       </View>
-    ));
+    );
 
     return (
       <View style={styles.container}>

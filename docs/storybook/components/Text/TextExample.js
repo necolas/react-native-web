@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class, react/prop-types */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -268,9 +268,10 @@ const examples = [
   },
   {
     title: 'Nested',
-    description: 'Nested text components will inherit the styles of their ' +
-      'parents (only backgroundColor is inherited from non-Text parents).  ' +
-      '<Text> only supports other <Text> and raw text (strings) as children.',
+    description:
+      'Nested text components will inherit the styles of their ' +
+        'parents (only backgroundColor is inherited from non-Text parents).  ' +
+        '<Text> only supports other <Text> and raw text (strings) as children.',
     render: function() {
       return (
         <View>
@@ -362,7 +363,7 @@ const examples = [
     render: function() {
       return (
         <Text>
-          A {'generated'} {' '} {'string'} and    some &nbsp;&nbsp;&nbsp; spaces
+          A {'generated'} {' '} {'string'} and some &nbsp;&nbsp;&nbsp; spaces
         </Text>
       );
     }
@@ -453,7 +454,8 @@ const examples = [
               style={{ backgroundColor: 'white', textDecorationLine: 'underline', color: 'blue' }}
               suppressHighlighting={false}
             >
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua. Ut enim ad minim veniam, quis nostrud
             </Text>
             {' '}
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -469,7 +471,8 @@ const examples = [
         <View>
           <Text>
             By default, text will respect Text Size accessibility setting on iOS.
-            It means that all font sizes will be increased or descreased depending on the value of Text Size setting in
+            It means that all font sizes will be increased or descreased depending on the value of
+            Text Size setting in
             {' '}
             <Text style={{ fontWeight: 'bold' }}>
               Settings.app - Display & Brightness - Text Size

@@ -3,7 +3,7 @@ import React from 'react';
 import StyleSheet from 'react-native/apis/StyleSheet';
 import View from '../View/react-native-stylesheet';
 
-const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) => (
+const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) =>
   <View
     {...other}
     style={[
@@ -12,8 +12,7 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
       layout === 'row' && styles.row,
       outer && styles.outer
     ]}
-  />
-);
+  />;
 
 const styles = StyleSheet.create({
   outer: {

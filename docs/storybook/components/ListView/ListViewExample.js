@@ -6,7 +6,7 @@ const generateData = length => Array.from({ length }).map((item, i) => i);
 const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 storiesOf('component: ListView', module)
-  .add('vertical', () => (
+  .add('vertical', () =>
     <View style={styles.scrollViewContainer}>
       <ListView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -22,8 +22,8 @@ storiesOf('component: ListView', module)
         style={styles.scrollViewStyle}
       />
     </View>
-  ))
-  .add('incremental rendering - large pageSize', () => (
+  )
+  .add('incremental rendering - large pageSize', () =>
     <View style={styles.scrollViewContainer}>
       <ListView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -40,8 +40,8 @@ storiesOf('component: ListView', module)
         style={styles.scrollViewStyle}
       />
     </View>
-  ))
-  .add('incremental rendering - small pageSize', () => (
+  )
+  .add('incremental rendering - small pageSize', () =>
     <View style={styles.scrollViewContainer}>
       <ListView
         contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -58,7 +58,7 @@ storiesOf('component: ListView', module)
         style={styles.scrollViewStyle}
       />
     </View>
-  ));
+  );
 
 const styles = StyleSheet.create({
   box: {

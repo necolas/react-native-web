@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -24,6 +21,11 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @flow
  */
+
+import createReactClass from 'create-react-class';
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 const Flip = createReactClass({
   getInitialState() {

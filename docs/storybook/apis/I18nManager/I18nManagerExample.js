@@ -14,7 +14,8 @@ class I18nManagerExample extends Component {
           LTR/RTL layout example!
         </Text>
         <Text style={styles.text}>
-          The writing direction of text is automatically determined by the browser, independent of the global writing direction of the app.
+          The writing direction of text is automatically determined by the browser, independent of
+          the global writing direction of the app.
         </Text>
         <Text style={[styles.text, styles.rtlText]}>
           أحب اللغة العربية

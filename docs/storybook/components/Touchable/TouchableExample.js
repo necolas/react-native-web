@@ -39,11 +39,12 @@ import {
 const examples = [
   {
     title: '<TouchableHighlight>',
-    description: 'TouchableHighlight works by adding an extra view with a ' +
-      'black background under the single child view.  This works best when the ' +
-      'child view is fully opaque, although it can be made to work as a simple ' +
-      'background color change as well with the activeOpacity and ' +
-      'underlayColor props.',
+    description:
+      'TouchableHighlight works by adding an extra view with a ' +
+        'black background under the single child view.  This works best when the ' +
+        'child view is fully opaque, although it can be made to work as a simple ' +
+        'background color change as well with the activeOpacity and ' +
+        'underlayColor props.',
     render: function() {
       return (
         <View>
@@ -79,17 +80,19 @@ const examples = [
   },
   {
     title: 'Touchable feedback events',
-    description: '<Touchable*> components accept onPress, onPressIn, ' +
-      'onPressOut, and onLongPress as props.',
+    description:
+      '<Touchable*> components accept onPress, onPressIn, ' +
+        'onPressOut, and onLongPress as props.',
     render: function() {
       return <TouchableFeedbackEvents />;
     }
   },
   {
     title: 'Touchable delay for events',
-    description: '<Touchable*> components also accept delayPressIn, ' +
-      'delayPressOut, and delayLongPress as props. These props impact the ' +
-      'timing of feedback events.',
+    description:
+      '<Touchable*> components also accept delayPressIn, ' +
+        'delayPressOut, and delayLongPress as props. These props impact the ' +
+        'timing of feedback events.',
     render: function() {
       return <TouchableDelayEvents />;
     }
@@ -104,16 +107,18 @@ const examples = [
   },
   {
     title: 'Touchable Hit Slop',
-    description: '<Touchable*> components accept hitSlop prop which extends the touch area ' +
-      'without changing the view bounds.',
+    description:
+      '<Touchable*> components accept hitSlop prop which extends the touch area ' +
+        'without changing the view bounds.',
     render: function() {
       return <TouchableHitSlop />;
     }
   },
   {
     title: 'Disabled Touchable*',
-    description: '<Touchable*> components accept disabled prop which prevents ' +
-      'any interaction with component',
+    description:
+      '<Touchable*> components accept disabled prop which prevents ' +
+        'any interaction with component',
     render: function() {
       return <TouchableDisabled />;
     }

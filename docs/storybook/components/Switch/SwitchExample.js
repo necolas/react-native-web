@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
