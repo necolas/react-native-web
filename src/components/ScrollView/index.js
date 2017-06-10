@@ -244,4 +244,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ScrollView;
+export default ScrollView;

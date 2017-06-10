@@ -55,4 +55,4 @@ const TextInputState = {
   }
 };
 
-module.exports = TextInputState;
+export default TextInputState;

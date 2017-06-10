@@ -76,4 +76,4 @@ if (process.env.NODE_ENV !== 'production') {
   ColorPropType = function() {};
 }
 
-module.exports = ColorPropType;
+export default ColorPropType;

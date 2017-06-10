@@ -108,4 +108,4 @@ const UIManager = {
   }
 };
 
-module.exports = UIManager;
+export default UIManager;

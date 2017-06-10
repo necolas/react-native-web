@@ -10,25 +10,21 @@
  * @providesModule TouchableHighlight
  * @noflow
  */
-'use strict';
 
-// Note (avik): add @flow when Flow supports spread properties in propTypes
-
-var ColorPropType = require('../../propTypes/ColorPropType');
-var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
-var React = require('react');
-var StyleSheet = require('../../apis/StyleSheet');
-var StyleSheetPropType = require('../../propTypes/StyleSheetPropType');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
-var View = require('../View');
-var ViewStylePropTypes = require('../View/ViewStylePropTypes');
+import ColorPropType from '../../propTypes/ColorPropType';
 import createReactClass from 'create-react-class';
+import ensureComponentIsNative from './ensureComponentIsNative';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import TouchableWithoutFeedback from './TouchableWithoutFeedback';
+import View from '../View';
+import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import { func, number } from 'prop-types';
-
-var ensureComponentIsNative = require('./ensureComponentIsNative');
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 
 type Event = Object;
 
@@ -308,4 +304,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableHighlight;
+export default TouchableHighlight;

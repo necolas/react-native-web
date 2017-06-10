@@ -10,14 +10,15 @@ const absoluteFillObject = {
 };
 const absoluteFill = StyleRegistry.register(absoluteFillObject);
 
-module.exports = {
+const StyleSheet = {
   absoluteFill,
   absoluteFillObject,
   create(styles) {
     const result = {};
     Object.keys(styles).forEach(key => {
       if (process.env.NODE_ENV !== 'production') {
-        require('./StyleSheetValidation').validateStyle(key, styles);
+        const StyleSheetValidation = require('./StyleSheetValidation').default;
+        StyleSheetValidation.validateStyle(key, styles);
       }
       result[key] = StyleRegistry.register(styles[key]);
     });
@@ -29,3 +30,5 @@ module.exports = {
     return StyleRegistry.getStyleSheetHtml();
   }
 };
+
+export default StyleSheet;

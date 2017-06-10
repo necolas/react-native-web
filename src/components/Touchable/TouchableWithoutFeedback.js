@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -10,16 +11,15 @@
  * @providesModule TouchableWithoutFeedback
  * @flow
  */
-'use strict';
 
-var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
-var React = require('react');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var warning = require('fbjs/lib/warning');
-var StyleSheet = require('../../apis/StyleSheet');
 import createReactClass from 'create-react-class';
+import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import warning from 'fbjs/lib/warning';
 import { bool, element, func, number, string } from 'prop-types';
 
 type Event = Object;
@@ -207,4 +207,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableWithoutFeedback;
+export default TouchableWithoutFeedback;

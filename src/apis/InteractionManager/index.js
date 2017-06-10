@@ -38,4 +38,4 @@ const InteractionManager = {
   addListener: () => {}
 };
 
-module.exports = InteractionManager;
+export default InteractionManager;

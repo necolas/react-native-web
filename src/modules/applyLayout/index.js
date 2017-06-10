@@ -90,4 +90,4 @@ const applyLayout = (Component: ReactClass<any>) => {
   return Component;
 };
 
-module.exports = applyLayout;
+export default applyLayout;

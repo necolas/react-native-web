@@ -58,4 +58,4 @@ const iframeOpen = url => {
   }
 };
 
-module.exports = Linking;
+export default Linking;

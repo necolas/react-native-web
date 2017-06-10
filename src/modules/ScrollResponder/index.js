@@ -10,20 +10,15 @@
  * @providesModule ScrollResponder
  * @flow
  */
-'use strict';
 
-var Dimensions = require('../../apis/Dimensions');
-var findNodeHandle = require('../findNodeHandle');
-var Platform = require('../../apis/Platform');
-var React = require('react');
-// var Subscribable = require('../Subscribable');
-var TextInputState = require('../../components/TextInput/TextInputState');
-var UIManager = require('../../apis/UIManager');
-
-// var { ScrollViewManager } = require('../../modules/NativeModules');
-
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
+import Dimensions from '../../apis/Dimensions';
+import findNodeHandle from '../findNodeHandle';
+import invariant from 'fbjs/lib/invariant';
+import Platform from '../../apis/Platform';
+import React from 'react';
+import TextInputState from '../../components/TextInput/TextInputState';
+import UIManager from '../../apis/UIManager';
+import warning from 'fbjs/lib/warning';
 
 // type Component = React.Component
 
@@ -557,4 +552,4 @@ var ScrollResponder = {
   Mixin: ScrollResponderMixin
 };
 
-module.exports = ScrollResponder;
+export default ScrollResponder;

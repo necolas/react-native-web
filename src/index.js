@@ -50,6 +50,7 @@ import {
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
+  TextPropTypes,
   ViewPropTypes
 } from './module';
 
@@ -106,6 +107,7 @@ const ReactNative = {
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
+  TextPropTypes,
   ViewPropTypes
 };
 

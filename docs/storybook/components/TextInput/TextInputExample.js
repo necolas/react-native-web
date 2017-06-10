@@ -26,8 +26,8 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import UIExplorer from '../../UIExplorer';
-import { any, bool, object, string } from 'prop-types';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { any, bool, string } from 'prop-types';
+import { StyleSheet, Text, TextInput, TextPropTypes, View } from 'react-native';
 
 class WithLabel extends React.Component {
   static propTypes = {
@@ -320,7 +320,7 @@ class SelectionExample extends React.Component {
 
   static propTypes = {
     multiline: bool,
-    style: object,
+    style: TextPropTypes.style,
     value: string
   };
 

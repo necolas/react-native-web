@@ -2,7 +2,7 @@
  * @flow
  */
 
-class ImageUriCache {
+export default class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
@@ -61,5 +61,3 @@ class ImageUriCache {
     }
   }
 }
-
-module.exports = ImageUriCache;

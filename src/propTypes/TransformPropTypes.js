@@ -30,4 +30,4 @@ const TransformPropTypes = {
   transformOrigin: string
 };
 
-module.exports = TransformPropTypes;
+export default TransformPropTypes;

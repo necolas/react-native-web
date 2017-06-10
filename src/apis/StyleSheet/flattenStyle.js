@@ -48,4 +48,4 @@ function flattenStyle(style: ?StyleObj): ?Object {
   return result;
 }
 
-module.exports = flattenStyle;
+export default flattenStyle;

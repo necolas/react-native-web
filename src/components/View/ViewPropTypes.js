@@ -38,4 +38,4 @@ const ViewPropTypes = {
   style: StyleSheetPropType(ViewStylePropTypes)
 };
 
-module.exports = ViewPropTypes;
+export default ViewPropTypes;

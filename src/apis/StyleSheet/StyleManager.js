@@ -33,7 +33,7 @@ const pointerEventsCss =
   `.${pointerEvents.boxOnly} *{pointer-events:none;}\n` +
   `.${pointerEvents.none}{pointer-events:none;}`;
 
-class StyleManager {
+export default class StyleManager {
   constructor() {
     // custom pointer event values are implemented using descendent selectors,
     // so we manually create the CSS and pre-register the declarations
@@ -131,5 +131,3 @@ class StyleManager {
     cache.byClassName[className] = { prop, value };
   }
 }
-
-module.exports = StyleManager;

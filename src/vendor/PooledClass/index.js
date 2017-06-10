@@ -9,7 +9,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 var twoArgumentPooler = function(a1, a2) {
   var Klass = this;
@@ -60,4 +60,4 @@ var PooledClass = {
   twoArgumentPooler: twoArgumentPooler
 };
 
-module.exports = PooledClass;
+export default PooledClass;

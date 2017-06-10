@@ -16,4 +16,4 @@ const applyNativeMethods = (Component: ReactClass<any>) => {
   return Component;
 };
 
-module.exports = applyNativeMethods;
+export default applyNativeMethods;

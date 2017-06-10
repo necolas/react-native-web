@@ -7,10 +7,12 @@ import View from '../../components/View';
 
 Animated.inject.FlattenStyle(StyleSheet.flatten);
 
-module.exports = {
+const AnimatedImplementation = {
   ...Animated,
   Image: Animated.createAnimatedComponent(Image),
   ScrollView: Animated.createAnimatedComponent(ScrollView),
   Text: Animated.createAnimatedComponent(Text),
   View: Animated.createAnimatedComponent(View)
 };
+
+export default AnimatedImplementation;

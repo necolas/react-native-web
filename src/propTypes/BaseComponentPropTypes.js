@@ -10,4 +10,4 @@ const BaseComponentPropTypes = {
   testID: string
 };
 
-module.exports = BaseComponentPropTypes;
+export default BaseComponentPropTypes;

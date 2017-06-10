@@ -72,4 +72,4 @@ function createStrictShapeTypeChecker(shapeTypes: {
   return chainedCheckType;
 }
 
-module.exports = createStrictShapeTypeChecker;
+export default createStrictShapeTypeChecker;

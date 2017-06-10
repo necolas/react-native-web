@@ -5,12 +5,10 @@
 import TextStylePropTypes from '../Text/TextStylePropTypes';
 import { oneOf } from 'prop-types';
 
-const TextInputOnlyStylePropTypes = {
+const TextInputStylePropTypes = {
+  ...TextStylePropTypes,
   /* @platform web */
   resize: oneOf(['none', 'vertical', 'horizontal', 'both'])
 };
 
-module.exports = {
-  ...TextStylePropTypes,
-  ...TextInputOnlyStylePropTypes
-};
+export default TextInputStylePropTypes;

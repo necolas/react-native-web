@@ -10,7 +10,6 @@
  * @providesModule ReactNativePropRegistry
  * @flow
  */
-'use strict';
 
 const emptyObject = {};
 const objects = {};
@@ -19,7 +18,7 @@ let uniqueID = 1;
 
 const createKey = id => `${prefix}-${id}`;
 
-class ReactNativePropRegistry {
+export default class ReactNativePropRegistry {
   static register(object: Object): number {
     let id = uniqueID++;
     if (process.env.NODE_ENV !== 'production') {
@@ -45,5 +44,3 @@ class ReactNativePropRegistry {
     return object;
   }
 }
-
-module.exports = ReactNativePropRegistry;

@@ -20,7 +20,7 @@ const createCacheKey = id => {
 
 const classListToString = list => list.join(' ').trim();
 
-class StyleRegistry {
+export default class StyleRegistry {
   constructor() {
     this.cache = { ltr: {}, rtl: {} };
     this.styleManager = new StyleManager();
@@ -189,5 +189,3 @@ class StyleRegistry {
     return this._resolveStyle(style, options);
   }
 }
-
-module.exports = StyleRegistry;

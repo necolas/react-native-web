@@ -321,4 +321,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(TextInput));
+export default applyLayout(applyNativeMethods(TextInput));

@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(View));
+export default applyLayout(applyNativeMethods(View));

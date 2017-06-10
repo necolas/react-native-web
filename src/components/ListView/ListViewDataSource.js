@@ -27,11 +27,10 @@
  * @typechecks
  * @flow
  */
-'use strict';
 
-var invariant = require('fbjs/lib/invariant');
-var isEmpty = require('fbjs/lib/isEmpty');
-var warning = require('fbjs/lib/warning');
+import invariant from 'fbjs/lib/invariant';
+import isEmpty from 'fbjs/lib/isEmpty';
+import warning from 'fbjs/lib/warning';
 
 function defaultGetRowData(dataBlob: any, sectionID: number | string, rowID: number | string): any {
   return dataBlob[sectionID][rowID];
@@ -392,4 +391,4 @@ function keyedDictionaryFromArray(arr) {
   return result;
 }
 
-module.exports = ListViewDataSource;
+export default ListViewDataSource;

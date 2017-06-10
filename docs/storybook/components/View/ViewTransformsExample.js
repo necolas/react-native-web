@@ -37,13 +37,13 @@ class Flip extends React.Component {
     this._animate();
   }
 
-  _animate() {
+  _animate = () => {
     this.state.theta.setValue(0);
     Animated.timing(this.state.theta, {
       toValue: 360,
       duration: 5000
     }).start(this._animate);
-  }
+  };
 
   render() {
     return (
@@ -255,4 +255,4 @@ const examples = [
   }
 ];
 
-module.exports = examples;
+export default examples;

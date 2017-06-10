@@ -10,21 +10,18 @@
  * @providesModule TouchableOpacity
  * @noflow
  */
-'use strict';
 
-// Note (avik): add @flow when Flow supports spread properties in propTypes
-
-var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
-var React = require('react');
-var StyleSheet = require('../../apis/StyleSheet');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
-var View = require('../View');
 import createReactClass from 'create-react-class';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import { number } from 'prop-types';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import TouchableWithoutFeedback from './TouchableWithoutFeedback';
+import View from '../View';
 
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 var flattenStyle = StyleSheet.flatten;
 
 type Event = Object;
@@ -217,4 +214,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableOpacity;
+export default TouchableOpacity;

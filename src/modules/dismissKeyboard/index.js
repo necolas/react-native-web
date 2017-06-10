@@ -4,4 +4,4 @@ const dismissKeyboard = () => {
   TextInputState.blurTextInput(TextInputState.currentlyFocusedField());
 };
 
-module.exports = dismissKeyboard;
+export default dismissKeyboard;

@@ -5,9 +5,7 @@
  * All rights reserved.
  */
 
-'use strict';
-
-var PooledClass = require('../../vendor/PooledClass');
+import PooledClass from '../../vendor/PooledClass';
 
 var twoArgumentPooler = PooledClass.twoArgumentPooler;
 
@@ -31,4 +29,4 @@ Position.prototype.destructor = function() {
 
 PooledClass.addPoolingTo(Position, twoArgumentPooler);
 
-module.exports = Position;
+export default Position;

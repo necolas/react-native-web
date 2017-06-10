@@ -10,15 +10,14 @@
  * @providesModule ensureComponentIsNative
  * @flow
  */
-'use strict';
 
-var invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
-var ensureComponentIsNative = function(component: any) {
+const ensureComponentIsNative = (component: any) => {
   invariant(
     component && typeof component.setNativeProps === 'function',
     'Touchable child must either be native or forward setNativeProps to a ' + 'native component'
   );
 };
 
-module.exports = ensureComponentIsNative;
+export default ensureComponentIsNative;
