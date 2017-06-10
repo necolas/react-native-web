@@ -1,5 +1,5 @@
-import { StyleSheet, Button, View, Alert } from 'react-native'
-import ReactNativeApp from '../../../../src/apis/AppRegistry/AppContainer'
+import { Button, View, Alert } from 'react-native'
+import AppContainer from '../../../../src/apis/AppRegistry/AppContainer'
 import React, { Component } from 'react';
 import UIExplorer, {
   AppText,
@@ -17,15 +17,18 @@ const style = {
   },
 };
 
+const showAlert = (...props) => () => Alert.alert(...props);
+
 class AlertExample extends Component {
   render() {
     return (
       <UIExplorer title="Alert" url="2-apis/Alert">
         <View style={{ height: 240 }}>
-          <ReactNativeApp>
-            <Button title="DEFAULT BUTTON"
+          <AppContainer>
+            <Button
+              title="DEFAULT BUTTON"
               onPress={
-                () => Alert.alert(
+                showAlert(
                   'Hey There',
                   'This is an example of how should we work with default button alert!'
                 )
@@ -46,7 +49,7 @@ class AlertExample extends Component {
             <View style={style.spacer} />
             <Button title="DOUBLE BUTTON"
               onPress={
-                () => Alert.alert(
+                showAlert(
                   'Hey There',
                   'This is an example of how should we work with one button alert!',
                   [
@@ -59,7 +62,7 @@ class AlertExample extends Component {
             <View style={style.spacer} />
             <Button title="MULTI BUTTON"
               onPress={
-                () => Alert.alert(
+                showAlert(
                   'Hey There',
                   'This is an example of how should we work with one button alert!',
                   [
@@ -73,7 +76,7 @@ class AlertExample extends Component {
             <View style={style.spacer} />
             <Button title="CANCELABLE"
               onPress={
-                () => Alert.alert(
+                showAlert(
                   'Hey There',
                   'Tap background to close',
                   [
@@ -83,7 +86,7 @@ class AlertExample extends Component {
                 )
               }
             />
-          </ReactNativeApp>
+          </AppContainer>
         </View>
       </UIExplorer>
     );
