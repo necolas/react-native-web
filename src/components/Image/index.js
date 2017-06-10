@@ -45,8 +45,17 @@ const resolveAssetDimensions = source => {
   }
 };
 
+const svgDataUriPattern = /^data:image\/svg\+xml;/;
 const resolveAssetSource = source => {
-  return (typeof source === 'object' ? source.uri : source) || '';
+  const uri = typeof source === 'object' ? source.uri : source || '';
+  // SVG data may contain characters (e.g., #, ") that need to be escaped
+  if (svgDataUriPattern.test(uri)) {
+    const parts = uri.split('<svg');
+    const [prefix, ...svgFragment] = parts;
+    const svg = encodeURIComponent(`<svg${svgFragment}`);
+    return `${prefix}${svg}`;
+  }
+  return uri;
 };
 
 class Image extends Component {
