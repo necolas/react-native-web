@@ -132,15 +132,15 @@ Controls whether the View can be the target of touch events. The enhanced
 `box-none` is the equivalent of:
 
 ```css
-.box-none { pointer-events: none }
-.box-none * { pointer-events: auto }
+.box-none { pointer-events: none !important; }
+.box-none > * { pointer-events: auto; }
 ```
 
 `box-only` is the equivalent of:
 
 ```css
-.box-only { pointer-events: auto }
-.box-only * { pointer-events: none }
+.box-only { pointer-events: auto !important; }
+.box-only > * { pointer-events: none; }
 ```
 
 **style**: ?style

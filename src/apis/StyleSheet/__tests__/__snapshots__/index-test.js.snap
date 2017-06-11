@@ -8,12 +8,12 @@ button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
 @keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
 @keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}
-.rn-pointerEvents-105ug2t{pointer-events:auto;}
-.rn-pointerEvents-12vffkv{pointer-events:none;}
-.rn-pointerEvents-12vffkv *{pointer-events:auto;}
-.rn-pointerEvents-ah5dr5{pointer-events:auto;}
-.rn-pointerEvents-ah5dr5 *{pointer-events:none;}
-.rn-pointerEvents-633pao{pointer-events:none;}
+.rn-pointerEvents-105ug2t{pointer-events:auto !important;}
+.rn-pointerEvents-ah5dr5{pointer-events:auto !important;}
+.rn-pointerEvents-633pao{pointer-events:none !important;}
+.rn-pointerEvents-12vffkv{pointer-events:none !important;}
+.rn-pointerEvents-12vffkv > *{pointer-events:auto;}
+.rn-pointerEvents-ah5dr5 > *{pointer-events:none;}
 </style>
 <style id=\\"react-native-stylesheet\\">
 .rn-bottom-1p0dtai{bottom:0px}
