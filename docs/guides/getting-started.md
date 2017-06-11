@@ -187,15 +187,16 @@ const AppContainer = (props) => { /* ... */ }
 AppRegistry.registerComponent('App', () => AppContainer)
 
 // prerender the app
-const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
+const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToString(sheet)).join('\n');
 
 // construct HTML document
 const document = `
 <!DOCTYPE html>
 <html>
 <head>
-${stylesheet}
+${initialStyles}
 </head>
 <body>
 ${initialHTML}

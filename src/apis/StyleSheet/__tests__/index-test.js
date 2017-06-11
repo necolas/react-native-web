@@ -37,7 +37,7 @@ describe('apis/StyleSheet', () => {
     expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
   });
 
-  test('renderToString', () => {
-    expect(StyleSheet.renderToString()).toMatchSnapshot();
+  test('getStyleSheets', () => {
+    expect(StyleSheet.getStyleSheets()).toMatchSnapshot();
   });
 });

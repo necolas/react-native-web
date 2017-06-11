@@ -85,6 +85,15 @@ export default class StyleManager {
   }
 
   getStyleSheetHtml() {
+    const styleSheets = this.getStyleSheets();
+    return styleSheets
+      .map(sheet => {
+        return `<style id="${sheet.id}">\n${sheet.textContent}\n</style>`;
+      })
+      .join('\n');
+  }
+
+  getStyleSheets() {
     const cache = this.cache.byProp;
 
     const mainSheetTextContext = Object.keys(cache)
@@ -99,9 +108,16 @@ export default class StyleManager {
       }, [])
       .join('\n');
 
-    const staticSheet = `<style id="react-native-stylesheet-static">\n${staticCss}\n${pointerEventsCss}\n</style>`;
-    const mainSheet = `<style id="${STYLE_ELEMENT_ID}">\n${mainSheetTextContext}\n</style>`;
-    return `${staticSheet}\n${mainSheet}`;
+    return [
+      {
+        id: 'react-native-stylesheet-static',
+        textContent: `${staticCss}\n${pointerEventsCss}`
+      },
+      {
+        id: STYLE_ELEMENT_ID,
+        textContent: `${mainSheetTextContext}`
+      }
+    ];
   }
 
   setDeclaration(prop, value) {

@@ -24,11 +24,11 @@ const StyleSheet = {
     });
     return result;
   },
-  hairlineWidth: 1,
   flatten: flattenStyle,
-  renderToString() {
-    return StyleRegistry.getStyleSheetHtml();
-  }
+  getStyleSheets() {
+    return StyleRegistry.getStyleSheets();
+  },
+  hairlineWidth: 1
 };
 
 export default StyleSheet;

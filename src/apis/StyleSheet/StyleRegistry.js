@@ -26,8 +26,8 @@ export default class StyleRegistry {
     this.styleManager = new StyleManager();
   }
 
-  getStyleSheetHtml() {
-    return this.styleManager.getStyleSheetHtml();
+  getStyleSheets() {
+    return this.styleManager.getStyleSheets();
   }
 
   /**
