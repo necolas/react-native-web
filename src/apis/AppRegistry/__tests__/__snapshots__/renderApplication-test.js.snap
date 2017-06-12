@@ -48,6 +48,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-borderLeftWidth-gxnn5r{border-left-width:0px}
 .rn-boxSizing-deolkf{box-sizing:border-box}
 .rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
+.rn-display-xoduu5{display:-webkit-box;display:-moz-box;display:-ms-inline-flexbox;display:-webkit-inline-flex;display:inline-flex}
 .rn-flexShrink-1qe8dj5{-webkit-flex-shrink:0;flex-shrink:0}
 .rn-flexShrink-1wbh5a2{-webkit-flex-shrink:1;flex-shrink:1}
 .rn-flexBasis-1mlwlqe{-webkit-flex-basis:auto;flex-basis:auto}

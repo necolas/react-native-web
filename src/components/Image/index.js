@@ -14,7 +14,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { any, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { any, bool, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 
 const emptyObject = {};
@@ -62,6 +62,10 @@ class Image extends Component {
   state: { shouldDisplaySource: boolean };
 
   static displayName = 'Image';
+
+  static contextTypes = {
+    isInAParentText: bool
+  };
 
   static propTypes = {
     ...ViewPropTypes,
@@ -167,6 +171,7 @@ class Image extends Component {
       imageSizeStyle,
       originalStyle,
       resizeModeStyles[finalResizeMode],
+      this.context.isInAParentText && styles.inline,
       backgroundImage && { backgroundImage }
     ]);
     // View doesn't support 'resizeMode' as a style
@@ -275,6 +280,9 @@ const styles = StyleSheet.create({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     zIndex: 0
+  },
+  inline: {
+    display: 'inline-flex'
   },
   img: {
     height: '100%',
