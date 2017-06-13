@@ -113,7 +113,8 @@ class StyleManager {
           const sheet = this.mainSheet.sheet;
           // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
           if (this.mainSheet.textContent.indexOf(className) === -1) {
-            const rule = createCssRule(className, prop, value);
+            const propName = prop === 'userDrag' ? 'WebkitUserDrag' : prop;
+            const rule = createCssRule(className, propName, value);
             sheet.insertRule(rule, sheet.cssRules.length);
           }
         });

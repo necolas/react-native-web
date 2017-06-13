@@ -23,6 +23,7 @@ module.exports = {
    */
   overlayColor: string,
   tintColor: ColorPropType,
+  userDrag: string,
   /**
    * @platform web
    */

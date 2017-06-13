@@ -167,7 +167,11 @@ class Image extends Component {
     const hiddenImage = displayImage
       ? createDOMElement('img', {
           src: displayImage,
-          style: [StyleSheet.absoluteFill, styles.img]
+          style: [
+            StyleSheet.absoluteFill,
+            styles.img,
+            style.userDrag === 'none' && styles.noDrag,
+          ]
         })
       : null;
 
@@ -272,6 +276,9 @@ const styles = StyleSheet.create({
     opacity: 0,
     width: '100%',
     zIndex: -1
+  },
+  noDrag: {
+    userDrag: 'none',
   }
 });
 
