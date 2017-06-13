@@ -26,6 +26,7 @@ const ViewStylePropTypes = {
    * @platform web
    */
   backgroundAttachment: string,
+  backgroundBlendMode: string,
   backgroundClip: string,
   backgroundImage: string,
   backgroundOrigin: oneOf(['border-box', 'content-box', 'padding-box']),

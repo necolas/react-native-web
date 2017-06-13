@@ -158,6 +158,7 @@ Controls whether the View can be the target of touch events. The enhanced
 + `animationTimingFunction` ‡
 + `backfaceVisibility`
 + `backgroundAttachment` ‡
++ `backgroundBlendMode` ‡
 + `backgroundClip` ‡
 + `backgroundColor`
 + `backgroundImage` ‡

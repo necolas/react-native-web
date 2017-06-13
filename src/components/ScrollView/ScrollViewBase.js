@@ -141,7 +141,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _setNodeRef = (element:View) => {
+  _setNodeRef = (element: View) => {
     this._node = findNodeHandle(element);
   };
 
