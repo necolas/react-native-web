@@ -155,7 +155,7 @@ const createReducer = (style, styleProps) => {
       case 'flex': {
         resolvedStyle.flexGrow = value;
         resolvedStyle.flexShrink = 1;
-        resolvedStyle.flexBasis = 'auto';
+        resolvedStyle.flexBasis = '0%';
         break;
       }
       case 'shadowColor':

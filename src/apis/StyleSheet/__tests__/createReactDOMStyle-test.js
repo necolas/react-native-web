@@ -32,14 +32,14 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
       display: 'flex',
       flexGrow: 1,
       flexShrink: 1,
-      flexBasis: 'auto'
+      flexBasis: '0%'
     });
 
     expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
       display: 'flex',
       flexGrow: 10,
       flexShrink: 1,
-      flexBasis: 'auto'
+      flexBasis: '0%'
     });
 
     expect(createReactDOMStyle({ display: 'flex', flexShrink: 1 })).toEqual({
@@ -51,7 +51,7 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
       display: 'flex',
       flexGrow: 1,
       flexShrink: 2,
-      flexBasis: 'auto'
+      flexBasis: '0%'
     });
   });
 
