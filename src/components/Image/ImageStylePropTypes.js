@@ -23,6 +23,7 @@ const ImageStylePropTypes = {
    */
   overlayColor: string,
   tintColor: ColorPropType,
+  userDrag: string,
   /**
    * @platform web
    */

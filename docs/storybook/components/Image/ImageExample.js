@@ -293,6 +293,39 @@ const examples = [
     }
   },
   {
+    title: 'Webkit User Drag',
+    description: 'You can modify -webkit-user-drag property using style userDrag: \'none\'',
+    render() {
+      return (
+        <View style={styles.horizontal}>
+          <View style={{ marginRight: 100 }}>
+            <Text>Draggable</Text>
+            <Image
+              source={smallImage}
+              style={[
+                styles.base,
+                styles.background,
+              ]}
+            />
+          </View>
+          <View>
+            <Text>Not Draggable</Text>
+            <Image
+              source={smallImage}
+              style={[
+                styles.base,
+                styles.background,
+                {
+                  userDrag: 'none',
+                }
+              ]}
+            />
+          </View>
+        </View>
+      );
+    }
+  },
+  {
     title: 'Border color',
     render() {
       return (

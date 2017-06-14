@@ -46,6 +46,7 @@ const ViewStylePropTypes = {
   transitionProperty: string,
   transitionTimingFunction: string,
   userSelect: string,
+  userDrag: string,
   willChange: string,
   WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
