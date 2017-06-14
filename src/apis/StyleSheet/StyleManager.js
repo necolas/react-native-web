@@ -1,7 +1,6 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import generateCss from './generateCss';
 import hash from './hash';
-import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
 import staticCss from './staticCss';
 
 const emptyObject = {};
@@ -126,14 +125,12 @@ export default class StyleManager {
       className = createClassName(prop, value);
       this._addToCache(className, prop, value);
       if (canUseDOM) {
-        requestAnimationFrame(() => {
-          const sheet = this.mainSheet.sheet;
-          // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
-          if (this.mainSheet.textContent.indexOf(className) === -1) {
-            const rule = createCssRule(className, prop, value);
-            sheet.insertRule(rule, sheet.cssRules.length);
-          }
-        });
+        const sheet = this.mainSheet.sheet;
+        // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
+        if (this.mainSheet.textContent.indexOf(className) === -1) {
+          const rule = createCssRule(className, prop, value);
+          sheet.insertRule(rule, sheet.cssRules.length);
+        }
       }
     }
     return className;
