@@ -1,52 +1,66 @@
 import React from 'react';
+import UIExplorer from '../../UIExplorer';
 import { action, storiesOf } from '@kadira/storybook';
-import { Button, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 const onButtonPress = action('Button has been pressed!');
 
 const examples = [
   {
-    title: 'Simple Button',
-    description: 'The title and onPress handler are required. It is ' +
-      'recommended to set accessibilityLabel to help make your app usable by ' +
-      'everyone.',
-    render: function() {
+    title: 'Default',
+    description:
+      'The title and onPress handler are required. It is ' +
+        'recommended to set "accessibilityLabel" to help make your app usable by ' +
+        'everyone.',
+    render() {
       return (
         <Button
           accessibilityLabel="See an informative alert"
           onPress={onButtonPress}
-          title="Press Me"
+          title="Press me"
         />
       );
     }
   },
   {
-    title: 'Adjusted color',
-    description: 'Adjusts the color in a way that looks standard on each ' +
-      'platform. On iOS, the color prop controls the color of the text. On ' +
-      'Android, the color adjusts the background color of the button.',
-    render: function() {
+    title: 'Custom colors',
+    description:
+      'Adjusts the color in a way that looks standard on each ' +
+        'platform. On iOS, the color prop controls the color of the text. On ' +
+        'Android, the color adjusts the background color of the button.',
+    render() {
       return (
-        <Button
-          accessibilityLabel="Learn more about purple"
-          color="#841584"
-          onPress={onButtonPress}
-          title="Press Purple"
-        />
+        <View>
+          <Button color="#17BF63" onPress={onButtonPress} title="Press me" />
+          <View style={styles.verticalDivider} />
+          <Button color="#F45D22" onPress={onButtonPress} title="Press me" />
+          <View style={styles.verticalDivider} />
+          <Button color="#794BC4" onPress={onButtonPress} title="Press me" />
+          <View style={styles.verticalDivider} />
+          <Button color="#E0245E" onPress={onButtonPress} title="Press me" />
+        </View>
       );
+    }
+  },
+  {
+    title: 'Disabled',
+    description: 'All interactions for the component are disabled.',
+    render() {
+      return <Button disabled onPress={onButtonPress} title="Disabled button" />;
     }
   },
   {
     title: 'Fit to text layout',
     description: 'This layout strategy lets the title define the width of the button',
-    render: function() {
+    render() {
       return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={styles.horizontal}>
           <Button
             accessibilityLabel="This sounds great!"
             onPress={onButtonPress}
             title="This looks great!"
           />
+          <View style={styles.horizontalDivider} />
           <Button
             accessibilityLabel="Ok, Great!"
             color="#841584"
@@ -56,23 +70,26 @@ const examples = [
         </View>
       );
     }
-  },
-  {
-    title: 'Disabled Button',
-    description: 'All interactions for the component are disabled.',
-    render: function() {
-      return (
-        <Button
-          accessibilityLabel="See an informative alert"
-          disabled
-          onPress={onButtonPress}
-          title="I Am Disabled"
-        />
-      );
-    }
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: Button', module).add(example.title, () => example.render());
+const styles = StyleSheet.create({
+  horizontalDivider: {
+    width: '0.6rem'
+  },
+  horizontal: {
+    flexDirection: 'row'
+  },
+  verticalDivider: {
+    height: '1.3125rem'
+  }
 });
+
+storiesOf('Components', module).add('Button', () =>
+  <UIExplorer
+    description="A basic button component. Supports a minimal level of customization. You can build your own custom button using &quot;TouchableOpacity&quot; or &quot;TouchableNativeFeedback&quot;"
+    examples={examples}
+    title="Button"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/Button.md"
+  />
+);

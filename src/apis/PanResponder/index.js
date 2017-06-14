@@ -4,9 +4,7 @@
  * All rights reserved.
  */
 
-'use strict';
-
-var TouchHistoryMath = require('../../vendor/TouchHistoryMath');
+import TouchHistoryMath from '../../vendor/TouchHistoryMath';
 
 var currentCentroidXOfTouchesChangedAfter = TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
 var currentCentroidYOfTouchesChangedAfter = TouchHistoryMath.currentCentroidYOfTouchesChangedAfter;
@@ -385,4 +383,4 @@ var PanResponder = {
   }
 };
 
-module.exports = PanResponder;
+export default PanResponder;

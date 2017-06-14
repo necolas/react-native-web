@@ -46,7 +46,7 @@ const createPromiseAll = (promises, callback, processResult) => {
   );
 };
 
-class AsyncStorage {
+export default class AsyncStorage {
   /**
    * Erases *all* AsyncStorage for the domain.
    */
@@ -147,5 +147,3 @@ class AsyncStorage {
     return createPromiseAll(promises, callback);
   }
 }
-
-module.exports = AsyncStorage;

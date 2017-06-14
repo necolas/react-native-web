@@ -10,16 +10,14 @@
  * @providesModule Touchable
  */
 
-'use strict';
-
 /* @edit start */
-const BoundingDimensions = require('./BoundingDimensions');
-const normalizeColor = require('normalize-css-color');
-const Position = require('./Position');
-const React = require('react');
-const TouchEventUtils = require('fbjs/lib/TouchEventUtils');
-const UIManager = require('../../apis/UIManager');
-const View = require('../../components/View');
+import BoundingDimensions from './BoundingDimensions';
+import normalizeColor from 'normalize-css-color';
+import Position from './Position';
+import React from 'react';
+import TouchEventUtils from 'fbjs/lib/TouchEventUtils';
+import UIManager from '../../apis/UIManager';
+import View from '../../components/View';
 /* @edit end */
 
 /**
@@ -792,4 +790,4 @@ var Touchable = {
   }
 };
 
-module.exports = Touchable;
+export default Touchable;

@@ -1,7 +1,4 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+/* eslint-disable react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -25,24 +22,28 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
  * @flow
  */
 
-const Flip = createReactClass({
-  getInitialState() {
-    return {
+import React from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
+
+class Flip extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
       theta: new Animated.Value(45)
     };
-  },
+  }
 
   componentDidMount() {
     this._animate();
-  },
+  }
 
-  _animate() {
+  _animate = () => {
     this.state.theta.setValue(0);
     Animated.timing(this.state.theta, {
       toValue: 360,
       duration: 5000
     }).start(this._animate);
-  },
+  };
 
   render() {
     return (
@@ -93,7 +94,7 @@ const Flip = createReactClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   box1: {
@@ -254,6 +255,4 @@ const examples = [
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: View (transforms)', module).add(example.title, () => example.render());
-});
+export default examples;

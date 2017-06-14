@@ -5,14 +5,13 @@ import theme from '../theme';
 
 const createTextEntity = ({ part }) => <Text>{`${part.prefix}${part.text}`}</Text>;
 
-const createTwemojiEntity = ({ part }) => (
+const createTwemojiEntity = ({ part }) =>
   <Image
     accessibilityLabel={part.text}
     draggable={false}
     source={{ uri: part.emoji }}
     style={styles.twemoji}
-  />
-);
+  />;
 
 // @mention, #hashtag, $cashtag
 const createSymbolEntity = ({ displayMode, part }) => {

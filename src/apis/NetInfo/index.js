@@ -111,4 +111,4 @@ const NetInfo = {
   }
 };
 
-module.exports = NetInfo;
+export default NetInfo;

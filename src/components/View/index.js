@@ -27,15 +27,16 @@ const calculateHitSlopStyle = hitSlop => {
 class View extends Component {
   static displayName = 'View';
 
-  static propTypes = ViewPropTypes;
-
   static childContextTypes = {
     isInAButtonView: bool
   };
 
   static contextTypes = {
-    isInAButtonView: bool
+    isInAButtonView: bool,
+    isInAParentText: bool
   };
+
+  static propTypes = ViewPropTypes;
 
   getChildContext() {
     const isInAButtonView =
@@ -57,9 +58,9 @@ class View extends Component {
       ...otherProps
     } = this.props;
 
-    const { isInAButtonView } = this.context;
+    const { isInAButtonView, isInAParentText } = this.context;
 
-    otherProps.style = [styles.initial, style];
+    otherProps.style = [styles.initial, isInAParentText && styles.inline, style];
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
@@ -91,6 +92,9 @@ const styles = StyleSheet.create({
     minHeight: 0,
     minWidth: 0
   },
+  inline: {
+    display: 'inline-flex'
+  },
   // this zIndex ordering positions the hitSlop above the View but behind
   // its children
   hasHitSlop: {
@@ -102,4 +106,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(View));
+export default applyLayout(applyNativeMethods(View));

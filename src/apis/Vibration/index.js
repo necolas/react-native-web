@@ -23,4 +23,4 @@ const Vibration = {
   }
 };
 
-module.exports = Vibration;
+export default Vibration;

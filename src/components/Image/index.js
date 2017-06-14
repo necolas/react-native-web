@@ -14,7 +14,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { any, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { any, bool, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 
 const emptyObject = {};
@@ -45,14 +45,27 @@ const resolveAssetDimensions = source => {
   }
 };
 
+const svgDataUriPattern = /^data:image\/svg\+xml;/;
 const resolveAssetSource = source => {
-  return (typeof source === 'object' ? source.uri : source) || '';
+  const uri = typeof source === 'object' ? source.uri : source || '';
+  // SVG data may contain characters (e.g., #, ") that need to be escaped
+  if (svgDataUriPattern.test(uri)) {
+    const parts = uri.split('<svg');
+    const [prefix, ...svgFragment] = parts;
+    const svg = encodeURIComponent(`<svg${svgFragment}`);
+    return `${prefix}${svg}`;
+  }
+  return uri;
 };
 
 class Image extends Component {
   state: { shouldDisplaySource: boolean };
 
   static displayName = 'Image';
+
+  static contextTypes = {
+    isInAParentText: bool
+  };
 
   static propTypes = {
     ...ViewPropTypes,
@@ -158,6 +171,7 @@ class Image extends Component {
       imageSizeStyle,
       originalStyle,
       resizeModeStyles[finalResizeMode],
+      this.context.isInAParentText && styles.inline,
       backgroundImage && { backgroundImage }
     ]);
     // View doesn't support 'resizeMode' as a style
@@ -267,6 +281,9 @@ const styles = StyleSheet.create({
     backgroundSize: 'cover',
     zIndex: 0
   },
+  inline: {
+    display: 'inline-flex'
+  },
   img: {
     height: '100%',
     opacity: 0,
@@ -298,4 +315,4 @@ const resizeModeStyles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(Image);
+export default applyNativeMethods(Image);

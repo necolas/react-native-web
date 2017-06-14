@@ -19,4 +19,4 @@ const propsToTabIndex = props => {
   }
 };
 
-module.exports = propsToTabIndex;
+export default propsToTabIndex;

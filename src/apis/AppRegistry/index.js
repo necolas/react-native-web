@@ -24,7 +24,7 @@ export type AppConfig = {
 /**
  * `AppRegistry` is the JS entry point to running all React Native apps.
  */
-class AppRegistry {
+export default class AppRegistry {
   static getAppKeys(): Array<string> {
     return Object.keys(runnables);
   }
@@ -90,5 +90,3 @@ class AppRegistry {
     unmountComponentAtNode(rootTag);
   }
 }
-
-module.exports = AppRegistry;

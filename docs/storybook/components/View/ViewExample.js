@@ -1,8 +1,3 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -25,6 +20,16 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
  *
  * @flow
  */
+
+import React from 'react';
+import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
+import ViewTransformsExample from './ViewTransformsExample';
+import { StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
+
+const logger = e => {
+  console.log(e.nativeEvent);
+};
 
 const styles = StyleSheet.create({
   box: {
@@ -51,12 +56,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const ViewBorderStyleExample = createReactClass({
-  getInitialState() {
-    return {
-      showBorder: true
-    };
-  },
+class ViewBorderStyleExample extends React.Component {
+  state = {
+    showBorder: true
+  };
 
   render() {
     return (
@@ -89,19 +92,17 @@ const ViewBorderStyleExample = createReactClass({
         </View>
       </TouchableWithoutFeedback>
     );
-  },
+  }
 
   _handlePress() {
     this.setState({ showBorder: !this.state.showBorder });
   }
-});
+}
 
-const ZIndexExample = createReactClass({
-  getInitialState() {
-    return {
-      flipped: false
-    };
-  },
+class ZIndexExample extends React.Component {
+  state = {
+    flipped: false
+  };
 
   render() {
     const indices = this.state.flipped ? [-1, 0, 1, 2] : [2, 1, 0, -1];
@@ -144,17 +145,17 @@ const ZIndexExample = createReactClass({
         </View>
       </TouchableWithoutFeedback>
     );
-  },
+  }
 
   _handlePress() {
     this.setState({ flipped: !this.state.flipped });
   }
-});
+}
 
 const examples = [
   {
     title: 'Background Color',
-    render: function() {
+    render() {
       return (
         <View style={{ backgroundColor: '#527FE4', padding: 5 }}>
           <Text style={{ fontSize: 11 }}>
@@ -166,7 +167,7 @@ const examples = [
   },
   {
     title: 'Border',
-    render: function() {
+    render() {
       return (
         <View style={{ borderColor: '#527FE4', borderWidth: 5, padding: 10 }}>
           <Text style={{ fontSize: 11 }}>5px blue border</Text>
@@ -176,7 +177,7 @@ const examples = [
   },
   {
     title: 'Padding/Margin',
-    render: function() {
+    render() {
       return (
         <View style={{ borderColor: '#bb0000', borderWidth: 0.5 }}>
           <View style={[styles.box, { padding: 5 }]}>
@@ -199,7 +200,7 @@ const examples = [
   },
   {
     title: 'Border Radius',
-    render: function() {
+    render() {
       return (
         <View style={{ borderWidth: 0.5, borderRadius: 5, padding: 5 }}>
           <Text style={{ fontSize: 11 }}>
@@ -213,19 +214,19 @@ const examples = [
   },
   {
     title: 'Border Style',
-    render: function() {
+    render() {
       return <ViewBorderStyleExample />;
     }
   },
   {
     title: 'Circle with Border Radius',
-    render: function() {
+    render() {
       return <View style={{ borderRadius: 10, borderWidth: 1, width: 20, height: 20 }} />;
     }
   },
   {
     title: 'Overflow',
-    render: function() {
+    render() {
       return (
         <View style={{ flexDirection: 'row' }}>
           <View
@@ -253,7 +254,7 @@ const examples = [
   },
   {
     title: 'Opacity',
-    render: function() {
+    render() {
       return (
         <View>
           <View style={{ opacity: 0 }}><Text>Opacity 0</Text></View>
@@ -269,8 +270,29 @@ const examples = [
   },
   {
     title: 'ZIndex',
-    render: function() {
+    render() {
       return <ZIndexExample />;
+    }
+  },
+  {
+    title: 'Pointer Events',
+    render() {
+      return (
+        <View pointerEvents="box-none">
+          <View pointerEvents="box-none">
+            <View pointerEvents="none"><Text onPress={logger}>none</Text></View>
+            <TouchableHighlight onPress={logger} pointerEvents="auto">
+              <Text>auto</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={logger} pointerEvents="box-only">
+              <Text>box-only</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={logger} pointerEvents="box-none">
+              <Text>box-none</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
     }
   },
   {
@@ -286,8 +308,12 @@ const examples = [
       return <View style={[styles.shadowBox, styles.shadow, { borderRadius: 50 }]} />;
     }
   }
-];
+].concat(ViewTransformsExample);
 
-examples.forEach(example => {
-  storiesOf('component: View', module).add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('View', () =>
+  <UIExplorer
+    examples={examples}
+    title="View"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/View.md"
+  />
+);

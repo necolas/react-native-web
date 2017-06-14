@@ -3,15 +3,13 @@ import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   root: {
-    alignItems: 'center',
-    height: '100vh',
-    justifyContent: 'center'
+    minHeight: '100vh'
   }
 });
 
 export default function(renderStory) {
   return (
-    <View style={[StyleSheet.absoluteFill, styles.root]}>
+    <View style={styles.root}>
       {renderStory()}
     </View>
   );

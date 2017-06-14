@@ -2,6 +2,10 @@
  * @flow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
+const initialURL = canUseDOM ? window.location.href : '';
+
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
@@ -9,7 +13,7 @@ const Linking = {
     return Promise.resolve(true);
   },
   getInitialURL() {
-    return Promise.resolve('');
+    return Promise.resolve(initialURL);
   },
   openURL(url: string) {
     try {
@@ -54,4 +58,4 @@ const iframeOpen = url => {
   }
 };
 
-module.exports = Linking;
+export default Linking;

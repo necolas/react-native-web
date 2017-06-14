@@ -4,7 +4,7 @@
 
 import { Component } from 'react';
 
-class StatusBar extends Component {
+export default class StatusBar extends Component {
   static setBackgroundColor() {}
   static setBarStyle() {}
   static setHidden() {}
@@ -14,5 +14,3 @@ class StatusBar extends Component {
     return null;
   }
 }
-
-module.exports = StatusBar;

@@ -10,7 +10,7 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 import { number, oneOf, oneOfType, string } from 'prop-types';
 
-module.exports = {
+const ViewStylePropTypes = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
   ...LayoutPropTypes,
@@ -26,6 +26,7 @@ module.exports = {
    * @platform web
    */
   backgroundAttachment: string,
+  backgroundBlendMode: string,
   backgroundClip: string,
   backgroundImage: string,
   backgroundOrigin: oneOf(['border-box', 'content-box', 'padding-box']),
@@ -49,3 +50,5 @@ module.exports = {
   WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };
+
+export default ViewStylePropTypes;

@@ -2,8 +2,10 @@ import propsToAccessibilityComponent from './propsToAccessibilityComponent';
 import propsToAriaRole from './propsToAriaRole';
 import propsToTabIndex from './propsToTabIndex';
 
-module.exports = {
+const AccessibilityUtil = {
   propsToAccessibilityComponent,
   propsToAriaRole,
   propsToTabIndex
 };
+
+export default AccessibilityUtil;

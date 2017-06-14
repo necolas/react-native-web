@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-no-bind, react/prefer-es6-class */
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -27,6 +27,7 @@ import createReactClass from 'create-react-class';
 import { Switch, Text, View } from 'react-native';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 
 const BasicSwitchExample = createReactClass({
   getInitialState() {
@@ -198,6 +199,10 @@ const examples = [
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: Switch', module).add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('Switch', () =>
+  <UIExplorer
+    examples={examples}
+    title="Switch"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/Switch.md"
+  />
+);

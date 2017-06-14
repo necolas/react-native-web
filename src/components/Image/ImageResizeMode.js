@@ -11,4 +11,4 @@ const ImageResizeMode = {
   stretch: 'stretch'
 };
 
-module.exports = ImageResizeMode;
+export default ImageResizeMode;

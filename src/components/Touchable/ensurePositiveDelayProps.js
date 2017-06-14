@@ -10,15 +10,14 @@
  * @providesModule ensurePositiveDelayProps
  * @flow
  */
-'use strict';
 
-var invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
-var ensurePositiveDelayProps = function(props: any) {
+const ensurePositiveDelayProps = (props: any) => {
   invariant(
     !(props.delayPressIn < 0 || props.delayPressOut < 0 || props.delayLongPress < 0),
     'Touchable components cannot have negative delay properties'
   );
 };
 
-module.exports = ensurePositiveDelayProps;
+export default ensurePositiveDelayProps;

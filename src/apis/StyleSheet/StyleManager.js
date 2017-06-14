@@ -25,15 +25,16 @@ const pointerEvents = {
   none: createClassName('pointerEvents', 'none')
 };
 
+// See #513
 const pointerEventsCss =
-  `.${pointerEvents.auto}{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxNone}{pointer-events:none;}\n` +
-  `.${pointerEvents.boxNone} *{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxOnly}{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxOnly} *{pointer-events:none;}\n` +
-  `.${pointerEvents.none}{pointer-events:none;}`;
+  `.${pointerEvents.auto}{pointer-events:auto !important;}\n` +
+  `.${pointerEvents.boxOnly}{pointer-events:auto !important;}\n` +
+  `.${pointerEvents.none}{pointer-events:none !important;}\n` +
+  `.${pointerEvents.boxNone}{pointer-events:none !important;}\n` +
+  `.${pointerEvents.boxNone} > *{pointer-events:auto;}\n` +
+  `.${pointerEvents.boxOnly} > *{pointer-events:none;}`;
 
-class StyleManager {
+export default class StyleManager {
   constructor() {
     // custom pointer event values are implemented using descendent selectors,
     // so we manually create the CSS and pre-register the declarations
@@ -84,6 +85,15 @@ class StyleManager {
   }
 
   getStyleSheetHtml() {
+    const styleSheets = this.getStyleSheets();
+    return styleSheets
+      .map(sheet => {
+        return `<style id="${sheet.id}">\n${sheet.textContent}\n</style>`;
+      })
+      .join('\n');
+  }
+
+  getStyleSheets() {
     const cache = this.cache.byProp;
 
     const mainSheetTextContext = Object.keys(cache)
@@ -98,9 +108,16 @@ class StyleManager {
       }, [])
       .join('\n');
 
-    const staticSheet = `<style id="react-native-stylesheet-static">\n${staticCss}\n${pointerEventsCss}\n</style>`;
-    const mainSheet = `<style id="${STYLE_ELEMENT_ID}">\n${mainSheetTextContext}\n</style>`;
-    return `${staticSheet}\n${mainSheet}`;
+    return [
+      {
+        id: 'react-native-stylesheet-static',
+        textContent: `${staticCss}\n${pointerEventsCss}`
+      },
+      {
+        id: STYLE_ELEMENT_ID,
+        textContent: `${mainSheetTextContext}`
+      }
+    ];
   }
 
   setDeclaration(prop, value) {
@@ -131,5 +148,3 @@ class StyleManager {
     cache.byClassName[className] = { prop, value };
   }
 }
-
-module.exports = StyleManager;

@@ -14,8 +14,7 @@ into `runApplication`. These should always be used as a pair.
 (web) static **getApplication**(appKey:string, appParameters: object)
 
 Returns the given application element. Use this for server-side rendering.
-Return object is of type `{ element: ReactElement; stylesheet: ReactElement }`.
-It's recommended that you use `sheetsheet` to render the style sheet in an app
+Return object is of type `{ element: ReactElement; stylesheets: [ ReactElement ] }`.
 
 static **registerConfig**(config: Array<AppConfig>)
 

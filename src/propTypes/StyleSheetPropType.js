@@ -6,8 +6,8 @@
  */
 
 function StyleSheetPropType(shape: { [key: string]: ReactPropsCheckType }): ReactPropsCheckType {
-  const createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker');
-  const StyleSheet = require('../apis/StyleSheet');
+  const createStrictShapeTypeChecker = require('./createStrictShapeTypeChecker').default;
+  const StyleSheet = require('../apis/StyleSheet').default;
 
   const shapePropType = createStrictShapeTypeChecker(shape);
   return function(props, propName, componentName, location?, ...rest) {
@@ -21,4 +21,4 @@ function StyleSheetPropType(shape: { [key: string]: ReactPropsCheckType }): Reac
   };
 }
 
-module.exports = StyleSheetPropType;
+export default StyleSheetPropType;

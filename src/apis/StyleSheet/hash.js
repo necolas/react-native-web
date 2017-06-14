@@ -13,7 +13,10 @@
  */
 
 function murmurhash2_32_gc(str, seed) {
-  var l = str.length, h = seed ^ l, i = 0, k;
+  var l = str.length,
+    h = seed ^ l,
+    i = 0,
+    k;
 
   while (l >= 4) {
     k =
@@ -49,4 +52,5 @@ function murmurhash2_32_gc(str, seed) {
   return h >>> 0;
 }
 
-module.exports = str => murmurhash2_32_gc(str, 1).toString(36);
+const hash = str => murmurhash2_32_gc(str, 1).toString(36);
+export default hash;

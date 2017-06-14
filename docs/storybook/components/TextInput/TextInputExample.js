@@ -25,8 +25,9 @@
 
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import { any, bool, object, string } from 'prop-types';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import UIExplorer from '../../UIExplorer';
+import { any, bool, string } from 'prop-types';
+import { StyleSheet, Text, TextInput, TextPropTypes, View } from 'react-native';
 
 class WithLabel extends React.Component {
   static propTypes = {
@@ -107,7 +108,8 @@ class AutoExpandingTextInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. The focus of React Native is on developer efficiency across all the platforms you care about — learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.',
+      text:
+        'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. The focus of React Native is on developer efficiency across all the platforms you care about — learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.',
       height: 0
     };
   }
@@ -318,7 +320,7 @@ class SelectionExample extends React.Component {
 
   static propTypes = {
     multiline: bool,
-    style: object,
+    style: TextPropTypes.style,
     value: string
   };
 
@@ -463,7 +465,7 @@ const styles = StyleSheet.create({
 const examples = [
   {
     title: 'Auto-focus',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput
@@ -477,19 +479,19 @@ const examples = [
   },
   {
     title: "Live Re-Write (<sp>  ->  '_') + maxLength",
-    render: function() {
+    render() {
       return <RewriteExample />;
     }
   },
   {
     title: 'Live Re-Write (no spaces allowed)',
-    render: function() {
+    render() {
       return <RewriteExampleInvalidCharacters />;
     }
   },
   {
     title: 'Auto-capitalize',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="none">
@@ -510,7 +512,7 @@ const examples = [
   },
   {
     title: 'Auto-correct',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="true">
@@ -525,7 +527,7 @@ const examples = [
   },
   {
     title: 'Keyboard types',
-    render: function() {
+    render() {
       const keyboardTypes = [
         'default',
         //'ascii-capable',
@@ -552,7 +554,7 @@ const examples = [
   },
   {
     title: 'Keyboard appearance',
-    render: function() {
+    render() {
       const keyboardAppearance = ['default', 'light', 'dark'];
       const examples = keyboardAppearance.map(type => {
         return (
@@ -566,7 +568,7 @@ const examples = [
   },
   {
     title: 'Return key types',
-    render: function() {
+    render() {
       const returnKeyTypes = [
         'default',
         'go',
@@ -592,7 +594,7 @@ const examples = [
   },
   {
     title: 'Enable return key automatically',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="true">
@@ -604,7 +606,7 @@ const examples = [
   },
   {
     title: 'Secure text entry',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="true">
@@ -616,13 +618,13 @@ const examples = [
   },
   {
     title: 'Event handling',
-    render: function(): React.Element<any> {
+    render(): React.Element<any> {
       return <TextEventsExample />;
     }
   },
   {
     title: 'Colored input text',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput defaultValue="Blue" style={[styles.default, { color: 'blue' }]} />
@@ -633,7 +635,7 @@ const examples = [
   },
   {
     title: 'Colored highlight/cursor for text input',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput defaultValue="Highlight me" selectionColor={'green'} style={styles.default} />
@@ -648,7 +650,7 @@ const examples = [
   },
   {
     title: 'Clear button mode',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="never">
@@ -669,7 +671,7 @@ const examples = [
   },
   {
     title: 'Clear and select',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="clearTextOnFocus">
@@ -694,13 +696,13 @@ const examples = [
   },
   {
     title: 'Blur on submit',
-    render: function(): React.Element<any> {
+    render(): React.Element<any> {
       return <BlurOnSubmitExample />;
     }
   },
   {
     title: 'Multiline blur on submit',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput
@@ -719,7 +721,7 @@ const examples = [
   },
   {
     title: 'Multiline',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput multiline={true} placeholder="multiline text input" style={styles.multiline} />
@@ -758,7 +760,7 @@ const examples = [
   },
   {
     title: 'Number of lines',
-    render: function() {
+    render() {
       return (
         <View>
           <TextInput
@@ -772,7 +774,7 @@ const examples = [
   },
   {
     title: 'Auto-expanding',
-    render: function() {
+    render() {
       return (
         <View>
           <AutoExpandingTextInput
@@ -786,13 +788,13 @@ const examples = [
   },
   {
     title: 'Attributed text',
-    render: function() {
+    render() {
       return <TokenizedTextExample />;
     }
   },
   {
     title: 'Text selection & cursor placement',
-    render: function() {
+    render() {
       return (
         <View>
           <SelectionExample style={styles.default} value="text selection can be changed" />
@@ -807,7 +809,7 @@ const examples = [
   },
   {
     title: 'TextInput maxLength',
-    render: function() {
+    render() {
       return (
         <View>
           <WithLabel label="maxLength: 5">
@@ -828,6 +830,10 @@ const examples = [
   }
 ];
 
-examples.forEach(example => {
-  storiesOf('component: TextInput', module).add(example.title, () => example.render());
-});
+storiesOf('Components', module).add('TextInput', () =>
+  <UIExplorer
+    examples={examples}
+    title="TextInput"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/TextInput.md"
+  />
+);

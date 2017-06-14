@@ -33,6 +33,8 @@ export function getApplication(RootComponent: ReactClass<Object>, initialProps: 
       <RootComponent {...initialProps} />
     </AppContainer>
   );
-  const stylesheet = StyleSheet.renderToString();
-  return { element, stylesheet };
+  const stylesheets = StyleSheet.getStyleSheets().map(sheet =>
+    <style id={sheet.id}>{sheet.textContent}</style>
+  );
+  return { element, stylesheets };
 }

@@ -7,4 +7,4 @@ const normalizeValue = (property, value) => {
   return value;
 };
 
-module.exports = normalizeValue;
+export default normalizeValue;

@@ -55,4 +55,4 @@ const createDOMElement = (component, props) => {
   return <Component {...domProps} />;
 };
 
-module.exports = createDOMElement;
+export default createDOMElement;

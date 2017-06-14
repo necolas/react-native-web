@@ -155,7 +155,7 @@ const createReducer = (style, styleProps) => {
       case 'flex': {
         resolvedStyle.flexGrow = value;
         resolvedStyle.flexShrink = 1;
-        resolvedStyle.flexBasis = 'auto';
+        resolvedStyle.flexBasis = '0%';
         break;
       }
       case 'shadowColor':
@@ -223,4 +223,4 @@ const createReactDOMStyle = style => {
   return resolvedStyle;
 };
 
-module.exports = createReactDOMStyle;
+export default createReactDOMStyle;

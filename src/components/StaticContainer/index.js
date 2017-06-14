@@ -24,7 +24,7 @@ import { Children, Component } from 'react';
  * Typically, you will not need to use this component and should opt for normal
  * React reconciliation.
  */
-class StaticContainer extends Component {
+export default class StaticContainer extends Component {
   static propTypes = {
     children: any.isRequired,
     shouldUpdate: bool.isRequired
@@ -39,5 +39,3 @@ class StaticContainer extends Component {
     return child === null || child === false ? null : Children.only(child);
   }
 }
-
-module.exports = StaticContainer;

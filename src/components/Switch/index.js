@@ -196,4 +196,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(Switch);
+export default applyNativeMethods(Switch);

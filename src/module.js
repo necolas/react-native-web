@@ -47,4 +47,5 @@ export { default as View } from './components/View';
 export { default as ColorPropType } from './propTypes/ColorPropType';
 export { default as EdgeInsetsPropType } from './propTypes/EdgeInsetsPropType';
 export { default as PointPropType } from './propTypes/PointPropType';
+export { default as TextPropTypes } from './components/Text/TextPropTypes';
 export { default as ViewPropTypes } from './components/View/ViewPropTypes';

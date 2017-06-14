@@ -28,4 +28,4 @@ const EdgeInsetsPropType = createStrictShapeTypeChecker({
   right: number
 });
 
-module.exports = EdgeInsetsPropType;
+export default EdgeInsetsPropType;

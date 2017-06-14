@@ -5,7 +5,7 @@
  * All rights reserved.
  */
 
-var PooledClass = require('../../vendor/PooledClass');
+import PooledClass from '../../vendor/PooledClass';
 
 var twoArgumentPooler = PooledClass.twoArgumentPooler;
 
@@ -36,4 +36,4 @@ BoundingDimensions.getPooledFromElement = function(element) {
 
 PooledClass.addPoolingTo(BoundingDimensions, twoArgumentPooler);
 
-module.exports = BoundingDimensions;
+export default BoundingDimensions;

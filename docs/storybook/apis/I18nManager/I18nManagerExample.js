@@ -1,4 +1,5 @@
 import { storiesOf } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
 import { I18nManager, StyleSheet, TouchableHighlight, Text, View } from 'react-native';
 import React, { Component } from 'react';
 
@@ -14,7 +15,8 @@ class I18nManagerExample extends Component {
           LTR/RTL layout example!
         </Text>
         <Text style={styles.text}>
-          The writing direction of text is automatically determined by the browser, independent of the global writing direction of the app.
+          The writing direction of text is automatically determined by the browser, independent of
+          the global writing direction of the app.
         </Text>
         <Text style={[styles.text, styles.rtlText]}>
           أحب اللغة العربية
@@ -84,4 +86,13 @@ const styles = StyleSheet.create({
   }
 });
 
-storiesOf('api: I18nManager', module).add('RTL layout', () => <I18nManagerExample />);
+const examples = [
+  {
+    title: 'RTL toggle',
+    render: () => <I18nManagerExample />
+  }
+];
+
+storiesOf('APIs', module).add('I18nManager', () =>
+  <UIExplorer examples={examples} title="I18nManager" />
+);

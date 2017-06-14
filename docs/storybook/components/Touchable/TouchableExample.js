@@ -24,7 +24,8 @@
  */
 
 import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import UIExplorer from '../../UIExplorer';
+import { action, storiesOf } from '@kadira/storybook';
 import {
   Image,
   StyleSheet,
@@ -35,90 +36,6 @@ import {
   TouchableNativeFeedback,
   View
 } from 'react-native';
-
-const examples = [
-  {
-    title: '<TouchableHighlight>',
-    description: 'TouchableHighlight works by adding an extra view with a ' +
-      'black background under the single child view.  This works best when the ' +
-      'child view is fully opaque, although it can be made to work as a simple ' +
-      'background color change as well with the activeOpacity and ' +
-      'underlayColor props.',
-    render: function() {
-      return (
-        <View>
-          <View style={styles.row}>
-            <TouchableHighlight
-              onPress={() => console.log('stock THW image - highlight')}
-              style={styles.wrapper}
-            >
-              <Image source={heartImage} style={styles.image} />
-            </TouchableHighlight>
-            <TouchableHighlight
-              activeOpacity={1}
-              onPress={() => console.log('custom THW text - highlight')}
-              style={styles.wrapper}
-              underlayColor="rgb(210, 230, 255)"
-            >
-              <View style={styles.wrapperCustom}>
-                <Text style={styles.text}>
-                  Tap Here For Custom Highlight!
-                </Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-        </View>
-      );
-    }
-  },
-  {
-    title: '<Text onPress={fn}> with highlight',
-    render: function() {
-      return <TextOnPressBox />;
-    }
-  },
-  {
-    title: 'Touchable feedback events',
-    description: '<Touchable*> components accept onPress, onPressIn, ' +
-      'onPressOut, and onLongPress as props.',
-    render: function() {
-      return <TouchableFeedbackEvents />;
-    }
-  },
-  {
-    title: 'Touchable delay for events',
-    description: '<Touchable*> components also accept delayPressIn, ' +
-      'delayPressOut, and delayLongPress as props. These props impact the ' +
-      'timing of feedback events.',
-    render: function() {
-      return <TouchableDelayEvents />;
-    }
-  },
-  {
-    title: '3D Touch / Force Touch',
-    description: 'iPhone 6s and 6s plus support 3D touch, which adds a force property to touches',
-    render: function() {
-      return <ForceTouchExample />;
-    },
-    platform: 'ios'
-  },
-  {
-    title: 'Touchable Hit Slop',
-    description: '<Touchable*> components accept hitSlop prop which extends the touch area ' +
-      'without changing the view bounds.',
-    render: function() {
-      return <TouchableHitSlop />;
-    }
-  },
-  {
-    title: 'Disabled Touchable*',
-    description: '<Touchable*> components accept disabled prop which prevents ' +
-      'any interaction with component',
-    render: function() {
-      return <TouchableDisabled />;
-    }
-  }
-];
 
 class TextOnPressBox extends React.Component {
   constructor(props) {
@@ -393,6 +310,66 @@ class TouchableDisabled extends React.Component {
   }
 }
 
+class TouchableStyling extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.buttons = ['a', 'b', 'c'];
+    this.state = {};
+    this.select = this.select.bind(this);
+  }
+
+  select(selectedButton) {
+    const newState = {};
+    this.buttons.forEach(button => {
+      newState[button] = selectedButton === button;
+    });
+    this.setState(newState);
+  }
+
+  render() {
+    return (
+      <View style={touchableStylingStyles.container}>
+        {this.buttons.map(button => {
+          const tstyle = [
+            touchableStylingStyles.textInput,
+            this.state[button] && touchableStylingStyles.blue
+          ];
+          return (
+            <TouchableHighlight
+              key={button}
+              onPress={this.select.bind(this, button)}
+              style={tstyle}
+            >
+              <Text style={[this.state[button] && touchableStylingStyles.white]}>
+                Button {button} {this.state[button] ? 'On' : 'Off'}
+              </Text>
+            </TouchableHighlight>
+          );
+        })}
+      </View>
+    );
+  }
+}
+
+const touchableStylingStyles = StyleSheet.create({
+  blue: {
+    backgroundColor: 'rgb(100, 100, 200)',
+    borderColor: 'white'
+  },
+  white: {
+    color: 'white'
+  },
+  container: {
+    backgroundColor: '#f6f6f6'
+  },
+  textInput: {
+    borderWidth: 3,
+    borderColor: 'black',
+    padding: 20,
+    width: 200
+  }
+});
+
 const heartImage = { uri: 'https://pbs.twimg.com/media/BlXBfT3CQAA6cVZ.png:small' };
 
 const styles = StyleSheet.create({
@@ -468,6 +445,105 @@ const styles = StyleSheet.create({
   }
 });
 
-examples.forEach(example => {
-  storiesOf('component: Touchable*', module).add(example.title, () => example.render());
-});
+const examples = [
+  {
+    title: '<TouchableHighlight>',
+    description:
+      'TouchableHighlight works by adding an extra view with a ' +
+        'black background under the single child view.  This works best when the ' +
+        'child view is fully opaque, although it can be made to work as a simple ' +
+        'background color change as well with the activeOpacity and ' +
+        'underlayColor props.',
+    render() {
+      return (
+        <View>
+          <View style={styles.row}>
+            <TouchableHighlight
+              onPress={() => console.log('stock THW image - highlight')}
+              style={styles.wrapper}
+            >
+              <Image source={heartImage} style={styles.image} />
+            </TouchableHighlight>
+            <TouchableHighlight
+              activeOpacity={1}
+              onPress={() => console.log('custom THW text - highlight')}
+              style={styles.wrapper}
+              underlayColor="rgb(210, 230, 255)"
+            >
+              <View style={styles.wrapperCustom}>
+                <Text style={styles.text}>
+                  Tap Here For Custom Highlight!
+                </Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
+    }
+  },
+  {
+    title: '<Text onPress={fn}> with highlight',
+    render() {
+      return <TextOnPressBox />;
+    }
+  },
+  {
+    title: 'Touchable feedback events',
+    description:
+      '<Touchable*> components accept onPress, onPressIn, ' +
+        'onPressOut, and onLongPress as props.',
+    render() {
+      return <TouchableFeedbackEvents />;
+    }
+  },
+  {
+    title: 'Touchable delay for events',
+    description:
+      '<Touchable*> components also accept delayPressIn, ' +
+        'delayPressOut, and delayLongPress as props. These props impact the ' +
+        'timing of feedback events.',
+    render() {
+      return <TouchableDelayEvents />;
+    }
+  },
+  {
+    title: 'Touchable styling',
+    render() {
+      return <TouchableStyling />;
+    }
+  },
+  {
+    title: '3D Touch / Force Touch',
+    description: 'iPhone 6s and 6s plus support 3D touch, which adds a force property to touches',
+    render() {
+      return <ForceTouchExample />;
+    },
+    platform: 'ios'
+  },
+  {
+    title: 'Touchable Hit Slop',
+    description:
+      '<Touchable*> components accept hitSlop prop which extends the touch area ' +
+        'without changing the view bounds.',
+    render() {
+      return <TouchableHitSlop />;
+    }
+  },
+  {
+    title: 'Disabled Touchable*',
+    description:
+      '<Touchable*> components accept disabled prop which prevents ' +
+        'any interaction with component',
+    render() {
+      return <TouchableDisabled />;
+    }
+  }
+];
+
+storiesOf('Components', module).add('Touchables', () =>
+  <UIExplorer
+    examples={examples}
+    title="Touchables"
+    url="https://github.com/necolas/react-native-web/blob/master/docs/components/TouchableWithoutFeedback.md"
+  />
+);

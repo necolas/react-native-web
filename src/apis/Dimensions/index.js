@@ -19,17 +19,14 @@ const win = canUseDOM
       screen: {
         height: undefined,
         width: undefined
-      },
-      addEventListener(type, handler, useCapture) {},
-      removeEventListener(type, handler) {},
-      dispatchEvent(event) {}
+      }
     };
 
 const EVENT_CHANGE = 'rn-dimensions-change';
 
 const dimensions = {};
 
-class Dimensions {
+export default class Dimensions {
   static get(dimension: string): Object {
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
@@ -50,27 +47,30 @@ class Dimensions {
       width: win.screen.width
     };
 
-    const change: window.Event = new window.Event(EVENT_CHANGE);
-    (change: any).window = dimensions.window;
-    (change: any).screen = dimensions.screen;
-    win.dispatchEvent(change);
+    if (canUseDOM) {
+      const change: window.Event = new window.Event(EVENT_CHANGE);
+      // this respects the official API
+      (change: any).window = dimensions.window;
+      (change: any).screen = dimensions.screen;
+      window.dispatchEvent(change);
+    }
   }
 
   static addEventListener(type, handler): void {
     if (type === 'change') {
-      win.addEventListener(EVENT_CHANGE, handler);
+      canUseDOM && window.addEventListener(EVENT_CHANGE, handler);
     }
   }
 
   static removeEventListener(type, handler): void {
     if (type === 'change') {
-      win.removeEventListener(EVENT_CHANGE, handler);
+      canUseDOM && window.removeEventListener(EVENT_CHANGE, handler);
     }
   }
 }
 
 Dimensions.set();
 
-win.addEventListener('resize', debounce(Dimensions.set, 16), false);
-
-module.exports = Dimensions;
+if (canUseDOM) {
+  window.addEventListener('resize', debounce(Dimensions.set, 16), false);
+}
