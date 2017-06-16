@@ -237,6 +237,35 @@ describe('components/TextInput', () => {
         done();
       }
     });
+
+    test('multi-line input', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(<TextInput defaultValue="12345" multiline onSubmitEditing={onSubmitEditing} />)
+      );
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+    });
+
+    test('multi-line input with "blurOnSubmit" triggers onSubmitEditing', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(
+          <TextInput
+            blurOnSubmit
+            defaultValue="12345"
+            multiline
+            onSubmitEditing={onSubmitEditing}
+          />
+        )
+      );
+
+      // shift+enter should enter newline, not submit
+      input.simulate('keyPress', { which: 13, shiftKey: true });
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).not.toHaveBeenCalledWith(expect.objectContaining({ shiftKey: true }));
+    });
   });
 
   test('prop "secureTextEntry"', () => {

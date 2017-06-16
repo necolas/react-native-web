@@ -318,8 +318,8 @@ class TextInput extends Component {
       }
     }
 
-    if (!e.isDefaultPrevented() && e.which === 13) {
-      if (onSubmitEditing) {
+    if (!e.isDefaultPrevented() && e.which === 13 && !e.shiftKey) {
+      if ((blurOnSubmit || !multiline) && onSubmitEditing) {
         e.nativeEvent = { target: e.target, text: e.target.value };
         onSubmitEditing(e);
       }
