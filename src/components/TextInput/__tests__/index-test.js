@@ -170,6 +170,19 @@ describe('components/TextInput', () => {
         done();
       }
     });
+
+    test('multi-line input', done => {
+      const input = findNativeTextarea(
+        mount(<TextInput defaultValue="12345" multiline onSubmitEditing={onSubmitEditing} />)
+      );
+      // shift+enter should enter newline, not submit
+      input.simulate('keyPress', { which: 13, shiftKey: true });
+      input.simulate('keyPress', { which: 13 });
+      function onSubmitEditing(e) {
+        expect(e.shiftKey).toBeFalsy();
+        done();
+      }
+    });
   });
 
   test('prop "secureTextEntry"', () => {
