@@ -19,7 +19,7 @@ const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0
 
 class Switch extends PureComponent {
   _checkboxElement: HTMLInputElement;
-  _thumbElement = null;
+  _thumbElement: View;
 
   static displayName = 'Switch';
 

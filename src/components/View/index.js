@@ -70,7 +70,9 @@ class View extends Component {
       otherProps.style.unshift(styles.hasHitSlop);
     }
 
+    // avoid HTML validation errors
     const component = isInAButtonView ? 'span' : 'div';
+
     return createDOMElement(component, otherProps);
   }
 }
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   inline: {
     display: 'inline-flex'
   },
-  // this zIndex ordering positions the hitSlop above the View but behind
+  // this zIndex-ordering positions the hitSlop above the View but behind
   // its children
   hasHitSlop: {
     zIndex: 0

@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
 
 class ProgressBar extends Component {
-  _progressElement = null;
+  _progressElement: View;
 
   static displayName = 'ProgressBar';
 
@@ -80,10 +80,12 @@ const styles = StyleSheet.create({
   track: {
     height: 5,
     overflow: 'hidden',
-    userSelect: 'none'
+    userSelect: 'none',
+    zIndex: 0
   },
   progress: {
-    height: '100%'
+    height: '100%',
+    zIndex: -1
   },
   animation: {
     animationDuration: '1s',
