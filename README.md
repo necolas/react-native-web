@@ -32,9 +32,12 @@ npm install --save react@15.6 react-dom@15.6 react-native-web
 
 NOTE: React Native for Web supports React/ReactDOM 15.4, 15.5, or 15.6.
 
-Read the [Getting Started](docs/guides/getting-started.md) guide.
+Then read the [Getting Started](docs/guides/getting-started.md) guide.
 
 ## Documentation
+
+The [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
+interactively documents all the APIs and Components.
 
 Guides:
 
@@ -45,36 +48,6 @@ Guides:
 * [Internationalization](docs/guides/internationalization.md)
 * [Advanced use](docs/guides/advanced.md)
 * [Known issues](docs/guides/known-issues.md)
-
-Exported modules:
-
-* Components
-  * [`ActivityIndicator`](docs/components/ActivityIndicator.md)
-  * [`Button`](docs/components/Button.md)
-  * [`Image`](docs/components/Image.md)
-  * [`ProgressBar`](docs/components/ProgressBar.md)
-  * [`ScrollView`](docs/components/ScrollView.md)
-  * [`Switch`](docs/components/Switch.md)
-  * [`Text`](docs/components/Text.md)
-  * [`TextInput`](docs/components/TextInput.md)
-  * [`TouchableHighlight`](http://facebook.github.io/react-native/releases/0.22/docs/touchablehighlight.html) (mirrors React Native)
-  * [`TouchableOpacity`](http://facebook.github.io/react-native/releases/0.22/docs/touchableopacity.html) (mirrors React Native)
-  * [`TouchableWithoutFeedback`](docs/components/TouchableWithoutFeedback.md)
-  * [`View`](docs/components/View.md)
-* APIs
-  * [`Animated`](http://facebook.github.io/react-native/releases/0.20/docs/animated.html) (mirrors React Native)
-  * [`AppRegistry`](docs/apis/AppRegistry.md)
-  * [`AppState`](docs/apis/AppState.md)
-  * [`AsyncStorage`](docs/apis/AsyncStorage.md)
-  * [`Clipboard`](docs/apis/Clipboard.md)
-  * [`Dimensions`](docs/apis/Dimensions.md)
-  * [`I18nManager`](docs/apis/I18nManager.md)
-  * [`NetInfo`](docs/apis/NetInfo.md)
-  * [`PanResponder`](http://facebook.github.io/react-native/releases/0.20/docs/panresponder.html#content) (mirrors React Native)
-  * [`PixelRatio`](docs/apis/PixelRatio.md)
-  * [`Platform`](docs/apis/Platform.md)
-  * [`StyleSheet`](docs/apis/StyleSheet.md)
-  * [`Vibration`](docs/apis/Vibration.md)
 
 ## Example code
 
@@ -121,6 +94,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
+* [react-sketchapp](https://github.com/airbnb/react-sketchapp)
 * [react-web](https://github.com/taobaofed/react-web)
 * [reactxp](https://github.com/microsoft/reactxp)
 

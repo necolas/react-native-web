@@ -3,7 +3,9 @@ import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   root: {
-    minHeight: '100vh'
+    minHeight: '100vh',
+    maxWidth: 680,
+    marginHorizontal: 'auto'
   }
 });
 

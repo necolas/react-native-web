@@ -68,7 +68,8 @@
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
-    "@kadira/storybook": "^2.5.1",
+    "@kadira/storybook": "^2.35.3",
+    "@kadira/storybook-addon-options": "^1.0.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
