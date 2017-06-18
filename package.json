@@ -57,7 +57,7 @@
     "animated": "^0.2.0",
     "array-find-index": "^1.0.2",
     "babel-runtime": "^6.23.0",
-    "create-react-class": "^15.5.3",
+    "create-react-class": "^15.6.0",
     "debounce": "1.0.2",
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.12",
@@ -88,17 +88,16 @@
     "lint-staged": "^3.6.0",
     "node-libs-browser": "^0.5.3",
     "prettier": "^1.4.4",
-    "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
-    "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.5.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.8.2"
   },
   "peerDependencies": {
-    "react": "15.4.x || 15.5.x",
-    "react-dom": "15.4.x || 15.5.x"
+    "react": "15.4.x || 15.5.x || 15.6.x",
+    "react-dom": "15.4.x || 15.5.x || 15.6.x"
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause",

@@ -27,8 +27,10 @@ Native for Web: Playground](https://www.webpackbin.com/bins/-KgucwxRbn7HRU-V-3Bc
 To install in your app:
 
 ```
-npm install --save react@15.5 react-dom@15.5 react-native-web
+npm install --save react@15.6 react-dom@15.6 react-native-web
 ```
+
+NOTE: React Native for Web supports React/ReactDOM 15.4, 15.5, or 15.6.
 
 Read the [Getting Started](docs/guides/getting-started.md) guide.
 
