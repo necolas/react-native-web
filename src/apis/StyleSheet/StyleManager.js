@@ -1,6 +1,6 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import generateCss from './generateCss';
-import hash from './hash';
+import hash from '../../vendor/hash';
 import staticCss from './staticCss';
 
 const emptyObject = {};
