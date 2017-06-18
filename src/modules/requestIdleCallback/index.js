@@ -13,7 +13,7 @@ const _requestIdleCallback = function(cb) {
   }, 1);
 };
 
-const _cancelIdleCallback = function(id) {
+const _cancelIdleCallback = function(id: number) {
   clearTimeout(id);
 };
 

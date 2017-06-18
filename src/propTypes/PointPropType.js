@@ -15,7 +15,7 @@
 import createStrictShapeTypeChecker from './createStrictShapeTypeChecker';
 import { number } from 'prop-types';
 
-var PointPropType = createStrictShapeTypeChecker({
+const PointPropType = createStrictShapeTypeChecker({
   x: number,
   y: number
 });

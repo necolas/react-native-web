@@ -1,6 +1,18 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule processColor
+ * @flow
+ */
+
 import normalizeColor from 'normalize-css-color';
 
-const processColor = (color, opacity = 1) => {
+const processColor = (color: ?(string | number), opacity: number = 1) => {
   if (
     color === undefined ||
     color === null ||

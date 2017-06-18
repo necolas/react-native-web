@@ -22,11 +22,11 @@ import Touchable from './Touchable';
 import TouchableWithoutFeedback from './TouchableWithoutFeedback';
 import View from '../View';
 
-var flattenStyle = StyleSheet.flatten;
+const flattenStyle = StyleSheet.flatten;
 
 type Event = Object;
 
-var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
@@ -49,7 +49,7 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * },
  * ```
  */
-var TouchableOpacity = createReactClass({
+const TouchableOpacity = createReactClass({
   mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
 
   propTypes: {
@@ -141,7 +141,7 @@ var TouchableOpacity = createReactClass({
   },
 
   _opacityInactive: function(duration: number) {
-    var childStyle = flattenStyle(this.props.style) || {};
+    const childStyle = flattenStyle(this.props.style) || {};
     this.setOpacityTo(childStyle.opacity === undefined ? 1 : childStyle.opacity, duration);
   },
 
@@ -150,7 +150,7 @@ var TouchableOpacity = createReactClass({
   },
 
   _onKeyEnter(e, callback) {
-    var ENTER = 13;
+    const ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
       e.stopPropagation();

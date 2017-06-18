@@ -7,7 +7,7 @@
 
 import PooledClass from '../../vendor/PooledClass';
 
-var twoArgumentPooler = PooledClass.twoArgumentPooler;
+const twoArgumentPooler = PooledClass.twoArgumentPooler;
 
 /**
  * Position does not expose methods for construction via an `HTMLDOMElement`,

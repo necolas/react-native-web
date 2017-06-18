@@ -15,12 +15,9 @@ import Dimensions from '../../apis/Dimensions';
 import findNodeHandle from '../findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import Platform from '../../apis/Platform';
-import React from 'react';
 import TextInputState from '../../components/TextInput/TextInputState';
 import UIManager from '../../apis/UIManager';
 import warning from 'fbjs/lib/warning';
-
-// type Component = React.Component
 
 /**
  * Mixin that can be integrated in order to handle scrolling that plays well
@@ -102,7 +99,7 @@ import warning from 'fbjs/lib/warning';
 
 const emptyObject = {};
 
-var IS_ANIMATING_TOUCH_START_THRESHOLD_MS = 16;
+const IS_ANIMATING_TOUCH_START_THRESHOLD_MS = 16;
 
 type State = {
   isTouching: boolean,
@@ -113,7 +110,7 @@ type State = {
 };
 type Event = Object;
 
-var ScrollResponderMixin = {
+const ScrollResponderMixin = {
   // mixins: [Subscribable.Mixin],
   scrollResponderMixinGetInitialState: function(): State {
     return {
@@ -228,7 +225,7 @@ var ScrollResponderMixin = {
    * @param {SyntheticEvent} e Event.
    */
   scrollResponderHandleTouchEnd: function(e: Event) {
-    var nativeEvent = e.nativeEvent;
+    const nativeEvent = e.nativeEvent;
     this.state.isTouching = nativeEvent.touches.length !== 0;
     this.props.onTouchEnd && this.props.onTouchEnd(e);
   },
@@ -241,7 +238,7 @@ var ScrollResponderMixin = {
 
     // By default scroll views will unfocus a textField
     // if another touch occurs outside of it
-    var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
+    const currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
     if (
       !this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
@@ -340,9 +337,9 @@ var ScrollResponderMixin = {
    * a touch has just started or ended.
    */
   scrollResponderIsAnimating: function(): boolean {
-    var now = Date.now();
-    var timeSinceLastMomentumScrollEnd = now - this.state.lastMomentumScrollEndTime;
-    var isAnimating =
+    const now = Date.now();
+    const timeSinceLastMomentumScrollEnd = now - this.state.lastMomentumScrollEndTime;
+    const isAnimating =
       timeSinceLastMomentumScrollEnd < IS_ANIMATING_TOUCH_START_THRESHOLD_MS ||
       this.state.lastMomentumScrollEndTime < this.state.lastMomentumScrollBeginTime;
     return isAnimating;
@@ -457,11 +454,11 @@ var ScrollResponderMixin = {
     width: number,
     height: number
   ) {
-    var keyboardScreenY = Dimensions.get('window').height;
+    let keyboardScreenY = Dimensions.get('window').height;
     if (this.keyboardWillOpenTo) {
       keyboardScreenY = this.keyboardWillOpenTo.endCoordinates.screenY;
     }
-    var scrollOffsetY = top - keyboardScreenY + height + this.additionalScrollOffset;
+    let scrollOffsetY = top - keyboardScreenY + height + this.additionalScrollOffset;
 
     // By default, this can scroll with negative offset, pulling the content
     // down so that the target component's bottom meets the keyboard's top.
@@ -548,7 +545,7 @@ var ScrollResponderMixin = {
   }
 };
 
-var ScrollResponder = {
+const ScrollResponder = {
   Mixin: ScrollResponderMixin
 };
 

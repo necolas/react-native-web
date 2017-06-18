@@ -6,14 +6,16 @@
 
 import TouchHistoryMath from '../../vendor/TouchHistoryMath';
 
-var currentCentroidXOfTouchesChangedAfter = TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
-var currentCentroidYOfTouchesChangedAfter = TouchHistoryMath.currentCentroidYOfTouchesChangedAfter;
-var previousCentroidXOfTouchesChangedAfter =
+const currentCentroidXOfTouchesChangedAfter =
+  TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
+const currentCentroidYOfTouchesChangedAfter =
+  TouchHistoryMath.currentCentroidYOfTouchesChangedAfter;
+const previousCentroidXOfTouchesChangedAfter =
   TouchHistoryMath.previousCentroidXOfTouchesChangedAfter;
-var previousCentroidYOfTouchesChangedAfter =
+const previousCentroidYOfTouchesChangedAfter =
   TouchHistoryMath.previousCentroidYOfTouchesChangedAfter;
-var currentCentroidX = TouchHistoryMath.currentCentroidX;
-var currentCentroidY = TouchHistoryMath.currentCentroidY;
+const currentCentroidX = TouchHistoryMath.currentCentroidX;
+const currentCentroidY = TouchHistoryMath.currentCentroidY;
 
 /**
  * `PanResponder` reconciles several touches into a single gesture. It makes
@@ -110,7 +112,7 @@ var currentCentroidY = TouchHistoryMath.currentCentroidY;
  * [PanResponder example in UIExplorer](https://github.com/facebook/react-native/blob/master/Examples/UIExplorer/PanResponderExample.js)
  */
 
-var PanResponder = {
+const PanResponder = {
   /**
    *
    * A graphical explanation of the touch data flow:
@@ -222,16 +224,16 @@ var PanResponder = {
       touchHistory,
       gestureState._accountsForMovesUpTo
     );
-    var movedAfter = gestureState._accountsForMovesUpTo;
-    var prevX = previousCentroidXOfTouchesChangedAfter(touchHistory, movedAfter);
-    var x = currentCentroidXOfTouchesChangedAfter(touchHistory, movedAfter);
-    var prevY = previousCentroidYOfTouchesChangedAfter(touchHistory, movedAfter);
-    var y = currentCentroidYOfTouchesChangedAfter(touchHistory, movedAfter);
-    var nextDX = gestureState.dx + (x - prevX);
-    var nextDY = gestureState.dy + (y - prevY);
+    const movedAfter = gestureState._accountsForMovesUpTo;
+    const prevX = previousCentroidXOfTouchesChangedAfter(touchHistory, movedAfter);
+    const x = currentCentroidXOfTouchesChangedAfter(touchHistory, movedAfter);
+    const prevY = previousCentroidYOfTouchesChangedAfter(touchHistory, movedAfter);
+    const y = currentCentroidYOfTouchesChangedAfter(touchHistory, movedAfter);
+    const nextDX = gestureState.dx + (x - prevX);
+    const nextDY = gestureState.dy + (y - prevY);
 
     // TODO: This must be filtered intelligently.
-    var dt = touchHistory.mostRecentTimeStamp - gestureState._accountsForMovesUpTo;
+    const dt = touchHistory.mostRecentTimeStamp - gestureState._accountsForMovesUpTo;
     gestureState.vx = (nextDX - gestureState.dx) / dt;
     gestureState.vy = (nextDY - gestureState.dy) / dt;
 
@@ -273,12 +275,12 @@ var PanResponder = {
    *  are the responder.
    */
   create: function(config) {
-    var gestureState = {
+    const gestureState = {
       // Useful for debugging
       stateID: Math.random()
     };
     PanResponder._initializeGestureState(gestureState);
-    var panHandlers = {
+    const panHandlers = {
       onStartShouldSetResponder: function(e) {
         return config.onStartShouldSetPanResponder === undefined
           ? false
@@ -309,7 +311,7 @@ var PanResponder = {
       },
 
       onMoveShouldSetResponderCapture: function(e) {
-        var touchHistory = e.touchHistory;
+        const touchHistory = e.touchHistory;
         // Responder system incorrectly dispatches should* to current responder
         // Filter out any touch moves past the first one - we would have
         // already processed multi-touch geometry during the first event.
@@ -344,13 +346,13 @@ var PanResponder = {
       },
 
       onResponderStart: function(e) {
-        var touchHistory = e.touchHistory;
+        const touchHistory = e.touchHistory;
         gestureState.numberActiveTouches = touchHistory.numberActiveTouches;
         config.onPanResponderStart && config.onPanResponderStart(e, gestureState);
       },
 
       onResponderMove: function(e) {
-        var touchHistory = e.touchHistory;
+        const touchHistory = e.touchHistory;
         // Guard against the dispatch of two touch moves when there are two
         // simultaneously changed touches.
         if (gestureState._accountsForMovesUpTo === touchHistory.mostRecentTimeStamp) {
@@ -363,7 +365,7 @@ var PanResponder = {
       },
 
       onResponderEnd: function(e) {
-        var touchHistory = e.touchHistory;
+        const touchHistory = e.touchHistory;
         gestureState.numberActiveTouches = touchHistory.numberActiveTouches;
         config.onPanResponderEnd && config.onPanResponderEnd(e, gestureState);
       },

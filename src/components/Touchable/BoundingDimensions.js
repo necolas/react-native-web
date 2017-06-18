@@ -1,22 +1,21 @@
-/* eslint-disable */
-
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) 2015-present, Nicolas Gallagher.
  * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
  */
 
 import PooledClass from '../../vendor/PooledClass';
 
-var twoArgumentPooler = PooledClass.twoArgumentPooler;
+const twoArgumentPooler = PooledClass.twoArgumentPooler;
 
 /**
  * PooledClass representing the bounding rectangle of a region.
- *
- * @param {number} width Width of bounding rectangle.
- * @param {number} height Height of bounding rectangle.
- * @constructor BoundingDimensions
  */
-function BoundingDimensions(width, height) {
+function BoundingDimensions(width: number, height: number) {
   this.width = width;
   this.height = height;
 }

@@ -16,7 +16,7 @@ import invariant from 'fbjs/lib/invariant';
 const ensureComponentIsNative = (component: any) => {
   invariant(
     component && typeof component.setNativeProps === 'function',
-    'Touchable child must either be native or forward setNativeProps to a ' + 'native component'
+    'Touchable child must either be native or forward setNativeProps to a native component'
   );
 };
 

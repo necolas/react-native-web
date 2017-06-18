@@ -28,12 +28,12 @@ import { func, number } from 'prop-types';
 
 type Event = Object;
 
-var DEFAULT_PROPS = {
+const DEFAULT_PROPS = {
   activeOpacity: 0.85,
   underlayColor: 'black'
 };
 
-var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
@@ -62,7 +62,7 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * > If you wish to have several child components, wrap them in a View.
  */
 
-var TouchableHighlight = createReactClass({
+const TouchableHighlight = createReactClass({
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
     /**
@@ -227,7 +227,7 @@ var TouchableHighlight = createReactClass({
   },
 
   _onKeyEnter(e, callback) {
-    var ENTER = 13;
+    const ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
       e.stopPropagation();

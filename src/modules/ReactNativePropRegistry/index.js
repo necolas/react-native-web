@@ -20,7 +20,7 @@ const createKey = id => `${prefix}-${id}`;
 
 export default class ReactNativePropRegistry {
   static register(object: Object): number {
-    let id = uniqueID++;
+    const id = uniqueID++;
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(object);
     }

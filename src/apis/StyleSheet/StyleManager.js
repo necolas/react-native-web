@@ -34,6 +34,9 @@ const pointerEventsCss =
   `.${pointerEvents.boxOnly} > *{pointer-events:none;}`;
 
 export default class StyleManager {
+  cache = null;
+  mainSheet = null;
+
   constructor() {
     // custom pointer event values are implemented using descendent selectors,
     // so we manually create the CSS and pre-register the declarations
