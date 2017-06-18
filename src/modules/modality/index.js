@@ -1,7 +1,3 @@
-/* global document, window */
-
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-
 /**
  * Adapts focus styles based on the user's active input modality (i.e., how
  * they are interacting with the UI right now).
@@ -16,7 +12,12 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
  * 2. a focus event happened on an element which requires keyboard interaction (e.g., a text field);
  *
  * Based on https://github.com/WICG/focus-ring
+ *
+ * @noflow
  */
+
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 const modality = () => {
   if (!canUseDOM) {
     return;

@@ -1,7 +1,16 @@
-/* global window */
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const _requestIdleCallback = function(cb) {
+const _requestIdleCallback = function(cb: Function) {
   return setTimeout(() => {
     const start = Date.now();
     cb({

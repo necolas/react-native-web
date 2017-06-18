@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 const CSS_UNIT_RE = /^[+-]?\d*(?:\.\d+)?(?:[Ee][+-]?\d+)?(%|\w*)/;
 
 const getUnit = str => str.match(CSS_UNIT_RE)[1];

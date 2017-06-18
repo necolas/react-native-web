@@ -1,7 +1,16 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
+ *
+ * @noflow
  */
+
 import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';

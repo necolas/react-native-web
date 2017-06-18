@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 const unitlessNumbers = {
   animationIterationCount: true,
   borderImageOutset: true,

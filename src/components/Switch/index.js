@@ -1,4 +1,5 @@
 /**
+ * @providesModule Switch
  * @flow
  */
 
