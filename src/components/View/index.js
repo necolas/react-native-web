@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     boxSizing: 'border-box',
     display: 'flex',
-    flexBasis: 'auto',
     flexDirection: 'column',
     margin: 0,
     padding: 0,

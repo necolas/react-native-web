@@ -146,9 +146,14 @@ const createReducer = (style, styleProps) => {
     switch (prop) {
       case 'display': {
         resolvedStyle.display = value;
-        // default of 'flexShrink:0' has lowest precedence
-        if (style.display === 'flex' && style.flex == null && style.flexShrink == null) {
-          resolvedStyle.flexShrink = 0;
+        // defaults of 'flexBasis:auto' and 'flexShrink:0' have lowest precedence
+        if (style.display === 'flex' && style.flex == null) {
+          if (style.flexShrink == null) {
+            resolvedStyle.flexShrink = 0;
+          }
+          if (style.flexBasis == null) {
+            resolvedStyle.flexBasis = 'auto'
+          }
         }
         break;
       }
