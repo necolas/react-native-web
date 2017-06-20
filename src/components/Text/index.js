@@ -54,6 +54,8 @@ class Text extends Component {
       ...otherProps
     } = this.props;
 
+    const { isInAParentText } = this.context;
+
     if (onPress) {
       otherProps.accessible = true;
       otherProps.onClick = onPress;
@@ -71,7 +73,9 @@ class Text extends Component {
       onPress && styles.pressable
     ];
 
-    return createDOMElement('div', otherProps);
+    const component = isInAParentText ? 'span' : 'div';
+
+    return createDOMElement(component, otherProps);
   }
 
   _createEnterHandler(fn) {
