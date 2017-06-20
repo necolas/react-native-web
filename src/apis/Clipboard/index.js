@@ -11,7 +11,7 @@
  */
 
 export default class Clipboard {
-  static isSupported() {
+  static isAvailable() {
     return (
       typeof document.queryCommandSupported === 'function' && document.queryCommandSupported('copy')
     );
