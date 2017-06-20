@@ -48,7 +48,7 @@ export default class AppContainer extends Component {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={styles.appContainer}>
+      <View pointerEvents="box-none" style={[styles.appContainer, StyleSheet.absoluteFill]}>
         <View
           children={this.props.children}
           key={this.state.mainKey}

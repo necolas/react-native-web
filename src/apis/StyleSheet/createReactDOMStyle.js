@@ -152,7 +152,7 @@ const createReducer = (style, styleProps) => {
             resolvedStyle.flexShrink = 0;
           }
           if (style.flexBasis == null) {
-            resolvedStyle.flexBasis = 'auto'
+            resolvedStyle.flexBasis = 'auto';
           }
         }
         break;

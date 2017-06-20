@@ -40,6 +40,9 @@ Runs the application that was registered under `appKey`. The `appParameters`
 must include the `rootTag` into which the application is rendered, and
 optionally any `initialProps`.
 
+On web, if the `rootTag` is a sub-section of your application it should be
+styled as `position:relative` and given an explicit height.
+
 static **unmountApplicationComponentAtRootTag**(rootTag: HTMLElement)
 
 To "stop" an application when a view should be destroyed, call
