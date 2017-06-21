@@ -161,14 +161,42 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', done => {
+    test('single-line input', () => {
+      const onSubmitEditing = jest.fn();
       const input = findNativeInput(
         mount(<TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />)
       );
       input.simulate('keyPress', { which: 13 });
-      function onSubmitEditing(e) {
-        done();
-      }
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+    });
+
+    test('multi-line input', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(<TextInput defaultValue="12345" multiline onSubmitEditing={onSubmitEditing} />)
+      );
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+    });
+
+    test('multi-line input with "blurOnSubmit" triggers onSubmitEditing', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(
+          <TextInput
+            blurOnSubmit
+            defaultValue="12345"
+            multiline
+            onSubmitEditing={onSubmitEditing}
+          />
+        )
+      );
+
+      // shift+enter should enter newline, not submit
+      input.simulate('keyPress', { which: 13, shiftKey: true });
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).not.toHaveBeenCalledWith(expect.objectContaining({ shiftKey: true }));
     });
   });
 

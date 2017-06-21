@@ -282,8 +282,8 @@ class TextInput extends Component {
     if (onKeyPress) {
       onKeyPress(e);
     }
-    if (!e.isDefaultPrevented() && e.which === 13) {
-      if (onSubmitEditing) {
+    if (!e.isDefaultPrevented() && e.which === 13 && !e.shiftKey) {
+      if ((blurOnSubmit || !multiline) && onSubmitEditing) {
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit) {
