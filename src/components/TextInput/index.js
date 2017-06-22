@@ -207,6 +207,7 @@ class TextInput extends Component {
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
       onKeyPress: normalizeEventHandler(this._handleKeyPress),
+      onKeyDown: normalizeEventHandler(this._handleKeyDown),
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setNode,
@@ -254,12 +255,43 @@ class TextInput extends Component {
     }
   };
 
+  _handleKeyDown = e => {
+    const { onKeyPress } = this.props;
+
+    if (e.which === 8) {
+      onKeyPress({ nativeEvent: { key: 'Backspace' } });
+    }
+  };
+
   _handleKeyPress = e => {
     const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
     if (onKeyPress) {
-      onKeyPress(e);
+      let keyValue;
+
+      // enter
+      if (e.which === 13) {
+        keyValue = 'Enter';
+      }
+      // space
+      else if (e.which === 32) {
+        keyValue = ' ';
+      }
+      //
+      else {
+        // we trim to only care about ones that has a textual representation
+        if (e.shiftKey) {
+          keyValue = String.fromCharCode(e.which).trim();
+        } else {
+          keyValue = String.fromCharCode(e.which).toLowerCase().trim();
+        }
+
+      }
+
+      if (keyValue) {
+        onKeyPress({ nativeEvent: { key: keyValue } });
+      }
     }
     if (!e.isDefaultPrevented() && e.which === 13) {
       if (onSubmitEditing) {
