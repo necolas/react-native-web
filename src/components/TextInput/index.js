@@ -300,7 +300,7 @@ class TextInput extends Component {
         keyValue = ' ';
       }
       else {
-        // we trim to only care about ones that has a textual representation
+        // we trim to only care about the keys that has a textual representation
         if (e.shiftKey) {
           keyValue = String.fromCharCode(e.which).trim();
         } else {
