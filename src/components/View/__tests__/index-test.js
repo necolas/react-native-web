@@ -1,26 +1,26 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { render } from 'enzyme';
+import { render, shallow } from 'enzyme';
 import View from '../';
 
 describe('components/View', () => {
   describe('rendered element', () => {
     test('is a "div" by default', () => {
-      const component = render(<View />);
-      expect(component).toMatchSnapshot();
+      const component = shallow(<View />);
+      expect(component.type()).toBe('div');
     });
 
     test('is a "span" when inside <View accessibilityRole="button" />', () => {
       const component = render(<View accessibilityRole="button"><View /></View>);
-      expect(component).toMatchSnapshot();
+      expect(component.find('span').length).toEqual(1);
     });
   });
 
   test('prop "children"', () => {
     const children = <View testID="1" />;
-    const component = render(<View>{children}</View>);
-    expect(component).toMatchSnapshot();
+    const component = shallow(<View>{children}</View>);
+    expect(component.contains(children)).toEqual(true);
   });
 
   describe('prop "hitSlop"', () => {

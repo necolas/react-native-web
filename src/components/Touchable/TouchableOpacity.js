@@ -1,35 +1,33 @@
 /* eslint-disable */
+
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TouchableOpacity
  * @noflow
  */
-'use strict';
 
-// Note (avik): add @flow when Flow supports spread properties in propTypes
-
-var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
-var React = require('react');
-var StyleSheet = require('../../apis/StyleSheet');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
-var View = require('../View');
 import createReactClass from 'create-react-class';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import { number } from 'prop-types';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import TouchableWithoutFeedback from './TouchableWithoutFeedback';
+import View from '../View';
 
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var flattenStyle = StyleSheet.flatten;
+const flattenStyle = StyleSheet.flatten;
 
 type Event = Object;
 
-var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
@@ -52,7 +50,7 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * },
  * ```
  */
-var TouchableOpacity = createReactClass({
+const TouchableOpacity = createReactClass({
   mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
 
   propTypes: {
@@ -144,7 +142,7 @@ var TouchableOpacity = createReactClass({
   },
 
   _opacityInactive: function(duration: number) {
-    var childStyle = flattenStyle(this.props.style) || {};
+    const childStyle = flattenStyle(this.props.style) || {};
     this.setOpacityTo(childStyle.opacity === undefined ? 1 : childStyle.opacity, duration);
   },
 
@@ -153,7 +151,7 @@ var TouchableOpacity = createReactClass({
   },
 
   _onKeyEnter(e, callback) {
-    var ENTER = 13;
+    const ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
       e.stopPropagation();
@@ -217,4 +215,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableOpacity;
+export default TouchableOpacity;

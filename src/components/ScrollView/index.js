@@ -3,7 +3,11 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
- * @flow
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule ScrollView
+ * @noflow
  */
 
 import createReactClass from 'create-react-class';
@@ -17,7 +21,7 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import React, { Component } from 'react';
+import React from 'react';
 import { bool, element, func, number, oneOf } from 'prop-types';
 
 const emptyObject = {};
@@ -54,7 +58,7 @@ const ScrollView = createReactClass({
    * implement this method so that they can be composed while providing access
    * to the underlying scroll responder's methods.
    */
-  getScrollResponder(): Component {
+  getScrollResponder(): ScrollView {
     return this;
   },
 
@@ -244,4 +248,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ScrollView;
+export default ScrollView;

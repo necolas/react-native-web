@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import I18nManager from '../I18nManager';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 
@@ -43,17 +53,6 @@ const flipProperty = (prop: String): String => {
   return PROPERTIES_TO_SWAP.hasOwnProperty(prop) ? PROPERTIES_TO_SWAP[prop] : prop;
 };
 
-/**
- * BiDi flip translateX
- */
-const flipTransform = (transform: Object): Object => {
-  const translateX = transform.translateX;
-  if (translateX != null) {
-    transform.translateX = additiveInverse(translateX);
-  }
-  return transform;
-};
-
 const swapLeftRight = (value: String): String => {
   return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
 };
@@ -71,16 +70,16 @@ const i18nStyle = originalStyle => {
       continue;
     }
 
+    const value = style[prop];
+
     if (PROPERTIES_TO_SWAP[prop]) {
       const newProp = flipProperty(prop);
-      nextStyle[newProp] = style[prop];
+      nextStyle[newProp] = value;
     } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
-      nextStyle[prop] = swapLeftRight(style[prop]);
+      nextStyle[prop] = swapLeftRight(value);
     } else if (prop === 'textShadowOffset') {
-      nextStyle[prop] = style[prop];
-      nextStyle[prop].width = additiveInverse(style[prop].width);
-    } else if (prop === 'transform') {
-      nextStyle[prop] = style[prop].map(flipTransform);
+      nextStyle[prop] = value;
+      nextStyle[prop].width = additiveInverse(value.width);
     } else {
       nextStyle[prop] = style[prop];
     }
@@ -89,4 +88,4 @@ const i18nStyle = originalStyle => {
   return nextStyle;
 };
 
-module.exports = i18nStyle;
+export default i18nStyle;

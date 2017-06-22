@@ -1,5 +1,18 @@
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule TextInput
+ * @flow
+ */
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
@@ -11,6 +24,7 @@ import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
 import { bool, func, number, oneOf, shape, string } from 'prop-types';
 
+const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
 const emptyObject = {};
 
 /**
@@ -44,12 +58,19 @@ const setSelection = (node, selection) => {
   try {
     if (isSelectionStale(node, selection)) {
       const { start, end } = selection;
-      node.setSelectionRange(start, end || start);
+      // workaround for Blink on Android: see https://github.com/text-mask/text-mask/issues/300
+      if (isAndroid) {
+        setTimeout(() => node.setSelectionRange(start, end || start), 10);
+      } else {
+        node.setSelectionRange(start, end || start);
+      }
     }
   } catch (e) {}
 };
 
 class TextInput extends Component {
+  _node: HTMLInputElement;
+
   static displayName = 'TextInput';
 
   static propTypes = {
@@ -340,4 +361,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(TextInput));
+export default applyLayout(applyNativeMethods(TextInput));

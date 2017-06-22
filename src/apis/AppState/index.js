@@ -1,3 +1,15 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule AppRegistry
+ * @flow
+ */
+
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
@@ -12,12 +24,12 @@ const AppStates = {
 
 const listeners = [];
 
-class AppState {
+export default class AppState {
   static isAvailable = ExecutionEnvironment.canUseDOM && document.visibilityState;
 
   static get currentState() {
     if (!AppState.isAvailable) {
-      return AppState.ACTIVE;
+      return AppStates.ACTIVE;
     }
 
     switch (document.visibilityState) {
@@ -61,5 +73,3 @@ class AppState {
     }
   }
 }
-
-module.exports = AppState;

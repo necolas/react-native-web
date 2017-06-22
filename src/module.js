@@ -27,24 +27,33 @@ export { default as Vibration } from './apis/Vibration';
 // components
 export { default as ActivityIndicator } from './components/ActivityIndicator';
 export { default as Button } from './components/Button';
+export { default as FlatList } from './components/FlatList';
 export { default as Image } from './components/Image';
 export { default as ListView } from './components/ListView';
+export { default as Modal } from './components/Modal';
+export { default as Picker } from './components/Picker';
 export { default as ProgressBar } from './components/ProgressBar';
+export { default as RefreshControl } from './components/RefreshControl';
 export { default as ScrollView } from './components/ScrollView';
+export { default as SectionList } from './components/SectionList';
+export { default as Slider } from './components/Slider';
 export { default as StatusBar } from './components/StatusBar';
 export { default as Switch } from './components/Switch';
 export { default as Text } from './components/Text';
 export { default as TextInput } from './components/TextInput';
 export { default as Touchable } from './components/Touchable/Touchable';
 export { default as TouchableHighlight } from './components/Touchable/TouchableHighlight';
+export { default as TouchableNativeFeedback } from './components/Touchable/TouchableNativeFeedback';
 export { default as TouchableOpacity } from './components/Touchable/TouchableOpacity';
 export {
   default as TouchableWithoutFeedback
 } from './components/Touchable/TouchableWithoutFeedback';
 export { default as View } from './components/View';
+export { default as VirtualizedList } from './components/VirtualizedList';
 
 // propTypes
 export { default as ColorPropType } from './propTypes/ColorPropType';
 export { default as EdgeInsetsPropType } from './propTypes/EdgeInsetsPropType';
 export { default as PointPropType } from './propTypes/PointPropType';
+export { default as TextPropTypes } from './components/Text/TextPropTypes';
 export { default as ViewPropTypes } from './components/View/ViewPropTypes';

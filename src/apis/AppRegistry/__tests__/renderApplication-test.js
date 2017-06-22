@@ -3,13 +3,13 @@
 import { getApplication } from '../renderApplication';
 import React from 'react';
 
-const component = () => <div />;
+const RootComponent = () => <div />;
 
 describe('apis/AppRegistry/renderApplication', () => {
   test('getApplication', () => {
-    const { element, stylesheet } = getApplication(component, {});
+    const { element, stylesheets } = getApplication(RootComponent, {});
 
-    expect(element).toBeTruthy();
-    expect(stylesheet).toMatchSnapshot();
+    expect(element).toMatchSnapshot();
+    expect(stylesheets).toMatchSnapshot();
   });
 });

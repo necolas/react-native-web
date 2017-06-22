@@ -1,24 +1,17 @@
-/* eslint-disable */
-
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
- */
-
-'use strict';
-
-var PooledClass = require('../../vendor/PooledClass');
-
-var twoArgumentPooler = PooledClass.twoArgumentPooler;
-
-/**
- * Position does not expose methods for construction via an `HTMLDOMElement`,
- * because it isn't meaningful to construct such a thing without first defining
- * a frame of reference.
  *
- * @param {number} windowStartKey Key that window starts at.
- * @param {number} windowEndKey Key that window ends at.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
  */
+
+import PooledClass from '../../vendor/PooledClass';
+
+const twoArgumentPooler = PooledClass.twoArgumentPooler;
+
 function Position(left, top) {
   this.left = left;
   this.top = top;
@@ -31,4 +24,4 @@ Position.prototype.destructor = function() {
 
 PooledClass.addPoolingTo(Position, twoArgumentPooler);
 
-module.exports = Position;
+export default Position;

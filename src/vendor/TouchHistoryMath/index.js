@@ -31,8 +31,8 @@ var TouchHistoryMath = {
         total += ofCurrent && isXAxis
           ? oneTouchData.currentPageX
           : ofCurrent && !isXAxis
-              ? oneTouchData.currentPageY
-              : !ofCurrent && isXAxis ? oneTouchData.previousPageX : oneTouchData.previousPageY;
+            ? oneTouchData.currentPageY
+            : !ofCurrent && isXAxis ? oneTouchData.previousPageX : oneTouchData.previousPageY;
         count = 1;
       }
     } else {
@@ -119,4 +119,4 @@ var TouchHistoryMath = {
   noCentroid: -1
 };
 
-module.exports = TouchHistoryMath;
+export default TouchHistoryMath;

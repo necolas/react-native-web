@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  */
 
 import debounce from 'debounce';
+import findNodeHandle from '../../modules/findNodeHandle';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component } from 'react';
@@ -67,14 +70,24 @@ export default class ScrollViewBase extends Component {
     scrollEventThrottle: 0
   };
 
-  constructor(props) {
-    super(props);
-    this._debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
-    this._state = { isScrolling: false };
+  _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
+  _state = { isScrolling: false, scrollLastTick: 0 };
+  _node = null;
+
+  componentDidMount() {
+    this._node && this._node.addEventListener('scroll', this._handleScroll);
+    this._node && this._node.addEventListener('touchmove', this._handlePreventableTouchMove);
+    this._node && this._node.addEventListener('wheel', this._handlePreventableWheel);
   }
 
-  _handlePreventableScrollEvent = handler => {
-    return e => {
+  componentWillUnmount() {
+    this._node && this._node.removeEventListener('scroll', this._handleScroll);
+    this._node && this._node.removeEventListener('touchmove', this._handlePreventableTouchMove);
+    this._node && this._node.removeEventListener('wheel', this._handlePreventableWheel);
+  }
+
+  _createPreventableScrollHandler = (handler: Function) => {
+    return (e: Object) => {
       if (!this.props.scrollEnabled) {
         e.preventDefault();
       } else {
@@ -85,8 +98,16 @@ export default class ScrollViewBase extends Component {
     };
   };
 
-  _handleScroll = e => {
-    e.persist();
+  _handlePreventableTouchMove = (e: Object) => {
+    this._createPreventableScrollHandler(this.props.onTouchMove)(e);
+  };
+
+  _handlePreventableWheel = (e: Object) => {
+    this._createPreventableScrollHandler(this.props.onWheel)(e);
+  };
+
+  _handleScroll = (e: Object) => {
+    e.stopPropagation();
     const { scrollEventThrottle } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
     this._debouncedOnScrollEnd(e);
@@ -101,12 +122,12 @@ export default class ScrollViewBase extends Component {
     }
   };
 
-  _handleScrollStart(e) {
+  _handleScrollStart(e: Object) {
     this._state.isScrolling = true;
     this._state.scrollLastTick = Date.now();
   }
 
-  _handleScrollTick(e) {
+  _handleScrollTick(e: Object) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
     if (onScroll) {
@@ -114,7 +135,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _handleScrollEnd(e) {
+  _handleScrollEnd(e: Object) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
     if (onScroll) {
@@ -122,7 +143,11 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _shouldEmitScrollEvent(lastTick, eventThrottle) {
+  _setNodeRef = (element: View) => {
+    this._node = findNodeHandle(element);
+  };
+
+  _shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
     const timeSinceLastTick = Date.now() - lastTick;
     return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
   }
@@ -132,8 +157,11 @@ export default class ScrollViewBase extends Component {
       /* eslint-disable */
       onMomentumScrollBegin,
       onMomentumScrollEnd,
+      onScroll,
       onScrollBeginDrag,
       onScrollEndDrag,
+      onTouchMove,
+      onWheel,
       removeClippedSubviews,
       scrollEnabled,
       scrollEventThrottle,
@@ -143,13 +171,6 @@ export default class ScrollViewBase extends Component {
       ...other
     } = this.props;
 
-    return (
-      <View
-        {...other}
-        onScroll={this._handleScroll}
-        onTouchMove={this._handlePreventableScrollEvent(this.props.onTouchMove)}
-        onWheel={this._handlePreventableScrollEvent(this.props.onWheel)}
-      />
-    );
+    return <View {...other} ref={this._setNodeRef} />;
   }
 }

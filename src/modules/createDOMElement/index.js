@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import '../injectResponderEventPlugin';
 
 import AccessibilityUtil from '../AccessibilityUtil';
@@ -44,16 +54,15 @@ const createDOMElement = (component, props) => {
 
   // normalize DOM events to match React Native events
   // TODO: move this out of the render path
-  for (const prop in domProps) {
-    if (Object.prototype.hasOwnProperty.call(domProps, prop)) {
-      const isEventHandler = typeof prop === 'function' && eventHandlerNames[prop];
-      if (isEventHandler) {
-        domProps[prop] = wrapEventHandler(prop);
-      }
+  Object.keys(domProps).forEach(propName => {
+    const prop = domProps[propName];
+    const isEventHandler = typeof prop === 'function' && eventHandlerNames[propName];
+    if (isEventHandler) {
+      domProps[propName] = wrapEventHandler(prop);
     }
-  }
+  });
 
   return <Component {...domProps} />;
 };
 
-module.exports = createDOMElement;
+export default createDOMElement;

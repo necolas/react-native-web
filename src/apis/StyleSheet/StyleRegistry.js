@@ -1,33 +1,40 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
+ *
+ * @noflow
  */
+
 import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
-import mapKeyValue from '../../modules/mapKeyValue';
-import prefixInlineStyles from './prefixInlineStyles';
+import i18nStyle from './i18nStyle';
+import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
-const vendorPrefixPattern = /^(webkit|moz|ms)/;
+const emptyObject = {};
 
 const createCacheKey = id => {
-  const prefix = I18nManager.isRTL ? 'rtl' : 'ltr';
+  const prefix = 'rn';
   return `${prefix}-${id}`;
 };
 
 const classListToString = list => list.join(' ').trim();
 
-class StyleRegistry {
-  constructor() {
-    this.cache = {};
-    this.styleManager = new StyleManager();
-  }
+export default class StyleRegistry {
+  cache = { ltr: {}, rtl: {} };
+  styleManager = new StyleManager();
 
-  getStyleSheetHtml() {
-    return this.styleManager.getStyleSheetHtml();
+  getStyleSheets() {
+    return this.styleManager.getStyleSheets();
   }
 
   /**
@@ -35,35 +42,43 @@ class StyleRegistry {
    */
   register(flatStyle) {
     const id = ReactNativePropRegistry.register(flatStyle);
-    const key = createCacheKey(id);
-    const style = createReactDOMStyle(flatStyle);
-    const classList = mapKeyValue(style, (prop, value) => {
-      if (value != null) {
-        return this.styleManager.setDeclaration(prop, value);
-      }
-    });
-    const className = classList.join(' ').trim();
-    this.cache[key] = { classList, className };
+    this._registerById(id);
     return id;
+  }
+
+  _registerById(id) {
+    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+    if (!this.cache[dir][id]) {
+      const style = flattenStyle(id);
+      const domStyle = createReactDOMStyle(i18nStyle(style));
+      Object.keys(domStyle).forEach(styleProp => {
+        const value = domStyle[styleProp];
+        if (value != null) {
+          this.styleManager.setDeclaration(styleProp, value);
+        }
+      });
+      this.cache[dir][id] = true;
+    }
   }
 
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  resolve(reactNativeStyle) {
+  resolve(reactNativeStyle, options = emptyObject) {
     if (!reactNativeStyle) {
       return undefined;
     }
 
     // fast and cachable
     if (typeof reactNativeStyle === 'number') {
+      this._registerById(reactNativeStyle);
       const key = createCacheKey(reactNativeStyle);
-      return this._resolveStyleIfNeeded(key, reactNativeStyle);
+      return this._resolveStyleIfNeeded(reactNativeStyle, options, key);
     }
 
     // resolve a plain RN style object
     if (!Array.isArray(reactNativeStyle)) {
-      return this._resolveStyle(reactNativeStyle);
+      return this._resolveStyle(reactNativeStyle, options);
     }
 
     // flatten the style array
@@ -72,13 +87,15 @@ class StyleRegistry {
     const flatArray = flattenArray(reactNativeStyle);
     let isArrayOfNumbers = true;
     for (let i = 0; i < flatArray.length; i++) {
-      if (typeof flatArray[i] !== 'number') {
+      const id = flatArray[i];
+      if (typeof id !== 'number') {
         isArrayOfNumbers = false;
-        break;
+      } else {
+        this._registerById(id);
       }
     }
     const key = isArrayOfNumbers ? createCacheKey(flatArray.join('-')) : null;
-    return this._resolveStyleIfNeeded(key, flatArray);
+    return this._resolveStyleIfNeeded(flatArray, options, key);
   }
 
   /**
@@ -88,10 +105,12 @@ class StyleRegistry {
    * To determine the next style, some of the existing DOM state must be
    * converted back into React Native styles.
    */
-  resolveStateful(rnStyleNext, { classList: domClassList, style: domStyle }) {
+  resolveStateful(rnStyleNext, domStyleProps, options) {
+    const { classList: rdomClassList, style: rdomStyle } = domStyleProps;
+
     // Convert the DOM classList back into a React Native form
     // Preserves unrecognized class names.
-    const { classList: rnClassList, style: rnStyle } = domClassList.reduce(
+    const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
       (styleProps, className) => {
         const { prop, value } = this.styleManager.getDeclaration(className);
         if (prop) {
@@ -104,24 +123,12 @@ class StyleRegistry {
       { classList: [], style: {} }
     );
 
-    // DOM style may include vendor prefixes and properties set by other libraries.
-    // Preserve it but transform back into React DOM style.
-    const rdomStyle = Object.keys(domStyle).reduce((acc, styleName) => {
-      const value = domStyle[styleName];
-      if (value !== '') {
-        const reactStyleName = vendorPrefixPattern.test(styleName)
-          ? styleName.charAt(0).toUpperCase() + styleName.slice(1)
-          : styleName;
-        acc[reactStyleName] = value;
-      }
-      return acc;
-    }, {});
-
     // Create next DOM style props from current and next RN styles
-    const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
-      rnStyle,
-      rnStyleNext
-    ]);
+    const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve(
+      [rnStyle, rnStyleNext],
+      options
+    );
+
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
     rdomClassListNext.forEach(className => {
@@ -130,8 +137,10 @@ class StyleRegistry {
         style[prop] = '';
       }
     });
+
     // Next inline styles take priority over current inline styles
     Object.assign(style, rdomStyleNext);
+
     // Add the current class names not managed by React Native
     const className = classListToString(rdomClassListNext.concat(rnClassList));
 
@@ -141,8 +150,9 @@ class StyleRegistry {
   /**
    * Resolves a React Native style object
    */
-  _resolveStyle(reactNativeStyle) {
-    const domStyle = createReactDOMStyle(flattenStyle(reactNativeStyle));
+  _resolveStyle(reactNativeStyle, options) {
+    const flatStyle = flattenStyle(reactNativeStyle);
+    const domStyle = createReactDOMStyle(options.i18n === false ? flatStyle : i18nStyle(flatStyle));
 
     const props = Object.keys(domStyle).reduce(
       (props, styleProp) => {
@@ -174,16 +184,15 @@ class StyleRegistry {
   /**
   * Caching layer over 'resolveStyle'
    */
-  _resolveStyleIfNeeded(key, style) {
+  _resolveStyleIfNeeded(style, options, key) {
+    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
     if (key) {
-      if (!this.cache[key]) {
+      if (!this.cache[dir][key]) {
         // slow: convert style object to props and cache
-        this.cache[key] = this._resolveStyle(style);
+        this.cache[dir][key] = this._resolveStyle(style, options);
       }
-      return this.cache[key];
+      return this.cache[dir][key];
     }
-    return this._resolveStyle(style);
+    return this._resolveStyle(style, options);
   }
 }
-
-module.exports = StyleRegistry;

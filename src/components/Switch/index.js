@@ -1,3 +1,8 @@
+/**
+ * @providesModule Switch
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import createDOMElement from '../../modules/createDOMElement';
@@ -14,6 +19,9 @@ const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
 class Switch extends PureComponent {
+  _checkboxElement: HTMLInputElement;
+  _thumbElement: View;
+
   static displayName = 'Switch';
 
   static propTypes = {
@@ -24,7 +32,15 @@ class Switch extends PureComponent {
     onValueChange: func,
     thumbColor: ColorPropType,
     trackColor: ColorPropType,
-    value: bool
+    value: bool,
+
+    /* eslint-disable react/sort-prop-types */
+    // Equivalent of 'activeTrackColor'
+    onTintColor: ColorPropType,
+    // Equivalent of 'thumbColor'
+    thumbTintColor: ColorPropType,
+    // Equivalent of 'trackColor'
+    tintColor: ColorPropType
   };
 
   static defaultProps = {
@@ -38,11 +54,11 @@ class Switch extends PureComponent {
   };
 
   blur() {
-    UIManager.blur(this._checkbox);
+    UIManager.blur(this._checkboxElement);
   }
 
   focus() {
-    UIManager.focus(this._checkbox);
+    UIManager.focus(this._checkboxElement);
   }
 
   render() {
@@ -55,10 +71,11 @@ class Switch extends PureComponent {
       thumbColor,
       trackColor,
       value,
-      // remove any iOS-only props
-      onTintColor, // eslint-disable-line
-      thumbTintColor, // eslint-disable-line
-      tintColor, // eslint-disable-line
+
+      // React Native compatibility
+      onTintColor,
+      thumbTintColor,
+      tintColor,
       ...other
     } = this.props;
 
@@ -67,8 +84,8 @@ class Switch extends PureComponent {
     const minWidth = multiplyStyleLengthValue(height, 2);
     const width = styleWidth > minWidth ? styleWidth : minWidth;
     const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const trackCurrentColor = value ? activeTrackColor : trackColor;
-    const thumbCurrentColor = value ? activeThumbColor : thumbColor;
+    const trackCurrentColor = value ? onTintColor || activeTrackColor : tintColor || trackColor;
+    const thumbCurrentColor = value ? activeThumbColor : thumbTintColor || thumbColor;
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
@@ -130,15 +147,17 @@ class Switch extends PureComponent {
   _handleFocusState = (event: Object) => {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
-    this._thumb.setNativeProps({ style: { boxShadow } });
+    if (this._thumbElement) {
+      this._thumbElement.setNativeProps({ style: { boxShadow } });
+    }
   };
 
-  _setCheckboxRef = component => {
-    this._checkbox = component;
+  _setCheckboxRef = element => {
+    this._checkboxElement = element;
   };
 
-  _setThumbRef = component => {
-    this._thumb = component;
+  _setThumbRef = element => {
+    this._thumbElement = element;
   };
 }
 
@@ -158,7 +177,7 @@ const styles = StyleSheet.create({
     height: '70%',
     margin: 'auto',
     transitionDuration: '0.1s',
-    width: '90%'
+    width: '100%'
   },
   disabledTrack: {
     backgroundColor: '#D5D5D5'
@@ -187,4 +206,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(Switch);
+export default applyNativeMethods(Switch);

@@ -1,6 +1,9 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Nicolas Gallagher.
  * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  */
@@ -35,7 +38,7 @@ const safeOverride = (original, next) => {
   return next;
 };
 
-const applyLayout = Component => {
+const applyLayout = (Component: ReactClass<any>) => {
   const componentDidMount = Component.prototype.componentDidMount;
   const componentDidUpdate = Component.prototype.componentDidUpdate;
   const componentWillUnmount = Component.prototype.componentWillUnmount;
@@ -75,7 +78,10 @@ const applyLayout = Component => {
         if (!this._isMounted) return;
 
         if (
-          layout.x !== x || layout.y !== y || layout.width !== width || layout.height !== height
+          layout.x !== x ||
+          layout.y !== y ||
+          layout.width !== width ||
+          layout.height !== height
         ) {
           this._layoutState = { x, y, width, height };
           const nativeEvent = { layout: this._layoutState };
@@ -87,4 +93,4 @@ const applyLayout = Component => {
   return Component;
 };
 
-module.exports = applyLayout;
+export default applyLayout;

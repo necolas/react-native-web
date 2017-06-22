@@ -10,8 +10,6 @@
  *
  */
 
-'use strict';
-
 import unitlessNumbers from '../../modules/unitlessNumbers';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -158,7 +156,9 @@ function dangerousStyleValue(name, value, component) {
 
   var isNonNumeric = isNaN(value);
   if (
-    isNonNumeric || value === 0 || (unitlessNumbers.hasOwnProperty(name) && unitlessNumbers[name])
+    isNonNumeric ||
+    value === 0 ||
+    (unitlessNumbers.hasOwnProperty(name) && unitlessNumbers[name])
   ) {
     return '' + value; // cast to string
   }
@@ -233,4 +233,4 @@ const setValueForStyles = function(node, styles, component) {
   }
 };
 
-module.exports = setValueForStyles;
+export default setValueForStyles;

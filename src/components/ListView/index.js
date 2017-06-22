@@ -206,7 +206,8 @@ class ListView extends Component {
         totalIndex++;
 
         if (
-          renderSeparator && (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)
+          renderSeparator &&
+          (rowIdx !== rowIDs.length - 1 || sectionIdx === allRowIDs.length - 1)
         ) {
           const adjacentRowHighlighted =
             this.state.highlightedRow.sectionID === sectionID &&
@@ -440,4 +441,4 @@ class ListView extends Component {
   };
 }
 
-module.exports = applyNativeMethods(ListView);
+export default applyNativeMethods(ListView);

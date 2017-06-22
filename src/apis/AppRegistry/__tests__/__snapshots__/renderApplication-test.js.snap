@@ -1,59 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`apis/AppRegistry/renderApplication getApplication 1`] = `
-"<style id=\\"react-native-stylesheet-static\\">
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
-body{margin:0;}
-button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
-input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-@keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
-@keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}
-.rn-pointerEvents-105ug2t{pointer-events:auto;}
-.rn-pointerEvents-12vffkv{pointer-events:none;}
-.rn-pointerEvents-12vffkv *{pointer-events:auto;}
-.rn-pointerEvents-ah5dr5{pointer-events:auto;}
-.rn-pointerEvents-ah5dr5 *{pointer-events:none;}
-.rn-pointerEvents-633pao{pointer-events:none;}
-</style>
-<style id=\\"react-native-stylesheet\\">
-.rn-bottom-1p0dtai{bottom:0px}
-.rn-left-1d2f490{left:0px}
-.rn-position-u8s1d{position:absolute}
-.rn-position-bnwqim{position:relative}
-.rn-right-zchlnj{right:0px}
-.rn-top-ipm5af{top:0px}
-.rn-appearance-30o5oe{-moz-appearance:none;-webkit-appearance:none;appearance:none}
-.rn-backgroundColor-wib322{background-color:transparent}
-.rn-color-homxoj{color:inherit}
-.rn-font-1lw9tu2{font:inherit}
-.rn-textAlign-1ttztb7{text-align:inherit}
-.rn-textDecoration-bauka4{text-decoration:none}
-.rn-listStyle-1ebb2ja{list-style:none}
-.rn-alignItems-1oszu61{-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
-.rn-borderTopStyle-1efd50x{border-top-style:solid}
-.rn-borderRightStyle-14skgim{border-right-style:solid}
-.rn-borderBottomStyle-rull8r{border-bottom-style:solid}
-.rn-borderLeftStyle-mm0ijv{border-left-style:solid}
-.rn-borderTopWidth-13yce4e{border-top-width:0px}
-.rn-borderRightWidth-fnigne{border-right-width:0px}
-.rn-borderBottomWidth-ndvcnb{border-bottom-width:0px}
-.rn-borderLeftWidth-gxnn5r{border-left-width:0px}
-.rn-boxSizing-deolkf{box-sizing:border-box}
-.rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
-.rn-flexShrink-1qe8dj5{-webkit-flex-shrink:0;flex-shrink:0}
-.rn-flexBasis-1mlwlqe{-webkit-flex-basis:auto;flex-basis:auto}
-.rn-flexDirection-eqz5dr{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
-.rn-marginTop-1mnahxq{margin-top:0px}
-.rn-marginRight-61z16t{margin-right:0px}
-.rn-marginBottom-p1pxzi{margin-bottom:0px}
-.rn-marginLeft-11wrixw{margin-left:0px}
-.rn-minHeight-ifefl9{min-height:0px}
-.rn-minWidth-bcqeeo{min-width:0px}
-.rn-paddingTop-wk8lta{padding-top:0px}
-.rn-paddingRight-9aemit{padding-right:0px}
-.rn-paddingBottom-1mdbw0j{padding-bottom:0px}
-.rn-paddingLeft-gy4na3{padding-left:0px}
-.rn-zIndex-1lgpqti{z-index:0}
-.rn-zIndex-1wyyakw{z-index:-1}
-</style>"
+<AppContainer
+  rootTag={Object {}}
+>
+  <RootComponent />
+</AppContainer>
+`;
+
+exports[`apis/AppRegistry/renderApplication getApplication 2`] = `
+Array [
+  <style
+    id="react-native-stylesheet-static"
+>
+    html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+    body{margin:0;}
+    button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+    input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+    @keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
+    @keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}
+    .rn-pointerEvents-105ug2t{pointer-events:auto !important;}
+    .rn-pointerEvents-ah5dr5{pointer-events:auto !important;}
+    .rn-pointerEvents-633pao{pointer-events:none !important;}
+    .rn-pointerEvents-12vffkv{pointer-events:none !important;}
+    .rn-pointerEvents-12vffkv &gt; *{pointer-events:auto;}
+    .rn-pointerEvents-ah5dr5 &gt; *{pointer-events:none;}
+</style>,
+  <style
+    id="react-native-stylesheet"
+>
+    .rn-bottom-1p0dtai{bottom:0px}
+    .rn-left-1d2f490{left:0px}
+    .rn-position-u8s1d{position:absolute}
+    .rn-position-bnwqim{position:relative}
+    .rn-right-zchlnj{right:0px}
+    .rn-top-ipm5af{top:0px}
+    .rn-appearance-30o5oe{-moz-appearance:none;-webkit-appearance:none;appearance:none}
+    .rn-backgroundColor-wib322{background-color:transparent}
+    .rn-color-homxoj{color:inherit}
+    .rn-font-1lw9tu2{font:inherit}
+    .rn-textAlign-1ttztb7{text-align:inherit}
+    .rn-textDecoration-bauka4{text-decoration:none}
+    .rn-listStyle-1ebb2ja{list-style:none}
+    .rn-alignItems-1oszu61{-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
+    .rn-borderTopStyle-1efd50x{border-top-style:solid}
+    .rn-borderRightStyle-14skgim{border-right-style:solid}
+    .rn-borderBottomStyle-rull8r{border-bottom-style:solid}
+    .rn-borderLeftStyle-mm0ijv{border-left-style:solid}
+    .rn-borderTopWidth-13yce4e{border-top-width:0px}
+    .rn-borderRightWidth-fnigne{border-right-width:0px}
+    .rn-borderBottomWidth-ndvcnb{border-bottom-width:0px}
+    .rn-borderLeftWidth-gxnn5r{border-left-width:0px}
+    .rn-boxSizing-deolkf{box-sizing:border-box}
+    .rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
+    .rn-display-xoduu5{display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-flexbox;display:-webkit-inline-flex;display:inline-flex}
+    .rn-flexShrink-1qe8dj5{-webkit-flex-shrink:0;flex-shrink:0}
+    .rn-flexShrink-1wbh5a2{-webkit-flex-shrink:1;flex-shrink:1}
+    .rn-flexBasis-1mlwlqe{-webkit-flex-basis:auto;flex-basis:auto}
+    .rn-flexBasis-1ro0kt6{-webkit-flex-basis:0%;flex-basis:0%}
+    .rn-flexDirection-eqz5dr{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
+    .rn-marginTop-1mnahxq{margin-top:0px}
+    .rn-marginRight-61z16t{margin-right:0px}
+    .rn-marginBottom-p1pxzi{margin-bottom:0px}
+    .rn-marginLeft-11wrixw{margin-left:0px}
+    .rn-minHeight-ifefl9{min-height:0px}
+    .rn-minWidth-bcqeeo{min-width:0px}
+    .rn-paddingTop-wk8lta{padding-top:0px}
+    .rn-paddingRight-9aemit{padding-right:0px}
+    .rn-paddingBottom-1mdbw0j{padding-bottom:0px}
+    .rn-paddingLeft-gy4na3{padding-left:0px}
+    .rn-zIndex-1lgpqti{z-index:0}
+    .rn-zIndex-1wyyakw{z-index:-1}
+    .rn-flexGrow-16y2uox{-webkit-flex-grow:1;flex-grow:1}
+</style>,
+]
 `;

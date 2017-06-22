@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule ProgressBar
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
@@ -7,6 +18,8 @@ import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
 
 class ProgressBar extends Component {
+  _progressElement: View;
+
   static displayName = 'ProgressBar';
 
   static propTypes = {
@@ -54,17 +67,19 @@ class ProgressBar extends Component {
     );
   }
 
-  _setProgressRef = component => {
-    this._progressRef = component;
+  _setProgressRef = element => {
+    this._progressElement = element;
   };
 
   _updateProgressWidth = () => {
     const { indeterminate, progress } = this.props;
     const percentageProgress = indeterminate ? 50 : progress * 100;
     const width = indeterminate ? '25%' : `${percentageProgress}%`;
-    this._progressRef.setNativeProps({
-      style: { width }
-    });
+    if (this._progressElement) {
+      this._progressElement.setNativeProps({
+        style: { width }
+      });
+    }
   };
 }
 
@@ -72,10 +87,12 @@ const styles = StyleSheet.create({
   track: {
     height: 5,
     overflow: 'hidden',
-    userSelect: 'none'
+    userSelect: 'none',
+    zIndex: 0
   },
   progress: {
-    height: '100%'
+    height: '100%',
+    zIndex: -1
   },
   animation: {
     animationDuration: '1s',
@@ -85,4 +102,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(ProgressBar);
+export default applyNativeMethods(ProgressBar);

@@ -1,4 +1,15 @@
-/* global window */
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule Image
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createDOMElement from '../../modules/createDOMElement';
 import ImageLoader from '../../modules/ImageLoader';
@@ -10,7 +21,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { any, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { any, bool, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 
 const emptyObject = {};
@@ -41,12 +52,27 @@ const resolveAssetDimensions = source => {
   }
 };
 
+const svgDataUriPattern = /^data:image\/svg\+xml;/;
 const resolveAssetSource = source => {
-  return (typeof source === 'object' ? source.uri : source) || null;
+  const uri = typeof source === 'object' ? source.uri : source || '';
+  // SVG data may contain characters (e.g., #, ") that need to be escaped
+  if (svgDataUriPattern.test(uri)) {
+    const parts = uri.split('<svg');
+    const [prefix, ...svgFragment] = parts;
+    const svg = encodeURIComponent(`<svg${svgFragment}`);
+    return `${prefix}${svg}`;
+  }
+  return uri;
 };
 
 class Image extends Component {
+  state: { shouldDisplaySource: boolean };
+
   static displayName = 'Image';
+
+  static contextTypes = {
+    isInAParentText: bool
+  };
 
   static propTypes = {
     ...ViewPropTypes,
@@ -76,6 +102,11 @@ class Image extends Component {
 
   static resizeMode = ImageResizeMode;
 
+  _imageRequestId = null;
+  _imageState = null;
+  _isMounted = false;
+  _loadRequest = null;
+
   constructor(props, context) {
     super(props, context);
     // If an image has been loaded before, render it immediately
@@ -84,7 +115,6 @@ class Image extends Component {
     this.state = { shouldDisplaySource: isPreviouslyLoaded };
     this._imageState = getImageState(uri, isPreviouslyLoaded);
     isPreviouslyLoaded && ImageUriCache.add(uri);
-    this._isMounted = false;
   }
 
   componentDidMount() {
@@ -148,6 +178,7 @@ class Image extends Component {
       imageSizeStyle,
       originalStyle,
       resizeModeStyles[finalResizeMode],
+      this.context.isInAParentText && styles.inline,
       backgroundImage && { backgroundImage }
     ]);
     // View doesn't support 'resizeMode' as a style
@@ -257,6 +288,9 @@ const styles = StyleSheet.create({
     backgroundSize: 'cover',
     zIndex: 0
   },
+  inline: {
+    display: 'inline-flex'
+  },
   img: {
     height: '100%',
     opacity: 0,
@@ -288,4 +322,4 @@ const resizeModeStyles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(Image);
+export default applyNativeMethods(Image);
