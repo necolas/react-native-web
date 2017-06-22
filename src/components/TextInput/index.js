@@ -294,19 +294,16 @@ class TextInput extends Component {
       // enter
       if (e.which === 13) {
         keyValue = 'Enter';
-      }
-      // space
-      else if (e.which === 32) {
+      } else if (e.which === 32) {
+        // space
         keyValue = ' ';
-      }
-      else {
+      } else {
         // we trim to only care about the keys that has a textual representation
         if (e.shiftKey) {
           keyValue = String.fromCharCode(e.which).trim();
         } else {
           keyValue = String.fromCharCode(e.which).toLowerCase().trim();
         }
-
       }
 
       if (keyValue) {
