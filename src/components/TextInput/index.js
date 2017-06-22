@@ -299,7 +299,6 @@ class TextInput extends Component {
       else if (e.which === 32) {
         keyValue = ' ';
       }
-      //
       else {
         // we trim to only care about ones that has a textual representation
         if (e.shiftKey) {
