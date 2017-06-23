@@ -146,6 +146,44 @@ describe('components/TextInput', () => {
     }
   });
 
+  describe('prop "onKeyPress"', () => {
+    test('enter', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 13 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Enter');
+        done();
+      }
+    });
+
+    test('space', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 32 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual(' ');
+        done();
+      }
+    });
+
+    test('backspace', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 8 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Backspace');
+        done();
+      }
+    });
+
+    test('text', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 97 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('a');
+        done();
+      }
+    });
+  });
+
   test('prop "onSelectionChange"', done => {
     const input = findNativeInput(
       mount(<TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />)
