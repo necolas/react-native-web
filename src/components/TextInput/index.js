@@ -278,8 +278,27 @@ class TextInput extends Component {
 
   _handleKeyDown = e => {
     const { onKeyPress } = this.props;
-    if (onKeyPress && e.which === 8) {
-      onKeyPress({ nativeEvent: { key: 'Backspace' } });
+
+    if (onKeyPress) {
+      if (e.which === 8) {
+        onKeyPress({ nativeEvent: { key: 'Backspace' } });
+      }
+
+      if (e.which === 37) {
+        onKeyPress({ nativeEvent: { key: 'Left arrow' } });
+      }
+
+      if (e.which === 38) {
+        onKeyPress({ nativeEvent: { key: 'Up arrow' } });
+      }
+
+      if (e.which === 39) {
+        onKeyPress({ nativeEvent: { key: 'Right arrow' } });
+      }
+
+      if (e.which === 40) {
+        onKeyPress({ nativeEvent: { key: 'Down arrow' } });
+      }
     }
   };
 

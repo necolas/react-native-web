@@ -174,6 +174,42 @@ describe('components/TextInput', () => {
       }
     });
 
+    test('up arrow', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 38 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Up arrow');
+        done();
+      }
+    });
+
+    test('down arrow', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 40 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Down arrow');
+        done();
+      }
+    });
+
+    test('left arrow', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 37 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Left arrow');
+        done();
+      }
+    });
+
+    test('right arrow', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 39 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Right arrow');
+        done();
+      }
+    });
+
     test('text', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', { which: 97 });
