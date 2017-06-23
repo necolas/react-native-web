@@ -96,6 +96,14 @@ const ScrollView = createReactClass({
     });
   },
 
+  /**
+   * Scrolls to the bottom if this is a vertical view. Scrolls to the right if this is horizontal.
+   * Syntax:
+   *
+   * scrollTo(options: {animated: boolean = true})
+   *
+   */
+
   scrollToEnd(
     option: Object = {}
   ) {
