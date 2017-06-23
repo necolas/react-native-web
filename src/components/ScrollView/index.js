@@ -96,6 +96,22 @@ const ScrollView = createReactClass({
     });
   },
 
+  scrollToEnd(
+    option: Object = {}
+  ) {
+    const { animated } = option;
+    const { horizontal } = this.props;
+    const scrollResponder = this.getScrollResponder();
+    const scrollResponderNode = scrollResponder.scrollResponderGetScrollableNode();
+    let x = horizontal ? scrollResponderNode.scrollWidth : 0;
+    let y = horizontal ? 0 : scrollResponderNode.scrollHeight;
+    scrollResponder.scrollResponderScrollTo({
+      x: x,
+      y: y,
+      animated: animated !== false
+    });
+  },
+
   /**
    * Deprecated, do not use.
    */
