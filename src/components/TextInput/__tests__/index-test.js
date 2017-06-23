@@ -147,7 +147,7 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onKeyPress"', () => {
-    test('enter', done => {
+    test('enter key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', { which: 13 });
       function onKeyPress(e) {
@@ -156,7 +156,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('space', done => {
+    test('space key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', { which: 32 });
       function onKeyPress(e) {
@@ -165,7 +165,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('backspace', done => {
+    test('backspace key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 8 });
       function onKeyPress(e) {
@@ -174,11 +174,38 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('text', done => {
+    test('text key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', { which: 97 });
       function onKeyPress(e) {
         expect(e.nativeEvent.key).toEqual('a');
+        done();
+      }
+    });
+
+    test('target element is included', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress');
+      function onKeyPress(e) {
+        expect(e.nativeEvent.target).toBeDefined();
+        done();
+      }
+    });
+
+    test('modifier keys', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', {
+        altKey: true,
+        ctrlKey: true,
+        metaKey: true,
+        shiftKey: true,
+        which: 97
+      });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.altKey).toEqual(true);
+        expect(e.nativeEvent.ctrlKey).toEqual(true);
+        expect(e.nativeEvent.metaKey).toEqual(true);
+        expect(e.nativeEvent.shiftKey).toEqual(true);
         done();
       }
     });

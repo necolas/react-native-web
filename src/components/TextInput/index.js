@@ -306,7 +306,15 @@ class TextInput extends Component {
       }
 
       if (keyValue) {
-        onKeyPress({ nativeEvent: { key: keyValue } });
+        const nativeEvent = {
+          altKey: e.altKey,
+          ctrlKey: e.ctrlKey,
+          key: keyValue,
+          metaKey: e.metaKey,
+          shiftKey: e.shiftKey,
+          target: e.target
+        };
+        onKeyPress({ nativeEvent });
       }
     }
 
