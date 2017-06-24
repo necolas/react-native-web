@@ -11,6 +11,7 @@
  */
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createDOMElement from '../../modules/createDOMElement';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageResizeMode from './ImageResizeMode';
@@ -41,8 +42,8 @@ const ImageSourcePropType = oneOfType([
   string
 ]);
 
-const getImageState = (uri, isPreviouslyLoaded) => {
-  return isPreviouslyLoaded ? STATUS_LOADED : uri ? STATUS_PENDING : STATUS_IDLE;
+const getImageState = (uri, shouldDisplaySource) => {
+  return shouldDisplaySource ? STATUS_LOADED : uri ? STATUS_PENDING : STATUS_IDLE;
 };
 
 const resolveAssetDimensions = source => {
@@ -111,10 +112,10 @@ class Image extends Component {
     super(props, context);
     // If an image has been loaded before, render it immediately
     const uri = resolveAssetSource(props.source);
-    const isPreviouslyLoaded = ImageUriCache.has(uri);
-    this.state = { shouldDisplaySource: isPreviouslyLoaded };
-    this._imageState = getImageState(uri, isPreviouslyLoaded);
-    isPreviouslyLoaded && ImageUriCache.add(uri);
+    const shouldDisplaySource = ImageUriCache.has(uri) || !canUseDOM;
+    this.state = { shouldDisplaySource };
+    this._imageState = getImageState(uri, shouldDisplaySource);
+    shouldDisplaySource && ImageUriCache.add(uri);
   }
 
   componentDidMount() {
