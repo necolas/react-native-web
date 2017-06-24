@@ -37,7 +37,8 @@ export function getApplication(RootComponent: ReactClass<Object>, initialProps: 
     </AppContainer>
   );
   const stylesheets = StyleSheet.getStyleSheets().map(sheet =>
-    <style id={sheet.id}>{sheet.textContent}</style>
+    // ensure that CSS text is not escaped
+    <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
   );
   return { element, stylesheets };
 }
