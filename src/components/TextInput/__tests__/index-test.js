@@ -174,7 +174,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('up arrow', done => {
+    test('up arrow key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 38 });
       function onKeyPress(e) {
@@ -183,7 +183,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('down arrow', done => {
+    test('down arrow key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 40 });
       function onKeyPress(e) {
@@ -192,7 +192,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('left arrow', done => {
+    test('left arrow key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 37 });
       function onKeyPress(e) {
@@ -201,7 +201,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('right arrow', done => {
+    test('right arrow key', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 39 });
       function onKeyPress(e) {
