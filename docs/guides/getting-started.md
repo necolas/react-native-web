@@ -189,7 +189,7 @@ AppRegistry.registerComponent('App', () => AppContainer)
 // prerender the app
 const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
-const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToString(sheet)).join('\n');
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
 
 // construct HTML document
 const document = `

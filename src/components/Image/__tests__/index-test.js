@@ -1,10 +1,12 @@
 /* eslint-env jasmine, jest */
 
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import Image from '../';
 import ImageUriCache from '../ImageUriCache';
 import React from 'react';
 import { mount, render } from 'enzyme';
 
+const originalCanUseDOM = ExecutionEnvironment.canUseDOM;
 const originalImage = window.Image;
 
 describe('components/Image', () => {
@@ -112,6 +114,15 @@ describe('components/Image', () => {
       component.setProps({ source: { uri: uriTwo } });
       ImageUriCache.remove(uriTwo);
       expect(component.render().find('img').attr('src')).toBe(uriTwo);
+    });
+
+    test('is set immediately when rendered on the server', () => {
+      ExecutionEnvironment.canUseDOM = false;
+      const uri = 'https://google.com/favicon.ico';
+      const component = render(<Image source={{ uri }} />);
+      expect(component.find('img').attr('src')).toBe(uri);
+      expect(ImageUriCache.has(uri)).toBe(true);
+      ExecutionEnvironment.canUseDOM = originalCanUseDOM;
     });
   });
 
