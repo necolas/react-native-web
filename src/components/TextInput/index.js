@@ -320,6 +320,7 @@ class TextInput extends Component {
 
     if (!e.isDefaultPrevented() && e.which === 13) {
       if (onSubmitEditing) {
+        e.nativeEvent = { target: e.target, text: e.target.value };
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit) {

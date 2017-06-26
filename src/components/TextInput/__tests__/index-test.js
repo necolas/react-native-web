@@ -232,6 +232,8 @@ describe('components/TextInput', () => {
       );
       input.simulate('keyPress', { which: 13 });
       function onSubmitEditing(e) {
+        expect(e.nativeEvent.target).toBeDefined();
+        expect(e.nativeEvent.text).toBe('12345');
         done();
       }
     });
