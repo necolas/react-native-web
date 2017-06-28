@@ -79,6 +79,7 @@ class Image extends Component {
     ...ViewPropTypes,
     children: any,
     defaultSource: ImageSourcePropType,
+    draggable: bool,
     onError: func,
     onLayout: func,
     onLoad: func,
@@ -155,6 +156,7 @@ class Image extends Component {
       accessible,
       children,
       defaultSource,
+      draggable,
       onLayout,
       source,
       testID,
@@ -188,6 +190,7 @@ class Image extends Component {
     // Allows users to trigger the browser's image context menu
     const hiddenImage = displayImage
       ? createDOMElement('img', {
+          draggable,
           src: displayImage,
           style: [StyleSheet.absoluteFill, styles.img]
         })

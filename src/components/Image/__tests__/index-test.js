@@ -4,7 +4,7 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import Image from '../';
 import ImageUriCache from '../ImageUriCache';
 import React from 'react';
-import { mount, render } from 'enzyme';
+import { mount, render, shallow } from 'enzyme';
 
 const originalCanUseDOM = ExecutionEnvironment.canUseDOM;
 const originalImage = window.Image;
@@ -74,6 +74,14 @@ describe('components/Image', () => {
       );
       expect(component).toMatchSnapshot();
     });
+  });
+
+  test('prop "draggable"', () => {
+    const defaultSource = { uri: 'https://google.com/favicon.ico' };
+    const component = shallow(<Image defaultSource={defaultSource} />);
+    expect(component.find('img').prop('draggable')).toBeUndefined();
+    component.setProps({ defaultSource, draggable: false });
+    expect(component.find('img').prop('draggable')).toBe(false);
   });
 
   describe('prop "resizeMode"', () => {
