@@ -72,12 +72,12 @@ class ActivityIndicator extends Component {
         accessibilityRole="progressbar"
         aria-valuemax="1"
         aria-valuemin="0"
-        style={[styles.container, style, typeof size === 'number' && { height: size, width: size }]}
+        style={[styles.container, style]}
       >
         <View
           children={svg}
           style={[
-            indicatorSizes[size],
+            typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
             styles.animation,
             !animating && styles.animationPause,
             !animating && hidesWhenStopped && styles.hidesWhenStopped
