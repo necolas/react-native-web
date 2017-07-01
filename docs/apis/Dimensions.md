@@ -18,8 +18,6 @@ Add an event handler. Supported events:
 
 * `change`: Fires when a property within the `Dimensions` object changes. The argument to the event handler is an object with `window` and `screen ` properties whose values are the same as the return values of `Dimensions.get('window')` and `Dimensions.get('screen')`, respectively.
 
-
 static **removeEventListener**(type, handler)
 
 Remove an event handler.
-
