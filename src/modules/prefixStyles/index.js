@@ -1,8 +1,18 @@
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+
 import prefixAll from 'inline-style-prefixer/static';
 
 export default prefixAll;
 
-export const prefixInlineStyles = style => {
+export const prefixInlineStyles = (style: Object) => {
   const prefixedStyles = prefixAll(style);
 
   // React@15 removed undocumented support for fallback values in

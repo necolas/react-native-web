@@ -3,6 +3,10 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule Dimensions
  * @flow
  */
 
@@ -29,7 +33,7 @@ const EVENT_CHANGE = 'rn-dimensions-change';
 
 const dimensions = {};
 
-class Dimensions {
+export default class Dimensions {
   static get(dimension: string): Object {
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
@@ -71,6 +75,6 @@ class Dimensions {
 
 Dimensions.set();
 
-win.addEventListener('resize', debounce(Dimensions.set, 16), false);
-
-module.exports = Dimensions;
+if (canUseDOM) {
+  window.addEventListener('resize', debounce(Dimensions.set, 16), false);
+}

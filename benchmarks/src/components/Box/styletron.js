@@ -3,7 +3,7 @@ import { injectStylePrefixed } from 'styletron-utils';
 import React from 'react';
 import View, { styletron } from '../View/styletron';
 
-const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) => (
+const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) =>
   <View
     {...other}
     style={[
@@ -12,8 +12,7 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
       layout === 'row' && styles.row,
       outer && styles.outer
     ]}
-  />
-);
+  />;
 
 const styles = {
   outer: injectStylePrefixed(styletron, {

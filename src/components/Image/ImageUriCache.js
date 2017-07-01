@@ -2,13 +2,15 @@
  * @flow
  */
 
-class ImageUriCache {
+const dataUriPattern = /^data:/;
+
+export default class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
   static has(uri: string) {
     const entries = ImageUriCache._entries;
-    const isDataUri = /^data:/.test(uri);
+    const isDataUri = dataUriPattern.test(uri);
     return isDataUri || Boolean(entries[uri]);
   }
 
@@ -61,5 +63,3 @@ class ImageUriCache {
     }
   }
 }
-
-module.exports = ImageUriCache;

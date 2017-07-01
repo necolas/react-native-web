@@ -5,6 +5,7 @@ import jss from './src/jss';
 import reactNative from './src/react-native';
 import reactNativeStyleSheet from './src/react-native-stylesheet';
 import styledComponents from './src/styled-components';
+import styledComponentsPrimitives from './src/styled-components-primitives';
 import styletron from './src/styletron';
 import xp from './src/reactxp';
 
@@ -40,7 +41,9 @@ const extraTests = [
   () => renderDeepTree('reactxp', xp),
   () => renderWideTree('reactxp', xp),
   () => renderDeepTree('styled-components', styledComponents),
-  () => renderWideTree('styled-components', styledComponents)
+  () => renderWideTree('styled-components', styledComponents),
+  () => renderDeepTree('styled-components/primitives', styledComponentsPrimitives),
+  () => renderWideTree('styled-components/primitives', styledComponentsPrimitives)
 ];
 
 const tests = testAll ? coreTests.concat(extraTests) : coreTests;

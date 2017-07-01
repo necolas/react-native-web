@@ -10,8 +10,6 @@
  *
  */
 
-'use strict';
-
 import unitlessNumbers from '../../modules/unitlessNumbers';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -235,4 +233,4 @@ const setValueForStyles = function(node, styles, component) {
   }
 };
 
-module.exports = setValueForStyles;
+export default setValueForStyles;

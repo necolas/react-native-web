@@ -3,6 +3,9 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @flow
  */
 
@@ -33,6 +36,9 @@ export function getApplication(RootComponent: ReactClass<Object>, initialProps: 
       <RootComponent {...initialProps} />
     </AppContainer>
   );
-  const stylesheet = StyleSheet.renderToString();
-  return { element, stylesheet };
+  const stylesheets = StyleSheet.getStyleSheets().map(sheet =>
+    // ensure that CSS text is not escaped
+    <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
+  );
+  return { element, stylesheets };
 }

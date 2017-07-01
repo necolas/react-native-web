@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import I18nManager from '../I18nManager';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 
@@ -78,4 +88,4 @@ const i18nStyle = originalStyle => {
   return nextStyle;
 };
 
-module.exports = i18nStyle;
+export default i18nStyle;

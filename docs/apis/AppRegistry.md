@@ -14,8 +14,7 @@ into `runApplication`. These should always be used as a pair.
 (web) static **getApplication**(appKey:string, appParameters: object)
 
 Returns the given application element. Use this for server-side rendering.
-Return object is of type `{ element: ReactElement; stylesheet: ReactElement }`.
-It's recommended that you use `sheetsheet` to render the style sheet in an app
+Return object is of type `{ element: ReactElement; stylesheets: [ ReactElement ] }`.
 
 static **registerConfig**(config: Array<AppConfig>)
 
@@ -40,6 +39,9 @@ static **runApplication**(appKey: string, appParameters?: object)
 Runs the application that was registered under `appKey`. The `appParameters`
 must include the `rootTag` into which the application is rendered, and
 optionally any `initialProps`.
+
+On web, if the `rootTag` is a sub-section of your application it should be
+styled as `position:relative` and given an explicit height.
 
 static **unmountApplicationComponentAtRootTag**(rootTag: HTMLElement)
 

@@ -22,36 +22,63 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
     expect(firstStyle).toEqual(secondStyle);
   });
 
-  test('flex', () => {
-    expect(createReactDOMStyle({ display: 'flex' })).toEqual({
-      display: 'flex',
-      flexShrink: 0
+  describe('flexbox styles', () => {
+    test('flex defaults', () => {
+      expect(createReactDOMStyle({ display: 'flex' })).toEqual({
+        display: 'flex',
+        flexShrink: 0,
+        flexBasis: 'auto'
+      });
     });
 
-    expect(createReactDOMStyle({ display: 'flex', flex: 1 })).toEqual({
-      display: 'flex',
-      flexGrow: 1,
-      flexShrink: 1,
-      flexBasis: 'auto'
+    test('flex property expansion', () => {
+      expect(createReactDOMStyle({ display: 'flex', flex: 1 })).toEqual({
+        display: 'flex',
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: '0%'
+      });
+
+      expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
+        display: 'flex',
+        flexGrow: 10,
+        flexShrink: 1,
+        flexBasis: '0%'
+      });
     });
 
-    expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
-      display: 'flex',
-      flexGrow: 10,
-      flexShrink: 1,
-      flexBasis: 'auto'
+    test('flexBasis', () => {
+      // is flex-basis applied?
+      expect(createReactDOMStyle({ display: 'flex', flexBasis: '25%' })).toEqual({
+        display: 'flex',
+        flexShrink: 0,
+        flexBasis: '25%'
+      });
+
+      // can flex-basis override the 'flex' expansion?
+      expect(createReactDOMStyle({ display: 'flex', flex: 1, flexBasis: '25%' })).toEqual({
+        display: 'flex',
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: '25%'
+      });
     });
 
-    expect(createReactDOMStyle({ display: 'flex', flexShrink: 1 })).toEqual({
-      display: 'flex',
-      flexShrink: 1
-    });
+    test('flexShrink overrides', () => {
+      // is flex-shrink applied?
+      expect(createReactDOMStyle({ display: 'flex', flexShrink: 1 })).toEqual({
+        display: 'flex',
+        flexShrink: 1,
+        flexBasis: 'auto'
+      });
 
-    expect(createReactDOMStyle({ display: 'flex', flex: 1, flexShrink: 2 })).toEqual({
-      display: 'flex',
-      flexGrow: 1,
-      flexShrink: 2,
-      flexBasis: 'auto'
+      // can flex-shrink override the 'flex' expansion?
+      expect(createReactDOMStyle({ display: 'flex', flex: 1, flexShrink: 2 })).toEqual({
+        display: 'flex',
+        flexGrow: 1,
+        flexShrink: 2,
+        flexBasis: '0%'
+      });
     });
   });
 

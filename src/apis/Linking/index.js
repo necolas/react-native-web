@@ -1,6 +1,18 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule Linking
  * @flow
  */
+
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
+const initialURL = canUseDOM ? window.location.href : '';
 
 const Linking = {
   addEventListener() {},
@@ -9,7 +21,7 @@ const Linking = {
     return Promise.resolve(true);
   },
   getInitialURL() {
-    return Promise.resolve('');
+    return Promise.resolve(initialURL);
   },
   openURL(url: string) {
     try {
@@ -54,4 +66,4 @@ const iframeOpen = url => {
   }
 };
 
-module.exports = Linking;
+export default Linking;

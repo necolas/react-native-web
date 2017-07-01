@@ -146,6 +146,71 @@ describe('components/TextInput', () => {
     }
   });
 
+  describe('prop "onKeyPress"', () => {
+    test('enter key', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 13 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Enter');
+        done();
+      }
+    });
+
+    test('space key', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 32 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual(' ');
+        done();
+      }
+    });
+
+    test('backspace key', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 8 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('Backspace');
+        done();
+      }
+    });
+
+    test('text key', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 97 });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.key).toEqual('a');
+        done();
+      }
+    });
+
+    test('target element is included', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress');
+      function onKeyPress(e) {
+        expect(e.nativeEvent.target).toBeDefined();
+        done();
+      }
+    });
+
+    test('modifier keys', done => {
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', {
+        altKey: true,
+        ctrlKey: true,
+        metaKey: true,
+        shiftKey: true,
+        which: 97
+      });
+      function onKeyPress(e) {
+        expect(e.nativeEvent.altKey).toEqual(true);
+        expect(e.nativeEvent.ctrlKey).toEqual(true);
+        expect(e.nativeEvent.metaKey).toEqual(true);
+        expect(e.nativeEvent.shiftKey).toEqual(true);
+        done();
+      }
+    });
+  });
+
   test('prop "onSelectionChange"', done => {
     const input = findNativeInput(
       mount(<TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />)
@@ -167,8 +232,39 @@ describe('components/TextInput', () => {
       );
       input.simulate('keyPress', { which: 13 });
       function onSubmitEditing(e) {
+        expect(e.nativeEvent.target).toBeDefined();
+        expect(e.nativeEvent.text).toBe('12345');
         done();
       }
+    });
+
+    test('multi-line input', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(<TextInput defaultValue="12345" multiline onSubmitEditing={onSubmitEditing} />)
+      );
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+    });
+
+    test('multi-line input with "blurOnSubmit" triggers onSubmitEditing', () => {
+      const onSubmitEditing = jest.fn();
+      const input = findNativeTextarea(
+        mount(
+          <TextInput
+            blurOnSubmit
+            defaultValue="12345"
+            multiline
+            onSubmitEditing={onSubmitEditing}
+          />
+        )
+      );
+
+      // shift+enter should enter newline, not submit
+      input.simulate('keyPress', { which: 13, shiftKey: true });
+      input.simulate('keyPress', { which: 13 });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).not.toHaveBeenCalledWith(expect.objectContaining({ shiftKey: true }));
     });
   });
 

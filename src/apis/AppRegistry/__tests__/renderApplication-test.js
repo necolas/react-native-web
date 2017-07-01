@@ -2,14 +2,18 @@
 
 import { getApplication } from '../renderApplication';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 const RootComponent = () => <div />;
 
 describe('apis/AppRegistry/renderApplication', () => {
   test('getApplication', () => {
-    const { element, stylesheet } = getApplication(RootComponent, {});
+    const { element, stylesheets } = getApplication(RootComponent, {});
 
     expect(element).toMatchSnapshot();
-    expect(stylesheet).toMatchSnapshot();
+    stylesheets.forEach(sheet => {
+      const result = ReactDOMServer.renderToStaticMarkup(sheet);
+      expect(result).toMatchSnapshot();
+    });
   });
 });

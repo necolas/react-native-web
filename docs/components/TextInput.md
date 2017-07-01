@@ -103,8 +103,11 @@ Callback that is called when the text input is focused.
 
 **onKeyPress**: ?function
 
-Callback that is called when a key is pressed. Pressed key value is passed as
-an argument to the callback handler. Fires before `onChange` callbacks.
+Callback that is called when a key is pressed. This will be called with `{
+nativeEvent: { key: keyValue } }` where keyValue is 'Enter` or 'Backspace' for
+respective keys and the typed-in character otherwise including ' ' for space.
+Modifier keys are also included in the nativeEvent. Fires before onChange
+callbacks.
 
 **onSelectionChange**: ?function
 

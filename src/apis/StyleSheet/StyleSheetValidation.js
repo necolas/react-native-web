@@ -1,10 +1,10 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule StyleSheetValidation
  * @flow
@@ -23,7 +23,7 @@ import { oneOf, string } from 'prop-types';
 // plz don't fire me.
 const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
-class StyleSheetValidation {
+export default class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
       if (allStylePropTypes[prop] === undefined) {
@@ -89,5 +89,3 @@ StyleSheetValidation.addValidStylePropTypes({
   listStyle: string,
   pointerEvents: string
 });
-
-module.exports = StyleSheetValidation;

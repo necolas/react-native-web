@@ -32,24 +32,33 @@ import {
   // components
   ActivityIndicator,
   Button,
+  FlatList,
   Image,
   ListView,
+  Modal,
+  Picker,
   ProgressBar,
+  RefreshControl,
   ScrollView,
+  SectionList,
+  Slider,
   StatusBar,
   Switch,
   Text,
   TextInput,
   Touchable,
   TouchableHighlight,
+  TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  VirtualizedList,
 
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
+  TextPropTypes,
   ViewPropTypes
 } from './module';
 
@@ -88,24 +97,33 @@ const ReactNative = {
   // components
   ActivityIndicator,
   Button,
+  FlatList,
   Image,
   ListView,
+  Modal,
+  Picker,
   ProgressBar,
+  RefreshControl,
   ScrollView,
+  SectionList,
+  Slider,
   StatusBar,
   Switch,
   Text,
   TextInput,
   Touchable,
   TouchableHighlight,
+  TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  VirtualizedList,
 
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
   PointPropType,
+  TextPropTypes,
   ViewPropTypes
 };
 

@@ -225,7 +225,8 @@ User Agent styles from (pseudo-)elements beyond the reach of React (e.g.,
 `html`, `body`) or inline styles (e.g., `::-moz-focus-inner`). The rest is
 handled at the component-level.
 
-### What about using DevTools?
+### What about using Dev Tools?
 
-It's recommended that you rely more on React DevTools and live/hot-reloading
-rather than inspecting and editing the DOM directly.
+React Dev Tools supports inspecting and editing of React Native styles. It's
+recommended that you rely more on React Dev Tools and live/hot-reloading rather
+than inspecting and editing the DOM directly.

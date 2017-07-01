@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule ActivityIndicator
  * @flow
  */
 
@@ -64,12 +72,12 @@ class ActivityIndicator extends Component {
         accessibilityRole="progressbar"
         aria-valuemax="1"
         aria-valuemin="0"
-        style={[styles.container, style, typeof size === 'number' && { height: size, width: size }]}
+        style={[styles.container, style]}
       >
         <View
           children={svg}
           style={[
-            indicatorSizes[size],
+            typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
             styles.animation,
             !animating && styles.animationPause,
             !animating && hidesWhenStopped && styles.hidesWhenStopped
@@ -110,4 +118,4 @@ const indicatorSizes = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(ActivityIndicator);
+export default applyNativeMethods(ActivityIndicator);

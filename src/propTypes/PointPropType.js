@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -10,13 +9,13 @@
  * @providesModule PointPropType
  * @flow
  */
-'use strict';
 
+import createStrictShapeTypeChecker from './createStrictShapeTypeChecker';
 import { number } from 'prop-types';
 
-var PointPropType = require('./createStrictShapeTypeChecker')({
+const PointPropType = createStrictShapeTypeChecker({
   x: number,
   y: number
 });
 
-module.exports = PointPropType;
+export default PointPropType;

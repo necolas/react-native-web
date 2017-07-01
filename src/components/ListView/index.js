@@ -441,4 +441,4 @@ class ListView extends Component {
   };
 }
 
-module.exports = applyNativeMethods(ListView);
+export default applyNativeMethods(ListView);

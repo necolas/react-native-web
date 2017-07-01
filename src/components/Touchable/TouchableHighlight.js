@@ -1,43 +1,40 @@
 /* eslint-disable */
+
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TouchableHighlight
  * @noflow
  */
-'use strict';
 
-// Note (avik): add @flow when Flow supports spread properties in propTypes
-
-var ColorPropType = require('../../propTypes/ColorPropType');
-var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
-var React = require('react');
-var StyleSheet = require('../../apis/StyleSheet');
-var StyleSheetPropType = require('../../propTypes/StyleSheetPropType');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
-var View = require('../View');
-var ViewStylePropTypes = require('../View/ViewStylePropTypes');
+import ColorPropType from '../../propTypes/ColorPropType';
 import createReactClass from 'create-react-class';
+import ensureComponentIsNative from './ensureComponentIsNative';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import TouchableWithoutFeedback from './TouchableWithoutFeedback';
+import View from '../View';
+import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import { func, number } from 'prop-types';
-
-var ensureComponentIsNative = require('./ensureComponentIsNative');
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 
 type Event = Object;
 
-var DEFAULT_PROPS = {
+const DEFAULT_PROPS = {
   activeOpacity: 0.85,
   underlayColor: 'black'
 };
 
-var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
@@ -66,7 +63,7 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * > If you wish to have several child components, wrap them in a View.
  */
 
-var TouchableHighlight = createReactClass({
+const TouchableHighlight = createReactClass({
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
     /**
@@ -222,14 +219,16 @@ var TouchableHighlight = createReactClass({
   },
 
   _hasPressHandler: function() {
-    return !!(this.props.onPress ||
+    return !!(
+      this.props.onPress ||
       this.props.onPressIn ||
       this.props.onPressOut ||
-      this.props.onLongPress);
+      this.props.onLongPress
+    );
   },
 
   _onKeyEnter(e, callback) {
-    var ENTER = 13;
+    const ENTER = 13;
     if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
       callback && callback(e);
       e.stopPropagation();
@@ -306,4 +305,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableHighlight;
+export default TouchableHighlight;

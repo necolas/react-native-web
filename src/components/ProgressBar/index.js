@@ -1,4 +1,11 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule ProgressBar
  * @flow
  */
 
@@ -11,7 +18,7 @@ import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
 
 class ProgressBar extends Component {
-  _progressElement = null;
+  _progressElement: View;
 
   static displayName = 'ProgressBar';
 
@@ -80,10 +87,12 @@ const styles = StyleSheet.create({
   track: {
     height: 5,
     overflow: 'hidden',
-    userSelect: 'none'
+    userSelect: 'none',
+    zIndex: 0
   },
   progress: {
-    height: '100%'
+    height: '100%',
+    zIndex: -1
   },
   animation: {
     animationDuration: '1s',
@@ -93,4 +102,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(ProgressBar);
+export default applyNativeMethods(ProgressBar);

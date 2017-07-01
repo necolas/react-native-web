@@ -14,7 +14,7 @@ polyfill.
 
 ## Webpack and Babel
 
-[Webpack](webpack.js.org) is a popular build tool for web apps. Below is an
+[Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
 
@@ -187,15 +187,16 @@ const AppContainer = (props) => { /* ... */ }
 AppRegistry.registerComponent('App', () => AppContainer)
 
 // prerender the app
-const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
+const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
 
 // construct HTML document
 const document = `
 <!DOCTYPE html>
 <html>
 <head>
-${stylesheet}
+${initialStyles}
 </head>
 <body>
 ${initialHTML}

@@ -28,25 +28,25 @@ yarn
 To run flow:
 
 ```
-npm run flow
+yarn flow
 ```
 
 To run the unit tests:
 
 ```
-npm run jest
+yarn jest
 ```
 
 …in watch mode:
 
 ```
-npm run jest:watch
+yarn jest:watch
 ```
 
 To run all automated tests:
 
 ```
-npm test
+yarn test
 ```
 
 ## Visual tests
@@ -54,19 +54,19 @@ npm test
 To run the interactive storybook:
 
 ```
-npm run docs:start
+yarn docs:start
 ```
 
 To generate a static build of the storybook:
 
 ```
-npm run docs:build
+yarn docs:build
 ```
 
 To run the performance benchmarks in a browser (opening `./benchmarks/index.html`):
 
 ```
-npm run benchmarks
+yarn benchmarks
 ```
 
 ## Compile and build
@@ -74,13 +74,13 @@ npm run benchmarks
 To compile the source code to `dist`:
 
 ```
-npm run compile
+yarn compile
 ```
 
 To create a UMD bundle of the library:
 
 ```
-npm run build
+yarn build
 ```
 
 ### Pre-commit
@@ -88,14 +88,14 @@ npm run build
 To format and lint code before commit:
 
 ```
-npm run precommit
+yarn precommit
 ```
 
 To format and lint the entire project:
 
 ```
-npm run fmt
-npm run lint
+yarn fmt
+yarn lint
 ```
 
 ### New Features

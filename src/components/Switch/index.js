@@ -1,4 +1,5 @@
 /**
+ * @providesModule Switch
  * @flow
  */
 
@@ -19,7 +20,7 @@ const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0
 
 class Switch extends PureComponent {
   _checkboxElement: HTMLInputElement;
-  _thumbElement = null;
+  _thumbElement: View;
 
   static displayName = 'Switch';
 
@@ -31,7 +32,15 @@ class Switch extends PureComponent {
     onValueChange: func,
     thumbColor: ColorPropType,
     trackColor: ColorPropType,
-    value: bool
+    value: bool,
+
+    /* eslint-disable react/sort-prop-types */
+    // Equivalent of 'activeTrackColor'
+    onTintColor: ColorPropType,
+    // Equivalent of 'thumbColor'
+    thumbTintColor: ColorPropType,
+    // Equivalent of 'trackColor'
+    tintColor: ColorPropType
   };
 
   static defaultProps = {
@@ -62,10 +71,11 @@ class Switch extends PureComponent {
       thumbColor,
       trackColor,
       value,
-      // remove any iOS-only props
-      onTintColor, // eslint-disable-line
-      thumbTintColor, // eslint-disable-line
-      tintColor, // eslint-disable-line
+
+      // React Native compatibility
+      onTintColor,
+      thumbTintColor,
+      tintColor,
       ...other
     } = this.props;
 
@@ -74,8 +84,8 @@ class Switch extends PureComponent {
     const minWidth = multiplyStyleLengthValue(height, 2);
     const width = styleWidth > minWidth ? styleWidth : minWidth;
     const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const trackCurrentColor = value ? activeTrackColor : trackColor;
-    const thumbCurrentColor = value ? activeThumbColor : thumbColor;
+    const trackCurrentColor = value ? onTintColor || activeTrackColor : tintColor || trackColor;
+    const thumbCurrentColor = value ? activeThumbColor : thumbTintColor || thumbColor;
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
@@ -167,7 +177,7 @@ const styles = StyleSheet.create({
     height: '70%',
     margin: 'auto',
     transitionDuration: '0.1s',
-    width: '90%'
+    width: '100%'
   },
   disabledTrack: {
     backgroundColor: '#D5D5D5'
@@ -196,4 +206,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyNativeMethods(Switch);
+export default applyNativeMethods(Switch);

@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule TextInput
  * @flow
  */
 
@@ -219,7 +227,8 @@ class TextInput extends Component {
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
-      onKeyPress: normalizeEventHandler(this._handleKeyPress),
+      onKeyDown: this._handleKeyDown,
+      onKeyPress: this._handleKeyPress,
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setNode,
@@ -267,15 +276,51 @@ class TextInput extends Component {
     }
   };
 
+  _handleKeyDown = e => {
+    const { onKeyPress } = this.props;
+    if (onKeyPress && e.which === 8) {
+      onKeyPress({ nativeEvent: { key: 'Backspace' } });
+    }
+  };
+
   _handleKeyPress = e => {
     const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+
     if (onKeyPress) {
-      onKeyPress(e);
+      let keyValue;
+      // enter
+      if (e.which === 13) {
+        keyValue = 'Enter';
+      } else if (e.which === 32) {
+        // space
+        keyValue = ' ';
+      } else {
+        // we trim to only care about the keys that has a textual representation
+        if (e.shiftKey) {
+          keyValue = String.fromCharCode(e.which).trim();
+        } else {
+          keyValue = String.fromCharCode(e.which).toLowerCase().trim();
+        }
+      }
+
+      if (keyValue) {
+        const nativeEvent = {
+          altKey: e.altKey,
+          ctrlKey: e.ctrlKey,
+          key: keyValue,
+          metaKey: e.metaKey,
+          shiftKey: e.shiftKey,
+          target: e.target
+        };
+        onKeyPress({ nativeEvent });
+      }
     }
-    if (!e.isDefaultPrevented() && e.which === 13) {
-      if (onSubmitEditing) {
+
+    if (!e.isDefaultPrevented() && e.which === 13 && !e.shiftKey) {
+      if ((blurOnSubmit || !multiline) && onSubmitEditing) {
+        e.nativeEvent = { target: e.target, text: e.target.value };
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit) {
@@ -321,4 +366,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(TextInput));
+export default applyLayout(applyNativeMethods(TextInput));

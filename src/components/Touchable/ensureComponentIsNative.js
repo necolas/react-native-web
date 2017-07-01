@@ -1,24 +1,21 @@
-/* eslint-disable */
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) 2015-present, Nicolas Gallagher.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule ensureComponentIsNative
  * @flow
  */
-'use strict';
 
-var invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
-var ensureComponentIsNative = function(component: any) {
+const ensureComponentIsNative = (component: any) => {
   invariant(
     component && typeof component.setNativeProps === 'function',
-    'Touchable child must either be native or forward setNativeProps to a ' + 'native component'
+    'Touchable child must either be native or forward setNativeProps to a native component'
   );
 };
 
-module.exports = ensureComponentIsNative;
+export default ensureComponentIsNative;

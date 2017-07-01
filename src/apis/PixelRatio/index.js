@@ -3,6 +3,10 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule PixelRatio
  * @flow
  */
 
@@ -11,7 +15,7 @@ import Dimensions from '../Dimensions';
 /**
  * PixelRatio gives access to the device pixel density.
  */
-class PixelRatio {
+export default class PixelRatio {
   /**
    * Returns the device pixel density.
    */
@@ -45,5 +49,3 @@ class PixelRatio {
     return Math.round(layoutSize * ratio) / ratio;
   }
 }
-
-module.exports = PixelRatio;

@@ -1,30 +1,27 @@
 /**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule Text
  * @flow
  */
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
+import { bool } from 'prop-types';
 import { Component } from 'react';
 import createDOMElement from '../../modules/createDOMElement';
 import StyleSheet from '../../apis/StyleSheet';
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
-import TextStylePropTypes from './TextStylePropTypes';
-import { any, bool, func, number, oneOf } from 'prop-types';
+import TextPropTypes from './TextPropTypes';
 
 class Text extends Component {
   static displayName = 'Text';
 
-  static propTypes = {
-    ...BaseComponentPropTypes,
-    accessibilityRole: oneOf(['button', 'heading', 'link', 'listitem']),
-    children: any,
-    numberOfLines: number,
-    onLayout: func,
-    onPress: func,
-    selectable: bool,
-    style: StyleSheetPropType(TextStylePropTypes)
-  };
+  static propTypes = TextPropTypes;
 
   static childContextTypes = {
     isInAParentText: bool
@@ -57,6 +54,8 @@ class Text extends Component {
       ...otherProps
     } = this.props;
 
+    const { isInAParentText } = this.context;
+
     if (onPress) {
       otherProps.accessible = true;
       otherProps.onClick = onPress;
@@ -74,7 +73,9 @@ class Text extends Component {
       onPress && styles.pressable
     ];
 
-    return createDOMElement('div', otherProps);
+    const component = isInAParentText ? 'span' : 'div';
+
+    return createDOMElement(component, otherProps);
   }
 
   _createEnterHandler(fn) {
@@ -114,4 +115,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(Text));
+export default applyLayout(applyNativeMethods(Text));

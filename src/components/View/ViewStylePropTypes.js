@@ -1,4 +1,11 @@
 /**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @flow
  */
 
@@ -10,7 +17,7 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 import { number, oneOf, oneOfType, string } from 'prop-types';
 
-module.exports = {
+const ViewStylePropTypes = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
   ...LayoutPropTypes,
@@ -26,6 +33,7 @@ module.exports = {
    * @platform web
    */
   backgroundAttachment: string,
+  backgroundBlendMode: string,
   backgroundClip: string,
   backgroundImage: string,
   backgroundOrigin: oneOf(['border-box', 'content-box', 'padding-box']),
@@ -49,3 +57,5 @@ module.exports = {
   WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };
+
+export default ViewStylePropTypes;

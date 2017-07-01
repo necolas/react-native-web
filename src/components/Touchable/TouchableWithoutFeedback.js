@@ -1,25 +1,25 @@
 /* eslint-disable */
+
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TouchableWithoutFeedback
- * @flow
+ * @noflow
  */
-'use strict';
 
-var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
-var React = require('react');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var warning = require('fbjs/lib/warning');
-var StyleSheet = require('../../apis/StyleSheet');
 import createReactClass from 'create-react-class';
+import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import warning from 'fbjs/lib/warning';
 import { bool, element, func, number, string } from 'prop-types';
 
 type Event = Object;
@@ -207,4 +207,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TouchableWithoutFeedback;
+export default TouchableWithoutFeedback;

@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * @providesModule View
  * @flow
  */
 
@@ -27,15 +32,16 @@ const calculateHitSlopStyle = hitSlop => {
 class View extends Component {
   static displayName = 'View';
 
-  static propTypes = ViewPropTypes;
-
   static childContextTypes = {
     isInAButtonView: bool
   };
 
   static contextTypes = {
-    isInAButtonView: bool
+    isInAButtonView: bool,
+    isInAParentText: bool
   };
+
+  static propTypes = ViewPropTypes;
 
   getChildContext() {
     const isInAButtonView =
@@ -57,9 +63,9 @@ class View extends Component {
       ...otherProps
     } = this.props;
 
-    const { isInAButtonView } = this.context;
+    const { isInAButtonView, isInAParentText } = this.context;
 
-    otherProps.style = [styles.initial, style];
+    otherProps.style = [styles.initial, isInAParentText && styles.inline, style];
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
@@ -69,7 +75,9 @@ class View extends Component {
       otherProps.style.unshift(styles.hasHitSlop);
     }
 
+    // avoid HTML validation errors
     const component = isInAButtonView ? 'span' : 'div';
+
     return createDOMElement(component, otherProps);
   }
 }
@@ -82,7 +90,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     boxSizing: 'border-box',
     display: 'flex',
-    flexBasis: 'auto',
     flexDirection: 'column',
     margin: 0,
     padding: 0,
@@ -91,7 +98,10 @@ const styles = StyleSheet.create({
     minHeight: 0,
     minWidth: 0
   },
-  // this zIndex ordering positions the hitSlop above the View but behind
+  inline: {
+    display: 'inline-flex'
+  },
+  // this zIndex-ordering positions the hitSlop above the View but behind
   // its children
   hasHitSlop: {
     zIndex: 0
@@ -102,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = applyLayout(applyNativeMethods(View));
+export default applyLayout(applyNativeMethods(View));

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -28,4 +27,4 @@ const EdgeInsetsPropType = createStrictShapeTypeChecker({
   right: number
 });
 
-module.exports = EdgeInsetsPropType;
+export default EdgeInsetsPropType;
