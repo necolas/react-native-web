@@ -4,6 +4,7 @@
  * @flow
  */
 
+import DimensionsChange from './examples/DimensionsChange'
 import { storiesOf } from '@kadira/storybook';
 import UIExplorer, { DocItem } from '../../ui-explorer';
 import React from 'react';
@@ -19,6 +20,19 @@ const sections = [
         example={{
           code: "const { height, width } = Dimensions.get('window')"
         }}
+      />,
+      <DocItem
+        name="static addEventLitener"
+        typeInfo="(type: string, handler: function) => void"
+        description="Add an event handler. Supported events: [`change`]"
+        example={{
+          render: () => <DimensionsChange />
+        }}
+      />,
+      <DocItem
+        name="static removeEventLitener"
+        typeInfo="(type: string, handler: function) => void"
+        description="Remove an event handler."
       />
     ]
   }
