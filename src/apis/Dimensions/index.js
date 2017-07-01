@@ -23,15 +23,11 @@ const win = canUseDOM
       screen: {
         height: undefined,
         width: undefined
-      },
-      addEventListener(type, handler, useCapture) {},
-      removeEventListener(type, handler) {},
-      dispatchEvent(event) {}
+      }
     };
 
-const EVENT_CHANGE = 'rn-dimensions-change';
-
 const dimensions = {};
+const listeners = {};
 
 export default class Dimensions {
   static get(dimension: string): Object {
@@ -54,21 +50,19 @@ export default class Dimensions {
       width: win.screen.width
     };
 
-    const change: window.Event = new window.Event(EVENT_CHANGE);
-    (change: any).window = dimensions.window;
-    (change: any).screen = dimensions.screen;
-    win.dispatchEvent(change);
-  }
-
-  static addEventListener(type, handler): void {
-    if (type === 'change') {
-      win.addEventListener(EVENT_CHANGE, handler);
+    if (Array.isArray(listeners['change'])) {
+      listeners['change'].forEach(handler => handler(dimensions));
     }
   }
 
+  static addEventListener(type, handler): void {
+    listeners[type] = listeners[type] || [];
+    listeners[type].push(handler);
+  }
+
   static removeEventListener(type, handler): void {
-    if (type === 'change') {
-      win.removeEventListener(EVENT_CHANGE, handler);
+    if (Array.isArray(listeners[type])) {
+      listeners[type] = listeners[type].filter(_handler => _handler !== handler);
     }
   }
 }
