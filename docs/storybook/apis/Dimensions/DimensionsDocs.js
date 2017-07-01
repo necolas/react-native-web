@@ -19,6 +19,19 @@ const sections = [
         example={{
           code: "const { height, width } = Dimensions.get('window')"
         }}
+      />,
+      <DocItem
+        name="static addEventLitener"
+        typeInfo="(type: string, handler: function) => void"
+        description="Add an event handler. Supported events: [`change`]"
+        example={{
+          code: "Dimensions.addEventLitener('change', ({window, screen}) => console.log({window, screen}))"
+        }}
+      />,
+      <DocItem
+        name="static removeEventLitener"
+        typeInfo="(type: string, handler: function) => void"
+        description="Remove an event handler."
       />
     ]
   }
