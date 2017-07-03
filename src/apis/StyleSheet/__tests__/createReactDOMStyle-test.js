@@ -31,14 +31,34 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
       });
     });
 
-    test('flex property expansion', () => {
+    test('flex: -1', () => {
+      expect(createReactDOMStyle({ display: 'flex', flex: -1 })).toEqual({
+        display: 'flex',
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: 'auto'
+      });
+    });
+
+    test('flex: 0', () => {
+      expect(createReactDOMStyle({ display: 'flex', flex: 0 })).toEqual({
+        display: 'flex',
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 'auto'
+      });
+    });
+
+    test('flex: 1', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: 1 })).toEqual({
         display: 'flex',
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: '0%'
       });
+    });
 
+    test('flex: 10', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
         display: 'flex',
         flexGrow: 10,
@@ -47,7 +67,7 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
       });
     });
 
-    test('flexBasis', () => {
+    test('flexBasis overrides', () => {
       // is flex-basis applied?
       expect(createReactDOMStyle({ display: 'flex', flexBasis: '25%' })).toEqual({
         display: 'flex',

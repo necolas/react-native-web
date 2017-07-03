@@ -147,7 +147,7 @@ const createReducer = (style, styleProps) => {
       case 'display': {
         resolvedStyle.display = value;
         // defaults of 'flexBasis:auto' and 'flexShrink:0' have lowest precedence
-        if (style.display === 'flex' && style.flex == null) {
+        if (style.display === 'flex') {
           if (style.flexShrink == null) {
             resolvedStyle.flexShrink = 0;
           }
@@ -166,9 +166,17 @@ const createReducer = (style, styleProps) => {
         break;
       }
       case 'flex': {
-        resolvedStyle.flexGrow = value;
-        resolvedStyle.flexShrink = 1;
-        resolvedStyle.flexBasis = '0%';
+        if (value > 0) {
+          resolvedStyle.flexGrow = value;
+          resolvedStyle.flexShrink = 1;
+          resolvedStyle.flexBasis = '0%';
+        } else if (value === 0) {
+          resolvedStyle.flexGrow = 0;
+          resolvedStyle.flexShrink = 0;
+        } else if (value === -1) {
+          resolvedStyle.flexGrow = 0;
+          resolvedStyle.flexShrink = 1;
+        }
         break;
       }
       case 'shadowColor':
