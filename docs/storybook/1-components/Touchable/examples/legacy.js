@@ -17,92 +17,6 @@ import {
   View
 } from 'react-native';
 
-class TouchableFeedbackEvents extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { eventLog: [] };
-  }
-
-  render() {
-    return (
-      <View testID="touchable_feedback_events">
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <TouchableOpacity
-            accessibilityComponentType="button"
-            accessibilityLabel="touchable feedback events"
-            accessibilityTraits="button"
-            onLongPress={this._createPressHandler('longPress')}
-            onPress={this._createPressHandler('press')}
-            onPressIn={this._createPressHandler('pressIn')}
-            onPressOut={this._createPressHandler('pressOut')}
-            style={styles.wrapper}
-            testID="touchable_feedback_events_button"
-          >
-            <Text style={styles.button}>
-              Press Me
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.eventLogBox} testID="touchable_feedback_events_console">
-          {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
-        </View>
-      </View>
-    );
-  }
-
-  _createPressHandler = eventName => {
-    return () => {
-      const limit = 6;
-      const eventLog = this.state.eventLog.slice(0, limit - 1);
-      eventLog.unshift(eventName);
-      this.setState({ eventLog });
-    };
-  };
-}
-
-class TouchableDelayEvents extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { eventLog: [] };
-  }
-
-  render() {
-    return (
-      <View testID="touchable_delay_events">
-        <View style={[styles.row, { justifyContent: 'center' }]}>
-          <TouchableOpacity
-            delayLongPress={800}
-            delayPressIn={400}
-            delayPressOut={1000}
-            onLongPress={this._createPressHandler('longPress - 800ms delay')}
-            onPress={this._createPressHandler('press')}
-            onPressIn={this._createPressHandler('pressIn - 400ms delay')}
-            onPressOut={this._createPressHandler('pressOut - 1000ms delay')}
-            style={styles.wrapper}
-            testID="touchable_delay_events_button"
-          >
-            <Text style={styles.button}>
-              Press Me
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.eventLogBox} testID="touchable_delay_events_console">
-          {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
-        </View>
-      </View>
-    );
-  }
-
-  _createPressHandler = eventName => {
-    return () => {
-      const limit = 6;
-      const eventLog = this.state.eventLog.slice(0, limit - 1);
-      eventLog.unshift(eventName);
-      this.setState({ eventLog });
-    };
-  };
-}
-
 const heartImage = { uri: 'https://pbs.twimg.com/media/BlXBfT3CQAA6cVZ.png:small' };
 
 const styles = StyleSheet.create({
@@ -214,33 +128,5 @@ const examples = [
       );
     }
   },
-  {
-    title: 'Touchable feedback events',
-    description:
-      '<Touchable*> components accept onPress, onPressIn, ' +
-        'onPressOut, and onLongPress as props.',
-    render() {
-      return <TouchableFeedbackEvents />;
-    }
-  },
-  {
-    title: 'Touchable delay for events',
-    description:
-      '<Touchable*> components also accept delayPressIn, ' +
-        'delayPressOut, and delayLongPress as props. These props impact the ' +
-        'timing of feedback events.',
-    render() {
-      return <TouchableDelayEvents />;
-    }
-  },
-  {
-    title: 'Disabled Touchable*',
-    description:
-      '<Touchable*> components accept disabled prop which prevents ' +
-        'any interaction with component',
-    render() {
-      return <TouchableDisabled />;
-    }
-  }
 ];
 */

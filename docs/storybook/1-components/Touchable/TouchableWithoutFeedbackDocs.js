@@ -4,9 +4,12 @@
  * @flow
  */
 
+import DelayEvents from './examples/DelayEvents';
+import FeedbackEvents from './examples/FeedbackEvents';
 import React from 'react';
 import PropHitSlop from './examples/PropHitSlop';
 import { storiesOf } from '@kadira/storybook';
+import { TouchableWithoutFeedbackDisabled } from './examples/PropDisabled';
 import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
 
 const sections = [
@@ -53,6 +56,9 @@ const sections = [
             If <Code>true</Code>, disable all interactions for this component.
           </AppText>
         }
+        example={{
+          render: () => <TouchableWithoutFeedbackDisabled />
+        }}
       />,
 
       <DocItem name="onLongPress" typeInfo="?function" />,
@@ -83,7 +89,23 @@ constant to reduce memory allocations.`}
 
   {
     title: 'More examples',
-    entries: [<DocItem description="Hit slop" example={{ render: () => <PropHitSlop /> }} />]
+    entries: [
+      <DocItem
+        description="Feedback events"
+        example={{
+          render: () => <FeedbackEvents touchable="withoutFeedback" />
+        }}
+      />,
+
+      <DocItem
+        description="Delay events"
+        example={{
+          render: () => <DelayEvents touchable="withoutFeedback" />
+        }}
+      />,
+
+      <DocItem description="Hit slop" example={{ render: () => <PropHitSlop /> }} />
+    ]
   }
 ];
 

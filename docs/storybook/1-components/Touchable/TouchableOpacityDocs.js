@@ -4,6 +4,8 @@
  * @flow
  */
 
+import DelayEvents from './examples/DelayEvents';
+import FeedbackEvents from './examples/FeedbackEvents';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { TouchableOpacityDisabled } from './examples/PropDisabled';
@@ -44,8 +46,21 @@ const sections = [
       <DocItem
         description="Disabled TouchableOpacity"
         example={{
-          code: '',
           render: () => <TouchableOpacityDisabled />
+        }}
+      />,
+
+      <DocItem
+        description="Feedback events"
+        example={{
+          render: () => <FeedbackEvents touchable="opacity" />
+        }}
+      />,
+
+      <DocItem
+        description="Delay events"
+        example={{
+          render: () => <DelayEvents touchable="opacity" />
         }}
       />
     ]

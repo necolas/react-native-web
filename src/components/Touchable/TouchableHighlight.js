@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -12,19 +10,18 @@
  * @noflow
  */
 
+import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
 import createReactClass from 'create-react-class';
 import ensureComponentIsNative from './ensureComponentIsNative';
 import ensurePositiveDelayProps from './ensurePositiveDelayProps';
-import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import React from 'react';
 import StyleSheet from '../../apis/StyleSheet';
-import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TimerMixin from 'react-timer-mixin';
 import Touchable from './Touchable';
 import TouchableWithoutFeedback from './TouchableWithoutFeedback';
 import View from '../View';
-import ViewStylePropTypes from '../View/ViewStylePropTypes';
+import ViewPropTypes from '../View/ViewPropTypes';
 import { func, number } from 'prop-types';
 
 type Event = Object;
@@ -39,10 +36,15 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 /**
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, which allows
- * the underlay color to show through, darkening or tinting the view.  The
- * underlay comes from adding a view to the view hierarchy, which can sometimes
- * cause unwanted visual artifacts if not used correctly, for example if the
- * backgroundColor of the wrapped view isn't explicitly set to an opaque color.
+ * the underlay color to show through, darkening or tinting the view.
+ *
+ * The underlay comes from wrapping the child in a new View, which can affect
+ * layout, and sometimes cause unwanted visual artifacts if not used correctly,
+ * for example if the backgroundColor of the wrapped view isn't explicitly set
+ * to an opaque color.
+ *
+ * TouchableHighlight must have one child (not zero or more than one).
+ * If you wish to have several child components, wrap them in a View.
  *
  * Example:
  *
@@ -52,18 +54,17 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  *     <TouchableHighlight onPress={this._onPressButton}>
  *       <Image
  *         style={styles.button}
- *         source={require('./myButton')}
+ *         source={require('./myButton.png')}
  *       />
  *     </TouchableHighlight>
  *   );
  * },
  * ```
- * > **NOTE**: TouchableHighlight must have one child (not zero or more than one)
- * >
- * > If you wish to have several child components, wrap them in a View.
  */
 
+/* eslint-disable react/prefer-es6-class */
 const TouchableHighlight = createReactClass({
+  displayName: 'TouchableHighlight',
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
     /**
@@ -72,37 +73,36 @@ const TouchableHighlight = createReactClass({
      */
     activeOpacity: number,
     /**
-     * The color of the underlay that will show through when the touch is
-     * active.
+     * Called immediately after the underlay is hidden
      */
-    underlayColor: ColorPropType,
-    style: StyleSheetPropType(ViewStylePropTypes),
+    onHideUnderlay: func,
     /**
      * Called immediately after the underlay is shown
      */
     onShowUnderlay: func,
+    style: ViewPropTypes.style,
     /**
-     * Called immediately after the underlay is hidden
+     * The color of the underlay that will show through when the touch is
+     * active.
      */
-    onHideUnderlay: func
+    underlayColor: ColorPropType
   },
 
-  mixins: [NativeMethodsMixin, TimerMixin, Touchable.Mixin],
+  mixins: [TimerMixin, Touchable.Mixin],
 
   getDefaultProps: () => DEFAULT_PROPS,
 
   // Performance optimization to avoid constantly re-generating these objects.
-  computeSyntheticState: props => {
-    const { activeOpacity, style, underlayColor } = props;
+  _computeSyntheticState: function(props) {
     return {
       activeProps: {
         style: {
-          opacity: activeOpacity
+          opacity: props.activeOpacity
         }
       },
       activeUnderlayProps: {
         style: {
-          backgroundColor: underlayColor
+          backgroundColor: props.underlayColor
         }
       },
       underlayStyle: [INACTIVE_UNDERLAY_PROPS.style, props.style]
@@ -110,20 +110,25 @@ const TouchableHighlight = createReactClass({
   },
 
   getInitialState: function() {
+    this._isMounted = false;
     return {
       ...this.touchableGetInitialState(),
-      ...this.computeSyntheticState(this.props)
+      ...this._computeSyntheticState(this.props)
     };
   },
 
   componentDidMount: function() {
-    ensurePositiveDelayProps(this.props);
-    ensureComponentIsNative(this.refs[CHILD_REF]);
     this._isMounted = true;
+    ensurePositiveDelayProps(this.props);
+    ensureComponentIsNative(this._childRef);
+  },
+
+  componentWillUnmount: function() {
+    this._isMounted = false;
   },
 
   componentDidUpdate: function() {
-    ensureComponentIsNative(this.refs[CHILD_REF]);
+    ensureComponentIsNative(this._childRef);
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -133,18 +138,9 @@ const TouchableHighlight = createReactClass({
       nextProps.underlayColor !== this.props.underlayColor ||
       nextProps.style !== this.props.style
     ) {
-      this.setState(this.computeSyntheticState(nextProps));
+      this.setState(this._computeSyntheticState(nextProps));
     }
   },
-
-  componentWillUnmount: function() {
-    this._isMounted = false;
-  },
-
-  // viewConfig: {
-  //   uiViewClassName: 'RCTView',
-  //   validAttributes: ReactNativeViewAttributes.RCTView
-  // },
 
   /**
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
@@ -200,17 +196,17 @@ const TouchableHighlight = createReactClass({
       return;
     }
 
-    this.refs[UNDERLAY_REF].setNativeProps(this.state.activeUnderlayProps);
-    this.refs[CHILD_REF].setNativeProps(this.state.activeProps);
+    this._underlayRef.setNativeProps(this.state.activeUnderlayProps);
+    this._childRef.setNativeProps(this.state.activeProps);
     this.props.onShowUnderlay && this.props.onShowUnderlay();
   },
 
   _hideUnderlay: function() {
     this.clearTimeout(this._hideTimeout);
     this._hideTimeout = null;
-    if (this._hasPressHandler() && this.refs[UNDERLAY_REF]) {
-      this.refs[CHILD_REF].setNativeProps(INACTIVE_CHILD_PROPS);
-      this.refs[UNDERLAY_REF].setNativeProps({
+    if (this._hasPressHandler() && this._underlayRef) {
+      this._childRef.setNativeProps(INACTIVE_CHILD_PROPS);
+      this._underlayRef.setNativeProps({
         ...INACTIVE_UNDERLAY_PROPS,
         style: this.state.underlayStyle
       });
@@ -227,12 +223,12 @@ const TouchableHighlight = createReactClass({
     );
   },
 
-  _onKeyEnter(e, callback) {
-    const ENTER = 13;
-    if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
-      callback && callback(e);
-      e.stopPropagation();
-    }
+  _setChildRef(node) {
+    this._childRef = node;
+  },
+
+  _setUnderlayRef(node) {
+    this._underlayRef = node;
   },
 
   render: function() {
@@ -258,26 +254,19 @@ const TouchableHighlight = createReactClass({
       <View
         {...other}
         accessible={this.props.accessible !== false}
-        onKeyDown={e => {
-          this._onKeyEnter(e, this.touchableHandleActivePressIn);
-        }}
-        onKeyPress={e => {
-          this._onKeyEnter(e, this.touchableHandlePress);
-        }}
-        onKeyUp={e => {
-          this._onKeyEnter(e, this.touchableHandleActivePressOut);
-        }}
-        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
-        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+        onKeyDown={this.touchableHandleKeyEvent}
+        onKeyUp={this.touchableHandleKeyEvent}
         onResponderGrant={this.touchableHandleResponderGrant}
         onResponderMove={this.touchableHandleResponderMove}
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
-        ref={UNDERLAY_REF}
+        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
+        ref={this._setUnderlayRef}
         style={[styles.root, this.props.disabled && styles.disabled, this.state.underlayStyle]}
       >
         {React.cloneElement(React.Children.only(this.props.children), {
-          ref: CHILD_REF
+          ref: this._setChildRef
         })}
         {Touchable.renderDebugView({ color: 'green', hitSlop: this.props.hitSlop })}
       </View>
@@ -285,17 +274,14 @@ const TouchableHighlight = createReactClass({
   }
 });
 
-var CHILD_REF = 'childRef';
-var UNDERLAY_REF = 'underlayRef';
-
-var INACTIVE_CHILD_PROPS = {
+const INACTIVE_CHILD_PROPS = {
   style: StyleSheet.create({ x: { opacity: 1.0 } }).x
 };
-var INACTIVE_UNDERLAY_PROPS = {
+const INACTIVE_UNDERLAY_PROPS = {
   style: StyleSheet.create({ x: { backgroundColor: 'transparent' } }).x
 };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
     userSelect: 'none'
@@ -305,4 +291,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default TouchableHighlight;
+export default applyNativeMethods(TouchableHighlight);

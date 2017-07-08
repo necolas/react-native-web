@@ -5,6 +5,8 @@
  */
 
 import CustomStyleOverrides from './examples/CustomStyleOverrides';
+import DelayEvents from './examples/DelayEvents';
+import FeedbackEvents from './examples/FeedbackEvents';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import { TouchableHighlightDisabled } from './examples/PropDisabled';
@@ -45,10 +47,24 @@ const sections = [
     title: 'More examples',
     entries: [
       <DocItem
-        description="Disabled TouchableHighlight"
+        description="Disabled"
         example={{
           code: '',
           render: () => <TouchableHighlightDisabled />
+        }}
+      />,
+
+      <DocItem
+        description="Feedback events"
+        example={{
+          render: () => <FeedbackEvents touchable="highlight" />
+        }}
+      />,
+
+      <DocItem
+        description="Delay events"
+        example={{
+          render: () => <DelayEvents touchable="highlight" />
         }}
       />,
 

@@ -14,7 +14,6 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
-import NativeMethodsMixin from '../../modules/NativeMethodsMixin';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
@@ -143,10 +142,6 @@ class TextInput extends Component {
 
   isFocused() {
     return TextInputState.currentlyFocusedField() === this._node;
-  }
-
-  setNativeProps(props) {
-    NativeMethodsMixin.setNativeProps.call(this, props);
   }
 
   componentDidMount() {

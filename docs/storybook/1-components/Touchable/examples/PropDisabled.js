@@ -4,7 +4,14 @@
 
 import React from 'react';
 import { action } from '@kadira/storybook';
-import { StyleSheet, View, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback
+} from 'react-native';
 
 class TouchableHighlightDisabled extends React.Component {
   render() {
@@ -57,7 +64,27 @@ class TouchableOpacityDisabled extends React.Component {
   }
 }
 
-export { TouchableHighlightDisabled, TouchableOpacityDisabled };
+class TouchableWithoutFeedbackDisabled extends React.Component {
+  render() {
+    return (
+      <View>
+        <TouchableWithoutFeedback disabled={true} onPress={action('TouchableWithoutFeedback')}>
+          <View style={[styles.row, styles.block]}>
+            <Text style={styles.disabledButton}>Disabled TouchableWithoutFeedback</Text>
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback disabled={false} onPress={action('TouchableWithoutFeedback')}>
+          <View style={[styles.row, styles.block]}>
+            <Text style={styles.button}>Enabled TouchableWithoutFeedback</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  }
+}
+
+export { TouchableHighlightDisabled, TouchableOpacityDisabled, TouchableWithoutFeedbackDisabled };
 
 const styles = StyleSheet.create({
   row: {
@@ -66,12 +93,5 @@ const styles = StyleSheet.create({
   },
   block: {
     padding: 10
-  },
-  button: {
-    color: '#007AFF'
-  },
-  disabledButton: {
-    color: '#007AFF',
-    opacity: 0.5
   }
 });
