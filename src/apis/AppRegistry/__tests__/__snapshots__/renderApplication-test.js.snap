@@ -30,6 +30,7 @@ exports[`apis/AppRegistry/renderApplication getApplication 3`] = `
 .rn-position-bnwqim{position:relative}
 .rn-right-zchlnj{right:0px}
 .rn-top-ipm5af{top:0px}
+.rn-cursor-1loqt21{cursor:pointer}
 .rn-appearance-30o5oe{-moz-appearance:none;-webkit-appearance:none;appearance:none}
 .rn-backgroundColor-wib322{background-color:transparent}
 .rn-color-homxoj{color:inherit}

@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import propsToAriaRole from './propsToAriaRole';
@@ -13,10 +13,10 @@ import propsToAriaRole from './propsToAriaRole';
 const roleComponents = {
   article: 'article',
   banner: 'header',
-  button: 'button',
   complementary: 'aside',
   contentinfo: 'footer',
   form: 'form',
+  label: 'label',
   link: 'a',
   list: 'ul',
   listitem: 'li',
@@ -27,13 +27,15 @@ const roleComponents = {
 
 const emptyObject = {};
 
-const propsToAccessibilityComponent = (props = emptyObject) => {
+const propsToAccessibilityComponent = (props: Object = emptyObject) => {
   const role = propsToAriaRole(props);
-  if (role === 'heading') {
-    const level = props['aria-level'] || 1;
-    return `h${level}`;
+  if (role) {
+    if (role === 'heading') {
+      const level = props['aria-level'] || 1;
+      return `h${level}`;
+    }
+    return roleComponents[role];
   }
-  return roleComponents[role];
 };
 
 export default propsToAccessibilityComponent;

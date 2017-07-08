@@ -14,25 +14,28 @@ import StyleRegistry from '../../apis/StyleSheet/registry';
 
 const emptyObject = {};
 
-const styles = StyleSheet.create({
-  buttonReset: {
+const resetStyles = StyleSheet.create({
+  ariaButton: {
+    cursor: 'pointer'
+  },
+  button: {
     appearance: 'none',
     backgroundColor: 'transparent',
     color: 'inherit',
     font: 'inherit',
     textAlign: 'inherit'
   },
-  linkReset: {
+  link: {
     backgroundColor: 'transparent',
     color: 'inherit',
     textDecorationLine: 'none'
   },
-  listReset: {
+  list: {
     listStyle: 'none'
   }
 });
 
-const pointerEventStyles = StyleSheet.create({
+const pointerEventsStyles = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
   },
@@ -47,24 +50,26 @@ const pointerEventStyles = StyleSheet.create({
   }
 });
 
-const resolver = style => StyleRegistry.resolve(style);
+const defaultStyleResolver = style => StyleRegistry.resolve(style);
 
-const createDOMProps = (rnProps, resolveStyle) => {
-  if (!resolveStyle) {
-    resolveStyle = resolver;
+const createDOMProps = (component, props, styleResolver) => {
+  if (!styleResolver) {
+    styleResolver = defaultStyleResolver;
   }
 
-  const props = rnProps || emptyObject;
+  if (!props) {
+    props = emptyObject;
+  }
+
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessible,
     importantForAccessibility,
     pointerEvents,
-    style: rnStyle,
+    style: providedStyle,
     testID,
-    type,
     /* eslint-disable */
+    accessible,
     accessibilityComponentType,
     accessibilityRole,
     accessibilityTraits,
@@ -72,19 +77,24 @@ const createDOMProps = (rnProps, resolveStyle) => {
     ...domProps
   } = props;
 
+  const isDisabled = AccessibilityUtil.isDisabled(props);
   const role = AccessibilityUtil.propsToAriaRole(props);
-  const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
+  const tabIndex = AccessibilityUtil.propsToTabIndex(props);
   const reactNativeStyle = [
-    (role === 'button' && styles.buttonReset) ||
-      (role === 'link' && styles.linkReset) ||
-      (role === 'list' && styles.listReset),
-    rnStyle,
-    pointerEventStyle
+    component === 'a' && resetStyles.link,
+    component === 'button' && resetStyles.button,
+    component === 'ul' && resetStyles.list,
+    role === 'button' && !isDisabled && resetStyles.ariaButton,
+    providedStyle,
+    pointerEvents && pointerEventsStyles[pointerEvents]
   ];
-  const { className, style } = resolveStyle(reactNativeStyle) || emptyObject;
+  const { className, style } = styleResolver(reactNativeStyle);
 
-  if (accessible === true) {
-    domProps.tabIndex = AccessibilityUtil.propsToTabIndex(props);
+  if (isDisabled) {
+    domProps['aria-disabled'] = true;
+  }
+  if (importantForAccessibility === 'no-hide-descendants') {
+    domProps['aria-hidden'] = true;
   }
   if (accessibilityLabel && accessibilityLabel.constructor === String) {
     domProps['aria-label'] = accessibilityLabel;
@@ -95,25 +105,20 @@ const createDOMProps = (rnProps, resolveStyle) => {
   if (className && className.constructor === String) {
     domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
   }
-  if (importantForAccessibility === 'no-hide-descendants') {
-    domProps['aria-hidden'] = true;
+  if (component === 'a' && domProps.target === '_blank') {
+    domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }
-  if (role && role.constructor === String) {
+  if (role && role.constructor === String && role !== 'label') {
     domProps.role = role;
-    if (role === 'button') {
-      domProps.type = 'button';
-    } else if (role === 'link' && domProps.target === '_blank') {
-      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
-    }
   }
   if (style) {
     domProps.style = style;
   }
+  if (tabIndex) {
+    domProps.tabIndex = tabIndex;
+  }
   if (testID && testID.constructor === String) {
     domProps['data-testid'] = testID;
-  }
-  if (type && type.constructor === String) {
-    domProps.type = type;
   }
 
   return domProps;
