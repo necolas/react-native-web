@@ -192,7 +192,7 @@ describe('components/TextInput', () => {
       }
     });
 
-    test('modifier keys', done => {
+    test('modifier keys are included', done => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', {
         altKey: true,

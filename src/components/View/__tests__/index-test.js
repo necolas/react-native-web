@@ -10,11 +10,6 @@ describe('components/View', () => {
       const component = shallow(<View />);
       expect(component.type()).toBe('div');
     });
-
-    test('is a "span" when inside <View accessibilityRole="button" />', () => {
-      const component = render(<View accessibilityRole="button"><View /></View>);
-      expect(component.find('span').length).toEqual(1);
-    });
   });
 
   test('prop "children"', () => {

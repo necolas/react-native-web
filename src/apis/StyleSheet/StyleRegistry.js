@@ -66,7 +66,7 @@ export default class StyleRegistry {
    */
   resolve(reactNativeStyle, options = emptyObject) {
     if (!reactNativeStyle) {
-      return undefined;
+      return emptyObject;
     }
 
     // fast and cachable

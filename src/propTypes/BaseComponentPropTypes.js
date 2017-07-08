@@ -17,7 +17,10 @@ const BaseComponentPropTypes = {
   accessible: bool,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
   style: oneOfType([array, number, object]),
-  testID: string
+  testID: string,
+  // compatibility with React Native
+  accessibilityComponentType: string,
+  accessibilityTraits: oneOfType([array, string])
 };
 
 export default BaseComponentPropTypes;

@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 const accessibilityComponentTypeToRole = {
@@ -24,11 +24,16 @@ const accessibilityTraitsToRole = {
   summary: 'region'
 };
 
+/**
+ * Provides compatibility with React Native's "accessibilityTraits" (iOS) and
+ * "accessibilityComponentType" (Android), converting them to equivalent ARIA
+ * roles.
+ */
 const propsToAriaRole = ({
   accessibilityComponentType,
   accessibilityRole,
   accessibilityTraits
-}) => {
+}: Object) => {
   if (accessibilityRole) {
     return accessibilityRole;
   }

@@ -34,6 +34,7 @@ exports[`components/Switch disabled when "true" a disabled checkbox is rendered 
     style="height:20px;width:20px;"
   />
   <input
+    aria-disabled="true"
     class="rn-bottom-1p0dtai rn-cursor-1ei5mc7 rn-height-1pi2tsx rn-left-1d2f490 rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-opacity-1272l3b rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-u8s1d rn-right-zchlnj rn-top-ipm5af rn-width-13qz1uu"
     disabled=""
     type="checkbox"
