@@ -26,7 +26,6 @@ const sections = [
         typeInfo="(type: string, handler: function) => void"
         description={[
           <AppText>Add an event handler. Supported events:</AppText>,
-
           <TextList
             items={[
               <AppText>

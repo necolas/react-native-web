@@ -5,8 +5,11 @@
  */
 
 import AppText from './AppText';
+import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+const Divider = () => <View style={styles.verticalDivider} />;
 
 const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
   <View style={styles.example}>
@@ -14,7 +17,12 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
       <AppText style={styles.title}>
         <PropText label={label} name={name} typeInfo={typeInfo} />
       </AppText>}
-    {description && <AppText style={styles.description}>{description}</AppText>}
+    {description &&
+      <View style={styles.description}>
+        {Array.isArray(description)
+          ? insertBetween(<Divider />, description)
+          : <AppText>{description}</AppText>}
+      </View>}
     {(example.render || example.code) &&
       <View style={styles.renderBox}>
         <AppText style={styles.exampleText}>Example</AppText>
@@ -61,7 +69,6 @@ const styles = StyleSheet.create({
     color: '#025268'
   },
   description: {
-    fontSize: '1rem',
     marginTop: 'calc(0.5 * 1.3125rem)'
   },
   renderBox: {

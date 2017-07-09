@@ -15,9 +15,6 @@ const TextList = ({ items }) =>
   </View>;
 
 const styles = StyleSheet.create({
-  list: {
-    marginTop: '1rem'
-  },
   item: {
     position: 'relative',
     paddingLeft: 20,

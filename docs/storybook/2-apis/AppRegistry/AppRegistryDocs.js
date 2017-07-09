@@ -18,12 +18,14 @@ const sections = [
       />,
 
       <DocItem
-        description={
-          <AppText>
-            Register multiple applications. <Code>AppConfig</Code> is of type
-            <Code>{'{ appKey: string; component: ComponentProvider; run?: Function }'}</Code>.
-          </AppText>
-        }
+        description={[
+          <AppText>Register multiple applications. <Code>AppConfig</Code> type is:</AppText>,
+          <Code>{`{
+  appKey: string;
+  component: ComponentProvider;
+  run?: function
+}`}</Code>
+        ]}
         name="static registerConfig"
         typeInfo="(config: Array<AppConfig>) => avoid"
       />,
@@ -60,9 +62,10 @@ const sections = [
       <DocItem
         description={
           <AppText>
-            Runs the application that was registered under <Code>appKey</Code>. The
+            Runs the application that was registered under <Code>appKey</Code>. The{' '}
             <Code>appParameters</Code> must include the <Code>rootTag</Code> into which the
-            application is rendered, and optionally any <Code>initialProps</Code>.
+            application is rendered, and optionally
+            any <Code>initialProps</Code>.
           </AppText>
         }
         example={{

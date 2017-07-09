@@ -4,16 +4,32 @@
 
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, DocItem, TextList } from '../../ui-explorer';
 
 const sections = [
   {
     title: 'Methods',
     entries: [
       <DocItem
-        description={
-          'Invokes the listener whenever network status changes. The listener receives one of the following connectivity types (from the DOM connection API): bluetooth, cellular, ethernet, mixed, none, other, unknown, wifi, wimax'
-        }
+        description={[
+          <AppText>
+            Invokes the listener whenever network status changes. The listener receives one of the
+            following connectivity types (from the DOM connection API):
+          </AppText>,
+          <TextList
+            items={[
+              'bluetooth',
+              'cellular',
+              'ethernet',
+              'mixed',
+              'none',
+              'other',
+              'unknown',
+              'wifi',
+              'wimax'
+            ]}
+          />
+        ]}
         example={{
           code: "NetInfo.addEventListener('change', (connectionType) => {})"
         }}

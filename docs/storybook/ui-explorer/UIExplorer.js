@@ -5,20 +5,13 @@
  */
 
 import AppText from './AppText';
+import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const Title = ({ children }) => <AppText style={styles.title}>{children}</AppText>;
 const Description = ({ children }) => <AppText style={styles.description}>{children}</AppText>;
 const SectionTitle = ({ children }) => <AppText style={styles.sectionTitle}>{children}</AppText>;
-
-const insertBetween = (item, array) =>
-  array.reduce((acc, curr, i, { length }) => {
-    if (i && i < length) {
-      return [...acc, item, curr];
-    }
-    return [...acc, curr];
-  }, []);
 
 const Divider = () => <View style={styles.divider} />;
 
