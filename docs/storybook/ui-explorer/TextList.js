@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   bullet: {
     position: 'absolute',
     left: 6,
-    top: '50%',
+    top: '.65625rem',
     marginTop: -2,
     height: 4,
     width: 4,
