@@ -38,12 +38,13 @@ class UnimplementedView extends Component {
   }
 }
 
-const unimplementedViewStyles = process.env.NODE_ENV !== 'production'
-  ? {
-      alignSelf: 'flex-start',
-      borderColor: 'red',
-      borderWidth: 1
-    }
-  : {};
+const unimplementedViewStyles =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        alignSelf: 'flex-start',
+        borderColor: 'red',
+        borderWidth: 1
+      }
+    : {};
 
 export default UnimplementedView;

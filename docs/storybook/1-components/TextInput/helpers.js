@@ -37,7 +37,9 @@ export class WithLabel extends React.Component {
     return (
       <View style={withLabelStyles.labelContainer}>
         <View style={withLabelStyles.label}>
-          <Text>{this.props.label}</Text>
+          <Text>
+            {this.props.label}
+          </Text>
         </View>
         {this.props.children}
       </View>

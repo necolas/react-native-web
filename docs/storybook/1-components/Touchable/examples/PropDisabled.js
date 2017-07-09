@@ -17,9 +17,7 @@ class TouchableHighlightDisabled extends React.Component {
           style={[styles.row, styles.block]}
           underlayColor="rgb(210, 230, 255)"
         >
-          <Text style={styles.disabledButton}>
-            Disabled TouchableHighlight
-          </Text>
+          <Text style={styles.disabledButton}>Disabled TouchableHighlight</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
@@ -28,9 +26,7 @@ class TouchableHighlightDisabled extends React.Component {
           style={[styles.row, styles.block]}
           underlayColor="rgb(210, 230, 255)"
         >
-          <Text style={styles.button}>
-            Enabled TouchableHighlight
-          </Text>
+          <Text style={styles.button}>Enabled TouchableHighlight</Text>
         </TouchableHighlight>
       </View>
     );

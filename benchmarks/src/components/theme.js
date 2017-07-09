@@ -27,7 +27,7 @@ module.exports = {
   colors,
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif, ' +
-      '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"', // emoji fonts
+    '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"', // emoji fonts
   fontSize,
   lineHeight: 1.3125,
   spaceX: 0.6,

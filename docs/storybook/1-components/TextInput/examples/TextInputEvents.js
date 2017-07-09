@@ -53,7 +53,8 @@ export default class TextEventsExample extends React.Component {
           style={[helperStyles.textinput, { maxWidth: 200 }]}
         />
         <Text style={styles.eventLabel}>
-          {this.state.curText}{'\n'}
+          {this.state.curText}
+          {'\n'}
           (prev: {this.state.prevText}){'\n'}
           (prev2: {this.state.prev2Text}){'\n'}
           (prev3: {this.state.prev3Text})

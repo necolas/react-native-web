@@ -30,9 +30,15 @@ export default class StateChanges extends PureComponent {
   render() {
     return (
       <View>
-        <Text>Active count: {this.state.active}</Text>
-        <Text>Background count: {this.state.background}</Text>
-        <Text>Current state is: {this.state.currentState}</Text>
+        <Text>
+          Active count: {this.state.active}
+        </Text>
+        <Text>
+          Background count: {this.state.background}
+        </Text>
+        <Text>
+          Current state is: {this.state.currentState}
+        </Text>
       </View>
     );
   }

@@ -43,7 +43,10 @@ class NetworkImageExample extends PureComponent {
         >
           {loader}
         </Image>
-        {this.state.message && <Text style={helpers.styles.marginLeft}>{this.state.message}</Text>}
+        {this.state.message &&
+          <Text style={helpers.styles.marginLeft}>
+            {this.state.message}
+          </Text>}
       </View>
     );
   }

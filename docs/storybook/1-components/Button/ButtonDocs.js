@@ -63,8 +63,8 @@ storiesOf('Components', module).add('Button', () =>
   <UIExplorer
     description={[
       <AppText>
-        A basic button component. Supports a minimal level of customization.
-        You can build your own custom button using <Code>TouchableOpacity</Code>
+        A basic button component. Supports a minimal level of customization. You can build your own
+        custom button using <Code>TouchableOpacity</Code>
         or <Code>TouchableNativeFeedback</Code>.
       </AppText>
     ]}

@@ -21,14 +21,22 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
       <View style={styles.description}>
         {Array.isArray(description)
           ? insertBetween(<Divider />, description)
-          : <AppText>{description}</AppText>}
+          : <AppText>
+              {description}
+            </AppText>}
       </View>}
     {(example.render || example.code) &&
       <View style={styles.renderBox}>
         <AppText style={styles.exampleText}>Example</AppText>
-        {example.render && <View>{example.render()}</View>}
+        {example.render &&
+          <View>
+            {example.render()}
+          </View>}
         {example.render && example.code && <View style={styles.verticalDivider} />}
-        {example.code && <Text style={styles.code}>{example.code}</Text>}
+        {example.code &&
+          <Text style={styles.code}>
+            {example.code}
+          </Text>}
       </View>}
   </View>;
 
@@ -38,8 +46,16 @@ const PropText = ({ label, name, typeInfo }) =>
       <Text style={[styles.label, label === 'web' && styles.webLabel]}>
         {label}
       </Text>}
-    <Text style={styles.propName}>{name}</Text>
-    {typeInfo && <Text>{': '}<Text style={styles.code}>{typeInfo}</Text></Text>}
+    <Text style={styles.propName}>
+      {name}
+    </Text>
+    {typeInfo &&
+      <Text>
+        {': '}
+        <Text style={styles.code}>
+          {typeInfo}
+        </Text>
+      </Text>}
   </AppText>;
 
 const styles = StyleSheet.create({

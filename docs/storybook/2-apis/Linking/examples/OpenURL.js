@@ -17,7 +17,9 @@ export default class OpenURL extends PureComponent {
   render() {
     return (
       <View>
-        <Text onPress={this.handlePress} style={styles.text}>Linking.openURL</Text>
+        <Text onPress={this.handlePress} style={styles.text}>
+          Linking.openURL
+        </Text>
         <Text
           accessibilityRole="link"
           href="https://mathiasbynens.github.io/rel-noopener/malicious.html"

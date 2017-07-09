@@ -30,10 +30,9 @@ const sections = [
             items={[
               <AppText>
                 <Code>change</Code>: Fires when a property within the <Code>Dimensions</Code> object
-                changes. The argument to the event handler is an object
-                with <Code>window</Code> and <Code>screen</Code> properties whose values are the
-                same as the return values of <Code>Dimensions.get('window')</Code> and{' '}
-                <Code>Dimensions.get('screen')</Code>,
+                changes. The argument to the event handler is an object with <Code>window</Code> and{' '}
+                <Code>screen</Code> properties whose values are the same as the return values of{' '}
+                <Code>Dimensions.get('window')</Code> and <Code>Dimensions.get('screen')</Code>,
                 respectively.
               </AppText>
             ]}

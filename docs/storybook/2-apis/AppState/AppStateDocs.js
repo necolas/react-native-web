@@ -33,8 +33,8 @@ const sections = [
         description={
           <AppText>
             Add a handler to <Code>AppState</Code> changes by listening to the
-            <Code>change</Code> event type and providing the <Code>handler</Code>. The
-            handler is called with the app state value.
+            <Code>change</Code> event type and providing the <Code>handler</Code>. The handler is
+            called with the app state value.
           </AppText>
         }
       />,
@@ -67,10 +67,10 @@ storiesOf('APIs', module).add('AppState', () =>
   <UIExplorer
     description={
       <AppText>
-        AppState can tell you if the app is in the foreground or background,
-        and notify you when the state changes. States: <Code>active</Code> (the app is
-        running in the foreground), <Code>background</Code> (the app is running in the
-        background, i.e., the user has not focused the app's tab).
+        AppState can tell you if the app is in the foreground or background, and notify you when the
+        state changes. States: <Code>active</Code> (the app is running in the foreground),{' '}
+        <Code>background</Code> (the app is running in the background, i.e., the user has not
+        focused the app's tab).
       </AppText>
     }
     sections={sections}

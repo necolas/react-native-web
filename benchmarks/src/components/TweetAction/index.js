@@ -45,7 +45,11 @@ export default class TweetAction extends React.Component {
           ]}
         >
           {getIcon(displayMode, highlighted)}
-          {count > 0 ? <Text style={styles.count}>{count}</Text> : null}
+          {count > 0
+            ? <Text style={styles.count}>
+                {count}
+              </Text>
+            : null}
         </Text>
       </View>
     );

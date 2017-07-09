@@ -14,8 +14,8 @@ const sections = [
         description={
           <AppText>
             Erases all AsyncStorage. You probably don't want to call this - use
-            <Code>removeItem</Code> or <Code>multiRemove</Code> to clear only
-            your own keys instead. Returns a Promise object.
+            <Code>removeItem</Code> or <Code>multiRemove</Code> to clear only your own keys instead.
+            Returns a Promise object.
           </AppText>
         }
         name="static clear"
@@ -43,9 +43,8 @@ const sections = [
       <DocItem
         description={
           <AppText>
-            <Code>multiGet</Code> results in an array of key-value pair arrays
-            that matches the input format of <Code>multiSet</Code>. Returns a
-            Promise object.
+            <Code>multiGet</Code> results in an array of key-value pair arrays that matches the
+            input format of <Code>multiSet</Code>. Returns a Promise object.
           </AppText>
         }
         example={{
@@ -59,9 +58,8 @@ const sections = [
         description={
           <AppText>
             multiMerge takes an array of key-value array pairs that match the output of{' '}
-            <Code>multiGet</Code>.
-            It merges existing values with input values, assuming they are stringified JSON. Returns
-            a Promise object.
+            <Code>multiGet</Code>. It merges existing values with input values, assuming they are
+            stringified JSON. Returns a Promise object.
           </AppText>
         }
         name="static multiMerge"
@@ -77,9 +75,8 @@ const sections = [
       <DocItem
         description={
           <AppText>
-            <Code>multiSet</Code> takes an array of key-value array pairs that
-            match the output of <Code>multiGet</Code>. Returns a Promise
-            object.
+            <Code>multiSet</Code> takes an array of key-value array pairs that match the output of{' '}
+            <Code>multiGet</Code>. Returns a Promise object.
           </AppText>
         }
         example={{
@@ -108,21 +105,20 @@ storiesOf('APIs', module).add('AsyncStorage', () =>
   <UIExplorer
     description={[
       <AppText>
-        AsyncStorage is a simple, unencrypted, asynchronous, persistent,
-        key-value storage system that is global to the domain. It's a facade
-        over, and should be used instead of <Code>window.localStorage</Code> to
-        provide an asynchronous API and multi functions. Each method returns
-        a <Code>Promise</Code> object.
+        AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system
+        that is global to the domain. It's a facade over, and should be used instead of{' '}
+        <Code>window.localStorage</Code> to provide an asynchronous API and multi functions. Each
+        method returns a <Code>Promise</Code> object.
       </AppText>,
       <AppText>
-        It is recommended that you use an abstraction on top
-        of <Code>AsyncStorage</Code> instead of <Code>AsyncStorage</Code> directly
-        for anything more than light usage since it operates globally.
+        It is recommended that you use an abstraction on top of <Code>AsyncStorage</Code> instead of{' '}
+        <Code>AsyncStorage</Code> directly for anything more than light usage since it operates
+        globally.
       </AppText>,
       <AppText>
-        The batched functions are useful for executing a lot of operations at
-        once, allowing for optimizations to provide the convenience of a
-        single promise after all operations are complete.
+        The batched functions are useful for executing a lot of operations at once, allowing for
+        optimizations to provide the convenience of a single promise after all operations are
+        complete.
       </AppText>
     ]}
     sections={sections}

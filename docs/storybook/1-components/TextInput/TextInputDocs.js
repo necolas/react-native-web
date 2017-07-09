@@ -38,8 +38,12 @@ const sections = [
           <TextList
             key={2}
             items={[
-              <AppText><Code>characters</Code>: Automatically capitalize all characters.</AppText>,
-              <AppText><Code>none</Code>: Completely disables automatic capitalization.</AppText>,
+              <AppText>
+                <Code>characters</Code>: Automatically capitalize all characters.
+              </AppText>,
+              <AppText>
+                <Code>none</Code>: Completely disables automatic capitalization.
+              </AppText>,
               <AppText>
                 <Code>sentences</Code>: Automatically capitalize the first letter of sentences.
               </AppText>,
@@ -61,14 +65,13 @@ const sections = [
         typeInfo="?string"
         description={
           <AppText>
-            Indicates whether the value of the control can be automatically
-            completed by the browser.{' '}
+            Indicates whether the value of the control can be automatically completed by the
+            browser.{' '}
             <AppText
               href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"
               target="_blank"
             >
-              Accepted
-              values.
+              Accepted values.
             </AppText>
           </AppText>
         }
@@ -91,13 +94,11 @@ const sections = [
         typeInfo="?boolean"
         description={
           <AppText>
-            If <Code>true</Code>, the text field will blur when submitted. The
-            default value is <Code>true</Code> for single-line fields and
-            {' '}<Code>false</Code> for multiline fields. Note, for multiline fields
-            setting <Code>blurOnSubmit</Code> to <Code>true</Code> means that
-            pressing return will blur the field and trigger the <Code>onSubmitEditing</Code>{' '}
-            event instead of inserting a newline
-            into the field.
+            If <Code>true</Code>, the text field will blur when submitted. The default value is{' '}
+            <Code>true</Code> for single-line fields and <Code>false</Code> for multiline fields.
+            Note, for multiline fields setting <Code>blurOnSubmit</Code> to <Code>true</Code> means
+            that pressing return will blur the field and trigger the <Code>onSubmitEditing</Code>{' '}
+            event instead of inserting a newline into the field.
           </AppText>
         }
         example={{
@@ -119,9 +120,9 @@ const sections = [
         typeInfo="?string"
         description={
           <AppText>
-            Provides an initial value that will change when the user starts typing. Useful
-            for simple use-cases where you don't want to deal with listening to events and
-            updating the <Code>value</Code> prop to keep the controlled state in sync.
+            Provides an initial value that will change when the user starts typing. Useful for
+            simple use-cases where you don't want to deal with listening to events and updating the{' '}
+            <Code>value</Code> prop to keep the controlled state in sync.
           </AppText>
         }
       />,
@@ -208,10 +209,10 @@ const sections = [
             Callback that is called when a key is pressed. This will be called with{' '}
             <Code>{`{
 nativeEvent: { key: keyValue } }`}</Code>{' '}
-            where keyValue is <Code>Enter</Code> or <Code>Backspace</Code> for
-            respective keys and the typed-in character otherwise including <Code>' '</Code>
-            for space. Modifier keys (e.g., <Code>shiftKey</Code>) are also included in
-            the <Code>nativeEvent</Code>. Fires before <Code>onChange</Code> callbacks.
+            where keyValue is <Code>Enter</Code> or <Code>Backspace</Code> for respective keys and
+            the typed-in character otherwise including <Code>' '</Code>
+            for space. Modifier keys (e.g., <Code>shiftKey</Code>) are also included in the{' '}
+            <Code>nativeEvent</Code>. Fires before <Code>onChange</Code> callbacks.
           </AppText>
         }
       />,
@@ -304,8 +305,7 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
               href="https://facebook.github.io/react/docs/forms.html"
               target="_blank"
             />{' '}
-            work. To prevent
-            user edits to the value set <Code>{'editable={false}'}</Code>.
+            work. To prevent user edits to the value set <Code>{'editable={false}'}</Code>.
           </AppText>
         }
       />

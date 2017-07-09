@@ -126,10 +126,10 @@ storiesOf('Components', module).add('Switch', () =>
   <UIExplorer
     description={
       <AppText>
-        This is a controlled component that requires an <Code>onValueChange</Code> callback
-        that updates the value prop in order for the component to reflect user actions. If
-        the <Code>value</Code> prop is not updated, the component will continue to render the
-        supplied <Code>value</Code> prop instead of the expected result of any user actions.
+        This is a controlled component that requires an <Code>onValueChange</Code> callback that
+        updates the value prop in order for the component to reflect user actions. If the{' '}
+        <Code>value</Code> prop is not updated, the component will continue to render the supplied{' '}
+        <Code>value</Code> prop instead of the expected result of any user actions.
       </AppText>
     }
     sections={sections}

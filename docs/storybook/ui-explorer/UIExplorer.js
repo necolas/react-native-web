@@ -9,9 +9,18 @@ import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const Title = ({ children }) => <AppText style={styles.title}>{children}</AppText>;
-const Description = ({ children }) => <AppText style={styles.description}>{children}</AppText>;
-const SectionTitle = ({ children }) => <AppText style={styles.sectionTitle}>{children}</AppText>;
+const Title = ({ children }) =>
+  <AppText style={styles.title}>
+    {children}
+  </AppText>;
+const Description = ({ children }) =>
+  <AppText style={styles.description}>
+    {children}
+  </AppText>;
+const SectionTitle = ({ children }) =>
+  <AppText style={styles.sectionTitle}>
+    {children}
+  </AppText>;
 
 const Divider = () => <View style={styles.divider} />;
 
@@ -27,14 +36,18 @@ const SourceLink = ({ uri }) =>
 
 const UIExplorer = ({ description, sections, title, url }) =>
   <View style={styles.root}>
-    <Title>{title}</Title>
+    <Title>
+      {title}
+    </Title>
     {description &&
       <Description>
         {Array.isArray(description) ? insertBetween(<Divider />, description) : description}
       </Description>}
     {sections.map(({ entries, title }, i) =>
       <View key={i}>
-        <SectionTitle>{title}</SectionTitle>
+        <SectionTitle>
+          {title}
+        </SectionTitle>
         {entries}
       </View>
     )}

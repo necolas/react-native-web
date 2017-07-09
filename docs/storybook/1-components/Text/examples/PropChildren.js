@@ -15,13 +15,8 @@ const Entity = ({ children }) =>
 const TextChildrenExample = () =>
   <View>
     <Text>
-      This text contains an inline blue view
-      {' '}
-      <View style={{ width: 25, height: 25, backgroundColor: 'steelblue' }} />
-      {' '}
-      and
-      an inline image
-      {' '}
+      This text contains an inline blue view{' '}
+      <View style={{ width: 25, height: 25, backgroundColor: 'steelblue' }} /> and an inline image{' '}
       <Image
         source={{ uri: 'http://lorempixel.com/30/11' }}
         style={{ width: 30, height: 11, resizeMode: 'cover' }}
@@ -34,9 +29,7 @@ const TextChildrenExample = () =>
         (Normal text,
         <Text style={{ fontWeight: 'bold' }}>
           (and bold
-          <Text style={{ fontSize: 11, color: '#527fe4' }}>
-            (and tiny inherited bold blue)
-          </Text>
+          <Text style={{ fontSize: 11, color: '#527fe4' }}>(and tiny inherited bold blue)</Text>
           )
         </Text>
         )
@@ -47,9 +40,7 @@ const TextChildrenExample = () =>
           (is inherited
           <Text style={{ opacity: 0.7 }}>
             (and accumulated
-            <Text style={{ backgroundColor: '#ffaaaa' }}>
-              (and also applies to the background)
-            </Text>
+            <Text style={{ backgroundColor: '#ffaaaa' }}>(and also applies to the background)</Text>
             )
           </Text>
           )
@@ -60,7 +51,6 @@ const TextChildrenExample = () =>
         <Entity>Entity Name</Entity>
       </Text>
     </View>
-
   </View>;
 
 export default TextChildrenExample;

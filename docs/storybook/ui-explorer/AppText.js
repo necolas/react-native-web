@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   baseText: {
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif, ' +
-        '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"', // emoji fonts
+      '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"', // emoji fonts
     lineHeight: '1.3125em'
   },
   link: {

@@ -60,9 +60,9 @@ const sections = [
         typeInfo="?function"
         description={
           <AppText>
-            Called when scrollable content view of the <Code>ScrollView</Code> changes.
-            It's implemented using the <Code>onLayout</Code> handler
-            attached to the content container which this <Code>ScrollView</Code> renders.
+            Called when scrollable content view of the <Code>ScrollView</Code> changes. It's
+            implemented using the <Code>onLayout</Code> handler attached to the content container
+            which this <Code>ScrollView</Code> renders.
           </AppText>
         }
       />,
@@ -72,12 +72,10 @@ const sections = [
         typeInfo="?function"
         description={[
           <AppText>
-            Fires at most once per frame during scrolling. The frequency of the events can
-            be contolled using the <Code>scrollEventThrottle</Code> prop.
+            Fires at most once per frame during scrolling. The frequency of the events can be
+            contolled using the <Code>scrollEventThrottle</Code> prop.
           </AppText>,
-          <AppText>
-            Invoked on scroll with the following event:
-          </AppText>,
+          <AppText>Invoked on scroll with the following event:</AppText>,
           <Code>{`{
   nativeEvent: {
     contentOffset: { x, y },
@@ -99,11 +97,11 @@ const sections = [
         typeInfo="?number = 0"
         description={
           <AppText>
-            This controls how often the scroll event will be fired while scrolling (as a
-            time interval in ms). A lower number yields better accuracy for code that is
-            tracking the scroll position, but can lead to scroll performance problems. The
-            default value is <Code>0</Code>, which means the scroll event will be sent only once
-            each time the view is scrolled.
+            This controls how often the scroll event will be fired while scrolling (as a time
+            interval in ms). A lower number yields better accuracy for code that is tracking the
+            scroll position, but can lead to scroll performance problems. The default value is{' '}
+            <Code>0</Code>, which means the scroll event will be sent only once each time the view
+            is scrolled.
           </AppText>
         }
       />
@@ -129,10 +127,10 @@ const sections = [
         typeInfo="() => ScrollResponder"
         description={
           <AppText>
-            Returns a reference to the underlying scroll responder, which supports
-            operations like <Code>scrollTo</Code>. All <Code>ScrollView</Code>-like components
-            should implement this method so that they can be composed while providing access to the
-            underlying scroll responder's methods.
+            Returns a reference to the underlying scroll responder, which supports operations like{' '}
+            <Code>scrollTo</Code>. All <Code>ScrollView</Code>-like components should implement this
+            method so that they can be composed while providing access to the underlying scroll
+            responder's methods.
           </AppText>
         }
       />,

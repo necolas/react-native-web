@@ -49,7 +49,9 @@ const sections = [
         name="disabled"
         typeInfo="?boolean"
         description={
-          <AppText>If <Code>true</Code>, disable all interactions for this component.</AppText>
+          <AppText>
+            If <Code>true</Code>, disable all interactions for this component.
+          </AppText>
         }
       />,
 
@@ -89,9 +91,9 @@ storiesOf('Components', module).add('TouchableWithoutFeedback', () =>
   <UIExplorer
     description={[
       <AppText>
-        Do not use unless you have a very good reason. All the elements that respond to
-        press should have a visual feedback when touched. This is one of the primary
-        reason a "web" app doesn't feel "native".
+        Do not use unless you have a very good reason. All the elements that respond to press should
+        have a visual feedback when touched. This is one of the primary reason a "web" app doesn't
+        feel "native".
       </AppText>,
       <AppText>
         NOTE: <Code>TouchableWithoutFeedback</Code> supports only one child. If you wish to have

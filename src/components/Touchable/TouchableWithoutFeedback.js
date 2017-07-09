@@ -180,9 +180,10 @@ const TouchableWithoutFeedback = createReactClass({
       children = React.Children.toArray(children);
       children.push(Touchable.renderDebugView({ color: 'red', hitSlop: this.props.hitSlop }));
     }
-    const style = Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
-      ? [styles.root, this.props.disabled && styles.disabled, child.props.style, { color: 'red' }]
-      : [styles.root, this.props.disabled && styles.disabled, child.props.style];
+    const style =
+      Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
+        ? [styles.root, this.props.disabled && styles.disabled, child.props.style, { color: 'red' }]
+        : [styles.root, this.props.disabled && styles.disabled, child.props.style];
     return (React: any).cloneElement(child, {
       ...other,
       accessible: this.props.accessible !== false,

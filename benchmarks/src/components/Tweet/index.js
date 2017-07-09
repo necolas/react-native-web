@@ -61,7 +61,6 @@ export class Tweet extends Component {
                     </AspectRatio>
                   </View>
                 : null}
-
             </View>
 
             <TweetActionsBar

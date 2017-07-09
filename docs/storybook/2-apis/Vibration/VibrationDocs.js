@@ -44,15 +44,14 @@ storiesOf('APIs', module).add('Vibration', () =>
   <UIExplorer
     description={[
       <AppText>
-        Vibration is described as a pattern of on-off pulses, which may be of
-        varying lengths. The pattern may consist of either a single integer,
-        describing the number of milliseconds to vibrate, or an array of
-        integers describing a pattern of vibrations and pauses. Vibration is
+        Vibration is described as a pattern of on-off pulses, which may be of varying lengths. The
+        pattern may consist of either a single integer, describing the number of milliseconds to
+        vibrate, or an array of integers describing a pattern of vibrations and pauses. Vibration is
         controlled with a single method: <Code>Vibration.vibrate()</Code>.
       </AppText>,
       <AppText>
-        The vibration is asynchronous so this method will return immediately. There
-        will be no effect on devices that do not support vibration.
+        The vibration is asynchronous so this method will return immediately. There will be no
+        effect on devices that do not support vibration.
       </AppText>
     ]}
     sections={sections}

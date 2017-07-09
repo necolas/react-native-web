@@ -128,14 +128,10 @@ const sections = [
         description={
           <AppText>
             Indicates to assistive technologies whether to notify the user when the view changes.
-            The values of
-            this attribute are expressed in degrees of importance. When regions are specified as{
-              ' '
-            }
-            <Code>polite</Code> (recommended),
-            updates take low priority. When regions are specified as <Code>assertive</Code>,
-            assistive technologies will
-            interrupt and immediately notify the user. (This is implemented using 'aria-live'.)
+            The values of this attribute are expressed in degrees of importance. When regions are
+            specified as <Code>polite</Code> (recommended), updates take low priority. When regions
+            are specified as <Code>assertive</Code>, assistive technologies will interrupt and
+            immediately notify the user. (This is implemented using 'aria-live'.)
           </AppText>
         }
       />,
@@ -147,13 +143,10 @@ const sections = [
         description={
           <AppText>
             Allows assistive technologies to present and support interaction with the view in a
-            manner that is
-            consistent with user expectations for similar views of that type. For example, marking a
-            touchable
-            view with an <Code>accessibilityRole</Code> of <Code>button</Code>. For compatibility
-            with React
-            Native <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are
-            mapped
+            manner that is consistent with user expectations for similar views of that type. For
+            example, marking a touchable view with an <Code>accessibilityRole</Code> of{' '}
+            <Code>button</Code>. For compatibility with React Native{' '}
+            <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are mapped
             to <Code>accessibilityRole</Code>. (This is implemented using ARIA roles.)
           </AppText>
         }
@@ -165,11 +158,9 @@ const sections = [
         description={
           <AppText>
             When <Code>true</Code>, indicates that the view is an accessibility element (i.e.,
-            focusable) and
-            groups its child content. By default, all the touchable elements and elements
-            with <Code>accessibilityRole</Code> of <Code>button</Code> and <Code>link</Code> are
-            accessible.
-            (This is implemented using 'tabindex'.)
+            focusable) and groups its child content. By default, all the touchable elements and
+            elements with <Code>accessibilityRole</Code> of <Code>button</Code> and{' '}
+            <Code>link</Code> are accessible. (This is implemented using 'tabindex'.)
           </AppText>
         }
       />,
@@ -246,15 +237,12 @@ storiesOf('Components', module).add('Text', () =>
     description={[
       <AppText>
         Text is component for displaying text. It supports style, basic touch handling, and inherits
-        typographic
-        styles from ancestor elements.
+        typographic styles from ancestor elements.
       </AppText>,
       <AppText>
         Text is unique relative to layout: child elements use text layout ("inline") rather than
-        flexbox layout.
-        This means that elements inside of a Text are not rectangles, as they wrap when reaching the
-        edge of
-        their container.
+        flexbox layout. This means that elements inside of a Text are not rectangles, as they wrap
+        when reaching the edge of their container.
       </AppText>,
       <AppText>NOTE: Text will transfer all other props to the rendered HTML element.</AppText>
     ]}

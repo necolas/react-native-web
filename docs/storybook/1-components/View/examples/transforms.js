@@ -64,9 +64,7 @@ class Flip extends React.Component {
             }
           ]}
         >
-          <Text style={styles.flipText}>
-            This text is flipping great.
-          </Text>
+          <Text style={styles.flipText}>This text is flipping great.</Text>
         </Animated.View>
         <Animated.View
           style={[
@@ -87,9 +85,7 @@ class Flip extends React.Component {
             }
           ]}
         >
-          <Text style={styles.flipText}>
-            On the flip side...
-          </Text>
+          <Text style={styles.flipText}>On the flip side...</Text>
         </Animated.View>
       </View>
     );

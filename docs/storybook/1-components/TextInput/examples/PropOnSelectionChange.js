@@ -87,21 +87,13 @@ class OnSelectionChangeExample extends React.Component {
           <Text>
             selection = {JSON.stringify(this.state.selection)}
           </Text>
-          <Text onPress={this.placeAt(0)}>
-            Place at Start (0, 0)
-          </Text>
+          <Text onPress={this.placeAt(0)}>Place at Start (0, 0)</Text>
           <Text onPress={this.placeAt(length)}>
             Place at End ({length}, {length})
           </Text>
-          <Text onPress={this.placeAtRandom}>
-            Place at Random
-          </Text>
-          <Text onPress={this.select(0, length)}>
-            Select All
-          </Text>
-          <Text onPress={this.selectRandom}>
-            Select Random
-          </Text>
+          <Text onPress={this.placeAtRandom}>Place at Random</Text>
+          <Text onPress={this.select(0, length)}>Select All</Text>
+          <Text onPress={this.selectRandom}>Select Random</Text>
         </View>
       </View>
     );

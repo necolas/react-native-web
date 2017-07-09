@@ -80,8 +80,8 @@ storiesOf('APIs', module).add('NetInfo', () =>
       </AppText>,
       <AppText>
         Note that support for retrieving the connection type depends upon browswer support (and is
-        limited to mobile browsers).
-        It will default to <Code>unknown</Code> when support is missing.
+        limited to mobile browsers). It will default to <Code>unknown</Code> when support is
+        missing.
       </AppText>
     ]}
     sections={sections}

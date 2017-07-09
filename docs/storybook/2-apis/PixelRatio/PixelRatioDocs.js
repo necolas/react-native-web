@@ -39,10 +39,9 @@ const sections = [
         description={
           <AppText>
             Rounds a layout size (dp) to the nearest layout size that corresponds to an integer
-            number of pixels.
-            For example, on a device with a PixelRatio of <Code>3</Code>,{' '}
-            <Code>PixelRatio.roundToNearestPixel(8.4) = 8.33</Code>,
-            which corresponds to exactly <Code>(8.33 * 3) = 25</Code> pixels.
+            number of pixels. For example, on a device with a PixelRatio of <Code>3</Code>,{' '}
+            <Code>PixelRatio.roundToNearestPixel(8.4) = 8.33</Code>, which corresponds to exactly{' '}
+            <Code>(8.33 * 3) = 25</Code> pixels.
           </AppText>
         }
         name="static roundToNearestPixel"

@@ -30,7 +30,11 @@ class DeepTree extends Component {
       </Box>
     );
     for (let i = 0; i < wrap; i++) {
-      result = <Box components={components}>{result}</Box>;
+      result = (
+        <Box components={components}>
+          {result}
+        </Box>
+      );
     }
     return result;
   }

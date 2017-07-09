@@ -39,10 +39,30 @@ class Board extends React.Component {
   render() {
     return (
       <View style={styles.board}>
-        <View style={styles.row}><Cell /><Cell /><Cell /><Cell /></View>
-        <View style={styles.row}><Cell /><Cell /><Cell /><Cell /></View>
-        <View style={styles.row}><Cell /><Cell /><Cell /><Cell /></View>
-        <View style={styles.row}><Cell /><Cell /><Cell /><Cell /></View>
+        <View style={styles.row}>
+          <Cell />
+          <Cell />
+          <Cell />
+          <Cell />
+        </View>
+        <View style={styles.row}>
+          <Cell />
+          <Cell />
+          <Cell />
+          <Cell />
+        </View>
+        <View style={styles.row}>
+          <Cell />
+          <Cell />
+          <Cell />
+          <Cell />
+        </View>
+        <View style={styles.row}>
+          <Cell />
+          <Cell />
+          <Cell />
+          <Cell />
+        </View>
         {this.props.children}
       </View>
     );
@@ -115,7 +135,9 @@ class Tile extends React.Component {
 
     return (
       <Animated.View style={tileStyles}>
-        <Text style={textStyles}>{tile.value}</Text>
+        <Text style={textStyles}>
+          {tile.value}
+        </Text>
       </Animated.View>
     );
   }
@@ -138,7 +160,9 @@ class GameEndOverlay extends React.Component {
 
     return (
       <View style={styles.overlay}>
-        <Text style={styles.overlayMessage}>{message}</Text>
+        <Text style={styles.overlayMessage}>
+          {message}
+        </Text>
         <TouchableOpacity onPress={this.props.onRestart} style={styles.tryAgain}>
           <Text style={styles.tryAgainText}>Try Again?</Text>
         </TouchableOpacity>

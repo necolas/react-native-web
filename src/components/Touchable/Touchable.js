@@ -376,9 +376,10 @@ const TouchableMixin = {
     this.state.touchable.touchState = States.NOT_RESPONDER;
     this.state.touchable.responderID = dispatchID;
     this._receiveSignal(Signals.RESPONDER_GRANT, e);
-    let delayMS = this.touchableGetHighlightDelayMS !== undefined
-      ? Math.max(this.touchableGetHighlightDelayMS(), 0)
-      : HIGHLIGHT_DELAY_MS;
+    let delayMS =
+      this.touchableGetHighlightDelayMS !== undefined
+        ? Math.max(this.touchableGetHighlightDelayMS(), 0)
+        : HIGHLIGHT_DELAY_MS;
     delayMS = isNaN(delayMS) ? HIGHLIGHT_DELAY_MS : delayMS;
     if (delayMS !== 0) {
       this.touchableDelayTimeout = setTimeout(this._handleDelay.bind(this, e), delayMS);
@@ -386,9 +387,10 @@ const TouchableMixin = {
       this._handleDelay(e);
     }
 
-    let longDelayMS = this.touchableGetLongPressDelayMS !== undefined
-      ? Math.max(this.touchableGetLongPressDelayMS(), 10)
-      : LONG_PRESS_DELAY_MS;
+    let longDelayMS =
+      this.touchableGetLongPressDelayMS !== undefined
+        ? Math.max(this.touchableGetLongPressDelayMS(), 10)
+        : LONG_PRESS_DELAY_MS;
     longDelayMS = isNaN(longDelayMS) ? LONG_PRESS_DELAY_MS : longDelayMS;
     this.longPressDelayTimeout = setTimeout(
       this._handleLongDelay.bind(this, e),

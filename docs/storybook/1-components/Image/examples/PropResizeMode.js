@@ -13,9 +13,7 @@ const ImageResizeModeExample = () =>
         <View key={i}>
           <View style={styles.horizontal}>
             <View>
-              <Text style={[styles.resizeModeText]}>
-                Contain
-              </Text>
+              <Text style={[styles.resizeModeText]}>Contain</Text>
               <Image
                 resizeMode={Image.resizeMode.contain}
                 source={source}
@@ -23,9 +21,7 @@ const ImageResizeModeExample = () =>
               />
             </View>
             <View>
-              <Text style={[styles.resizeModeText]}>
-                Cover
-              </Text>
+              <Text style={[styles.resizeModeText]}>Cover</Text>
               <Image
                 resizeMode={Image.resizeMode.cover}
                 source={source}
@@ -33,9 +29,7 @@ const ImageResizeModeExample = () =>
               />
             </View>
             <View>
-              <Text style={[styles.resizeModeText]}>
-                Stretch
-              </Text>
+              <Text style={[styles.resizeModeText]}>Stretch</Text>
               <Image
                 resizeMode={Image.resizeMode.stretch}
                 source={source}
@@ -43,15 +37,11 @@ const ImageResizeModeExample = () =>
               />
             </View>
             <View>
-              <Text style={[styles.resizeModeText]}>
-                Repeat
-              </Text>
+              <Text style={[styles.resizeModeText]}>Repeat</Text>
               <Image resizeMode={'repeat'} source={source} style={styles.resizeMode} />
             </View>
             <View>
-              <Text style={[styles.resizeModeText]}>
-                Center
-              </Text>
+              <Text style={[styles.resizeModeText]}>Center</Text>
               <Image resizeMode={'center'} source={source} style={styles.resizeMode} />
             </View>
           </View>

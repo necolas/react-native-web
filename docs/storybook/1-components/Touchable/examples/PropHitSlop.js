@@ -39,7 +39,9 @@ export default class TouchableHitSlopExample extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.logBox}>
-          <Text>{log}</Text>
+          <Text>
+            {log}
+          </Text>
         </View>
       </View>
     );

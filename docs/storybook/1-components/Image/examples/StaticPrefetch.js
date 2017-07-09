@@ -30,7 +30,9 @@ class ImagePrefetchExample extends PureComponent {
           : null}
         {startLoad
           ? <View>
-              <Text>{this.state.events.join('\n')}</Text>
+              <Text>
+                {this.state.events.join('\n')}
+              </Text>
               <Image
                 onLoad={this._handleLoad}
                 onLoadEnd={this._handleLoadEnd}

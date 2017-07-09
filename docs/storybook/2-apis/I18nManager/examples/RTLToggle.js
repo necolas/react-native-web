@@ -21,12 +21,8 @@ export default class RTLToggle extends PureComponent {
             The writing direction of text is automatically determined by the browser, independent of
             the global writing direction of the app.
           </Text>
-          <Text style={[styles.text, styles.rtlText]}>
-            أحب اللغة العربية
-          </Text>
-          <Text style={[styles.text, styles.textAlign]}>
-            textAlign toggles
-          </Text>
+          <Text style={[styles.text, styles.rtlText]}>أحب اللغة العربية</Text>
+          <Text style={[styles.text, styles.textAlign]}>textAlign toggles</Text>
           <View style={styles.horizontal}>
             <View style={[styles.box, { backgroundColor: 'lightblue' }]}>
               <Text>One</Text>

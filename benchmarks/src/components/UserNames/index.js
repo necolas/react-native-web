@@ -28,7 +28,9 @@ class UserNames extends PureComponent {
         onPress={onPress}
         style={[styles.root, style]}
       >
-        <AppText color="normal" weight="bold">{fullName}</AppText>
+        <AppText color="normal" weight="bold">
+          {fullName}
+        </AppText>
         {layout === 'stack' ? ' \u000A' : ' '}
         <AppText color="deepGray" style={styles.screenName}>{`@${screenName}`}</AppText>
       </AppText>

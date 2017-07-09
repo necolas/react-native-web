@@ -42,8 +42,8 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
       <DocItem
         description={
           <AppText>
-            Returns an array of stylesheets of the form <Code>{'{ id, textContent }'}</Code>.
-            Useful for compile-time or server-side rendering if you are not using AppRegistry.
+            Returns an array of stylesheets of the form <Code>{'{ id, textContent }'}</Code>. Useful
+            for compile-time or server-side rendering if you are not using AppRegistry.
           </AppText>
         }
         label="web"

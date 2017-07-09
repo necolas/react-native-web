@@ -21,7 +21,9 @@ export default class ScrollToExample extends PureComponent {
         >
           {Array.from({ length: 50 }).map((item, i) =>
             <View key={i} style={[styles.box, styles.horizontalBox]}>
-              <Text>{i}</Text>
+              <Text>
+                {i}
+              </Text>
             </View>
           )}
         </ScrollView>

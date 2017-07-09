@@ -537,14 +537,10 @@ const sections = [
         description={
           <AppText>
             Indicates to assistive technologies whether to notify the user when the view changes.
-            The values of
-            this attribute are expressed in degrees of importance. When regions are specified as{
-              ' '
-            }
-            <Code>polite</Code> (recommended),
-            updates take low priority. When regions are specified as <Code>assertive</Code>,
-            assistive technologies will
-            interrupt and immediately notify the user. (This is implemented using 'aria-live'.)
+            The values of this attribute are expressed in degrees of importance. When regions are
+            specified as <Code>polite</Code> (recommended), updates take low priority. When regions
+            are specified as <Code>assertive</Code>, assistive technologies will interrupt and
+            immediately notify the user. (This is implemented using 'aria-live'.)
           </AppText>
         }
       />,
@@ -556,13 +552,10 @@ const sections = [
         description={
           <AppText>
             Allows assistive technologies to present and support interaction with the view in a
-            manner that is
-            consistent with user expectations for similar views of that type. For example, marking a
-            touchable
-            view with an <Code>accessibilityRole</Code> of <Code>button</Code>. For compatibility
-            with React
-            Native <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are
-            mapped
+            manner that is consistent with user expectations for similar views of that type. For
+            example, marking a touchable view with an <Code>accessibilityRole</Code> of{' '}
+            <Code>button</Code>. For compatibility with React Native{' '}
+            <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are mapped
             to <Code>accessibilityRole</Code>. (This is implemented using ARIA roles.)
           </AppText>
         }
@@ -574,11 +567,9 @@ const sections = [
         description={
           <AppText>
             When <Code>true</Code>, indicates that the view is an accessibility element (i.e.,
-            focusable) and
-            groups its child content. By default, all the touchable elements and elements
-            with <Code>accessibilityRole</Code> of <Code>button</Code> and <Code>link</Code> are
-            accessible.
-            (This is implemented using 'tabindex'.)
+            focusable) and groups its child content. By default, all the touchable elements and
+            elements with <Code>accessibilityRole</Code> of <Code>button</Code> and{' '}
+            <Code>link</Code> are accessible. (This is implemented using 'tabindex'.)
           </AppText>
         }
       />,
@@ -731,14 +722,12 @@ storiesOf('Components', module).add('View', () =>
     description={[
       <AppText>
         View is the fundamental UI building block. It is a component that supports style, layout
-        with flexbox,
-        and accessibility controls. It can be nested inside another View and has 0-to-many children
-        of any type.
+        with flexbox, and accessibility controls. It can be nested inside another View and has
+        0-to-many children of any type.
       </AppText>,
       <AppText>
         Also, refer to React Native's documentation about the Gesture Responder System. NOTE: View
-        will
-        transfer all other props to the rendered HTML element.
+        will transfer all other props to the rendered HTML element.
       </AppText>
     ]}
     sections={sections}

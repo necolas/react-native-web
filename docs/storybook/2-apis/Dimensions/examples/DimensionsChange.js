@@ -18,7 +18,11 @@ export default class ChangeEventExample extends Component {
       <View>
         <Button onPress={this.toggle} title={buttonTitle} />
         <ScrollView style={styles.logs}>
-          {logs.map((log, i) => <Text key={i} style={styles.log}>{log}</Text>)}
+          {logs.map((log, i) =>
+            <Text key={i} style={styles.log}>
+              {log}
+            </Text>
+          )}
         </ScrollView>
       </View>
     );

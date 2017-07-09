@@ -21,7 +21,9 @@ class AspectRatio extends PureComponent {
     return (
       <View style={[styles.root, style]}>
         <View style={[styles.shim, { paddingBottom: `${percentage}%` }]} />
-        <View style={StyleSheet.absoluteFill}>{children}</View>
+        <View style={StyleSheet.absoluteFill}>
+          {children}
+        </View>
       </View>
     );
   }

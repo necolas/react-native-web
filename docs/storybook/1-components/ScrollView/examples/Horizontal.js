@@ -20,7 +20,9 @@ const VerticalExample = () =>
     >
       {Array.from({ length: 50 }).map((item, i) =>
         <View key={i} style={[styles.box, styles.horizontalBox]}>
-          <Text>{i}</Text>
+          <Text>
+            {i}
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -37,7 +39,9 @@ const HorizontalExample = () =>
     >
       {Array.from({ length: 50 }).map((item, i) =>
         <View key={i} style={[styles.box, styles.horizontalBox]}>
-          <Text>{i}</Text>
+          <Text>
+            {i}
+          </Text>
         </View>
       )}
     </ScrollView>

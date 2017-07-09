@@ -19,7 +19,9 @@ const sections = [
 
       <DocItem
         description={[
-          <AppText>Register multiple applications. <Code>AppConfig</Code> type is:</AppText>,
+          <AppText>
+            Register multiple applications. <Code>AppConfig</Code> type is:
+          </AppText>,
           <Code>{`{
   appKey: string;
   component: ComponentProvider;
@@ -32,7 +34,9 @@ const sections = [
 
       <DocItem
         description={
-          <AppText>Register a component provider under the given <Code>appKey</Code>.</AppText>
+          <AppText>
+            Register a component provider under the given <Code>appKey</Code>.
+          </AppText>
         }
         example={{
           code: 'AppRegistry.registerComponent("MyApp", () => AppComponent)'
@@ -44,9 +48,8 @@ const sections = [
       <DocItem
         description={
           <AppText>
-            Register a custom render function for an application. The
-            function will receive the <Code>appParameters</Code> passed
-            to <Code>runApplication</Code>.
+            Register a custom render function for an application. The function will receive the{' '}
+            <Code>appParameters</Code> passed to <Code>runApplication</Code>.
           </AppText>
         }
         name="static registerRunnable"
@@ -64,8 +67,7 @@ const sections = [
           <AppText>
             Runs the application that was registered under <Code>appKey</Code>. The{' '}
             <Code>appParameters</Code> must include the <Code>rootTag</Code> into which the
-            application is rendered, and optionally
-            any <Code>initialProps</Code>.
+            application is rendered, and optionally any <Code>initialProps</Code>.
           </AppText>
         }
         example={{
@@ -97,10 +99,10 @@ storiesOf('APIs', module).add('AppRegistry', () =>
   <UIExplorer
     description={
       <AppText>
-        AppRegistry is the control point for registering, running,
-        prerendering, and unmounting all apps. App root components should
-        register themselves with <Code>AppRegistry.registerComponent</Code>. Apps can be
-        run by invoking <Code>AppRegistry.runApplication</Code>
+        AppRegistry is the control point for registering, running, prerendering, and unmounting all
+        apps. App root components should register themselves with{' '}
+        <Code>AppRegistry.registerComponent</Code>. Apps can be run by invoking{' '}
+        <Code>AppRegistry.runApplication</Code>
       </AppText>
     }
     sections={sections}

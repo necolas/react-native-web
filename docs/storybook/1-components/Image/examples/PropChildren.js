@@ -8,9 +8,7 @@ import { Image, StyleSheet, Text } from 'react-native';
 
 const ImageChildrenExample = () =>
   <Image source={sources.large} style={styles.image}>
-    <Text style={styles.text}>
-      React
-    </Text>
+    <Text style={styles.text}>React</Text>
   </Image>;
 
 const styles = StyleSheet.create({

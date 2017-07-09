@@ -171,7 +171,9 @@ const GameEndOverlay = createReactClass({
 
     return (
       <View style={styles.overlay}>
-        <Text style={styles.overlayMessage}>{message}</Text>
+        <Text style={styles.overlayMessage}>
+          {message}
+        </Text>
         <TouchableHighlight
           activeOpacity={0.5}
           onPress={this.props.onRestart}
