@@ -5,22 +5,28 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
+import isDisabled from './isDisabled';
 import propsToAriaRole from './propsToAriaRole';
 
-const propsToTabIndex = props => {
-  const ariaRole = propsToAriaRole(props);
+const propsToTabIndex = (props: Object) => {
+  const role = propsToAriaRole(props);
   const focusable =
-    props.disabled !== true &&
+    !isDisabled(props) &&
     props.importantForAccessibility !== 'no' &&
     props.importantForAccessibility !== 'no-hide-descendants';
-  const focusableRole = ariaRole === 'button' || ariaRole === 'link';
 
-  if (focusableRole) {
+  // Assume that 'link' is focusable by default (uses <a>).
+  // Assume that 'button' is not (uses <div role='button'>) but must be treated as such.
+  if (role === 'link') {
     if (props.accessible === false || !focusable) {
       return '-1';
+    }
+  } else if (role === 'button') {
+    if (props.accessible !== false && focusable) {
+      return '0';
     }
   } else {
     if (props.accessible === true && focusable) {

@@ -40,34 +40,39 @@ using `aria-label`.
 In some cases, we also want to alert the end user of the type of selected
 component (i.e., that it is a “button”). To provide more context to screen
 readers, you should specify the `accessibilityRole` property. (Note that React
-Native for Web provides a compatibility mapping of equivalent
+Native for Web also provides a compatibility mapping of equivalent
 `accessibilityTraits` and `accessibilityComponentType` values to
 `accessibilityRole`).
 
 The `accessibilityRole` prop is used to infer an [analogous HTML
-element][html-aria-url] to use in addition to the resulting ARIA `role`, where
-possible. While this may contradict some ARIA recommendations, it also helps
-avoid certain HTML5 conformance errors and accessibility anti-patterns (e.g.,
-giving a `heading` role to a `button` element).
+element][html-aria-url] and ARIA `role`, where possible. In most cases, both
+the element and ARIA `role` are rendered. While this may contradict some ARIA
+recommendations, it also helps avoid certain HTML5 conformance errors and
+accessibility anti-patterns (e.g., giving a `heading` role to a `button`
+element) and browser bugs.
 
 For example:
 
 * `<View accessibilityRole='article' />` => `<article role='article' />`.
 * `<View accessibilityRole='banner' />` => `<header role='banner' />`.
-* `<View accessibilityRole='button' />` => `<button type='button' role='button' />`.
+* `<View accessibilityRole='button' />` => `<div role='button' tabIndex='0' />`.
+* `<Text accessibilityRole='label' />` => `<label />`.
 * `<Text accessibilityRole='link' href='/' />` => `<a role='link' href='/' />`.
 * `<View accessibilityRole='main' />` => `<main role='main' />`.
 
-In the example below, the `TouchableWithoutFeedback` is announced by screen
-readers as a native Button.
+In the example below, the `TouchableHighlight` is announced by screen
+readers as a button.
 
-```
-<TouchableWithoutFeedback accessibilityRole="button" onPress={this._onPress}>
+```js
+<TouchableHighlight accessibilityRole="button" onPress={this._handlePress}>
   <View style={styles.button}>
     <Text style={styles.buttonText}>Press me!</Text>
   </View>
-</TouchableWithoutFeedback>
+</TouchableHighlight>
 ```
+
+Note: The `button` role is not implemented using the native `button` element
+due to browsers limiting the use of flexbox layout on its children.
 
 Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying

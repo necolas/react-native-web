@@ -7,7 +7,6 @@
  * @flow
  */
 
-import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
@@ -15,8 +14,6 @@ import createDOMElement from '../../modules/createDOMElement';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import React, { Component } from 'react';
-
-const emptyObject = {};
 
 const calculateHitSlopStyle = hitSlop => {
   const hitStyle = {};
@@ -32,22 +29,11 @@ const calculateHitSlopStyle = hitSlop => {
 class View extends Component {
   static displayName = 'View';
 
-  static childContextTypes = {
-    isInAButtonView: bool
-  };
-
   static contextTypes = {
-    isInAButtonView: bool,
     isInAParentText: bool
   };
 
   static propTypes = ViewPropTypes;
-
-  getChildContext() {
-    const isInAButtonView =
-      AccessibilityUtil.propsToAriaRole(this.props) === 'button' || this.context.isInAButtonView;
-    return isInAButtonView ? { isInAButtonView } : emptyObject;
-  }
 
   render() {
     const {
@@ -63,7 +49,7 @@ class View extends Component {
       ...otherProps
     } = this.props;
 
-    const { isInAButtonView, isInAParentText } = this.context;
+    const { isInAParentText } = this.context;
 
     otherProps.style = [styles.initial, isInAParentText && styles.inline, style];
 
@@ -76,7 +62,7 @@ class View extends Component {
     }
 
     // avoid HTML validation errors
-    const component = isInAButtonView ? 'span' : 'div';
+    const component = 'div';
 
     return createDOMElement(component, otherProps);
   }
