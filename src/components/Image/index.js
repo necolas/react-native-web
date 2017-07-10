@@ -192,6 +192,7 @@ class Image extends Component {
     // Allows users to trigger the browser's image context menu
     const hiddenImage = displayImage
       ? createDOMElement('img', {
+          alt: accessibilityLabel || '',
           draggable,
           src: displayImage,
           style: [StyleSheet.absoluteFill, styles.img]

@@ -24,7 +24,10 @@ describe('components/Image', () => {
   });
 
   test('prop "accessibilityLabel"', () => {
-    const component = render(<Image accessibilityLabel="accessibilityLabel" />);
+    const defaultSource = { uri: 'https://google.com/favicon.ico' };
+    const component = render(
+      <Image accessibilityLabel="accessibilityLabel" defaultSource={defaultSource} />
+    );
     expect(component).toMatchSnapshot();
   });
 
