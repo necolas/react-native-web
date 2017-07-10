@@ -139,6 +139,12 @@ describe('components/Image', () => {
       const component = render(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
       expect(component).toMatchSnapshot();
     });
+
+    test('removes other unsupported View styles', () => {
+      const component = shallow(<Image style={{ overlayColor: 'red', tintColor: 'blue' }} />);
+      expect(component.props().style.overlayColor).toBeUndefined();
+      expect(component.props().style.tintColor).toBeUndefined();
+    });
   });
 
   test('prop "testID"', () => {

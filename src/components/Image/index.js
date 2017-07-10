@@ -184,8 +184,10 @@ class Image extends Component {
       this.context.isInAParentText && styles.inline,
       backgroundImage && { backgroundImage }
     ]);
-    // View doesn't support 'resizeMode' as a style
+    // View doesn't support these styles
+    delete style.overlayColor;
     delete style.resizeMode;
+    delete style.tintColor;
 
     // Allows users to trigger the browser's image context menu
     const hiddenImage = displayImage
