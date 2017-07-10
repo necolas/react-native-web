@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import theme from '../theme';
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 class AppText extends PureComponent {

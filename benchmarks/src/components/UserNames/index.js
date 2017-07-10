@@ -1,6 +1,7 @@
 import AppText from '../AppText';
+import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 
 class UserNames extends PureComponent {
   static displayName = 'UserNames';

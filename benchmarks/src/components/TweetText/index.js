@@ -1,15 +1,16 @@
 import AppText from '../AppText';
+import React from 'react';
 import TweetTextPart from '../TweetTextPart';
-import React, { PropTypes } from 'react';
+import { array, number, string } from 'prop-types';
 
 class TweetText extends React.Component {
   static displayName = 'TweetText';
 
   static propTypes = {
     displayMode: TweetTextPart.propTypes.displayMode,
-    lang: PropTypes.string,
-    numberOfLines: PropTypes.number,
-    textParts: PropTypes.array.isRequired
+    lang: string,
+    numberOfLines: number,
+    textParts: array.isRequired
   };
 
   render() {

@@ -26,4 +26,4 @@ const viewStyle = {
   minWidth: 0
 };
 
-module.exports = View;
+export default View;

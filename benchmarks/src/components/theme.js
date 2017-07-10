@@ -23,7 +23,7 @@ const fontSize = {
   large: '1.25rem'
 };
 
-module.exports = {
+const theme = {
   colors,
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif, ' +
@@ -36,3 +36,5 @@ module.exports = {
     return `${num}${unit}`;
   }
 };
+
+export default theme;

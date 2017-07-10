@@ -46,4 +46,4 @@ const styles = {
   }
 };
 
-module.exports = injectSheet(styles)(Box);
+export default injectSheet(styles)(Box);

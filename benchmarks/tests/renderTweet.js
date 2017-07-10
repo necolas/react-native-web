@@ -96,7 +96,7 @@ const tweet2 = {
   }
 };
 
-const renderTweet = (label, components) =>
+const renderTweet = label =>
   createRenderBenchmark({
     name: `Tweet [${label}]`,
     runs: 10,

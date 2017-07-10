@@ -28,4 +28,4 @@ const Box = styled(View)`
   background-color: ${props => getColor(props.color)};
 `;
 
-module.exports = Box;
+export default Box;

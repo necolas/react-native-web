@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import TweetAction from '../TweetAction';
 import { View, StyleSheet } from 'react-native';
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 
 const actionNames = ['reply', 'retweet', 'like', 'directMessage'];
 

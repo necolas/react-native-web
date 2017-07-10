@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = View;
+export default View;

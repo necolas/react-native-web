@@ -5,7 +5,9 @@ const node = document.querySelector('.root');
 
 const createRenderBenchmark = ({ description, getElement, name, runs }) => () => {
   const setup = () => {};
-  const teardown = () => ReactDOM.unmountComponentAtNode(node);
+  const teardown = () => {
+    ReactDOM.unmountComponentAtNode(node);
+  };
 
   return benchmark({
     name,
@@ -13,7 +15,9 @@ const createRenderBenchmark = ({ description, getElement, name, runs }) => () =>
     runs,
     setup,
     teardown,
-    task: () => ReactDOM.render(getElement(), node)
+    task: () => {
+      ReactDOM.render(getElement(), node);
+    }
   });
 };
 

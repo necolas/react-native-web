@@ -16,4 +16,4 @@ const View = styled.div`
   min-width: 0;
 `;
 
-module.exports = View;
+export default View;

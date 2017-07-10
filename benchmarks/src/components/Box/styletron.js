@@ -45,4 +45,4 @@ const styles = {
   })
 };
 
-module.exports = Box;
+export default Box;

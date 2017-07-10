@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Box;
+export default Box;

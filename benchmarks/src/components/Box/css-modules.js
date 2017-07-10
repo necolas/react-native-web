@@ -14,4 +14,4 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
     })}
   />;
 
-module.exports = Box;
+export default Box;

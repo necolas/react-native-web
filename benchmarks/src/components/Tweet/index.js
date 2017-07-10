@@ -1,11 +1,12 @@
 import AspectRatio from '../AspectRatio';
 import GridView from '../GridView';
+import PropTypes from 'prop-types';
 import TweetActionsBar from '../TweetActionsBar';
 import TweetText from '../TweetText';
 import UserAvatar from '../UserAvatar';
 import UserNames from '../UserNames';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import theme from '../theme';
 
 export class Tweet extends Component {

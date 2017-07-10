@@ -29,4 +29,4 @@ const styles = {
   }
 };
 
-module.exports = injectSheet(styles)(View);
+export default injectSheet(styles)(View);

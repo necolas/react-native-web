@@ -21,7 +21,7 @@
     "jest": "jest",
     "jest:watch": "yarn test -- --watch",
     "lint": "yarn lint:cmd -- benchmarks docs src",
-    "lint:cmd": "eslint --fix --ignore-path .gitignore",
+    "lint:cmd": "eslint --ignore-path .gitignore --fix",
     "precommit": "lint-staged",
     "release": "yarn lint && yarn test && yarn compile && yarn build && npm publish",
     "test": "flow && jest"

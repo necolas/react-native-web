@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class DeepTree extends Component {
   static propTypes = {
@@ -40,4 +41,4 @@ class DeepTree extends Component {
   }
 }
 
-module.exports = DeepTree;
+export default DeepTree;

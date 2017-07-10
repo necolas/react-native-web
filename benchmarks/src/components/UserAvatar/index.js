@@ -1,6 +1,7 @@
 import AspectRatio from '../AspectRatio';
+import PropTypes from 'prop-types';
 import { Image, StyleSheet } from 'react-native';
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import theme from '../theme';
 
 class UserAvatar extends PureComponent {

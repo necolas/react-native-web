@@ -2,9 +2,10 @@ import IconReply from '../Icons/Reply';
 import IconHeart from '../Icons/Heart';
 import IconRetweet from '../Icons/Retweet';
 import IconDirectMessage from '../Icons/DirectMessage';
-import { Text, View, StyleSheet } from 'react-native';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import theme from '../theme';
+import { Text, View, StyleSheet } from 'react-native';
 
 const getIcon = (icon, highlighted) => {
   switch (icon) {
