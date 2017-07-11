@@ -25,6 +25,9 @@ const resetStyles = StyleSheet.create({
     font: 'inherit',
     textAlign: 'inherit'
   },
+  heading: {
+    font: 'inherit'
+  },
   link: {
     backgroundColor: 'transparent',
     color: 'inherit',
@@ -83,6 +86,7 @@ const createDOMProps = (component, props, styleResolver) => {
   const reactNativeStyle = [
     component === 'a' && resetStyles.link,
     component === 'button' && resetStyles.button,
+    role === 'heading' && resetStyles.heading,
     component === 'ul' && resetStyles.list,
     role === 'button' && !isDisabled && resetStyles.ariaButton,
     providedStyle,
