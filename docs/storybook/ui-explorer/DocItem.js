@@ -20,7 +20,7 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
     {description &&
       <View style={styles.description}>
         {Array.isArray(description)
-          ? insertBetween(<Divider />, description)
+          ? insertBetween(() => <Divider key={Math.random()} />, description)
           : <AppText>
               {description}
             </AppText>}

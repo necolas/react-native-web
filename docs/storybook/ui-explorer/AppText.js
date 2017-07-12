@@ -10,7 +10,7 @@ import { StyleSheet, Text } from 'react-native';
 const AppText = ({ style, ...rest }) =>
   <Text
     {...rest}
-    accessibilityRole={rest.href ? 'link' : null}
+    accessibilityRole={rest.href ? 'link' : undefined}
     style={[styles.baseText, style, rest.href && styles.link]}
   />;
 

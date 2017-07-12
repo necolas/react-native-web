@@ -2,7 +2,7 @@ import { setOptions } from '@kadira/storybook-addon-options';
 import centered from './decorator-centered';
 import { configure, addDecorator } from '@kadira/storybook';
 
-const context = require.context('../', true, /Docs\.js$/);
+const context = require.context('../', true, /Screen\.js$/);
 
 addDecorator(centered);
 

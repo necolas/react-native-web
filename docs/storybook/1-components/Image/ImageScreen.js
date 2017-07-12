@@ -17,13 +17,17 @@ import PropSource from './examples/PropSource';
 import StaticGetSizeExample from './examples/StaticGetSize';
 import StaticPrefetchExample from './examples/StaticPrefetch';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const ImageScreen = () =>
+  <UIExplorer title="Image" url="components/Image">
+    <Description>
+      An accessibile image component with support for image resizing, default image, and child
+      content.
+    </Description>
+
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         name="children"
@@ -32,34 +36,44 @@ const sections = [
         example={{
           render: () => <PropChildren />
         }}
-      />,
+      />
 
       <DocItem
         name="defaultSource"
         typeInfo="?object"
-        description="An image to display as a placeholder while downloading the final image off the network. `{ uri: string, width, height }`"
+        description={
+          <AppText>
+            An image to display as a placeholder while downloading the final image off the network.{' '}
+            <Code>{'{ uri: string, width, height }'}</Code>
+          </AppText>
+        }
         example={{
           render: () => <PropDefaultSource />
         }}
-      />,
+      />
 
       <DocItem
+        label="web"
         name="draggable"
         typeInfo="?boolean = true"
         description="When false, the image will not be draggable"
         example={{
           render: () => <PropDraggable />
         }}
-      />,
+      />
 
       <DocItem
         name="onError"
         typeInfo="?function"
-        description="Invoked on load error with `{nativeEvent: {error}}`."
+        description={
+          <AppText>
+            Invoked on load error with <Code>{'{nativeEvent: {error}}'}</Code>.
+          </AppText>
+        }
         example={{
           render: () => <PropOnError />
         }}
-      />,
+      />
 
       <DocItem
         name="onLoad"
@@ -68,7 +82,7 @@ const sections = [
         example={{
           render: () => <PropOnLoad />
         }}
-      />,
+      />
 
       <DocItem
         name="onLoadEnd"
@@ -77,7 +91,7 @@ const sections = [
         example={{
           render: () => <PropOnLoadEnd />
         }}
-      />,
+      />
 
       <DocItem
         name="onLoadStart"
@@ -86,7 +100,7 @@ const sections = [
         example={{
           render: () => <PropOnLoadStart />
         }}
-      />,
+      />
 
       <DocItem
         name="resizeMode"
@@ -95,25 +109,27 @@ const sections = [
         example={{
           render: () => <PropResizeMode />
         }}
-      />,
+      />
 
       <DocItem
         name="source"
         typeInfo="?object"
-        description="`uri` is a string representing the resource identifier for the image, which could be an http address or a base64 encoded image. `{ uri: string, width, height }`"
+        description={
+          <AppText>
+            <Code>uri</Code> is a string representing the resource identifier for the image, which
+            could be an http address or a base64 encoded image.{' '}
+            <Code>{'{ uri: string, width, height }'}</Code>
+          </AppText>
+        }
         example={{
-          code: '',
           render: () => <PropSource />
         }}
-      />,
+      />
 
       <DocItem name="style" typeInfo="?style" />
-    ]
-  },
+    </Section>
 
-  {
-    title: 'Properties',
-    entries: [
+    <Section title="Properties">
       <DocItem
         name="static resizeMode"
         typeInfo="object"
@@ -121,20 +137,28 @@ const sections = [
           code: '<Image resizeMode={Image.resizeMode.contain} />'
         }}
       />
-    ]
-  },
+    </Section>
 
-  {
-    title: 'Methods',
-    entries: [
+    <Section title="Methods">
       <DocItem
         name="static getSize"
         typeInfo="(uri: string, success: (width, height) => {}, failure: function) => void"
-        description="Retrieve the width and height (in pixels) of an image prior to displaying it. This method can fail if the image cannot be found, or fails to download.\n\n(In order to retrieve the image dimensions, the image may first need to be loaded or downloaded, after which it will be cached. This means that in principle you could use this method to preload images, however it is not optimized for that purpose, and may in future be implemented in a way that does not fully load/download the image data.)"
+        description={[
+          <AppText key={1}>
+            Retrieve the width and height (in pixels) of an image prior to displaying it. This
+            method can fail if the image cannot be found, or fails to download.
+          </AppText>,
+          <AppText key={2}>
+            (In order to retrieve the image dimensions, the image may first need to be loaded or
+            downloaded, after which it will be cached. This means that in principle you could use
+            this method to preload images, however it is not optimized for that purpose, and may in
+            future be implemented in a way that does not fully load/download the image data.)
+          </AppText>
+        ]}
         example={{
           render: () => <StaticGetSizeExample />
         }}
-      />,
+      />
 
       <DocItem
         name="static prefetch"
@@ -144,15 +168,7 @@ const sections = [
           render: () => <StaticPrefetchExample />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('Image', () =>
-  <UIExplorer
-    description="An accessibile image component with support for image resizing, default image, and child content."
-    sections={sections}
-    title="Image"
-    url="components/Image"
-  />
-);
+storiesOf('Components', module).add('Image', ImageScreen);

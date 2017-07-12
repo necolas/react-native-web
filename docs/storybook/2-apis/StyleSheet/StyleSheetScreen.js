@@ -4,12 +4,17 @@
 
 import { storiesOf } from '@kadira/storybook';
 import React from 'react';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Methods',
-    entries: [
+const StyleSheetScreen = () =>
+  <UIExplorer title="StyleSheet" url="apis/StyleSheet">
+    <Description>
+      The StyleSheet abstraction converts predefined styles to (vendor-prefixed) CSS without
+      requiring a compile-time step. Styles that cannot be resolved outside of the render loop
+      (e.g., dynamic positioning) are usually applied as inline styles.
+    </Description>
+
+    <Section title="Methods">
       <DocItem
         description="Each key of the object passed to `create` must define a style object. The returned object replaces style objects with IDs"
         example={{
@@ -27,7 +32,7 @@ const sections = [
         }}
         name="create"
         typeInfo="(obj: {[key: string]: any})"
-      />,
+      />
 
       <DocItem
         description="Lookup a style object by ID or flatten an array of styles into a single style object."
@@ -37,7 +42,7 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
         }}
         name="flatten"
         typeInfo="()"
-      />,
+      />
 
       <DocItem
         description={
@@ -50,11 +55,9 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
         name="getStyleSheets"
         typeInfo="() => Array"
       />
-    ]
-  },
-  {
-    title: 'Properties',
-    entries: [
+    </Section>
+
+    <Section title="Properties">
       <DocItem
         description="A very common pattern is to create overlays with position absolute and zero positioning, so `absoluteFill` can be used for convenience and to reduce duplication of these repeated styles."
         example={{
@@ -62,7 +65,7 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
         }}
         name="absoluteFill"
         typeInfo="number"
-      />,
+      />
 
       <DocItem
         description="Sometimes you may want `absoluteFill` but with a couple tweaks - `absoluteFillObject` can be used to create a customized entry in a `StyleSheet`"
@@ -77,18 +80,10 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
         }}
         name="absoluteFillObject"
         typeInfo="object"
-      />,
+      />
 
       <DocItem name="hairlineWidth" typeInfo="number" />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('StyleSheet', () =>
-  <UIExplorer
-    description="The StyleSheet abstraction converts predefined styles to (vendor-prefixed) CSS without requiring a compile-time step. Styles that cannot be resolved outside of the render loop (e.g., dynamic positioning) are usually applied as inline styles."
-    sections={sections}
-    title="StyleSheet"
-    url="apis/StyleSheet"
-  />
-);
+storiesOf('APIs', module).add('StyleSheet', StyleSheetScreen);

@@ -9,19 +9,34 @@ import ScrollToExample from './examples/ScrollTo';
 import ScrollToEndExample from './examples/ScrollToEnd';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem, TextList } from '../../ui-explorer';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  TextList
+} from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const ScrollViewScreen = () =>
+  <UIExplorer title="ScrollView" url="components/ScrollView">
+    <Description>
+      <AppText>
+        A scrollable <Code>View</Code> that provides itegration with the touch-locking responder
+        system. <Code>ScrollView</Code>'s must have a bounded height: either set the height of the
+        view directly (discouraged) or make sure all parent views have bounded height (e.g.,
+        transfer <Code>{'{ flex: 1}'}</Code> down the view stack).
+      </AppText>
+    </Description>
+
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         name="contentContainerStyle"
         typeInfo="?style"
         description="These styles will be applied to the scroll view content container which wraps all of the child views."
-      />,
+      />
 
       <DocItem
         name="horizontal"
@@ -30,7 +45,7 @@ const sections = [
         example={{
           render: () => <HorizontalExample />
         }}
-      />,
+      />
 
       <DocItem
         name="keyboardDismissMode"
@@ -53,7 +68,7 @@ const sections = [
             ]}
           />
         ]}
-      />,
+      />
 
       <DocItem
         name="onContentSizeChange"
@@ -65,7 +80,7 @@ const sections = [
             which this <Code>ScrollView</Code> renders.
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="onScroll"
@@ -84,13 +99,13 @@ const sections = [
   }
 }`}</Code>
         ]}
-      />,
+      />
 
       <DocItem
         name="scrollEnabled"
         typeInfo="?boolean = true"
         description="When false, the content does not scroll."
-      />,
+      />
 
       <DocItem
         name="scrollEventThrottle"
@@ -105,22 +120,20 @@ const sections = [
           </AppText>
         }
       />
-    ]
-  },
-  {
-    title: 'Instance methods',
-    entries: [
+    </Section>
+
+    <Section title="Instance methods">
       <DocItem
         name="getInnerViewNode"
         typeInfo="() => node"
         description="Returns a reference to the underlying content container DOM node within the ScrollView."
-      />,
+      />
 
       <DocItem
         name="getScrollableNode"
         typeInfo="() => node"
         description="Returns a reference to the underlying scrollable DOM node."
-      />,
+      />
 
       <DocItem
         name="getScrollResponder"
@@ -133,7 +146,7 @@ const sections = [
             responder's methods.
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="scrollTo"
@@ -142,7 +155,7 @@ const sections = [
         example={{
           render: () => <ScrollToExample />
         }}
-      />,
+      />
 
       <DocItem
         name="scrollToEnd"
@@ -152,22 +165,7 @@ const sections = [
           render: () => <ScrollToEndExample />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('ScrollView', () =>
-  <UIExplorer
-    description={
-      <AppText>
-        A scrollable <Code>View</Code> that provides itegration with the touch-locking responder
-        system. <Code>ScrollView</Code>'s must have a bounded height: either set the height of the
-        view directly (discouraged) or make sure all parent views have bounded height (e.g.,
-        transfer <Code>{'{ flex: 1}'}</Code> down the view stack).
-      </AppText>
-    }
-    sections={sections}
-    title="ScrollView"
-    url="components/ScrollView"
-  />
-);
+storiesOf('Components', module).add('ScrollView', ScrollViewScreen);

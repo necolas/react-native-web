@@ -10,13 +10,13 @@ import PropHidesWhenStopped from './examples/PropHidesWhenStopped';
 import PropSize from './examples/PropSize';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { DocItem } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const ActivityIndicatorScreen = () =>
+  <UIExplorer title="ActivityIndicator" url="components/ActivityIndicator">
+    <Description>Displays a customizable activity indicator</Description>
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         name="animating"
@@ -25,7 +25,7 @@ const sections = [
         example={{
           render: () => <PropAnimating />
         }}
-      />,
+      />
 
       <DocItem
         name="color"
@@ -34,7 +34,7 @@ const sections = [
         example={{
           render: () => <PropColor />
         }}
-      />,
+      />
 
       <DocItem
         name="hidesWhenStopped"
@@ -43,7 +43,7 @@ const sections = [
         example={{
           render: () => <PropHidesWhenStopped />
         }}
-      />,
+      />
 
       <DocItem
         name="size"
@@ -53,15 +53,7 @@ const sections = [
           render: () => <PropSize />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('ActivityIndicator', () =>
-  <UIExplorer
-    description="Displays a customizable activity indicator"
-    sections={sections}
-    title="ActivityIndicator"
-    url="components/ActivityIndicator"
-  />
-);
+storiesOf('Components', module).add('ActivityIndicator', ActivityIndicatorScreen);

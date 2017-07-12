@@ -4,23 +4,23 @@
 
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Methods',
-    entries: [
+const PixelRatioScreen = () =>
+  <UIExplorer title="PixelRatio" url="apis/PixelRatio">
+    <Description>PixelRatio class gives access to the device pixel density.</Description>
+    <Section title="Methods">
       <DocItem
         description="Returns the device pixel density"
         name="static get"
         typeInfo="() => number"
-      />,
+      />
 
       <DocItem
         description="On web this returns the device pixel ratio"
         name="static getFontScale"
         typeInfo="() => number"
-      />,
+      />
 
       <DocItem
         description="Converts a layout size (dp) to pixel size (px). Guaranteed to return an integer number."
@@ -33,7 +33,7 @@ const sections = [
         }}
         name="static getPixelSizeForLayoutSize"
         typeInfo="(layoutSize: number) => number"
-      />,
+      />
 
       <DocItem
         description={
@@ -47,15 +47,7 @@ const sections = [
         name="static roundToNearestPixel"
         typeInfo="(layoutSize: number) => number"
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('PixelRatio', () =>
-  <UIExplorer
-    description="PixelRatio class gives access to the device pixel density."
-    sections={sections}
-    title="PixelRatio"
-    url="apis/PixelRatio"
-  />
-);
+storiesOf('APIs', module).add('PixelRatio', PixelRatioScreen);

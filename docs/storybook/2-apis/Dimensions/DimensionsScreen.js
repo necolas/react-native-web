@@ -6,13 +6,25 @@
 
 import DimensionsChange from './examples/DimensionsChange';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem, TextList } from '../../ui-explorer';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  TextList
+} from '../../ui-explorer';
 import React from 'react';
 
-const sections = [
-  {
-    title: 'Methods',
-    entries: [
+const DimensionsScreen = () =>
+  <UIExplorer title="Dimensions" url="apis/Dimensions">
+    <Description>
+      Note: dimensions may change (e.g., due to device rotation) so any rendering logic or styles
+      that depend on these constants should try to call this function on every render, rather than
+      caching the value.
+    </Description>
+
+    <Section title="Methods">
       <DocItem
         name="static get"
         typeInfo="(dimension: string) => Object"
@@ -20,7 +32,8 @@ const sections = [
         example={{
           code: "const { height, width } = Dimensions.get('window')"
         }}
-      />,
+      />
+
       <DocItem
         name="static addEventLitener"
         typeInfo="(type: string, handler: function) => void"
@@ -41,21 +54,14 @@ const sections = [
         example={{
           render: () => <DimensionsChange />
         }}
-      />,
+      />
+
       <DocItem
         name="static removeEventLitener"
         typeInfo="(type: string, handler: function) => void"
         description="Remove an event handler."
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('Dimensions', () =>
-  <UIExplorer
-    description="Note: dimensions may change (e.g., due to device rotation) so any rendering logic or styles that depend on these constants should try to call this function on every render, rather than caching the value."
-    sections={sections}
-    title="Dimensions"
-    url="apis/Dimensions"
-  />
-);
+storiesOf('APIs', module).add('Dimensions', DimensionsScreen);

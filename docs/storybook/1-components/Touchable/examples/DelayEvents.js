@@ -45,9 +45,11 @@ export default class TouchableDelayEvents extends PureComponent {
             onPressIn={this._createPressHandler('pressIn: 400ms delay')}
             onPressOut={this._createPressHandler('pressOut: 1000ms delay')}
           >
-            <Text style={styles.touchableText}>
-              {displayName}
-            </Text>
+            <View>
+              <Text style={styles.touchableText}>
+                {displayName}
+              </Text>
+            </View>
           </Touchable>
         </View>
         <View style={styles.eventLogBox}>
@@ -83,16 +85,9 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     textAlign: 'center'
   },
-  logBox: {
-    padding: 20,
-    margin: 10,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#f0f0f0',
-    backgroundColor: '#f9f9f9'
-  },
   eventLogBox: {
     padding: 10,
-    margin: 10,
+    marginTop: 10,
     height: 120,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#f0f0f0',

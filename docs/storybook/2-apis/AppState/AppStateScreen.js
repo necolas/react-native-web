@@ -7,26 +7,32 @@
 import React from 'react';
 import StateChangesExample from './examples/StateChanges';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Properties',
-    entries: [
+const AppStateScreen = () =>
+  <UIExplorer title="AppState" url="apis/AppState">
+    <Description>
+      <AppText>
+        AppState can tell you if the app is in the foreground or background, and notify you when the
+        state changes. States: <Code>active</Code> (the app is running in the foreground),{' '}
+        <Code>background</Code> (the app is running in the background, i.e., the user has not
+        focused the app's tab).
+      </AppText>
+    </Description>
+
+    <Section title="Properties">
       <DocItem
         name="static isAvailable"
         description="Determines whether the browser environment supports AppState."
-      />,
+      />
 
       <DocItem
         name="static currentState"
         description="Returns the current state of the app: &quot;active&quot; or &quot;background&quot;."
       />
-    ]
-  },
-  {
-    title: 'Methods',
-    entries: [
+    </Section>
+
+    <Section title="Methods">
       <DocItem
         name="static addEventListener"
         typeInfo="(type: string, handler: Function) => void"
@@ -37,7 +43,7 @@ const sections = [
             called with the app state value.
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="static removeEventListener"
@@ -49,32 +55,15 @@ const sections = [
           </AppText>
         }
       />
-    ]
-  },
-  {
-    title: 'Example',
-    entries: [
+    </Section>
+
+    <Section title="Example">
       <DocItem
         example={{
           render: () => <StateChangesExample />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('AppState', () =>
-  <UIExplorer
-    description={
-      <AppText>
-        AppState can tell you if the app is in the foreground or background, and notify you when the
-        state changes. States: <Code>active</Code> (the app is running in the foreground),{' '}
-        <Code>background</Code> (the app is running in the background, i.e., the user has not
-        focused the app's tab).
-      </AppText>
-    }
-    sections={sections}
-    title="AppState"
-    url="apis/AppState"
-  />
-);
+storiesOf('APIs', module).add('AppState', AppStateScreen);

@@ -4,12 +4,15 @@
 
 import { storiesOf } from '@kadira/storybook';
 import React from 'react';
-import UIExplorer, { DocItem } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Properties',
-    entries: [
+const PlatformScreen = () =>
+  <UIExplorer title="Platform" url="apis/Platform">
+    <Description>
+      Detect what is the platform in which the app is running. This piece of functionality can be
+      useful when only small parts of a component are platform specific.
+    </Description>
+    <Section title="Properties">
       <DocItem
         description="`Platform.OS` will be `web` when running in a Web browser."
         example={{
@@ -22,11 +25,9 @@ const styles = StyleSheet.create({
         name="OS"
         typeInfo="string"
       />
-    ]
-  },
-  {
-    title: 'Methods',
-    entries: [
+    </Section>
+
+    <Section title="Methods">
       <DocItem
         description="`Platform.select` takes an object containing `Platform.OS` as keys and returns the value for the platform you are currently running on."
         example={{
@@ -50,15 +51,7 @@ const containerStyles = {
         name="select"
         typeInfo="(object) => any"
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('Platform', () =>
-  <UIExplorer
-    description="Detect what is the platform in which the app is running. This piece of functionality can be useful when only small parts of a component are platform specific."
-    sections={sections}
-    title="Platform"
-    url="apis/Platform"
-  />
-);
+storiesOf('APIs', module).add('Platform', PlatformScreen);

@@ -14,13 +14,21 @@ import PropTrackColor from './examples/PropTrackColor';
 import PropValue from './examples/PropValue';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const SwitchScreen = () =>
+  <UIExplorer title="Switch" url="components/Switch">
+    <Description>
+      <AppText>
+        This is a controlled component that requires an <Code>onValueChange</Code> callback that
+        updates the value prop in order for the component to reflect user actions. If the{' '}
+        <Code>value</Code> prop is not updated, the component will continue to render the supplied{' '}
+        <Code>value</Code> prop instead of the expected result of any user actions.
+      </AppText>
+    </Description>
+
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         description="The color of the thumb grip when the switch is turned on."
@@ -29,7 +37,7 @@ const sections = [
         }}
         name="activeThumbColor"
         typeInfo="?color = #009688"
-      />,
+      />
 
       <DocItem
         description="The color of the track when the switch is turned on."
@@ -38,16 +46,16 @@ const sections = [
         }}
         name="activeTrackColor"
         typeInfo="?color = #A3D3CF"
-      />,
+      />
 
       <DocItem
-        description="If `true` the user won't be able to interact with the switch."
+        description="If true, the user won't be able to interact with the switch."
         example={{
           render: () => <PropDisabled />
         }}
         name="disabled"
         typeInfo="?boolean = false"
-      />,
+      />
 
       <DocItem
         description="Invoked with the new value when the value changes."
@@ -56,7 +64,7 @@ const sections = [
         }}
         name="onValueChange"
         typeInfo="?function"
-      />,
+      />
 
       <DocItem
         description="The color of the thumb grip when the switch is turned off."
@@ -65,7 +73,7 @@ const sections = [
         }}
         name="thumbColor"
         typeInfo="?color = #FAFAFA"
-      />,
+      />
 
       <DocItem
         description="The color of the track when the switch is turned off."
@@ -74,7 +82,7 @@ const sections = [
         }}
         name="trackColor"
         typeInfo="?color = #939393"
-      />,
+      />
 
       <DocItem
         description="The value of the switch. If `true` the switch will be turned on."
@@ -83,21 +91,21 @@ const sections = [
         }}
         name="value"
         typeInfo="?boolean = false"
-      />,
+      />
 
       <DocItem
         description="(For compatibility with React Native. Equivalent to &quot;activeTrackColor&quot;)"
         label="compat"
         name="onTintColor"
         typeInfo="?color"
-      />,
+      />
 
       <DocItem
         description="(For compatibility with React Native. Equivalent to &quot;trackColor&quot;)"
         label="compat"
         name="tintColor"
         typeInfo="?color"
-      />,
+      />
 
       <DocItem
         description="(For compatibility with React Native. Equivalent to &quot;thumbColor&quot;)"
@@ -105,12 +113,9 @@ const sections = [
         name="thumbTintColor"
         typeInfo="?color"
       />
-    ]
-  },
+    </Section>
 
-  {
-    title: 'More examples',
-    entries: [
+    <Section title="More examples">
       <DocItem
         description="Custom sizes can be created using styles"
         example={{
@@ -118,22 +123,7 @@ const sections = [
           render: () => <CustomSize />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('Switch', () =>
-  <UIExplorer
-    description={
-      <AppText>
-        This is a controlled component that requires an <Code>onValueChange</Code> callback that
-        updates the value prop in order for the component to reflect user actions. If the{' '}
-        <Code>value</Code> prop is not updated, the component will continue to render the supplied{' '}
-        <Code>value</Code> prop instead of the expected result of any user actions.
-      </AppText>
-    }
-    sections={sections}
-    title="Switch"
-    url="components/Switch"
-  />
-);
+storiesOf('Components', module).add('Switch', SwitchScreen);

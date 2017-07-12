@@ -9,13 +9,13 @@ import PropProgress from './examples/PropProgress';
 import PropTrackColor from './examples/PropTrackColor';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { DocItem } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const ProgressBarScreen = () =>
+  <UIExplorer title="ProgressBar" url="components/ProgressBar">
+    <Description>Display an activity progress bar</Description>
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         description="Color of the progress bar."
@@ -24,7 +24,7 @@ const sections = [
         }}
         name="color"
         typeInfo="?string = #1976D2"
-      />,
+      />
 
       <DocItem
         description="Whether the progress bar will show indeterminate progress."
@@ -33,7 +33,7 @@ const sections = [
         }}
         name="indeterminate"
         typeInfo="?boolean = true"
-      />,
+      />
 
       <DocItem
         description="The progress value (between 0 and 1)."
@@ -42,7 +42,7 @@ const sections = [
         }}
         name="progress"
         typeInfo="?number"
-      />,
+      />
 
       <DocItem
         description="Color of the track bar."
@@ -52,11 +52,9 @@ const sections = [
         name="trackColor"
         typeInfo="?string = 'transparent'"
       />
-    ]
-  },
-  {
-    title: 'More examples',
-    entries: [
+    </Section>
+
+    <Section title="More examples">
       <DocItem
         description="Custom sizes can be created using styles"
         example={{
@@ -64,15 +62,7 @@ const sections = [
           render: () => <CustomSize />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('ProgressBar', () =>
-  <UIExplorer
-    description="Display an activity progress bar"
-    sections={sections}
-    title="ProgressBar"
-    url="components/ProgressBar"
-  />
-);
+storiesOf('Components', module).add('ProgressBar', ProgressBarScreen);

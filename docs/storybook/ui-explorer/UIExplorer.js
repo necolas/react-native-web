@@ -13,13 +13,10 @@ const Title = ({ children }) =>
   <AppText style={styles.title}>
     {children}
   </AppText>;
-const Description = ({ children }) =>
+
+export const Description = ({ children }) =>
   <AppText style={styles.description}>
-    {children}
-  </AppText>;
-const SectionTitle = ({ children }) =>
-  <AppText style={styles.sectionTitle}>
-    {children}
+    {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(children))}
   </AppText>;
 
 const Divider = () => <View style={styles.divider} />;
@@ -34,23 +31,13 @@ const SourceLink = ({ uri }) =>
     View source code on GitHub
   </AppText>;
 
-const UIExplorer = ({ description, sections, title, url }) =>
+const UIExplorer = ({ children, description, sections, title, url }) =>
   <View style={styles.root}>
     <Title>
       {title}
     </Title>
-    {description &&
-      <Description>
-        {Array.isArray(description) ? insertBetween(<Divider />, description) : description}
-      </Description>}
-    {sections.map(({ entries, title }, i) =>
-      <View key={i}>
-        <SectionTitle>
-          {title}
-        </SectionTitle>
-        {entries}
-      </View>
-    )}
+    {description}
+    {children}
     {url && <SourceLink uri={url} />}
   </View>;
 
@@ -64,11 +51,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: '2rem'
-  },
-  sectionTitle: {
-    fontSize: '1.3125rem',
-    marginBottom: '1.3125rem',
-    fontWeight: 'bold'
   },
   description: {
     color: '#666',

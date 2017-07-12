@@ -4,18 +4,26 @@
 
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Methods',
-    entries: [
+const AppRegistryScreen = () =>
+  <UIExplorer title="AppRegistry" url="apis/AppRegistry">
+    <Description>
+      <AppText>
+        AppRegistry is the control point for registering, running, prerendering, and unmounting all
+        apps. App root components should register themselves with{' '}
+        <Code>AppRegistry.registerComponent</Code>. Apps can be run by invoking{' '}
+        <Code>AppRegistry.runApplication</Code>
+      </AppText>
+    </Description>
+
+    <Section title="Methods">
       <DocItem
         description="Returns the given application's element and stylesheets. Use this for server-side rendering."
         label="web"
         name="static getApplication"
         typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; stylesheets: Array<ReactElement> }"
-      />,
+      />
 
       <DocItem
         description={[
@@ -30,7 +38,7 @@ const sections = [
         ]}
         name="static registerConfig"
         typeInfo="(config: Array<AppConfig>) => avoid"
-      />,
+      />
 
       <DocItem
         description={
@@ -43,7 +51,7 @@ const sections = [
         }}
         name="static registerComponent"
         typeInfo="(appKey: string, getComponentFunc: ComponentProvider) => void"
-      />,
+      />
 
       <DocItem
         description={
@@ -54,13 +62,13 @@ const sections = [
         }
         name="static registerRunnable"
         typeInfo="(appKey: string, run: Function) => void"
-      />,
+      />
 
       <DocItem
         description="Returns all registered app keys"
         name="static getAppKeys"
         typeInfo="() => Array<string>"
-      />,
+      />
 
       <DocItem
         description={
@@ -78,7 +86,7 @@ const sections = [
         }}
         name="static runApplication"
         typeInfo="(appKey: string, appParameters?: object) => void"
-      />,
+      />
 
       <DocItem
         description={
@@ -91,22 +99,7 @@ const sections = [
         name="static unmountApplicationComponentAtRootTag"
         typeInfo="(rootTag: HTMLElement) => void"
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('AppRegistry', () =>
-  <UIExplorer
-    description={
-      <AppText>
-        AppRegistry is the control point for registering, running, prerendering, and unmounting all
-        apps. App root components should register themselves with{' '}
-        <Code>AppRegistry.registerComponent</Code>. Apps can be run by invoking{' '}
-        <Code>AppRegistry.runApplication</Code>
-      </AppText>
-    }
-    sections={sections}
-    title="AppRegistry"
-    url="apis/AppRegistry"
-  />
-);
+storiesOf('APIs', module).add('AppRegistry', AppRegistryScreen);

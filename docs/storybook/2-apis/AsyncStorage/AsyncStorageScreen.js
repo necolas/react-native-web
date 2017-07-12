@@ -4,12 +4,30 @@
 
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem } from '../../ui-explorer';
+import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Methods',
-    entries: [
+const AsyncStorageScreen = () =>
+  <UIExplorer title="AsyncStorage" url="apis/AsyncStorage">
+    <Description>
+      <AppText>
+        AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system
+        that is global to the domain. It's a facade over, and should be used instead of{' '}
+        <Code>window.localStorage</Code> to provide an asynchronous API and multi functions. Each
+        method returns a <Code>Promise</Code> object.
+      </AppText>
+      <AppText>
+        It is recommended that you use an abstraction on top of <Code>AsyncStorage</Code> instead of{' '}
+        <Code>AsyncStorage</Code> directly for anything more than light usage since it operates
+        globally.
+      </AppText>
+      <AppText>
+        The batched functions are useful for executing a lot of operations at once, allowing for
+        optimizations to provide the convenience of a single promise after all operations are
+        complete.
+      </AppText>
+    </Description>
+
+    <Section title="Methods">
       <DocItem
         description={
           <AppText>
@@ -20,25 +38,25 @@ const sections = [
         }
         name="static clear"
         typeInfo="function"
-      />,
+      />
 
       <DocItem
         description="Gets all known keys. Returns a Promise object."
         name="static getAllKeys"
         typeInfo=""
-      />,
+      />
 
       <DocItem
         description="Fetches the value of the given key. Returns a Promise object.."
         name="static getItem"
         typeInfo="(key: string) => {}"
-      />,
+      />
 
       <DocItem
         description="Merges existing value with input value, assuming they are stringified JSON. Returns a Promise object."
         name="static mergeItem"
         typeInfo="(key: string, value: string) => {}"
-      />,
+      />
 
       <DocItem
         description={
@@ -52,7 +70,7 @@ const sections = [
         }}
         name="static multiGet"
         typeInfo="(keys: Array<string>) => {}"
-      />,
+      />
 
       <DocItem
         description={
@@ -64,13 +82,13 @@ const sections = [
         }
         name="static multiMerge"
         typeInfo="(keyValuePairs: Array<Array<string>>) => {}"
-      />,
+      />
 
       <DocItem
         description="Delete all the keys in the keys array. Returns a Promise object."
         name="static multiRemove"
         typeInfo="(keys: Array<string>) => {}"
-      />,
+      />
 
       <DocItem
         description={
@@ -84,45 +102,20 @@ const sections = [
         }}
         name="static multiSet"
         typeInfo="(keyValuePairs: Array<Array<string>>) => {}"
-      />,
+      />
 
       <DocItem
         description="Removes the value of the given key. Returns a Promise object."
         name="static removeItem"
         typeInfo="(key: string) => {}"
-      />,
+      />
 
       <DocItem
         description="Sets the value of the given key. Returns a Promise object."
         name="static setItem"
         typeInfo="(key: string, value: string) => {}"
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('APIs', module).add('AsyncStorage', () =>
-  <UIExplorer
-    description={[
-      <AppText>
-        AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system
-        that is global to the domain. It's a facade over, and should be used instead of{' '}
-        <Code>window.localStorage</Code> to provide an asynchronous API and multi functions. Each
-        method returns a <Code>Promise</Code> object.
-      </AppText>,
-      <AppText>
-        It is recommended that you use an abstraction on top of <Code>AsyncStorage</Code> instead of{' '}
-        <Code>AsyncStorage</Code> directly for anything more than light usage since it operates
-        globally.
-      </AppText>,
-      <AppText>
-        The batched functions are useful for executing a lot of operations at once, allowing for
-        optimizations to provide the convenience of a single promise after all operations are
-        complete.
-      </AppText>
-    ]}
-    sections={sections}
-    title="AsyncStorage"
-    url="apis/AsyncStorage"
-  />
-);
+storiesOf('APIs', module).add('AsyncStorage', AsyncStorageScreen);

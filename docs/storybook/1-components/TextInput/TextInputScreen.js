@@ -20,13 +20,28 @@ import TextInputEvents from './examples/TextInputEvents';
 import TextInputRewrite, { TextInputRewriteInvalidCharacters } from './examples/Rewrite';
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, DocItem, StyleList, TextList } from '../../ui-explorer';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  StyleList,
+  TextList
+} from '../../ui-explorer';
 
-const sections = [
-  {
-    title: 'Props',
-    entries: [
-      <DocItem name="...View props" />,
+const TextInputScreen = () =>
+  <UIExplorer title="TextInput" url="components/TextInput">
+    <Description>
+      <AppText>
+        Accessible single- and multi-line text input via a keyboard. Supports features such as
+        auto-complete, auto-focus, placeholder text, and event callbacks. Note: some props are
+        exclusive to or excluded from <Code>multiline</Code>.
+      </AppText>
+    </Description>
+
+    <Section title="Props">
+      <DocItem name="...View props" />
 
       <DocItem
         name="autoCapitalize"
@@ -54,10 +69,9 @@ const sections = [
           />
         ]}
         example={{
-          code: '',
           render: () => <PropAutoCapitalize />
         }}
-      />,
+      />
 
       <DocItem
         label="web"
@@ -75,19 +89,19 @@ const sections = [
             </AppText>
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="autoCorrect"
         typeInfo="?boolean = true"
         description="Automatically correct spelling mistakes (only available in iOS Safari)."
-      />,
+      />
 
       <DocItem
         name="autoFocus"
         typeInfo="?boolean = false"
         description="If `true`, focuses the input on `componentDidMount`. Only the first form element in a document with `autofocus` is focused."
-      />,
+      />
 
       <DocItem
         name="blurOnSubmit"
@@ -104,7 +118,7 @@ const sections = [
         example={{
           render: () => <PropBlurOnSubmit />
         }}
-      />,
+      />
 
       <DocItem
         name="clearTextOnFocus"
@@ -113,7 +127,7 @@ const sections = [
         example={{
           render: () => <PropClearTextOnFocus />
         }}
-      />,
+      />
 
       <DocItem
         name="defaultValue"
@@ -125,81 +139,76 @@ const sections = [
             <Code>value</Code> prop to keep the controlled state in sync.
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="editable"
         typeInfo="?boolean = true"
         description="If `false`, text is not editable (i.e., read-only).  "
         example={{
-          code: '',
           render: () => <PropEditable />
         }}
-      />,
+      />
 
       <DocItem
         name="keyboardType"
         typeInfo="enum('default', 'email-address', 'numeric', 'phone-pad', 'search', 'url', 'web-search') = 'default'"
         description="Determines which keyboard to open on devices with a virtual keyboard. Safari iOS requires an ancestral `<form action>` element to display the `search` keyboard). (Not available when `multiline` is `true`.)"
         example={{
-          code: '',
           render: () => <PropKeyboardType />
         }}
-      />,
+      />
 
       <DocItem
         name="maxLength"
         typeInfo="?number"
         description="Limits the maximum number of characters that can be entered."
         example={{
-          code: '',
           render: () => <PropMaxLength />
         }}
-      />,
+      />
 
       <DocItem
         name="multiline"
         typeInfo="?boolean = false"
         description="If true, the text input can be multiple lines."
         example={{
-          code: '',
           render: () => <PropMultiline />
         }}
-      />,
+      />
 
       <DocItem
         name="numberOfLines"
         typeInfo="?number"
         description="Sets the number of lines for a multiline `TextInput`. (Requires `multiline` to be `true`.)"
         example={{
-          code: '',
           render: () => <PropNumberOfLines />
         }}
-      />,
+      />
 
       <DocItem
         name="onBlur"
         typeInfo="?function"
         description="Callback that is called when the text input is blurred."
-      />,
+      />
 
       <DocItem
         name="onChange"
         typeInfo="?function"
         description="Callback that is called when the text input's text changes."
-      />,
+      />
 
       <DocItem
         name="onChangeText"
         typeInfo="?function"
         description="Callback that is called when the text input's text changes. The text is passed as an argument to the callback handler."
-      />,
+      />
 
       <DocItem
         name="onFocus"
         typeInfo="?function"
         description="Callback that is called when the text input is focused."
-      />,
+      />
 
       <DocItem
         name="onKeyPress"
@@ -215,7 +224,7 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
             <Code>nativeEvent</Code>. Fires before <Code>onChange</Code> callbacks.
           </AppText>
         }
-      />,
+      />
 
       <DocItem
         name="onSelectionChange"
@@ -229,49 +238,46 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
         example={{
           render: () => <PropOnSelectionChange />
         }}
-      />,
+      />
 
       <DocItem
         name="onSubmitEditing"
         typeInfo="?function"
         description="Callback that is called when the keyboard's submit button is pressed. When multiline={true}, this is only called if blurOnSubmit={true}."
-      />,
+      />
 
       <DocItem
         name="placeholder"
         typeInfo="?string"
         description="The string that will be rendered in an empty `TextInput` before text has been entered."
         example={{
-          code: '',
           render: () => <PropPlaceholder />
         }}
-      />,
+      />
 
       <DocItem
         name="secureTextEntry"
         typeInfo="?boolean = false"
         description="If true, the text input obscures the text entered so that sensitive text like passwords stay secure. (Not available when `multiline` is `true`.)"
         example={{
-          code: '',
           render: () => <PropSecureTextEntry />
         }}
-      />,
+      />
 
       <DocItem
         name="selection"
         typeInfo="?{ start: number, end: ?number }"
         description="The start and end of the text input's selection. Set start and end to the same value to position the cursor."
-      />,
+      />
 
       <DocItem
         name="selectTextOnFocus"
         typeInfo="?boolean = false"
         description="If `true`, all text will automatically be selected on focus."
         example={{
-          code: '',
           render: () => <PropSelectTextOnFocus />
         }}
-      />,
+      />
 
       <DocItem
         name="style"
@@ -290,7 +296,7 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
             ]}
           />
         }
-      />,
+      />
 
       <DocItem
         name="value"
@@ -309,43 +315,40 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
           </AppText>
         }
       />
-    ]
-  },
+    </Section>
 
-  {
-    title: 'Instance methods',
-    entries: [
-      <DocItem name="blur" typeInfo="() => void" description="Blur the underlying DOM input." />,
+    <Section title="Instance methods">
+      <DocItem name="blur" typeInfo="() => void" description="Blur the underlying DOM input." />
+
       <DocItem
         name="clear"
         typeInfo="() => void"
         description="Clear the text from the underlying DOM input."
-      />,
-      <DocItem name="focus" typeInfo="() => void" description="Focus the underlying DOM input." />,
+      />
+
+      <DocItem name="focus" typeInfo="() => void" description="Focus the underlying DOM input." />
+
       <DocItem
         name="isFocused"
         typeInfo="() => boolean"
         description="Returns `true` if the input is currently focused; `false` otherwise."
       />
-    ]
-  },
+    </Section>
 
-  {
-    title: 'More examples',
-    entries: [
+    <Section title="More examples">
       <DocItem
         description="TextInput events"
         example={{
           render: () => <TextInputEvents />
         }}
-      />,
+      />
 
       <DocItem
         description="Rewrite (<sp> to '_' with maxLength)"
         example={{
           render: () => <TextInputRewrite />
         }}
-      />,
+      />
 
       <DocItem
         description="Rewrite (no spaces allowed)"
@@ -353,15 +356,7 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
           render: () => <TextInputRewriteInvalidCharacters />
         }}
       />
-    ]
-  }
-];
+    </Section>
+  </UIExplorer>;
 
-storiesOf('Components', module).add('TextInput', () =>
-  <UIExplorer
-    description="Accessible single- and multi-line text input via a keyboard. Supports features such as auto-complete, auto-focus, placeholder text, and event callbacks. Note: some props are exclusive to or excluded from `multiline`."
-    sections={sections}
-    title="TextInput"
-    url="components/TextInput"
-  />
-);
+storiesOf('Components', module).add('TextInput', TextInputScreen);
