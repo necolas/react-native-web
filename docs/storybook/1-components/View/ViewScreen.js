@@ -87,45 +87,80 @@ const ViewScreen = () =>
       <DocItem
         name="hitSlop"
         typeInfo="?object"
-        description={
-          'This defines how far a touch event can start away from the view (in pixels). Typical interface guidelines recommend touch targets that are at least 30 - 40 points/density-independent pixels.\n\nFor example, if a touchable view has a height of `20` the touchable height can be extended to `40` with hitSlop.'
-        }
+        description={[
+          <AppText>
+            This defines how far a touch event can start away from the view (in pixels). Typical
+            interface guidelines recommend touch targets that are at least 30 - 40
+            points/density-independent pixels.
+          </AppText>,
+          <AppText>
+            For example, if a touchable view has a height of <Code>20</Code> the touchable height
+            can be extended to <Code>40</Code> with hitSlop.
+          </AppText>
+        ]}
         example={{
-          code: '<View hitSlop={{top: 10, bottom: 10, left: 0, right: 0}} />',
-          render: () => null
+          code: '<View hitSlop={{top: 10, bottom: 10, left: 0, right: 0}} />'
         }}
       />
 
       <DocItem
         name="importantForAccessibility"
         typeInfo="?enum('auto', 'no', 'no-hide-descendants', 'yes')"
-        description={
-          'A value of `no` will remove the element from the tab flow.\n\nA value of `no-hide-descendants` will hide the element and its children from assistive technologies. (This is implemented using `aria-hidden`.)'
-        }
+        description={[
+          <AppText>
+            A value of <Code>no</Code> will remove the element from the tab flow.
+          </AppText>,
+          <AppText>
+            A value of <Code>no-hide-descendants</Code> will hide the element and its children from
+            assistive technologies. (This is implemented using 'aria-hidden'.)
+          </AppText>
+        ]}
       />
 
       <DocItem
         name="onLayout"
         typeInfo="?function"
-        description="Invoked on mount and layout changes with `{ nativeEvent: { layout: { x, y, width, height } } }`, where `x` and `y` are the offsets from the parent node."
+        description={
+          <AppText>
+            Invoked on mount and layout changes with{' '}
+            <Code>{'{ nativeEvent: { layout: { x, y, width, height } } }'}</Code>, where{' '}
+            <Code>x</Code> and <Code>y</Code> are the offsets from the parent node.
+          </AppText>
+        }
       />
 
       <DocItem
         name="onMoveShouldSetResponder"
         typeInfo="?function => boolean"
-        description="Does this view want to &quot;claim&quot; touch responsiveness? This is called for every touch move on the `View` when it is not the responder."
+        description={
+          <AppText>
+            Does this view want to "claim" touch responsiveness? This is called for every touch move
+            on the <Code>View</Code> when it is not the responder.
+          </AppText>
+        }
       />
 
       <DocItem
         name="onMoveShouldSetResponderCapture"
         typeInfo="?function => boolean"
-        description="If a parent `View` wants to prevent a child `View` from becoming responder on a move, it should have this handler return `true`."
+        description={
+          <AppText>
+            If a parent <Code>View</Code> wants to prevent a child <Code>View</Code> from becoming
+            responder on a move, it should have this handler return <Code>true</Code>.
+          </AppText>
+        }
       />
 
       <DocItem
         name="onResponderGrant"
         typeInfo="?function"
-        description="The `View` is now responding to touch events. This is the time to highlight and show the user what is happening. For most touch interactions, you'll simply want to wrap your component in `TouchableHighlight` or `TouchableOpacity`."
+        description={
+          <AppText>
+            The <Code>View</Code> is now responding to touch events. This is the time to highlight
+            and show the user what is happening. For most touch interactions, you'll simply want to
+            wrap your component in <Code>TouchableHighlight</Code> or <Code>TouchableOpacity</Code>.
+          </AppText>
+        }
       />
 
       <DocItem
@@ -137,7 +172,12 @@ const ViewScreen = () =>
       <DocItem
         name="onResponderReject"
         typeInfo="?function"
-        description="Another responder is already active and will not release it to the `View` asking to be the responder."
+        description={
+          <AppText>
+            Another responder is already active and will not release it to the <Code>View</Code>{' '}
+            asking to be the responder.
+          </AppText>
+        }
       />
 
       <DocItem
@@ -149,13 +189,23 @@ const ViewScreen = () =>
       <DocItem
         name="onResponderTerminate"
         typeInfo="?function"
-        description="The responder has been taken from the `View`."
+        description={
+          <AppText>
+            The responder has been taken from the <Code>View</Code>.
+          </AppText>
+        }
       />
 
       <DocItem
         name="onResponderTerminationRequest"
         typeInfo="?function"
-        description="Some other `View` wants to become responder and is asking this `View` to release its responder. Returning `true` allows its release."
+        description={
+          <AppText>
+            Some other <Code>View</Code> wants to become responder and is asking this{' '}
+            <Code>View</Code> to release its responder. Returning <Code>true</Code> allows its
+            release.
+          </AppText>
+        }
       />
 
       <DocItem
@@ -167,13 +217,26 @@ const ViewScreen = () =>
       <DocItem
         name="onStartShouldSetResponderCapture"
         typeInfo="?function => boolean"
-        description="If a parent `View` wants to prevent a child `View` from becoming the responder on a touch start, it should have this handler return `true`."
+        description={
+          <AppText>
+            If a parent <Code>View</Code> wants to prevent a child <Code>View</Code> from becoming
+            the responder on a touch start, it should have this handler return <Code>true</Code>.
+          </AppText>
+        }
       />
 
       <DocItem
         name="pointerEvents"
         typeInfo="?enum('auto', 'box-only', 'box-none', 'none') = 'auto'"
-        description="Controls whether the View can be the target of touch events. The enhanced `pointerEvents` modes provided are not part of the CSS spec, therefore, `pointerEvents` is excluded from `style`. `box-none` preserves pointer events on the element's children; `box-only` disables pointer events on the element's children"
+        description={
+          <AppText>
+            Controls whether the View can be the target of touch events. The enhanced{' '}
+            <Code>pointerEvents</Code> modes provided are not part of the CSS spec, therefore,{' '}
+            <Code>pointerEvents</Code> is excluded from <Code>style</Code>.
+            <Code>box-none</Code> preserves pointer events on the element's children;{' '}
+            <Code>box-only</Code> disables pointer events on the element's children.
+          </AppText>
+        }
         example={{
           render: () => <PropPointerEvents />
         }}
@@ -188,21 +251,29 @@ const ViewScreen = () =>
       <DocItem
         name="testID"
         typeInfo="?string"
-        description="Used to locate this view in end-to-end tests. The test ID is rendered to a `data-testid` DOM attribute"
+        description="Used to locate this view in end-to-end tests. The test ID is rendered to a 'data-testid' DOM attribute"
       />
 
       <DocItem
         label="compat"
         name="accessibilityComponentType"
         typeInfo="?enum(roles)"
-        description="(For compatibility with React Native. Equivalent to &quot;accessibilityRole&quot;.)"
+        description={
+          <AppText>
+            (For compatibility with React Native. Equivalent to <Code>accessibilityRole</Code>.)
+          </AppText>
+        }
       />
 
       <DocItem
         label="compat"
         name="accessibilityTraits"
         typeInfo="?enum(roles) | Array<role>"
-        description="(For compatibility with React Native. Equivalent to &quot;accessibilityRole&quot;.)"
+        description={
+          <AppText>
+            (For compatibility with React Native. Equivalent to <Code>accessibilityRole</Code>.)
+          </AppText>
+        }
       />
     </Section>
 

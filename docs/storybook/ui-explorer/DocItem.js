@@ -19,11 +19,7 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
       </AppText>}
     {description &&
       <View style={styles.description}>
-        {Array.isArray(description)
-          ? insertBetween(() => <Divider key={Math.random()} />, description)
-          : <AppText>
-              {description}
-            </AppText>}
+        {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(description))}
       </View>}
     {(example.render || example.code) &&
       <View style={styles.renderBox}>
