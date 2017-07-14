@@ -672,6 +672,11 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
+    label: 'web',
+    name: 'touchAction',
+    typeInfo: 'string'
+  },
+  {
     name: 'top',
     typeInfo: 'number | string'
   },

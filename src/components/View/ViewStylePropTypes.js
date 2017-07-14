@@ -48,6 +48,7 @@ const ViewStylePropTypes = {
   outlineColor: ColorPropType,
   perspective: oneOfType([number, string]),
   perspectiveOrigin: string,
+  touchAction: string,
   transitionDelay: string,
   transitionDuration: string,
   transitionProperty: string,

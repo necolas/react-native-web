@@ -5,7 +5,7 @@
  */
 
 import React, { PureComponent } from 'react';
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 export default class ScrollToExample extends PureComponent {
   render() {
@@ -20,11 +20,15 @@ export default class ScrollToExample extends PureComponent {
           style={styles.scrollViewStyle}
         >
           {Array.from({ length: 50 }).map((item, i) =>
-            <View key={i} style={[styles.box, styles.horizontalBox]}>
+            <TouchableHighlight
+              key={i}
+              onPress={() => {}}
+              style={[styles.box, styles.horizontalBox]}
+            >
               <Text>
                 {i}
               </Text>
-            </View>
+            </TouchableHighlight>
           )}
         </ScrollView>
         <Button
