@@ -263,7 +263,7 @@ const TouchableHighlight = createReactClass({
         onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
         onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
         ref={this._setUnderlayRef}
-        style={[styles.root, this.props.disabled && styles.disabled, this.state.underlayStyle]}
+        style={[styles.root, !this.props.disabled && styles.actionable, this.state.underlayStyle]}
       >
         {React.cloneElement(React.Children.only(this.props.children), {
           ref: this._setChildRef
@@ -283,11 +283,11 @@ const INACTIVE_UNDERLAY_PROPS = {
 
 const styles = StyleSheet.create({
   root: {
-    cursor: 'pointer',
     userSelect: 'none'
   },
-  disabled: {
-    cursor: 'default'
+  actionable: {
+    cursor: 'pointer',
+    touchAction: 'manipulate'
   }
 });
 

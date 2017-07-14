@@ -179,8 +179,8 @@ const TouchableWithoutFeedback = createReactClass({
     }
     const style =
       Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
-        ? [styles.root, this.props.disabled && styles.disabled, child.props.style, { color: 'red' }]
-        : [styles.root, this.props.disabled && styles.disabled, child.props.style];
+        ? [!this.props.disabled && styles.actionable, child.props.style, { color: 'red' }]
+        : [!this.props.disabled && styles.actionable, child.props.style];
     return (React: any).cloneElement(child, {
       ...other,
       accessible: this.props.accessible !== false,
@@ -199,11 +199,9 @@ const TouchableWithoutFeedback = createReactClass({
 });
 
 const styles = StyleSheet.create({
-  root: {
-    cursor: 'pointer'
-  },
-  disabled: {
-    cursor: 'default'
+  actionable: {
+    cursor: 'pointer',
+    touchAction: 'manipulate'
   }
 });
 

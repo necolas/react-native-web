@@ -187,7 +187,7 @@ const TouchableOpacity = createReactClass({
         onResponderTerminate={this.touchableHandleResponderTerminate}
         onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
         onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
-        style={[styles.root, this.props.disabled && styles.disabled, this.props.style]}
+        style={[styles.root, !this.props.disabled && styles.actionable, this.props.style]}
       >
         {this.props.children}
         {Touchable.renderDebugView({ color: 'blue', hitSlop: this.props.hitSlop })}
@@ -198,13 +198,13 @@ const TouchableOpacity = createReactClass({
 
 const styles = StyleSheet.create({
   root: {
-    cursor: 'pointer',
     transitionProperty: 'opacity',
     transitionDuration: '0.15s',
     userSelect: 'none'
   },
-  disabled: {
-    cursor: 'default'
+  actionable: {
+    cursor: 'pointer',
+    touchAction: 'manipulate'
   }
 });
 
