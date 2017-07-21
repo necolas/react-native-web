@@ -62,7 +62,7 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible, onShow } = this.props;
-    const contentStyles = [ styles.modalConent ];
+    const contentStyles = [ styles.modalContent ];
     contentStyles.push(transparent?styles.transparent:styles.noTransparent);
     return (
       <RenderToTopLayer
@@ -90,7 +90,7 @@ class Modal extends Component {
 }
 
 const styles = StyleSheet.create({
-  modalConent: {
+  modalContent: {
     flexDirection: 'column', 
     display: 'flex', 
     position: 'fixed', 
