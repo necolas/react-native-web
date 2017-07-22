@@ -19,8 +19,9 @@ Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 touch handling to the Web.
 
 Browse the [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
-to see React Native examples running on Web. Or try it out online with [React
-Native for Web: Playground](https://www.webpackbin.com/bins/-KgucwxRbn7HRU-V-3Bc).
+to see React Native examples running on Web. Or remix the [React Native for
+Web: Playground](https://glitch.com/edit/#!/react-native-web-playground) on
+Glitch.
 
 ## Quick start
 
@@ -91,12 +92,15 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 ## Related projects
 
 * [react-primitives](https://github.com/lelandrichardson/react-primitives/)
+* [react-sketchapp](https://github.com/airbnb/react-sketchapp)
+* [reactxp](https://github.com/microsoft/reactxp)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
+
+## Start kits
+
+* [create-react-app](https://github.com/facebookincubator/create-react-app) ([on Glitch](https://glitch.com/edit/#!/react-native-web-playground))
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
-* [react-sketchapp](https://github.com/airbnb/react-sketchapp)
-* [react-web](https://github.com/taobaofed/react-web)
-* [reactxp](https://github.com/microsoft/reactxp)
 
 ## License
 
