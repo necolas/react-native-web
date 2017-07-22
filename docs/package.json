@@ -1,0 +1,13 @@
+{
+  "name": "docs",
+  "private": true,
+  "scripts": {
+    "build": "yarn && build-storybook -o ./dist -c ./storybook/.storybook",
+    "start": "start-storybook -p 9001 -c ./storybook/.storybook --dont-track",
+    "publish": "yarn build && git checkout gh-pages && rm -rf ./storybook && mv docs/dist storybook && git add -A && git commit -m \"Storybook deploy\" && git push origin gh-pages && git checkout -"
+  },
+  "dependencies": {
+    "@kadira/storybook": "^2.35.3",
+    "@kadira/storybook-addon-options": "^1.0.2"
+  }
+}

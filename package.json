@@ -12,9 +12,9 @@
     "benchmark": "cd benchmarks && yarn && webpack && open index.html",
     "build": "webpack --config webpack.config.js --sort-assets-by --progress",
     "compile": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
-    "docs:build": "build-storybook -o ./docs/dist -c ./docs/storybook/.storybook",
-    "docs:start": "start-storybook -p 9001 -c ./docs/storybook/.storybook --dont-track",
-    "docs:publish": "yarn docs:build && git checkout gh-pages && rm -rf ./storybook && mv docs/dist storybook && git add -A && git commit -m \"Storybook deploy\" && git push origin gh-pages && git checkout -",
+    "docs:build": "cd docs && yarn build",
+    "docs:start": "cd docs && yarn && yarn start",
+    "docs:publish": "cd docs && yarn publish",
     "flow": "flow",
     "fmt": "find benchmarks docs src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs yarn fmt:cmd",
     "fmt:cmd": "prettier --print-width=100 --single-quote --write",
@@ -68,8 +68,6 @@
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
-    "@kadira/storybook": "^2.35.3",
-    "@kadira/storybook-addon-options": "^1.0.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
