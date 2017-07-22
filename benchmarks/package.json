@@ -1,5 +1,5 @@
 {
-  "name": "performance",
+  "name": "benchmarks",
   "private": true,
   "dependencies": {
     "aphrodite": "^1.2.3",

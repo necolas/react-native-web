@@ -9,7 +9,7 @@
     "!**/__tests__"
   ],
   "scripts": {
-    "benchmarks": "cd benchmarks && yarn && webpack && open index.html",
+    "benchmark": "cd benchmarks && yarn && webpack && open index.html",
     "build": "webpack --config webpack.config.js --sort-assets-by --progress",
     "compile": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
     "docs:build": "build-storybook -o ./docs/dist -c ./docs/storybook/.storybook",

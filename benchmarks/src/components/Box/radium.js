@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Radium from 'radium'
+import Radium from 'radium';
 import React from 'react';
 import View from '../View/radium';
 

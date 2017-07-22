@@ -66,7 +66,7 @@ yarn docs:build
 To run the performance benchmarks in a browser (opening `./benchmarks/index.html`):
 
 ```
-yarn benchmarks
+yarn benchmark
 ```
 
 ## Compile and build
