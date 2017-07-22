@@ -78,6 +78,16 @@ class AlertViewClass extends React.Component {
     }
   };
 
+  _addButtonRef = index => (ref) => {
+    this[`button_${index}`] = ref;
+  };
+
+  componentDidUpdate() {
+    if (this.state.visible) {
+      this.button_0.focus();
+    }
+  }
+
   render() {
     const { visible, message, title, buttons } = this.state;
     if (!visible) {
@@ -113,6 +123,7 @@ class AlertViewClass extends React.Component {
                   <TouchableHighlight
                     key={i}
                     onPress={this.onButtonPress(onPress)}
+                    ref={this._addButtonRef(i)}
                     style={[
                       styles.button,
                       ((i < buttons.length - 1) && (isMultiButton ? styles.buttonSpacerMulti : styles.buttonSpacer))

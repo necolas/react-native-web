@@ -125,6 +125,7 @@ export {
 
 const ReactNative = {
   // top-level API
+  Alert,
   findNodeHandle,
   hydrate,
   render,

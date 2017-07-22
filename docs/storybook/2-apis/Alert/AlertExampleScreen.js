@@ -2,11 +2,6 @@ import { Button, View, Alert } from 'react-native'
 import AppContainer from '../../../../src/apis/AppRegistry/AppContainer'
 import React, { Component } from 'react';
 import UIExplorer, {
-  AppText,
-  Code,
-  Description,
-  DocItem,
-  Section,
   storiesOf
 } from '../../ui-explorer';
 import { action } from '@storybook/react';
@@ -15,6 +10,7 @@ const style = {
   spacer: {
     height: 5,
   },
+  container: { height: 240 },
 };
 
 const showAlert = (...props) => () => Alert.alert(...props);
@@ -23,21 +19,20 @@ class AlertExample extends Component {
   render() {
     return (
       <UIExplorer title="Alert" url="2-apis/Alert">
-        <View style={{ height: 240 }}>
+        <View style={style.container}>
           <AppContainer>
             <Button
-              title="DEFAULT BUTTON"
               onPress={
                 showAlert(
                   'Hey There',
                   'This is an example of how should we work with default button alert!'
                 )
               }
+              title="DEFAULT BUTTON"
             />
             <View style={style.spacer} />
-            <Button title="CUSTOM SINGLE BUTTON"
-              onPress={
-                () => Alert.alert(
+            <Button onPress={
+                showAlert(
                   'Hey There',
                   'This is an example of how should we work with custom single button alert!',
                   [
@@ -45,10 +40,10 @@ class AlertExample extends Component {
                   ]
                 )
               }
+              title="CUSTOM SINGLE BUTTON"
             />
             <View style={style.spacer} />
-            <Button title="DOUBLE BUTTON"
-              onPress={
+            <Button onPress={
                 showAlert(
                   'Hey There',
                   'This is an example of how should we work with one button alert!',
@@ -58,10 +53,10 @@ class AlertExample extends Component {
                   ]
                 )
               }
+              title="DOUBLE BUTTON"
             />
             <View style={style.spacer} />
-            <Button title="MULTI BUTTON"
-              onPress={
+            <Button onPress={
                 showAlert(
                   'Hey There',
                   'This is an example of how should we work with one button alert!',
@@ -72,10 +67,10 @@ class AlertExample extends Component {
                   ]
                 )
               }
+              title="MULTI BUTTON"
             />
             <View style={style.spacer} />
-            <Button title="CANCELABLE"
-              onPress={
+            <Button onPress={
                 showAlert(
                   'Hey There',
                   'Tap background to close',
@@ -85,6 +80,7 @@ class AlertExample extends Component {
                   { cancelable: true }
                 )
               }
+              title="CANCELABLE"
             />
           </AppContainer>
         </View>
