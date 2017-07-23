@@ -3,6 +3,35 @@
 This guide will help you to correctly configure build and test tools to work
 with React Native for Web.
 
+## Setting up your project
+
+If you haven't done so already, initialize your project:
+
+```
+$ npm i -g yarn
+$ yarn global add react-native
+$ react-native init YourProjectName
+$ cd YourProjectName
+$ yarn add react@15.6 react-dom@15.6 react-native-web
+$ yarn add --dev webpack-dev-server webpack
+$ mkdir web
+```
+
+Create a file called `index.web.js` with the following contents:
+
+```
+import { AppRegistry } from 'react-native'
+import App from './src' // or wherever your application code is located
+
+// update to reflect the element you'd like your application mounted into
+const rootTag = document.getElementById('react-root')
+
+AppRegistry.registerComponent('YourProjectName', () => App)
+AppRegistry.runApplication('YourProjectName', {
+  rootTag: rootTag,
+})
+```
+
 Alternatively, you can quickly setup a local project using
 [create-react-app](https://github.com/facebookincubator/create-react-app)
 (which supports `react-native-web` out-of-the-box once installed),
@@ -17,6 +46,8 @@ polyfill.
 [Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
+
+Add a file called `webpack.config.js` inside of the `web/` folder with the following contents:
 
 ```js
 // webpack.config.js
@@ -86,6 +117,27 @@ module.exports = {
 ```
 
 Please refer to the Webpack documentation for more information.
+
+## Run the project
+
+Start the packager:
+
+```
+$ react-native start
+```
+
+Note that the packager is needed for iOS or Android. web doesn't use this... [yet](https://github.com/callstack-io/haul/issues/132). For web we'll use webpack to serve our builds.
+
+Start your application:
+
+```
+// web
+$ ./node_modules/.bin/webpack-dev-server -d --config web/webpack.config.js --inline --hot --colors
+// ios
+$ react-native run-ios
+// android
+$ react-native run-android
+```
 
 ## Jest
 
