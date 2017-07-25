@@ -8,12 +8,11 @@ with React Native for Web.
 If you haven't done so already, initialize your project:
 
 ```
-$ npm i -g yarn
-$ yarn global add react-native
+$ npm i -g react-native
 $ react-native init YourProjectName
 $ cd YourProjectName
-$ yarn add react@15.6 react-dom@15.6 react-native-web
-$ yarn add --dev webpack-dev-server webpack
+$ npm i --save react@15.6 react-dom@15.6 react-native-web
+$ npm i --save-dev webpack-dev-server webpack
 $ mkdir web
 ```
 
@@ -47,10 +46,8 @@ polyfill.
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
 
-Add a file called `webpack.config.js` inside of the `web/` folder with the following contents:
-
 ```js
-// webpack.config.js
+// web/webpack.config.js
 
 // This is needed for webpack to compile JavaScript.
 // Many OSS React Native packages are not compiled to ES5 before being
