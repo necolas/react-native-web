@@ -74,6 +74,7 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.6",
     "babel-preset-react-native": "^2.1.0",
+    "caniuse-api": "^2.0.0",
     "del-cli": "^1.1.0",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",

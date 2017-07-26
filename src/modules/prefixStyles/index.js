@@ -8,7 +8,10 @@
  * @flow
  */
 
-import prefixAll from 'inline-style-prefixer/static';
+import createPrefixer from 'inline-style-prefixer/static/createPrefixer';
+import staticData from './static';
+
+const prefixAll = createPrefixer(staticData);
 
 export default prefixAll;
 

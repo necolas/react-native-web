@@ -28,4 +28,12 @@ describe('apis/StyleSheet/StyleManager', () => {
     styleManager.setDeclaration('width', '100px');
     expect(styleManager.getStyleSheetHtml()).toMatchSnapshot();
   });
+
+  test('setDeclaration', () => {
+    styleManager.mainSheet.sheet.insertRule = (rule, position) => {
+      // check for regressions in CSS write path (e.g., 0 => 0px)
+      expect(rule.indexOf('-webkit-flex-shrink:0;')).not.toEqual(-1);
+    };
+    styleManager.setDeclaration('flexShrink', 0);
+  });
 });

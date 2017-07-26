@@ -46,4 +46,18 @@ const unitlessNumbers = {
   shadowOpacity: true
 };
 
+/**
+ * Support style names that may come passed in prefixed by adding permutations
+ * of vendor prefixes.
+ */
+const prefixes = ['ms', 'Moz', 'O', 'Webkit'];
+const prefixKey = (prefix: string, key: string) => {
+  return prefix + key.charAt(0).toUpperCase() + key.substring(1);
+};
+Object.keys(unitlessNumbers).forEach(prop => {
+  prefixes.forEach(prefix => {
+    unitlessNumbers[prefixKey(prefix, prop)] = unitlessNumbers[prop];
+  });
+});
+
 export default unitlessNumbers;

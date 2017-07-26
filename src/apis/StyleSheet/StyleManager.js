@@ -113,7 +113,8 @@ export default class StyleManager {
         if (prop !== 'pointerEvents') {
           Object.keys(cache[prop]).forEach(value => {
             const className = this.getClassName(prop, value);
-            rules.push(createCssRule(className, prop, value));
+            const rule = createCssRule(className, prop, value);
+            rules.push(rule);
           });
         }
         return rules;
