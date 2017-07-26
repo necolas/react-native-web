@@ -1,7 +1,7 @@
 // based on https://github.com/facebook/react/pull/4303/files
 
 import EventPluginHub from 'react-dom/lib/EventPluginHub';
-import normalizeNativeEvent from './normalizeNativeEvent';
+import normalizeNativeEvent from '../normalizeNativeEvent';
 import ResponderEventPlugin from 'react-dom/lib/ResponderEventPlugin';
 import ResponderTouchHistoryStore from 'react-dom/lib/ResponderTouchHistoryStore';
 
