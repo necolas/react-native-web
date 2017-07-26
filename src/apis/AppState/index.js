@@ -7,15 +7,19 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AppState
- * @flow
+ * @noflow
  */
 
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
+// Android 4.4 browser
+const isPrefixed = !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
+
 const EVENT_TYPES = ['change'];
-const VISIBILITY_CHANGE_EVENT = 'visibilitychange';
+const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';
+const VISIBILITY_STATE_PROPERTY = isPrefixed ? 'webkitVisibilityState' : 'visibilityState';
 
 const AppStates = {
   BACKGROUND: 'background',
@@ -25,14 +29,14 @@ const AppStates = {
 const listeners = [];
 
 export default class AppState {
-  static isAvailable = ExecutionEnvironment.canUseDOM && document.visibilityState;
+  static isAvailable = ExecutionEnvironment.canUseDOM && document[VISIBILITY_STATE_PROPERTY];
 
   static get currentState() {
     if (!AppState.isAvailable) {
       return AppStates.ACTIVE;
     }
 
-    switch (document.visibilityState) {
+    switch (document[VISIBILITY_STATE_PROPERTY]) {
       case 'hidden':
       case 'prerender':
       case 'unloaded':
