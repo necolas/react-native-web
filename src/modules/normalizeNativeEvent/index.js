@@ -27,8 +27,6 @@ const normalizeTouches = (touches = emptyArray) =>
       locationX: locationX,
       locationY: locationY,
       identifier: identifier,
-      offsetX: touch.offsetX,
-      offsetY: touch.offsetY,
       pageX: touch.pageX,
       pageY: touch.pageY,
       radiusX: touch.radiusX,
@@ -63,11 +61,7 @@ function normalizeTouchEvent(nativeEvent) {
   };
 
   if (changedTouches[0]) {
-    event.clientX = changedTouches[0].clientX;
-    event.clientY = changedTouches[0].clientY;
     event.identifier = changedTouches[0].identifier;
-    event.offsetX = changedTouches[0].offsetX;
-    event.offsetY = changedTouches[0].offsetY;
     event.pageX = changedTouches[0].pageX;
     event.pageY = changedTouches[0].pageY;
     event.locationX = changedTouches[0].locationX;
@@ -87,8 +81,6 @@ function normalizeMouseEvent(nativeEvent) {
       locationX: nativeEvent.clientX,
       locationY: nativeEvent.clientY,
       identifier: 0,
-      offsetX: nativeEvent.offsetX,
-      offsetY: nativeEvent.offsetY,
       pageX: nativeEvent.pageX,
       pageY: nativeEvent.pageY,
       screenX: nativeEvent.screenX,
@@ -103,8 +95,6 @@ function normalizeMouseEvent(nativeEvent) {
     identifier: touches[0].identifier,
     locationX: nativeEvent.offsetX,
     locationY: nativeEvent.offsetY,
-    offsetX: nativeEvent.offsetX,
-    offsetY: nativeEvent.offsetY,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
     preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
