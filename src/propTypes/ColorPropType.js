@@ -35,7 +35,8 @@ const colorPropType = function(isRequired, props, propName, componentName, locat
     return;
   }
 
-  if (color === 'currentcolor' || color === 'inherit') {
+  // Web supports additional color keywords and custom property values
+  if (color === 'currentcolor' || color === 'inherit' || color.indexOf('var(') === 0) {
     return;
   }
 

@@ -15,7 +15,8 @@ import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
 // Android 4.4 browser
-const isPrefixed = canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
+const isPrefixed =
+  canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
 
 const EVENT_TYPES = ['change'];
 const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';

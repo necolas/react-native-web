@@ -19,7 +19,15 @@ function StyleSheetPropType(shape: { [key: string]: ReactPropsCheckType }): Reac
     if (props[propName]) {
       // Just make a dummy prop object with only the flattened style
       newProps = {};
-      newProps[propName] = StyleSheet.flatten(props[propName]);
+      const flatStyle = StyleSheet.flatten(props[propName]);
+      // Remove custom properties from check
+      const nextStyle = Object.keys(flatStyle).reduce((acc, curr) => {
+        if (curr.indexOf('--') !== 0) {
+          acc[curr] = flatStyle[curr];
+        }
+        return acc;
+      }, {});
+      newProps[propName] = nextStyle;
     }
     return shapePropType(newProps, propName, componentName, location, ...rest);
   };

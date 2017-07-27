@@ -14,6 +14,7 @@ import UIExplorer, {
   Code,
   Description,
   DocItem,
+  ExternalLink,
   Section,
   StyleList
 } from '../../ui-explorer';
@@ -291,6 +292,12 @@ const ViewScreen = () =>
   </UIExplorer>;
 
 const stylePropTypes = [
+  {
+    label: 'web',
+    name: (
+      <ExternalLink href="https://drafts.csswg.org/css-variables/">Custom properties</ExternalLink>
+    )
+  },
   {
     name: 'alignContent',
     typeInfo: 'string'

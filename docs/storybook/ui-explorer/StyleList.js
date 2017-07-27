@@ -16,10 +16,12 @@ const StyleList = ({ stylePropTypes }) =>
         <Text style={styles.name}>
           {name}
         </Text>
-        {': '}
-        <Text style={styles.code}>
-          {typeInfo}
-        </Text>
+        {typeInfo ? ': ' : null}
+        {typeInfo
+          ? <Text style={styles.code}>
+              {typeInfo}
+            </Text>
+          : null}
       </AppText>
     )}
   </View>;

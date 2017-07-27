@@ -5,6 +5,7 @@
  */
 
 import AppText from './AppText';
+import ExternalLink from './ExternalLink';
 import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -22,14 +23,12 @@ export const Description = ({ children }) =>
 const Divider = () => <View style={styles.divider} />;
 
 const SourceLink = ({ uri }) =>
-  <AppText
-    accessibilityRole="link"
+  <ExternalLink
     href={`https://github.com/necolas/react-native-web/tree/master/docs/storybook/${uri}`}
     style={styles.link}
-    target="_blank"
   >
     View source code on GitHub
-  </AppText>;
+  </ExternalLink>;
 
 const UIExplorer = ({ children, description, sections, title, url }) =>
   <View style={styles.root}>

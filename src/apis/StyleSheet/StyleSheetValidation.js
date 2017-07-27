@@ -26,23 +26,27 @@ const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 export default class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
+      const isCustomProperty = prop.indexOf('--') === 0;
+      if (isCustomProperty) return;
+
       if (allStylePropTypes[prop] === undefined) {
         const message1 = '"' + prop + '" is not a valid style property.';
         const message2 =
           '\nValid style props: ' +
           JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
         styleError(message1, style, caller, message2);
-      }
-      const error = allStylePropTypes[prop](
-        style,
-        prop,
-        caller,
-        'prop',
-        null,
-        ReactPropTypesSecret
-      );
-      if (error) {
-        styleError(error.message, style, caller);
+      } else {
+        const error = allStylePropTypes[prop](
+          style,
+          prop,
+          caller,
+          'prop',
+          null,
+          ReactPropTypesSecret
+        );
+        if (error) {
+          styleError(error.message, style, caller);
+        }
       }
     }
   }
