@@ -10,12 +10,12 @@
  * @noflow
  */
 
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
 // Android 4.4 browser
-const isPrefixed = !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
+const isPrefixed = canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
 
 const EVENT_TYPES = ['change'];
 const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';
@@ -29,7 +29,7 @@ const AppStates = {
 const listeners = [];
 
 export default class AppState {
-  static isAvailable = ExecutionEnvironment.canUseDOM && document[VISIBILITY_STATE_PROPERTY];
+  static isAvailable = canUseDOM && document[VISIBILITY_STATE_PROPERTY];
 
   static get currentState() {
     if (!AppState.isAvailable) {
