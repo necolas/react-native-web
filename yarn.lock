@@ -976,7 +976,7 @@ camelcase@^4.0.0:
 
 caniuse-api@^2.0.0:
   version "2.0.0"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/caniuse-api/-/caniuse-api-2.0.0.tgz#b1ddb5a5966b16f48dc4998444d4bbc6c7d9d834"
+  resolved "https://registry.yarnpkg.com/caniuse-api/-/caniuse-api-2.0.0.tgz#b1ddb5a5966b16f48dc4998444d4bbc6c7d9d834"
   dependencies:
     browserslist "^2.0.0"
     caniuse-lite "^1.0.0"
