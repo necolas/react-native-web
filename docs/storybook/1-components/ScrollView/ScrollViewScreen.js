@@ -8,13 +8,13 @@ import { HorizontalExample } from './examples/Horizontal';
 import ScrollToExample from './examples/ScrollTo';
 import ScrollToEndExample from './examples/ScrollToEnd';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import UIExplorer, {
   AppText,
   Code,
   Description,
   DocItem,
   Section,
+  storiesOf,
   TextList
 } from '../../ui-explorer';
 

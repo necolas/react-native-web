@@ -4,8 +4,7 @@
 
 import React from 'react';
 import SetStringExample from './examples/SetString';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ClipboardScreen = () =>
   <UIExplorer title="Clipboard" url="apis/Clipboard">

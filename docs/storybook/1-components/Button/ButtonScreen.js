@@ -8,8 +8,14 @@ import React from 'react';
 import PropColor from './examples/PropColor';
 import PropDisabled from './examples/PropDisabled';
 import PropOnPress from './examples/PropOnPress';
-import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
-import { storiesOf } from '@kadira/storybook';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  storiesOf
+} from '../../ui-explorer';
 
 const ButtonScreen = () =>
   <UIExplorer title="Button" url="components/Button">

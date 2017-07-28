@@ -1,33 +1,36 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const DEV = process.env.NODE_ENV !== 'production';
+module.exports = (storybookBaseConfig, configType) => {
+  const DEV = configType === 'DEVELOPMENT';
 
-module.exports = {
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { cacheDirectory: true }
-      },
-      {
-        test: /\.(gif|jpe?g|png|svg)$/,
-        loader: 'url-loader',
-        query: { name: '[name].[ext]' }
-      }
-    ]
-  },
-  plugins: [
+  storybookBaseConfig.module.rules.push({
+    test: /\.js$/,
+    exclude: /node_modules/,
+    use: {
+      loader: 'babel-loader',
+      options: { cacheDirectory: true }
+    }
+  });
+
+  storybookBaseConfig.module.rules.push({
+    test: /\.(gif|jpe?g|png|svg)$/,
+    use: {
+      loader: 'url-loader',
+      options: { name: '[name].[ext]' }
+    }
+  });
+
+  storybookBaseConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.__REACT_NATIVE_DEBUG_ENABLED__': DEV
     })
-  ],
-  resolve: {
-    alias: {
-      'react-native': path.join(__dirname, '../../../src/module')
-    }
-  }
+  );
+
+  storybookBaseConfig.resolve.alias = {
+    'react-native': path.join(__dirname, '../../../src/module')
+  };
+
+  return storybookBaseConfig;
 };

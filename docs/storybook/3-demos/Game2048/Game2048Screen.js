@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '../../ui-explorer';
 import Game2048 from './Game2048';
 
 const Game2048Screen = () => <Game2048 />;

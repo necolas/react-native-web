@@ -16,8 +16,14 @@ import PropResizeMode from './examples/PropResizeMode';
 import PropSource from './examples/PropSource';
 import StaticGetSizeExample from './examples/StaticGetSize';
 import StaticPrefetchExample from './examples/StaticPrefetch';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  storiesOf
+} from '../../ui-explorer';
 
 const ImageScreen = () =>
   <UIExplorer title="Image" url="components/Image">

@@ -5,8 +5,7 @@
 /*
 import createReactClass from 'create-react-class';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { PropText, StyleList } from '../../ui-explorer';
+import UIExplorer, { PropText, storiesOf, StyleList } from '../../ui-explorer';
 import { Image, Text, View } from 'react-native';
 
 const AttributeToggler = createReactClass({

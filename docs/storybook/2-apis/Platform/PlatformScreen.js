@@ -2,9 +2,8 @@
  * @flow
  */
 
-import { storiesOf } from '@kadira/storybook';
 import React from 'react';
-import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const PlatformScreen = () =>
   <UIExplorer title="Platform" url="apis/Platform">

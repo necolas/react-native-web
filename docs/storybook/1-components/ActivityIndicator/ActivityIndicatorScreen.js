@@ -9,8 +9,7 @@ import PropColor from './examples/PropColor';
 import PropHidesWhenStopped from './examples/PropHidesWhenStopped';
 import PropSize from './examples/PropSize';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ActivityIndicatorScreen = () =>
   <UIExplorer title="ActivityIndicator" url="components/ActivityIndicator">

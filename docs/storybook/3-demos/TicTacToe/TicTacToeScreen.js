@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '../../ui-explorer';
 import TicTacToe from './TicTacToe';
 
 const TicTacToeScreen = () => <TicTacToe />;

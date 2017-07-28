@@ -5,10 +5,11 @@
  */
 
 import React from 'react';
-import { action } from '@kadira/storybook';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-const onScroll = action('ScrollView.onScroll');
+const onScroll = () => {
+  console.log('ScrollView.onScroll');
+};
 
 const VerticalExample = () =>
   <View style={styles.scrollViewContainer}>

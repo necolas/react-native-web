@@ -3,8 +3,14 @@
  */
 
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { AppText, Code, Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, {
+  AppText,
+  Code,
+  Description,
+  DocItem,
+  Section,
+  storiesOf
+} from '../../ui-explorer';
 
 const AsyncStorageScreen = () =>
   <UIExplorer title="AsyncStorage" url="apis/AsyncStorage">

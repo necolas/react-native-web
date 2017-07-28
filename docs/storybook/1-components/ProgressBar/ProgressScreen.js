@@ -8,8 +8,7 @@ import PropIndeterminate from './examples/PropIndeterminate';
 import PropProgress from './examples/PropProgress';
 import PropTrackColor from './examples/PropTrackColor';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ProgressBarScreen = () =>
   <UIExplorer title="ProgressBar" url="components/ProgressBar">

@@ -8,7 +8,6 @@ import PropPointerEvents from './examples/PropPointerEvents';
 import transformExamples from './examples/transforms';
 import ZIndexExample from './examples/ZIndex';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import UIExplorer, {
   AppText,
   Code,
@@ -16,6 +15,7 @@ import UIExplorer, {
   DocItem,
   ExternalLink,
   Section,
+  storiesOf,
   StyleList
 } from '../../ui-explorer';
 

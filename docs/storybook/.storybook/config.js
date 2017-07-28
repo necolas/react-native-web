@@ -1,6 +1,6 @@
-import { setOptions } from '@kadira/storybook-addon-options';
+import { setOptions } from '@storybook/addon-options';
 import centered from './decorator-centered';
-import { configure, addDecorator } from '@kadira/storybook';
+import { configure, addDecorator } from '@storybook/react';
 
 const context = require.context('../', true, /Screen\.js$/);
 

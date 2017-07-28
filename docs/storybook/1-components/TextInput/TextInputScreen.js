@@ -19,13 +19,13 @@ import PropSelectTextOnFocus from './examples/PropSelectTextOnFocus';
 import TextInputEvents from './examples/TextInputEvents';
 import TextInputRewrite, { TextInputRewriteInvalidCharacters } from './examples/Rewrite';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import UIExplorer, {
   AppText,
   Code,
   Description,
   DocItem,
   Section,
+  storiesOf,
   StyleList,
   TextList
 } from '../../ui-explorer';

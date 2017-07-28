@@ -8,9 +8,8 @@ import CustomStyleOverrides from './examples/CustomStyleOverrides';
 import DelayEvents from './examples/DelayEvents';
 import FeedbackEvents from './examples/FeedbackEvents';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import { TouchableHighlightDisabled } from './examples/PropDisabled';
-import UIExplorer, { AppText, Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const TouchableHighlightScreen = () =>
   <UIExplorer title="TouchableHighlight" url="components/Touchable">

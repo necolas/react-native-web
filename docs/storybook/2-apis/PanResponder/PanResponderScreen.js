@@ -3,9 +3,8 @@
  */
 
 import DraggableCircleExample from './examples/DraggableCircle';
-import { storiesOf } from '@kadira/storybook';
 import React from 'react';
-import UIExplorer, { AppText, Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const PanResponderScreen = () =>
   <UIExplorer title="PanResponder" url="apis/PanResponder">

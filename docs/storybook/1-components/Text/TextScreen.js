@@ -8,13 +8,13 @@ import PropChildren from './examples/PropChildren';
 import PropNumberOfLines from './examples/PropNumberOfLines';
 import PropOnPress from './examples/PropOnPress';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
 import UIExplorer, {
   AppText,
   Code,
   Description,
   DocItem,
   Section,
+  storiesOf,
   StyleList
 } from '../../ui-explorer';
 

@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import { action } from '@kadira/storybook';
 import {
   StyleSheet,
   View,
@@ -12,6 +11,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native';
+
+const action = msg => () => {
+  console.log(msg);
+};
 
 class TouchableHighlightDisabled extends React.Component {
   render() {

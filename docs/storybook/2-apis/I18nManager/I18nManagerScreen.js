@@ -6,8 +6,7 @@
 
 import RTLToggle from './examples/RTLToggle';
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import UIExplorer, { Description, DocItem, Section } from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const I18nManagerScreen = () =>
   <UIExplorer title="I18nManager" url="apis/I18nManager">
