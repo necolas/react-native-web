@@ -185,6 +185,7 @@ const TouchableWithoutFeedback = createReactClass({
       ...other,
       accessible: this.props.accessible !== false,
       children,
+      onClick: this.touchableHandlePress,
       onKeyDown: this.touchableHandleKeyEvent,
       onKeyUp: this.touchableHandleKeyEvent,
       onResponderGrant: this.touchableHandleResponderGrant,
