@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  */
 
 import debounce from 'debounce';
+import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component } from 'react';
@@ -67,25 +70,23 @@ export default class ScrollViewBase extends Component {
     scrollEventThrottle: 0
   };
 
-  constructor(props) {
-    super(props);
-    this._debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
-    this._state = { isScrolling: false };
-  }
+  _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
+  _state = { isScrolling: false, scrollLastTick: 0 };
 
-  _handlePreventableScrollEvent = handler => {
-    return e => {
-      if (!this.props.scrollEnabled) {
-        e.preventDefault();
-      } else {
+  _createPreventableScrollHandler = (handler: Function) => {
+    return (e: Object) => {
+      if (this.props.scrollEnabled) {
         if (handler) {
           handler(e);
         }
+      } else {
+        // To disable scrolling in all browsers except Chrome
+        e.preventDefault();
       }
     };
   };
 
-  _handleScroll = e => {
+  _handleScroll = (e: SyntheticEvent) => {
     e.persist();
     e.stopPropagation();
     const { scrollEventThrottle } = this.props;
@@ -102,12 +103,12 @@ export default class ScrollViewBase extends Component {
     }
   };
 
-  _handleScrollStart(e) {
+  _handleScrollStart(e: Object) {
     this._state.isScrolling = true;
     this._state.scrollLastTick = Date.now();
   }
 
-  _handleScrollTick(e) {
+  _handleScrollTick(e: Object) {
     const { onScroll } = this.props;
     this._state.scrollLastTick = Date.now();
     if (onScroll) {
@@ -115,7 +116,7 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _handleScrollEnd(e) {
+  _handleScrollEnd(e: Object) {
     const { onScroll } = this.props;
     this._state.isScrolling = false;
     if (onScroll) {
@@ -123,20 +124,21 @@ export default class ScrollViewBase extends Component {
     }
   }
 
-  _shouldEmitScrollEvent(lastTick, eventThrottle) {
+  _shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
     const timeSinceLastTick = Date.now() - lastTick;
     return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
   }
 
   render() {
     const {
+      scrollEnabled,
+      style,
       /* eslint-disable */
       onMomentumScrollBegin,
       onMomentumScrollEnd,
       onScrollBeginDrag,
       onScrollEndDrag,
       removeClippedSubviews,
-      scrollEnabled,
       scrollEventThrottle,
       showsHorizontalScrollIndicator,
       showsVerticalScrollIndicator,
@@ -148,9 +150,19 @@ export default class ScrollViewBase extends Component {
       <View
         {...other}
         onScroll={this._handleScroll}
-        onTouchMove={this._handlePreventableScrollEvent(this.props.onTouchMove)}
-        onWheel={this._handlePreventableScrollEvent(this.props.onWheel)}
+        onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
+        onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
+        style={[style, !scrollEnabled && styles.scrollDisabled]}
       />
     );
   }
 }
+
+// Chrome doesn't support e.preventDefault in this case; touch-action must be
+// used to disable scrolling.
+// https://developers.google.com/web/updates/2017/01/scrolling-intervention
+const styles = StyleSheet.create({
+  scrollDisabled: {
+    touchAction: 'none'
+  }
+});

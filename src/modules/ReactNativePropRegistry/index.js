@@ -1,16 +1,13 @@
-/* eslint-disable */
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule ReactNativePropRegistry
  * @flow
  */
-'use strict';
 
 const emptyObject = {};
 const objects = {};
@@ -19,9 +16,9 @@ let uniqueID = 1;
 
 const createKey = id => `${prefix}-${id}`;
 
-class ReactNativePropRegistry {
+export default class ReactNativePropRegistry {
   static register(object: Object): number {
-    let id = uniqueID++;
+    const id = uniqueID++;
     if (process.env.NODE_ENV !== 'production') {
       Object.freeze(object);
     }
@@ -45,5 +42,3 @@ class ReactNativePropRegistry {
     return object;
   }
 }
-
-module.exports = ReactNativePropRegistry;

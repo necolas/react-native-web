@@ -1,8 +1,12 @@
 /**
- * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule NativeMethodsMixin
  * @flow
  */
 
@@ -14,6 +18,29 @@ import UIManager from '../../apis/UIManager';
 
 const hyphenPattern = /-([a-z])/g;
 const toCamelCase = str => str.replace(hyphenPattern, m => m[1].toUpperCase());
+
+type MeasureOnSuccessCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  pageX: number,
+  pageY: number
+) => void;
+
+type MeasureInWindowOnSuccessCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) => void;
+
+type MeasureLayoutOnSuccessCallback = (
+  left: number,
+  top: number,
+  width: number,
+  height: number
+) => void;
 
 const NativeMethodsMixin = {
   /**
@@ -34,7 +61,7 @@ const NativeMethodsMixin = {
   /**
    * Determines the position and dimensions of the view
    */
-  measure(callback) {
+  measure(callback: MeasureOnSuccessCallback) {
     UIManager.measure(findNodeHandle(this), callback);
   },
 
@@ -53,14 +80,18 @@ const NativeMethodsMixin = {
    * Note that these measurements are not available until after the rendering
    * has been completed.
    */
-  measureInWindow(callback) {
+  measureInWindow(callback: MeasureInWindowOnSuccessCallback) {
     UIManager.measureInWindow(findNodeHandle(this), callback);
   },
 
   /**
    * Measures the view relative to another view (usually an ancestor)
    */
-  measureLayout(relativeToNativeNode, onSuccess, onFail) {
+  measureLayout(
+    relativeToNativeNode: Object,
+    onSuccess: MeasureLayoutOnSuccessCallback,
+    onFail: () => void
+  ) {
     UIManager.measureLayout(findNodeHandle(this), relativeToNativeNode, onFail, onSuccess);
   },
 
@@ -89,11 +120,11 @@ const NativeMethodsMixin = {
     const domStyleProps = { classList, style };
 
     // Next DOM state
-    const domProps = createDOMProps(i18nStyle(nativeProps), style =>
+    const domProps = createDOMProps(null, i18nStyle(nativeProps), style =>
       StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);
   }
 };
 
-module.exports = NativeMethodsMixin;
+export default NativeMethodsMixin;

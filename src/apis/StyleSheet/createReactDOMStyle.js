@@ -1,12 +1,20 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * The browser implements the CSS cascade, where the order of properties is a
- * factor in determining which styles to paint. React Native is different in
- * giving precedence to the more specific styles. For example, the value of
- * `paddingTop` takes precedence over that of `padding`.
+ * factor in determining which styles to paint. React Native is different. It
+ * gives giving precedence to the more specific style property. For example,
+ * the value of `paddingTop` takes precedence over that of `padding`.
  *
  * This module creates mutally exclusive style declarations by expanding all of
  * React Native's supported shortform properties (e.g. `padding`) to their
  * longfrom equivalents.
+ *
+ * @noflow
  */
 
 import normalizeValue from './normalizeValue';
@@ -138,9 +146,14 @@ const createReducer = (style, styleProps) => {
     switch (prop) {
       case 'display': {
         resolvedStyle.display = value;
-        // default of 'flexShrink:0' has lowest precedence
-        if (style.display === 'flex' && style.flex == null && style.flexShrink == null) {
-          resolvedStyle.flexShrink = 0;
+        // defaults of 'flexBasis:auto' and 'flexShrink:0' have lowest precedence
+        if (style.display === 'flex') {
+          if (style.flexShrink == null) {
+            resolvedStyle.flexShrink = 0;
+          }
+          if (style.flexBasis == null) {
+            resolvedStyle.flexBasis = 'auto';
+          }
         }
         break;
       }
@@ -153,9 +166,17 @@ const createReducer = (style, styleProps) => {
         break;
       }
       case 'flex': {
-        resolvedStyle.flexGrow = value;
-        resolvedStyle.flexShrink = 1;
-        resolvedStyle.flexBasis = 'auto';
+        if (value > 0) {
+          resolvedStyle.flexGrow = value;
+          resolvedStyle.flexShrink = 1;
+          resolvedStyle.flexBasis = '0%';
+        } else if (value === 0) {
+          resolvedStyle.flexGrow = 0;
+          resolvedStyle.flexShrink = 0;
+        } else if (value === -1) {
+          resolvedStyle.flexGrow = 0;
+          resolvedStyle.flexShrink = 1;
+        }
         break;
       }
       case 'shadowColor':
@@ -223,4 +244,4 @@ const createReactDOMStyle = style => {
   return resolvedStyle;
 };
 
-module.exports = createReactDOMStyle;
+export default createReactDOMStyle;

@@ -1,9 +1,10 @@
 # StyleSheet
 
 The `StyleSheet` abstraction converts predefined styles to (vendor-prefixed)
-CSS without requiring a compile-time step. Some styles cannot be resolved
-outside of the render loop and are applied as inline styles. Read more about
-[how to style your application](../guides/style.md).
+CSS without requiring a compile-time step. Styles that cannot be resolved
+outside of the render loop (e.g., dynamic positioning) are usually applied as
+inline styles. Read more about [how to style your
+application](../guides/style.md).
 
 ## Methods
 
@@ -15,9 +16,10 @@ Each key of the object passed to `create` must define a style object.
 
 Flattens an array of styles into a single style object.
 
-**renderToString**: function
+(web) **getStyleSheets**: function
 
-Returns a string of the stylesheet for use in server-side rendering.
+Returns an array of stylesheets (`{ id, textContent }`). Useful for
+compile-time or server-side rendering.
 
 ## Properties
 

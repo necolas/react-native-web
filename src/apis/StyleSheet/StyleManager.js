@@ -1,7 +1,16 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import generateCss from './generateCss';
-import hash from './hash';
-import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
+import hash from '../../vendor/hash';
 import staticCss from './staticCss';
 
 const emptyObject = {};
@@ -25,15 +34,19 @@ const pointerEvents = {
   none: createClassName('pointerEvents', 'none')
 };
 
+// See #513
 const pointerEventsCss =
-  `.${pointerEvents.auto}{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxNone}{pointer-events:none;}\n` +
-  `.${pointerEvents.boxNone} *{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxOnly}{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxOnly} *{pointer-events:none;}\n` +
-  `.${pointerEvents.none}{pointer-events:none;}`;
+  `.${pointerEvents.auto}{pointer-events:auto !important;}\n` +
+  `.${pointerEvents.boxOnly}{pointer-events:auto !important;}\n` +
+  `.${pointerEvents.none}{pointer-events:none !important;}\n` +
+  `.${pointerEvents.boxNone}{pointer-events:none !important;}\n` +
+  `.${pointerEvents.boxNone} > *{pointer-events:auto;}\n` +
+  `.${pointerEvents.boxOnly} > *{pointer-events:none;}`;
 
-class StyleManager {
+export default class StyleManager {
+  cache = null;
+  mainSheet = null;
+
   constructor() {
     // custom pointer event values are implemented using descendent selectors,
     // so we manually create the CSS and pre-register the declarations
@@ -84,6 +97,15 @@ class StyleManager {
   }
 
   getStyleSheetHtml() {
+    const styleSheets = this.getStyleSheets();
+    return styleSheets
+      .map(sheet => {
+        return `<style id="${sheet.id}">\n${sheet.textContent}\n</style>`;
+      })
+      .join('\n');
+  }
+
+  getStyleSheets() {
     const cache = this.cache.byProp;
 
     const mainSheetTextContext = Object.keys(cache)
@@ -98,9 +120,16 @@ class StyleManager {
       }, [])
       .join('\n');
 
-    const staticSheet = `<style id="react-native-stylesheet-static">\n${staticCss}\n${pointerEventsCss}\n</style>`;
-    const mainSheet = `<style id="${STYLE_ELEMENT_ID}">\n${mainSheetTextContext}\n</style>`;
-    return `${staticSheet}\n${mainSheet}`;
+    return [
+      {
+        id: 'react-native-stylesheet-static',
+        textContent: `${staticCss}\n${pointerEventsCss}`
+      },
+      {
+        id: STYLE_ELEMENT_ID,
+        textContent: `${mainSheetTextContext}`
+      }
+    ];
   }
 
   setDeclaration(prop, value) {
@@ -109,14 +138,12 @@ class StyleManager {
       className = createClassName(prop, value);
       this._addToCache(className, prop, value);
       if (canUseDOM) {
-        requestAnimationFrame(() => {
-          const sheet = this.mainSheet.sheet;
-          // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
-          if (this.mainSheet.textContent.indexOf(className) === -1) {
-            const rule = createCssRule(className, prop, value);
-            sheet.insertRule(rule, sheet.cssRules.length);
-          }
-        });
+        const sheet = this.mainSheet.sheet;
+        // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
+        if (this.mainSheet.textContent.indexOf(className) === -1) {
+          const rule = createCssRule(className, prop, value);
+          sheet.insertRule(rule, sheet.cssRules.length);
+        }
       }
     }
     return className;
@@ -131,5 +158,3 @@ class StyleManager {
     cache.byClassName[className] = { prop, value };
   }
 }
-
-module.exports = StyleManager;

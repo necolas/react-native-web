@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import hyphenateStyleName from 'hyphenate-style-name';
 import mapKeyValue from '../../modules/mapKeyValue';
 import normalizeValue from './normalizeValue';
@@ -21,4 +31,4 @@ const createDeclarationString = (prop, val) => {
 const generateCss = style =>
   mapKeyValue(prefixStyles(style), createDeclarationString).sort().join(';');
 
-module.exports = generateCss;
+export default generateCss;

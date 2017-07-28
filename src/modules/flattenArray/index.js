@@ -15,4 +15,4 @@ function flattenArray(array) {
   return flattenDown(array, []);
 }
 
-module.exports = flattenArray;
+export default flattenArray;

@@ -1,28 +1,44 @@
+/**
+ * Copyright (c) 2015-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleRegistry from '../../apis/StyleSheet/registry';
 
 const emptyObject = {};
 
-const styles = StyleSheet.create({
-  buttonReset: {
+const resetStyles = StyleSheet.create({
+  ariaButton: {
+    cursor: 'pointer'
+  },
+  button: {
     appearance: 'none',
     backgroundColor: 'transparent',
     color: 'inherit',
     font: 'inherit',
     textAlign: 'inherit'
   },
-  linkReset: {
+  heading: {
+    font: 'inherit'
+  },
+  link: {
     backgroundColor: 'transparent',
     color: 'inherit',
     textDecorationLine: 'none'
   },
-  listReset: {
+  list: {
     listStyle: 'none'
   }
 });
 
-const pointerEventStyles = StyleSheet.create({
+const pointerEventsStyles = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
   },
@@ -37,20 +53,26 @@ const pointerEventStyles = StyleSheet.create({
   }
 });
 
-const resolver = style => StyleRegistry.resolve(style);
+const defaultStyleResolver = style => StyleRegistry.resolve(style);
 
-const createDOMProps = (rnProps, resolveStyle = resolver) => {
-  const props = rnProps || emptyObject;
+const createDOMProps = (component, props, styleResolver) => {
+  if (!styleResolver) {
+    styleResolver = defaultStyleResolver;
+  }
+
+  if (!props) {
+    props = emptyObject;
+  }
+
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessible,
     importantForAccessibility,
     pointerEvents,
-    style: rnStyle,
+    style: providedStyle,
     testID,
-    type,
     /* eslint-disable */
+    accessible,
     accessibilityComponentType,
     accessibilityRole,
     accessibilityTraits,
@@ -58,51 +80,52 @@ const createDOMProps = (rnProps, resolveStyle = resolver) => {
     ...domProps
   } = props;
 
+  const isDisabled = AccessibilityUtil.isDisabled(props);
   const role = AccessibilityUtil.propsToAriaRole(props);
-  const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
+  const tabIndex = AccessibilityUtil.propsToTabIndex(props);
   const reactNativeStyle = [
-    (role === 'button' && styles.buttonReset) ||
-      (role === 'link' && styles.linkReset) ||
-      (role === 'list' && styles.listReset),
-    rnStyle,
-    pointerEventStyle
+    component === 'a' && resetStyles.link,
+    component === 'button' && resetStyles.button,
+    role === 'heading' && resetStyles.heading,
+    component === 'ul' && resetStyles.list,
+    role === 'button' && !isDisabled && resetStyles.ariaButton,
+    providedStyle,
+    pointerEvents && pointerEventsStyles[pointerEvents]
   ];
-  const { className, style } = resolveStyle(reactNativeStyle) || emptyObject;
+  const { className, style } = styleResolver(reactNativeStyle);
 
-  if (accessible === true) {
-    domProps.tabIndex = AccessibilityUtil.propsToTabIndex(props);
-  }
-  if (typeof accessibilityLabel === 'string') {
-    domProps['aria-label'] = accessibilityLabel;
-  }
-  if (typeof accessibilityLiveRegion === 'string') {
-    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
-  }
-  if (typeof className === 'string' && className !== '') {
-    domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
+  if (isDisabled) {
+    domProps['aria-disabled'] = true;
   }
   if (importantForAccessibility === 'no-hide-descendants') {
     domProps['aria-hidden'] = true;
   }
-  if (typeof role === 'string') {
-    domProps.role = role;
-    if (role === 'button') {
-      domProps.type = 'button';
-    } else if (role === 'link' && domProps.target === '_blank') {
-      domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
-    }
+  if (accessibilityLabel && accessibilityLabel.constructor === String) {
+    domProps['aria-label'] = accessibilityLabel;
   }
-  if (style != null) {
+  if (accessibilityLiveRegion && accessibilityLiveRegion.constructor === String) {
+    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
+  }
+  if (className && className.constructor === String) {
+    domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
+  }
+  if (component === 'a' && domProps.target === '_blank') {
+    domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
+  }
+  if (role && role.constructor === String && role !== 'label') {
+    domProps.role = role;
+  }
+  if (style) {
     domProps.style = style;
   }
-  if (typeof testID === 'string') {
-    domProps['data-testid'] = testID;
+  if (tabIndex) {
+    domProps.tabIndex = tabIndex;
   }
-  if (typeof type === 'string') {
-    domProps.type = type;
+  if (testID && testID.constructor === String) {
+    domProps['data-testid'] = testID;
   }
 
   return domProps;
 };
 
-module.exports = createDOMProps;
+export default createDOMProps;

@@ -1,6 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/ActivityIndicator default render 1`] = `
+exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="rn-alignItems-1awozwy rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-justifyContent-1777fci rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+  role="progressbar"
+>
+  <div
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationPlayState-1abnn5w rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-z80fyv rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-visibility-11j9u27 rn-width-19wmn03"
+  >
+    <svg
+      height="100%"
+      viewbox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;opacity:0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;stroke-dasharray:80;stroke-dashoffset:60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -36,7 +72,7 @@ exports[`components/ActivityIndicator default render 1`] = `
 </div>
 `;
 
-exports[`components/ActivityIndicator other render 1`] = `
+exports[`components/ActivityIndicator prop "color" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -44,7 +80,152 @@ exports[`components/ActivityIndicator other render 1`] = `
   role="progressbar"
 >
   <div
-    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationPlayState-1abnn5w rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-1r8g8re rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-width-1acpoxo"
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-z80fyv rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-width-19wmn03"
+  >
+    <svg
+      height="100%"
+      viewbox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:red;opacity:0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:red;stroke-dasharray:80;stroke-dashoffset:60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="rn-alignItems-1awozwy rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-justifyContent-1777fci rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+  role="progressbar"
+>
+  <div
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationPlayState-1abnn5w rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-z80fyv rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-width-19wmn03"
+  >
+    <svg
+      height="100%"
+      viewbox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;opacity:0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;stroke-dasharray:80;stroke-dashoffset:60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="rn-alignItems-1awozwy rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-justifyContent-1777fci rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+  role="progressbar"
+>
+  <div
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationPlayState-1abnn5w rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-z80fyv rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-visibility-11j9u27 rn-width-19wmn03"
+  >
+    <svg
+      height="100%"
+      viewbox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;opacity:0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;stroke-dasharray:80;stroke-dashoffset:60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="rn-alignItems-1awozwy rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-justifyContent-1777fci rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+  role="progressbar"
+>
+  <div
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-height-1r8g8re rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-width-1acpoxo"
+  >
+    <svg
+      height="100%"
+      viewbox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;opacity:0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke:#1976D2;stroke-dasharray:80;stroke-dashoffset:60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "size" is a number 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="rn-alignItems-1awozwy rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-justifyContent-1777fci rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+  role="progressbar"
+>
+  <div
+    class="rn-alignItems-1oszu61 rn-animationDuration-17bb2tj rn-animationIterationCount-1muvv40 rn-animationName-dozj4v rn-animationTimingFunction-1ldzwu0 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim"
+    style="height:30px;width:30px;"
   >
     <svg
       height="100%"

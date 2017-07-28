@@ -1,5 +1,6 @@
+
 import React, { Component } from 'react';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import ModalPropTypes from './ModalPropTypes';
 import RenderToTopLayer from './RenderToTopLayer';
 import View from '../View';
@@ -18,11 +19,11 @@ const StyleComponent = () =>
           transition: transform 500ms ease-in-out;
         }
 
-        .slide-leave {
+        .slide-exit {
           transform: translate(0%);
         }
 
-        .slide-leave.slide-leave-active {
+        .slide-exit.slide-exit-active {
           transform: translate(-100%);
           transition: transform 300ms ease-in-out;
         }
@@ -36,11 +37,11 @@ const StyleComponent = () =>
           transition: opacity 500ms ease-in;
         }
 
-        .fade-leave {
+        .fade-exit {
           opacity: 1;
         }
 
-        .fade-leave.fade-leave-active {
+        .fade-exit.fade-exit-active {
           opacity: 0.01;
           transition: opacity 300ms ease-in;
         }
@@ -61,7 +62,7 @@ class Modal extends Component {
 
   render() {
     const { animationType, transparent, visible, onShow } = this.props;
-    const contentStyles = [ styles.modalConent ];
+    const contentStyles = [ styles.modalContent ];
     contentStyles.push(transparent?styles.transparent:styles.noTransparent);
     return (
       <RenderToTopLayer
@@ -73,24 +74,23 @@ class Modal extends Component {
       >
         <View>
           <StyleComponent />
-          <CSSTransitionGroup component="div"
-            transitionEnter={animationType !== 'none'}
-            transitionEnterTimeout={500}
-            transitionLeave={animationType !== 'none'}
-            transitionLeaveTimeout={300}
-            transitionName={animationType}
+          <TransitionGroup 
+            classNames={animationType}
+            component="div"
+            enter={animationType !== 'none'}
+            exit={animationType !== 'none'}
           >
             {visible && React.Children.map(this.props.children, (child) => {
               return <View style={contentStyles}>{child}</View>;
             })}
-          </CSSTransitionGroup>
+          </TransitionGroup>
         </View>
       </RenderToTopLayer>)
   }
 }
 
 const styles = StyleSheet.create({
-  modalConent: {
+  modalContent: {
     flexDirection: 'column', 
     display: 'flex', 
     position: 'fixed', 

@@ -1,41 +1,37 @@
-/* eslint-disable */
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TouchableOpacity
  * @noflow
  */
-'use strict';
 
-// Note (avik): add @flow when Flow supports spread properties in propTypes
-
-var NativeMethodsMixin = require('../../modules/NativeMethodsMixin');
-var React = require('react');
-var StyleSheet = require('../../apis/StyleSheet');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var TouchableWithoutFeedback = require('./TouchableWithoutFeedback');
-var View = require('../View');
+import applyNativeMethods from '../../modules/applyNativeMethods';
 import createReactClass from 'create-react-class';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
 import { number } from 'prop-types';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import Touchable from './Touchable';
+import TouchableWithoutFeedback from './TouchableWithoutFeedback';
+import View from '../View';
 
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var flattenStyle = StyleSheet.flatten;
+const flattenStyle = StyleSheet.flatten;
 
 type Event = Object;
 
-var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, dimming it.
- * This is done without actually changing the view hierarchy, and in general is
- * easy to add to an app without weird side-effects.
+ *
+ * Opacity is controlled by wrapping the children in a View, which is
+ * added to the view hiearchy. Be aware that this can affect layout.
  *
  * Example:
  *
@@ -45,15 +41,18 @@ var PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  *     <TouchableOpacity onPress={this._onPressButton}>
  *       <Image
  *         style={styles.button}
- *         source={require('./myButton')}
+ *         source={require('./myButton.png')}
  *       />
  *     </TouchableOpacity>
  *   );
  * },
  * ```
  */
-var TouchableOpacity = createReactClass({
-  mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
+
+/* eslint-disable react/prefer-es6-class */
+const TouchableOpacity = createReactClass({
+  displayName: 'TouchableOpacity',
+  mixins: [Touchable.Mixin],
 
   propTypes: {
     ...TouchableWithoutFeedback.propTypes,
@@ -84,11 +83,14 @@ var TouchableOpacity = createReactClass({
     ensurePositiveDelayProps(nextProps);
   },
 
-  setOpacityTo: function(value: number, duration: number) {
+  /**
+   * Animate the touchable to a new opacity.
+   */
+  setOpacityTo: function(value: number, duration: ?number) {
     this.setNativeProps({
       style: {
         opacity: value,
-        transitionDuration: `${duration / 1000}s`
+        transitionDuration: duration ? `${duration / 1000}s` : '0s'
       }
     });
   },
@@ -144,20 +146,16 @@ var TouchableOpacity = createReactClass({
   },
 
   _opacityInactive: function(duration: number) {
-    var childStyle = flattenStyle(this.props.style) || {};
-    this.setOpacityTo(childStyle.opacity === undefined ? 1 : childStyle.opacity, duration);
+    this.setOpacityTo(this._getChildStyleOpacityWithDefault(), duration);
   },
 
   _opacityFocused: function() {
     this.setOpacityTo(this.props.focusedOpacity);
   },
 
-  _onKeyEnter(e, callback) {
-    var ENTER = 13;
-    if ((e.type === 'keypress' ? e.charCode : e.keyCode) === ENTER) {
-      callback && callback(e);
-      e.stopPropagation();
-    }
+  _getChildStyleOpacityWithDefault: function() {
+    const childStyle = flattenStyle(this.props.style) || {};
+    return childStyle.opacity === undefined ? 1 : childStyle.opacity;
   },
 
   render: function() {
@@ -181,22 +179,15 @@ var TouchableOpacity = createReactClass({
       <View
         {...other}
         accessible={this.props.accessible !== false}
-        style={[styles.root, this.props.disabled && styles.disabled, this.props.style]}
-        onKeyDown={e => {
-          this._onKeyEnter(e, this.touchableHandleActivePressIn);
-        }}
-        onKeyPress={e => {
-          this._onKeyEnter(e, this.touchableHandlePress);
-        }}
-        onKeyUp={e => {
-          this._onKeyEnter(e, this.touchableHandleActivePressOut);
-        }}
-        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
-        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+        onKeyDown={this.touchableHandleKeyEvent}
+        onKeyUp={this.touchableHandleKeyEvent}
         onResponderGrant={this.touchableHandleResponderGrant}
         onResponderMove={this.touchableHandleResponderMove}
         onResponderRelease={this.touchableHandleResponderRelease}
         onResponderTerminate={this.touchableHandleResponderTerminate}
+        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
+        style={[styles.root, !this.props.disabled && styles.actionable, this.props.style]}
       >
         {this.props.children}
         {Touchable.renderDebugView({ color: 'blue', hitSlop: this.props.hitSlop })}
@@ -205,16 +196,16 @@ var TouchableOpacity = createReactClass({
   }
 });
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   root: {
-    cursor: 'pointer',
     transitionProperty: 'opacity',
     transitionDuration: '0.15s',
     userSelect: 'none'
   },
-  disabled: {
-    cursor: 'default'
+  actionable: {
+    cursor: 'pointer',
+    touchAction: 'manipulate'
   }
 });
 
-module.exports = TouchableOpacity;
+export default applyNativeMethods(TouchableOpacity);

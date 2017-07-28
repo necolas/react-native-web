@@ -3,10 +3,13 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule AppRegistry
  * @flow
  */
 
-import { Component } from 'react';
 import invariant from 'fbjs/lib/invariant';
 import { unmountComponentAtNode } from 'react-dom';
 import renderApplication, { getApplication } from './renderApplication';
@@ -14,9 +17,9 @@ import renderApplication, { getApplication } from './renderApplication';
 const emptyObject = {};
 const runnables = {};
 
-type ComponentProvider = () => Component<any, any, any>;
+export type ComponentProvider = () => ReactClass<any>;
 
-type AppConfig = {
+export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
   run?: Function
@@ -25,7 +28,7 @@ type AppConfig = {
 /**
  * `AppRegistry` is the JS entry point to running all React Native apps.
  */
-class AppRegistry {
+export default class AppRegistry {
   static getAppKeys(): Array<string> {
     return Object.keys(runnables);
   }
@@ -91,5 +94,3 @@ class AppRegistry {
     unmountComponentAtNode(rootTag);
   }
 }
-
-module.exports = AppRegistry;

@@ -1,10 +1,12 @@
 /* eslint-env jasmine, jest */
 
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import Image from '../';
 import ImageUriCache from '../ImageUriCache';
 import React from 'react';
-import { mount, render } from 'enzyme';
+import { mount, render, shallow } from 'enzyme';
 
+const originalCanUseDOM = ExecutionEnvironment.canUseDOM;
 const originalImage = window.Image;
 
 describe('components/Image', () => {
@@ -22,7 +24,10 @@ describe('components/Image', () => {
   });
 
   test('prop "accessibilityLabel"', () => {
-    const component = render(<Image accessibilityLabel="accessibilityLabel" />);
+    const defaultSource = { uri: 'https://google.com/favicon.ico' };
+    const component = render(
+      <Image accessibilityLabel="accessibilityLabel" defaultSource={defaultSource} />
+    );
     expect(component).toMatchSnapshot();
   });
 
@@ -74,6 +79,14 @@ describe('components/Image', () => {
     });
   });
 
+  test('prop "draggable"', () => {
+    const defaultSource = { uri: 'https://google.com/favicon.ico' };
+    const component = shallow(<Image defaultSource={defaultSource} />);
+    expect(component.find('img').prop('draggable')).toBeUndefined();
+    component.setProps({ defaultSource, draggable: false });
+    expect(component.find('img').prop('draggable')).toBe(false);
+  });
+
   describe('prop "resizeMode"', () => {
     [
       Image.resizeMode.contain,
@@ -113,12 +126,27 @@ describe('components/Image', () => {
       ImageUriCache.remove(uriTwo);
       expect(component.render().find('img').attr('src')).toBe(uriTwo);
     });
+
+    test('is set immediately when rendered on the server', () => {
+      ExecutionEnvironment.canUseDOM = false;
+      const uri = 'https://google.com/favicon.ico';
+      const component = render(<Image source={{ uri }} />);
+      expect(component.find('img').attr('src')).toBe(uri);
+      expect(ImageUriCache.has(uri)).toBe(true);
+      ExecutionEnvironment.canUseDOM = originalCanUseDOM;
+    });
   });
 
   describe('prop "style"', () => {
     test('correctly supports "resizeMode" property', () => {
       const component = render(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
       expect(component).toMatchSnapshot();
+    });
+
+    test('removes other unsupported View styles', () => {
+      const component = shallow(<Image style={{ overlayColor: 'red', tintColor: 'blue' }} />);
+      expect(component.props().style.overlayColor).toBeUndefined();
+      expect(component.props().style.tintColor).toBeUndefined();
     });
   });
 

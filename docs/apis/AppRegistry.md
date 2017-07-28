@@ -3,8 +3,7 @@
 `AppRegistry` is the control point for registering, running, prerendering, and
 unmounting all apps. App root components should register themselves with
 `AppRegistry.registerComponent`. Apps can be run by invoking
-`AppRegistry.runApplication` (see the [client and server rendering
-guide](../guides/rendering.md) for more details).
+`AppRegistry.runApplication` (see the [getting started guide](../guides/getting-started.md) for more details).
 
 To "stop" an application when a view should be destroyed, call
 `AppRegistry.unmountApplicationComponentAtRootTag` with the tag that was passed
@@ -15,8 +14,7 @@ into `runApplication`. These should always be used as a pair.
 (web) static **getApplication**(appKey:string, appParameters: object)
 
 Returns the given application element. Use this for server-side rendering.
-Return object is of type `{ element: ReactElement; stylesheet: ReactElement }`.
-It's recommended that you use `sheetsheet` to render the style sheet in an app
+Return object is of type `{ element: ReactElement; stylesheets: [ ReactElement ] }`.
 
 static **registerConfig**(config: Array<AppConfig>)
 
@@ -41,6 +39,9 @@ static **runApplication**(appKey: string, appParameters?: object)
 Runs the application that was registered under `appKey`. The `appParameters`
 must include the `rootTag` into which the application is rendered, and
 optionally any `initialProps`.
+
+On web, if the `rootTag` is a sub-section of your application it should be
+styled as `position:relative` and given an explicit height.
 
 static **unmountApplicationComponentAtRootTag**(rootTag: HTMLElement)
 

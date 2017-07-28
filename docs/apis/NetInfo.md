@@ -32,7 +32,7 @@ static **removeEventListener**(eventName: ChangeEventName, handler: Function)
 **isConnected**: bool = true
 
 Available on all user agents. Asynchronously fetch a boolean to determine
-internet connectivity.
+internet connectivity. Use this if you are only interested with whether the device has internet connectivity.
 
 **isConnected.addEventListener**(eventName: ChangeEventName, handler: Function)
 

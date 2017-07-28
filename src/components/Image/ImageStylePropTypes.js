@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
 import ImageResizeMode from './ImageResizeMode';
@@ -6,7 +10,7 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 import { number, oneOf, string } from 'prop-types';
 
-module.exports = {
+const ImageStylePropTypes = {
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...ShadowPropTypes,
@@ -24,3 +28,5 @@ module.exports = {
    */
   boxShadow: string
 };
+
+export default ImageStylePropTypes;

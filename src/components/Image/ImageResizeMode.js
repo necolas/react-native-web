@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 const ImageResizeMode = {
   center: 'center',
   contain: 'contain',
@@ -7,4 +11,4 @@ const ImageResizeMode = {
   stretch: 'stretch'
 };
 
-module.exports = ImageResizeMode;
+export default ImageResizeMode;

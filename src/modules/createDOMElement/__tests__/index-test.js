@@ -1,110 +1,55 @@
 /* eslint-env jasmine, jest */
 
 import createDOMElement from '..';
-import { render } from 'enzyme';
+import { shallow, render } from 'enzyme';
 
 describe('modules/createDOMElement', () => {
-  test('renders correct DOM element', () => {
+  test('it renders different DOM elements', () => {
     let component = render(createDOMElement('span'));
     expect(component).toMatchSnapshot();
     component = render(createDOMElement('main'));
     expect(component).toMatchSnapshot();
   });
 
-  test('prop "accessibilityLabel"', () => {
-    const accessibilityLabel = 'accessibilityLabel';
-    const component = render(createDOMElement('span', { accessibilityLabel }));
-    expect(component).toMatchSnapshot();
+  test('it normalizes event.nativeEvent', done => {
+    const onClick = e => {
+      e.nativeEvent.timestamp = 1496876171255;
+      expect(e.nativeEvent).toMatchSnapshot();
+      done();
+    };
+    const component = shallow(createDOMElement('span', { onClick }));
+    component.find('span').simulate('click', {
+      nativeEvent: {
+        preventDefault() {},
+        stopImmediatePropagation() {},
+        stopPropagation() {}
+      }
+    });
   });
 
-  test('prop "accessibilityLiveRegion"', () => {
-    const component = render(createDOMElement('span', { accessibilityLiveRegion: 'none' }));
-    expect(component).toMatchSnapshot();
-  });
-
-  describe('prop "accessibilityRole"', () => {
-    test('roles', () => {
-      const component = render(createDOMElement('span', { accessibilityRole: 'banner' }));
-      expect(component).toMatchSnapshot();
-    });
-
-    test('button', () => {
-      const component = render(createDOMElement('span', { accessibilityRole: 'button' }));
-      expect(component).toMatchSnapshot();
-    });
-
-    test('headings', () => {
-      let component = render(createDOMElement('div', { accessibilityRole: 'heading' }));
-      expect(component).toMatchSnapshot();
-
-      component = render(
-        createDOMElement('div', { accessibilityRole: 'heading', 'aria-level': '3' })
-      );
-      expect(component).toMatchSnapshot();
-    });
-
-    test('link and target="_blank"', () => {
-      const component = render(
-        createDOMElement('span', {
-          accessibilityRole: 'link',
-          target: '_blank'
-        })
-      );
-      expect(component).toMatchSnapshot();
-    });
-
-    describe('compatibility with', () => {
-      test('accessibilityComponentType', () => {
-        let component = render(createDOMElement('span', { accessibilityComponentType: 'button' }));
-        expect(component).toMatchSnapshot();
-
-        component = render(
-          createDOMElement('span', {
-            accessibilityComponentType: 'button',
-            accessibilityRole: 'link'
-          })
-        );
-        expect(component).toMatchSnapshot();
-      });
-
-      test('accessibilityTraits', () => {
-        let component = render(createDOMElement('span', { accessibilityTraits: 'button' }));
-        expect(component).toMatchSnapshot();
-
-        component = render(
-          createDOMElement('span', { accessibilityTraits: 'button', accessibilityRole: 'link' })
-        );
-        expect(component).toMatchSnapshot();
+  describe('when ARIA role is "button"', () => {
+    [{ disabled: true }, { disabled: false }].forEach(({ disabled }) => {
+      describe(`and disabled is "${disabled}"`, () => {
+        [{ name: 'Enter', which: 13 }, { name: 'Space', which: 32 }].forEach(({ name, which }) => {
+          test(`"onClick" is ${disabled ? 'not ' : ''}called when "${name}" is pressed`, () => {
+            const onClick = jest.fn();
+            const component = shallow(
+              createDOMElement('span', { accessibilityRole: 'button', disabled, onClick })
+            );
+            component.find('span').simulate('keyPress', {
+              isDefaultPrevented() {},
+              nativeEvent: {
+                preventDefault() {},
+                stopImmediatePropagation() {},
+                stopPropagation() {}
+              },
+              preventDefault() {},
+              which
+            });
+            expect(onClick).toHaveBeenCalledTimes(disabled ? 0 : 1);
+          });
+        });
       });
     });
-  });
-
-  test('prop "accessible"', () => {
-    let component = render(createDOMElement('span', { accessible: true }));
-    expect(component).toMatchSnapshot();
-
-    component = render(createDOMElement('span', { accessible: false }));
-    expect(component).toMatchSnapshot();
-  });
-
-  test('prop "importantForAccessibility"', () => {
-    let component = render(createDOMElement('span', { importantForAccessibility: 'auto' }));
-    expect(component).toMatchSnapshot();
-
-    component = render(createDOMElement('span', { importantForAccessibility: 'no' }));
-    expect(component).toMatchSnapshot();
-
-    component = render(
-      createDOMElement('span', { importantForAccessibility: 'no-hide-descendants' })
-    );
-    expect(component).toMatchSnapshot();
-
-    component = render(createDOMElement('span', { importantForAccessibility: 'yes' }));
-    expect(component).toMatchSnapshot();
-  });
-
-  test('prop "testID"', () => {
-    const component = render(createDOMElement('span', { testID: 'Example.testID' }));
-    expect(component).toMatchSnapshot();
   });
 });

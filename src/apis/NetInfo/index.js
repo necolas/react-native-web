@@ -3,6 +3,10 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule NetInfo
  * @flow
  */
 
@@ -50,7 +54,7 @@ const NetInfo = {
     connection.removeEventListener(type, handler);
   },
 
-  fetch(): Promise {
+  fetch(): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         resolve(connection.type);
@@ -99,7 +103,7 @@ const NetInfo = {
       connectionListeners.splice(listenerIndex, 1);
     },
 
-    fetch(): Promise {
+    fetch(): Promise<any> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);
@@ -111,4 +115,4 @@ const NetInfo = {
   }
 };
 
-module.exports = NetInfo;
+export default NetInfo;

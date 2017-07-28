@@ -1,67 +1,54 @@
-/* eslint-disable */
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TouchableWithoutFeedback
  * @flow
  */
-'use strict';
 
-var EdgeInsetsPropType = require('../../propTypes/EdgeInsetsPropType');
-var React = require('react');
-var TimerMixin = require('react-timer-mixin');
-var Touchable = require('./Touchable');
-var ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
-var warning = require('fbjs/lib/warning');
-var StyleSheet = require('../../apis/StyleSheet');
+import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createReactClass from 'create-react-class';
-import { bool, func, number, string } from 'prop-types';
+import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
+import ensurePositiveDelayProps from './ensurePositiveDelayProps';
+import React from 'react';
+import StyleSheet from '../../apis/StyleSheet';
+import TimerMixin from 'react-timer-mixin';
+import Touchable from './Touchable';
+import warning from 'fbjs/lib/warning';
+import { bool, element, func, number, string } from 'prop-types';
 
 type Event = Object;
 
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
- * Do not use unless you have a very good reason. All the elements that
- * respond to press should have a visual feedback when touched. This is
- * one of the primary reasons a "web" app doesn't feel "native".
+ * Do not use unless you have a very good reason. All elements that
+ * respond to press should have a visual feedback when touched.
  *
- * > **NOTE**: TouchableWithoutFeedback supports only one child
- * >
- * > If you wish to have several child components, wrap them in a View.
+ * TouchableWithoutFeedback supports only one child.
+ * If you wish to have several child components, wrap them in a View.
  */
+
+/* eslint-disable react/prefer-es6-class */
 const TouchableWithoutFeedback = createReactClass({
+  displayName: 'TouchableWithoutFeedback',
   mixins: [TimerMixin, Touchable.Mixin],
 
   propTypes: {
-    accessible: bool,
+    accessibilityComponentType: BaseComponentPropTypes.accessibilityComponentType,
     accessibilityLabel: string,
-    accessibilityRole: string,
+    accessibilityRole: BaseComponentPropTypes.accessibilityRole,
+    accessibilityTraits: BaseComponentPropTypes.accessibilityTraits,
+    accessible: bool,
+    children: element,
     /**
-     * If true, disable all interactions for this component.
+     * Delay in ms, from onPressIn, before onLongPress is called.
      */
-    disabled: bool,
-    /**
-     * Called when the touch is released, but not if cancelled (e.g. by a scroll
-     * that steals the responder lock).
-     */
-    onPress: func,
-    onPressIn: func,
-    onPressOut: func,
-    /**
-     * Invoked on mount and layout changes with
-     *
-     *   `{nativeEvent: {layout: {x, y, width, height}}}`
-     */
-    onLayout: func,
-
-    onLongPress: func,
-
+    delayLongPress: number,
     /**
      * Delay in ms, from the start of the touch, before onPressIn is called.
      */
@@ -71,9 +58,29 @@ const TouchableWithoutFeedback = createReactClass({
      */
     delayPressOut: number,
     /**
-     * Delay in ms, from onPressIn, before onLongPress is called.
+     * If true, disable all interactions for this component.
      */
-    delayLongPress: number,
+    disabled: bool,
+    /**
+     * This defines how far your touch can start away from the button. This is
+     * added to `pressRetentionOffset` when moving off of the button.
+     */
+    // $FlowFixMe(>=0.41.0)
+    hitSlop: EdgeInsetsPropType,
+    /**
+     * Invoked on mount and layout changes with
+     *
+     *   `{nativeEvent: {layout: {x, y, width, height}}}`
+     */
+    onLayout: func,
+    onLongPress: func,
+    /**
+     * Called when the touch is released, but not if cancelled (e.g. by a scroll
+     * that steals the responder lock).
+     */
+    onPress: func,
+    onPressIn: func,
+    onPressOut: func,
     /**
      * When the scroll view is disabled, this defines how far your touch may
      * move off of the button, before deactivating the button. Once deactivated,
@@ -81,16 +88,9 @@ const TouchableWithoutFeedback = createReactClass({
      * reactivated! Move it back and forth several times while the scroll view
      * is disabled. Ensure you pass in a constant to reduce memory allocations.
      */
+    // $FlowFixMe
     pressRetentionOffset: EdgeInsetsPropType,
-    /**
-     * This defines how far your touch can start away from the button. This is
-     * added to `pressRetentionOffset` when moving off of the button.
-     * ** NOTE **
-     * The touch area never extends past the parent view bounds and the Z-index
-     * of sibling views always takes precedence if a touch hits two overlapping
-     * views.
-     */
-    hitSlop: EdgeInsetsPropType
+    testID: string
   },
 
   getInitialState: function() {
@@ -177,31 +177,32 @@ const TouchableWithoutFeedback = createReactClass({
       children = React.Children.toArray(children);
       children.push(Touchable.renderDebugView({ color: 'red', hitSlop: this.props.hitSlop }));
     }
-    const style = Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
-      ? [styles.root, this.props.disabled && styles.disabled, child.props.style, { color: 'red' }]
-      : [styles.root, this.props.disabled && styles.disabled, child.props.style];
+    const style =
+      Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'Text'
+        ? [!this.props.disabled && styles.actionable, child.props.style, { color: 'red' }]
+        : [!this.props.disabled && styles.actionable, child.props.style];
     return (React: any).cloneElement(child, {
       ...other,
       accessible: this.props.accessible !== false,
-      onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
-      onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
+      children,
+      onKeyDown: this.touchableHandleKeyEvent,
+      onKeyUp: this.touchableHandleKeyEvent,
       onResponderGrant: this.touchableHandleResponderGrant,
       onResponderMove: this.touchableHandleResponderMove,
       onResponderRelease: this.touchableHandleResponderRelease,
       onResponderTerminate: this.touchableHandleResponderTerminate,
-      style,
-      children
+      onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
+      onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
+      style
     });
   }
 });
 
-var styles = StyleSheet.create({
-  root: {
-    cursor: 'pointer'
-  },
-  disabled: {
-    cursor: 'default'
+const styles = StyleSheet.create({
+  actionable: {
+    cursor: 'pointer',
+    touchAction: 'manipulate'
   }
 });
 
-module.exports = TouchableWithoutFeedback;
+export default TouchableWithoutFeedback;

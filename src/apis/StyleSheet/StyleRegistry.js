@@ -1,7 +1,16 @@
 /**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
+ *
+ * @noflow
  */
+
 import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
@@ -20,14 +29,12 @@ const createCacheKey = id => {
 
 const classListToString = list => list.join(' ').trim();
 
-class StyleRegistry {
-  constructor() {
-    this.cache = { ltr: {}, rtl: {} };
-    this.styleManager = new StyleManager();
-  }
+export default class StyleRegistry {
+  cache = { ltr: {}, rtl: {} };
+  styleManager = new StyleManager();
 
-  getStyleSheetHtml() {
-    return this.styleManager.getStyleSheetHtml();
+  getStyleSheets() {
+    return this.styleManager.getStyleSheets();
   }
 
   /**
@@ -59,7 +66,7 @@ class StyleRegistry {
    */
   resolve(reactNativeStyle, options = emptyObject) {
     if (!reactNativeStyle) {
-      return undefined;
+      return emptyObject;
     }
 
     // fast and cachable
@@ -189,5 +196,3 @@ class StyleRegistry {
     return this._resolveStyle(style, options);
   }
 }
-
-module.exports = StyleRegistry;

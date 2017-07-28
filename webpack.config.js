@@ -1,5 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const SRC_DIRECTORY = path.resolve(__dirname, 'src');
@@ -57,4 +57,4 @@ module.exports = {
       }
     })
   ]
-}
+};

@@ -1,11 +1,20 @@
 # Getting started
 
+This guide will help you to correctly configure build and test tools to work
+with React Native for Web.
+
+Alternatively, you can quickly setup a local project using
+[create-react-app](https://github.com/facebookincubator/create-react-app)
+(which supports `react-native-web` out-of-the-box once installed),
+[react-native-web-starter](https://github.com/grabcode/react-native-web-starter),
+or [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack).
+
 It is recommended that your application provide a `Promise` and `Array.from`
 polyfill.
 
 ## Webpack and Babel
 
-[Webpack](webpack.js.org) is a popular build tool for web apps. Below is an
+[Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
 
@@ -76,10 +85,6 @@ module.exports = {
 }
 ```
 
-A more complex example setup for web apps can be found in various starter kits
-(e.g., create-react-app and
-[react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack))
-
 Please refer to the Webpack documentation for more information.
 
 ## Jest
@@ -111,6 +116,26 @@ if (Platform.OS === 'web') {
   });
 }
 ```
+
+More significant platform differences should use platform-specific files (see
+the webpack configuration above for resolving `*.web.js` files):
+
+For example, with the following files in your project:
+
+```
+MyComponent.android.js
+MyComponent.ios.js
+MyComponent.web.js
+```
+
+And the following import:
+
+```js
+import MyComponent from './MyComponent';
+```
+
+React Native will automatically import the correct variant for each specific
+target platform.
 
 ## Client-side rendering
 
@@ -144,8 +169,8 @@ AppRegistry.runApplication('App', {
 })
 ```
 
-Rendering within `ReactDOM.render` also works when introduce `react-native-web`
-to an existing web app, but it is not recommended oherwise.
+Rendering within `ReactDOM.render` also works when introducing
+`react-native-web` to an existing web app, but otherwise it is not recommended.
 
 ## Server-side rendering
 
@@ -162,6 +187,18 @@ const AppContainer = (props) => { /* ... */ }
 AppRegistry.registerComponent('App', () => AppContainer)
 
 // prerender the app
-const { element, stylesheet } = AppRegistry.getApplication('App', { initialProps });
+const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
 const initialHTML = ReactDOMServer.renderToString(element);
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
+
+// construct HTML document
+const document = `
+<!DOCTYPE html>
+<html>
+<head>
+${initialStyles}
+</head>
+<body>
+${initialHTML}
+`
 ```

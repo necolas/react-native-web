@@ -1,9 +1,21 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule I18nManager
+ * @flow
+ */
+
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type I18nManagerStatus = {
-  allowRTL: (allowRTL: boolean) => {},
-  forceRTL: (forceRTL: boolean) => {},
-  setRTL: (setRTL: boolean) => {},
+  allowRTL: (allowRTL: boolean) => void,
+  forceRTL: (forceRTL: boolean) => void,
+  setPreferredLanguageRTL: (setRTL: boolean) => void,
   isRTL: boolean
 };
 
@@ -20,7 +32,9 @@ const isRTL = () => {
 
 const onChange = () => {
   if (ExecutionEnvironment.canUseDOM) {
-    document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
+    if (document.documentElement && document.documentElement.setAttribute) {
+      document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
+    }
   }
 };
 
@@ -42,4 +56,4 @@ const I18nManager: I18nManagerStatus = {
   }
 };
 
-module.exports = I18nManager;
+export default I18nManager;

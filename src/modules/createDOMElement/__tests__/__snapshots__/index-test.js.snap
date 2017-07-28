@@ -1,109 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/createDOMElement prop "accessibilityLabel" 1`] = `
-<span
-  aria-label="accessibilityLabel"
-/>
+exports[`modules/createDOMElement it normalizes event.nativeEvent 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [],
+  "pageX": undefined,
+  "pageY": undefined,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
 `;
 
-exports[`modules/createDOMElement prop "accessibilityLiveRegion" 1`] = `
-<span
-  aria-live="off"
-/>
-`;
+exports[`modules/createDOMElement it renders different DOM elements 1`] = `<span />`;
 
-exports[`modules/createDOMElement prop "accessibilityRole" button 1`] = `
-<button
-  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
-  role="button"
-  type="button"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 1`] = `
-<button
-  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
-  role="button"
-  type="button"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityComponentType 2`] = `
-<a
-  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
-  role="link"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 1`] = `
-<button
-  class="rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7"
-  role="button"
-  type="button"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" compatibility with accessibilityTraits 2`] = `
-<a
-  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
-  role="link"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" headings 1`] = `
-<h1
-  role="heading"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" headings 2`] = `
-<h3
-  aria-level="3"
-  role="heading"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" link and target="_blank" 1`] = `
-<a
-  class="rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"
-  rel=" noopener noreferrer"
-  role="link"
-  target="_blank"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessibilityRole" roles 1`] = `
-<header
-  role="banner"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessible" 1`] = `
-<span
-  tabindex="0"
-/>
-`;
-
-exports[`modules/createDOMElement prop "accessible" 2`] = `<span />`;
-
-exports[`modules/createDOMElement prop "importantForAccessibility" 1`] = `<span />`;
-
-exports[`modules/createDOMElement prop "importantForAccessibility" 2`] = `<span />`;
-
-exports[`modules/createDOMElement prop "importantForAccessibility" 3`] = `
-<span
-  aria-hidden="true"
-/>
-`;
-
-exports[`modules/createDOMElement prop "importantForAccessibility" 4`] = `<span />`;
-
-exports[`modules/createDOMElement prop "testID" 1`] = `
-<span
-  data-testid="Example.testID"
-/>
-`;
-
-exports[`modules/createDOMElement renders correct DOM element 1`] = `<span />`;
-
-exports[`modules/createDOMElement renders correct DOM element 2`] = `<main />`;
+exports[`modules/createDOMElement it renders different DOM elements 2`] = `<main />`;

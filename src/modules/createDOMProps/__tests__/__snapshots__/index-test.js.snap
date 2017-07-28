@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modules/createDOMProps includes "rel" values for "a" elements (to securely open external links) 1`] = `" noopener noreferrer"`;
+
+exports[`modules/createDOMProps includes cursor style for "button" role 1`] = `
+Object {
+  "className": "rn-cursor-1loqt21",
+  "role": "button",
+  "tabIndex": "0",
+}
+`;
+
+exports[`modules/createDOMProps includes reset styles for "a" elements 1`] = `
+Object {
+  "className": "rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4",
+}
+`;
+
+exports[`modules/createDOMProps includes reset styles for "button" elements 1`] = `
+Object {
+  "className": "rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7",
+}
+`;
+
+exports[`modules/createDOMProps includes reset styles for "ul" elements 1`] = `
+Object {
+  "className": "rn-listStyle-1ebb2ja",
+}
+`;

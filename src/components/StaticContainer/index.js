@@ -3,6 +3,10 @@
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule StaticContainer
  * @flow
  */
 
@@ -24,7 +28,7 @@ import { Children, Component } from 'react';
  * Typically, you will not need to use this component and should opt for normal
  * React reconciliation.
  */
-class StaticContainer extends Component {
+export default class StaticContainer extends Component {
   static propTypes = {
     children: any.isRequired,
     shouldUpdate: bool.isRequired
@@ -39,5 +43,3 @@ class StaticContainer extends Component {
     return child === null || child === false ? null : Children.only(child);
   }
 }
-
-module.exports = StaticContainer;
