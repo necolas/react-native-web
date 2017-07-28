@@ -179,6 +179,7 @@ const TouchableOpacity = createReactClass({
       <View
         {...other}
         accessible={this.props.accessible !== false}
+        onClick={this.touchableHandlePress}
         onKeyDown={this.touchableHandleKeyEvent}
         onKeyUp={this.touchableHandleKeyEvent}
         onResponderGrant={this.touchableHandleResponderGrant}
