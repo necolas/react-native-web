@@ -59,7 +59,11 @@ array-find@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-find/-/array-find-1.0.0.tgz#6c8e286d11ed768327f8e62ecee87353ca3e78b8"
 
-asap@^2.0.3, asap@^2.0.5, asap@~2.0.3:
+asap@^2.0.3, asap@^2.0.5:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
+
+asap@~2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
 
@@ -89,8 +93,8 @@ babel-code-frame@^6.11.0:
     js-tokens "^3.0.0"
 
 babel-runtime@^6.23.0:
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
+  version "6.25.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
@@ -111,9 +115,13 @@ big.js@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.1.3.tgz#4cada2193652eb3ca9ec8e55c9015669c9806978"
 
-bowser@^1.0.0, bowser@^1.6.0:
+bowser@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.6.0.tgz#37fc387b616cb6aef370dab4d6bd402b74c5c54d"
+
+bowser@^1.6.0:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.7.1.tgz#a4de8f18a1a0dc9531eb2a92a1521fb6a9ba96a5"
 
 brace-expansion@^1.1.7:
   version "1.1.8"
@@ -253,7 +261,7 @@ css-color-names@0.0.4:
 
 css-in-js-utils@^1.0.3:
   version "1.0.3"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/css-in-js-utils/-/css-in-js-utils-1.0.3.tgz#9ac7e02f763cf85d94017666565ed68a5b5f3215"
+  resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-1.0.3.tgz#9ac7e02f763cf85d94017666565ed68a5b5f3215"
   dependencies:
     hyphenate-style-name "^1.0.2"
 
@@ -414,7 +422,19 @@ fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
 
-fbjs@^0.8.12, fbjs@^0.8.4, fbjs@^0.8.5, fbjs@^0.8.9:
+fbjs@^0.8.12:
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.14.tgz#d1dbe2be254c35a91e09f31f9cd50a40b2a0ed1c"
+  dependencies:
+    core-js "^1.0.0"
+    isomorphic-fetch "^2.1.1"
+    loose-envify "^1.0.0"
+    object-assign "^4.1.0"
+    promise "^7.1.1"
+    setimmediate "^1.0.5"
+    ua-parser-js "^0.7.9"
+
+fbjs@^0.8.4, fbjs@^0.8.5, fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -442,13 +462,14 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-glamor@^3.0.0-3:
-  version "3.0.0-3"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-3.0.0-3.tgz#62e1cf2ce70a4db0b247a5f95d4b7d6a89ac83c9"
+glamor@^2.20.37:
+  version "2.20.37"
+  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.37.tgz#3cd576deb760eaaf475dcc1f9b77bf6a7d2f8b26"
   dependencies:
     fbjs "^0.8.12"
-    inline-style-prefixer "^3.0.3"
-    react-css-property-operations "^15.4.1"
+    inline-style-prefixer "^3.0.6"
+    object-assign "^4.1.1"
+    prop-types "^15.5.10"
 
 glob@^7.0.5:
   version "7.1.2"
@@ -537,7 +558,7 @@ inline-style-prefixer@^2.0.1, inline-style-prefixer@^2.0.5:
     bowser "^1.0.0"
     hyphenate-style-name "^1.0.1"
 
-inline-style-prefixer@^3.0.1, inline-style-prefixer@^3.0.3, inline-style-prefixer@^3.0.6:
+inline-style-prefixer@^3.0.1, inline-style-prefixer@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.6.tgz#b27fe309b4168a31eaf38c8e8c60ab9e7c11731f"
   dependencies:
@@ -1090,10 +1111,6 @@ react-addons-perf@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-css-property-operations@^15.4.1:
-  version "15.4.1"
-  resolved "https://registry.yarnpkg.com/react-css-property-operations/-/react-css-property-operations-15.4.1.tgz#4c0e305df4cc35f0f5fd2d65a79214c8b012db35"
-
 react-jss@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-7.0.1.tgz#36c505c3798993edd46ea01734f171f895348e25"
@@ -1105,8 +1122,8 @@ react-jss@^7.0.1:
     theming "^1.1.0"
 
 react-native-web@0.0.x:
-  version "0.0.106"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.0.106.tgz#928427320b5963548b372a32b62459154f1e1d7e"
+  version "0.0.116"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.0.116.tgz#e05e376b34617a54d61826e4bc06b0bdbfd3f4b2"
   dependencies:
     animated "^0.2.0"
     array-find-index "^1.0.2"
@@ -1184,8 +1201,8 @@ regenerate@^1.2.1:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.3.2.tgz#d1941c67bad437e1be76433add5b385f95b19260"
 
 regenerator-runtime@^0.10.0:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.3.tgz#8c4367a904b51ea62a908ac310bf99ff90a82a3e"
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
 regexpu-core@^1.0.0:
   version "1.0.0"
@@ -1249,7 +1266,7 @@ strict-uri-encode@^1.0.0:
 
 string-hash@^1.1.3:
   version "1.1.3"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/string-hash/-/string-hash-1.1.3.tgz#e8aafc0ac1855b4666929ed7dd1275df5d6c811b"
+  resolved "https://registry.yarnpkg.com/string-hash/-/string-hash-1.1.3.tgz#e8aafc0ac1855b4666929ed7dd1275df5d6c811b"
 
 strip-ansi@^3.0.0:
   version "3.0.1"

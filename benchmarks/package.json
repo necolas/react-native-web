@@ -4,7 +4,7 @@
   "dependencies": {
     "aphrodite": "^1.2.3",
     "classnames": "^2.2.5",
-    "glamor": "^3.0.0-3",
+    "glamor": "^2.20.37",
     "marky": "^1.2.0",
     "radium": "^0.19.1",
     "react-jss": "^7.0.1",
