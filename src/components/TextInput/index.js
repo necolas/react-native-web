@@ -18,6 +18,7 @@ import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import ColorPropType from '../../propTypes/ColorPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';
 import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
@@ -111,6 +112,7 @@ class TextInput extends Component {
       end: number
     }),
     style: StyleSheetPropType(TextInputStylePropTypes),
+    underlineColorAndroid: ColorPropType,
     value: string
   };
 
