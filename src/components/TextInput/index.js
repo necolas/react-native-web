@@ -14,6 +14,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
+import ColorPropType from '../../propTypes/ColorPropType';
 import createDOMElement from '../../modules/createDOMElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
@@ -21,7 +22,7 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';
 import TextInputState from './TextInputState';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { bool, func, number, oneOf, shape, string } from 'prop-types';
+import { any, bool, func, number, oneOf, shape, string } from 'prop-types';
 
 const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
 const emptyObject = {};
@@ -103,7 +104,6 @@ class TextInput extends Component {
     onSelectionChange: func,
     onSubmitEditing: func,
     placeholder: string,
-    placeholderTextColor: string,
     secureTextEntry: bool,
     selectTextOnFocus: bool,
     selection: shape({
@@ -111,7 +111,29 @@ class TextInput extends Component {
       end: number
     }),
     style: StyleSheetPropType(TextInputStylePropTypes),
-    value: string
+    value: string,
+    /* react-native compat */
+    /* eslint-disable */
+    caretHidden: bool,
+    clearButtonMode: string,
+    dataDetectorTypes: string,
+    disableFullscreenUI: bool,
+    enablesReturnKeyAutomatically: bool,
+    keyboardAppearance: string,
+    inlineImageLeft: string,
+    inlineImagePadding: number,
+    onContentSizeChange: func,
+    onEndEditing: func,
+    onScroll: func,
+    placeholderTextColor: ColorPropType,
+    returnKeyLabel: string,
+    returnKeyType: string,
+    selectionColor: ColorPropType,
+    selectionState: any,
+    spellCheck: bool,
+    textBreakStrategy: string,
+    underlineColorAndroid: ColorPropType
+    /* eslint-enable */
   };
 
   static defaultProps = {
@@ -163,23 +185,30 @@ class TextInput extends Component {
       style,
       /* eslint-disable */
       blurOnSubmit,
-      caretHidden,
-      clearButtonMode,
       clearTextOnFocus,
-      dataDetectorTypes,
-      enablesReturnKeyAutomatically,
-      keyboardAppearance,
       onChangeText,
-      onContentSizeChange,
-      onEndEditing,
-      onLayout,
       onSelectionChange,
       onSubmitEditing,
-      placeholderTextColor,
-      returnKeyType,
       selection,
-      selectionColor,
       selectTextOnFocus,
+      /* react-native compat */
+      caretHidden,
+      clearButtonMode,
+      dataDetectorTypes,
+      disableFullscreenUI,
+      enablesReturnKeyAutomatically,
+      inlineImageLeft,
+      inlineImagePadding,
+      keyboardAppearance,
+      onContentSizeChange,
+      onEndEditing,
+      onScroll,
+      placeholderTextColor,
+      returnKeyLabel,
+      returnKeyType,
+      selectionColor,
+      selectionState,
+      spellCheck,
       textBreakStrategy,
       underlineColorAndroid,
       /* eslint-enable */

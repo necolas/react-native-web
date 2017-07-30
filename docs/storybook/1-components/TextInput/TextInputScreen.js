@@ -227,6 +227,12 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
       />
 
       <DocItem
+        name="onLayout"
+        typeInfo="?function"
+        description="Invoked on mount and layout changes with {x, y, width, height}."
+      />
+
+      <DocItem
         name="onSelectionChange"
         typeInfo="?function"
         description={
