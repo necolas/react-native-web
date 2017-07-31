@@ -25,13 +25,13 @@ Glitch.
 
 ## Quick start
 
-To install in your app:
-
-```
-npm install --save react@15.6 react-dom@15.6 react-native-web
-```
-
 NOTE: React Native for Web supports React/ReactDOM 15.4, 15.5, or 15.6.
+
+Install in your existing app using `yarn` or `npm`:
+
+```
+yarn add react@15.6 react-dom@15.6 react-native-web
+```
 
 Then read the [Getting Started](docs/guides/getting-started.md) guide.
 
@@ -49,6 +49,12 @@ Guides:
 * [Internationalization](docs/guides/internationalization.md)
 * [Advanced use](docs/guides/advanced.md)
 * [Known issues](docs/guides/known-issues.md)
+
+## Starter kits
+
+* [create-react-app](https://github.com/facebookincubator/create-react-app) ([on Glitch](https://glitch.com/edit/#!/react-native-web-playground))
+* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
+* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 
 ## Example code
 
@@ -95,12 +101,6 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [react-sketchapp](https://github.com/airbnb/react-sketchapp)
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
-
-## Start kits
-
-* [create-react-app](https://github.com/facebookincubator/create-react-app) ([on Glitch](https://glitch.com/edit/#!/react-native-web-playground))
-* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
-* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 
 ## License
 

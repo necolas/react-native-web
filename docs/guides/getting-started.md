@@ -1,25 +1,22 @@
 # Getting started
 
 This guide will help you to correctly configure build and test tools to work
-with React Native for Web.
-
-Alternatively, you can quickly setup a local project using
-[create-react-app](https://github.com/facebookincubator/create-react-app)
-(which supports `react-native-web` out-of-the-box once installed),
-[react-native-web-starter](https://github.com/grabcode/react-native-web-starter),
-or [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack).
+with React Native for Web. (Alternatively, you can quickly setup a local
+project using the starter kits listed in the README.)
 
 It is recommended that your application provide a `Promise` and `Array.from`
 polyfill.
 
-## Webpack and Babel
+## Web packager
 
 [Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
 example of how to configure a build that uses [Babel](https://babeljs.io/) to
 compile your JavaScript for the web.
 
+Create a `web/webpack.config.js` file:
+
 ```js
-// webpack.config.js
+// web/webpack.config.js
 
 // This is needed for webpack to compile JavaScript.
 // Many OSS React Native packages are not compiled to ES5 before being
@@ -37,7 +34,7 @@ const babelLoaderConfiguration = {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
-      // The 'react-native' preset is recommended
+      // The 'react-native' preset is recommended (or use your own .babelrc)
       presets: ['react-native']
     }
   }
@@ -66,7 +63,8 @@ module.exports = {
 
   plugins: [
     // `process.env.NODE_ENV === 'production'` must be `true` for production
-    // builds to eliminate development checks and reduce build size.
+    // builds to eliminate development checks and reduce build size. You may
+    // wish to include additional optimizations.
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
@@ -85,36 +83,97 @@ module.exports = {
 }
 ```
 
-Please refer to the Webpack documentation for more information.
-
-## Jest
-
-[Jest](https://facebook.github.io/jest/) also needs to map `react-native` to `react-native-web`.
+To run in development:
 
 ```
-"jest": {
-  "moduleNameMapper": {
-    "react-native": "<rootDir>/node_modules/react-native-web"
-  }
-}
+./node_modules/.bin/webpack-dev-server -d --config web/webpack.config.js --inline --hot --colors
 ```
 
-Please refer to the Jest documentation for more information.
+To build for production:
+
+```
+./node_modules/.bin/webpack -p --config web/webpack.config.js
+```
+
+Please refer to the Webpack documentation for more information on configuration.
+
+## Web entry
+
+Create a `index.web.js` file (or simply `index.js` for web-only apps).
+
+### Client-side rendering
+
+Rendering using `AppRegistry`:
+
+```js
+// index.web.js
+
+import App from './src/App';
+import React from 'react';
+import ReactNative, { AppRegistry } from 'react-native';
+
+// register the app
+AppRegistry.registerComponent('App', () => App);
+
+AppRegistry.runApplication('App', {
+  initialProps: {},
+  rootTag: document.getElementById('react-app')
+});
+```
+
+Rendering within existing web apps is also possible using `ReactNative`:
+
+```js
+import AppHeader from './src/AppHeader';
+import React from 'react';
+import ReactNative from 'react-native';
+
+ReactNative.render(<AppHeader />, document.getElementById('react-app-header'))
+```
+
+And finally, `react-native-web` components will also be rendering within a tree
+produced by calling `ReactDOM.render` (i.e., an existing web app), but
+otherwise it is not recommended.
+
+### Server-side rendering
+
+Server-side rendering is supported using the `AppRegistry`:
+
+```js
+import App from './src/App';
+import ReactDOMServer from 'react-dom/server'
+import ReactNative, { AppRegistry } from 'react-native'
+
+// register the app
+AppRegistry.registerComponent('App', () => App)
+
+// prerender the app
+const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
+const initialHTML = ReactDOMServer.renderToString(element);
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
+
+// construct HTML document
+const document = `
+<!DOCTYPE html>
+<html>
+<head>
+${initialStyles}
+</head>
+<body>
+${initialHTML}
+`
+```
 
 ## Web-specific code
 
 Minor platform differences can use the `Platform` module.
 
 ```js
-import { AppRegistry, Platform } from 'react-native'
+import { Platform } from 'react-native';
 
-AppRegistry.registerComponent('MyApp', () => MyApp)
-
-if (Platform.OS === 'web') {
-  AppRegistry.runApplication('MyApp', {
-    rootTag: document.getElementById('react-root')
-  });
-}
+const styles = StyleSheet.create({
+  height: (Platform.OS === 'web') ? 200 : 100,
+});
 ```
 
 More significant platform differences should use platform-specific files (see
@@ -137,68 +196,16 @@ import MyComponent from './MyComponent';
 React Native will automatically import the correct variant for each specific
 target platform.
 
-## Client-side rendering
+## Testing with Jest
 
-Rendering using `ReactNative`:
+[Jest](https://facebook.github.io/jest/) also needs to map `react-native` to `react-native-web`.
 
-```js
-import React from 'react'
-import ReactNative from 'react-native'
-
-// component that renders the app
-const AppHeaderContainer = (props) => { /* ... */ }
-
-ReactNative.render(<AppHeaderContainer />, document.getElementById('react-app-header'))
+```
+"jest": {
+  "moduleNameMapper": {
+    "react-native": "<rootDir>/node_modules/react-native-web"
+  }
+}
 ```
 
-Rendering using `AppRegistry`:
-
-```js
-import React from 'react'
-import ReactNative, { AppRegistry } from 'react-native'
-
-// component that renders the app
-const AppContainer = (props) => { /* ... */ }
-
-// register the app
-AppRegistry.registerComponent('App', () => AppContainer)
-
-AppRegistry.runApplication('App', {
-  initialProps: {},
-  rootTag: document.getElementById('react-app')
-})
-```
-
-Rendering within `ReactDOM.render` also works when introducing
-`react-native-web` to an existing web app, but otherwise it is not recommended.
-
-## Server-side rendering
-
-Rendering using the `AppRegistry`:
-
-```js
-import ReactDOMServer from 'react-dom/server'
-import ReactNative, { AppRegistry } from 'react-native'
-
-// component that renders the app
-const AppContainer = (props) => { /* ... */ }
-
-// register the app
-AppRegistry.registerComponent('App', () => AppContainer)
-
-// prerender the app
-const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
-const initialHTML = ReactDOMServer.renderToString(element);
-const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
-
-// construct HTML document
-const document = `
-<!DOCTYPE html>
-<html>
-<head>
-${initialStyles}
-</head>
-<body>
-${initialHTML}
-`
-```
+Please refer to the Jest documentation for more information.
