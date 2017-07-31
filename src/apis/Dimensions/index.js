@@ -35,7 +35,18 @@ export default class Dimensions {
     return dimensions[dimension];
   }
 
-  static set(): void {
+  static set(initialDimensions: ?{ [key: string]: any }): void {
+    if (initialDimensions) {
+      if (canUseDOM) {
+        invariant(false, 'Dimensions cannot be set in the browser');
+      } else {
+        dimensions.screen = initialDimensions.screen;
+        dimensions.window = initialDimensions.window;
+      }
+    }
+  }
+
+  static _update() {
     dimensions.window = {
       fontScale: 1,
       height: win.innerHeight,
@@ -67,8 +78,7 @@ export default class Dimensions {
   }
 }
 
-Dimensions.set();
-
 if (canUseDOM) {
-  window.addEventListener('resize', debounce(Dimensions.set, 16), false);
+  Dimensions._update();
+  window.addEventListener('resize', debounce(Dimensions._update, 16), false);
 }

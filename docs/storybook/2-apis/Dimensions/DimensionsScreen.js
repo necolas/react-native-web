@@ -35,6 +35,14 @@ const DimensionsScreen = () =>
       />
 
       <DocItem
+        name="static set"
+        typeInfo="(dimensions: ?{[key:string]: any}) => void"
+        description="This should only be called server-side with an estimate
+        for initial dimensions to be used when pre-rendering pages on the
+        server."
+      />
+
+      <DocItem
         name="static addEventLitener"
         typeInfo="(type: string, handler: function) => void"
         description={[
