@@ -109,105 +109,165 @@ describe('components/TextInput', () => {
     expect(input.prop('rows')).toEqual(3);
   });
 
-  test('prop "onBlur"', done => {
+  test('prop "onBlur"', () => {
+    const onBlur = jest.fn();
     const input = findNativeInput(mount(<TextInput onBlur={onBlur} />));
     input.simulate('blur');
-    function onBlur(e) {
-      expect(e).toBeTruthy();
-      done();
-    }
+    expect(onBlur).toHaveBeenCalledTimes(1);
   });
 
-  test('prop "onChange"', done => {
+  test('prop "onChange"', () => {
+    const onChange = jest.fn();
     const input = findNativeInput(mount(<TextInput onChange={onChange} />));
     input.simulate('change');
-    function onChange(e) {
-      expect(e).toBeTruthy();
-      done();
-    }
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  test('prop "onChangeText"', done => {
+  test('prop "onChangeText"', () => {
+    const onChangeText = jest.fn();
     const newText = 'newText';
     const input = findNativeInput(mount(<TextInput onChangeText={onChangeText} />));
     input.simulate('change', { target: { value: newText } });
-    function onChangeText(text) {
-      expect(text).toEqual(newText);
-      done();
-    }
+    expect(onChangeText).toHaveBeenCalledTimes(1);
+    expect(onChangeText).toBeCalledWith(newText);
   });
 
-  test('prop "onFocus"', done => {
+  test('prop "onFocus"', () => {
+    const onFocus = jest.fn();
     const input = findNativeInput(mount(<TextInput onFocus={onFocus} />));
     input.simulate('focus');
-    function onFocus(e) {
-      expect(e).toBeTruthy();
-      done();
-    }
+    expect(onFocus).toHaveBeenCalledTimes(1);
   });
 
   describe('prop "onKeyPress"', () => {
-    test('enter key', done => {
-      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 13 });
-      function onKeyPress(e) {
-        expect(e.nativeEvent.key).toEqual('Enter');
-        done();
-      }
-    });
-
-    test('space key', done => {
-      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 32 });
-      function onKeyPress(e) {
-        expect(e.nativeEvent.key).toEqual(' ');
-        done();
-      }
-    });
-
-    test('backspace key', done => {
+    test('backspace key', () => {
+      const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', { which: 8 });
-      function onKeyPress(e) {
-        expect(e.nativeEvent.key).toEqual('Backspace');
-        done();
-      }
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'Backspace',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
     });
 
-    test('text key', done => {
+    test('tab key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { which: 9 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'Tab',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('enter key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 13 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'Enter',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('space key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 32 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: ' ',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('text key', () => {
+      const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', { which: 97 });
-      function onKeyPress(e) {
-        expect(e.nativeEvent.key).toEqual('a');
-        done();
-      }
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'a',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
     });
 
-    test('target element is included', done => {
-      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress');
-      function onKeyPress(e) {
-        expect(e.nativeEvent.target).toBeDefined();
-        done();
-      }
-    });
-
-    test('modifier keys are included', done => {
+    test('modifier keys are included', () => {
+      const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyPress', {
         altKey: true,
         ctrlKey: true,
         metaKey: true,
         shiftKey: true,
-        which: 97
+        which: 32
       });
-      function onKeyPress(e) {
-        expect(e.nativeEvent.altKey).toEqual(true);
-        expect(e.nativeEvent.ctrlKey).toEqual(true);
-        expect(e.nativeEvent.metaKey).toEqual(true);
-        expect(e.nativeEvent.shiftKey).toEqual(true);
-        done();
-      }
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: true,
+            ctrlKey: true,
+            key: ' ',
+            metaKey: true,
+            shiftKey: true,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('meta key + Enter calls "onKeyPress"', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', {
+        metaKey: true,
+        which: 13
+      });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
     });
   });
 
