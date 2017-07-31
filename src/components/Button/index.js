@@ -28,7 +28,8 @@ class Button extends Component {
   };
 
   render() {
-    const { accessibilityLabel, color, disabled, onPress, testID, title } = this.props;
+    const { accessibilityLabel, color, onPress, testID, title } = this.props;
+    const disabled = this.props.disabled !== undefined ? this.props.disabled : 'disabled' in this.props;
 
     return (
       <TouchableOpacity

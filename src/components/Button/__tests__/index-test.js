@@ -34,8 +34,12 @@ describe('components/Button', () => {
     // true
     let component = shallow(<Button disabled={true} onPress={onPress} title="" />);
     expect(component.prop('disabled')).toEqual(true);
+    component = shallow(<Button disabled onPress={onPress} title="" />);
+    expect(component.prop('disabled')).toEqual(true);
     // false
     component = shallow(<Button disabled={false} onPress={onPress} title="" />);
+    expect(component.prop('disabled')).toEqual(false);
+    component = shallow(<Button onPress={onPress} title="" />);
     expect(component.prop('disabled')).toEqual(false);
   });
 
