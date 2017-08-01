@@ -78,7 +78,8 @@ export default class Dimensions {
   }
 }
 
+Dimensions._update();
+
 if (canUseDOM) {
-  Dimensions._update();
   window.addEventListener('resize', debounce(Dimensions._update, 16), false);
 }

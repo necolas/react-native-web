@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`apis/Dimensions get 1`] = `
+Object {
+  "fontScale": 1,
+  "height": 0,
+  "scale": 1,
+  "width": 0,
+}
+`;
+
+exports[`apis/Dimensions get 2`] = `
+Object {
+  "fontScale": 1,
+  "height": 768,
+  "scale": 1,
+  "width": 1024,
+}
+`;

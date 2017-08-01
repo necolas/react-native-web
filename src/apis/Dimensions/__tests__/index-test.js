@@ -3,6 +3,15 @@
 import Dimensions from '..';
 
 describe('apis/Dimensions', () => {
+  test('get', () => {
+    expect(Dimensions.get('screen')).toMatchSnapshot();
+    expect(Dimensions.get('window')).toMatchSnapshot();
+  });
+
+  test('set', () => {
+    expect(() => Dimensions.set({})).toThrow();
+  });
+
   test('addEventListener', () => {
     const handler = jest.fn();
     Dimensions.addEventListener('change', handler);
