@@ -399,6 +399,7 @@ const TouchableMixin = {
     if (delayMS !== 0) {
       this.touchableDelayTimeout = setTimeout(this._handleDelay.bind(this, e), delayMS);
     } else {
+      this.state.touchable.positionOnActivate = null;
       this._handleDelay(e);
     }
 
