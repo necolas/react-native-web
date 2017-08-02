@@ -60,7 +60,7 @@ Guides:
 
 ```js
 import React from 'react'
-import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native-web'
 
 // Components
 const Card = ({ children }) => <View style={styles.card}>{children}</View>
