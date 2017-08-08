@@ -23,6 +23,7 @@ import ViewPropTypes from '../View/ViewPropTypes';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import React from 'react';
 import { bool, element, func, number, oneOf } from 'prop-types';
+import PagingScrollViewBase from "./PagingScrollViewBase";
 
 const emptyObject = {};
 
@@ -191,9 +192,9 @@ const ScrollView = createReactClass({
       onResponderReject: this.scrollResponderHandleResponderReject
     };
 
-    const ScrollViewClass = ScrollViewBase;
+      const ScrollViewClass = horizontal && pagingEnabled ? PagingScrollViewBase : ScrollViewBase;
 
-    invariant(ScrollViewClass !== undefined, 'ScrollViewClass must not be undefined');
+      invariant(ScrollViewClass !== undefined, 'ScrollViewClass must not be undefined');
 
     if (refreshControl) {
       return React.cloneElement(
