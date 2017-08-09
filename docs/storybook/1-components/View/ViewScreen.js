@@ -233,9 +233,9 @@ const ViewScreen = () =>
           <AppText>
             Controls whether the View can be the target of touch events. The enhanced{' '}
             <Code>pointerEvents</Code> modes provided are not part of the CSS spec, therefore,{' '}
-            <Code>pointerEvents</Code> is excluded from <Code>style</Code>.
-            <Code>box-none</Code> preserves pointer events on the element's children;{' '}
-            <Code>box-only</Code> disables pointer events on the element's children.
+            <Code>pointerEvents</Code> is excluded from <Code>style</Code>. <Code>box-none</Code>{' '}
+            preserves pointer events on the element's children; <Code>box-only</Code> disables
+            pointer events on the element's children.
           </AppText>
         }
         example={{

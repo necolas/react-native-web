@@ -3,7 +3,11 @@
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
 
-[React Native][react-native-url] components and APIs for the Web.
+"React Native for Web" brings [React Native][react-native-url]'s
+building blocks and touch handling to the Web.
+
+* [UI Explorer and documentation](https://necolas.github.io/react-native-web/storybook/).
+* [React Native for Web: Playground](https://glitch.com/edit/#!/react-native-web-playground) using create-react-app.
 
 Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 
@@ -12,16 +16,6 @@ Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 [react-native-url]: https://facebook.github.io/react-native/
 [travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
 [travis-url]: https://travis-ci.org/necolas/react-native-web
-
-## Overview
-
-"React Native for Web" is a project to bring React Native's building blocks and
-touch handling to the Web.
-
-Browse the [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
-to see React Native examples running on Web. Or remix the [React Native for
-Web: Playground](https://glitch.com/edit/#!/react-native-web-playground) on
-Glitch.
 
 ## Quick start
 
@@ -38,7 +32,7 @@ Then read the [Getting Started](docs/guides/getting-started.md) guide.
 ## Documentation
 
 The [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
-interactively documents all the APIs and Components.
+interactively documents all the supported APIs and Components.
 
 Guides:
 

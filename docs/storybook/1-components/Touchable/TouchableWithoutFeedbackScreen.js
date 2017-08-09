@@ -34,6 +34,7 @@ const TouchableWithoutFeedbackScreen = () =>
 
     <Section title="Props">
       <DocItem name="...View props" />
+
       <DocItem
         name="delayLongPress"
         typeInfo="?number"
@@ -43,6 +44,7 @@ const TouchableWithoutFeedbackScreen = () =>
           </AppText>
         }
       />
+
       <DocItem
         name="delayPressIn"
         typeInfo="?number"
@@ -52,6 +54,7 @@ const TouchableWithoutFeedbackScreen = () =>
           </AppText>
         }
       />
+
       <DocItem
         name="delayPressOut"
         typeInfo="?number"
@@ -61,6 +64,7 @@ const TouchableWithoutFeedbackScreen = () =>
           </AppText>
         }
       />
+
       <DocItem
         name="disabled"
         typeInfo="?boolean"
@@ -73,14 +77,19 @@ const TouchableWithoutFeedbackScreen = () =>
           render: () => <TouchableWithoutFeedbackDisabled />
         }}
       />
-      <DocItem name="onLongPress" typeInfo="?function" />,
+
+      <DocItem name="onLongPress" typeInfo="?function" />
+
       <DocItem
         name="onPress"
         typeInfo="?function"
         description="Called when the touch is released, but not if cancelled (e.g. by a scroll that steals the responder lock)."
       />
+
       <DocItem name="onPressIn" typeInfo="?function" />
+
       <DocItem name="onPressOut" typeInfo="?function" />
+
       <DocItem
         name="pressRetentionOffset"
         typeInfo="?{top: number, left: number, bottom: number, right: number}"
@@ -90,6 +99,7 @@ back and you'll see that the button is once again reactivated! Move it back and
 forth several times while the scroll view is disabled. Ensure you pass in a
 constant to reduce memory allocations.`}
       />
+
       <DocItem name="style" typeInfo="?style" />
     </Section>
 

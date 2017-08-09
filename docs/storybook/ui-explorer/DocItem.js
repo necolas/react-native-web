@@ -11,6 +11,19 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const Divider = () => <View style={styles.verticalDivider} />;
 
+const createDescription = description => {
+  const nodeList = React.Children.toArray(description);
+  if (nodeList.length === 1) {
+    return (
+      <Text>
+        {nodeList}
+      </Text>
+    );
+  } else {
+    return insertBetween(() => <Divider key={Math.random()} />, nodeList);
+  }
+};
+
 const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
   <View style={styles.example}>
     {name &&
@@ -19,7 +32,7 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
       </AppText>}
     {description &&
       <View style={styles.description}>
-        {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(description))}
+        {createDescription(description)}
       </View>}
     {(example.render || example.code) &&
       <View style={styles.renderBox}>
