@@ -50,6 +50,7 @@ export {
 } from './components/Touchable/TouchableWithoutFeedback';
 export { default as View } from './components/View';
 export { default as VirtualizedList } from './components/VirtualizedList';
+export { default as ART } from './components/ART';
 
 // propTypes
 export { default as ColorPropType } from './propTypes/ColorPropType';
