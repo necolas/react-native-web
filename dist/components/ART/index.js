@@ -1,0 +1,1 @@
+Object.defineProperty(exports,"__esModule",{value:true});var _reactArt=require('@ecliptic/react-art');var _reactArt2=_interopRequireDefault(_reactArt);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=_reactArt2.default;

@@ -2,7 +2,7 @@
   "name": "react-native-web",
   "version": "0.0.117",
   "description": "React Native for Web",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist",
     "src",
@@ -66,7 +66,7 @@
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.10",
     "react-timer-mixin": "^0.13.3",
-    "@ecliptic/react-art": "0.15.4-fork.1",
+    "@ecliptic/react-art": "0.15.4-fork.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
