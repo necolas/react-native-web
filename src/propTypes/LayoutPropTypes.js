@@ -65,7 +65,7 @@ const LayoutPropTypes = {
   paddingRight: numberOrString,
   paddingTop: numberOrString,
   paddingVertical: numberOrString,
-  position: oneOf(['absolute', 'fixed', 'relative', 'static']),
+  position: oneOf(['absolute', 'fixed', 'relative', 'static', 'sticky']),
   right: numberOrString,
   top: numberOrString,
   visibility: hiddenOrVisible,
