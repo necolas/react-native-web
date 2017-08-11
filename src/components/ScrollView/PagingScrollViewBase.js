@@ -1,134 +1,139 @@
 import React, {Component} from 'react';
 import View from '../View';
+import Animated from '../../apis/Animated';
+import Easing from 'animated/lib/Easing';
 
-const normalizeScrollEvent = (e, xOffset) => ({
-    nativeEvent: {
-        contentOffset: {
-            get x() {
-                return xOffset;
-            },
-            get y() {
-                return 0;
-            }
-        },
-        contentSize: {
-            get height() {
-                return e.clientHeight;
-            },
-            get width() {
-                return e.clientWidth;
-            }
-        },
-        layoutMeasurement: {
-            get height() {
-                return e.offsetHeight;
-            },
-            get width() {
-                return e.offsetWidth;
-            }
-        }
-    },
-    timeStamp: Date.now()
-});
 export default class PagingScrollViewBase extends Component {
+    static propTypes = {
+        onScroll: React.PropTypes.func
+    };
     constructor(props) {
         super(props);
         this._onTouchStart = this._onTouchStart.bind(this);
         this._onTouchEnd = this._onTouchEnd.bind(this);
         this._onTouchMove = this._onTouchMove.bind(this);
-        this.totalOffset = 0;
-        this.startPos = 0;
-        this.currentSelPosition = 0;
-        this.scrollItemCount = 0;
+        this._totalOffset = 0;
+        this._startPos = 0;
+        this._currentSelPosition = 0;
+        this._scrollItemCount = 0;
+        this._contentWidth = 0;
+        this._contentHeight = 0;
+        this._parentWidth = 0;
+        this._parentHeight = 0;
+        this._currentOffset = new Animated.Value(0);
     }
 
-    componentDidMount() {
-        this.scrollItemCount = Math.ceil(this._getContentWidth() / this._getParentWidth());
-        this.maxPositiveTransform = this._getContentWidth() - this._getParentWidth();
-        this.pixelThreshold = this._getParentWidth() / 3;
+    componentWillMount() {
+        this._currentOffset.addListener(this._offsetChange);
     }
 
-    componentDidUpdate() {
-        this.scrollItemCount = Math.ceil(this._getContentWidth() / this._getParentWidth());
-        this.maxPositiveTransform = this._getContentWidth() - this._getParentWidth();
-        this.pixelThreshold = this._getParentWidth() / 3;
+    componentWillUnmount() {
+        this._currentOffset.removeListener(this._offsetChange);
     }
 
-    _getContentWidth() {
-        return this._contentRef.children[0].children[0].clientWidth;
-    }
-
-    _getParentWidth() {
-        return this._parentRef.clientWidth;
+    _updatePositions() {
+        this._scrollItemCount = Math.ceil(this._contentWidth / this._parentWidth);
+        this.maxPositiveTransform = this._contentWidth - this._parentWidth;
+        this.pixelThreshold = this._parentWidth / 3;
     }
 
     _getCurrentTimeInSec() {
-        return (new Date().getTime()) / 1000;
+        return new Date().getTime() / 1000;
     }
 
     _onTouchMove(e: Object) {
-        this.offset = this.startPos - e.touches[0].pageX;
-        var newOffset = this.totalOffset + this.offset;
+        this.offset = this._startPos - e.touches[0].pageX;
+        let newOffset = this._totalOffset + this.offset;
         if (newOffset < 0) {
             this.offset = 0;
-            this.totalOffset = newOffset = 0;
-        }
-        else if (newOffset > this.maxPositiveTransform) {
+            this._totalOffset = newOffset = 0;
+        } else if (newOffset > this.maxPositiveTransform) {
             this.offset = 0;
-            this.totalOffset = newOffset = this.maxPositiveTransform;
+            this._totalOffset = newOffset = this.maxPositiveTransform;
         }
-        this._contentRef.style.transform = 'translate(' + -newOffset + 'px,0px)'
-        if (this.props.onScroll) {
-            this.props.onScroll(normalizeScrollEvent(this._contentRef, newOffset));
-        }
+        this._currentOffset.setValue(-newOffset);
     }
 
     _onTouchStart(e: Object) {
-        this.startPos = e.touches[0].pageX;
+        this._startPos = e.touches[0].pageX;
         this.animationStartTS = this._getCurrentTimeInSec();
     }
 
     _onTouchEnd(e: Object) {
-        var totalPixelsCovered = this.offset;
-        this.totalOffset += this.offset;
-        var moveVelocity = totalPixelsCovered / (this._getCurrentTimeInSec() - this.animationStartTS);
+        const totalPixelsCovered = this.offset;
+        this._totalOffset += this.offset;
+        const moveVelocity = totalPixelsCovered / (this._getCurrentTimeInSec() - this.animationStartTS);
         if (moveVelocity < -this.pixelThreshold) {
-            this.currentSelPosition = Math.max(0, this.currentSelPosition - 1);
+            this._currentSelPosition = Math.max(0, this._currentSelPosition - 1);
         } else if (moveVelocity > this.pixelThreshold) {
-            this.currentSelPosition = Math.min(this.scrollItemCount - 1, this.currentSelPosition + 1);
-        }
-        else {
-            this.currentSelPosition = this._getPositionMetaForX(this.totalOffset);
+            this._currentSelPosition = Math.min(this._scrollItemCount - 1, this._currentSelPosition + 1);
+        } else {
+            this._currentSelPosition = this._getPositionMetaForX(this._totalOffset);
         }
         this._scrollToCurrentPosition();
     }
 
     _getPositionMetaForX(x) {
-        var mod = x / (this._getParentWidth());
-        return Math.round(mod);
+        return Math.round(x / this._parentWidth);
     }
 
     _scrollToCurrentPosition() {
-        var correctOffsetForPostion = this._getParentWidth() * this.currentSelPosition;
-        this.totalOffset = correctOffsetForPostion;
+        const correctOffsetForPosition = this._parentWidth * this._currentSelPosition;
+        this._totalOffset = correctOffsetForPosition;
         this.offset = 0;
-        this._contentRef.style.cssText = "transition: transform 0.20s ease-out; transform: translate(" + -correctOffsetForPostion + "px,0px)";
+        Animated.timing(this._currentOffset, {toValue: -correctOffsetForPosition, easing: Easing.easeOut}).start();
+    }
+
+    _onContentLayout = (e) => {
+        this._contentWidth = e.nativeEvent.layout.width;
+        this._contentHeight = e.nativeEvent.layout.height;
+        this._updatePositions();
+    };
+
+    _onParentLayout = (e) => {
+        this._parentWidth = e.nativeEvent.layout.width;
+        this._parentHeight = e.nativeEvent.layout.height;
+        this._updatePositions();
+    };
+
+    _offsetChange = (e) => {
         if (this.props.onScroll) {
-            this.props.onScroll(normalizeScrollEvent(this._contentRef, correctOffsetForPostion));
+            this.props.onScroll(this._normalizeScrollEvent(-e.value));
         }
     }
 
-    _setContentRef = (ref) => {
-        this._contentRef = ref;
-    }
-    _setParentRef = (ref) => {
-        this._parentRef = ref;
-    }
+    _normalizeScrollEvent = (xOffset) => ({
+        nativeEvent: {
+            contentOffset: {
+                get x() {
+                    return xOffset;
+                },
+                get y() {
+                    return 0;
+                }
+            },
+            contentSize: {
+                get height() {
+                    return this._contentHeight;
+                },
+                get width() {
+                    return this._contentWidth;
+                }
+            },
+            layoutMeasurement: {
+                get height() {
+                    return this._parentHeight;
+                },
+                get width() {
+                    return this._parentWidth;
+                }
+            }
+        },
+        timeStamp: Date.now()
+    });
 
     render() {
         const {
-            scrollEnabled,
-            style,
             /* eslint-disable */
             onMomentumScrollBegin,
             onMomentumScrollEnd,
@@ -142,9 +147,15 @@ export default class PagingScrollViewBase extends Component {
             ...other
         } = this.props;
         return (
-            <View domRef={this._setParentRef} style={{flex: 1, overflow: 'hidden'}} onTouchStart={this._onTouchStart}
-                  onTouchMove={this._onTouchMove} onTouchEnd={this._onTouchEnd}>
-                <View domRef={this._setContentRef} style={{flex: 1}} {...other}/>
-            </View>);
+            <View
+                onLayout={this._onParentLayout}
+                onTouchEnd={this._onTouchEnd}
+                onTouchMove={this._onTouchMove}
+                onTouchStart={this._onTouchStart}
+                style={{flex: 1, overflow: 'hidden'}}
+            >
+                <View onLayout={this._onContentLayout} style={{flex: 1, transform:[{translateX: this._currentOffset}]}} {...other} />
+            </View>
+        );
     }
 }
