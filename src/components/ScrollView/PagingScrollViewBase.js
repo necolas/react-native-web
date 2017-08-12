@@ -3,54 +3,35 @@ import View from '../View';
 import Animated from '../../apis/Animated';
 import Easing from 'animated/lib/Easing';
 
-// const normalizeScrollEvent = (parent, xOffset) => ({
-//     nativeEvent: {
-//         contentOffset: {
-//             get x() {
-//                 return xOffset;
-//             },
-//             get y() {
-//                 return 0;
-//             }
-//         },
-//         contentSize: {
-//             get height() {
-//                 return parent._contentHeight;
-//             },
-//             get width() {
-//                 return parent._contentWidth;
-//             }
-//         },
-//         layoutMeasurement: {
-//             get height() {
-//                 return parent._parentHeight;
-//             },
-//             get width() {
-//                 return parent._parentWidth;
-//             }
-//         }
-//     },
-//     timeStamp: Date.now()
-// });
-const normalizeScrollEvent = (parent, xOffset) => {
-    return {
-        nativeEvent: {
-            contentOffset: {
-                x: xOffset,
-                y: 0
+const normalizeScrollEvent = (parent, xOffset) => ({
+    nativeEvent: {
+        contentOffset: {
+            get x() {
+                return xOffset;
             },
-            contentSize: {
-                height: parent._contentHeight,
-                width: parent._contentWidth
-            },
-            layoutMeasurement: {
-                height: parent._parentHeight,
-                width: parent._parentWidth
+            get y() {
+                return 0;
             }
         },
-        timeStamp: Date.now()
-    }
-};
+        contentSize: {
+            get height() {
+                return parent._contentHeight;
+            },
+            get width() {
+                return parent._contentWidth;
+            }
+        },
+        layoutMeasurement: {
+            get height() {
+                return parent._parentHeight;
+            },
+            get width() {
+                return parent._parentWidth;
+            }
+        }
+    },
+    timeStamp: Date.now()
+});
 
 export default class PagingScrollViewBase extends Component {
     static propTypes = {
@@ -66,11 +47,19 @@ export default class PagingScrollViewBase extends Component {
         this._startPos = 0;
         this._currentSelPosition = 0;
         this._scrollItemCount = 0;
-        this._contentWidth = 720;
-        this._contentHeight = 720;
+        this._contentWidth = 0;
+        this._contentHeight = 0;
         this._parentWidth = 0;
         this._parentHeight = 0;
         this._currentOffset = new Animated.Value(0);
+    }
+
+    componentDidMount() {
+        this._measureContent();
+    }
+
+    componentDidUpdate() {
+        this._measureContent();
     }
 
     componentWillMount() {
@@ -79,6 +68,13 @@ export default class PagingScrollViewBase extends Component {
 
     componentWillUnmount() {
         this._currentOffset.removeListener(this._offsetChange);
+    }
+
+    //For some reason onLayout/measure callbacks are not working on the content view
+    _measureContent() {
+        this._contentWidth = this._contentRef.clientWidth;
+        this._contentHeight = this._contentRef.clientHeight;
+        this._updatePositions();
     }
 
     _updatePositions() {
@@ -131,7 +127,11 @@ export default class PagingScrollViewBase extends Component {
         const correctOffsetForPosition = this._parentWidth * this._currentSelPosition;
         this._totalOffset = correctOffsetForPosition;
         this.offset = 0;
-        Animated.timing(this._currentOffset, {toValue: -correctOffsetForPosition, easing: Easing.easeOut}).start();
+        Animated.timing(this._currentOffset, {
+            toValue: -correctOffsetForPosition,
+            easing: Easing.easeOut,
+            duration: 200
+        }).start();
     }
 
     _onContentLayout = (e) => {
@@ -152,21 +152,25 @@ export default class PagingScrollViewBase extends Component {
         }
     }
 
+    _setContentRef = x => {
+        this._contentRef = x.children[0].children[0];
+    }
+
 
     render() {
         const {
-            onScroll,
-            scrollEnabled,
-            style,
             /* eslint-disable */
+            onScroll,
             onMomentumScrollBegin,
             onMomentumScrollEnd,
             onScrollBeginDrag,
             onScrollEndDrag,
             removeClippedSubviews,
+            scrollEnabled,
             scrollEventThrottle,
             showsHorizontalScrollIndicator,
             showsVerticalScrollIndicator,
+            style,
             /* eslint-enable */
             ...other
         } = this.props;
@@ -178,8 +182,12 @@ export default class PagingScrollViewBase extends Component {
                 onTouchStart={this._onTouchStart}
                 style={{flex: 1, overflow: 'hidden'}}
             >
-                <Animated.View ref={x => this._contentRef = x} onLayout={this._onContentLayout}
-                       style={{flex: 1, transform: [{translateX: this._currentOffset}]}} {...other} />
+                <Animated.View domRef={this._setContentRef}
+                               style={{
+                                   flex: 1,
+                                   willChange: 'transform',
+                                   transform: [{translateX: this._currentOffset}]
+                               }} {...other} />
             </View>
         );
     }
