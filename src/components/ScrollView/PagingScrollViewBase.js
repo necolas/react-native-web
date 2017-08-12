@@ -83,6 +83,31 @@ export default class PagingScrollViewBase extends Component {
         this.pixelThreshold = this._parentWidth / 3;
     }
 
+    scrollTo(y?: number | { x?: number, y?: number, animated?: boolean },
+             x?: number,
+             animated?: boolean) {
+
+        if (typeof y === 'number') {
+            console.warn(
+                '`scrollTo(y, x, animated)` is deprecated. Use `scrollTo({x: 5, y: 5, animated: true})` instead.'
+            );
+        } else {
+            ({x, y, animated} = y || {});
+        }
+        this._totalOffset = Math.min(this.maxPositiveTransform, x);
+        this._currentSelPosition = this._getPositionMetaForX(this._totalOffset);
+        this._scrollToCurrentPosition(animated);
+    }
+
+    scrollToEnd(options?: { animated?: boolean }) {
+        this.scrollTo({y: 0, x: this.maxPositiveTransform, animated: options.animated});
+    }
+
+    scrollWithoutAnimationTo(y: number = 0, x: number = 0) {
+        console.warn('`scrollWithoutAnimationTo` is deprecated. Use `scrollTo` instead');
+        this.scrollTo({x, y, animated: false});
+    }
+
     _getCurrentTimeInSec() {
         return new Date().getTime() / 1000;
     }
@@ -116,22 +141,27 @@ export default class PagingScrollViewBase extends Component {
         } else {
             this._currentSelPosition = this._getPositionMetaForX(this._totalOffset);
         }
-        this._scrollToCurrentPosition();
+        this._scrollToCurrentPosition(true);
     }
 
     _getPositionMetaForX(x) {
         return Math.round(x / this._parentWidth);
     }
 
-    _scrollToCurrentPosition() {
+    _scrollToCurrentPosition(enableAnim) {
         const correctOffsetForPosition = this._parentWidth * this._currentSelPosition;
         this._totalOffset = correctOffsetForPosition;
         this.offset = 0;
-        Animated.timing(this._currentOffset, {
-            toValue: -correctOffsetForPosition,
-            easing: Easing.easeOut,
-            duration: 200
-        }).start();
+        if (enableAnim) {
+            Animated.timing(this._currentOffset, {
+                toValue: -correctOffsetForPosition,
+                easing: Easing.easeOut,
+                duration: 200
+            }).start();
+        }
+        else {
+            this._currentOffset.setValue(-correctOffsetForPosition);
+        }
     }
 
     _onContentLayout = (e) => {
@@ -150,11 +180,11 @@ export default class PagingScrollViewBase extends Component {
         if (this.props.onScroll) {
             this.props.onScroll(normalizeScrollEvent(this, -1 * e.value));
         }
-    }
+    };
 
     _setContentRef = x => {
         this._contentRef = x.children[0].children[0];
-    }
+    };
 
 
     render() {
