@@ -3,10 +3,60 @@ import View from '../View';
 import Animated from '../../apis/Animated';
 import Easing from 'animated/lib/Easing';
 
+// const normalizeScrollEvent = (parent, xOffset) => ({
+//     nativeEvent: {
+//         contentOffset: {
+//             get x() {
+//                 return xOffset;
+//             },
+//             get y() {
+//                 return 0;
+//             }
+//         },
+//         contentSize: {
+//             get height() {
+//                 return parent._contentHeight;
+//             },
+//             get width() {
+//                 return parent._contentWidth;
+//             }
+//         },
+//         layoutMeasurement: {
+//             get height() {
+//                 return parent._parentHeight;
+//             },
+//             get width() {
+//                 return parent._parentWidth;
+//             }
+//         }
+//     },
+//     timeStamp: Date.now()
+// });
+const normalizeScrollEvent = (parent, xOffset) => {
+    return {
+        nativeEvent: {
+            contentOffset: {
+                x: xOffset,
+                y: 0
+            },
+            contentSize: {
+                height: parent._contentHeight,
+                width: parent._contentWidth
+            },
+            layoutMeasurement: {
+                height: parent._parentHeight,
+                width: parent._parentWidth
+            }
+        },
+        timeStamp: Date.now()
+    }
+};
+
 export default class PagingScrollViewBase extends Component {
     static propTypes = {
         onScroll: React.PropTypes.func
     };
+
     constructor(props) {
         super(props);
         this._onTouchStart = this._onTouchStart.bind(this);
@@ -16,8 +66,8 @@ export default class PagingScrollViewBase extends Component {
         this._startPos = 0;
         this._currentSelPosition = 0;
         this._scrollItemCount = 0;
-        this._contentWidth = 0;
-        this._contentHeight = 0;
+        this._contentWidth = 720;
+        this._contentHeight = 720;
         this._parentWidth = 0;
         this._parentHeight = 0;
         this._currentOffset = new Animated.Value(0);
@@ -98,42 +148,16 @@ export default class PagingScrollViewBase extends Component {
 
     _offsetChange = (e) => {
         if (this.props.onScroll) {
-            this.props.onScroll(this._normalizeScrollEvent(-e.value));
+            this.props.onScroll(normalizeScrollEvent(this, -1 * e.value));
         }
     }
 
-    _normalizeScrollEvent = (xOffset) => ({
-        nativeEvent: {
-            contentOffset: {
-                get x() {
-                    return xOffset;
-                },
-                get y() {
-                    return 0;
-                }
-            },
-            contentSize: {
-                get height() {
-                    return this._contentHeight;
-                },
-                get width() {
-                    return this._contentWidth;
-                }
-            },
-            layoutMeasurement: {
-                get height() {
-                    return this._parentHeight;
-                },
-                get width() {
-                    return this._parentWidth;
-                }
-            }
-        },
-        timeStamp: Date.now()
-    });
 
     render() {
         const {
+            onScroll,
+            scrollEnabled,
+            style,
             /* eslint-disable */
             onMomentumScrollBegin,
             onMomentumScrollEnd,
@@ -154,7 +178,8 @@ export default class PagingScrollViewBase extends Component {
                 onTouchStart={this._onTouchStart}
                 style={{flex: 1, overflow: 'hidden'}}
             >
-                <View onLayout={this._onContentLayout} style={{flex: 1, transform:[{translateX: this._currentOffset}]}} {...other} />
+                <Animated.View ref={x => this._contentRef = x} onLayout={this._onContentLayout}
+                       style={{flex: 1, transform: [{translateX: this._currentOffset}]}} {...other} />
             </View>
         );
     }
