@@ -56,7 +56,7 @@
   "dependencies": {
     "animated": "^0.2.0",
     "array-find-index": "^1.0.2",
-    "babel-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "create-react-class": "^15.6.0",
     "debounce": "1.0.2",
     "deep-assign": "^2.0.0",
@@ -68,12 +68,12 @@
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.6",
-    "babel-preset-react-native": "^2.1.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.8",
+    "babel-preset-react-native": "2.1.0",
     "caniuse-api": "^2.0.0",
     "del-cli": "^1.1.0",
     "enzyme": "^2.9.1",
