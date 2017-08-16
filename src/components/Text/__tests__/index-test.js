@@ -37,14 +37,14 @@ describe('components/Text', () => {
 
   test('prop "onPress"', () => {
     const onPress = e => {};
-    const component = render(<Text onPress={onPress} />);
+    const component = shallow(<Text onPress={onPress} />);
     expect(component).toMatchSnapshot();
   });
 
   test('prop "selectable"', () => {
-    let component = render(<Text />);
+    let component = shallow(<Text />);
     expect(component).toMatchSnapshot();
-    component = render(<Text selectable={false} />);
+    component = shallow(<Text selectable={false} />);
     expect(component).toMatchSnapshot();
   });
 });
