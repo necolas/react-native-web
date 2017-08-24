@@ -53,7 +53,7 @@ exports[`apis/AppRegistry/renderApplication getApplication 3`] = `
 .rn-flexShrink-1qe8dj5{-webkit-flex-shrink:0;flex-shrink:0}
 .rn-flexShrink-1wbh5a2{-webkit-flex-shrink:1;flex-shrink:1}
 .rn-flexBasis-1mlwlqe{-webkit-flex-basis:auto;flex-basis:auto}
-.rn-flexBasis-1ro0kt6{-webkit-flex-basis:0%;flex-basis:0%}
+.rn-flexBasis-1iusvr4{-webkit-flex-basis:0px;flex-basis:0px}
 .rn-flexDirection-eqz5dr{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
 .rn-marginTop-1mnahxq{margin-top:0px}
 .rn-marginRight-61z16t{margin-right:0px}

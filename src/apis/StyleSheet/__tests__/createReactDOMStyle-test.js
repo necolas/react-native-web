@@ -54,7 +54,7 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
         display: 'flex',
         flexGrow: 1,
         flexShrink: 1,
-        flexBasis: '0%'
+        flexBasis: '0px'
       });
     });
 
@@ -63,7 +63,7 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
         display: 'flex',
         flexGrow: 10,
         flexShrink: 1,
-        flexBasis: '0%'
+        flexBasis: '0px'
       });
     });
 
@@ -97,7 +97,7 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
         display: 'flex',
         flexGrow: 1,
         flexShrink: 2,
-        flexBasis: '0%'
+        flexBasis: '0px'
       });
     });
   });
