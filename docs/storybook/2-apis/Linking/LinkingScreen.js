@@ -9,7 +9,7 @@ import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const LinkingScreen = () =>
-  <UIExplorer title="Linking" url="apis/Linking">
+  <UIExplorer title="Linking" url="2-apis/Linking">
     <Description>
       Linking gives you a general interface for securely opening external URLs from JavaScript.
     </Description>

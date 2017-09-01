@@ -19,7 +19,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const TouchableWithoutFeedbackScreen = () =>
-  <UIExplorer title="TouchableWithoutFeedback" url="components/Touchable">
+  <UIExplorer title="TouchableWithoutFeedback" url="1-components/Touchable">
     <Description>
       <AppText>
         Do not use unless you have a very good reason. All the elements that respond to press should

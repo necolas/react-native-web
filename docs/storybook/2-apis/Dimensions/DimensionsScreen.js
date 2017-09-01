@@ -17,7 +17,7 @@ import UIExplorer, {
 import React from 'react';
 
 const DimensionsScreen = () =>
-  <UIExplorer title="Dimensions" url="apis/Dimensions">
+  <UIExplorer title="Dimensions" url="2-apis/Dimensions">
     <Description>
       Note: dimensions may change (e.g., due to device rotation) so any rendering logic or styles
       that depend on these constants should try to call this function on every render, rather than

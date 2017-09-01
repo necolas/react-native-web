@@ -14,7 +14,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const NetInfoScreen = () =>
-  <UIExplorer title="NetInfo" url="apis/NetInfo">
+  <UIExplorer title="NetInfo" url="2-apis/NetInfo">
     <Description>
       <AppText>
         NetInfo asynchronously determines the online/offline status of the application.

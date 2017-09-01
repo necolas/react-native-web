@@ -13,7 +13,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const AsyncStorageScreen = () =>
-  <UIExplorer title="AsyncStorage" url="apis/AsyncStorage">
+  <UIExplorer title="AsyncStorage" url="2-apis/AsyncStorage">
     <Description>
       <AppText>
         AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system

@@ -16,7 +16,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const AppStateScreen = () =>
-  <UIExplorer title="AppState" url="apis/AppState">
+  <UIExplorer title="AppState" url="2-apis/AppState">
     <Description>
       <AppText>
         AppState can tell you if the app is in the foreground or background, and notify you when the

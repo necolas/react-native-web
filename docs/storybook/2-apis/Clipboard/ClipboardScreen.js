@@ -7,7 +7,7 @@ import SetStringExample from './examples/SetString';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ClipboardScreen = () =>
-  <UIExplorer title="Clipboard" url="apis/Clipboard">
+  <UIExplorer title="Clipboard" url="2-apis/Clipboard">
     <Description>
       Clipboard gives you an interface for setting to the clipboard. (Getting clipboard content is
       not supported on web.)

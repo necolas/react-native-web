@@ -19,7 +19,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const TextScreen = () =>
-  <UIExplorer title="Text" url="components/Text">
+  <UIExplorer title="Text" url="1-components/Text">
     <Description>
       <AppText>
         Text is component for displaying text. It supports style, basic touch handling, and inherits

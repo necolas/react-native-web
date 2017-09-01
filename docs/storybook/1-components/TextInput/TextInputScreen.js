@@ -31,7 +31,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const TextInputScreen = () =>
-  <UIExplorer title="TextInput" url="components/TextInput">
+  <UIExplorer title="TextInput" url="1-components/TextInput">
     <Description>
       <AppText>
         Accessible single- and multi-line text input via a keyboard. Supports features such as

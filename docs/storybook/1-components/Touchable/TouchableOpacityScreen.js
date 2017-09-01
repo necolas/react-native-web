@@ -11,7 +11,7 @@ import { TouchableOpacityDisabled } from './examples/PropDisabled';
 import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const TouchableOpacityScreen = () =>
-  <UIExplorer title="TouchableOpacity" url="components/Touchable">
+  <UIExplorer title="TouchableOpacity" url="1-components/Touchable">
     <Description>
       <AppText>
         A wrapper for making views respond properly to touches. On press down, the opacity of the

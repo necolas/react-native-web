@@ -18,7 +18,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const ButtonScreen = () =>
-  <UIExplorer title="Button" url="components/Button">
+  <UIExplorer title="Button" url="1-components/Button">
     <Description>
       <AppText>
         A basic button component. Supports a minimal level of customization. You can build your own

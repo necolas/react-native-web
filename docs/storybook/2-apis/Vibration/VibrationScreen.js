@@ -13,7 +13,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const VibrationScreen = () =>
-  <UIExplorer title="Vibration" url="apis/Vibration">
+  <UIExplorer title="Vibration" url="2-apis/Vibration">
     <Description>
       <AppText>
         Vibration is described as a pattern of on-off pulses, which may be of varying lengths. The

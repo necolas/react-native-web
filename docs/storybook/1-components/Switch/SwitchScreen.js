@@ -23,7 +23,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const SwitchScreen = () =>
-  <UIExplorer title="Switch" url="components/Switch">
+  <UIExplorer title="Switch" url="1-components/Switch">
     <Description>
       <AppText>
         This is a controlled component that requires an <Code>onValueChange</Code> callback that

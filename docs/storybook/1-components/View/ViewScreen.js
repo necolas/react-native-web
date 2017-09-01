@@ -20,7 +20,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const ViewScreen = () =>
-  <UIExplorer title="View" url="components/View">
+  <UIExplorer title="View" url="1-components/View">
     <Description>
       <AppText>
         View is the fundamental UI building block. It is a component that supports style, layout

@@ -9,7 +9,7 @@ import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const I18nManagerScreen = () =>
-  <UIExplorer title="I18nManager" url="apis/I18nManager">
+  <UIExplorer title="I18nManager" url="2-apis/I18nManager">
     <Description>Control and set the layout and writing direction of the application.</Description>
     <Section title="Properties">
       <DocItem

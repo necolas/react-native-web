@@ -19,7 +19,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const ScrollViewScreen = () =>
-  <UIExplorer title="ScrollView" url="components/ScrollView">
+  <UIExplorer title="ScrollView" url="1-components/ScrollView">
     <Description>
       <AppText>
         A scrollable <Code>View</Code> that provides itegration with the touch-locking responder

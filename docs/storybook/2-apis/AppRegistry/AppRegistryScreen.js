@@ -13,7 +13,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const AppRegistryScreen = () =>
-  <UIExplorer title="AppRegistry" url="apis/AppRegistry">
+  <UIExplorer title="AppRegistry" url="2-apis/AppRegistry">
     <Description>
       <AppText>
         AppRegistry is the control point for registering, running, prerendering, and unmounting all

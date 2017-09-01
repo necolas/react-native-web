@@ -13,7 +13,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const StyleSheetScreen = () =>
-  <UIExplorer title="StyleSheet" url="apis/StyleSheet">
+  <UIExplorer title="StyleSheet" url="2-apis/StyleSheet">
     <Description>
       The StyleSheet abstraction converts predefined styles to (vendor-prefixed) CSS without
       requiring a compile-time step. Styles that cannot be resolved outside of the render loop

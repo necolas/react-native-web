@@ -12,7 +12,7 @@ import { TouchableHighlightDisabled } from './examples/PropDisabled';
 import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const TouchableHighlightScreen = () =>
-  <UIExplorer title="TouchableHighlight" url="components/Touchable">
+  <UIExplorer title="TouchableHighlight" url="1-components/Touchable">
     <Description>
       <AppText>
         A wrapper for making views respond properly to touches. On press down, the opacity of the

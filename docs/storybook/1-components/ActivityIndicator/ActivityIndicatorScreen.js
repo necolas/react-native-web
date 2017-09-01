@@ -12,7 +12,7 @@ import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ActivityIndicatorScreen = () =>
-  <UIExplorer title="ActivityIndicator" url="components/ActivityIndicator">
+  <UIExplorer title="ActivityIndicator" url="1-components/ActivityIndicator">
     <Description>Displays a customizable activity indicator</Description>
     <Section title="Props">
       <DocItem name="...View props" />

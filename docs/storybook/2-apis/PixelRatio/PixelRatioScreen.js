@@ -13,7 +13,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const PixelRatioScreen = () =>
-  <UIExplorer title="PixelRatio" url="apis/PixelRatio">
+  <UIExplorer title="PixelRatio" url="2-apis/PixelRatio">
     <Description>PixelRatio class gives access to the device pixel density.</Description>
     <Section title="Methods">
       <DocItem
