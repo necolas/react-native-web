@@ -102,6 +102,16 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
     });
   });
 
+  describe('fontFamily', () => {
+    test('general case', () => {
+      expect(createReactDOMStyle({ fontFamily: 'Georgia, Times' })).toMatchSnapshot();
+    });
+
+    test('fontFamily: "System"', () => {
+      expect(createReactDOMStyle({ fontFamily: 'System' })).toMatchSnapshot();
+    });
+  });
+
   test('shortform -> longform', () => {
     const style = {
       borderStyle: 'solid',

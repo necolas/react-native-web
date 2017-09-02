@@ -52,6 +52,9 @@ const colorProps = {
   color: true
 };
 
+const systemFontStack =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
+
 const alphaSortProps = propsArray =>
   propsArray.sort((a, b) => {
     if (a < b) {
@@ -144,6 +147,15 @@ const createReducer = (style, styleProps) => {
     }
 
     switch (prop) {
+      // ignore React Native styles
+      case 'aspectRatio':
+      case 'elevation':
+      case 'overlayColor':
+      case 'resizeMode':
+      case 'tintColor': {
+        break;
+      }
+
       case 'display': {
         resolvedStyle.display = value;
         // defaults of 'flexBasis:auto' and 'flexShrink:0' have lowest precedence
@@ -157,14 +169,7 @@ const createReducer = (style, styleProps) => {
         }
         break;
       }
-      // ignore React Native styles
-      case 'aspectRatio':
-      case 'elevation':
-      case 'overlayColor':
-      case 'resizeMode':
-      case 'tintColor': {
-        break;
-      }
+
       case 'flex': {
         if (value > 0) {
           resolvedStyle.flexGrow = value;
@@ -179,6 +184,13 @@ const createReducer = (style, styleProps) => {
         }
         break;
       }
+
+      case 'fontFamily': {
+        const isSystem = value === 'System';
+        resolvedStyle.fontFamily = isSystem ? systemFontStack : value;
+        break;
+      }
+
       case 'shadowColor':
       case 'shadowOffset':
       case 'shadowOpacity':
@@ -189,10 +201,12 @@ const createReducer = (style, styleProps) => {
         hasResolvedShadow = true;
         break;
       }
+
       case 'textAlignVertical': {
         resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
         break;
       }
+
       case 'textShadowColor':
       case 'textShadowOffset':
       case 'textShadowRadius': {
@@ -202,11 +216,13 @@ const createReducer = (style, styleProps) => {
         hasResolvedTextShadow = true;
         break;
       }
+
       case 'transform':
       case 'transformMatrix': {
         resolveTransform(resolvedStyle, style);
         break;
       }
+
       default: {
         // normalize color values
         let finalValue = value;
