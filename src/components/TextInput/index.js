@@ -301,6 +301,9 @@ class TextInput extends Component {
   };
 
   _handleKeyDown = e => {
+    // prevent key events bubbling (see #612)
+    e.stopPropagation();
+
     // Backspace, Tab, and Cmd+Enter only fire 'keydown' DOM events
     if (e.which === 8 || e.which === 9 || (e.which === 13 && e.metaKey)) {
       this._handleKeyPress(e);
