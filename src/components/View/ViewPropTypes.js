@@ -16,6 +16,19 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { any, bool, func, oneOf } from 'prop-types';
 
+export type ViewLayout = {
+  x: number,
+  y: number,
+  width: number,
+  height: number
+};
+
+export type ViewLayoutEvent = {
+  nativeEvent: {
+    layout: ViewLayout
+  }
+};
+
 const ViewPropTypes = {
   ...BaseComponentPropTypes,
   children: any,
