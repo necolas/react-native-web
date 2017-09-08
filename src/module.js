@@ -29,6 +29,7 @@ export { default as ActivityIndicator } from './components/ActivityIndicator';
 export { default as Button } from './components/Button';
 export { default as FlatList } from './components/FlatList';
 export { default as Image } from './components/Image';
+export { default as KeyboardAvoidingView } from './components/KeyboardAvoidingView';
 export { default as ListView } from './components/ListView';
 export { default as Modal } from './components/Modal';
 export { default as Picker } from './components/Picker';
