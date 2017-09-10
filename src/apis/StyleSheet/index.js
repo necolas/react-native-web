@@ -10,7 +10,11 @@
  */
 
 import flattenStyle from './flattenStyle';
+import modality from '../../modules/modality';
 import StyleRegistry from './registry';
+
+// initialize focus-ring fix
+modality();
 
 // allow component styles to be editable in React Dev Tools
 if (process.env.NODE_ENV !== 'production') {
