@@ -30,11 +30,7 @@ class UnimplementedView extends Component {
   }
 
   render() {
-    return (
-      <View style={[unimplementedViewStyles, this.props.style]}>
-        {this.props.children}
-      </View>
-    );
+    return <View style={[unimplementedViewStyles, this.props.style]}>{this.props.children}</View>;
   }
 }
 

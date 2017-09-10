@@ -10,35 +10,33 @@ import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const Title = ({ children }) =>
-  <AppText style={styles.title}>
-    {children}
-  </AppText>;
+const Title = ({ children }) => <AppText style={styles.title}>{children}</AppText>;
 
-export const Description = ({ children }) =>
+export const Description = ({ children }) => (
   <AppText style={styles.description}>
     {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(children))}
-  </AppText>;
+  </AppText>
+);
 
 const Divider = () => <View style={styles.divider} />;
 
-const SourceLink = ({ uri }) =>
+const SourceLink = ({ uri }) => (
   <ExternalLink
     href={`https://github.com/necolas/react-native-web/tree/master/docs/storybook/${uri}`}
     style={styles.link}
   >
     View source code on GitHub
-  </ExternalLink>;
+  </ExternalLink>
+);
 
-const UIExplorer = ({ children, description, sections, title, url }) =>
+const UIExplorer = ({ children, description, sections, title, url }) => (
   <View style={styles.root}>
-    <Title>
-      {title}
-    </Title>
+    <Title>{title}</Title>
     {description}
     {children}
     {url && <SourceLink uri={url} />}
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   root: {

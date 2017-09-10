@@ -22,9 +22,7 @@ class TextOnPressExample extends React.Component {
           Text has built-in onPress handling
         </Text>
         <View style={styles.logBox}>
-          <Text>
-            {textLog}
-          </Text>
+          <Text>{textLog}</Text>
         </View>
       </View>
     );

@@ -6,10 +6,11 @@ import sources from '../sources';
 import React from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 
-const ImageChildrenExample = () =>
+const ImageChildrenExample = () => (
   <Image source={sources.large} style={styles.image}>
     <Text style={styles.text}>React</Text>
-  </Image>;
+  </Image>
+);
 
 const styles = StyleSheet.create({
   image: {

@@ -5,7 +5,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-const ActivityIndicatorColorExample = () =>
+const ActivityIndicatorColorExample = () => (
   <View style={styles.horizontal}>
     <ActivityIndicator color="#1DA1F2" style={styles.rightPadding} />
     <ActivityIndicator color="#17BF63" style={styles.rightPadding} />
@@ -13,7 +13,8 @@ const ActivityIndicatorColorExample = () =>
     <ActivityIndicator color="#794BC4" style={styles.rightPadding} />
     <ActivityIndicator color="#E0245E" style={styles.rightPadding} />
     <ActivityIndicator color="#FFAD1F" style={styles.rightPadding} />
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

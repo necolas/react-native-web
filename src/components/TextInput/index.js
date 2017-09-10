@@ -339,7 +339,9 @@ class TextInput extends Component {
           if (e.shiftKey) {
             keyValue = String.fromCharCode(e.which).trim();
           } else {
-            keyValue = String.fromCharCode(e.which).toLowerCase().trim();
+            keyValue = String.fromCharCode(e.which)
+              .toLowerCase()
+              .trim();
           }
         }
       }

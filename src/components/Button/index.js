@@ -43,9 +43,7 @@ class Button extends Component {
         ]}
         testID={testID}
       >
-        <Text style={[styles.text, disabled && styles.textDisabled]}>
-          {title}
-        </Text>
+        <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
       </TouchableOpacity>
     );
   }

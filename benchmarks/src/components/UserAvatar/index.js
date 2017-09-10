@@ -23,15 +23,15 @@ class UserAvatar extends PureComponent {
 
     return (
       <AspectRatio ratio={1} style={[styles.root, style]}>
-        {uri
-          ? <Image
-              accessibilityLabel={accessibilityLabel}
-              onLoad={this._handleLoad}
-              ref={this._setImageRef}
-              source={{ uri }}
-              style={[styles.image, circle && styles.circle]}
-            />
-          : null}
+        {uri ? (
+          <Image
+            accessibilityLabel={accessibilityLabel}
+            onLoad={this._handleLoad}
+            ref={this._setImageRef}
+            source={{ uri }}
+            style={[styles.image, circle && styles.circle]}
+          />
+        ) : null}
       </AspectRatio>
     );
   }

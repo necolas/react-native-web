@@ -5,11 +5,12 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React from 'react';
 
-const ActivityIndicatorAnimatingExample = () =>
+const ActivityIndicatorAnimatingExample = () => (
   <View style={styles.horizontal}>
     <ActivityIndicator />
     <ActivityIndicator animating={false} />
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

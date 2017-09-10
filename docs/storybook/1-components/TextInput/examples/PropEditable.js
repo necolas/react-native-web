@@ -6,7 +6,7 @@ import React from 'react';
 import { styles } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputEditableExample = () =>
+const TextInputEditableExample = () => (
   <View>
     <TextInput defaultValue="uneditable text input" editable={false} style={styles.textinput} />
     <TextInput
@@ -15,6 +15,7 @@ const TextInputEditableExample = () =>
       multiline={true}
       style={styles.multiline}
     />
-  </View>;
+  </View>
+);
 
 export default TextInputEditableExample;

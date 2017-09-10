@@ -28,9 +28,7 @@ class SwitchOnValueChangeExample extends PureComponent {
             style={styles.marginBottom}
             value={eventSwitchIsOn}
           />
-          <Text>
-            {eventSwitchIsOn ? 'On' : 'Off'}
-          </Text>
+          <Text>{eventSwitchIsOn ? 'On' : 'Off'}</Text>
         </View>
         <View style={styles.alignCenter}>
           <Switch
@@ -43,9 +41,7 @@ class SwitchOnValueChangeExample extends PureComponent {
             style={styles.marginBottom}
             value={eventSwitchRegressionIsOn}
           />
-          <Text>
-            {eventSwitchRegressionIsOn ? 'On' : 'Off'}
-          </Text>
+          <Text>{eventSwitchRegressionIsOn ? 'On' : 'Off'}</Text>
         </View>
       </View>
     );

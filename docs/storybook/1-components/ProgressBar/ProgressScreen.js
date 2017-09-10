@@ -10,7 +10,7 @@ import PropTrackColor from './examples/PropTrackColor';
 import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const ProgressBarScreen = () =>
+const ProgressBarScreen = () => (
   <UIExplorer title="ProgressBar" url="1-components/ProgressBar">
     <Description>Display an activity progress bar</Description>
     <Section title="Props">
@@ -62,6 +62,7 @@ const ProgressBarScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('ProgressBar', ProgressBarScreen);

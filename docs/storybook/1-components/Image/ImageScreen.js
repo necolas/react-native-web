@@ -25,7 +25,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const ImageScreen = () =>
+const ImageScreen = () => (
   <UIExplorer title="Image" url="1-components/Image">
     <Description>
       An accessibile image component with support for image resizing, default image, and child
@@ -175,6 +175,7 @@ const ImageScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('Image', ImageScreen);

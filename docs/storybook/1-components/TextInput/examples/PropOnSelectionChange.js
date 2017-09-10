@@ -84,9 +84,7 @@ class OnSelectionChangeExample extends React.Component {
           value={this.state.value}
         />
         <View>
-          <Text>
-            selection = {JSON.stringify(this.state.selection)}
-          </Text>
+          <Text>selection = {JSON.stringify(this.state.selection)}</Text>
           <Text onPress={this.placeAt(0)}>Place at Start (0, 0)</Text>
           <Text onPress={this.placeAt(length)}>
             Place at End ({length}, {length})
@@ -100,7 +98,7 @@ class OnSelectionChangeExample extends React.Component {
   }
 }
 
-const TextInputOnSelectionChangeExample = () =>
+const TextInputOnSelectionChangeExample = () => (
   <View>
     <OnSelectionChangeExample style={styles.textinput} value="text selection can be changed" />
     <OnSelectionChangeExample
@@ -108,6 +106,7 @@ const TextInputOnSelectionChangeExample = () =>
       style={styles.multiline}
       value={'multiline text selection\ncan also be changed'}
     />
-  </View>;
+  </View>
+);
 
 export default TextInputOnSelectionChangeExample;

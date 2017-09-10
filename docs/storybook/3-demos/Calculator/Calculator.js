@@ -349,26 +349,29 @@ class Calculator extends React.Component {
   }
 }
 
-const DigitKey = props =>
+const DigitKey = props => (
   <CalculatorKey
     {...props}
     style={[calculatorStyles.digitKey, props.style]}
     textStyle={[calculatorStyles.digitKeyText, props.textStyle]}
-  />;
+  />
+);
 
-const FunctionKey = props =>
+const FunctionKey = props => (
   <CalculatorKey
     {...props}
     style={[calculatorStyles.functionKey, props.style]}
     textStyle={[calculatorStyles.functionKeyText, props.textStyle]}
-  />;
+  />
+);
 
-const OperatorKey = props =>
+const OperatorKey = props => (
   <CalculatorKey
     {...props}
     style={[calculatorStyles.operatorKey, props.style]}
     textStyle={[calculatorStyles.operatorKeyText, props.textStyle]}
-  />;
+  />
+);
 
 const calculatorStyles = StyleSheet.create({
   root: {

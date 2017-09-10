@@ -24,20 +24,20 @@ class ImageGetSizeExample extends PureComponent {
 
     return (
       <View>
-        {showButton
-          ? <View style={styles.button}>
-              <Button onPress={this._handlePress} title="(4.7MB) Get image dimensions" />
-            </View>
-          : null}
-        {startLoad
-          ? <View>
-              <Text>
-                Source dimensions:{' '}
-                {JSON.stringify({ width: this.state.width, height: this.state.height })}
-              </Text>
-              <Image source={createUncachedURI(this.props.source.uri)} style={styles.image} />
-            </View>
-          : null}
+        {showButton ? (
+          <View style={styles.button}>
+            <Button onPress={this._handlePress} title="(4.7MB) Get image dimensions" />
+          </View>
+        ) : null}
+        {startLoad ? (
+          <View>
+            <Text>
+              Source dimensions:{' '}
+              {JSON.stringify({ width: this.state.width, height: this.state.height })}
+            </Text>
+            <Image source={createUncachedURI(this.props.source.uri)} style={styles.image} />
+          </View>
+        ) : null}
       </View>
     );
   }

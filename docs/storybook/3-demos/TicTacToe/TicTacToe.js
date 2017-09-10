@@ -143,9 +143,7 @@ const Cell = createReactClass({
         underlayColor="transparent"
       >
         <View style={[styles.cell, this.cellStyle()]}>
-          <Text style={[styles.cellText, this.textStyle()]}>
-            {this.textContents()}
-          </Text>
+          <Text style={[styles.cellText, this.textStyle()]}>{this.textContents()}</Text>
         </View>
       </TouchableHighlight>
     );
@@ -171,9 +169,7 @@ const GameEndOverlay = createReactClass({
 
     return (
       <View style={styles.overlay}>
-        <Text style={styles.overlayMessage}>
-          {message}
-        </Text>
+        <Text style={styles.overlayMessage}>{message}</Text>
         <TouchableHighlight
           activeOpacity={0.5}
           onPress={this.props.onRestart}
@@ -213,24 +209,22 @@ const TicTacToeApp = createReactClass({
   },
 
   render() {
-    const rows = this.state.board.grid.map((cells, row) =>
+    const rows = this.state.board.grid.map((cells, row) => (
       <View key={'row' + row} style={styles.row}>
-        {cells.map((player, col) =>
+        {cells.map((player, col) => (
           <Cell
             key={'cell' + col}
             onPress={this.handleCellPress.bind(this, row, col)}
             player={player}
           />
-        )}
+        ))}
       </View>
-    );
+    ));
 
     return (
       <View style={styles.container}>
         <Text style={styles.title}>EXTREME T3</Text>
-        <View style={styles.board}>
-          {rows}
-        </View>
+        <View style={styles.board}>{rows}</View>
         <GameEndOverlay board={this.state.board} onRestart={this.restartGame} />
       </View>
     );

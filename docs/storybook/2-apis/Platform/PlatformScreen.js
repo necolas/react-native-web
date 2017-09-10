@@ -5,7 +5,7 @@
 import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const PlatformScreen = () =>
+const PlatformScreen = () => (
   <UIExplorer title="Platform" url="2-apis/Platform">
     <Description>
       Detect what is the platform in which the app is running. This piece of functionality can be
@@ -51,6 +51,7 @@ const containerStyles = {
         typeInfo="(object) => any"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('Platform', PlatformScreen);

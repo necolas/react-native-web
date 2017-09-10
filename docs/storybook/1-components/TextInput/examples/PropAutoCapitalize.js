@@ -6,7 +6,7 @@ import React from 'react';
 import { WithLabel, styles } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputAutoCapitalizeExample = () =>
+const TextInputAutoCapitalizeExample = () => (
   <View>
     <WithLabel label="none">
       <TextInput autoCapitalize="none" style={styles.textinput} />
@@ -20,6 +20,7 @@ const TextInputAutoCapitalizeExample = () =>
     <WithLabel label="characters">
       <TextInput autoCapitalize="characters" style={styles.textinput} />
     </WithLabel>
-  </View>;
+  </View>
+);
 
 export default TextInputAutoCapitalizeExample;

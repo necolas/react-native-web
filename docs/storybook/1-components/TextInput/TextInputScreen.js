@@ -31,7 +31,7 @@ import UIExplorer, {
   TextList
 } from '../../ui-explorer';
 
-const TextInputScreen = () =>
+const TextInputScreen = () => (
   <UIExplorer title="TextInput" url="1-components/TextInput">
     <Description>
       <AppText>
@@ -371,6 +371,7 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('TextInput', TextInputScreen);

@@ -119,12 +119,22 @@ describe('components/Image', () => {
       // initial render
       const component = mount(<Image source={{ uri: uriOne }} />);
       ImageUriCache.remove(uriOne);
-      expect(component.render().find('img').attr('src')).toBe(uriOne);
+      expect(
+        component
+          .render()
+          .find('img')
+          .attr('src')
+      ).toBe(uriOne);
 
       // props update
       component.setProps({ source: { uri: uriTwo } });
       ImageUriCache.remove(uriTwo);
-      expect(component.render().find('img').attr('src')).toBe(uriTwo);
+      expect(
+        component
+          .render()
+          .find('img')
+          .attr('src')
+      ).toBe(uriTwo);
     });
 
     test('is set immediately when rendered on the server', () => {

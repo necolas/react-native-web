@@ -29,6 +29,8 @@ const createDeclarationString = (prop, val) => {
  * // => 'color:blue;width:20px'
  */
 const generateCss = style =>
-  mapKeyValue(prefixStyles(style), createDeclarationString).sort().join(';');
+  mapKeyValue(prefixStyles(style), createDeclarationString)
+    .sort()
+    .join(';');
 
 export default generateCss;

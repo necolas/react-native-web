@@ -6,7 +6,7 @@ import React from 'react';
 import { styles } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputNumberOfLinesExample = () =>
+const TextInputNumberOfLinesExample = () => (
   <View>
     <TextInput
       multiline={true}
@@ -20,6 +20,7 @@ const TextInputNumberOfLinesExample = () =>
       placeholder="numberOfLines = 3"
       style={[styles.multiline, { height: 'auto' }]}
     />
-  </View>;
+  </View>
+);
 
 export default TextInputNumberOfLinesExample;

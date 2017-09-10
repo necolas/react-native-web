@@ -6,7 +6,7 @@ import DraggableCircleExample from './examples/DraggableCircle';
 import React from 'react';
 import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const PanResponderScreen = () =>
+const PanResponderScreen = () => (
   <UIExplorer title="PanResponder" url="2-apis/PanResponder">
     <Description>
       PanResponder reconciles several touches into a single gesture. It makes single-touch gestures
@@ -29,6 +29,7 @@ const PanResponderScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('PanResponder', PanResponderScreen);

@@ -6,7 +6,7 @@ import sources from '../sources';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-const ImageSourceExample = () =>
+const ImageSourceExample = () => (
   <View style={styles.row}>
     <View style={styles.column}>
       <Text style={styles.text}>Static image</Text>
@@ -24,7 +24,8 @@ const ImageSourceExample = () =>
       <Text style={styles.text}>Data SVG</Text>
       <Image source={sources.dataSvg} style={styles.image} />
     </View>
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   row: {

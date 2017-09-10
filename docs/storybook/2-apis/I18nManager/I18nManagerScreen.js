@@ -8,7 +8,7 @@ import RTLToggle from './examples/RTLToggle';
 import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const I18nManagerScreen = () =>
+const I18nManagerScreen = () => (
   <UIExplorer title="I18nManager" url="2-apis/I18nManager">
     <Description>Control and set the layout and writing direction of the application.</Description>
     <Section title="Properties">
@@ -48,6 +48,7 @@ const I18nManagerScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('I18nManager', I18nManagerScreen);

@@ -4,15 +4,16 @@ import AppText from './AppText';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const TextList = ({ items }) =>
+const TextList = ({ items }) => (
   <View accessibilityTraits="list" style={styles.list}>
-    {items.map((item, i) =>
+    {items.map((item, i) => (
       <AppText accessibilityTraits="listitem" key={i} style={styles.item}>
         <View style={styles.bullet} />
         {item}
       </AppText>
-    )}
-  </View>;
+    ))}
+  </View>
+);
 
 const styles = StyleSheet.create({
   item: {

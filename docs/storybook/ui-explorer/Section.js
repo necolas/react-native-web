@@ -8,18 +8,14 @@ import AppText from './AppText';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const SectionTitle = ({ children }) =>
-  <AppText style={styles.sectionTitle}>
-    {children}
-  </AppText>;
+const SectionTitle = ({ children }) => <AppText style={styles.sectionTitle}>{children}</AppText>;
 
-const Section = ({ children, title }) =>
+const Section = ({ children, title }) => (
   <View>
-    <SectionTitle>
-      {title}
-    </SectionTitle>
+    <SectionTitle>{title}</SectionTitle>
     {children}
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   sectionTitle: {

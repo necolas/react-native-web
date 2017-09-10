@@ -24,11 +24,11 @@ class NetworkImageExample extends PureComponent {
   };
 
   render() {
-    const loader = this.state.loading
-      ? <View>
-          <ActivityIndicator />
-        </View>
-      : null;
+    const loader = this.state.loading ? (
+      <View>
+        <ActivityIndicator />
+      </View>
+    ) : null;
 
     return (
       <View style={[helpers.styles.row, helpers.styles.centerRow]}>
@@ -43,10 +43,7 @@ class NetworkImageExample extends PureComponent {
         >
           {loader}
         </Image>
-        {this.state.message &&
-          <Text style={helpers.styles.marginLeft}>
-            {this.state.message}
-          </Text>}
+        {this.state.message && <Text style={helpers.styles.marginLeft}>{this.state.message}</Text>}
       </View>
     );
   }

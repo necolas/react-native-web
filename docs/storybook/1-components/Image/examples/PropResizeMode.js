@@ -6,7 +6,7 @@ import React from 'react';
 import sources from '../sources';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-const ImageResizeModeExample = () =>
+const ImageResizeModeExample = () => (
   <View>
     {[sources.small, sources.large].map((source, i) => {
       return (
@@ -48,7 +48,8 @@ const ImageResizeModeExample = () =>
         </View>
       );
     })}
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

@@ -6,7 +6,7 @@ import React from 'react';
 import { styles, WithLabel } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputClearButtonModeExample = () =>
+const TextInputClearButtonModeExample = () => (
   <View>
     <WithLabel label="never">
       <TextInput clearButtonMode="never" style={styles.textinput} />
@@ -20,6 +20,7 @@ const TextInputClearButtonModeExample = () =>
     <WithLabel label="always">
       <TextInput clearButtonMode="always" style={styles.textinput} />
     </WithLabel>
-  </View>;
+  </View>
+);
 
 export default TextInputClearButtonModeExample;

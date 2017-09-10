@@ -19,7 +19,7 @@ import UIExplorer, {
   StyleList
 } from '../../ui-explorer';
 
-const ViewScreen = () =>
+const ViewScreen = () => (
   <UIExplorer title="View" url="1-components/View">
     <Description>
       <AppText>
@@ -285,11 +285,12 @@ const ViewScreen = () =>
           render: () => <ZIndexExample />
         }}
       />
-      {transformExamples.map(({ title, render }, i) =>
+      {transformExamples.map(({ title, render }, i) => (
         <DocItem description={title} key={i} example={{ render }} />
-      )}
+      ))}
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 const stylePropTypes = [
   {

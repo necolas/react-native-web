@@ -18,9 +18,9 @@ class TweetText extends React.Component {
 
     return (
       <AppText {...other} lang={lang} numberOfLines={numberOfLines}>
-        {textParts.map((part, i) =>
+        {textParts.map((part, i) => (
           <TweetTextPart displayMode={displayMode} key={i} part={part} />
-        )}
+        ))}
       </AppText>
     );
   }

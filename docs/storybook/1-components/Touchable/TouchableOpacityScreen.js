@@ -10,7 +10,7 @@ import React from 'react';
 import { TouchableOpacityDisabled } from './examples/PropDisabled';
 import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const TouchableOpacityScreen = () =>
+const TouchableOpacityScreen = () => (
   <UIExplorer title="TouchableOpacity" url="1-components/Touchable">
     <Description>
       <AppText>
@@ -69,6 +69,7 @@ const TouchableOpacityScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('TouchableOpacity', TouchableOpacityScreen);

@@ -8,7 +8,7 @@ import { Button, StyleSheet, View } from 'react-native';
 
 const emptyFunction = () => {};
 
-const ButtonOnPressExample = () =>
+const ButtonOnPressExample = () => (
   <View style={styles.horizontal}>
     <Button
       accessibilityLabel="This sounds great!"
@@ -17,7 +17,8 @@ const ButtonOnPressExample = () =>
     />
     <DividerHorizontal />
     <Button color="#841584" onPress={emptyFunction} title="Ok!" />
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

@@ -6,7 +6,7 @@ import React from 'react';
 import { styles } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputSelectTextOnFocusExample = () =>
+const TextInputSelectTextOnFocusExample = () => (
   <View>
     <TextInput
       defaultValue="text is selected on focus"
@@ -21,6 +21,7 @@ const TextInputSelectTextOnFocusExample = () =>
       selectTextOnFocus={true}
       style={styles.multiline}
     />
-  </View>;
+  </View>
+);
 
 export default TextInputSelectTextOnFocusExample;

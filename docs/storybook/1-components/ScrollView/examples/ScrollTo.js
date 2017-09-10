@@ -19,17 +19,15 @@ export default class ScrollToExample extends PureComponent {
           scrollEventThrottle={16} // ~60 events per second
           style={styles.scrollViewStyle}
         >
-          {Array.from({ length: 50 }).map((item, i) =>
+          {Array.from({ length: 50 }).map((item, i) => (
             <TouchableHighlight
               key={i}
               onPress={() => {}}
               style={[styles.box, styles.horizontalBox]}
             >
-              <Text>
-                {i}
-              </Text>
+              <Text>{i}</Text>
             </TouchableHighlight>
-          )}
+          ))}
         </ScrollView>
         <Button
           onPress={() => {

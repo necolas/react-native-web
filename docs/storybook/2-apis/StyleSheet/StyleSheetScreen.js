@@ -12,7 +12,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const StyleSheetScreen = () =>
+const StyleSheetScreen = () => (
   <UIExplorer title="StyleSheet" url="2-apis/StyleSheet">
     <Description>
       The StyleSheet abstraction converts predefined styles to (vendor-prefixed) CSS without
@@ -90,6 +90,7 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
 
       <DocItem name="hairlineWidth" typeInfo="number" />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('StyleSheet', StyleSheetScreen);

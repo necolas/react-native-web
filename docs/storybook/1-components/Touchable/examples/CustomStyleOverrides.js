@@ -28,9 +28,7 @@ export default class TouchableCustomStyleOverridesExample extends React.Componen
               style={[styles.touchable, this.state[button] && styles.blue]}
               underlayColor={processColor('#1B95E0', 0.125)}
             >
-              <Text style={[!this.state[button] && styles.text]}>
-                {button}
-              </Text>
+              <Text style={[!this.state[button] && styles.text]}>{button}</Text>
             </TouchableHighlight>
           );
         })}

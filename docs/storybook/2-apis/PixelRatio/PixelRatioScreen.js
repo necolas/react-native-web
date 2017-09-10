@@ -12,7 +12,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const PixelRatioScreen = () =>
+const PixelRatioScreen = () => (
   <UIExplorer title="PixelRatio" url="2-apis/PixelRatio">
     <Description>PixelRatio class gives access to the device pixel density.</Description>
     <Section title="Methods">
@@ -54,6 +54,7 @@ const PixelRatioScreen = () =>
         typeInfo="(layoutSize: number) => number"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('PixelRatio', PixelRatioScreen);

@@ -13,7 +13,7 @@ import UIExplorer, {
   TextList
 } from '../../ui-explorer';
 
-const NetInfoScreen = () =>
+const NetInfoScreen = () => (
   <UIExplorer title="NetInfo" url="2-apis/NetInfo">
     <Description>
       <AppText>
@@ -84,6 +84,7 @@ const NetInfoScreen = () =>
         typeInfo="ObjectExpression"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('NetInfo', NetInfoScreen);

@@ -46,18 +46,12 @@ export default class TouchableDelayEvents extends PureComponent {
             onPressOut={this._createPressHandler('pressOut: 1000ms delay')}
           >
             <View>
-              <Text style={styles.touchableText}>
-                {displayName}
-              </Text>
+              <Text style={styles.touchableText}>{displayName}</Text>
             </View>
           </Touchable>
         </View>
         <View style={styles.eventLogBox}>
-          {this.state.eventLog.map((e, ii) =>
-            <Text key={ii}>
-              {e}
-            </Text>
-          )}
+          {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
         </View>
       </View>
     );

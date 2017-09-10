@@ -21,13 +21,14 @@ const keyboardTypes = [
   'numeric'
 ];
 
-const TextInputKeyboardTypeExample = () =>
+const TextInputKeyboardTypeExample = () => (
   <View>
-    {keyboardTypes.map(type =>
+    {keyboardTypes.map(type => (
       <WithLabel key={type} label={type}>
         <TextInput keyboardType={type} style={styles.textinput} />
       </WithLabel>
-    )}
-  </View>;
+    ))}
+  </View>
+);
 
 export default TextInputKeyboardTypeExample;

@@ -27,9 +27,7 @@ export default class TextInputRewrite extends React.Component {
           style={helperStyles.textinput}
           value={this.state.text}
         />
-        <Text style={[styles.remainder, { color: remainderColor }]}>
-          {remainder}
-        </Text>
+        <Text style={[styles.remainder, { color: remainderColor }]}>{remainder}</Text>
       </View>
     );
   }

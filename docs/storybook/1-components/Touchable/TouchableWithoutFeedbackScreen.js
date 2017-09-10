@@ -18,7 +18,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const TouchableWithoutFeedbackScreen = () =>
+const TouchableWithoutFeedbackScreen = () => (
   <UIExplorer title="TouchableWithoutFeedback" url="1-components/Touchable">
     <Description>
       <AppText>
@@ -120,6 +120,7 @@ constant to reduce memory allocations.`}
 
       <DocItem description="Hit slop" example={{ render: () => <PropHitSlop /> }} />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('TouchableWithoutFeedback', TouchableWithoutFeedbackScreen);

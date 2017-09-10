@@ -14,58 +14,43 @@ const Divider = () => <View style={styles.verticalDivider} />;
 const createDescription = description => {
   const nodeList = React.Children.toArray(description);
   if (nodeList.length === 1) {
-    return (
-      <Text>
-        {nodeList}
-      </Text>
-    );
+    return <Text>{nodeList}</Text>;
   } else {
     return insertBetween(() => <Divider key={Math.random()} />, nodeList);
   }
 };
 
-const DocItem = ({ description, example = {}, name, typeInfo, label }) =>
+const DocItem = ({ description, example = {}, name, typeInfo, label }) => (
   <View style={styles.example}>
-    {name &&
+    {name && (
       <AppText style={styles.title}>
         <PropText label={label} name={name} typeInfo={typeInfo} />
-      </AppText>}
-    {description &&
-      <View style={styles.description}>
-        {createDescription(description)}
-      </View>}
-    {(example.render || example.code) &&
+      </AppText>
+    )}
+    {description && <View style={styles.description}>{createDescription(description)}</View>}
+    {(example.render || example.code) && (
       <View style={styles.renderBox}>
         <AppText style={styles.exampleText}>Example</AppText>
-        {example.render &&
-          <View>
-            {example.render()}
-          </View>}
+        {example.render && <View>{example.render()}</View>}
         {example.render && example.code && <View style={styles.verticalDivider} />}
-        {example.code &&
-          <Text style={styles.code}>
-            {example.code}
-          </Text>}
-      </View>}
-  </View>;
+        {example.code && <Text style={styles.code}>{example.code}</Text>}
+      </View>
+    )}
+  </View>
+);
 
-const PropText = ({ label, name, typeInfo }) =>
+const PropText = ({ label, name, typeInfo }) => (
   <AppText>
-    {label &&
-      <Text style={[styles.label, label === 'web' && styles.webLabel]}>
-        {label}
-      </Text>}
-    <Text style={styles.propName}>
-      {name}
-    </Text>
-    {typeInfo &&
+    {label && <Text style={[styles.label, label === 'web' && styles.webLabel]}>{label}</Text>}
+    <Text style={styles.propName}>{name}</Text>
+    {typeInfo && (
       <Text>
         {': '}
-        <Text style={styles.code}>
-          {typeInfo}
-        </Text>
-      </Text>}
-  </AppText>;
+        <Text style={styles.code}>{typeInfo}</Text>
+      </Text>
+    )}
+  </AppText>
+);
 
 const styles = StyleSheet.create({
   code: {

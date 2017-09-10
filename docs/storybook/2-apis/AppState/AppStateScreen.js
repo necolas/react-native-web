@@ -15,7 +15,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const AppStateScreen = () =>
+const AppStateScreen = () => (
   <UIExplorer title="AppState" url="2-apis/AppState">
     <Description>
       <AppText>
@@ -70,6 +70,7 @@ const AppStateScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('AppState', AppStateScreen);

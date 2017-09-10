@@ -12,7 +12,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const AppRegistryScreen = () =>
+const AppRegistryScreen = () => (
   <UIExplorer title="AppRegistry" url="2-apis/AppRegistry">
     <Description>
       <AppText>
@@ -106,6 +106,7 @@ const AppRegistryScreen = () =>
         typeInfo="(rootTag: HTMLElement) => void"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('AppRegistry', AppRegistryScreen);

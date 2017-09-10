@@ -5,7 +5,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const TextNumberOfLinesExample = () =>
+const TextNumberOfLinesExample = () => (
   <View style={{ maxWidth: 320 }}>
     <Text numberOfLines={1}>
       Maximum of one line, no matter how much I write here. If I keep writing, it
@@ -22,6 +22,7 @@ const TextNumberOfLinesExample = () =>
       {"'"}
       ll just keep going and going.
     </Text>
-  </View>;
+  </View>
+);
 
 export default TextNumberOfLinesExample;

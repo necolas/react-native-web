@@ -23,25 +23,23 @@ class ImagePrefetchExample extends PureComponent {
 
     return (
       <View>
-        {showButton
-          ? <View style={styles.button}>
-              <Button onPress={this._handlePress} title="Prefetch image" />
-            </View>
-          : null}
-        {startLoad
-          ? <View>
-              <Text>
-                {this.state.events.join('\n')}
-              </Text>
-              <Image
-                onLoad={this._handleLoad}
-                onLoadEnd={this._handleLoadEnd}
-                onLoadStart={this._handleLoadStart}
-                source={this.props.source}
-                style={styles.image}
-              />
-            </View>
-          : null}
+        {showButton ? (
+          <View style={styles.button}>
+            <Button onPress={this._handlePress} title="Prefetch image" />
+          </View>
+        ) : null}
+        {startLoad ? (
+          <View>
+            <Text>{this.state.events.join('\n')}</Text>
+            <Image
+              onLoad={this._handleLoad}
+              onLoadEnd={this._handleLoadEnd}
+              onLoadStart={this._handleLoadStart}
+              source={this.props.source}
+              style={styles.image}
+            />
+          </View>
+        ) : null}
       </View>
     );
   }

@@ -8,7 +8,7 @@ import OpenURL from './examples/OpenURL';
 import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const LinkingScreen = () =>
+const LinkingScreen = () => (
   <UIExplorer title="Linking" url="2-apis/Linking">
     <Description>
       Linking gives you a general interface for securely opening external URLs from JavaScript.
@@ -28,6 +28,7 @@ const LinkingScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('Linking', LinkingScreen);

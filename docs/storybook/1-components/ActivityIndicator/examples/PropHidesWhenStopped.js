@@ -43,11 +43,12 @@ class ToggleAnimatingActivityIndicator extends PureComponent {
   }
 }
 
-const ActivityIndicatorHidesWhenStoppedExample = () =>
+const ActivityIndicatorHidesWhenStoppedExample = () => (
   <View style={[styles.horizontal]}>
     <ToggleAnimatingActivityIndicator hidesWhenStopped={false} style={styles.rightPadding} />
     <ToggleAnimatingActivityIndicator />
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

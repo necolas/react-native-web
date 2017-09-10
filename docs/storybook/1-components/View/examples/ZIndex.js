@@ -22,9 +22,7 @@ export default class ZIndex extends React.Component {
               { marginTop: 0, backgroundColor: '#E57373', zIndex: indices[0] }
             ]}
           >
-            <Text>
-              ZIndex {indices[0]}
-            </Text>
+            <Text>ZIndex {indices[0]}</Text>
           </View>
           <View
             style={[
@@ -32,9 +30,7 @@ export default class ZIndex extends React.Component {
               { marginLeft: 50, backgroundColor: '#FFF176', zIndex: indices[1] }
             ]}
           >
-            <Text>
-              ZIndex {indices[1]}
-            </Text>
+            <Text>ZIndex {indices[1]}</Text>
           </View>
           <View
             style={[
@@ -42,9 +38,7 @@ export default class ZIndex extends React.Component {
               { marginLeft: 100, backgroundColor: '#81C784', zIndex: indices[2] }
             ]}
           >
-            <Text>
-              ZIndex {indices[2]}
-            </Text>
+            <Text>ZIndex {indices[2]}</Text>
           </View>
           <View
             style={[
@@ -52,9 +46,7 @@ export default class ZIndex extends React.Component {
               { marginLeft: 150, backgroundColor: '#64B5F6', zIndex: indices[3] }
             ]}
           >
-            <Text>
-              ZIndex {indices[3]}
-            </Text>
+            <Text>ZIndex {indices[3]}</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>

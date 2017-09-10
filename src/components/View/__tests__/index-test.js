@@ -14,11 +14,7 @@ describe('components/View', () => {
 
   test('prop "children"', () => {
     const children = <View testID="1" />;
-    const component = shallow(
-      <View>
-        {children}
-      </View>
-    );
+    const component = shallow(<View>{children}</View>);
     expect(component.contains(children)).toEqual(true);
   });
 

@@ -7,12 +7,11 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 
-const Entity = ({ children }) =>
-  <Text style={{ fontWeight: '500', color: '#527fe4' }}>
-    {children}
-  </Text>;
+const Entity = ({ children }) => (
+  <Text style={{ fontWeight: '500', color: '#527fe4' }}>{children}</Text>
+);
 
-const TextChildrenExample = () =>
+const TextChildrenExample = () => (
   <View>
     <Text>
       This text contains an inline blue view{' '}
@@ -51,6 +50,7 @@ const TextChildrenExample = () =>
         <Entity>Entity Name</Entity>
       </Text>
     </View>
-  </View>;
+  </View>
+);
 
 export default TextChildrenExample;

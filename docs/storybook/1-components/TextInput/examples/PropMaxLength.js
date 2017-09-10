@@ -6,7 +6,7 @@ import React from 'react';
 import { styles, WithLabel } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputMaxLengthExample = () =>
+const TextInputMaxLengthExample = () => (
   <View>
     <WithLabel label="maxLength: 5">
       <TextInput maxLength={5} style={styles.textinput} />
@@ -20,6 +20,7 @@ const TextInputMaxLengthExample = () =>
     <WithLabel label="maxLength: 5 with very long default value already set">
       <TextInput defaultValue="9402512345" maxLength={5} style={styles.textinput} />
     </WithLabel>
-  </View>;
+  </View>
+);
 
 export default TextInputMaxLengthExample;

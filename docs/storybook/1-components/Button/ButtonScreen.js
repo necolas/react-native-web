@@ -17,7 +17,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const ButtonScreen = () =>
+const ButtonScreen = () => (
   <UIExplorer title="Button" url="1-components/Button">
     <Description>
       <AppText>
@@ -68,6 +68,7 @@ const ButtonScreen = () =>
 
       <DocItem name="title" typeInfo="string" description="Text to display inside the button." />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('Button', ButtonScreen);

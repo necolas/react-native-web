@@ -6,7 +6,7 @@ import { styles } from '../helpers';
 import React from 'react';
 import { Switch, View } from 'react-native';
 
-const SwitchValueExample = () =>
+const SwitchValueExample = () => (
   <View style={styles.row}>
     <View style={styles.marginRight}>
       <Switch value={false} />
@@ -14,6 +14,7 @@ const SwitchValueExample = () =>
     <View style={styles.marginRight}>
       <Switch value={true} />
     </View>
-  </View>;
+  </View>
+);
 
 export default SwitchValueExample;

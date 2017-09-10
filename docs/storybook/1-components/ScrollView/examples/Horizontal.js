@@ -11,7 +11,7 @@ const onScroll = () => {
   console.log('ScrollView.onScroll');
 };
 
-const VerticalExample = () =>
+const VerticalExample = () => (
   <View style={styles.scrollViewContainer}>
     <ScrollView
       contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -19,17 +19,16 @@ const VerticalExample = () =>
       scrollEventThrottle={16} // ~60 events per second
       style={styles.scrollViewStyle}
     >
-      {Array.from({ length: 50 }).map((item, i) =>
+      {Array.from({ length: 50 }).map((item, i) => (
         <View key={i} style={[styles.box, styles.horizontalBox]}>
-          <Text>
-            {i}
-          </Text>
+          <Text>{i}</Text>
         </View>
-      )}
+      ))}
     </ScrollView>
-  </View>;
+  </View>
+);
 
-const HorizontalExample = () =>
+const HorizontalExample = () => (
   <View style={styles.scrollViewContainer}>
     <ScrollView
       contentContainerStyle={styles.scrollViewContentContainerStyle}
@@ -38,15 +37,14 @@ const HorizontalExample = () =>
       scrollEventThrottle={16} // ~60 events per second
       style={styles.scrollViewStyle}
     >
-      {Array.from({ length: 50 }).map((item, i) =>
+      {Array.from({ length: 50 }).map((item, i) => (
         <View key={i} style={[styles.box, styles.horizontalBox]}>
-          <Text>
-            {i}
-          </Text>
+          <Text>{i}</Text>
         </View>
-      )}
+      ))}
     </ScrollView>
-  </View>;
+  </View>
+);
 
 export { HorizontalExample, VerticalExample };
 

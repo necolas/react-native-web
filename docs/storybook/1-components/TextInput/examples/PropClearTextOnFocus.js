@@ -6,7 +6,7 @@ import React from 'react';
 import { styles } from '../helpers';
 import { TextInput, View } from 'react-native';
 
-const TextInputClearTextOnFocusExample = () =>
+const TextInputClearTextOnFocusExample = () => (
   <View>
     <TextInput
       clearTextOnFocus={true}
@@ -21,6 +21,7 @@ const TextInputClearTextOnFocusExample = () =>
       placeholder="text is cleared on focus"
       style={styles.multiline}
     />
-  </View>;
+  </View>
+);
 
 export default TextInputClearTextOnFocusExample;

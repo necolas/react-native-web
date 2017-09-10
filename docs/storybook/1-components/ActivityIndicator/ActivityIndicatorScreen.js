@@ -11,7 +11,7 @@ import PropSize from './examples/PropSize';
 import React from 'react';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const ActivityIndicatorScreen = () =>
+const ActivityIndicatorScreen = () => (
   <UIExplorer title="ActivityIndicator" url="1-components/ActivityIndicator">
     <Description>Displays a customizable activity indicator</Description>
     <Section title="Props">
@@ -53,6 +53,7 @@ const ActivityIndicatorScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('ActivityIndicator', ActivityIndicatorScreen);

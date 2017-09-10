@@ -135,9 +135,7 @@ class Tile extends React.Component {
 
     return (
       <Animated.View style={tileStyles}>
-        <Text style={textStyles}>
-          {tile.value}
-        </Text>
+        <Text style={textStyles}>{tile.value}</Text>
       </Animated.View>
     );
   }
@@ -160,9 +158,7 @@ class GameEndOverlay extends React.Component {
 
     return (
       <View style={styles.overlay}>
-        <Text style={styles.overlayMessage}>
-          {message}
-        </Text>
+        <Text style={styles.overlayMessage}>{message}</Text>
         <TouchableOpacity onPress={this.props.onRestart} style={styles.tryAgain}>
           <Text style={styles.tryAgainText}>Try Again?</Text>
         </TouchableOpacity>
@@ -229,9 +225,7 @@ class Game2048 extends React.Component {
         onTouchStart={this._handleTouchStart}
         style={styles.container}
       >
-        <Board>
-          {tiles}
-        </Board>
+        <Board>{tiles}</Board>
         <GameEndOverlay board={this.state.board} onRestart={this._handleRestart} />
       </View>
     );

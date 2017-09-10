@@ -18,7 +18,7 @@ import UIExplorer, {
   TextList
 } from '../../ui-explorer';
 
-const ScrollViewScreen = () =>
+const ScrollViewScreen = () => (
   <UIExplorer title="ScrollView" url="1-components/ScrollView">
     <Description>
       <AppText>
@@ -166,6 +166,7 @@ const ScrollViewScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('ScrollView', ScrollViewScreen);

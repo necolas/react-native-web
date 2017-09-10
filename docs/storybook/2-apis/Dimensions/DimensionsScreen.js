@@ -16,7 +16,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 import React from 'react';
 
-const DimensionsScreen = () =>
+const DimensionsScreen = () => (
   <UIExplorer title="Dimensions" url="2-apis/Dimensions">
     <Description>
       Note: dimensions may change (e.g., due to device rotation) so any rendering logic or styles
@@ -70,6 +70,7 @@ const DimensionsScreen = () =>
         description="Remove an event handler."
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('Dimensions', DimensionsScreen);

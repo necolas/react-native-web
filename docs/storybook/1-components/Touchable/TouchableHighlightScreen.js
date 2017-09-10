@@ -11,7 +11,7 @@ import React from 'react';
 import { TouchableHighlightDisabled } from './examples/PropDisabled';
 import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
-const TouchableHighlightScreen = () =>
+const TouchableHighlightScreen = () => (
   <UIExplorer title="TouchableHighlight" url="1-components/Touchable">
     <Description>
       <AppText>
@@ -87,6 +87,7 @@ const TouchableHighlightScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('TouchableHighlight', TouchableHighlightScreen);

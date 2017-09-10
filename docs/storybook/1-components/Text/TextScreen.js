@@ -18,7 +18,7 @@ import UIExplorer, {
   StyleList
 } from '../../ui-explorer';
 
-const TextScreen = () =>
+const TextScreen = () => (
   <UIExplorer title="Text" url="1-components/Text">
     <Description>
       <AppText>
@@ -156,7 +156,8 @@ only supports other <Text> and raw text (strings) as children.`}
         description="Used to locate this view in end-to-end tests. The test ID is rendered to a 'data-testid' DOM attribute"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 const stylePropTypes = [
   {

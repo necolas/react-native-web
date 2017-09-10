@@ -25,7 +25,7 @@ export default class TweetActionsBar extends PureComponent {
     /* eslint-disable react/jsx-handler-names */
     return (
       <View style={[styles.root, style]}>
-        {actions.map((action, i) =>
+        {actions.map((action, i) => (
           <TweetAction
             accessibilityLabel={actions.label}
             count={action.count}
@@ -35,7 +35,7 @@ export default class TweetActionsBar extends PureComponent {
             onPress={action.onPress}
             style={styles.action}
           />
-        )}
+        ))}
       </View>
     );
   }

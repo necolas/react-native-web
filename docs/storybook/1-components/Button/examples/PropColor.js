@@ -8,7 +8,7 @@ import { Button, View } from 'react-native';
 
 const emptyFunction = () => {};
 
-const ButtonColorExample = () =>
+const ButtonColorExample = () => (
   <View>
     <Button color="#17BF63" onPress={emptyFunction} title="Press me" />
     <DividerVertical />
@@ -17,6 +17,7 @@ const ButtonColorExample = () =>
     <Button color="#794BC4" onPress={emptyFunction} title="Press me" />
     <DividerVertical />
     <Button color="#E0245E" onPress={emptyFunction} title="Press me" />
-  </View>;
+  </View>
+);
 
 export default ButtonColorExample;

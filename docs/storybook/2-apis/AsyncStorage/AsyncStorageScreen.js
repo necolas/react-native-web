@@ -12,7 +12,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const AsyncStorageScreen = () =>
+const AsyncStorageScreen = () => (
   <UIExplorer title="AsyncStorage" url="2-apis/AsyncStorage">
     <Description>
       <AppText>
@@ -122,6 +122,7 @@ const AsyncStorageScreen = () =>
         typeInfo="(key: string, value: string) => {}"
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('AsyncStorage', AsyncStorageScreen);

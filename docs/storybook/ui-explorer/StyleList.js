@@ -4,27 +4,18 @@ import AppText from './AppText';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const StyleList = ({ stylePropTypes }) =>
+const StyleList = ({ stylePropTypes }) => (
   <View accessibilityTraits="list">
-    {stylePropTypes.map(({ label, name, typeInfo }, i) =>
+    {stylePropTypes.map(({ label, name, typeInfo }, i) => (
       <AppText accessibilityTraits="listitem" key={i} style={styles.item}>
-        {label
-          ? <Text style={styles.label}>
-              {label}
-            </Text>
-          : null}
-        <Text style={styles.name}>
-          {name}
-        </Text>
+        {label ? <Text style={styles.label}>{label}</Text> : null}
+        <Text style={styles.name}>{name}</Text>
         {typeInfo ? ': ' : null}
-        {typeInfo
-          ? <Text style={styles.code}>
-              {typeInfo}
-            </Text>
-          : null}
+        {typeInfo ? <Text style={styles.code}>{typeInfo}</Text> : null}
       </AppText>
-    )}
-  </View>;
+    ))}
+  </View>
+);
 
 const styles = StyleSheet.create({
   code: {

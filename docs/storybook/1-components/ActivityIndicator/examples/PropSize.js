@@ -7,11 +7,12 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 const sizes = [20, 'small', 36, 'large', 60];
 
-const ActivityIndicatorSizeExample = () =>
+const ActivityIndicatorSizeExample = () => (
   <View style={styles.horizontal}>
     {sizes.map((size, i) => <ActivityIndicator key={i} size={size} style={styles.rightPadding} />)}
     <ActivityIndicator size="large" style={styles.large} />
-  </View>;
+  </View>
+);
 
 const styles = StyleSheet.create({
   horizontal: {

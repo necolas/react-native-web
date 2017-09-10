@@ -12,7 +12,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const VibrationScreen = () =>
+const VibrationScreen = () => (
   <UIExplorer title="Vibration" url="2-apis/Vibration">
     <Description>
       <AppText>
@@ -53,6 +53,7 @@ Vibration.vibrate([200]);`
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('APIs', module).add('Vibration', VibrationScreen);

@@ -22,7 +22,7 @@ import UIExplorer, {
   storiesOf
 } from '../../ui-explorer';
 
-const SwitchScreen = () =>
+const SwitchScreen = () => (
   <UIExplorer title="Switch" url="1-components/Switch">
     <Description>
       <AppText>
@@ -130,6 +130,7 @@ const SwitchScreen = () =>
         }}
       />
     </Section>
-  </UIExplorer>;
+  </UIExplorer>
+);
 
 storiesOf('Components', module).add('Switch', SwitchScreen);

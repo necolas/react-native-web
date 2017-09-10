@@ -6,7 +6,7 @@ import { logger } from '../helpers';
 import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 
-const ViewStyleExample = () =>
+const ViewStyleExample = () => (
   <View pointerEvents="box-none">
     <View pointerEvents="box-none">
       <View pointerEvents="none">
@@ -22,6 +22,7 @@ const ViewStyleExample = () =>
         <Text>box-none</Text>
       </TouchableHighlight>
     </View>
-  </View>;
+  </View>
+);
 
 export default ViewStyleExample;
