@@ -10,6 +10,24 @@ class DeepTree extends Component {
     wrap: PropTypes.number.isRequired
   };
 
+  /* necessary for reactxp to work without errors */
+  static childContextTypes = {
+    focusManager: PropTypes.object
+  };
+
+  getChildContext() {
+    return {
+      focusManager: {
+        addFocusableComponent() {},
+        removeFocusableComponent() {},
+        restrictFocusWithin() {},
+        removeFocusRestriction() {},
+        limitFocusWithin() {},
+        removeFocusLimitation() {}
+      }
+    };
+  }
+
   render() {
     const { breadth, components, depth, id, wrap } = this.props;
     const { Box } = components;

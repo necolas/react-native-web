@@ -27,24 +27,25 @@ Typical render timings*: mean ± two standard deviations.
 
 | Implementation                        | Deep tree (ms)    | Wide tree (ms)    | Tweets (ms)       |
 | :--- | ---: | ---: | ---: |
-| `css-modules`                         |  `84.19` `±14.69` | `183.37` `±22.98` | |
-| `react-native-web/stylesheet@0.0.113` |  `88.83` `±14.31` | `185.54` `±24.62` | |
-| `react-native-web@0.0.113`            | `110.45` `±19.63` | `251.53` `±32.52` | `15.52` `±7.93ms` |
+| `css-modules`                         |  `88.83` `±18.63` | `198.79` `±22.98` | |
+| `react-native-web/stylesheet@0.0.121` |  `91.17` `±19.29` | `209.67` `±32.38` | |
+| `react-native-web@0.0.121`            | `124.21` `±16.84` | `264.55` `±38.75` | `16.90` `±7.30ms` |
 
 Other libraries
 
 | Implementation                       | Deep tree (ms)    | Wide tree (ms)    |
 | :--- | ---: | ---: |
-| `aphrodite@1.2.3`                    |  `84.68` `±18.80` | `180.62` `±41.98` |
-| `styletron@2.5.1`                    |  `83.93` `±13.10` | `185.96` `±45.65` |
-| `react-jss@7.0.1`                    | `174.75` `±30.87` | `411.77` `±83.83` |
-| `glamor@3.0.0-3`                     | `255.21` `±45.68` | `545.74` `±107.79` |
-| `reactxp@0.34.3`                     | `237.46` `±36.72` | `514.48` `±84.87` |
-| `styled-components@2.1.1`            | `266.91` `±50.04` | `598.29` `±95.13` |
-| `styled-components/primitives@2.1.1` | `266.62` `±50.39` | `567.13` `±68.12` |
-| `radium@0.19.1`                      | `518.48` `±69.74` | `1058.85` `±120.85` |
+| `aphrodite@1.2.3`                    |  `91.73` `±41.63` | `197.72` `±44.90` |
+| `styletron@2.5.1`                    |  `94.73` `±37.58` | `201.81` `±57.93` |
+| `glamor@2.20.40`                     | `146.60` `±26.73` | `277.46` `±29.17` |
+| `emotion@7.2.2`                      | `150.79` `±38.29` | `282.18` `±41.79` |
+| `react-jss@7.1.0`                    | `201.83` `±34.65` | `428.61` `±47.8` |
+| `reactxp@0.42.1`                     | `262.69` `±24.14` | `595.20` `±66.17` |
+| `styled-components@2.1.2`            | `280.59` `±31.77` | `599.00` `±62.99` |
+| `styled-components/primitives@2.1.2` | `291.74` `±48.96` | `606.57` `±78.18` |
+| `radium@0.19.4`                      | `563.94` `±69.91` | `1139.18` `±152.59` |
 
-These results indicate that styled render performance is not a significant
+These results indicate that style render performance is not a significant
 differentiating factor between `aphrodite`, `css-modules`, `react-native-web`,
 and `styletron`.
 

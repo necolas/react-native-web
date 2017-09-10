@@ -1,5 +1,6 @@
 import aphrodite from './src/aphrodite';
 import cssModules from './src/css-modules';
+import emotion from './src/emotion';
 import glamor from './src/glamor';
 import jss from './src/jss';
 import radium from './src/radium';
@@ -29,24 +30,26 @@ const coreTests = [
 ];
 
 const fastestTests = [
-  () => renderDeepTree('styletron', styletron),
-  () => renderWideTree('styletron', styletron),
   () => renderDeepTree('aphrodite', aphrodite),
-  () => renderWideTree('aphrodite', aphrodite)
+  () => renderWideTree('aphrodite', aphrodite),
+  () => renderDeepTree('styletron', styletron),
+  () => renderWideTree('styletron', styletron)
 ];
 
 /**
  * Optionally run tests using other libraries
  */
 const restTests = [
+  () => renderDeepTree('emotion', emotion),
+  () => renderWideTree('emotion', emotion),
   () => renderDeepTree('glamor', glamor),
   () => renderWideTree('glamor', glamor),
-  () => renderDeepTree('react-jss', jss),
-  () => renderWideTree('react-jss', jss),
   () => renderDeepTree('radium', radium),
   () => renderWideTree('radium', radium),
   () => renderDeepTree('reactxp', xp),
   () => renderWideTree('reactxp', xp),
+  () => renderDeepTree('react-jss', jss),
+  () => renderWideTree('react-jss', jss),
   () => renderDeepTree('styled-components', styledComponents),
   () => renderWideTree('styled-components', styledComponents),
   () => renderDeepTree('styled-components/primitives', styledComponentsPrimitives),
