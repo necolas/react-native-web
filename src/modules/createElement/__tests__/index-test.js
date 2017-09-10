@@ -1,13 +1,13 @@
 /* eslint-env jasmine, jest */
 
-import createDOMElement from '..';
+import createElement from '..';
 import { shallow, render } from 'enzyme';
 
-describe('modules/createDOMElement', () => {
+describe('modules/createElement', () => {
   test('it renders different DOM elements', () => {
-    let component = render(createDOMElement('span'));
+    let component = render(createElement('span'));
     expect(component).toMatchSnapshot();
-    component = render(createDOMElement('main'));
+    component = render(createElement('main'));
     expect(component).toMatchSnapshot();
   });
 
@@ -17,7 +17,7 @@ describe('modules/createDOMElement', () => {
       expect(e.nativeEvent).toMatchSnapshot();
       done();
     };
-    const component = shallow(createDOMElement('span', { onClick }));
+    const component = shallow(createElement('span', { onClick }));
     component.find('span').simulate('click', {
       nativeEvent: {
         preventDefault() {},
@@ -34,7 +34,7 @@ describe('modules/createDOMElement', () => {
           test(`"onClick" is ${disabled ? 'not ' : ''}called when "${name}" is pressed`, () => {
             const onClick = jest.fn();
             const component = shallow(
-              createDOMElement('span', { accessibilityRole: 'button', disabled, onClick })
+              createElement('span', { accessibilityRole: 'button', disabled, onClick })
             );
             component.find('span').simulate('keyPress', {
               isDefaultPrevented() {},

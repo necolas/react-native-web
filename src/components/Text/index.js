@@ -14,7 +14,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import { Component } from 'react';
-import createDOMElement from '../../modules/createDOMElement';
+import createElement from '../../modules/createElement';
 import StyleSheet from '../../apis/StyleSheet';
 import TextPropTypes from './TextPropTypes';
 
@@ -75,7 +75,7 @@ class Text extends Component {
 
     const component = isInAParentText ? 'span' : 'div';
 
-    return createDOMElement(component, otherProps);
+    return createElement(component, otherProps);
   }
 
   _createEnterHandler(fn) {

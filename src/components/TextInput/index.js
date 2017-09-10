@@ -15,7 +15,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 import ColorPropType from '../../propTypes/ColorPropType';
-import createDOMElement from '../../modules/createDOMElement';
+import createElement from '../../modules/createElement';
 import findNodeHandle from '../../modules/findNodeHandle';
 import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
@@ -265,7 +265,7 @@ class TextInput extends Component {
       otherProps.type = type;
     }
 
-    return createDOMElement(component, otherProps);
+    return createElement(component, otherProps);
   }
 
   _handleBlur = e => {

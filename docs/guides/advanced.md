@@ -2,7 +2,7 @@
 
 ## Use with existing React DOM components
 
-React Native for Web exports a web-specific module called `createDOMElement`,
+React Native for Web exports a web-specific module called `createElement`,
 which can be used to wrap React DOM components. This allows you to use React
 Native's accessibility and style optimizations.
 
@@ -11,9 +11,8 @@ In the example below, `Video` will now accept common React Native props such as
 props.
 
 ```js
-import { createDOMElement } from 'react-native';
-
-const Video = (props) => createDOMElement('video', props);
+import { createElement } from 'react-native-web';
+const Video = (props) => createElement('video', props);
 ```
 
 This also works with composite components defined in your existing component
@@ -21,9 +20,10 @@ gallery or dependencies ([live example](https://www.webpackbin.com/bins/-KiTSGFw
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
-import { createDOMElement, StyleSheet } from 'react-native';
+import { createElement } from 'react-native-web';
+import { StyleSheet } from 'react-native';
 
-const CustomButton = (props) => createDOMElement(RaisedButton, {
+const CustomButton = (props) => createElement(RaisedButton, {
   ...props,
   style: [ styles.button, props.style ]
 });
@@ -33,6 +33,14 @@ const styles = StyleSheet.create({
     padding: 20
   }
 });
+```
+
+And `createElement` can be used as drop-in replacement for `React.createElement`:
+
+```js
+/* @jsx createElement */
+import { createElement } from 'react-native-web';
+const Video = (props) => <video {...props} style={[ { marginVertical: 10 }, props.style ]} />
 ```
 
 Remember that React Native styles are not the same as React DOM styles, and
@@ -47,7 +55,8 @@ an API inspired by styled-components ([live
 example](https://www.webpackbin.com/bins/-KjT9ziwv4O7FDZdvsnX)).
 
 ```js
-const { createDOMElement, StyleSheet } = ReactNative;
+import { createElement } from 'react-native-web';
+import { StyleSheet } from 'react-native';
 
 /**
  * styled API
@@ -69,7 +78,7 @@ const styled = (Component, styler) => {
 
       return (
         isDOMComponent
-          ? createDOMElement(Component, nextProps)
+          ? createElement(Component, nextProps)
           : <Component {...nextProps} />
       );
     }

@@ -5,7 +5,7 @@
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import ColorPropType from '../../propTypes/ColorPropType';
-import createDOMElement from '../../modules/createDOMElement';
+import createElement from '../../modules/createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../../apis/StyleSheet';
 import UIManager from '../../apis/UIManager';
@@ -110,7 +110,7 @@ class Switch extends PureComponent {
       disabled && styles.disabledThumb
     ];
 
-    const nativeControl = createDOMElement('input', {
+    const nativeControl = createElement('input', {
       checked: value,
       disabled: disabled,
       onBlur: this._handleFocusState,

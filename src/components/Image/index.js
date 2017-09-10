@@ -12,7 +12,7 @@
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import createDOMElement from '../../modules/createDOMElement';
+import createElement from '../../modules/createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageResizeMode from './ImageResizeMode';
@@ -209,11 +209,11 @@ class Image extends Component {
 
     // Allows users to trigger the browser's image context menu
     const hiddenImage = displayImage
-      ? createDOMElement('img', {
+      ? createElement('img', {
           alt: accessibilityLabel || '',
           draggable,
           src: displayImage,
-          style: [StyleSheet.absoluteFill, styles.img]
+          style: styles.img
         })
       : null;
 
@@ -317,6 +317,7 @@ const styles = StyleSheet.create({
     display: 'inline-flex'
   },
   img: {
+    ...StyleSheet.absoluteFillObject,
     height: '100%',
     opacity: 0,
     width: '100%',

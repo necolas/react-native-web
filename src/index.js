@@ -5,7 +5,7 @@ import {
   unmountComponentAtNode,
 
   // modules
-  createDOMElement,
+  createElement,
   NativeModules,
   processColor,
 
@@ -71,7 +71,7 @@ const ReactNative = {
   unmountComponentAtNode,
 
   // modules
-  createDOMElement,
+  createElement,
   NativeModules,
   processColor,
 

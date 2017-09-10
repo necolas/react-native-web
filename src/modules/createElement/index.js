@@ -80,15 +80,13 @@ const adjustProps = domProps => {
   }
 };
 
-const createDOMElement = (component, props) => {
+const createElement = (component, props, ...children) => {
   // use equivalent platform elements where possible
   const accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
   const Component = accessibilityComponent || component;
   const domProps = createDOMProps(Component, props);
-
   adjustProps(domProps);
-
-  return <Component {...domProps} />;
+  return React.createElement(Component, domProps, ...children);
 };
 
-export default createDOMElement;
+export default createElement;

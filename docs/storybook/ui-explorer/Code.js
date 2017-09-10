@@ -2,9 +2,9 @@
  * @flow
  */
 
-import { createDOMElement, StyleSheet } from 'react-native';
+import { createElement, StyleSheet } from 'react-native';
 
-const Code = props => createDOMElement('code', { ...props, style: [styles.code, props.style] });
+const Code = props => createElement('code', { ...props, style: [styles.code, props.style] });
 
 export default Code;
 

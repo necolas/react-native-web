@@ -1,9 +1,10 @@
-import { createDOMElement } from 'react-native';
+/* eslint-disable react/prop-types */
+import { createElement } from 'react-native';
 import React from 'react';
 import styles from './styles';
 
 const IconDirectMessage = props =>
-  createDOMElement('svg', {
+  createElement('svg', {
     children: (
       <g>
         <path d="M43.34 14H12.66L28 27.946z" />
