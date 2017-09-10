@@ -71,9 +71,9 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.1",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.8",
-    "babel-preset-react-native": "2.1.0",
+    "babel-preset-react-native": "^3.0.2",
     "caniuse-api": "^2.0.0",
     "del-cli": "^1.1.0",
     "enzyme": "^2.9.1",
@@ -91,7 +91,7 @@
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.5",
+    "webpack": "^3.5.6",
     "webpack-bundle-analyzer": "^2.9.0"
   },
   "peerDependencies": {
