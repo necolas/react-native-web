@@ -13,11 +13,13 @@ const Divider = () => <View style={styles.verticalDivider} />;
 
 const createDescription = description => {
   const nodeList = React.Children.toArray(description);
+  let content;
   if (nodeList.length === 1) {
-    return <Text>{nodeList}</Text>;
+    content = <Text>{nodeList}</Text>;
   } else {
-    return insertBetween(() => <Divider key={Math.random()} />, nodeList);
+    content = insertBetween(() => <Divider key={Math.random()} />, nodeList);
   }
+  return <Text style={styles.text}>{content}</Text>;
 };
 
 const DocItem = ({ description, example = {}, name, typeInfo, label }) => (
@@ -55,6 +57,7 @@ const PropText = ({ label, name, typeInfo }) => (
 const styles = StyleSheet.create({
   code: {
     fontFamily: 'monospace, monospace',
+    fontSize: '1rem',
     lineHeight: '1.3125em'
   },
   example: {
@@ -63,13 +66,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: '1rem'
   },
+  text: {
+    alignItems: 'stretch',
+    display: 'flex',
+    flexDirection: 'column',
+    fontSize: '1rem',
+    lineHeight: '1.3125em'
+  },
   label: {
     backgroundColor: '#ddd',
-    color: '#555',
     borderRadius: '1rem',
+    color: '#555',
+    marginRight: '0.5rem',
     paddingVertical: '0.125rem',
-    paddingHorizontal: '0.5rem',
-    marginRight: '0.5rem'
+    paddingHorizontal: '0.5rem'
   },
   propName: {
     fontWeight: 'bold'

@@ -38,6 +38,7 @@ const TextChildrenExample = () => (
         <Text>
           (is inherited
           <Text style={{ opacity: 0.7 }}>
+            {'\n'}
             (and accumulated
             <Text style={{ backgroundColor: '#ffaaaa' }}>(and also applies to the background)</Text>
             )
