@@ -72,6 +72,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
+    "babel-plugin-tester": "^4.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.8",
     "babel-preset-react-native": "^3.0.2",
     "caniuse-api": "^2.0.0",
