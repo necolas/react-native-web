@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { VirtualizedList, View, Text, StyleSheet } from 'react-native'
-import { storiesOf } from '@kadira/storybook';
 
-class VirtualizedListExample extends Component {
+export default class VirtualizedListExample extends Component {
   constructor (props) {
     super(props)
 
@@ -52,20 +51,8 @@ class VirtualizedListExample extends Component {
   }
 }
 
-const examples = [{
-  title: 'perf',
-  render() {
-    return <VirtualizedListExample />
-  }
-}]
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   }
 })
-
-storiesOf('component: VirtualizedList', module)
-  .add('perf', () => (
-    <VirtualizedListExample />
-  ))

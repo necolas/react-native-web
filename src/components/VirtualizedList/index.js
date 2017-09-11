@@ -16,16 +16,16 @@
 
 'use strict';
 
-const React = require('react')
-const findNodeHandle = require('../../modules/findNodeHandle')
-const ScrollView = require('../ScrollView')
-const View = require('../View')
-const { computeWindowedRenderLimits } = require('./VirtualizeUtils')
-const FillRateHelper = require('./FillRateHelper')
-const Batchinator = require('./Batchinator')
-const ViewabilityHelper = require('./ViewabilityHelper')
-const { flatten: flattenStyle } = require('../../apis/StyleSheet');
-const invariant = require('fbjs/lib/invariant')
+const React = require('react');
+const findNodeHandle = require('../../modules/findNodeHandle');
+const ScrollView = require('../ScrollView').default;
+const View = require('../View').default;
+const { computeWindowedRenderLimits } = require('./VirtualizeUtils');
+const FillRateHelper = require('./FillRateHelper');
+const Batchinator = require('./Batchinator');
+const ViewabilityHelper = require('./ViewabilityHelper');
+const StyleSheet = require('../../apis/StyleSheet').default;
+const invariant = require('fbjs/lib/invariant');
 const warning = require('fbjs/lib/warning');
 
 import type {ViewabilityConfig, ViewToken} from './ViewabilityHelper';
@@ -416,7 +416,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
 
   render() {
     if (process.env.NODE_ENV !== 'production') {
-      const flatStyles = flattenStyle(this.props.contentContainerStyle);
+      const flatStyles = StyleSheet.flatten(this.props.contentContainerStyle);
       warning(
         flatStyles == null || flatStyles.flexWrap !== 'wrap',
         '`flexWrap: `wrap`` is not supported with the `VirtualizedList` components.' +
@@ -526,6 +526,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
         </View>
       );
     }
+    debugger;
     const ret = React.cloneElement(
       this.props.renderScrollComponent(this.props),
       {
