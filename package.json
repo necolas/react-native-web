@@ -12,7 +12,8 @@
   "scripts": {
     "benchmark": "cd benchmarks && yarn && webpack && open index.html",
     "build": "webpack --config webpack.config.js --sort-assets-by --progress",
-    "compile": "del ./dist && mkdir dist && babel src -d dist --ignore **/__tests__",
+    "clean-dist": "del ./dist && mkdir dist",
+    "compile": "babel src -d dist --ignore *-test.js",
     "docs:build": "cd docs && yarn build",
     "docs:start": "cd docs && yarn && yarn start",
     "docs:release": "cd docs && yarn release",
@@ -24,7 +25,7 @@
     "lint": "yarn lint:cmd -- babel benchmarks docs src",
     "lint:cmd": "eslint --ignore-path .gitignore --fix",
     "precommit": "lint-staged",
-    "release": "yarn lint && yarn test && yarn compile && yarn build && npm publish",
+    "release": "yarn clean-dist && yarn lint && yarn test && yarn compile && yarn build && npm publish",
     "test": "flow && jest"
   },
   "babel": {
