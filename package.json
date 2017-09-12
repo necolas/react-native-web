@@ -4,6 +4,7 @@
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
+    "babel",
     "dist",
     "src",
     "!**/__tests__"
