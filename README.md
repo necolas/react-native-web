@@ -3,19 +3,23 @@
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
 
-"React Native for Web" brings [React Native][react-native-url]'s
-building blocks and touch handling to the Web.
+"React Native for Web" brings the platform-agnostic Components and APIs of
+[React Native][react-native-url] to the Web.
 
-* [UI Explorer and documentation](https://necolas.github.io/react-native-web/storybook/).
-* [React Native for Web: Playground](https://glitch.com/edit/#!/react-native-web-playground) using create-react-app.
+Browse the [interactive
+documentation](https://necolas.github.io/react-native-web/storybook/) or [try
+it out](https://glitch.com/edit/#!/react-native-web-playground) on Glitch.
 
-Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+## Features
 
-[npm-image]: https://badge.fury.io/js/react-native-web.svg
-[npm-url]: https://npmjs.org/package/react-native-web
-[react-native-url]: https://facebook.github.io/react-native/
-[travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
-[travis-url]: https://travis-ci.org/necolas/react-native-web
+* Interoperability with ReactDOM components.
+* Native-like touch handling.
+* Built-in integration with web accessibility APIs.
+* Built-in support for LTR and RTL layouts.
+* Built-in expressive and reliable subset of CSS.
+* Optimized, vendor-prefixed CSS with [good runtime performance](benchmarks/README.md).
+* Server-side rendering of HTML and critical CSS.
+* Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 
 ## Quick start
 
@@ -27,12 +31,28 @@ Install in your existing app using `yarn` or `npm`:
 yarn add react@15.6 react-dom@15.6 react-native-web
 ```
 
-Then read the [Getting Started](docs/guides/getting-started.md) guide.
+Add the `react-native-web/babel` plugin to your Babel configuration. This will
+alias `react-native` to `react-native-web` and exclude any modules not required
+by the app.
+
+```json
+{
+  "plugins": [
+    "react-native-web/babel"
+  ],
+  "presets": [
+    "react-native"
+  ]
+}
+```
+
+See the [Getting Started](docs/guides/getting-started.md) guide for more details.
 
 ## Documentation
 
-The [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
-interactively documents all the supported APIs and Components.
+The [interactive
+documentation](https://necolas.github.io/react-native-web/storybook/) shows all
+the supported APIs and Components.
 
 Guides:
 
@@ -46,7 +66,8 @@ Guides:
 
 ## Starter kits
 
-* [create-react-app](https://github.com/facebookincubator/create-react-app) ([on Glitch](https://glitch.com/edit/#!/react-native-web-playground))
+* [Glitch](https://glitch.com/edit/#!/react-native-web-playground)
+* [create-react-app](https://github.com/facebookincubator/create-react-app)
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 
@@ -99,3 +120,9 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 ## License
 
 React Native for Web is [BSD licensed](LICENSE).
+
+[npm-image]: https://badge.fury.io/js/react-native-web.svg
+[npm-url]: https://npmjs.org/package/react-native-web
+[react-native-url]: https://facebook.github.io/react-native/
+[travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
+[travis-url]: https://travis-ci.org/necolas/react-native-web
