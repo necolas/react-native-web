@@ -20,7 +20,7 @@ const NetInfoScreen = () => (
         NetInfo asynchronously determines the online/offline status of the application.
       </AppText>
       <AppText>
-        Note that support for retrieving the connection type depends upon browswer support (and is
+        Note that support for retrieving the connection type depends upon browser support (and is
         limited to mobile browsers). It will default to <Code>unknown</Code> when support is
         missing.
       </AppText>
