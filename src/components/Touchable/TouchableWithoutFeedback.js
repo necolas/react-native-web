@@ -44,7 +44,6 @@ const TouchableWithoutFeedback = createReactClass({
     accessibilityRole: BaseComponentPropTypes.accessibilityRole,
     accessibilityTraits: BaseComponentPropTypes.accessibilityTraits,
     accessible: bool,
-    children: element,
     /**
      * Delay in ms, from onPressIn, before onLongPress is called.
      */
@@ -161,6 +160,7 @@ const TouchableWithoutFeedback = createReactClass({
     } = this.props;
 
     // Note(avik): remove dynamic typecast once Flow has been upgraded
+    // $FlowFixMe
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
     warning(
