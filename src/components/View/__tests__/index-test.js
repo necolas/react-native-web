@@ -12,10 +12,18 @@ describe('components/View', () => {
     });
   });
 
-  test('prop "children"', () => {
-    const children = <View testID="1" />;
-    const component = shallow(<View>{children}</View>);
-    expect(component.contains(children)).toEqual(true);
+  describe('prop "children"', () => {
+    test('text node throws error', () => {
+      const children = 'hello';
+      const render = () => shallow(<View>{children}</View>);
+      expect(render).toThrow();
+    });
+
+    test('non-text is rendered', () => {
+      const children = <View testID="1" />;
+      const component = shallow(<View>{children}</View>);
+      expect(component.contains(children)).toEqual(true);
+    });
   });
 
   describe('prop "hitSlop"', () => {
