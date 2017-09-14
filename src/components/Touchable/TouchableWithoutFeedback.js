@@ -19,7 +19,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import TimerMixin from 'react-timer-mixin';
 import Touchable from './Touchable';
 import warning from 'fbjs/lib/warning';
-import { bool, element, func, number, string } from 'prop-types';
+import { bool, func, number, string } from 'prop-types';
 
 type Event = Object;
 
@@ -33,7 +33,7 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  * If you wish to have several child components, wrap them in a View.
  */
 
-/* eslint-disable react/prefer-es6-class */
+/* eslint-disable react/prefer-es6-class, react/prop-types */
 const TouchableWithoutFeedback = createReactClass({
   displayName: 'TouchableWithoutFeedback',
   mixins: [TimerMixin, Touchable.Mixin],
