@@ -19,11 +19,7 @@ describe('modules/createElement', () => {
     };
     const component = shallow(createElement('span', { onClick }));
     component.find('span').simulate('click', {
-      nativeEvent: {
-        preventDefault() {},
-        stopImmediatePropagation() {},
-        stopPropagation() {}
-      }
+      nativeEvent: {}
     });
   });
 
@@ -38,11 +34,7 @@ describe('modules/createElement', () => {
             );
             component.find('span').simulate('keyPress', {
               isDefaultPrevented() {},
-              nativeEvent: {
-                preventDefault() {},
-                stopImmediatePropagation() {},
-                stopPropagation() {}
-              },
+              nativeEvent: {},
               preventDefault() {},
               which
             });

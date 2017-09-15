@@ -4,6 +4,9 @@ exports[`modules/createElement it normalizes event.nativeEvent 1`] = `
 Object {
   "_normalized": true,
   "changedTouches": Array [],
+  "identifier": undefined,
+  "locationX": undefined,
+  "locationY": undefined,
   "pageX": undefined,
   "pageY": undefined,
   "preventDefault": [Function],
