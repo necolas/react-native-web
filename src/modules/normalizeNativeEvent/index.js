@@ -45,14 +45,26 @@ function normalizeTouchEvent(nativeEvent) {
   const changedTouches = normalizeTouches(nativeEvent.changedTouches);
   const touches = normalizeTouches(nativeEvent.touches);
 
+  const preventDefault = nativeEvent.preventDefault != null
+    ? nativeEvent.preventDefault.bind(nativeEvent)
+    : () => {};
+
+  const stopImmediatePropagation = nativeEvent.stopImmediatePropagation != null
+    ? nativeEvent.preventDefault.bind(nativeEvent)
+    : () => {};
+
+  const stopPropagation = nativeEvent.stopPropagation != null
+    ? nativeEvent.stopPropagation.bind(nativeEvent)
+    : () => {};
+
   const event = {
     _normalized: true,
     changedTouches,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
-    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
-    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
-    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
+    preventDefault: preventDefault,
+    stopImmediatePropagation: stopImmediatePropagation,
+    stopPropagation: stopPropagation,
     target: nativeEvent.target,
     // normalize the timestamp
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
@@ -89,6 +101,19 @@ function normalizeMouseEvent(nativeEvent) {
       timestamp: Date.now()
     }
   ];
+
+  const preventDefault = nativeEvent.preventDefault != null
+    ? nativeEvent.preventDefault.bind(nativeEvent)
+    : () => {};
+
+  const stopImmediatePropagation = nativeEvent.stopImmediatePropagation != null
+    ? nativeEvent.preventDefault.bind(nativeEvent)
+    : () => {};
+
+  const stopPropagation = nativeEvent.stopPropagation != null
+    ? nativeEvent.stopPropagation.bind(nativeEvent)
+    : () => {};
+
   return {
     _normalized: true,
     changedTouches: touches,
@@ -97,9 +122,9 @@ function normalizeMouseEvent(nativeEvent) {
     locationY: nativeEvent.offsetY,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
-    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
-    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
-    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
+    preventDefault: preventDefault,
+    stopImmediatePropagation: stopImmediatePropagation,
+    stopPropagation: stopPropagation,
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
     touches: nativeEvent.type === 'mouseup' ? emptyArray : touches
