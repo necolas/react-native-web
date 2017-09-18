@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) 2015-present, Alibaba Group Holding Limited.
+ * All rights reserved.
+ *
+ * @providesModule ReactModal
+ */
+'use strict';
+
 import React, {PropTypes, Component} from 'react';
 import StyleSheet from '../../apis/StyleSheet';
 import DeviceEventEmitter from '../../apis/DeviceEventEmitter';
@@ -68,7 +76,14 @@ class Modal extends Component {
     render() {
         const {main} = this.props;
         const {content, transparent, maskClosable} = this.state;
-alert(main);
+        return (main && content ?
+            <TouchableHighlight
+                underlayColor={transparent?"rgba(0,0,0,0)":"#000"}
+                onPress={maskClosable?this.close.bind(this):null}
+                style={[styles.modal,transparent?{backgroundColor:"rgba(0,0,0,0)"}:null]}>
+                {content}
+            </TouchableHighlight>
+            : null);
     }
 }
 
