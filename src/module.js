@@ -24,6 +24,9 @@ export { default as Platform } from './apis/Platform';
 export { default as StyleSheet } from './apis/StyleSheet';
 export { default as UIManager } from './apis/UIManager';
 export { default as Vibration } from './apis/Vibration';
+///////////||\\change start////////////////////////////////////
+export { default as DeviceEventEmitter } from './apis/DeviceEventEmitter';
+///////////||\\change end////////////////////////////////////
 
 // components
 export { default as ActivityIndicator } from './components/ActivityIndicator';

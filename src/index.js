@@ -29,6 +29,9 @@ import {
   StyleSheet,
   UIManager,
   Vibration,
+    ///////////||\\change start////////////////////////////////////
+    DeviceEventEmitter,
+    ///////////||\\change end////////////////////////////////////
 
   // components
   ActivityIndicator,
@@ -96,6 +99,9 @@ const ReactNative = {
   StyleSheet,
   UIManager,
   Vibration,
+    ///////////||\\change start////////////////////////////////////
+    DeviceEventEmitter,
+    ///////////||\\change end////////////////////////////////////
 
   // components
   ActivityIndicator,
