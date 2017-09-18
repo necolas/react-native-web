@@ -13,9 +13,20 @@ describe('components/View', () => {
   });
 
   describe('prop "children"', () => {
-    test('text node throws error', () => {
-      const children = 'hello';
-      const render = () => shallow(<View>{children}</View>);
+    test('text node throws error (single)', () => {
+      const render = () => shallow(<View>'hello'</View>);
+      expect(render).toThrow();
+    });
+
+    test('text node throws error (array)', () => {
+      const render = () =>
+        shallow(
+          <View>
+            <View />
+            'hello'
+            <View />
+          </View>
+        );
       expect(render).toThrow();
     });
 

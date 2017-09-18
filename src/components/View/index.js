@@ -51,10 +51,9 @@ class View extends Component {
     } = this.props;
 
     if (process.env.NODE_ENV !== 'production') {
-      invariant(
-        typeof this.props.children !== 'string',
-        'A text node cannot be a child of a <View>'
-      );
+      React.Children.toArray(this.props.children).forEach(item => {
+        invariant(typeof item !== 'string', 'A text node cannot be a child of a <View>');
+      });
     }
 
     const { isInAParentText } = this.context;

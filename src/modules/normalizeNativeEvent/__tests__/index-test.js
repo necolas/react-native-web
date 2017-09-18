@@ -2,7 +2,7 @@
 
 import normalizeNativeEvent from '..';
 
-const normalizeEvent = (nativeEvent) => {
+const normalizeEvent = nativeEvent => {
   const result = normalizeNativeEvent(nativeEvent);
   result.timestamp = 1496876171255;
   if (result.changedTouches && result.changedTouches[0]) {
@@ -12,7 +12,7 @@ const normalizeEvent = (nativeEvent) => {
     result.touches[0].timestamp = 1496876171255;
   }
   return result;
-}
+};
 
 describe('modules/normalizeNativeEvent', () => {
   describe('mouse events', () => {
