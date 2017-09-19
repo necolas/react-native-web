@@ -1,6 +1,6 @@
 {
   "name": "react-native-web",
-  "version": "0.0.125",
+  "version": "0.1.125",
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
@@ -105,7 +105,7 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "git://github.com/necolas/react-native-web.git"
+    "url": "https://github.com/289420843/react-native-web.git"
   },
   "tags": [
     "react"

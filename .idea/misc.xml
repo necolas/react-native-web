@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="FLOW" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="E:/songguo/SVN/rnp/APP">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="https://210.41.215.46/svn/%E4%BA%91%E5%81%A5%E5%BA%B7/APP" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="E:/songguo/SVN/rnp/CHMobile">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="https://210.41.215.46/svn/%E4%BA%91%E5%81%A5%E5%BA%B7/CHMobile" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+</project>
