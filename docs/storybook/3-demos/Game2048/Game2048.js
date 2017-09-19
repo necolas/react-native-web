@@ -14,7 +14,6 @@
  * @providesModule Game2048
  * @flow
  */
-'use strict';
 
 import { any, func, object } from 'prop-types';
 import GameBoard from './GameBoard';
