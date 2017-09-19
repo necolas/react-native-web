@@ -11,7 +11,6 @@
  */
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createElement from '../../modules/createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import ImageLoader from '../../modules/ImageLoader';
@@ -131,7 +130,7 @@ class Image extends Component {
     super(props, context);
     // If an image has been loaded before, render it immediately
     const uri = resolveAssetSource(props.source);
-    const shouldDisplaySource = ImageUriCache.has(uri) || !canUseDOM;
+    const shouldDisplaySource = ImageUriCache.has(uri);
     this.state = { shouldDisplaySource };
     this._imageState = getImageState(uri, shouldDisplaySource);
     shouldDisplaySource && ImageUriCache.add(uri);
