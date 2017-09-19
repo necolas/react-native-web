@@ -1,6 +1,7 @@
 import {
   // top-level API
   findNodeHandle,
+  hydrate,
   render,
   unmountComponentAtNode,
 
@@ -67,6 +68,7 @@ import {
 const ReactNative = {
   // top-level API
   findNodeHandle,
+  hydrate,
   render,
   unmountComponentAtNode,
 

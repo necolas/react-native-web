@@ -127,6 +127,7 @@ import AppHeader from './src/AppHeader';
 import React from 'react';
 import ReactNative from 'react-native';
 
+// use .hydrate if hydrating a SSR app
 ReactNative.render(<AppHeader />, document.getElementById('react-app-header'))
 ```
 

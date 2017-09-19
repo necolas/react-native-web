@@ -2,7 +2,7 @@ export { default as createElement } from './modules/createElement';
 export { default as findNodeHandle } from './modules/findNodeHandle';
 export { default as NativeModules } from './modules/NativeModules';
 export { default as processColor } from './modules/processColor';
-export { render, unmountComponentAtNode } from 'react-dom';
+export { hydrate, render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
 export { default as Animated } from './apis/Animated';
