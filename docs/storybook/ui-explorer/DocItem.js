@@ -31,13 +31,13 @@ const DocItem = ({ description, example = {}, name, typeInfo, label }) => (
     )}
     {description && <View style={styles.description}>{createDescription(description)}</View>}
     {(example.render || example.code) && (
-      <View style={styles.renderBox}>
-        <AppText style={styles.exampleText}>Example</AppText>
-        {example.render && <View>{example.render()}</View>}
-        {example.render && example.code && <View style={styles.verticalDivider} />}
-        {example.code && <Text style={styles.code}>{example.code}</Text>}
-      </View>
-    )}
+        <View style={styles.renderBox}>
+          <AppText style={styles.exampleText}>Example</AppText>
+          {example.render && <View>{example.render()}</View>}
+          {example.render && example.code && <View style={styles.verticalDivider} />}
+          {example.code && <Text style={styles.code}>{example.code}</Text>}
+        </View>
+      )}
   </View>
 );
 
