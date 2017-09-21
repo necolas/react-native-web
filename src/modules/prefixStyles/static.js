@@ -2,6 +2,7 @@ import crossFade from 'inline-style-prefixer/static/plugins/crossFade';
 import cursor from 'inline-style-prefixer/static/plugins/cursor';
 import filter from 'inline-style-prefixer/static/plugins/filter';
 import flex from 'inline-style-prefixer/static/plugins/flex';
+import flexboxIE from 'inline-style-prefixer/static/plugins/flexboxIE';
 import flexboxOld from 'inline-style-prefixer/static/plugins/flexboxOld';
 import gradient from 'inline-style-prefixer/static/plugins/gradient';
 import imageSet from 'inline-style-prefixer/static/plugins/imageSet';
@@ -21,6 +22,7 @@ export default {
     cursor,
     filter,
     flex,
+    flexboxIE,
     flexboxOld,
     gradient,
     imageSet,
@@ -82,13 +84,13 @@ export default {
     columns: wm,
     columnSpan: wm,
     columnWidth: wm,
-    flex: w,
+    flex: wms,
     flexBasis: w,
-    flexDirection: w,
+    flexDirection: wms,
     flexGrow: w,
-    flexFlow: w,
+    flexFlow: wms,
     flexShrink: w,
-    flexWrap: w,
+    flexWrap: wms,
     alignContent: w,
     alignItems: w,
     alignSelf: w,
@@ -122,6 +124,7 @@ export default {
     wrapFlow: ms,
     wrapThrough: ms,
     wrapMargin: ms,
+    touchAction: ms,
     gridTemplateColumns: ms,
     gridTemplateRows: ms,
     gridTemplateAreas: ms,

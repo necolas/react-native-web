@@ -7,7 +7,7 @@ const browserList = {
   firefox: 40,
   ios_saf: 7,
   safari: 7,
-  ie: 11,
+  ie: 10,
   ie_mob: 11,
   edge: 12,
   opera: 16,

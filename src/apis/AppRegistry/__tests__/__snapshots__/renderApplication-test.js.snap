@@ -38,7 +38,7 @@ exports[`apis/AppRegistry/renderApplication getApplication 3`] = `
 .rn-textAlign-1ttztb7{text-align:inherit}
 .rn-textDecoration-bauka4{text-decoration:none}
 .rn-listStyle-1ebb2ja{list-style:none}
-.rn-alignItems-1oszu61{-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
+.rn-alignItems-1oszu61{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
 .rn-borderTopStyle-1efd50x{border-top-style:solid}
 .rn-borderRightStyle-14skgim{border-right-style:solid}
 .rn-borderBottomStyle-rull8r{border-bottom-style:solid}
@@ -50,10 +50,10 @@ exports[`apis/AppRegistry/renderApplication getApplication 3`] = `
 .rn-boxSizing-deolkf{box-sizing:border-box}
 .rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
 .rn-display-xoduu5{display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-flexbox;display:-webkit-inline-flex;display:inline-flex}
-.rn-flexShrink-1pxmb3b{-webkit-flex-shrink:0 !important;flex-shrink:0 !important}
-.rn-flexShrink-1awmn5t{-webkit-flex-shrink:1 !important;flex-shrink:1 !important}
-.rn-flexBasis-7vfszb{-webkit-flex-basis:auto !important;flex-basis:auto !important}
-.rn-flexDirection-eqz5dr{-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
+.rn-flexShrink-1pxmb3b{-ms-flex-negative:0 !important;-webkit-flex-shrink:0 !important;flex-shrink:0 !important}
+.rn-flexShrink-1awmn5t{-ms-flex-negative:1 !important;-webkit-flex-shrink:1 !important;flex-shrink:1 !important}
+.rn-flexBasis-7vfszb{-ms-flex-preferred-size:auto !important;-webkit-flex-basis:auto !important;flex-basis:auto !important}
+.rn-flexDirection-eqz5dr{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
 .rn-marginTop-1mnahxq{margin-top:0px}
 .rn-marginRight-61z16t{margin-right:0px}
 .rn-marginBottom-p1pxzi{margin-bottom:0px}
@@ -66,6 +66,6 @@ exports[`apis/AppRegistry/renderApplication getApplication 3`] = `
 .rn-paddingLeft-gy4na3{padding-left:0px}
 .rn-zIndex-1lgpqti{z-index:0}
 .rn-zIndex-1wyyakw{z-index:-1}
-.rn-flex-13awgt0{-webkit-flex:1;flex:1}
-.rn-flexGrow-1m1wadx{-webkit-flex-grow:1 !important;flex-grow:1 !important}</style>"
+.rn-flex-13awgt0{-ms-flex:1;-webkit-flex:1;flex:1}
+.rn-flexGrow-1m1wadx{-ms-flex-positive:1 !important;-webkit-flex-grow:1 !important;flex-grow:1 !important}</style>"
 `;
