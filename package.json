@@ -64,7 +64,7 @@
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.14",
     "hyphenate-style-name": "^1.0.2",
-    "inline-style-prefixer": "^3.0.7",
+    "inline-style-prefixer": "^3.0.8",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.10",
     "react-timer-mixin": "^0.13.3"
