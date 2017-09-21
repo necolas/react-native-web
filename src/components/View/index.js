@@ -52,7 +52,10 @@ class View extends Component {
 
     if (process.env.NODE_ENV !== 'production') {
       React.Children.toArray(this.props.children).forEach(item => {
-        invariant(typeof item !== 'string', 'A text node cannot be a child of a <View>');
+        invariant(
+          typeof item !== 'string',
+          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+        );
       });
     }
 
