@@ -67,7 +67,8 @@
     "inline-style-prefixer": "^3.0.8",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.5.10",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "@ecliptic/react-art": "0.15.4-fork.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

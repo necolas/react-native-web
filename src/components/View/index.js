@@ -40,6 +40,7 @@ class View extends Component {
     const {
       hitSlop,
       style,
+      domRef,
       /* eslint-disable */
       collapsable,
       onAccessibilityTap,
@@ -62,6 +63,7 @@ class View extends Component {
     const { isInAParentText } = this.context;
 
     otherProps.style = [styles.initial, isInAParentText && styles.inline, style];
+    otherProps.ref = domRef;
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
