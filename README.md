@@ -23,12 +23,10 @@ it out](https://glitch.com/edit/#!/react-native-web-playground) on Glitch.
 
 ## Quick start
 
-NOTE: React Native for Web supports React/ReactDOM 15.4, 15.5, or 15.6.
-
 Install in your existing app using `yarn` or `npm`:
 
 ```
-yarn add react@15.6 react-dom@15.6 react-native-web
+yarn add react react-dom react-native-web
 ```
 
 Add the `react-native-web/babel` plugin to your Babel configuration. This will
@@ -45,6 +43,8 @@ by the app.
   ]
 }
 ```
+
+(For React/ReactDOM 15.4 – 15.6 support, install `react-native-web@<=0.1.0`)
 
 See the [Getting Started](docs/guides/getting-started.md) guide for more details.
 
