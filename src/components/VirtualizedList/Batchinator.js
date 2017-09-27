@@ -13,7 +13,7 @@
 
 'use strict';
 
-const InteractionManager = require('../../apis/InteractionManager')
+import InteractionManager from '../../apis/InteractionManager';
 
 /**
  * A simple class for batching up invocations of a low-pri callback. A timeout is set to run the

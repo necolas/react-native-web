@@ -194,7 +194,7 @@ class ViewabilityHelper {
     this._hasInteracted = true;
   }
 
-  _onUpdateSync(viewableIndicesToCheck, onViewableItemsChanged, createViewToken) {
+  _onUpdateSync(viewableIndicesToCheck: any, onViewableItemsChanged: any, createViewToken: any) {
     // Filter out indices that have gone out of view since this call was scheduled.
     viewableIndicesToCheck = viewableIndicesToCheck.filter(
       (ii) => this._viewableIndices.includes(ii)

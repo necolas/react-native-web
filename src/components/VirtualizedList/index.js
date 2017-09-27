@@ -573,7 +573,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
   _updateCellsToRenderBatcher: Batchinator;
   _viewabilityHelper: ViewabilityHelper;
 
-  _captureScrollRef = (ref) => {
+  _captureScrollRef = (ref: any) => {
     this._scrollRef = ref;
   };
 
@@ -585,7 +585,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     );
   }
 
-  _onCellLayout(e, cellKey, index) {
+  _onCellLayout(e: any, cellKey: any, index: any) {
     const layout = e.nativeEvent.layout;
     const next = {
       offset: this._selectOffset(layout),
@@ -625,15 +625,15 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     this._maybeCallOnEndReached();
   };
 
-  _onLayoutEmpty = (e) => {
+  _onLayoutEmpty = (e: any) => {
     this.props.onLayout && this.props.onLayout(e);
   };
 
-  _onLayoutFooter = (e) => {
+  _onLayoutFooter = (e: any) => {
     this._footerLength = this._selectLength(e.nativeEvent.layout);
   };
 
-  _onLayoutHeader = (e) => {
+  _onLayoutHeader = (e: any) => {
     this._headerLength = this._selectLength(e.nativeEvent.layout);
   };
 
@@ -777,12 +777,12 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     }
   }
 
-  _onScrollBeginDrag = (e): void => {
+  _onScrollBeginDrag = (e: any): void => {
     this._viewabilityHelper.recordInteraction();
     this.props.onScrollBeginDrag && this.props.onScrollBeginDrag(e);
   };
 
-  _onScrollEndDrag = (e): void => {
+  _onScrollEndDrag = (e: any): void => {
     const {velocity} = e.nativeEvent;
     if (velocity) {
       this._scrollMetrics.velocity = this._selectOffset(velocity);
@@ -791,7 +791,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     this.props.onScrollEndDrag && this.props.onScrollEndDrag(e);
   };
 
-  _onMomentumScrollEnd = (e): void => {
+  _onMomentumScrollEnd = (e: any): void => {
     this._scrollMetrics.velocity = 0;
     this._computeBlankness();
     this.props.onMomentumScrollEnd && this.props.onMomentumScrollEnd(e);
