@@ -366,12 +366,12 @@ describe('components/TextInput', () => {
       );
 
       // default selection is 0
-      expect(inputDefaultSelection.node.selectionStart).toEqual(0);
-      expect(inputDefaultSelection.node.selectionEnd).toEqual(0);
+      expect(inputDefaultSelection.instance().selectionStart).toEqual(0);
+      expect(inputDefaultSelection.instance().selectionEnd).toEqual(0);
 
       // custom selection sets cursor at custom position
-      expect(inputCustomSelection.node.selectionStart).toEqual(cursorLocation.start);
-      expect(inputCustomSelection.node.selectionEnd).toEqual(cursorLocation.end);
+      expect(inputCustomSelection.instance().selectionStart).toEqual(cursorLocation.start);
+      expect(inputCustomSelection.instance().selectionEnd).toEqual(cursorLocation.end);
     });
   });
 });

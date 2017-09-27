@@ -1,19 +1,21 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { render } from 'enzyme';
+import { shallow } from 'enzyme';
 import Switch from '..';
+
+const checkboxSelector = 'input[type="checkbox"]';
 
 describe('components/Switch', () => {
   describe('disabled', () => {
     test('when "false" a default checkbox is rendered', () => {
-      const component = render(<Switch />);
-      expect(component).toMatchSnapshot();
+      const component = shallow(<Switch />);
+      expect(component.find(checkboxSelector).prop('disabled')).toBe(false);
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
-      const component = render(<Switch disabled />);
-      expect(component).toMatchSnapshot();
+      const component = shallow(<Switch disabled />);
+      expect(component.find(checkboxSelector).prop('disabled')).toBe(true);
     });
   });
 
@@ -35,13 +37,13 @@ describe('components/Switch', () => {
 
   describe('value', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
-      const component = render(<Switch value={false} />);
-      expect(component).toMatchSnapshot();
+      const component = shallow(<Switch value={false} />);
+      expect(component.find(checkboxSelector).prop('checked')).toBe(false);
     });
 
     test('when "true" a checked checkbox is rendered', () => {
-      const component = render(<Switch value />);
-      expect(component).toMatchSnapshot();
+      const component = shallow(<Switch value />);
+      expect(component.find(checkboxSelector).prop('checked')).toBe(true);
     });
   });
 });

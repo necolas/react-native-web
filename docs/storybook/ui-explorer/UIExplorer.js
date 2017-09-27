@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
   link: {
     color: '#1B95E0',
+    fontSize: '1rem',
     marginTop: 'calc(0.5 * 1.3125rem)',
     textDecorationLine: 'underline'
   }

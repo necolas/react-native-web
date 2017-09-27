@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modules/normalizeNativeEvent mouse events simulated event 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [
+    Object {
+      "_normalized": true,
+      "clientX": undefined,
+      "clientY": undefined,
+      "force": undefined,
+      "identifier": 0,
+      "locationX": undefined,
+      "locationY": undefined,
+      "pageX": undefined,
+      "pageY": undefined,
+      "screenX": undefined,
+      "screenY": undefined,
+      "target": undefined,
+      "timestamp": 1496876171255,
+    },
+  ],
+  "identifier": 0,
+  "locationX": undefined,
+  "locationY": undefined,
+  "pageX": undefined,
+  "pageY": undefined,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
+`;
+
+exports[`modules/normalizeNativeEvent mouse events synthetic event 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [
+    Object {
+      "_normalized": true,
+      "clientX": 100,
+      "clientY": 100,
+      "force": false,
+      "identifier": 0,
+      "locationX": 100,
+      "locationY": 100,
+      "pageX": 300,
+      "pageY": 300,
+      "screenX": 400,
+      "screenY": 400,
+      "target": undefined,
+      "timestamp": 1496876171255,
+    },
+  ],
+  "identifier": 0,
+  "locationX": 200,
+  "locationY": 200,
+  "pageX": 300,
+  "pageY": 300,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
+`;
+
+exports[`modules/normalizeNativeEvent touch events simulated event 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [],
+  "identifier": undefined,
+  "locationX": undefined,
+  "locationY": undefined,
+  "pageX": undefined,
+  "pageY": undefined,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
+`;
+
+exports[`modules/normalizeNativeEvent touch events synthetic event 1`] = `
+Object {
+  "_normalized": true,
+  "changedTouches": Array [
+    Object {
+      "_normalized": true,
+      "clientX": 100,
+      "clientY": 100,
+      "force": false,
+      "identifier": undefined,
+      "locationX": undefined,
+      "locationY": undefined,
+      "pageX": 300,
+      "pageY": 300,
+      "radiusX": 10,
+      "radiusY": 10,
+      "rotationAngle": 45,
+      "screenX": 400,
+      "screenY": 400,
+      "target": undefined,
+      "timestamp": 1496876171255,
+    },
+  ],
+  "identifier": undefined,
+  "locationX": undefined,
+  "locationY": undefined,
+  "pageX": 300,
+  "pageY": 300,
+  "preventDefault": [Function],
+  "stopImmediatePropagation": [Function],
+  "stopPropagation": [Function],
+  "target": undefined,
+  "timestamp": 1496876171255,
+  "touches": Array [],
+}
+`;

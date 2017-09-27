@@ -5,19 +5,31 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 const emptyArray = [];
+const emptyFunction = () => {};
 
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
-const normalizeTouches = (touches = emptyArray) =>
-  Array.prototype.slice.call(touches).map(touch => {
-    const identifier = touch.identifier > 20 ? touch.identifier % 20 : touch.identifier;
+const normalizeTouches = touches => {
+  if (!touches) {
+    return emptyArray;
+  }
 
-    const rect = touch.target && touch.target.getBoundingClientRect();
-    const locationX = touch.pageX - rect.left;
-    const locationY = touch.pageY - rect.top;
+  return Array.prototype.slice.call(touches).map(touch => {
+    const identifier = touch.identifier > 20 ? touch.identifier % 20 : touch.identifier;
+    let locationX, locationY;
+
+    const node = touch.target;
+    if (node) {
+      const isElement = node.nodeType === 1 /* Node.ELEMENT_NODE */;
+      if (isElement && typeof node.getBoundingClientRect === 'function') {
+        const rect = node.getBoundingClientRect();
+        locationX = touch.pageX - rect.left;
+        locationY = touch.pageY - rect.top;
+      }
+    }
 
     return {
       _normalized: true,
@@ -40,19 +52,36 @@ const normalizeTouches = (touches = emptyArray) =>
       timestamp: Date.now()
     };
   });
+};
 
 function normalizeTouchEvent(nativeEvent) {
   const changedTouches = normalizeTouches(nativeEvent.changedTouches);
   const touches = normalizeTouches(nativeEvent.touches);
 
+  const preventDefault =
+    typeof nativeEvent.preventDefault === 'function'
+      ? nativeEvent.preventDefault.bind(nativeEvent)
+      : emptyFunction;
+  const stopImmediatePropagation =
+    typeof nativeEvent.stopImmediatePropagation === 'function'
+      ? nativeEvent.stopImmediatePropagation.bind(nativeEvent)
+      : emptyFunction;
+  const stopPropagation =
+    typeof nativeEvent.stopPropagation === 'function'
+      ? nativeEvent.stopPropagation.bind(nativeEvent)
+      : emptyFunction;
+
   const event = {
     _normalized: true,
     changedTouches,
+    identifier: undefined,
+    locationX: undefined,
+    locationY: undefined,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
-    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
-    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
-    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
+    preventDefault,
+    stopImmediatePropagation,
+    stopPropagation,
     target: nativeEvent.target,
     // normalize the timestamp
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
@@ -89,6 +118,20 @@ function normalizeMouseEvent(nativeEvent) {
       timestamp: Date.now()
     }
   ];
+
+  const preventDefault =
+    typeof nativeEvent.preventDefault === 'function'
+      ? nativeEvent.preventDefault.bind(nativeEvent)
+      : emptyFunction;
+  const stopImmediatePropagation =
+    typeof nativeEvent.stopImmediatePropagation === 'function'
+      ? nativeEvent.stopImmediatePropagation.bind(nativeEvent)
+      : emptyFunction;
+  const stopPropagation =
+    typeof nativeEvent.stopPropagation === 'function'
+      ? nativeEvent.stopPropagation.bind(nativeEvent)
+      : emptyFunction;
+
   return {
     _normalized: true,
     changedTouches: touches,
@@ -97,22 +140,27 @@ function normalizeMouseEvent(nativeEvent) {
     locationY: nativeEvent.offsetY,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
-    preventDefault: nativeEvent.preventDefault.bind(nativeEvent),
-    stopImmediatePropagation: nativeEvent.stopImmediatePropagation.bind(nativeEvent),
-    stopPropagation: nativeEvent.stopPropagation.bind(nativeEvent),
+    preventDefault,
+    stopImmediatePropagation,
+    stopPropagation,
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
     touches: nativeEvent.type === 'mouseup' ? emptyArray : touches
   };
 }
 
-function normalizeNativeEvent(nativeEvent) {
-  if (nativeEvent._normalized) {
+// TODO: how to best handle keyboard events?
+function normalizeNativeEvent(nativeEvent: Object) {
+  if (!nativeEvent || nativeEvent._normalized) {
     return nativeEvent;
   }
   const eventType = nativeEvent.type || '';
   const mouse = eventType.indexOf('mouse') >= 0;
-  return mouse ? normalizeMouseEvent(nativeEvent) : normalizeTouchEvent(nativeEvent);
+  if (mouse) {
+    return normalizeMouseEvent(nativeEvent);
+  } else {
+    return normalizeTouchEvent(nativeEvent);
+  }
 }
 
 export default normalizeNativeEvent;

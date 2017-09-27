@@ -2,7 +2,7 @@ export { default as createElement } from './modules/createElement';
 export { default as findNodeHandle } from './modules/findNodeHandle';
 export { default as NativeModules } from './modules/NativeModules';
 export { default as processColor } from './modules/processColor';
-export { render, unmountComponentAtNode } from 'react-dom';
+export { hydrate, render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
 export { default as Animated } from './apis/Animated';
@@ -12,7 +12,7 @@ export { default as AsyncStorage } from './apis/AsyncStorage';
 export { default as BackAndroid } from './apis/BackAndroid';
 export { default as Clipboard } from './apis/Clipboard';
 export { default as Dimensions } from './apis/Dimensions';
-export { default as Easing } from 'animated/lib/Easing';
+export { default as Easing } from './apis/Easing';
 export { default as I18nManager } from './apis/I18nManager';
 export { default as Keyboard } from './apis/Keyboard';
 export { default as InteractionManager } from './apis/InteractionManager';

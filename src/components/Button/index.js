@@ -55,10 +55,11 @@ const styles = StyleSheet.create({
     borderRadius: 2
   },
   text: {
-    textAlign: 'center',
     color: '#fff',
+    fontWeight: '500',
     padding: 8,
-    fontWeight: '500'
+    textAlign: 'center',
+    textTransform: 'uppercase'
   },
   buttonDisabled: {
     backgroundColor: '#dfdfdf'

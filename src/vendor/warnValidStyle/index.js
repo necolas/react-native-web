@@ -11,8 +11,6 @@
  * @providesModule warnValidStyle
  */
 
-'use strict';
-
 var emptyFunction = require('fbjs/lib/emptyFunction');
 
 var warnValidStyle = emptyFunction;

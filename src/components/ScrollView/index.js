@@ -137,6 +137,7 @@ const ScrollView = createReactClass({
       keyboardDismissMode,
       onScroll,
       pagingEnabled,
+      stickyHeaderIndices,
       /* eslint-enable */
       ...other
     } = this.props;

@@ -11,6 +11,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import createElement from '../../modules/createElement';
+import invariant from 'fbjs/lib/invariant';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import React, { Component } from 'react';
@@ -48,6 +49,15 @@ class View extends Component {
       /* eslint-enable */
       ...otherProps
     } = this.props;
+
+    if (process.env.NODE_ENV !== 'production') {
+      React.Children.toArray(this.props.children).forEach(item => {
+        invariant(
+          typeof item !== 'string',
+          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+        );
+      });
+    }
 
     const { isInAParentText } = this.context;
 

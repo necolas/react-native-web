@@ -34,6 +34,9 @@ const babelLoaderConfiguration = {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
+      // This aliases 'react-native' to 'react-native-web' and includes only
+      // the modules needed by the app
+      plugins: ['react-native-web/babel']
       // The 'react-native' preset is recommended (or use your own .babelrc)
       presets: ['react-native']
     }
@@ -71,10 +74,6 @@ module.exports = {
   ],
 
   resolve: {
-    // Maps the 'react-native' import to 'react-native-web'.
-    alias: {
-      'react-native': 'react-native-web'
-    },
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension
     // `.web.js`.
@@ -128,6 +127,7 @@ import AppHeader from './src/AppHeader';
 import React from 'react';
 import ReactNative from 'react-native';
 
+// use .hydrate if hydrating a SSR app
 ReactNative.render(<AppHeader />, document.getElementById('react-app-header'))
 ```
 

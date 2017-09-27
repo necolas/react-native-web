@@ -17,7 +17,7 @@ import { any, bool, func, number, oneOf } from 'prop-types';
 
 const TextPropTypes = {
   ...BaseComponentPropTypes,
-  accessibilityRole: oneOf(['button', 'heading', 'link', 'listitem']),
+  accessibilityRole: oneOf(['button', 'heading', 'label', 'link', 'listitem']),
   children: any,
   numberOfLines: number,
   onLayout: func,
