@@ -42,11 +42,11 @@ export default class VirtualizedListExample extends Component {
 
   render () {
     return <VirtualizedList
-      style={styles.container}
       data={this.state.data}
-      renderItem={this.renderItem}
       getItem={this.getItem}
       getItemCount={this.getItemCount}
+      renderItem={this.renderItem}
+      style={styles.container}
     />
   }
 }
@@ -54,5 +54,6 @@ export default class VirtualizedListExample extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: 150,
   }
 })
