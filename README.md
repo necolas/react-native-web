@@ -44,7 +44,7 @@ by the app.
 }
 ```
 
-(For React/ReactDOM 15.4 – 15.6 support, install `react-native-web@<=0.1.0`)
+(For React/ReactDOM 15.4 – 15.6 support, install `react-native-web@<0.1.0`)
 
 See the [Getting Started](docs/guides/getting-started.md) guide for more details.
 
@@ -70,6 +70,7 @@ Guides:
 * [create-react-app](https://github.com/facebookincubator/create-react-app)
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
+* [re-start](https://github.com/react-everywhere/re-start)
 
 ## Example code
 
