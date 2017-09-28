@@ -94,13 +94,11 @@ const NetInfo = {
 
   getConnectionInfo(): Promise<any> {
     return new Promise((resolve, reject) => {
-      // Allow extra, browser-specifc fields to be returned
-      const result = {
+      resolve({
         effectiveType: 'unknown',
         type: 'unknown',
         ...getConnectionInfoObject()
-      };
-      resolve(result);
+      });
     });
   },
 
