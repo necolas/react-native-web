@@ -20,7 +20,27 @@ const connection =
     window.navigator.mozConnection ||
     window.navigator.webkitConnection);
 
-const eventTypes = ['change'];
+// Prevent the underlying event handlers from leaking,
+// while still including additional info from the browser api
+const getConnectionInfoObject = () => {
+  const result = {};
+  if (!connection) {
+    return result;
+  }
+  for (const prop in connection) {
+    if (typeof connection[prop] !== 'function') {
+      result[prop] = connection[prop];
+    }
+  }
+  return result;
+};
+
+// Map react-native events to browser NetInfo events
+const eventTypesMap = {
+  change: 'change',
+  connectionChange: 'change'
+};
+const eventTypes = Object.keys(eventTypesMap);
 
 const connectionListeners = [];
 
@@ -31,6 +51,10 @@ const connectionListeners = [];
 const NetInfo = {
   addEventListener(type: string, handler: Function): { remove: () => void } {
     invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+    if (type === 'change') {
+      console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
+    }
+
     if (!connection) {
       console.error(
         'Network Connection API is not supported. Not listening for connection type changes.'
@@ -40,27 +64,41 @@ const NetInfo = {
       };
     }
 
-    connection.addEventListener(type, handler);
+    connection.addEventListener(eventTypesMap[type], handler);
     return {
-      remove: () => NetInfo.removeEventListener(type, handler)
+      remove: () => NetInfo.removeEventListener(eventTypesMap[type], handler)
     };
   },
 
   removeEventListener(type: string, handler: Function): void {
     invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+    if (type === 'change') {
+      console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
+    }
     if (!connection) {
       return;
     }
-    connection.removeEventListener(type, handler);
+    connection.removeEventListener(eventTypesMap[type], handler);
   },
 
   fetch(): Promise<any> {
+    console.warn('`fetch` is deprecated. Use `getConnectionInfo` instead.');
     return new Promise((resolve, reject) => {
       try {
         resolve(connection.type);
       } catch (err) {
         resolve('unknown');
       }
+    });
+  },
+
+  getConnectionInfo(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve({
+        effectiveType: 'unknown',
+        type: 'unknown',
+        ...getConnectionInfoObject()
+      });
     });
   },
 
@@ -71,6 +109,10 @@ const NetInfo = {
         'Trying to subscribe to unknown event: "%s"',
         type
       );
+      if (type === 'change') {
+        console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
+      }
+
       const onlineCallback = () => handler(true);
       const offlineCallback = () => handler(false);
       connectionListeners.push([handler, onlineCallback, offlineCallback]);
@@ -79,7 +121,7 @@ const NetInfo = {
       window.addEventListener('offline', offlineCallback, false);
 
       return {
-        remove: () => NetInfo.isConnected.removeEventListener(type, handler)
+        remove: () => NetInfo.isConnected.removeEventListener(eventTypesMap[type], handler)
       };
     },
 
@@ -89,6 +131,9 @@ const NetInfo = {
         'Trying to subscribe to unknown event: "%s"',
         type
       );
+      if (type === 'change') {
+        console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
+      }
 
       const listenerIndex = findIndex(connectionListeners, pair => pair[0] === handler);
       invariant(
@@ -104,6 +149,11 @@ const NetInfo = {
     },
 
     fetch(): Promise<any> {
+      console.warn('`fetch` is deprecated. Use `getConnectionInfo` instead.');
+      return this.getConnectionInfo();
+    },
+
+    getConnectionInfo(): Promise<any> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);
