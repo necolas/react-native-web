@@ -1,9 +1,17 @@
 # NetInfo
 
 `NetInfo` asynchronously determines the online/offline status of the
-application.
+application and depending on browser support, additional information about the connection.
 
-Connection types:
+Effective Connection types:
+
+* `4g`
+* `3g`
+* `2g`
+* `slow-2g`
+* `unknown`
+
+Deprecated Connection types:
 
 * `bluetooth` - The user agent is using a Bluetooth connection.
 * `cellular` - The user agent is using a cellular connection (e.g., EDGE, HSPA, LTE, etc.).
@@ -18,12 +26,12 @@ Connection types:
 ## Methods
 
 Note that support for retrieving the connection type depends upon browswer
-support (and is limited to mobile browsers). It will default to `unknown` when
+support and the current platform. It will default to `unknown` when
 support is missing.
 
 static **addEventListener**(eventName: ChangeEventName, handler: Function)
 
-static **fetch**(): Promise
+static **getConnectionInfo**(): Promise
 
 static **removeEventListener**(eventName: ChangeEventName, handler: Function)
 
@@ -36,7 +44,7 @@ internet connectivity. Use this if you are only interested with whether the devi
 
 **isConnected.addEventListener**(eventName: ChangeEventName, handler: Function)
 
-**isConnected.fetch**(): Promise
+**isConnected.getConnectionInfo**(): Promise
 
 **isConnected.removeEventListener**(eventName: ChangeEventName, handler: Function)
 
@@ -45,24 +53,25 @@ internet connectivity. Use this if you are only interested with whether the devi
 Fetching the connection type:
 
 ```js
-NetInfo.fetch().then((connectionType) => {
-  console.log('Connection type:', connectionType);
+NetInfo.getConnectionInfo().then(({ effectiveType, type }) => {
+  console.log('Effective connection type:', effectiveType);
+  console.log('Legacy connection type:', type);
 });
 ```
 
 Subscribing to changes in the connection type:
 
 ```js
-const handleConnectivityTypeChange = (connectionType) => {
-  console.log('Current connection type:', connectionType);
+const handleConnectivityTypeChange = ({ effectiveType }) => {
+  console.log('Current connection type:', effectiveType);
 }
-NetInfo.addEventListener('change', handleConnectivityTypeChange);
+NetInfo.addEventListener('connectionChange', handleConnectivityTypeChange);
 ```
 
 Fetching the connection status:
 
 ```js
-NetInfo.isConnected.fetch().then((isConnected) => {
+NetInfo.isConnected.getConnectionInfo().then((isConnected) => {
   console.log('Connection status:', (isConnected ? 'online' : 'offline'));
 });
 ```
@@ -73,5 +82,5 @@ Subscribing to changes in the connection status:
 const handleConnectivityStatusChange = (isConnected) => {
   console.log('Current connection status:', (isConnected ? 'online' : 'offline'));
 }
-NetInfo.isConnected.addEventListener('change', handleConnectivityStatusChange);
+NetInfo.isConnected.addEventListener('connectionChange', handleConnectivityStatusChange);
 ```
