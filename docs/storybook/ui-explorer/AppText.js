@@ -4,16 +4,27 @@
  * @flow
  */
 
+import { bool } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-const AppText = ({ style, ...rest }) => (
-  <Text
-    {...rest}
-    accessibilityRole={rest.href ? 'link' : undefined}
-    style={[styles.baseText, style, rest.href && styles.link]}
-  />
-);
+class AppText extends React.PureComponent {
+  static contextTypes = {
+    isInAParentText: bool
+  };
+
+  render() {
+    const { style, ...rest } = this.props;
+    const isInAParentText = this.context;
+    return (
+      <Text
+        {...rest}
+        accessibilityRole={rest.href ? 'link' : undefined}
+        style={[!isInAParentText && styles.baseText, style, rest.href && styles.link]}
+      />
+    );
+  }
+}
 
 export default AppText;
 
