@@ -64,14 +64,6 @@ Guides:
 * [Advanced use](docs/guides/advanced.md)
 * [Known issues](docs/guides/known-issues.md)
 
-## Starter kits
-
-* [Glitch](https://glitch.com/edit/#!/react-native-web-playground)
-* [create-react-app](https://github.com/facebookincubator/create-react-app)
-* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
-* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
-* [re-start](https://github.com/react-everywhere/re-start)
-
 ## Example code
 
 ```js
@@ -110,6 +102,12 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('MyApp', () => App)
 AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-root') })
 ```
+
+## Starter kits
+
+* [Glitch](https://glitch.com/edit/#!/react-native-web-playground)
+* [create-react-app](https://github.com/facebookincubator/create-react-app)
+* [re-start](https://github.com/react-everywhere/re-start)
 
 ## Related projects
 
