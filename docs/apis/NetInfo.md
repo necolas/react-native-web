@@ -3,7 +3,7 @@
 `NetInfo` asynchronously determines the online/offline status of the
 application and depending on browser support, additional information about the connection.
 
-Effective Connection types:
+EffectiveConnectionType:
 
 * `4g`
 * `3g`
@@ -11,7 +11,7 @@ Effective Connection types:
 * `slow-2g`
 * `unknown`
 
-Deprecated Connection types:
+ConnectionType:
 
 * `bluetooth` - The user agent is using a Bluetooth connection.
 * `cellular` - The user agent is using a cellular connection (e.g., EDGE, HSPA, LTE, etc.).
@@ -55,7 +55,7 @@ Fetching the connection type:
 ```js
 NetInfo.getConnectionInfo().then(({ effectiveType, type }) => {
   console.log('Effective connection type:', effectiveType);
-  console.log('Legacy connection type:', type);
+  console.log('Connection type:', type);
 });
 ```
 
@@ -63,7 +63,7 @@ Subscribing to changes in the connection type:
 
 ```js
 const handleConnectivityTypeChange = ({ effectiveType }) => {
-  console.log('Current connection type:', effectiveType);
+  console.log('Current effective connection type:', effectiveType);
 }
 NetInfo.addEventListener('connectionChange', handleConnectivityTypeChange);
 ```
