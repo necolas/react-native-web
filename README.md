@@ -71,6 +71,7 @@ Guides:
 * [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
 * [re-start](https://github.com/react-everywhere/re-start)
+* [react-nativeish](https://github.com/ericwooley/react-nativeish)
 
 ## Example code
 
