@@ -1,7 +1,9 @@
 # NetInfo
 
 `NetInfo` asynchronously determines the online/offline status of the
-application and depending on browser support, additional information about the connection.
+application and depending on browser support via
+[NetworkInformation API](https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation),
+additional information about the connection.
 
 EffectiveConnectionType:
 

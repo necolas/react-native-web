@@ -8,6 +8,7 @@ import UIExplorer, {
   Code,
   Description,
   DocItem,
+  ExternalLink,
   Section,
   storiesOf,
   TextList
@@ -22,7 +23,11 @@ const NetInfoScreen = () => (
       </AppText>
       <AppText>
         Note that support for retrieving the connection type depends upon browswer support and the
-        current platform. It will default to <Code>unknown</Code> when support is missing.
+        current platform. It will default to <Code>unknown</Code> when support is missing. Under the
+        hood it leverages the{' '}
+        <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation">
+          NetworkInformation API
+        </ExternalLink>.
       </AppText>
     </Description>
 
@@ -31,7 +36,8 @@ const NetInfoScreen = () => (
         description={[
           <AppText>
             Invokes the listener whenever network status changes. The listener an object with at
-            least <Code>effectiveType</Code> and <Code>type</Code> (from the DOM connection API):
+            least <Code>effectiveType</Code> and <Code>type</Code>, plus any additional properties
+            from the browser's NetworkInformation API:
           </AppText>,
           <AppText style={{ fontWeight: '500' }}>effectiveType (EffectiveConnectionType)</AppText>,
           <TextList items={['slow-2g', '2g', '3g', '4g', 'unknown']} />,
