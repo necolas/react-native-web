@@ -22,7 +22,7 @@ const ImageLoader = {
   getSize(uri, success, failure) {
     let complete = false;
     const interval = setInterval(callback, 16);
-    const requestId = ImageLoader.load(uri, callback, callback);
+    const requestId = ImageLoader.load(uri, callback, errorCallback);
 
     function callback() {
       const image = requests[`${requestId}`];
@@ -37,6 +37,14 @@ const ImageLoader = {
         ImageLoader.abort(requestId);
         clearInterval(interval);
       }
+    }
+
+    function errorCallback() {
+      if (typeof failure === 'function') {
+        failure();
+      }
+      ImageLoader.abort(requestId);
+      clearInterval(interval);
     }
   },
   load(uri, onLoad, onError): number {
