@@ -30,17 +30,28 @@
     "test": "flow && jest"
   },
   "babel": {
-    "presets": [ "react-native" ],
+    "presets": [
+      "react-native"
+    ],
     "plugins": [
-      [ "transform-react-remove-prop-types", { "mode": "wrap" } ]
+      [
+        "transform-react-remove-prop-types",
+        {
+          "mode": "wrap"
+        }
+      ]
     ]
   },
   "jest": {
     "testEnvironment": "jsdom",
     "timers": "fake",
-    "setupFiles": [ "raf/polyfill" ],
+    "setupFiles": [
+      "raf/polyfill"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/jest-setup-framework.js",
-    "snapshotSerializers": [ "enzyme-to-json/serializer" ]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "lint-staged": {
     "**/*.js": [
@@ -77,9 +88,9 @@
     "enzyme-adapter-react-16": "^1.0.0",
     "enzyme-to-json": "next",
     "eslint": "^4.6.1",
-    "eslint-config-prettier": "^2.4.0",
+    "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-react": "^7.4.0",
     "file-loader": "^0.11.2",
     "flow-bin": "^0.49.1",
     "jest": "^21.1.0",
