@@ -1,61 +1,192 @@
-export { default as createElement } from './modules/createElement';
-export { default as findNodeHandle } from './modules/findNodeHandle';
-export { default as NativeModules } from './modules/NativeModules';
-export { default as processColor } from './modules/processColor';
-export { hydrate, render, unmountComponentAtNode } from 'react-dom';
+import createElement from './modules/createElement';
+import findNodeHandle from './modules/findNodeHandle';
+import NativeModules from './modules/NativeModules';
+import processColor from './modules/processColor';
+import { hydrate, render, unmountComponentAtNode } from 'react-dom';
 
 // APIs
-export { default as Animated } from './apis/Animated';
-export { default as AppRegistry } from './apis/AppRegistry';
-export { default as AppState } from './apis/AppState';
-export { default as AsyncStorage } from './apis/AsyncStorage';
-export { default as BackAndroid } from './apis/BackAndroid';
-export { default as Clipboard } from './apis/Clipboard';
-export { default as Dimensions } from './apis/Dimensions';
-export { default as Easing } from './apis/Easing';
-export { default as I18nManager } from './apis/I18nManager';
-export { default as Keyboard } from './apis/Keyboard';
-export { default as InteractionManager } from './apis/InteractionManager';
-export { default as Linking } from './apis/Linking';
-export { default as NetInfo } from './apis/NetInfo';
-export { default as PanResponder } from './apis/PanResponder';
-export { default as PixelRatio } from './apis/PixelRatio';
-export { default as Platform } from './apis/Platform';
-export { default as StyleSheet } from './apis/StyleSheet';
-export { default as UIManager } from './apis/UIManager';
-export { default as Vibration } from './apis/Vibration';
+import Animated from './apis/Animated';
+import AppRegistry from './apis/AppRegistry';
+import AppState from './apis/AppState';
+import AsyncStorage from './apis/AsyncStorage';
+import BackAndroid from './apis/BackAndroid';
+import Clipboard from './apis/Clipboard';
+import Dimensions from './apis/Dimensions';
+import Easing from './apis/Easing';
+import I18nManager from './apis/I18nManager';
+import Keyboard from './apis/Keyboard';
+import InteractionManager from './apis/InteractionManager';
+import Linking from './apis/Linking';
+import NetInfo from './apis/NetInfo';
+import PanResponder from './apis/PanResponder';
+import PixelRatio from './apis/PixelRatio';
+import Platform from './apis/Platform';
+import StyleSheet from './apis/StyleSheet';
+import UIManager from './apis/UIManager';
+import Vibration from './apis/Vibration';
 
 // components
-export { default as ActivityIndicator } from './components/ActivityIndicator';
-export { default as Button } from './components/Button';
-export { default as FlatList } from './components/FlatList';
-export { default as Image } from './components/Image';
-export { default as KeyboardAvoidingView } from './components/KeyboardAvoidingView';
-export { default as ListView } from './components/ListView';
-export { default as Modal } from './components/Modal';
-export { default as Picker } from './components/Picker';
-export { default as ProgressBar } from './components/ProgressBar';
-export { default as RefreshControl } from './components/RefreshControl';
-export { default as ScrollView } from './components/ScrollView';
-export { default as SectionList } from './components/SectionList';
-export { default as Slider } from './components/Slider';
-export { default as StatusBar } from './components/StatusBar';
-export { default as Switch } from './components/Switch';
-export { default as Text } from './components/Text';
-export { default as TextInput } from './components/TextInput';
-export { default as Touchable } from './components/Touchable/Touchable';
-export { default as TouchableHighlight } from './components/Touchable/TouchableHighlight';
-export { default as TouchableNativeFeedback } from './components/Touchable/TouchableNativeFeedback';
-export { default as TouchableOpacity } from './components/Touchable/TouchableOpacity';
-export {
-  default as TouchableWithoutFeedback
-} from './components/Touchable/TouchableWithoutFeedback';
-export { default as View } from './components/View';
-export { default as VirtualizedList } from './components/VirtualizedList';
+import ActivityIndicator from './components/ActivityIndicator';
+import Button from './components/Button';
+import FlatList from './components/FlatList';
+import Image from './components/Image';
+import KeyboardAvoidingView from './components/KeyboardAvoidingView';
+import ListView from './components/ListView';
+import Modal from './components/Modal';
+import Picker from './components/Picker';
+import ProgressBar from './components/ProgressBar';
+import RefreshControl from './components/RefreshControl';
+import ScrollView from './components/ScrollView';
+import SectionList from './components/SectionList';
+import Slider from './components/Slider';
+import StatusBar from './components/StatusBar';
+import Switch from './components/Switch';
+import Text from './components/Text';
+import TextInput from './components/TextInput';
+import Touchable from './components/Touchable/Touchable';
+import TouchableHighlight from './components/Touchable/TouchableHighlight';
+import TouchableNativeFeedback from './components/Touchable/TouchableNativeFeedback';
+import TouchableOpacity from './components/Touchable/TouchableOpacity';
+import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
+import View from './components/View';
+import VirtualizedList from './components/VirtualizedList';
 
 // propTypes
-export { default as ColorPropType } from './propTypes/ColorPropType';
-export { default as EdgeInsetsPropType } from './propTypes/EdgeInsetsPropType';
-export { default as PointPropType } from './propTypes/PointPropType';
-export { default as TextPropTypes } from './components/Text/TextPropTypes';
-export { default as ViewPropTypes } from './components/View/ViewPropTypes';
+import ColorPropType from './propTypes/ColorPropType';
+import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
+import PointPropType from './propTypes/PointPropType';
+import TextPropTypes from './components/Text/TextPropTypes';
+import ViewPropTypes from './components/View/ViewPropTypes';
+
+export {
+  // top-level API
+  findNodeHandle,
+  hydrate,
+  render,
+  unmountComponentAtNode,
+  // modules
+  createElement,
+  NativeModules,
+  processColor,
+  // APIs
+  Animated,
+  AppRegistry,
+  AppState,
+  AsyncStorage,
+  BackAndroid,
+  Clipboard,
+  Dimensions,
+  Easing,
+  I18nManager,
+  InteractionManager,
+  Keyboard,
+  Linking,
+  NetInfo,
+  PanResponder,
+  PixelRatio,
+  Platform,
+  StyleSheet,
+  UIManager,
+  Vibration,
+  // components
+  ActivityIndicator,
+  Button,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  ListView,
+  Modal,
+  Picker,
+  ProgressBar,
+  RefreshControl,
+  ScrollView,
+  SectionList,
+  Slider,
+  StatusBar,
+  Switch,
+  Text,
+  TextInput,
+  Touchable,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+  VirtualizedList,
+  // propTypes
+  ColorPropType,
+  EdgeInsetsPropType,
+  PointPropType,
+  TextPropTypes,
+  ViewPropTypes
+};
+
+const ReactNative = {
+  // top-level API
+  findNodeHandle,
+  hydrate,
+  render,
+  unmountComponentAtNode,
+
+  // modules
+  createElement,
+  NativeModules,
+  processColor,
+
+  // APIs
+  Animated,
+  AppRegistry,
+  AppState,
+  AsyncStorage,
+  BackAndroid,
+  BackHandler: BackAndroid,
+  Clipboard,
+  Dimensions,
+  Easing,
+  I18nManager,
+  InteractionManager,
+  Keyboard,
+  Linking,
+  NetInfo,
+  PanResponder,
+  PixelRatio,
+  Platform,
+  StyleSheet,
+  UIManager,
+  Vibration,
+
+  // components
+  ActivityIndicator,
+  Button,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  ListView,
+  Modal,
+  Picker,
+  ProgressBar,
+  RefreshControl,
+  ScrollView,
+  SectionList,
+  Slider,
+  StatusBar,
+  Switch,
+  Text,
+  TextInput,
+  Touchable,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+  VirtualizedList,
+
+  // propTypes
+  ColorPropType,
+  EdgeInsetsPropType,
+  PointPropType,
+  TextPropTypes,
+  ViewPropTypes
+};
+
+export default ReactNative;
