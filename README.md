@@ -116,6 +116,10 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 * [reactxp](https://github.com/microsoft/reactxp)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
 
+## Community packages
+
+`react-native-web` is about **platform-agnostic** Components and APIs of React Native. For **platform-specific** Components, APIs and third-party packages, you can head over to the [React Native for Web Community](https://github.com/react-native-web-community). You will also find experimental implementations of RN components not yet available in `react-native-web` (because of their stability). Contributing and adding new repositories is highly encouraged, see [contributing](https://github.com/react-native-web-community/contributing)!
+
 ## License
 
 React Native for Web is [BSD licensed](LICENSE).
