@@ -12,13 +12,14 @@ import View from 'react-native-web/dist/components/View';
 
 exports[`2. Rewrite react-native paths for react-native-web 1`] = `
 "
-import { Switch, Text, View as MyView } from 'react-native';
+import { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import Switch from 'react-native-web/dist/components/Switch';
 import Text from 'react-native-web/dist/components/Text';
 import MyView from 'react-native-web/dist/components/View';
+import ViewPropTypes from 'react-native-web/dist/components/View/ViewPropTypes';
 "
 `;
 

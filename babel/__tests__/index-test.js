@@ -7,7 +7,7 @@ pluginTester({
   tests: [
     // import react-native
     "import { View } from 'react-native';",
-    "import { Switch, Text, View as MyView } from 'react-native';",
+    "import { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';",
     "import { createElement, Switch, StyleSheet } from 'react-native';",
     "import { InvalidThing, TouchableOpacity } from 'react-native';",
     "import * as RNW from 'react-native';",
