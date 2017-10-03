@@ -69,10 +69,14 @@ const getDistLocation = importName => {
     // propTypes
     case 'ColorPropType':
     case 'EdgeInsetsPropType':
-    case 'PointPropType':
-    case 'TextPropTypes':
-    case 'ViewPropTypes': {
+    case 'PointPropType': {
       return `${root}/propTypes/${importName}`;
+    }
+    case 'TextPropTypes': {
+      return `${root}/components/Text/${importName}`;
+    }
+    case 'ViewPropTypes': {
+      return `${root}/components/View/${importName}`;
     }
 
     default:
