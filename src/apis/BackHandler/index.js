@@ -12,7 +12,7 @@
 
 function emptyFunction() {}
 
-const BackAndroid = {
+const BackHandler = {
   exitApp: emptyFunction,
   addEventListener() {
     return {
@@ -22,4 +22,4 @@ const BackAndroid = {
   removeEventListener: emptyFunction
 };
 
-export default BackAndroid;
+export default BackHandler;

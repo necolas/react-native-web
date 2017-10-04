@@ -9,7 +9,7 @@ import Animated from './apis/Animated';
 import AppRegistry from './apis/AppRegistry';
 import AppState from './apis/AppState';
 import AsyncStorage from './apis/AsyncStorage';
-import BackAndroid from './apis/BackAndroid';
+import BackHandler from './apis/BackHandler';
 import Clipboard from './apis/Clipboard';
 import Dimensions from './apis/Dimensions';
 import Easing from './apis/Easing';
@@ -73,7 +73,7 @@ export {
   AppRegistry,
   AppState,
   AsyncStorage,
-  BackAndroid,
+  BackHandler,
   Clipboard,
   Dimensions,
   Easing,
@@ -138,8 +138,7 @@ const ReactNative = {
   AppRegistry,
   AppState,
   AsyncStorage,
-  BackAndroid,
-  BackHandler: BackAndroid,
+  BackHandler,
   Clipboard,
   Dimensions,
   Easing,

@@ -7,7 +7,7 @@ const getDistLocation = importName => {
     case 'AppRegistry':
     case 'AppState':
     case 'AsyncStorage':
-    case 'BackAndroid':
+    case 'BackHandler':
     case 'Clipboard':
     case 'Dimensions':
     case 'Easing':
