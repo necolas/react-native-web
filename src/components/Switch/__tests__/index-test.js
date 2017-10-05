@@ -19,21 +19,21 @@ describe('components/Switch', () => {
     });
   });
 
-  /*
   describe('onValueChange', () => {
     test('when value is "false" it receives "true"', () => {
-      const handleValueChange = (value) => expect(value === true).toBeTruthy();
-      const component = shallow(<Switch onValueChange={handleValueChange} value={false} />);
-      component.find('input').simulate('click');
+      const onValueChange = jest.fn();
+      const component = shallow(<Switch onValueChange={onValueChange} value={false} />);
+      component.find('input').simulate('change', { nativeEvent: { target: { checked: true } } });
+      expect(onValueChange).toHaveBeenCalledWith(true)
     });
 
     test('when value is "true" it receives "false"', () => {
-      const handleValueChange = (value) => expect(value === false).toBeTruthy();
-      const component = shallow(<Switch onValueChange={handleValueChange} value />);
-      component.find('input').simulate('click');
+      const onValueChange = jest.fn();
+      const component = shallow(<Switch onValueChange={onValueChange} value />);
+      component.find('input').simulate('change', { nativeEvent: { target: { checked: false } } });
+      expect(onValueChange).toHaveBeenCalledWith(false)
     });
   });
-  */
 
   describe('value', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
