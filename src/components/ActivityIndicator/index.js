@@ -17,6 +17,10 @@ import ViewPropTypes from '../View/ViewPropTypes';
 import { bool, number, oneOf, oneOfType, string } from 'prop-types';
 import React, { Component } from 'react';
 
+const createSvgCircle = style => (
+  <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
+);
+
 class ActivityIndicator extends Component {
   static displayName = 'ActivityIndicator';
 
@@ -40,29 +44,15 @@ class ActivityIndicator extends Component {
 
     const svg = (
       <svg height="100%" viewBox="0 0 32 32" width="100%">
-        <circle
-          cx="16"
-          cy="16"
-          fill="none"
-          r="14"
-          strokeWidth="4"
-          style={{
-            stroke: color,
-            opacity: 0.2
-          }}
-        />
-        <circle
-          cx="16"
-          cy="16"
-          fill="none"
-          r="14"
-          strokeWidth="4"
-          style={{
-            stroke: color,
-            strokeDasharray: 80,
-            strokeDashoffset: 60
-          }}
-        />
+        {createSvgCircle({
+          stroke: color,
+          opacity: 0.2
+        })}
+        {createSvgCircle({
+          stroke: color,
+          strokeDasharray: 80,
+          strokeDashoffset: 60
+        })}
       </svg>
     );
 
