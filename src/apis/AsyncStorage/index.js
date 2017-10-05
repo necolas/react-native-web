@@ -62,6 +62,11 @@ export default class AsyncStorage {
   }
 
   /**
+   * (stub) Flushes any pending requests using a single batch call to get the data.
+   */
+  static flushGetRequests() {}
+
+  /**
    * Gets *all* keys known to the app, for all callers, libraries, etc.
    */
   static getAllKeys(callback) {
