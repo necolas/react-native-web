@@ -103,3 +103,59 @@ const { InvalidThing, TouchableOpacity } = require('react-native');
 const TouchableOpacity = require('react-native-web/dist/components/Touchable/TouchableOpacity');
 "
 `;
+
+exports[`10. Rewrite react-native paths for react-native-web 1`] = `
+"
+export { View } from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export { default as View } from 'react-native-web/dist/components/View';
+"
+`;
+
+exports[`11. Rewrite react-native paths for react-native-web 1`] = `
+"
+export { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export { default as Switch } from 'react-native-web/dist/components/Switch';
+export { default as Text } from 'react-native-web/dist/components/Text';
+export { default as MyView } from 'react-native-web/dist/components/View';
+export { default as ViewPropTypes } from 'react-native-web/dist/components/View/ViewPropTypes';
+"
+`;
+
+exports[`12. Rewrite react-native paths for react-native-web 1`] = `
+"
+export { createElement, Switch, StyleSheet } from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export { default as createElement } from 'react-native-web/dist/modules/createElement';
+export { default as Switch } from 'react-native-web/dist/components/Switch';
+export { default as StyleSheet } from 'react-native-web/dist/apis/StyleSheet';
+"
+`;
+
+exports[`13. Rewrite react-native paths for react-native-web 1`] = `
+"
+export { InvalidThing, TouchableOpacity } from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export { InvalidThing } from 'react-native-web';
+export { default as TouchableOpacity } from 'react-native-web/dist/components/Touchable/TouchableOpacity';
+"
+`;
+
+exports[`14. Rewrite react-native paths for react-native-web 1`] = `
+"
+export { default as RNW } from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export { default as RNW } from 'react-native-web';
+"
+`;

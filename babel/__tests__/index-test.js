@@ -30,6 +30,13 @@ pluginTester({
     // "let { Switch, Text, View: MyView } = require('react-native-web');",
     // "var { createElement, Switch, StyleSheet } = require('react-native-web');",
     // "const { InvalidThing, TouchableOpacity } = require('react-native-web');",
+
+    // export react-native
+    "export { View } from 'react-native';",
+    "export { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';",
+    "export { createElement, Switch, StyleSheet } from 'react-native';",
+    "export { InvalidThing, TouchableOpacity } from 'react-native';",
+    "export { default as RNW } from 'react-native';",
     {
       code: "const RNW = require('react-native');",
       output: "const RNW = require('react-native');",
