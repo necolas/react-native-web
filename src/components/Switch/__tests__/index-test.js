@@ -24,14 +24,14 @@ describe('components/Switch', () => {
       const onValueChange = jest.fn();
       const component = shallow(<Switch onValueChange={onValueChange} value={false} />);
       component.find('input').simulate('change', { nativeEvent: { target: { checked: true } } });
-      expect(onValueChange).toHaveBeenCalledWith(true)
+      expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
     test('when value is "true" it receives "false"', () => {
       const onValueChange = jest.fn();
       const component = shallow(<Switch onValueChange={onValueChange} value />);
       component.find('input').simulate('change', { nativeEvent: { target: { checked: false } } });
-      expect(onValueChange).toHaveBeenCalledWith(false)
+      expect(onValueChange).toHaveBeenCalledWith(false);
     });
   });
 
