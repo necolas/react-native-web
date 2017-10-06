@@ -134,7 +134,8 @@ module.exports = function({ types: t }) {
             .map(specifier => {
               if (t.isExportSpecifier(specifier)) {
                 const exportName = specifier.exported.name
-                const distLocation = getDistLocation(exportName);
+                const localName = specifier.local.name
+                const distLocation = getDistLocation(localName);
 
                 if (distLocation) {
                   return t.exportNamedDeclaration(

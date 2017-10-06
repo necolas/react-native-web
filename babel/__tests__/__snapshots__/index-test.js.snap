@@ -122,7 +122,7 @@ export { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';
 
 export { default as Switch } from 'react-native-web/dist/components/Switch';
 export { default as Text } from 'react-native-web/dist/components/Text';
-export { View as MyView } from 'react-native-web';
+export { default as MyView } from 'react-native-web/dist/components/View';
 export { default as ViewPropTypes } from 'react-native-web/dist/components/View/ViewPropTypes';
 "
 `;
