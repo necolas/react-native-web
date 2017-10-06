@@ -127,6 +127,30 @@ module.exports = function({ types: t }) {
           path.replaceWithMultiple(imports);
         }
       },
+      ExportNamedDeclaration(path) {
+        const { source, specifiers } = path.node;
+        if (source.value === 'react-native' && specifiers.length) {
+          const exports = specifiers
+            .map(specifier => {
+              if (t.isExportSpecifier(specifier)) {
+                const exportName = specifier.exported.name
+                const distLocation = getDistLocation(exportName);
+
+                if (distLocation) {
+                  return t.exportNamedDeclaration(
+                    null,
+                    [t.exportSpecifier(t.identifier('default'), t.identifier(exportName))],
+                    t.stringLiteral(distLocation)
+                  );
+                }
+                return t.exportNamedDeclaration(null, [specifier], t.stringLiteral('react-native-web'));
+              }
+            })
+            .filter(Boolean)
+          
+          path.replaceWithMultiple(exports);
+        }
+      },
       VariableDeclaration(path) {
         if (isReactNativeRequire(t, path.node)) {
           const { id } = path.node.declarations[0];
