@@ -106,7 +106,7 @@ module.exports = function({ types: t }) {
     visitor: {
       ImportDeclaration(path) {
         const { source, specifiers } = path.node;
-        if (source.value === 'react-native' && specifiers.length) {
+        if (source && source.value === 'react-native' && specifiers.length) {
           const imports = specifiers
             .map(specifier => {
               if (t.isImportSpecifier(specifier)) {
@@ -129,7 +129,7 @@ module.exports = function({ types: t }) {
       },
       ExportNamedDeclaration(path) {
         const { source, specifiers } = path.node;
-        if (source.value === 'react-native' && specifiers.length) {
+        if (source && source.value === 'react-native' && specifiers.length) {
           const exports = specifiers
             .map(specifier => {
               if (t.isExportSpecifier(specifier)) {
