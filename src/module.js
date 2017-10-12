@@ -24,6 +24,7 @@ import Platform from './apis/Platform';
 import StyleSheet from './apis/StyleSheet';
 import UIManager from './apis/UIManager';
 import Vibration from './apis/Vibration';
+import Extend from './apis/Extend';
 
 // components
 import ActivityIndicator from './components/ActivityIndicator';
@@ -88,6 +89,7 @@ export {
   StyleSheet,
   UIManager,
   Vibration,
+  Extend,
   // components
   ActivityIndicator,
   Button,
@@ -153,6 +155,7 @@ const ReactNative = {
   StyleSheet,
   UIManager,
   Vibration,
+  Extend,
 
   // components
   ActivityIndicator,
