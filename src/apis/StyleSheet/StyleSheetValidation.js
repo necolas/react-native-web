@@ -91,6 +91,7 @@ StyleSheetValidation.addValidStylePropTypes({
   borderSpacing: oneOf([number, string]),
   clear: string,
   cursor: string,
+  fill: string,
   float: oneOf(['left', 'none', 'right']),
   font: string /* @private */,
   listStyle: string,

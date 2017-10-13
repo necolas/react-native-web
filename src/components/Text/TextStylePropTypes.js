@@ -30,7 +30,7 @@ const TextStylePropTypes = {
   letterSpacing: numberOrString,
   lineHeight: numberOrString,
   textAlign: TextAlignPropType,
-  textAlignVertical: oneOf(['auto', 'bottom', 'center', 'top']),
+  textAlignVertical: string,
   textDecorationColor: ColorPropType,
   textDecorationLine: string,
   textDecorationStyle: string,
