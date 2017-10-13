@@ -43,7 +43,7 @@ const DimensionsScreen = () => (
       />
 
       <DocItem
-        name="static addEventLitener"
+        name="static addEventListener"
         typeInfo="(type: string, handler: function) => void"
         description={[
           <AppText>Add an event handler. Supported events:</AppText>,
@@ -65,7 +65,7 @@ const DimensionsScreen = () => (
       />
 
       <DocItem
-        name="static removeEventLitener"
+        name="static removeEventListener"
         typeInfo="(type: string, handler: function) => void"
         description="Remove an event handler."
       />
