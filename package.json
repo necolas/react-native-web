@@ -18,15 +18,16 @@
     "docs:start": "cd docs && yarn && yarn start",
     "docs:release": "cd docs && yarn release",
     "flow": "flow",
-    "fmt": "find babel benchmarks docs src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs yarn fmt:cmd",
+    "fmt": "find babel benchmarks docs jest src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs yarn fmt:cmd",
     "fmt:cmd": "prettier --print-width=100 --single-quote --write",
     "jest": "jest",
     "jest:watch": "yarn test -- --watch",
-    "lint": "yarn lint:cmd -- babel benchmarks docs src",
+    "lint": "yarn lint:cmd -- babel benchmarks docs jest src",
     "lint:cmd": "eslint --ignore-path .gitignore --fix",
     "precommit": "lint-staged",
     "release": "yarn clean-dist && yarn lint && yarn test && yarn build && npm publish",
-    "test": "flow && jest"
+    "test": "flow && jest",
+    "test:ci": "yarn clean-dist && yarn compile && yarn test"
   },
   "babel": {
     "presets": [

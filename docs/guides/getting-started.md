@@ -198,10 +198,20 @@ target platform.
 
 ## Testing with Jest
 
-[Jest](https://facebook.github.io/jest/) also needs to map `react-native` to `react-native-web`.
+[Jest](https://facebook.github.io/jest/) can be configured to improve snapshots
+of `react-native-web` components.
 
 ```
-"jest": {
+{
+  "snapshotSerializers": [ "enzyme-to-json/serializer", "react-native-web/jest/serializer" ]
+}
+```
+
+Jest also needs to map `react-native` to `react-native-web` (unless you are
+using Babel with the `react-native-web/babel` plugin).
+
+```
+{
   "moduleNameMapper": {
     "react-native": "<rootDir>/node_modules/react-native-web"
   }
