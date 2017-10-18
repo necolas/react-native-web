@@ -1,6 +1,6 @@
 {
   "name": "react-native-web",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
@@ -25,7 +25,7 @@
     "lint": "yarn lint:cmd -- babel benchmarks docs jest src",
     "lint:cmd": "eslint --ignore-path .gitignore --fix",
     "precommit": "lint-staged",
-    "release": "yarn clean-dist && yarn lint && yarn test && yarn build && npm publish",
+    "release": "yarn clean-dist && yarn lint && yarn build && yarn test && npm publish",
     "test": "flow && jest",
     "test:ci": "yarn clean-dist && yarn compile && yarn test"
   },
