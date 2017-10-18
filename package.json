@@ -1,11 +1,12 @@
 {
   "name": "react-native-web",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
     "babel",
     "dist",
+    "jest",
     "src",
     "!**/__tests__"
   ],
