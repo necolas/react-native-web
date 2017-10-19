@@ -13,8 +13,8 @@ const createUncachedURI = source => {
 
 const styles = StyleSheet.create({
   base: {
-    height: 38,
-    width: 38
+    height: 200,
+    width: 300
   },
   row: {
     flexDirection: 'row'
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   centerRow: {
     alignItems: 'center'
   },
-  marginLeft: {
-    marginLeft: '1rem'
+  marginTop: {
+    marginTop: '1rem'
   }
 });
 

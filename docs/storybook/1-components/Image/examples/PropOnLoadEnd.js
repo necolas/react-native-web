@@ -8,7 +8,7 @@ import React from 'react';
 import sources from '../sources';
 
 const ImageOnLoadEndExample = () => (
-  <NetworkImage logMethod="onLoadEnd" source={createUncachedURI(sources.small)} />
+  <NetworkImage logMethod="onLoadEnd" source={createUncachedURI(sources.largeAlt)} />
 );
 
 export default ImageOnLoadEndExample;

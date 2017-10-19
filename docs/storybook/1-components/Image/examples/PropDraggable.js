@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 300,
+    height: 200,
     backgroundColor: 'transparent',
     marginRight: 10
   }

@@ -8,11 +8,7 @@ import React from 'react';
 import { Image } from 'react-native';
 
 const ImageDefaultSourceExample = () => (
-  <Image
-    defaultSource={sources.placeholder}
-    source={sources.largeAlt}
-    style={helpers.styles.base}
-  />
+  <Image defaultSource={sources.placeholder} style={helpers.styles.base} />
 );
 
 export default ImageDefaultSourceExample;

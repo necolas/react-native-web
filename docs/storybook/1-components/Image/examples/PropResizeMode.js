@@ -8,7 +8,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 
 const ImageResizeModeExample = () => (
   <View>
-    {[sources.small, sources.large].map((source, i) => {
+    {[sources.small].map((source, i) => {
       return (
         <View key={i}>
           <View style={styles.horizontal}>
@@ -60,12 +60,11 @@ const styles = StyleSheet.create({
   resizeMode: {
     borderColor: 'black',
     borderWidth: 0.5,
-    height: 60,
-    width: 90
+    height: 120,
+    width: 120
   },
   resizeModeText: {
-    fontSize: 11,
-    marginBottom: 3
+    marginBottom: '0.5rem'
   },
   leftMargin: {
     marginLeft: 10

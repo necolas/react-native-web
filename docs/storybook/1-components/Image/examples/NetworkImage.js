@@ -31,7 +31,7 @@ class NetworkImageExample extends PureComponent {
     ) : null;
 
     return (
-      <View style={[helpers.styles.row, helpers.styles.centerRow]}>
+      <View>
         <Image
           defaultSource={sources.placeholder}
           onError={this._handleError}
@@ -43,7 +43,7 @@ class NetworkImageExample extends PureComponent {
         >
           {loader}
         </Image>
-        {this.state.message && <Text style={helpers.styles.marginLeft}>{this.state.message}</Text>}
+        {this.state.message && <Text style={helpers.styles.marginTop}>{this.state.message}</Text>}
       </View>
     );
   }

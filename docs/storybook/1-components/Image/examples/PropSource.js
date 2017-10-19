@@ -30,18 +30,22 @@ const ImageSourceExample = () => (
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   column: {
-    marginRight: '1rem'
+    alignItems: 'flex-start',
+    marginBottom: '1rem'
   },
   text: {
     marginBottom: '0.5rem'
   },
   image: {
-    flex: 1,
-    height: 50,
-    resizeMode: 'contain'
+    borderColor: 'black',
+    borderWidth: 0.5,
+    height: 120,
+    width: 120,
+    resizeMode: 'cover'
   }
 });
 
