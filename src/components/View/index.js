@@ -68,7 +68,6 @@ class View extends Component {
       const hitSlopChild = createElement('span', { style: [styles.hitSlop, hitSlopStyle] });
       otherProps.children = React.Children.toArray(otherProps.children);
       otherProps.children.unshift(hitSlopChild);
-      otherProps.style.unshift(styles.hasHitSlop);
     }
 
     return createElement('div', otherProps);
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
+    zIndex: 0,
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
@@ -96,9 +96,6 @@ const styles = StyleSheet.create({
   },
   // this zIndex-ordering positions the hitSlop above the View but behind
   // its children
-  hasHitSlop: {
-    zIndex: 0
-  },
   hitSlop: {
     ...StyleSheet.absoluteFillObject,
     zIndex: -1
