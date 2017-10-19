@@ -4,11 +4,8 @@
 import { mount, render, shallow } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import serializer from '../serializer';
-import { StyleSheet, Text, View } from '../../dist';
+import { StyleSheet, Text, View } from '../../src';
 import toJson from 'enzyme-to-json';
-
-expect.addSnapshotSerializer(serializer);
 
 /**
  * Fixtures

@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "benchmark": "cd benchmarks && yarn && webpack && open index.html",
-    "build": "yarn compile && webpack --config webpack.config.js --sort-assets-by --progress",
+    "build": "yarn clean-dist && yarn compile && webpack --config webpack.config.js --sort-assets-by --progress",
     "clean-dist": "del ./dist && mkdir dist",
     "compile": "babel src -d dist --ignore *-test.js",
     "docs:build": "cd docs && yarn build",
@@ -26,9 +26,8 @@
     "lint": "yarn lint:cmd -- babel benchmarks docs jest src",
     "lint:cmd": "eslint --ignore-path .gitignore --fix",
     "precommit": "lint-staged",
-    "release": "yarn clean-dist && yarn lint && yarn build && yarn test && npm publish",
-    "test": "flow && jest",
-    "test:ci": "yarn clean-dist && yarn compile && yarn test"
+    "release": "yarn lint && yarn test && yarn build && npm publish",
+    "test": "flow && jest"
   },
   "babel": {
     "presets": [
@@ -85,9 +84,9 @@
     "babel-preset-react-native": "^4.0.0",
     "caniuse-api": "^2.0.0",
     "del-cli": "^1.1.0",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
-    "enzyme-to-json": "^3.0.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "enzyme-to-json": "^3.1.4",
     "eslint": "^4.6.1",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.5.0",
