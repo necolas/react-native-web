@@ -5,10 +5,10 @@ import { styles } from '../helpers';
 import React, { Component } from 'react';
 import { Slider, View, Text } from 'react-native';
 
-class PropOnValueChange extends Component {
+class PropStep extends Component {
   state = { value: 0 }
 
-  handleValueChange = (value: number) => {
+  handleValueChange = (value) => {
     this.setState({ value });
   }
 
@@ -16,12 +16,12 @@ class PropOnValueChange extends Component {
     return (
       <View style={styles.row}>
         <View>
-          <Slider onValueChange={this.handleValueChange}/>
+          <Slider maximumValue={10} step={2} onValueChange={this.handleValueChange}/>
         </View>
-        <Text>{parseFloat(this.state.value).toFixed(2)}</Text>
+        <Text>{this.state.value}</Text>
       </View>
     )
   }
 }
 
-export default PropOnValueChange;
+export default PropStep;

@@ -5,16 +5,15 @@ import { styles } from '../helpers';
 import React from 'react';
 import { Slider, View } from 'react-native';
 
-const SliderValueExample = () => (
+const values = [0, 0.5, 1];
+const PropValue = () => (
   <View style={styles.row}>
-    <View>
-      <Slider
-        maximumValue={4}
-        step={1}
-        value={2}
-      />
-    </View>
+    {values.map((item, index) => (
+      <View key={index} value={item}>
+        <Slider value={item}/>
+      </View>
+    ))}
   </View>
 );
 
-export default SliderValueExample;
+export default PropValue;
