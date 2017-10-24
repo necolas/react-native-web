@@ -1,3 +1,12 @@
+/**
+ * Thanks to Jean Regisser <jean.regisser@gmail.com>
+ * Reference: https://github.com/jeanregisser/react-native-slider
+ *
+ * @providesModule Slider
+ * @flow
+ */
+
+import applyNativeMethods from '../../modules/applyNativeMethods';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import StyleSheet from '../../apis/StyleSheet';
@@ -24,7 +33,11 @@ const DEFAULT_ANIMATION_CONFIGS = {
   }
 };
 
-export default class Slider extends PureComponent {
+class Slider extends PureComponent {
+  _panResponder: PanResponder;
+  _previousLeft: number;
+  _store: { [key: string]: { width: number, height: number, [x: string]: any } } = {};
+
   static propTypes = {
     /**
      * Set to true to animate values with default 'timing' animation type
@@ -116,7 +129,7 @@ export default class Slider extends PureComponent {
       /* eslint-enable */
       ...other
     } = this.props;
-    const {value, containerSize, thumbSize, allMeasured} = this.state;
+    const { value, containerSize, thumbSize, allMeasured } = this.state;
     const thumbLeft = value.interpolate({
       inputRange: [minimumValue, maximumValue],
       outputRange: [0, containerSize.width - thumbSize.width],
@@ -231,21 +244,21 @@ export default class Slider extends PureComponent {
   };
 
   _handleMeasure = (name: string, x: Object) => {
-    const {width, height} = x.nativeEvent.layout;
-    const size = {width: width, height: height};
+    const { width, height } = x.nativeEvent.layout;
+    const size = { width: width, height: height };
 
-    const storeName = `_${name}`;
-    const currentSize = this[storeName];
+    const currentSize = this._store[name];
     if (currentSize && width === currentSize.width && height === currentSize.height) {
       return;
     }
-    this[storeName] = size;
+    this._store[name] = size;
 
-    if (this._containerSize && this._trackSize && this._thumbSize) {
+    const store = this._store;
+    if (store.containerSize && store.trackSize && store.thumbSize) {
       this.setState({
-        containerSize: this._containerSize,
-        trackSize: this._trackSize,
-        thumbSize: this._thumbSize,
+        containerSize: store.containerSize,
+        trackSize: store.trackSize,
+        thumbSize: store.thumbSize,
         allMeasured: true,
       })
     }
@@ -406,3 +419,5 @@ const defaultStyles = StyleSheet.create({
     opacity: 0.5,
   }
 });
+
+export default applyNativeMethods(Slider);
