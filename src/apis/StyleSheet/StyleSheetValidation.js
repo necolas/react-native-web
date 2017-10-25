@@ -23,6 +23,8 @@ import { number, oneOf, string } from 'prop-types';
 // plz don't fire me.
 const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
+const allStylePropTypes = {};
+
 export default class StyleSheetValidation {
   static validateStyleProp(prop, style, caller) {
     if (process.env.NODE_ENV !== 'production') {
@@ -77,8 +79,6 @@ const styleError = function(message1, style, caller?, message2?) {
       (message2 || '')
   );
 };
-
-const allStylePropTypes = {};
 
 StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes);
