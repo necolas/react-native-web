@@ -10,16 +10,16 @@
  * @flow
  * @format
  */
-'use strict';
+import StyleSheet from '../../apis/StyleSheet';
+import Image from './';
+import View from '../View';
+import ensureComponentIsNative from '../Touchable/ensureComponentIsNative';
+import ImageStylePropTypes from './ImageStylePropTypes';
+import ViewStylePropTypes from '../View/ViewStylePropTypes';
+import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
+import React, { Component } from 'react';
 
-const Image = require('Image');
-const React = require('React');
-const StyleSheet = require('StyleSheet');
-const View = require('View');
-
-const ensureComponentIsNative = require('ensureComponentIsNative');
-
-import type {NativeMethodsMixinType} from 'ReactNativeTypes';
+const emptyObject = {};
 
 /**
  * Very simple drop-in replacement for <Image> which supports nesting views.
@@ -45,7 +45,17 @@ import type {NativeMethodsMixinType} from 'ReactNativeTypes';
  * AppRegistry.registerComponent('DisplayAnImageBackground', () => DisplayAnImageBackground);
  * ```
  */
-class ImageBackground extends React.Component<$FlowFixMeProps> {
+class ImageBackground extends Component {
+  static propTypes = {
+    ...Image.propTypes,
+    imageStyle: StyleSheetPropType(ImageStylePropTypes),
+    style: StyleSheetPropType(ViewStylePropTypes)
+  };
+
+  static defaultProps = {
+    style: emptyObject
+  };
+
   setNativeProps(props: Object) {
     // Work-around flow
     const viewRef = this._viewRef;
@@ -55,19 +65,20 @@ class ImageBackground extends React.Component<$FlowFixMeProps> {
     }
   }
 
-  _viewRef: ?NativeMethodsMixinType = null;
+  _viewRef: ?View = null;
 
-  _captureRef = ref => {
+  _captureRef = (ref: View) => {
     this._viewRef = ref;
   };
 
   render() {
-    const {children, style, imageStyle, imageRef, ...props} = this.props;
+    const { children, style, imageStyle, imageRef, ...props } = this.props;
 
     return (
-      <View style={style} ref={this._captureRef}>
+      <View ref={this._captureRef} style={style}>
         <Image
           {...props}
+          ref={imageRef}
           style={[
             StyleSheet.absoluteFill,
             {
@@ -79,11 +90,10 @@ class ImageBackground extends React.Component<$FlowFixMeProps> {
               // This workaround should be removed after implementing proper support of
               // intrinsic content size of the <Image>.
               width: style.width,
-              height: style.height,
+              height: style.height
             },
-            imageStyle,
+            imageStyle
           ]}
-          ref={imageRef}
         />
         {children}
       </View>
@@ -91,4 +101,4 @@ class ImageBackground extends React.Component<$FlowFixMeProps> {
   }
 }
 
-module.exports = ImageBackground;
+export default ImageBackground;
