@@ -30,6 +30,7 @@ import ActivityIndicator from './components/ActivityIndicator';
 import Button from './components/Button';
 import FlatList from './components/FlatList';
 import Image from './components/Image';
+import ImageBackground from './components/Image/ImageBackground';
 import KeyboardAvoidingView from './components/KeyboardAvoidingView';
 import ListView from './components/ListView';
 import Modal from './components/Modal';
@@ -93,6 +94,7 @@ export {
   Button,
   FlatList,
   Image,
+  ImageBackground,
   KeyboardAvoidingView,
   ListView,
   Modal,
@@ -159,6 +161,7 @@ const ReactNative = {
   Button,
   FlatList,
   Image,
+  ImageBackground,
   KeyboardAvoidingView,
   ListView,
   Modal,
