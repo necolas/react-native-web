@@ -7,7 +7,6 @@ import radium from './src/radium';
 import reactNative from './src/react-native';
 import reactNativeStyleSheet from './src/react-native-stylesheet';
 import styledComponents from './src/styled-components';
-import styledComponentsPrimitives from './src/styled-components-primitives';
 import styletron from './src/styletron';
 import xp from './src/reactxp';
 
@@ -51,9 +50,7 @@ const restTests = [
   () => renderDeepTree('react-jss', jss),
   () => renderWideTree('react-jss', jss),
   () => renderDeepTree('styled-components', styledComponents),
-  () => renderWideTree('styled-components', styledComponents),
-  () => renderDeepTree('styled-components/primitives', styledComponentsPrimitives),
-  () => renderWideTree('styled-components/primitives', styledComponentsPrimitives)
+  () => renderWideTree('styled-components', styledComponents)
 ];
 
 const tests = [...coreTests];

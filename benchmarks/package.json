@@ -2,21 +2,21 @@
   "name": "benchmarks",
   "private": true,
   "dependencies": {
-    "aphrodite": "^1.2.3",
+    "aphrodite": "^1.2.5",
     "classnames": "^2.2.5",
-    "emotion": "^7.2.2",
+    "emotion": "^8.0.9",
     "glamor": "^2.20.40",
     "marky": "^1.2.0",
-    "radium": "^0.19.4",
-    "react-jss": "^7.1.0",
+    "radium": "^0.19.6",
+    "react-jss": "^7.2.0",
     "react-primitives": "^0.4.3",
-    "reactxp": "^0.42.1",
-    "styled-components": "^2.1.2",
+    "reactxp": "^0.42.11",
+    "styled-components": "^2.2.3",
     "styletron-client": "^2.5.7",
     "styletron-utils": "^2.5.4"
   },
   "devDependencies": {
     "css-loader": "^0.28.7",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.19.0"
   }
 }
