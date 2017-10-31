@@ -52,6 +52,14 @@ const colorProps = {
   color: true
 };
 
+const borderWidthProps = {
+  borderWidth: true,
+  borderTopWidth: true,
+  borderRightWidth: true,
+  borderBottomWidth: true,
+  borderLeftWidth: true
+};
+
 const systemFontStack =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
@@ -141,13 +149,26 @@ const createReducer = (style, styleProps) => {
   let hasResolvedTextShadow = false;
 
   return (resolvedStyle, prop) => {
-    const value = normalizeValue(prop, style[prop]);
+    let value = normalizeValue(prop, style[prop]);
+
+    // Make sure the default border width is explicitly set to '0' to avoid
+    // falling back to any unwanted user-agent styles.
+    if (borderWidthProps[prop]) {
+      value = value == null ? normalizeValue(null, 0) : value;
+    }
+
+    // Normalize color values
+    if (colorProps[prop]) {
+      value = processColor(value);
+    }
+
+    // Ignore everything else with a null value
     if (value == null) {
       return resolvedStyle;
     }
 
     switch (prop) {
-      // ignore React Native styles
+      // Ignore some React Native styles
       case 'aspectRatio':
       case 'elevation':
       case 'overlayColor':
@@ -251,23 +272,17 @@ const createReducer = (style, styleProps) => {
       }
 
       default: {
-        // normalize color values
-        let finalValue = value;
-        if (colorProps[prop]) {
-          finalValue = processColor(value);
-        }
-
         const longFormProperties = styleShortFormProperties[prop];
         if (longFormProperties) {
           longFormProperties.forEach((longForm, i) => {
-            // the value of any longform property in the original styles takes
-            // precedence over the shortform's value
+            // The value of any longform property in the original styles takes
+            // precedence over the shortform's value.
             if (styleProps.indexOf(longForm) === -1) {
-              resolvedStyle[longForm] = finalValue;
+              resolvedStyle[longForm] = value;
             }
           });
         } else {
-          resolvedStyle[prop] = finalValue;
+          resolvedStyle[prop] = value;
         }
       }
     }

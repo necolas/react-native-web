@@ -22,6 +22,23 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
     expect(firstStyle).toEqual(secondStyle);
   });
 
+  describe('borderWidth styles', () => {
+    test('defaults to 0 when "null"', () => {
+      expect(createReactDOMStyle({ borderWidth: null })).toEqual({
+        borderTopWidth: '0px',
+        borderRightWidth: '0px',
+        borderBottomWidth: '0px',
+        borderLeftWidth: '0px'
+      });
+      expect(createReactDOMStyle({ borderWidth: 2, borderRightWidth: null })).toEqual({
+        borderTopWidth: '2px',
+        borderRightWidth: '0px',
+        borderBottomWidth: '2px',
+        borderLeftWidth: '2px'
+      });
+    });
+  });
+
   describe('flexbox styles', () => {
     test('flex defaults', () => {
       expect(createReactDOMStyle({ display: 'flex' })).toEqual({
