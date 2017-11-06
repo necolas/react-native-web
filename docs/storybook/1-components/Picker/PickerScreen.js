@@ -7,13 +7,7 @@
 import React from 'react';
 import PropOnValueChange from './examples/PropOnValueChange';
 import PropSelectedValue from './examples/PropSelectedValue';
-import UIExplorer, {
-  AppText,
-  Description,
-  DocItem,
-  Section,
-  storiesOf
-} from '../../ui-explorer';
+import UIExplorer, { AppText, Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const PickerScreen = () => (
   <UIExplorer title="Picker" url="1-components/Picker">

@@ -13,11 +13,7 @@
 import React from 'react';
 import Picker from './';
 
-const PickerItemPropType = (
-  props: Object,
-  propName: string,
-  componentName: string
-) => {
+const PickerItemPropType = (props: Object, propName: string, componentName: string) => {
   const prop = props[propName];
   let error = null;
   React.Children.forEach(prop, function(child) {

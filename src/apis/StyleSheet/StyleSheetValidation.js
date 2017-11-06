@@ -55,11 +55,7 @@ export default class StyleSheetValidation {
   static validateStyle(name, styles) {
     if (process.env.NODE_ENV !== 'production') {
       for (const prop in styles[name]) {
-        StyleSheetValidation.validateStyleProp(
-          prop,
-          styles[name],
-          'StyleSheet ' + name
-        );
+        StyleSheetValidation.validateStyleProp(prop, styles[name], 'StyleSheet ' + name);
       }
     }
   }
