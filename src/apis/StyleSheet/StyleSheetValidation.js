@@ -11,6 +11,7 @@
  */
 
 import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
+import PickerStylePropType from '../../components/Picker/PickerStylePropType';
 import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes';
 import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
 import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
@@ -54,7 +55,11 @@ export default class StyleSheetValidation {
   static validateStyle(name, styles) {
     if (process.env.NODE_ENV !== 'production') {
       for (const prop in styles[name]) {
-        StyleSheetValidation.validateStyleProp(prop, styles[name], 'StyleSheet ' + name);
+        StyleSheetValidation.validateStyleProp(
+          prop,
+          styles[name],
+          'StyleSheet ' + name
+        );
       }
     }
   }
@@ -81,6 +86,7 @@ const styleError = function(message1, style, caller?, message2?) {
 const allStylePropTypes = {};
 
 StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes);
+StyleSheetValidation.addValidStylePropTypes(PickerStylePropType);
 StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes);
 StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes);

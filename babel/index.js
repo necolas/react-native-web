@@ -72,6 +72,10 @@ const getDistLocation = importName => {
     case 'PointPropType': {
       return `${root}/propTypes/${importName}`;
     }
+    case 'PickerStylePropType':
+    case 'PickerItemPropType': {
+      return `${root}/components/Picker/${importName}`;
+    }
     case 'TextPropTypes': {
       return `${root}/components/Text/${importName}`;
     }
@@ -115,12 +119,19 @@ module.exports = function({ types: t }) {
 
                 if (distLocation) {
                   return t.importDeclaration(
-                    [t.importDefaultSpecifier(t.identifier(specifier.local.name))],
+                    [
+                      t.importDefaultSpecifier(
+                        t.identifier(specifier.local.name)
+                      )
+                    ],
                     t.stringLiteral(distLocation)
                   );
                 }
               }
-              return t.importDeclaration([specifier], t.stringLiteral('react-native-web'));
+              return t.importDeclaration(
+                [specifier],
+                t.stringLiteral('react-native-web')
+              );
             })
             .filter(Boolean);
 
@@ -140,7 +151,12 @@ module.exports = function({ types: t }) {
                 if (distLocation) {
                   return t.exportNamedDeclaration(
                     null,
-                    [t.exportSpecifier(t.identifier('default'), t.identifier(exportName))],
+                    [
+                      t.exportSpecifier(
+                        t.identifier('default'),
+                        t.identifier(exportName)
+                      )
+                    ],
                     t.stringLiteral(distLocation)
                   );
                 }
@@ -166,7 +182,9 @@ module.exports = function({ types: t }) {
                 return t.variableDeclaration(path.node.kind, [
                   t.variableDeclarator(
                     t.identifier(identifier.value.name),
-                    t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)])
+                    t.callExpression(t.identifier('require'), [
+                      t.stringLiteral(distLocation)
+                    ])
                   )
                 ]);
               }
