@@ -72,6 +72,10 @@ const getDistLocation = importName => {
     case 'PointPropType': {
       return `${root}/propTypes/${importName}`;
     }
+    case 'PickerStylePropType':
+    case 'PickerItemPropType': {
+      return `${root}/components/Picker/${importName}`;
+    }
     case 'TextPropTypes': {
       return `${root}/components/Text/${importName}`;
     }

@@ -54,6 +54,8 @@ import VirtualizedList from './components/VirtualizedList';
 // propTypes
 import ColorPropType from './propTypes/ColorPropType';
 import EdgeInsetsPropType from './propTypes/EdgeInsetsPropType';
+import PickerItemPropType from './components/Picker/PickerItemPropType';
+import PickerStylePropType from './components/Picker/PickerStylePropType';
 import PointPropType from './propTypes/PointPropType';
 import TextPropTypes from './components/Text/TextPropTypes';
 import ViewPropTypes from './components/View/ViewPropTypes';
@@ -183,6 +185,8 @@ const ReactNative = {
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
+  PickerItemPropType,
+  PickerStylePropType,
   PointPropType,
   TextPropTypes,
   ViewPropTypes
