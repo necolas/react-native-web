@@ -3,8 +3,8 @@
 To run these benchmarks:
 
 ```
-npm run build:performance
-open ./performance/index.html
+npm run benchmark
+open ./benchmarks/index.html
 ```
 
 Append `?fastest` to the URL to include the fastest "other libraries", and
