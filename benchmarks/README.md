@@ -1,10 +1,10 @@
 # Performance
 
-To run these benchmarks:
+To run these benchmarks from the root of the project:
 
 ```
-npm run build:performance
-open ./performance/index.html
+yarn benchmark
+open ./benchmarks/index.html
 ```
 
 Append `?fastest` to the URL to include the fastest "other libraries", and
