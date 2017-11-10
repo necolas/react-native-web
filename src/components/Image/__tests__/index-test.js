@@ -1,6 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import Image from '../';
+import ImageLoader from '../../../modules/ImageLoader';
 import ImageUriCache from '../ImageUriCache';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
@@ -153,6 +154,34 @@ describe('components/Image', () => {
   test('prop "testID"', () => {
     const component = shallow(<Image testID="testID" />);
     expect(component.prop('testID')).toBe('testID');
+  });
+
+  describe('prop "onLoad"', () => {
+    test('fires after image is loaded', () => {
+      jest.useFakeTimers();
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+      const onLoadStub = jest.fn();
+      shallow(<Image onLoad={onLoadStub} source="https://test.com/img.jpg" />);
+      jest.runOnlyPendingTimers();
+      expect(ImageLoader.load).toBeCalled();
+      expect(onLoadStub).toBeCalled();
+    });
+
+    test('fires even if the image is cached', () => {
+      jest.useFakeTimers();
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+      const onLoadStub = jest.fn();
+      const uri = 'https://test.com/img.jpg';
+      shallow(<Image onLoad={onLoadStub} source={uri} />);
+      ImageUriCache.add(uri);
+      jest.runOnlyPendingTimers();
+      expect(ImageLoader.load).not.toBeCalled();
+      expect(onLoadStub).toBeCalled();
+    });
   });
 
   test('passes other props through to underlying View', () => {
