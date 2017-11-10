@@ -4,6 +4,7 @@
 .*/docs/.*
 .*/node_modules/animated/*
 .*/node_modules/babel-plugin-transform-react-remove-prop-types/*
+.*/node_modules/mitt/*
 
 [include]
 
