@@ -11,6 +11,7 @@
 
 import StyleSheet from '../StyleSheet';
 import View from '../../components/View';
+import Modal from '../../components/Modal';
 import { any, node } from 'prop-types';
 import React, { Component } from 'react';
 
@@ -49,12 +50,14 @@ export default class AppContainer extends Component {
   render() {
     return (
       <View pointerEvents="box-none" style={[styles.appContainer, StyleSheet.absoluteFill]}>
-        <View
-          children={this.props.children}
-          key={this.state.mainKey}
-          pointerEvents="box-none"
-          style={styles.appContainer}
-        />
+        <Modal.Root>
+          <View
+            children={this.props.children}
+            key={this.state.mainKey}
+            pointerEvents="box-none"
+            style={styles.appContainer}
+          />
+        </Modal.Root>
       </View>
     );
   }
