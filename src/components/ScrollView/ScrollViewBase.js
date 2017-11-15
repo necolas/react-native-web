@@ -49,6 +49,8 @@ const normalizeScrollEvent = e => ({
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
 export default class ScrollViewBase extends Component {
+  _viewRef: View;
+
   static propTypes = {
     ...ViewPropTypes,
     onMomentumScrollBegin: func,
@@ -72,6 +74,66 @@ export default class ScrollViewBase extends Component {
 
   _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
   _state = { isScrolling: false, scrollLastTick: 0 };
+
+  setNativeProps(props: Object) {
+    if (this._viewRef) {
+      this._viewRef.setNativeProps(props);
+    }
+  }
+
+  render() {
+    const {
+      scrollEnabled,
+      style,
+      /* eslint-disable */
+      alwaysBounceHorizontal,
+      alwaysBounceVertical,
+      automaticallyAdjustContentInsets,
+      bounces,
+      bouncesZoom,
+      canCancelContentTouches,
+      centerContent,
+      contentInset,
+      contentInsetAdjustmentBehavior,
+      contentOffset,
+      decelerationRate,
+      directionalLockEnabled,
+      endFillColor,
+      indicatorStyle,
+      keyboardShouldPersistTaps,
+      maximumZoomScale,
+      minimumZoomScale,
+      onMomentumScrollBegin,
+      onMomentumScrollEnd,
+      onScrollBeginDrag,
+      onScrollEndDrag,
+      overScrollMode,
+      pinchGestureEnabled,
+      removeClippedSubviews,
+      scrollEventThrottle,
+      scrollIndicatorInsets,
+      scrollPerfTag,
+      scrollsToTop,
+      showsHorizontalScrollIndicator,
+      showsVerticalScrollIndicator,
+      snapToInterval,
+      snapToAlignment,
+      zoomScale,
+      /* eslint-enable */
+      ...other
+    } = this.props;
+
+    return (
+      <View
+        {...other}
+        onScroll={this._handleScroll}
+        onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
+        onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
+        ref={this._setViewRef}
+        style={[style, !scrollEnabled && styles.scrollDisabled]}
+      />
+    );
+  }
 
   _createPreventableScrollHandler = (handler: Function) => {
     return (e: Object) => {
@@ -124,62 +186,13 @@ export default class ScrollViewBase extends Component {
     }
   }
 
+  _setViewRef = (element: View) => {
+    this._viewRef = element;
+  };
+
   _shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
     const timeSinceLastTick = Date.now() - lastTick;
     return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
-  }
-
-  render() {
-    const {
-      scrollEnabled,
-      style,
-      /* eslint-disable */
-      alwaysBounceHorizontal,
-      alwaysBounceVertical,
-      automaticallyAdjustContentInsets,
-      bounces,
-      bouncesZoom,
-      canCancelContentTouches,
-      centerContent,
-      contentInset,
-      contentInsetAdjustmentBehavior,
-      contentOffset,
-      decelerationRate,
-      directionalLockEnabled,
-      endFillColor,
-      indicatorStyle,
-      keyboardShouldPersistTaps,
-      maximumZoomScale,
-      minimumZoomScale,
-      onMomentumScrollBegin,
-      onMomentumScrollEnd,
-      onScrollBeginDrag,
-      onScrollEndDrag,
-      overScrollMode,
-      pinchGestureEnabled,
-      removeClippedSubviews,
-      scrollEventThrottle,
-      scrollIndicatorInsets,
-      scrollPerfTag,
-      scrollsToTop,
-      showsHorizontalScrollIndicator,
-      showsVerticalScrollIndicator,
-      snapToInterval,
-      snapToAlignment,
-      zoomScale,
-      /* eslint-enable */
-      ...other
-    } = this.props;
-
-    return (
-      <View
-        {...other}
-        onScroll={this._handleScroll}
-        onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
-        onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
-        style={[style, !scrollEnabled && styles.scrollDisabled]}
-      />
-    );
   }
 }
 

@@ -49,7 +49,9 @@ const ScrollView = createReactClass({
   },
 
   setNativeProps(props: Object) {
-    this._scrollViewRef.setNativeProps(props);
+    if (this._scrollViewRef) {
+      this._scrollViewRef.setNativeProps(props);
+    }
   },
 
   /**
