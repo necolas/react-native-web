@@ -1,2 +1,4 @@
 import UnimplementedView from '../UnimplementedView';
-export default UnimplementedView;
+const Picker = UnimplementedView;
+Picker.Item = UnimplementedView;
+export default Picker;
