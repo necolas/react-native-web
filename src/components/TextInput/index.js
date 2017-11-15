@@ -289,6 +289,9 @@ class TextInput extends Component {
   _handleFocus = e => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
     const node = this._node;
+
+    TextInputState.focusTextInput(this._node);
+
     if (onFocus) {
       onFocus(e);
     }
