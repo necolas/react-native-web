@@ -72,6 +72,7 @@ export default class ScrollViewBase extends Component {
 
   _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
   _state = { isScrolling: false, scrollLastTick: 0 };
+  state = { nativeProps: {} };
 
   _createPreventableScrollHandler = (handler: Function) => {
     return (e: Object) => {
@@ -129,6 +130,10 @@ export default class ScrollViewBase extends Component {
     return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
   }
 
+  setNativeProps(nativeProps: Object) {
+    this.setState({ nativeProps });
+  }
+
   render() {
     const {
       scrollEnabled,
@@ -169,7 +174,10 @@ export default class ScrollViewBase extends Component {
       zoomScale,
       /* eslint-enable */
       ...other
-    } = this.props;
+    } = {
+      ...this.props,
+      ...this.state.nativeProps
+    };
 
     return (
       <View
