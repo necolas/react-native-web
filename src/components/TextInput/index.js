@@ -150,16 +150,10 @@ class TextInput extends Component {
 
   static State = TextInputState;
 
-  blur() {
-    TextInputState.blurTextInput(this._node);
-  }
+  blur: Function;
 
   clear() {
     this._node.value = '';
-  }
-
-  focus() {
-    TextInputState.focusTextInput(this._node);
   }
 
   isFocused() {
@@ -270,6 +264,7 @@ class TextInput extends Component {
 
   _handleBlur = e => {
     const { onBlur } = this.props;
+    TextInputState.blurTextInput(this._node);
     if (onBlur) {
       onBlur(e);
     }
@@ -289,6 +284,7 @@ class TextInput extends Component {
   _handleFocus = e => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
     const node = this._node;
+    TextInputState.focusTextInput(this._node);
     if (onFocus) {
       onFocus(e);
     }
