@@ -43,6 +43,7 @@ const eventTypesMap = {
 const eventTypes = Object.keys(eventTypesMap);
 
 const connectionListeners = [];
+const netInfoListeners = [];
 
 /**
  * Navigator online: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
@@ -63,7 +64,9 @@ const NetInfo = {
       };
     }
 
-    connection.addEventListener(eventTypesMap[type], handler);
+    const wrappedHandler = e => handler(e.target);
+    netInfoListeners.push([handler, wrappedHandler]);
+    connection.addEventListener(eventTypesMap[type], wrappedHandler);
     return {
       remove: () => NetInfo.removeEventListener(eventTypesMap[type], handler)
     };
@@ -74,10 +77,12 @@ const NetInfo = {
     if (type === 'change') {
       console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
     }
-    if (!connection) {
-      return;
-    }
-    connection.removeEventListener(eventTypesMap[type], handler);
+
+    const listenerIndex = findIndex(netInfoListeners, pair => pair[0] === handler);
+    invariant(listenerIndex !== -1, 'Trying to remove NetInfo listener for unregistered handler');
+    const [, wrappedHandler] = netInfoListeners[listenerIndex];
+    connection.removeEventListener(eventTypesMap[type], wrappedHandler);
+    netInfoListeners.splice(listenerIndex, 1);
   },
 
   fetch(): Promise<any> {

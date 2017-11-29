@@ -13,6 +13,27 @@ describe('apis/NetInfo', () => {
     });
   });
 
+  describe('event handlers', () => {
+    const handler = () => {};
+
+    describe('addEventListener', () => {
+      test('throws if the provided "eventType" is not supported', () => {
+        expect(() => NetInfo.addEventListener('foo', handler)).toThrow();
+        expect(() => NetInfo.addEventListener('connectionChange', handler)).not.toThrow();
+      });
+    });
+
+    describe('removeEventListener', () => {
+      test('throws if the handler is not registered', () => {
+        expect(() => NetInfo.removeEventListener('connectionChange', handler)).toThrow();
+      });
+
+      test('throws if the provided "eventType" is not supported', () => {
+        expect(() => NetInfo.removeEventListener('foo', handler)).toThrow();
+      });
+    });
+  });
+
   describe('isConnected', () => {
     const handler = () => {};
 
@@ -33,14 +54,17 @@ describe('apis/NetInfo', () => {
 
     describe('removeEventListener', () => {
       test('throws if the handler is not registered', () => {
-        expect(() => NetInfo.isConnected.removeEventListener('connectionChange', handler)).toThrow;
+        expect(() =>
+          NetInfo.isConnected.removeEventListener('connectionChange', handler)
+        ).toThrow();
       });
 
       test('throws if the provided "eventType" is not supported', () => {
         NetInfo.isConnected.addEventListener('connectionChange', handler);
-        expect(() => NetInfo.isConnected.removeEventListener('foo', handler)).toThrow;
-        expect(() => NetInfo.isConnected.removeEventListener('connectionChange', handler)).not
-          .toThrow;
+        expect(() => NetInfo.isConnected.removeEventListener('foo', handler)).toThrow();
+        expect(() =>
+          NetInfo.isConnected.removeEventListener('connectionChange', handler)
+        ).not.toThrow();
       });
     });
   });
