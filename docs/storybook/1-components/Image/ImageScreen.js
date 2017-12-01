@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-import PropChildren from './examples/PropChildren';
 import PropDefaultSource from './examples/PropDefaultSource';
 import PropDraggable from './examples/PropDraggable';
 import PropOnError from './examples/PropOnError';
@@ -34,15 +33,6 @@ const ImageScreen = () => (
 
     <Section title="Props">
       <DocItem name="...View props" />
-
-      <DocItem
-        name="children"
-        typeInfo="?any"
-        description="Content to display over the image."
-        example={{
-          render: () => <PropChildren />
-        }}
-      />
 
       <DocItem
         name="defaultSource"

@@ -96,7 +96,6 @@ class Image extends Component<*, State> {
 
   static propTypes = {
     ...ViewPropTypes,
-    children: any,
     defaultSource: ImageSourcePropType,
     draggable: bool,
     onError: func,
@@ -176,7 +175,6 @@ class Image extends Component<*, State> {
     const {
       accessibilityLabel,
       accessible,
-      children,
       defaultSource,
       draggable,
       onLayout,
@@ -221,6 +219,16 @@ class Image extends Component<*, State> {
         })
       : null;
 
+    if (process.env.NODE_ENV !== 'production') {
+      if (this.props.src) {
+        console.warn('The <Image> component requires a `source` property rather than `src`.');
+      }
+
+      if (this.props.children) {
+        throw new Error('The <Image> component cannot contain children. If you want to render content on top of the image, consider using the <ImageBackground> component or absolute positioning.');
+      }
+    }
+
     return (
       <View
         {...other}
@@ -231,7 +239,6 @@ class Image extends Component<*, State> {
         testID={testID}
       >
         {hiddenImage}
-        {children}
       </View>
     );
   }

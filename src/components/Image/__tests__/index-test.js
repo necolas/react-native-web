@@ -33,12 +33,6 @@ describe('components/Image', () => {
     expect(component.prop('accessible')).toBe(false);
   });
 
-  test('prop "children"', () => {
-    const children = <div className="unique" />;
-    const component = shallow(<Image children={children} />);
-    expect(component.find('.unique').length).toBe(1);
-  });
-
   describe('prop "defaultSource"', () => {
     test('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };

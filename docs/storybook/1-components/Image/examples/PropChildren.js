@@ -4,12 +4,12 @@
 
 import sources from '../sources';
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { ImageBackground, StyleSheet, Text } from 'react-native';
 
 const ImageChildrenExample = () => (
-  <Image source={sources.large} style={styles.image}>
+  <ImageBackground source={sources.large} style={styles.image}>
     <Text style={styles.text}>Child content</Text>
-  </Image>
+  </ImageBackground>
 );
 
 const styles = StyleSheet.create({
