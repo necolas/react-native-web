@@ -149,9 +149,6 @@ class Image extends Component {
   componentDidUpdate() {
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
-    } else if (this._imageState === STATUS_LOADED) {
-      const { onLoad } = this.props;
-      onLoad && onLoad();
     }
   }
 

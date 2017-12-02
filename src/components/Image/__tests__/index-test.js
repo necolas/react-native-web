@@ -87,6 +87,55 @@ describe('components/Image', () => {
     expect(component.find('img').prop('draggable')).toBe(false);
   });
 
+  describe('prop "onLoad"', () => {
+    test('is called after image is loaded from network', () => {
+      jest.useFakeTimers();
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+      const onLoadStub = jest.fn();
+      shallow(<Image onLoad={onLoadStub} source="https://test.com/img.jpg" />);
+      jest.runOnlyPendingTimers();
+      expect(ImageLoader.load).toBeCalled();
+      expect(onLoadStub).toBeCalled();
+    });
+
+    test('is called after image is loaded from cache', () => {
+      jest.useFakeTimers();
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+      const onLoadStub = jest.fn();
+      const uri = 'https://test.com/img.jpg';
+      shallow(<Image onLoad={onLoadStub} source={uri} />);
+      ImageUriCache.add(uri);
+      jest.runOnlyPendingTimers();
+      expect(ImageLoader.load).not.toBeCalled();
+      expect(onLoadStub).toBeCalled();
+      ImageUriCache.remove(uri);
+    });
+
+    test('is called on update if "uri" is different', () => {
+      jest.useFakeTimers();
+      const onLoadStub = jest.fn();
+      const uri = 'https://test.com/img.jpg';
+      const component = mount(<Image onLoad={onLoadStub} source={uri} />);
+      component.setProps({ source: `https://blah.com/img.png` });
+      jest.runOnlyPendingTimers();
+      expect(onLoadStub.mock.calls.length).toBe(2);
+    });
+
+    test('is not called on update if "uri" is the same', () => {
+      jest.useFakeTimers();
+      const onLoadStub = jest.fn();
+      const uri = 'https://test.com/img.jpg';
+      const component = mount(<Image onLoad={onLoadStub} source={uri} />);
+      component.setProps({ resizeMode: 'stretch' });
+      jest.runOnlyPendingTimers();
+      expect(onLoadStub.mock.calls.length).toBe(1);
+    });
+  });
+
   describe('prop "resizeMode"', () => {
     [
       Image.resizeMode.contain,
@@ -154,34 +203,6 @@ describe('components/Image', () => {
   test('prop "testID"', () => {
     const component = shallow(<Image testID="testID" />);
     expect(component.prop('testID')).toBe('testID');
-  });
-
-  describe('prop "onLoad"', () => {
-    test('fires after image is loaded', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
-      const onLoadStub = jest.fn();
-      shallow(<Image onLoad={onLoadStub} source="https://test.com/img.jpg" />);
-      jest.runOnlyPendingTimers();
-      expect(ImageLoader.load).toBeCalled();
-      expect(onLoadStub).toBeCalled();
-    });
-
-    test('fires even if the image is cached', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
-      const onLoadStub = jest.fn();
-      const uri = 'https://test.com/img.jpg';
-      shallow(<Image onLoad={onLoadStub} source={uri} />);
-      ImageUriCache.add(uri);
-      jest.runOnlyPendingTimers();
-      expect(ImageLoader.load).not.toBeCalled();
-      expect(onLoadStub).toBeCalled();
-    });
   });
 
   test('passes other props through to underlying View', () => {
