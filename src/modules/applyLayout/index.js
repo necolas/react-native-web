@@ -38,7 +38,7 @@ const safeOverride = (original, next) => {
   return next;
 };
 
-const applyLayout = (Component) => {
+const applyLayout = Component => {
   const componentDidMount = Component.prototype.componentDidMount;
   const componentDidUpdate = Component.prototype.componentDidUpdate;
   const componentWillUnmount = Component.prototype.componentWillUnmount;

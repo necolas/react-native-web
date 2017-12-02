@@ -46,9 +46,11 @@ export default class TextEventsExample extends React.Component {
                 event.nativeEvent.selection.start +
                 ',' +
                 event.nativeEvent.selection.end
-            )}
+            )
+          }
           onSubmitEditing={event =>
-            this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)}
+            this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)
+          }
           placeholder="Enter text to see events"
           style={[helperStyles.textinput, { maxWidth: 200 }]}
         />

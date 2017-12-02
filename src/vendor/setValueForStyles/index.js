@@ -14,13 +14,13 @@ import dangerousStyleValue from '../dangerousStyleValue';
 import warnValidStyle from '../warnValidStyle';
 
 /**
-   * Sets the value for multiple styles on a node.  If a value is specified as
-   * '' (empty string), the corresponding style property will be unset.
-   *
-   * @param {DOMElement} node
-   * @param {object} styles
-   * @param {ReactDOMComponent} component
-   */
+ * Sets the value for multiple styles on a node.  If a value is specified as
+ * '' (empty string), the corresponding style property will be unset.
+ *
+ * @param {DOMElement} node
+ * @param {object} styles
+ * @param {ReactDOMComponent} component
+ */
 const setValueForStyles = function(node, styles, component) {
   var style = node.style;
   for (var styleName in styles) {

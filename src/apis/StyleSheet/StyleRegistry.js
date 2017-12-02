@@ -182,7 +182,7 @@ export default class StyleRegistry {
   }
 
   /**
-  * Caching layer over 'resolveStyle'
+   * Caching layer over 'resolveStyle'
    */
   _resolveStyleIfNeeded(style, options, key) {
     const dir = I18nManager.isRTL ? 'rtl' : 'ltr';

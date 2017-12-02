@@ -37,11 +37,11 @@ export type ViewProps = {
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   accessibilityRole?: string,
   accessibilityTraits?: string | Array<string>,
-  accessible?: bool,
+  accessible?: boolean,
   children?: any,
-  collapsable?: bool,
+  collapsable?: boolean,
   hitSlop?: EdgeInsetsProp,
-  importantForAccessibility?: 'auto'| 'yes'| 'no'| 'no-hide-descendants',
+  importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
   onAccessibilityTap?: Function,
   onClick?: Function,
   onClickCapture?: Function,
@@ -65,11 +65,11 @@ export type ViewProps = {
   onTouchMoveCapture?: Function,
   onTouchStart?: Function,
   onTouchStartCapture?: Function,
-  pointerEvents?: 'box-none'| 'none'| 'box-only'| 'auto',
+  pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
   removeClippedSubviews?: boolean,
   style?: stylePropType,
-  testID?: string,
-}
+  testID?: string
+};
 
 const ViewPropTypes = {
   ...BaseComponentPropTypes,

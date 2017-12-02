@@ -27,7 +27,7 @@ import { Children, Component } from 'react';
  *
  * Typically, you will not need to use this component and should opt for normal
  * React reconciliation.
-*/
+ */
 
 type Props = {
   children: any,

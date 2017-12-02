@@ -30,10 +30,7 @@ export default function renderApplication<Props: Object>(
   );
 }
 
-export function getApplication(
-  RootComponent: ComponentType<Object>,
-  initialProps: Object
-): Object {
+export function getApplication(RootComponent: ComponentType<Object>, initialProps: Object): Object {
   const element = (
     <AppContainer rootTag={{}}>
       <RootComponent {...initialProps} />
