@@ -32,8 +32,9 @@ const NetInfoScreen = () => (
       <DocItem
         description={
           <AppText>
-            One of <Code>slow-2g</Code>, <Code>2g</Code>, <Code>3g</Code>, <Code>4g</Code>,{' '}
-            <Code>unknown</Code>.
+            One of <Code>bluebooth</Code>, <Code>cellular</Code>, <Code>ethernet</Code>,{' '}
+            <Code>mixed</Code>, <Code>mixed</Code>, <Code>none</Code>, <Code>other</Code>,{' '}
+            <Code>unknown</Code>, <Code>wifi</Code>, <Code>wimax</Code>
           </AppText>
         }
         name="ConnectionType"
@@ -41,9 +42,8 @@ const NetInfoScreen = () => (
       <DocItem
         description={
           <AppText>
-            One of <Code>bluebooth</Code>, <Code>cellular</Code>, <Code>ethernet</Code>,{' '}
-            <Code>mixed</Code>, <Code>mixed</Code>, <Code>none</Code>, <Code>other</Code>,{' '}
-            <Code>unknown</Code>, <Code>wifi</Code>, <Code>wimax</Code>
+            One of <Code>slow-2g</Code>, <Code>2g</Code>, <Code>3g</Code>, <Code>4g</Code>,{' '}
+            <Code>unknown</Code>.
           </AppText>
         }
         name="EffectiveConnectionType"

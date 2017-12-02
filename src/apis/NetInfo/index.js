@@ -23,13 +23,17 @@ const connection =
 // Prevent the underlying event handlers from leaking and include additional
 // properties available in browsers
 const getConnectionInfoObject = () => {
-  const result = {};
+  const result = {
+    effectiveType: 'unknown',
+    type: 'unknown'
+  };
   if (!connection) {
     return result;
   }
   for (const prop in connection) {
-    if (typeof connection[prop] !== 'function') {
-      result[prop] = connection[prop];
+    const value = connection[prop];
+    if (typeof value !== 'function' && value != null) {
+      result[prop] = value;
     }
   }
   return result;
@@ -43,6 +47,7 @@ const eventTypesMap = {
 const eventTypes = Object.keys(eventTypesMap);
 
 const connectionListeners = [];
+const netInfoListeners = [];
 
 /**
  * Navigator online: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
@@ -63,21 +68,29 @@ const NetInfo = {
       };
     }
 
-    connection.addEventListener(eventTypesMap[type], handler);
+    const wrappedHandler = () => handler(getConnectionInfoObject());
+    netInfoListeners.push([handler, wrappedHandler]);
+    connection.addEventListener(eventTypesMap[type], wrappedHandler);
     return {
       remove: () => NetInfo.removeEventListener(eventTypesMap[type], handler)
     };
   },
 
   removeEventListener(type: string, handler: Function): void {
-    invariant(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
+    invariant(
+      eventTypes.indexOf(type) !== -1,
+      'Trying to unsubscribe from unknown event: "%s"',
+      type
+    );
     if (type === 'change') {
       console.warn('Listening to event `change` is deprecated. Use `connectionChange` instead.');
     }
-    if (!connection) {
-      return;
-    }
-    connection.removeEventListener(eventTypesMap[type], handler);
+
+    const listenerIndex = findIndex(netInfoListeners, pair => pair[0] === handler);
+    invariant(listenerIndex !== -1, 'Trying to remove NetInfo listener for unregistered handler');
+    const [, wrappedHandler] = netInfoListeners[listenerIndex];
+    connection.removeEventListener(eventTypesMap[type], wrappedHandler);
+    netInfoListeners.splice(listenerIndex, 1);
   },
 
   fetch(): Promise<any> {
@@ -93,11 +106,7 @@ const NetInfo = {
 
   getConnectionInfo(): Promise<Object> {
     return new Promise((resolve, reject) => {
-      resolve({
-        effectiveType: 'unknown',
-        type: 'unknown',
-        ...getConnectionInfoObject()
-      });
+      resolve(getConnectionInfoObject());
     });
   },
 
