@@ -13,11 +13,11 @@ import invariant from 'fbjs/lib/invariant';
 import { render } from 'react-dom';
 import AppContainer from './AppContainer';
 import StyleSheet from '../../apis/StyleSheet';
-import React from 'react';
+import React, { type ComponentType } from 'react';
 
-export default function renderApplication(
-  RootComponent: ReactClass<Object>,
-  initialProps: Object,
+export default function renderApplication<Props: Object>(
+  RootComponent: ComponentType<Props>,
+  initialProps: Props,
   rootTag: any
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
@@ -30,7 +30,10 @@ export default function renderApplication(
   );
 }
 
-export function getApplication(RootComponent: ReactClass<Object>, initialProps: Object): Object {
+export function getApplication(
+  RootComponent: ComponentType<Object>,
+  initialProps: Object
+): Object {
   const element = (
     <AppContainer rootTag={{}}>
       <RootComponent {...initialProps} />

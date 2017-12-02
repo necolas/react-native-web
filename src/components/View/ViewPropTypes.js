@@ -11,10 +11,12 @@
  */
 
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
-import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
+import EdgeInsetsPropType, { type EdgeInsetsProp } from '../../propTypes/EdgeInsetsPropType';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { any, bool, func, oneOf } from 'prop-types';
+
+const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
 export type ViewLayout = {
   x: number,
@@ -28,6 +30,46 @@ export type ViewLayoutEvent = {
     layout: ViewLayout
   }
 };
+
+export type ViewProps = {
+  accessibilityComponentType?: string,
+  accessibilityLabel?: string,
+  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
+  accessibilityRole?: string,
+  accessibilityTraits?: string | Array<string>,
+  accessible?: bool,
+  children?: any,
+  collapsable?: bool,
+  hitSlop?: EdgeInsetsProp,
+  importantForAccessibility?: 'auto'| 'yes'| 'no'| 'no-hide-descendants',
+  onAccessibilityTap?: Function,
+  onClick?: Function,
+  onClickCapture?: Function,
+  onLayout?: (event: ViewLayoutEvent) => void,
+  onMagicTap?: Function,
+  onResponderGrant?: Function,
+  onResponderMove?: Function,
+  onResponderReject?: Function,
+  onResponderRelease?: Function,
+  onResponderTerminate?: Function,
+  onResponderTerminationRequest?: Function,
+  onStartShouldSetResponder?: Function,
+  onStartShouldSetResponderCapture?: Function,
+  onMoveShouldSetResponder?: Function,
+  onMoveShouldSetResponderCapture?: Function,
+  onTouchCancel?: Function,
+  onTouchCancelCapture?: Function,
+  onTouchEnd?: Function,
+  onTouchEndCapture?: Function,
+  onTouchMove?: Function,
+  onTouchMoveCapture?: Function,
+  onTouchStart?: Function,
+  onTouchStartCapture?: Function,
+  pointerEvents?: 'box-none'| 'none'| 'box-only'| 'auto',
+  removeClippedSubviews?: boolean,
+  style?: stylePropType,
+  testID?: string,
+}
 
 const ViewPropTypes = {
   ...BaseComponentPropTypes,
@@ -56,7 +98,7 @@ const ViewPropTypes = {
   onTouchStart: func,
   onTouchStartCapture: func,
   pointerEvents: oneOf(['auto', 'box-none', 'box-only', 'none']),
-  style: StyleSheetPropType(ViewStylePropTypes)
+  style: stylePropType
 };
 
 export default ViewPropTypes;

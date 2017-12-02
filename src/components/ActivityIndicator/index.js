@@ -21,7 +21,7 @@ const createSvgCircle = style => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
 
-class ActivityIndicator extends Component {
+class ActivityIndicator extends Component<*> {
   static displayName = 'ActivityIndicator';
 
   static propTypes = {

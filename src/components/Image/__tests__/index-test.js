@@ -1,4 +1,5 @@
 /* eslint-env jasmine, jest */
+/* eslint-disable react/jsx-no-bind */
 
 import Image from '../';
 import ImageLoader from '../../../modules/ImageLoader';
@@ -120,7 +121,7 @@ describe('components/Image', () => {
       const onLoadStub = jest.fn();
       const uri = 'https://test.com/img.jpg';
       const component = mount(<Image onLoad={onLoadStub} source={uri} />);
-      component.setProps({ source: `https://blah.com/img.png` });
+      component.setProps({ source: 'https://blah.com/img.png' });
       jest.runOnlyPendingTimers();
       expect(onLoadStub.mock.calls.length).toBe(2);
     });

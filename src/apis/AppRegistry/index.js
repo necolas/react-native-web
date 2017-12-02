@@ -13,16 +13,18 @@
 import invariant from 'fbjs/lib/invariant';
 import { unmountComponentAtNode } from 'react-dom';
 import renderApplication, { getApplication } from './renderApplication';
+import type { ComponentType } from 'react';
 
 const emptyObject = {};
 const runnables = {};
 
-export type ComponentProvider = () => ReactClass<any>;
+export type ComponentProvider = () => ComponentType<any>;
 
 export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
-  run?: Function
+  run?: Function,
+  section?: boolean
 };
 
 /**
@@ -90,7 +92,7 @@ export default class AppRegistry {
     runnables[appKey].run(appParameters);
   }
 
-  static unmountApplicationComponentAtRootTag(rootTag) {
+  static unmountApplicationComponentAtRootTag(rootTag: Object) {
     unmountComponentAtNode(rootTag);
   }
 }

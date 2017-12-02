@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule ColorPropType
- * @flow
+ * @noflow
  */
 
 const isWebColor = (color: string) =>

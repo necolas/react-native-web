@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @noflow
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
@@ -38,7 +38,7 @@ const safeOverride = (original, next) => {
   return next;
 };
 
-const applyLayout = (Component: ReactClass<any>) => {
+const applyLayout = (Component) => {
   const componentDidMount = Component.prototype.componentDidMount;
   const componentDidUpdate = Component.prototype.componentDidUpdate;
   const componentWillUnmount = Component.prototype.componentWillUnmount;

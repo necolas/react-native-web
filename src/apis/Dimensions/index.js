@@ -66,12 +66,12 @@ export default class Dimensions {
     }
   }
 
-  static addEventListener(type, handler): void {
+  static addEventListener(type: string, handler: Function): void {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
   }
 
-  static removeEventListener(type, handler): void {
+  static removeEventListener(type: string, handler: Function): void {
     if (Array.isArray(listeners[type])) {
       listeners[type] = listeners[type].filter(_handler => _handler !== handler);
     }

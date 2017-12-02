@@ -16,7 +16,7 @@ import ViewPropTypes from '../View/ViewPropTypes';
 import { arrayOf, bool, func, number, oneOf, string } from 'prop-types';
 import React, { Component } from 'react';
 
-class RefreshControl extends Component {
+class RefreshControl extends Component<*> {
   static propTypes = {
     ...ViewPropTypes,
     colors: arrayOf(ColorPropType),

@@ -13,7 +13,7 @@ import { bool } from 'prop-types';
 import createElement from '../../modules/createElement';
 import invariant from 'fbjs/lib/invariant';
 import StyleSheet from '../../apis/StyleSheet';
-import ViewPropTypes from './ViewPropTypes';
+import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
 import React, { Component } from 'react';
 
 const calculateHitSlopStyle = hitSlop => {
@@ -27,7 +27,7 @@ const calculateHitSlopStyle = hitSlop => {
   return hitStyle;
 };
 
-class View extends Component {
+class View extends Component<ViewProps> {
   static displayName = 'View';
 
   static contextTypes = {
@@ -39,7 +39,6 @@ class View extends Component {
   render() {
     const {
       hitSlop,
-      style,
       /* eslint-disable */
       collapsable,
       onAccessibilityTap,
@@ -61,7 +60,7 @@ class View extends Component {
 
     const { isInAParentText } = this.context;
 
-    otherProps.style = [styles.initial, isInAParentText && styles.inline, style];
+    otherProps.style = [styles.initial, isInAParentText && styles.inline, this.props.style];
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);

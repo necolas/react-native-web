@@ -14,7 +14,7 @@ import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
 import createReactClass from 'create-react-class';
 import EdgeInsetsPropType from '../../propTypes/EdgeInsetsPropType';
 import ensurePositiveDelayProps from './ensurePositiveDelayProps';
-import React from 'react';
+import React, { type Element } from 'react';
 import StyleSheet from '../../apis/StyleSheet';
 import TimerMixin from 'react-timer-mixin';
 import Touchable from './Touchable';
@@ -144,7 +144,7 @@ const TouchableWithoutFeedback = createReactClass({
     return this.props.delayPressOut || 0;
   },
 
-  render: function(): React.Element<any> {
+  render: function(): Element<any> {
     const {
       /* eslint-disable */
       delayLongPress,

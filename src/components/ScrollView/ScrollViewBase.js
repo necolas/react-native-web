@@ -48,7 +48,7 @@ const normalizeScrollEvent = e => ({
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-export default class ScrollViewBase extends Component {
+export default class ScrollViewBase extends Component<*> {
   _viewRef: View;
 
   static propTypes = {
@@ -148,7 +148,7 @@ export default class ScrollViewBase extends Component {
     };
   };
 
-  _handleScroll = (e: SyntheticEvent) => {
+  _handleScroll = (e: Object) => {
     e.persist();
     e.stopPropagation();
     const { scrollEventThrottle } = this.props;

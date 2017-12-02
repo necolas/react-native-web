@@ -24,7 +24,7 @@ import { number, oneOf, string } from 'prop-types';
 const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 export default class StyleSheetValidation {
-  static validateStyleProp(prop, style, caller) {
+  static validateStyleProp(prop: string, style: Object, caller: string) {
     if (process.env.NODE_ENV !== 'production') {
       const isCustomProperty = prop.indexOf('--') === 0;
       if (isCustomProperty) return;
@@ -51,7 +51,7 @@ export default class StyleSheetValidation {
     }
   }
 
-  static validateStyle(name, styles) {
+  static validateStyle(name: string, styles: Object) {
     if (process.env.NODE_ENV !== 'production') {
       for (const prop in styles[name]) {
         StyleSheetValidation.validateStyleProp(prop, styles[name], 'StyleSheet ' + name);
@@ -59,7 +59,7 @@ export default class StyleSheetValidation {
     }
   }
 
-  static addValidStylePropTypes(stylePropTypes) {
+  static addValidStylePropTypes(stylePropTypes: Object) {
     for (const key in stylePropTypes) {
       allStylePropTypes[key] = stylePropTypes[key];
     }

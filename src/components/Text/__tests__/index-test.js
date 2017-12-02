@@ -1,4 +1,5 @@
 /* eslint-env jasmine, jest */
+/* eslint-disable react/jsx-no-bind */
 
 import React from 'react';
 import { render, shallow } from 'enzyme';

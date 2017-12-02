@@ -11,7 +11,7 @@
 
 import { Component } from 'react';
 
-export default class StatusBar extends Component {
+export default class StatusBar extends Component<*> {
   static setBackgroundColor() {}
   static setBarStyle() {}
   static setHidden() {}

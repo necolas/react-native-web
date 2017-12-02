@@ -27,8 +27,14 @@ import { Children, Component } from 'react';
  *
  * Typically, you will not need to use this component and should opt for normal
  * React reconciliation.
- */
-export default class StaticContainer extends Component {
+*/
+
+type Props = {
+  children: any,
+  shouldUpdate: boolean
+};
+
+export default class StaticContainer extends Component<Props> {
   static propTypes = {
     children: any.isRequired,
     shouldUpdate: bool.isRequired

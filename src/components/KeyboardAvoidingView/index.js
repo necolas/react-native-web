@@ -17,7 +17,7 @@ import React, { Component } from 'react';
 
 import type { ViewLayout, ViewLayoutEvent } from '../View/ViewPropTypes';
 
-class KeyboardAvoidingView extends Component {
+class KeyboardAvoidingView extends Component<*> {
   static propTypes = {
     ...ViewPropTypes,
     behavior: oneOf(['height', 'padding', 'position']),

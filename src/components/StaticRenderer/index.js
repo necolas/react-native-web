@@ -27,7 +27,12 @@ import { bool, func } from 'prop-types';
  * React reconciliation.
  */
 
-export default class StaticRenderer extends Component {
+type Props = {
+  render: Function,
+  shouldUpdate: boolean
+};
+
+export default class StaticRenderer extends Component<Props> {
   static propTypes = {
     render: func.isRequired,
     shouldUpdate: bool.isRequired

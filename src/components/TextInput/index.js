@@ -68,7 +68,7 @@ const setSelection = (node, selection) => {
   } catch (e) {}
 };
 
-class TextInput extends Component {
+class TextInput extends Component<*> {
   _node: HTMLInputElement;
 
   static displayName = 'TextInput';

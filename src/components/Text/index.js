@@ -18,7 +18,7 @@ import createElement from '../../modules/createElement';
 import StyleSheet from '../../apis/StyleSheet';
 import TextPropTypes from './TextPropTypes';
 
-class Text extends Component {
+class Text extends Component<*> {
   static displayName = 'Text';
 
   static propTypes = TextPropTypes;

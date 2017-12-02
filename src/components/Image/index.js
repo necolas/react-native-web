@@ -83,9 +83,11 @@ const resolveAssetSource = source => {
   return uri;
 };
 
-class Image extends Component {
-  state: { shouldDisplaySource: boolean };
+type State = {
+  shouldDisplaySource: boolean
+};
 
+class Image extends Component<*, State> {
   static displayName = 'Image';
 
   static contextTypes = {

@@ -11,14 +11,14 @@ import StyleSheet from '../../apis/StyleSheet';
 import UIManager from '../../apis/UIManager';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { bool, func } from 'prop-types';
 
 const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-class Switch extends PureComponent {
+class Switch extends Component<*> {
   _checkboxElement: HTMLInputElement;
   _thumbElement: View;
 

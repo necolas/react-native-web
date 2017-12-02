@@ -17,11 +17,11 @@ export default class Clipboard {
     );
   }
 
-  static getString() {
+  static getString(): Promise<string> {
     return Promise.resolve('');
   }
 
-  static setString(text) {
+  static setString(text: string) {
     let success = false;
     const body = document.body;
 

@@ -17,7 +17,7 @@ import ViewPropTypes from '../View/ViewPropTypes';
 import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
 
-class ProgressBar extends Component {
+class ProgressBar extends Component<*> {
   _progressElement: View;
 
   static displayName = 'ProgressBar';

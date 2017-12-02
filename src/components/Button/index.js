@@ -17,7 +17,7 @@ import Text from '../Text';
 import { bool, func, string } from 'prop-types';
 import React, { Component } from 'react';
 
-class Button extends Component {
+class Button extends Component<*> {
   static propTypes = {
     accessibilityLabel: string,
     color: ColorPropType,

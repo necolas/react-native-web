@@ -19,6 +19,7 @@ type Context = {
 };
 
 type Props = {
+  // $FlowFixMe
   children?: React.Children,
   rootTag: any
 };
@@ -27,10 +28,7 @@ type State = {
   mainKey: number
 };
 
-export default class AppContainer extends Component {
-  props: Props;
-  state: State = { mainKey: 1 };
-
+export default class AppContainer extends Component<Props, State> {
   static childContextTypes = {
     rootTag: any
   };

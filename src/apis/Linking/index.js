@@ -17,13 +17,13 @@ const initialURL = canUseDOM ? window.location.href : '';
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
-  canOpenURL() {
+  canOpenURL(): Promise<boolean> {
     return Promise.resolve(true);
   },
-  getInitialURL() {
+  getInitialURL(): Promise<string> {
     return Promise.resolve(initialURL);
   },
-  openURL(url: string) {
+  openURL(url: string): Promise<Object | void> {
     try {
       iframeOpen(url);
       return Promise.resolve();
