@@ -6,20 +6,11 @@
 
 import React from 'react';
 import PropChildren from './examples/PropChildren';
-import UIExplorer, {
-  AppText,
-  Code,
-  Description,
-  DocItem,
-  Section,
-  storiesOf
-} from '../../ui-explorer';
+import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ImageBackgroundScreen = () => (
   <UIExplorer title="ImageBackground" url="1-components/ImageBackground">
-    <Description>
-      A image component with support for child content.
-    </Description>
+    <Description>A image component with support for child content.</Description>
 
     <Section title="Props">
       <DocItem name="...Image props" />

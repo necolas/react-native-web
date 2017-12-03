@@ -22,7 +22,7 @@ import StyleSheet from '../../apis/StyleSheet';
 import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
-import { any, bool, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { bool, func, number, oneOf, oneOfType, shape, string } from 'prop-types';
 import React, { Component } from 'react';
 
 const emptyObject = {};
@@ -225,7 +225,9 @@ class Image extends Component<*, State> {
       }
 
       if (this.props.children) {
-        throw new Error('The <Image> component cannot contain children. If you want to render content on top of the image, consider using the <ImageBackground> component or absolute positioning.');
+        throw new Error(
+          'The <Image> component cannot contain children. If you want to render content on top of the image, consider using the <ImageBackground> component or absolute positioning.'
+        );
       }
     }
 
