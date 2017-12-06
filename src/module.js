@@ -37,6 +37,7 @@ import Modal from './components/Modal';
 import Picker from './components/Picker';
 import ProgressBar from './components/ProgressBar';
 import RefreshControl from './components/RefreshControl';
+import SafeAreaView from './components/SafeAreaView';
 import ScrollView from './components/ScrollView';
 import SectionList from './components/SectionList';
 import Slider from './components/Slider';
@@ -101,6 +102,7 @@ export {
   Picker,
   ProgressBar,
   RefreshControl,
+  SafeAreaView,
   ScrollView,
   SectionList,
   Slider,
@@ -168,6 +170,7 @@ const ReactNative = {
   Picker,
   ProgressBar,
   RefreshControl,
+  SafeAreaView,
   ScrollView,
   SectionList,
   Slider,
