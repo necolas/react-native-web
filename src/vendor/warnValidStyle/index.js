@@ -9,6 +9,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule warnValidStyle
+ * From React 16.0.0
  */
 
 var emptyFunction = require('fbjs/lib/emptyFunction');

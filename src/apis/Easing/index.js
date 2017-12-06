@@ -6,8 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule Easing
- * @noflow
+ * @flow
  */
 
-import Easing from 'animated/lib/Easing';
+import Easing from '../../vendor/Animated/Easing';
 export default Easing;

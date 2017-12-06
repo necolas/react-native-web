@@ -19,12 +19,12 @@
     "docs:start": "cd docs && yarn && yarn start",
     "docs:release": "cd docs && yarn release",
     "flow": "flow",
-    "fmt": "find babel benchmarks docs jest src -name '*.js' | grep -v -E '(node_modules|dist)' | xargs yarn fmt:cmd",
+    "fmt": "find babel benchmarks docs jest src -name '*.js' | grep -v -E '(node_modules|dist|vendor)' | xargs yarn fmt:cmd",
     "fmt:cmd": "prettier --print-width=100 --single-quote --write",
     "jest": "jest",
     "jest:watch": "yarn test --watch",
     "lint": "yarn lint:cmd babel benchmarks docs jest src",
-    "lint:cmd": "eslint --ignore-path .gitignore --fix",
+    "lint:cmd": "eslint --ignore-path .gitignore --ignore-pattern '/src/vendor/*' --fix",
     "precommit": "lint-staged",
     "release": "yarn lint && yarn test && yarn build && npm publish",
     "test": "flow && jest"
@@ -61,7 +61,6 @@
     ]
   },
   "dependencies": {
-    "animated": "^0.2.0",
     "array-find-index": "^1.0.2",
     "babel-runtime": "^6.26.0",
     "create-react-class": "^15.6.2",

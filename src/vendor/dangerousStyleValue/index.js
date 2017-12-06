@@ -9,6 +9,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule dangerousStyleValue
+ * From React 16.0.0
  */
 
 import isUnitlessNumber from '../../modules/unitlessNumbers';
