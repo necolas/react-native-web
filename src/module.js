@@ -2,7 +2,8 @@ import createElement from './modules/createElement';
 import findNodeHandle from './modules/findNodeHandle';
 import NativeModules from './modules/NativeModules';
 import processColor from './modules/processColor';
-import { hydrate, render, unmountComponentAtNode } from 'react-dom';
+import render from './modules/render';
+import unmountComponentAtNode from './modules/unmountComponentAtNode';
 
 // APIs
 import Animated from './apis/Animated';
@@ -63,7 +64,6 @@ import ViewPropTypes from './components/View/ViewPropTypes';
 export {
   // top-level API
   findNodeHandle,
-  hydrate,
   render,
   unmountComponentAtNode,
   // modules
@@ -128,7 +128,6 @@ export {
 const ReactNative = {
   // top-level API
   findNodeHandle,
-  hydrate,
   render,
   unmountComponentAtNode,
 
