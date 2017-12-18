@@ -107,7 +107,6 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 
 * [Glitch](https://glitch.com/edit/#!/react-native-web-playground)
 * [create-react-app](https://github.com/facebookincubator/create-react-app)
-* [re-start](https://github.com/react-everywhere/re-start)
 
 ## Related projects
 
