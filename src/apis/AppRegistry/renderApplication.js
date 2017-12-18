@@ -38,7 +38,7 @@ export function getApplication(RootComponent: ComponentType<Object>, initialProp
   );
   const stylesheets = StyleSheet.getStyleSheets().map(sheet => (
     // ensure that CSS text is not escaped
-    <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
+    <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} key={sheet.id} />
   ));
   return { element, stylesheets };
 }
