@@ -10,7 +10,7 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import { render } from 'react-dom';
+import { hydrate } from '../../modules/hydrate';
 import AppContainer from './AppContainer';
 import StyleSheet from '../../apis/StyleSheet';
 import React, { type ComponentType } from 'react';
@@ -22,7 +22,7 @@ export default function renderApplication<Props: Object>(
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
-  render(
+  hydrate(
     <AppContainer rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
