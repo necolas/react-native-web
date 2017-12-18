@@ -10,13 +10,25 @@ polyfill.
 ## Web packager
 
 [Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
-example of how to configure a build that uses [Babel](https://babeljs.io/) to
-compile your JavaScript for the web.
+_example_ of how to configure a build that uses [Babel](https://babeljs.io/) to
+compile your JavaScript for the web. Please refer to the webpack documentation
+when setting up your project.
+
+Install webpack-related dependencies, for example:
+
+```
+yarn add --dev babel-loader url-loader webpack webpack-dev-server
+```
 
 Create a `web/webpack.config.js` file:
 
 ```js
 // web/webpack.config.js
+
+const path = require('path');
+const webpack = require('webpack');
+
+const appDirectory = path.resolve(__dirname, '../');
 
 // This is needed for webpack to compile JavaScript.
 // Many OSS React Native packages are not compiled to ES5 before being
@@ -25,25 +37,26 @@ Create a `web/webpack.config.js` file:
 // `node_module`.
 const babelLoaderConfiguration = {
   test: /\.js$/,
-  // Add every directory that needs to be compiled by Babel during the build
+  // Add every directory that needs to be compiled by Babel during the build.
   include: [
-    path.resolve(__dirname, 'src'),
-    path.resolve(__dirname, 'node_modules/react-native-uncompiled')
+    path.resolve(appDirectory, 'index.web.js'),
+    path.resolve(appDirectory, 'src'),
+    path.resolve(appDirectory, 'node_modules/react-native-uncompiled')
   ],
   use: {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
       // This aliases 'react-native' to 'react-native-web' and includes only
-      // the modules needed by the app
-      plugins: ['react-native-web/babel'],
-      // The 'react-native' preset is recommended (or use your own .babelrc)
+      // the modules needed by the app.
+      plugins: ['react-native-web/babel', 'transform-runtime'],
+      // The 'react-native' preset is recommended (or use your own .babelrc).
       presets: ['react-native']
     }
   }
 };
 
-// This is needed for webpack to import static images in JavaScript files
+// This is needed for webpack to import static images in JavaScript files.
 const imageLoaderConfiguration = {
   test: /\.(gif|jpe?g|png|svg)$/,
   use: {
@@ -55,6 +68,15 @@ const imageLoaderConfiguration = {
 };
 
 module.exports = {
+  // your web-specific entry file
+  entry: path.resolve(appDirectory, 'index.web.js'),
+
+  // configures where the build ends up
+  output: {
+    filename: 'bundle.web.js',
+    path: path.resolve(appDirectory, 'dist')
+  },
+
   // ...the rest of your config
 
   module: {
@@ -69,7 +91,8 @@ module.exports = {
     // builds to eliminate development checks and reduce build size. You may
     // wish to include additional optimizations.
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      __DEV__: process.env.NODE_ENV === 'production' || true
     })
   ],
 
@@ -82,23 +105,19 @@ module.exports = {
 }
 ```
 
-To run in development:
+To run in development from the root of your application:
 
 ```
-./node_modules/.bin/webpack-dev-server -d --config web/webpack.config.js --inline --hot --colors
+./node_modules/.bin/webpack-dev-server -d --config ./web/webpack.config.js --inline --hot --colors
 ```
 
 To build for production:
 
 ```
-./node_modules/.bin/webpack -p --config web/webpack.config.js
+./node_modules/.bin/webpack -p --config ./web/webpack.config.js
 ```
 
 Please refer to the Webpack documentation for more information on configuration.
-
-## Web entry
-
-Create a `index.web.js` file (or simply `index.js` for web-only apps).
 
 ### Client-side rendering
 
