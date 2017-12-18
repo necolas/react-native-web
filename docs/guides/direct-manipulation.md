@@ -1,13 +1,13 @@
 # Direct manipulation
 
-React Native for Web provides several methods to directly access the underlying
-DOM node. This can be useful when you need to make changes directly to a
-component without using state/props to trigger a re-render of the entire
-subtree, or when you want to focus a view or measure its on-screen dimensions.
+React Native provides several methods to directly access the underlying host
+node. This can be useful when you need to make changes directly to a component
+without using state/props to trigger a re-render of the entire subtree, or when
+you want to focus a view or measure its on-screen dimensions.
 
 The methods described are available on most of the default components provided
-by React Native for Web. Note, however, that they are *not* available on the
-composite components that you define in your own app.
+by React Native for Web. Note, however, that they are *not* available on the composite
+components that you define in your own app.
 
 ## Instance methods
 
@@ -35,11 +35,17 @@ Like `measure`, but measures the view relative to another view, specified as
 `relativeToNativeNode`. This means that the returned `x`, `y` are relative to
 the origin `x`, `y` of the ancestor view.
 
+As always, to obtain a native node handle for a component, you can use
+`findNodeHandle(component)`.
+
+**measureInWindow**(callback: (x, y, width, height) => void)
+
+Determines the location of the given view in the window and returns the values
+via an async callback.
+
 **setNativeProps**(nativeProps: Object)
 
-This function sends props straight to the underlying DOM node. See the [direct
-manipulation](../guides/direct-manipulation.md) guide for cases where
-`setNativeProps` should be used.
+This function sends props straight to the underlying DOM node.
 
 ## About `setNativeProps`
 
