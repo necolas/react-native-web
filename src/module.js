@@ -28,6 +28,7 @@ import Vibration from './apis/Vibration';
 
 // components
 import ActivityIndicator from './components/ActivityIndicator';
+import ART from './components/ART';
 import Button from './components/Button';
 import FlatList from './components/FlatList';
 import Image from './components/Image';
@@ -92,6 +93,7 @@ export {
   Vibration,
   // components
   ActivityIndicator,
+  ART,
   Button,
   FlatList,
   Image,
@@ -159,6 +161,7 @@ const ReactNative = {
 
   // components
   ActivityIndicator,
+  ART,
   Button,
   FlatList,
   Image,

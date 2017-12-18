@@ -71,6 +71,7 @@
     "inline-style-prefixer": "^3.0.8",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
+    "react-art": "^16.2.0",
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {

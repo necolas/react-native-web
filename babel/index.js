@@ -27,6 +27,7 @@ const getDistLocation = importName => {
 
     // components
     case 'ActivityIndicator':
+    case 'ART':
     case 'Button':
     case 'FlatList':
     case 'Image':
