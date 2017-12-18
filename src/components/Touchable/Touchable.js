@@ -316,27 +316,32 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  * @lends Touchable.prototype
  */
 const TouchableMixin = {
+  // HACK (part 1): basic support for touchable interactions using a keyboard
   componentDidMount: function() {
     this._touchableNode = findNodeHandle(this);
-    this._touchableBlurListener = e => {
-      if (this._isTouchableKeyboardActive) {
-        if (
-          this.state.touchable.touchState &&
-          this.state.touchable.touchState !== States.NOT_RESPONDER
-        ) {
-          this.touchableHandleResponderTerminate({ nativeEvent: e });
+    if (this._touchableNode && this._touchableNode.addEventListener) {
+      this._touchableBlurListener = e => {
+        if (this._isTouchableKeyboardActive) {
+          if (
+            this.state.touchable.touchState &&
+            this.state.touchable.touchState !== States.NOT_RESPONDER
+          ) {
+            this.touchableHandleResponderTerminate({ nativeEvent: e });
+          }
+          this._isTouchableKeyboardActive = false;
         }
-        this._isTouchableKeyboardActive = false;
-      }
-    };
-    this._touchableNode.addEventListener('blur', this._touchableBlurListener);
+      };
+      this._touchableNode.addEventListener('blur', this._touchableBlurListener);
+    }
   },
 
   /**
    * Clear all timeouts on unmount
    */
   componentWillUnmount: function() {
-    this._touchableNode.removeEventListener('blur', this._touchableBlurListener);
+    if (this._touchableNode && this._touchableNode.addEventListener) {
+      this._touchableNode.removeEventListener('blur', this._touchableBlurListener);
+    }
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
     this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);
@@ -791,7 +796,7 @@ const TouchableMixin = {
     }
   },
 
-  // HACK: basic support for touchable interactions using a keyboard (including
+  // HACK (part 2): basic support for touchable interactions using a keyboard (including
   // delays and longPress)
   touchableHandleKeyEvent: function(e: Event) {
     const ENTER = 13;
