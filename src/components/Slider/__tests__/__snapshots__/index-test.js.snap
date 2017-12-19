@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Slider trackTintColor maximumTrackTintColor 1`] = `
+<View
+  onLayout={[Function]}
+  step={0}
+  style={
+    Object {
+      "height": 40,
+      "justifyContent": "center",
+    }
+  }
+  value={0}
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#F45D22",
+        "borderRadius": 2,
+        "height": 4,
+      }
+    }
+  />
+  <AnimatedComponent
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 2,
+        "height": 4,
+        "opacity": 0,
+        "position": "absolute",
+        "width": AnimatedAddition {
+          "_a": AnimatedInterpolation {
+            "_children": Array [],
+            "_interpolation": [Function],
+            "_listeners": Object {},
+            "_parent": AnimatedValue {
+              "_animation": null,
+              "_children": Array [],
+              "_listeners": Object {},
+              "_offset": 0,
+              "_value": 0,
+            },
+          },
+          "_b": AnimatedValue {
+            "_animation": null,
+            "_children": Array [],
+            "_listeners": Object {},
+            "_offset": 0,
+            "_value": 0,
+          },
+          "_children": Array [],
+          "_listeners": Object {},
+        },
+      }
+    }
+  />
+  <AnimatedComponent
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 10,
+        "height": 20,
+        "opacity": 0,
+        "position": "absolute",
+        "transform": Array [
+          Object {
+            "translateX": AnimatedInterpolation {
+              "_children": Array [],
+              "_interpolation": [Function],
+              "_listeners": Object {},
+              "_parent": AnimatedValue {
+                "_animation": null,
+                "_children": Array [],
+                "_listeners": Object {},
+                "_offset": 0,
+                "_value": 0,
+              },
+            },
+          },
+          Object {
+            "translateY": 0,
+          },
+        ],
+        "width": 20,
+      }
+    }
+  />
+  <View
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`components/Slider trackTintColor minimumTrackTintColor 1`] = `
+<View
+  onLayout={[Function]}
+  step={0}
+  style={
+    Object {
+      "height": 40,
+      "justifyContent": "center",
+    }
+  }
+  value={0}
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#794BC4",
+        "borderRadius": 2,
+        "height": 4,
+      }
+    }
+  />
+  <AnimatedComponent
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 2,
+        "height": 4,
+        "opacity": 0,
+        "position": "absolute",
+        "width": AnimatedAddition {
+          "_a": AnimatedInterpolation {
+            "_children": Array [],
+            "_interpolation": [Function],
+            "_listeners": Object {},
+            "_parent": AnimatedValue {
+              "_animation": null,
+              "_children": Array [],
+              "_listeners": Object {},
+              "_offset": 0,
+              "_value": 0,
+            },
+          },
+          "_b": AnimatedValue {
+            "_animation": null,
+            "_children": Array [],
+            "_listeners": Object {},
+            "_offset": 0,
+            "_value": 0,
+          },
+          "_children": Array [],
+          "_listeners": Object {},
+        },
+      }
+    }
+  />
+  <AnimatedComponent
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 10,
+        "height": 20,
+        "opacity": 0,
+        "position": "absolute",
+        "transform": Array [
+          Object {
+            "translateX": AnimatedInterpolation {
+              "_children": Array [],
+              "_interpolation": [Function],
+              "_listeners": Object {},
+              "_parent": AnimatedValue {
+                "_animation": null,
+                "_children": Array [],
+                "_listeners": Object {},
+                "_offset": 0,
+                "_value": 0,
+              },
+            },
+          },
+          Object {
+            "translateY": 0,
+          },
+        ],
+        "width": 20,
+      }
+    }
+  />
+  <View
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`components/Slider step maximumValue: "10", step: "2", value: "4" 1`] = `
+<View
+  onLayout={[Function]}
+  step={2}
+  style={
+    Object {
+      "height": 40,
+      "justifyContent": "center",
+    }
+  }
+  value={4}
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#939393",
+        "borderRadius": 2,
+        "height": 4,
+      }
+    }
+  />
+  <AnimatedComponent
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 2,
+        "height": 4,
+        "opacity": 0,
+        "position": "absolute",
+        "width": AnimatedAddition {
+          "_a": AnimatedInterpolation {
+            "_children": Array [],
+            "_interpolation": [Function],
+            "_listeners": Object {},
+            "_parent": AnimatedValue {
+              "_animation": null,
+              "_children": Array [],
+              "_listeners": Object {},
+              "_offset": 0,
+              "_value": 4,
+            },
+          },
+          "_b": AnimatedValue {
+            "_animation": null,
+            "_children": Array [],
+            "_listeners": Object {},
+            "_offset": 0,
+            "_value": 0,
+          },
+          "_children": Array [],
+          "_listeners": Object {},
+        },
+      }
+    }
+  />
+  <AnimatedComponent
+    onLayout={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#009688",
+        "borderRadius": 10,
+        "height": 20,
+        "opacity": 0,
+        "position": "absolute",
+        "transform": Array [
+          Object {
+            "translateX": AnimatedInterpolation {
+              "_children": Array [],
+              "_interpolation": [Function],
+              "_listeners": Object {},
+              "_parent": AnimatedValue {
+                "_animation": null,
+                "_children": Array [],
+                "_listeners": Object {},
+                "_offset": 0,
+                "_value": 4,
+              },
+            },
+          },
+          Object {
+            "translateY": 0,
+          },
+        ],
+        "width": 20,
+      }
+    }
+  />
+  <View
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
