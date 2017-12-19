@@ -354,7 +354,7 @@ const ScrollResponderMixin = {
   },
 
   /**
-   * A helper function to scroll to a specific point  in the scrollview.
+   * A helper function to scroll to a specific point in the scrollview.
    * This is currently used to help focus on child textviews, but can also
    * be used to quickly scroll to any element we want to focus. Syntax:
    *
@@ -377,6 +377,7 @@ const ScrollResponderMixin = {
       ({ x, y, animated } = x || emptyObject);
     }
     const node = this.scrollResponderGetScrollableNode();
+    UIManager.updateView(node, { style: { scrollBehavior: !animated ? 'auto' : 'smooth' } }, this);
     node.scrollLeft = x || 0;
     node.scrollTop = y || 0;
   },
