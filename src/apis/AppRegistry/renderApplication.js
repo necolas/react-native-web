@@ -10,7 +10,7 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import { hydrate } from '../../modules/hydrate';
+import hydrate from '../../modules/hydrate';
 import AppContainer from './AppContainer';
 import StyleSheet from '../../apis/StyleSheet';
 import React, { type ComponentType } from 'react';
