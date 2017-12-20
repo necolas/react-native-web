@@ -25,7 +25,7 @@ Typical render timings*: mean ± two standard deviations.
 | Implementation                        | Deep tree (ms)    | Wide tree (ms)    | Tweets (ms)       |
 | :--- | ---: | ---: | ---: |
 | `css-modules`                         |  `80.47` `±25.13` | `144.87` `±32.70` | |
-| `react-native-web@0.2.0`             |  `88.68` `±28.78` | `178.17` `±39.90` | `13.78` `±2.90ms` |
+| `react-native-web@0.2.1`             |  `88.68` `±28.78` | `178.17` `±39.90` | `13.78` `±2.90ms` |
 
 Other libraries
 
