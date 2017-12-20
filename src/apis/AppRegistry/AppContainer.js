@@ -29,6 +29,8 @@ type State = {
 };
 
 export default class AppContainer extends Component<Props, State> {
+  state = { mainKey: 1 };
+
   static childContextTypes = {
     rootTag: any
   };
