@@ -30,6 +30,7 @@ import Vibration from './apis/Vibration';
 import ActivityIndicator from './components/ActivityIndicator';
 import ART from './components/ART';
 import Button from './components/Button';
+import CheckBox from './components/CheckBox';
 import FlatList from './components/FlatList';
 import Image from './components/Image';
 import ImageBackground from './components/Image/ImageBackground';
@@ -95,6 +96,7 @@ export {
   ActivityIndicator,
   ART,
   Button,
+  CheckBox,
   FlatList,
   Image,
   ImageBackground,
@@ -163,6 +165,7 @@ const ReactNative = {
   ActivityIndicator,
   ART,
   Button,
+  CheckBox,
   FlatList,
   Image,
   ImageBackground,
