@@ -104,7 +104,11 @@ StyleSheet.flatten([styles.listItem, styles.selectedListItem]);`
         typeInfo="object"
       />
 
-      <DocItem name="hairlineWidth" typeInfo="number" />
+      <DocItem
+        description="Enables borders of just one physical pixel on retina screens, otherwise it is equal to a CSS value of 1px."
+        name="hairlineWidth"
+        typeInfo="number"
+      />
     </Section>
   </UIExplorer>
 );

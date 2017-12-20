@@ -10,6 +10,7 @@
  */
 
 import flattenStyle from './flattenStyle';
+import getHairlineWidth from './getHairlineWidth';
 import modality from '../../modules/modality';
 import StyleRegistry from './registry';
 
@@ -58,7 +59,7 @@ const StyleSheet = {
   getStyleSheets() {
     return StyleRegistry.getStyleSheets();
   },
-  hairlineWidth: 1
+  hairlineWidth: getHairlineWidth()
 };
 
 export default StyleSheet;
