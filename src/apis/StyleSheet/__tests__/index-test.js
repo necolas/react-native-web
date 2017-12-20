@@ -22,6 +22,18 @@ describe('apis/StyleSheet', () => {
     expect(isPlainObject(StyleSheet.absoluteFillObject) === true).toBeTruthy();
   });
 
+  describe('compose', () => {
+    test('returns array when neither style is falsey', () => {
+      expect(StyleSheet.compose(1, 2)).toEqual([1, 2]);
+    });
+    test('returns style1 when style2 is falsey', () => {
+      expect(StyleSheet.compose(1, null)).toBe(1);
+    });
+    test('returns style2 when style1 is falsey', () => {
+      expect(StyleSheet.compose(null, 2)).toBe(2);
+    });
+  });
+
   describe('create', () => {
     test('replaces styles with numbers', () => {
       const style = StyleSheet.create({ root: { position: 'absolute' } });

@@ -29,7 +29,7 @@ const fastestTests = [
   () => renderDeepTree('styletron', styletron),
   () => renderWideTree('styletron', styletron),
   () => renderDeepTree('aphrodite', aphrodite),
-  () => renderWideTree('aphrodite', aphrodite),
+  () => renderWideTree('aphrodite', aphrodite)
 ];
 
 /**
@@ -47,7 +47,7 @@ const restTests = [
   () => renderDeepTree('reactxp', xp),
   () => renderWideTree('reactxp', xp),
   () => renderDeepTree('radium', radium),
-  () => renderWideTree('radium', radium),
+  () => renderWideTree('radium', radium)
 ];
 
 const tests = [...coreTests];

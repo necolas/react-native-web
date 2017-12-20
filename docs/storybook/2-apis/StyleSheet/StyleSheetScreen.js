@@ -22,6 +22,22 @@ const StyleSheetScreen = () => (
 
     <Section title="Methods">
       <DocItem
+        description={
+          <AppText>
+            Combines two styles such that <Code>style2</Code> will override any styles in{' '}
+            <Code>style1</Code>. If either style is falsy, the other one is returned without
+            allocating an array, saving allocations and maintaining reference equality for{' '}
+            <Code>PureComponent</Code> checks.
+          </AppText>
+        }
+        example={{
+          code: 'StyleSheet.compose(style1, style2);'
+        }}
+        name="compose"
+        typeInfo="(style1, style2) => style"
+      />
+
+      <DocItem
         description="Each key of the object passed to `create` must define a style object. The returned object replaces style objects with IDs"
         example={{
           code: `const styles = StyleSheet.create({

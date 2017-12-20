@@ -36,6 +36,13 @@ const absoluteFill = StyleRegistry.register(absoluteFillObject);
 const StyleSheet = {
   absoluteFill,
   absoluteFillObject,
+  compose(style1, style2) {
+    if (style1 && style2) {
+      return [style1, style2];
+    } else {
+      return style1 || style2;
+    }
+  },
   create(styles) {
     const result = {};
     Object.keys(styles).forEach(key => {
