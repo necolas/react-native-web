@@ -120,7 +120,7 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 React Native for Web is [BSD licensed](LICENSE).
 
 [npm-image]: https://badge.fury.io/js/react-native-web.svg
-[npm-url]: https://npmjs.org/package/react-native-web
+[npm-url]: https://yarnpkg.com/en/package/react-native-web
 [react-native-url]: https://facebook.github.io/react-native/
 [travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
 [travis-url]: https://travis-ci.org/necolas/react-native-web
