@@ -1,7 +1,9 @@
+/* eslint-env jasmine, jest */
+
 import Adapter from 'enzyme-adapter-react-16';
-import createSerializer from './jest/createSerializer';
 import Enzyme from 'enzyme';
-import { StyleSheet } from './src';
+import createSerializer from '../../packages/react-native-web/jest/createSerializer';
+import { StyleSheet } from '../../packages/react-native-web/src';
 
 const serializer = createSerializer(StyleSheet);
 

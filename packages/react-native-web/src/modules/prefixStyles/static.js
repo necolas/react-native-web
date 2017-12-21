@@ -84,6 +84,7 @@ export default {
     columns: wm,
     columnSpan: wm,
     columnWidth: wm,
+    writingMode: wms,
     flex: wms,
     flexBasis: w,
     flexDirection: wms,

@@ -1,6 +1,10 @@
 {
-  "name": "benchmarks",
   "private": true,
+  "name": "benchmarks",
+  "version": "0.2.2",
+  "scripts": {
+    "benchmark": "webpack --config ./webpack.config.js && open index.html"
+  },
   "dependencies": {
     "aphrodite": "^1.2.5",
     "classnames": "^2.2.5",
@@ -8,7 +12,10 @@
     "glamor": "^2.20.40",
     "marky": "^1.2.0",
     "radium": "^0.19.6",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-jss": "^8.2.0",
+    "react-native-web": "^0.2.2",
     "reactxp": "^0.46.6",
     "styled-components": "^2.3.2",
     "styletron-client": "^3.0.0-rc.5",
@@ -16,6 +23,8 @@
   },
   "devDependencies": {
     "css-loader": "^0.28.7",
-    "style-loader": "^0.19.1"
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.9.1"
   }
 }

@@ -11,11 +11,9 @@
  */
 
 import View from '../View';
-import ViewPropTypes from '../View/ViewPropTypes';
 import { number, oneOf } from 'prop-types';
 import React, { Component } from 'react';
-
-import type { ViewLayout, ViewLayoutEvent } from '../View/ViewPropTypes';
+import ViewPropTypes, { type ViewLayout, type ViewLayoutEvent } from '../View/ViewPropTypes';
 
 class KeyboardAvoidingView extends Component<*> {
   static propTypes = {

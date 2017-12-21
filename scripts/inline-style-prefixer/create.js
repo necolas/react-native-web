@@ -1,4 +1,6 @@
-const generateData = require('inline-style-prefixer/generator');
+'use strict';
+
+const generator = require('inline-style-prefixer/generator');
 const path = require('path');
 
 const browserList = {
@@ -16,6 +18,9 @@ const browserList = {
   and_chr: 38
 };
 
-generateData(browserList, {
-  staticPath: path.join(__dirname, '../src/modules/prefixStyles/static.js'),
+generator(browserList, {
+  staticPath: path.join(
+    __dirname,
+    '../packages/react-native-web/src/modules/prefixStyles/static.js'
+  )
 });
