@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - "6"
+  - "8"
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script:
-  - yarn lint
+  - yarn test
