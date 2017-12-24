@@ -12,8 +12,7 @@
     "fmt:cmd": "prettier --print-width=100 --single-quote --write",
     "jest": "jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
-    "lint:check": "yarn lint:cmd packages scripts website",
-    "lint:cmd": "eslint --ignore-path .gitignore --ignore-pattern 'packages/**/vendor/*'",
+    "lint:check": "eslint packages scripts website",
     "precommit": "lint-staged",
     "release": "yarn test && yarn build && node ./scripts/release/publish.js && yarn docs:release",
     "test": "yarn flow && yarn lint:check && yarn jest"
