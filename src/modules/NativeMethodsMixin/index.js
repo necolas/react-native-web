@@ -119,8 +119,12 @@ const NativeMethodsMixin = {
     }
     const domStyleProps = { classList, style };
 
+    const props = {
+      ...nativeProps,
+      style: i18nStyle(nativeProps.style)
+    };
     // Next DOM state
-    const domProps = createDOMProps(null, i18nStyle(nativeProps), style =>
+    const domProps = createDOMProps(null, props, style =>
       StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);
