@@ -1,0 +1,75 @@
+/**
+ * Copyright (c) 2016-present, Nicolas Gallagher.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @providesModule StyleSheet
+ * @noflow
+ */
+
+import flattenStyle from './flattenStyle';
+import getHairlineWidth from './getHairlineWidth';
+import modality from './lib/modality';
+import StyleRegistry from './StyleRegistry';
+import StyleSheetValidation from './StyleSheetValidation'
+import i18nStyle from './i18nStyle'
+
+// initialize focus-ring fix
+modality();
+
+let StyleSheetValidation = {}
+
+// allow component styles to be editable in React Dev Tools
+if (process.env.NODE_ENV !== 'production') {
+  StyleSheetValidation = require('./StyleSheetValidation').default;
+  const { canUseDOM } = require('fbjs/lib/ExecutionEnvironment');
+  if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+    window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = flattenStyle;
+  }
+}
+
+const absoluteFillObject = {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0
+};
+
+const absoluteFill = StyleRegistry.register(absoluteFillObject);
+
+const StyleSheet = {
+  absoluteFill,
+  absoluteFillObject,
+  compose(style1, style2) {
+    if (style1 && style2) {
+      return [style1, style2];
+    } else {
+      return style1 || style2;
+    }
+  },
+  create(styles) {
+    const result = {};
+    Object.keys(styles).forEach(key => {
+      if (process.env.NODE_ENV !== 'production') {
+        StyleSheetValidation.validateStyle(key, styles);
+      }
+      result[key] = StyleRegistry.register(styles[key]);
+    });
+    return result;
+  },
+  flatten: flattenStyle,
+  getStyleSheets() {
+    return StyleRegistry.getStyleSheets();
+  },
+  hairlineWidth: getHairlineWidth(),
+  addValidStylePropTypes: StyleSheetValidation.addValidStylePropTypes || (() => {}),
+  setIsRTL: fn => { StyleRegistry.setIsRTL(fn) }
+};
+
+export default StyleSheet;
+
+export StyleRegistry;
+export i18nStyle;

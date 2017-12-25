@@ -8,8 +8,7 @@
  * @noflow
  */
 
-import I18nManager from '../I18nManager';
-import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
+import multiplyStyleLengthValue from '../../react-native-web/src/modules/multiplyStyleLengthValue';
 
 const emptyObject = {};
 
@@ -57,8 +56,8 @@ const swapLeftRight = (value: String): String => {
   return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
 };
 
-const i18nStyle = originalStyle => {
-  if (!I18nManager.isRTL) {
+const i18nStyle = (originalStyle, isRTL = false) => {
+  if (!isRTL) {
     return originalStyle;
   }
 

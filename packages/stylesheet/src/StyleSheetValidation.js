@@ -10,10 +10,6 @@
  * @flow
  */
 
-import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
-import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes';
-import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
-import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
 import warning from 'fbjs/lib/warning';
 import { number, oneOf, string } from 'prop-types';
 
@@ -79,11 +75,6 @@ const styleError = function(message1, style, caller?, message2?) {
 };
 
 const allStylePropTypes = {};
-
-StyleSheetValidation.addValidStylePropTypes(ImageStylePropTypes);
-StyleSheetValidation.addValidStylePropTypes(TextStylePropTypes);
-StyleSheetValidation.addValidStylePropTypes(TextInputStylePropTypes);
-StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes);
 
 StyleSheetValidation.addValidStylePropTypes({
   appearance: string,

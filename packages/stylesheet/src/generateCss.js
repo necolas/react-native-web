@@ -9,9 +9,9 @@
  */
 
 import hyphenateStyleName from 'hyphenate-style-name';
-import mapKeyValue from '../../modules/mapKeyValue';
+import mapKeyValue from './lib/mapKeyValue';
 import normalizeValue from './normalizeValue';
-import prefixStyles from '../../modules/prefixStyles';
+import prefixStyles from './lib/prefixStyles';
 
 const createDeclarationString = (prop, val) => {
   const name = hyphenateStyleName(prop);

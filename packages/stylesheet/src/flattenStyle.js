@@ -10,7 +10,7 @@
  * @flow
  */
 
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import ReactNativePropRegistry from './lib/ReactNativePropRegistry';
 import invariant from 'fbjs/lib/invariant';
 
 type Atom = number | boolean | Object | Array<?Atom>;
