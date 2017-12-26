@@ -1,18 +1,161 @@
 # Getting started
 
-This guide will help you to correctly configure build and test tools to work
-with React Native for Web. (Alternatively, you can quickly setup a local
-project using the starter kits listed in the README.)
+This guide will help you to use and test React Native for Web once it has been installed.
 
 It is recommended that your application provide a `Promise` and `Array.from`
 polyfill.
 
-## Web packager
+## Adding to a new web app
 
-[Webpack](https://webpack.js.org) is a popular build tool for web apps. Below is an
-_example_ of how to configure a build that uses [Babel](https://babeljs.io/) to
-compile your JavaScript for the web. Please refer to the webpack documentation
-when setting up your project.
+It's recommended to rely on Facebook's official React web starter kit –
+[create-react-app](https://github.com/facebookincubator/create-react-app) –
+which has built-in React Native for Web support (once you install
+`react-native-web`).
+
+## Adding to an existing web app
+
+Add the `react-native-web` plugin to your Babel configuration. This will
+alias `react-native` to `react-native-web` and exclude any modules not required
+by the app.
+
+```json
+{
+  "presets": [
+    "react-native"
+  ],
+  "plugins": [
+    "react-native-web"
+  ]
+}
+```
+
+## Client-side rendering
+
+Render apps using `AppRegistry`:
+
+```js
+// index.web.js
+
+import App from './src/App';
+import React from 'react';
+import { AppRegistry } from 'react-native';
+
+// register the app
+AppRegistry.registerComponent('App', () => App);
+
+AppRegistry.runApplication('App', {
+  initialProps: {},
+  rootTag: document.getElementById('react-app')
+});
+```
+
+Render components within existing apps:
+
+```js
+import AppHeader from './src/AppHeader';
+import React from 'react';
+import { render } from 'react-native';
+
+render(<AppHeader />, document.getElementById('react-app-header'))
+```
+
+Components will also be rendered within a tree produced by calling
+`ReactDOM.render` (i.e., an existing web app), but
+otherwise it is not recommended.
+
+## Server-side rendering
+
+Server-side rendering is supported using `AppRegistry`:
+
+```js
+import App from './src/App';
+import ReactDOMServer from 'react-dom/server'
+import { AppRegistry } from 'react-native'
+
+// register the app
+AppRegistry.registerComponent('App', () => App)
+
+// prerender the app
+const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
+const initialHTML = ReactDOMServer.renderToString(element);
+const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
+
+// construct HTML document string
+const document = `
+<!DOCTYPE html>
+<html>
+<head>
+${initialStyles}
+</head>
+<body>
+${initialHTML}
+`
+```
+
+## Web-specific code
+
+Minor platform differences can use the `Platform` module.
+
+```js
+import { Platform } from 'react-native';
+
+const styles = StyleSheet.create({
+  height: (Platform.OS === 'web') ? 200 : 100,
+});
+```
+
+More significant platform differences should use platform-specific files (see
+the webpack configuration below for resolving `*.web.js` files):
+
+For example, with the following files in your project:
+
+```
+MyComponent.android.js
+MyComponent.ios.js
+MyComponent.web.js
+```
+
+And the following import:
+
+```js
+import MyComponent from './MyComponent';
+```
+
+React Native will automatically import the correct variant for each specific
+target platform.
+
+## Testing with Jest
+
+[Jest](https://facebook.github.io/jest/) can be configured to improve snapshots
+of `react-native-web` components.
+
+```
+{
+  "snapshotSerializers": [ "enzyme-to-json/serializer", "react-native-web/jest/serializer" ]
+}
+```
+
+Jest also needs to map `react-native` to `react-native-web` (unless you are
+using the Babel plugin).
+
+```
+{
+  "moduleNameMapper": {
+    "react-native": "<rootDir>/node_modules/react-native-web"
+  }
+}
+```
+
+Please refer to the Jest documentation for more information.
+
+## Web packaging for existing React Native apps
+
+The web packaging landscape is diverse and fractured. Packaging web apps is
+subtly different to packaging React Native apps and is also complicated by the
+need for code-splitting any non-trivial app.
+
+What follows is merely an _example_ of one simpyl way to package a web app
+using [Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/).
 
 Install webpack-related dependencies, for example:
 
@@ -49,7 +192,7 @@ const babelLoaderConfiguration = {
       cacheDirectory: true,
       // This aliases 'react-native' to 'react-native-web' and includes only
       // the modules needed by the app.
-      plugins: ['react-native-web/babel', 'transform-runtime'],
+      plugins: ['react-native-web', 'transform-runtime'],
       // The 'react-native' preset is recommended (or use your own .babelrc).
       presets: ['react-native']
     }
@@ -119,122 +262,17 @@ To build for production:
 
 Please refer to the Webpack documentation for more information on configuration.
 
-### Client-side rendering
+## Other notes
 
-Rendering using `AppRegistry`:
+### Safari flexbox performance
 
-```js
-// index.web.js
+Safari prior to version 10.1 can suffer from extremely [poor flexbox
+performance](https://bugs.webkit.org/show_bug.cgi?id=150445). The recommended
+way to work around this issue (as used on mobile.twitter.com) is to set
+`display:block` on Views in your element hierarchy that you know don't need
+flexbox layout.
 
-import App from './src/App';
-import React from 'react';
-import ReactNative, { AppRegistry } from 'react-native';
+### Platform-specific component props
 
-// register the app
-AppRegistry.registerComponent('App', () => App);
-
-AppRegistry.runApplication('App', {
-  initialProps: {},
-  rootTag: document.getElementById('react-app')
-});
-```
-
-Rendering within existing web apps is also possible using `ReactNative`:
-
-```js
-import AppHeader from './src/AppHeader';
-import React from 'react';
-import ReactNative from 'react-native';
-
-// use .hydrate if hydrating a SSR app
-ReactNative.render(<AppHeader />, document.getElementById('react-app-header'))
-```
-
-And finally, `react-native-web` components will also be rendering within a tree
-produced by calling `ReactDOM.render` (i.e., an existing web app), but
-otherwise it is not recommended.
-
-### Server-side rendering
-
-Server-side rendering is supported using the `AppRegistry`:
-
-```js
-import App from './src/App';
-import ReactDOMServer from 'react-dom/server'
-import ReactNative, { AppRegistry } from 'react-native'
-
-// register the app
-AppRegistry.registerComponent('App', () => App)
-
-// prerender the app
-const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
-const initialHTML = ReactDOMServer.renderToString(element);
-const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
-
-// construct HTML document
-const document = `
-<!DOCTYPE html>
-<html>
-<head>
-${initialStyles}
-</head>
-<body>
-${initialHTML}
-`
-```
-
-## Web-specific code
-
-Minor platform differences can use the `Platform` module.
-
-```js
-import { Platform } from 'react-native';
-
-const styles = StyleSheet.create({
-  height: (Platform.OS === 'web') ? 200 : 100,
-});
-```
-
-More significant platform differences should use platform-specific files (see
-the webpack configuration above for resolving `*.web.js` files):
-
-For example, with the following files in your project:
-
-```
-MyComponent.android.js
-MyComponent.ios.js
-MyComponent.web.js
-```
-
-And the following import:
-
-```js
-import MyComponent from './MyComponent';
-```
-
-React Native will automatically import the correct variant for each specific
-target platform.
-
-## Testing with Jest
-
-[Jest](https://facebook.github.io/jest/) can be configured to improve snapshots
-of `react-native-web` components.
-
-```
-{
-  "snapshotSerializers": [ "enzyme-to-json/serializer", "react-native-web/jest/serializer" ]
-}
-```
-
-Jest also needs to map `react-native` to `react-native-web` (unless you are
-using Babel with the `react-native-web/babel` plugin).
-
-```
-{
-  "moduleNameMapper": {
-    "react-native": "<rootDir>/node_modules/react-native-web"
-  }
-}
-```
-
-Please refer to the Jest documentation for more information.
+There are properties that do not work across all platforms. All web-specific
+props are annotated with `(web)` in the documentation.

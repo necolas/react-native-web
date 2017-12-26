@@ -113,13 +113,13 @@ that we won't want to accept.
 
 ## Pull requests
 
-**Before submitting a pull request,** please make sure the following is done:
+**Before submitting a pull request**, please make sure the following is done:
 
 1. Fork the repository and create your branch from `master`.
 2. If you've added code that should be tested, add tests!
 3. If you've changed APIs, update the documentation.
-4. Ensure the tests pass (`yarn test`).
-5. Lint and format your code (`yarn fmt && yarn lint`).
+4. Lint and format your code (`yarn precommit`).
+5. Ensure the tests pass (`yarn test`).
 
 You can now submit a pull request, referencing any issues it addresses.
 
