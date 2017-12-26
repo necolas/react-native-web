@@ -17,7 +17,7 @@ equivalent in functionality. For example, the "React Native for Web" benchmark i
 complete `View` implementation and the `StyleSheet` also converts React Native
 styles to DOM styles, has deterministic resolution, and supports RTL layout.
 
-## Benchmark results
+## Results
 
 Typical render timings*: mean ± two standard deviations.
 

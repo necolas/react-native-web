@@ -101,9 +101,9 @@ const StyledView = styled(View, styles.container);
 ## Use with react-sketchapp
 
 Use with [react-sketchapp](http://airbnb.io/react-sketchapp/) requires that you
-alias `react-native` to `react-sketchapp`. This will allow you to render your
-existing React Native components in Sketch. Sketch-specific components like
-`Artboard` should be imported from `react-sketchapp`.
+alias `react-native` to `react-sketchapp`. This will allow you to render simple
+React Native components in Sketch. Sketch-specific components like `Artboard`
+should be imported from `react-sketchapp`.
 
 If you're using `skpm`, you can rely on an [undocumented
 feature](https://github.com/sketch-pm/skpm/blob/master/lib/utils/webpackConfig.js)

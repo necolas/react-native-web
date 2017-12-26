@@ -5,22 +5,22 @@ application. React Native for Web implements the React Native style API in a
 way that avoids *all* the [problems with CSS at
 scale](https://speakerdeck.com/vjeux/react-css-in-js):
 
-1. No local variables
-2. Implicit dependencies
-3. No dead code elimination
-4. No code minification
-5. No sharing of constants
-6. Non-deterministic resolution
-7. No isolation
+1. No local variables.
+2. Implicit dependencies.
+3. No dead code elimination.
+4. No code minification.
+5. No sharing of constants.
+6. Non-deterministic resolution.
+7. No isolation.
 
 At the same time, it has several benefits:
 
-1. Simple API and expressive subset of CSS
-2. Generates CSS; the minimum required
-3. Good runtime performance
-4. Support for static and dynamic styles
-5. Support for RTL layouts
-6. Easy pre-rendering of critical CSS
+1. Simple API and expressive subset of CSS.
+2. Generates CSS; the minimum required.
+3. Good runtime performance.
+4. Support for static and dynamic styles.
+5. Support for RTL layouts.
+6. Easy pre-rendering of critical CSS.
 
 ## Defining styles
 
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
 ```
 
 See the `style` documentation of individual components for supported properties.
+
+NOTE: React Native does not yet support `rem` or `em` units.
 
 ## Using styles
 
@@ -126,7 +128,7 @@ the CSS and takes precedence over the previous rules, resulting in a margin of
 <div class="marginTop marginBottom margin"></div>
 ```
 
-But in React Native the most *specific* style property takes precedence,
+But in React Native the most *precise* style property takes precedence,
 resulting in margins of `10, 0, 20, 0`.
 
 ```js
@@ -192,7 +194,7 @@ inline styles.
 
 All this allows React Native for Web to support the rich functionality of React
 Native styles (including RTL layouts and `setNativeProps`) while providing one
-of the [fastest](https://github.com/necolas/react-native-web/blob/master/benchmarks/README.md),
+of the [fastest](https://github.com/necolas/react-native-web/blob/master/packages/benchmarks/README.md),
 safest, and most efficient styles-in-JavaScript solutions.
 
 ## FAQs
@@ -204,14 +206,11 @@ it does not concern itself with _where_ or _when_ those styles are applied to
 elements.
 
 Media Queries may not be most appropriate for component-based designs. React
-Native provides the `Dimensions` API and `onLayout` props.  If you do need Media
-Queries, using the `matchMedia` DOM API has the benefit of allowing you to swap
-out entire components, not just styles. There are also many React libraries
-wrapping JavaScript Media Query API's, e.g.,
-[react-media](https://github.com/reacttraining/react-media),
-[react-media-queries](https://github.com/bloodyowl/react-media-queries),
-[media-query-fascade](https://github.com/tanem/media-query-facade), or
-[react-responsive](https://github.com/contra/react-responsive).
+Native provides the `Dimensions` API and the component-scoped `onLayout` prop.
+
+If you do choose to use Media Queries, using them in JavaScript via the
+`matchMedia` DOM API has the benefit of allowing you to swap out entire
+components, not just styles.
 
 ### What about pseudo-classes and pseudo-elements?
 
