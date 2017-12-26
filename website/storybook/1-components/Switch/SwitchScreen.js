@@ -41,6 +41,7 @@ const SwitchScreen = () => (
         example={{
           render: () => <PropActiveThumbColor />
         }}
+        label="web"
         name="activeThumbColor"
         typeInfo="?color = #009688"
       />
@@ -50,6 +51,7 @@ const SwitchScreen = () => (
         example={{
           render: () => <PropActiveTrackColor />
         }}
+        label="web"
         name="activeTrackColor"
         typeInfo="?color = #A3D3CF"
       />
@@ -77,6 +79,7 @@ const SwitchScreen = () => (
         example={{
           render: () => <PropThumbColor />
         }}
+        label="web"
         name="thumbColor"
         typeInfo="?color = #FAFAFA"
       />
@@ -86,6 +89,7 @@ const SwitchScreen = () => (
         example={{
           render: () => <PropTrackColor />
         }}
+        label="web"
         name="trackColor"
         typeInfo="?color = #939393"
       />
