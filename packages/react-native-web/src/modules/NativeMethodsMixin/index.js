@@ -10,10 +10,9 @@
  * @flow
  */
 
+import { StyleRegistry, i18nStyle } from 'rnw-stylesheet';
 import createDOMProps from '../createDOMProps';
 import findNodeHandle from '../findNodeHandle';
-import i18nStyle from '../../apis/StyleSheet/i18nStyle';
-import StyleRegistry from '../../apis/StyleSheet/registry';
 import UIManager from '../../apis/UIManager';
 
 const hyphenPattern = /-([a-z])/g;

@@ -19,8 +19,5 @@ const browserList = {
 };
 
 generator(browserList, {
-  staticPath: path.join(
-    __dirname,
-    '../packages/react-native-web/src/modules/prefixStyles/static.js'
-  )
+  staticPath: path.join(__dirname, '../packages/stylesheet/src/lib/prefixStyles/static.js')
 });

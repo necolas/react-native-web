@@ -12,12 +12,11 @@
  */
 
 import createReactDOMStyle from './createReactDOMStyle';
-import flattenArray from '../../modules/flattenArray';
+import flattenArray from './lib/flattenArray';
 import flattenStyle from './flattenStyle';
-import I18nManager from '../I18nManager';
 import i18nStyle from './i18nStyle';
-import { prefixInlineStyles } from '../../modules/prefixStyles';
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import { prefixInlineStyles } from './lib/prefixStyles';
+import ReactNativePropRegistry from './lib/ReactNativePropRegistry';
 import StyleManager from './StyleManager';
 
 const emptyObject = {};
@@ -30,6 +29,11 @@ const createCacheKey = id => {
 const classListToString = list => list.join(' ').trim();
 
 export default class StyleRegistry {
+  _isRTL = () => false;
+  setIsRTL(fn) {
+    this._isRTL = fn;
+  }
+
   cache = { ltr: {}, rtl: {} };
   styleManager = new StyleManager();
 
@@ -47,10 +51,10 @@ export default class StyleRegistry {
   }
 
   _registerById(id) {
-    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+    const dir = this._isRTL() ? 'rtl' : 'ltr';
     if (!this.cache[dir][id]) {
       const style = flattenStyle(id);
-      const domStyle = createReactDOMStyle(i18nStyle(style));
+      const domStyle = createReactDOMStyle(i18nStyle(style, this._isRTL()));
       Object.keys(domStyle).forEach(styleProp => {
         const value = domStyle[styleProp];
         if (value != null) {
@@ -185,7 +189,7 @@ export default class StyleRegistry {
    * Caching layer over 'resolveStyle'
    */
   _resolveStyleIfNeeded(style, options, key) {
-    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+    const dir = this_.isRTL() ? 'rtl' : 'ltr';
     if (key) {
       if (!this.cache[dir][key]) {
         // slow: convert style object to props and cache

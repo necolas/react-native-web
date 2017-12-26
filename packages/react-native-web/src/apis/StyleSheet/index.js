@@ -9,57 +9,18 @@
  * @noflow
  */
 
-import flattenStyle from './flattenStyle';
-import getHairlineWidth from './getHairlineWidth';
-import modality from '../../modules/modality';
-import StyleRegistry from './registry';
+import StyleSheet from 'rnw-stylesheet';
+import I18nManager from '../I18nManager';
+import ImageStylePropTypes from '../../components/Image/ImageStylePropTypes';
+import TextInputStylePropTypes from '../../components/TextInput/TextInputStylePropTypes';
+import TextStylePropTypes from '../../components/Text/TextStylePropTypes';
+import ViewStylePropTypes from '../../components/View/ViewStylePropTypes';
 
-// initialize focus-ring fix
-modality();
+StyleSheet.setIsRTL(I18nManager.isRTL);
 
-// allow component styles to be editable in React Dev Tools
-if (process.env.NODE_ENV !== 'production') {
-  const { canUseDOM } = require('fbjs/lib/ExecutionEnvironment');
-  if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
-    window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = flattenStyle;
-  }
-}
-
-const absoluteFillObject = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
-};
-const absoluteFill = StyleRegistry.register(absoluteFillObject);
-
-const StyleSheet = {
-  absoluteFill,
-  absoluteFillObject,
-  compose(style1, style2) {
-    if (style1 && style2) {
-      return [style1, style2];
-    } else {
-      return style1 || style2;
-    }
-  },
-  create(styles) {
-    const result = {};
-    Object.keys(styles).forEach(key => {
-      if (process.env.NODE_ENV !== 'production') {
-        const StyleSheetValidation = require('./StyleSheetValidation').default;
-        StyleSheetValidation.validateStyle(key, styles);
-      }
-      result[key] = StyleRegistry.register(styles[key]);
-    });
-    return result;
-  },
-  flatten: flattenStyle,
-  getStyleSheets() {
-    return StyleRegistry.getStyleSheets();
-  },
-  hairlineWidth: getHairlineWidth()
-};
+StyleSheet.addValidStylePropTypes(ImageStylePropTypes);
+StyleSheet.addValidStylePropTypes(TextInputStylePropTypes);
+StyleSheet.addValidStylePropTypes(TextStylePropTypes);
+StyleSheet.addValidStylePropTypes(ViewStylePropTypes);
 
 export default StyleSheet;

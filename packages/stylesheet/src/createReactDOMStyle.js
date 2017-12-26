@@ -18,7 +18,7 @@
  */
 
 import normalizeValue from './normalizeValue';
-import processColor from '../../modules/processColor';
+import processColor from './lib/processColor';
 
 const emptyObject = {};
 const styleShortFormProperties = {

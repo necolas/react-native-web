@@ -1,0 +1,36 @@
+{
+  "name": "rnw-stylesheet",
+  "version": "0.1.0",
+  "description": "React Native compatible StyleSheet API",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "jest",
+    "src",
+    "!**/__tests__"
+  ],
+  "author": "Nicolas Gallagher",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "fbjs": "^0.8.16",
+    "hyphenate-style-name": "^1.0.2",
+    "inline-style-prefixer": "^3.0.8",
+    "normalize-css-color": "^1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/necolas/react-native-web.git"
+  },
+  "tags": [
+    "react"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "web",
+    "css-in-js",
+    "stylesheet",
+    "css"
+  ]
+}
