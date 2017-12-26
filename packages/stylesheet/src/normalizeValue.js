@@ -8,7 +8,7 @@
  * @noflow
  */
 
-import unitlessNumbers from '../../react-native-web/src/modules/unitlessNumbers';
+import unitlessNumbers from '../../react-native-web/dist/modules/unitlessNumbers';
 
 const normalizeValue = (property: string, value) => {
   if (!unitlessNumbers[property] && typeof value === 'number') {

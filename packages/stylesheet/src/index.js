@@ -12,14 +12,13 @@
 import flattenStyle from './flattenStyle';
 import getHairlineWidth from './getHairlineWidth';
 import modality from './lib/modality';
-import StyleRegistry from './StyleRegistry';
-import StyleSheetValidation from './StyleSheetValidation'
-import i18nStyle from './i18nStyle'
+import StyleRegistry from './registry';
+import i18nStyle from './i18nStyle';
 
 // initialize focus-ring fix
 modality();
 
-let StyleSheetValidation = {}
+let StyleSheetValidation = {};
 
 // allow component styles to be editable in React Dev Tools
 if (process.env.NODE_ENV !== 'production') {
@@ -66,10 +65,11 @@ const StyleSheet = {
   },
   hairlineWidth: getHairlineWidth(),
   addValidStylePropTypes: StyleSheetValidation.addValidStylePropTypes || (() => {}),
-  setIsRTL: fn => { StyleRegistry.setIsRTL(fn) }
+  setIsRTL: fn => {
+    StyleRegistry.setIsRTL(fn);
+  }
 };
 
 export default StyleSheet;
 
-export StyleRegistry;
-export i18nStyle;
+export { StyleRegistry, i18nStyle };

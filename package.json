@@ -4,7 +4,7 @@
   "scripts": {
     "benchmark": "cd packages/benchmarks && yarn benchmark",
     "clean": "del ./packages/*/dist",
-    "compile": "yarn clean && cd packages/react-native-web && babel src --optional runtime --out-dir dist --ignore \"__tests__\"",
+    "compile": "yarn clean && cd packages/react-native-web && babel src --optional runtime --out-dir dist --ignore \"__tests__\" && cd ../stylesheet && babel src --optional runtime --out-dir dist --ignore \"__tests__\"",
     "docs:start": "cd website && yarn start",
     "docs:release": "cd website && yarn release",
     "flow": "flow",

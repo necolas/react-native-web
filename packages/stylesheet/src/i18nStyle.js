@@ -8,7 +8,7 @@
  * @noflow
  */
 
-import multiplyStyleLengthValue from '../../react-native-web/src/modules/multiplyStyleLengthValue';
+import multiplyStyleLengthValue from '../../react-native-web/dist/modules/multiplyStyleLengthValue';
 
 const emptyObject = {};
 
