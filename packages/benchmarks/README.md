@@ -6,31 +6,37 @@ To run these benchmarks:
 yarn benchmark
 ```
 
-Append `?fastest` to the URL to include the fastest "other libraries", and
-`?all` to include all the "other libraries".
+To run benchmarks for individual implementations append `?<name>,<name>` to the
+URL, e.g., `?css-modules,react-native-web`.
 
 ## Notes
 
+These benchmarks are crude approximations of extreme cases that libraries may
+encounter. The deep and wide tree cases look at the performance of mounting and
+rendering large trees of styled elements. The Triangle cases looks at the
+performance of repeated updates to a large mounted tree. Libraries without
+support for dynamic styles (i.e., they rely on inline styles) do not include
+the `SierpinskiTriangle` benchmark.
+
 The components used in the render benchmarks are simple enough to be
-implemented by multiple UI or style libraries. The implementations are not
-equivalent in functionality. For example, the "React Native for Web" benchmark includes a
-complete `View` implementation and the `StyleSheet` also converts React Native
-styles to DOM styles, has deterministic resolution, and supports RTL layout.
+implemented by multiple UI or style libraries. The benchmark implementations
+and the features of the style libraries are not equivalent in functionality.
 
 ## Results
 
 Typical render timings*: mean ± two standard deviations.
 
-| Implementation                        | Deep tree (ms)    | Wide tree (ms)    | Tweets (ms)       |
+| Implementation                        | Deep tree (ms)    | Wide tree (ms)    | Triangle (ms)       |
 | :--- | ---: | ---: | ---: |
 | `css-modules`                         |  `80.47` `±25.13` | `144.87` `±32.70` | |
-| `react-native-web@0.2.2`              |  `88.68` `±28.78` | `178.17` `±39.90` | `13.78` `±2.90ms` |
+| `react-native-web@0.2.2`              |  `88.68` `±28.78` | `178.17` `±39.90` | `` `±` |
+| `inline-styles`                       |  `` `±` | `` `±` | |
 
 Other libraries
 
 | Implementation                        | Deep tree (ms)    | Wide tree (ms)    |
 | :--- | ---: | ---: |
-| `styletron@3.0.0-rc.5`                |  `79.41` `±27.49` | `152.95` `±29.46` |
+| `styletron@3.0.0-rc.5`                |  `84.32` `±32.55` | `163.21` `±29.46` |
 | `aphrodite@1.2.5`                     |  `85.13` `±25.39` | `162.87` `±25.91` |
 | `glamor@2.20.40`                      | `109.92` `±29.88` | `193.01` `±32.03` |
 | `react-jss@8.2.0`                     | `134.28` `±49.00` | `278.78` `±50.39` |
