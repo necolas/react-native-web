@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "aphrodite": "^1.2.5",
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
+    "d3-scale-chromatic": "^1.1.1",
     "emotion": "^8.0.12",
     "glamor": "^2.20.40",
     "marky": "^1.2.0",

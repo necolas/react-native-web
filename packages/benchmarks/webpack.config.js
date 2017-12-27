@@ -1,10 +1,10 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
-  entry: './index',
+  entry: ['babel-polyfill', './src/index'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'performance.bundle.js'
@@ -34,10 +34,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false
-    }),
+    // new BundleAnalyzerPlugin({
+    //  analyzerMode: 'static',
+    //  openAnalyzer: false
+    // }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
