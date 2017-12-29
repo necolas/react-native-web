@@ -1,126 +1,137 @@
 # React Native for Web
 
-[![Build Status][travis-image]][travis-url]
-[![npm version][npm-image]][npm-url]
+[![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
 "React Native for Web" brings the platform-agnostic Components and APIs of
 [React Native][react-native-url] to the Web.
 
-Browse the [interactive
-documentation](https://necolas.github.io/react-native-web/storybook/) or [try
-it out](https://glitch.com/edit/#!/react-native-web-playground) on Glitch.
+* **High-quality user interfaces**: React Native for Web makes it easy to
+create [fast](packages/benchmarks/README.md), adaptive web UIs in
+JavaScript. It provides native-like interactions, optimized vendor-prefixed
+styles, support for all interaction types (touch, mouse, keyboard), accessible
+experiences, built-in support for RTL layout, and integrates with React Dev
+Tools.
 
-## Features
+* **Write once, render anywhere**: React Native for Web interoperates with
+existing React DOM components and is compatible with the majority of the
+React Native API. You can develop new components for native and web without
+rewriting existing code. React Native for Web can also render to HTML and
+critical CSS on the server using Node.js.
 
-* Interoperability with ReactDOM components.
-* Native-like touch handling.
-* Built-in integration with web accessibility APIs.
-* Built-in support for LTR and RTL layouts.
-* Built-in expressive and reliable subset of CSS.
-* Optimized, vendor-prefixed CSS with [good runtime performance](benchmarks/README.md).
-* Server-side rendering of HTML and critical CSS.
-* Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+React Native for Web is used extensively in production by [Twitter
+Lite](https://mobile.twitter.com). The library's performance was experimentally
+validated at scale including in emerging markets, and an independent audit
+found Twitter Lite to be Twitter's most accessible app.
+
+Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 
 ## Quick start
 
-Install in your existing app using `yarn` or `npm`:
+The easiest way to get started with React Native for Web is to use this
+[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native-web-playground).
+You don’t need to install anything to try it out.
 
-```
-yarn add react react-dom react-native-web
-```
-
-Add the `react-native-web/babel` plugin to your Babel configuration. This will
-alias `react-native` to `react-native-web` and exclude any modules not required
-by the app.
-
-```json
-{
-  "plugins": [
-    "react-native-web/babel"
-  ],
-  "presets": [
-    "react-native"
-  ]
-}
-```
-
-(For React/ReactDOM 15.4 – 15.6 support, install `react-native-web@<0.1.0`)
-
-See the [Getting Started](docs/guides/getting-started.md) guide for more details.
+If you are unfamiliar with setting up a React web project, please follow the
+recommendations in the the official [React documentation](https://reactjs.org/).
 
 ## Documentation
 
-The [interactive
-documentation](https://necolas.github.io/react-native-web/storybook/) shows all
-the supported APIs and Components.
+You can find the React Native for Web API documentation [on the
+website][website-url].
 
-Guides:
+Please refer to the [React Native documentation][react-native-url] for details
+about its design, the [Gesture Responder system](https://facebook.github.io/react-native/docs/gesture-responder-system.html),
+and [animations](https://facebook.github.io/react-native/docs/animations.html).
 
-* [Getting started](docs/guides/getting-started.md)
-* [Style](docs/guides/style.md)
-* [Accessibility](docs/guides/accessibility.md)
-* [Direct manipulation](docs/guides/direct-manipulation.md)
-* [Internationalization](docs/guides/internationalization.md)
-* [Advanced use](docs/guides/advanced.md)
-* [Known issues](docs/guides/known-issues.md)
+### Installation
 
-## Example code
+Install using `yarn` or `npm`:
 
-```js
-import React from 'react'
-import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native'
-
-// Components
-const Card = ({ children }) => <View style={styles.card}>{children}</View>
-const Title = ({ children }) => <Text style={styles.title}>{children}</Text>
-const Photo = ({ uri }) => <Image source={{ uri }} style={styles.image} />
-const App = () => (
-  <Card>
-    <Title>App Card</Title>
-    <Photo uri="/some-photo.jpg" />
-  </Card>
-)
-
-// Styles
-const styles = StyleSheet.create({
-  card: {
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 'bold'
-  },
-  image: {
-    height: 40,
-    marginVertical: 10,
-    width: 40
-  }
-})
-
-// App registration and rendering
-AppRegistry.registerComponent('MyApp', () => App)
-AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-root') })
+```
+yarn add react react-dom react-native-web
+yarn add --dev babel-plugin-react-native-web
 ```
 
-## Starter kits
+### Guides
 
-* [Glitch](https://glitch.com/edit/#!/react-native-web-playground)
-* [create-react-app](https://github.com/facebookincubator/create-react-app)
+* [Getting started](website/guides/getting-started.md)
+* [Style](website/guides/style.md)
+* [Accessibility](website/guides/accessibility.md)
+* [Internationalization](website/guides/internationalization.md)
+* [Direct manipulation](website/guides/direct-manipulation.md)
+* [Advanced use](website/guides/advanced.md)
 
-## Related projects
+## Examples
 
-* [react-primitives](https://github.com/lelandrichardson/react-primitives/)
-* [react-sketchapp](https://github.com/airbnb/react-sketchapp)
-* [reactxp](https://github.com/microsoft/reactxp)
-* [react-native-web-player](https://github.com/dabbott/react-native-web-player)
+There are several examples [on the website][website-url] and in the [website's
+source code](./website). Here is an example to get you started:
+
+```js
+import React from 'react';
+import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+
+class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.box}>
+        <Text style={styles.text}>Hello, world!</Text>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  box: { padding: 10 },
+  text: { fontWeight: 'bold' }
+});
+
+AppRegistry.registerComponent('App', () => App);
+AppRegistry.runApplication('App', { rootTag: document.getElementById('react-root') });
+```
+
+This example will render the `App` into a container on the page.
+
+You'll notice that there is no reference to `react-dom`; the `App` component is
+defined using the platform-agnostic APIs and Components introduced by React
+Native. This allows the app to be rendered to web and native platforms.
+
+## Contributing
+
+The main purpose of this repository is to help evolve React web and native
+development towards the platform-agnostic design of React Native, and in the
+process make it faster and easier to build high-quality experiences for the web
+with React. Development happens in the open on GitHub, and we are grateful for
+contributing bugfixes and improvements. Read below to learn how you can take
+part in improving React Native for Web.
+
+### Code of conduct
+
+Facebook has adopted a [Code of Conduct][code-of-conduct] that this project
+expects all participants to adhere to. Please read the full text so that you
+can understand what actions will and will not be tolerated.
+
+### Contributing guide
+
+Read the [contributing guide][contributing-url] to learn about the
+development process, how to propose bugfixes and improvements, and how to build
+and test your changes to React Native for Web.
+
+### Good first issues
+
+To help you get you familiar with the contribution process, there is a list of
+[good first issues][good-first-issue-url] that contain bugs which have a
+relatively limited scope. This is a great place to get started.
 
 ## License
 
-React Native for Web is [BSD licensed](LICENSE).
+React Native for Web is [BSD licensed](./LICENSE).
 
-[npm-image]: https://badge.fury.io/js/react-native-web.svg
-[npm-url]: https://yarnpkg.com/en/package/react-native-web
+[package-badge]: https://img.shields.io/npm/v/react-native-web.svg?style=flat
+[package-url]: https://yarnpkg.com/en/package/react-native-web
+[ci-badge]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
+[ci-url]: https://travis-ci.org/necolas/react-native-web
+[website-url]: https://necolas.github.io/react-native-web/storybook/
 [react-native-url]: https://facebook.github.io/react-native/
-[travis-image]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
-[travis-url]: https://travis-ci.org/necolas/react-native-web
+[contributing-url]: ./.github/CONTRIBUTING.md
+[good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue
+[code-of-conduct]: https://code.facebook.com/codeofconduct

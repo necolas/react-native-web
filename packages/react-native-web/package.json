@@ -1,0 +1,45 @@
+{
+  "name": "react-native-web",
+  "version": "0.2.2",
+  "description": "React Native for Web",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "jest",
+    "src",
+    "!**/__tests__"
+  ],
+  "dependencies": {
+    "array-find-index": "^1.0.2",
+    "babel-runtime": "^6.26.0",
+    "create-react-class": "^15.6.2",
+    "debounce": "^1.1.0",
+    "deep-assign": "^2.0.0",
+    "fbjs": "^0.8.16",
+    "hyphenate-style-name": "^1.0.2",
+    "inline-style-prefixer": "^3.0.8",
+    "normalize-css-color": "^1.0.2",
+    "prop-types": "^15.6.0",
+    "react-art": "^16.2.0",
+    "react-timer-mixin": "^0.13.3"
+  },
+  "peerDependencies": {
+    "react": "16.x.x",
+    "react-dom": "16.x.x"
+  },
+  "author": "Nicolas Gallagher",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/necolas/react-native-web.git"
+  },
+  "tags": [
+    "react"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "web"
+  ]
+}

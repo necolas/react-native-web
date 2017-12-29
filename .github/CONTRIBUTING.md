@@ -17,13 +17,19 @@ Fork, then clone the repo:
 git clone https://github.com/your-username/react-native-web.git
 ```
 
-Install dependencies (requires [yarn](https://yarnpkg.com/en/docs/install):
+Install dependencies (requires [yarn](https://yarnpkg.com/en/docs/install)):
 
 ```
 yarn
 ```
 
 ## Automated tests
+
+To run the linter:
+
+```
+yarn lint
+```
 
 To run flow:
 
@@ -40,16 +46,30 @@ yarn jest
 …in watch mode:
 
 ```
-yarn jest:watch
+yarn jest --watch
 ```
 
-To run all automated tests:
+To run all these automated tests:
 
 ```
 yarn test
 ```
 
-## Visual tests
+## Compile and build
+
+To compile the `react-native-web` source code:
+
+```
+yarn compile
+```
+
+…in watch mode:
+
+```
+yarn compile --watch
+```
+
+## Website and visual tests
 
 To run the interactive storybook:
 
@@ -57,30 +77,18 @@ To run the interactive storybook:
 yarn docs:start
 ```
 
-To generate a static build of the storybook:
+When you're also making changes to the 'react-native-web' source files, run this command in another process:
 
 ```
-yarn docs:build
+yarn compile --watch
 ```
 
-To run the performance benchmarks in a browser (opening `./benchmarks/index.html`):
+## Benchmarks
+
+To run the performance benchmarks in a browser (opening `./packages/benchmarks/index.html`):
 
 ```
 yarn benchmark
-```
-
-## Compile and build
-
-To compile the source code to `dist`:
-
-```
-yarn compile
-```
-
-To create a UMD bundle of the library:
-
-```
-yarn build
 ```
 
 ### Pre-commit
@@ -95,7 +103,6 @@ To format and lint the entire project:
 
 ```
 yarn fmt
-yarn lint
 ```
 
 ### New Features
@@ -106,13 +113,13 @@ that we won't want to accept.
 
 ## Pull requests
 
-**Before submitting a pull request,** please make sure the following is done:
+**Before submitting a pull request**, please make sure the following is done:
 
 1. Fork the repository and create your branch from `master`.
 2. If you've added code that should be tested, add tests!
 3. If you've changed APIs, update the documentation.
-4. Ensure the tests pass (`yarn test`).
-5. Lint and format your code (`yarn fmt && yarn lint`).
+4. Lint and format your code (`yarn precommit`).
+5. Ensure the tests pass (`yarn test`).
 
 You can now submit a pull request, referencing any issues it addresses.
 
