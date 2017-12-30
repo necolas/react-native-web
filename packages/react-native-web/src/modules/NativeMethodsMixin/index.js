@@ -102,6 +102,10 @@ const NativeMethodsMixin = {
    * the initial styles from the DOM node and merge them with incoming props.
    */
   setNativeProps(nativeProps: Object) {
+    if (!nativeProps) {
+      return;
+    }
+
     // Copy of existing DOM state
     const node = findNodeHandle(this);
     const nodeStyle = node.style;
@@ -117,10 +121,14 @@ const NativeMethodsMixin = {
         style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
       }
     }
-    const domStyleProps = { classList, style };
 
+    const domStyleProps = { classList, style };
+    const props = {
+      ...nativeProps,
+      style: i18nStyle(nativeProps.style)
+    };
     // Next DOM state
-    const domProps = createDOMProps(null, i18nStyle(nativeProps), style =>
+    const domProps = createDOMProps(null, props, style =>
       StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);

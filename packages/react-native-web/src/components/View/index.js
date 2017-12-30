@@ -65,7 +65,7 @@ class View extends Component<ViewProps> {
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
       const hitSlopChild = createElement('span', { style: [styles.hitSlop, hitSlopStyle] });
-      otherProps.children = React.Children.toArray([ hitSlopChild, otherProps.children ]);
+      otherProps.children = React.Children.toArray([hitSlopChild, otherProps.children]);
     }
 
     return createElement('div', otherProps);
