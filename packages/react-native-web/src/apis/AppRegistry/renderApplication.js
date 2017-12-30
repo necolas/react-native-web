@@ -9,11 +9,14 @@
  * @flow
  */
 
+import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import hydrate from '../../modules/hydrate';
-import AppContainer from './AppContainer';
+import render from '../../modules/render';
 import StyleSheet from '../../apis/StyleSheet';
 import React, { type ComponentType } from 'react';
+
+const renderFn = process.env.NODE_ENV !== 'production' ? render : hydrate;
 
 export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
@@ -22,7 +25,7 @@ export default function renderApplication<Props: Object>(
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
-  hydrate(
+  renderFn(
     <AppContainer rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
