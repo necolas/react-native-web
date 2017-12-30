@@ -37,7 +37,7 @@ Typical render timings*: mean ± two standard deviations.
 Other libraries
 
 | Implementation                        | Deep tree (ms)    | Wide tree (ms)    | Triangle (ms)     |
-| :--- | ---: | ---: |
+| :--- | ---: | ---: | ---: |
 | `styletron@3.0.0-rc.5`                |  `83.53` `±33.55` | `153.12` `±39.13` |  `56.47` `±24.22` |
 | `aphrodite@1.2.5`                     |  `88.23` `±31.22` | `164.03` `±34.70` | - |
 | `glamor@2.20.40`                      | `110.09` `±34.20` | `182.06` `±50.39` | ‡ |
