@@ -130,3 +130,18 @@ After you have submitted your pull request, we'll try to get back to you as
 soon as possible. We may suggest some changes or improvements.
 
 Thank you for contributing!
+
+## Releases
+
+To commit, publish, and push a final version:
+
+```
+yarn release <version>
+```
+
+Release candidates or versions that you'd like to publish to npm, but do not
+want to produce a commit and push it to GitHub:
+
+```
+yarn release <version> --skip-git
+```

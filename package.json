@@ -14,7 +14,9 @@
     "lint": "yarn lint:check --fix",
     "lint:check": "eslint packages scripts website",
     "precommit": "lint-staged",
-    "release": "yarn test && yarn build && node ./scripts/release/publish.js && yarn docs:release",
+    "prerelease": "yarn test && yarn compile",
+    "release": "node ./scripts/release/publish.js",
+    "postrelease": "yarn docs:release",
     "test": "yarn flow && yarn lint:check && yarn jest"
   },
   "devDependencies": {
@@ -43,7 +45,10 @@
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0"
   },
-  "workspaces": ["packages/*", "website"],
+  "workspaces": [
+    "packages/*",
+    "website"
+  ],
   "lint-staged": {
     "**/*.js": [
       "fmt:cmd",
