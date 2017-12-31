@@ -3,6 +3,7 @@
   "version": "0.2.2",
   "description": "React Native for Web",
   "main": "dist/index.js",
+  "module": "dist/module.js",
   "files": [
     "dist",
     "jest",

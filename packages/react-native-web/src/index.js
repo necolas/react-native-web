@@ -1,2 +1,2 @@
-import ReactNative from './module';
-module.exports = ReactNative;
+import * as ReactNative from './module';
+export default ReactNative;

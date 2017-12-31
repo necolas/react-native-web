@@ -14,20 +14,9 @@ which has built-in React Native for Web support (once you install
 
 ## Adding to an existing web app
 
-Add the `react-native-web` plugin to your Babel configuration. This will
-alias `react-native` to `react-native-web` and exclude any modules not required
-by the app.
-
-```json
-{
-  "presets": [
-    "react-native"
-  ],
-  "plugins": [
-    "react-native-web"
-  ]
-}
-```
+Add [`babel-plugin-react-native-web`](https://www.npmjs.com/package/babel-plugin-react-native-web)
+to your Babel configuration. This will alias `react-native` to
+`react-native-web` and exclude any modules not required by the app.
 
 ## Client-side rendering
 
@@ -190,10 +179,11 @@ const babelLoaderConfiguration = {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
+      // Babel configuration (or use .babelrc)
       // This aliases 'react-native' to 'react-native-web' and includes only
       // the modules needed by the app.
       plugins: ['react-native-web', 'transform-runtime'],
-      // The 'react-native' preset is recommended (or use your own .babelrc).
+      // The 'react-native' preset is recommended to match React Native's packager
       presets: ['react-native']
     }
   }

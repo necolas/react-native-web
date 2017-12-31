@@ -2,11 +2,13 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const appDirectory = path.resolve(__dirname);
+
 module.exports = {
   context: __dirname,
   entry: ['babel-polyfill', './src/index'],
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(appDirectory, 'dist'),
     filename: 'performance.bundle.js'
   },
   module: {
@@ -23,7 +25,9 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: [
+          path.resolve(appDirectory, 'src'),
+        ],
         use: {
           loader: 'babel-loader',
           options: {

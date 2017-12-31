@@ -15,6 +15,7 @@
     "react-native-web": "^0.2.2"
   },
   "devDependencies": {
+    "babel-plugin-react-native-web": "^0.2.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   }
