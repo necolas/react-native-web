@@ -11,7 +11,7 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import { unmountComponentAtNode } from '../../modules/unmountComponentAtNode';
+import unmountComponentAtNode from '../../modules/unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
 import type { ComponentType } from 'react';
 
