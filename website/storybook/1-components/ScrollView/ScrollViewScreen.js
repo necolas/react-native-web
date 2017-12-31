@@ -151,7 +151,7 @@ const ScrollViewScreen = () => (
       <DocItem
         name="scrollTo"
         typeInfo="(options: { x: number = 0; y: number = 0; animated: boolean = true }) => void"
-        description="Scrolls to a given `x`, `y` offset (animation is not currently supported)."
+        description="Scrolls to a given `x`, `y` offset (animation depends on browser support for 'scroll-behaviour')."
         example={{
           render: () => <ScrollToExample />
         }}

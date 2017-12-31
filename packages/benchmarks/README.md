@@ -13,7 +13,7 @@ URL, e.g., `?css-modules,react-native-web`.
 
 These benchmarks are crude approximations of extreme cases that libraries may
 encounter. The deep and wide tree cases look at the performance of mounting and
-rendering large trees of styled elements. The Triangle cases looks at the
+rendering large trees of styled elements. The Triangle case looks at the
 performance of repeated style updates to a large mounted tree. Some libraries
 must inject new styles for each "dynamic style", whereas others may not.
 Libraries without support for dynamic styles (i.e., they rely on user-authored
@@ -52,4 +52,5 @@ These results indicate that render times when using `react-native-web`,
 significantly faster than alternatives.
 
 *MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3. Google Chrome 62.
-‡Glamor essentially crashes
+
+‡Glamor essentially crashes the browser tab.
