@@ -16,7 +16,7 @@ const {AnimatedEvent} = require('../AnimatedEvent');
 const AnimatedNode = require('./AnimatedNode');
 const AnimatedStyle = require('./AnimatedStyle');
 const NativeAnimatedHelper = require('../NativeAnimatedHelper');
-const findNodeHandle = require('../../../modules/findNodeHandle').default;
+const findNodeHandle = require('../../../exports/findNodeHandle').default;
 
 const invariant = require('fbjs/lib/invariant');
 

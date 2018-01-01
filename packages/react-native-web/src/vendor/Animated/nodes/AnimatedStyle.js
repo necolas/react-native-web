@@ -16,8 +16,9 @@ const AnimatedNode = require('./AnimatedNode');
 const AnimatedTransform = require('./AnimatedTransform');
 const AnimatedWithChildren = require('./AnimatedWithChildren');
 const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+const StyleSheet = require('../../../exports/StyleSheet').default;
 
-const flattenStyle = require('../../../apis/StyleSheet/flattenStyle').default;
+const flattenStyle = StyleSheet.flatten;
 
 class AnimatedStyle extends AnimatedWithChildren {
   _style: Object;

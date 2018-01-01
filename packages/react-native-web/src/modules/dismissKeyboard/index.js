@@ -9,7 +9,7 @@
  * @flow
  */
 
-import TextInputState from '../../components/TextInput/TextInputState';
+import TextInputState from '../TextInputState';
 
 const dismissKeyboard = () => {
   TextInputState.blurTextInput(TextInputState.currentlyFocusedField());

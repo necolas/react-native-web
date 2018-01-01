@@ -11,10 +11,10 @@
  */
 
 import createDOMProps from '../createDOMProps';
-import findNodeHandle from '../findNodeHandle';
-import i18nStyle from '../../apis/StyleSheet/i18nStyle';
-import StyleRegistry from '../../apis/StyleSheet/registry';
-import UIManager from '../../apis/UIManager';
+import findNodeHandle from '../../exports/findNodeHandle';
+import i18nStyle from '../../exports/StyleSheet/i18nStyle';
+import StyleRegistry from '../../exports/StyleSheet/registry';
+import UIManager from '../../exports/UIManager';
 
 const hyphenPattern = /-([a-z])/g;
 const toCamelCase = str => str.replace(hyphenPattern, m => m[1].toUpperCase());

@@ -13,7 +13,7 @@
 'use strict';
 
 const invariant = require('fbjs/lib/invariant');
-const NativeModules = require('../../modules/NativeModules');
+const NativeModules = require('../../exports/NativeModules');
 const NativeEventEmitter = require('../../modules/NativeEventEmitter');
 
 import type {AnimationConfig} from './animations/Animation';
