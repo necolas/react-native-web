@@ -14,7 +14,7 @@
 
 const AnimatedValue = require('./nodes/AnimatedValue');
 const NativeAnimatedHelper = require('./NativeAnimatedHelper');
-const findNodeHandle = require('../../modules/findNodeHandle').default;
+const findNodeHandle = require('../../exports/findNodeHandle').default;
 
 const invariant = require('fbjs/lib/invariant');
 const {shouldUseNativeDriver} = require('./NativeAnimatedHelper');

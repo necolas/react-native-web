@@ -15,7 +15,7 @@
 const {AnimatedEvent} = require('./AnimatedEvent');
 const AnimatedProps = require('./nodes/AnimatedProps');
 const React = require('react');
-const ViewStylePropTypes = require('../../components/View/ViewStylePropTypes').default;
+const ViewStylePropTypes = require('../../exports/View/ViewStylePropTypes').default;
 
 function createAnimatedComponent(Component: any): any {
   class AnimatedComponent extends React.Component<Object> {
