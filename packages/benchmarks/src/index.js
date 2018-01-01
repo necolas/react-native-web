@@ -12,7 +12,6 @@ import styletron from './implementations/styletron';
 
 import renderDeepTree from './cases/renderDeepTree';
 import renderSierpinskiTriangle from './cases/renderSierpinskiTriangle';
-// import renderTweet from './cases/renderTweet';
 import renderWideTree from './cases/renderWideTree';
 
 const testMatrix = {
@@ -29,7 +28,6 @@ const testMatrix = {
     () => renderDeepTree('react-native-web', reactNativeWeb),
     () => renderWideTree('react-native-web', reactNativeWeb),
     () => renderSierpinskiTriangle('react-native-web', reactNativeWeb)
-    // () => renderTweet('react-native-web', reactNativeWeb)
   ],
 
   aphrodite: [

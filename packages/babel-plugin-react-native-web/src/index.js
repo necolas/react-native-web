@@ -97,17 +97,22 @@ const isReactNativeRequire = (t, node) => {
     t.isIdentifier(init.callee) &&
     init.callee.name === 'require' &&
     init.arguments.length === 1 &&
-    init.arguments[0].value === 'react-native'
+    (init.arguments[0].value === 'react-native' || init.arguments[0].value === 'react-native-web')
   );
 };
 
+const isReactNativeModule = ({ source, specifiers }) =>
+  source &&
+  (source.value === 'react-native' || source.value === 'react-native-web') &&
+  specifiers.length;
+
 module.exports = function({ types: t }) {
   return {
-    name: 'Rewrite react-native paths for react-native-web',
+    name: 'Rewrite react-native to react-native-web',
     visitor: {
-      ImportDeclaration(path) {
-        const { source, specifiers } = path.node;
-        if (source && source.value === 'react-native' && specifiers.length) {
+      ImportDeclaration(path, state) {
+        const { specifiers } = path.node;
+        if (isReactNativeModule(path.node)) {
           const imports = specifiers
             .map(specifier => {
               if (t.isImportSpecifier(specifier)) {
@@ -121,16 +126,19 @@ module.exports = function({ types: t }) {
                   );
                 }
               }
-              return t.importDeclaration([specifier], t.stringLiteral('react-native-web'));
+              return t.importDeclaration(
+                [specifier],
+                t.stringLiteral('react-native-web/dist/index')
+              );
             })
             .filter(Boolean);
 
           path.replaceWithMultiple(imports);
         }
       },
-      ExportNamedDeclaration(path) {
-        const { source, specifiers } = path.node;
-        if (source && source.value === 'react-native' && specifiers.length) {
+      ExportNamedDeclaration(path, state) {
+        const { specifiers } = path.node;
+        if (isReactNativeModule(path.node)) {
           const exports = specifiers
             .map(specifier => {
               if (t.isExportSpecifier(specifier)) {
@@ -145,19 +153,19 @@ module.exports = function({ types: t }) {
                     t.stringLiteral(distLocation)
                   );
                 }
-                return t.exportNamedDeclaration(
-                  null,
-                  [specifier],
-                  t.stringLiteral('react-native-web')
-                );
               }
+              return t.exportNamedDeclaration(
+                null,
+                [specifier],
+                t.stringLiteral('react-native-web/dist/index')
+              );
             })
             .filter(Boolean);
 
           path.replaceWithMultiple(exports);
         }
       },
-      VariableDeclaration(path) {
+      VariableDeclaration(path, state) {
         if (isReactNativeRequire(t, path.node)) {
           const { id } = path.node.declarations[0];
           const imports = id.properties

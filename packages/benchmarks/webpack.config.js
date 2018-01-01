@@ -1,4 +1,5 @@
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const babelPreset = require('../../scripts/babel/preset');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const webpack = require('webpack');
 
@@ -25,23 +26,23 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [
-          path.resolve(appDirectory, 'src'),
-        ],
+        include: [path.resolve(appDirectory, 'src')],
         use: {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true
+            cacheDirectory: true,
+            presets: babelPreset,
+            plugins: ['react-native-web']
           }
         }
       }
     ]
   },
   plugins: [
-    // new BundleAnalyzerPlugin({
-    //  analyzerMode: 'static',
-    //  openAnalyzer: false
-    // }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),

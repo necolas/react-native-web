@@ -24,6 +24,7 @@
     "styletron-utils": "^3.0.0-rc.3"
   },
   "devDependencies": {
+    "babel-plugin-react-native-web": "^0.2.2",
     "css-loader": "^0.28.7",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",

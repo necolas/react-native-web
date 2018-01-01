@@ -1,161 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`1. Rewrite react-native paths for react-native-web 1`] = `
-"
-import { View } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import View from 'react-native-web/dist/components/View';
-"
-`;
-
-exports[`2. Rewrite react-native paths for react-native-web 1`] = `
-"
-import { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import Switch from 'react-native-web/dist/components/Switch';
-import Text from 'react-native-web/dist/components/Text';
-import MyView from 'react-native-web/dist/components/View';
-import ViewPropTypes from 'react-native-web/dist/components/View/ViewPropTypes';
-"
-`;
-
-exports[`3. Rewrite react-native paths for react-native-web 1`] = `
-"
-import { createElement, Switch, StyleSheet } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import createElement from 'react-native-web/dist/modules/createElement';
-import Switch from 'react-native-web/dist/components/Switch';
-import StyleSheet from 'react-native-web/dist/apis/StyleSheet';
-"
-`;
-
-exports[`4. Rewrite react-native paths for react-native-web 1`] = `
-"
-import { InvalidThing, TouchableOpacity } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import { InvalidThing } from 'react-native-web';
-import TouchableOpacity from 'react-native-web/dist/components/Touchable/TouchableOpacity';
-"
-`;
-
-exports[`5. Rewrite react-native paths for react-native-web 1`] = `
-"
-import * as RNW from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import * as RNW from 'react-native-web';
-"
-`;
-
-exports[`6. Rewrite react-native paths for react-native-web 1`] = `
-"
-const { View } = require('react-native');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const View = require('react-native-web/dist/components/View');
-"
-`;
-
-exports[`7. Rewrite react-native paths for react-native-web 1`] = `
-"
-let { Switch, Text, View: MyView } = require('react-native');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-let Switch = require('react-native-web/dist/components/Switch');
-
-let Text = require('react-native-web/dist/components/Text');
-
-let MyView = require('react-native-web/dist/components/View');
-"
-`;
-
-exports[`8. Rewrite react-native paths for react-native-web 1`] = `
-"
-var { createElement, Switch, StyleSheet } = require('react-native');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var createElement = require('react-native-web/dist/modules/createElement');
-
-var Switch = require('react-native-web/dist/components/Switch');
-
-var StyleSheet = require('react-native-web/dist/apis/StyleSheet');
-"
-`;
-
-exports[`9. Rewrite react-native paths for react-native-web 1`] = `
-"
-const { InvalidThing, TouchableOpacity } = require('react-native');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const TouchableOpacity = require('react-native-web/dist/components/Touchable/TouchableOpacity');
-"
-`;
-
-exports[`10. Rewrite react-native paths for react-native-web 1`] = `
+exports[`export from "react-native" 1`] = `
 "
 export { View } from 'react-native';
+export { ColorPropType, StyleSheet, Text, createElement } from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 export { default as View } from 'react-native-web/dist/components/View';
-"
-`;
-
-exports[`11. Rewrite react-native paths for react-native-web 1`] = `
-"
-export { Switch, Text, View as MyView, ViewPropTypes } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-export { default as Switch } from 'react-native-web/dist/components/Switch';
-export { default as Text } from 'react-native-web/dist/components/Text';
-export { default as MyView } from 'react-native-web/dist/components/View';
-export { default as ViewPropTypes } from 'react-native-web/dist/components/View/ViewPropTypes';
-"
-`;
-
-exports[`12. Rewrite react-native paths for react-native-web 1`] = `
-"
-export { createElement, Switch, StyleSheet } from 'react-native';
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-export { default as createElement } from 'react-native-web/dist/modules/createElement';
-export { default as Switch } from 'react-native-web/dist/components/Switch';
+export { default as ColorPropType } from 'react-native-web/dist/propTypes/ColorPropType';
 export { default as StyleSheet } from 'react-native-web/dist/apis/StyleSheet';
+export { default as Text } from 'react-native-web/dist/components/Text';
+export { default as createElement } from 'react-native-web/dist/modules/createElement';
 "
 `;
 
-exports[`13. Rewrite react-native paths for react-native-web 1`] = `
+exports[`export from "react-native-web" 1`] = `
 "
-export { InvalidThing, TouchableOpacity } from 'react-native';
+export { View } from 'react-native-web';
+export { ColorPropType, StyleSheet, Text, createElement } from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { InvalidThing } from 'react-native-web';
-export { default as TouchableOpacity } from 'react-native-web/dist/components/Touchable/TouchableOpacity';
+export { default as View } from 'react-native-web/dist/components/View';
+export { default as ColorPropType } from 'react-native-web/dist/propTypes/ColorPropType';
+export { default as StyleSheet } from 'react-native-web/dist/apis/StyleSheet';
+export { default as Text } from 'react-native-web/dist/components/Text';
+export { default as createElement } from 'react-native-web/dist/modules/createElement';
 "
 `;
 
-exports[`14. Rewrite react-native paths for react-native-web 1`] = `
+exports[`import from "native-native" 1`] = `
 "
-export { default as RNW } from 'react-native';
+import ReactNative from 'react-native';
+import { View } from 'react-native';
+import { Invalid, View as MyView, ViewPropTypes } from 'react-native';
+import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { default as RNW } from 'react-native-web';
+import ReactNative from 'react-native-web/dist/index';
+import View from 'react-native-web/dist/components/View';
+import { Invalid } from 'react-native-web/dist/index';
+import MyView from 'react-native-web/dist/components/View';
+import ViewPropTypes from 'react-native-web/dist/components/View/ViewPropTypes';
+import * as ReactNativeModules from 'react-native-web/dist/index';
+"
+`;
+
+exports[`import from "react-native-web" 1`] = `
+"
+import { createElement } from 'react-native-web';
+import { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } from 'react-native-web';
+import * as ReactNativeModules from 'react-native-web';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import createElement from 'react-native-web/dist/modules/createElement';
+import ColorPropType from 'react-native-web/dist/propTypes/ColorPropType';
+import StyleSheet from 'react-native-web/dist/apis/StyleSheet';
+import View from 'react-native-web/dist/components/View';
+import TouchableOpacity from 'react-native-web/dist/components/Touchable/TouchableOpacity';
+import processColor from 'react-native-web/dist/modules/processColor';
+import * as ReactNativeModules from 'react-native-web/dist/index';
+"
+`;
+
+exports[`require "react-native-web" 1`] = `
+"
+const ReactNative = require('react-native-web');
+const { createElement } = require('react-native-web');
+const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = require('react-native-web');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ReactNative = require('react-native-web');
+
+const createElement = require('react-native-web/dist/modules/createElement');
+
+const ColorPropType = require('react-native-web/dist/propTypes/ColorPropType');
+
+const StyleSheet = require('react-native-web/dist/apis/StyleSheet');
+
+const View = require('react-native-web/dist/components/View');
+
+const TouchableOpacity = require('react-native-web/dist/components/Touchable/TouchableOpacity');
+
+const processColor = require('react-native-web/dist/modules/processColor');
 "
 `;
