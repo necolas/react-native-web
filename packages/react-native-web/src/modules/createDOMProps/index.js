@@ -9,8 +9,8 @@
  */
 
 import AccessibilityUtil from '../AccessibilityUtil';
-import StyleSheet from '../../apis/StyleSheet';
-import StyleRegistry from '../../apis/StyleSheet/registry';
+import StyleSheet from '../../exports/StyleSheet';
+import StyleRegistry from '../../exports/StyleSheet/registry';
 
 const emptyObject = {};
 

@@ -10,12 +10,12 @@
  * @flow
  */
 
-import Dimensions from '../../apis/Dimensions';
-import findNodeHandle from '../findNodeHandle';
+import Dimensions from '../../exports/Dimensions';
+import findNodeHandle from '../../exports/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
-import Platform from '../../apis/Platform';
-import TextInputState from '../../components/TextInput/TextInputState';
-import UIManager from '../../apis/UIManager';
+import Platform from '../../exports/Platform';
+import TextInputState from '../TextInputState';
+import UIManager from '../../exports/UIManager';
 import warning from 'fbjs/lib/warning';
 
 /**
