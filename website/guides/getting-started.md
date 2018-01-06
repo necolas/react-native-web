@@ -149,7 +149,7 @@ using [Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/).
 Install webpack-related dependencies, for example:
 
 ```
-yarn add --dev babel-loader url-loader webpack webpack-dev-server
+yarn add --dev babel-loader url-loader webpack webpack-dev-server babel-plugin-transform-runtime
 ```
 
 Create a `web/webpack.config.js` file:
