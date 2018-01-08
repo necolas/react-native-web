@@ -60,6 +60,7 @@ const borderWidthProps = {
   borderLeftWidth: true
 };
 
+const monospaceFontStack = 'monospace, monospace';
 const systemFontStack =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
@@ -234,8 +235,13 @@ const createReducer = (style, styleProps) => {
       }
 
       case 'fontFamily': {
-        const isSystem = value === 'System';
-        resolvedStyle.fontFamily = isSystem ? systemFontStack : value;
+        if (value === 'System') {
+          resolvedStyle.fontFamily = systemFontStack;
+        } else if (value === 'monospace') {
+          resolvedStyle.fontFamily = monospaceFontStack;
+        } else {
+          resolvedStyle.fontFamily = value;
+        }
         break;
       }
 

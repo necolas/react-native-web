@@ -6,9 +6,15 @@ Object {
 }
 `;
 
+exports[`apis/StyleSheet/createReactDOMStyle fontFamily fontFamily: "monospace" 1`] = `
+Object {
+  "fontFamily": "monospace, monospace",
+}
+`;
+
 exports[`apis/StyleSheet/createReactDOMStyle fontFamily general case 1`] = `
 Object {
-  "fontFamily": "Georgia, Times",
+  "fontFamily": "Georgia, Times, serif",
 }
 `;
 

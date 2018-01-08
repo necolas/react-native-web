@@ -122,7 +122,11 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
 
   describe('fontFamily', () => {
     test('general case', () => {
-      expect(createReactDOMStyle({ fontFamily: 'Georgia, Times' })).toMatchSnapshot();
+      expect(createReactDOMStyle({ fontFamily: 'Georgia, Times, serif' })).toMatchSnapshot();
+    });
+
+    test('fontFamily: "monospace"', () => {
+      expect(createReactDOMStyle({ fontFamily: 'monospace' })).toMatchSnapshot();
     });
 
     test('fontFamily: "System"', () => {
