@@ -99,6 +99,9 @@ To format and lint code before commit:
 yarn precommit
 ```
 
+**Note**: _this command is called automatically when you commit_
+thanks to [husky](https://github.com/typicode/husky).
+
 To format and lint the entire project:
 
 ```
@@ -118,8 +121,7 @@ that we won't want to accept.
 1. Fork the repository and create your branch from `master`.
 2. If you've added code that should be tested, add tests!
 3. If you've changed APIs, update the documentation.
-4. Lint and format your code (`yarn precommit`).
-5. Ensure the tests pass (`yarn test`).
+4. Ensure the tests pass (`yarn test`).
 
 You can now submit a pull request, referencing any issues it addresses.
 
