@@ -41,6 +41,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
     "flow-bin": "^0.61.0",
+    "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lerna": "^2.5.1",
     "lint-staged": "^4.1.3",
@@ -58,7 +59,7 @@
     "**/*.js": [
       "fmt:cmd",
       "git update-index --again",
-      "lint:cmd"
+      "eslint"
     ]
   },
   "author": "Nicolas Gallagher",
