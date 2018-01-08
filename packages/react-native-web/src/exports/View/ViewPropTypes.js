@@ -38,14 +38,11 @@ export type ViewProps = {
   accessibilityTraits?: string | Array<string>,
   accessible?: boolean,
   children?: any,
-  collapsable?: boolean,
   hitSlop?: EdgeInsetsProp,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
-  onAccessibilityTap?: Function,
   onClick?: Function,
   onClickCapture?: Function,
   onLayout?: (event: ViewLayoutEvent) => void,
-  onMagicTap?: Function,
   onResponderGrant?: Function,
   onResponderMove?: Function,
   onResponderReject?: Function,
@@ -65,9 +62,17 @@ export type ViewProps = {
   onTouchStart?: Function,
   onTouchStartCapture?: Function,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
-  removeClippedSubviews?: boolean,
   style?: stylePropType,
-  testID?: string
+  testID?: string,
+  // compatibility with React Native
+  accessibilityViewIsModal?: boolean,
+  collapsable?: boolean,
+  needsOffscreenAlphaCompositing?: boolean,
+  onAccessibilityTap?: Function,
+  onMagicTap?: Function,
+  removeClippedSubviews?: boolean,
+  renderToHardwareTextureAndroid?: boolean,
+  shouldRasterizeIOS?: boolean
 };
 
 const ViewPropTypes = {
@@ -78,7 +83,6 @@ const ViewPropTypes = {
   accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
-  collapsable: bool,
   hitSlop: EdgeInsetsPropType,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
   onClick: func,
@@ -104,7 +108,16 @@ const ViewPropTypes = {
   onTouchStartCapture: func,
   pointerEvents: oneOf(['auto', 'box-none', 'box-only', 'none']),
   style: stylePropType,
-  testID: string
+  testID: string,
+  // compatibility with React Native
+  accessibilityViewIsModal: bool,
+  collapsable: bool,
+  needsOffscreenAlphaCompositing: bool,
+  onAccessibilityTap: func,
+  onMagicTap: func,
+  removeClippedSubviews: bool,
+  renderToHardwareTextureAndroid: bool,
+  shouldRasterizeIOS: bool
 };
 
 export default ViewPropTypes;

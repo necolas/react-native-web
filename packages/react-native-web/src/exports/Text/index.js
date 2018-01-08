@@ -49,7 +49,11 @@ class Text extends Component<*> {
       lineBreakMode,
       minimumFontScale,
       onLayout,
+      onLongPress,
+      pressRetentionOffset,
+      selectionColor,
       suppressHighlighting,
+      textBreakStrategy,
       /* eslint-enable */
       ...otherProps
     } = this.props;
