@@ -9,7 +9,7 @@
     "docs:release": "cd website && yarn release",
     "flow": "flow",
     "fmt": "find packages scripts types website -name '*.js' | grep -v -E '(node_modules|dist|vendor)' | xargs yarn fmt:cmd",
-    "fmt:cmd": "prettier --print-width=100 --single-quote --write",
+    "fmt:cmd": "prettier --write",
     "jest": "jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
     "lint:check": "eslint packages scripts website",
@@ -61,6 +61,10 @@
       "git update-index --again",
       "eslint"
     ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
   },
   "author": "Nicolas Gallagher",
   "license": "BSD-3-Clause"
