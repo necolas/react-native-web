@@ -40,11 +40,15 @@ class View extends Component<ViewProps> {
     const {
       hitSlop,
       /* eslint-disable */
+      accessibilityViewIsModal,
       collapsable,
+      needsOffscreenAlphaCompositing,
       onAccessibilityTap,
       onLayout,
       onMagicTap,
       removeClippedSubviews,
+      renderToHardwareTextureAndroid,
+      shouldRasterizeIOS,
       /* eslint-enable */
       ...otherProps
     } = this.props;

@@ -36,11 +36,13 @@ export type ViewProps = {
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   accessibilityRole?: string,
   accessibilityTraits?: string | Array<string>,
+  accessibilityViewIsModal?: boolean,
   accessible?: boolean,
   children?: any,
   collapsable?: boolean,
   hitSlop?: EdgeInsetsProp,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
+  needsOffscreenAlphaCompositing?: boolean,
   onAccessibilityTap?: Function,
   onClick?: Function,
   onClickCapture?: Function,
@@ -66,6 +68,8 @@ export type ViewProps = {
   onTouchStartCapture?: Function,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
   removeClippedSubviews?: boolean,
+  renderToHardwareTextureAndroid?: boolean,
+  shouldRasterizeIOS?: boolean,
   style?: stylePropType,
   testID?: string
 };
