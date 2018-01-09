@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "benchmarks",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "scripts": {
     "benchmark": "webpack --config ./webpack.config.js && open index.html"
   },
@@ -17,14 +17,14 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-jss": "^8.2.0",
-    "react-native-web": "^0.2.2",
+    "react-native-web": "^0.3.0",
     "reactxp": "^0.46.6",
     "styled-components": "^2.3.2",
     "styletron-client": "^3.0.0-rc.5",
     "styletron-utils": "^3.0.0-rc.3"
   },
   "devDependencies": {
-    "babel-plugin-react-native-web": "^0.2.2",
+    "babel-plugin-react-native-web": "^0.3.0",
     "css-loader": "^0.28.7",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
