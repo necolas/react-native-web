@@ -33,7 +33,7 @@
     "babel-preset-react-native": "^4.0.0",
     "caniuse-api": "^2.0.0",
     "del-cli": "^1.1.0",
-    "enzyme": "^3.2.0",
+    "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
     "eslint": "^4.12.1",
