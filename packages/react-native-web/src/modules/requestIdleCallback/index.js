@@ -22,7 +22,8 @@ const _requestIdleCallback = function(cb: Function) {
   }, 1);
 };
 
-const _cancelIdleCallback = function(id: number) {
+// $FlowFixMe (TimeoutID type is not recognized by eslint)
+const _cancelIdleCallback = function(id) {
   clearTimeout(id);
 };
 
