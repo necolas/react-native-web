@@ -87,6 +87,9 @@ type State = {
   shouldDisplaySource: boolean
 };
 
+const getAssetTimeout = source =>
+  typeof source === 'object' && source.timeout ? source.timeout : 1000;
+
 class Image extends Component<*, State> {
   static displayName = 'Image';
 
@@ -246,12 +249,16 @@ class Image extends Component<*, State> {
   }
 
   _createImageLoader() {
+    const { source } = this.props;
     this._destroyImageLoader();
-    this._loadRequest = requestIdleCallback(() => {
-      const uri = resolveAssetSource(this.props.source);
-      this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
-      this._onLoadStart();
-    });
+    this._loadRequest = requestIdleCallback(
+      () => {
+        const uri = resolveAssetSource(source);
+        this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
+        this._onLoadStart();
+      },
+      { timeout: getAssetTimeout(source) }
+    );
   }
 
   _destroyImageLoader() {

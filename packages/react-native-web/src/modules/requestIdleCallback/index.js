@@ -10,7 +10,7 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const _requestIdleCallback = function(cb: Function) {
+const _requestIdleCallback = function(cb: Function, options: Object) {
   return setTimeout(() => {
     const start = Date.now();
     cb({
