@@ -17,6 +17,8 @@ import ShadowPropTypes from '../../modules/ShadowPropTypes';
 import TransformPropTypes from '../../modules/TransformPropTypes';
 import { number, oneOf, oneOfType, string } from 'prop-types';
 
+const overscrollBehaviorType = oneOf(['auto', 'contain', 'none']);
+
 const ViewStylePropTypes = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
@@ -46,6 +48,9 @@ const ViewStylePropTypes = {
   filter: string,
   outline: string,
   outlineColor: ColorPropType,
+  overscrollBehavior: overscrollBehaviorType,
+  overscrollBehaviorX: overscrollBehaviorType,
+  overscrollBehaviorY: overscrollBehaviorType,
   perspective: oneOfType([number, string]),
   perspectiveOrigin: string,
   touchAction: string,

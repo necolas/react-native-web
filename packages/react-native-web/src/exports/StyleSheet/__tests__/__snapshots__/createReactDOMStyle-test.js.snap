@@ -34,5 +34,9 @@ Object {
   "marginLeft": "10px",
   "marginRight": "10px",
   "marginTop": "50px",
+  "overflowX": "hidden",
+  "overflowY": "hidden",
+  "overscrollBehaviorX": "contain",
+  "overscrollBehaviorY": "contain",
 }
 `;

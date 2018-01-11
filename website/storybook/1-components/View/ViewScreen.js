@@ -689,6 +689,21 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    label: 'web',
+    name: 'overscrollBehavior',
+    typeInfo: '"auto" | "contain" | "none"'
+  },
+  {
+    label: 'web',
+    name: 'overscrollBehaviorX',
+    typeInfo: '"auto" | "contain" | "none"'
+  },
+  {
+    label: 'web',
+    name: 'overscrollBehaviorY',
+    typeInfo: '"auto" | "contain" | "none"'
+  },
+  {
     name: 'padding',
     typeInfo: 'number | string'
   },

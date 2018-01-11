@@ -143,7 +143,9 @@ describe('apis/StyleSheet/createReactDOMStyle', () => {
       borderWidth: 0,
       marginTop: 50,
       marginVertical: 25,
-      margin: 10
+      margin: 10,
+      overflow: 'hidden',
+      overscrollBehavior: 'contain'
     };
 
     expect(createReactDOMStyle(style)).toMatchSnapshot();

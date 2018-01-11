@@ -35,6 +35,7 @@ const styleShortFormProperties = {
   marginHorizontal: ['marginRight', 'marginLeft'],
   marginVertical: ['marginTop', 'marginBottom'],
   overflow: ['overflowX', 'overflowY'],
+  overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
   padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
   paddingHorizontal: ['paddingRight', 'paddingLeft'],
   paddingVertical: ['paddingTop', 'paddingBottom'],
