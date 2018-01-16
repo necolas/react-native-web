@@ -34,6 +34,6 @@ import { StyleSheet, View } from 'react-native';
 **After**
 
 ```js
-import StyleSheet from 'react-native-web/dist/apis/StyleSheet';
-import View from 'react-native-web/dist/components/View';
+import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
+import View from 'react-native-web/dist/exports/View';
 ```
