@@ -9,6 +9,7 @@ import ViewPropTypes from './exports/ViewPropTypes';
 
 // APIs
 import Animated from './exports/Animated';
+import Alert from './exports/Alert';
 import AppRegistry from './exports/AppRegistry';
 import AppState from './exports/AppState';
 import AsyncStorage from './exports/AsyncStorage';
@@ -76,6 +77,7 @@ export {
   ViewPropTypes,
   // APIs
   Animated,
+  Alert,
   AppRegistry,
   AppState,
   AsyncStorage,
