@@ -2,21 +2,23 @@
 
 This guide will help you to use and test React Native for Web once it has been installed.
 
-It is recommended that your application provide a `Promise` and `Array.from`
-polyfill.
+Your application may need to polyfill `Promise`, `Object.assign`, and
+`Array.from` as necessary for your desired browser support.
 
 ## Adding to a new web app
 
-It's recommended to rely on Facebook's official React web starter kit –
-[create-react-app](https://github.com/facebookincubator/create-react-app) –
-which has built-in React Native for Web support (once you install
-`react-native-web`).
+The easiest way to create a new web app with React Native for Web is to rely on
+Facebook's React web starter kit –
+[create-react-app](https://github.com/facebookincubator/create-react-app). All
+that is needed after initializing a web app with CRA is to install
+`react-native-web`.
 
 ## Adding to an existing web app
 
-Add [`babel-plugin-react-native-web`](https://www.npmjs.com/package/babel-plugin-react-native-web)
-to your Babel configuration. This will alias `react-native` to
-`react-native-web` and exclude any modules not required by the app.
+Existing web apps need to alias `react-native` to `react-native-web` and
+exclude any modules not required by the app. You can do this by adding
+[`babel-plugin-react-native-web`](https://www.npmjs.com/package/babel-plugin-react-native-web)
+to the plugins in your Babel configuration.
 
 ## Client-side rendering
 
