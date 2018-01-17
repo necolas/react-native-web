@@ -2,8 +2,8 @@
 
 This guide will help you to use and test React Native for Web once it has been installed.
 
-It is recommended that your application provide a `Promise` and `Array.from`
-polyfill.
+It is recommended that your application provide a `Promise`, `Object.assign`,
+and `Array.from` polyfill.
 
 ## Adding to a new web app
 
