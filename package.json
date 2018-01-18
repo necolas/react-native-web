@@ -2,11 +2,12 @@
   "private": true,
   "name": "react-native-web-monorepo",
   "scripts": {
-    "benchmark": "cd packages/benchmarks && yarn benchmark",
     "clean": "del ./packages/*/dist",
     "compile": "yarn clean && cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
-    "docs:start": "cd website && yarn start",
-    "docs:release": "cd website && yarn release",
+    "benchmarks": "cd packages/benchmarks && yarn build",
+    "benchmarks:release": "cd packages/benchmarks && yarn release",
+    "website": "cd website && yarn start",
+    "website:release": "cd website && yarn release",
     "flow": "flow",
     "fmt": "find packages scripts types website -name '*.js' | grep -v -E '(node_modules|dist|vendor)' | xargs yarn fmt:cmd",
     "fmt:cmd": "prettier --write",
@@ -16,7 +17,7 @@
     "precommit": "lint-staged",
     "prerelease": "yarn test && yarn compile",
     "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn docs:release",
+    "postrelease": "yarn website:release && yarn benchmarks:release",
     "test": "yarn flow && yarn lint:check && yarn jest"
   },
   "devDependencies": {

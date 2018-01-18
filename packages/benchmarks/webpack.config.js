@@ -7,10 +7,10 @@ const appDirectory = path.resolve(__dirname);
 
 module.exports = {
   context: __dirname,
-  entry: ['babel-polyfill', './src/index'],
+  entry: './src/index',
   output: {
     path: path.resolve(appDirectory, 'dist'),
-    filename: 'performance.bundle.js'
+    filename: 'bundle.js'
   },
   module: {
     rules: [
