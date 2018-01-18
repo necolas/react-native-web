@@ -1,10 +1,12 @@
 # benchmarks
 
-To run these benchmarks:
+Try the [benchmarks app](https://necolas.github.io/react-native-web/benchmarks) online.
+
+To run the benchmarks locally:
 
 ```
 yarn benchmark
-open ./packages/benchmarks/index.html
+open ./packages/benchmarks/dist/index.html
 ```
 
 Develop against these benchmarks:
