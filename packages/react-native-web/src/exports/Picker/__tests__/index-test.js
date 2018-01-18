@@ -16,6 +16,12 @@ describe('components/Picker', () => {
       const component = shallow(picker);
       expect(component).toMatchSnapshot();
     });
+
+    test('items', () => {
+      const pickerItem = <Picker.Item label="label-1" value="value-1" />;
+      const component = shallow(pickerItem);
+      expect(component).toMatchSnapshot();
+    });
   });
 
   describe('prop "enabled"', () => {

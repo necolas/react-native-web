@@ -20,6 +20,6 @@ export default class PickerItem extends Component<Props> {
 
   render() {
     const { label, testID, value } = this.props;
-    return createElement('option', { label, testID, value });
+    return createElement('option', { testID, value }, label);
   }
 }

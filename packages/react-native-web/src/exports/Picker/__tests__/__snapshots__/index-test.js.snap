@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/Picker prop "children" items 1`] = `
+<option
+  value="value-1"
+>
+  label-1
+</option>
+`;
+
 exports[`components/Picker prop "children" renders items 1`] = `
 <select
   className="rn-fontFamily-poiln3 rn-fontSize-7cikom rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw"
