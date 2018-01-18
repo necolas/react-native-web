@@ -11,8 +11,8 @@ const Dot = ({ size, x, y, children, color }) =>
         borderRightWidth: size / 2,
         borderBottomWidth: size / 2,
         borderLeftWidth: size / 2,
-        left: x,
-        top: y
+        marginLeft: x,
+        marginTop: y
       }
     ]
   });
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     height: 0,
     borderColor: 'transparent',
     borderStyle: 'solid',
-    borderTopWidth: 0
+    borderTopWidth: 0,
+    transform: [{ translateX: '50%' }, { translateY: '50%' }]
   }
 });
 

@@ -4,28 +4,28 @@ import View from './View';
 const getColor = color => {
   switch (color) {
     case 0:
-      return '#222';
+      return '#14171A';
     case 1:
-      return '#666';
+      return '#AAB8C2';
     case 2:
-      return '#999';
+      return '#E6ECF0';
     case 3:
-      return 'blue';
+      return '#FFAD1F';
     case 4:
-      return 'orange';
+      return '#F45D22';
     case 5:
-      return 'red';
+      return '#E0245E';
     default:
       return 'transparent';
   }
 };
 
 const Box = styled(View)`
+  align-self: flex-start;
   flex-direction: ${props => (props.layout === 'column' ? 'column' : 'row')};
   padding: ${props => (props.outer ? '4px' : '0')};
-  height: ${props => (props.fixed ? '20px' : 'auto')};
-  width: ${props => (props.fixed ? '20px' : 'auto')};
-  background-color: ${props => getColor(props.color)};
+  ${props => props.fixed && 'height:6px;'} ${props =>
+      props.fixed && 'width:6px;'} background-color: ${props => getColor(props.color)};
 `;
 
 export default Box;

@@ -1,97 +1,56 @@
-import aphrodite from './implementations/aphrodite';
-import cssModules from './implementations/css-modules';
-import emotion from './implementations/emotion';
-import jss from './implementations/jss';
-import glamor from './implementations/glamor';
-import inlineStyles from './implementations/inline-styles';
-import radium from './implementations/radium';
-import reactNativeWeb from './implementations/react-native-web';
-import reactxp from './implementations/reactxp';
-import styledComponents from './implementations/styled-components';
-import styletron from './implementations/styletron';
+import App from './app/App';
+import impl from './impl';
+import Tree from './cases/Tree';
+import SierpinskiTriangle from './cases/SierpinskiTriangle';
 
-import renderDeepTree from './cases/renderDeepTree';
-import renderSierpinskiTriangle from './cases/renderSierpinskiTriangle';
-import renderWideTree from './cases/renderWideTree';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const testMatrix = {
-  'inline-styles': [
-    () => renderDeepTree('inline-styles', inlineStyles),
-    () => renderWideTree('inline-styles', inlineStyles),
-    () => renderSierpinskiTriangle('inline-styles', inlineStyles)
-  ],
-  'css-modules': [
-    () => renderDeepTree('css-modules', cssModules),
-    () => renderWideTree('css-modules', cssModules)
-  ],
-  'react-native-web': [
-    () => renderDeepTree('react-native-web', reactNativeWeb),
-    () => renderWideTree('react-native-web', reactNativeWeb),
-    () => renderSierpinskiTriangle('react-native-web', reactNativeWeb)
-  ],
+const implementations = impl;
+const packageNames = Object.keys(implementations);
 
-  aphrodite: [
-    () => renderDeepTree('aphrodite', aphrodite),
-    () => renderWideTree('aphrodite', aphrodite)
-  ],
-  emotion: [
-    () => renderDeepTree('emotion', emotion),
-    () => renderWideTree('emotion', emotion),
-    () => renderSierpinskiTriangle('emotion', emotion)
-  ],
-  glamor: [
-    () => renderDeepTree('glamor', glamor),
-    () => renderWideTree('glamor', glamor)
-    // disabled: glamor starts to lock up the browser
-    // () => renderSierpinskiTriangle('glamor', glamor)
-  ],
-  jss: [() => renderDeepTree('jss', jss), () => renderWideTree('jss', jss)],
-  radium: [
-    () => renderDeepTree('radium', radium),
-    () => renderWideTree('radium', radium),
-    () => renderSierpinskiTriangle('radium', radium)
-  ],
-  reactxp: [
-    () => renderDeepTree('reactxp', reactxp),
-    () => renderWideTree('reactxp', reactxp),
-    () => renderSierpinskiTriangle('reactxp', reactxp)
-  ],
-  'styled-components': [
-    () => renderDeepTree('styled-components', styledComponents),
-    () => renderWideTree('styled-components', styledComponents),
-    () => renderSierpinskiTriangle('styled-components', styledComponents)
-  ],
-  styletron: [
-    () => renderDeepTree('styletron', styletron),
-    () => renderWideTree('styletron', styletron),
-    () => renderSierpinskiTriangle('styletron', styletron)
-  ]
+const createTestBlock = fn => {
+  return packageNames.reduce((testSetups, packageName) => {
+    const { name, components, version } = implementations[packageName];
+    const { Component, getComponentProps, sampleCount, Provider, benchmarkType } = fn(components);
+
+    testSetups[packageName] = {
+      Component,
+      getComponentProps,
+      sampleCount,
+      Provider,
+      benchmarkType,
+      version,
+      name
+    };
+    return testSetups;
+  }, {});
 };
 
-const allTests = Object.keys(testMatrix).reduce((acc, curr) => {
-  testMatrix[curr].forEach(test => {
-    acc.push(test);
-  });
-  return acc;
-}, []);
+const tests = {
+  'Mount deep tree': createTestBlock(components => ({
+    benchmarkType: 'mount',
+    Component: Tree,
+    getComponentProps: () => ({ breadth: 2, components, depth: 7, id: 0, wrap: 1 }),
+    Provider: components.Provider,
+    sampleCount: 50
+  })),
+  'Mount wide tree': createTestBlock(components => ({
+    benchmarkType: 'mount',
+    Component: Tree,
+    getComponentProps: () => ({ breadth: 6, components, depth: 3, id: 0, wrap: 2 }),
+    Provider: components.Provider,
+    sampleCount: 50
+  })),
+  'Update dynamic styles': createTestBlock(components => ({
+    benchmarkType: 'update',
+    Component: SierpinskiTriangle,
+    getComponentProps: ({ cycle }) => {
+      return { components, s: 200, renderCount: cycle, x: 0, y: 0 };
+    },
+    Provider: components.Provider,
+    sampleCount: 100
+  }))
+};
 
-const tests = [];
-
-if (window.location.search) {
-  window.location.search
-    .slice(1)
-    .split(',')
-    .forEach(implementation => {
-      if (Array.isArray(testMatrix[implementation])) {
-        tests.push(...testMatrix[implementation]);
-      } else {
-        throw new Error(`Benchmark for ${implementation} not found`);
-      }
-    });
-} else {
-  tests.push(...allTests);
-}
-
-tests.push(() => () => Promise.resolve(console.log('Done')));
-
-tests.reduce((promise, test) => promise.then(test()), Promise.resolve());
+ReactDOM.render(<App tests={tests} />, document.querySelector('.root'));

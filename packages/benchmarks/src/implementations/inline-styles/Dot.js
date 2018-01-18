@@ -10,8 +10,8 @@ const Dot = ({ size, x, y, children, color }) => (
         borderRightWidth: `${size / 2}px`,
         borderBottomWidth: `${size / 2}px`,
         borderLeftWidth: `${size / 2}px`,
-        left: `${x}px`,
-        top: `${y}px`
+        marginLeft: `${x}px`,
+        marginTop: `${y}px`
       }
     }}
   >
@@ -27,7 +27,8 @@ const styles = {
     height: 0,
     borderColor: 'transparent',
     borderStyle: 'solid',
-    borderTopWidth: 0
+    borderTopWidth: 0,
+    transform: 'translate(50%, 50%)'
   }
 };
 

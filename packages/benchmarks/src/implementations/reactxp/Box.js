@@ -16,32 +16,33 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
 
 const styles = {
   outer: Styles.createViewStyle({
+    alignSelf: 'flex-start',
     padding: 4
   }),
   row: Styles.createViewStyle({
     flexDirection: 'row'
   }),
   color0: Styles.createViewStyle({
-    backgroundColor: '#222'
+    backgroundColor: '#14171A'
   }),
   color1: Styles.createViewStyle({
-    backgroundColor: '#666'
+    backgroundColor: '#AAB8C2'
   }),
   color2: Styles.createViewStyle({
-    backgroundColor: '#999'
+    backgroundColor: '#E6ECF0'
   }),
   color3: Styles.createViewStyle({
-    backgroundColor: 'blue'
+    backgroundColor: '#FFAD1F'
   }),
   color4: Styles.createViewStyle({
-    backgroundColor: 'orange'
+    backgroundColor: '#F45D22'
   }),
   color5: Styles.createViewStyle({
-    backgroundColor: 'red'
+    backgroundColor: '#E0245E'
   }),
   fixed: Styles.createViewStyle({
-    width: 20,
-    height: 20
+    width: 6,
+    height: 6
   })
 };
 

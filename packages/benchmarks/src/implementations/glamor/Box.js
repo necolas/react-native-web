@@ -16,32 +16,33 @@ const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other 
 
 const styles = {
   outer: {
+    alignSelf: 'flex-start',
     padding: 4
   },
   row: {
     flexDirection: 'row'
   },
   color0: {
-    backgroundColor: '#222'
+    backgroundColor: '#14171A'
   },
   color1: {
-    backgroundColor: '#666'
+    backgroundColor: '#AAB8C2'
   },
   color2: {
-    backgroundColor: '#999'
+    backgroundColor: '#E6ECF0'
   },
   color3: {
-    backgroundColor: 'blue'
+    backgroundColor: '#FFAD1F'
   },
   color4: {
-    backgroundColor: 'orange'
+    backgroundColor: '#F45D22'
   },
   color5: {
-    backgroundColor: 'red'
+    backgroundColor: '#E0245E'
   },
   fixed: {
-    width: 20,
-    height: 20
+    width: 6,
+    height: 6
   }
 };
 

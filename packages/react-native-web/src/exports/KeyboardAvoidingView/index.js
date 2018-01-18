@@ -42,7 +42,7 @@ class KeyboardAvoidingView extends Component<*> {
 
   onLayout = (event: ViewLayoutEvent) => {
     this.frame = event.nativeEvent.layout;
-  }
+  };
 
   render() {
     const {
