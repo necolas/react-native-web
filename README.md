@@ -6,10 +6,11 @@
 [React Native][react-native-url] to the Web.
 
 * **High-quality user interfaces**: React Native for Web makes it easy to
-create [fast](packages/benchmarks/README.md), adaptive web UIs in JavaScript.
-It provides native-like interactions, support for multiple input modes (touch,
-mouse, keyboard), optimized vendor-prefixed styles, built-in support for RTL
-layout, built-in accessibility, and integrates with React Dev Tools.
+create [fast](https://github.com/necolas/react-native-web/blob/master/packages/benchmarks/README.md),
+adaptive web UIs in JavaScript.  It provides native-like interactions, support
+for multiple input modes (touch, mouse, keyboard), optimized vendor-prefixed
+styles, built-in support for RTL layout, built-in accessibility, and integrates
+with React Dev Tools.
 
 * **Write once, render anywhere**: React Native for Web interoperates with
 existing React DOM components and is compatible with the majority of the
@@ -54,17 +55,18 @@ yarn add --dev babel-plugin-react-native-web
 
 ### Guides
 
-* [Getting started](website/guides/getting-started.md)
-* [Style](website/guides/style.md)
-* [Accessibility](website/guides/accessibility.md)
-* [Internationalization](website/guides/internationalization.md)
-* [Direct manipulation](website/guides/direct-manipulation.md)
-* [Advanced use](website/guides/advanced.md)
+* [Getting started](https://github.com/necolas/react-native-web/blob/master/website/guides/getting-started.md)
+* [Style](https://github.com/necolas/react-native-web/blob/master/website/guides/style.md)
+* [Accessibility](https://github.com/necolas/react-native-web/blob/master/website/guides/accessibility.md)
+* [Internationalization](https://github.com/necolas/react-native-web/blob/master/website/guides/internationalization.md)
+* [Direct manipulation](https://github.com/necolas/react-native-web/blob/master/website/guides/direct-manipulation.md)
+* [Advanced use](https://github.com/necolas/react-native-web/blob/master/website/guides/advanced.md)
 
 ## Examples
 
 There are several examples [on the website][website-url] and in the [website's
-source code](./website). Here is an example to get you started:
+source code](https://github.com/necolas/react-native-web/blob/master/website).
+Here is an example to get you started:
 
 ```js
 import React from 'react';
@@ -132,6 +134,6 @@ React Native for Web is [BSD licensed](./LICENSE).
 [ci-url]: https://travis-ci.org/necolas/react-native-web
 [website-url]: https://necolas.github.io/react-native-web/storybook/
 [react-native-url]: https://facebook.github.io/react-native/
-[contributing-url]: ./.github/CONTRIBUTING.md
+[contributing-url]: https://github.com/necolas/react-native-web/blob/master/.github/CONTRIBUTING.md
 [good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue
 [code-of-conduct]: https://code.facebook.com/codeofconduct
