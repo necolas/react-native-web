@@ -1,5 +1,7 @@
 # babel-plugin-react-native-web
 
+[![npm version][package-badge]][package-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+
 A Babel plugin that will alias `react-native` to `react-native-web` and exclude
 any modules not required by your app (keeping bundle size down).
 
@@ -37,3 +39,6 @@ import { StyleSheet, View } from 'react-native';
 import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
 import View from 'react-native-web/dist/exports/View';
 ```
+
+[package-badge]: https://img.shields.io/npm/v/babel-plugin-react-native-web.svg?style=flat
+[package-url]: https://yarnpkg.com/en/package/babel-plugin-react-native-web

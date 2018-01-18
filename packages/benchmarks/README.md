@@ -1,7 +1,5 @@
 # benchmarks
 
-[![npm version][package-badge]][package-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
-
 Try the [benchmarks app](https://necolas.github.io/react-native-web/benchmarks) online.
 
 To run the benchmarks locally:
@@ -66,6 +64,3 @@ significantly faster than alternatives.
 *MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3. Google Chrome 62.
 
 ‡Glamor essentially crashes the browser tab. Emotion gets slower every iteration.
-
-[package-badge]: https://img.shields.io/npm/v/babel-plugin-react-native-web.svg?style=flat
-[package-url]: https://yarnpkg.com/en/package/babel-plugin-react-native-web
