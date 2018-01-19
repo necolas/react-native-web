@@ -8,7 +8,7 @@ const isReactNativeRequire = (t, node) => {
   }
   const { id, init } = declarations[0];
   return (
-    t.isObjectPattern(id) &&
+    (t.isObjectPattern(id) || t.isIdentifier(id)) &&
     t.isCallExpression(init) &&
     t.isIdentifier(init.callee) &&
     init.callee.name === 'require' &&
@@ -84,21 +84,35 @@ module.exports = function({ types: t }) {
       VariableDeclaration(path, state) {
         if (isReactNativeRequire(t, path.node)) {
           const { id } = path.node.declarations[0];
-          const imports = id.properties
-            .map(identifier => {
-              const distLocation = getDistLocation(identifier.key.name);
-              if (distLocation) {
-                return t.variableDeclaration(path.node.kind, [
-                  t.variableDeclarator(
-                    t.identifier(identifier.value.name),
-                    t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)])
-                  )
-                ]);
-              }
-            })
-            .filter(Boolean);
+          if (t.isObjectPattern(id)) {
+            const imports = id.properties
+              .map(identifier => {
+                const distLocation = getDistLocation(identifier.key.name);
+                if (distLocation) {
+                  return t.variableDeclaration(path.node.kind, [
+                    t.variableDeclarator(
+                      t.identifier(identifier.value.name),
+                      t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)])
+                    )
+                  ]);
+                }
+              })
+              .filter(Boolean);
 
-          path.replaceWithMultiple(imports);
+            path.replaceWithMultiple(imports);
+          } else if (t.isIdentifier(id)) {
+            const name = id.name;
+            const importIndex = t.variableDeclaration(path.node.kind, [
+              t.variableDeclarator(
+                t.identifier(name),
+                t.callExpression(t.identifier('require'), [
+                  t.stringLiteral('react-native-web/dist/index')
+                ])
+              )
+            ]);
+
+            path.replaceWith(importIndex);
+          }
         }
       }
     }
