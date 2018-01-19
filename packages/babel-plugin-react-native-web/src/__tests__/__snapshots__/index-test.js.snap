@@ -66,6 +66,24 @@ import * as ReactNativeModules from 'react-native-web/dist/index';
 "
 `;
 
+exports[`require "react-native" 1`] = `
+"
+const ReactNative = require('react-native');
+const { View } = require('react-native');
+const {  StyleSheet, TouchableOpacity } = require('react-native');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ReactNative = require('react-native-web/dist/index');
+
+const View = require('react-native-web/dist/exports/View');
+
+const StyleSheet = require('react-native-web/dist/exports/StyleSheet');
+
+const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity');
+"
+`;
+
 exports[`require "react-native-web" 1`] = `
 "
 const ReactNative = require('react-native-web');
@@ -74,7 +92,7 @@ const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = requ
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web');
+const ReactNative = require('react-native-web/dist/index');
 
 const createElement = require('react-native-web/dist/exports/createElement');
 
