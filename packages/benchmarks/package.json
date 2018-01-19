@@ -22,6 +22,7 @@
     "react-native-web": "^0.3.2",
     "reactxp": "0.51.0-alpha.9",
     "styled-components": "2.4.0",
+    "styled-jsx": "^2.2.1",
     "styletron-client": "3.0.2",
     "styletron-react": "3.0.3"
   },
