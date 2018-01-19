@@ -32,7 +32,7 @@ module.exports = {
           options: {
             cacheDirectory: false,
             presets: babelPreset,
-            plugins: ['react-native-web']
+            plugins: ['react-native-web', 'styled-jsx/babel']
           }
         }
       }
