@@ -70,7 +70,7 @@ exports[`require "react-native" 1`] = `
 "
 const ReactNative = require('react-native'); 
 const { View } = require('react-native');
-const {  StyleSheet, TouchableOpacity } = require('react-native-web');
+const {  StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 

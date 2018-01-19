@@ -34,7 +34,7 @@ export { ColorPropType, StyleSheet, Text, createElement } from 'react-native-web
     title: 'require "react-native"',
     code: `const ReactNative = require('react-native'); 
 const { View } = require('react-native');
-const {  StyleSheet, TouchableOpacity } = require('react-native-web');`,
+const {  StyleSheet, TouchableOpacity } = require('react-native');`,
     snapshot: true
   },
   {
