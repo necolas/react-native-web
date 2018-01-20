@@ -8,6 +8,6 @@
  * @flow
  */
 
-import StyleRegistry from './StyleRegistry';
-const registry = new StyleRegistry();
+import StyleSheetRegistry from './StyleSheetRegistry';
+const registry = new StyleSheetRegistry();
 export default registry;

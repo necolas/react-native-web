@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register before RTL, resolves to className 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register before RTL, resolves to className 1`] = `
 Object {
   "classList": Array [
     "rn-marginRight-zso239",
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to className 1`] = `
 Object {
   "classList": Array [
     "rn-borderTopColor-1gxhl28",
@@ -31,7 +31,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 2`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to className 2`] = `
 Object {
   "classList": Array [
     "rn-borderTopColor-1gxhl28",
@@ -51,7 +51,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to className 3`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to className 3`] = `
 Object {
   "classList": Array [
     "rn-borderTopColor-1gxhl28",
@@ -71,7 +71,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to mixed 1`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -93,7 +93,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 2`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to mixed 2`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -115,7 +115,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve with register, resolves to mixed 3`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to mixed 3`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -137,7 +137,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 1`] = `
 Object {
   "classList": Array [
     "rn-pointerEvents-ah5dr5",
@@ -159,7 +159,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 2`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 2`] = `
 Object {
   "classList": Array [
     "rn-pointerEvents-ah5dr5",
@@ -181,7 +181,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolve without register, resolves to inline styles 3`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 3`] = `
 Object {
   "classList": Array [
     "rn-pointerEvents-ah5dr5",
@@ -203,7 +203,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful next class names have priority over current inline styles 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolveStateful next class names have priority over current inline styles 1`] = `
 Object {
   "className": "rn-opacity-6dt33c",
   "style": Object {
@@ -212,7 +212,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful next inline styles have priority over current inline styles 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolveStateful next inline styles have priority over current inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {
@@ -223,14 +223,14 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful preserves unrelated class names 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolveStateful preserves unrelated class names 1`] = `
 Object {
   "className": "unknown-class-1 unknown-class-2",
   "style": Object {},
 }
 `;
 
-exports[`apis/StyleSheet/StyleRegistry resolveStateful preserves unrelated inline styles 1`] = `
+exports[`apis/StyleSheet/StyleSheetRegistry resolveStateful preserves unrelated inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {

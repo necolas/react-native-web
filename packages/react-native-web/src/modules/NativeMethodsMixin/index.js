@@ -13,7 +13,7 @@
 import createDOMProps from '../createDOMProps';
 import findNodeHandle from '../../exports/findNodeHandle';
 import i18nStyle from '../../exports/StyleSheet/i18nStyle';
-import StyleRegistry from '../../exports/StyleSheet/registry';
+import styleSheetRegistry from '../../exports/StyleSheet/registry';
 import UIManager from '../../exports/UIManager';
 
 const hyphenPattern = /-([a-z])/g;
@@ -129,7 +129,7 @@ const NativeMethodsMixin = {
     };
     // Next DOM state
     const domProps = createDOMProps(null, props, style =>
-      StyleRegistry.resolveStateful(style, domStyleProps, { i18n: false })
+      styleSheetRegistry.resolveStateful(style, domStyleProps, { i18n: false })
     );
     UIManager.updateView(node, domProps, this);
   }

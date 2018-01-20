@@ -12,7 +12,7 @@
 import flattenStyle from './flattenStyle';
 import getHairlineWidth from './getHairlineWidth';
 import modality from '../../modules/modality';
-import StyleRegistry from './registry';
+import StyleSheetRegistry from './registry';
 
 // initialize focus-ring fix
 modality();
@@ -32,7 +32,7 @@ const absoluteFillObject = {
   top: 0,
   bottom: 0
 };
-const absoluteFill = StyleRegistry.register(absoluteFillObject);
+const absoluteFill = StyleSheetRegistry.register(absoluteFillObject);
 
 const StyleSheet = {
   absoluteFill,
@@ -51,13 +51,13 @@ const StyleSheet = {
         const StyleSheetValidation = require('./StyleSheetValidation').default;
         StyleSheetValidation.validateStyle(key, styles);
       }
-      result[key] = StyleRegistry.register(styles[key]);
+      result[key] = StyleSheetRegistry.register(styles[key]);
     });
     return result;
   },
   flatten: flattenStyle,
   getStyleSheets() {
-    return StyleRegistry.getStyleSheets();
+    return StyleSheetRegistry.getStyleSheets();
   },
   hairlineWidth: getHairlineWidth()
 };

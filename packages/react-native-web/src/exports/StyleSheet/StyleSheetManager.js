@@ -43,7 +43,7 @@ const pointerEventsCss =
   `.${pointerEvents.boxNone} > *{pointer-events:auto;}\n` +
   `.${pointerEvents.boxOnly} > *{pointer-events:none;}`;
 
-export default class StyleManager {
+export default class StyleSheetManager {
   cache = null;
   mainSheet = null;
 

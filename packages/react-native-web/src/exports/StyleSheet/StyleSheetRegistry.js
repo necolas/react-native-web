@@ -18,7 +18,7 @@ import I18nManager from '../I18nManager';
 import i18nStyle from './i18nStyle';
 import { prefixInlineStyles } from '../../modules/prefixStyles';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
-import StyleManager from './StyleManager';
+import StyleSheetManager from './StyleSheetManager';
 
 const emptyObject = {};
 
@@ -29,12 +29,12 @@ const createCacheKey = id => {
 
 const classListToString = list => list.join(' ').trim();
 
-export default class StyleRegistry {
+export default class StyleSheetRegistry {
   cache = { ltr: {}, rtl: {} };
-  styleManager = new StyleManager();
+  styleSheetManager = new StyleSheetManager();
 
   getStyleSheets() {
-    return this.styleManager.getStyleSheets();
+    return this.styleSheetManager.getStyleSheets();
   }
 
   /**
@@ -54,7 +54,7 @@ export default class StyleRegistry {
       Object.keys(domStyle).forEach(styleProp => {
         const value = domStyle[styleProp];
         if (value != null) {
-          this.styleManager.setDeclaration(styleProp, value);
+          this.styleSheetManager.setDeclaration(styleProp, value);
         }
       });
       this.cache[dir][id] = true;
@@ -112,7 +112,7 @@ export default class StyleRegistry {
     // Preserves unrecognized class names.
     const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
       (styleProps, className) => {
-        const { prop, value } = this.styleManager.getDeclaration(className);
+        const { prop, value } = this.styleSheetManager.getDeclaration(className);
         if (prop) {
           styleProps.style[prop] = value;
         } else {
@@ -132,7 +132,7 @@ export default class StyleRegistry {
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
     rdomClassListNext.forEach(className => {
-      const { prop } = this.styleManager.getDeclaration(className);
+      const { prop } = this.styleSheetManager.getDeclaration(className);
       if (style[prop]) {
         style[prop] = '';
       }
@@ -158,7 +158,7 @@ export default class StyleRegistry {
       (props, styleProp) => {
         const value = domStyle[styleProp];
         if (value != null) {
-          const className = this.styleManager.getClassName(styleProp, value);
+          const className = this.styleSheetManager.getClassName(styleProp, value);
           if (className) {
             props.classList.push(className);
           } else {
