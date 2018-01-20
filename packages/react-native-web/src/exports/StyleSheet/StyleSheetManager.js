@@ -21,57 +21,43 @@ const createClassName = (prop, value) => {
   return process.env.NODE_ENV !== 'production' ? `rn-${prop}-${hashed}` : `rn-${hashed}`;
 };
 
-const createCssRule = (className, prop, value) => {
-  const css = generateCss({ [prop]: value });
-  const selector = `.${className}`;
-  return `${selector}{${css}}`;
-};
+const createCssRules = (selector, prop, value) => {
+  const rules = [];
+  let v = value;
 
-const pointerEvents = {
-  auto: createClassName('pointerEvents', 'auto'),
-  boxNone: createClassName('pointerEvents', 'box-none'),
-  boxOnly: createClassName('pointerEvents', 'box-only'),
-  none: createClassName('pointerEvents', 'none')
+  // pointerEvents is a special case that requires custom values and additional css rules
+  if (prop === 'pointerEvents') {
+    if (value === 'auto' || value === 'box-only') {
+      v = 'auto !important';
+      if (value === 'box-only') {
+        const css = generateCss({ [prop]: 'none' });
+        rules.push(`${selector} > *{${css}}`);
+      }
+    } else if (value === 'none' || value === 'box-none') {
+      v = 'none !important';
+      if (value === 'box-none') {
+        const css = generateCss({ [prop]: 'auto' });
+        rules.push(`${selector} > *{${css}}`);
+      }
+    }
+  }
+
+  const css = generateCss({ [prop]: v });
+  rules.push(`${selector}{${css}}`);
+
+  return rules;
 };
 
 // See #513
-const pointerEventsCss =
-  `.${pointerEvents.auto}{pointer-events:auto !important;}\n` +
-  `.${pointerEvents.boxOnly}{pointer-events:auto !important;}\n` +
-  `.${pointerEvents.none}{pointer-events:none !important;}\n` +
-  `.${pointerEvents.boxNone}{pointer-events:none !important;}\n` +
-  `.${pointerEvents.boxNone} > *{pointer-events:auto;}\n` +
-  `.${pointerEvents.boxOnly} > *{pointer-events:none;}`;
 
 export default class StyleSheetManager {
   cache = null;
   mainSheet = null;
 
   constructor() {
-    // custom pointer event values are implemented using descendent selectors,
-    // so we manually create the CSS and pre-register the declarations
-    const pointerEventsPropName = 'pointerEvents';
     this.cache = {
-      byClassName: {
-        [pointerEvents.auto]: { prop: pointerEventsPropName, value: 'auto' },
-        [pointerEvents.boxNone]: {
-          prop: pointerEventsPropName,
-          value: 'box-none'
-        },
-        [pointerEvents.boxOnly]: {
-          prop: pointerEventsPropName,
-          value: 'box-only'
-        },
-        [pointerEvents.none]: { prop: pointerEventsPropName, value: 'none' }
-      },
-      byProp: {
-        pointerEvents: {
-          auto: pointerEvents.auto,
-          'box-none': pointerEvents.boxNone,
-          'box-only': pointerEvents.boxOnly,
-          none: pointerEvents.none
-        }
-      }
+      byClassName: {},
+      byProp: {}
     };
 
     // on the client we check for an existing style sheet before injecting style sheets
@@ -84,6 +70,11 @@ export default class StyleSheetManager {
         this.mainSheet = document.getElementById(STYLE_ELEMENT_ID);
       }
     }
+
+    // need to pre-register pointerEvents as they have no inline-style equivalent
+    ['box-only', 'box-none', 'auto', 'none'].forEach(v => {
+      this.setDeclaration('pointerEvents', v);
+    });
   }
 
   getClassName(prop, value) {
@@ -110,13 +101,12 @@ export default class StyleSheetManager {
 
     const mainSheetTextContext = Object.keys(cache)
       .reduce((rules, prop) => {
-        if (prop !== 'pointerEvents') {
-          Object.keys(cache[prop]).forEach(value => {
-            const className = this.getClassName(prop, value);
-            const rule = createCssRule(className, prop, value);
-            rules.push(rule);
-          });
-        }
+        Object.keys(cache[prop]).forEach(value => {
+          const className = this.getClassName(prop, value);
+          const moreRules = createCssRules(`.${className}`, prop, value);
+          rules.push(...moreRules);
+        });
+
         return rules;
       }, [])
       .join('\n');
@@ -124,7 +114,7 @@ export default class StyleSheetManager {
     return [
       {
         id: 'react-native-stylesheet-static',
-        textContent: `${staticCss}\n${pointerEventsCss}`
+        textContent: `${staticCss}`
       },
       {
         id: STYLE_ELEMENT_ID,
@@ -142,8 +132,8 @@ export default class StyleSheetManager {
         const sheet = this.mainSheet.sheet;
         // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
         if (this.mainSheet.textContent.indexOf(className) === -1) {
-          const rule = createCssRule(className, prop, value);
-          sheet.insertRule(rule, sheet.cssRules.length);
+          const rules = createCssRules(`.${className}`, prop, value);
+          rules.forEach(rule => sheet.insertRule(rule, sheet.cssRules.length));
         }
       }
     }

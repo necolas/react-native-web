@@ -39,7 +39,7 @@ No benchmark will run for more than 20 seconds.
 
 MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3 RAM. Google Chrome 63.
 
-Typical render timings*: mean ± standard deviations.
+Typical render timings: mean ± standard deviations.
 
 | Implementation                        | Mount deep tree (ms)    | Mount wide tree (ms)    | Dynamic update (ms)     |
 | :--- | ---: | ---: | ---: |
@@ -66,7 +66,7 @@ Other libraries
 
 Moto G4 (Android 7); Octa-core (4x1.5 GHz & 4x1.2 Ghz); 2 GB RAM. Google Chrome 63
 
-Typical render timings*: mean ± standard deviations.
+Typical render timings: mean ± standard deviations.
 
 | Implementation                        | Mount deep tree (ms)    | Mount wide tree (ms)    | Dynamic update (ms)     |
 | :--- | ---: | ---: | ---: |
