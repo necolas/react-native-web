@@ -8,10 +8,10 @@
  * @noflow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import generateCss from './generateCss';
 import hash from '../../vendor/hash';
-import staticCss from './staticCss';
+import initialRules from './initialRules';
+import WebStyleSheet from './WebStyleSheet';
 
 const emptyObject = {};
 const STYLE_ELEMENT_ID = 'react-native-stylesheet';
@@ -26,6 +26,7 @@ const createCssRules = (selector, prop, value) => {
   let v = value;
 
   // pointerEvents is a special case that requires custom values and additional css rules
+  // See #513
   if (prop === 'pointerEvents') {
     if (value === 'auto' || value === 'box-only') {
       v = 'auto !important';
@@ -48,11 +49,9 @@ const createCssRules = (selector, prop, value) => {
   return rules;
 };
 
-// See #513
-
 export default class StyleSheetManager {
   cache = null;
-  mainSheet = null;
+  _webStyleSheet = null;
 
   constructor() {
     this.cache = {
@@ -60,18 +59,14 @@ export default class StyleSheetManager {
       byProp: {}
     };
 
-    // on the client we check for an existing style sheet before injecting style sheets
-    if (canUseDOM) {
-      const prerenderedStyleSheet = document.getElementById(STYLE_ELEMENT_ID);
-      if (prerenderedStyleSheet) {
-        this.mainSheet = prerenderedStyleSheet;
-      } else {
-        document.head.insertAdjacentHTML('afterbegin', this.getStyleSheetHtml());
-        this.mainSheet = document.getElementById(STYLE_ELEMENT_ID);
-      }
-    }
+    this._webStyleSheet = new WebStyleSheet(STYLE_ELEMENT_ID);
+    initialRules.forEach(rule => {
+      this._webStyleSheet.insertRuleOnce(rule);
+    });
 
     // need to pre-register pointerEvents as they have no inline-style equivalent
+    // TODO: make it so inline style can register pointerEvents when needed. might need
+    // this for placeholder text color implementation, and keyframes too
     ['box-only', 'box-none', 'auto', 'none'].forEach(v => {
       this.setDeclaration('pointerEvents', v);
     });
@@ -87,38 +82,13 @@ export default class StyleSheetManager {
     return cache[className] || emptyObject;
   }
 
-  getStyleSheetHtml() {
-    const styleSheets = this.getStyleSheets();
-    return styleSheets
-      .map(sheet => {
-        return `<style id="${sheet.id}">\n${sheet.textContent}\n</style>`;
-      })
-      .join('\n');
-  }
-
   getStyleSheets() {
-    const cache = this.cache.byProp;
-
-    const mainSheetTextContext = Object.keys(cache)
-      .reduce((rules, prop) => {
-        Object.keys(cache[prop]).forEach(value => {
-          const className = this.getClassName(prop, value);
-          const moreRules = createCssRules(`.${className}`, prop, value);
-          rules.push(...moreRules);
-        });
-
-        return rules;
-      }, [])
-      .join('\n');
+    const { cssText } = this._webStyleSheet;
 
     return [
       {
-        id: 'react-native-stylesheet-static',
-        textContent: `${staticCss}`
-      },
-      {
         id: STYLE_ELEMENT_ID,
-        textContent: `${mainSheetTextContext}`
+        textContent: cssText
       }
     ];
   }
@@ -128,14 +98,10 @@ export default class StyleSheetManager {
     if (!className) {
       className = createClassName(prop, value);
       this._addToCache(className, prop, value);
-      if (canUseDOM) {
-        const sheet = this.mainSheet.sheet;
-        // avoid injecting if the rule already exists (e.g., server rendered, hot reload)
-        if (this.mainSheet.textContent.indexOf(className) === -1) {
-          const rules = createCssRules(`.${className}`, prop, value);
-          rules.forEach(rule => sheet.insertRule(rule, sheet.cssRules.length));
-        }
-      }
+      const rules = createCssRules(`.${className}`, prop, value);
+      rules.forEach(rule => {
+        this._webStyleSheet.insertRuleOnce(rule);
+      });
     }
     return className;
   }

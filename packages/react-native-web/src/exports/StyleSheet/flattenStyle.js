@@ -24,7 +24,7 @@ function getStyle(style) {
 }
 
 function flattenStyle(style: ?StyleObj): ?Object {
-  if (style == null || typeof style === 'boolean') {
+  if (!style) {
     return undefined;
   }
 
@@ -33,6 +33,7 @@ function flattenStyle(style: ?StyleObj): ?Object {
   }
 
   if (!Array.isArray(style)) {
+    // $FlowFixMe
     return getStyle(style);
   }
 

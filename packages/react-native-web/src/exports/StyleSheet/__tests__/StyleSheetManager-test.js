@@ -23,14 +23,13 @@ describe('apis/StyleSheet/StyleSheetManager', () => {
     });
   });
 
-  test('getStyleSheetHtml', () => {
-    expect(styleSheetManager.getStyleSheetHtml()).toMatchSnapshot();
-    styleSheetManager.setDeclaration('width', '100px');
-    expect(styleSheetManager.getStyleSheetHtml()).toMatchSnapshot();
+  test('getStyleSheets', () => {
+    styleSheetManager.setDeclaration('--test-property', 'test-value');
+    expect(styleSheetManager.getStyleSheets()).toMatchSnapshot();
   });
 
   test('setDeclaration', () => {
-    styleSheetManager.mainSheet.sheet.insertRule = (rule, position) => {
+    styleSheetManager._webStyleSheet.insertRuleOnce = (rule, position) => {
       // check for regressions in CSS write path (e.g., 0 => 0px)
       expect(rule.indexOf('-webkit-flex-shrink:0;')).not.toEqual(-1);
     };
