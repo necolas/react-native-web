@@ -63,13 +63,6 @@ export default class StyleSheetManager {
     initialRules.forEach(rule => {
       this._webStyleSheet.insertRuleOnce(rule);
     });
-
-    // need to pre-register pointerEvents as they have no inline-style equivalent
-    // TODO: make it so inline style can register pointerEvents when needed. might need
-    // this for placeholder text color implementation, and keyframes too
-    ['box-only', 'box-none', 'auto', 'none'].forEach(v => {
-      this.setDeclaration('pointerEvents', v);
-    });
   }
 
   getClassName(prop, value) {

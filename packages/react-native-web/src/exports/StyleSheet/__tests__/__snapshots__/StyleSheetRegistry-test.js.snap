@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`apis/StyleSheet/StyleSheetRegistry resolve resolves inline-style pointerEvents to classname 1`] = `
+Object {
+  "classList": Array [
+    "rn-pointerEvents-12vffkv",
+  ],
+  "className": "rn-pointerEvents-12vffkv",
+}
+`;
+
 exports[`apis/StyleSheet/StyleSheetRegistry resolve with register before RTL, resolves to className 1`] = `
 Object {
   "classList": Array [
@@ -23,11 +32,11 @@ Object {
     "rn-borderBottomWidth-ndvcnb",
     "rn-borderLeftWidth-gxnn5r",
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-b8lwoo",
   ],
-  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-b8lwoo",
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
 }
 `;
 
@@ -43,11 +52,11 @@ Object {
     "rn-borderBottomWidth-ndvcnb",
     "rn-borderLeftWidth-gxnn5r",
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-l0gwng",
   ],
-  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-l0gwng",
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
 }
 `;
 
@@ -63,11 +72,11 @@ Object {
     "rn-borderBottomWidth-ndvcnb",
     "rn-borderLeftWidth-gxnn5r",
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-b8lwoo",
   ],
-  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-b8lwoo",
+  "className": "rn-borderTopColor-1gxhl28 rn-borderRightColor-knoah9 rn-borderBottomColor-1ani3fp rn-borderLeftColor-ribj9x rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
 }
 `;
 
@@ -75,10 +84,10 @@ exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to m
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
   ],
-  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d",
+  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -97,11 +106,11 @@ exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to m
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-l0gwng",
   ],
-  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d rn-width-l0gwng",
+  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -119,10 +128,10 @@ exports[`apis/StyleSheet/StyleSheetRegistry resolve with register, resolves to m
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
-    "rn-pointerEvents-ah5dr5",
+    "rn-opacity-icoktb",
     "rn-position-u8s1d",
   ],
-  "className": "rn-left-1tsx3h3 rn-pointerEvents-ah5dr5 rn-position-u8s1d",
+  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -139,10 +148,8 @@ Object {
 
 exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 1`] = `
 Object {
-  "classList": Array [
-    "rn-pointerEvents-ah5dr5",
-  ],
-  "className": "rn-pointerEvents-ah5dr5",
+  "classList": Array [],
+  "className": "",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -153,6 +160,7 @@ Object {
     "borderTopColor": "red",
     "borderTopWidth": "0px",
     "left": "50px",
+    "opacity": 0.5,
     "position": "absolute",
     "width": "100px",
   },
@@ -161,10 +169,8 @@ Object {
 
 exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 2`] = `
 Object {
-  "classList": Array [
-    "rn-pointerEvents-ah5dr5",
-  ],
-  "className": "rn-pointerEvents-ah5dr5",
+  "classList": Array [],
+  "className": "",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -175,6 +181,7 @@ Object {
     "borderTopColor": "red",
     "borderTopWidth": "0px",
     "left": "50px",
+    "opacity": 0.5,
     "position": "absolute",
     "width": "200px",
   },
@@ -183,10 +190,8 @@ Object {
 
 exports[`apis/StyleSheet/StyleSheetRegistry resolve without register, resolves to inline styles 3`] = `
 Object {
-  "classList": Array [
-    "rn-pointerEvents-ah5dr5",
-  ],
-  "className": "rn-pointerEvents-ah5dr5",
+  "classList": Array [],
+  "className": "",
   "style": Object {
     "borderBottomColor": "red",
     "borderBottomWidth": "0px",
@@ -197,6 +202,7 @@ Object {
     "borderTopColor": "red",
     "borderTopWidth": "0px",
     "left": "50px",
+    "opacity": 0.5,
     "position": "absolute",
     "width": "100px",
   },

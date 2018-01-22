@@ -21,7 +21,7 @@ describe('apis/StyleSheet/StyleSheetRegistry', () => {
     const styleB = {
       position: 'absolute',
       left: 50,
-      pointerEvents: 'box-only'
+      opacity: 0.5
     };
     const styleC = { width: 200 };
 
@@ -66,6 +66,10 @@ describe('apis/StyleSheet/StyleSheetRegistry', () => {
 
     test('without register, resolves to inline styles', () => {
       testResolve(styleA, styleB, styleC);
+    });
+
+    test('resolves inline-style pointerEvents to classname', () => {
+      expect(styleSheetRegistry.resolve({ pointerEvents: 'box-none' })).toMatchSnapshot();
     });
   });
 

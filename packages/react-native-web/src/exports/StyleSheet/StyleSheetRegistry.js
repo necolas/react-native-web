@@ -162,11 +162,21 @@ export default class StyleSheetRegistry {
           if (className) {
             props.classList.push(className);
           } else {
-            if (!props.style) {
-              props.style = {};
+            // Certain properties and values are not transformed by 'createReactDOMStyle' as they
+            // require more complex transforms into multiple CSS rules. Here we make sure the styles
+            // can be represented by a className and don't end up as invalid inline-styles.
+            if (styleProp === 'pointerEvents') {
+              const className = this.styleSheetManager.setDeclaration(styleProp, value);
+              props.classList.push(className);
+              // } else if (styleProp ==='placeholderTextColor') {
+              // } else if (styleProp ==='animationName') {
+            } else {
+              if (!props.style) {
+                props.style = {};
+              }
+              // 4x slower render
+              props.style[styleProp] = value;
             }
-            // 4x slower render
-            props.style[styleProp] = value;
           }
         }
         return props;
