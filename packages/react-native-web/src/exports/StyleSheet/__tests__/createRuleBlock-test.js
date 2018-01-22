@@ -1,8 +1,8 @@
 /* eslint-env jasmine, jest */
 
-import generateCss from '../generateCss';
+import createRuleBlock from '../createRuleBlock';
 
-describe('apis/StyleSheet/generateCss', () => {
+describe('StyleSheet/createRuleBlock', () => {
   test('generates correct css', () => {
     const style = {
       boxShadow: '1px 1px 1px 1px #000',
@@ -11,6 +11,6 @@ describe('apis/StyleSheet/generateCss', () => {
       position: 'absolute',
       transitionDuration: '0.1s'
     };
-    expect(generateCss(style)).toMatchSnapshot();
+    expect(createRuleBlock(style)).toMatchSnapshot();
   });
 });

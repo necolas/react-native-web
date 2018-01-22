@@ -10,7 +10,7 @@
 
 import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet from '../../exports/StyleSheet';
-import StyleSheetRegistry from '../../exports/StyleSheet/registry';
+import styleResolver from '../../exports/StyleSheet/styleResolver';
 
 const emptyObject = {};
 
@@ -53,7 +53,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const defaultStyleResolver = style => StyleSheetRegistry.resolve(style);
+const defaultStyleResolver = style => styleResolver.resolve(style);
 
 const createDOMProps = (component, props, styleResolver) => {
   if (!styleResolver) {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/StyleSheet/i18nStyle LTR mode does not auto-flip 1`] = `
+exports[`StyleSheet/i18nStyle LTR mode does not auto-flip 1`] = `
 Object {
   "borderBottomLeftRadius": 20,
   "borderBottomRightRadius": "2rem",
@@ -26,7 +26,7 @@ Object {
 }
 `;
 
-exports[`apis/StyleSheet/i18nStyle RTL mode does auto-flip 1`] = `
+exports[`StyleSheet/i18nStyle RTL mode does auto-flip 1`] = `
 Object {
   "borderBottomLeftRadius": "2rem",
   "borderBottomRightRadius": 20,

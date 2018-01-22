@@ -8,7 +8,7 @@
  * @noflow
  */
 
-import generateCss from './generateCss';
+import createAtomicRules from './createAtomicRules';
 import hash from '../../vendor/hash';
 import initialRules from './initialRules';
 import WebStyleSheet from './WebStyleSheet';
@@ -21,62 +21,31 @@ const createClassName = (prop, value) => {
   return process.env.NODE_ENV !== 'production' ? `rn-${prop}-${hashed}` : `rn-${hashed}`;
 };
 
-const createCssRules = (selector, prop, value) => {
-  const rules = [];
-  let v = value;
-
-  // pointerEvents is a special case that requires custom values and additional css rules
-  // See #513
-  if (prop === 'pointerEvents') {
-    if (value === 'auto' || value === 'box-only') {
-      v = 'auto !important';
-      if (value === 'box-only') {
-        const css = generateCss({ [prop]: 'none' });
-        rules.push(`${selector} > *{${css}}`);
-      }
-    } else if (value === 'none' || value === 'box-none') {
-      v = 'none !important';
-      if (value === 'box-none') {
-        const css = generateCss({ [prop]: 'auto' });
-        rules.push(`${selector} > *{${css}}`);
-      }
-    }
-  }
-
-  const css = generateCss({ [prop]: v });
-  rules.push(`${selector}{${css}}`);
-
-  return rules;
-};
-
 export default class StyleSheetManager {
-  cache = null;
-  _webStyleSheet = null;
+  _cache = {
+    byClassName: {},
+    byProp: {}
+  };
 
-  constructor() {
-    this.cache = {
-      byClassName: {},
-      byProp: {}
-    };
-
-    this._webStyleSheet = new WebStyleSheet(STYLE_ELEMENT_ID);
+  constructor(id) {
+    this._id = this._sheet = new WebStyleSheet(STYLE_ELEMENT_ID);
     initialRules.forEach(rule => {
-      this._webStyleSheet.insertRuleOnce(rule);
+      this._sheet.insertRuleOnce(rule);
     });
   }
 
   getClassName(prop, value) {
-    const cache = this.cache.byProp;
+    const cache = this._cache.byProp;
     return cache[prop] && cache[prop].hasOwnProperty(value) && cache[prop][value];
   }
 
   getDeclaration(className) {
-    const cache = this.cache.byClassName;
+    const cache = this._cache.byClassName;
     return cache[className] || emptyObject;
   }
 
   getStyleSheets() {
-    const { cssText } = this._webStyleSheet;
+    const { cssText } = this._sheet;
 
     return [
       {
@@ -86,21 +55,21 @@ export default class StyleSheetManager {
     ];
   }
 
-  setDeclaration(prop, value) {
+  injectDeclaration(prop, value): string {
     let className = this.getClassName(prop, value);
     if (!className) {
       className = createClassName(prop, value);
       this._addToCache(className, prop, value);
-      const rules = createCssRules(`.${className}`, prop, value);
+      const rules = createAtomicRules(`.${className}`, prop, value);
       rules.forEach(rule => {
-        this._webStyleSheet.insertRuleOnce(rule);
+        this._sheet.insertRuleOnce(rule);
       });
     }
     return className;
   }
 
   _addToCache(className, prop, value) {
-    const cache = this.cache;
+    const cache = this._cache;
     if (!cache.byProp[prop]) {
       cache.byProp[prop] = {};
     }

@@ -11,6 +11,9 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 export default class WebStyleSheet {
+  _cssRules = [];
+  _domStyleElement = null;
+
   constructor(id: string) {
     let _domStyleElement;
 
@@ -26,11 +29,9 @@ export default class WebStyleSheet {
       }
     }
 
+    this.id = id;
     this._domStyleElement = _domStyleElement;
   }
-
-  _cssRules = [];
-  _domStyleElement = null;
 
   containsRule(rule: string): boolean {
     return this._cssRules.indexOf(rule) > -1;
@@ -40,17 +41,21 @@ export default class WebStyleSheet {
     return this._cssRules.join('\n');
   }
 
-  insertRuleOnce(rule: string) {
+  insertRuleOnce(rule: string, position: ?number) {
     // prevent duplicate rules
     if (!this.containsRule(rule)) {
       this._cssRules.push(rule);
+
       // update the native stylesheet (i.e., browser)
       if (this._domStyleElement) {
         // Check whether a rule was part of any prerendered styles (textContent
         // doesn't include styles injected via 'insertRule')
         if (this._domStyleElement.textContent.indexOf(rule) === -1) {
           // $FlowFixMe
-          this._domStyleElement.sheet.insertRule(rule, this._domStyleElement.sheet.cssRules.length);
+          this._domStyleElement.sheet.insertRule(
+            rule,
+            position || this._domStyleElement.sheet.cssRules.length
+          );
         }
       }
     }

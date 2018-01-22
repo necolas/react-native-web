@@ -12,7 +12,8 @@
 import flattenStyle from './flattenStyle';
 import getHairlineWidth from './getHairlineWidth';
 import modality from '../../modules/modality';
-import StyleSheetRegistry from './registry';
+import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import styleResolver from './styleResolver';
 
 // initialize focus-ring fix
 modality();
@@ -32,7 +33,7 @@ const absoluteFillObject = {
   top: 0,
   bottom: 0
 };
-const absoluteFill = StyleSheetRegistry.register(absoluteFillObject);
+const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
 
 const StyleSheet = {
   absoluteFill,
@@ -51,13 +52,16 @@ const StyleSheet = {
         const StyleSheetValidation = require('./StyleSheetValidation').default;
         StyleSheetValidation.validateStyle(key, styles);
       }
-      result[key] = StyleSheetRegistry.register(styles[key]);
+      const id = styles[key] && ReactNativePropRegistry.register(styles[key]);
+      result[key] = id;
+      // TODO: remove
+      styleResolver._injectRegisteredStyle(id);
     });
     return result;
   },
   flatten: flattenStyle,
   getStyleSheets() {
-    return StyleSheetRegistry.getStyleSheets();
+    return styleResolver.getStyleSheets();
   },
   hairlineWidth: getHairlineWidth()
 };

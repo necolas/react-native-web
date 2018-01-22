@@ -11,7 +11,7 @@
 
 import flattenStyle from '../flattenStyle';
 
-describe('apis/StyleSheet/flattenStyle', () => {
+describe('StyleSheet/flattenStyle', () => {
   test('should merge style objects', () => {
     const style = flattenStyle([{ opacity: 1 }, { order: 2 }]);
     expect(style).toMatchSnapshot();

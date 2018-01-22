@@ -1,24 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/StyleSheet/createReactDOMStyle fontFamily fontFamily: "System" 1`] = `
+exports[`StyleSheet/createReactDOMStyle fontFamily fontFamily: "System" 1`] = `
 Object {
   "fontFamily": "-apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif",
 }
 `;
 
-exports[`apis/StyleSheet/createReactDOMStyle fontFamily fontFamily: "monospace" 1`] = `
+exports[`StyleSheet/createReactDOMStyle fontFamily fontFamily: "monospace" 1`] = `
 Object {
   "fontFamily": "monospace, monospace",
 }
 `;
 
-exports[`apis/StyleSheet/createReactDOMStyle fontFamily general case 1`] = `
+exports[`StyleSheet/createReactDOMStyle fontFamily general case 1`] = `
 Object {
   "fontFamily": "Georgia, Times, serif",
 }
 `;
 
-exports[`apis/StyleSheet/createReactDOMStyle shortform -> longform 1`] = `
+exports[`StyleSheet/createReactDOMStyle shortform -> longform 1`] = `
 Object {
   "borderBottomColor": "white",
   "borderBottomStyle": "solid",

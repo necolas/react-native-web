@@ -24,7 +24,7 @@ const style = {
   textShadowOffset: { width: '1rem', height: 10 }
 };
 
-describe('apis/StyleSheet/i18nStyle', () => {
+describe('StyleSheet/i18nStyle', () => {
   describe('LTR mode', () => {
     beforeEach(() => {
       I18nManager.allowRTL(false);

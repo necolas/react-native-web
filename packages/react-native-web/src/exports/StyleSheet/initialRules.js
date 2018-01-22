@@ -8,20 +8,24 @@
  * @flow
  */
 
-// "media all" wrapper stops browsers throwing errors on each others vendor-prefixed pseudo-elements in selectors
-const safeRule = rule => `@media all{${rule}}`;
+// Prevent browsers throwing parse errors, e.g., on vendor-prefixed pseudo-elements
+const safeRule = rule => `@media all{\n${rule}\n}`;
 
-const initialRules = [
+const resets = [
   // minimal top-level reset
   'html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
   'body{margin:0;}',
   // minimal form pseudo-element reset
-  safeRule('button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}'),
-  safeRule(
-    'input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,' +
-      'input::-webkit-search-cancel-button,input::-webkit-search-decoration,' +
-      'input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
-  ),
+  'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}',
+  'input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,' +
+    'input::-webkit-search-cancel-button,input::-webkit-search-decoration,' +
+    'input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
+];
+
+const reset = safeRule(resets.join('\n'));
+
+const initialRules = [
+  reset,
   // temporary keyframes
   '@keyframes rn-ActivityIndicator-animation{' +
     '0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}' +

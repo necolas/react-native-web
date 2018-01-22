@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyleSheet/createRuleBlock generates correct css 1`] = `"-webkit-transition-duration:0.1s;border-width-left:2px;border-width-right:3px;box-shadow:1px 1px 1px 1px #000;position:absolute;transition-duration:0.1s"`;

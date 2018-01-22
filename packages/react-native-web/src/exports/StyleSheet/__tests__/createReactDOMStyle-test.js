@@ -15,7 +15,7 @@ const reactNativeStyle = {
   resizeMode: 'contain'
 };
 
-describe('apis/StyleSheet/createReactDOMStyle', () => {
+describe('StyleSheet/createReactDOMStyle', () => {
   test('noop on DOM styles', () => {
     const firstStyle = createReactDOMStyle(reactNativeStyle);
     const secondStyle = createReactDOMStyle(firstStyle);

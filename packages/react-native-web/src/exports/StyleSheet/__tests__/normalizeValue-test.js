@@ -2,7 +2,7 @@
 
 import normalizeValue from '../normalizeValue';
 
-describe('apis/StyleSheet/normalizeValue', () => {
+describe('StyleSheet/normalizeValue', () => {
   test('normalizes property values requiring units', () => {
     expect(normalizeValue('margin', 0)).toEqual('0px');
   });

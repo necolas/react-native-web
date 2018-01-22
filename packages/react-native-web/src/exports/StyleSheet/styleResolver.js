@@ -8,6 +8,6 @@
  * @flow
  */
 
-import StyleSheetRegistry from './StyleSheetRegistry';
-const registry = new StyleSheetRegistry();
-export default registry;
+import ReactNativeStyleResolver from './ReactNativeStyleResolver';
+const styleResolver = new ReactNativeStyleResolver();
+export default styleResolver;

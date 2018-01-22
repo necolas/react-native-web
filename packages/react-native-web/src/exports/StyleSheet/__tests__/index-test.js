@@ -13,7 +13,7 @@ const isPlainObject = x => {
   /* eslint-enable */
 };
 
-describe('apis/StyleSheet', () => {
+describe('StyleSheet', () => {
   test('absoluteFill', () => {
     expect(Number.isInteger(StyleSheet.absoluteFill) === true).toBeTruthy();
   });
