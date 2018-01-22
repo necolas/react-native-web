@@ -74,7 +74,7 @@ type BenchmarkPropsType = {
 };
 
 type BenchmarkStateType = {
-  getComponentProps: Function,
+  componentProps: Object,
   cycle: number,
   running: boolean
 };
@@ -100,9 +100,10 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
   constructor(props: BenchmarkPropsType, context?: {}) {
     super(props, context);
+    const cycle = 0;
     this.state = {
-      getComponentProps: props.getComponentProps,
-      cycle: 0,
+      componentProps: props.getComponentProps({ cycle }),
+      cycle,
       running: false
     };
     this._startTime = 0;
@@ -110,7 +111,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
   }
 
   componentWillReceiveProps(nextProps: BenchmarkPropsType) {
-    this.setState(state => ({ getComponentProps: nextProps.getComponentProps }));
+    this.setState(state => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
   }
 
   componentWillUpdate(nextProps: BenchmarkPropsType, nextState: BenchmarkStateType) {
@@ -145,13 +146,11 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
   render() {
     const { component: Component, type } = this.props;
-    const { getComponentProps, cycle, running } = this.state;
+    const { componentProps, cycle, running } = this.state;
     if (running && shouldRecord(cycle, type)) {
       this._samples[cycle] = { start: Timing.now() };
     }
-    return running && shouldRender(cycle, type) ? (
-      <Component {...getComponentProps({ cycle })} />
-    ) : null;
+    return running && shouldRender(cycle, type) ? <Component {...componentProps} /> : null;
   }
 
   start() {
@@ -165,15 +164,16 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
     // Calculate the component props outside of the time recording (render)
     // so that it doesn't skew results
-    const getNextProps =
-      type === BenchmarkType.UPDATE
-        ? obj => ({ ...getComponentProps(obj), 'data-test': cycle })
-        : getComponentProps;
+    const componentProps = getComponentProps({ cycle });
+    // make sure props always change for update tests
+    if (type === BenchmarkType.UPDATE) {
+      componentProps['data-test'] = cycle;
+    }
 
     this.raf = window.requestAnimationFrame(() => {
       this.setState((state: BenchmarkStateType) => ({
-        getComponentProps: getNextProps,
-        cycle: state.cycle + 1
+        cycle: state.cycle + 1,
+        componentProps
       }));
     });
   }

@@ -53,35 +53,34 @@ class SierpinskiTriangle extends React.Component {
 
       s /= 2;
 
-      return [
-        <SierpinskiTriangle
-          components={components}
-          depth={1}
-          key={1}
-          renderCount={renderCount}
-          s={s}
-          x={x}
-          y={y - s / 2}
-        />,
-        <SierpinskiTriangle
-          components={components}
-          depth={2}
-          key={2}
-          renderCount={renderCount}
-          s={s}
-          x={x - s}
-          y={y + s / 2}
-        />,
-        <SierpinskiTriangle
-          components={components}
-          depth={3}
-          key={3}
-          renderCount={renderCount}
-          s={s}
-          x={x + s}
-          y={y + s / 2}
-        />
-      ];
+      return (
+        <React.Fragment>
+          <SierpinskiTriangle
+            components={components}
+            depth={1}
+            renderCount={renderCount}
+            s={s}
+            x={x}
+            y={y - s / 2}
+          />
+          <SierpinskiTriangle
+            components={components}
+            depth={2}
+            renderCount={renderCount}
+            s={s}
+            x={x - s}
+            y={y + s / 2}
+          />
+          <SierpinskiTriangle
+            components={components}
+            depth={3}
+            renderCount={renderCount}
+            s={s}
+            x={x + s}
+            y={y + s / 2}
+          />
+        </React.Fragment>
+      );
     } else {
       return <span style={{ color: 'white' }}>No implementation available</span>;
     }
