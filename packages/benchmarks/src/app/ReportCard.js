@@ -8,45 +8,49 @@ const fmt = (time: number) => {
   return 10 / i > 1 ? `0${i}` : i;
 };
 
-const ReportCard = ({
-  benchmarkName,
-  libraryName,
-  sampleCount,
-  mean,
-  stdDev,
-  runTime,
-  libraryVersion
-}) => {
-  const sampleCountText = sampleCount != null ? `(${sampleCount})` : '';
+class ReportCard extends React.PureComponent {
+  render() {
+    const {
+      benchmarkName,
+      libraryName,
+      sampleCount,
+      mean,
+      stdDev,
+      runTime,
+      libraryVersion
+    } = this.props;
 
-  return (
-    <View style={styles.root}>
-      <View style={styles.left}>
-        <Text numberOfLines={1} style={styles.bold}>
-          {`${libraryName}${libraryVersion ? '@' + libraryVersion : ''}`}
-        </Text>
-        <Text numberOfLines={1}>
-          {benchmarkName} {sampleCountText}
-        </Text>
+    const sampleCountText = sampleCount != null ? `(${sampleCount})` : '';
+
+    return (
+      <View style={styles.root}>
+        <View style={styles.left}>
+          <Text numberOfLines={1} style={styles.bold}>
+            {`${libraryName}${libraryVersion ? '@' + libraryVersion : ''}`}
+          </Text>
+          <Text numberOfLines={1}>
+            {benchmarkName} {sampleCountText}
+          </Text>
+        </View>
+        <View style={styles.right}>
+          {mean ? (
+            <Fragment>
+              <Text style={[styles.bold, styles.monoFont]}>
+                {fmt(mean)} ±{fmt(stdDev)} ms
+              </Text>
+              <Text style={[styles.monoFont, styles.centerText]}>
+                <Text style={styles.smallText}>Σ = </Text>
+                <Text>{Math.round(runTime)} ms</Text>
+              </Text>
+            </Fragment>
+          ) : (
+            <Text style={styles.bold}>In progress…</Text>
+          )}
+        </View>
       </View>
-      <View style={styles.right}>
-        {mean ? (
-          <Fragment>
-            <Text style={[styles.bold, styles.monoFont]}>
-              {fmt(mean)} ±{fmt(stdDev)} ms
-            </Text>
-            <Text style={[styles.monoFont, styles.centerText]}>
-              <Text style={styles.smallText}>Σ = </Text>
-              <Text>{Math.round(runTime)} ms</Text>
-            </Text>
-          </Fragment>
-        ) : (
-          <Text style={styles.bold}>In progress…</Text>
-        )}
-      </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   root: {

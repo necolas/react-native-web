@@ -19,11 +19,13 @@ export default class Layout extends Component {
     const { widescreen } = this.state;
     return (
       <View onLayout={this._handleLayout} style={[styles.root, widescreen && styles.row]}>
-        <View style={widescreen ? styles.grow : styles.stackPanel}>{viewPanel}</View>
+        <View style={[widescreen ? styles.grow : styles.stackPanel, styles.layer]}>
+          {viewPanel}
+        </View>
         <View style={styles.grow}>
-          <View style={styles.grow}>{listPanel}</View>
+          <View style={[styles.grow, styles.layer]}>{listPanel}</View>
           <View style={styles.divider} />
-          <View>{actionPanel}</View>
+          <View style={styles.layer}>{actionPanel}</View>
         </View>
       </View>
     );
@@ -59,5 +61,8 @@ const styles = StyleSheet.create({
   },
   stackPanel: {
     height: '33.33%'
+  },
+  layer: {
+    transform: [{ translateZ: '0' }]
   }
 });
