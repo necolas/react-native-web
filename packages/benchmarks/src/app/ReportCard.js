@@ -8,7 +8,15 @@ const fmt = (time: number) => {
   return 10 / i > 1 ? `0${i}` : i;
 };
 
-const ReportCard = ({ benchmarkName, libraryName, sampleCount, mean, stdDev, libraryVersion }) => {
+const ReportCard = ({
+  benchmarkName,
+  libraryName,
+  sampleCount,
+  mean,
+  stdDev,
+  runTime,
+  libraryVersion
+}) => {
   const sampleCountText = sampleCount != null ? `(${sampleCount})` : '';
 
   return (
@@ -29,7 +37,7 @@ const ReportCard = ({ benchmarkName, libraryName, sampleCount, mean, stdDev, lib
             </Text>
             <Text style={[styles.monoFont, styles.centerText]}>
               <Text style={styles.smallText}>Σ = </Text>
-              <Text>{Math.round(mean * sampleCount)} ms</Text>
+              <Text>{Math.round(runTime)} ms</Text>
             </Text>
           </Fragment>
         ) : (

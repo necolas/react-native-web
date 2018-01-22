@@ -100,6 +100,7 @@ export default class App extends Component {
                     libraryName={r.libraryName}
                     libraryVersion={r.libraryVersion}
                     mean={r.mean}
+                    runTime={r.runTime}
                     sampleCount={r.sampleCount}
                     stdDev={r.stdDev}
                   />
