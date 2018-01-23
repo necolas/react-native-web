@@ -255,24 +255,32 @@
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/inline-style-prefixer/-/inline-style-prefixer-3.0.1.tgz#8541e636b029124b747952e9a28848286d2b5bf6"
 
-"@types/lodash@^4.14.64", "@types/lodash@^4.14.78":
+"@types/lodash@^4.14.64":
   version "4.14.91"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.91.tgz#794611b28056d16b5436059c6d800b39d573cd3a"
+
+"@types/lodash@^4.14.80":
+  version "4.14.93"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.93.tgz#a6d2a1e1601a3c29196f38ef1990b68a9afa1e1c"
 
 "@types/node@*":
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
 
-"@types/react-dom@^16.0.0":
+"@types/react-dom@^16.0.3":
   version "16.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.3.tgz#8accad7eabdab4cca3e1a56f5ccb57de2da0ff64"
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.0", "@types/react@^16.0.18":
+"@types/react@*", "@types/react@^16.0.18":
   version "16.0.31"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.31.tgz#5285da62f3ac62b797f6d0729a1d6181f3180c3e"
+
+"@types/react@^16.0.9":
+  version "16.0.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.34.tgz#7a8f795afd8a404a9c4af9539b24c75d3996914e"
 
 JSONStream@^1.0.4:
   version "1.3.2"
@@ -3329,12 +3337,6 @@ eslint-config-prettier@^2.9.0:
   dependencies:
     get-stdin "^5.0.1"
 
-eslint-plugin-cup@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-cup/-/eslint-plugin-cup-1.0.0.tgz#6ceced9a06d29e6e7bdc76ca9e398c9bf53072be"
-  dependencies:
-    globals "^10.0.0"
-
 eslint-plugin-promise@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-3.6.0.tgz#54b7658c8f454813dc2a870aff8152ec4969ba75"
@@ -3623,6 +3625,15 @@ fbjs@^0.8.12, fbjs@^0.8.16, fbjs@^0.8.5, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
 
+fela-bindings@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-1.3.4.tgz#f48887dfed8c0948d851af14b18434d902cb034f"
+  dependencies:
+    fast-loops "^1.0.0"
+    fela-dom "^7.0.4"
+    fela-tools "^5.1.2"
+    shallow-equal "^1.0.0"
+
 fela-dom@^5.0.0:
   version "5.0.8"
   resolved "https://registry.npmjs.org/fela-dom/-/fela-dom-5.0.8.tgz#e793596b01075aec0b89b67935db70a2d6dc0da8"
@@ -3630,7 +3641,15 @@ fela-dom@^5.0.0:
     fela-tools "^5.0.7"
     fela-utils "^6.0.1"
 
-fela-tools@^5.0.0, fela-tools@^5.0.7:
+fela-dom@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-7.0.4.tgz#30a159d12142c5cec376608a5dd1d4395462c4a0"
+  dependencies:
+    css-in-js-utils "^2.0.0"
+    fast-loops "^1.0.0"
+    fela-utils "^8.0.3"
+
+fela-tools@^5.0.0, fela-tools@^5.0.7, fela-tools@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/fela-tools/-/fela-tools-5.1.2.tgz#c6760b42d72116911c2c0341b6d880cfc11c76a8"
   dependencies:
@@ -3665,6 +3684,14 @@ fela@5.0.0:
     css-in-js-utils "^1.0.3"
     fela-tools "^5.0.0"
     fela-utils "^5.0.0"
+
+fela@6.1.3:
+  version "6.1.3"
+  resolved "https://registry.yarnpkg.com/fela/-/fela-6.1.3.tgz#c3bc8726dada63c23914bed9ca79d902e61e9a74"
+  dependencies:
+    css-in-js-utils "2.0.0"
+    fast-loops "^1.0.0"
+    fela-utils "^8.0.3"
 
 fela@^5.0.0:
   version "5.2.0"
@@ -5575,7 +5602,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.x.x, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.1, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.x.x, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -6853,9 +6880,9 @@ querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-radium@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/radium/-/radium-0.21.0.tgz#15ad5f7dccdc9b5a4d09e3c8f23dddcd8717f15b"
+radium@0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/radium/-/radium-0.21.1.tgz#8b91c45af5009240fdbe436a07823ae869ee9124"
   dependencies:
     array-find "^1.0.0"
     exenv "^1.2.1"
@@ -6976,6 +7003,14 @@ react-fela@5.0.0:
   dependencies:
     fela "^5.0.0"
     fela-dom "^5.0.0"
+    prop-types "^15.5.8"
+
+react-fela@6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-6.2.4.tgz#18e5984c22d8eb8921ed4c43500a5f7608b91c40"
+  dependencies:
+    fela-bindings "^1.3.4"
+    fela-dom "^7.0.4"
     prop-types "^15.5.8"
 
 react-fuzzy@^0.5.1:
@@ -7109,20 +7144,20 @@ react@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-reactxp@0.51.0-alpha.9:
-  version "0.51.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/reactxp/-/reactxp-0.51.0-alpha.9.tgz#471ee6e7be65fe2461143eb6f49413cbb321b327"
+reactxp@0.51.1:
+  version "0.51.1"
+  resolved "https://registry.yarnpkg.com/reactxp/-/reactxp-0.51.1.tgz#a24fa83d9f652de0a081f01fe85f3ce6a469101e"
   dependencies:
-    "@types/lodash" "^4.14.78"
-    "@types/react" "^16.0.0"
-    "@types/react-dom" "^16.0.0"
+    "@types/lodash" "^4.14.80"
+    "@types/react" "^16.0.9"
+    "@types/react-dom" "^16.0.3"
     assert "^1.3.0"
     ifvisible.js "^1.0.6"
-    lodash "^4.17.1"
+    lodash "^4.17.4"
     prop-types "^15.5.9"
     rebound "^0.0.13"
     subscribableevent "^1.0.0"
-    synctasks "^0.3.0"
+    synctasks "^0.3.1"
 
 read-cmd-shim@^1.0.1:
   version "1.0.1"
@@ -7622,6 +7657,10 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+shallow-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
+
 shallowequal@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-0.2.2.tgz#1e32fd5bcab6ad688a4812cb0cc04efc75c7014e"
@@ -7937,9 +7976,9 @@ style-loader@^0.19.1:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
 
-styled-components@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.4.0.tgz#086d0fd483d54638837fca3ea546a030b94adf75"
+styled-components@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.0.2.tgz#dbcd66ee84d444ee4332a7f74027e8a675191593"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
@@ -7962,36 +8001,35 @@ styled-jsx@2.2.1:
     stylis "3.4.5"
     stylis-rule-sheet "0.0.7"
 
-styletron-client@3.0.2, styletron-client@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-3.0.2.tgz#9b2853e8b94e6e94d70166b8403f27ab2d10c514"
+styletron-client@3.0.4, styletron-client@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-3.0.4.tgz#50c3fcdc7f45ed0693d68dc174bd0f2fa607cc57"
   dependencies:
-    styletron-core "^3.0.2"
+    styletron-core "^3.0.4"
 
-styletron-core@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-3.0.2.tgz#67513feed50fb39753f72e547d00dfdb619ae79f"
+styletron-core@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-3.0.4.tgz#648081572a8de30acbe3008cd283c421565444bb"
 
-styletron-react@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-3.0.3.tgz#67d2932db82972e0ea60544b7d5b8c6d5aecd3a3"
+styletron-react@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-3.0.4.tgz#fe7714778a809f6c2634b62a334fc0b6ba265a36"
   dependencies:
     "@types/react" "*"
-    eslint-plugin-cup "^1.0.0"
     prop-types "^15.6.0"
-    styletron-client "^3.0.2"
-    styletron-server "^3.0.2"
-    styletron-utils "^3.0.2"
+    styletron-client "^3.0.4"
+    styletron-server "^3.0.4"
+    styletron-utils "^3.0.4"
 
-styletron-server@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/styletron-server/-/styletron-server-3.0.2.tgz#0b989c833ed48437d68b728f65e9406fb8802de6"
+styletron-server@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/styletron-server/-/styletron-server-3.0.4.tgz#6bf24643b2ce84198d0fcb7c27308f00880c8dfd"
   dependencies:
-    styletron-core "^3.0.2"
+    styletron-core "^3.0.4"
 
-styletron-utils@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-3.0.2.tgz#3bd18f60d8a8534e19d500ffa052a2f1c6c31198"
+styletron-utils@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-3.0.4.tgz#6696320f6ade52383006c4d47e72c5c6a1f37b15"
   dependencies:
     inline-style-prefixer "^4.0.0"
 
@@ -8062,7 +8100,7 @@ symbol-tree@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
 
-synctasks@^0.3.0:
+synctasks@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/synctasks/-/synctasks-0.3.1.tgz#1f9012b23792ad775ba2693e0cafcfcd65b80d97"
 
