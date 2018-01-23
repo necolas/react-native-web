@@ -3,7 +3,6 @@
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
-<PROJECT_ROOT>/packages/benchmarks/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
 <PROJECT_ROOT>/website/.*
 .*/node_modules/babel-plugin-transform-react-remove-prop-types/*

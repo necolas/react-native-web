@@ -1,4 +1,6 @@
-// @flow
+/**
+ * @flow
+ */
 export type BenchResultsType = {
   startTime: number,
   endTime: number,
@@ -9,20 +11,21 @@ export type BenchResultsType = {
   min: number,
   median: number,
   mean: number,
-  stdDev: number,
-  p70: number,
-  p95: number,
-  p99: number
+  stdDev: number
 };
 
 export type SampleTimingType = {
-  start: number,
-  end?: number,
-  elapsed?: number
+  scriptingStart: number,
+  scriptingEnd?: number,
+  layoutStart?: number,
+  layoutEnd?: number
 };
 
 export type FullSampleTimingType = {
   start: number,
   end: number,
-  elapsed: number
+  scriptingStart: number,
+  scriptingEnd: number,
+  layoutStart?: number,
+  layoutEnd?: number
 };

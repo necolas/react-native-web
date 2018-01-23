@@ -15,8 +15,9 @@ class ReportCard extends React.PureComponent {
       libraryName,
       sampleCount,
       mean,
+      meanLayout,
+      meanScripting,
       stdDev,
-      runTime,
       libraryVersion
     } = this.props;
 
@@ -38,9 +39,8 @@ class ReportCard extends React.PureComponent {
               <Text style={[styles.bold, styles.monoFont]}>
                 {fmt(mean)} ±{fmt(stdDev)} ms
               </Text>
-              <Text style={[styles.monoFont, styles.centerText]}>
-                <Text style={styles.smallText}>Σ = </Text>
-                <Text>{Math.round(runTime)} ms</Text>
+              <Text style={[styles.smallText, styles.monoFont]}>
+                (S/L) {fmt(meanScripting)} / {fmt(meanLayout)} ms
               </Text>
             </Fragment>
           ) : (

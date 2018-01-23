@@ -1,9 +1,5 @@
 /* eslint-disable react/prop-types */
 
-/**
- * @flow
- */
-
 import { bool } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';

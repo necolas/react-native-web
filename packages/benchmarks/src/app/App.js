@@ -100,6 +100,8 @@ export default class App extends Component {
                     libraryName={r.libraryName}
                     libraryVersion={r.libraryVersion}
                     mean={r.mean}
+                    meanLayout={r.meanLayout}
+                    meanScripting={r.meanScripting}
                     runTime={r.runTime}
                     sampleCount={r.sampleCount}
                     stdDev={r.stdDev}
@@ -130,6 +132,7 @@ export default class App extends Component {
                   <View ref={this._setBenchWrapperRef}>
                     <Benchmark
                       component={Component}
+                      forceLayout={true}
                       getComponentProps={getComponentProps}
                       onComplete={this._createHandleComplete({
                         sampleCount,
