@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     ...StyleSheet.absoluteFillObject,
+    appearance: 'none',
     opacity: 0,
     width: '100%'
   },
