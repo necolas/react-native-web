@@ -14,6 +14,7 @@ import PropMultiline from './examples/PropMultiline';
 import PropNumberOfLines from './examples/PropNumberOfLines';
 import PropOnSelectionChange from './examples/PropOnSelectionChange';
 import PropPlaceholder from './examples/PropPlaceholder';
+import PropPlaceholderTextColor from './examples/PropPlaceholderTextColor';
 import PropSecureTextEntry from './examples/PropSecureTextEntry';
 import PropSelectTextOnFocus from './examples/PropSelectTextOnFocus';
 import TextInputEvents from './examples/TextInputEvents';
@@ -259,6 +260,15 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
         description="The string that will be rendered in an empty `TextInput` before text has been entered."
         example={{
           render: () => <PropPlaceholder />
+        }}
+      />
+
+      <DocItem
+        name="placeholderTextColor"
+        typeInfo="?color"
+        description="The text color of the placeholder string."
+        example={{
+          render: () => <PropPlaceholderTextColor />
         }}
       />
 

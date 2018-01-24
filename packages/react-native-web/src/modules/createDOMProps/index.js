@@ -68,6 +68,7 @@ const createDOMProps = (component, props, styleResolver) => {
     accessibilityLabel,
     accessibilityLiveRegion,
     importantForAccessibility,
+    placeholderTextColor,
     pointerEvents,
     style: providedStyle,
     testID,
@@ -89,8 +90,9 @@ const createDOMProps = (component, props, styleResolver) => {
     role === 'heading' && resetStyles.heading,
     component === 'ul' && resetStyles.list,
     role === 'button' && !isDisabled && resetStyles.ariaButton,
+    pointerEvents && pointerEventsStyles[pointerEvents],
     providedStyle,
-    pointerEvents && pointerEventsStyles[pointerEvents]
+    placeholderTextColor && { placeholderTextColor }
   ];
   const { className, style } = styleResolver(reactNativeStyle);
 

@@ -104,6 +104,7 @@ class TextInput extends Component<*> {
     onSelectionChange: func,
     onSubmitEditing: func,
     placeholder: string,
+    placeholderTextColor: ColorPropType,
     secureTextEntry: bool,
     selectTextOnFocus: bool,
     selection: shape({
@@ -126,7 +127,6 @@ class TextInput extends Component<*> {
     onContentSizeChange: func,
     onEndEditing: func,
     onScroll: func,
-    placeholderTextColor: ColorPropType,
     returnKeyLabel: string,
     returnKeyType: string,
     selectionColor: ColorPropType,
@@ -198,7 +198,6 @@ class TextInput extends Component<*> {
       onContentSizeChange,
       onEndEditing,
       onScroll,
-      placeholderTextColor,
       returnKeyLabel,
       returnKeyType,
       selectionColor,

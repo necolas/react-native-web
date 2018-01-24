@@ -158,13 +158,13 @@ export default class ReactNativeStyleResolver {
             props.classList.push(className);
           } else {
             // Certain properties and values are not transformed by 'createReactDOMStyle' as they
-            // require more complex transforms into multiple CSS rules. Here we make sure the styles
-            // can be represented by a className and don't end up as invalid inline-styles.
-            if (styleProp === 'pointerEvents') {
+            // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
+            // can bind these styles to a className, and prevent them becoming invalid inline-styles.
+            if (styleProp === 'pointerEvents' || styleProp === 'placeholderTextColor') {
               const className = this.styleSheetManager.injectDeclaration(styleProp, value);
-              props.classList.push(className);
-              // } else if (styleProp ==='placeholderTextColor') {
-              // } else if (styleProp ==='animationName') {
+              if (className) {
+                props.classList.push(className);
+              }
             } else {
               if (!props.style) {
                 props.style = {};

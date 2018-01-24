@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyleSheet/createAtomicRules transforms custom placeholderTextColor declaration 1`] = `
+Array [
+  "@media all {
+.test::-webkit-input-placeholder{color:gray;opacity:1}
+.test::-moz-placeholder{color:gray;opacity:1}
+.test:-ms-input-placeholder{color:gray;opacity:1}
+.test::placeholder{color:gray;opacity:1}
+}",
+]
+`;
+
+exports[`StyleSheet/createAtomicRules transforms custom pointerEvents declaration 1`] = `
+Array [
+  ".test > *{pointer-events:none}",
+  ".test{pointer-events:auto !important}",
+]
+`;
+
+exports[`StyleSheet/createAtomicRules transforms standard declarations to a single rule 1`] = `
+Array [
+  ".test{margin:0px}",
+]
+`;
