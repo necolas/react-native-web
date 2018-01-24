@@ -108,7 +108,13 @@ class Image extends Component<*, State> {
     onLoadStart: func,
     resizeMode: oneOf(Object.keys(ImageResizeMode)),
     source: ImageSourcePropType,
-    style: StyleSheetPropType(ImageStylePropTypes)
+    style: StyleSheetPropType(ImageStylePropTypes),
+    // compatibility with React Native
+    /* eslint-disable react/sort-prop-types */
+    blurRadius: number,
+    capInsets: shape({ top: number, left: number, bottom: number, right: number }),
+    resizeMethod: oneOf(['auto', 'resize', 'scale'])
+    /* eslint-enable react/sort-prop-types */
   };
 
   static defaultProps = {
@@ -184,10 +190,13 @@ class Image extends Component<*, State> {
       source,
       testID,
       /* eslint-disable */
+      blurRadius,
+      capInsets,
       onError,
       onLoad,
       onLoadEnd,
       onLoadStart,
+      resizeMethod,
       resizeMode,
       /* eslint-enable */
       ...other
