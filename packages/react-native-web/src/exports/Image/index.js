@@ -14,6 +14,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import ImageLoader from '../../modules/ImageLoader';
+import ImageResizeMethod from './ImageResizeMethod';
 import ImageResizeMode from './ImageResizeMode';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
@@ -99,6 +100,8 @@ class Image extends Component<*, State> {
 
   static propTypes = {
     ...ViewPropTypes,
+    blurRadius: number,
+    capInsets: shape({ top: number, left: number, bottom: number, right: number }),
     defaultSource: ImageSourcePropType,
     draggable: bool,
     onError: func,
@@ -106,6 +109,7 @@ class Image extends Component<*, State> {
     onLoad: func,
     onLoadEnd: func,
     onLoadStart: func,
+    resizeMethod: oneOf(Object.keys(ImageResizeMethod)),
     resizeMode: oneOf(Object.keys(ImageResizeMode)),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes)
@@ -184,10 +188,13 @@ class Image extends Component<*, State> {
       source,
       testID,
       /* eslint-disable */
+      blurRadius,
+      capInsets,
       onError,
       onLoad,
       onLoadEnd,
       onLoadStart,
+      resizeMethod,
       resizeMode,
       /* eslint-enable */
       ...other
