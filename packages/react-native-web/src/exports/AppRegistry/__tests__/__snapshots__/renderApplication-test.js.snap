@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`apis/AppRegistry/renderApplication getApplication 1`] = `
+exports[`Additional CSS for styled app 1`] = `
+"
+.rn-backgroundColor-1e4kli0{background-color:purple}
+.rn-borderTopWidth-10pzpfo{border-top-width:1234px}
+.rn-borderRightWidth-1y24uml{border-right-width:1234px}
+.rn-borderBottomWidth-98wxn4{border-bottom-width:1234px}
+.rn-borderLeftWidth-150mub4{border-left-width:1234px}"
+`;
+
+exports[`AppRegistry/renderApplication getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
   rootTag={Object {}}
 >
@@ -8,7 +17,7 @@ exports[`apis/AppRegistry/renderApplication getApplication 1`] = `
 </AppContainer>
 `;
 
-exports[`apis/AppRegistry/renderApplication getApplication 2`] = `
+exports[`AppRegistry/renderApplication getApplication returns "element" and "getStyleElement" 2`] = `
 "<style id=\\"react-native-stylesheet\\">@media all{
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
@@ -17,4 +26,51 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 }
 @keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
 @keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}</style>"
+`;
+
+exports[`CSS for an unstyled app 1`] = `
+"@media all{
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{margin:0;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+}
+@keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
+@keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}
+.rn-alignItems-1oszu61{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
+.rn-borderTopStyle-1efd50x{border-top-style:solid}
+.rn-borderRightStyle-14skgim{border-right-style:solid}
+.rn-borderBottomStyle-rull8r{border-bottom-style:solid}
+.rn-borderLeftStyle-mm0ijv{border-left-style:solid}
+.rn-borderTopWidth-13yce4e{border-top-width:0px}
+.rn-borderRightWidth-fnigne{border-right-width:0px}
+.rn-borderBottomWidth-ndvcnb{border-bottom-width:0px}
+.rn-borderLeftWidth-gxnn5r{border-left-width:0px}
+.rn-boxSizing-deolkf{box-sizing:border-box}
+.rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
+.rn-flexShrink-1pxmb3b{-ms-flex-negative:0 !important;-webkit-flex-shrink:0 !important;flex-shrink:0 !important}
+.rn-flexBasis-7vfszb{-ms-flex-preferred-size:auto !important;-webkit-flex-basis:auto !important;flex-basis:auto !important}
+.rn-flexDirection-eqz5dr{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
+.rn-marginTop-1mnahxq{margin-top:0px}
+.rn-marginRight-61z16t{margin-right:0px}
+.rn-marginBottom-p1pxzi{margin-bottom:0px}
+.rn-marginLeft-11wrixw{margin-left:0px}
+.rn-minHeight-ifefl9{min-height:0px}
+.rn-minWidth-bcqeeo{min-width:0px}
+.rn-paddingTop-wk8lta{padding-top:0px}
+.rn-paddingRight-9aemit{padding-right:0px}
+.rn-paddingBottom-1mdbw0j{padding-bottom:0px}
+.rn-paddingLeft-gy4na3{padding-left:0px}
+.rn-position-bnwqim{position:relative}
+.rn-zIndex-1lgpqti{z-index:0}
+.rn-flex-13awgt0{-ms-flex:1;-webkit-flex:1;flex:1}
+.rn-flexGrow-1m1wadx{-ms-flex-positive:1 !important;-webkit-flex-grow:1 !important;flex-grow:1 !important}
+.rn-flexShrink-1awmn5t{-ms-flex-negative:1 !important;-webkit-flex-shrink:1 !important;flex-shrink:1 !important}
+.rn-bottom-1p0dtai{bottom:0px}
+.rn-left-1d2f490{left:0px}
+.rn-position-u8s1d{position:absolute}
+.rn-right-zchlnj{right:0px}
+.rn-top-ipm5af{top:0px}
+.rn-pointerEvents-12vffkv > *{pointer-events:auto}
+.rn-pointerEvents-12vffkv{pointer-events:none !important}"
 `;

@@ -25,13 +25,6 @@ const AppRegistryScreen = () => (
 
     <Section title="Methods">
       <DocItem
-        description="Returns the given application's element and stylesheets. Use this for server-side rendering."
-        label="web"
-        name="static getApplication"
-        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; stylesheets: Array<ReactElement> }"
-      />
-
-      <DocItem
         description={[
           <AppText>
             Register multiple applications. <Code>AppConfig</Code> type is:
@@ -104,6 +97,13 @@ const AppRegistryScreen = () => (
         }
         name="static unmountApplicationComponentAtRootTag"
         typeInfo="(rootTag: HTMLElement) => void"
+      />
+
+      <DocItem
+        description="Use this for server-side rendering to HTML. Returns a object of the given application's element, and a function to get styles once the element is rendered."
+        label="web"
+        name="static getApplication"
+        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; getStyleElement: () => ReactElement }"
       />
     </Section>
   </UIExplorer>

@@ -13,7 +13,7 @@ import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import hydrate from '../../modules/hydrate';
 import render from '../render';
-import StyleSheet from '../StyleSheet';
+import styleResolver from '../StyleSheet/styleResolver';
 import React, { type ComponentType } from 'react';
 
 const renderFn = process.env.NODE_ENV !== 'production' ? render : hydrate;
@@ -39,9 +39,10 @@ export function getApplication(RootComponent: ComponentType<Object>, initialProp
       <RootComponent {...initialProps} />
     </AppContainer>
   );
-  const stylesheets = StyleSheet.getStyleSheets().map(sheet => (
-    // ensure that CSS text is not escaped
-    <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} key={sheet.id} />
-  ));
-  return { element, stylesheets };
+  // Don't escape CSS text
+  const getStyleElement = () => {
+    const sheet = styleResolver.getStyleSheet();
+    return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />;
+  };
+  return { element, getStyleElement };
 }

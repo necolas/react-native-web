@@ -27,8 +27,8 @@ export default class StyleSheetManager {
     byProp: {}
   };
 
-  constructor(id) {
-    this._id = this._sheet = new WebStyleSheet(STYLE_ELEMENT_ID);
+  constructor() {
+    this._sheet = new WebStyleSheet(STYLE_ELEMENT_ID);
     initialRules.forEach(rule => {
       this._sheet.insertRuleOnce(rule);
     });
@@ -44,15 +44,13 @@ export default class StyleSheetManager {
     return cache[className] || emptyObject;
   }
 
-  getStyleSheets() {
+  getStyleSheet() {
     const { cssText } = this._sheet;
 
-    return [
-      {
-        id: STYLE_ELEMENT_ID,
-        textContent: cssText
-      }
-    ];
+    return {
+      id: STYLE_ELEMENT_ID,
+      textContent: cssText
+    };
   }
 
   injectDeclaration(prop, value): string {

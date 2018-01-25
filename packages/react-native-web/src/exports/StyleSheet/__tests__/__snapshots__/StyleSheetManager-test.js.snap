@@ -2,11 +2,10 @@
 
 exports[`StyleSheet/StyleSheetManager getClassName 1`] = `undefined`;
 
-exports[`StyleSheet/StyleSheetManager getStyleSheets 1`] = `
-Array [
-  Object {
-    "id": "react-native-stylesheet",
-    "textContent": "@media all{
+exports[`StyleSheet/StyleSheetManager getStyleSheet 1`] = `
+Object {
+  "id": "react-native-stylesheet",
+  "textContent": "@media all{
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
@@ -15,6 +14,5 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 @keyframes rn-ActivityIndicator-animation{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
 @keyframes rn-ProgressBar-animation{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}100%{-webkit-transform:translateX(400%);transform:translateX(400%);}}
 .rn---test-property-ax3bxi{--test-property:test-value}",
-  },
-]
+}
 `;

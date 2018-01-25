@@ -11,6 +11,7 @@
  * @noflow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createReactDOMStyle from './createReactDOMStyle';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
@@ -22,12 +23,22 @@ import StyleSheetManager from './StyleSheetManager';
 const emptyObject = {};
 
 export default class ReactNativeStyleResolver {
-  cache = { ltr: {}, rtl: {} };
+  _init() {
+    this.cache = { ltr: {}, rtl: {} };
+    this.styleSheetManager = new StyleSheetManager();
+  }
 
-  styleSheetManager = new StyleSheetManager();
+  constructor() {
+    this._init();
+  }
 
-  getStyleSheets() {
-    return this.styleSheetManager.getStyleSheets();
+  getStyleSheet() {
+    // reset state on the server so critical css is always the result
+    const sheet = this.styleSheetManager.getStyleSheet();
+    if (!canUseDOM) {
+      this._init();
+    }
+    return sheet;
   }
 
   _injectRegisteredStyle(id) {
@@ -48,27 +59,27 @@ export default class ReactNativeStyleResolver {
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  resolve(reactNativeStyle) {
-    if (!reactNativeStyle) {
+  resolve(style) {
+    if (!style) {
       return emptyObject;
     }
 
     // fast and cachable
-    if (typeof reactNativeStyle === 'number') {
-      this._injectRegisteredStyle(reactNativeStyle);
-      const key = createCacheKey(reactNativeStyle);
-      return this._resolveStyleIfNeeded(reactNativeStyle, key);
+    if (typeof style === 'number') {
+      this._injectRegisteredStyle(style);
+      const key = createCacheKey(style);
+      return this._resolveStyleIfNeeded(style, key);
     }
 
     // resolve a plain RN style object
-    if (!Array.isArray(reactNativeStyle)) {
-      return this._resolveStyleIfNeeded(reactNativeStyle);
+    if (!Array.isArray(style)) {
+      return this._resolveStyleIfNeeded(style);
     }
 
     // flatten the style array
     // cache resolved props when all styles are registered
     // otherwise fallback to resolving
-    const flatArray = flattenArray(reactNativeStyle);
+    const flatArray = flattenArray(style);
     let isArrayOfNumbers = true;
     for (let i = 0; i < flatArray.length; i++) {
       const id = flatArray[i];
@@ -134,8 +145,8 @@ export default class ReactNativeStyleResolver {
   /**
    * Resolves a React Native style object
    */
-  _resolveStyle(reactNativeStyle) {
-    const flatStyle = flattenStyle(reactNativeStyle);
+  _resolveStyle(style) {
+    const flatStyle = flattenStyle(style);
     const domStyle = createReactDOMStyle(i18nStyle(flatStyle));
 
     const props = Object.keys(domStyle).reduce(

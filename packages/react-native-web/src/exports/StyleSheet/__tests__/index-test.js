@@ -48,8 +48,4 @@ describe('StyleSheet', () => {
   test('hairlineWidth', () => {
     expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
   });
-
-  test('getStyleSheets', () => {
-    expect(StyleSheet.getStyleSheets()).toMatchSnapshot();
-  });
 });

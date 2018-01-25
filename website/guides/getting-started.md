@@ -56,7 +56,7 @@ otherwise it is not recommended.
 
 ## Server-side rendering
 
-Server-side rendering is supported using `AppRegistry`:
+Server-side rendering to HTML is supported using `AppRegistry`:
 
 ```js
 import App from './src/App';
@@ -67,19 +67,20 @@ import { AppRegistry } from 'react-native'
 AppRegistry.registerComponent('App', () => App)
 
 // prerender the app
-const { element, stylesheets } = AppRegistry.getApplication('App', { initialProps });
-const initialHTML = ReactDOMServer.renderToString(element);
-const initialStyles = stylesheets.map((sheet) => ReactDOMServer.renderToStaticMarkup(sheet)).join('\n');
+const { element, getStyleElement } = AppRegistry.getApplication('App', { initialProps });
+// first the element
+const html = ReactDOMServer.renderToString(element);
+// then the styles
+const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
 
-// construct HTML document string
+// example HTML document string
 const document = `
 <!DOCTYPE html>
 <html>
-<head>
-${initialStyles}
-</head>
-<body>
-${initialHTML}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+${css}
+${html}
 `
 ```
 

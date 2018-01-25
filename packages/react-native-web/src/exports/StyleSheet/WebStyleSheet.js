@@ -12,25 +12,29 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 export default class WebStyleSheet {
   _cssRules = [];
-  _domStyleElement = null;
+  _sheet = null;
+  _textContent = '';
 
   constructor(id: string) {
-    let _domStyleElement;
+    let domStyleElement;
 
     // on the client we check for an existing style sheet before injecting
     if (canUseDOM) {
-      _domStyleElement = document.getElementById(id);
-      if (!_domStyleElement) {
+      domStyleElement = document.getElementById(id);
+      if (!domStyleElement) {
         const html = `<style id="${id}"></style>`;
         if (document.head) {
           document.head.insertAdjacentHTML('afterbegin', html);
-          _domStyleElement = document.getElementById(id);
+          domStyleElement = document.getElementById(id);
         }
       }
-    }
 
-    this.id = id;
-    this._domStyleElement = _domStyleElement;
+      if (domStyleElement) {
+        // $FlowFixMe
+        this._sheet = domStyleElement.sheet;
+        this._textContent = domStyleElement.textContent;
+      }
+    }
   }
 
   containsRule(rule: string): boolean {
@@ -42,21 +46,15 @@ export default class WebStyleSheet {
   }
 
   insertRuleOnce(rule: string, position: ?number) {
-    // prevent duplicate rules
+    // Reduce chance of duplicate rules
     if (!this.containsRule(rule)) {
       this._cssRules.push(rule);
 
-      // update the native stylesheet (i.e., browser)
-      if (this._domStyleElement) {
-        // Check whether a rule was part of any prerendered styles (textContent
-        // doesn't include styles injected via 'insertRule')
-        if (this._domStyleElement.textContent.indexOf(rule) === -1) {
-          // $FlowFixMe
-          this._domStyleElement.sheet.insertRule(
-            rule,
-            position || this._domStyleElement.sheet.cssRules.length
-          );
-        }
+      // Check whether a rule was part of any prerendered styles (textContent
+      // doesn't include styles injected via 'insertRule')
+      if (this._textContent.indexOf(rule) === -1 && this._sheet) {
+        const pos = position || this._sheet.cssRules.length;
+        this._sheet.insertRule(rule, pos);
       }
     }
   }

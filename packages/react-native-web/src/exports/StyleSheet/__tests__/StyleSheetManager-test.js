@@ -23,9 +23,9 @@ describe('StyleSheet/StyleSheetManager', () => {
     });
   });
 
-  test('getStyleSheets', () => {
+  test('getStyleSheet', () => {
     styleSheetManager.injectDeclaration('--test-property', 'test-value');
-    expect(styleSheetManager.getStyleSheets()).toMatchSnapshot();
+    expect(styleSheetManager.getStyleSheet()).toMatchSnapshot();
   });
 
   test('injectDeclaration', () => {
