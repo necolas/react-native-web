@@ -54,8 +54,6 @@ const StyleSheet = {
       }
       const id = styles[key] && ReactNativePropRegistry.register(styles[key]);
       result[key] = id;
-      // TODO: remove
-      styleResolver._injectRegisteredStyle(id);
     });
     return result;
   },
