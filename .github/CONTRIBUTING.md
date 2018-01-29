@@ -85,10 +85,18 @@ yarn compile --watch
 
 ## Benchmarks
 
-To run the performance benchmarks in a browser (opening `./packages/benchmarks/index.html`):
+To run the benchmarks locally:
 
 ```
-yarn benchmarks
+yarn benchmark
+open ./packages/benchmarks/dist/index.html
+```
+
+To develop against these benchmarks:
+
+```
+yarn compile --watch
+yarn benchmark --watch
 ```
 
 ### New Features
