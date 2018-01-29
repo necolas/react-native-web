@@ -88,7 +88,7 @@ yarn compile --watch
 To run the benchmarks locally:
 
 ```
-yarn benchmark
+yarn benchmarks
 open ./packages/benchmarks/dist/index.html
 ```
 
@@ -96,7 +96,7 @@ To develop against these benchmarks:
 
 ```
 yarn compile --watch
-yarn benchmark --watch
+yarn benchmarks --watch
 ```
 
 ### New Features

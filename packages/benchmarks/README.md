@@ -5,7 +5,7 @@ Try the [benchmarks app](https://necolas.github.io/react-native-web/benchmarks) 
 To run the benchmarks locally:
 
 ```
-yarn benchmark
+yarn benchmarks
 open ./packages/benchmarks/dist/index.html
 ```
 
@@ -13,7 +13,7 @@ Develop against these benchmarks:
 
 ```
 yarn compile --watch
-yarn benchmark --watch
+yarn benchmarks --watch
 ```
 
 ## Notes
