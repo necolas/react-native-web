@@ -25,12 +25,12 @@ const createDeclarationString = (prop, val) => {
 /**
  * Generates valid CSS rule body from a JS object
  *
- * generateCss({ width: 20, color: 'blue' });
+ * createRuleBlock({ width: 20, color: 'blue' });
  * // => 'color:blue;width:20px'
  */
-const generateCss = style =>
+const createRuleBlock = style =>
   mapKeyValue(prefixStyles(style), createDeclarationString)
     .sort()
     .join(';');
 
-export default generateCss;
+export default createRuleBlock;

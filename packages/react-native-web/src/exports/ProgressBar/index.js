@@ -96,7 +96,12 @@ const styles = StyleSheet.create({
   },
   animation: {
     animationDuration: '1s',
-    animationName: 'rn-ProgressBar-animation',
+    animationName: [
+      {
+        '0%': { transform: [{ translateX: '-100%' }] },
+        '100%': { transform: [{ translateX: '400%' }] }
+      }
+    ],
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite'
   }

@@ -54,4 +54,5 @@ function murmurhash2_32_gc(str, seed) {
 }
 
 const hash = str => murmurhash2_32_gc(str, 1).toString(36);
+
 export default hash;

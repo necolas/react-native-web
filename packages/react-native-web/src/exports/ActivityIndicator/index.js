@@ -88,7 +88,12 @@ const styles = StyleSheet.create({
   },
   animation: {
     animationDuration: '0.75s',
-    animationName: 'rn-ActivityIndicator-animation',
+    animationName: [
+      {
+        '0%': { transform: [{ rotate: '0deg' }] },
+        '100%': { transform: [{ rotate: '360deg' }] }
+      }
+    ],
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite'
   },

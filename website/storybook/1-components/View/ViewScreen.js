@@ -334,7 +334,7 @@ const stylePropTypes = [
   {
     label: 'web',
     name: 'animationName',
-    typeInfo: 'string'
+    typeInfo: 'string | Array<Object>'
   },
   {
     label: 'web',
@@ -776,7 +776,7 @@ const stylePropTypes = [
   },
   {
     name: 'transform',
-    typeInfo: 'array'
+    typeInfo: 'Array<Object>'
   },
   {
     label: 'web',

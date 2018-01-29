@@ -25,6 +25,7 @@ const emptyObject = {};
 export default class ReactNativeStyleResolver {
   _init() {
     this.cache = { ltr: {}, rtl: {} };
+    this.injectedCache = { ltr: {}, rtl: {} };
     this.styleSheetManager = new StyleSheetManager();
   }
 
@@ -43,7 +44,7 @@ export default class ReactNativeStyleResolver {
 
   _injectRegisteredStyle(id) {
     const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
-    if (!this.cache[dir][id]) {
+    if (!this.injectedCache[dir][id]) {
       const style = flattenStyle(id);
       const domStyle = createReactDOMStyle(i18nStyle(style));
       Object.keys(domStyle).forEach(styleProp => {
@@ -52,7 +53,7 @@ export default class ReactNativeStyleResolver {
           this.styleSheetManager.injectDeclaration(styleProp, value);
         }
       });
-      this.cache[dir][id] = true;
+      this.injectedCache[dir][id] = true;
     }
   }
 
@@ -160,7 +161,11 @@ export default class ReactNativeStyleResolver {
             // Certain properties and values are not transformed by 'createReactDOMStyle' as they
             // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
             // can bind these styles to a className, and prevent them becoming invalid inline-styles.
-            if (styleProp === 'pointerEvents' || styleProp === 'placeholderTextColor') {
+            if (
+              styleProp === 'pointerEvents' ||
+              styleProp === 'placeholderTextColor' ||
+              styleProp === 'animationName'
+            ) {
               const className = this.styleSheetManager.injectDeclaration(styleProp, value);
               if (className) {
                 props.classList.push(className);

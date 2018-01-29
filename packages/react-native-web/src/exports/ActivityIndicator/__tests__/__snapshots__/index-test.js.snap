@@ -17,7 +17,24 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationPlayState": "paused",
         "animationTimingFunction": "linear",
         "height": 20,
@@ -80,7 +97,24 @@ exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationTimingFunction": "linear",
         "height": 20,
         "width": 20,
@@ -177,7 +211,24 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationPlayState": "paused",
         "animationTimingFunction": "linear",
         "height": 20,
@@ -239,7 +290,24 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationPlayState": "paused",
         "animationTimingFunction": "linear",
         "height": 20,
@@ -302,7 +370,24 @@ exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationTimingFunction": "linear",
         "height": 36,
         "width": 36,
@@ -363,7 +448,24 @@ exports[`components/ActivityIndicator prop "size" is a number 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": "rn-ActivityIndicator-animation",
+        "animationName": Array [
+          Object {
+            "0%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+            "100%": Object {
+              "transform": Array [
+                Object {
+                  "rotate": "360deg",
+                },
+              ],
+            },
+          },
+        ],
         "animationTimingFunction": "linear",
         "height": 30,
         "width": 30,

@@ -17,9 +17,11 @@ const emptyObject = {};
 const STYLE_ELEMENT_ID = 'react-native-stylesheet';
 
 const createClassName = (prop, value) => {
-  const hashed = hash(prop + value);
+  const hashed = hash(prop + normalizeValue(value));
   return process.env.NODE_ENV !== 'production' ? `rn-${prop}-${hashed}` : `rn-${hashed}`;
 };
+
+const normalizeValue = value => (typeof value === 'object' ? JSON.stringify(value) : value);
 
 export default class StyleSheetManager {
   _cache = {
@@ -35,8 +37,9 @@ export default class StyleSheetManager {
   }
 
   getClassName(prop, value) {
+    const val = normalizeValue(value);
     const cache = this._cache.byProp;
-    return cache[prop] && cache[prop].hasOwnProperty(value) && cache[prop][value];
+    return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
   }
 
   getDeclaration(className) {
@@ -54,16 +57,21 @@ export default class StyleSheetManager {
   }
 
   injectDeclaration(prop, value): string {
-    let className = this.getClassName(prop, value);
+    const val = normalizeValue(value);
+    let className = this.getClassName(prop, val);
     if (!className) {
-      className = createClassName(prop, value);
-      this._addToCache(className, prop, value);
+      className = createClassName(prop, val);
+      this._addToCache(className, prop, val);
       const rules = createAtomicRules(`.${className}`, prop, value);
       rules.forEach(rule => {
         this._sheet.insertRuleOnce(rule);
       });
     }
     return className;
+  }
+
+  injectKeyframe(): string {
+    // return identifier;
   }
 
   _addToCache(className, prop, value) {

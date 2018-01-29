@@ -22,19 +22,6 @@ const resets = [
     'input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
 ];
 
-const reset = safeRule(resets.join('\n'));
+const reset = [safeRule(resets.join('\n'))];
 
-const initialRules = [
-  reset,
-  // temporary keyframes
-  '@keyframes rn-ActivityIndicator-animation{' +
-    '0%{-webkit-transform:rotate(0deg);transform:rotate(0deg);}' +
-    '100%{-webkit-transform:rotate(360deg);transform:rotate(360deg);}' +
-    '}',
-  '@keyframes rn-ProgressBar-animation{' +
-    '0%{-webkit-transform:translateX(-100%);transform:translateX(-100%);}' +
-    '100%{-webkit-transform:translateX(400%);transform:translateX(400%);}' +
-    '}'
-];
-
-export default initialRules;
+export default reset;

@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { number, oneOf, oneOfType, string } from 'prop-types';
+import { arrayOf, number, object, oneOf, oneOfType, string } from 'prop-types';
 
 const AnimationPropTypes = {
   animationDelay: string,
@@ -16,7 +16,7 @@ const AnimationPropTypes = {
   animationDuration: string,
   animationFillMode: oneOf(['none', 'forwards', 'backwards', 'both']),
   animationIterationCount: oneOfType([number, oneOf(['infinite'])]),
-  animationName: string,
+  animationName: oneOfType([string, arrayOf(oneOfType([string, object]))]),
   animationPlayState: oneOf(['paused', 'running']),
   animationTimingFunction: string
 };
