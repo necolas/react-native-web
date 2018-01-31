@@ -110,6 +110,7 @@ class TextInput extends Component<*> {
       start: number.isRequired,
       end: number
     }),
+    spellCheck: bool,
     style: StyleSheetPropType(TextInputStylePropTypes),
     value: string,
     /* react-native compat */
@@ -130,7 +131,6 @@ class TextInput extends Component<*> {
     returnKeyType: string,
     selectionColor: ColorPropType,
     selectionState: any,
-    spellCheck: bool,
     textBreakStrategy: string,
     underlineColorAndroid: ColorPropType
     /* eslint-enable */
@@ -185,6 +185,7 @@ class TextInput extends Component<*> {
       onSubmitEditing,
       selection,
       selectTextOnFocus,
+      spellCheck,
       /* react-native compat */
       caretHidden,
       clearButtonMode,
@@ -202,7 +203,6 @@ class TextInput extends Component<*> {
       returnKeyType,
       selectionColor,
       selectionState,
-      spellCheck,
       textBreakStrategy,
       underlineColorAndroid,
       /* eslint-enable */
@@ -250,6 +250,7 @@ class TextInput extends Component<*> {
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setNode,
+      spellCheck: spellCheck != null ? spellCheck : autoCorrect,
       style: [styles.initial, style]
     });
 

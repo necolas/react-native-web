@@ -350,12 +350,6 @@ describe('components/TextInput', () => {
     // assert.equal(input.node.selectionStart, 0)
   });
 
-  test('prop "value"', () => {
-    const value = 'value';
-    const input = findNativeInput(shallow(<TextInput value={value} />));
-    expect(input.prop('value')).toEqual(value);
-  });
-
   describe('prop "selection"', () => {
     test('set cursor location', () => {
       const cursorLocation = { start: 3, end: 3 };
@@ -373,5 +367,22 @@ describe('components/TextInput', () => {
       expect(inputCustomSelection.instance().selectionStart).toEqual(cursorLocation.start);
       expect(inputCustomSelection.instance().selectionEnd).toEqual(cursorLocation.end);
     });
+  });
+
+  test('prop "spellCheck"', () => {
+    // default (inherets from autoCorrect)
+    let input = findNativeInput(shallow(<TextInput />));
+    expect(input.prop('spellCheck')).toEqual(true);
+    input = findNativeInput(shallow(<TextInput autoCorrect={false} />));
+    expect(input.prop('spellCheck')).toEqual(false);
+    // false
+    input = findNativeInput(shallow(<TextInput spellCheck={false} />));
+    expect(input.prop('spellCheck')).toEqual(false);
+  });
+
+  test('prop "value"', () => {
+    const value = 'value';
+    const input = findNativeInput(shallow(<TextInput value={value} />));
+    expect(input.prop('value')).toEqual(value);
   });
 });

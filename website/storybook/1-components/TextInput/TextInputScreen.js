@@ -95,7 +95,7 @@ const TextInputScreen = () => (
       <DocItem
         name="autoCorrect"
         typeInfo="?boolean = true"
-        description="Automatically correct spelling mistakes (only available in iOS Safari)."
+        description="Automatically correct spelling mistakes. (Only available in iOS Safari.)"
       />
 
       <DocItem
@@ -284,6 +284,12 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
         example={{
           render: () => <PropSelectTextOnFocus />
         }}
+      />
+
+      <DocItem
+        name="spellCheck"
+        typeInfo="?boolean"
+        description="If false, disables spell-check style (i.e. red underlines). The default value is inherited from autoCorrect. (Only available in supporting browsers)."
       />
 
       <DocItem
