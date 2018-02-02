@@ -303,7 +303,7 @@ class TextInput extends Component<*> {
     // Backspace, Tab, Cmd+Enter, and arrow keys only fire 'keydown' DOM events
     if (   e.which === 8 || e.which === 9 || (e.which === 13 && e.metaKey)
         || e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40) {
-      _this._handleKeyPress(e);
+      this._handleKeyPress(e);
     }
   };
 
