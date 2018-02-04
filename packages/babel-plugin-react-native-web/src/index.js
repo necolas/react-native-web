@@ -92,7 +92,10 @@ module.exports = function({ types: t }) {
                   return t.variableDeclaration(path.node.kind, [
                     t.variableDeclarator(
                       t.identifier(identifier.value.name),
-                      t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)])
+                      t.memberExpression(
+                        t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)]),
+                        t.identifier('default')
+                      )
                     )
                   ]);
                 }
@@ -105,9 +108,12 @@ module.exports = function({ types: t }) {
             const importIndex = t.variableDeclaration(path.node.kind, [
               t.variableDeclarator(
                 t.identifier(name),
-                t.callExpression(t.identifier('require'), [
-                  t.stringLiteral('react-native-web/dist/index')
-                ])
+                t.memberExpression(
+                  t.callExpression(t.identifier('require'), [
+                    t.stringLiteral('react-native-web/dist/index')
+                  ]),
+                  t.identifier('default')
+                )
               )
             ]);
 
