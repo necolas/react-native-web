@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "0.3.4",
   "name": "react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",
@@ -42,9 +43,9 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
     "flow-bin": "^0.63.1",
+    "glob": "^7.1.2",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
-    "lerna": "^2.6.0",
     "lint-staged": "^6.0.0",
     "prettier": "^1.8.2",
     "raf": "^3.4.0",

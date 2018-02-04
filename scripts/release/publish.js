@@ -3,6 +3,9 @@
 'use strict';
 
 const execSync = require('child_process').execSync;
+const fs = require('fs');
+const glob = require('glob');
+const path = require('path');
 
 const args = process.argv.slice(2);
 const version = args[0];
@@ -10,9 +13,34 @@ const skipGit = args[1] === '--skip-git';
 
 console.log(`Publishing ${version}`);
 
-// use lerna to bump versions and dependencies
-execSync(`./node_modules/.bin/lerna publish --skip-git --skip-npm --repo-version ${version} --yes`);
+// Collect workspaces and package manifests
+const workspacePaths = require('../../package.json').workspaces.concat(['./']);
+const workspaces = workspacePaths.reduce((acc, curr) => {
+  const packageDirectories = glob.sync(path.resolve(curr));
+  packageDirectories.forEach(directory => {
+    const packageJsonPath = path.join(directory, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
+    acc.push({ directory, packageJson, packageJsonPath });
+  });
+  return acc;
+}, []);
 
+// Update each package version and its dependencies
+const workspaceNames = workspaces.map(({ packageJson }) => packageJson.name);
+workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
+  packageJson.version = version;
+  workspaceNames.forEach(name => {
+    if (packageJson.dependencies && packageJson.dependencies[name]) {
+      packageJson.dependencies[name] = version;
+    }
+    if (packageJson.devDependencies && packageJson.devDependencies[name]) {
+      packageJson.devDependencies[name] = version;
+    }
+  });
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
+});
+
+// Commit changes
 if (!skipGit) {
   // add changes
   execSync('git add .');
@@ -22,11 +50,14 @@ if (!skipGit) {
   execSync(`git tag -m ${version} "${version}"`);
 }
 
-// publish to npm (expect plugin to error as version won't change often)
-execSync('cd packages/react-native-web && npm publish');
-execSync('cd packages/babel-plugin-react-native-web && npm publish');
+// Publish public packages
+workspaces.forEach(({ directory, packageJson }) => {
+  if (!packageJson.private) {
+    execSync(`cd ${directory} && npm publish`);
+  }
+});
 
+// Push changes
 if (!skipGit) {
-  // push to github
   execSync('git push --tags origin master');
 }
