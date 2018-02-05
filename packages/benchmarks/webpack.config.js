@@ -49,7 +49,7 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         dead_code: true,
-        drop_console: true,
+        drop_console: false,
         screw_ie8: true,
         warnings: false
       }
