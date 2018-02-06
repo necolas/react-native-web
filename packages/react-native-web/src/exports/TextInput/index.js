@@ -390,10 +390,12 @@ class TextInput extends Component<*> {
 
 const styles = StyleSheet.create({
   initial: {
+    MozAppearance: 'textfield',
     appearance: 'none',
     backgroundColor: 'transparent',
     borderColor: 'black',
     borderRadius: 0,
+    borderStyle: 'solid',
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',

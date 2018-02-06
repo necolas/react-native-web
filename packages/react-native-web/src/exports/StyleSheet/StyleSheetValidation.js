@@ -93,8 +93,10 @@ StyleSheetValidation.addValidStylePropTypes({
   cursor: string,
   fill: string,
   float: oneOf(['left', 'none', 'right']),
-  font: string /* @private */,
   listStyle: string,
   pointerEvents: string,
-  tableLayout: string
+  tableLayout: string,
+  /* @private */
+  MozAppearance: string,
+  font: string
 });
