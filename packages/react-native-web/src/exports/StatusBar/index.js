@@ -17,6 +17,23 @@ export default class StatusBar extends Component<*> {
   static setHidden() {}
   static setNetworkActivityIndicatorVisible() {}
   static setTranslucent() {}
+  static _defaultProps = {
+    backgroundColor: {
+      value: 'black',
+      animated: false
+    },
+    barStyle: {
+      value: 'default',
+      animated: false
+    },
+    translucent: false,
+    hidden: {
+      value: true,
+      animated: false,
+      transition: 'fade'
+    },
+    networkActivityIndicatorVisible: false
+  };
   render() {
     return null;
   }
