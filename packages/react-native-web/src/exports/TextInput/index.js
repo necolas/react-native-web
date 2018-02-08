@@ -297,11 +297,19 @@ class TextInput extends Component<*> {
   };
 
   _handleKeyDown = e => {
-    // prevent key events bubbling (see #612)
+    // Prevent key events bubbling (see #612)
     e.stopPropagation();
 
-    // Backspace, Tab, and Cmd+Enter only fire 'keydown' DOM events
-    if (e.which === 8 || e.which === 9 || (e.which === 13 && e.metaKey)) {
+    // Backspace, Tab, Cmd+Enter, and Arrow keys only fire 'keydown' DOM events
+    if (
+      e.which === 8 ||
+      e.which === 9 ||
+      (e.which === 13 && e.metaKey) ||
+      e.which === 37 ||
+      e.which === 38 ||
+      e.which === 39 ||
+      e.which === 40
+    ) {
       this._handleKeyPress(e);
     }
   };
@@ -314,24 +322,32 @@ class TextInput extends Component<*> {
     if (onKeyPress) {
       let keyValue;
       switch (e.which) {
-        // backspace
         case 8:
           keyValue = 'Backspace';
           break;
-        // tab
         case 9:
           keyValue = 'Tab';
           break;
-        // enter
         case 13:
           keyValue = 'Enter';
           break;
-        // spacebar
         case 32:
           keyValue = ' ';
           break;
+        case 37:
+          keyValue = 'ArrowLeft';
+          break;
+        case 38:
+          keyValue = 'ArrowUp';
+          break;
+        case 39:
+          keyValue = 'ArrowRight';
+          break;
+        case 40:
+          keyValue = 'ArrowDown';
+          break;
         default: {
-          // we trim to only care about the keys that has a textual representation
+          // Trim to only care about the keys that have a textual representation
           if (e.shiftKey) {
             keyValue = String.fromCharCode(e.which).trim();
           } else {

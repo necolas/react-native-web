@@ -220,10 +220,11 @@ const TextInputScreen = () => (
             Callback that is called when a key is pressed. This will be called with{' '}
             <Code>{`{
 nativeEvent: { key: keyValue } }`}</Code>{' '}
-            where keyValue is <Code>Enter</Code> or <Code>Backspace</Code> for respective keys and
-            the typed-in character otherwise including <Code>' '</Code>
-            for space. Modifier keys (e.g., <Code>shiftKey</Code>) are also included in the{' '}
-            <Code>nativeEvent</Code>. Fires before <Code>onChange</Code> callbacks.
+            where keyValue is <Code>Enter</Code>, <Code>Backspace</Code>, <Code>Tab</Code>,{' '}
+            <Code>{'Arrow{Up,Right,Down,Left}'}</Code> for respective keys and the typed-in
+            character otherwise including <Code>' '</Code> for space. Modifier keys (e.g.,{' '}
+            <Code>shiftKey</Code>) are also included in the <Code>nativeEvent</Code>. Fires before{' '}
+            <Code>onChange</Code> callbacks.
           </AppText>
         }
       />

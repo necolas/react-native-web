@@ -216,6 +216,25 @@ describe('components/TextInput', () => {
       );
     });
 
+    test('arrow key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { which: 37 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'ArrowLeft',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
     test('text key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
