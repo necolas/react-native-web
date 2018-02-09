@@ -19,7 +19,7 @@ rewriting existing code. React Native for Web can also render to HTML and
 critical CSS on the server using Node.js.
 
 Who is using React Native for Web? [Twitter](https://mobile.twitter.com),
-[Major League Soccer](https://matchcenter.mlssoccer.com), [The
+[Major League Soccer](https://matchcenter.mlssoccer.com), Playstation, Uber, [The
 Times](https://github.com/newsuk/times-components), [React Native's
 documentation](http://facebook.github.io/react-native/).
 
