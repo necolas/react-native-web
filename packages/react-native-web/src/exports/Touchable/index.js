@@ -386,6 +386,7 @@ const TouchableMixin = {
    * Place as callback for a DOM element's `onResponderGrant` event.
    */
   touchableHandleResponderGrant: function(e: Event) {
+    this.preventOnPressTrigger = false;
     const dispatchID = e.currentTarget;
     // Since e is used in a callback invoked on another event loop
     // (as in setTimeout etc), we need to call e.persist() on the
@@ -448,6 +449,7 @@ const TouchableMixin = {
     // Not enough time elapsed yet, wait for highlight -
     // this is just a perf optimization.
     if (this.state.touchable.touchState === States.RESPONDER_INACTIVE_PRESS_IN) {
+      this.preventOnPressTrigger = true;
       return;
     }
 
@@ -690,7 +692,10 @@ const TouchableMixin = {
     }
   },
 
-  _cancelLongPressDelayTimeout: function() {
+  _cancelLongPressDelayTimeout: function(preventOnPressTrigger = true) {
+    if (preventOnPressTrigger) {
+      this.preventOnPressTrigger = true;
+    }
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
     this.longPressDelayTimeout = null;
   },
@@ -740,7 +745,7 @@ const TouchableMixin = {
       signal === Signals.RESPONDER_TERMINATED || signal === Signals.RESPONDER_RELEASE;
 
     if (isFinalSignal) {
-      this._cancelLongPressDelayTimeout();
+      this._cancelLongPressDelayTimeout(false);
     }
 
     if (!IsActive[curState] && IsActive[nextState]) {
@@ -771,7 +776,9 @@ const TouchableMixin = {
           this._startHighlight(e);
           this._endHighlight(e);
         }
-        this.touchableHandlePress(e);
+        if (!this.preventOnPressTrigger) {
+          this.touchableHandlePress(e);
+        }
       }
     }
 
