@@ -206,7 +206,7 @@ const stylePropTypes = [
   },
   {
     name: 'textAlign',
-    typeInfo: 'string'
+    typeInfo: 'enum("center", "end", "inherit", "justify", "justify-all", "left", "right", "start")'
   },
   {
     name: 'textAlignVertical',

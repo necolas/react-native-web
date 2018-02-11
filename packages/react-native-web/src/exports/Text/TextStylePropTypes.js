@@ -16,7 +16,16 @@ import { number, oneOf, oneOfType, shape, string } from 'prop-types';
 const numberOrString = oneOfType([number, string]);
 
 const ShadowOffsetPropType = shape({ width: number, height: number });
-const TextAlignPropType = oneOf(['center', 'inherit', 'justify', 'justify-all', 'left', 'right']);
+const TextAlignPropType = oneOf([
+  'center',
+  'end',
+  'inherit',
+  'justify',
+  'justify-all',
+  'left',
+  'right',
+  'start'
+]);
 const WritingDirectionPropType = oneOf(['auto', 'ltr', 'rtl']);
 
 const TextStylePropTypes = {
