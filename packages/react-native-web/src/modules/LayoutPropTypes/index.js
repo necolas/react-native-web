@@ -41,7 +41,14 @@ const LayoutPropTypes = {
   flexShrink: number,
   flexWrap: oneOf(['nowrap', 'wrap', 'wrap-reverse']),
   height: numberOrString,
-  justifyContent: oneOf(['center', 'flex-end', 'flex-start', 'space-around', 'space-between']),
+  justifyContent: oneOf([
+    'center',
+    'flex-end',
+    'flex-start',
+    'space-around',
+    'space-between',
+    'space-evenly'
+  ]),
   left: numberOrString,
   margin: numberOrString,
   marginBottom: numberOrString,
