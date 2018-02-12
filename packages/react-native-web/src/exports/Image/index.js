@@ -168,8 +168,8 @@ class Image extends Component<*, State> {
     if (uri !== nextUri) {
       ImageUriCache.remove(uri);
       const isPreviouslyLoaded = ImageUriCache.has(nextUri);
-      isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
+      isPreviouslyLoaded && ImageUriCache.add(nextUri);
+      this._updateImageState(getImageState(nextUri, isPreviouslyLoaded));
     }
   }
 
