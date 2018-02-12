@@ -316,10 +316,10 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  * @lends Touchable.prototype
  */
 const TouchableMixin = {
-  // HACK (part 1): basic support for touchable interactions using a keyboard
   componentDidMount: function() {
     this._touchableNode = findNodeHandle(this);
     if (this._touchableNode && this._touchableNode.addEventListener) {
+      // HACK (part 1): basic support for touchable interactions using a keyboard
       this._touchableBlurListener = e => {
         if (this._isTouchableKeyboardActive) {
           if (
@@ -332,6 +332,13 @@ const TouchableMixin = {
         }
       };
       this._touchableNode.addEventListener('blur', this._touchableBlurListener);
+
+      // support for detecting if mouse click is not valid (not primary)
+      this._rightClickListener = e => {
+        this._lastMouseClickWasPrimary = e.which === 1;
+      };
+      this._touchableNode.addEventListener('mousedown', this._rightClickListener);
+      this._isInvalidMouseEvt = e => !this._lastMouseClickWasPrimary && e.type.startsWith('mouse');
     }
   },
 
@@ -341,6 +348,7 @@ const TouchableMixin = {
   componentWillUnmount: function() {
     if (this._touchableNode && this._touchableNode.addEventListener) {
       this._touchableNode.removeEventListener('blur', this._touchableBlurListener);
+      this._touchableNode.removeEventListener('mousedown', this._rightClickListener);
     }
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
@@ -393,9 +401,13 @@ const TouchableMixin = {
     e.persist();
     this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);
     this.pressOutDelayTimeout = null;
-
     this.state.touchable.touchState = States.NOT_RESPONDER;
     this.state.touchable.responderID = dispatchID;
+
+    if (this._isInvalidMouseEvt(e)) {
+      return;
+    }
+
     this._receiveSignal(Signals.RESPONDER_GRANT, e);
     let delayMS =
       this.touchableGetHighlightDelayMS !== undefined
@@ -424,7 +436,10 @@ const TouchableMixin = {
    * Place as callback for a DOM element's `onResponderRelease` event.
    */
   touchableHandleResponderRelease: function(e: Event) {
-    this._receiveSignal(Signals.RESPONDER_RELEASE, e);
+    const curState = this.state.touchable.touchState;
+    if (curState !== States.NOT_RESPONDER) {
+      this._receiveSignal(Signals.RESPONDER_RELEASE, e);
+    }
     // Browsers fire mouse events after touch events. This causes the
     // 'onResponderRelease' handler to be called twice for Touchables.
     // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
@@ -445,6 +460,9 @@ const TouchableMixin = {
    * Place as callback for a DOM element's `onResponderMove` event.
    */
   touchableHandleResponderMove: function(e: Event) {
+    if (this._isInvalidMouseEvt(e)) {
+      return;
+    }
     // Not enough time elapsed yet, wait for highlight -
     // this is just a perf optimization.
     if (this.state.touchable.touchState === States.RESPONDER_INACTIVE_PRESS_IN) {
