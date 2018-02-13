@@ -71,7 +71,7 @@ export default class DraggableCircle extends PureComponent {
 
   _handleMoveShouldSetPanResponder = (e: Object, gestureState: Object): boolean => {
     // Should we become active when the user moves a touch over the circle?
-    return false;
+    return true;
   };
 
   _handlePanResponderGrant = (e: Object, gestureState: Object) => {

@@ -43,8 +43,8 @@ const originalExtractEvents = ResponderEventPlugin.extractEvents;
 ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nativeEventTarget) => {
   const hasActiveTouches = ResponderTouchHistoryStore.touchHistory.numberActiveTouches > 0;
   if (
-    // Filter out mousemove events when there hasn't been a touch yet
-    (topLevelType === topMouseMove && !hasActiveTouches) ||
+    // Filter out mousemove and mouseup events when a touch hasn't started yet
+    ((topLevelType === topMouseMove || topLevelType === topMouseUp) && !hasActiveTouches) ||
     // Filter out events from wheel/middle and right click.
     (nativeEvent.button === 1 || nativeEvent.button === 2)
   ) {
