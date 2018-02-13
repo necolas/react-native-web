@@ -3,7 +3,10 @@
 exports[`modules/createElement it normalizes event.nativeEvent 1`] = `
 Object {
   "_normalized": true,
+  "bubbles": undefined,
+  "cancelable": undefined,
   "changedTouches": Array [],
+  "defaultPrevented": undefined,
   "identifier": undefined,
   "locationX": undefined,
   "locationY": undefined,
@@ -15,6 +18,8 @@ Object {
   "target": undefined,
   "timestamp": 1496876171255,
   "touches": Array [],
+  "type": undefined,
+  "which": undefined,
 }
 `;
 

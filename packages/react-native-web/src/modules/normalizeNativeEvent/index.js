@@ -73,7 +73,10 @@ function normalizeTouchEvent(nativeEvent) {
 
   const event = {
     _normalized: true,
+    bubbles: nativeEvent.bubbles,
+    cancelable: nativeEvent.cancelable,
     changedTouches,
+    defaultPrevented: nativeEvent.defaultPrevented,
     identifier: undefined,
     locationX: undefined,
     locationY: undefined,
@@ -86,7 +89,9 @@ function normalizeTouchEvent(nativeEvent) {
     // normalize the timestamp
     // https://stackoverflow.com/questions/26177087/ios-8-mobile-safari-wrong-timestamp-on-touch-events
     timestamp: Date.now(),
-    touches
+    touches,
+    type: nativeEvent.type,
+    which: nativeEvent.which
   };
 
   if (changedTouches[0]) {
@@ -134,7 +139,10 @@ function normalizeMouseEvent(nativeEvent) {
 
   return {
     _normalized: true,
+    bubbles: nativeEvent.bubbles,
+    cancelable: nativeEvent.cancelable,
     changedTouches: touches,
+    defaultPrevented: nativeEvent.defaultPrevented,
     identifier: touches[0].identifier,
     locationX: nativeEvent.offsetX,
     locationY: nativeEvent.offsetY,
@@ -145,7 +153,9 @@ function normalizeMouseEvent(nativeEvent) {
     stopPropagation,
     target: nativeEvent.target,
     timestamp: touches[0].timestamp,
-    touches: nativeEvent.type === 'mouseup' ? emptyArray : touches
+    touches: nativeEvent.type === 'mouseup' ? emptyArray : touches,
+    type: nativeEvent.type,
+    which: nativeEvent.which
   };
 }
 

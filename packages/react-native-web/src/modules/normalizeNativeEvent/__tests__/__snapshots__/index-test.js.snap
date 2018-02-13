@@ -3,6 +3,8 @@
 exports[`modules/normalizeNativeEvent mouse events simulated event 1`] = `
 Object {
   "_normalized": true,
+  "bubbles": undefined,
+  "cancelable": undefined,
   "changedTouches": Array [
     Object {
       "_normalized": true,
@@ -20,6 +22,7 @@ Object {
       "timestamp": 1496876171255,
     },
   ],
+  "defaultPrevented": undefined,
   "identifier": 0,
   "locationX": undefined,
   "locationY": undefined,
@@ -31,12 +34,16 @@ Object {
   "target": undefined,
   "timestamp": 1496876171255,
   "touches": Array [],
+  "type": "mouseup",
+  "which": undefined,
 }
 `;
 
 exports[`modules/normalizeNativeEvent mouse events synthetic event 1`] = `
 Object {
   "_normalized": true,
+  "bubbles": undefined,
+  "cancelable": undefined,
   "changedTouches": Array [
     Object {
       "_normalized": true,
@@ -54,6 +61,7 @@ Object {
       "timestamp": 1496876171255,
     },
   ],
+  "defaultPrevented": undefined,
   "identifier": 0,
   "locationX": 200,
   "locationY": 200,
@@ -65,13 +73,18 @@ Object {
   "target": undefined,
   "timestamp": 1496876171255,
   "touches": Array [],
+  "type": "mouseup",
+  "which": undefined,
 }
 `;
 
 exports[`modules/normalizeNativeEvent touch events simulated event 1`] = `
 Object {
   "_normalized": true,
+  "bubbles": undefined,
+  "cancelable": undefined,
   "changedTouches": Array [],
+  "defaultPrevented": undefined,
   "identifier": undefined,
   "locationX": undefined,
   "locationY": undefined,
@@ -83,12 +96,16 @@ Object {
   "target": undefined,
   "timestamp": 1496876171255,
   "touches": Array [],
+  "type": "touchstart",
+  "which": undefined,
 }
 `;
 
 exports[`modules/normalizeNativeEvent touch events synthetic event 1`] = `
 Object {
   "_normalized": true,
+  "bubbles": undefined,
+  "cancelable": undefined,
   "changedTouches": Array [
     Object {
       "_normalized": true,
@@ -109,6 +126,7 @@ Object {
       "timestamp": 1496876171255,
     },
   ],
+  "defaultPrevented": undefined,
   "identifier": undefined,
   "locationX": undefined,
   "locationY": undefined,
@@ -120,5 +138,7 @@ Object {
   "target": undefined,
   "timestamp": 1496876171255,
   "touches": Array [],
+  "type": "touchstart",
+  "which": undefined,
 }
 `;

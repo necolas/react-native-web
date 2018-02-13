@@ -52,6 +52,7 @@ ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nat
   }
 
   const normalizedEvent = normalizeNativeEvent(nativeEvent);
+
   return originalExtractEvents.call(
     ResponderEventPlugin,
     topLevelType,
