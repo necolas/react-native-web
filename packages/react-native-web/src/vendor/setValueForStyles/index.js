@@ -12,6 +12,7 @@
  */
 
 import dangerousStyleValue from '../dangerousStyleValue';
+import hyphenateStyleName from 'hyphenate-style-name';
 import warnValidStyle from '../warnValidStyle';
 
 /**
@@ -20,32 +21,37 @@ import warnValidStyle from '../warnValidStyle';
  *
  * @param {DOMElement} node
  * @param {object} styles
- * @param {ReactDOMComponent} component
  */
-const setValueForStyles = function(node, styles, component) {
-  var style = node.style;
-  for (var styleName in styles) {
+function setValueForStyles(node, styles, getStack) {
+  const style = node.style;
+  for (let styleName in styles) {
     if (!styles.hasOwnProperty(styleName)) {
       continue;
     }
-    var isCustomProperty = styleName.indexOf('--') === 0;
+    const isCustomProperty = styleName.indexOf('--') === 0;
+    const isImportant =
+      typeof styles[styleName] === 'string' && styles[styleName].indexOf('!important') > -1;
     if (process.env.NODE_ENV !== 'production') {
       if (!isCustomProperty) {
-        warnValidStyle(styleName, styles[styleName], component);
+        warnValidStyle(styleName, styles[styleName], getStack);
       }
     }
-    var styleValue = dangerousStyleValue(styleName, styles[styleName], isCustomProperty);
+    const styleValue = dangerousStyleValue(styleName, styles[styleName], isCustomProperty);
     if (styleName === 'float') {
       styleName = 'cssFloat';
     }
-    if (isCustomProperty) {
-      style.setProperty(styleName, styleValue);
-    } else if (styleValue) {
-      style[styleName] = styleValue;
+    if (isCustomProperty || isImportant) {
+      const name = isCustomProperty ? styleName : hyphenateStyleName(styleName);
+      if (isImportant) {
+        const [value, priority] = styleValue.split('!');
+        style.setProperty(name, value, priority);
+      } else {
+        style.setProperty(name, styleValue);
+      }
     } else {
-      style[styleName] = '';
+      style[styleName] = styleValue;
     }
   }
-};
+}
 
 export default setValueForStyles;
