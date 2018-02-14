@@ -42,14 +42,22 @@ describe('StyleSheet/ReactNativeStyleResolver', () => {
       testResolve(a, b, c);
     });
 
-    test('with register before RTL, resolves to className', () => {
+    test('with register before RTL, resolves to correct className', () => {
       const a = ReactNativePropRegistry.register({ left: '12.34%' });
       const b = ReactNativePropRegistry.register({ textAlign: 'left' });
       const c = ReactNativePropRegistry.register({ marginLeft: 10 });
       I18nManager.forceRTL(true);
-      const resolved = styleResolver.resolve([a, b, c]);
+
+      const resolved1 = styleResolver.resolve([a, b, c]);
+      expect(resolved1).toMatchSnapshot();
+
+      I18nManager.swapLeftAndRightInRTL(false);
+
+      const resolved2 = styleResolver.resolve([a, b, c]);
+      expect(resolved2).toMatchSnapshot();
+
+      I18nManager.swapLeftAndRightInRTL(true);
       I18nManager.forceRTL(false);
-      expect(resolved).toMatchSnapshot();
     });
 
     test('with register, resolves to mixed', () => {
@@ -102,7 +110,7 @@ describe('StyleSheet/ReactNativeStyleResolver', () => {
       expect(resolved).toMatchSnapshot();
     });
 
-    test('when RTL=true, resolves to flipped inline styles', () => {
+    test('when isRTL=true, resolves to flipped inline styles', () => {
       // note: DOM state resolved from { marginLeft: 5, left: 5 } in RTL mode
       node.style.cssText = 'margin-right: 5px; right: 5px;';
       I18nManager.forceRTL(true);
@@ -111,14 +119,28 @@ describe('StyleSheet/ReactNativeStyleResolver', () => {
       expect(resolved).toMatchSnapshot();
     });
 
-    test('when RTL=true, resolves to flipped classNames', () => {
-      // note: DOM state resolved from { marginLeft: 5, left: 5 } in RTL mode
+    test('when isRTL=true, resolves to flipped classNames', () => {
+      // note: DOM state resolved from { marginLeft: 5, left: 5 }
       node.style.cssText = 'margin-right: 5px; right: 5px;';
       const nextStyle = ReactNativePropRegistry.register({ marginLeft: 10, right: 1 });
 
       I18nManager.forceRTL(true);
       const resolved = styleResolver.resolveWithNode(nextStyle, node);
       I18nManager.forceRTL(false);
+      expect(resolved).toMatchSnapshot();
+    });
+
+    test('when isRTL=true & doLeftAndRightSwapInRTL=false, resolves to non-flipped inline styles', () => {
+      // note: DOM state resolved from { marginRight 5, right: 5, paddingEnd: 5 }
+      node.style.cssText = 'margin-right: 5px; right: 5px; padding-left: 5px';
+      I18nManager.forceRTL(true);
+      I18nManager.swapLeftAndRightInRTL(false);
+      const resolved = styleResolver.resolveWithNode(
+        { marginRight: 10, right: 10, paddingEnd: 10 },
+        node
+      );
+      I18nManager.forceRTL(false);
+      I18nManager.swapLeftAndRightInRTL(true);
       expect(resolved).toMatchSnapshot();
     });
   });

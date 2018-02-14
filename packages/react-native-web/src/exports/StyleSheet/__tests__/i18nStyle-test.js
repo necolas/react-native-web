@@ -3,50 +3,8 @@
 import I18nManager from '../../I18nManager';
 import i18nStyle from '../i18nStyle';
 
-const styleLeftRight = {
-  borderLeftColor: 'red',
-  borderRightColor: 'blue',
-  borderTopLeftRadius: 10,
-  borderTopRightRadius: '1rem',
-  borderBottomLeftRadius: 20,
-  borderBottomRightRadius: '2rem',
-  borderLeftStyle: 'solid',
-  borderRightStyle: 'dotted',
-  borderLeftWidth: 5,
-  borderRightWidth: 6,
-  left: 1,
-  marginLeft: 7,
-  marginRight: 8,
-  paddingLeft: 9,
-  paddingRight: 10,
-  right: 2,
-  textAlign: 'left',
-  textShadowOffset: { width: '1rem', height: 10 }
-};
-
-const styleStartEnd = {
-  borderStartColor: 'red',
-  borderEndColor: 'blue',
-  borderTopStartRadius: 10,
-  borderTopEndRadius: '1rem',
-  borderBottomStartRadius: 20,
-  borderBottomEndRadius: '2rem',
-  borderStartStyle: 'solid',
-  borderEndStyle: 'dotted',
-  borderStartWidth: 5,
-  borderEndWidth: 6,
-  start: 1,
-  marginStart: 7,
-  marginEnd: 8,
-  paddingStart: 9,
-  paddingEnd: 10,
-  end: 2,
-  textAlign: 'start',
-  textShadowOffset: { width: '1rem', height: 10 }
-};
-
 describe('StyleSheet/i18nStyle', () => {
-  describe('LTR mode', () => {
+  describe('isRTL = false', () => {
     beforeEach(() => {
       I18nManager.allowRTL(false);
     });
@@ -56,32 +14,59 @@ describe('StyleSheet/i18nStyle', () => {
     });
 
     test("doesn't flip left/right", () => {
-      expect(i18nStyle(styleLeftRight)).toMatchSnapshot();
+      const initial = {
+        borderLeftColor: 'red',
+        left: 1,
+        marginLeft: 5,
+        paddingRight: 10,
+        textAlign: 'right',
+        textShadowOffset: { width: '1rem', height: 10 }
+      };
+
+      expect(i18nStyle(initial)).toEqual(initial);
     });
 
     test("converts and doesn't flip start/end", () => {
-      expect(i18nStyle(styleStartEnd)).toMatchSnapshot();
+      const initial = {
+        borderStartColor: 'red',
+        start: 1,
+        marginStart: 5,
+        paddingEnd: 10,
+        textAlign: 'end',
+        textShadowOffset: { width: '1rem', height: 10 }
+      };
+
+      const expected = {
+        borderLeftColor: 'red',
+        left: 1,
+        marginLeft: 5,
+        paddingRight: 10,
+        textAlign: 'right',
+        textShadowOffset: { width: '1rem', height: 10 }
+      };
+
+      expect(i18nStyle(initial)).toEqual(expected);
     });
 
     test('start/end takes precedence over left/right', () => {
-      const style = {
-        borderTopStartRadius: 10,
-        borderTopLeftRadius: 0,
+      const initial = {
+        borderStartWidth: 10,
+        borderLeftWidth: 0,
         end: 10,
         right: 0,
         marginStart: 10,
         marginLeft: 0
       };
       const expected = {
-        borderTopLeftRadius: 10,
+        borderLeftWidth: 10,
         marginLeft: 10,
         right: 10
       };
-      expect(i18nStyle(style)).toEqual(expected);
+      expect(i18nStyle(initial)).toEqual(expected);
     });
   });
 
-  describe('RTL mode', () => {
+  describe('isRTL = true', () => {
     beforeEach(() => {
       I18nManager.forceRTL(true);
     });
@@ -90,29 +75,125 @@ describe('StyleSheet/i18nStyle', () => {
       I18nManager.forceRTL(false);
     });
 
-    test('flips left/right', () => {
-      expect(i18nStyle(styleLeftRight)).toMatchSnapshot();
+    describe('doLeftAndRightSwapInRTL = true', () => {
+      test('flips left/right', () => {
+        const initial = {
+          borderLeftColor: 'red',
+          left: 1,
+          marginLeft: 5,
+          paddingRight: 10,
+          textAlign: 'right',
+          textShadowOffset: { width: '1rem', height: 10 }
+        };
+
+        const expected = {
+          borderRightColor: 'red',
+          right: 1,
+          marginRight: 5,
+          paddingLeft: 10,
+          textAlign: 'left',
+          textShadowOffset: { width: '-1rem', height: 10 }
+        };
+
+        expect(i18nStyle(initial)).toEqual(expected);
+      });
+
+      test('converts and flips start/end', () => {
+        const initial = {
+          borderStartColor: 'red',
+          start: 1,
+          marginStart: 5,
+          paddingEnd: 10,
+          textAlign: 'end'
+        };
+
+        const expected = {
+          borderRightColor: 'red',
+          right: 1,
+          marginRight: 5,
+          paddingLeft: 10,
+          textAlign: 'left'
+        };
+
+        expect(i18nStyle(initial)).toEqual(expected);
+      });
+
+      test('start/end takes precedence over left/right', () => {
+        const style = {
+          borderStartWidth: 10,
+          borderLeftWidth: 0,
+          end: 10,
+          right: 0,
+          marginStart: 10,
+          marginLeft: 0
+        };
+        const expected = {
+          borderRightWidth: 10,
+          marginRight: 10,
+          left: 10
+        };
+        expect(i18nStyle(style)).toEqual(expected);
+      });
     });
 
-    test('converts and flips start/end', () => {
-      expect(i18nStyle(styleStartEnd)).toMatchSnapshot();
-    });
+    describe('doLeftAndRightSwapInRTL = false', () => {
+      beforeEach(() => {
+        I18nManager.swapLeftAndRightInRTL(false);
+      });
 
-    test('start/end takes precedence over left/right', () => {
-      const style = {
-        borderTopStartRadius: 10,
-        borderTopLeftRadius: 0,
-        end: 10,
-        right: 0,
-        marginStart: 10,
-        marginLeft: 0
-      };
-      const expected = {
-        borderTopRightRadius: 10,
-        marginRight: 10,
-        left: 10
-      };
-      expect(i18nStyle(style)).toEqual(expected);
+      afterEach(() => {
+        I18nManager.swapLeftAndRightInRTL(true);
+      });
+
+      test("doesn't flip left/right", () => {
+        const initial = {
+          borderLeftColor: 'red',
+          left: 1,
+          marginLeft: 5,
+          paddingRight: 10,
+          textAlign: 'right',
+          textShadowOffset: { width: '1rem', height: 10 }
+        };
+
+        expect(i18nStyle(initial)).toEqual(initial);
+      });
+
+      test('converts start/end', () => {
+        const initial = {
+          borderStartColor: 'red',
+          start: 1,
+          marginStart: 5,
+          paddingEnd: 10,
+          textAlign: 'end'
+        };
+
+        const expected = {
+          borderRightColor: 'red',
+          right: 1,
+          marginRight: 5,
+          paddingLeft: 10,
+          textAlign: 'left'
+        };
+
+        expect(i18nStyle(initial)).toEqual(expected);
+      });
+
+      test('start/end takes precedence over left/right', () => {
+        const style = {
+          borderStartWidth: 10,
+          borderRightWidth: 0,
+          end: 10,
+          left: 0,
+          marginStart: 10,
+          marginRight: 0
+        };
+        const expected = {
+          borderRightWidth: 10,
+          marginRight: 10,
+          left: 10
+        };
+        expect(i18nStyle(style)).toEqual(expected);
+      });
     });
   });
 });

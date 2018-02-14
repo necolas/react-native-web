@@ -9,7 +9,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register before RTL, resolves to className 1`] = `
+exports[`StyleSheet/ReactNativeStyleResolver resolve with register before RTL, resolves to correct className 1`] = `
 Object {
   "classList": Array [
     "rn-marginRight-zso239",
@@ -17,6 +17,17 @@ Object {
     "rn-textAlign-1ff274t",
   ],
   "className": "rn-marginRight-zso239 rn-right-1bnbe1j rn-textAlign-1ff274t",
+}
+`;
+
+exports[`StyleSheet/ReactNativeStyleResolver resolve with register before RTL, resolves to correct className 2`] = `
+Object {
+  "classList": Array [
+    "rn-left-2s0hu9",
+    "rn-marginLeft-1n0xq6e",
+    "rn-textAlign-fdjqy7",
+  ],
+  "className": "rn-left-2s0hu9 rn-marginLeft-1n0xq6e rn-textAlign-fdjqy7",
 }
 `;
 
@@ -246,7 +257,18 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when RTL=true, resolves to flipped classNames 1`] = `
+exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true & doLeftAndRightSwapInRTL=false, resolves to non-flipped inline styles 1`] = `
+Object {
+  "className": "",
+  "style": Object {
+    "marginRight": "10px",
+    "paddingLeft": "10px",
+    "right": "10px",
+  },
+}
+`;
+
+exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true, resolves to flipped classNames 1`] = `
 Object {
   "className": "rn-left-1u10d71 rn-marginRight-zso239",
   "style": Object {
@@ -256,7 +278,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when RTL=true, resolves to flipped inline styles 1`] = `
+exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true, resolves to flipped inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {

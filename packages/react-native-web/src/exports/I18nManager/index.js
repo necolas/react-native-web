@@ -14,11 +14,14 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => void,
+  doLeftAndRightSwapInRTL: boolean,
   forceRTL: (forceRTL: boolean) => void,
+  isRTL: boolean,
   setPreferredLanguageRTL: (setRTL: boolean) => void,
-  isRTL: boolean
+  swapLeftAndRightInRTL: (flipStyles: boolean) => void
 };
 
+let doLeftAndRightSwapInRTL = true;
 let isPreferredLanguageRTL = false;
 let isRTLAllowed = true;
 let isRTLForced = false;
@@ -30,7 +33,7 @@ const isRTL = () => {
   return isRTLAllowed && isPreferredLanguageRTL;
 };
 
-const onChange = () => {
+const onDirectionChange = () => {
   if (ExecutionEnvironment.canUseDOM) {
     if (document.documentElement && document.documentElement.setAttribute) {
       document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
@@ -41,15 +44,21 @@ const onChange = () => {
 const I18nManager: I18nManagerStatus = {
   allowRTL(bool) {
     isRTLAllowed = bool;
-    onChange();
+    onDirectionChange();
   },
   forceRTL(bool) {
     isRTLForced = bool;
-    onChange();
+    onDirectionChange();
   },
   setPreferredLanguageRTL(bool) {
     isPreferredLanguageRTL = bool;
-    onChange();
+    onDirectionChange();
+  },
+  swapLeftAndRightInRTL(bool) {
+    doLeftAndRightSwapInRTL = bool;
+  },
+  get doLeftAndRightSwapInRTL() {
+    return doLeftAndRightSwapInRTL;
   },
   get isRTL() {
     return isRTL();

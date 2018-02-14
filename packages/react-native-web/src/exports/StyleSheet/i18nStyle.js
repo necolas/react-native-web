@@ -79,69 +79,52 @@ const PROPERTIES_VALUE = {
 // Invert the sign of a numeric-like value
 const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
 
-// Convert I18N properties and values
-const convertProperty = (prop: String): String => {
-  return PROPERTIES_I18N.hasOwnProperty(prop) ? PROPERTIES_I18N[prop] : prop;
-};
-const convertValue = (value: String): String => {
-  return value === 'start' ? 'left' : value === 'end' ? 'right' : value;
-};
-
-// BiDi flip properties and values
-const flipProperty = (prop: String): String => {
-  return PROPERTIES_FLIP.hasOwnProperty(prop) ? PROPERTIES_FLIP[prop] : prop;
-};
-const flipValue = (value: String): String => {
-  return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
-};
-
 const i18nStyle = originalStyle => {
-  const isRTL = I18nManager.isRTL;
-
+  const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
   const style = originalStyle || emptyObject;
-  const nextStyle = {};
   const frozenProps = {};
+  const nextStyle = {};
 
   for (const originalProp in style) {
     if (!Object.prototype.hasOwnProperty.call(style, originalProp)) {
       continue;
     }
-
+    const originalValue = style[originalProp];
     let prop = originalProp;
-    let value = style[originalProp];
-    let shouldFreezeProp = false;
+    let value = originalValue;
 
-    // Process I18N properties and values
-    if (PROPERTIES_I18N[prop]) {
-      prop = convertProperty(prop);
-      // I18N properties takes precendence over left/right
-      shouldFreezeProp = true;
-    } else if (PROPERTIES_VALUE[prop]) {
-      value = convertValue(value);
+    // BiDi flip properties
+    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
+      // convert start/end
+      const convertedProp = PROPERTIES_I18N[originalProp];
+      prop = isRTL ? PROPERTIES_FLIP[convertedProp] : convertedProp;
+    } else if (isRTL && doLeftAndRightSwapInRTL && PROPERTIES_FLIP[originalProp]) {
+      prop = PROPERTIES_FLIP[originalProp];
     }
 
-    if (isRTL) {
-      if (PROPERTIES_FLIP[prop]) {
-        const newProp = flipProperty(prop);
-        if (!frozenProps[prop]) {
-          nextStyle[newProp] = value;
+    // BiDi flip values
+    if (PROPERTIES_VALUE.hasOwnProperty(originalProp)) {
+      if (originalValue === 'start') {
+        value = isRTL ? 'right' : 'left';
+      } else if (originalValue === 'end') {
+        value = isRTL ? 'left' : 'right';
+      } else if (isRTL && doLeftAndRightSwapInRTL) {
+        if (originalValue === 'left') {
+          value = 'right';
+        } else if (originalValue === 'right') {
+          value = 'left';
         }
-      } else if (PROPERTIES_VALUE[prop]) {
-        nextStyle[prop] = flipValue(value);
-      } else if (prop === 'textShadowOffset') {
-        nextStyle[prop] = value;
-        nextStyle[prop].width = additiveInverse(value.width);
-      } else {
-        nextStyle[prop] = style[prop];
-      }
-    } else {
-      if (!frozenProps[prop]) {
-        nextStyle[prop] = value;
       }
     }
 
-    // Mark the style prop as frozen
-    if (shouldFreezeProp) {
+    if (isRTL && prop === 'textShadowOffset') {
+      nextStyle[prop] = value;
+      nextStyle[prop].width = additiveInverse(value.width);
+    } else if (!frozenProps[prop]) {
+      nextStyle[prop] = value;
+    }
+
+    if (PROPERTIES_I18N[originalProp]) {
       frozenProps[prop] = true;
     }
   }
