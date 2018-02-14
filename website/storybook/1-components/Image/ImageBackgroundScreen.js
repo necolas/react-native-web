@@ -9,7 +9,7 @@ import PropChildren from './examples/PropChildren';
 import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-explorer';
 
 const ImageBackgroundScreen = () => (
-  <UIExplorer title="ImageBackground" url="1-components/ImageBackground">
+  <UIExplorer title="ImageBackground" url="1-components/Image">
     <Description>A image component with support for child content.</Description>
 
     <Section title="Props">
