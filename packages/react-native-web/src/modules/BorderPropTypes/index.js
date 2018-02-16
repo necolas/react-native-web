@@ -16,20 +16,28 @@ const BorderStylePropType = oneOf(['solid', 'dotted', 'dashed']);
 
 const BorderPropTypes = {
   borderColor: ColorPropType,
-  borderTopColor: ColorPropType,
-  borderRightColor: ColorPropType,
   borderBottomColor: ColorPropType,
+  borderEndColor: ColorPropType,
   borderLeftColor: ColorPropType,
+  borderRightColor: ColorPropType,
+  borderStartColor: ColorPropType,
+  borderTopColor: ColorPropType,
   borderRadius: numberOrString,
-  borderTopLeftRadius: numberOrString,
-  borderTopRightRadius: numberOrString,
+  borderBottomEndRadius: numberOrString,
   borderBottomLeftRadius: numberOrString,
   borderBottomRightRadius: numberOrString,
+  borderBottomStartRadius: numberOrString,
+  borderTopEndRadius: numberOrString,
+  borderTopLeftRadius: numberOrString,
+  borderTopRightRadius: numberOrString,
+  borderTopStartRadius: numberOrString,
   borderStyle: BorderStylePropType,
-  borderTopStyle: BorderStylePropType,
-  borderRightStyle: BorderStylePropType,
   borderBottomStyle: BorderStylePropType,
-  borderLeftStyle: BorderStylePropType
+  borderEndStyle: BorderStylePropType,
+  borderLeftStyle: BorderStylePropType,
+  borderRightStyle: BorderStylePropType,
+  borderStartStyle: BorderStylePropType,
+  borderTopStyle: BorderStylePropType
 };
 
 export default BorderPropTypes;
