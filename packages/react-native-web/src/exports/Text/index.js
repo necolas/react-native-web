@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     display: 'inline',
     font: 'inherit',
     fontFamily: 'System',
+    fontVariant: ['inherit'],
     fontSize: 14,
     margin: 0,
     padding: 0,

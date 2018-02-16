@@ -11,7 +11,7 @@
 
 import ColorPropType from '../ColorPropType';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import { number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { number, oneOf, oneOfType, shape, string, array } from 'prop-types';
 
 const numberOrString = oneOfType([number, string]);
 
@@ -36,6 +36,7 @@ const TextStylePropTypes = {
   fontSize: numberOrString,
   fontStyle: string,
   fontWeight: string,
+  fontVariant: array,
   letterSpacing: numberOrString,
   lineHeight: numberOrString,
   textAlign: TextAlignPropType,
