@@ -16,7 +16,6 @@ import ImageResizeMode from './ImageResizeMode';
 import ImageSourcePropType from './ImageSourcePropType';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
-import requestIdleCallback, { cancelIdleCallback } from '../../modules/requestIdleCallback';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import View from '../View';
@@ -78,9 +77,6 @@ type State = {
   shouldDisplaySource: boolean
 };
 
-const getAssetTimeout = source =>
-  typeof source === 'object' && source.timeout ? source.timeout : 1000;
-
 class Image extends Component<*, State> {
   static displayName = 'Image';
 
@@ -126,7 +122,6 @@ class Image extends Component<*, State> {
   _imageRequestId = null;
   _imageState = null;
   _isMounted = false;
-  _loadRequest = null;
 
   constructor(props, context) {
     super(props, context);
@@ -216,6 +211,7 @@ class Image extends Component<*, State> {
     const hiddenImage = displayImage
       ? createElement('img', {
           alt: accessibilityLabel || '',
+          decode: 'async',
           draggable,
           ref: this._setImageRef,
           src: displayImage,
@@ -252,22 +248,12 @@ class Image extends Component<*, State> {
   _createImageLoader() {
     const { source } = this.props;
     this._destroyImageLoader();
-    this._loadRequest = requestIdleCallback(
-      () => {
-        const uri = resolveAssetUri(source);
-        this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
-        this._onLoadStart();
-      },
-      { timeout: getAssetTimeout(source) }
-    );
+    const uri = resolveAssetUri(source);
+    this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
+    this._onLoadStart();
   }
 
   _destroyImageLoader() {
-    if (this._loadRequest) {
-      cancelIdleCallback(this._loadRequest);
-      this._loadRequest = null;
-    }
-
     if (this._imageRequestId) {
       ImageLoader.abort(this._imageRequestId);
       this._imageRequestId = null;
