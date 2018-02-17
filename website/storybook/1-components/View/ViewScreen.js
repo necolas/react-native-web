@@ -118,6 +118,10 @@ const ViewScreen = () => (
         ]}
       />
 
+      <DocItem name="onBlur" typeInfo="?function" />
+      <DocItem name="onContextMenu" typeInfo="?function" />
+      <DocItem name="onFocus" typeInfo="?function" />
+
       <DocItem
         name="onLayout"
         typeInfo="?function"
