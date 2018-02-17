@@ -25,6 +25,8 @@ const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 export default class StyleSheetValidation {
   static validateStyleProp(prop: string, style: Object, caller: string) {
     if (process.env.NODE_ENV !== 'production') {
+      const value = style[prop];
+
       const isCustomProperty = prop.indexOf('--') === 0;
       if (isCustomProperty) return;
 
@@ -34,6 +36,12 @@ export default class StyleSheetValidation {
           '\nValid style props: ' +
           JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
         styleError(message1, style, caller, message2);
+      } else if (typeof value === 'string' && value.indexOf('!important') > -1) {
+        styleError(
+          `Invalid value of "${value}" set on prop "${prop}". Values cannot include "!important"`,
+          style,
+          caller
+        );
       } else {
         const error = allStylePropTypes[prop](
           style,
