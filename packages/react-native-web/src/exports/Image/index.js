@@ -56,7 +56,7 @@ const resolveAssetDimensions = source => {
   }
 };
 
-const svgDataUriPattern = /^data:image\/svg\+xml;/;
+const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 const resolveAssetSource = source => {
   let uri;
   if (typeof source === 'number') {
@@ -71,12 +71,12 @@ const resolveAssetSource = source => {
     uri = source || '';
   }
 
-  // SVG data may contain characters (e.g., #, ") that need to be escaped
-  if (svgDataUriPattern.test(uri)) {
-    const parts = uri.split('<svg');
-    const [prefix, ...svgFragment] = parts;
-    const svg = encodeURIComponent(`<svg${svgFragment.join('<svg')}`);
-    return `${prefix}${svg}`;
+  const match = uri.match(svgDataUriPattern);
+  // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
+  if (match) {
+    const [, prefix, svg] = match;
+    const encodedSvg = encodeURIComponent(svg);
+    return `${prefix}${encodedSvg}`;
   }
 
   return uri;

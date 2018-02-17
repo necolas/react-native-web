@@ -17,11 +17,15 @@ const ImageSourceExample = () => (
       <Image source={sources.animatedGif} style={styles.image} />
     </View>
     <View style={styles.column}>
-      <Text style={styles.text}>Data PNG</Text>
-      <Image source={sources.dataPng} style={styles.image} />
+      <Text style={styles.text}>PNG (base64)</Text>
+      <Image source={sources.dataBase64Png} style={styles.image} />
     </View>
     <View style={styles.column}>
-      <Text style={styles.text}>Data SVG</Text>
+      <Text style={styles.text}>SVG (base64)</Text>
+      <Image source={sources.dataBase64Svg} style={styles.image} />
+    </View>
+    <View style={styles.column}>
+      <Text style={styles.text}>SVG (inline data)</Text>
       <Image source={sources.dataSvg} style={styles.image} />
     </View>
   </View>
