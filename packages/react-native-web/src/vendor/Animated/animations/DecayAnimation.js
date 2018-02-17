@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule DecayAnimation
  * @flow
@@ -14,19 +12,19 @@
 
 const Animation = require('./Animation');
 
-const {shouldUseNativeDriver} = require('../NativeAnimatedHelper');
+const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
 
-import type {AnimationConfig, EndCallback} from './Animation';
+import type { AnimationConfig, EndCallback } from './Animation';
 import type AnimatedValue from '../nodes/AnimatedValue';
 
 export type DecayAnimationConfig = AnimationConfig & {
-  velocity: number | {x: number, y: number},
-  deceleration?: number,
+  velocity: number | { x: number, y: number },
+  deceleration?: number
 };
 
 export type DecayAnimationConfigSingle = AnimationConfig & {
   velocity: number,
-  deceleration?: number,
+  deceleration?: number
 };
 
 class DecayAnimation extends Animation {
@@ -41,12 +39,10 @@ class DecayAnimation extends Animation {
 
   constructor(config: DecayAnimationConfigSingle) {
     super();
-    this._deceleration =
-      config.deceleration !== undefined ? config.deceleration : 0.998;
+    this._deceleration = config.deceleration !== undefined ? config.deceleration : 0.998;
     this._velocity = config.velocity;
     this._useNativeDriver = shouldUseNativeDriver(config);
-    this.__isInteraction =
-      config.isInteraction !== undefined ? config.isInteraction : true;
+    this.__isInteraction = config.isInteraction !== undefined ? config.isInteraction : true;
     this.__iterations = config.iterations !== undefined ? config.iterations : 1;
   }
 
@@ -55,7 +51,7 @@ class DecayAnimation extends Animation {
       type: 'decay',
       deceleration: this._deceleration,
       velocity: this._velocity,
-      iterations: this.__iterations,
+      iterations: this.__iterations
     };
   }
 
@@ -64,7 +60,7 @@ class DecayAnimation extends Animation {
     onUpdate: (value: number) => void,
     onEnd: ?EndCallback,
     previousAnimation: ?Animation,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {
     this.__active = true;
     this._lastValue = fromValue;
@@ -91,7 +87,7 @@ class DecayAnimation extends Animation {
     this._onUpdate(value);
 
     if (Math.abs(this._lastValue - value) < 0.1) {
-      this.__debouncedOnEnd({finished: true});
+      this.__debouncedOnEnd({ finished: true });
       return;
     }
 
@@ -105,7 +101,7 @@ class DecayAnimation extends Animation {
     super.stop();
     this.__active = false;
     global.cancelAnimationFrame(this._animationFrame);
-    this.__debouncedOnEnd({finished: false});
+    this.__debouncedOnEnd({ finished: false });
   }
 }
 

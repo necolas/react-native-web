@@ -126,7 +126,9 @@ relatively limited scope. This is a great place to get started.
 
 ## License
 
-React Native for Web is [BSD licensed](./LICENSE).
+React Native for Web is [MIT licensed](./LICENSE). By contributing to React
+Native for Web, you agree that your contributions will be licensed under its
+MIT license.
 
 [package-badge]: https://img.shields.io/npm/v/react-native-web.svg?style=flat
 [package-url]: https://yarnpkg.com/en/package/react-native-web

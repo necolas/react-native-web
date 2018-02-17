@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule NativeAnimatedHelper
  * @flow
@@ -16,19 +14,19 @@ const invariant = require('fbjs/lib/invariant');
 const NativeModules = require('../../exports/NativeModules');
 const NativeEventEmitter = require('../../modules/NativeEventEmitter');
 
-import type {AnimationConfig} from './animations/Animation';
-import type {EventConfig} from './AnimatedEvent';
+import type { AnimationConfig } from './animations/Animation';
+import type { EventConfig } from './AnimatedEvent';
 
 const NativeAnimatedModule = NativeModules.NativeAnimatedModule;
 
 let __nativeAnimatedNodeTagCount = 1; /* used for animated nodes */
 let __nativeAnimationIdCount = 1; /* used for started animations */
 
-type EndResult = {finished: boolean};
+type EndResult = { finished: boolean };
 type EndCallback = (result: EndResult) => void;
 type EventMapping = {
   nativeEventPath: Array<string>,
-  animatedValueTag: ?number,
+  animatedValueTag: ?number
 };
 
 let nativeEventEmitter;
@@ -54,10 +52,7 @@ const API = {
     assertNativeAnimatedModule();
     NativeAnimatedModule.connectAnimatedNodes(parentTag, childTag);
   },
-  disconnectAnimatedNodes: function(
-    parentTag: ?number,
-    childTag: ?number,
-  ): void {
+  disconnectAnimatedNodes: function(parentTag: ?number, childTag: ?number): void {
     assertNativeAnimatedModule();
     NativeAnimatedModule.disconnectAnimatedNodes(parentTag, childTag);
   },
@@ -65,15 +60,10 @@ const API = {
     animationId: ?number,
     nodeTag: ?number,
     config: Object,
-    endCallback: EndCallback,
+    endCallback: EndCallback
   ): void {
     assertNativeAnimatedModule();
-    NativeAnimatedModule.startAnimatingNode(
-      animationId,
-      nodeTag,
-      config,
-      endCallback,
-    );
+    NativeAnimatedModule.startAnimatingNode(animationId, nodeTag, config, endCallback);
   },
   stopAnimation: function(animationId: ?number) {
     assertNativeAnimatedModule();
@@ -95,17 +85,11 @@ const API = {
     assertNativeAnimatedModule();
     NativeAnimatedModule.extractAnimatedNodeOffset(nodeTag);
   },
-  connectAnimatedNodeToView: function(
-    nodeTag: ?number,
-    viewTag: ?number,
-  ): void {
+  connectAnimatedNodeToView: function(nodeTag: ?number, viewTag: ?number): void {
     assertNativeAnimatedModule();
     NativeAnimatedModule.connectAnimatedNodeToView(nodeTag, viewTag);
   },
-  disconnectAnimatedNodeFromView: function(
-    nodeTag: ?number,
-    viewTag: ?number,
-  ): void {
+  disconnectAnimatedNodeFromView: function(nodeTag: ?number, viewTag: ?number): void {
     assertNativeAnimatedModule();
     NativeAnimatedModule.disconnectAnimatedNodeFromView(nodeTag, viewTag);
   },
@@ -116,27 +100,15 @@ const API = {
   addAnimatedEventToView: function(
     viewTag: ?number,
     eventName: string,
-    eventMapping: EventMapping,
+    eventMapping: EventMapping
   ) {
     assertNativeAnimatedModule();
-    NativeAnimatedModule.addAnimatedEventToView(
-      viewTag,
-      eventName,
-      eventMapping,
-    );
+    NativeAnimatedModule.addAnimatedEventToView(viewTag, eventName, eventMapping);
   },
-  removeAnimatedEventFromView(
-    viewTag: ?number,
-    eventName: string,
-    animatedNodeTag: ?number,
-  ) {
+  removeAnimatedEventFromView(viewTag: ?number, eventName: string, animatedNodeTag: ?number) {
     assertNativeAnimatedModule();
-    NativeAnimatedModule.removeAnimatedEventFromView(
-      viewTag,
-      eventName,
-      animatedNodeTag,
-    );
-  },
+    NativeAnimatedModule.removeAnimatedEventFromView(viewTag, eventName, animatedNodeTag);
+  }
 };
 
 /**
@@ -155,7 +127,7 @@ const STYLES_WHITELIST = {
   scaleX: true,
   scaleY: true,
   translateX: true,
-  translateY: true,
+  translateY: true
 };
 
 const TRANSFORM_WHITELIST = {
@@ -167,15 +139,13 @@ const TRANSFORM_WHITELIST = {
   rotate: true,
   rotateX: true,
   rotateY: true,
-  perspective: true,
+  perspective: true
 };
 
 function validateTransform(configs: Array<Object>): void {
   configs.forEach(config => {
     if (!TRANSFORM_WHITELIST.hasOwnProperty(config.property)) {
-      throw new Error(
-        `Property '${config.property}' is not supported by native animated module`,
-      );
+      throw new Error(`Property '${config.property}' is not supported by native animated module`);
     }
   });
 }
@@ -183,9 +153,7 @@ function validateTransform(configs: Array<Object>): void {
 function validateStyles(styles: Object): void {
   for (var key in styles) {
     if (!STYLES_WHITELIST.hasOwnProperty(key)) {
-      throw new Error(
-        `Style property '${key}' is not supported by native animated module`,
-      );
+      throw new Error(`Style property '${key}' is not supported by native animated module`);
     }
   }
 }
@@ -196,13 +164,11 @@ function validateInterpolation(config: Object): void {
     outputRange: true,
     extrapolate: true,
     extrapolateRight: true,
-    extrapolateLeft: true,
+    extrapolateLeft: true
   };
   for (var key in config) {
     if (!SUPPORTED_INTERPOLATION_PARAMS.hasOwnProperty(key)) {
-      throw new Error(
-        `Interpolation property '${key}' is not supported by native animated module`,
-      );
+      throw new Error(`Interpolation property '${key}' is not supported by native animated module`);
     }
   }
 }
@@ -229,7 +195,7 @@ function shouldUseNativeDriver(config: AnimationConfig | EventConfig): boolean {
           'animated module is missing. Falling back to JS-based animation. To ' +
           'resolve this, add `RCTAnimation` module to this app, or remove ' +
           '`useNativeDriver`. ' +
-          'More info: https://github.com/facebook/react-native/issues/11094#issuecomment-263240420',
+          'More info: https://github.com/facebook/react-native/issues/11094#issuecomment-263240420'
       );
       _warnedMissingNativeAnimated = true;
     }
@@ -253,7 +219,7 @@ const NativeAnimatedHelper = {
       nativeEventEmitter = new NativeEventEmitter(NativeAnimatedModule);
     }
     return nativeEventEmitter;
-  },
+  }
 };
 
 module.exports = NativeAnimatedHelper;

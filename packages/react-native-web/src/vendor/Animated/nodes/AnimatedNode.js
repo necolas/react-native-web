@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedNode
  * @flow
@@ -46,24 +44,16 @@ class AnimatedNode {
   }
   __getNativeTag(): ?number {
     NativeAnimatedHelper.assertNativeAnimatedModule();
-    invariant(
-      this.__isNative,
-      'Attempt to get native tag from node not marked as "native"',
-    );
+    invariant(this.__isNative, 'Attempt to get native tag from node not marked as "native"');
     if (this.__nativeTag == null) {
       const nativeTag: ?number = NativeAnimatedHelper.generateNewNodeTag();
-      NativeAnimatedHelper.API.createAnimatedNode(
-        nativeTag,
-        this.__getNativeConfig(),
-      );
+      NativeAnimatedHelper.API.createAnimatedNode(nativeTag, this.__getNativeConfig());
       this.__nativeTag = nativeTag;
     }
     return this.__nativeTag;
   }
   __getNativeConfig(): Object {
-    throw new Error(
-      'This JS animated node type cannot be used as native animated node',
-    );
+    throw new Error('This JS animated node type cannot be used as native animated node');
   }
   toJSON(): any {
     return this.__getValue();

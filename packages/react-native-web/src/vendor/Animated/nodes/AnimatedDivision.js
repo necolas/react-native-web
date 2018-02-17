@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedDivision
  * @flow
@@ -17,7 +15,7 @@ const AnimatedNode = require('./AnimatedNode');
 const AnimatedValue = require('./AnimatedValue');
 const AnimatedWithChildren = require('./AnimatedWithChildren');
 
-import type {InterpolationConfigType} from './AnimatedInterpolation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
 
 class AnimatedDivision extends AnimatedWithChildren {
   _a: AnimatedNode;
@@ -62,7 +60,7 @@ class AnimatedDivision extends AnimatedWithChildren {
   __getNativeConfig(): any {
     return {
       type: 'division',
-      input: [this._a.__getNativeTag(), this._b.__getNativeTag()],
+      input: [this._a.__getNativeTag(), this._b.__getNativeTag()]
     };
   }
 }

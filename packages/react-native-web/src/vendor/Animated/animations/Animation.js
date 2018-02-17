@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule Animation
  * @flow
@@ -16,14 +14,14 @@ const NativeAnimatedHelper = require('../NativeAnimatedHelper');
 
 import type AnimatedValue from '../nodes/AnimatedValue';
 
-export type EndResult = {finished: boolean};
+export type EndResult = { finished: boolean };
 export type EndCallback = (result: EndResult) => void;
 
 export type AnimationConfig = {
   isInteraction?: boolean,
   useNativeDriver?: boolean,
   onComplete?: ?EndCallback,
-  iterations?: number,
+  iterations?: number
 };
 
 // Important note: start() and stop() will only be called at most once.
@@ -40,7 +38,7 @@ class Animation {
     onUpdate: (value: number) => void,
     onEnd: ?EndCallback,
     previousAnimation: ?Animation,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {}
   stop(): void {
     if (this.__nativeId) {
@@ -65,7 +63,7 @@ class Animation {
       this.__nativeId,
       animatedValue.__getNativeTag(),
       this.__getNativeAnimationConfig(),
-      this.__debouncedOnEnd.bind(this),
+      this.__debouncedOnEnd.bind(this)
     );
   }
 }

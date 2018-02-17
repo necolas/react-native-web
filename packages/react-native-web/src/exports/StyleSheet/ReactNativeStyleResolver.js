@@ -1,14 +1,15 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @noflow
+ */
+
+/**
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
- *
- * @noflow
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';

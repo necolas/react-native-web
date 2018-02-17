@@ -27,7 +27,7 @@
     "react-dom": "16.x.x"
   },
   "author": "Nicolas Gallagher",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/necolas/react-native-web.git"
