@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     display: 'inline',
     font: 'inherit',
     fontFamily: 'System',
+    fontVariant: ['inherit'],
     fontSize: 14,
     margin: 0,
     padding: 0,
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     // inherit parent font styles
     fontFamily: 'inherit',
     fontSize: 'inherit',
+    fontVariant: ['inherit'],
     whiteSpace: 'inherit'
   },
   notSelectable: {
