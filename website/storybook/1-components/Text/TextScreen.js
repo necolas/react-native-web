@@ -125,6 +125,10 @@ const TextScreen = () => (
         }}
       />
 
+      <DocItem name="onBlur" typeInfo="?function" />
+      <DocItem name="onContextMenu" typeInfo="?function" />
+      <DocItem name="onFocus" typeInfo="?function" />
+
       <DocItem
         name="onLayout"
         typeInfo="?function"
@@ -193,6 +197,10 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    name: 'fontVariant',
+    typeInfo: 'Array<string>'
+  },
+  {
     name: 'fontWeight',
     typeInfo: 'string'
   },
@@ -206,7 +214,7 @@ const stylePropTypes = [
   },
   {
     name: 'textAlign',
-    typeInfo: 'string'
+    typeInfo: 'enum("center", "end", "inherit", "justify", "justify-all", "left", "right", "start")'
   },
   {
     name: 'textAlignVertical',

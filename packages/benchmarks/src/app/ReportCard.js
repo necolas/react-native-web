@@ -40,7 +40,7 @@ class ReportCard extends React.PureComponent {
                 {fmt(mean)} ±{fmt(stdDev)} ms
               </Text>
               <Text style={[styles.smallText, styles.monoFont]}>
-                (S/L) {fmt(meanScripting)} / {fmt(meanLayout)} ms
+                (S/L) {fmt(meanScripting)}/{fmt(meanLayout)} ms
               </Text>
             </Fragment>
           ) : (

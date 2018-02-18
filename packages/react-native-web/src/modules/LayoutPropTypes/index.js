@@ -1,8 +1,7 @@
 /**
  * Copyright (c) 2015-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
@@ -27,13 +26,16 @@ const LayoutPropTypes = {
   backfaceVisibility: hiddenOrVisible,
   borderWidth: numberOrString,
   borderBottomWidth: numberOrString,
+  borderEndWidth: numberOrString,
   borderLeftWidth: numberOrString,
   borderRightWidth: numberOrString,
+  borderStartWidth: numberOrString,
   borderTopWidth: numberOrString,
   bottom: numberOrString,
   boxSizing: string,
   direction: oneOf(['inherit', 'ltr', 'rtl']),
   display: string,
+  end: numberOrString,
   flex: number,
   flexBasis: numberOrString,
   flexDirection: oneOf(['column', 'column-reverse', 'row', 'row-reverse']),
@@ -41,13 +43,22 @@ const LayoutPropTypes = {
   flexShrink: number,
   flexWrap: oneOf(['nowrap', 'wrap', 'wrap-reverse']),
   height: numberOrString,
-  justifyContent: oneOf(['center', 'flex-end', 'flex-start', 'space-around', 'space-between']),
+  justifyContent: oneOf([
+    'center',
+    'flex-end',
+    'flex-start',
+    'space-around',
+    'space-between',
+    'space-evenly'
+  ]),
   left: numberOrString,
   margin: numberOrString,
   marginBottom: numberOrString,
   marginHorizontal: numberOrString,
+  marginEnd: numberOrString,
   marginLeft: numberOrString,
   marginRight: numberOrString,
+  marginStart: numberOrString,
   marginTop: numberOrString,
   marginVertical: numberOrString,
   maxHeight: numberOrString,
@@ -61,12 +72,15 @@ const LayoutPropTypes = {
   padding: numberOrString,
   paddingBottom: numberOrString,
   paddingHorizontal: numberOrString,
+  paddingEnd: numberOrString,
   paddingLeft: numberOrString,
   paddingRight: numberOrString,
+  paddingStart: numberOrString,
   paddingTop: numberOrString,
   paddingVertical: numberOrString,
   position: oneOf(['absolute', 'fixed', 'relative', 'static', 'sticky']),
   right: numberOrString,
+  start: numberOrString,
   top: numberOrString,
   visibility: hiddenOrVisible,
   width: numberOrString,

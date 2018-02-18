@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedTracking
  * @flow
@@ -15,7 +13,7 @@
 const AnimatedValue = require('./AnimatedValue');
 const AnimatedNode = require('./AnimatedNode');
 
-import type {EndCallback} from '../animations/Animation';
+import type { EndCallback } from '../animations/Animation';
 
 class AnimatedTracking extends AnimatedNode {
   _value: AnimatedValue;
@@ -29,7 +27,7 @@ class AnimatedTracking extends AnimatedNode {
     parent: AnimatedNode,
     animationClass: any,
     animationConfig: Object,
-    callback?: ?EndCallback,
+    callback?: ?EndCallback
   ) {
     super();
     this._value = value;
@@ -57,9 +55,9 @@ class AnimatedTracking extends AnimatedNode {
     this._value.animate(
       new this._animationClass({
         ...this._animationConfig,
-        toValue: (this._animationConfig.toValue: any).__getValue(),
+        toValue: (this._animationConfig.toValue: any).__getValue()
       }),
-      this._callback,
+      this._callback
     );
   }
 }

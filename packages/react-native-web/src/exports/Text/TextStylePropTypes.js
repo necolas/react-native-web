@@ -1,9 +1,8 @@
 /**
  * Copyright (c) 2015-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
@@ -11,12 +10,21 @@
 
 import ColorPropType from '../ColorPropType';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import { number, oneOf, oneOfType, shape, string } from 'prop-types';
+import { array, number, oneOf, oneOfType, shape, string } from 'prop-types';
 
 const numberOrString = oneOfType([number, string]);
 
 const ShadowOffsetPropType = shape({ width: number, height: number });
-const TextAlignPropType = oneOf(['center', 'inherit', 'justify', 'justify-all', 'left', 'right']);
+const TextAlignPropType = oneOf([
+  'center',
+  'end',
+  'inherit',
+  'justify',
+  'justify-all',
+  'left',
+  'right',
+  'start'
+]);
 const WritingDirectionPropType = oneOf(['auto', 'ltr', 'rtl']);
 
 const TextStylePropTypes = {
@@ -27,6 +35,7 @@ const TextStylePropTypes = {
   fontSize: numberOrString,
   fontStyle: string,
   fontWeight: string,
+  fontVariant: array,
   letterSpacing: numberOrString,
   lineHeight: numberOrString,
   textAlign: TextAlignPropType,

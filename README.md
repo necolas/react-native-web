@@ -19,7 +19,7 @@ rewriting existing code. React Native for Web can also render to HTML and
 critical CSS on the server using Node.js.
 
 Who is using React Native for Web? [Twitter](https://mobile.twitter.com),
-[Major League Soccer](https://matchcenter.mlssoccer.com), [The
+[Major League Soccer](https://matchcenter.mlssoccer.com), Playstation, Uber, [The
 Times](https://github.com/newsuk/times-components), [React Native's
 documentation](http://facebook.github.io/react-native/).
 
@@ -126,7 +126,9 @@ relatively limited scope. This is a great place to get started.
 
 ## License
 
-React Native for Web is [BSD licensed](./LICENSE).
+React Native for Web is [MIT licensed](./LICENSE). By contributing to React
+Native for Web, you agree that your contributions will be licensed under its
+MIT license.
 
 [package-badge]: https://img.shields.io/npm/v/react-native-web.svg?style=flat
 [package-url]: https://yarnpkg.com/en/package/react-native-web

@@ -1,9 +1,8 @@
 /**
  * Copyright (c) 2015-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule ViewPropTypes
@@ -40,8 +39,11 @@ export type ViewProps = {
   children?: any,
   hitSlop?: EdgeInsetsProp,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
+  onBlur?: Function,
   onClick?: Function,
   onClickCapture?: Function,
+  onContextMenu?: Function,
+  onFocus?: Function,
   onLayout?: (event: ViewLayoutEvent) => void,
   onResponderGrant?: Function,
   onResponderMove?: Function,
@@ -85,8 +87,11 @@ const ViewPropTypes = {
   children: any,
   hitSlop: EdgeInsetsPropType,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
+  onBlur: func,
   onClick: func,
   onClickCapture: func,
+  onContextMenu: func,
+  onFocus: func,
   onLayout: func,
   onMoveShouldSetResponder: func,
   onMoveShouldSetResponderCapture: func,

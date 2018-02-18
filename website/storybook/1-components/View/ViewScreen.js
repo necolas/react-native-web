@@ -118,6 +118,10 @@ const ViewScreen = () => (
         ]}
       />
 
+      <DocItem name="onBlur" typeInfo="?function" />
+      <DocItem name="onContextMenu" typeInfo="?function" />
+      <DocItem name="onFocus" typeInfo="?function" />
+
       <DocItem
         name="onLayout"
         typeInfo="?function"
@@ -404,15 +408,11 @@ const stylePropTypes = [
     typeInfo: 'color'
   },
   {
-    name: 'borderTopColor',
-    typeInfo: 'color'
-  },
-  {
     name: 'borderBottomColor',
     typeInfo: 'color'
   },
   {
-    name: 'borderRightColor',
+    name: 'borderEndColor',
     typeInfo: 'color'
   },
   {
@@ -420,15 +420,23 @@ const stylePropTypes = [
     typeInfo: 'color'
   },
   {
+    name: 'borderRightColor',
+    typeInfo: 'color'
+  },
+  {
+    name: 'borderStartColor',
+    typeInfo: 'color'
+  },
+  {
+    name: 'borderTopColor',
+    typeInfo: 'color'
+  },
+  {
     name: 'borderRadius',
     typeInfo: 'number | string'
   },
   {
-    name: 'borderTopLeftRadius',
-    typeInfo: 'number | string'
-  },
-  {
-    name: 'borderTopRightRadius',
+    name: 'borderBottomEndRadius',
     typeInfo: 'number | string'
   },
   {
@@ -440,15 +448,27 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
+    name: 'borderBottomStartRadius',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'borderTopEndRadius',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'borderTopLeftRadius',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'borderTopRightRadius',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'borderTopStartRadius',
+    typeInfo: 'number | string'
+  },
+  {
     name: 'borderStyle',
-    typeInfo: 'string'
-  },
-  {
-    name: 'borderTopStyle',
-    typeInfo: 'string'
-  },
-  {
-    name: 'borderRightStyle',
     typeInfo: 'string'
   },
   {
@@ -456,7 +476,23 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    name: 'borderEndStyle',
+    typeInfo: 'string'
+  },
+  {
     name: 'borderLeftStyle',
+    typeInfo: 'string'
+  },
+  {
+    name: 'borderRightStyle',
+    typeInfo: 'string'
+  },
+  {
+    name: 'borderStartStyle',
+    typeInfo: 'string'
+  },
+  {
+    name: 'borderTopStyle',
     typeInfo: 'string'
   },
   {
@@ -468,11 +504,19 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
+    name: 'borderEndWidth',
+    typeInfo: 'number | string'
+  },
+  {
     name: 'borderLeftWidth',
     typeInfo: 'number | string'
   },
   {
     name: 'borderRightWidth',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'borderStartWidth',
     typeInfo: 'number | string'
   },
   {
@@ -510,6 +554,10 @@ const stylePropTypes = [
   {
     name: 'display',
     typeInfo: 'string'
+  },
+  {
+    name: 'end',
+    typeInfo: 'number | string'
   },
   {
     label: 'web',
@@ -621,6 +669,10 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
+    name: 'marginEnd',
+    typeInfo: 'number | string'
+  },
+  {
     name: 'marginHorizontal',
     typeInfo: 'number | string'
   },
@@ -630,6 +682,10 @@ const stylePropTypes = [
   },
   {
     name: 'marginRight',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'marginStart',
     typeInfo: 'number | string'
   },
   {
@@ -712,6 +768,10 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
+    name: 'paddingEnd',
+    typeInfo: 'number | string'
+  },
+  {
     name: 'paddingHorizontal',
     typeInfo: 'number | string'
   },
@@ -721,6 +781,10 @@ const stylePropTypes = [
   },
   {
     name: 'paddingRight',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'paddingStart',
     typeInfo: 'number | string'
   },
   {
@@ -763,6 +827,10 @@ const stylePropTypes = [
   },
   {
     name: 'shadowRadius',
+    typeInfo: 'number | string'
+  },
+  {
+    name: 'start',
     typeInfo: 'number | string'
   },
   {

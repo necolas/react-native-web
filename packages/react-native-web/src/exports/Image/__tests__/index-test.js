@@ -180,6 +180,20 @@ describe('components/Image', () => {
           .attr('src')
       ).toBe(uriTwo);
     });
+
+    test('is correctly updated when missing in initial render', () => {
+      jest.useFakeTimers();
+      const uri = 'https://testing.com/img.jpg';
+      const component = mount(<Image />);
+      component.setProps({ source: { uri } });
+      jest.runOnlyPendingTimers();
+      expect(
+        component
+          .render()
+          .find('img')
+          .attr('src')
+      ).toBe(uri);
+    });
   });
 
   describe('prop "style"', () => {

@@ -1,9 +1,8 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule Image
@@ -57,7 +56,7 @@ const resolveAssetDimensions = source => {
   }
 };
 
-const svgDataUriPattern = /^data:image\/svg\+xml;/;
+const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 const resolveAssetSource = source => {
   let uri;
   if (typeof source === 'number') {
@@ -72,12 +71,12 @@ const resolveAssetSource = source => {
     uri = source || '';
   }
 
-  // SVG data may contain characters (e.g., #, ") that need to be escaped
-  if (svgDataUriPattern.test(uri)) {
-    const parts = uri.split('<svg');
-    const [prefix, ...svgFragment] = parts;
-    const svg = encodeURIComponent(`<svg${svgFragment.join('<svg')}`);
-    return `${prefix}${svg}`;
+  const match = uri.match(svgDataUriPattern);
+  // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
+  if (match) {
+    const [, prefix, svg] = match;
+    const encodedSvg = encodeURIComponent(svg);
+    return `${prefix}${encodedSvg}`;
   }
 
   return uri;
@@ -168,8 +167,8 @@ class Image extends Component<*, State> {
     if (uri !== nextUri) {
       ImageUriCache.remove(uri);
       const isPreviouslyLoaded = ImageUriCache.has(nextUri);
-      isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
+      isPreviouslyLoaded && ImageUriCache.add(nextUri);
+      this._updateImageState(getImageState(nextUri, isPreviouslyLoaded));
     }
   }
 

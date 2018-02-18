@@ -2,44 +2,100 @@
 
 import I18nManager from '..';
 
+const getDocumentDir = () => document.documentElement.getAttribute('dir');
+
 describe('apis/I18nManager', () => {
-  describe('when RTL not enabled', () => {
+  describe('preferred language is LTR', () => {
     beforeEach(() => {
       I18nManager.setPreferredLanguageRTL(false);
     });
 
-    test('is "false" by default', () => {
-      expect(I18nManager.isRTL).toEqual(false);
-      expect(document.documentElement.getAttribute('dir')).toEqual('ltr');
+    describe('isRTL', () => {
+      test('is false', () => {
+        expect(I18nManager.isRTL).toBe(false);
+        expect(getDocumentDir()).toEqual('ltr');
+      });
     });
 
-    test('is "true" when forced', () => {
-      I18nManager.forceRTL(true);
-      expect(I18nManager.isRTL).toEqual(true);
-      expect(document.documentElement.getAttribute('dir')).toEqual('rtl');
-      I18nManager.forceRTL(false);
+    describe('forceRTL', () => {
+      test('when set to false, "isRTL" is false', () => {
+        I18nManager.forceRTL(false);
+        expect(I18nManager.isRTL).toBe(false);
+        expect(getDocumentDir()).toEqual('ltr');
+      });
+      test('when set to true, "isRTL" is true', () => {
+        I18nManager.forceRTL(true);
+        expect(I18nManager.isRTL).toBe(true);
+        expect(getDocumentDir()).toEqual('rtl');
+        I18nManager.forceRTL(false);
+      });
+    });
+
+    describe('swapLeftAndRightInRTL', () => {
+      test('when set to false, "doLeftAndRightSwapInRTL" is false', () => {
+        I18nManager.swapLeftAndRightInRTL(false);
+        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(false);
+      });
+      test('when set to true, "doLeftAndRightSwapInRTL" is true', () => {
+        I18nManager.swapLeftAndRightInRTL(true);
+        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(true);
+      });
     });
   });
 
-  describe('when RTL is enabled', () => {
+  describe('preferred language is RTL', () => {
     beforeEach(() => {
       I18nManager.setPreferredLanguageRTL(true);
     });
 
-    afterEach(() => {
+    afterAll(() => {
       I18nManager.setPreferredLanguageRTL(false);
     });
 
-    test('is "true" by default', () => {
-      expect(I18nManager.isRTL).toEqual(true);
-      expect(document.documentElement.getAttribute('dir')).toEqual('rtl');
+    describe('isRTL', () => {
+      test('is true', () => {
+        expect(I18nManager.isRTL).toBe(true);
+        expect(getDocumentDir()).toEqual('rtl');
+      });
     });
 
-    test('is "false" when not allowed', () => {
-      I18nManager.allowRTL(false);
-      expect(I18nManager.isRTL).toEqual(false);
-      expect(document.documentElement.getAttribute('dir')).toEqual('ltr');
-      I18nManager.allowRTL(true);
+    describe('allowRTL', () => {
+      test('when set to false, "isRTL" is false', () => {
+        I18nManager.allowRTL(false);
+        expect(I18nManager.isRTL).toBe(false);
+        expect(getDocumentDir()).toEqual('ltr');
+        I18nManager.allowRTL(true);
+      });
+      test('when set to true, "isRTL" is true', () => {
+        I18nManager.allowRTL(true);
+        expect(I18nManager.isRTL).toBe(true);
+        expect(getDocumentDir()).toEqual('rtl');
+      });
+    });
+
+    describe('forceRTL', () => {
+      test('when set to false, "isRTL" is true', () => {
+        I18nManager.forceRTL(false);
+        expect(I18nManager.isRTL).toBe(true);
+        expect(getDocumentDir()).toEqual('rtl');
+      });
+      test('when set to true, "isRTL" is true', () => {
+        I18nManager.forceRTL(true);
+        expect(I18nManager.isRTL).toBe(true);
+        expect(getDocumentDir()).toEqual('rtl');
+        I18nManager.forceRTL(false);
+      });
+    });
+
+    describe('swapLeftAndRightInRTL', () => {
+      test('when set to false, "doLeftAndRightSwapInRTL" is false', () => {
+        I18nManager.swapLeftAndRightInRTL(false);
+        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(false);
+      });
+      test('when set to true, "doLeftAndRightSwapInRTL" is true', () => {
+        I18nManager.swapLeftAndRightInRTL(true);
+        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(true);
+      });
     });
   });
 });

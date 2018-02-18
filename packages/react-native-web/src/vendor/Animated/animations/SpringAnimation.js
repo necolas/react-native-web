@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule SpringAnimation
  * @flow
@@ -18,16 +16,16 @@ const Animation = require('./Animation');
 const SpringConfig = require('../SpringConfig');
 
 const invariant = require('fbjs/lib/invariant');
-const {shouldUseNativeDriver} = require('../NativeAnimatedHelper');
+const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
 
-import type {AnimationConfig, EndCallback} from './Animation';
+import type { AnimationConfig, EndCallback } from './Animation';
 
 export type SpringAnimationConfig = AnimationConfig & {
-  toValue: number | AnimatedValue | {x: number, y: number} | AnimatedValueXY,
+  toValue: number | AnimatedValue | { x: number, y: number } | AnimatedValueXY,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
-  velocity?: number | {x: number, y: number},
+  velocity?: number | { x: number, y: number },
   bounciness?: number,
   speed?: number,
   tension?: number,
@@ -35,7 +33,7 @@ export type SpringAnimationConfig = AnimationConfig & {
   stiffness?: number,
   damping?: number,
   mass?: number,
-  delay?: number,
+  delay?: number
 };
 
 export type SpringAnimationConfigSingle = AnimationConfig & {
@@ -51,7 +49,7 @@ export type SpringAnimationConfigSingle = AnimationConfig & {
   stiffness?: number,
   damping?: number,
   mass?: number,
-  delay?: number,
+  delay?: number
 };
 
 function withDefault<T>(value: ?T, defaultValue: T): T {
@@ -87,18 +85,14 @@ class SpringAnimation extends Animation {
     super();
 
     this._overshootClamping = withDefault(config.overshootClamping, false);
-    this._restDisplacementThreshold = withDefault(
-      config.restDisplacementThreshold,
-      0.001,
-    );
+    this._restDisplacementThreshold = withDefault(config.restDisplacementThreshold, 0.001);
     this._restSpeedThreshold = withDefault(config.restSpeedThreshold, 0.001);
     this._initialVelocity = withDefault(config.velocity, 0);
     this._lastVelocity = withDefault(config.velocity, 0);
     this._toValue = config.toValue;
     this._delay = withDefault(config.delay, 0);
     this._useNativeDriver = shouldUseNativeDriver(config);
-    this.__isInteraction =
-      config.isInteraction !== undefined ? config.isInteraction : true;
+    this.__isInteraction = config.isInteraction !== undefined ? config.isInteraction : true;
     this.__iterations = config.iterations !== undefined ? config.iterations : 1;
 
     if (
@@ -111,7 +105,7 @@ class SpringAnimation extends Animation {
           config.speed === undefined &&
           config.tension === undefined &&
           config.friction === undefined,
-        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one',
+        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one'
       );
       this._stiffness = withDefault(config.stiffness, 100);
       this._damping = withDefault(config.damping, 10);
@@ -125,11 +119,11 @@ class SpringAnimation extends Animation {
           config.stiffness === undefined &&
           config.damping === undefined &&
           config.mass === undefined,
-        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one',
+        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one'
       );
       const springConfig = SpringConfig.fromBouncinessAndSpeed(
         withDefault(config.bounciness, 8),
-        withDefault(config.speed, 12),
+        withDefault(config.speed, 12)
       );
       this._stiffness = springConfig.stiffness;
       this._damping = springConfig.damping;
@@ -139,7 +133,7 @@ class SpringAnimation extends Animation {
       // We assume mass is 1.
       const springConfig = SpringConfig.fromOrigamiTensionAndFriction(
         withDefault(config.tension, 40),
-        withDefault(config.friction, 7),
+        withDefault(config.friction, 7)
       );
       this._stiffness = springConfig.stiffness;
       this._damping = springConfig.damping;
@@ -162,7 +156,7 @@ class SpringAnimation extends Animation {
       mass: this._mass,
       initialVelocity: withDefault(this._initialVelocity, this._lastVelocity),
       toValue: this._toValue,
-      iterations: this.__iterations,
+      iterations: this.__iterations
     };
   }
 
@@ -171,7 +165,7 @@ class SpringAnimation extends Animation {
     onUpdate: (value: number) => void,
     onEnd: ?EndCallback,
     previousAnimation: ?Animation,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {
     this.__active = true;
     this._startPosition = fromValue;
@@ -211,7 +205,7 @@ class SpringAnimation extends Animation {
     return {
       lastPosition: this._lastPosition,
       lastVelocity: this._lastVelocity,
-      lastTime: this._lastTime,
+      lastTime: this._lastTime
     };
   }
 
@@ -269,25 +263,21 @@ class SpringAnimation extends Animation {
       position =
         this._toValue -
         envelope *
-          ((v0 + zeta * omega0 * x0) / omega1 * Math.sin(omega1 * t) +
-            x0 * Math.cos(omega1 * t));
+          ((v0 + zeta * omega0 * x0) / omega1 * Math.sin(omega1 * t) + x0 * Math.cos(omega1 * t));
       // This looks crazy -- it's actually just the derivative of the
       // oscillation function
       velocity =
         zeta *
           omega0 *
           envelope *
-          (Math.sin(omega1 * t) * (v0 + zeta * omega0 * x0) / omega1 +
-            x0 * Math.cos(omega1 * t)) -
+          (Math.sin(omega1 * t) * (v0 + zeta * omega0 * x0) / omega1 + x0 * Math.cos(omega1 * t)) -
         envelope *
-          (Math.cos(omega1 * t) * (v0 + zeta * omega0 * x0) -
-            omega1 * x0 * Math.sin(omega1 * t));
+          (Math.cos(omega1 * t) * (v0 + zeta * omega0 * x0) - omega1 * x0 * Math.sin(omega1 * t));
     } else {
       // Critically damped
       const envelope = Math.exp(-omega0 * t);
       position = this._toValue - envelope * (x0 + (v0 + omega0 * x0) * t);
-      velocity =
-        envelope * (v0 * (t * omega0 - 1) + t * x0 * (omega0 * omega0));
+      velocity = envelope * (v0 * (t * omega0 - 1) + t * x0 * (omega0 * omega0));
     }
 
     this._lastTime = now;
@@ -312,8 +302,7 @@ class SpringAnimation extends Animation {
     const isVelocity = Math.abs(velocity) <= this._restSpeedThreshold;
     let isDisplacement = true;
     if (this._stiffness !== 0) {
-      isDisplacement =
-        Math.abs(this._toValue - position) <= this._restDisplacementThreshold;
+      isDisplacement = Math.abs(this._toValue - position) <= this._restDisplacementThreshold;
     }
 
     if (isOvershooting || (isVelocity && isDisplacement)) {
@@ -324,7 +313,7 @@ class SpringAnimation extends Animation {
         this._onUpdate(this._toValue);
       }
 
-      this.__debouncedOnEnd({finished: true});
+      this.__debouncedOnEnd({ finished: true });
       return;
     }
     this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
@@ -335,7 +324,7 @@ class SpringAnimation extends Animation {
     this.__active = false;
     clearTimeout(this._timeout);
     global.cancelAnimationFrame(this._animationFrame);
-    this.__debouncedOnEnd({finished: false});
+    this.__debouncedOnEnd({ finished: false });
   }
 }
 

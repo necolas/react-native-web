@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedImplementation
  * @flow
@@ -13,7 +11,7 @@
  */
 'use strict';
 
-const {AnimatedEvent, attachNativeEvent} = require('./AnimatedEvent');
+const { AnimatedEvent, attachNativeEvent } = require('./AnimatedEvent');
 const AnimatedAddition = require('./nodes/AnimatedAddition');
 const AnimatedDiffClamp = require('./nodes/AnimatedDiffClamp');
 const AnimatedDivision = require('./nodes/AnimatedDivision');
@@ -31,41 +29,31 @@ const TimingAnimation = require('./animations/TimingAnimation');
 
 const createAnimatedComponent = require('./createAnimatedComponent');
 
-import type {
-  AnimationConfig,
-  EndCallback,
-  EndResult,
-} from './animations/Animation';
-import type {TimingAnimationConfig} from './animations/TimingAnimation';
-import type {DecayAnimationConfig} from './animations/DecayAnimation';
-import type {SpringAnimationConfig} from './animations/SpringAnimation';
-import type {Mapping, EventConfig} from './AnimatedEvent';
+import type { AnimationConfig, EndCallback, EndResult } from './animations/Animation';
+import type { TimingAnimationConfig } from './animations/TimingAnimation';
+import type { DecayAnimationConfig } from './animations/DecayAnimation';
+import type { SpringAnimationConfig } from './animations/SpringAnimation';
+import type { Mapping, EventConfig } from './AnimatedEvent';
 
 type CompositeAnimation = {
   start: (callback?: ?EndCallback) => void,
   stop: () => void,
   reset: () => void,
   _startNativeLoop: (iterations?: number) => void,
-  _isUsingNativeDriver: () => boolean,
+  _isUsingNativeDriver: () => boolean
 };
 
-const add = function(
-  a: AnimatedNode | number,
-  b: AnimatedNode | number,
-): AnimatedAddition {
+const add = function(a: AnimatedNode | number, b: AnimatedNode | number): AnimatedAddition {
   return new AnimatedAddition(a, b);
 };
 
-const divide = function(
-  a: AnimatedNode | number,
-  b: AnimatedNode | number,
-): AnimatedDivision {
+const divide = function(a: AnimatedNode | number, b: AnimatedNode | number): AnimatedDivision {
   return new AnimatedDivision(a, b);
 };
 
 const multiply = function(
   a: AnimatedNode | number,
-  b: AnimatedNode | number,
+  b: AnimatedNode | number
 ): AnimatedMultiplication {
   return new AnimatedMultiplication(a, b);
 };
@@ -74,18 +62,11 @@ const modulo = function(a: AnimatedNode, modulus: number): AnimatedModulo {
   return new AnimatedModulo(a, modulus);
 };
 
-const diffClamp = function(
-  a: AnimatedNode,
-  min: number,
-  max: number,
-): AnimatedDiffClamp {
+const diffClamp = function(a: AnimatedNode, min: number, max: number): AnimatedDiffClamp {
   return new AnimatedDiffClamp(a, min, max);
 };
 
-const _combineCallbacks = function(
-  callback: ?EndCallback,
-  config: AnimationConfig,
-) {
+const _combineCallbacks = function(callback: ?EndCallback, config: AnimationConfig) {
   if (callback && config.onComplete) {
     return (...args) => {
       config.onComplete && config.onComplete(...args);
@@ -99,13 +80,13 @@ const _combineCallbacks = function(
 const maybeVectorAnim = function(
   value: AnimatedValue | AnimatedValueXY,
   config: Object,
-  anim: (value: AnimatedValue, config: Object) => CompositeAnimation,
+  anim: (value: AnimatedValue, config: Object) => CompositeAnimation
 ): ?CompositeAnimation {
   if (value instanceof AnimatedValueXY) {
-    const configX = {...config};
-    const configY = {...config};
+    const configX = { ...config };
+    const configY = { ...config };
     for (const key in config) {
-      const {x, y} = config[key];
+      const { x, y } = config[key];
       if (x !== undefined && y !== undefined) {
         configX[key] = x;
         configY[key] = y;
@@ -115,19 +96,19 @@ const maybeVectorAnim = function(
     const aY = anim((value: AnimatedValueXY).y, configY);
     // We use `stopTogether: false` here because otherwise tracking will break
     // because the second animation will get stopped before it can update.
-    return parallel([aX, aY], {stopTogether: false});
+    return parallel([aX, aY], { stopTogether: false });
   }
   return null;
 };
 
 const spring = function(
   value: AnimatedValue | AnimatedValueXY,
-  config: SpringAnimationConfig,
+  config: SpringAnimationConfig
 ): CompositeAnimation {
   const start = function(
     animatedValue: AnimatedValue | AnimatedValueXY,
     configuration: SpringAnimationConfig,
-    callback?: ?EndCallback,
+    callback?: ?EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue: any = animatedValue;
@@ -140,8 +121,8 @@ const spring = function(
           configuration.toValue,
           SpringAnimation,
           singleConfig,
-          callback,
-        ),
+          callback
+        )
       );
     } else {
       singleValue.animate(new SpringAnimation(singleConfig), callback);
@@ -162,25 +143,25 @@ const spring = function(
       },
 
       _startNativeLoop: function(iterations?: number): void {
-        const singleConfig = {...config, iterations};
+        const singleConfig = { ...config, iterations };
         start(value, singleConfig);
       },
 
       _isUsingNativeDriver: function(): boolean {
         return config.useNativeDriver || false;
-      },
+      }
     }
   );
 };
 
 const timing = function(
   value: AnimatedValue | AnimatedValueXY,
-  config: TimingAnimationConfig,
+  config: TimingAnimationConfig
 ): CompositeAnimation {
   const start = function(
     animatedValue: AnimatedValue | AnimatedValueXY,
     configuration: TimingAnimationConfig,
-    callback?: ?EndCallback,
+    callback?: ?EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue: any = animatedValue;
@@ -193,8 +174,8 @@ const timing = function(
           configuration.toValue,
           TimingAnimation,
           singleConfig,
-          callback,
-        ),
+          callback
+        )
       );
     } else {
       singleValue.animate(new TimingAnimation(singleConfig), callback);
@@ -216,25 +197,25 @@ const timing = function(
       },
 
       _startNativeLoop: function(iterations?: number): void {
-        const singleConfig = {...config, iterations};
+        const singleConfig = { ...config, iterations };
         start(value, singleConfig);
       },
 
       _isUsingNativeDriver: function(): boolean {
         return config.useNativeDriver || false;
-      },
+      }
     }
   );
 };
 
 const decay = function(
   value: AnimatedValue | AnimatedValueXY,
-  config: DecayAnimationConfig,
+  config: DecayAnimationConfig
 ): CompositeAnimation {
   const start = function(
     animatedValue: AnimatedValue | AnimatedValueXY,
     configuration: DecayAnimationConfig,
-    callback?: ?EndCallback,
+    callback?: ?EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue: any = animatedValue;
@@ -258,20 +239,18 @@ const decay = function(
       },
 
       _startNativeLoop: function(iterations?: number): void {
-        const singleConfig = {...config, iterations};
+        const singleConfig = { ...config, iterations };
         start(value, singleConfig);
       },
 
       _isUsingNativeDriver: function(): boolean {
         return config.useNativeDriver || false;
-      },
+      }
     }
   );
 };
 
-const sequence = function(
-  animations: Array<CompositeAnimation>,
-): CompositeAnimation {
+const sequence = function(animations: Array<CompositeAnimation>): CompositeAnimation {
   let current = 0;
   return {
     start: function(callback?: ?EndCallback) {
@@ -292,7 +271,7 @@ const sequence = function(
       };
 
       if (animations.length === 0) {
-        callback && callback({finished: true});
+        callback && callback({ finished: true });
       } else {
         animations[current].start(onComplete);
       }
@@ -315,22 +294,22 @@ const sequence = function(
 
     _startNativeLoop: function() {
       throw new Error(
-        'Loops run using the native driver cannot contain Animated.sequence animations',
+        'Loops run using the native driver cannot contain Animated.sequence animations'
       );
     },
 
     _isUsingNativeDriver: function(): boolean {
       return false;
-    },
+    }
   };
 };
 
 type ParallelConfig = {
-  stopTogether?: boolean, // If one is stopped, stop all.  default: true
+  stopTogether?: boolean // If one is stopped, stop all.  default: true
 };
 const parallel = function(
   animations: Array<CompositeAnimation>,
-  config?: ?ParallelConfig,
+  config?: ?ParallelConfig
 ): CompositeAnimation {
   let doneCount = 0;
   // Make sure we only call stop() at most once for each animation
@@ -340,7 +319,7 @@ const parallel = function(
   const result = {
     start: function(callback?: ?EndCallback) {
       if (doneCount === animations.length) {
-        callback && callback({finished: true});
+        callback && callback({ finished: true });
         return;
       }
 
@@ -360,7 +339,7 @@ const parallel = function(
         };
 
         if (!animation) {
-          cb({finished: true});
+          cb({ finished: true });
         } else {
           animation.start(cb);
         }
@@ -384,13 +363,13 @@ const parallel = function(
 
     _startNativeLoop: function() {
       throw new Error(
-        'Loops run using the native driver cannot contain Animated.parallel animations',
+        'Loops run using the native driver cannot contain Animated.parallel animations'
       );
     },
 
     _isUsingNativeDriver: function(): boolean {
       return false;
-    },
+    }
   };
 
   return result;
@@ -398,36 +377,29 @@ const parallel = function(
 
 const delay = function(time: number): CompositeAnimation {
   // Would be nice to make a specialized implementation
-  return timing(new AnimatedValue(0), {toValue: 0, delay: time, duration: 0});
+  return timing(new AnimatedValue(0), { toValue: 0, delay: time, duration: 0 });
 };
 
-const stagger = function(
-  time: number,
-  animations: Array<CompositeAnimation>,
-): CompositeAnimation {
+const stagger = function(time: number, animations: Array<CompositeAnimation>): CompositeAnimation {
   return parallel(
     animations.map((animation, i) => {
       return sequence([delay(time * i), animation]);
-    }),
+    })
   );
 };
 
-type LoopAnimationConfig = {iterations: number};
+type LoopAnimationConfig = { iterations: number };
 
 const loop = function(
   animation: CompositeAnimation,
-  {iterations = -1}: LoopAnimationConfig = {},
+  { iterations = -1 }: LoopAnimationConfig = {}
 ): CompositeAnimation {
   let isFinished = false;
   let iterationsSoFar = 0;
   return {
     start: function(callback?: ?EndCallback) {
-      const restart = function(result: EndResult = {finished: true}): void {
-        if (
-          isFinished ||
-          iterationsSoFar === iterations ||
-          result.finished === false
-        ) {
+      const restart = function(result: EndResult = { finished: true }): void {
+        if (isFinished || iterationsSoFar === iterations || result.finished === false) {
           callback && callback(result);
         } else {
           iterationsSoFar++;
@@ -436,7 +408,7 @@ const loop = function(
         }
       };
       if (!animation || iterations === 0) {
-        callback && callback({finished: true});
+        callback && callback({ finished: true });
       } else {
         if (animation._isUsingNativeDriver()) {
           animation._startNativeLoop(iterations);
@@ -458,20 +430,18 @@ const loop = function(
     },
 
     _startNativeLoop: function() {
-      throw new Error(
-        'Loops run using the native driver cannot contain Animated.loop animations',
-      );
+      throw new Error('Loops run using the native driver cannot contain Animated.loop animations');
     },
 
     _isUsingNativeDriver: function(): boolean {
       return animation._isUsingNativeDriver();
-    },
+    }
   };
 };
 
 function forkEvent(
   event: ?AnimatedEvent | ?Function,
-  listener: Function,
+  listener: Function
 ): AnimatedEvent | Function {
   if (!event) {
     return listener;
@@ -486,10 +456,7 @@ function forkEvent(
   }
 }
 
-function unforkEvent(
-  event: ?AnimatedEvent | ?Function,
-  listener: Function,
-): void {
+function unforkEvent(event: ?AnimatedEvent | ?Function, listener: Function): void {
   if (event && event instanceof AnimatedEvent) {
     event.__removeListener(listener);
   }
@@ -528,14 +495,14 @@ module.exports = {
   ValueXY: AnimatedValueXY,
   /**
    * Exported to use the Interpolation type in flow.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#interpolation
    */
   Interpolation: AnimatedInterpolation,
   /**
    * Exported for ease of type checking. All animated values derive from this
    * class.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#node
    */
   Node: AnimatedNode,
@@ -557,7 +524,7 @@ module.exports = {
   /**
    * Animates a value according to an analytical spring model based on
    * damped harmonic oscillation.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#spring
    */
   spring,
@@ -565,7 +532,7 @@ module.exports = {
   /**
    * Creates a new Animated value composed from two Animated values added
    * together.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#add
    */
   add,
@@ -573,7 +540,7 @@ module.exports = {
   /**
    * Creates a new Animated value composed by dividing the first Animated value
    * by the second Animated value.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#divide
    */
   divide,
@@ -581,7 +548,7 @@ module.exports = {
   /**
    * Creates a new Animated value composed from two Animated values multiplied
    * together.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#multiply
    */
   multiply,
@@ -589,7 +556,7 @@ module.exports = {
   /**
    * Creates a new Animated value that is the (non-negative) modulo of the
    * provided Animated value.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#modulo
    */
   modulo,
@@ -598,14 +565,14 @@ module.exports = {
    * Create a new Animated value that is limited between 2 values. It uses the
    * difference between the last value so even if the value is far from the
    * bounds it will start changing when the value starts getting closer again.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#diffclamp
    */
   diffClamp,
 
   /**
    * Starts an animation after the given delay.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#delay
    */
   delay,
@@ -613,7 +580,7 @@ module.exports = {
    * Starts an array of animations in order, waiting for each to complete
    * before starting the next. If the current running animation is stopped, no
    * following animations will be started.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#sequence
    */
   sequence,
@@ -621,44 +588,44 @@ module.exports = {
    * Starts an array of animations all at the same time. By default, if one
    * of the animations is stopped, they will all be stopped. You can override
    * this with the `stopTogether` flag.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#parallel
    */
   parallel,
   /**
    * Array of animations may run in parallel (overlap), but are started in
    * sequence with successive delays.  Nice for doing trailing effects.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#stagger
    */
   stagger,
   /**
    * Loops a given animation continuously, so that each time it reaches the
    * end, it resets and begins again from the start.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#loop
-  */
+   */
   loop,
 
   /**
    * Takes an array of mappings and extracts values from each arg accordingly,
    * then calls `setValue` on the mapped outputs.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#event
    */
   event,
 
   /**
    * Make any React component Animatable.  Used to create `Animated.View`, etc.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#createanimatedcomponent
    */
   createAnimatedComponent,
 
   /**
-   * Imperative API to attach an animated value to an event on a view. Prefer 
+   * Imperative API to attach an animated value to an event on a view. Prefer
    * using `Animated.event` with `useNativeDrive: true` if possible.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#attachnativeevent
    */
   attachNativeEvent,
@@ -666,11 +633,11 @@ module.exports = {
   /**
    * Advanced imperative API for snooping on animated events that are passed in
    * through props. Use values directly where possible.
-   * 
+   *
    * See http://facebook.github.io/react-native/docs/animated.html#forkevent
    */
   forkEvent,
   unforkEvent,
 
-  __PropsOnlyForTests: AnimatedProps,
+  __PropsOnlyForTests: AnimatedProps
 };

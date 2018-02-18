@@ -1,9 +1,8 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule StyleSheetValidation
@@ -26,6 +25,8 @@ const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 export default class StyleSheetValidation {
   static validateStyleProp(prop: string, style: Object, caller: string) {
     if (process.env.NODE_ENV !== 'production') {
+      const value = style[prop];
+
       const isCustomProperty = prop.indexOf('--') === 0;
       if (isCustomProperty) return;
 
@@ -35,6 +36,12 @@ export default class StyleSheetValidation {
           '\nValid style props: ' +
           JSON.stringify(Object.keys(allStylePropTypes).sort(), null, '  ');
         styleError(message1, style, caller, message2);
+      } else if (typeof value === 'string' && value.indexOf('!important') > -1) {
+        styleError(
+          `Invalid value of "${value}" set on prop "${prop}". Values cannot include "!important"`,
+          style,
+          caller
+        );
       } else {
         const error = allStylePropTypes[prop](
           style,
@@ -92,7 +99,7 @@ StyleSheetValidation.addValidStylePropTypes({
   clear: string,
   cursor: string,
   fill: string,
-  float: oneOf(['left', 'none', 'right']),
+  float: oneOf(['end', 'left', 'none', 'right', 'start']),
   listStyle: string,
   pointerEvents: string,
   tableLayout: string,

@@ -2,7 +2,7 @@
  * @flow
  */
 
-import sources from '../sources';
+import sources from '../../Image/sources';
 import React from 'react';
 import { ImageBackground, StyleSheet, Text } from 'react-native';
 

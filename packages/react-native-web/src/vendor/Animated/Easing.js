@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule Easing
  * @flow
@@ -152,7 +150,7 @@ class Easing {
      * error is because an exported function parameter is missing an
      * annotation. Without an annotation, these parameters are uncovered by
      * Flow. */
-    return (t) => Math.pow(t, n);
+    return t => Math.pow(t, n);
   }
 
   /**
@@ -206,7 +204,7 @@ class Easing {
    */
   static elastic(bounciness: number = 1): (t: number) => number {
     const p = bounciness * Math.PI;
-    return (t) => 1 - Math.pow(Math.cos(t * Math.PI / 2), 3) * Math.cos(t * p);
+    return t => 1 - Math.pow(Math.cos(t * Math.PI / 2), 3) * Math.cos(t * p);
   }
 
   /**
@@ -221,7 +219,7 @@ class Easing {
     if (s === undefined) {
       s = 1.70158;
     }
-    return (t) => t * t * ((s + 1) * t - s);
+    return t => t * t * ((s + 1) * t - s);
   }
 
   /**
@@ -255,12 +253,7 @@ class Easing {
    * A useful tool to visualize cubic bezier curves can be found at
    * http://cubic-bezier.com/
    */
-  static bezier(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number
-  ): (t: number) => number {
+  static bezier(x1: number, y1: number, x2: number, y2: number): (t: number) => number {
     const _bezier = require('./bezier');
     return _bezier(x1, y1, x2, y2);
   }
@@ -268,19 +261,15 @@ class Easing {
   /**
    * Runs an easing function forwards.
    */
-  static in(
-    easing: (t: number) => number,
-  ): (t: number) => number {
+  static in(easing: (t: number) => number): (t: number) => number {
     return easing;
   }
 
   /**
    * Runs an easing function backwards.
    */
-  static out(
-    easing: (t: number) => number,
-  ): (t: number) => number {
-    return (t) => 1 - easing(1 - t);
+  static out(easing: (t: number) => number): (t: number) => number {
+    return t => 1 - easing(1 - t);
   }
 
   /**
@@ -288,10 +277,8 @@ class Easing {
    * forwards for half of the duration, then backwards for the rest of the
    * duration.
    */
-  static inOut(
-    easing: (t: number) => number,
-  ): (t: number) => number {
-    return (t) => {
+  static inOut(easing: (t: number) => number): (t: number) => number {
+    return t => {
       if (t < 0.5) {
         return easing(t * 2) / 2;
       }

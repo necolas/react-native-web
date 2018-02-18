@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedStyle
  * @noflow
@@ -29,7 +27,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     if (style.transform) {
       style = {
         ...style,
-        transform: new AnimatedTransform(style.transform),
+        transform: new AnimatedTransform(style.transform)
       };
     }
     this._style = style;
@@ -120,7 +118,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     NativeAnimatedHelper.validateStyles(styleConfig);
     return {
       type: 'style',
-      style: styleConfig,
+      style: styleConfig
     };
   }
 }

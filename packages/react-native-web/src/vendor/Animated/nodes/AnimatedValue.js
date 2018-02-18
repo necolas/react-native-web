@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule AnimatedValue
  * @flow
@@ -18,12 +16,12 @@ const AnimatedWithChildren = require('./AnimatedWithChildren');
 const InteractionManager = require('../../../exports/InteractionManager').default;
 const NativeAnimatedHelper = require('../NativeAnimatedHelper');
 
-import type Animation, {EndCallback} from '../animations/Animation';
-import type {InterpolationConfigType} from './AnimatedInterpolation';
+import type Animation, { EndCallback } from '../animations/Animation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 
-type ValueListenerCallback = (state: {value: number}) => void;
+type ValueListenerCallback = (state: { value: number }) => void;
 
 let _uniqueId = 1;
 
@@ -77,7 +75,7 @@ class AnimatedValue extends AnimatedWithChildren {
   _offset: number;
   _animation: ?Animation;
   _tracking: ?AnimatedNode;
-  _listeners: {[key: string]: ValueListenerCallback};
+  _listeners: { [key: string]: ValueListenerCallback };
   __nativeAnimatedValueListener: ?any;
 
   constructor(value: number) {
@@ -118,7 +116,7 @@ class AnimatedValue extends AnimatedWithChildren {
     }
     this._updateValue(
       value,
-      !this.__isNative /* don't perform a flush for natively driven values */,
+      !this.__isNative /* don't perform a flush for natively driven values */
     );
     if (this.__isNative) {
       NativeAnimatedAPI.setAnimatedNodeValue(this.__getNativeTag(), value);
@@ -221,7 +219,7 @@ class AnimatedValue extends AnimatedWithChildren {
           return;
         }
         this._updateValue(data.value, false /* flush */);
-      },
+      }
     );
   }
 
@@ -296,7 +294,7 @@ class AnimatedValue extends AnimatedWithChildren {
         callback && callback(result);
       },
       previousAnimation,
-      this,
+      this
     );
   }
 
@@ -322,7 +320,7 @@ class AnimatedValue extends AnimatedWithChildren {
       _flush(this);
     }
     for (const key in this._listeners) {
-      this._listeners[key]({value: this.__getValue()});
+      this._listeners[key]({ value: this.__getValue() });
     }
   }
 
@@ -330,7 +328,7 @@ class AnimatedValue extends AnimatedWithChildren {
     return {
       type: 'value',
       value: this._value,
-      offset: this._offset,
+      offset: this._offset
     };
   }
 }

@@ -1,8 +1,7 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule UIManager
@@ -16,11 +15,13 @@ import setValueForStyles from '../../vendor/setValueForStyles';
 const getRect = node => {
   const height = node.offsetHeight;
   const width = node.offsetWidth;
-  let left = 0;
-  let top = 0;
+  let left = node.offsetLeft;
+  let top = node.offsetTop;
+  node = node.offsetParent;
+
   while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
-    left += node.offsetLeft;
-    top += node.offsetTop;
+    left += node.offsetLeft - node.scrollLeft;
+    top += node.offsetTop - node.scrollTop;
     node = node.offsetParent;
   }
   return { height, left, top, width };

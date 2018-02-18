@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule TimingAnimation
  * @flow
@@ -16,22 +14,22 @@ const AnimatedValue = require('../nodes/AnimatedValue');
 const AnimatedValueXY = require('../nodes/AnimatedValueXY');
 const Animation = require('./Animation');
 
-const {shouldUseNativeDriver} = require('../NativeAnimatedHelper');
+const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
 
-import type {AnimationConfig, EndCallback} from './Animation';
+import type { AnimationConfig, EndCallback } from './Animation';
 
 export type TimingAnimationConfig = AnimationConfig & {
-  toValue: number | AnimatedValue | {x: number, y: number} | AnimatedValueXY,
+  toValue: number | AnimatedValue | { x: number, y: number } | AnimatedValueXY,
   easing?: (value: number) => number,
   duration?: number,
-  delay?: number,
+  delay?: number
 };
 
 export type TimingAnimationConfigSingle = AnimationConfig & {
   toValue: number | AnimatedValue,
   easing?: (value: number) => number,
   duration?: number,
-  delay?: number,
+  delay?: number
 };
 
 let _easeInOut;
@@ -62,8 +60,7 @@ class TimingAnimation extends Animation {
     this._duration = config.duration !== undefined ? config.duration : 500;
     this._delay = config.delay !== undefined ? config.delay : 0;
     this.__iterations = config.iterations !== undefined ? config.iterations : 1;
-    this.__isInteraction =
-      config.isInteraction !== undefined ? config.isInteraction : true;
+    this.__isInteraction = config.isInteraction !== undefined ? config.isInteraction : true;
     this._useNativeDriver = shouldUseNativeDriver(config);
   }
 
@@ -78,7 +75,7 @@ class TimingAnimation extends Animation {
       type: 'frames',
       frames,
       toValue: this._toValue,
-      iterations: this.__iterations,
+      iterations: this.__iterations
     };
   }
 
@@ -87,7 +84,7 @@ class TimingAnimation extends Animation {
     onUpdate: (value: number) => void,
     onEnd: ?EndCallback,
     previousAnimation: ?Animation,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {
     this.__active = true;
     this._fromValue = fromValue;
@@ -100,15 +97,13 @@ class TimingAnimation extends Animation {
       // not cause intermixed JS and native animations.
       if (this._duration === 0 && !this._useNativeDriver) {
         this._onUpdate(this._toValue);
-        this.__debouncedOnEnd({finished: true});
+        this.__debouncedOnEnd({ finished: true });
       } else {
         this._startTime = Date.now();
         if (this._useNativeDriver) {
           this.__startNativeAnimation(animatedValue);
         } else {
-          this._animationFrame = requestAnimationFrame(
-            this.onUpdate.bind(this),
-          );
+          this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
         }
       }
     };
@@ -125,18 +120,15 @@ class TimingAnimation extends Animation {
       if (this._duration === 0) {
         this._onUpdate(this._toValue);
       } else {
-        this._onUpdate(
-          this._fromValue + this._easing(1) * (this._toValue - this._fromValue),
-        );
+        this._onUpdate(this._fromValue + this._easing(1) * (this._toValue - this._fromValue));
       }
-      this.__debouncedOnEnd({finished: true});
+      this.__debouncedOnEnd({ finished: true });
       return;
     }
 
     this._onUpdate(
       this._fromValue +
-        this._easing((now - this._startTime) / this._duration) *
-          (this._toValue - this._fromValue),
+        this._easing((now - this._startTime) / this._duration) * (this._toValue - this._fromValue)
     );
     if (this.__active) {
       this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
@@ -148,7 +140,7 @@ class TimingAnimation extends Animation {
     this.__active = false;
     clearTimeout(this._timeout);
     global.cancelAnimationFrame(this._animationFrame);
-    this.__debouncedOnEnd({finished: false});
+    this.__debouncedOnEnd({ finished: false });
   }
 }
 

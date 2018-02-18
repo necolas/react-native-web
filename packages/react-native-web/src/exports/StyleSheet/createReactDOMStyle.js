@@ -1,10 +1,16 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @noflow
+ */
+
+import normalizeValue from './normalizeValue';
+import processColor from '../processColor';
+
+/**
  * The browser implements the CSS cascade, where the order of properties is a
  * factor in determining which styles to paint. React Native is different. It
  * gives giving precedence to the more specific style property. For example,
@@ -13,12 +19,7 @@
  * This module creates mutally exclusive style declarations by expanding all of
  * React Native's supported shortform properties (e.g. `padding`) to their
  * longfrom equivalents.
- *
- * @noflow
  */
-
-import normalizeValue from './normalizeValue';
-import processColor from '../processColor';
 
 const emptyObject = {};
 const styleShortFormProperties = {
@@ -242,6 +243,13 @@ const createReducer = (style, styleProps) => {
           resolvedStyle.fontFamily = monospaceFontStack;
         } else {
           resolvedStyle.fontFamily = value;
+        }
+        break;
+      }
+
+      case 'fontVariant': {
+        if (Array.isArray(value) && value.length > 0) {
+          resolvedStyle.fontVariant = value.join(' ');
         }
         break;
       }

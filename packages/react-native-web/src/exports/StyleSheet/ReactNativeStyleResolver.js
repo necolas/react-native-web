@@ -1,14 +1,15 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @noflow
+ */
+
+/**
  * WARNING: changes to this file in particular can cause significant changes to
  * the results of render performance benchmarks.
- *
- * @noflow
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
@@ -24,8 +25,8 @@ const emptyObject = {};
 
 export default class ReactNativeStyleResolver {
   _init() {
-    this.cache = { ltr: {}, rtl: {} };
-    this.injectedCache = { ltr: {}, rtl: {} };
+    this.cache = { ltr: {}, rtl: {}, rtlNoSwap: {} };
+    this.injectedCache = { ltr: {}, rtl: {}, rtlNoSwap: {} };
     this.styleSheetManager = new StyleSheetManager();
   }
 
@@ -43,7 +44,8 @@ export default class ReactNativeStyleResolver {
   }
 
   _injectRegisteredStyle(id) {
-    const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+    const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
     if (!this.injectedCache[dir][id]) {
       const style = flattenStyle(id);
       const domStyle = createReactDOMStyle(i18nStyle(style));
@@ -120,7 +122,7 @@ export default class ReactNativeStyleResolver {
 
     // Create next DOM style props from current and next RN styles
     const { classList: rdomClassListNext, style: rdomStyleNext } = this.resolve([
-      I18nManager.isRTL ? i18nStyle(rnStyle) : rnStyle,
+      i18nStyle(rnStyle),
       rnStyleNext
     ]);
 
@@ -196,7 +198,8 @@ export default class ReactNativeStyleResolver {
    */
   _resolveStyleIfNeeded(style, key) {
     if (key) {
-      const dir = I18nManager.isRTL ? 'rtl' : 'ltr';
+      const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+      const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
       if (!this.cache[dir][key]) {
         // slow: convert style object to props and cache
         this.cache[dir][key] = this._resolveStyle(style);

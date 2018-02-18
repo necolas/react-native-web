@@ -19,7 +19,7 @@
     "prerelease": "yarn test && yarn compile",
     "release": "node ./scripts/release/publish.js",
     "postrelease": "yarn website:release && yarn benchmarks:release",
-    "test": "yarn flow && yarn lint:check && yarn jest"
+    "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -70,5 +70,5 @@
     "singleQuote": true
   },
   "author": "Nicolas Gallagher",
-  "license": "BSD-3-Clause"
+  "license": "MIT"
 }

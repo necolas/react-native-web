@@ -1,8 +1,7 @@
 /**
  * Copyright (c) 2016-present, Nicolas Gallagher.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
+ * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @noflow
@@ -13,75 +12,119 @@ import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 
 const emptyObject = {};
 
-/**
- * Map of property names to their BiDi equivalent.
- */
-const PROPERTIES_TO_SWAP = {
-  borderTopLeftRadius: 'borderTopRightRadius',
-  borderTopRightRadius: 'borderTopLeftRadius',
-  borderBottomLeftRadius: 'borderBottomRightRadius',
-  borderBottomRightRadius: 'borderBottomLeftRadius',
-  borderLeftColor: 'borderRightColor',
-  borderLeftStyle: 'borderRightStyle',
-  borderLeftWidth: 'borderRightWidth',
-  borderRightColor: 'borderLeftColor',
-  borderRightWidth: 'borderLeftWidth',
-  borderRightStyle: 'borderLeftStyle',
-  left: 'right',
-  marginLeft: 'marginRight',
-  marginRight: 'marginLeft',
-  paddingLeft: 'paddingRight',
-  paddingRight: 'paddingLeft',
-  right: 'left'
+const borderTopLeftRadius = 'borderTopLeftRadius';
+const borderTopRightRadius = 'borderTopRightRadius';
+const borderBottomLeftRadius = 'borderBottomLeftRadius';
+const borderBottomRightRadius = 'borderBottomRightRadius';
+const borderLeftColor = 'borderLeftColor';
+const borderLeftStyle = 'borderLeftStyle';
+const borderLeftWidth = 'borderLeftWidth';
+const borderRightColor = 'borderRightColor';
+const borderRightStyle = 'borderRightStyle';
+const borderRightWidth = 'borderRightWidth';
+const right = 'right';
+const marginLeft = 'marginLeft';
+const marginRight = 'marginRight';
+const paddingLeft = 'paddingLeft';
+const paddingRight = 'paddingRight';
+const left = 'left';
+
+// Map of LTR property names to their BiDi equivalent.
+const PROPERTIES_FLIP = {
+  borderTopLeftRadius: borderTopRightRadius,
+  borderTopRightRadius: borderTopLeftRadius,
+  borderBottomLeftRadius: borderBottomRightRadius,
+  borderBottomRightRadius: borderBottomLeftRadius,
+  borderLeftColor: borderRightColor,
+  borderLeftStyle: borderRightStyle,
+  borderLeftWidth: borderRightWidth,
+  borderRightColor: borderLeftColor,
+  borderRightStyle: borderLeftStyle,
+  borderRightWidth: borderLeftWidth,
+  left: right,
+  marginLeft: marginRight,
+  marginRight: marginLeft,
+  paddingLeft: paddingRight,
+  paddingRight: paddingLeft,
+  right: left
 };
 
-const PROPERTIES_SWAP_LEFT_RIGHT = {
+// Map of I18N property names to their LTR equivalent.
+const PROPERTIES_I18N = {
+  borderTopStartRadius: borderTopLeftRadius,
+  borderTopEndRadius: borderTopRightRadius,
+  borderBottomStartRadius: borderBottomLeftRadius,
+  borderBottomEndRadius: borderBottomRightRadius,
+  borderStartColor: borderLeftColor,
+  borderStartStyle: borderLeftStyle,
+  borderStartWidth: borderLeftWidth,
+  borderEndColor: borderRightColor,
+  borderEndStyle: borderRightStyle,
+  borderEndWidth: borderRightWidth,
+  end: right,
+  marginStart: marginLeft,
+  marginEnd: marginRight,
+  paddingStart: paddingLeft,
+  paddingEnd: paddingRight,
+  start: left
+};
+
+const PROPERTIES_VALUE = {
   clear: true,
   float: true,
   textAlign: true
 };
 
-/**
- * Invert the sign of a numeric-like value
- */
+// Invert the sign of a numeric-like value
 const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
 
-/**
- * BiDi flip the given property.
- */
-const flipProperty = (prop: String): String => {
-  return PROPERTIES_TO_SWAP.hasOwnProperty(prop) ? PROPERTIES_TO_SWAP[prop] : prop;
-};
-
-const swapLeftRight = (value: String): String => {
-  return value === 'left' ? 'right' : value === 'right' ? 'left' : value;
-};
-
 const i18nStyle = originalStyle => {
-  if (!I18nManager.isRTL) {
-    return originalStyle;
-  }
-
+  const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
   const style = originalStyle || emptyObject;
+  const frozenProps = {};
   const nextStyle = {};
 
-  for (const prop in style) {
-    if (!Object.prototype.hasOwnProperty.call(style, prop)) {
+  for (const originalProp in style) {
+    if (!Object.prototype.hasOwnProperty.call(style, originalProp)) {
       continue;
     }
+    const originalValue = style[originalProp];
+    let prop = originalProp;
+    let value = originalValue;
 
-    const value = style[prop];
+    // BiDi flip properties
+    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
+      // convert start/end
+      const convertedProp = PROPERTIES_I18N[originalProp];
+      prop = isRTL ? PROPERTIES_FLIP[convertedProp] : convertedProp;
+    } else if (isRTL && doLeftAndRightSwapInRTL && PROPERTIES_FLIP[originalProp]) {
+      prop = PROPERTIES_FLIP[originalProp];
+    }
 
-    if (PROPERTIES_TO_SWAP[prop]) {
-      const newProp = flipProperty(prop);
-      nextStyle[newProp] = value;
-    } else if (PROPERTIES_SWAP_LEFT_RIGHT[prop]) {
-      nextStyle[prop] = swapLeftRight(value);
-    } else if (prop === 'textShadowOffset') {
+    // BiDi flip values
+    if (PROPERTIES_VALUE.hasOwnProperty(originalProp)) {
+      if (originalValue === 'start') {
+        value = isRTL ? 'right' : 'left';
+      } else if (originalValue === 'end') {
+        value = isRTL ? 'left' : 'right';
+      } else if (isRTL && doLeftAndRightSwapInRTL) {
+        if (originalValue === 'left') {
+          value = 'right';
+        } else if (originalValue === 'right') {
+          value = 'left';
+        }
+      }
+    }
+
+    if (isRTL && prop === 'textShadowOffset') {
       nextStyle[prop] = value;
       nextStyle[prop].width = additiveInverse(value.width);
-    } else {
-      nextStyle[prop] = style[prop];
+    } else if (!frozenProps[prop]) {
+      nextStyle[prop] = value;
+    }
+
+    if (PROPERTIES_I18N[originalProp]) {
+      frozenProps[prop] = true;
     }
   }
 
