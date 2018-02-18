@@ -22,6 +22,23 @@ describe('StyleSheet/createReactDOMStyle', () => {
     expect(firstStyle).toEqual(secondStyle);
   });
 
+  test('shortform -> longform', () => {
+    const style = {
+      borderStyle: 'solid',
+      boxSizing: 'border-box',
+      borderBottomColor: 'white',
+      borderBottomWidth: 1,
+      borderWidth: 0,
+      marginTop: 50,
+      marginVertical: 25,
+      margin: 10,
+      overflow: 'hidden',
+      overscrollBehavior: 'contain'
+    };
+
+    expect(createReactDOMStyle(style)).toMatchSnapshot();
+  });
+
   describe('borderWidth styles', () => {
     test('defaults to 0 when "null"', () => {
       expect(createReactDOMStyle({ borderWidth: null })).toEqual({
@@ -134,21 +151,10 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
   });
 
-  test('shortform -> longform', () => {
-    const style = {
-      borderStyle: 'solid',
-      boxSizing: 'border-box',
-      borderBottomColor: 'white',
-      borderBottomWidth: 1,
-      borderWidth: 0,
-      marginTop: 50,
-      marginVertical: 25,
-      margin: 10,
-      overflow: 'hidden',
-      overscrollBehavior: 'contain'
-    };
-
-    expect(createReactDOMStyle(style)).toMatchSnapshot();
+  test('fontVariant', () => {
+    expect(createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })).toEqual({
+      fontVariant: 'common-ligatures small-caps'
+    });
   });
 
   describe('shadow styles', () => {

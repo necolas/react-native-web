@@ -247,6 +247,13 @@ const createReducer = (style, styleProps) => {
         break;
       }
 
+      case 'fontVariant': {
+        if (Array.isArray(value) && value.length > 0) {
+          resolvedStyle.fontVariant = value.join(' ');
+        }
+        break;
+      }
+
       case 'shadowColor':
       case 'shadowOffset':
       case 'shadowOpacity':

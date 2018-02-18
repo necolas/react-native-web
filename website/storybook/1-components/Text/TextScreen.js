@@ -197,6 +197,10 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    name: 'fontVariant',
+    typeInfo: 'Array<string>'
+  },
+  {
     name: 'fontWeight',
     typeInfo: 'string'
   },

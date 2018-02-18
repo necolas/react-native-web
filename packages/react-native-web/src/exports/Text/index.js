@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     // inherit parent font styles
     fontFamily: 'inherit',
     fontSize: 'inherit',
+    fontVariant: ['inherit'],
     whiteSpace: 'inherit'
   },
   notSelectable: {
