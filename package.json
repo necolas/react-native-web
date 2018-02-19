@@ -62,6 +62,9 @@
       "fmt:cmd",
       "git update-index --again",
       "eslint"
+    ],
+    "packages/react-native-web/src/index.js": [
+      "node ./scripts/babel/createModuleMap.js"
     ]
   },
   "prettier": {

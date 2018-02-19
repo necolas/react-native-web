@@ -41,7 +41,7 @@ import * as ReactNativeModules from 'react-native';
 
 import ReactNative from 'react-native-web/dist/index';
 import View from 'react-native-web/dist/exports/View';
-import Invalid from 'react-native-web/dist/exports/Invalid';
+import { Invalid } from 'react-native-web/dist/index';
 import MyView from 'react-native-web/dist/exports/View';
 import ViewPropTypes from 'react-native-web/dist/exports/ViewPropTypes';
 import * as ReactNativeModules from 'react-native-web/dist/index';

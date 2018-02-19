@@ -1,5 +1,7 @@
+const moduleMap = require('./moduleMap');
+
 const getDistLocation = importName =>
-  importName ? `react-native-web/dist/exports/${importName}` : undefined;
+  importName && moduleMap[importName] ? `react-native-web/dist/exports/${importName}` : undefined;
 
 const isReactNativeRequire = (t, node) => {
   const { declarations } = node;
