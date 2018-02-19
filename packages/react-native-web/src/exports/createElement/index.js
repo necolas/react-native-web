@@ -21,18 +21,12 @@ import React from 'react';
  * and remove event handlers when disabled.
  */
 const eventHandlerNames = {
+  onBlur: true,
   onClick: true,
   onClickCapture: true,
-  onMoveShouldSetResponder: true,
-  onMoveShouldSetResponderCapture: true,
-  onResponderGrant: true,
-  onResponderMove: true,
-  onResponderReject: true,
+  onContextMenu: true,
+  onFocus: true,
   onResponderRelease: true,
-  onResponderTerminate: true,
-  onResponderTerminationRequest: true,
-  onStartShouldSetResponder: true,
-  onStartShouldSetResponderCapture: true,
   onTouchCancel: true,
   onTouchCancelCapture: true,
   onTouchEnd: true,
