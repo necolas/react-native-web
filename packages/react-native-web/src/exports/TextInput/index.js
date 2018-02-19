@@ -413,8 +413,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 0,
     boxSizing: 'border-box',
-    color: 'inherit',
-    font: 'inherit',
+    fontFamily: 'System',
+    fontSize: 14,
     padding: 0,
     resize: 'none'
   }
