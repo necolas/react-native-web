@@ -52,6 +52,17 @@ const adjustProps = domProps => {
     if (isEventHandler) {
       if (isButtonRole && isDisabled) {
         domProps[propName] = undefined;
+      } else if (propName === 'onResponderRelease') {
+        // Browsers fire mouse events after touch events. This causes the
+        // 'onResponderRelease' handler to be called twice for Touchables.
+        // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
+        // events.
+        domProps[propName] = e => {
+          if (e.cancelable && !e.isDefaultPrevented()) {
+            e.preventDefault();
+          }
+          return prop(e);
+        };
       } else {
         // TODO: move this out of the render path
         domProps[propName] = e => {
