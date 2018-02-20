@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   },
   actionable: {
     cursor: 'pointer',
-    touchAction: 'manipulate'
+    touchAction: 'manipulation'
   }
 });
 
