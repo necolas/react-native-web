@@ -135,7 +135,7 @@ class Switch extends Component<*> {
             thumbStyle,
             value && styles.thumbOn,
             {
-              marginLeft: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0
+              marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0
             }
           ]}
         />
@@ -191,12 +191,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
-    left: '0%',
+    start: '0%',
     transform: [{ translateZ: 0 }],
     transitionDuration: '0.1s'
   },
   thumbOn: {
-    left: '100%'
+    start: '100%'
   },
   disabledThumb: {
     backgroundColor: '#BDBDBD'
