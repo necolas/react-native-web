@@ -14,7 +14,7 @@ import ColorPropType from '../ColorPropType';
 import LayoutPropTypes from '../../modules/LayoutPropTypes';
 import ShadowPropTypes from '../../modules/ShadowPropTypes';
 import TransformPropTypes from '../../modules/TransformPropTypes';
-import { number, oneOf, oneOfType, string } from 'prop-types';
+import { number, oneOf, string } from 'prop-types';
 
 const overscrollBehaviorType = oneOf(['auto', 'contain', 'none']);
 
@@ -50,8 +50,6 @@ const ViewStylePropTypes = {
   overscrollBehavior: overscrollBehaviorType,
   overscrollBehaviorX: overscrollBehaviorType,
   overscrollBehaviorY: overscrollBehaviorType,
-  perspective: oneOfType([number, string]),
-  perspectiveOrigin: string,
   touchAction: oneOf([
     'auto',
     'inherit',

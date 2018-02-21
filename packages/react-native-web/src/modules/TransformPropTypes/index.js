@@ -8,10 +8,12 @@
  * @flow
  */
 
-import { arrayOf, number, oneOfType, shape, string } from 'prop-types';
+import { arrayOf, number, oneOf, oneOfType, shape, string } from 'prop-types';
 const numberOrString = oneOfType([number, string]);
 
 const TransformPropTypes = {
+  perspective: oneOfType([number, string]),
+  perspectiveOrigin: string,
   transform: arrayOf(
     oneOfType([
       shape({ perspective: numberOrString }),
