@@ -11,6 +11,7 @@
 import AnimationPropTypes from '../../modules/AnimationPropTypes';
 import BorderPropTypes from '../../modules/BorderPropTypes';
 import ColorPropType from '../ColorPropType';
+import InteractionPropTypes from '../../modules/InteractionPropTypes';
 import LayoutPropTypes from '../../modules/LayoutPropTypes';
 import ShadowPropTypes from '../../modules/ShadowPropTypes';
 import TransformPropTypes from '../../modules/TransformPropTypes';
@@ -21,6 +22,7 @@ const overscrollBehaviorType = oneOf(['auto', 'contain', 'none']);
 const ViewStylePropTypes = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
+  ...InteractionPropTypes,
   ...LayoutPropTypes,
   ...ShadowPropTypes,
   ...TransformPropTypes,
@@ -43,28 +45,12 @@ const ViewStylePropTypes = {
   backgroundSize: string,
   boxShadow: string,
   clip: string,
-  cursor: string,
   filter: string,
   outline: string,
   outlineColor: ColorPropType,
   overscrollBehavior: overscrollBehaviorType,
   overscrollBehaviorX: overscrollBehaviorType,
   overscrollBehaviorY: overscrollBehaviorType,
-  touchAction: oneOf([
-    'auto',
-    'inherit',
-    'manipulation',
-    'none',
-    'pan-down',
-    'pan-left',
-    'pan-right',
-    'pan-up',
-    'pan-x',
-    'pan-y',
-    'pinch-zoom'
-  ]),
-  userSelect: string,
-  willChange: string,
   WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };
