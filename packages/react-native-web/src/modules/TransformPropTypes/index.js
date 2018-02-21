@@ -32,7 +32,8 @@ const TransformPropTypes = {
       shape({ translate3d: string })
     ])
   ),
-  transformOrigin: string
+  transformOrigin: string,
+  transformStyle: oneOf(['flat', 'preserve-3d'])
 };
 
 export default TransformPropTypes;

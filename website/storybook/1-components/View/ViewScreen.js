@@ -853,6 +853,11 @@ const stylePropTypes = [
   },
   {
     label: 'web',
+    name: 'transformStyle',
+    typeInfo: '"flat" | "preserve-3d"'
+  },
+  {
+    label: 'web',
     name: 'transitionDelay',
     typeInfo: 'string'
   },
