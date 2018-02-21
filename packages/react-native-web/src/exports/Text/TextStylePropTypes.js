@@ -14,19 +14,6 @@ import { array, number, oneOf, oneOfType, shape, string } from 'prop-types';
 
 const numberOrString = oneOfType([number, string]);
 
-const ShadowOffsetPropType = shape({ width: number, height: number });
-const TextAlignPropType = oneOf([
-  'center',
-  'end',
-  'inherit',
-  'justify',
-  'justify-all',
-  'left',
-  'right',
-  'start'
-]);
-const WritingDirectionPropType = oneOf(['auto', 'ltr', 'rtl']);
-
 const TextStylePropTypes = {
   ...ViewStylePropTypes,
   color: ColorPropType,
@@ -38,15 +25,24 @@ const TextStylePropTypes = {
   fontVariant: array,
   letterSpacing: numberOrString,
   lineHeight: numberOrString,
-  textAlign: TextAlignPropType,
+  textAlign: oneOf([
+    'center',
+    'end',
+    'inherit',
+    'justify',
+    'justify-all',
+    'left',
+    'right',
+    'start'
+  ]),
   textAlignVertical: string,
   textDecorationColor: ColorPropType,
   textDecorationLine: string,
   textDecorationStyle: string,
   textShadowColor: ColorPropType,
-  textShadowOffset: ShadowOffsetPropType,
+  textShadowOffset: shape({ width: number, height: number }),
   textShadowRadius: number,
-  writingDirection: WritingDirectionPropType,
+  writingDirection: oneOf(['auto', 'ltr', 'rtl']),
   /* @platform web */
   textIndent: numberOrString,
   textOverflow: string,
