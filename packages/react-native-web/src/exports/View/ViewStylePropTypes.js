@@ -63,10 +63,6 @@ const ViewStylePropTypes = {
     'pan-y',
     'pinch-zoom'
   ]),
-  transitionDelay: string,
-  transitionDuration: string,
-  transitionProperty: string,
-  transitionTimingFunction: string,
   userSelect: string,
   willChange: string,
   WebkitMaskImage: string,

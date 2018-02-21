@@ -17,7 +17,11 @@ const AnimationPropTypes = {
   animationIterationCount: oneOfType([number, oneOf(['infinite'])]),
   animationName: oneOfType([string, arrayOf(oneOfType([string, object]))]),
   animationPlayState: oneOf(['paused', 'running']),
-  animationTimingFunction: string
+  animationTimingFunction: string,
+  transitionDelay: string,
+  transitionDuration: string,
+  transitionProperty: string,
+  transitionTimingFunction: string
 };
 
 export default AnimationPropTypes;
