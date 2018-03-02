@@ -13,6 +13,9 @@ Facebook's React web starter kit –
 that is needed after initializing a web app with CRA is to install
 `react-native-web`.
 
+If you are unfamiliar with setting up a new React web project, please follow
+the recommendations in the [React documentation](https://reactjs.org/).
+
 ## Adding to an existing web app
 
 Existing web apps need to alias `react-native` to `react-native-web` and

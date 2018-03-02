@@ -28,11 +28,8 @@ Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 ## Quick start
 
 The easiest way to get started with React Native for Web is to use this
-[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native-web-playground).
+[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native).
 You don’t need to install anything to try it out.
-
-If you are unfamiliar with setting up a React web project, please follow the
-recommendations in the [React documentation](https://reactjs.org/).
 
 ## Documentation
 
