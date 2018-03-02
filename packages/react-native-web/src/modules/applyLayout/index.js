@@ -83,9 +83,9 @@ const unobserve = instance => {
 
 const safeOverride = (original, next) => {
   if (original) {
-    return function prototypeOverride() {
-      original.call(this);
-      next.call(this);
+    return function prototypeOverride(...args) {
+      original.apply(this, args);
+      next.apply(this, args);
     };
   }
   return next;
