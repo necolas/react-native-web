@@ -18,7 +18,7 @@ const Box = ({ pointerEvents }) => (
   </TouchableHighlight>
 );
 
-const ViewStyleExample = () => (
+const ViewPointerEventsExample = () => (
   <View pointerEvents="box-none">
     <View pointerEvents="box-none" style={styles.container}>
       <Box pointerEvents="none" />
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     borderStyle: 'solid'
   }
 });
-export default ViewStyleExample;
+export default ViewPointerEventsExample;

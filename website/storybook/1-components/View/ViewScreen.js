@@ -4,6 +4,7 @@
  * @flow
  */
 
+import PropOnLayout from './examples/PropOnLayout';
 import PropPointerEvents from './examples/PropPointerEvents';
 import transformExamples from './examples/transforms';
 import ZIndexExample from './examples/ZIndex';
@@ -132,6 +133,9 @@ const ViewScreen = () => (
             <Code>x</Code> and <Code>y</Code> are the offsets from the parent node.
           </AppText>
         }
+        example={{
+          render: () => <PropOnLayout />
+        }}
       />
 
       <DocItem

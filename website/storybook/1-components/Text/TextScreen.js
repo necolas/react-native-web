@@ -132,13 +132,13 @@ const TextScreen = () => (
       <DocItem
         name="onLayout"
         typeInfo="?function"
-        description={
+        description={[
           <AppText>
             Invoked on mount and layout changes with{' '}
             <Code>{'{ nativeEvent: { layout: { x, y, width, height } } }'}</Code>, where{' '}
             <Code>x</Code> and <Code>y</Code> are the offsets from the parent node.
           </AppText>
-        }
+        ]}
       />
 
       <DocItem

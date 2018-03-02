@@ -2,8 +2,9 @@
 
 This guide will help you to use and test React Native for Web once it has been installed.
 
-Your application may need to polyfill `Promise`, `Object.assign`, and
-`Array.from` as necessary for your desired browser support.
+Your application may need to polyfill `Promise`, `Object.assign`, `Array.from`,
+and [`ResizeObserver`](https://github.com/que-etc/resize-observer-polyfill) as
+necessary for your desired browser support.
 
 ## Adding to a new web app
 
