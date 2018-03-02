@@ -22,8 +22,8 @@ if (canUseDOM) {
   if (typeof window.ResizeObserver !== 'undefined') {
     resizeObserver = new window.ResizeObserver(entries => {
       entries.forEach(({ target, contentRect }) => {
-        typeof target.handleResize === 'function' &&
-          target.handleResize({
+        typeof target._handleLayout === 'function' &&
+          target._handleLayout({
             x: contentRect.x,
             y: contentRect.y,
             width: contentRect.width,
@@ -59,7 +59,7 @@ const observe = instance => {
 
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node.handleResize = debounce(cb);
+    node._handleLayout = debounce(cb);
     resizeObserver.observe(node);
   } else {
     const id = guid();
@@ -74,7 +74,7 @@ const observe = instance => {
 const unobserve = instance => {
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node.handleResize = null;
+    node._handleLayout = null;
     resizeObserver.unobserve(node);
   } else {
     delete registry[instance._onLayoutId];
