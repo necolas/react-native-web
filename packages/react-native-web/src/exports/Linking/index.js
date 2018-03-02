@@ -57,7 +57,7 @@ const iframeOpen = url => {
       const openerExpression = noOpener ? 'child.opener = null' : '';
       script.text = `
         window.parent = null; window.top = null; window.frameElement = null;
-        var child = window.open("${url}"); ${openerExpression};
+        var child = window.open(${JSON.stringify(url)}); ${openerExpression};
       `;
       iframeBody.appendChild(script);
     }
