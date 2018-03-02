@@ -9,6 +9,7 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
+import findNodeHandle from '../../exports/findNodeHandle';
 
 const emptyObject = {};
 const registry = {};
@@ -16,16 +17,69 @@ const registry = {};
 let id = 1;
 const guid = () => `r-${id++}`;
 
+let resizeObserver;
 if (canUseDOM) {
-  const triggerAll = () => {
-    Object.keys(registry).forEach(key => {
-      const instance = registry[key];
-      instance._handleLayout();
+  if (typeof window.ResizeObserver !== 'undefined') {
+    resizeObserver = new window.ResizeObserver(entries => {
+      entries.forEach(({ target, contentRect }) => {
+        typeof target.handleResize === 'function' &&
+          target.handleResize({
+            x: contentRect.x,
+            y: contentRect.y,
+            width: contentRect.width,
+            height: contentRect.height
+          });
+      });
     });
-  };
+  } else {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        'onLayout relies on ResizeObserver which is not supported by your browser. ' +
+          'Please include a polyfill. https://github.com/WICG/ResizeObserver/issues/3. ' +
+          'Falling back to window.onresize.'
+      );
+    }
 
-  window.addEventListener('resize', debounce(triggerAll, 16), false);
+    const triggerAll = () => {
+      Object.keys(registry).forEach(key => {
+        const instance = registry[key];
+        instance._isMounted &&
+          instance.measure((x, y, width, height) => {
+            instance._handleLayout({ x, y, width, height });
+          });
+      });
+    };
+
+    window.addEventListener('resize', debounce(triggerAll, 16), false);
+  }
 }
+
+const observe = instance => {
+  const cb = instance._handleLayout.bind(instance);
+
+  if (resizeObserver) {
+    const node = findNodeHandle(instance);
+    node.handleResize = debounce(cb);
+    resizeObserver.observe(node);
+  } else {
+    const id = guid();
+    registry[id] = instance;
+    instance._onLayoutId = id;
+    instance.measure((x, y, width, height) => {
+      cb({ x, y, width, height });
+    });
+  }
+};
+
+const unobserve = instance => {
+  if (resizeObserver) {
+    const node = findNodeHandle(instance);
+    node.handleResize = null;
+    resizeObserver.unobserve(node);
+  } else {
+    delete registry[instance._onLayoutId];
+  }
+};
 
 const safeOverride = (original, next) => {
   if (original) {
@@ -47,16 +101,20 @@ const applyLayout = Component => {
     function componentDidMount() {
       this._layoutState = emptyObject;
       this._isMounted = true;
-      this._onLayoutId = guid();
-      registry[this._onLayoutId] = this;
-      this._handleLayout();
+      if (this.props.onLayout) {
+        observe(this);
+      }
     }
   );
 
   Component.prototype.componentDidUpdate = safeOverride(
     componentDidUpdate,
-    function componentDidUpdate() {
-      this._handleLayout();
+    function componentDidUpdate(prevProps) {
+      if (this.props.onLayout && !prevProps.onLayout) {
+        observe(this);
+      } else if (!this.props.onLayout && prevProps.onLayout) {
+        unobserve(this);
+      }
     }
   );
 
@@ -64,29 +122,28 @@ const applyLayout = Component => {
     componentWillUnmount,
     function componentWillUnmount() {
       this._isMounted = false;
-      delete registry[this._onLayoutId];
+      unobserve(this);
     }
   );
 
-  Component.prototype._handleLayout = function() {
-    const layout = this._layoutState;
+  Component.prototype._handleLayout = function(layout) {
     const { onLayout } = this.props;
 
-    if (onLayout) {
-      this.measure((x, y, width, height) => {
-        if (!this._isMounted) return;
+    if (typeof onLayout !== 'function' || !this._isMounted || !layout) {
+      return;
+    }
 
-        if (
-          layout.x !== x ||
-          layout.y !== y ||
-          layout.width !== width ||
-          layout.height !== height
-        ) {
-          this._layoutState = { x, y, width, height };
-          const nativeEvent = { layout: this._layoutState };
-          onLayout({ nativeEvent, timeStamp: Date.now() });
-        }
-      });
+    const prevLayout = this._layoutState;
+
+    if (
+      prevLayout.x !== layout.x ||
+      prevLayout.y !== layout.y ||
+      prevLayout.width !== layout.width ||
+      prevLayout.height !== layout.height
+    ) {
+      const nativeEvent = { layout };
+      this._layoutState = layout;
+      onLayout({ nativeEvent, timeStamp: Date.now() });
     }
   };
   return Component;

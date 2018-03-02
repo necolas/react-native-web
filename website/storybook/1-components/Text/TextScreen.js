@@ -4,6 +4,7 @@
  * @flow
  */
 
+import OnLayoutExample from './examples/onLayout';
 import PropChildren from './examples/PropChildren';
 import PropNumberOfLines from './examples/PropNumberOfLines';
 import PropOnPress from './examples/PropOnPress';
@@ -132,13 +133,20 @@ const TextScreen = () => (
       <DocItem
         name="onLayout"
         typeInfo="?function"
-        description={
+        description={[
           <AppText>
             Invoked on mount and layout changes with{' '}
             <Code>{'{ nativeEvent: { layout: { x, y, width, height } } }'}</Code>, where{' '}
             <Code>x</Code> and <Code>y</Code> are the offsets from the parent node.
+          </AppText>,
+          <AppText>
+            NOTE: Behind the hood React Native for Web uses <Code>ResizeObserver</Code> and doesn't
+            polyfill it when not supported.
           </AppText>
-        }
+        ]}
+        example={{
+          render: () => <OnLayoutExample />
+        }}
       />
 
       <DocItem
