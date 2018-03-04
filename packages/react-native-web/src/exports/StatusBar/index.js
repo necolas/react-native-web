@@ -11,6 +11,8 @@
 import { Component } from 'react';
 
 export default class StatusBar extends Component<*> {
+  static currentHeight = 0
+
   static setBackgroundColor() {}
   static setBarStyle() {}
   static setHidden() {}
