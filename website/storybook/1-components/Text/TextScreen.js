@@ -4,6 +4,7 @@
  * @flow
  */
 
+import { View } from 'react-native';
 import OnLayoutExample from './examples/onLayout';
 import PropChildren from './examples/PropChildren';
 import PropNumberOfLines from './examples/PropNumberOfLines';
@@ -145,7 +146,15 @@ const TextScreen = () => (
           </AppText>
         ]}
         example={{
-          render: () => <OnLayoutExample />
+          render: () => (
+            <React.Fragment>
+              <OnLayoutExample style={{ padding: 10 }} />
+              <OnLayoutExample />
+              <View>
+                <OnLayoutExample />
+              </View>
+            </React.Fragment>
+          )
         }}
       />
 

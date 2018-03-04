@@ -21,14 +21,8 @@ let resizeObserver;
 if (canUseDOM) {
   if (typeof window.ResizeObserver !== 'undefined') {
     resizeObserver = new window.ResizeObserver(entries => {
-      entries.forEach(({ target, contentRect }) => {
-        typeof target._handleLayout === 'function' &&
-          target._handleLayout({
-            x: contentRect.x,
-            y: contentRect.y,
-            width: contentRect.width,
-            height: contentRect.height
-          });
+      entries.forEach(({ target }) => {
+        target._handleLayout && target._handleLayout();
       });
     });
   } else {
@@ -43,10 +37,7 @@ if (canUseDOM) {
     const triggerAll = () => {
       Object.keys(registry).forEach(key => {
         const instance = registry[key];
-        instance._isMounted &&
-          instance.measure((x, y, width, height) => {
-            instance._handleLayout({ x, y, width, height });
-          });
+        instance._handleLayout();
       });
     };
 
@@ -55,37 +46,36 @@ if (canUseDOM) {
 }
 
 const observe = instance => {
-  const cb = instance._handleLayout.bind(instance);
-
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node._handleLayout = debounce(cb);
+    node._handleLayout = debounce(instance._handleLayout.bind(instance));
     resizeObserver.observe(node);
   } else {
     const id = guid();
-    registry[id] = instance;
     instance._onLayoutId = id;
-    instance.measure((x, y, width, height) => {
-      cb({ x, y, width, height });
-    });
+    registry[id] = instance;
+    instance._handleLayout();
   }
 };
 
 const unobserve = instance => {
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node._handleLayout = null;
+    delete node._handleLayout;
     resizeObserver.unobserve(node);
   } else {
     delete registry[instance._onLayoutId];
+    delete instance._onLayoutId;
   }
 };
 
 const safeOverride = (original, next) => {
   if (original) {
-    return function prototypeOverride(...args) {
-      original.apply(this, args);
-      next.apply(this, args);
+    return function prototypeOverride() {
+      /* eslint-disable prefer-rest-params */
+      original.call(this, arguments);
+      next.call(this, arguments);
+      /* eslint-enable prefer-rest-params */
     };
   }
   return next;
@@ -101,9 +91,7 @@ const applyLayout = Component => {
     function componentDidMount() {
       this._layoutState = emptyObject;
       this._isMounted = true;
-      if (this.props.onLayout) {
-        observe(this);
-      }
+      observe(this);
     }
   );
 
@@ -114,6 +102,8 @@ const applyLayout = Component => {
         observe(this);
       } else if (!this.props.onLayout && prevProps.onLayout) {
         unobserve(this);
+      } else if (!resizeObserver) {
+        this._handleLayout();
       }
     }
   );
@@ -126,24 +116,25 @@ const applyLayout = Component => {
     }
   );
 
-  Component.prototype._handleLayout = function(layout) {
+  Component.prototype._handleLayout = function() {
+    const layout = this._layoutState;
     const { onLayout } = this.props;
 
-    if (typeof onLayout !== 'function' || !this._isMounted || !layout) {
-      return;
-    }
+    if (onLayout) {
+      this.measure((x, y, width, height) => {
+        if (!this._isMounted) return;
 
-    const prevLayout = this._layoutState;
-
-    if (
-      prevLayout.x !== layout.x ||
-      prevLayout.y !== layout.y ||
-      prevLayout.width !== layout.width ||
-      prevLayout.height !== layout.height
-    ) {
-      const nativeEvent = { layout };
-      this._layoutState = layout;
-      onLayout({ nativeEvent, timeStamp: Date.now() });
+        if (
+          layout.x !== x ||
+          layout.y !== y ||
+          layout.width !== width ||
+          layout.height !== height
+        ) {
+          this._layoutState = { x, y, width, height };
+          const nativeEvent = { layout: this._layoutState };
+          onLayout({ nativeEvent, timeStamp: Date.now() });
+        }
+      });
     }
   };
   return Component;

@@ -3,9 +3,13 @@
  */
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ViewPropTypes, StyleSheet } from 'react-native';
 
 export default class OnLayoutExample extends React.Component {
+  static propTypes = {
+    style: ViewPropTypes.style
+  };
+
   state = {
     layoutInfo: {}
   };
@@ -16,9 +20,15 @@ export default class OnLayoutExample extends React.Component {
 
   render() {
     return (
-      <View onLayout={this.onLayout}>
+      <View onLayout={this.onLayout} style={[styles.root, this.props.style]}>
         <Text>{JSON.stringify(this.state.layoutInfo)}</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: '#eee'
+  }
+});
