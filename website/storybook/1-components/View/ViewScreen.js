@@ -4,6 +4,7 @@
  * @flow
  */
 
+import { View } from 'react-native';
 import OnLayoutExample from './examples/onLayout';
 import PropPointerEvents from './examples/PropPointerEvents';
 import transformExamples from './examples/transforms';
@@ -138,7 +139,15 @@ const ViewScreen = () => (
           </AppText>
         ]}
         example={{
-          render: () => <OnLayoutExample />
+          render: () => (
+            <React.Fragment>
+              <OnLayoutExample style={{ padding: 10 }} />
+              <OnLayoutExample />
+              <View>
+                <OnLayoutExample />
+              </View>
+            </React.Fragment>
+          )
         }}
       />
 
