@@ -79,6 +79,16 @@ export default class StatusBar extends Component<*> {
 
 
   render() {
+    const {animated, backgroundColor, barStyle, hidden,
+      networkActivityIndicatorVisible, showHideTransition,
+      translucent} = this.props
+
+    if(barStyle) StatusBar.setBarStyle(barStyle, animated)
+    if(backgroundColor) StatusBar.setBackgroundColor(backgroundColor, animated)
+    if(hidden) StatusBar.setHidden(hidden, animated)
+    if(networkActivityIndicatorVisible) StatusBar.setNetworkActivityIndicatorVisible(networkActivityIndicatorVisible)
+    if(translucent) StatusBar.setTranslucent(translucent)
+
     return null;
   }
 }
