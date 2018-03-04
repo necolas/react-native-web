@@ -46,7 +46,11 @@ function setAppleMobileWebAppStatusBarStyle() {
 
 
 export default class StatusBar extends Component<*> {
-  static currentHeight = 0
+  static get currentHeight() {
+    const {availHeight, height} = screen
+
+    return height - availHeight
+  }
 
 
   static setBackgroundColor(color, animated) {
