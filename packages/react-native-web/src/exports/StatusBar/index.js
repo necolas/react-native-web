@@ -7,20 +7,21 @@
  * @providesModule StatusBar
  * @flow
  */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 
 
-const {head} = document
+const {head} = canUseDOM && document
 
 let _barStyle = 'default'
 let _hidden = false
 let _translucent = false
 
 
-function getMetaTag(attrName) {
-  const htmlCollection = head.getElementsByTagName('meta')
+function setMetaTag(attrName, content) {
+  if(!canUseDOM) return
 
-  let tag = Array.from(htmlCollection).filter(({name}) => name === attrName)[0]
+  let tag = head.querySelector(`meta[name=${attrName}]`)
 
   if(!tag) {
     tag = document.createElement('meta')
@@ -29,42 +30,44 @@ function getMetaTag(attrName) {
     head.appendChild(tag)
   }
 
-  return tag
+  tag.content = content
 }
 
 function setAppleMobileWebAppCapable() {
-  getMetaTag('apple-mobile-web-app-capable').content =
-    (_hidden || _translucent || _barStyle !== 'default') ? 'yes' : 'no'
+  setMetaTag('apple-mobile-web-app-capable',
+    (_hidden || _translucent || _barStyle !== 'default') ? 'yes' : 'no')
 }
 
 function setAppleMobileWebAppStatusBarStyle() {
   setAppleMobileWebAppCapable()
 
-  getMetaTag('apple-mobile-web-app-status-bar-style').content =
-    _translucent ? 'black-translucent' : _barStyle
+  setMetaTag('apple-mobile-web-app-status-bar-style',
+    _translucent ? 'black-translucent' : _barStyle)
 }
 
 
 export default class StatusBar extends Component<*> {
   static get currentHeight() {
-    const {availHeight, height} = screen
+    if(!canUseDOM) return
+
+    const {availHeight, height} = window.screen
 
     return height - availHeight
   }
 
 
   static setBackgroundColor(color, animated) {
-    getMetaTag('theme-color').content = color
+    setMetaTag('theme-color', color)
   }
 
   static setBarStyle(style, animated) {
     if(style === 'light-content') style = 'black'
 
-    if(!['black', 'black-translucent', 'default'].includes(style)) return
+    if(style === 'black' || style === 'black-translucent' || style === 'default') {
+      _barStyle = style
 
-    _barStyle = style
-
-    setAppleMobileWebAppStatusBarStyle()
+      setAppleMobileWebAppStatusBarStyle()
+    }
   }
 
   static setHidden(hidden, animation) {
