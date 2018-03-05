@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { styled } from 'styletron-react';
+import { withStyle } from 'styletron-react';
 import View from './View';
 
-const Box = styled(
+const Box = withStyle(
   View,
   ({ color, fixed = false, layout = 'column', outer = false, ...other }) => ({
     ...styles[`color${color}`],
