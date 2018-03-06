@@ -7,9 +7,8 @@
  * @providesModule Batchinator
  * @flow
  */
-'use strict';
 
-const InteractionManager = require('InteractionManager');
+import InteractionManager from '../../exports/InteractionManager';
 
 /**
  * A simple class for batching up invocations of a low-pri callback. A timeout is set to run the

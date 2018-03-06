@@ -1,2 +1,2 @@
-import UnimplementedView from '../../modules/UnimplementedView';
-export default UnimplementedView;
+import VirtualizedList from '../../vendor/VirtualizedList';
+export default VirtualizedList;

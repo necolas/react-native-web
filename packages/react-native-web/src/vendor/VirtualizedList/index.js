@@ -5,39 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule VirtualizedList
- * @flow
+ * @noflow
  * @format
  */
-'use strict';
+import Batchinator from '../Batchinator';
+import FillRateHelper from '../FillRateHelper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import RefreshControl from '../../exports/RefreshControl';
+import ScrollView from '../../exports/ScrollView';
+import StyleSheet, { type StyleObj } from '../../exports/StyleSheet';
+import UIManager from '../../exports/UIManager';
+import View from '../../exports/View';
+import ViewabilityHelper, {
+  type ViewabilityConfig,
+  type ViewToken,
+  type ViewabilityConfigCallbackPair
+} from '../ViewabilityHelper';
+import { computeWindowedRenderLimits } from '../VirtualizeUtils';
+import { findNodeHandle } from '../../exports/findNodeHandle';
+import infoLog from '../infoLog';
+import invariant from 'fbjs/lib/invariant';
+import warning from 'fbjs/lib/warning';
 
-const Batchinator = require('Batchinator');
-const FillRateHelper = require('FillRateHelper');
-const PropTypes = require('prop-types');
-const React = require('React');
-const ReactNative = require('ReactNative');
-const RefreshControl = require('RefreshControl');
-const ScrollView = require('ScrollView');
-const StyleSheet = require('StyleSheet');
-const UIManager = require('UIManager');
-const View = require('View');
-const ViewabilityHelper = require('ViewabilityHelper');
-
-const flattenStyle = require('flattenStyle');
-const infoLog = require('infoLog');
-const invariant = require('fbjs/lib/invariant');
-/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
- * found when Flow v0.54 was deployed. To see the error delete this comment and
- * run Flow. */
-const warning = require('fbjs/lib/warning');
-
-const { computeWindowedRenderLimits } = require('VirtualizeUtils');
-
-import type { StyleObj } from 'StyleSheetTypes';
-import type {
-  ViewabilityConfig,
-  ViewToken,
-  ViewabilityConfigCallbackPair
-} from 'ViewabilityHelper';
+const flattenStyle = StyleSheet.flatten;
+const __DEV__ = process.env.NODE_ENV !== 'production';
 
 type Item = any;
 
@@ -388,7 +380,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return ReactNative.findNodeHandle(this._scrollRef);
+      return findNodeHandle(this._scrollRef);
     }
   }
 
@@ -606,6 +598,14 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       first: Math.max(0, Math.min(prevState.first, getItemCount(data) - 1 - maxToRenderPerBatch)),
       last: Math.max(0, Math.min(prevState.last, getItemCount(data) - 1))
     };
+  }
+
+  // Workaround for React 16.2 which does not support static getDerivedStateFromProps.
+  componentWillReceiveProps(nextProps: Props) {
+    const state = this.constructor.getDerivedStateFromProps(nextProps, this.state);
+    if (state !== null && state !== undefined) {
+      this.setState(() => state);
+    }
   }
 
   _pushCells(
@@ -980,8 +980,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _measureLayoutRelativeToContainingList(): void {
     UIManager.measureLayout(
-      ReactNative.findNodeHandle(this),
-      ReactNative.findNodeHandle(this.context.virtualizedList.getOutermostParentListRef()),
+      findNodeHandle(this),
+      findNodeHandle(this.context.virtualizedList.getOutermostParentListRef()),
       error => {
         console.warn(
           "VirtualizedList: Encountered an error while measuring a list's" +
