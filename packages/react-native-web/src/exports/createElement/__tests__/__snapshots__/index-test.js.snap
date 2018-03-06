@@ -13,6 +13,7 @@ Object {
   "pageX": undefined,
   "pageY": undefined,
   "preventDefault": [Function],
+  "relatedTarget": undefined,
   "stopImmediatePropagation": [Function],
   "stopPropagation": [Function],
   "target": undefined,
