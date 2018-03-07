@@ -48,8 +48,8 @@ export default class AppRegistry {
     runnables[appKey] = {
       getApplication: ({ initialProps } = emptyObject) =>
         getApplication(getComponentFunc(), initialProps),
-      run: ({ initialProps = emptyObject, rootTag }) =>
-        renderApplication(getComponentFunc(), initialProps, rootTag)
+      run: ({ initialProps = emptyObject, rootTag, callback }) =>
+        renderApplication(getComponentFunc(), initialProps, rootTag, callback)
     };
     return appKey;
   }

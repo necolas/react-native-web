@@ -20,7 +20,8 @@ const renderFn = process.env.NODE_ENV !== 'production' ? render : hydrate;
 export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
   initialProps: Props,
-  rootTag: any
+  rootTag: any,
+  callback?: () => void
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
@@ -28,7 +29,8 @@ export default function renderApplication<Props: Object>(
     <AppContainer rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
-    rootTag
+    rootTag,
+    callback
   );
 }
 
