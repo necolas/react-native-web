@@ -21,7 +21,8 @@ export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
   initialProps: Props,
   rootTag: any,
-  WrapperComponent?: ?ComponentType<*>
+  WrapperComponent?: ?ComponentType<*>,
+  callback?: () => void
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
@@ -29,7 +30,8 @@ export default function renderApplication<Props: Object>(
     <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
-    rootTag
+    rootTag,
+    callback
   );
 }
 

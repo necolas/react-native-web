@@ -9,7 +9,7 @@ exports[`Additional CSS for styled app 1`] = `
 .rn-borderLeftWidth-150mub4{border-left-width:1234px}"
 `;
 
-exports[`AppRegistry/renderApplication getApplication returns "element" and "getStyleElement" 1`] = `
+exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
   WrapperComponent={undefined}
   rootTag={Object {}}
@@ -18,7 +18,7 @@ exports[`AppRegistry/renderApplication getApplication returns "element" and "get
 </AppContainer>
 `;
 
-exports[`AppRegistry/renderApplication getApplication returns "element" and "getStyleElement" 2`] = `
+exports[`AppRegistry getApplication returns "element" and "getStyleElement" 2`] = `
 "<style id=\\"react-native-stylesheet\\">@media all{
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}

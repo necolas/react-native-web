@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
+import AppRegistry from '..';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-import { getApplication } from '../renderApplication';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'enzyme';
@@ -10,7 +10,7 @@ import View from '../../View';
 
 const RootComponent = () => <div />;
 
-describe('AppRegistry/renderApplication', () => {
+describe('AppRegistry', () => {
   describe('getApplication', () => {
     const canUseDOM = ExecutionEnvironment.canUseDOM;
 
@@ -23,7 +23,9 @@ describe('AppRegistry/renderApplication', () => {
     });
 
     test('returns "element" and "getStyleElement"', () => {
-      const { element, getStyleElement } = getApplication(RootComponent, {});
+      AppRegistry.registerComponent('App', () => RootComponent);
+
+      const { element, getStyleElement } = AppRegistry.getApplication('App', {});
       expect(element).toMatchSnapshot();
       expect(ReactDOMServer.renderToStaticMarkup(getStyleElement())).toMatchSnapshot();
     });
@@ -33,13 +35,16 @@ describe('AppRegistry/renderApplication', () => {
         getStyleElement().props.dangerouslySetInnerHTML.__html;
 
       // First "RootComponent" render
-      let app = getApplication(RootComponent, {});
+      AppRegistry.registerComponent('App1', () => RootComponent);
+      let app = AppRegistry.getApplication('App1', {});
       render(app.element);
       const first = getTextContent(app.getStyleElement);
 
       // Next render is a different tree; the style sheet should be different
       const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
-      app = getApplication(() => <View style={styles.root} />, {});
+      const Component = () => <View style={styles.root} />;
+      AppRegistry.registerComponent('App2', () => Component);
+      app = AppRegistry.getApplication('App2', {});
       render(app.element);
       const second = getTextContent(app.getStyleElement);
 
@@ -51,11 +56,25 @@ describe('AppRegistry/renderApplication', () => {
 
       // Final render is once again "RootComponent"; the style sheet should not
       // be polluted by earlier rendering of a different tree
-      app = getApplication(RootComponent, {});
+      app = AppRegistry.getApplication('App1', {});
       render(app.element);
       const third = getTextContent(app.getStyleElement);
 
       expect(first).toEqual(third);
+    });
+  });
+
+  describe('runApplication', () => {
+    test('callback after render', () => {
+      AppRegistry.registerComponent('App', () => RootComponent);
+
+      const callback = jest.fn();
+      const rootTag = document.createElement('div');
+      rootTag.id = 'react-root';
+      document.body.appendChild(rootTag);
+      AppRegistry.runApplication('App', { initialProps: {}, rootTag, callback });
+      expect(callback).toHaveBeenCalledTimes(1);
+      document.body.removeChild(rootTag);
     });
   });
 });
