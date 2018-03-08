@@ -10,6 +10,15 @@
 const emptyArray = [];
 const emptyFunction = () => {};
 
+const getRect = node => {
+  if (node) {
+    const isElement = node.nodeType === 1 /* Node.ELEMENT_NODE */;
+    if (isElement && typeof node.getBoundingClientRect === 'function') {
+      return node.getBoundingClientRect();
+    }
+  }
+};
+
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
 const normalizeTouches = touches => {
   if (!touches) {
@@ -18,25 +27,25 @@ const normalizeTouches = touches => {
 
   return Array.prototype.slice.call(touches).map(touch => {
     const identifier = touch.identifier > 20 ? touch.identifier % 20 : touch.identifier;
-    let locationX, locationY;
-
-    const node = touch.target;
-    if (node) {
-      const isElement = node.nodeType === 1 /* Node.ELEMENT_NODE */;
-      if (isElement && typeof node.getBoundingClientRect === 'function') {
-        const rect = node.getBoundingClientRect();
-        locationX = touch.pageX - rect.left;
-        locationY = touch.pageY - rect.top;
-      }
-    }
+    let rect;
 
     return {
       _normalized: true,
       clientX: touch.clientX,
       clientY: touch.clientY,
       force: touch.force,
-      locationX: locationX,
-      locationY: locationY,
+      get locationX() {
+        rect = rect || getRect(touch.target);
+        if (rect) {
+          return touch.pageX - rect.left;
+        }
+      },
+      get locationY() {
+        rect = rect || getRect(touch.target);
+        if (rect) {
+          return touch.pageY - rect.top;
+        }
+      },
       identifier: identifier,
       pageX: touch.pageX,
       pageY: touch.pageY,
@@ -105,15 +114,27 @@ function normalizeTouchEvent(nativeEvent) {
 }
 
 function normalizeMouseEvent(nativeEvent) {
+  let rect;
+
   const touches = [
     {
       _normalized: true,
       clientX: nativeEvent.clientX,
       clientY: nativeEvent.clientY,
       force: nativeEvent.force,
-      locationX: nativeEvent.clientX,
-      locationY: nativeEvent.clientY,
       identifier: 0,
+      get locationX() {
+        rect = rect || getRect(nativeEvent.target);
+        if (rect) {
+          return nativeEvent.pageX - rect.left;
+        }
+      },
+      get locationY() {
+        rect = rect || getRect(nativeEvent.target);
+        if (rect) {
+          return nativeEvent.pageY - rect.top;
+        }
+      },
       pageX: nativeEvent.pageX,
       pageY: nativeEvent.pageY,
       screenX: nativeEvent.screenX,
@@ -143,8 +164,8 @@ function normalizeMouseEvent(nativeEvent) {
     changedTouches: touches,
     defaultPrevented: nativeEvent.defaultPrevented,
     identifier: touches[0].identifier,
-    locationX: nativeEvent.offsetX,
-    locationY: nativeEvent.offsetY,
+    locationX: touches[0].locationX,
+    locationY: touches[0].locationY,
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
     preventDefault,
