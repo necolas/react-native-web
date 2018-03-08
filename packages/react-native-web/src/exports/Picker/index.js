@@ -82,7 +82,7 @@ class Picker extends Component<Props> {
 
 const styles = StyleSheet.create({
   initial: {
-    fontFamily: 'inherit',
+    fontFamily: 'System',
     fontSize: 'inherit',
     margin: 0
   }
