@@ -10,91 +10,111 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 
+import ColorPropType from '../ColorPropType';
 
-const {head} = canUseDOM && document
+type Props = {
+  animated?: boolean,
+  backgroundColor?: ColorPropType,
+  barStyle?: StatusBarStyle,
+  hidden?: boolean,
+  networkActivityIndicatorVisible?: boolean,
+  showHideTransition?: 'fade' | 'slide',
+  translucent?: boolean
+};
+type StatusBarAnimation = 'none' | 'fade' | 'slide';
+type StatusBarStyle = 'default' | 'light-content' | 'dark-content';
 
-let _barStyle = 'default'
-let _hidden = false
-let _translucent = false
+const { head } = document;
 
+let _barStyle = 'default';
+let _hidden = false;
+let _translucent = false;
 
 function setMetaTag(attrName, content) {
-  if(!canUseDOM) return
+  if (!(canUseDOM && head)) return;
 
-  let tag = head.querySelector(`meta[name=${attrName}]`)
+  let tag = head.querySelector(`meta[name=${attrName}]`);
 
-  if(!tag) {
-    tag = document.createElement('meta')
-    tag.name = attrName
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.name = attrName;
 
-    head.appendChild(tag)
+    head.appendChild(tag);
   }
 
-  tag.content = content
+  if (tag instanceof HTMLMetaElement) tag.content = content;
 }
 
 function setAppleMobileWebAppCapable() {
-  setMetaTag('apple-mobile-web-app-capable',
-    (_hidden || _translucent || _barStyle !== 'default') ? 'yes' : 'no')
+  setMetaTag(
+    'apple-mobile-web-app-capable',
+    _hidden || _translucent || _barStyle !== 'default' ? 'yes' : 'no'
+  );
 }
 
 function setAppleMobileWebAppStatusBarStyle() {
-  setAppleMobileWebAppCapable()
+  setAppleMobileWebAppCapable();
 
-  setMetaTag('apple-mobile-web-app-status-bar-style',
-    _translucent ? 'black-translucent' : _barStyle)
+  setMetaTag(
+    'apple-mobile-web-app-status-bar-style',
+    _translucent ? 'black-translucent' : _barStyle
+  );
 }
 
+export default class StatusBar extends Component<Props> {
+  static defaultProps = {
+    showHideTransition: 'fade'
+  };
 
-export default class StatusBar extends Component<*> {
-  static get currentHeight() {
-    if(!canUseDOM) return
+  static get currentHeight(): ?number {
+    if (!canUseDOM) return;
 
-    const {availHeight, height} = window.screen
+    const { availHeight, height } = window.screen;
 
-    return height - availHeight
+    return height - availHeight;
   }
 
-
-  static setBackgroundColor(color, animated) {
-    setMetaTag('theme-color', color)
+  static setBackgroundColor(color: string, animated?: boolean) {
+    setMetaTag('theme-color', color);
   }
 
-  static setBarStyle(style, animated) {
-    if(style === 'light-content') style = 'black'
+  static setBarStyle(style: StatusBarStyle, animated?: boolean) {
+    _barStyle = style === 'light-content' ? 'black' : 'default';
 
-    if(style === 'black' || style === 'black-translucent' || style === 'default') {
-      _barStyle = style
-
-      setAppleMobileWebAppStatusBarStyle()
-    }
+    setAppleMobileWebAppStatusBarStyle();
   }
 
-  static setHidden(hidden, animation) {
-    _hidden = hidden
+  static setHidden(hidden: boolean, animation?: StatusBarAnimation) {
+    _hidden = hidden;
 
-    setAppleMobileWebAppCapable()
+    setAppleMobileWebAppCapable();
   }
 
-  static setNetworkActivityIndicatorVisible() {}
+  static setNetworkActivityIndicatorVisible(visible: boolean) {}
 
-  static setTranslucent(translucent) {
-    _translucent = translucent
+  static setTranslucent(translucent: boolean) {
+    _translucent = translucent;
 
-    setAppleMobileWebAppStatusBarStyle()
+    setAppleMobileWebAppStatusBarStyle();
   }
-
 
   render() {
-    const {animated, backgroundColor, barStyle, hidden,
-      networkActivityIndicatorVisible, showHideTransition,
-      translucent} = this.props
+    const {
+      animated,
+      backgroundColor,
+      barStyle,
+      hidden,
+      networkActivityIndicatorVisible,
+      showHideTransition,
+      translucent
+    } = this.props;
 
-    if(barStyle) StatusBar.setBarStyle(barStyle, animated)
-    if(backgroundColor) StatusBar.setBackgroundColor(backgroundColor, animated)
-    if(hidden) StatusBar.setHidden(hidden, animated)
-    if(networkActivityIndicatorVisible) StatusBar.setNetworkActivityIndicatorVisible(networkActivityIndicatorVisible)
-    if(translucent) StatusBar.setTranslucent(translucent)
+    if (backgroundColor) StatusBar.setBackgroundColor(backgroundColor, animated);
+    if (barStyle) StatusBar.setBarStyle(barStyle, animated);
+    if (hidden) StatusBar.setHidden(hidden, showHideTransition);
+    if (networkActivityIndicatorVisible)
+      StatusBar.setNetworkActivityIndicatorVisible(networkActivityIndicatorVisible);
+    if (translucent) StatusBar.setTranslucent(translucent);
 
     return null;
   }
