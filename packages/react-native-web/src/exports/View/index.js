@@ -49,6 +49,7 @@ class View extends Component<ViewProps> {
       removeClippedSubviews,
       renderToHardwareTextureAndroid,
       shouldRasterizeIOS,
+      tvParallaxProperties,
       /* eslint-enable */
       ...otherProps
     } = this.props;
