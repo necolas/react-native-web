@@ -105,10 +105,11 @@ Native. This allows the app to be rendered to web and native platforms.
 
 Examples of using React Native for Web with other web tools:
 
+* [Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-react-native-web)
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
-* [Storybook](https://github.com/necolas/react-native-web/tree/0.5.1/website/storybook/.storybook)
-* [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
+* [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
+* [Storybook](https://github.com/necolas/react-native-web/tree/0.5.1/website/storybook/.storybook)
 * [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/v6.2.6/examples/react-native)
 
 ## Contributing
