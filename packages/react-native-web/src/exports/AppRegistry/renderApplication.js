@@ -41,7 +41,7 @@ export function getApplication(RootComponent: ComponentType<Object>, initialProp
   // Don't escape CSS text
   const getStyleElement = () => {
     const sheet = styleResolver.getStyleSheet();
-    return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />;
+    return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} key={sheet.id} />;
   };
   return { element, getStyleElement };
 }
