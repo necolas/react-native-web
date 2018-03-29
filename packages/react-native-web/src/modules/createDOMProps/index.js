@@ -90,24 +90,10 @@ const createDOMProps = (component, props, styleResolver) => {
     ...domProps
   } = props;
 
-  const isDisabled = AccessibilityUtil.isDisabled(props);
+  const disabled = AccessibilityUtil.isDisabled(props);
   const role = AccessibilityUtil.propsToAriaRole(props);
-  const tabIndex = AccessibilityUtil.propsToTabIndex(props);
-  const reactNativeStyle = [
-    component === 'a' && resetStyles.link,
-    component === 'button' && resetStyles.button,
-    role === 'heading' && resetStyles.heading,
-    component === 'ul' && resetStyles.list,
-    role === 'button' && !isDisabled && resetStyles.ariaButton,
-    pointerEvents && pointerEventsStyles[pointerEvents],
-    providedStyle,
-    placeholderTextColor && { placeholderTextColor }
-  ];
-  const { className, style } = styleResolver(reactNativeStyle);
 
-  if (isDisabled) {
-    domProps['aria-disabled'] = true;
-  }
+  // GENERAL ACCESSIBILITY
   if (importantForAccessibility === 'no-hide-descendants') {
     domProps['aria-hidden'] = true;
   }
@@ -117,20 +103,70 @@ const createDOMProps = (component, props, styleResolver) => {
   if (accessibilityLiveRegion && accessibilityLiveRegion.constructor === String) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (className && className.constructor === String) {
-    domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
-  }
-  if (component === 'a' && domProps.target === '_blank') {
-    domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
-  }
   if (role && role.constructor === String && role !== 'label') {
     domProps.role = role;
+  }
+
+  // DISABLED
+  if (disabled) {
+    domProps['aria-disabled'] = disabled;
+    domProps.disabled = disabled;
+  }
+
+  // FOCUS
+  // Assume that 'link' is focusable by default (uses <a>).
+  // Assume that 'button' is not (uses <div role='button'>) but must be treated as such.
+  const focusable =
+    !disabled &&
+    importantForAccessibility !== 'no' &&
+    importantForAccessibility !== 'no-hide-descendants';
+  if (
+    role === 'link' ||
+    component === 'input' ||
+    component === 'select' ||
+    component === 'textarea'
+  ) {
+    if (accessible === false || !focusable) {
+      domProps.tabIndex = '-1';
+    } else {
+      domProps['data-focusable'] = true;
+    }
+  } else if (role === 'button' || role === 'textbox') {
+    if (accessible !== false && focusable) {
+      domProps['data-focusable'] = true;
+      domProps.tabIndex = '0';
+    }
+  } else {
+    if (accessible === true && focusable) {
+      domProps['data-focusable'] = true;
+      domProps.tabIndex = '0';
+    }
+  }
+
+  // STYLE
+  // Resolve React Native styles to optimized browser equivalent
+  const reactNativeStyle = [
+    component === 'a' && resetStyles.link,
+    component === 'button' && resetStyles.button,
+    role === 'heading' && resetStyles.heading,
+    component === 'ul' && resetStyles.list,
+    role === 'button' && !disabled && resetStyles.ariaButton,
+    pointerEvents && pointerEventsStyles[pointerEvents],
+    providedStyle,
+    placeholderTextColor && { placeholderTextColor }
+  ];
+  const { className, style } = styleResolver(reactNativeStyle);
+  if (className && className.constructor === String) {
+    domProps.className = props.className ? `${props.className} ${className}` : className;
   }
   if (style) {
     domProps.style = style;
   }
-  if (tabIndex) {
-    domProps.tabIndex = tabIndex;
+
+  // OTHER
+  // Link security and automation test ids
+  if (component === 'a' && domProps.target === '_blank') {
+    domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }
   if (testID && testID.constructor === String) {
     domProps['data-testid'] = testID;

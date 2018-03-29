@@ -114,6 +114,18 @@ value of `no` will remove a focusable element from the tab flow, and a value of
 `no-hide-descendants` will also hide the entire subtree from assistive
 technologies (this is implemented using `aria-hidden`).
 
+### Spatial navigation
+
+Focus-based web UIs, e.g., for TVs and Game Consoles can implement [TV remote
+control navigation](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS_for_TV/TV_remote_control_navigation)
+outside of React using existing directional-focus libraries. Every DOM element
+that React Native considers focusable can be matched by the attribute
+`data-focusable="true"`.
+
+```js
+const focusableElements = document.querySelectorAll('[data-focusable="true"]');
+```
+
 ### Other
 
 Other ARIA properties can be set via [direct
