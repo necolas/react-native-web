@@ -20,9 +20,18 @@ const InteractionManager = {
   /**
    * Schedule a function to run after all interactions have completed.
    */
-  runAfterInteractions(callback: Function) {
-    invariant(typeof callback === 'function', 'Must specify a function to schedule.');
-    callback();
+  runAfterInteractions(task: ?Function): { then: Function, done: Function, cancel: Function } {
+    console.warn('InteractionManager is not supported on web');
+    const promise = new Promise(resolve => {
+      if (task) {
+        resolve(task());
+      }
+    });
+    return {
+      then: promise.then.bind(promise),
+      done: () => {},
+      cancel: () => {}
+    };
   },
 
   /**
