@@ -53,6 +53,7 @@ class Text extends Component<*> {
       selectionColor,
       suppressHighlighting,
       textBreakStrategy,
+      tvParallaxProperties,
       /* eslint-enable */
       ...otherProps
     } = this.props;
