@@ -1,6 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TextInput from '..';
 import { mount, shallow } from 'enzyme';
 
@@ -112,8 +113,14 @@ describe('components/TextInput', () => {
   test('prop "onBlur"', () => {
     const onBlur = jest.fn();
     const input = findNativeInput(mount(<TextInput onBlur={onBlur} />));
+    const node = ReactDOM.findDOMNode(input.instance());
+
+    // more accurate blur simulation
     input.simulate('blur');
+    node.blur();
+
     expect(onBlur).toHaveBeenCalledTimes(1);
+    expect(TextInput.State.currentlyFocusedField()).toBe(null);
   });
 
   test('prop "onChange"', () => {
@@ -135,8 +142,14 @@ describe('components/TextInput', () => {
   test('prop "onFocus"', () => {
     const onFocus = jest.fn();
     const input = findNativeInput(mount(<TextInput onFocus={onFocus} />));
+    const node = ReactDOM.findDOMNode(input.instance());
+
+    // more accurate focus simulation
     input.simulate('focus');
+    node.focus();
+
     expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(TextInput.State.currentlyFocusedField()).toBe(node);
   });
 
   describe('prop "onKeyPress"', () => {

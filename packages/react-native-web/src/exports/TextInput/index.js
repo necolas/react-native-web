@@ -161,6 +161,9 @@ class TextInput extends Component<*> {
 
   componentDidMount() {
     setSelection(this._node, this.props.selection);
+    if (document.activeElement === this._node) {
+      TextInputState._currentlyFocusedNode = this._node;
+    }
   }
 
   componentDidUpdate() {
@@ -263,7 +266,7 @@ class TextInput extends Component<*> {
 
   _handleBlur = e => {
     const { onBlur } = this.props;
-    TextInputState.blurTextInput(this._node);
+    TextInputState._currentlyFocusedNode = null;
     if (onBlur) {
       onBlur(e);
     }
@@ -283,7 +286,7 @@ class TextInput extends Component<*> {
   _handleFocus = e => {
     const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
     const node = this._node;
-    TextInputState.focusTextInput(this._node);
+    TextInputState._currentlyFocusedNode = this._node;
     if (onFocus) {
       onFocus(e);
     }
