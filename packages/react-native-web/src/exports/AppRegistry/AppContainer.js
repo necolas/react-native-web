@@ -11,13 +11,14 @@
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 import { any, node } from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, type ComponentType } from 'react';
 
 type Context = {
   rootTag: any
 };
 
 type Props = {
+  WrapperComponent?: ?ComponentType<*>,
   // $FlowFixMe
   children?: React.Children,
   rootTag: any
@@ -35,6 +36,7 @@ export default class AppContainer extends Component<Props, State> {
   };
 
   static propTypes = {
+    WrapperComponent: any,
     children: node,
     rootTag: any.isRequired
   };
@@ -46,14 +48,23 @@ export default class AppContainer extends Component<Props, State> {
   }
 
   render() {
+    const { children, WrapperComponent } = this.props;
+    let innerView = (
+      <View
+        children={children}
+        key={this.state.mainKey}
+        pointerEvents="box-none"
+        style={styles.appContainer}
+      />
+    );
+
+    if (WrapperComponent) {
+      innerView = <WrapperComponent>{innerView}</WrapperComponent>;
+    }
+
     return (
       <View pointerEvents="box-none" style={styles.appContainer}>
-        <View
-          children={this.props.children}
-          key={this.state.mainKey}
-          pointerEvents="box-none"
-          style={styles.appContainer}
-        />
+        {innerView}
       </View>
     );
   }

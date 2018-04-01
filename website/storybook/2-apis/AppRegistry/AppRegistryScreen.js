@@ -19,11 +19,37 @@ const AppRegistryScreen = () => (
         AppRegistry is the control point for registering, running, prerendering, and unmounting all
         apps. App root components should register themselves with{' '}
         <Code>AppRegistry.registerComponent</Code>. Apps can be run by invoking{' '}
-        <Code>AppRegistry.runApplication</Code>
+        <Code>AppRegistry.runApplication</Code>.
       </AppText>
     </Description>
 
     <Section title="Methods">
+      <DocItem
+        description="Returns all registered app keys"
+        name="static getAppKeys"
+        typeInfo="() => Array<string>"
+      />
+
+      <DocItem
+        description="Use this for server-side rendering to HTML. Returns a object of the given application's element, and a function to get styles once the element is rendered."
+        label="web"
+        name="static getApplication"
+        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; getStyleElement: () => ReactElement }"
+      />
+
+      <DocItem
+        description={
+          <AppText>
+            Register a component provider under the given <Code>appKey</Code>.
+          </AppText>
+        }
+        example={{
+          code: 'AppRegistry.registerComponent("MyApp", () => AppComponent)'
+        }}
+        name="static registerComponent"
+        typeInfo="(appKey: string, getComponentFunc: ComponentProvider) => void"
+      />
+
       <DocItem
         description={[
           <AppText>
@@ -42,31 +68,12 @@ const AppRegistryScreen = () => (
       <DocItem
         description={
           <AppText>
-            Register a component provider under the given <Code>appKey</Code>.
-          </AppText>
-        }
-        example={{
-          code: 'AppRegistry.registerComponent("MyApp", () => AppComponent)'
-        }}
-        name="static registerComponent"
-        typeInfo="(appKey: string, getComponentFunc: ComponentProvider) => void"
-      />
-
-      <DocItem
-        description={
-          <AppText>
             Register a custom render function for an application. The function will receive the{' '}
             <Code>appParameters</Code> passed to <Code>runApplication</Code>.
           </AppText>
         }
         name="static registerRunnable"
         typeInfo="(appKey: string, run: Function) => void"
-      />
-
-      <DocItem
-        description="Returns all registered app keys"
-        name="static getAppKeys"
-        typeInfo="() => Array<string>"
       />
 
       <DocItem
@@ -88,6 +95,16 @@ const AppRegistryScreen = () => (
       />
 
       <DocItem
+        name="static setComponentProviderInstrumentationHook"
+        typeInfo="(componentProvider: func) => Component"
+      />
+
+      <DocItem
+        name="static setWrapperComponentProvider"
+        typeInfo="(appParameters: object) => Component"
+      />
+
+      <DocItem
         description={
           <AppText>
             To "stop" an application when a view should be destroyed, call{' '}
@@ -97,13 +114,6 @@ const AppRegistryScreen = () => (
         }
         name="static unmountApplicationComponentAtRootTag"
         typeInfo="(rootTag: HTMLElement) => void"
-      />
-
-      <DocItem
-        description="Use this for server-side rendering to HTML. Returns a object of the given application's element, and a function to get styles once the element is rendered."
-        label="web"
-        name="static getApplication"
-        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; getStyleElement: () => ReactElement }"
       />
     </Section>
   </UIExplorer>

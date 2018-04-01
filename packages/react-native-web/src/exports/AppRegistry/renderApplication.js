@@ -20,21 +20,26 @@ const renderFn = process.env.NODE_ENV !== 'production' ? render : hydrate;
 export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
   initialProps: Props,
-  rootTag: any
+  rootTag: any,
+  WrapperComponent?: ?ComponentType<*>
 ) {
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer rootTag={rootTag}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
     rootTag
   );
 }
 
-export function getApplication(RootComponent: ComponentType<Object>, initialProps: Object): Object {
+export function getApplication(
+  RootComponent: ComponentType<Object>,
+  initialProps: Object,
+  WrapperComponent?: ?ComponentType<*>
+): Object {
   const element = (
-    <AppContainer rootTag={{}}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );

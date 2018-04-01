@@ -11,6 +11,7 @@ exports[`Additional CSS for styled app 1`] = `
 
 exports[`AppRegistry/renderApplication getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
+  WrapperComponent={undefined}
   rootTag={Object {}}
 >
   <RootComponent />
