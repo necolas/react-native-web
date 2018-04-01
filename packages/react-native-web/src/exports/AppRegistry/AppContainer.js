@@ -47,7 +47,7 @@ export default class AppContainer extends Component<Props, State> {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={[styles.appContainer, StyleSheet.absoluteFill]}>
+      <View pointerEvents="box-none" style={styles.appContainer}>
         <View
           children={this.props.children}
           key={this.state.mainKey}
@@ -60,9 +60,6 @@ export default class AppContainer extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  /**
-   * Ensure that the application covers the whole screen.
-   */
   appContainer: {
     flex: 1
   }

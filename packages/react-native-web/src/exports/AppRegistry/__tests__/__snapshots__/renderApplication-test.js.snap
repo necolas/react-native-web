@@ -63,10 +63,5 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-zIndex-1lgpqti{z-index:0}
 .rn-flex-13awgt0{-ms-flex:1;-webkit-flex:1;flex:1}
 .rn-flexGrow-1m1wadx{-ms-flex-positive:1 !important;-webkit-flex-grow:1 !important;flex-grow:1 !important}
-.rn-flexShrink-1awmn5t{-ms-flex-negative:1 !important;-webkit-flex-shrink:1 !important;flex-shrink:1 !important}
-.rn-bottom-1p0dtai{bottom:0px}
-.rn-left-1d2f490{left:0px}
-.rn-position-u8s1d{position:absolute}
-.rn-right-zchlnj{right:0px}
-.rn-top-ipm5af{top:0px}"
+.rn-flexShrink-1awmn5t{-ms-flex-negative:1 !important;-webkit-flex-shrink:1 !important;flex-shrink:1 !important}"
 `;
