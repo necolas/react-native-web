@@ -37,7 +37,9 @@ const open = url => {
   anchor.target = '_blank'; // :(
   anchor.rel = 'noopener';
   anchor.href = url;
+  if (document.body) document.body.appendChild(anchor);
   anchor.click();
+  if (document.body) anchor.remove();
 };
 
 export default Linking;
