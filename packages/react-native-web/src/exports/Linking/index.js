@@ -33,11 +33,7 @@ const Linking = {
 };
 
 const open = url => {
-  const anchor = document.createElement('a');
-  anchor.target = '_blank'; // :(
-  anchor.rel = 'noopener';
-  anchor.href = url;
-  anchor.click();
+  window.open(url, '_blank')
 };
 
 export default Linking;
