@@ -27,6 +27,7 @@
     "window": false,
     // Flow global types
     "HTMLInputElement": false,
+    "HTMLMetaElement": false,
     "ReactClass": false,
     "ReactComponent": false,
     "ReactElement": false,
