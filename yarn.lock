@@ -6599,9 +6599,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-art@^16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.2.0.tgz#3b6914a6c9da64f83910896fa8cdae6ddf2aa589"
+react-art@^16.3.0:
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.3.0.tgz#749988e58e1d990769d0c9b294bae62d846442bd"
   dependencies:
     art "^0.10.1"
     create-react-class "^15.6.2"
