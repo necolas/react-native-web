@@ -18,7 +18,7 @@ Object {
 
 exports[`modules/createDOMProps includes reset styles for "button" elements 1`] = `
 Object {
-  "className": "rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-font-1lw9tu2 rn-textAlign-1ttztb7",
+  "className": "rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-fontFamily-poiln3 rn-fontSize-7cikom rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-textAlign-1ttztb7",
 }
 `;
 
