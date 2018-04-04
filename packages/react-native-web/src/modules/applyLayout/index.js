@@ -22,7 +22,8 @@ if (canUseDOM) {
   if (typeof window.ResizeObserver !== 'undefined') {
     resizeObserver = new window.ResizeObserver(entries => {
       entries.forEach(({ target }) => {
-        target._handleLayout && target._handleLayout();
+        const instance = registry[target._onLayoutId];
+        instance && instance._handleLayout();
       });
     });
   } else {
@@ -46,25 +47,25 @@ if (canUseDOM) {
 }
 
 const observe = instance => {
+  const id = guid();
+  registry[id] = instance;
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node._handleLayout = debounce(instance._handleLayout.bind(instance));
+    node._onLayoutId = id;
     resizeObserver.observe(node);
   } else {
-    const id = guid();
     instance._onLayoutId = id;
-    registry[id] = instance;
     instance._handleLayout();
   }
 };
 
 const unobserve = instance => {
+  delete registry[instance._onLayoutId];
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    delete node._handleLayout;
+    delete node._onLayoutId;
     resizeObserver.unobserve(node);
   } else {
-    delete registry[instance._onLayoutId];
     delete instance._onLayoutId;
   }
 };
