@@ -24,7 +24,7 @@ const Linking = {
   },
   openURL(url: string): Promise<Object | void> {
     try {
-      iframeOpen(url);
+      open(url);
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
@@ -32,37 +32,12 @@ const Linking = {
   }
 };
 
-/**
- * Tabs opened using JavaScript may redirect the parent tab using
- * `window.opener.location`, ignoring cross-origin restrictions and enabling
- * phishing attacks.
- *
- * Safari requires that we open the url by injecting a hidden iframe that calls
- * window.open(), then removes the iframe from the DOM.
- *
- * https://mathiasbynens.github.io/rel-noopener/
- */
-const iframeOpen = url => {
-  const noOpener = url.indexOf('mailto:') !== 0;
-  const body = document.body;
-  if (body) {
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    body.appendChild(iframe);
-
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-    const iframeBody = iframeDoc.body;
-    if (iframeBody) {
-      const script = iframeDoc.createElement('script');
-      const openerExpression = noOpener ? 'child.opener = null' : '';
-      script.text = `
-        window.parent = null; window.top = null; window.frameElement = null;
-        var child = window.open("${url}"); ${openerExpression};
-      `;
-      iframeBody.appendChild(script);
-    }
-    body.removeChild(iframe);
-  }
+const open = url => {
+  const anchor = document.createElement('a');
+  anchor.target = '_blank'; // :(
+  anchor.rel = 'noopener';
+  anchor.href = url;
+  anchor.click();
 };
 
 export default Linking;

@@ -2,8 +2,8 @@
 
 This guide will help you to use and test React Native for Web once it has been installed.
 
-Your application may need to polyfill `Promise`, `Object.assign`, and
-`Array.from` as necessary for your desired browser support.
+Your application may need to polyfill `Promise`, `Object.assign`,
+`Array.from` and [`ResizeObserver`](#resizeobserve) as necessary for your desired browser support.
 
 ## Adding to a new web app
 
@@ -12,6 +12,9 @@ Facebook's React web starter kit –
 [create-react-app](https://github.com/facebookincubator/create-react-app). All
 that is needed after initializing a web app with CRA is to install
 `react-native-web`.
+
+If you are unfamiliar with setting up a new React web project, please follow
+the recommendations in the [React documentation](https://reactjs.org/).
 
 ## Adding to an existing web app
 
@@ -269,3 +272,7 @@ flexbox layout.
 
 There are properties that do not work across all platforms. All web-specific
 props are annotated with `(web)` in the documentation.
+
+### ResizeObserver
+
+To observe layout changes and fire [`onLayout`](https://facebook.github.io/react-native/docs/view.html#onlayout) when elements are resized, React Native for Web uses the [`ResizeObserver` API](https://wicg.github.io/ResizeObserver/). Browsers that don't support this API require a [polyfill](https://github.com/que-etc/resize-observer-polyfill) for this feature.

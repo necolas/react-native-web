@@ -19,20 +19,18 @@ rewriting existing code. React Native for Web can also render to HTML and
 critical CSS on the server using Node.js.
 
 Who is using React Native for Web? [Twitter](https://mobile.twitter.com),
-[Major League Soccer](https://matchcenter.mlssoccer.com), Playstation, Uber, [The
+[Major League Soccer](https://matchcenter.mlssoccer.com),
+[Flipkart](https://www.flipkart.com/), Playstation, Uber, [The
 Times](https://github.com/newsuk/times-components), [React Native's
 documentation](http://facebook.github.io/react-native/).
 
-Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
+Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 
 ## Quick start
 
 The easiest way to get started with React Native for Web is to use this
-[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native-web-playground).
+[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native).
 You don’t need to install anything to try it out.
-
-If you are unfamiliar with setting up a React web project, please follow the
-recommendations in the [React documentation](https://reactjs.org/).
 
 ## Documentation
 
@@ -96,6 +94,16 @@ This example will render the `App` into a container on the page.
 You'll notice that there is no reference to `react-dom`; the `App` component is
 defined using the platform-agnostic APIs and Components introduced by React
 Native. This allows the app to be rendered to web and native platforms.
+
+## Integrations
+
+Examples of using React Native for Web with other web tools:
+
+* [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
+* [Storybook](https://github.com/necolas/react-native-web/tree/0.5.1/website/storybook/.storybook)
+* [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
+* [Phenomic](https://github.com/phenomic/phenomic/tree/v1.0.0-alpha.20/docs)
+* [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/v6.2.6/examples/react-native)
 
 ## Contributing
 
