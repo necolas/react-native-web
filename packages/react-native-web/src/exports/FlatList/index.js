@@ -7,5 +7,5 @@
  * @flow
  */
 
-import UnimplementedView from '../../modules/UnimplementedView';
-export default UnimplementedView;
+import FlatList from '../../vendor/react-native/FlatList';
+export default FlatList;
