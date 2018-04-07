@@ -7,5 +7,5 @@
  * @flow
  */
 
-import UnimplementedView from '../../modules/UnimplementedView';
-export default UnimplementedView;
+import SectionList from '../../vendor/react-native/SectionList';
+export default SectionList;
