@@ -89,6 +89,10 @@ const UIManager = {
           node.setAttribute(prop, value);
       }
     }
+  },
+
+  configureNextLayoutAnimation(config, onAnimationDidEnd) {
+    onAnimationDidEnd();
   }
 };
 

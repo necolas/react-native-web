@@ -21,6 +21,7 @@ import Easing from './exports/Easing';
 import I18nManager from './exports/I18nManager';
 import Keyboard from './exports/Keyboard';
 import InteractionManager from './exports/InteractionManager';
+import LayoutAnimation from './exports/LayoutAnimation';
 import Linking from './exports/Linking';
 import NetInfo from './exports/NetInfo';
 import PanResponder from './exports/PanResponder';
@@ -90,6 +91,7 @@ export {
   I18nManager,
   InteractionManager,
   Keyboard,
+  LayoutAnimation,
   Linking,
   NetInfo,
   PanResponder,
@@ -158,6 +160,7 @@ const ReactNative = {
   I18nManager,
   InteractionManager,
   Keyboard,
+  LayoutAnimation,
   Linking,
   NetInfo,
   PanResponder,
