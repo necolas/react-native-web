@@ -18,6 +18,15 @@ const emptyObject = {};
 const runnables = {};
 
 export type ComponentProvider = () => ComponentType<any>;
+export type ComponentProviderInstrumentationHook = (
+  component: ComponentProvider
+) => ComponentType<any>;
+export type WrapperComponentProvider = any => ComponentType<*>;
+
+let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook = (
+  component: ComponentProvider
+) => component();
+let wrapperComponentProvider: ?WrapperComponentProvider;
 
 export type AppConfig = {
   appKey: string,
@@ -44,12 +53,22 @@ export default class AppRegistry {
     return runnables[appKey].getApplication(appParameters);
   }
 
-  static registerComponent(appKey: string, getComponentFunc: ComponentProvider): string {
+  static registerComponent(appKey: string, componentProvider: ComponentProvider): string {
     runnables[appKey] = {
-      getApplication: ({ initialProps } = emptyObject) =>
-        getApplication(getComponentFunc(), initialProps),
-      run: ({ initialProps = emptyObject, rootTag, callback }) =>
-        renderApplication(getComponentFunc(), initialProps, rootTag, callback)
+      getApplication: appParameters =>
+        getApplication(
+          componentProviderInstrumentationHook(componentProvider),
+          appParameters.initialProps || emptyObject,
+          wrapperComponentProvider && wrapperComponentProvider(appParameters)
+        ),
+      run: appParameters =>
+        renderApplication(
+          componentProviderInstrumentationHook(componentProvider),
+          appParameters.initialProps || emptyObject,
+          appParameters.rootTag,
+          wrapperComponentProvider && wrapperComponentProvider(appParameters),
+          appParameters.callback
+        )
     };
     return appKey;
   }
@@ -89,6 +108,14 @@ export default class AppRegistry {
     );
 
     runnables[appKey].run(appParameters);
+  }
+
+  static setComponentProviderInstrumentationHook(hook: ComponentProviderInstrumentationHook) {
+    componentProviderInstrumentationHook = hook;
+  }
+
+  static setWrapperComponentProvider(provider: WrapperComponentProvider) {
+    wrapperComponentProvider = provider;
   }
 
   static unmountApplicationComponentAtRootTag(rootTag: Object) {

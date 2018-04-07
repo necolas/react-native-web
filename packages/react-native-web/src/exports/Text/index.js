@@ -53,6 +53,7 @@ class Text extends Component<*> {
       selectionColor,
       suppressHighlighting,
       textBreakStrategy,
+      tvParallaxProperties,
       /* eslint-enable */
       ...otherProps
     } = this.props;
@@ -96,9 +97,12 @@ const styles = StyleSheet.create({
     boxSizing: 'border-box',
     color: 'inherit',
     display: 'inline',
-    font: 'inherit',
     fontFamily: 'System',
     fontSize: 14,
+    fontStyle: 'inherit',
+    fontVariant: ['inherit'],
+    fontWeight: 'inherit',
+    lineHeight: 'inherit',
     margin: 0,
     padding: 0,
     textDecorationLine: 'none',
@@ -109,7 +113,6 @@ const styles = StyleSheet.create({
     // inherit parent font styles
     fontFamily: 'inherit',
     fontSize: 'inherit',
-    fontVariant: ['inherit'],
     whiteSpace: 'inherit'
   },
   notSelectable: {

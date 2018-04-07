@@ -142,12 +142,16 @@ describe('StyleSheet/createReactDOMStyle', () => {
       expect(createReactDOMStyle({ fontFamily: 'Georgia, Times, serif' })).toMatchSnapshot();
     });
 
-    test('fontFamily: "monospace"', () => {
+    test('"monospace"', () => {
       expect(createReactDOMStyle({ fontFamily: 'monospace' })).toMatchSnapshot();
     });
 
-    test('fontFamily: "System"', () => {
+    test('"System"', () => {
       expect(createReactDOMStyle({ fontFamily: 'System' })).toMatchSnapshot();
+    });
+
+    test('"Noto, System"', () => {
+      expect(createReactDOMStyle({ fontFamily: 'Noto, System' })).toMatchSnapshot();
     });
   });
 

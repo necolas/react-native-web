@@ -51,6 +51,12 @@ yarn add react react-dom react-native-web
 yarn add --dev babel-plugin-react-native-web
 ```
 
+And if you need to use `ART`:
+
+```
+yarn add react-art
+```
+
 ### Guides
 
 * [Getting started](https://github.com/necolas/react-native-web/blob/master/website/guides/getting-started.md)

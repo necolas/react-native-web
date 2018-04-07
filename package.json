@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.5.1",
+  "version": "0.5.4",
   "name": "react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",
@@ -50,6 +50,7 @@
     "prettier": "^1.8.2",
     "raf": "^3.4.0",
     "react": "^16.2.0",
+    "react-art": "^16.3.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0"
   },

@@ -21,11 +21,21 @@ const resetStyles = StyleSheet.create({
     appearance: 'none',
     backgroundColor: 'transparent',
     color: 'inherit',
-    font: 'inherit',
+    fontFamily: 'inherit',
+    fontSize: 'inherit',
+    fontStyle: 'inherit',
+    fontVariant: ['inherit'],
+    fontWeight: 'inherit',
+    lineHeight: 'inherit',
     textAlign: 'inherit'
   },
   heading: {
-    font: 'inherit'
+    fontFamily: 'inherit',
+    fontSize: 'inherit',
+    fontStyle: 'inherit',
+    fontVariant: ['inherit'],
+    fontWeight: 'inherit',
+    lineHeight: 'inherit'
   },
   link: {
     backgroundColor: 'transparent',

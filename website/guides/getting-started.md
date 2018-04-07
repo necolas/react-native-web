@@ -155,7 +155,7 @@ using [Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/).
 Install webpack-related dependencies, for example:
 
 ```
-yarn add --dev babel-loader url-loader webpack webpack-dev-server
+yarn add --dev babel-loader url-loader webpack webpack-cli webpack-dev-server
 ```
 
 Create a `web/webpack.config.js` file:
@@ -231,7 +231,7 @@ module.exports = {
     // wish to include additional optimizations.
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      __DEV__: process.env.NODE_ENV === 'production' || true
+      __DEV__: process.env.NODE_ENV !== 'production' || true
     })
   ],
 

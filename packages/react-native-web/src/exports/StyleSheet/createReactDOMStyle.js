@@ -64,7 +64,7 @@ const borderWidthProps = {
 
 const monospaceFontStack = 'monospace, monospace';
 const systemFontStack =
-  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
+  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
 const alphaSortProps = propsArray =>
   propsArray.sort((a, b) => {
@@ -237,8 +237,10 @@ const createReducer = (style, styleProps) => {
       }
 
       case 'fontFamily': {
-        if (value === 'System') {
-          resolvedStyle.fontFamily = systemFontStack;
+        if (value.indexOf('System') > -1) {
+          const stack = value.split(/\s*,\s*/);
+          stack[stack.indexOf('System')] = systemFontStack;
+          resolvedStyle.fontFamily = stack.join(', ');
         } else if (value === 'monospace') {
           resolvedStyle.fontFamily = monospaceFontStack;
         } else {
