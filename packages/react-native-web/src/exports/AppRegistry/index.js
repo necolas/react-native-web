@@ -66,7 +66,8 @@ export default class AppRegistry {
           componentProviderInstrumentationHook(componentProvider),
           appParameters.initialProps || emptyObject,
           appParameters.rootTag,
-          wrapperComponentProvider && wrapperComponentProvider(appParameters)
+          wrapperComponentProvider && wrapperComponentProvider(appParameters),
+          appParameters.callback
         )
     };
     return appKey;

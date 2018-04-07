@@ -39,7 +39,8 @@ AppRegistry.registerComponent('App', () => App);
 
 AppRegistry.runApplication('App', {
   initialProps: {},
-  rootTag: document.getElementById('react-app')
+  rootTag: document.getElementById('react-app'),
+  callback: () => console.log('React rendering has finished')
 });
 ```
 
