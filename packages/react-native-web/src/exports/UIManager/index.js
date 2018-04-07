@@ -8,8 +8,6 @@
  * @noflow
  */
 
-import requestAnimationFrame from 'fbjs/lib/requestAnimationFrame';
-import setImmediate from 'fbjs/lib/setImmediate';
 import setValueForStyles from '../../vendor/setValueForStyles';
 
 const getRect = node => {
@@ -27,38 +25,15 @@ const getRect = node => {
   return { height, left, top, width };
 };
 
-let hasRequestedAnimationFrame = false;
-const measureLayoutQueue = [];
-
-const processLayoutQueue = () => {
-  measureLayoutQueue.splice(0, 250).forEach(item => {
-    const [node, relativeToNativeNode, callback] = item;
-    const relativeNode = relativeToNativeNode || (node && node.parentNode);
-
-    if (node && relativeNode) {
-      const relativeRect = getRect(relativeNode);
-      const { height, left, top, width } = getRect(node);
-      const x = left - relativeRect.left;
-      const y = top - relativeRect.top;
-      callback(x, y, width, height, left, top);
-    }
-  });
-
-  if (measureLayoutQueue.length > 0) {
-    setImmediate(processLayoutQueue);
-  }
-};
-
 const measureLayout = (node, relativeToNativeNode, callback) => {
-  if (!hasRequestedAnimationFrame) {
-    requestAnimationFrame(() => {
-      hasRequestedAnimationFrame = false;
-      processLayoutQueue();
-    });
+  const relativeNode = relativeToNativeNode || (node && node.parentNode);
+  if (node && relativeNode) {
+    const relativeRect = getRect(relativeNode);
+    const { height, left, top, width } = getRect(node);
+    const x = left - relativeRect.left;
+    const y = top - relativeRect.top;
+    callback(x, y, width, height, left, top);
   }
-
-  hasRequestedAnimationFrame = true;
-  measureLayoutQueue.push([node, relativeToNativeNode, callback]);
 };
 
 const UIManager = {
@@ -79,12 +54,10 @@ const UIManager = {
   },
 
   measureInWindow(node, callback) {
-    requestAnimationFrame(() => {
-      if (node) {
-        const { height, left, top, width } = getRect(node);
-        callback(left, top, width, height);
-      }
-    });
+    if (node) {
+      const { height, left, top, width } = getRect(node);
+      callback(left, top, width, height);
+    }
   },
 
   measureLayout(node, relativeToNativeNode, onFail, onSuccess) {
