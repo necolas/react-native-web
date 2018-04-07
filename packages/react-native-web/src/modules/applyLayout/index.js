@@ -9,6 +9,7 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
+import findNodeHandle from '../../exports/findNodeHandle';
 
 const emptyObject = {};
 const registry = {};
@@ -16,22 +17,66 @@ const registry = {};
 let id = 1;
 const guid = () => `r-${id++}`;
 
+let resizeObserver;
 if (canUseDOM) {
-  const triggerAll = () => {
-    Object.keys(registry).forEach(key => {
-      const instance = registry[key];
-      instance._handleLayout();
+  if (typeof window.ResizeObserver !== 'undefined') {
+    resizeObserver = new window.ResizeObserver(entries => {
+      entries.forEach(({ target }) => {
+        const instance = registry[target._onLayoutId];
+        instance && instance._handleLayout();
+      });
     });
-  };
+  } else {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        'onLayout relies on ResizeObserver which is not supported by your browser. ' +
+          'Please include a polyfill. https://github.com/WICG/ResizeObserver/issues/3. ' +
+          'Falling back to window.onresize.'
+      );
+    }
 
-  window.addEventListener('resize', debounce(triggerAll, 16), false);
+    const triggerAll = () => {
+      Object.keys(registry).forEach(key => {
+        const instance = registry[key];
+        instance._handleLayout();
+      });
+    };
+
+    window.addEventListener('resize', debounce(triggerAll, 16), false);
+  }
 }
+
+const observe = instance => {
+  const id = guid();
+  registry[id] = instance;
+  if (resizeObserver) {
+    const node = findNodeHandle(instance);
+    node._onLayoutId = id;
+    resizeObserver.observe(node);
+  } else {
+    instance._onLayoutId = id;
+    instance._handleLayout();
+  }
+};
+
+const unobserve = instance => {
+  delete registry[instance._onLayoutId];
+  if (resizeObserver) {
+    const node = findNodeHandle(instance);
+    delete node._onLayoutId;
+    resizeObserver.unobserve(node);
+  } else {
+    delete instance._onLayoutId;
+  }
+};
 
 const safeOverride = (original, next) => {
   if (original) {
     return function prototypeOverride() {
-      original.call(this);
-      next.call(this);
+      /* eslint-disable prefer-rest-params */
+      original.call(this, arguments);
+      next.call(this, arguments);
+      /* eslint-enable prefer-rest-params */
     };
   }
   return next;
@@ -47,16 +92,20 @@ const applyLayout = Component => {
     function componentDidMount() {
       this._layoutState = emptyObject;
       this._isMounted = true;
-      this._onLayoutId = guid();
-      registry[this._onLayoutId] = this;
-      this._handleLayout();
+      observe(this);
     }
   );
 
   Component.prototype.componentDidUpdate = safeOverride(
     componentDidUpdate,
-    function componentDidUpdate() {
-      this._handleLayout();
+    function componentDidUpdate(prevProps) {
+      if (this.props.onLayout && !prevProps.onLayout) {
+        observe(this);
+      } else if (!this.props.onLayout && prevProps.onLayout) {
+        unobserve(this);
+      } else if (!resizeObserver) {
+        this._handleLayout();
+      }
     }
   );
 
@@ -64,7 +113,7 @@ const applyLayout = Component => {
     componentWillUnmount,
     function componentWillUnmount() {
       this._isMounted = false;
-      delete registry[this._onLayoutId];
+      unobserve(this);
     }
   );
 
