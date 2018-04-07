@@ -81,13 +81,15 @@ const AppRegistryScreen = () => (
           <AppText>
             Runs the application that was registered under <Code>appKey</Code>. The{' '}
             <Code>appParameters</Code> must include the <Code>rootTag</Code> into which the
-            application is rendered, and optionally any <Code>initialProps</Code>.
+            application is rendered, and optionally any <Code>initialProps</Code> or render{' '}
+            <Code>callback</Code>.
           </AppText>
         }
         example={{
           code: `AppRegistry.runApplication('MyApp', {
   initialProps: {},
-  rootTag: document.getElementById('react-root')
+  rootTag: document.getElementById('react-root'),
+  callback: () => console.log('React rendering has finished')
 })`
         }}
         name="static runApplication"
