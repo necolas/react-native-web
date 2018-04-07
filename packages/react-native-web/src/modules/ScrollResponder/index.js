@@ -412,6 +412,11 @@ const ScrollResponderMixin = {
   },
 
   /**
+   * Displays the scroll indicators momentarily.
+   */
+  scrollResponderFlashScrollIndicators: function() {},
+
+  /**
    * This method should be used as the callback to onFocus in a TextInputs'
    * parent view. Note that any module using this mixin needs to return
    * the parent view's ref in getScrollViewRef() in order to use this method.

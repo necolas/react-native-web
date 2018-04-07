@@ -44,6 +44,10 @@ const ScrollView = createReactClass({
     return this.scrollResponderMixinGetInitialState();
   },
 
+  flashScrollIndicators() {
+    this.scrollResponderFlashScrollIndicators();
+  },
+
   setNativeProps(props: Object) {
     if (this._scrollViewRef) {
       this._scrollViewRef.setNativeProps(props);
@@ -169,9 +173,11 @@ const ScrollView = createReactClass({
       />
     );
 
+    const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
+
     const props = {
       ...other,
-      style: [styles.base, horizontal && styles.baseHorizontal, this.props.style],
+      style: [baseStyle, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -198,7 +204,7 @@ const ScrollView = createReactClass({
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={styles.base}>
+        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={baseStyle}>
           {contentContainer}
         </ScrollViewClass>
       );
@@ -245,21 +251,32 @@ const ScrollView = createReactClass({
   }
 });
 
+const commonStyle = {
+  flexGrow: 1,
+  flexShrink: 1,
+  overscrollBehavior: 'contain',
+  // Enable hardware compositing in modern browsers.
+  // Creates a new layer with its own backing surface that can significantly
+  // improve scroll performance.
+  transform: [{ translateZ: 0 }],
+  // iOS native scrolling
+  WebkitOverflowScrolling: 'touch'
+};
+
 const styles = StyleSheet.create({
-  base: {
-    flex: 1,
+  baseVertical: {
+    ...commonStyle,
+    flexDirection: 'column',
     overflowX: 'hidden',
     overflowY: 'auto',
-    WebkitOverflowScrolling: 'touch',
-    // Enable hardware compositing in modern browsers.
-    // Creates a new layer with its own backing surface that can significantly
-    // improve scroll performance.
-    transform: [{ translateZ: 0 }]
+    touchAction: 'pan-y'
   },
   baseHorizontal: {
+    ...commonStyle,
     flexDirection: 'row',
     overflowX: 'auto',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
+    touchAction: 'pan-x'
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
