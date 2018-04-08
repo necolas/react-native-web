@@ -20,7 +20,7 @@ const PickerExample = props => (
 );
 
 const styles = StyleSheet.create({
-  rootl: {
+  root: {
     alignItems: 'flex-start'
   }
 });

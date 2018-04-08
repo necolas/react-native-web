@@ -98,8 +98,16 @@ const PickerScreen = () => (
       <Description>Individual selectable item in a Picker.</Description>
 
       <Section title="Props">
-        <DocItem name="label" typeInfo="string" description="Text to display for this item" />
+        <DocItem
+          name="color"
+          typeInfo="?color"
+          description="Color of the item label. (Limited by browser support.)"
+        />
+
+        <DocItem name="label" typeInfo="string" description="Text to display for this item." />
+
         <DocItem name="testID" typeInfo="?string" />
+
         <DocItem
           name="value"
           typeInfo="?number | string"
