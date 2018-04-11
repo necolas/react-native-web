@@ -273,3 +273,6 @@ flexbox layout.
 
 There are properties that do not work across all platforms. All web-specific
 props are annotated with `(web)` in the documentation.
+
+### Parcel
+[Parcel](https://github.com/parcel-bundler/parcel) with [parcel-plugin-react-native-web](https://github.com/dalcib/parcel-plugin-react-native-web) can be used to build a react-native-web app, as replacement for WebPack.
