@@ -62,7 +62,7 @@ class Text extends Component<*> {
 
     if (onPress) {
       otherProps.accessible = true;
-      otherProps.onClick = onPress;
+      otherProps.onClick = this._createPressHandler(onPress);
       otherProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
@@ -87,6 +87,13 @@ class Text extends Component<*> {
       if (e.keyCode === 13) {
         fn && fn(e);
       }
+    };
+  }
+
+  _createPressHandler(fn) {
+    return e => {
+      e.stopPropagation();
+      fn && fn(e);
     };
   }
 }
