@@ -83,7 +83,10 @@ const adjustProps = domProps => {
 
 const createElement = (component, props, ...children) => {
   // use equivalent platform elements where possible
-  const accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
+  let accessibilityComponent;
+  if (component && component.constructor === String) {
+    accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
+  }
   const Component = accessibilityComponent || component;
   const domProps = createDOMProps(Component, props);
   adjustProps(domProps);

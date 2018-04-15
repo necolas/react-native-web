@@ -67,7 +67,7 @@ export default class AppRegistry {
           appParameters.initialProps || emptyObject,
           appParameters.rootTag,
           wrapperComponentProvider && wrapperComponentProvider(appParameters),
-          appParameters.callback,
+          appParameters.callback
         )
     };
     return appKey;

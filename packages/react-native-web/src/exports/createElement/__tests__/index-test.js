@@ -1,7 +1,8 @@
 /* eslint-env jasmine, jest */
 
 import createElement from '..';
-import { shallow, render } from 'enzyme';
+import React from 'react';
+import { render, shallow } from 'enzyme';
 
 describe('modules/createElement', () => {
   test('it renders different DOM elements', () => {
@@ -23,9 +24,20 @@ describe('modules/createElement', () => {
     });
   });
 
-  describe('when ARIA role is "button"', () => {
+  describe('prop "accessibilityRole"', () => {
+    test('and string component type', () => {
+      const component = shallow(createElement('span', { accessibilityRole: 'link' }));
+      expect(component.find('a').length).toBe(1);
+    });
+
+    test('and function component type', () => {
+      const Custom = () => <div />;
+      const component = shallow(createElement(Custom, { accessibilityRole: 'link' }));
+      expect(component.find('div').length).toBe(1);
+    });
+
     [{ disabled: true }, { disabled: false }].forEach(({ disabled }) => {
-      describe(`and disabled is "${disabled}"`, () => {
+      describe(`value is "button" and disabled is "${disabled}"`, () => {
         [{ name: 'Enter', which: 13 }, { name: 'Space', which: 32 }].forEach(({ name, which }) => {
           test(`"onClick" is ${disabled ? 'not ' : ''}called when "${name}" is pressed`, () => {
             const onClick = jest.fn();
