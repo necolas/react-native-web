@@ -1,7 +1,7 @@
 
 import SyncTasks  from 'synctasks'
-
-export class Location extends RX.Location {
+import Types from  "../../../../../types/Location"
+export class Location {
     setConfiguration(config) {
         if (this.isAvailable() && navigator.geolocation.setRNConfiguration) {
             navigator.geolocation.setRNConfiguration(config);
@@ -20,7 +20,7 @@ export class Location extends RX.Location {
         let reportedError = false;
 
         if (!this.isAvailable()) {
-            let error = {
+            const  error = {
                 code: Types.LocationErrorType.PositionUnavailable,
                 message: 'Position unavailable because device does not support it.',
                 PERMISSION_DENIED: 0,
