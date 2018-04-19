@@ -1,6 +1,6 @@
 
 import SyncTasks  from 'synctasks'
-import Types from  "../../../../../types/Location"
+import Types from  '../../../../../types/Location'
 export class Location {
     setConfiguration(config) {
         if (this.isAvailable() && navigator.geolocation.setRNConfiguration) {
