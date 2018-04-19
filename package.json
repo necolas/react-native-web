@@ -1,7 +1,7 @@
 {
   "private": true,
-  "version": "0.6.0",
-  "name": "react-native-web-monorepo",
+  "version": "0.1.0",
+  "name": "@blueeast/react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",
     "compile": "yarn clean && cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
