@@ -103,5 +103,6 @@ StyleSheetValidation.addValidStylePropTypes({
   pointerEvents: string,
   tableLayout: string,
   /* @private */
-  MozAppearance: string
+  MozAppearance: string,
+  WebkitAppearance: string
 });
