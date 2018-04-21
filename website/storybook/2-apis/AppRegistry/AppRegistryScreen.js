@@ -93,7 +93,7 @@ const AppRegistryScreen = () => (
 })`
         }}
         name="static runApplication"
-        typeInfo="(appKey: string, appParameters?: object) => void"
+        typeInfo="(appKey: string, appParameters: object) => void"
       />
 
       <DocItem

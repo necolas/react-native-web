@@ -22,6 +22,11 @@ describe('AppRegistry', () => {
       ExecutionEnvironment.canUseDOM = canUseDOM;
     });
 
+    test('does not throw when missing appParameters', () => {
+      AppRegistry.registerComponent('App', () => RootComponent);
+      expect(() => AppRegistry.getApplication('App')).not.toThrow();
+    });
+
     test('returns "element" and "getStyleElement"', () => {
       AppRegistry.registerComponent('App', () => RootComponent);
 

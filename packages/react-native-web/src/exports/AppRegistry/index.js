@@ -58,7 +58,7 @@ export default class AppRegistry {
       getApplication: appParameters =>
         getApplication(
           componentProviderInstrumentationHook(componentProvider),
-          appParameters.initialProps || emptyObject,
+          appParameters ? appParameters.initialProps : emptyObject,
           wrapperComponentProvider && wrapperComponentProvider(appParameters)
         ),
       run: appParameters =>
@@ -90,7 +90,7 @@ export default class AppRegistry {
     return appKey;
   }
 
-  static runApplication(appKey: string, appParameters?: Object): void {
+  static runApplication(appKey: string, appParameters: Object): void {
     const isDevelopment = process.env.NODE_ENV !== 'production';
     const params = { ...appParameters };
     params.rootTag = `#${params.rootTag.id}`;
