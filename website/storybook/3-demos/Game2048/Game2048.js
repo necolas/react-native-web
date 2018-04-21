@@ -184,7 +184,7 @@ class Game2048 extends React.Component {
     this.setState({ board: new GameBoard() });
   };
 
-  _handleTouchStart = (event: Object) => {
+  _handleStart = (event: Object) => {
     if (this.state.board.hasWon()) {
       return;
     }
@@ -193,7 +193,7 @@ class Game2048 extends React.Component {
     this.startY = event.nativeEvent.pageY;
   };
 
-  _handleTouchEnd = (event: Object) => {
+  _handleEnd = (event: Object) => {
     if (this.state.board.hasWon()) {
       return;
     }
@@ -220,8 +220,10 @@ class Game2048 extends React.Component {
 
     return (
       <View
-        onTouchEnd={this._handleTouchEnd}
-        onTouchStart={this._handleTouchStart}
+        onMouseDown={this._handleStart}
+        onMouseUp={this._handleEnd}
+        onTouchEnd={this._handleEnd}
+        onTouchStart={this._handleStart}
         style={styles.container}
       >
         <Board>{tiles}</Board>
