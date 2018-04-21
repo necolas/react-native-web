@@ -110,6 +110,7 @@ Examples of using React Native for Web with other web tools:
 * [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
 * [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/v6.2.6/examples/react-native)
+* [Gatsby](https://github.com/slorber/gatsby-plugin-react-native-web)
 
 ## Contributing
 
