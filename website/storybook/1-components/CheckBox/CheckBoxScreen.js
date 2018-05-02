@@ -20,7 +20,7 @@ import UIExplorer, {
 } from '../../ui-explorer';
 
 const CheckBoxScreen = () => (
-  <UIExplorer title="CheckBox" url="components/CheckBox">
+  <UIExplorer title="CheckBox" url="1-components/CheckBox">
     <Description>
       <AppText>
         This is a controlled component that requires an <Code>onValueChange</Code> callback that
