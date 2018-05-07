@@ -1,11 +1,11 @@
 const babelPreset = require('../../scripts/babel/preset');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
-const webpack = require('webpack');
 
 const appDirectory = path.resolve(__dirname);
 
 module.exports = {
+  mode: 'production',
   context: __dirname,
   entry: './src/index',
   output: {
@@ -42,17 +42,6 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        dead_code: true,
-        drop_console: false,
-        screw_ie8: true,
-        warnings: false
-      }
     })
   ]
 };

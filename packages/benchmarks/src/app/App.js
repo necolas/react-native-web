@@ -292,7 +292,6 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 0,
-    fontSize: 32,
     flex: 1
   }
 });
