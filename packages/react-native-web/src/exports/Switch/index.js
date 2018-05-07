@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D5D5D5'
   },
   thumb: {
-    alignSelf: 'flex-start',
+    position: 'absolute',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
     start: '0%',
