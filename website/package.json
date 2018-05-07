@@ -8,15 +8,17 @@
     "release": "yarn build && git checkout gh-pages && rm -rf ../storybook && mv dist ../storybook && git add -A && git commit -m \"Storybook deploy\" && git push origin gh-pages && git checkout -"
   },
   "dependencies": {
-    "@storybook/addon-options": "^3.3.6",
-    "@storybook/react": "^3.3.6",
+    "@storybook/addon-options": "^3.4.3",
+    "@storybook/react": "^3.4.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-native-web": "0.6.1"
   },
   "devDependencies": {
     "babel-plugin-react-native-web": "0.6.1",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0"
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.8.1"
   }
 }

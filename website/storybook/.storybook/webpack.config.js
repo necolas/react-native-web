@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = (storybookBaseConfig, configType) => {
-  const DEV = configType === 'DEVELOPMENT';
-
+module.exports = storybookBaseConfig => {
   storybookBaseConfig.module.rules.push({
     test: /\.(gif|jpe?g|png|svg)$/,
     use: {
@@ -12,11 +10,11 @@ module.exports = (storybookBaseConfig, configType) => {
     }
   });
 
-  storybookBaseConfig.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  );
+  storybookBaseConfig.resolve.extensions = ['.web.js', '.js', '.json', '.web.jsx', '.jsx'];
+
+  storybookBaseConfig.resolve.alias = {
+    'react-native': 'react-native-web'
+  };
 
   return storybookBaseConfig;
 };
