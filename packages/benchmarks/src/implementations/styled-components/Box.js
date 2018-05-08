@@ -25,7 +25,7 @@ const Box = styled(View)`
   flex-direction: ${props => (props.layout === 'column' ? 'column' : 'row')};
   padding: ${props => (props.outer ? '4px' : '0')};
   ${props => props.fixed && 'height:6px;'} ${props =>
-      props.fixed && 'width:6px;'} background-color: ${props => getColor(props.color)};
+  props.fixed && 'width:6px;'} background-color: ${props => getColor(props.color)};
 `;
 
 export default Box;
