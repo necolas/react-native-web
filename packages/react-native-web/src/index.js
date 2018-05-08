@@ -9,6 +9,7 @@ import ViewPropTypes from './exports/ViewPropTypes';
 
 // APIs
 import AccessibilityInfo from './exports/AccessibilityInfo';
+import Alert from './exports/Alert';
 import Animated from './exports/Animated';
 import AppRegistry from './exports/AppRegistry';
 import AppState from './exports/AppState';
@@ -80,6 +81,7 @@ export {
   ViewPropTypes,
   // APIs
   AccessibilityInfo,
+  Alert,
   Animated,
   AppRegistry,
   AppState,
@@ -150,6 +152,7 @@ const ReactNative = {
   ViewPropTypes,
   // APIs
   AccessibilityInfo,
+  Alert,
   Animated,
   AppRegistry,
   AppState,

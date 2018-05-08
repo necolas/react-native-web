@@ -3,6 +3,7 @@ module.exports = {
   ART: true,
   AccessibilityInfo: true,
   ActivityIndicator: true,
+  Alert: true,
   Animated: true,
   AppRegistry: true,
   AppState: true,
