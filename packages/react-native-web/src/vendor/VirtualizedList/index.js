@@ -4,7 +4,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule VirtualizedList
  * @noflow
  * @format
  */
@@ -690,7 +689,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const { data, horizontal } = this.props;
     const isVirtualizationDisabled = this._isVirtualizationDisabled();
     const inversionStyle = this.props.inverted
-      ? this.props.horizontal ? styles.horizontallyInverted : styles.verticallyInverted
+      ? this.props.horizontal
+        ? styles.horizontallyInverted
+        : styles.verticallyInverted
       : null;
     const cells = [];
     const stickyIndicesFromProps = new Set(this.props.stickyHeaderIndices);
@@ -1540,7 +1541,9 @@ class CellRenderer extends React.Component<
       ? horizontal
         ? [{ flexDirection: 'row-reverse' }, inversionStyle]
         : [{ flexDirection: 'column-reverse' }, inversionStyle]
-      : horizontal ? [{ flexDirection: 'row' }, inversionStyle] : inversionStyle;
+      : horizontal
+        ? [{ flexDirection: 'row' }, inversionStyle]
+        : inversionStyle;
     if (!CellRendererComponent) {
       return (
         <View style={cellStyle} onLayout={onLayout}>
