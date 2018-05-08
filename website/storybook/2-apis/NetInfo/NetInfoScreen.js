@@ -107,9 +107,9 @@ const NetInfoScreen = () => (
 
     <Section title="Properties">
       <DocItem
-        description="An object with the same methods as above but the listener receives a boolean which represents the internet connectivity. Use this if you are only interested with whether the device has internet connectivity."
+        description="An object with similar methods as above but the listener receives a boolean which represents the internet connectivity. Use this if you are only interested with whether the device has internet connectivity."
         example={{
-          code: `NetInfo.isConnected.getConnectionInfo().then((isConnected) => {
+          code: `NetInfo.isConnected.fetch().then((isConnected) => {
   console.log('Connection status:', (isConnected ? 'online' : 'offline'));
 });`
         }}

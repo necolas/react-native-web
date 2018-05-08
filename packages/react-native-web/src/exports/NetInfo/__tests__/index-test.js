@@ -37,6 +37,15 @@ describe('apis/NetInfo', () => {
       } catch (e) {}
     });
 
+    describe('fetch', () => {
+      test('returns a boolean', done => {
+        NetInfo.isConnected.fetch().then(isConnected => {
+          expect(isConnected).toBe(true);
+          done();
+        });
+      });
+    });
+
     describe('addEventListener', () => {
       test('throws if the provided "eventType" is not supported', () => {
         expect(() => NetInfo.isConnected.addEventListener('foo', handler)).toThrow();
