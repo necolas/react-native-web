@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`enzyme.mount complex 1`] = `
+exports[`enzyme complex: enzyme.mount complex 1`] = `
 <Box
   element={
     <View>
@@ -76,7 +76,60 @@ exports[`enzyme.mount complex 1`] = `
 </Box>
 `;
 
-exports[`enzyme.mount composite 1`] = `
+exports[`enzyme complex: enzyme.render complex 1`] = `
+<div
+  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
+>
+  <div
+    class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-1bodaif rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-ubezar rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-verticalAlign-9iso6 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+    dir="auto"
+  >
+    Hello World
+  </div>
+  <div
+    class="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-zIndex-1lgpqti"
+  >
+    <div
+      class="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-1knelpx rn-paddingRight-1ah4tor rn-paddingBottom-k8qxaj rn-paddingLeft-b5h31w rn-position-bnwqim rn-zIndex-1lgpqti"
+    />
+    <div
+      class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-1b43r93 rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+      dir="auto"
+    >
+      Nested
+    </div>
+  </div>
+</div>
+`;
+
+exports[`enzyme complex: enzyme.shallow complex 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "red",
+      "padding": 10,
+    }
+  }
+>
+  <Title>
+    Hello World
+  </Title>
+  <View>
+    <View
+      style={
+        Object {
+          "padding": 20,
+        }
+      }
+    />
+    <Text>
+      Nested
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`enzyme composite: enzyme.mount composite 1`] = `
 <Box>
   <View
     style={
@@ -93,7 +146,24 @@ exports[`enzyme.mount composite 1`] = `
 </Box>
 `;
 
-exports[`enzyme.mount nested 1`] = `
+exports[`enzyme composite: enzyme.render composite 1`] = `
+<div
+  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
+/>
+`;
+
+exports[`enzyme composite: enzyme.shallow composite 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "red",
+      "padding": 10,
+    }
+  }
+/>
+`;
+
+exports[`enzyme nested: enzyme.mount nested 1`] = `
 <Box>
   <View
     style={
@@ -129,7 +199,35 @@ exports[`enzyme.mount nested 1`] = `
 </Box>
 `;
 
-exports[`enzyme.mount noop 1`] = `
+exports[`enzyme nested: enzyme.render nested 1`] = `
+<div
+  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
+>
+  <div
+    class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-1bodaif rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-ubezar rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-verticalAlign-9iso6 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+    dir="auto"
+  >
+    Hello World
+  </div>
+</div>
+`;
+
+exports[`enzyme nested: enzyme.shallow nested 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "red",
+      "padding": 10,
+    }
+  }
+>
+  <Title>
+    Hello World
+  </Title>
+</View>
+`;
+
+exports[`enzyme noop: enzyme.mount noop 1`] = `
 <View>
   <div
     className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-zIndex-1lgpqti"
@@ -137,111 +235,13 @@ exports[`enzyme.mount noop 1`] = `
 </View>
 `;
 
-exports[`enzyme.render complex 1`] = `
-<div
-  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
->
-  <div
-    class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-1bodaif rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-ubezar rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-verticalAlign-9iso6 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
-    dir="auto"
-  >
-    Hello World
-  </div>
-  <div
-    class="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-zIndex-1lgpqti"
-  >
-    <div
-      class="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-1knelpx rn-paddingRight-1ah4tor rn-paddingBottom-k8qxaj rn-paddingLeft-b5h31w rn-position-bnwqim rn-zIndex-1lgpqti"
-    />
-    <div
-      class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-homxoj rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-1b43r93 rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
-      dir="auto"
-    >
-      Nested
-    </div>
-  </div>
-</div>
-`;
-
-exports[`enzyme.render composite 1`] = `
-<div
-  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
-/>
-`;
-
-exports[`enzyme.render nested 1`] = `
-<div
-  class="rn-alignItems-1oszu61 rn-backgroundColor-1mjtqww rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-m611by rn-paddingRight-1qfoi16 rn-paddingBottom-1mi0q7o rn-paddingLeft-1hfyk0a rn-position-bnwqim rn-zIndex-1lgpqti"
->
-  <div
-    class="rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-color-1bodaif rn-display-1471scf rn-fontFamily-14xgk7a rn-fontSize-ubezar rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-verticalAlign-9iso6 rn-textDecoration-bauka4 rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
-    dir="auto"
-  >
-    Hello World
-  </div>
-</div>
-`;
-
-exports[`enzyme.render noop 1`] = `
+exports[`enzyme noop: enzyme.render noop 1`] = `
 <div
   class="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-zIndex-1lgpqti"
 />
 `;
 
-exports[`enzyme.shallow complex 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "red",
-      "padding": 10,
-    }
-  }
->
-  <Title>
-    Hello World
-  </Title>
-  <View>
-    <View
-      style={
-        Object {
-          "padding": 20,
-        }
-      }
-    />
-    <Text>
-      Nested
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`enzyme.shallow composite 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "red",
-      "padding": 10,
-    }
-  }
-/>
-`;
-
-exports[`enzyme.shallow nested 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "red",
-      "padding": 10,
-    }
-  }
->
-  <Title>
-    Hello World
-  </Title>
-</View>
-`;
-
-exports[`enzyme.shallow noop 1`] = `
+exports[`enzyme noop: enzyme.shallow noop 1`] = `
 <div
   className="rn-alignItems-1oszu61 rn-borderTopStyle-1efd50x rn-borderRightStyle-14skgim rn-borderBottomStyle-rull8r rn-borderLeftStyle-mm0ijv rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-boxSizing-deolkf rn-display-6koalj rn-flexShrink-1qe8dj5 rn-flexBasis-1mlwlqe rn-flexDirection-eqz5dr rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw rn-minHeight-ifefl9 rn-minWidth-bcqeeo rn-paddingTop-wk8lta rn-paddingRight-9aemit rn-paddingBottom-1mdbw0j rn-paddingLeft-gy4na3 rn-position-bnwqim rn-zIndex-1lgpqti"
 />

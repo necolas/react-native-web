@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`export from "react-native" 1`] = `
+exports[`Rewrite react-native to react-native-web export from "react-native": export from "react-native" 1`] = `
 "
 export { View } from 'react-native';
 export { ColorPropType, StyleSheet, Text, createElement } from 'react-native';
@@ -15,7 +15,7 @@ export { default as createElement } from 'react-native-web/dist/exports/createEl
 "
 `;
 
-exports[`export from "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web export from "react-native-web": export from "react-native-web" 1`] = `
 "
 export { View } from 'react-native-web';
 export { ColorPropType, StyleSheet, Text, createElement } from 'react-native-web';
@@ -30,7 +30,7 @@ export { default as createElement } from 'react-native-web/dist/exports/createEl
 "
 `;
 
-exports[`import from "native-native" 1`] = `
+exports[`Rewrite react-native to react-native-web import from "native-native": import from "native-native" 1`] = `
 "
 import ReactNative from 'react-native';
 import { View } from 'react-native';
@@ -48,7 +48,7 @@ import * as ReactNativeModules from 'react-native-web/dist/index';
 "
 `;
 
-exports[`import from "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web import from "react-native-web": import from "react-native-web" 1`] = `
 "
 import { createElement } from 'react-native-web';
 import { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } from 'react-native-web';
@@ -66,7 +66,7 @@ import * as ReactNativeModules from 'react-native-web/dist/index';
 "
 `;
 
-exports[`require "react-native" 1`] = `
+exports[`Rewrite react-native to react-native-web require "react-native": require "react-native" 1`] = `
 "
 const ReactNative = require('react-native');
 const { View } = require('react-native');
@@ -84,7 +84,7 @@ const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity
 "
 `;
 
-exports[`require "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web require "react-native-web": require "react-native-web" 1`] = `
 "
 const ReactNative = require('react-native-web');
 const { createElement } = require('react-native-web');
