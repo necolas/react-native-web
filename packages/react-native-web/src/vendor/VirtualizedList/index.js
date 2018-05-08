@@ -23,7 +23,7 @@ import ViewabilityHelper, {
   type ViewabilityConfigCallbackPair
 } from '../ViewabilityHelper';
 import { computeWindowedRenderLimits } from '../VirtualizeUtils';
-import { findNodeHandle } from '../../exports/findNodeHandle';
+import findNodeHandle from '../../exports/findNodeHandle';
 import infoLog from '../infoLog';
 import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
