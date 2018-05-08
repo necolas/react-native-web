@@ -55,9 +55,10 @@ const observe = instance => {
     node._onLayoutId = id;
     resizeObserver.observe(node);
   } else {
-    const id = guid();
     instance._onLayoutId = id;
-    instance._handleLayout();
+    setTimeout(() => {
+      instance._handleLayout();
+    }, 0);
   }
 };
 
@@ -105,8 +106,6 @@ const applyLayout = Component => {
         observe(this);
       } else if (!this.props.onLayout && prevProps.onLayout) {
         unobserve(this);
-      } else if (!resizeObserver) {
-        this._handleLayout();
       }
     }
   );
@@ -123,10 +122,8 @@ const applyLayout = Component => {
     const layout = this._layoutState;
     const { onLayout } = this.props;
 
-    if (onLayout) {
+    if (this._isMounted && onLayout) {
       this.measure((x, y, width, height) => {
-        if (!this._isMounted) return;
-
         if (
           layout.x !== x ||
           layout.y !== y ||
