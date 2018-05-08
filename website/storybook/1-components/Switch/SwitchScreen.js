@@ -12,6 +12,7 @@ import PropOnValueChange from './examples/PropOnValueChange';
 import PropThumbColor from './examples/PropThumbColor';
 import PropTrackColor from './examples/PropTrackColor';
 import PropValue from './examples/PropValue';
+import TouchableWrapper from './examples/TouchableWrapper';
 import React from 'react';
 import UIExplorer, {
   AppText,
@@ -127,10 +128,17 @@ const SwitchScreen = () => (
 
     <Section title="More examples">
       <DocItem
-        description="Custom sizes can be created using styles"
+        description="Custom sizes can be created using styles."
         example={{
           code: '<Switch style={{ height: 30 }} />',
           render: () => <CustomSize />
+        }}
+      />
+
+      <DocItem
+        description="Wrapped in a Touchable."
+        example={{
+          render: () => <TouchableWrapper />
         }}
       />
     </Section>
