@@ -156,11 +156,6 @@ const NetInfo = {
     },
 
     fetch(): Promise<boolean> {
-      console.warn('`fetch` is deprecated. Use `getConnectionInfo` instead.');
-      return NetInfo.isConnected.getConnectionInfo();
-    },
-
-    getConnectionInfo(): Promise<boolean> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);
