@@ -39,29 +39,39 @@ using `aria-label`.
 
 In some cases, we also want to alert the end user of the type of selected
 component (i.e., that it is a “button”). To provide more context to screen
-readers, you should specify the `accessibilityRole` property. (Note that React
-Native for Web also provides a compatibility mapping of equivalent
+readers on the web, you should use the `accessibilityRole` property. (Note that
+React Native for Web also provides a compatibility mapping of equivalent
 `accessibilityTraits` and `accessibilityComponentType` values to
 `accessibilityRole`).
 
 The `accessibilityRole` prop is used to infer an [analogous HTML
 element][html-aria-url] and ARIA `role`, where possible. In most cases, both
 the element and ARIA `role` are rendered. While this may contradict some ARIA
-recommendations, it also helps avoid certain HTML5 conformance errors and
-accessibility anti-patterns (e.g., giving a `heading` role to a `button`
-element) and browser bugs.
+recommendations, it also helps avoid certain browser bugs, HTML5 conformance
+errors, and accessibility anti-patterns (e.g., giving a `heading` role to a
+`button` element).
 
-For example:
+Straight-forward examples:
 
-* `<View accessibilityRole='article' />` => `<article role='article' />`.
-* `<View accessibilityRole='banner' />` => `<header role='banner' />`.
-* `<View accessibilityRole='button' />` => `<div role='button' tabIndex='0' />`.
-* `<Text accessibilityRole='label' />` => `<label />`.
-* `<Text accessibilityRole='link' href='/' />` => `<a role='link' href='/' />`.
-* `<View accessibilityRole='main' />` => `<main role='main' />`.
+* `<View accessibilityRole="article" />` => `<article role="article" />`.
+* `<View accessibilityRole="banner" />` => `<header role="banner" />`.
+* `<Text accessibilityRole="label" />` => `<label />`.
+* `<Text accessibilityRole="link" />` => `<a role="link" />`.
+* `<View accessibilityRole="main" />` => `<main role="main" />`.
 
-In the example below, the `TouchableHighlight` is announced by screen
-readers as a button.
+The `heading` role can be combined with `aria-level`:
+
+* `<Text accessibilityRole="heading" />` => `<h1 />`.
+* `<Text accessibilityRole="heading" aria-level="3" />` => `<h3 />`.
+
+The `button` role renders an accessible button but is not implemented using the
+native `button` element due to some browsers limiting the use of flexbox layout on
+its children.
+
+* `<View accessibilityRole="button" />` => `<div role="button" tabIndex="0" />`.
+
+In the example below, the `TouchableHighlight` is announced by screen readers
+as a button and it responds to touch, mouse, and keyboard interactions.
 
 ```js
 <TouchableHighlight accessibilityRole="button" onPress={this._handlePress}>
@@ -71,16 +81,13 @@ readers as a button.
 </TouchableHighlight>
 ```
 
-Note: The `button` role is not implemented using the native `button` element
-due to browsers limiting the use of flexbox layout on its children.
-
 Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
 ### accessibilityLiveRegion
 
-When components dynamically change we may need to inform the user.  The
+When components dynamically change we may need to inform the user. The
 `accessibilityLiveRegion` property serves this purpose and can be set to
 `none`, `polite` and `assertive`. On web, `accessibilityLiveRegion` is
 implemented using `aria-live`.

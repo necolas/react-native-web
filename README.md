@@ -29,8 +29,9 @@ Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 ## Quick start
 
 The easiest way to get started with React Native for Web is to use this
-[ready-to-go project on Glitch](https://glitch.com/edit/#!/react-native).
-You don’t need to install anything to try it out.
+[CodeSandbox](https://codesandbox.io/s/q4qymyp2l6) template (or
+[Glitch](https://glitch.com/edit/#!/react-native)). You don’t need to install
+anything to try it out.
 
 ## Documentation
 
@@ -41,21 +42,6 @@ Please refer to the [React Native documentation][react-native-url] for more
 design details, and for information about the [Gesture Responder
 system](https://facebook.github.io/react-native/docs/gesture-responder-system.html)
 and [animations](https://facebook.github.io/react-native/docs/animations.html).
-
-### Installation
-
-Install using `yarn` or `npm`:
-
-```
-yarn add react react-dom react-native-web
-yarn add --dev babel-plugin-react-native-web
-```
-
-And if you need to use `ART`:
-
-```
-yarn add react-art
-```
 
 ### Guides
 
@@ -109,8 +95,8 @@ Examples of using React Native for Web with other web tools:
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
 * [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
-* [Storybook](https://github.com/necolas/react-native-web/tree/0.5.1/website/storybook/.storybook)
-* [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/v6.2.6/examples/react-native)
+* [Storybook](https://github.com/necolas/react-native-web/tree/master/website/storybook/.storybook)
+* [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/master/examples/react-native)
 
 ## Contributing
 
