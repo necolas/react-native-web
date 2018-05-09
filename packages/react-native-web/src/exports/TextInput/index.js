@@ -85,6 +85,7 @@ class TextInput extends Component<*> {
       'default',
       'email-address',
       'number-pad',
+      'numbers-and-punctuation',
       'numeric',
       'phone-pad',
       'search',
