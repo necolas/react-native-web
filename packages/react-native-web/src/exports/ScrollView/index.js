@@ -18,7 +18,7 @@ import StyleSheet from '../StyleSheet';
 import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
 import React from 'react';
-import { bool, element, func, number, oneOf } from 'prop-types';
+import { arrayOf, bool, element, func, number, oneOf } from 'prop-types';
 
 const emptyObject = {};
 
@@ -35,6 +35,7 @@ const ScrollView = createReactClass({
     refreshControl: element,
     scrollEnabled: bool,
     scrollEventThrottle: number,
+    stickyHeaderIndices: arrayOf(number),
     style: ViewPropTypes.style
   },
 
@@ -135,11 +136,11 @@ const ScrollView = createReactClass({
       horizontal,
       onContentSizeChange,
       refreshControl,
+      stickyHeaderIndices,
       /* eslint-disable */
       keyboardDismissMode,
       onScroll,
       pagingEnabled,
-      stickyHeaderIndices,
       /* eslint-enable */
       ...other
     } = this.props;
@@ -163,10 +164,21 @@ const ScrollView = createReactClass({
       };
     }
 
+    const children =
+      !horizontal && Array.isArray(stickyHeaderIndices)
+        ? React.Children.map(this.props.children, (child, i) => {
+            if (stickyHeaderIndices.indexOf(i) > -1) {
+              return React.cloneElement(child, { style: [child.props.style, styles.stickyHeader] });
+            } else {
+              return child;
+            }
+          })
+        : this.props.children;
+
     const contentContainer = (
       <View
         {...contentSizeChangeProps}
-        children={this.props.children}
+        children={children}
         collapsable={false}
         ref={this._setInnerViewRef}
         style={[horizontal && styles.contentContainerHorizontal, contentContainerStyle]}
@@ -280,6 +292,11 @@ const styles = StyleSheet.create({
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
+  },
+  stickyHeader: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 10
   }
 });
 

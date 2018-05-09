@@ -120,6 +120,19 @@ const ScrollViewScreen = () => (
           </AppText>
         }
       />
+
+      <DocItem
+        name="stickyHeaderIndices"
+        typeInfo="?Array<number>"
+        description={
+          <AppText>
+            An array of child indices determining which children get docked to the top of the screen
+            when scrolling. For example, passing stickyHeaderIndices={[0]} will cause the first
+            child to be fixed to the top of the scroll view. This property is not supported in
+            conjunction with horizontal={true}.
+          </AppText>
+        }
+      />
     </Section>
 
     <Section title="Instance methods">
