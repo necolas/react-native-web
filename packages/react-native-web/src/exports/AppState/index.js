@@ -16,7 +16,7 @@ import invariant from 'fbjs/lib/invariant';
 const isPrefixed =
   canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
 
-const EVENT_TYPES = ['change'];
+const EVENT_TYPES = ['change', 'memoryWarning'];
 const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';
 const VISIBILITY_STATE_PROPERTY = isPrefixed ? 'webkitVisibilityState' : 'visibilityState';
 
@@ -52,9 +52,11 @@ export default class AppState {
         'Trying to subscribe to unknown event: "%s"',
         type
       );
-      const callback = () => handler(AppState.currentState);
-      listeners.push([handler, callback]);
-      document.addEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
+      if (type === 'change') {
+        const callback = () => handler(AppState.currentState);
+        listeners.push([handler, callback]);
+        document.addEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
+      }
     }
   }
 
@@ -65,14 +67,16 @@ export default class AppState {
         'Trying to remove listener for unknown event: "%s"',
         type
       );
-      const listenerIndex = findIndex(listeners, pair => pair[0] === handler);
-      invariant(
-        listenerIndex !== -1,
-        'Trying to remove AppState listener for unregistered handler'
-      );
-      const callback = listeners[listenerIndex][1];
-      document.removeEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
-      listeners.splice(listenerIndex, 1);
+      if (type === 'change') {
+        const listenerIndex = findIndex(listeners, pair => pair[0] === handler);
+        invariant(
+          listenerIndex !== -1,
+          'Trying to remove AppState listener for unregistered handler'
+        );
+        const callback = listeners[listenerIndex][1];
+        document.removeEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
+        listeners.splice(listenerIndex, 1);
+      }
     }
   }
 }
