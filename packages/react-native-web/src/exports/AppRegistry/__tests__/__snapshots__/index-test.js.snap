@@ -44,7 +44,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 .rn-paddingLeft-gy4na3{padding-left:0px}
 .rn-position-bnwqim{position:relative}
 .rn-zIndex-1lgpqti{z-index:0}
-.rn-flexGrow-16y2uox{-ms-flex-positive:1;-webkit-flex-grow:1;flex-grow:1}
+.rn-flexGrow-16y2uox{-ms-flex-positive:1;-webkit-box-flex:1;-webkit-flex-grow:1;flex-grow:1}
 .rn-flexShrink-1wbh5a2{-ms-flex-negative:1;-webkit-flex-shrink:1;flex-shrink:1}
 .rn-flexBasis-1ro0kt6{-ms-flex-preferred-size:0%;-webkit-flex-basis:0%;flex-basis:0%}"
 `;
