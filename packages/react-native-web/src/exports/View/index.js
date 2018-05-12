@@ -6,6 +6,7 @@
  * @flow
  */
 
+import _ from 'lodash';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
@@ -13,6 +14,7 @@ import createElement from '../createElement';
 import invariant from 'fbjs/lib/invariant';
 import StyleSheet from '../StyleSheet';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
+import { ViewStylePropKeys } from './ViewStylePropTypes';
 import React, { Component } from 'react';
 
 const calculateHitSlopStyle = hitSlop => {
@@ -50,7 +52,7 @@ class View extends Component<ViewProps> {
       shouldRasterizeIOS,
       tvParallaxProperties,
       /* eslint-enable */
-      ...otherProps
+      ..._otherProps
     } = this.props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -64,9 +66,13 @@ class View extends Component<ViewProps> {
 
     const { isInAParentText } = this.context;
 
+    const styleProps = _.pick(_otherProps, ViewStylePropKeys);
+    const otherProps = _.omit(_otherProps, ViewStylePropKeys);
+
     otherProps.style = StyleSheet.compose(
       styles.initial,
-      StyleSheet.compose(isInAParentText && styles.inline, this.props.style)
+      StyleSheet.compose(isInAParentText && styles.inline, this.props.style),
+      Object.keys(styleProps).length ? StyleSheet.create({ style: styleProps }).style : undefined
     );
 
     if (hitSlop) {
