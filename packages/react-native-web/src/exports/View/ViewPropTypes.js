@@ -29,6 +29,7 @@ export type ViewLayoutEvent = {
 };
 
 export type ViewProps = {
+  ...ViewStylePropTypes,
   accessibilityComponentType?: string,
   accessibilityLabel?: string,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
