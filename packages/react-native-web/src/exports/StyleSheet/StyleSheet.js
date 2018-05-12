@@ -23,12 +23,9 @@ const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
 const StyleSheet = {
   absoluteFill,
   absoluteFillObject,
-  compose(style1, style2) {
-    if (style1 && style2) {
-      return [style1, style2];
-    } else {
-      return style1 || style2;
-    }
+  compose(...styles) {
+    const _styles = styles.filter(Boolean);
+    return _styles.length > 1 ? _styles : _styles[0];
   },
   create(styles) {
     const result = {};
