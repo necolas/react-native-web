@@ -17,6 +17,7 @@
     "fbjs": "^0.8.16",
     "hyphenate-style-name": "^1.0.2",
     "inline-style-prefixer": "^4.0.0",
+    "lodash": "^4.17.10",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
     "react-timer-mixin": "^0.13.3"

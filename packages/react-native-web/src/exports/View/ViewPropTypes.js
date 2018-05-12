@@ -75,9 +75,10 @@ export type ViewProps = {
   renderToHardwareTextureAndroid?: boolean,
   shouldRasterizeIOS?: boolean,
   tvParallaxProperties?: {}
-};
+} & ViewStylePropTypes;
 
 const ViewPropTypes = {
+  ...ViewStylePropTypes,
   accessibilityComponentType: string,
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
