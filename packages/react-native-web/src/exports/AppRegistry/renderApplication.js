@@ -46,9 +46,11 @@ export function getApplication(
     </AppContainer>
   );
   // Don't escape CSS text
-  const getStyleElement = () => {
+  const getStyleElement = props => {
     const sheet = styleResolver.getStyleSheet();
-    return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />;
+    return (
+      <style {...props} dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
+    );
   };
   return { element, getStyleElement };
 }
