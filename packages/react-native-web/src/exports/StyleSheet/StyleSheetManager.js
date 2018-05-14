@@ -69,10 +69,6 @@ export default class StyleSheetManager {
     return className;
   }
 
-  injectKeyframe(): string {
-    // return identifier;
-  }
-
   _addToCache(className, prop, value) {
     const cache = this._cache;
     if (!cache.byProp[prop]) {

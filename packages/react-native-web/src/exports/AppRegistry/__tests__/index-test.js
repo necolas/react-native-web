@@ -39,6 +39,14 @@ describe('AppRegistry', () => {
       expect(styleElement).toMatchSnapshot();
     });
 
+    test('"getStyleElement" adds props to <style>', () => {
+      const nonce = '2Bz9RM/UHvBbmo3jK/PbYZ==';
+      AppRegistry.registerComponent('App', () => RootComponent);
+      const { getStyleElement } = AppRegistry.getApplication('App', {});
+      const styleElement = getStyleElement({ nonce });
+      expect(styleElement.props.nonce).toBe(nonce);
+    });
+
     test('"getStyleElement" produces styles that are a function of rendering "element"', () => {
       const getApplicationStyles = appName => {
         const { element, getStyleElement } = AppRegistry.getApplication(appName, {});

@@ -8,6 +8,7 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import modality from './modality';
 
 export default class WebStyleSheet {
   _cssRules = [];
@@ -29,6 +30,7 @@ export default class WebStyleSheet {
       }
 
       if (domStyleElement) {
+        modality(domStyleElement);
         // $FlowFixMe
         this._sheet = domStyleElement.sheet;
         this._textContent = domStyleElement.textContent;
