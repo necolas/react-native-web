@@ -18,12 +18,11 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const modality = () => {
+const modality = styleElement => {
   if (!canUseDOM) {
     return;
   }
 
-  let styleElement;
   let hadKeyboardEvent = false;
   let keyboardThrottleTimeoutID = 0;
 
@@ -56,21 +55,6 @@ const modality = () => {
   ].join(',');
 
   /**
-   * Disable the focus ring by default
-   */
-  const initialize = () => {
-    // check if the style sheet needs to be created
-    const id = 'react-native-modality';
-    styleElement = document.getElementById(id);
-    if (!styleElement) {
-      // removes focus styles by default
-      const style = `<style id="${id}">:focus { outline: none; }</style>`;
-      document.head.insertAdjacentHTML('afterbegin', style);
-      styleElement = document.getElementById(id);
-    }
-  };
-
-  /**
    * Computes whether the given element should automatically trigger the
    * `focus-ring`.
    */
@@ -83,20 +67,21 @@ const modality = () => {
   };
 
   /**
-   * Add the focus ring to the focused element
+   * Add the focus ring style
    */
   const addFocusRing = () => {
     if (styleElement) {
-      styleElement.disabled = true;
+      styleElement.sheet.deleteRule(0);
     }
   };
 
   /**
-   * Remove the focus ring
+   * Remove the focus ring style
    */
   const removeFocusRing = () => {
     if (styleElement) {
-      styleElement.disabled = false;
+      const rule = ':focus { outline: none; }';
+      styleElement.sheet.insertRule(rule, 0);
     }
   };
 
@@ -136,7 +121,7 @@ const modality = () => {
   };
 
   if (document.body && document.body.addEventListener) {
-    initialize();
+    removeFocusRing();
     document.body.addEventListener('keydown', handleKeyDown, true);
     document.body.addEventListener('focus', handleFocus, true);
     document.body.addEventListener('blur', handleBlur, true);
