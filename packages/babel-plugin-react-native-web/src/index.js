@@ -1,7 +1,10 @@
 const moduleMap = require('./moduleMap');
 
-const getDistLocation = importName =>
-  importName && moduleMap[importName] ? `react-native-web/dist/exports/${importName}` : undefined;
+const getDistLocation = (importName, opts) => {
+  if (!importName) return undefined;
+  if (opts && opts[importName]) return opts[importName];
+  return moduleMap[importName] ? `react-native-web/dist/exports/${importName}` : undefined;
+}
 
 const isReactNativeRequire = (t, node) => {
   const { declarations } = node;
@@ -35,7 +38,7 @@ module.exports = function({ types: t }) {
             .map(specifier => {
               if (t.isImportSpecifier(specifier)) {
                 const importName = specifier.imported.name;
-                const distLocation = getDistLocation(importName);
+                const distLocation = getDistLocation(importName, state.opts);
 
                 if (distLocation) {
                   return t.importDeclaration(
@@ -62,7 +65,7 @@ module.exports = function({ types: t }) {
               if (t.isExportSpecifier(specifier)) {
                 const exportName = specifier.exported.name;
                 const localName = specifier.local.name;
-                const distLocation = getDistLocation(localName);
+                const distLocation = getDistLocation(localName, state.opts);
 
                 if (distLocation) {
                   return t.exportNamedDeclaration(
@@ -89,7 +92,7 @@ module.exports = function({ types: t }) {
           if (t.isObjectPattern(id)) {
             const imports = id.properties
               .map(identifier => {
-                const distLocation = getDistLocation(identifier.key.name);
+                const distLocation = getDistLocation(identifier.key.name, state.opts);
                 if (distLocation) {
                   return t.variableDeclaration(path.node.kind, [
                     t.variableDeclarator(
