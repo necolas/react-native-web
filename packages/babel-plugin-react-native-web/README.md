@@ -21,6 +21,17 @@ yarn add --dev babel-plugin-react-native-web
 }
 ```
 
+You can set your own web modules in babel options:
+```
+{
+  "plugins": [
+    ["react-native-web", {
+      "Modal": "/your/path/to/Modal", "Text": "/your/path/to/Text"
+    }]
+  ]
+}
+```
+
 ## Example
 
 NOTE: `react-native-web` internal paths are _not stable_ and you must not rely
