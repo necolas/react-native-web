@@ -17,10 +17,14 @@ const getRect = node => {
   node = node.offsetParent;
 
   while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
-    left += node.offsetLeft - node.scrollLeft;
-    top += node.offsetTop - node.scrollTop;
+    left += node.offsetLeft;
+    top += node.offsetTop;
     node = node.offsetParent;
   }
+
+  top -= window.pageYOffset;
+  left -= window.pageXOffset;
+  
   return { height, left, top, width };
 };
 
