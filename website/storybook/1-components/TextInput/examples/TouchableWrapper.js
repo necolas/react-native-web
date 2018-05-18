@@ -19,7 +19,9 @@ export default class TouchableWrapper extends React.Component {
 
   _handlePress = () => {
     if (this._input) {
-      this._input.focus();
+      setTimeout(() => {
+        this._input.focus();
+      }, 0);
     }
   };
 
