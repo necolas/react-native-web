@@ -32,7 +32,7 @@ module.exports = {
           options: {
             cacheDirectory: false,
             presets: babelPreset,
-            plugins: ['react-native-web', 'styled-jsx/babel']
+            plugins: ['styled-jsx/babel']
           }
         }
       }
@@ -43,5 +43,10 @@ module.exports = {
       analyzerMode: 'static',
       openAnalyzer: false
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
+  }
 };

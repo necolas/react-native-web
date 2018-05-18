@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "del ./packages/*/dist",
     "compile": "yarn clean && cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
+    "compile:commonjs": "cd packages/react-native-web && MODULES=commonjs babel src --out-dir dist/cjs --ignore \"**/__tests__\"",
     "benchmarks": "cd packages/benchmarks && yarn build",
     "benchmarks:release": "cd packages/benchmarks && yarn release",
     "website": "cd website && yarn start",
@@ -12,11 +13,11 @@
     "flow": "flow",
     "fmt": "find packages scripts types website -name '*.js' | grep -v -E '(node_modules|dist|vendor)' | xargs yarn fmt:cmd",
     "fmt:cmd": "prettier --write",
-    "jest": "jest --config ./scripts/jest/config.js",
+    "jest": "MODULES=commonjs jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
     "lint:check": "eslint packages scripts website",
     "precommit": "lint-staged",
-    "prerelease": "yarn test && yarn compile",
+    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
     "postrelease": "yarn website:release && yarn benchmarks:release",
     "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
