@@ -70,4 +70,4 @@ class Batchinator {
   }
 }
 
-module.exports = Batchinator;
+export default Batchinator;

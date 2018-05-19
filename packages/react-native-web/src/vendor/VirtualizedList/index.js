@@ -1593,4 +1593,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = VirtualizedList;
+export default VirtualizedList;

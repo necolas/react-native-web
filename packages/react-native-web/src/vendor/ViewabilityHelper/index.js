@@ -7,9 +7,8 @@
  * @noflow
  * @format
  */
-'use strict';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 export type ViewToken = {
   item: any,
@@ -275,4 +274,4 @@ function _isEntirelyVisible(top: number, bottom: number, viewportHeight: number)
   return top >= 0 && bottom <= viewportHeight && bottom > top;
 }
 
-module.exports = ViewabilityHelper;
+export default ViewabilityHelper;
