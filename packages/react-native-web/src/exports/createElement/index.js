@@ -7,12 +7,18 @@
  * @noflow
  */
 
-import '../../modules/injectResponderEventPlugin';
-
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
+
+const { EventPluginHub } = ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
+EventPluginHub.injection.injectEventPluginsByName({
+  ResponderEventPlugin
+});
 
 /**
  * Ensure event handlers receive an event of the expected shape. The 'button'

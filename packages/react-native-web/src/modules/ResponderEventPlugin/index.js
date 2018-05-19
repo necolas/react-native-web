@@ -1,10 +1,8 @@
 // based on https://github.com/facebook/react/pull/4303/files
 
 import normalizeNativeEvent from '../normalizeNativeEvent';
-import ReactDOM from 'react-dom';
 import ReactDOMUnstableNativeDependencies from 'react-dom/unstable-native-dependencies';
 
-const { EventPluginHub } = ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 const { ResponderEventPlugin, ResponderTouchHistoryStore } = ReactDOMUnstableNativeDependencies;
 
 const topMouseDown = 'topMouseDown';
@@ -78,6 +76,4 @@ ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nat
   );
 };
 
-EventPluginHub.injection.injectEventPluginsByName({
-  ResponderEventPlugin
-});
+export default ResponderEventPlugin;
