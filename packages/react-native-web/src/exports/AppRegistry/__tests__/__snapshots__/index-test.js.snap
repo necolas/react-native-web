@@ -2,7 +2,7 @@
 
 exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element": Additional CSS for styled app 1`] = `
 "
-.rn-backgroundColor-1e4kli0{background-color:purple}
+.rn-backgroundColor-aot4c7{background-color:rgba(128,0,128,1.00)}
 .rn-borderTopWidth-10pzpfo{border-top-width:1234px}
 .rn-borderRightWidth-1y24uml{border-right-width:1234px}
 .rn-borderBottomWidth-98wxn4{border-bottom-width:1234px}

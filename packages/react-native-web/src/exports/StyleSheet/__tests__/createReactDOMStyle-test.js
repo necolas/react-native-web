@@ -166,13 +166,13 @@ describe('StyleSheet/createReactDOMStyle', () => {
       const resolved = createReactDOMStyle(style);
 
       expect(resolved).toEqual({
-        boxShadow: '0px 0px 0px red'
+        boxShadow: '0px 0px 0px rgba(255,0,0,1.00)'
       });
     });
 
     test('shadowColor and shadowOpacity only', () => {
       expect(createReactDOMStyle({ shadowColor: 'red', shadowOpacity: 0.5 })).toEqual({
-        boxShadow: '0px 0px 0px rgba(255,0,0,0.5)'
+        boxShadow: '0px 0px 0px rgba(255,0,0,0.50)'
       });
     });
 
@@ -216,7 +216,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
         textShadowRadius: 5
       })
     ).toEqual({
-      textShadow: '1px 2px 5px red'
+      textShadow: '1px 2px 5px rgba(255,0,0,1.00)'
     });
   });
 

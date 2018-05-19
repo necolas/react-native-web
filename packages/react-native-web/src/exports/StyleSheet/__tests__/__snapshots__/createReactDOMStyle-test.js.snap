@@ -26,7 +26,7 @@ Object {
 
 exports[`StyleSheet/createReactDOMStyle shortform -> longform 1`] = `
 Object {
-  "borderBottomColor": "white",
+  "borderBottomColor": "rgba(255,255,255,1.00)",
   "borderBottomStyle": "solid",
   "borderBottomWidth": "1px",
   "borderLeftStyle": "solid",

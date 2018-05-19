@@ -7,8 +7,8 @@
  * @noflow
  */
 
+import normalizeColor from '../../modules/normalizeColor';
 import normalizeValue from './normalizeValue';
-import processColor from '../processColor';
 
 /**
  * The browser implements the CSS cascade, where the order of properties is a
@@ -89,7 +89,7 @@ const resolveShadow = (resolvedStyle, style) => {
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
   const blurRadius = normalizeValue(null, style.shadowRadius || 0);
-  const color = processColor(style.shadowColor, style.shadowOpacity);
+  const color = normalizeColor(style.shadowColor, style.shadowOpacity);
 
   if (color) {
     const boxShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
@@ -108,7 +108,7 @@ const resolveTextShadow = (resolvedStyle, style) => {
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
   const blurRadius = normalizeValue(null, style.textShadowRadius || 0);
-  const color = processColor(style.textShadowColor);
+  const color = normalizeColor(style.textShadowColor);
 
   if (color) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
@@ -162,7 +162,7 @@ const createReducer = (style, styleProps) => {
 
     // Normalize color values
     if (colorProps[prop]) {
-      value = processColor(value);
+      value = normalizeColor(value);
     }
 
     // Ignore everything else with a null value
