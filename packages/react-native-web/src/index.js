@@ -8,12 +8,14 @@ import TextPropTypes from './exports/TextPropTypes';
 import ViewPropTypes from './exports/ViewPropTypes';
 
 // APIs
+import AccessibilityInfo from './exports/AccessibilityInfo';
 import Animated from './exports/Animated';
 import AppRegistry from './exports/AppRegistry';
 import AppState from './exports/AppState';
 import AsyncStorage from './exports/AsyncStorage';
 import BackHandler from './exports/BackHandler';
 import Clipboard from './exports/Clipboard';
+import DeviceInfo from './exports/DeviceInfo';
 import Dimensions from './exports/Dimensions';
 import Easing from './exports/Easing';
 import I18nManager from './exports/I18nManager';
@@ -75,12 +77,14 @@ export {
   TextPropTypes,
   ViewPropTypes,
   // APIs
+  AccessibilityInfo,
   Animated,
   AppRegistry,
   AppState,
   AsyncStorage,
   BackHandler,
   Clipboard,
+  DeviceInfo,
   Dimensions,
   Easing,
   I18nManager,
@@ -141,12 +145,14 @@ const ReactNative = {
   TextPropTypes,
   ViewPropTypes,
   // APIs
+  AccessibilityInfo,
   Animated,
   AppRegistry,
   AppState,
   AsyncStorage,
   BackHandler,
   Clipboard,
+  DeviceInfo,
   Dimensions,
   Easing,
   I18nManager,

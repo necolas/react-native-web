@@ -63,13 +63,13 @@
     "website"
   ],
   "lint-staged": {
+    "packages/react-native-web/src/index.js": [
+      "node ./scripts/babel/createModuleMap.js"
+    ],
     "**/*.js": [
       "prettier --write",
       "git update-index --again",
       "eslint"
-    ],
-    "packages/react-native-web/src/index.js": [
-      "node ./scripts/babel/createModuleMap.js"
     ]
   },
   "prettier": {
