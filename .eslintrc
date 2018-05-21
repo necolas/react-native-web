@@ -25,7 +25,8 @@
     "document": false,
     "navigator": false,
     "window": false,
-    // Flow global types
+    // Flow global types,
+    "$Enum": false,
     "HTMLInputElement": false,
     "ReactClass": false,
     "ReactComponent": false,
