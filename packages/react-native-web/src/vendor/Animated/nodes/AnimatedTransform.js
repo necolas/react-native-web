@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 class AnimatedTransform extends AnimatedWithChildren {
   _transforms: Array<Object>;
@@ -117,4 +117,4 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedTransform;
+export default AnimatedTransform;

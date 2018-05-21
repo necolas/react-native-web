@@ -19,4 +19,4 @@ class NativeEventEmitter {
   removeSubscription() {}
 }
 
-module.exports = NativeEventEmitter;
+export default NativeEventEmitter;

@@ -9,8 +9,8 @@
  */
 'use strict';
 
-const AnimatedValue = require('./AnimatedValue');
-const AnimatedNode = require('./AnimatedNode');
+import AnimatedValue from './AnimatedValue';
+import AnimatedNode from './AnimatedNode';
 
 import type { EndCallback } from '../animations/Animation';
 
@@ -61,4 +61,4 @@ class AnimatedTracking extends AnimatedNode {
   }
 }
 
-module.exports = AnimatedTracking;
+export default AnimatedTracking;

@@ -9,11 +9,11 @@
  */
 'use strict';
 
-const AnimatedInterpolation = require('./AnimatedInterpolation');
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
-const InteractionManager = require('../../../exports/InteractionManager').default;
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+import AnimatedInterpolation from './AnimatedInterpolation';
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import InteractionManager from '../../../exports/InteractionManager';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type Animation, { EndCallback } from '../animations/Animation';
 import type { InterpolationConfigType } from './AnimatedInterpolation';
@@ -332,4 +332,4 @@ class AnimatedValue extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedValue;
+export default AnimatedValue;

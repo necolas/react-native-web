@@ -9,10 +9,10 @@
  */
 'use strict';
 
-const AnimatedValue = require('./AnimatedValue');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
+import AnimatedValue from './AnimatedValue';
+import AnimatedWithChildren from './AnimatedWithChildren';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 type ValueXYListenerCallback = (value: { x: number, y: number }) => void;
 
@@ -188,4 +188,4 @@ class AnimatedValueXY extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedValueXY;
+export default AnimatedValueXY;

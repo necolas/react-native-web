@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const invariant = require('fbjs/lib/invariant');
-const NativeModules = require('../../exports/NativeModules');
-const NativeEventEmitter = require('../../modules/NativeEventEmitter');
+import invariant from 'fbjs/lib/invariant';
+import NativeModules from '../../exports/NativeModules';
+import NativeEventEmitter from '../../modules/NativeEventEmitter';
 
 import type { AnimationConfig } from './animations/Animation';
 import type { EventConfig } from './AnimatedEvent';
@@ -221,4 +221,15 @@ const NativeAnimatedHelper = {
   }
 };
 
-module.exports = NativeAnimatedHelper;
+export {
+  API,
+  validateStyles,
+  validateTransform,
+  validateInterpolation,
+  generateNewNodeTag,
+  generateNewAnimationId,
+  assertNativeAnimatedModule,
+  shouldUseNativeDriver
+};
+
+export default NativeAnimatedHelper;

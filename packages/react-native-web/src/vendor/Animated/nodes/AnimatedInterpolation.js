@@ -10,12 +10,12 @@
 /* eslint no-bitwise: 0 */
 'use strict';
 
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-const invariant = require('fbjs/lib/invariant');
-const normalizeColor = require('normalize-css-color');
+import invariant from 'fbjs/lib/invariant';
+import normalizeColor from 'normalize-css-color';
 
 type ExtrapolateType = 'extend' | 'identity' | 'clamp';
 
@@ -372,4 +372,4 @@ class AnimatedInterpolation extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedInterpolation;
+export default AnimatedInterpolation;

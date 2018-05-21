@@ -9,7 +9,7 @@
  */
 'use strict';
 
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type AnimatedValue from '../nodes/AnimatedValue';
 
@@ -67,4 +67,4 @@ class Animation {
   }
 }
 
-module.exports = Animation;
+export default Animation;

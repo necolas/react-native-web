@@ -9,10 +9,10 @@
  */
 'use strict';
 
-const { AnimatedEvent } = require('./AnimatedEvent');
-const AnimatedProps = require('./nodes/AnimatedProps');
-const React = require('react');
-const ViewStylePropTypes = require('../../exports/View/ViewStylePropTypes').default;
+import { AnimatedEvent } from './AnimatedEvent';
+import AnimatedProps from './nodes/AnimatedProps';
+import React from 'react';
+import ViewStylePropTypes from '../../exports/View/ViewStylePropTypes';
 
 function createAnimatedComponent(Component: any): any {
   class AnimatedComponent extends React.Component<Object> {
@@ -187,4 +187,4 @@ function createAnimatedComponent(Component: any): any {
   return AnimatedComponent;
 }
 
-module.exports = createAnimatedComponent;
+export default createAnimatedComponent;

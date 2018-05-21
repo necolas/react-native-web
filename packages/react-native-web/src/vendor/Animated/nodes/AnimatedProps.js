@@ -9,13 +9,13 @@
  */
 'use strict';
 
-const { AnimatedEvent } = require('../AnimatedEvent');
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedStyle = require('./AnimatedStyle');
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
-const findNodeHandle = require('../../../exports/findNodeHandle').default;
+import { AnimatedEvent } from '../AnimatedEvent';
+import AnimatedNode from './AnimatedNode';
+import AnimatedStyle from './AnimatedStyle';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import findNodeHandle from '../../../exports/findNodeHandle';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 class AnimatedProps extends AnimatedNode {
   _props: Object;
@@ -145,4 +145,4 @@ class AnimatedProps extends AnimatedNode {
   }
 }
 
-module.exports = AnimatedProps;
+export default AnimatedProps;

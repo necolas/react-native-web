@@ -9,11 +9,12 @@
  */
 'use strict';
 
-const AnimatedValue = require('../nodes/AnimatedValue');
-const AnimatedValueXY = require('../nodes/AnimatedValueXY');
-const Animation = require('./Animation');
+import AnimatedValue from '../nodes/AnimatedValue';
+import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import Animation from './Animation';
+import Easing from '../Easing';
 
-const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
 
 import type { AnimationConfig, EndCallback } from './Animation';
 
@@ -34,7 +35,6 @@ export type TimingAnimationConfigSingle = AnimationConfig & {
 let _easeInOut;
 function easeInOut() {
   if (!_easeInOut) {
-    const Easing = require('../Easing');
     _easeInOut = Easing.inOut(Easing.ease);
   }
   return _easeInOut;
@@ -143,4 +143,4 @@ class TimingAnimation extends Animation {
   }
 }
 
-module.exports = TimingAnimation;
+export default TimingAnimation;

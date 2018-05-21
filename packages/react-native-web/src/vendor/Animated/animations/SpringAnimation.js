@@ -9,13 +9,13 @@
  */
 'use strict';
 
-const AnimatedValue = require('../nodes/AnimatedValue');
-const AnimatedValueXY = require('../nodes/AnimatedValueXY');
-const Animation = require('./Animation');
-const SpringConfig = require('../SpringConfig');
+import AnimatedValue from '../nodes/AnimatedValue';
+import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import Animation from './Animation';
+import SpringConfig from '../SpringConfig';
 
-const invariant = require('fbjs/lib/invariant');
-const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
+import invariant from 'fbjs/lib/invariant';
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
 
 import type { AnimationConfig, EndCallback } from './Animation';
 
@@ -327,4 +327,4 @@ class SpringAnimation extends Animation {
   }
 }
 
-module.exports = SpringAnimation;
+export default SpringAnimation;

@@ -21,7 +21,7 @@ import { number, oneOf, string } from 'prop-types';
 // plz don't fire me.
 const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
-export default class StyleSheetValidation {
+class StyleSheetValidation {
   static validateStyleProp(prop: string, style: Object, caller: string) {
     if (process.env.NODE_ENV !== 'production') {
       const value = style[prop];
@@ -106,3 +106,5 @@ StyleSheetValidation.addValidStylePropTypes({
   MozAppearance: string,
   WebkitAppearance: string
 });
+
+export default StyleSheetValidation;

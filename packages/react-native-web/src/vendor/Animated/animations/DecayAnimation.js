@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const Animation = require('./Animation');
+import Animation from './Animation';
 
-const { shouldUseNativeDriver } = require('../NativeAnimatedHelper');
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
 
 import type { AnimationConfig, EndCallback } from './Animation';
 import type AnimatedValue from '../nodes/AnimatedValue';
@@ -104,4 +104,4 @@ class DecayAnimation extends Animation {
   }
 }
 
-module.exports = DecayAnimation;
+export default DecayAnimation;

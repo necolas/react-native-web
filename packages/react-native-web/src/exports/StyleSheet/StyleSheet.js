@@ -7,9 +7,10 @@
  * @noflow
  */
 
+import StyleSheetValidation from './StyleSheetValidation';
+import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
 import getHairlineWidth from './getHairlineWidth';
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 
 const absoluteFillObject = {
   position: 'absolute',
@@ -34,7 +35,6 @@ const StyleSheet = {
     const result = {};
     Object.keys(styles).forEach(key => {
       if (process.env.NODE_ENV !== 'production') {
-        const StyleSheetValidation = require('./StyleSheetValidation').default;
         StyleSheetValidation.validateStyle(key, styles);
       }
       const id = styles[key] && ReactNativePropRegistry.register(styles[key]);

@@ -80,7 +80,5 @@ function fromBouncinessAndSpeed(bounciness: number, speed: number): SpringConfig
   };
 }
 
-module.exports = {
-  fromOrigamiTensionAndFriction,
-  fromBouncinessAndSpeed
-};
+export { fromOrigamiTensionAndFriction, fromBouncinessAndSpeed };
+export default { fromOrigamiTensionAndFriction, fromBouncinessAndSpeed };

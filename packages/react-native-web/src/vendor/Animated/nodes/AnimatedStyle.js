@@ -9,11 +9,11 @@
  */
 'use strict';
 
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedTransform = require('./AnimatedTransform');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
-const StyleSheet = require('../../../exports/StyleSheet').default;
+import AnimatedNode from './AnimatedNode';
+import AnimatedTransform from './AnimatedTransform';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import StyleSheet from '../../../exports/StyleSheet';
 
 const flattenStyle = StyleSheet.flatten;
 
@@ -122,4 +122,4 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedStyle;
+export default AnimatedStyle;

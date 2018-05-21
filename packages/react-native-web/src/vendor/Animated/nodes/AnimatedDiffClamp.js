@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const AnimatedInterpolation = require('./AnimatedInterpolation');
-const AnimatedNode = require('./AnimatedNode');
-const AnimatedWithChildren = require('./AnimatedWithChildren');
+import AnimatedInterpolation from './AnimatedInterpolation';
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
 
 import type { InterpolationConfigType } from './AnimatedInterpolation';
 
@@ -67,4 +67,4 @@ class AnimatedDiffClamp extends AnimatedWithChildren {
   }
 }
 
-module.exports = AnimatedDiffClamp;
+export default AnimatedDiffClamp;

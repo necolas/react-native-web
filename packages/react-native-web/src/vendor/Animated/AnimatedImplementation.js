@@ -10,23 +10,23 @@
  */
 'use strict';
 
-const { AnimatedEvent, attachNativeEvent } = require('./AnimatedEvent');
-const AnimatedAddition = require('./nodes/AnimatedAddition');
-const AnimatedDiffClamp = require('./nodes/AnimatedDiffClamp');
-const AnimatedDivision = require('./nodes/AnimatedDivision');
-const AnimatedInterpolation = require('./nodes/AnimatedInterpolation');
-const AnimatedModulo = require('./nodes/AnimatedModulo');
-const AnimatedMultiplication = require('./nodes/AnimatedMultiplication');
-const AnimatedNode = require('./nodes/AnimatedNode');
-const AnimatedProps = require('./nodes/AnimatedProps');
-const AnimatedTracking = require('./nodes/AnimatedTracking');
-const AnimatedValue = require('./nodes/AnimatedValue');
-const AnimatedValueXY = require('./nodes/AnimatedValueXY');
-const DecayAnimation = require('./animations/DecayAnimation');
-const SpringAnimation = require('./animations/SpringAnimation');
-const TimingAnimation = require('./animations/TimingAnimation');
+import { AnimatedEvent, attachNativeEvent } from './AnimatedEvent';
+import AnimatedAddition from './nodes/AnimatedAddition';
+import AnimatedDiffClamp from './nodes/AnimatedDiffClamp';
+import AnimatedDivision from './nodes/AnimatedDivision';
+import AnimatedInterpolation from './nodes/AnimatedInterpolation';
+import AnimatedModulo from './nodes/AnimatedModulo';
+import AnimatedMultiplication from './nodes/AnimatedMultiplication';
+import AnimatedNode from './nodes/AnimatedNode';
+import AnimatedProps from './nodes/AnimatedProps';
+import AnimatedTracking from './nodes/AnimatedTracking';
+import AnimatedValue from './nodes/AnimatedValue';
+import AnimatedValueXY from './nodes/AnimatedValueXY';
+import DecayAnimation from './animations/DecayAnimation';
+import SpringAnimation from './animations/SpringAnimation';
+import TimingAnimation from './animations/TimingAnimation';
 
-const createAnimatedComponent = require('./createAnimatedComponent');
+import createAnimatedComponent from './createAnimatedComponent';
 
 import type { AnimationConfig, EndCallback, EndResult } from './animations/Animation';
 import type { TimingAnimationConfig } from './animations/TimingAnimation';
@@ -478,7 +478,7 @@ const event = function(argMapping: Array<?Mapping>, config?: EventConfig): any {
  *
  * See http://facebook.github.io/react-native/docs/animated.html
  */
-module.exports = {
+const AnimatedImplementation = {
   /**
    * Standard value class for driving animations.  Typically initialized with
    * `new Animated.Value(0);`
@@ -640,3 +640,5 @@ module.exports = {
 
   __PropsOnlyForTests: AnimatedProps
 };
+
+export default AnimatedImplementation;

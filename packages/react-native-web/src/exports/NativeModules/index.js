@@ -1,3 +1,3 @@
 // NativeModules shim
 const NativeModules = {};
-module.exports = NativeModules;
+export default NativeModules;

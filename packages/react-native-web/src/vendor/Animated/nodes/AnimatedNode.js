@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const NativeAnimatedHelper = require('../NativeAnimatedHelper');
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 // Note(vjeux): this would be better as an interface but flow doesn't
 // support them yet
@@ -59,4 +59,4 @@ class AnimatedNode {
   }
 }
 
-module.exports = AnimatedNode;
+export default AnimatedNode;

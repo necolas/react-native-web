@@ -9,12 +9,12 @@
  */
 'use strict';
 
-const AnimatedValue = require('./nodes/AnimatedValue');
-const NativeAnimatedHelper = require('./NativeAnimatedHelper');
-const findNodeHandle = require('../../exports/findNodeHandle').default;
+import AnimatedValue from './nodes/AnimatedValue';
+import NativeAnimatedHelper from './NativeAnimatedHelper';
+import findNodeHandle from '../../exports/findNodeHandle';
+import invariant from 'fbjs/lib/invariant';
 
-const invariant = require('fbjs/lib/invariant');
-const { shouldUseNativeDriver } = require('./NativeAnimatedHelper');
+const { shouldUseNativeDriver } = NativeAnimatedHelper;
 
 export type Mapping = { [key: string]: Mapping } | AnimatedValue;
 export type EventConfig = {
@@ -172,4 +172,5 @@ class AnimatedEvent {
   }
 }
 
-module.exports = { AnimatedEvent, attachNativeEvent };
+export { AnimatedEvent, attachNativeEvent };
+export default { AnimatedEvent, attachNativeEvent };

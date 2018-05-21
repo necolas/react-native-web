@@ -7,10 +7,10 @@
  * @flow
  */
 
-function StyleSheetPropType(shape: { [key: string]: ReactPropsCheckType }): ReactPropsCheckType {
-  const createStrictShapeTypeChecker = require('../createStrictShapeTypeChecker').default;
-  const StyleSheet = require('../../exports/StyleSheet').default;
+import createStrictShapeTypeChecker from '../createStrictShapeTypeChecker';
+import StyleSheet from '../../exports/StyleSheet';
 
+function StyleSheetPropType(shape: { [key: string]: ReactPropsCheckType }): ReactPropsCheckType {
   const shapePropType = createStrictShapeTypeChecker(shape);
   return function(props, propName, componentName, location?, ...rest) {
     let newProps = props;

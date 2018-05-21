@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
-
-const InteractionManager = require('../../exports/InteractionManager').default;
-const TouchHistoryMath = require('../TouchHistoryMath');
+import InteractionManager from '../../exports/InteractionManager';
+import TouchHistoryMath from '../TouchHistoryMath';
 
 const currentCentroidXOfTouchesChangedAfter =
   TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
@@ -417,4 +415,4 @@ function clearInteractionHandle(
   }
 }
 
-module.exports = PanResponder;
+export default PanResponder;

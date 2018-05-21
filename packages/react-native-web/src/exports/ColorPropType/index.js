@@ -7,11 +7,12 @@
  * @noflow
  */
 
+import normalizeColor from 'normalize-css-color';
+
 const isWebColor = (color: string) =>
   color === 'currentcolor' || color === 'inherit' || color.indexOf('var(') === 0;
 
 const colorPropType = function(isRequired, props, propName, componentName, location, propFullName) {
-  const normalizeColor = require('normalize-css-color');
   const color = props[propName];
   if (color === undefined || color === null) {
     if (isRequired) {
