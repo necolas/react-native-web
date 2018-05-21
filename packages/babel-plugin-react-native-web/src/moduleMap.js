@@ -60,6 +60,7 @@ module.exports = {
   View: true,
   ViewPropTypes: true,
   VirtualizedList: true,
+  YellowBox: true,
   createElement: true,
   findNodeHandle: true,
   processColor: true,

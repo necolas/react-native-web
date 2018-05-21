@@ -9,6 +9,8 @@
     "compile:es": "cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
     "benchmarks": "cd packages/benchmarks && yarn build",
     "benchmarks:release": "cd packages/benchmarks && yarn release",
+    "examples": "cd packages/examples && yarn build",
+    "examples:release": "cd packages/examples && yarn release",
     "website": "cd packages/website && yarn start",
     "website:release": "cd packages/website && yarn release",
     "flow": "flow",
