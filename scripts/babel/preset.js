@@ -1,10 +1,10 @@
-module.exports = {
+const createConfig = ({ modules }) => ({
   presets: [
     [
       'babel-preset-env',
       {
         loose: true,
-        modules: process.env.MODULES || false,
+        modules,
         exclude: ['transform-es2015-typeof-symbol'],
         targets: {
           browsers: [
@@ -31,5 +31,10 @@ module.exports = {
     ['babel-plugin-transform-class-properties', { loose: true }],
     ['babel-plugin-transform-object-rest-spread', { useBuiltIns: true }],
     ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }]
-  ]
-};
+  ].concat(modules ? ['babel-plugin-add-module-exports'] : [])
+});
+
+module.exports =
+  process.env.BABEL_ENV === 'commonjs'
+    ? createConfig({ modules: 'commonjs' })
+    : createConfig({ modules: false });
