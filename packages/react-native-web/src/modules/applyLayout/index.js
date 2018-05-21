@@ -22,7 +22,7 @@ if (canUseDOM) {
   if (typeof window.ResizeObserver !== 'undefined') {
     resizeObserver = new window.ResizeObserver(entries => {
       entries.forEach(({ target }) => {
-        const instance = registry[target._onLayoutId];
+        const instance = registry[target._layoutId];
         instance && instance._handleLayout();
       });
     });
@@ -52,10 +52,10 @@ const observe = instance => {
 
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node._onLayoutId = id;
+    node._layoutId = id;
     resizeObserver.observe(node);
   } else {
-    instance._onLayoutId = id;
+    instance._layoutId = id;
     setTimeout(() => {
       instance._handleLayout();
     }, 0);
@@ -63,13 +63,13 @@ const observe = instance => {
 };
 
 const unobserve = instance => {
-  delete registry[instance._onLayoutId];
+  delete registry[instance._layoutId];
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    delete node._onLayoutId;
+    delete node._layoutId;
     resizeObserver.unobserve(node);
   } else {
-    delete instance._onLayoutId;
+    delete instance._layoutId;
   }
 };
 
@@ -131,7 +131,12 @@ const applyLayout = Component => {
           layout.height !== height
         ) {
           this._layoutState = { x, y, width, height };
-          const nativeEvent = { layout: this._layoutState };
+          const nativeEvent = {
+            layout: this._layoutState,
+            get target() {
+              return findNodeHandle(this);
+            }
+          };
           onLayout({ nativeEvent, timeStamp: Date.now() });
         }
       });
