@@ -63,7 +63,8 @@ class ImageBackground extends Component<*> {
               // This workaround should be removed after implementing proper support of
               // intrinsic content size of the <Image>.
               width: style.width,
-              height: style.height
+              height: style.height,
+              zIndex: -1
             },
             imageStyle
           ]}
