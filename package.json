@@ -9,13 +9,13 @@
     "compile:es": "cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
     "benchmarks": "cd packages/benchmarks && yarn build",
     "benchmarks:release": "cd packages/benchmarks && yarn release",
-    "website": "cd website && yarn start",
-    "website:release": "cd website && yarn release",
+    "website": "cd packages/website && yarn start",
+    "website:release": "cd packages/website && yarn release",
     "flow": "flow",
     "fmt": "prettier --write \"**/*.js\"",
     "jest": "BABEL_ENV=commonjs jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
-    "lint:check": "eslint packages scripts website",
+    "lint:check": "eslint packages scripts",
     "precommit": "lint-staged",
     "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
@@ -58,8 +58,7 @@
     "react-test-renderer": "^16.3.2"
   },
   "workspaces": [
-    "packages/*",
-    "website"
+    "packages/*"
   ],
   "lint-staged": {
     "packages/react-native-web/src/index.js": [

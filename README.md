@@ -45,17 +45,17 @@ and [animations](https://facebook.github.io/react-native/docs/animations.html).
 
 ### Guides
 
-* [Getting started](https://github.com/necolas/react-native-web/blob/master/website/guides/getting-started.md)
-* [Style](https://github.com/necolas/react-native-web/blob/master/website/guides/style.md)
-* [Accessibility](https://github.com/necolas/react-native-web/blob/master/website/guides/accessibility.md)
-* [Internationalization](https://github.com/necolas/react-native-web/blob/master/website/guides/internationalization.md)
-* [Direct manipulation](https://github.com/necolas/react-native-web/blob/master/website/guides/direct-manipulation.md)
-* [Advanced use](https://github.com/necolas/react-native-web/blob/master/website/guides/advanced.md)
+* [Getting started](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/getting-started.md)
+* [Style](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/style.md)
+* [Accessibility](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/accessibility.md)
+* [Internationalization](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/internationalization.md)
+* [Direct manipulation](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/direct-manipulation.md)
+* [Advanced use](https://github.com/necolas/react-native-web/blob/master/packages/website/guides/advanced.md)
 
 ## Examples
 
 There are several examples [on the website][website-url] and in the [website's
-source code](https://github.com/necolas/react-native-web/blob/master/website).
+source code](https://github.com/necolas/react-native-web/blob/master/packages/website).
 Here is an example to get you started:
 
 ```js
@@ -95,7 +95,7 @@ Examples of using React Native for Web with other web tools:
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
 * [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
-* [Storybook](https://github.com/necolas/react-native-web/tree/master/website/storybook/.storybook)
+* [Storybook](https://github.com/necolas/react-native-web/tree/master/packages/website/storybook/.storybook)
 * [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/master/examples/react-native)
 
 ## Contributing
