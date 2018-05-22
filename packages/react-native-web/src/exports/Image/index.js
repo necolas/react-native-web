@@ -122,6 +122,7 @@ class Image extends Component<*, State> {
 
   static resizeMode = ImageResizeMode;
 
+  _imageRef = null;
   _imageRequestId = null;
   _imageState = null;
   _isMounted = false;
@@ -134,7 +135,6 @@ class Image extends Component<*, State> {
     const shouldDisplaySource = ImageUriCache.has(uri);
     this.state = { shouldDisplaySource };
     this._imageState = getImageState(uri, shouldDisplaySource);
-    shouldDisplaySource && ImageUriCache.add(uri);
   }
 
   componentDidMount() {
@@ -142,8 +142,7 @@ class Image extends Component<*, State> {
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     } else if (this._imageState === STATUS_LOADED) {
-      const { onLoad } = this.props;
-      onLoad && onLoad();
+      this._onLoad({ target: this._imageRef });
     }
   }
 
@@ -218,6 +217,7 @@ class Image extends Component<*, State> {
       ? createElement('img', {
           alt: accessibilityLabel || '',
           draggable,
+          ref: this._setImageRef,
           src: displayImage,
           style: styles.img
         })
@@ -312,6 +312,10 @@ class Image extends Component<*, State> {
       onLoadStart();
     }
   }
+
+  _setImageRef = ref => {
+    this._imageRef = ref;
+  };
 
   _updateImageState(status) {
     this._imageState = status;
