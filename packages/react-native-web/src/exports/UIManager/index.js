@@ -7,7 +7,7 @@
  * @noflow
  */
 
-import setValueForStyles from '../../vendor/setValueForStyles';
+import setValueForStyles from '../../vendor/react-dom/setValueForStyles';
 
 const getRect = node => {
   const height = node.offsetHeight;

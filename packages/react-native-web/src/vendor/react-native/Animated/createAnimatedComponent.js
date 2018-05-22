@@ -12,7 +12,7 @@
 import { AnimatedEvent } from './AnimatedEvent';
 import AnimatedProps from './nodes/AnimatedProps';
 import React from 'react';
-import ViewStylePropTypes from '../../exports/View/ViewStylePropTypes';
+import ViewStylePropTypes from '../../../exports/View/ViewStylePropTypes';
 
 function createAnimatedComponent(Component: any): any {
   class AnimatedComponent extends React.Component<Object> {

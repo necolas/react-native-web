@@ -26,7 +26,7 @@ class Info {
   sample_count = 0;
 }
 
-type FrameMetrics = { inLayout?: boolean, length: number, offset: number };
+type FrameMetrics = {inLayout?: boolean, length: number, offset: number};
 
 const DEBUG = false;
 
@@ -50,13 +50,16 @@ class FillRateHelper {
   _mostlyBlankStartTime = (null: ?number);
   _samplesStartTime = (null: ?number);
 
-  static addListener(callback: FillRateInfo => void): { remove: () => void } {
-    warning(_sampleRate !== null, 'Call `FillRateHelper.setSampleRate` before `addListener`.');
+  static addListener(callback: FillRateInfo => void): {remove: () => void} {
+    warning(
+      _sampleRate !== null,
+      'Call `FillRateHelper.setSampleRate` before `addListener`.',
+    );
     _listeners.push(callback);
     return {
       remove: () => {
         _listeners = _listeners.filter(listener => callback !== listener);
-      }
+      },
     };
   }
 
@@ -87,7 +90,8 @@ class FillRateHelper {
     }
     const start = this._samplesStartTime; // const for flow
     if (start == null) {
-      DEBUG && console.debug('FillRateHelper: bail on deactivate with no start time');
+      DEBUG &&
+        console.debug('FillRateHelper: bail on deactivate with no start time');
       return;
     }
     if (this._info.sample_count < _minSampleCount) {
@@ -98,22 +102,25 @@ class FillRateHelper {
     const total_time_spent = performanceNow() - start;
     const info: any = {
       ...this._info,
-      total_time_spent
+      total_time_spent,
     };
     if (DEBUG) {
       const derived = {
         avg_blankness: this._info.pixels_blank / this._info.pixels_sampled,
         avg_speed: this._info.pixels_scrolled / (total_time_spent / 1000),
-        avg_speed_when_any_blank: this._info.any_blank_speed_sum / this._info.any_blank_count,
-        any_blank_per_min: this._info.any_blank_count / (total_time_spent / 1000 / 60),
+        avg_speed_when_any_blank:
+          this._info.any_blank_speed_sum / this._info.any_blank_count,
+        any_blank_per_min:
+          this._info.any_blank_count / (total_time_spent / 1000 / 60),
         any_blank_time_frac: this._info.any_blank_ms / total_time_spent,
-        mostly_blank_per_min: this._info.mostly_blank_count / (total_time_spent / 1000 / 60),
-        mostly_blank_time_frac: this._info.mostly_blank_ms / total_time_spent
+        mostly_blank_per_min:
+          this._info.mostly_blank_count / (total_time_spent / 1000 / 60),
+        mostly_blank_time_frac: this._info.mostly_blank_ms / total_time_spent,
       };
       for (const key in derived) {
         derived[key] = Math.round(1000 * derived[key]) / 1000;
       }
-      console.debug('FillRateHelper deactivateAndFlush: ', { derived, info });
+      console.debug('FillRateHelper deactivateAndFlush: ', {derived, info});
     }
     _listeners.forEach(listener => listener(info));
     this._resetData();
@@ -123,23 +130,27 @@ class FillRateHelper {
     props: {
       data: Array<any>,
       getItemCount: (data: Array<any>) => number,
-      initialNumToRender: number
+      initialNumToRender: number,
     },
     state: {
       first: number,
-      last: number
+      last: number,
     },
     scrollMetrics: {
       dOffset: number,
       offset: number,
       velocity: number,
-      visibleLength: number
-    }
+      visibleLength: number,
+    },
   ): number {
-    if (!this._enabled || props.getItemCount(props.data) === 0 || this._samplesStartTime == null) {
+    if (
+      !this._enabled ||
+      props.getItemCount(props.data) === 0 ||
+      this._samplesStartTime == null
+    ) {
       return 0;
     }
-    const { dOffset, offset, velocity, visibleLength } = scrollMetrics;
+    const {dOffset, offset, velocity, visibleLength} = scrollMetrics;
 
     // Denominator metrics that we track for all events - most of the time there is no blankness and
     // we want to capture that.
@@ -169,7 +180,10 @@ class FillRateHelper {
     // Only count blankTop if we aren't rendering the first item, otherwise we will count the header
     // as blank.
     if (firstFrame && first > 0) {
-      blankTop = Math.min(visibleLength, Math.max(0, firstFrame.offset - offset));
+      blankTop = Math.min(
+        visibleLength,
+        Math.max(0, firstFrame.offset - offset),
+      );
     }
     let blankBottom = 0;
     let last = state.last;
@@ -182,7 +196,10 @@ class FillRateHelper {
     // footer as blank.
     if (lastFrame && last < props.getItemCount(props.data) - 1) {
       const bottomEdge = lastFrame.offset + lastFrame.length;
-      blankBottom = Math.min(visibleLength, Math.max(0, offset + visibleLength - bottomEdge));
+      blankBottom = Math.min(
+        visibleLength,
+        Math.max(0, offset + visibleLength - bottomEdge),
+      );
     }
     const pixels_blank = Math.round(blankTop + blankBottom);
     const blankness = pixels_blank / visibleLength;

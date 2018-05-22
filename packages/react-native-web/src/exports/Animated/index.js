@@ -7,7 +7,7 @@
  * @flow
  */
 
-import AnimatedImplementation from '../../vendor/Animated/AnimatedImplementation';
+import AnimatedImplementation from '../../vendor/react-native/Animated/AnimatedImplementation';
 import Image from '../Image';
 import ScrollView from '../ScrollView';
 import Text from '../Text';

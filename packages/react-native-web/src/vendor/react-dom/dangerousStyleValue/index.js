@@ -9,7 +9,7 @@
  * From React 16.0.0
  */
 
-import isUnitlessNumber from '../../modules/unitlessNumbers';
+import isUnitlessNumber from '../../../modules/unitlessNumbers';
 
 /**
  * Convert a value into the proper css writable value. The style name `name`

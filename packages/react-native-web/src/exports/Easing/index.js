@@ -7,5 +7,5 @@
  * @flow
  */
 
-import Easing from '../../vendor/Animated/Easing';
+import Easing from '../../vendor/react-native/Animated/Easing';
 export default Easing;

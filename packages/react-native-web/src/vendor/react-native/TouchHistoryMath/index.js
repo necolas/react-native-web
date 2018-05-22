@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 var TouchHistoryMath = {
   /**
    * This code is optimized and not intended to look beautiful. This allows
@@ -17,7 +15,12 @@ var TouchHistoryMath = {
    * touches vs. previous centroid of now actively moving touches.
    * @return {number} value of centroid in specified dimension.
    */
-  centroidDimension: function(touchHistory, touchesChangedAfter, isXAxis, ofCurrent) {
+  centroidDimension: function(
+    touchHistory,
+    touchesChangedAfter,
+    isXAxis,
+    ofCurrent
+  ) {
     var touchBank = touchHistory.touchBank;
     var total = 0;
     var count = 0;
@@ -28,7 +31,10 @@ var TouchHistoryMath = {
         : null;
 
     if (oneTouchData !== null) {
-      if (oneTouchData.touchActive && oneTouchData.currentTimeStamp > touchesChangedAfter) {
+      if (
+        oneTouchData.touchActive &&
+        oneTouchData.currentTimeStamp > touchesChangedAfter
+      ) {
         total +=
           ofCurrent && isXAxis
             ? oneTouchData.currentPageX
@@ -48,7 +54,7 @@ var TouchHistoryMath = {
           touchTrack.touchActive &&
           touchTrack.currentTimeStamp >= touchesChangedAfter
         ) {
-          var toAdd; // Yuck, program temporarily in invalid state.
+          var toAdd = void 0; // Yuck, program temporarily in invalid state.
           if (ofCurrent && isXAxis) {
             toAdd = touchTrack.currentPageX;
           } else if (ofCurrent && !isXAxis) {
@@ -66,39 +72,51 @@ var TouchHistoryMath = {
     return count > 0 ? total / count : TouchHistoryMath.noCentroid;
   },
 
-  currentCentroidXOfTouchesChangedAfter: function(touchHistory, touchesChangedAfter) {
+  currentCentroidXOfTouchesChangedAfter: function(
+    touchHistory,
+    touchesChangedAfter
+  ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       true, // isXAxis
-      true // ofCurrent
+      true
     );
   },
 
-  currentCentroidYOfTouchesChangedAfter: function(touchHistory, touchesChangedAfter) {
+  currentCentroidYOfTouchesChangedAfter: function(
+    touchHistory,
+    touchesChangedAfter
+  ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       false, // isXAxis
-      true // ofCurrent
+      true
     );
   },
 
-  previousCentroidXOfTouchesChangedAfter: function(touchHistory, touchesChangedAfter) {
+  previousCentroidXOfTouchesChangedAfter: function(
+    touchHistory,
+    touchesChangedAfter
+  ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       true, // isXAxis
-      false // ofCurrent
+      false
     );
   },
 
-  previousCentroidYOfTouchesChangedAfter: function(touchHistory, touchesChangedAfter) {
+  previousCentroidYOfTouchesChangedAfter: function(
+    touchHistory,
+    touchesChangedAfter
+  ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       false, // isXAxis
-      false // ofCurrent
+      false
     );
   },
 
@@ -107,7 +125,7 @@ var TouchHistoryMath = {
       touchHistory,
       0, // touchesChangedAfter
       true, // isXAxis
-      true // ofCurrent
+      true
     );
   },
 
@@ -116,7 +134,7 @@ var TouchHistoryMath = {
       touchHistory,
       0, // touchesChangedAfter
       false, // isXAxis
-      true // ofCurrent
+      true
     );
   },
 

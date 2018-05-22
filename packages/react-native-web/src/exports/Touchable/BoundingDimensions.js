@@ -7,7 +7,7 @@
  * @flow
  */
 
-import PooledClass from '../../vendor/PooledClass';
+import PooledClass from '../../vendor/react-native/PooledClass';
 
 const twoArgumentPooler = PooledClass.twoArgumentPooler;
 

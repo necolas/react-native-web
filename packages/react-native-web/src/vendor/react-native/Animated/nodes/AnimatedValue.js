@@ -12,7 +12,7 @@
 import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedNode from './AnimatedNode';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import InteractionManager from '../../../exports/InteractionManager';
+import InteractionManager from '../../../../exports/InteractionManager';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type Animation, { EndCallback } from '../animations/Animation';

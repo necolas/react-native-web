@@ -15,15 +15,15 @@ export type ViewToken = {
   key: string,
   index: ?number,
   isViewable: boolean,
-  section?: any
+  section?: any,
 };
 
 export type ViewabilityConfigCallbackPair = {
   viewabilityConfig: ViewabilityConfig,
   onViewableItemsChanged: (info: {
     viewableItems: Array<ViewToken>,
-    changed: Array<ViewToken>
-  }) => void
+    changed: Array<ViewToken>,
+  }) => void,
 };
 
 export type ViewabilityConfig = {|
@@ -52,7 +52,7 @@ export type ViewabilityConfig = {|
    * Nothing is considered viewable until the user scrolls or `recordInteraction` is called after
    * render.
    */
-  waitForInteraction?: boolean
+  waitForInteraction?: boolean,
 |};
 
 /**
@@ -77,7 +77,9 @@ class ViewabilityHelper {
   _viewableIndices: Array<number> = [];
   _viewableItems: Map<string, ViewToken> = new Map();
 
-  constructor(config: ViewabilityConfig = { viewAreaCoveragePercentThreshold: 0 }) {
+  constructor(
+    config: ViewabilityConfig = {viewAreaCoveragePercentThreshold: 0},
+  ) {
     this._config = config;
   }
 
@@ -95,28 +97,32 @@ class ViewabilityHelper {
     itemCount: number,
     scrollOffset: number,
     viewportHeight: number,
-    getFrameMetrics: (index: number) => ?{ length: number, offset: number },
-    renderRange?: { first: number, last: number } // Optional optimization to reduce the scan size
+    getFrameMetrics: (index: number) => ?{length: number, offset: number},
+    renderRange?: {first: number, last: number}, // Optional optimization to reduce the scan size
   ): Array<number> {
-    const { itemVisiblePercentThreshold, viewAreaCoveragePercentThreshold } = this._config;
+    const {
+      itemVisiblePercentThreshold,
+      viewAreaCoveragePercentThreshold,
+    } = this._config;
     const viewAreaMode = viewAreaCoveragePercentThreshold != null;
     const viewablePercentThreshold = viewAreaMode
       ? viewAreaCoveragePercentThreshold
       : itemVisiblePercentThreshold;
     invariant(
       viewablePercentThreshold != null &&
-        (itemVisiblePercentThreshold != null) !== (viewAreaCoveragePercentThreshold != null),
-      'Must set exactly one of itemVisiblePercentThreshold or viewAreaCoveragePercentThreshold'
+        (itemVisiblePercentThreshold != null) !==
+          (viewAreaCoveragePercentThreshold != null),
+      'Must set exactly one of itemVisiblePercentThreshold or viewAreaCoveragePercentThreshold',
     );
     const viewableIndices = [];
     if (itemCount === 0) {
       return viewableIndices;
     }
     let firstVisible = -1;
-    const { first, last } = renderRange || { first: 0, last: itemCount - 1 };
+    const {first, last} = renderRange || {first: 0, last: itemCount - 1};
     invariant(
       last < itemCount,
-      'Invalid render range ' + JSON.stringify({ renderRange, itemCount })
+      'Invalid render range ' + JSON.stringify({renderRange, itemCount}),
     );
     for (let idx = first; idx <= last; idx++) {
       const metrics = getFrameMetrics(idx);
@@ -134,7 +140,7 @@ class ViewabilityHelper {
             top,
             bottom,
             viewportHeight,
-            metrics.length
+            metrics.length,
           )
         ) {
           viewableIndices.push(idx);
@@ -154,13 +160,13 @@ class ViewabilityHelper {
     itemCount: number,
     scrollOffset: number,
     viewportHeight: number,
-    getFrameMetrics: (index: number) => ?{ length: number, offset: number },
+    getFrameMetrics: (index: number) => ?{length: number, offset: number},
     createViewToken: (index: number, isViewable: boolean) => ViewToken,
     onViewableItemsChanged: ({
       viewableItems: Array<ViewToken>,
-      changed: Array<ViewToken>
+      changed: Array<ViewToken>,
     }) => void,
-    renderRange?: { first: number, last: number } // Optional optimization to reduce the scan size
+    renderRange?: {first: number, last: number}, // Optional optimization to reduce the scan size
   ): void {
     if (
       (this._config.waitForInteraction && !this._hasInteracted) ||
@@ -176,7 +182,7 @@ class ViewabilityHelper {
         scrollOffset,
         viewportHeight,
         getFrameMetrics,
-        renderRange
+        renderRange,
       );
     }
     if (
@@ -191,11 +197,19 @@ class ViewabilityHelper {
     if (this._config.minimumViewTime) {
       const handle = setTimeout(() => {
         this._timers.delete(handle);
-        this._onUpdateSync(viewableIndices, onViewableItemsChanged, createViewToken);
+        this._onUpdateSync(
+          viewableIndices,
+          onViewableItemsChanged,
+          createViewToken,
+        );
       }, this._config.minimumViewTime);
       this._timers.add(handle);
     } else {
-      this._onUpdateSync(viewableIndices, onViewableItemsChanged, createViewToken);
+      this._onUpdateSync(
+        viewableIndices,
+        onViewableItemsChanged,
+        createViewToken,
+      );
     }
   }
 
@@ -213,17 +227,21 @@ class ViewabilityHelper {
     this._hasInteracted = true;
   }
 
-  _onUpdateSync(viewableIndicesToCheck, onViewableItemsChanged, createViewToken) {
+  _onUpdateSync(
+    viewableIndicesToCheck,
+    onViewableItemsChanged,
+    createViewToken,
+  ) {
     // Filter out indices that have gone out of view since this call was scheduled.
     viewableIndicesToCheck = viewableIndicesToCheck.filter(ii =>
-      this._viewableIndices.includes(ii)
+      this._viewableIndices.includes(ii),
     );
     const prevItems = this._viewableItems;
     const nextItems = new Map(
       viewableIndicesToCheck.map(ii => {
         const viewable = createViewToken(ii, true);
         return [viewable.key, viewable];
-      })
+      }),
     );
 
     const changed = [];
@@ -234,7 +252,7 @@ class ViewabilityHelper {
     }
     for (const [key, viewable] of prevItems) {
       if (!nextItems.has(key)) {
-        changed.push({ ...viewable, isViewable: false });
+        changed.push({...viewable, isViewable: false});
       }
     }
     if (changed.length > 0) {
@@ -242,7 +260,7 @@ class ViewabilityHelper {
       onViewableItemsChanged({
         viewableItems: Array.from(nextItems.values()),
         changed,
-        viewabilityConfig: this._config
+        viewabilityConfig: this._config,
       });
     }
   }
@@ -254,23 +272,32 @@ function _isViewable(
   top: number,
   bottom: number,
   viewportHeight: number,
-  itemLength: number
+  itemLength: number,
 ): boolean {
   if (_isEntirelyVisible(top, bottom, viewportHeight)) {
     return true;
   } else {
     const pixels = _getPixelsVisible(top, bottom, viewportHeight);
-    const percent = 100 * (viewAreaMode ? pixels / viewportHeight : pixels / itemLength);
+    const percent =
+      100 * (viewAreaMode ? pixels / viewportHeight : pixels / itemLength);
     return percent >= viewablePercentThreshold;
   }
 }
 
-function _getPixelsVisible(top: number, bottom: number, viewportHeight: number): number {
+function _getPixelsVisible(
+  top: number,
+  bottom: number,
+  viewportHeight: number,
+): number {
   const visibleHeight = Math.min(bottom, viewportHeight) - Math.max(top, 0);
   return Math.max(0, visibleHeight);
 }
 
-function _isEntirelyVisible(top: number, bottom: number, viewportHeight: number): boolean {
+function _isEntirelyVisible(
+  top: number,
+  bottom: number,
+  viewportHeight: number,
+): boolean {
   return top >= 0 && bottom <= viewportHeight && bottom > top;
 }
 

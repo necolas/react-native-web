@@ -11,7 +11,7 @@
 
 import AnimatedValue from './nodes/AnimatedValue';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
-import findNodeHandle from '../../exports/findNodeHandle';
+import findNodeHandle from '../../../exports/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 
 const { shouldUseNativeDriver } = NativeAnimatedHelper;

@@ -13,7 +13,7 @@ import { AnimatedEvent } from '../AnimatedEvent';
 import AnimatedNode from './AnimatedNode';
 import AnimatedStyle from './AnimatedStyle';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
-import findNodeHandle from '../../../exports/findNodeHandle';
+import findNodeHandle from '../../../../exports/findNodeHandle';
 
 import invariant from 'fbjs/lib/invariant';
 
