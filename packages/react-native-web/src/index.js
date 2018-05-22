@@ -29,6 +29,7 @@ import NetInfo from './exports/NetInfo';
 import PanResponder from './exports/PanResponder';
 import PixelRatio from './exports/PixelRatio';
 import Platform from './exports/Platform';
+import Share from './exports/Share';
 import StyleSheet from './exports/StyleSheet';
 import UIManager from './exports/UIManager';
 import Vibration from './exports/Vibration';
@@ -101,6 +102,7 @@ export {
   PanResponder,
   PixelRatio,
   Platform,
+  Share,
   StyleSheet,
   UIManager,
   Vibration,
@@ -172,6 +174,7 @@ const ReactNative = {
   PanResponder,
   PixelRatio,
   Platform,
+  Share,
   StyleSheet,
   UIManager,
   Vibration,

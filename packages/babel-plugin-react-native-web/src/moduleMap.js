@@ -41,6 +41,7 @@ module.exports = {
   SafeAreaView: true,
   ScrollView: true,
   SectionList: true,
+  Share: true,
   Slider: true,
   StatusBar: true,
   StyleSheet: true,
