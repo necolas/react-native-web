@@ -11,7 +11,7 @@
 
 import invariant from 'fbjs/lib/invariant';
 import NativeModules from '../../../exports/NativeModules';
-import NativeEventEmitter from '../../../modules/NativeEventEmitter';
+import NativeEventEmitter from '../NativeEventEmitter';
 
 import type {AnimationConfig} from './animations/Animation';
 import type {EventConfig} from './AnimatedEvent';

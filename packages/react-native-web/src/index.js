@@ -23,6 +23,7 @@ import Keyboard from './exports/Keyboard';
 import InteractionManager from './exports/InteractionManager';
 import LayoutAnimation from './exports/LayoutAnimation';
 import Linking from './exports/Linking';
+import NativeEventEmitter from './exports/NativeEventEmitter';
 import NetInfo from './exports/NetInfo';
 import PanResponder from './exports/PanResponder';
 import PixelRatio from './exports/PixelRatio';
@@ -93,6 +94,7 @@ export {
   Keyboard,
   LayoutAnimation,
   Linking,
+  NativeEventEmitter,
   NetInfo,
   PanResponder,
   PixelRatio,
@@ -162,6 +164,7 @@ const ReactNative = {
   Keyboard,
   LayoutAnimation,
   Linking,
+  NativeEventEmitter,
   NetInfo,
   PanResponder,
   PixelRatio,

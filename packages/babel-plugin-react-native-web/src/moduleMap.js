@@ -27,6 +27,7 @@ module.exports = {
   Linking: true,
   ListView: true,
   Modal: true,
+  NativeEventEmitter: true,
   NativeModules: true,
   NetInfo: true,
   PanResponder: true,

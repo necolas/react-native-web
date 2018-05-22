@@ -63,7 +63,9 @@
   ],
   "lint-staged": {
     "packages/react-native-web/src/index.js": [
-      "node ./scripts/babel/createModuleMap.js"
+      "node ./scripts/babel/createModuleMap.js",
+      "prettier --write ./packages/babel-plugin-react-native-web/src/moduleMap.js",
+      "git add ./packages/babel-plugin-react-native-web/src/moduleMap.js"
     ],
     "**/*.js": [
       "prettier --write",
