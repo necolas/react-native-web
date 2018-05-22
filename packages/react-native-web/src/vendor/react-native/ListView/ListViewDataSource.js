@@ -1,41 +1,31 @@
-/* eslint-disable */
 /**
- * Copyright (c) 2015, Facebook, Inc.  All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * Facebook, Inc. ("Facebook") owns all right, title and interest, including
- * all intellectual property and other proprietary rights, in and to the React
- * Native CustomComponents software (the "Software").  Subject to your
- * compliance with these terms, you are hereby granted a non-exclusive,
- * worldwide, royalty-free copyright license to (1) use and copy the Software;
- * and (2) reproduce and distribute the Software as part of your own software
- * ("Your Software").  Facebook reserves all rights not expressly granted to
- * you in this license agreement.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
- * THE SOFTWARE AND DOCUMENTATION, IF ANY, ARE PROVIDED "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES (INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE) ARE DISCLAIMED.
- * IN NO EVENT SHALL FACEBOOK OR ITS AFFILIATES, OFFICERS, DIRECTORS OR
- * EMPLOYEES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * @typechecks
+ * @providesModule ListViewDataSource
  * @flow
+ * @format
  */
+'use strict';
 
 import invariant from 'fbjs/lib/invariant';
-import isEmpty from 'fbjs/lib/isEmpty';
+import isEmpty from '../isEmpty';
 import warning from 'fbjs/lib/warning';
 
-function defaultGetRowData(dataBlob: any, sectionID: number | string, rowID: number | string): any {
+function defaultGetRowData(
+  dataBlob: any,
+  sectionID: number | string,
+  rowID: number | string,
+): any {
   return dataBlob[sectionID][rowID];
 }
 
-function defaultGetSectionHeaderData(dataBlob: any, sectionID: number | string): any {
+function defaultGetSectionHeaderData(
+  dataBlob: any,
+  sectionID: number | string,
+): any {
   return dataBlob[sectionID];
 }
 
@@ -43,9 +33,9 @@ type differType = (data1: any, data2: any) => boolean;
 
 type ParamType = {
   rowHasChanged: differType,
-  getRowData: ?typeof defaultGetRowData,
-  sectionHeaderHasChanged: ?differType,
-  getSectionHeaderData: ?typeof defaultGetSectionHeaderData
+  getRowData?: ?typeof defaultGetRowData,
+  sectionHeaderHasChanged?: ?differType,
+  getSectionHeaderData?: ?typeof defaultGetSectionHeaderData,
 };
 
 /**
@@ -70,7 +60,7 @@ type ParamType = {
  *
  * ```
  * getInitialState: function() {
- *   var ds = new ListViewDataSource({rowHasChanged: this._rowHasChanged});
+ *   var ds = new ListView.DataSource({rowHasChanged: this._rowHasChanged});
  *   return {ds};
  * },
  * _onDataArrived(newData) {
@@ -111,12 +101,13 @@ class ListViewDataSource {
   constructor(params: ParamType) {
     invariant(
       params && typeof params.rowHasChanged === 'function',
-      'Must provide a rowHasChanged function.'
+      'Must provide a rowHasChanged function.',
     );
     this._rowHasChanged = params.rowHasChanged;
     this._getRowData = params.getRowData || defaultGetRowData;
     this._sectionHeaderHasChanged = params.sectionHeaderHasChanged;
-    this._getSectionHeaderData = params.getSectionHeaderData || defaultGetSectionHeaderData;
+    this._getSectionHeaderData =
+      params.getSectionHeaderData || defaultGetSectionHeaderData;
 
     this._dataBlob = null;
     this._dirtyRows = [];
@@ -135,7 +126,7 @@ class ListViewDataSource {
    * construction an extractor to get the interesting information was defined
    * (or the default was used).
    *
-   * The `rowIdentities` is is a 2D array of identifiers for rows.
+   * The `rowIdentities` is a 2D array of identifiers for rows.
    * ie. [['a1', 'a2'], ['b1', 'b2', 'b3'], ...].  If not provided, it's
    * assumed that the keys of the section data are the row identities.
    *
@@ -146,14 +137,14 @@ class ListViewDataSource {
    * this function as the `dataBlob`.
    */
   cloneWithRows(
-    dataBlob: Array<any> | { [key: string]: any },
-    rowIdentities: ?Array<string>
+    dataBlob: $ReadOnlyArray<any> | {+[key: string]: any},
+    rowIdentities: ?$ReadOnlyArray<string>,
   ): ListViewDataSource {
-    var rowIds = rowIdentities ? [rowIdentities] : null;
+    var rowIds = rowIdentities ? [[...rowIdentities]] : null;
     if (!this._sectionHeaderHasChanged) {
       this._sectionHeaderHasChanged = () => false;
     }
-    return this.cloneWithRowsAndSections({ s1: dataBlob }, ['s1'], rowIds);
+    return this.cloneWithRowsAndSections({s1: dataBlob}, ['s1'], rowIds);
   }
 
   /**
@@ -161,26 +152,41 @@ class ListViewDataSource {
    * you also specify what your `sectionIdentities` are. If you don't care
    * about sections you should safely be able to use `cloneWithRows`.
    *
-   * `sectionIdentities` is an array of identifiers for  sections.
-   * ie. ['s1', 's2', ...].  If not provided, it's assumed that the
+   * `sectionIdentities` is an array of identifiers for sections.
+   * ie. ['s1', 's2', ...].  The identifiers should correspond to the keys or array indexes
+   * of the data you wish to include.  If not provided, it's assumed that the
    * keys of dataBlob are the section identities.
    *
    * Note: this returns a new object!
+   *
+   * ```
+   * const dataSource = ds.cloneWithRowsAndSections({
+   *   addresses: ['row 1', 'row 2'],
+   *   phone_numbers: ['data 1', 'data 2'],
+   * }, ['phone_numbers']);
+   * ```
    */
   cloneWithRowsAndSections(
     dataBlob: any,
     sectionIdentities: ?Array<string>,
-    rowIdentities: ?Array<Array<string>>
+    rowIdentities: ?Array<Array<string>>,
   ): ListViewDataSource {
     invariant(
       typeof this._sectionHeaderHasChanged === 'function',
-      'Must provide a sectionHeaderHasChanged function with section data.'
+      'Must provide a sectionHeaderHasChanged function with section data.',
     );
+    invariant(
+      !sectionIdentities ||
+        !rowIdentities ||
+        sectionIdentities.length === rowIdentities.length,
+      'row and section ids lengths must be the same',
+    );
+
     var newSource = new ListViewDataSource({
       getRowData: this._getRowData,
       getSectionHeaderData: this._getSectionHeaderData,
       rowHasChanged: this._rowHasChanged,
-      sectionHeaderHasChanged: this._sectionHeaderHasChanged
+      sectionHeaderHasChanged: this._sectionHeaderHasChanged,
     });
     newSource._dataBlob = dataBlob;
     if (sectionIdentities) {
@@ -198,15 +204,29 @@ class ListViewDataSource {
     }
     newSource._cachedRowCount = countRows(newSource.rowIdentities);
 
-    newSource._calculateDirtyArrays(this._dataBlob, this.sectionIdentities, this.rowIdentities);
+    newSource._calculateDirtyArrays(
+      this._dataBlob,
+      this.sectionIdentities,
+      this.rowIdentities,
+    );
 
     return newSource;
   }
 
+  /**
+   * Returns the total number of rows in the data source.
+   *
+   * If you are specifying the rowIdentities or sectionIdentities, then `getRowCount` will return the number of rows in the filtered data source.
+   */
   getRowCount(): number {
     return this._cachedRowCount;
   }
 
+  /**
+   * Returns the total number of rows in the data source (see `getRowCount` for how this is calculated) plus the number of sections in the data.
+   *
+   * If you are specifying the rowIdentities or sectionIdentities, then `getRowAndSectionCount` will return the number of rows & sections in the filtered data source.
+   */
   getRowAndSectionCount(): number {
     return this._cachedRowCount + this.sectionIdentities.length;
   }
@@ -218,7 +238,7 @@ class ListViewDataSource {
     var needsUpdate = this._dirtyRows[sectionIndex][rowIndex];
     warning(
       needsUpdate !== undefined,
-      'missing dirtyBit for section, row: ' + sectionIndex + ', ' + rowIndex
+      'missing dirtyBit for section, row: ' + sectionIndex + ', ' + rowIndex,
     );
     return needsUpdate;
   }
@@ -231,7 +251,7 @@ class ListViewDataSource {
     var rowID = this.rowIdentities[sectionIndex][rowIndex];
     warning(
       sectionID !== undefined && rowID !== undefined,
-      'rendering invalid section, row: ' + sectionIndex + ', ' + rowIndex
+      'rendering invalid section, row: ' + sectionIndex + ', ' + rowIndex,
     );
     return this._getRowData(this._dataBlob, sectionID, rowID);
   }
@@ -284,7 +304,10 @@ class ListViewDataSource {
    */
   sectionHeaderShouldUpdate(sectionIndex: number): boolean {
     var needsUpdate = this._dirtySections[sectionIndex];
-    warning(needsUpdate !== undefined, 'missing dirtyBit for section: ' + sectionIndex);
+    warning(
+      needsUpdate !== undefined,
+      'missing dirtyBit for section: ' + sectionIndex,
+    );
     return needsUpdate;
   }
 
@@ -296,7 +319,10 @@ class ListViewDataSource {
       return null;
     }
     var sectionID = this.sectionIdentities[sectionIndex];
-    warning(sectionID !== undefined, 'renderSection called on invalid section: ' + sectionIndex);
+    warning(
+      sectionID !== undefined,
+      'renderSection called on invalid section: ' + sectionIndex,
+    );
     return this._getSectionHeaderData(this._dataBlob, sectionID);
   }
 
@@ -322,14 +348,17 @@ class ListViewDataSource {
   _calculateDirtyArrays(
     prevDataBlob: any,
     prevSectionIDs: Array<string>,
-    prevRowIDs: Array<Array<string>>
+    prevRowIDs: Array<Array<string>>,
   ): void {
     // construct a hashmap of the existing (old) id arrays
     var prevSectionsHash = keyedDictionaryFromArray(prevSectionIDs);
     var prevRowsHash = {};
     for (var ii = 0; ii < prevRowIDs.length; ii++) {
       var sectionID = prevSectionIDs[ii];
-      warning(!prevRowsHash[sectionID], 'SectionID appears more than once: ' + sectionID);
+      warning(
+        !prevRowsHash[sectionID],
+        'SectionID appears more than once: ' + sectionID,
+      );
       prevRowsHash[sectionID] = keyedDictionaryFromArray(prevRowIDs[ii]);
     }
 
@@ -346,13 +375,17 @@ class ListViewDataSource {
       if (!dirty && sectionHeaderHasChanged) {
         dirty = sectionHeaderHasChanged(
           this._getSectionHeaderData(prevDataBlob, sectionID),
-          this._getSectionHeaderData(this._dataBlob, sectionID)
+          this._getSectionHeaderData(this._dataBlob, sectionID),
         );
       }
       this._dirtySections.push(!!dirty);
 
       this._dirtyRows[sIndex] = [];
-      for (var rIndex = 0; rIndex < this.rowIdentities[sIndex].length; rIndex++) {
+      for (
+        var rIndex = 0;
+        rIndex < this.rowIdentities[sIndex].length;
+        rIndex++
+      ) {
         var rowID = this.rowIdentities[sIndex][rIndex];
         // dirty if the section is new, row is new or _rowHasChanged is true
         dirty =
@@ -360,7 +393,7 @@ class ListViewDataSource {
           !prevRowsHash[sectionID][rowID] ||
           this._rowHasChanged(
             this._getRowData(prevDataBlob, sectionID, rowID),
-            this._getRowData(this._dataBlob, sectionID, rowID)
+            this._getRowData(this._dataBlob, sectionID, rowID),
           );
         this._dirtyRows[sIndex].push(!!dirty);
       }
