@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @noflow
  * @format
  */
 'use strict';
@@ -26,14 +26,14 @@ class AnimatedStyle extends AnimatedWithChildren {
     if (style.transform) {
       style = {
         ...style,
-        transform: new AnimatedTransform(style.transform)
+        transform: new AnimatedTransform(style.transform),
       };
     }
     this._style = style;
   }
 
   // Recursively get values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetValues(style: Object) {
+  _walkStyleAndGetValues(style) {
     const updatedStyle = {};
     for (const key in style) {
       const value = style[key];
@@ -58,7 +58,7 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   // Recursively get animated values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetAnimatedValues(style: Object) {
+  _walkStyleAndGetAnimatedValues(style) {
     const updatedStyle = {};
     for (const key in style) {
       const value = style[key];
@@ -117,7 +117,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     NativeAnimatedHelper.validateStyles(styleConfig);
     return {
       type: 'style',
-      style: styleConfig
+      style: styleConfig,
     };
   }
 }

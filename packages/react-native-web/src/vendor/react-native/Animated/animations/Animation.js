@@ -13,14 +13,14 @@ import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type AnimatedValue from '../nodes/AnimatedValue';
 
-export type EndResult = { finished: boolean };
+export type EndResult = {finished: boolean};
 export type EndCallback = (result: EndResult) => void;
 
 export type AnimationConfig = {
   isInteraction?: boolean,
   useNativeDriver?: boolean,
   onComplete?: ?EndCallback,
-  iterations?: number
+  iterations?: number,
 };
 
 // Important note: start() and stop() will only be called at most once.
@@ -37,7 +37,7 @@ class Animation {
     onUpdate: (value: number) => void,
     onEnd: ?EndCallback,
     previousAnimation: ?Animation,
-    animatedValue: AnimatedValue
+    animatedValue: AnimatedValue,
   ): void {}
   stop(): void {
     if (this.__nativeId) {
@@ -62,7 +62,7 @@ class Animation {
       this.__nativeId,
       animatedValue.__getNativeTag(),
       this.__getNativeAnimationConfig(),
-      this.__debouncedOnEnd.bind(this)
+      this.__debouncedOnEnd.bind(this),
     );
   }
 }

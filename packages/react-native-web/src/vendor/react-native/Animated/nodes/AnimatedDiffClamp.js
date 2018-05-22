@@ -13,7 +13,7 @@ import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedNode from './AnimatedNode';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
-import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type {InterpolationConfigType} from './AnimatedInterpolation';
 
 class AnimatedDiffClamp extends AnimatedWithChildren {
   _a: AnimatedNode;
@@ -62,7 +62,7 @@ class AnimatedDiffClamp extends AnimatedWithChildren {
       type: 'diffclamp',
       input: this._a.__getNativeTag(),
       min: this._min,
-      max: this._max
+      max: this._max,
     };
   }
 }

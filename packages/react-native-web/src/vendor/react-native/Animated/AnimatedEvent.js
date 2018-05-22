@@ -16,13 +16,17 @@ import invariant from 'fbjs/lib/invariant';
 
 const { shouldUseNativeDriver } = NativeAnimatedHelper;
 
-export type Mapping = { [key: string]: Mapping } | AnimatedValue;
+export type Mapping = {[key: string]: Mapping} | AnimatedValue;
 export type EventConfig = {
   listener?: ?Function,
-  useNativeDriver?: boolean
+  useNativeDriver?: boolean,
 };
 
-function attachNativeEvent(viewRef: any, eventName: string, argMapping: Array<?Mapping>) {
+function attachNativeEvent(
+  viewRef: any,
+  eventName: string,
+  argMapping: Array<?Mapping>,
+) {
   // Find animated values in `argMapping` and create an array representing their
   // key path inside the `nativeEvent` object. Ex.: ['contentOffset', 'x'].
   const eventMappings = [];
@@ -33,7 +37,7 @@ function attachNativeEvent(viewRef: any, eventName: string, argMapping: Array<?M
 
       eventMappings.push({
         nativeEventPath: path,
-        animatedValueTag: value.__getNativeTag()
+        animatedValueTag: value.__getNativeTag(),
       });
     } else if (typeof value === 'object') {
       for (const key in value) {
@@ -44,7 +48,7 @@ function attachNativeEvent(viewRef: any, eventName: string, argMapping: Array<?M
 
   invariant(
     argMapping[0] && argMapping[0].nativeEvent,
-    'Native driven events only support animated values contained inside `nativeEvent`.'
+    'Native driven events only support animated values contained inside `nativeEvent`.',
   );
 
   // Assume that the event containing `nativeEvent` is always the first argument.
@@ -53,7 +57,11 @@ function attachNativeEvent(viewRef: any, eventName: string, argMapping: Array<?M
   const viewTag = findNodeHandle(viewRef);
 
   eventMappings.forEach(mapping => {
-    NativeAnimatedHelper.API.addAnimatedEventToView(viewTag, eventName, mapping);
+    NativeAnimatedHelper.API.addAnimatedEventToView(
+      viewTag,
+      eventName,
+      mapping,
+    );
   });
 
   return {
@@ -62,10 +70,10 @@ function attachNativeEvent(viewRef: any, eventName: string, argMapping: Array<?M
         NativeAnimatedHelper.API.removeAnimatedEventFromView(
           viewTag,
           eventName,
-          mapping.animatedValueTag
+          mapping.animatedValueTag,
         );
       });
-    }
+    },
   };
 }
 
@@ -74,7 +82,7 @@ class AnimatedEvent {
   _listeners: Array<Function> = [];
   _callListeners: Function;
   _attachedEvent: ?{
-    detach: () => void
+    detach: () => void,
   };
   __isNative: boolean;
 
@@ -101,13 +109,23 @@ class AnimatedEvent {
   }
 
   __attach(viewRef: any, eventName: string) {
-    invariant(this.__isNative, 'Only native driven events need to be attached.');
+    invariant(
+      this.__isNative,
+      'Only native driven events need to be attached.',
+    );
 
-    this._attachedEvent = attachNativeEvent(viewRef, eventName, this._argMapping);
+    this._attachedEvent = attachNativeEvent(
+      viewRef,
+      eventName,
+      this._argMapping,
+    );
   }
 
   __detach(viewTag: any, eventName: string) {
-    invariant(this.__isNative, 'Only native driven events need to be detached.');
+    invariant(
+      this.__isNative,
+      'Only native driven events need to be detached.',
+    );
 
     this._attachedEvent && this._attachedEvent.detach();
   }
@@ -153,17 +171,17 @@ class AnimatedEvent {
             typeof recMapping +
             ' for key ' +
             key +
-            ', event value must map to AnimatedValue'
+            ', event value must map to AnimatedValue',
         );
         return;
       }
       invariant(
         typeof recMapping === 'object',
-        'Bad mapping of type ' + typeof recMapping + ' for key ' + key
+        'Bad mapping of type ' + typeof recMapping + ' for key ' + key,
       );
       invariant(
         typeof recEvt === 'object',
-        'Bad event of type ' + typeof recEvt + ' for key ' + key
+        'Bad event of type ' + typeof recEvt + ' for key ' + key,
       );
       for (const mappingKey in recMapping) {
         traverse(recMapping[mappingKey], recEvt[mappingKey], mappingKey);

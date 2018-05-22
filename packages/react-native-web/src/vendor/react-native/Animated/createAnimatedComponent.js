@@ -13,8 +13,16 @@ import { AnimatedEvent } from './AnimatedEvent';
 import AnimatedProps from './nodes/AnimatedProps';
 import React from 'react';
 import ViewStylePropTypes from '../../../exports/View/ViewStylePropTypes';
+import invariant from 'fbjs/lib/invariant';
 
 function createAnimatedComponent(Component: any): any {
+  invariant(
+    typeof Component === 'string' ||
+      (Component.prototype && Component.prototype.isReactComponent),
+    '`createAnimatedComponent` does not support stateless functional components; ' +
+      'use a class component instead.',
+  );
+
   class AnimatedComponent extends React.Component<Object> {
     _component: any;
     _invokeAnimatedPropsCallbackOnMount: boolean = false;
@@ -39,7 +47,7 @@ function createAnimatedComponent(Component: any): any {
       this._component.setNativeProps(props);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       this._attachProps(this.props);
     }
 
@@ -93,12 +101,14 @@ function createAnimatedComponent(Component: any): any {
       ) {
         this.forceUpdate();
       } else if (!this._propsAnimated.__isNative) {
-        this._component.setNativeProps(this._propsAnimated.__getAnimatedValue());
+        this._component.setNativeProps(
+          this._propsAnimated.__getAnimatedValue(),
+        );
       } else {
         throw new Error(
           'Attempting to run JS driven animation on animated ' +
             'node that has been moved to "native" earlier by starting an ' +
-            'animation with `useNativeDriver: true`'
+            'animation with `useNativeDriver: true`',
         );
       }
     };
@@ -106,7 +116,10 @@ function createAnimatedComponent(Component: any): any {
     _attachProps(nextProps) {
       const oldPropsAnimated = this._propsAnimated;
 
-      this._propsAnimated = new AnimatedProps(nextProps, this._animatedPropsCallback);
+      this._propsAnimated = new AnimatedProps(
+        nextProps,
+        this._animatedPropsCallback,
+      );
 
       // When you call detach, it removes the element from the parent list
       // of children. If it goes to 0, then the parent also detaches itself
@@ -119,7 +132,7 @@ function createAnimatedComponent(Component: any): any {
       oldPropsAnimated && oldPropsAnimated.__detach();
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
       this._attachProps(newProps);
     }
 
@@ -141,9 +154,11 @@ function createAnimatedComponent(Component: any): any {
           ref={this._setComponentRef}
           // The native driver updates views directly through the UI thread so we
           // have to make sure the view doesn't get optimized away because it cannot
-          // go through the NativeViewHierachyManager since it operates on the shadow
+          // go through the NativeViewHierarchyManager since it operates on the shadow
           // thread.
-          collapsable={this._propsAnimated.__isNative ? false : props.collapsable}
+          collapsable={
+            this._propsAnimated.__isNative ? false : props.collapsable
+          }
         />
       );
     }
@@ -177,11 +192,11 @@ function createAnimatedComponent(Component: any): any {
               'should nest it in a style object. ' +
               'E.g. `{ style: { ' +
               key +
-              ': ... } }`'
+              ': ... } }`',
           );
         }
       }
-    }
+    },
   };
 
   return AnimatedComponent;

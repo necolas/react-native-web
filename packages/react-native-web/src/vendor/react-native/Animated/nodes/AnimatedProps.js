@@ -27,7 +27,7 @@ class AnimatedProps extends AnimatedNode {
     if (props.style) {
       props = {
         ...props,
-        style: new AnimatedStyle(props.style)
+        style: new AnimatedStyle(props.style),
       };
     }
     this._props = props;
@@ -118,16 +118,32 @@ class AnimatedProps extends AnimatedNode {
 
   __connectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
-    const nativeViewTag: ?number = findNodeHandle(this._animatedView);
-    invariant(nativeViewTag != null, 'Unable to locate attached view in the native tree');
-    NativeAnimatedHelper.API.connectAnimatedNodeToView(this.__getNativeTag(), nativeViewTag);
+    const nativeViewTag: ?number = findNodeHandle(
+      this._animatedView,
+    );
+    invariant(
+      nativeViewTag != null,
+      'Unable to locate attached view in the native tree',
+    );
+    NativeAnimatedHelper.API.connectAnimatedNodeToView(
+      this.__getNativeTag(),
+      nativeViewTag,
+    );
   }
 
   __disconnectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
-    const nativeViewTag: ?number = findNodeHandle(this._animatedView);
-    invariant(nativeViewTag != null, 'Unable to locate attached view in the native tree');
-    NativeAnimatedHelper.API.disconnectAnimatedNodeFromView(this.__getNativeTag(), nativeViewTag);
+    const nativeViewTag: ?number = findNodeHandle(
+      this._animatedView,
+    );
+    invariant(
+      nativeViewTag != null,
+      'Unable to locate attached view in the native tree',
+    );
+    NativeAnimatedHelper.API.disconnectAnimatedNodeFromView(
+      this.__getNativeTag(),
+      nativeViewTag,
+    );
   }
 
   __getNativeConfig(): Object {
@@ -140,7 +156,7 @@ class AnimatedProps extends AnimatedNode {
     }
     return {
       type: 'props',
-      props: propsConfig
+      props: propsConfig,
     };
   }
 }

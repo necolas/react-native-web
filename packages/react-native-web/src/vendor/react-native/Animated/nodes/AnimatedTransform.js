@@ -14,9 +14,9 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 class AnimatedTransform extends AnimatedWithChildren {
-  _transforms: Array<Object>;
+  _transforms: $ReadOnlyArray<Object>;
 
-  constructor(transforms: Array<Object>) {
+  constructor(transforms: $ReadOnlyArray<Object>) {
     super();
     this._transforms = transforms;
   }
@@ -33,7 +33,7 @@ class AnimatedTransform extends AnimatedWithChildren {
     });
   }
 
-  __getValue(): Array<Object> {
+  __getValue(): $ReadOnlyArray<Object> {
     return this._transforms.map(transform => {
       const result = {};
       for (const key in transform) {
@@ -48,7 +48,7 @@ class AnimatedTransform extends AnimatedWithChildren {
     });
   }
 
-  __getAnimatedValue(): Array<Object> {
+  __getAnimatedValue(): $ReadOnlyArray<Object> {
     return this._transforms.map(transform => {
       const result = {};
       for (const key in transform) {
@@ -97,13 +97,13 @@ class AnimatedTransform extends AnimatedWithChildren {
           transConfigs.push({
             type: 'animated',
             property: key,
-            nodeTag: value.__getNativeTag()
+            nodeTag: value.__getNativeTag(),
           });
         } else {
           transConfigs.push({
             type: 'static',
             property: key,
-            value
+            value,
           });
         }
       }
@@ -112,7 +112,7 @@ class AnimatedTransform extends AnimatedWithChildren {
     NativeAnimatedHelper.validateTransform(transConfigs);
     return {
       type: 'transform',
-      transforms: transConfigs
+      transforms: transConfigs,
     };
   }
 }

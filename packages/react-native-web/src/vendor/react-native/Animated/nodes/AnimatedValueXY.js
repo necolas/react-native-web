@@ -14,7 +14,7 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 
 import invariant from 'fbjs/lib/invariant';
 
-type ValueXYListenerCallback = (value: { x: number, y: number }) => void;
+type ValueXYListenerCallback = (value: {x: number, y: number}) => void;
 
 let _uniqueId = 1;
 
@@ -27,18 +27,21 @@ let _uniqueId = 1;
 class AnimatedValueXY extends AnimatedWithChildren {
   x: AnimatedValue;
   y: AnimatedValue;
-  _listeners: { [key: string]: { x: string, y: string } };
+  _listeners: {[key: string]: {x: string, y: string}};
 
-  constructor(valueIn?: ?{ x: number | AnimatedValue, y: number | AnimatedValue }) {
+  constructor(
+    valueIn?: ?{+x: number | AnimatedValue, +y: number | AnimatedValue},
+  ) {
     super();
-    const value: any = valueIn || { x: 0, y: 0 }; // @flowfixme: shouldn't need `: any`
+    const value: any = valueIn || {x: 0, y: 0}; // @flowfixme: shouldn't need `: any`
     if (typeof value.x === 'number' && typeof value.y === 'number') {
       this.x = new AnimatedValue(value.x);
       this.y = new AnimatedValue(value.y);
     } else {
       invariant(
         value.x instanceof AnimatedValue && value.y instanceof AnimatedValue,
-        'AnimatedValueXY must be initalized with an object of numbers or ' + 'AnimatedValues.'
+        'AnimatedValueXY must be initialized with an object of numbers or ' +
+          'AnimatedValues.',
       );
       this.x = value.x;
       this.y = value.y;
@@ -52,7 +55,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#setvalue
    */
-  setValue(value: { x: number, y: number }) {
+  setValue(value: {x: number, y: number}) {
     this.x.setValue(value.x);
     this.y.setValue(value.y);
   }
@@ -64,7 +67,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#setoffset
    */
-  setOffset(offset: { x: number, y: number }) {
+  setOffset(offset: {x: number, y: number}) {
     this.x.setOffset(offset.x);
     this.y.setOffset(offset.y);
   }
@@ -91,10 +94,10 @@ class AnimatedValueXY extends AnimatedWithChildren {
     this.y.extractOffset();
   }
 
-  __getValue(): { x: number, y: number } {
+  __getValue(): {x: number, y: number} {
     return {
       x: this.x.__getValue(),
-      y: this.y.__getValue()
+      y: this.y.__getValue(),
     };
   }
 
@@ -103,7 +106,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#resetanimation
    */
-  resetAnimation(callback?: (value: { x: number, y: number }) => void): void {
+  resetAnimation(callback?: (value: {x: number, y: number}) => void): void {
     this.x.resetAnimation();
     this.y.resetAnimation();
     callback && callback(this.__getValue());
@@ -116,7 +119,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#stopanimation
    */
-  stopAnimation(callback?: (value: { x: number, y: number }) => void): void {
+  stopAnimation(callback?: (value: {x: number, y: number}) => void): void {
     this.x.stopAnimation();
     this.y.stopAnimation();
     callback && callback(this.__getValue());
@@ -133,12 +136,12 @@ class AnimatedValueXY extends AnimatedWithChildren {
    */
   addListener(callback: ValueXYListenerCallback): string {
     const id = String(_uniqueId++);
-    const jointCallback = ({ value: number }) => {
+    const jointCallback = ({value: number}) => {
       callback(this.__getValue());
     };
     this._listeners[id] = {
       x: this.x.addListener(jointCallback),
-      y: this.y.addListener(jointCallback)
+      y: this.y.addListener(jointCallback),
     };
     return id;
   }
@@ -171,10 +174,10 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#getlayout
    */
-  getLayout(): { [key: string]: AnimatedValue } {
+  getLayout(): {[key: string]: AnimatedValue} {
     return {
       left: this.x,
-      top: this.y
+      top: this.y,
     };
   }
 
@@ -183,8 +186,8 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#gettranslatetransform
    */
-  getTranslateTransform(): Array<{ [key: string]: AnimatedValue }> {
-    return [{ translateX: this.x }, { translateY: this.y }];
+  getTranslateTransform(): Array<{[key: string]: AnimatedValue}> {
+    return [{translateX: this.x}, {translateY: this.y}];
   }
 }
 

@@ -29,7 +29,7 @@ export type InterpolationConfigType = {
   easing?: (input: number) => number,
   extrapolate?: ExtrapolateType,
   extrapolateLeft?: ExtrapolateType,
-  extrapolateRight?: ExtrapolateType
+  extrapolateRight?: ExtrapolateType,
 };
 
 const linear = t => t;
@@ -38,7 +38,9 @@ const linear = t => t;
  * Very handy helper to map input ranges to output ranges with an easing
  * function and custom behavior outside of the ranges.
  */
-function createInterpolation(config: InterpolationConfigType): (input: number) => number | string {
+function createInterpolation(
+  config: InterpolationConfigType,
+): (input: number) => number | string {
   if (config.outputRange && typeof config.outputRange[0] === 'string') {
     return createInterpolationFromStringOutputRange(config);
   }
@@ -56,7 +58,7 @@ function createInterpolation(config: InterpolationConfigType): (input: number) =
       inputRange.length +
       ') and outputRange (' +
       outputRange.length +
-      ') must have the same length'
+      ') must have the same length',
   );
 
   const easing = config.easing || linear;
@@ -76,7 +78,10 @@ function createInterpolation(config: InterpolationConfigType): (input: number) =
   }
 
   return input => {
-    invariant(typeof input === 'number', 'Cannot interpolation an input which is not a number');
+    invariant(
+      typeof input === 'number',
+      'Cannot interpolation an input which is not a number',
+    );
 
     const range = findRange(input, inputRange);
     return interpolate(
@@ -87,7 +92,7 @@ function createInterpolation(config: InterpolationConfigType): (input: number) =
       outputRange[range + 1],
       easing,
       extrapolateLeft,
-      extrapolateRight
+      extrapolateRight,
     );
   };
 }
@@ -100,7 +105,7 @@ function interpolate(
   outputMax: number,
   easing: (input: number) => number,
   extrapolateLeft: ExtrapolateType,
-  extrapolateRight: ExtrapolateType
+  extrapolateRight: ExtrapolateType,
 ) {
   let result = input;
 
@@ -187,7 +192,7 @@ const stringShapeRegex = /[0-9\.-]+/g;
  *   -45deg                  // values with units
  */
 function createInterpolationFromStringOutputRange(
-  config: InterpolationConfigType
+  config: InterpolationConfigType,
 ): (input: number) => string {
   let outputRange: Array<string> = (config.outputRange: any);
   invariant(outputRange.length >= 2, 'Bad output range');
@@ -218,12 +223,14 @@ function createInterpolationFromStringOutputRange(
   /* $FlowFixMe(>=0.18.0): `outputRange[0].match()` can return `null`. Need to
    * guard against this possibility.
    */
-  const interpolations = outputRange[0].match(stringShapeRegex).map((value, i) => {
-    return createInterpolation({
-      ...config,
-      outputRange: outputRanges[i]
+  const interpolations = outputRange[0]
+    .match(stringShapeRegex)
+    .map((value, i) => {
+      return createInterpolation({
+        ...config,
+        outputRange: outputRanges[i],
+      });
     });
-  });
 
   // rgba requires that the r,g,b are integers.... so we want to round them, but we *dont* want to
   // round the opacity (4th column).
@@ -236,7 +243,8 @@ function createInterpolationFromStringOutputRange(
     // 'rgba(${interpolations[0](input)}, ${interpolations[1](input)}, ...'
     return outputRange[0].replace(stringShapeRegex, () => {
       const val = +interpolations[i++](input);
-      const rounded = shouldRound && i < 4 ? Math.round(val) : Math.round(val * 1000) / 1000;
+      const rounded =
+        shouldRound && i < 4 ? Math.round(val) : Math.round(val * 1000) / 1000;
       return String(rounded);
     });
   };
@@ -251,7 +259,7 @@ function checkPattern(arr: Array<string>) {
   for (let i = 1; i < arr.length; ++i) {
     invariant(
       pattern === arr[i].replace(stringShapeRegex, ''),
-      'invalid pattern ' + arr[0] + ' and ' + arr[i]
+      'invalid pattern ' + arr[0] + ' and ' + arr[i],
     );
   }
 }
@@ -277,7 +285,7 @@ function checkValidInputRange(arr: Array<number>) {
        * mean this implicit string conversion, you can do something like
        * String(myThing)
        */
-      'inputRange must be monotonically increasing ' + arr
+      'inputRange must be monotonically increasing ' + arr,
     );
   }
 }
@@ -292,7 +300,7 @@ function checkInfiniteRange(name: string, arr: Array<number>) {
      * this implicit string conversion, you can do something like
      * String(myThing)
      */
-    name + 'cannot be ]-infinity;+infinity[ ' + arr
+    name + 'cannot be ]-infinity;+infinity[ ' + arr,
   );
 }
 
@@ -320,7 +328,7 @@ class AnimatedInterpolation extends AnimatedWithChildren {
     const parentValue: number = this._parent.__getValue();
     invariant(
       typeof parentValue === 'number',
-      'Cannot interpolate an input which is not a number.'
+      'Cannot interpolate an input which is not a number.',
     );
     return this._interpolation(parentValue);
   }
@@ -363,11 +371,13 @@ class AnimatedInterpolation extends AnimatedWithChildren {
 
     return {
       inputRange: this._config.inputRange,
-      // Only the `outputRange` can contain strings so we don't need to tranform `inputRange` here
+      // Only the `outputRange` can contain strings so we don't need to transform `inputRange` here
       outputRange: this.__transformDataType(this._config.outputRange),
-      extrapolateLeft: this._config.extrapolateLeft || this._config.extrapolate || 'extend',
-      extrapolateRight: this._config.extrapolateRight || this._config.extrapolate || 'extend',
-      type: 'interpolation'
+      extrapolateLeft:
+        this._config.extrapolateLeft || this._config.extrapolate || 'extend',
+      extrapolateRight:
+        this._config.extrapolateRight || this._config.extrapolate || 'extend',
+      type: 'interpolation',
     };
   }
 }

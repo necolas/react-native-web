@@ -61,22 +61,14 @@ class Easing {
   /**
    * A stepping function, returns 1 for any positive value of `n`.
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static step0(n) {
+  static step0(n: number) {
     return n > 0 ? 1 : 0;
   }
 
   /**
    * A stepping function, returns 1 if `n` is greater than or equal to 1.
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static step1(n) {
+  static step1(n: number) {
     return n >= 1 ? 1 : 0;
   }
 
@@ -86,11 +78,7 @@ class Easing {
    *
    * http://cubic-bezier.com/#0,0,1,1
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static linear(t) {
+  static linear(t: number) {
     return t;
   }
 
@@ -113,11 +101,7 @@ class Easing {
    *
    * http://easings.net/#easeInQuad
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static quad(t) {
+  static quad(t: number) {
     return t * t;
   }
 
@@ -127,11 +111,7 @@ class Easing {
    *
    * http://easings.net/#easeInCubic
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static cubic(t) {
+  static cubic(t: number) {
     return t * t * t;
   }
 
@@ -141,17 +121,8 @@ class Easing {
    * n = 4: http://easings.net/#easeInQuart
    * n = 5: http://easings.net/#easeInQuint
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static poly(n) {
-    /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an
-     * error caught by Flow 0.59 which was not caught before. Most likely, this
-     * error is because an exported function parameter is missing an
-     * annotation. Without an annotation, these parameters are uncovered by
-     * Flow. */
-    return t => Math.pow(t, n);
+  static poly(n: number) {
+    return (t: number) => Math.pow(t, n);
   }
 
   /**
@@ -159,11 +130,7 @@ class Easing {
    *
    * http://easings.net/#easeInSine
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static sin(t) {
+  static sin(t: number) {
     return 1 - Math.cos(t * Math.PI / 2);
   }
 
@@ -172,11 +139,7 @@ class Easing {
    *
    * http://easings.net/#easeInCirc
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static circle(t) {
+  static circle(t: number) {
     return 1 - Math.sqrt(1 - t * t);
   }
 
@@ -185,11 +148,7 @@ class Easing {
    *
    * http://easings.net/#easeInExpo
    */
-  /* $FlowFixMe(>=0.59.0 site=react_native_fb) This comment suppresses an error
-   * caught by Flow 0.59 which was not caught before. Most likely, this error
-   * is because an exported function parameter is missing an annotation.
-   * Without an annotation, these parameters are uncovered by Flow. */
-  static exp(t) {
+  static exp(t: number) {
     return Math.pow(2, 10 * (t - 1));
   }
 
@@ -205,7 +164,7 @@ class Easing {
    */
   static elastic(bounciness: number = 1): (t: number) => number {
     const p = bounciness * Math.PI;
-    return t => 1 - Math.pow(Math.cos(t * Math.PI / 2), 3) * Math.cos(t * p);
+    return (t) => 1 - Math.pow(Math.cos(t * Math.PI / 2), 3) * Math.cos(t * p);
   }
 
   /**
@@ -220,7 +179,7 @@ class Easing {
     if (s === undefined) {
       s = 1.70158;
     }
-    return t => t * t * ((s + 1) * t - s);
+    return (t) => t * t * ((s + 1) * t - s);
   }
 
   /**
@@ -254,22 +213,31 @@ class Easing {
    * A useful tool to visualize cubic bezier curves can be found at
    * http://cubic-bezier.com/
    */
-  static bezier(x1: number, y1: number, x2: number, y2: number): (t: number) => number {
+  static bezier(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number
+  ): (t: number) => number {
     return _bezier(x1, y1, x2, y2);
   }
 
   /**
    * Runs an easing function forwards.
    */
-  static in(easing: (t: number) => number): (t: number) => number {
+  static in(
+    easing: (t: number) => number,
+  ): (t: number) => number {
     return easing;
   }
 
   /**
    * Runs an easing function backwards.
    */
-  static out(easing: (t: number) => number): (t: number) => number {
-    return t => 1 - easing(1 - t);
+  static out(
+    easing: (t: number) => number,
+  ): (t: number) => number {
+    return (t) => 1 - easing(1 - t);
   }
 
   /**
@@ -277,8 +245,10 @@ class Easing {
    * forwards for half of the duration, then backwards for the rest of the
    * duration.
    */
-  static inOut(easing: (t: number) => number): (t: number) => number {
-    return t => {
+  static inOut(
+    easing: (t: number) => number,
+  ): (t: number) => number {
+    return (t) => {
       if (t < 0.5) {
         return easing(t * 2) / 2;
       }

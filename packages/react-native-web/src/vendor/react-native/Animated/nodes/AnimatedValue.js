@@ -15,12 +15,13 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 import InteractionManager from '../../../../exports/InteractionManager';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-import type Animation, { EndCallback } from '../animations/Animation';
-import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type Animation, {EndCallback} from '../animations/Animation';
+import type {InterpolationConfigType} from './AnimatedInterpolation';
+import type AnimatedTracking from './AnimatedTracking';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 
-type ValueListenerCallback = (state: { value: number }) => void;
+type ValueListenerCallback = (state: {value: number}) => void;
 
 let _uniqueId = 1;
 
@@ -73,8 +74,8 @@ class AnimatedValue extends AnimatedWithChildren {
   _startingValue: number;
   _offset: number;
   _animation: ?Animation;
-  _tracking: ?AnimatedNode;
-  _listeners: { [key: string]: ValueListenerCallback };
+  _tracking: ?AnimatedTracking;
+  _listeners: {[key: string]: ValueListenerCallback};
   __nativeAnimatedValueListener: ?any;
 
   constructor(value: number) {
@@ -115,7 +116,7 @@ class AnimatedValue extends AnimatedWithChildren {
     }
     this._updateValue(
       value,
-      !this.__isNative /* don't perform a flush for natively driven values */
+      !this.__isNative /* don't perform a flush for natively driven values */,
     );
     if (this.__isNative) {
       NativeAnimatedAPI.setAnimatedNodeValue(this.__getNativeTag(), value);
@@ -218,7 +219,7 @@ class AnimatedValue extends AnimatedWithChildren {
           return;
         }
         this._updateValue(data.value, false /* flush */);
-      }
+      },
     );
   }
 
@@ -293,7 +294,7 @@ class AnimatedValue extends AnimatedWithChildren {
         callback && callback(result);
       },
       previousAnimation,
-      this
+      this,
     );
   }
 
@@ -308,7 +309,7 @@ class AnimatedValue extends AnimatedWithChildren {
   /**
    * Typically only used internally.
    */
-  track(tracking: AnimatedNode): void {
+  track(tracking: AnimatedTracking): void {
     this.stopTracking();
     this._tracking = tracking;
   }
@@ -319,7 +320,7 @@ class AnimatedValue extends AnimatedWithChildren {
       _flush(this);
     }
     for (const key in this._listeners) {
-      this._listeners[key]({ value: this.__getValue() });
+      this._listeners[key]({value: this.__getValue()});
     }
   }
 
@@ -327,7 +328,7 @@ class AnimatedValue extends AnimatedWithChildren {
     return {
       type: 'value',
       value: this._value,
-      offset: this._offset
+      offset: this._offset,
     };
   }
 }

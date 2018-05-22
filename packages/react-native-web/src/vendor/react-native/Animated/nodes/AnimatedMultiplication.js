@@ -14,7 +14,7 @@ import AnimatedNode from './AnimatedNode';
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
-import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type {InterpolationConfigType} from './AnimatedInterpolation';
 
 class AnimatedMultiplication extends AnimatedWithChildren {
   _a: AnimatedNode;
@@ -54,7 +54,7 @@ class AnimatedMultiplication extends AnimatedWithChildren {
   __getNativeConfig(): any {
     return {
       type: 'multiplication',
-      input: [this._a.__getNativeTag(), this._b.__getNativeTag()]
+      input: [this._a.__getNativeTag(), this._b.__getNativeTag()],
     };
   }
 }

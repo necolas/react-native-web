@@ -13,7 +13,7 @@ import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedNode from './AnimatedNode';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
-import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type {InterpolationConfigType} from './AnimatedInterpolation';
 
 class AnimatedModulo extends AnimatedWithChildren {
   _a: AnimatedNode;
@@ -31,7 +31,9 @@ class AnimatedModulo extends AnimatedWithChildren {
   }
 
   __getValue(): number {
-    return (this._a.__getValue() % this._modulus + this._modulus) % this._modulus;
+    return (
+      (this._a.__getValue() % this._modulus + this._modulus) % this._modulus
+    );
   }
 
   interpolate(config: InterpolationConfigType): AnimatedInterpolation {
@@ -51,7 +53,7 @@ class AnimatedModulo extends AnimatedWithChildren {
     return {
       type: 'modulus',
       input: this._a.__getNativeTag(),
-      modulus: this._modulus
+      modulus: this._modulus,
     };
   }
 }
