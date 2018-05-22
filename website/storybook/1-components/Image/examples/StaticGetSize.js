@@ -26,7 +26,7 @@ class ImageGetSizeExample extends PureComponent {
       <View>
         {showButton ? (
           <View style={styles.button}>
-            <Button onPress={this._handlePress} title="(4.7MB) Get image dimensions" />
+            <Button onPress={this._handlePress} title="Get image dimensions" />
           </View>
         ) : null}
         {startLoad ? (
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   },
   image: {
     backgroundColor: '#eee',
-    height: 227,
+    height: 230,
     marginTop: 10,
-    width: 323
+    width: 320
   }
 });
 
-const StaticGetSizeExample = () => <ImageGetSizeExample source={sources.huge} />;
+const StaticGetSizeExample = () => <ImageGetSizeExample source={sources.pjpeg} />;
 
 export default StaticGetSizeExample;

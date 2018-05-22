@@ -39,6 +39,9 @@ const sources = {
   huge: {
     uri: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chestnut-mandibled_Toucan.jpg'
   },
+  pjpeg: {
+    uri: 'http://pooyak.com/p/progjpeg/jpegload.cgi?o=1'
+  },
   dataSvg,
   dataBase64Png,
   dataBase64Svg
