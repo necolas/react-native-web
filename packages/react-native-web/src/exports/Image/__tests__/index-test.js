@@ -147,6 +147,13 @@ describe('components/Image', () => {
   });
 
   describe('prop "source"', () => {
+    test('does not throw', () => {
+      const sources = [null, '', {}, { uri: '' }, { uri: 'https://google.com' }];
+      sources.forEach(source => {
+        expect(() => shallow(<Image source={source} />)).not.toThrow();
+      });
+    });
+
     test('is not set immediately if the image has not already been loaded', () => {
       const uri = 'https://google.com/favicon.ico';
       const source = { uri };
