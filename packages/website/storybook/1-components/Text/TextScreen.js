@@ -221,7 +221,15 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    name: 'textDecorationColor',
+    typeInfo: 'color'
+  },
+  {
     name: 'textDecorationLine',
+    typeInfo: 'string'
+  },
+  {
+    name: 'textDecorationStyle',
     typeInfo: 'string'
   },
   {

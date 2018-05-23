@@ -40,7 +40,6 @@ const styleShortFormProperties = {
   padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
   paddingHorizontal: ['paddingRight', 'paddingLeft'],
   paddingVertical: ['paddingTop', 'paddingBottom'],
-  textDecorationLine: ['textDecoration'],
   writingDirection: ['direction']
 };
 
@@ -85,17 +84,31 @@ const defaultOffset = { height: 0, width: 0 };
 
 // TODO: add inset and spread support
 const resolveShadow = (resolvedStyle, style) => {
-  const { height, width } = style.shadowOffset || defaultOffset;
+  const { boxShadow, shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
+  const { height, width } = shadowOffset || defaultOffset;
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
-  const blurRadius = normalizeValue(null, style.shadowRadius || 0);
-  const color = normalizeColor(style.shadowColor, style.shadowOpacity);
+  const blurRadius = normalizeValue(null, shadowRadius || 0);
+  const color = normalizeColor(shadowColor, shadowOpacity);
 
   if (color) {
-    const boxShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
-    resolvedStyle.boxShadow = style.boxShadow ? `${style.boxShadow}, ${boxShadow}` : boxShadow;
-  } else if (style.boxShadow) {
-    resolvedStyle.boxShadow = style.boxShadow;
+    const shadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+    resolvedStyle.boxShadow = boxShadow ? `${boxShadow}, ${shadow}` : shadow;
+  } else if (boxShadow) {
+    resolvedStyle.boxShadow = boxShadow;
+  }
+};
+
+/**
+ * Text Decoration
+ */
+
+const resolveTextDecoration = (resolvedStyle, style) => {
+  const { textDecorationColor, textDecorationLine, textDecorationStyle } = style;
+  const color = normalizeColor(textDecorationColor) || '';
+  const lineStyle = textDecorationStyle || '';
+  if (textDecorationLine) {
+    resolvedStyle.textDecoration = `${textDecorationLine} ${lineStyle} ${color}`.trim();
   }
 };
 
@@ -104,11 +117,12 @@ const resolveShadow = (resolvedStyle, style) => {
  */
 
 const resolveTextShadow = (resolvedStyle, style) => {
-  const { height, width } = style.textShadowOffset || defaultOffset;
+  const { textShadowColor, textShadowOffset, textShadowRadius } = style;
+  const { height, width } = textShadowOffset || defaultOffset;
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
-  const blurRadius = normalizeValue(null, style.textShadowRadius || 0);
-  const color = normalizeColor(style.textShadowColor);
+  const blurRadius = normalizeValue(null, textShadowRadius || 0);
+  const color = normalizeColor(textShadowColor);
 
   if (color) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
@@ -149,6 +163,7 @@ const resolveTransform = (resolvedStyle, style) => {
 
 const createReducer = (style, styleProps) => {
   let hasResolvedShadow = false;
+  let hasResolvedTextDecoration = false;
   let hasResolvedTextShadow = false;
 
   return (resolvedStyle, prop) => {
@@ -247,6 +262,16 @@ const createReducer = (style, styleProps) => {
 
       case 'textAlignVertical': {
         resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
+        break;
+      }
+
+      case 'textDecorationColor':
+      case 'textDecorationLine':
+      case 'textDecorationStyle': {
+        if (!hasResolvedTextDecoration) {
+          resolveTextDecoration(resolvedStyle, style);
+        }
+        hasResolvedTextDecoration = true;
         break;
       }
 

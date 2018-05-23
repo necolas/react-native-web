@@ -208,6 +208,46 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
   });
 
+  describe('textDecoration styles', () => {
+    test('textDecorationColor only', () => {
+      expect(
+        createReactDOMStyle({
+          textDecorationColor: 'red'
+        })
+      ).toEqual({});
+    });
+
+    test('textDecorationLine only', () => {
+      expect(
+        createReactDOMStyle({
+          textDecorationLine: 'underline'
+        })
+      ).toEqual({
+        textDecoration: 'underline'
+      });
+    });
+
+    test('textDecorationStyle only', () => {
+      expect(
+        createReactDOMStyle({
+          textDecorationStyle: 'dashed'
+        })
+      ).toEqual({});
+    });
+
+    test('textDecorationColor, textDecorationLine, textDecorationStyle', () => {
+      expect(
+        createReactDOMStyle({
+          textDecorationColor: 'red',
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'dashed'
+        })
+      ).toEqual({
+        textDecoration: 'underline dashed rgba(255,0,0,1.00)'
+      });
+    });
+  });
+
   test('textShadowOffset', () => {
     expect(
       createReactDOMStyle({
