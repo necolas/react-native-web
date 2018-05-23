@@ -212,7 +212,7 @@ class Image extends Component<*, State> {
       ? createElement('img', {
           alt: accessibilityLabel || '',
           decode: 'async',
-          draggable,
+          draggable: draggable || false,
           ref: this._setImageRef,
           src: displayImage,
           style: styles.img

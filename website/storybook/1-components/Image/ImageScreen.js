@@ -51,8 +51,8 @@ const ImageScreen = () => (
       <DocItem
         label="web"
         name="draggable"
-        typeInfo="?boolean = true"
-        description="When false, the image will not be draggable"
+        typeInfo="?boolean = false"
+        description="When true, the image will be draggable"
         example={{
           render: () => <PropDraggable />
         }}

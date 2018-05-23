@@ -8,7 +8,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 const ImageDraggableExample = () => (
   <View style={styles.container}>
-    <Image draggable={false} source={sources.large} style={styles.image} />
+    <Image draggable={true} source={sources.large} style={styles.image} />
   </View>
 );
 
