@@ -10,6 +10,7 @@ import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import createElement from '../createElement';
+import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
 import StyleSheet from '../StyleSheet';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
@@ -36,22 +37,8 @@ class View extends Component<ViewProps> {
   static propTypes = ViewPropTypes;
 
   render() {
-    const {
-      hitSlop,
-      /* eslint-disable */
-      accessibilityViewIsModal,
-      collapsable,
-      needsOffscreenAlphaCompositing,
-      onAccessibilityTap,
-      onLayout,
-      onMagicTap,
-      removeClippedSubviews,
-      renderToHardwareTextureAndroid,
-      shouldRasterizeIOS,
-      tvParallaxProperties,
-      /* eslint-enable */
-      ...otherProps
-    } = this.props;
+    const hitSlop = this.props.hitSlop;
+    const supportedProps = filterSupportedProps(this.props);
 
     if (process.env.NODE_ENV !== 'production') {
       React.Children.toArray(this.props.children).forEach(item => {
@@ -64,7 +51,7 @@ class View extends Component<ViewProps> {
 
     const { isInAParentText } = this.context;
 
-    otherProps.style = StyleSheet.compose(
+    supportedProps.style = StyleSheet.compose(
       styles.initial,
       StyleSheet.compose(isInAParentText && styles.inline, this.props.style)
     );
@@ -72,10 +59,10 @@ class View extends Component<ViewProps> {
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
       const hitSlopChild = createElement('span', { style: [styles.hitSlop, hitSlopStyle] });
-      otherProps.children = React.Children.toArray([hitSlopChild, otherProps.children]);
+      supportedProps.children = React.Children.toArray([hitSlopChild, supportedProps.children]);
     }
 
-    return createElement('div', otherProps);
+    return createElement('div', supportedProps);
   }
 }
 
