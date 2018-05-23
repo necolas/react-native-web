@@ -252,15 +252,49 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
   });
 
-  test('textShadowOffset', () => {
-    expect(
-      createReactDOMStyle({
-        textShadowColor: 'red',
-        textShadowOffset: { width: 1, height: 2 },
-        textShadowRadius: 5
-      })
-    ).toEqual({
-      textShadow: '1px 2px 5px rgba(255,0,0,1.00)'
+  describe('textShadow styles', () => {
+    test('textShadowColor only', () => {
+      expect(createReactDOMStyle({ textShadowColor: 'red' })).toEqual({});
+    });
+
+    test('textShadowOffset only', () => {
+      expect(createReactDOMStyle({ textShadowOffset: { width: 1, height: 2 } })).toEqual({});
+    });
+
+    test('textShadowRadius only', () => {
+      expect(createReactDOMStyle({ textShadowRadius: 5 })).toEqual({});
+    });
+
+    test('textShadowColor and textShadowOffset only', () => {
+      expect(
+        createReactDOMStyle({ textShadowColor: 'red', textShadowOffset: { width: 0, height: 0 } })
+      ).toEqual({});
+      expect(
+        createReactDOMStyle({ textShadowColor: 'red', textShadowOffset: { width: -1, height: 0 } })
+      ).toEqual({
+        textShadow: '-1px 0px 0px rgba(255,0,0,1.00)'
+      });
+      expect(
+        createReactDOMStyle({ textShadowColor: 'red', textShadowOffset: { width: 1, height: 2 } })
+      ).toEqual({
+        textShadow: '1px 2px 0px rgba(255,0,0,1.00)'
+      });
+    });
+
+    test('textShadowColor and textShadowRadius only', () => {
+      expect(createReactDOMStyle({ textShadowColor: 'red', textShadowRadius: 5 })).toEqual({});
+    });
+
+    test('textShadowColor, textShadowOffset, textShadowRadius', () => {
+      expect(
+        createReactDOMStyle({
+          textShadowColor: 'rgba(50,60,70,0.50)',
+          textShadowOffset: { width: 5, height: 10 },
+          textShadowRadius: 15
+        })
+      ).toEqual({
+        textShadow: '5px 10px 15px rgba(50,60,70,0.50)'
+      });
     });
   });
 

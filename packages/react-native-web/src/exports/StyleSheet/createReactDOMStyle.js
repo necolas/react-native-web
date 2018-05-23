@@ -120,7 +120,7 @@ const resolveTextShadow = (resolvedStyle, style) => {
   const blurRadius = normalizeValue(null, textShadowRadius || 0);
   const color = normalizeColor(textShadowColor);
 
-  if (color) {
+  if (color && (height !== 0 || width !== 0)) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 };
