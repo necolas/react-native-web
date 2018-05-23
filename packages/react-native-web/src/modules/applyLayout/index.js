@@ -56,9 +56,7 @@ const observe = instance => {
     resizeObserver.observe(node);
   } else {
     instance._layoutId = id;
-    setTimeout(() => {
-      instance._handleLayout();
-    }, 0);
+    instance._handleLayout();
   }
 };
 
@@ -122,22 +120,24 @@ const applyLayout = Component => {
     const layout = this._layoutState;
     const { onLayout } = this.props;
 
-    if (this._isMounted && onLayout) {
+    if (onLayout) {
       this.measure((x, y, width, height) => {
-        if (
-          layout.x !== x ||
-          layout.y !== y ||
-          layout.width !== width ||
-          layout.height !== height
-        ) {
-          this._layoutState = { x, y, width, height };
-          const nativeEvent = {
-            layout: this._layoutState,
-            get target() {
-              return findNodeHandle(this);
-            }
-          };
-          onLayout({ nativeEvent, timeStamp: Date.now() });
+        if (this._isMounted) {
+          if (
+            layout.x !== x ||
+            layout.y !== y ||
+            layout.width !== width ||
+            layout.height !== height
+          ) {
+            this._layoutState = { x, y, width, height };
+            const nativeEvent = {
+              layout: this._layoutState,
+              get target() {
+                return findNodeHandle(this);
+              }
+            };
+            onLayout({ nativeEvent, timeStamp: Date.now() });
+          }
         }
       });
     }

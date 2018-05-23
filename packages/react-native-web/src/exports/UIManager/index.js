@@ -27,11 +27,13 @@ const getRect = node => {
 const measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || (node && node.parentNode);
   if (node && relativeNode) {
-    const relativeRect = getRect(relativeNode);
-    const { height, left, top, width } = getRect(node);
-    const x = left - relativeRect.left;
-    const y = top - relativeRect.top;
-    callback(x, y, width, height, left, top);
+    setTimeout(() => {
+      const relativeRect = getRect(relativeNode);
+      const { height, left, top, width } = getRect(node);
+      const x = left - relativeRect.left;
+      const y = top - relativeRect.top;
+      callback(x, y, width, height, left, top);
+    }, 0);
   }
 };
 
@@ -54,8 +56,10 @@ const UIManager = {
 
   measureInWindow(node, callback) {
     if (node) {
-      const { height, left, top, width } = getRect(node);
-      callback(left, top, width, height);
+      setTimeout(() => {
+        const { height, left, top, width } = getRect(node);
+        callback(left, top, width, height);
+      }, 0);
     }
   },
 
