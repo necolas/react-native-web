@@ -89,14 +89,10 @@ const resolveShadow = (resolvedStyle, style) => {
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
   const blurRadius = normalizeValue(null, shadowRadius || 0);
-  const color = normalizeColor(shadowColor, shadowOpacity);
+  const color = normalizeColor(shadowColor || 'black', shadowOpacity);
 
-  if (color) {
-    const shadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
-    resolvedStyle.boxShadow = boxShadow ? `${boxShadow}, ${shadow}` : shadow;
-  } else if (boxShadow) {
-    resolvedStyle.boxShadow = boxShadow;
-  }
+  const shadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  resolvedStyle.boxShadow = boxShadow ? `${boxShadow}, ${shadow}` : shadow;
 };
 
 /**

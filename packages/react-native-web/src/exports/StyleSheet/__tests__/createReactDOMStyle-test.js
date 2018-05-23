@@ -177,11 +177,15 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
 
     test('shadowOffset only', () => {
-      expect(createReactDOMStyle({ shadowOffset: { width: 1, height: 2 } })).toEqual({});
+      expect(createReactDOMStyle({ shadowOffset: { width: 1, height: 2 } })).toEqual({
+        boxShadow: '1px 2px 0px rgba(0,0,0,1.00)'
+      });
     });
 
     test('shadowRadius only', () => {
-      expect(createReactDOMStyle({ shadowRadius: 5 })).toEqual({});
+      expect(createReactDOMStyle({ shadowRadius: 5 })).toEqual({
+        boxShadow: '0px 0px 5px rgba(0,0,0,1.00)'
+      });
     });
 
     test('shadowOffset, shadowRadius, shadowColor', () => {
