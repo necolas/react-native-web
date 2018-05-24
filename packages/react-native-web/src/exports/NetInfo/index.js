@@ -5,7 +5,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule NetInfo
  * @flow
  */
 
@@ -156,11 +155,6 @@ const NetInfo = {
     },
 
     fetch(): Promise<boolean> {
-      console.warn('`fetch` is deprecated. Use `getConnectionInfo` instead.');
-      return NetInfo.isConnected.getConnectionInfo();
-    },
-
-    getConnectionInfo(): Promise<boolean> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);

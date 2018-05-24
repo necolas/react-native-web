@@ -5,7 +5,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule TextInput
  * @flow
  */
 
@@ -409,7 +408,7 @@ class TextInput extends Component<*> {
 const styles = StyleSheet.create({
   initial: {
     MozAppearance: 'textfield',
-    appearance: 'none',
+    WebkitAppearance: 'none',
     backgroundColor: 'transparent',
     borderColor: 'black',
     borderRadius: 0,

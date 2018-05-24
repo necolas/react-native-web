@@ -60,44 +60,44 @@ describe('StyleSheet/createReactDOMStyle', () => {
     test('flex defaults', () => {
       expect(createReactDOMStyle({ display: 'flex' })).toEqual({
         display: 'flex',
-        flexShrink: '0 !important',
-        flexBasis: 'auto !important'
+        flexShrink: 0,
+        flexBasis: 'auto'
       });
     });
 
     test('flex: -1', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: -1 })).toEqual({
         display: 'flex',
-        flexGrow: '0 !important',
-        flexShrink: '1 !important',
-        flexBasis: 'auto !important'
+        flexGrow: 0,
+        flexShrink: 1,
+        flexBasis: 'auto'
       });
     });
 
     test('flex: 0', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: 0 })).toEqual({
         display: 'flex',
-        flexGrow: '0 !important',
-        flexShrink: '0 !important',
-        flexBasis: 'auto !important'
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: '0%'
       });
     });
 
     test('flex: 1', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: 1 })).toEqual({
         display: 'flex',
-        flex: 1,
-        flexGrow: '1 !important',
-        flexShrink: '1 !important'
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: '0%'
       });
     });
 
     test('flex: 10', () => {
       expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
         display: 'flex',
-        flex: 10,
-        flexGrow: '10 !important',
-        flexShrink: '1 !important'
+        flexGrow: 10,
+        flexShrink: 1,
+        flexBasis: '0%'
       });
     });
 
@@ -105,17 +105,16 @@ describe('StyleSheet/createReactDOMStyle', () => {
       // is flex-basis applied?
       expect(createReactDOMStyle({ display: 'flex', flexBasis: '25%' })).toEqual({
         display: 'flex',
-        flexShrink: '0 !important',
-        flexBasis: '25% !important'
+        flexShrink: 0,
+        flexBasis: '25%'
       });
 
       // can flex-basis override the 'flex' expansion?
       expect(createReactDOMStyle({ display: 'flex', flex: 1, flexBasis: '25%' })).toEqual({
         display: 'flex',
-        flex: 1,
-        flexGrow: '1 !important',
-        flexShrink: '1 !important',
-        flexBasis: '25% !important'
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: '25%'
       });
     });
 
@@ -123,16 +122,16 @@ describe('StyleSheet/createReactDOMStyle', () => {
       // is flex-shrink applied?
       expect(createReactDOMStyle({ display: 'flex', flexShrink: 1 })).toEqual({
         display: 'flex',
-        flexShrink: '1 !important',
-        flexBasis: 'auto !important'
+        flexShrink: 1,
+        flexBasis: 'auto'
       });
 
       // can flex-shrink override the 'flex' expansion?
       expect(createReactDOMStyle({ display: 'flex', flex: 1, flexShrink: 2 })).toEqual({
         display: 'flex',
-        flex: 1,
-        flexGrow: '1 !important',
-        flexShrink: '2 !important'
+        flexGrow: 1,
+        flexShrink: 2,
+        flexBasis: '0%'
       });
     });
   });

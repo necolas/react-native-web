@@ -10,10 +10,10 @@ setOptions({
   name: 'React Native Web',
   url: 'https://necolas.github.io/react-native-web',
   goFullScreen: false,
-  showLeftPanel: true,
-  showDownPanel: false,
+  addonPanelInRight: false,
   showSearchBox: false,
-  downPanelInRight: false
+  showAddonPanel: false,
+  showStoriesPanel: true
 });
 
 function loadStories() {

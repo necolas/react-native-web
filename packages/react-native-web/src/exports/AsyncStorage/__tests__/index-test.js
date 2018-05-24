@@ -159,7 +159,7 @@ describe('apis/AsyncStorage', () => {
   });
 
   describe('multiSet', () => {
-    const assertResult = result => {
+    const assertResult = () => {
       expect(mockLocalStorage.getItem('UID123')).toEqual(JSON.stringify(uid123Object));
       expect(mockLocalStorage.getItem('UID124')).toEqual(JSON.stringify(uid124Object));
     };
@@ -206,7 +206,7 @@ describe('apis/AsyncStorage', () => {
   });
 
   describe('multiMerge', () => {
-    const assertResult = result => {
+    const assertResult = () => {
       expect(JSON.parse(mockLocalStorage.getItem('UID123'))).toMatchSnapshot();
       expect(JSON.parse(mockLocalStorage.getItem('UID124'))).toMatchSnapshot();
     };
@@ -253,7 +253,7 @@ describe('apis/AsyncStorage', () => {
   });
 
   describe('multiRemove', () => {
-    const assertResult = result => {
+    const assertResult = () => {
       expect(mockLocalStorage.getItem('UID123')).toBeUndefined();
       expect(mockLocalStorage.getItem('UID124')).toBeUndefined();
     };

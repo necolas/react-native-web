@@ -1,28 +1,65 @@
 # Getting started
 
-This guide will help you to use and test React Native for Web once it has been installed.
+This guide will help you render components and applications with React Native
+for Web.
 
 Your application may need to polyfill `Promise`, `Object.assign`, `Array.from`,
 and [`ResizeObserver`](https://github.com/que-etc/resize-observer-polyfill) as
 necessary for your desired browser support.
 
-## Adding to a new web app
-
-The easiest way to create a new web app with React Native for Web is to rely on
-Facebook's React web starter kit –
-[create-react-app](https://github.com/facebookincubator/create-react-app). All
-that is needed after initializing a web app with CRA is to install
-`react-native-web`.
-
-If you are unfamiliar with setting up a new React web project, please follow
+If you're not familiar with setting up a new React web project, please follow
 the recommendations in the [React documentation](https://reactjs.org/).
 
-## Adding to an existing web app
+## Install
 
-Existing web apps need to alias `react-native` to `react-native-web` and
-exclude any modules not required by the app. You can do this by adding
-[`babel-plugin-react-native-web`](https://www.npmjs.com/package/babel-plugin-react-native-web)
-to the plugins in your Babel configuration.
+```
+yarn install react react-dom react-native-web
+```
+
+And if you need to use `ART`:
+
+```
+yarn add react-art
+```
+
+## Starter kits
+
+Web: [create-react-app](https://github.com/facebookincubator/create-react-app)
+includes built-in support for aliasing `react-native-web` to `react-native`.
+
+```
+create-react-app my-app
+```
+
+Multi-platform: [create-react-native-app](https://github.com/react-community/create-react-native-app)
+includes experimental support for Web.
+
+```
+create-react-native-app my-app --with-web-support
+```
+
+## Configure module bundler
+
+If you have a custom setup, you may choose to configure your module bundler to
+alias the package to `react-native`.
+
+For example, modify your [webpack](https://github.com/webpack/webpack)
+configuration as follows:
+
+```
+// webpack.config.js
+module.exports = {
+  // ...the rest of your config
+
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
+  }
+}
+```
+
+Now you can create your components and applications with the React Native API.
 
 ## Client-side rendering
 
@@ -44,7 +81,7 @@ AppRegistry.runApplication('App', {
 });
 ```
 
-Render components within existing apps:
+Or render individual components:
 
 ```js
 import AppHeader from './src/AppHeader';
@@ -54,9 +91,18 @@ import { render } from 'react-native';
 render(<AppHeader />, document.getElementById('react-app-header'))
 ```
 
-Components will also be rendered within a tree produced by calling
+(Components will also be rendered within a tree produced by calling
 `ReactDOM.render` (i.e., an existing web app), but
-otherwise it is not recommended.
+otherwise it is not recommended.)
+
+You might need to adjust the styles of the HTML document's root elements for
+your app to fill the viewport.
+
+```html
+<html style="height:100%">
+<body style="height:100%">
+<div id="react-root" style="display:flex;height:100%"></div>
+```
 
 ## Server-side rendering
 
@@ -64,31 +110,65 @@ Server-side rendering to HTML is supported using `AppRegistry`:
 
 ```js
 import App from './src/App';
-import ReactDOMServer from 'react-dom/server'
-import { AppRegistry } from 'react-native'
+import ReactDOMServer from 'react-dom/server';
+import { AppRegistry } from 'react-native-web';
 
 // register the app
-AppRegistry.registerComponent('App', () => App)
+AppRegistry.registerComponent('App', () => App);
 
 // prerender the app
 const { element, getStyleElement } = AppRegistry.getApplication('App', { initialProps });
 // first the element
 const html = ReactDOMServer.renderToString(element);
-// then the styles
-const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
+// then the styles (optionally include a nonce if your CSP policy requires it)
+const css = ReactDOMServer.renderToStaticMarkup(getStyleElement({ nonce }));
 
 // example HTML document string
 const document = `
 <!DOCTYPE html>
-<html>
+<html style="height:100%">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ${css}
+<body style="height:100%; overflow-y:hidden">
+<div id="root" style="display:flex; height: 100%">
 ${html}
+</div>
+<script nonce="${nonce}" src="${bundlePath}"></script>
 `
 ```
 
-## Web-specific code
+## Testing with Jest
+
+[Jest](https://facebook.github.io/jest/) can be configured to alias
+`react-native-web` and improve snapshots:
+
+```
+{
+  "moduleNameMapper": {
+    "react-native": "<rootDir>/node_modules/react-native-web"
+  },
+  "snapshotSerializers": [
+    "enzyme-to-json/serializer",
+    "react-native-web/jest/serializer"
+  ]
+}
+```
+
+Please refer to the Jest documentation for more information.
+
+## Using Flow
+
+[Flow](https://flow.org) can be configured to understand the aliased module:
+
+```
+[options]
+module.name_mapper='(react-native)' -> 'react-native-web'
+```
+
+## Multi-platform applications
+
+### Web-specific code
 
 Minor platform differences can use the `Platform` module.
 
@@ -120,44 +200,29 @@ import MyComponent from './MyComponent';
 React Native will automatically import the correct variant for each specific
 target platform.
 
-## Testing with Jest
-
-[Jest](https://facebook.github.io/jest/) can be configured to improve snapshots
-of `react-native-web` components.
-
-```
-{
-  "snapshotSerializers": [ "enzyme-to-json/serializer", "react-native-web/jest/serializer" ]
-}
-```
-
-Jest also needs to map `react-native` to `react-native-web` (unless you are
-using the Babel plugin).
-
-```
-{
-  "moduleNameMapper": {
-    "react-native": "<rootDir>/node_modules/react-native-web"
-  }
-}
-```
-
-Please refer to the Jest documentation for more information.
-
 ## Web packaging for existing React Native apps
 
-The web packaging landscape is diverse and fractured. Packaging web apps is
-subtly different to packaging React Native apps and is also complicated by the
-need to code-split non-trivial apps.
+What follows is merely an _example_ of one basic way to package a web app using
+[Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/). (You can
+also the React Native bundler, [Metro](https://github.com/facebook/metro), to
+build web apps.)
 
-What follows is merely an _example_ of one basic way to package a web app
-using [Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/).
+Packaging web apps is subtly different to packaging React Native apps and is
+complicated by the need to tree-shake and code-split non-trivial apps.
 
 Install webpack-related dependencies, for example:
 
 ```
 yarn add --dev babel-loader url-loader webpack webpack-cli webpack-dev-server
 ```
+
+React Native's Babel preset rewrites ES modules to CommonJS modules, preventing bundlers from automatically performing "tree-shaking" to remove
+unused modules from your web app build. To help with this, you can install the following Babel plugin:
+
+```
+yarn install --dev babel-plugin-react-native-web
+```
+
 
 Create a `web/webpack.config.js` file:
 
@@ -186,12 +251,10 @@ const babelLoaderConfiguration = {
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
-      // Babel configuration (or use .babelrc)
-      // This aliases 'react-native' to 'react-native-web' and includes only
-      // the modules needed by the app.
-      plugins: ['react-native-web'],
       // The 'react-native' preset is recommended to match React Native's packager
-      presets: ['react-native']
+      presets: ['react-native'],
+      // Re-write paths to import only the modules needed by the app
+      plugins: ['react-native-web']
     }
   }
 };
@@ -226,17 +289,10 @@ module.exports = {
     ]
   },
 
-  plugins: [
-    // `process.env.NODE_ENV === 'production'` must be `true` for production
-    // builds to eliminate development checks and reduce build size. You may
-    // wish to include additional optimizations.
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      __DEV__: process.env.NODE_ENV !== 'production' || true
-    })
-  ],
-
   resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    },
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension
     // `.web.js`.

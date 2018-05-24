@@ -4,6 +4,7 @@ module.exports = {
       'babel-preset-env',
       {
         loose: true,
+        modules: process.env.MODULES || false,
         exclude: ['transform-es2015-typeof-symbol'],
         targets: {
           browsers: [

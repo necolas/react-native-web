@@ -2,28 +2,10 @@
 
 exports[`modules/createDOMProps includes "rel" values for "a" elements (to securely open external links) 1`] = `" noopener noreferrer"`;
 
-exports[`modules/createDOMProps includes cursor style for "button" role 1`] = `
-Object {
-  "className": "rn-cursor-1loqt21",
-  "role": "button",
-  "tabIndex": "0",
-}
-`;
+exports[`modules/createDOMProps includes cursor style for "button" role 1`] = `"rn-cursor-1loqt21"`;
 
-exports[`modules/createDOMProps includes reset styles for "a" elements 1`] = `
-Object {
-  "className": "rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4",
-}
-`;
+exports[`modules/createDOMProps includes reset styles for "a" elements 1`] = `"rn-backgroundColor-wib322 rn-color-homxoj rn-textDecoration-bauka4"`;
 
-exports[`modules/createDOMProps includes reset styles for "button" elements 1`] = `
-Object {
-  "className": "rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-fontFamily-poiln3 rn-fontSize-7cikom rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-textAlign-1ttztb7",
-}
-`;
+exports[`modules/createDOMProps includes reset styles for "button" elements 1`] = `"rn-appearance-30o5oe rn-backgroundColor-wib322 rn-color-homxoj rn-fontFamily-poiln3 rn-fontSize-7cikom rn-fontStyle-o11vmf rn-fontVariant-ebii48 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-textAlign-1ttztb7"`;
 
-exports[`modules/createDOMProps includes reset styles for "ul" elements 1`] = `
-Object {
-  "className": "rn-listStyle-1ebb2ja",
-}
-`;
+exports[`modules/createDOMProps includes reset styles for "ul" elements 1`] = `"rn-listStyle-1ebb2ja"`;

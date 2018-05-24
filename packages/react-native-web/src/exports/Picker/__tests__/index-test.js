@@ -33,7 +33,7 @@ describe('components/Picker', () => {
         </Picker>
       );
       const component = shallow(picker);
-      expect(component.find('select').props().disabled).toBe(true);
+      expect(component.find('select').prop('disabled')).toBe(true);
     });
   });
 

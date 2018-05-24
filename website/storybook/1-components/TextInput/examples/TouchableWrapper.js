@@ -9,7 +9,7 @@ import { StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-nat
 export default class TouchableWrapper extends React.Component {
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this._handlePress}>
+      <TouchableWithoutFeedback importantForAccessibility="no" onPress={this._handlePress}>
         <View style={styles.container}>
           <TextInput multiline={false} ref={this._setRef} style={helperStyles.textinput} />
         </View>
@@ -19,7 +19,9 @@ export default class TouchableWrapper extends React.Component {
 
   _handlePress = () => {
     if (this._input) {
-      this._input.focus();
+      setTimeout(() => {
+        this._input.focus();
+      }, 0);
     }
   };
 

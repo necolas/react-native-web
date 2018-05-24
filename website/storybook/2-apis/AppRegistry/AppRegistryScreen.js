@@ -31,10 +31,18 @@ const AppRegistryScreen = () => (
       />
 
       <DocItem
-        description="Use this for server-side rendering to HTML. Returns a object of the given application's element, and a function to get styles once the element is rendered."
+        description={
+          <AppText>
+            Use this for server-side rendering to HTML. Returns an object containing the given
+            application's element and a function to get styles once the element is rendered.
+            Additional props can be passed to the <Code>getStyleElement</Code> function, e.g., your
+            CSP policy may require a <Code>nonce</Code> to be set on <Code>style</Code>
+            elements.
+          </AppText>
+        }
         label="web"
         name="static getApplication"
-        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; getStyleElement: () => ReactElement }"
+        typeInfo="(appKey: string, appParameters: ?object) => { element: ReactElement; getStyleElement: (props) => ReactElement }"
       />
 
       <DocItem
@@ -93,7 +101,7 @@ const AppRegistryScreen = () => (
 })`
         }}
         name="static runApplication"
-        typeInfo="(appKey: string, appParameters?: object) => void"
+        typeInfo="(appKey: string, appParameters: object) => void"
       />
 
       <DocItem

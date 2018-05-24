@@ -10,13 +10,11 @@
 import isDisabled from './isDisabled';
 import propsToAccessibilityComponent from './propsToAccessibilityComponent';
 import propsToAriaRole from './propsToAriaRole';
-import propsToTabIndex from './propsToTabIndex';
 
 const AccessibilityUtil = {
   isDisabled,
   propsToAccessibilityComponent,
-  propsToAriaRole,
-  propsToTabIndex
+  propsToAriaRole
 };
 
 export default AccessibilityUtil;

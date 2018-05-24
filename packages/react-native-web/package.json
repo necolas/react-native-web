@@ -1,8 +1,10 @@
 {
   "name": "react-native-web",
-  "version": "0.6.0",
+  "version": "0.7.2",
   "description": "React Native for Web",
-  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "sideEffects": false,
   "files": [
     "dist",
     "jest",
@@ -16,7 +18,7 @@
     "deep-assign": "^2.0.0",
     "fbjs": "^0.8.16",
     "hyphenate-style-name": "^1.0.2",
-    "inline-style-prefixer": "^4.0.0",
+    "inline-style-prefixer": "^4.0.2",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
     "react-timer-mixin": "^0.13.3"

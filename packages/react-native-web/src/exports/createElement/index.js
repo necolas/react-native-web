@@ -7,12 +7,18 @@
  * @noflow
  */
 
-import '../../modules/injectResponderEventPlugin';
-
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
+
+const { EventPluginHub } = ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
+EventPluginHub.injection.injectEventPluginsByName({
+  ResponderEventPlugin
+});
 
 /**
  * Ensure event handlers receive an event of the expected shape. The 'button'
@@ -46,17 +52,6 @@ const adjustProps = domProps => {
     if (isEventHandler) {
       if (isButtonRole && isDisabled) {
         domProps[propName] = undefined;
-      } else if (propName === 'onResponderRelease') {
-        // Browsers fire mouse events after touch events. This causes the
-        // 'onResponderRelease' handler to be called twice for Touchables.
-        // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
-        // events.
-        domProps[propName] = e => {
-          if (e.cancelable && !e.isDefaultPrevented()) {
-            e.preventDefault();
-          }
-          return prop(e);
-        };
       } else {
         // TODO: move this out of the render path
         domProps[propName] = e => {

@@ -1,4 +1,4 @@
-import { BenchmarkType } from 'react-component-benchmark';
+import { BenchmarkType } from '../app/Benchmark';
 import { number, object } from 'prop-types';
 import React, { Component } from 'react';
 

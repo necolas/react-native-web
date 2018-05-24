@@ -1,3 +1,9 @@
+/**
+ * The MIT License (MIT)
+ * Copyright (c) 2017 Paul Armstrong
+ * https://github.com/paularmstrong/react-component-benchmark
+ */
+
 /* global $Values */
 /**
  * @flow

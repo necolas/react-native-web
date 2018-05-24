@@ -4,20 +4,18 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule VirtualizeUtils
  * @flow
  * @format
  */
-'use strict';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 /**
  * Used to find the indices of the frames that overlap the given offsets. Useful for finding the
  * items that bound different windows of content, such as the visible area or the buffered overscan
  * area.
  */
-function elementsThatOverlapOffsets(
+export function elementsThatOverlapOffsets(
   offsets: Array<number>,
   itemCount: number,
   getFrameMetrics: (index: number) => { length: number, offset: number }
@@ -51,7 +49,7 @@ function elementsThatOverlapOffsets(
  * can restrict the number of new items render at once so that content can appear on the screen
  * faster.
  */
-function newRangeCount(
+export function newRangeCount(
   prev: { first: number, last: number },
   next: { first: number, last: number }
 ): number {
@@ -69,7 +67,7 @@ function newRangeCount(
  * prioritizes the visible area first, then expands that with overscan regions ahead and behind,
  * biased in the direction of scroll.
  */
-function computeWindowedRenderLimits(
+export function computeWindowedRenderLimits(
   props: {
     data: any,
     getItemCount: (data: any) => number,
@@ -202,4 +200,4 @@ const VirtualizeUtils = {
   newRangeCount
 };
 
-module.exports = VirtualizeUtils;
+export default VirtualizeUtils;

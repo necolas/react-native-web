@@ -4,13 +4,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule ViewabilityHelper
  * @noflow
  * @format
  */
-'use strict';
 
-const invariant = require('fbjs/lib/invariant');
+import invariant from 'fbjs/lib/invariant';
 
 export type ViewToken = {
   item: any,
@@ -276,4 +274,4 @@ function _isEntirelyVisible(top: number, bottom: number, viewportHeight: number)
   return top >= 0 && bottom <= viewportHeight && bottom > top;
 }
 
-module.exports = ViewabilityHelper;
+export default ViewabilityHelper;
