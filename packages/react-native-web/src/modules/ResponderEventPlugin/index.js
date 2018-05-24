@@ -5,37 +5,43 @@ import ReactDOMUnstableNativeDependencies from 'react-dom/unstable-native-depend
 
 const { ResponderEventPlugin, ResponderTouchHistoryStore } = ReactDOMUnstableNativeDependencies;
 
-const topMouseDown = 'topMouseDown';
-const topMouseMove = 'topMouseMove';
-const topMouseUp = 'topMouseUp';
-const topScroll = 'topScroll';
-const topSelectionChange = 'topSelectionChange';
-const topTouchCancel = 'topTouchCancel';
-const topTouchEnd = 'topTouchEnd';
-const topTouchMove = 'topTouchMove';
-const topTouchStart = 'topTouchStart';
+// On older versions of React (< 16.4) we have to inject the dependencies in order for the plugin
+// to work properly in the browser.
+// This version still uses `top*` strings to identify the internal event names.
+// https://github.com/facebook/react/pull/12629
+if (!ResponderEventPlugin.eventTypes.responderMove.dependencies){
+  const topMouseDown = 'topMouseDown';
+  const topMouseMove = 'topMouseMove';
+  const topMouseUp = 'topMouseUp';
+  const topScroll = 'topScroll';
+  const topSelectionChange = 'topSelectionChange';
+  const topTouchCancel = 'topTouchCancel';
+  const topTouchEnd = 'topTouchEnd';
+  const topTouchMove = 'topTouchMove';
+  const topTouchStart = 'topTouchStart';
 
-const endDependencies = [topTouchCancel, topTouchEnd, topMouseUp];
-const moveDependencies = [topTouchMove, topMouseMove];
-const startDependencies = [topTouchStart, topMouseDown];
+  const endDependencies = [topTouchCancel, topTouchEnd, topMouseUp];
+  const moveDependencies = [topTouchMove, topMouseMove];
+  const startDependencies = [topTouchStart, topMouseDown];
 
-/**
- * Setup ResponderEventPlugin dependencies
- */
-ResponderEventPlugin.eventTypes.responderMove.dependencies = moveDependencies;
-ResponderEventPlugin.eventTypes.responderEnd.dependencies = endDependencies;
-ResponderEventPlugin.eventTypes.responderStart.dependencies = startDependencies;
-ResponderEventPlugin.eventTypes.responderRelease.dependencies = endDependencies;
-ResponderEventPlugin.eventTypes.responderTerminationRequest.dependencies = [];
-ResponderEventPlugin.eventTypes.responderGrant.dependencies = [];
-ResponderEventPlugin.eventTypes.responderReject.dependencies = [];
-ResponderEventPlugin.eventTypes.responderTerminate.dependencies = [];
-ResponderEventPlugin.eventTypes.moveShouldSetResponder.dependencies = moveDependencies;
-ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies = [
-  topSelectionChange
-];
-ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [topScroll];
-ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies;
+  /**
+   * Setup ResponderEventPlugin dependencies
+   */
+  ResponderEventPlugin.eventTypes.responderMove.dependencies = moveDependencies;
+  ResponderEventPlugin.eventTypes.responderEnd.dependencies = endDependencies;
+  ResponderEventPlugin.eventTypes.responderStart.dependencies = startDependencies;
+  ResponderEventPlugin.eventTypes.responderRelease.dependencies = endDependencies;
+  ResponderEventPlugin.eventTypes.responderTerminationRequest.dependencies = [];
+  ResponderEventPlugin.eventTypes.responderGrant.dependencies = [];
+  ResponderEventPlugin.eventTypes.responderReject.dependencies = [];
+  ResponderEventPlugin.eventTypes.responderTerminate.dependencies = [];
+  ResponderEventPlugin.eventTypes.moveShouldSetResponder.dependencies = moveDependencies;
+  ResponderEventPlugin.eventTypes.selectionChangeShouldSetResponder.dependencies = [
+    topSelectionChange
+  ];
+  ResponderEventPlugin.eventTypes.scrollShouldSetResponder.dependencies = [topScroll];
+  ResponderEventPlugin.eventTypes.startShouldSetResponder.dependencies = startDependencies;
+}
 
 let lastActiveTouchTimestamp = null;
 
