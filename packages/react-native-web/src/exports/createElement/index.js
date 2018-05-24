@@ -20,6 +20,9 @@ EventPluginHub.injection.injectEventPluginsByName({
   ResponderEventPlugin
 });
 
+const isModifiedEvent = event =>
+  !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+
 /**
  * Ensure event handlers receive an event of the expected shape. The 'button'
  * role – for accessibility reasons and functional equivalence to the native
@@ -43,7 +46,9 @@ const eventHandlerNames = {
   onTouchStartCapture: true
 };
 const adjustProps = domProps => {
-  const isButtonRole = domProps.role === 'button';
+  const { onClick, onResponderRelease, role } = domProps;
+
+  const isButtonRole = role === 'button';
   const isDisabled = AccessibilityUtil.isDisabled(domProps);
 
   Object.keys(domProps).forEach(propName => {
@@ -62,9 +67,20 @@ const adjustProps = domProps => {
     }
   });
 
-  // Button role should trigger 'onClick' if SPACE or ENTER keys are pressed
+  // Cancel click events if the responder system is being used. Click events
+  // are not an expected part of the React Native API, and browsers dispatch
+  // click events that cannot otherwise be cancelled from preceding mouse
+  // events in the responder system.
+  if (onResponderRelease) {
+    domProps.onClick = function(e) {
+      if (!e.isDefaultPrevented() && !isModifiedEvent(e.nativeEvent) && !domProps.target) {
+        e.preventDefault();
+      }
+    };
+  }
+
+  // Button role should trigger 'onClick' if SPACE or ENTER keys are pressed.
   if (isButtonRole && !isDisabled) {
-    const { onClick } = domProps;
     domProps.onKeyPress = function(e) {
       if (!e.isDefaultPrevented() && (e.which === 13 || e.which === 32)) {
         e.preventDefault();

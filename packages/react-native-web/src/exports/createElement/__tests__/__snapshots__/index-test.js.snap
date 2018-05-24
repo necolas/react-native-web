@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/createElement it normalizes event.nativeEvent 1`] = `
+exports[`modules/createElement normalizes event.nativeEvent 1`] = `
 Object {
   "_normalized": true,
   "bubbles": undefined,
@@ -23,6 +23,6 @@ Object {
 }
 `;
 
-exports[`modules/createElement it renders different DOM elements 1`] = `<span />`;
+exports[`modules/createElement renders different DOM elements 1`] = `<span />`;
 
-exports[`modules/createElement it renders different DOM elements 2`] = `<main />`;
+exports[`modules/createElement renders different DOM elements 2`] = `<main />`;
