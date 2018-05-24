@@ -188,37 +188,6 @@ class Image extends Component<*, State> {
       ...other
     } = this.props;
 
-    const displayImage = resolveAssetUri(shouldDisplaySource ? source : defaultSource);
-    const imageSizeStyle = resolveAssetDimensions(shouldDisplaySource ? source : defaultSource);
-    const backgroundImage = displayImage ? `url("${displayImage}")` : null;
-    const originalStyle = StyleSheet.flatten(this.props.style);
-    const finalResizeMode = resizeMode || originalStyle.resizeMode || ImageResizeMode.cover;
-
-    const style = StyleSheet.flatten([
-      styles.initial,
-      imageSizeStyle,
-      originalStyle,
-      resizeModeStyles[finalResizeMode],
-      this.context.isInAParentText && styles.inline,
-      backgroundImage && { backgroundImage }
-    ]);
-    // View doesn't support these styles
-    delete style.overlayColor;
-    delete style.resizeMode;
-    delete style.tintColor;
-
-    // Allows users to trigger the browser's image context menu
-    const hiddenImage = displayImage
-      ? createElement('img', {
-          alt: accessibilityLabel || '',
-          decode: 'async',
-          draggable: draggable || false,
-          ref: this._setImageRef,
-          src: displayImage,
-          style: styles.img
-        })
-      : null;
-
     if (process.env.NODE_ENV !== 'production') {
       if (this.props.src) {
         console.warn('The <Image> component requires a `source` property rather than `src`.');
@@ -231,15 +200,49 @@ class Image extends Component<*, State> {
       }
     }
 
+    const selectedSource = shouldDisplaySource ? source : defaultSource;
+    const displayImageUri = resolveAssetUri(selectedSource);
+    const imageSizeStyle = resolveAssetDimensions(selectedSource);
+    const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
+    const flatStyle = { ...StyleSheet.flatten(this.props.style) };
+    const finalResizeMode = resizeMode || flatStyle.resizeMode || ImageResizeMode.cover;
+    // View doesn't support these styles
+    delete flatStyle.overlayColor;
+    delete flatStyle.resizeMode;
+    delete flatStyle.tintColor;
+
+    // Accessibility image allows users to trigger the browser's image context menu
+    const hiddenImage = displayImageUri
+      ? createElement('img', {
+          alt: accessibilityLabel || '',
+          draggable: draggable || false,
+          ref: this._setImageRef,
+          src: displayImageUri,
+          style: styles.accessibilityImage
+        })
+      : null;
+
     return (
       <View
         {...other}
         accessibilityLabel={accessibilityLabel}
         accessible={accessible}
         onLayout={onLayout}
-        style={style}
+        style={[
+          styles.root,
+          this.context.isInAParentText && styles.inline,
+          imageSizeStyle,
+          flatStyle
+        ]}
         testID={testID}
       >
+        <View
+          style={[
+            styles.image,
+            resizeModeStyles[finalResizeMode],
+            backgroundImage && { backgroundImage }
+          ]}
+        />
         {hiddenImage}
       </View>
     );
@@ -317,17 +320,25 @@ class Image extends Component<*, State> {
 }
 
 const styles = StyleSheet.create({
-  initial: {
-    backgroundColor: 'transparent',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
+  root: {
+    flexBasis: 'auto',
+    overflow: 'hidden',
     zIndex: 0
   },
   inline: {
     display: 'inline-flex'
   },
-  img: {
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height: '100%',
+    width: '100%',
+    zIndex: -1
+  },
+  accessibilityImage: {
     ...StyleSheet.absoluteFillObject,
     height: '100%',
     opacity: 0,
@@ -338,8 +349,7 @@ const styles = StyleSheet.create({
 
 const resizeModeStyles = StyleSheet.create({
   center: {
-    backgroundSize: 'auto',
-    backgroundPosition: 'center'
+    backgroundSize: 'auto'
   },
   contain: {
     backgroundSize: 'contain'
@@ -348,11 +358,13 @@ const resizeModeStyles = StyleSheet.create({
     backgroundSize: 'cover'
   },
   none: {
+    backgroundPosition: '0 0',
     backgroundSize: 'auto'
   },
   repeat: {
-    backgroundSize: 'auto',
-    backgroundRepeat: 'repeat'
+    backgroundPosition: '0 0',
+    backgroundRepeat: 'repeat',
+    backgroundSize: 'auto'
   },
   stretch: {
     backgroundSize: '100% 100%'

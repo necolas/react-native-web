@@ -5,9 +5,12 @@ import Image from '../';
 import ImageLoader from '../../../modules/ImageLoader';
 import ImageUriCache from '../ImageUriCache';
 import React from 'react';
+import StyleSheet from '../../StyleSheet';
 import { mount, shallow } from 'enzyme';
 
 const originalImage = window.Image;
+
+const findImageSurfaceStyle = wrapper => StyleSheet.flatten(wrapper.childAt(0).prop('style'));
 
 describe('components/Image', () => {
   beforeEach(() => {
@@ -37,14 +40,14 @@ describe('components/Image', () => {
     test('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
       const component = shallow(<Image defaultSource={defaultSource} />);
-      expect(component.prop('style').backgroundImage).toMatchSnapshot();
+      expect(findImageSurfaceStyle(component).backgroundImage).toMatchSnapshot();
     });
 
     test('sets background image when value is a string', () => {
       // emulate require-ed asset
       const defaultSource = 'https://google.com/favicon.ico';
       const component = shallow(<Image defaultSource={defaultSource} />);
-      expect(component.prop('style').backgroundImage).toMatchSnapshot();
+      expect(findImageSurfaceStyle(component).backgroundImage).toMatchSnapshot();
     });
 
     test('sets "height" and "width" styles if missing', () => {
@@ -54,7 +57,7 @@ describe('components/Image', () => {
         width: 20
       };
       const component = shallow(<Image defaultSource={defaultSource} />);
-      const { height, width } = component.prop('style');
+      const { height, width } = StyleSheet.flatten(component.prop('style'));
       expect(height).toBe(10);
       expect(width).toBe(20);
     });
@@ -68,7 +71,7 @@ describe('components/Image', () => {
       const component = shallow(
         <Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />
       );
-      const { height, width } = component.prop('style');
+      const { height, width } = StyleSheet.flatten(component.prop('style'));
       expect(height).toBe(20);
       expect(width).toBe(40);
     });
@@ -141,7 +144,7 @@ describe('components/Image', () => {
     ].forEach(resizeMode => {
       test(`value "${resizeMode}"`, () => {
         const component = shallow(<Image resizeMode={resizeMode} />);
-        expect(component.prop('style').backgroundSize).toMatchSnapshot();
+        expect(findImageSurfaceStyle(component).backgroundSize).toMatchSnapshot();
       });
     });
   });
@@ -206,7 +209,7 @@ describe('components/Image', () => {
   describe('prop "style"', () => {
     test('correctly supports "resizeMode" property', () => {
       const component = shallow(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
-      expect(component.prop('style').backgroundSize).toMatchSnapshot();
+      expect(findImageSurfaceStyle(component).backgroundSize).toMatchSnapshot();
     });
 
     test('removes other unsupported View styles', () => {
