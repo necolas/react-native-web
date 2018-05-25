@@ -48,6 +48,24 @@ import * as ReactNativeModules from 'react-native-web/dist/index';
 "
 `;
 
+exports[`Rewrite react-native to react-native-web import from "native-native": import from "native-native" 2`] = `
+"
+import ReactNative from 'react-native';
+import { View } from 'react-native';
+import { Invalid, View as MyView, ViewPropTypes } from 'react-native';
+import * as ReactNativeModules from 'react-native';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import ReactNative from 'react-native-web/dist/cjs/index';
+import View from 'react-native-web/dist/cjs/exports/View';
+import { Invalid } from 'react-native-web/dist/cjs/index';
+import MyView from 'react-native-web/dist/cjs/exports/View';
+import ViewPropTypes from 'react-native-web/dist/cjs/exports/ViewPropTypes';
+import * as ReactNativeModules from 'react-native-web/dist/cjs/index';
+"
+`;
+
 exports[`Rewrite react-native to react-native-web import from "react-native-web": import from "react-native-web" 1`] = `
 "
 import { createElement } from 'react-native-web';
@@ -70,7 +88,7 @@ exports[`Rewrite react-native to react-native-web require "react-native": requir
 "
 const ReactNative = require('react-native');
 const { View } = require('react-native');
-const {  StyleSheet, TouchableOpacity } = require('react-native');
+const { StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -81,6 +99,24 @@ const View = require('react-native-web/dist/exports/View').default;
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
 
 const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity').default;
+"
+`;
+
+exports[`Rewrite react-native to react-native-web require "react-native": require "react-native" 2`] = `
+"
+const ReactNative = require('react-native');
+const { View } = require('react-native');
+const { StyleSheet, TouchableOpacity } = require('react-native');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ReactNative = require('react-native-web/dist/cjs/index').default;
+
+const View = require('react-native-web/dist/cjs/exports/View').default;
+
+const StyleSheet = require('react-native-web/dist/cjs/exports/StyleSheet').default;
+
+const TouchableOpacity = require('react-native-web/dist/cjs/exports/TouchableOpacity').default;
 "
 `;
 

@@ -17,9 +17,17 @@ yarn add --dev babel-plugin-react-native-web
 
 ```
 {
-  "plugins": ["react-native-web"]
+  "plugins": [
+    ["react-native-web", { commonjs: true }]
+  ]
 }
 ```
+
+You should configure the plugin to match the module format used by your
+bundler. Most modern bundlers will use a package's ES modules by default (i.e.,
+if `package.json` has a `module` field). But if you need the plugin to rewrite
+import paths to point to CommonJS modules, you must set the `commonjs` option
+to `true`.
 
 ## Example
 

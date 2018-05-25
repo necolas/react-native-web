@@ -1,7 +1,15 @@
 const moduleMap = require('./moduleMap');
 
-const getDistLocation = importName =>
-  importName && moduleMap[importName] ? `react-native-web/dist/exports/${importName}` : undefined;
+const isCommonJS = opts => opts.commonjs === true;
+
+const getDistLocation = (importName, opts) => {
+  const format = isCommonJS(opts) ? 'cjs/' : '';
+  if (importName === 'index') {
+    return `react-native-web/dist/${format}index`;
+  } else if (importName && moduleMap[importName]) {
+    return `react-native-web/dist/${format}exports/${importName}`;
+  }
+};
 
 const isReactNativeRequire = (t, node) => {
   const { declarations } = node;
@@ -35,7 +43,7 @@ module.exports = function({ types: t }) {
             .map(specifier => {
               if (t.isImportSpecifier(specifier)) {
                 const importName = specifier.imported.name;
-                const distLocation = getDistLocation(importName);
+                const distLocation = getDistLocation(importName, state.opts);
 
                 if (distLocation) {
                   return t.importDeclaration(
@@ -46,7 +54,7 @@ module.exports = function({ types: t }) {
               }
               return t.importDeclaration(
                 [specifier],
-                t.stringLiteral('react-native-web/dist/index')
+                t.stringLiteral(getDistLocation('index', state.opts))
               );
             })
             .filter(Boolean);
@@ -62,7 +70,7 @@ module.exports = function({ types: t }) {
               if (t.isExportSpecifier(specifier)) {
                 const exportName = specifier.exported.name;
                 const localName = specifier.local.name;
-                const distLocation = getDistLocation(localName);
+                const distLocation = getDistLocation(localName, state.opts);
 
                 if (distLocation) {
                   return t.exportNamedDeclaration(
@@ -75,7 +83,7 @@ module.exports = function({ types: t }) {
               return t.exportNamedDeclaration(
                 null,
                 [specifier],
-                t.stringLiteral('react-native-web/dist/index')
+                t.stringLiteral(getDistLocation('index', state.opts))
               );
             })
             .filter(Boolean);
@@ -89,7 +97,7 @@ module.exports = function({ types: t }) {
           if (t.isObjectPattern(id)) {
             const imports = id.properties
               .map(identifier => {
-                const distLocation = getDistLocation(identifier.key.name);
+                const distLocation = getDistLocation(identifier.key.name, state.opts);
                 if (distLocation) {
                   return t.variableDeclaration(path.node.kind, [
                     t.variableDeclarator(
@@ -112,7 +120,7 @@ module.exports = function({ types: t }) {
                 t.identifier(name),
                 t.memberExpression(
                   t.callExpression(t.identifier('require'), [
-                    t.stringLiteral('react-native-web/dist/index')
+                    t.stringLiteral(getDistLocation('index', state.opts))
                   ]),
                   t.identifier('default')
                 )

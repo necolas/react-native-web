@@ -216,13 +216,14 @@ Install webpack-related dependencies, for example:
 yarn add --dev babel-loader url-loader webpack webpack-cli webpack-dev-server
 ```
 
-React Native's Babel preset rewrites ES modules to CommonJS modules, preventing bundlers from automatically performing "tree-shaking" to remove
-unused modules from your web app build. To help with this, you can install the following Babel plugin:
+React Native's Babel preset rewrites ES modules to CommonJS modules, preventing
+bundlers from automatically performing "tree-shaking" to remove unused modules
+from your web app build. To help with this, you can install the following Babel
+plugin:
 
 ```
 yarn install --dev babel-plugin-react-native-web
 ```
-
 
 Create a `web/webpack.config.js` file:
 
