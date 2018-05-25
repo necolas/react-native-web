@@ -11,6 +11,7 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
+import resolveShadowValue from '../StyleSheet/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageResizeMode from './ImageResizeMode';
 import ImageSourcePropType from './ImageSourcePropType';
@@ -73,6 +74,20 @@ const resolveAssetUri = source => {
   return uri;
 };
 
+let filterId = 0;
+
+const createTintColorSVG = (tintColor, id) =>
+  tintColor && id != null ? (
+    <svg style={{ position: 'absolute', height: 0, visibility: 'hidden', width: 0 }}>
+      <defs>
+        <filter id={`tint-${id}`}>
+          <feFlood floodColor={`${tintColor}`} />
+          <feComposite in2="SourceAlpha" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+  ) : null;
+
 type State = {
   shouldDisplaySource: boolean
 };
@@ -86,6 +101,7 @@ class Image extends Component<*, State> {
 
   static propTypes = {
     ...ViewPropTypes,
+    blurRadius: number,
     defaultSource: ImageSourcePropType,
     draggable: bool,
     onError: func,
@@ -98,7 +114,6 @@ class Image extends Component<*, State> {
     style: StyleSheetPropType(ImageStylePropTypes),
     // compatibility with React Native
     /* eslint-disable react/sort-prop-types */
-    blurRadius: number,
     capInsets: shape({ top: number, left: number, bottom: number, right: number }),
     resizeMethod: oneOf(['auto', 'resize', 'scale'])
     /* eslint-enable react/sort-prop-types */
@@ -118,6 +133,7 @@ class Image extends Component<*, State> {
 
   static resizeMode = ImageResizeMode;
 
+  _filterId = 0;
   _imageRef = null;
   _imageRequestId = null;
   _imageState = null;
@@ -130,6 +146,8 @@ class Image extends Component<*, State> {
     const shouldDisplaySource = ImageUriCache.has(uri);
     this.state = { shouldDisplaySource };
     this._imageState = getImageState(uri, shouldDisplaySource);
+    this._filterId = filterId;
+    filterId++;
   }
 
   componentDidMount() {
@@ -170,13 +188,13 @@ class Image extends Component<*, State> {
     const {
       accessibilityLabel,
       accessible,
+      blurRadius,
       defaultSource,
       draggable,
       onLayout,
       source,
       testID,
       /* eslint-disable */
-      blurRadius,
       capInsets,
       onError,
       onLoad,
@@ -206,10 +224,35 @@ class Image extends Component<*, State> {
     const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
     const flatStyle = { ...StyleSheet.flatten(this.props.style) };
     const finalResizeMode = resizeMode || flatStyle.resizeMode || ImageResizeMode.cover;
-    // View doesn't support these styles
+
+    // CSS filters
+    const filters = [];
+    const tintColor = flatStyle.tintColor;
+    if (flatStyle.filter) {
+      filters.push(flatStyle.filter);
+    }
+    if (blurRadius) {
+      filters.push(`blur(${blurRadius}px)`);
+    }
+    if (flatStyle.shadowOffset) {
+      const shadowString = resolveShadowValue(flatStyle);
+      if (shadowString) {
+        filters.push(`drop-shadow(${shadowString})`);
+      }
+    }
+    if (flatStyle.tintColor) {
+      filters.push(`url(#tint-${this._filterId})`);
+    }
+
+    // these styles were converted to filters
+    delete flatStyle.shadowColor;
+    delete flatStyle.shadowOpacity;
+    delete flatStyle.shadowOffset;
+    delete flatStyle.shadowRadius;
+    delete flatStyle.tintColor;
+    // these styles are not supported on View
     delete flatStyle.overlayColor;
     delete flatStyle.resizeMode;
-    delete flatStyle.tintColor;
 
     // Accessibility image allows users to trigger the browser's image context menu
     const hiddenImage = displayImageUri
@@ -240,10 +283,12 @@ class Image extends Component<*, State> {
           style={[
             styles.image,
             resizeModeStyles[finalResizeMode],
-            backgroundImage && { backgroundImage }
+            backgroundImage && { backgroundImage },
+            filters.length > 0 && { filter: filters.join(' ') }
           ]}
         />
         {hiddenImage}
+        {createTintColorSVG(tintColor, this._filterId)}
       </View>
     );
   }

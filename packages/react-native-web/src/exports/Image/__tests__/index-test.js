@@ -36,6 +36,12 @@ describe('components/Image', () => {
     expect(component.prop('accessible')).toBe(false);
   });
 
+  test('prop "blurRadius"', () => {
+    const defaultSource = { uri: 'https://google.com/favicon.ico' };
+    const component = shallow(<Image blurRadius={5} defaultSource={defaultSource} />);
+    expect(findImageSurfaceStyle(component).filter).toMatchSnapshot();
+  });
+
   describe('prop "defaultSource"', () => {
     test('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
@@ -207,9 +213,27 @@ describe('components/Image', () => {
   });
 
   describe('prop "style"', () => {
-    test('correctly supports "resizeMode" property', () => {
+    test('supports "resizeMode" property', () => {
       const component = shallow(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
       expect(findImageSurfaceStyle(component).backgroundSize).toMatchSnapshot();
+    });
+
+    test('supports "shadow" properties (convert to filter)', () => {
+      const component = shallow(
+        <Image style={{ shadowColor: 'red', shadowOffset: { width: 1, height: 1 } }} />
+      );
+      expect(findImageSurfaceStyle(component).filter).toMatchSnapshot();
+    });
+
+    test('supports "tintcolor" property (convert to filter)', () => {
+      const defaultSource = { uri: 'https://google.com/favicon.ico' };
+      const component = shallow(
+        <Image defaultSource={defaultSource} style={{ tintColor: 'red' }} />
+      );
+      // filter
+      expect(findImageSurfaceStyle(component).filter).toContain('url(#tint-');
+      // svg
+      expect(component.childAt(2).type()).toBe('svg');
     });
 
     test('removes other unsupported View styles', () => {

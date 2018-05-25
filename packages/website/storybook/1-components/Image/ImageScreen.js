@@ -21,6 +21,7 @@ import UIExplorer, {
   Description,
   DocItem,
   Section,
+  StyleList,
   storiesOf
 } from '../../ui-explorer';
 
@@ -33,6 +34,12 @@ const ImageScreen = () => (
 
     <Section title="Props">
       <DocItem name="...View props" />
+
+      <DocItem
+        name="blurRadius"
+        typeInfo="?number"
+        description="The blur radius of the blur filter added to the image"
+      />
 
       <DocItem
         name="defaultSource"
@@ -122,7 +129,11 @@ const ImageScreen = () => (
         }}
       />
 
-      <DocItem name="style" typeInfo="?style" />
+      <DocItem
+        name="style"
+        typeInfo="?style"
+        description={<StyleList stylePropTypes={stylePropTypes} />}
+      />
     </Section>
 
     <Section title="Properties">
@@ -167,5 +178,18 @@ const ImageScreen = () => (
     </Section>
   </UIExplorer>
 );
+
+const stylePropTypes = [
+  {
+    name: '...View#style'
+  },
+  {
+    name: 'resizeMode'
+  },
+  {
+    name: 'tintColor',
+    typeInfo: 'color'
+  }
+];
 
 storiesOf('Components', module).add('Image', ImageScreen);

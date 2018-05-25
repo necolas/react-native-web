@@ -22,11 +22,11 @@ const ImageStylePropTypes = {
   backgroundColor: ColorPropType,
   opacity: number,
   resizeMode: oneOf(Object.keys(ImageResizeMode)),
+  tintColor: ColorPropType,
   /**
    * @platform unsupported
    */
   overlayColor: string,
-  tintColor: ColorPropType,
   /**
    * @platform web
    */

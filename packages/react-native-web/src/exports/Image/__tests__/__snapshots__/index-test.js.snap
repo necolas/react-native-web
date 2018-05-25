@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/Image prop "blurRadius" 1`] = `"blur(5px)"`;
+
 exports[`components/Image prop "defaultSource" sets background image when value is a string 1`] = `"url(\\"https://google.com/favicon.ico\\")"`;
 
 exports[`components/Image prop "defaultSource" sets background image when value is an object 1`] = `"url(\\"https://google.com/favicon.ico\\")"`;
@@ -14,4 +16,6 @@ exports[`components/Image prop "resizeMode" value "stretch" 1`] = `"100% 100%"`;
 
 exports[`components/Image prop "resizeMode" value "undefined" 1`] = `"cover"`;
 
-exports[`components/Image prop "style" correctly supports "resizeMode" property 1`] = `"contain"`;
+exports[`components/Image prop "style" supports "resizeMode" property 1`] = `"contain"`;
+
+exports[`components/Image prop "style" supports "shadow" properties (convert to filter) 1`] = `"drop-shadow(1px 1px 0px rgba(255,0,0,1.00))"`;

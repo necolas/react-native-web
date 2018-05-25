@@ -9,6 +9,7 @@
 
 import normalizeColor from '../../modules/normalizeColor';
 import normalizeValue from './normalizeValue';
+import resolveShadowValue from './resolveShadowValue';
 
 /**
  * The browser implements the CSS cascade, where the order of properties is a
@@ -82,16 +83,9 @@ const defaultOffset = { height: 0, width: 0 };
  * Shadow
  */
 
-// TODO: add inset and spread support
 const resolveShadow = (resolvedStyle, style) => {
-  const { boxShadow, shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
-  const { height, width } = shadowOffset || defaultOffset;
-  const offsetX = normalizeValue(null, width);
-  const offsetY = normalizeValue(null, height);
-  const blurRadius = normalizeValue(null, shadowRadius || 0);
-  const color = normalizeColor(shadowColor || 'black', shadowOpacity);
-
-  const shadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  const { boxShadow } = style;
+  const shadow = resolveShadowValue(style);
   resolvedStyle.boxShadow = boxShadow ? `${boxShadow}, ${shadow}` : shadow;
 };
 
