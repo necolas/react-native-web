@@ -97,7 +97,10 @@ const UIManager = {
 
   configureNextLayoutAnimation(config, onAnimationDidEnd) {
     onAnimationDidEnd();
-  }
+  },
+
+  // mocks
+  setLayoutAnimationEnabledExperimental() {}
 };
 
 export default UIManager;
