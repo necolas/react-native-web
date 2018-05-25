@@ -1,4 +1,4 @@
-# Advanced use
+# Experimental / unstable uses
 
 ## Use with existing React DOM components
 

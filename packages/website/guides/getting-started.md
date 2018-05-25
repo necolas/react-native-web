@@ -13,7 +13,7 @@ the recommendations in the [React documentation](https://reactjs.org/).
 ## Install
 
 ```
-yarn install react react-dom react-native-web
+yarn add react react-dom react-native-web
 ```
 
 And if you need to use `ART`:
@@ -38,7 +38,7 @@ includes experimental support for Web.
 create-react-native-app my-app --with-web-support
 ```
 
-## Configure module bundler
+## Configuring a module bundler
 
 If you have a custom setup, you may choose to configure your module bundler to
 alias the package to `react-native`.
@@ -46,20 +46,37 @@ alias the package to `react-native`.
 For example, modify your [webpack](https://github.com/webpack/webpack)
 configuration as follows:
 
-```
+```js
 // webpack.config.js
 module.exports = {
   // ...the rest of your config
 
   resolve: {
     alias: {
-      'react-native': 'react-native-web'
+      'react-native$': 'react-native-web'
     }
   }
 }
 ```
 
 Now you can create your components and applications with the React Native API.
+
+## Configuring babel
+
+If you need to do the aliasing with Babel you can use
+[babel-plugin-module-resolver](https://www.npmjs.com/package/babel-plugin-module-resolver)
+
+```
+{
+  "plugins": [
+    ["module-resolver", {
+      "alias": {
+        "^react-native$": "react-native-web"
+      }
+    }]
+  ]
+}
+```
 
 ## Client-side rendering
 
@@ -140,18 +157,13 @@ ${html}
 
 ## Testing with Jest
 
-[Jest](https://facebook.github.io/jest/) can be configured to alias
-`react-native-web` and improve snapshots:
+[Jest](https://facebook.github.io/jest/) can be configured using the provided
+preset. This will map `react-native` to `react-native-web` and provide
+appropriate mocks:
 
 ```
 {
-  "moduleNameMapper": {
-    "react-native": "<rootDir>/node_modules/react-native-web"
-  },
-  "snapshotSerializers": [
-    "enzyme-to-json/serializer",
-    "react-native-web/jest/serializer"
-  ]
+  "preset": "react-native-web"
 }
 ```
 
@@ -272,8 +284,12 @@ const imageLoaderConfiguration = {
 };
 
 module.exports = {
-  // your web-specific entry file
-  entry: path.resolve(appDirectory, 'index.web.js'),
+  entry: [
+    // load any web API polyfills
+    // path.resolve(appDirectory, 'polyfills-web.js'),
+    // your web-specific entry file
+    path.resolve(appDirectory, 'index.web.js')
+  ],
 
   // configures where the build ends up
   output: {
@@ -291,8 +307,9 @@ module.exports = {
   },
 
   resolve: {
+    // This will only alias the exact import "react-native"
     alias: {
-      'react-native': 'react-native-web'
+      'react-native$': 'react-native-web'
     },
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension
