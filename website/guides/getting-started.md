@@ -13,7 +13,7 @@ the recommendations in the [React documentation](https://reactjs.org/).
 ## Install
 
 ```
-yarn install react react-dom react-native-web
+yarn add react react-dom react-native-web
 ```
 
 And if you need to use `ART`:
