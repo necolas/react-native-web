@@ -89,6 +89,7 @@ const createTintColorSVG = (tintColor, id) =>
   ) : null;
 
 type State = {
+  layout: Object,
   shouldDisplaySource: boolean
 };
 
@@ -144,7 +145,7 @@ class Image extends Component<*, State> {
     // If an image has been loaded before, render it immediately
     const uri = resolveAssetUri(props.source);
     const shouldDisplaySource = ImageUriCache.has(uri);
-    this.state = { shouldDisplaySource };
+    this.state = { layout: {}, shouldDisplaySource };
     this._imageState = getImageState(uri, shouldDisplaySource);
     this._filterId = filterId;
     filterId++;
@@ -191,12 +192,12 @@ class Image extends Component<*, State> {
       blurRadius,
       defaultSource,
       draggable,
-      onLayout,
       source,
       testID,
       /* eslint-disable */
       capInsets,
       onError,
+      onLayout,
       onLoad,
       onLoadEnd,
       onLoadStart,
@@ -270,7 +271,7 @@ class Image extends Component<*, State> {
         {...other}
         accessibilityLabel={accessibilityLabel}
         accessible={accessible}
-        onLayout={onLayout}
+        onLayout={this._createLayoutHandler(finalResizeMode)}
         style={[
           styles.root,
           this.context.isInAParentText && styles.inline,
@@ -283,6 +284,7 @@ class Image extends Component<*, State> {
           style={[
             styles.image,
             resizeModeStyles[finalResizeMode],
+            this._getBackgroundSize(finalResizeMode),
             backgroundImage && { backgroundImage },
             filters.length > 0 && { filter: filters.join(' ') }
           ]}
@@ -307,6 +309,32 @@ class Image extends Component<*, State> {
       this._imageRequestId = null;
     }
   }
+
+  _createLayoutHandler = resizeMode => {
+    const { onLayout } = this.props;
+    if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
+      return e => {
+        const { layout } = e.nativeEvent;
+        onLayout && onLayout(e);
+        this.setState(() => ({ layout }));
+      };
+    }
+  };
+
+  _getBackgroundSize = resizeMode => {
+    if (this._imageRef && (resizeMode === 'center' || resizeMode === 'repeat')) {
+      const { naturalHeight, naturalWidth } = this._imageRef;
+      const { height, width } = this.state.layout;
+      if (naturalHeight && naturalWidth && height && width) {
+        const scaleFactor = Math.min(1, width / naturalWidth, height / naturalHeight);
+        const x = Math.ceil(scaleFactor * naturalWidth);
+        const y = Math.ceil(scaleFactor * naturalHeight);
+        return {
+          backgroundSize: `${x}px ${y}px`
+        };
+      }
+    }
+  };
 
   _onError = () => {
     const { onError, source } = this.props;
