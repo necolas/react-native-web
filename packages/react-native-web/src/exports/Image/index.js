@@ -160,20 +160,17 @@ class Image extends Component<*, State> {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const prevUri = resolveAssetUri(prevProps.source);
+    const uri = resolveAssetUri(this.props.source);
+    if (prevUri !== uri) {
+      ImageUriCache.remove(prevUri);
+      const isPreviouslyLoaded = ImageUriCache.has(uri);
+      isPreviouslyLoaded && ImageUriCache.add(uri);
+      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
+    }
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const uri = resolveAssetUri(this.props.source);
-    const nextUri = resolveAssetUri(nextProps.source);
-    if (uri !== nextUri) {
-      ImageUriCache.remove(uri);
-      const isPreviouslyLoaded = ImageUriCache.has(nextUri);
-      isPreviouslyLoaded && ImageUriCache.add(nextUri);
-      this._updateImageState(getImageState(nextUri, isPreviouslyLoaded));
     }
   }
 
