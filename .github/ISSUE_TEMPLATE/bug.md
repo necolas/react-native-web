@@ -20,13 +20,13 @@ Steps to reproduce:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Environment (include versions). Did this work in previous versions?**
+**Environment**
+<!-- In your project directory, run the following command:
 
-* OS:
-* Device:
-* Browser:
-* React Native for Web (version):
-* React (version):
+  `npx envinfo@latest --preset react-native-web --clipboard`
+
+Then, paste the automagically copied to clipboard results here. Please also include last known
+working versions, if applicable -->
 
 **Additional context**
 Add any other context about the problem here.
