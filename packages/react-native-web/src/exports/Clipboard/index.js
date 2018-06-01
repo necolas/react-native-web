@@ -27,8 +27,9 @@ export default class Clipboard {
       // add the text to a hidden node
       const node = document.createElement('span');
       node.textContent = text;
-      node.style.position = 'absolute';
       node.style.opacity = '0';
+      node.style.position = 'absolute';
+      node.style.whiteSpace = 'pre-wrap';
       body.appendChild(node);
 
       // select the text
