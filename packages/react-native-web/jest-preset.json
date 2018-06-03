@@ -1,0 +1,9 @@
+{
+  "moduleNameMapper": {
+    "^react-native$": "<rootDir>/node_modules/react-native-web/dist/cjs"
+  },
+  "setupFiles": [
+    "<rootDir>/node_modules/react-native-web/jest/setup.js"
+  ],
+  "testEnvironment": "jsdom"
+}

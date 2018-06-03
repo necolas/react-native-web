@@ -1,4 +1,5 @@
-const React = require('react');
+import React from 'react';
+import { StyleSheet } from '../../packages/react-native-web/src';
 
 function createSerializer(styleSheet) {
   function flattenNodeStyles(node) {
@@ -53,4 +54,6 @@ function createSerializer(styleSheet) {
   return { test, print };
 }
 
-module.exports = createSerializer;
+const serializer = createSerializer(StyleSheet);
+
+export default serializer;
