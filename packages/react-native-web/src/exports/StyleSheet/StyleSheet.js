@@ -10,7 +10,6 @@
 import StyleSheetValidation from './StyleSheetValidation';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
-import getHairlineWidth from './getHairlineWidth';
 
 const absoluteFillObject = {
   position: 'absolute',
@@ -43,7 +42,7 @@ const StyleSheet = {
     return result;
   },
   flatten: flattenStyle,
-  hairlineWidth: getHairlineWidth()
+  hairlineWidth: 1
 };
 
 export default StyleSheet;
