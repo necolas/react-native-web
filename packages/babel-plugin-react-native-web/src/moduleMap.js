@@ -45,6 +45,7 @@ module.exports = {
   Slider: true,
   StatusBar: true,
   StyleSheet: true,
+  SwipeableFlatList: true,
   SwipeableListView: true,
   Switch: true,
   Text: true,

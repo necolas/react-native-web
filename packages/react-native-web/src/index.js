@@ -55,6 +55,8 @@ import ScrollView from './exports/ScrollView';
 import SectionList from './exports/SectionList';
 import Slider from './exports/Slider';
 import StatusBar from './exports/StatusBar';
+import SwipeableFlatList from './exports/SwipeableFlatList';
+import SwipeableListView from './exports/SwipeableListView';
 import Switch from './exports/Switch';
 import Text from './exports/Text';
 import TextInput from './exports/TextInput';
@@ -86,8 +88,6 @@ const ProgressBarAndroid = UnimplementedView;
 const ProgressViewIOS = UnimplementedView;
 const SegmentedControlIOS = UnimplementedView;
 const SnapshotViewIOS = UnimplementedView;
-const SwipeableFlatList = UnimplementedView;
-const SwipeableListView = UnimplementedView;
 const TabBarIOS = UnimplementedView;
 const ToastAndroid = UnimplementedView;
 const ToolbarAndroid = UnimplementedView;
@@ -164,6 +164,8 @@ export {
   SectionList,
   Slider,
   StatusBar,
+  SwipeableFlatList,
+  SwipeableListView,
   Switch,
   Text,
   TextInput,
@@ -192,8 +194,6 @@ export {
   ProgressViewIOS,
   SegmentedControlIOS,
   SnapshotViewIOS,
-  SwipeableFlatList,
-  SwipeableListView,
   TabBarIOS,
   ToastAndroid,
   ToolbarAndroid,
@@ -271,6 +271,8 @@ const ReactNative = {
   SectionList,
   Slider,
   StatusBar,
+  SwipeableFlatList,
+  SwipeableListView,
   Switch,
   Text,
   TextInput,
@@ -299,8 +301,6 @@ const ReactNative = {
   ProgressViewIOS,
   SegmentedControlIOS,
   SnapshotViewIOS,
-  SwipeableFlatList,
-  SwipeableListView,
   TabBarIOS,
   ToastAndroid,
   ToolbarAndroid,
