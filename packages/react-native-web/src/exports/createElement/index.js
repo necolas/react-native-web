@@ -50,6 +50,7 @@ const adjustProps = domProps => {
 
   const isButtonRole = role === 'button';
   const isDisabled = AccessibilityUtil.isDisabled(domProps);
+  const isLinkRole = role === 'link';
 
   Object.keys(domProps).forEach(propName => {
     const prop = domProps[propName];
@@ -67,11 +68,11 @@ const adjustProps = domProps => {
     }
   });
 
-  // Cancel click events if the responder system is being used. Click events
-  // are not an expected part of the React Native API, and browsers dispatch
-  // click events that cannot otherwise be cancelled from preceding mouse
-  // events in the responder system.
-  if (onResponderRelease) {
+  // Cancel click events if the responder system is being used on a link
+  // element. Click events are not an expected part of the React Native API,
+  // and browsers dispatch click events that cannot otherwise be cancelled from
+  // preceding mouse events in the responder system.
+  if (isLinkRole && onResponderRelease) {
     domProps.onClick = function(e) {
       if (!e.isDefaultPrevented() && !isModifiedEvent(e.nativeEvent) && !domProps.target) {
         e.preventDefault();
