@@ -33,6 +33,9 @@ Steps to reproduce:
 **Expected behavior**
 <!--
 REQUIRED: A clear and concise description of what you expected to happen.
+
+Please check that the behaviour is not expected React Native behaviour by
+running your test case on iOS or Android using https://snack.expo.io.
 -->
 
 **Environment (include versions). Did this work in previous versions?**
