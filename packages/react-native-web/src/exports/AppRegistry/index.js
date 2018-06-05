@@ -91,14 +91,16 @@ export default class AppRegistry {
 
   static runApplication(appKey: string, appParameters: Object): void {
     const isDevelopment = process.env.NODE_ENV !== 'production';
-    const params = { ...appParameters };
-    params.rootTag = `#${params.rootTag.id}`;
+    if (isDevelopment) {
+      const params = { ...appParameters };
+      params.rootTag = `#${params.rootTag.id}`;
 
-    console.log(
-      `Running application "${appKey}" with appParams: ${JSON.stringify(params)}.\n` +
-        `Development-level warnings: ${isDevelopment ? 'ON' : 'OFF'}.\n` +
-        `Performance optimizations: ${isDevelopment ? 'OFF' : 'ON'}.`
-    );
+      console.log(
+        `Running application "${appKey}" with appParams: ${JSON.stringify(params)}.\n` +
+          `Development-level warnings: ${isDevelopment ? 'ON' : 'OFF'}.\n` +
+          `Performance optimizations: ${isDevelopment ? 'OFF' : 'ON'}.`
+      );
+    }
 
     invariant(
       runnables[appKey] && runnables[appKey].run,
