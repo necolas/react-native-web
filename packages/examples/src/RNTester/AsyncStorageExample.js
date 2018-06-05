@@ -29,7 +29,7 @@ class BasicStorageExample extends React.Component<{}, $FlowFixMeState> {
   };
 
   componentDidMount() {
-    this._loadInitialState().done();
+    this._loadInitialState()//.done();
   }
 
   _loadInitialState = async () => {
