@@ -8,6 +8,7 @@
   "files": [
     "dist",
     "jest",
+    "jest-preset.json",
     "src",
     "!**/__tests__"
   ],
