@@ -52,8 +52,10 @@ const observe = instance => {
 
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    node._layoutId = id;
-    resizeObserver.observe(node);
+    if (node) {
+      node._layoutId = id;
+      resizeObserver.observe(node);
+    }
   } else {
     instance._layoutId = id;
     instance._handleLayout();
@@ -64,8 +66,10 @@ const unobserve = instance => {
   delete registry[instance._layoutId];
   if (resizeObserver) {
     const node = findNodeHandle(instance);
-    delete node._layoutId;
-    resizeObserver.unobserve(node);
+    if (node) {
+      delete node._layoutId;
+      resizeObserver.unobserve(node);
+    }
   } else {
     delete instance._layoutId;
   }
