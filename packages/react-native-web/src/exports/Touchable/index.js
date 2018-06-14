@@ -755,7 +755,14 @@ const TouchableMixin = {
         (!hasLongPressHandler || // But either has no long handler
           !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
 
-      const shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
+      // Fix onPress event accidentally triggered while scrolling the page
+      const touchBank = e.touchHistory.touchBank[e.touchHistory.indexOfSingleActiveTouch];
+      const offset = Math.sqrt(Math.pow(touchBank.startPageX - touchBank.currentPageX, 2)
+        + Math.pow(touchBank.startPageY - touchBank.currentPageY, 2));
+      const velocity = (offset / (touchBank.currentTimeStamp - touchBank.startTimeStamp)) * 1000;
+      const IsMissPressFromScroll = velocity > 100;
+
+      const shouldInvokePress = (!IsLongPressingIn[curState] && !IsMissPressFromScroll) || pressIsLongButStillCallOnPress;
       if (shouldInvokePress && this.touchableHandlePress) {
         if (!newIsHighlight && !curIsHighlight) {
           // we never highlighted because of delay, but we should highlight now
