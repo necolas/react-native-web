@@ -131,11 +131,12 @@ const applyLayout = Component => {
           ) {
             this._layoutState = { x, y, width, height };
             const nativeEvent = {
-              layout: this._layoutState,
-              get target() {
-                return findNodeHandle(this);
-              }
+              layout: this._layoutState
             };
+            Object.defineProperty(nativeEvent, 'target', {
+              enumerable: true,
+              get: () => findNodeHandle(this)
+            });
             onLayout({ nativeEvent, timeStamp: Date.now() });
           }
         }

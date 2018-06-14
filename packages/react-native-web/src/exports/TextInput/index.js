@@ -183,6 +183,7 @@ class TextInput extends Component<*> {
       blurOnSubmit,
       clearTextOnFocus,
       onChangeText,
+      onLayout,
       onSelectionChange,
       onSubmitEditing,
       selection,
