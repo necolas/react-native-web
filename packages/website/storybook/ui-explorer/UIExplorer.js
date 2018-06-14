@@ -22,7 +22,7 @@ const Divider = () => <View style={styles.divider} />;
 
 const SourceLink = ({ uri }) => (
   <ExternalLink
-    href={`https://github.com/necolas/react-native-web/tree/master/packages/docs/storybook/${uri}`}
+    href={`https://github.com/necolas/react-native-web/tree/master/packages/website/storybook/${uri}`}
     style={styles.link}
   >
     View source code on GitHub
