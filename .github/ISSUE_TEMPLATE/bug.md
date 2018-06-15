@@ -4,29 +4,46 @@ about: "If something isn't working as expected \U0001F914"
 
 ---
 
+<!--
+Thank you for reporting an issue. Please note that an issue must include the
+information that is marked as REQUIRED below, or it may be closed.
+-->
+
 **The problem**
-A clear and concise description of the bug or problem.
+<!--
+REQUIRED: A clear and concise description of the bug or problem.
+-->
 
 **How to reproduce**
-Test case: <!-- FORK THIS TEMPLATE: https://codesandbox.io/s/6lx6ql1w5r -->
+<!--
+REQUIRED: Create a test case by forking this template https://codesandbox.io/s/6lx6ql1w5r
+
+Failing to include a reduced test case may result in the issue being closed,
+and will delay any potential fix. Your application or GitHub project is NOT
+considered a reduced test case. If the issue only affects certain browsers,
+providing screenshots is also helpful.
+-->
+Simplified test case: <!-- add link here -->
 
 Steps to reproduce:
 1.
 2.
 3.
 
-<!-- If applicable, add screenshots to help explain your problem. -->
-
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+<!--
+REQUIRED: A clear and concise description of what you expected to happen.
+-->
 
 **Environment (include versions). Did this work in previous versions?**
 
-* OS:
-* Device:
-* Browser:
-* React Native for Web (version):
-* React (version):
+* React Native for Web (version): TBC
+* React (version): TBC
+* Browser: TBC
+
+<!--
+OPTIONAL:
 
 **Additional context**
 Add any other context about the problem here.
+-->

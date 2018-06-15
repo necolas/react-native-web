@@ -4,7 +4,8 @@
 
 Before opening an issue, please search the [issue
 tracker](https://github.com/necolas/react-native-web/issues) to make sure your
-issue hasn't already been reported.
+issue hasn't already been reported. Please note that your issue may be closed
+if it doesn't include the information requested in the issue template.
 
 ## Getting started
 
