@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "website",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "scripts": {
     "build": "build-storybook -o ./dist -c ./storybook/.storybook",
     "start": "start-storybook -p 9001 -c ./storybook/.storybook",
@@ -12,10 +12,10 @@
     "@storybook/react": "^3.4.3",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-native-web": "0.8.4"
+    "react-native-web": "0.8.5"
   },
   "devDependencies": {
-    "babel-plugin-react-native-web": "0.8.4",
+    "babel-plugin-react-native-web": "0.8.5",
     "url-loader": "^1.0.1",
     "webpack": "^4.8.1"
   }
