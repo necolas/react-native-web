@@ -399,7 +399,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return ReactNative.findNodeHandle(this._scrollRef);
+      return findNodeHandle(this._scrollRef);
     }
   }
 
@@ -1058,8 +1058,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _measureLayoutRelativeToContainingList(): void {
     UIManager.measureLayout(
-      ReactNative.findNodeHandle(this),
-      ReactNative.findNodeHandle(
+      findNodeHandle(this),
+      findNodeHandle(
         this.context.virtualizedList.getOutermostParentListRef(),
       ),
       error => {
