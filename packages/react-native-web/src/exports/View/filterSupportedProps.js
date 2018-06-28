@@ -38,19 +38,21 @@ const whitelist = {
   pointerEvents: true,
   style: true,
   testID: true,
-  // escape-hatches for ScrollView
+  /* @platform web */
   onScroll: true,
   onWheel: true,
-  // escape-hatches for Touchable keyboard support
+  // keyboard events
   onKeyDown: true,
   onKeyPress: true,
   onKeyUp: true,
-  // escape-hatches for creating hover effects
+  // mouse events (e.g, hover effects)
+  onMouseDown: true,
   onMouseEnter: true,
   onMouseLeave: true,
   onMouseMove: true,
   onMouseOver: true,
   onMouseOut: true,
+  onMouseUp: true,
   // unstable escape-hatches for web
   className: true,
   href: true,
