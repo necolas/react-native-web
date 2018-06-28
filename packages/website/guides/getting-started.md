@@ -175,8 +175,12 @@ Please refer to the Jest documentation for more information.
 
 ```
 [options]
-module.name_mapper='(react-native)' -> 'react-native-web'
+module.name_mapper='^react-native$' -> 'react-native-web'
 ```
+
+You may also need to inlucde a custom libdef
+([example](https://gist.github.com/paularmstrong/f60b40d16fc83e1e8e532d483336f9bb))
+in your config.
 
 ## Multi-platform applications
 
