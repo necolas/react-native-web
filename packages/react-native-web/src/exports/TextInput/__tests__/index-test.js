@@ -368,6 +368,8 @@ describe('components/TextInput', () => {
 
     test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
       const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
+
       const input = findNativeTextarea(
         mount(
           <TextInput
@@ -380,10 +382,13 @@ describe('components/TextInput', () => {
       );
 
       // shift+enter should enter newline, not submit
-      input.simulate('keyPress', { which: 13, shiftKey: true });
-      input.simulate('keyPress', { which: 13 });
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      input.simulate('keyPress', { which: 13, preventDefault, shiftKey: true });
       expect(onSubmitEditing).not.toHaveBeenCalledWith(expect.objectContaining({ shiftKey: true }));
+      expect(preventDefault).not.toHaveBeenCalled();
+
+      input.simulate('keyPress', { which: 13, preventDefault });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledTimes(1);
     });
   });
 
