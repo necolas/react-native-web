@@ -185,6 +185,16 @@ const createReducer = (style, styleProps) => {
         break;
       }
 
+      // TODO: remove once this issue is fixed
+      // https://github.com/rofrischmann/inline-style-prefixer/issues/159
+      case 'backgroundClip': {
+        if (value === 'text') {
+          resolvedStyle.backgroundClip = value;
+          resolvedStyle.WebkitBackgroundClip = value;
+        }
+        break;
+      }
+
       case 'display': {
         resolvedStyle.display = value;
         // A flex container in React Native has these defaults which should be
