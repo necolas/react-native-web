@@ -330,18 +330,27 @@ describe('components/TextInput', () => {
     });
   });
 
-  test('prop "onSelectionChange"', done => {
-    const input = findNativeInput(
-      mount(<TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />)
-    );
-    input.simulate('select', {
-      target: { selectionStart: 0, selectionEnd: 3 }
+  describe('prop "onSelectionChange"', () => {
+    test('is called on select', done => {
+      const input = findNativeInput(
+        mount(<TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />)
+      );
+      input.simulate('select', {
+        target: { selectionStart: 0, selectionEnd: 3 }
+      });
+      function onSelectionChange(e) {
+        expect(e.nativeEvent.selection.end).toEqual(3);
+        expect(e.nativeEvent.selection.start).toEqual(0);
+        done();
+      }
     });
-    function onSelectionChange(e) {
-      expect(e.nativeEvent.selection.end).toEqual(3);
-      expect(e.nativeEvent.selection.start).toEqual(0);
-      done();
-    }
+
+    test('is called on change', () => {
+      const onSelectionChange = jest.fn();
+      const input = findNativeInput(mount(<TextInput onSelectionChange={onSelectionChange} />));
+      input.simulate('change');
+      expect(onSelectionChange).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('prop "onSubmitEditing"', () => {

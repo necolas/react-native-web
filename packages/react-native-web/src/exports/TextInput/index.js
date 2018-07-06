@@ -282,6 +282,7 @@ class TextInput extends Component<*> {
     if (onChangeText) {
       onChangeText(text);
     }
+    this._handleSelectionChange(e);
   };
 
   _handleFocus = e => {
