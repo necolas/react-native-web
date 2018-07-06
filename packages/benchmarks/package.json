@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "benchmarks",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "scripts": {
     "build": "mkdir -p dist && cp -f index.html dist/index.html && ./node_modules/.bin/webpack-cli --config ./webpack.config.js",
     "release": "yarn build && git checkout gh-pages && rm -rf ../../benchmarks && mv dist ../../benchmarks && git add -A && git commit -m \"Benchmarks deploy\" && git push origin gh-pages && git checkout -"
@@ -18,7 +18,7 @@
     "react-dom": "^16.4.1",
     "react-fela": "^7.3.1",
     "react-jss": "^8.6.1",
-    "react-native-web": "0.8.7",
+    "react-native-web": "0.8.8",
     "reactxp": "^1.3.0",
     "styled-components": "^3.3.3",
     "styled-jsx": "^2.2.7",
@@ -26,7 +26,7 @@
     "styletron-react": "^4.3.1"
   },
   "devDependencies": {
-    "babel-plugin-react-native-web": "0.8.7",
+    "babel-plugin-react-native-web": "0.8.8",
     "css-loader": "^1.0.0",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
