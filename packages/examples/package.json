@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-native-web": "0.8.7"
   },
   "devDependencies": {
