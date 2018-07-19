@@ -266,7 +266,6 @@ const ScrollView = createReactClass({
 const commonStyle = {
   flexGrow: 1,
   flexShrink: 1,
-  overscrollBehavior: 'contain',
   // Enable hardware compositing in modern browsers.
   // Creates a new layer with its own backing surface that can significantly
   // improve scroll performance.
