@@ -100,6 +100,7 @@ StyleSheetValidation.addValidStylePropTypes({
   fill: string,
   float: oneOf(['end', 'left', 'none', 'right', 'start']),
   listStyle: string,
+  objectFit: string,
   pointerEvents: string,
   tableLayout: string,
   /* @private */
