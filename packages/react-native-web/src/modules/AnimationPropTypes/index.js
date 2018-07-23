@@ -14,7 +14,7 @@ const AnimationPropTypes = {
   animationDirection: oneOf(['alternate', 'alternate-reverse', 'normal', 'reverse']),
   animationDuration: string,
   animationFillMode: oneOf(['none', 'forwards', 'backwards', 'both']),
-  animationIterationCount: oneOfType([number, oneOf(['infinite'])]),
+  animationIterationCount: oneOfType([number, string]),
   animationName: oneOfType([string, arrayOf(oneOfType([string, object]))]),
   animationPlayState: oneOf(['paused', 'running']),
   animationTimingFunction: string,
