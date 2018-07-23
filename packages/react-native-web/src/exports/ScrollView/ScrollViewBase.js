@@ -146,9 +146,6 @@ export default class ScrollViewBase extends Component<*> {
         if (handler) {
           handler(e);
         }
-      } else {
-        // To disable scrolling in all browsers except Chrome
-        e.preventDefault();
       }
     };
   };
@@ -206,7 +203,8 @@ export default class ScrollViewBase extends Component<*> {
 // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 const styles = StyleSheet.create({
   scrollDisabled: {
-    touchAction: 'none'
+		overflowY : 'hidden',
+		overflowX : 'hidden',
   },
   hideScrollbar: {
     scrollbarWidth: 'none'
