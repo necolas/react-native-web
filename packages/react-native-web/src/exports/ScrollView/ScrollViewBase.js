@@ -203,8 +203,8 @@ export default class ScrollViewBase extends Component<*> {
 // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 const styles = StyleSheet.create({
   scrollDisabled: {
-		overflowY : 'hidden',
-		overflowX : 'hidden',
+    overflowY : 'hidden',
+    overflowX : 'hidden',
   },
   hideScrollbar: {
     scrollbarWidth: 'none'
