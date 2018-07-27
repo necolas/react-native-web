@@ -95,10 +95,18 @@ const resolveShadow = (resolvedStyle, style) => {
 
 const resolveTextDecoration = (resolvedStyle, style) => {
   const { textDecorationColor, textDecorationLine, textDecorationStyle } = style;
-  const color = normalizeColor(textDecorationColor) || '';
-  const lineStyle = textDecorationStyle || '';
+  const color = normalizeColor(textDecorationColor);
+
   if (textDecorationLine) {
-    resolvedStyle.textDecoration = `${textDecorationLine} ${lineStyle} ${color}`.trim();
+    // use 'text-decoration' for browsers that support CSS2 text-decoration (e.g., IE, Edge)
+    resolvedStyle.textDecoration = textDecorationLine;
+
+    if (textDecorationColor) {
+      resolvedStyle.textDecorationColor = color;
+    }
+    if (textDecorationStyle) {
+      resolvedStyle.textDecorationStyle = textDecorationStyle;
+    }
   }
 };
 

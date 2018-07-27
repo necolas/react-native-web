@@ -247,7 +247,9 @@ describe('StyleSheet/createReactDOMStyle', () => {
           textDecorationStyle: 'dashed'
         })
       ).toEqual({
-        textDecoration: 'underline dashed rgba(255,0,0,1.00)'
+        textDecoration: 'underline',
+        textDecorationColor: 'rgba(255,0,0,1.00)',
+        textDecorationStyle: 'dashed'
       });
     });
   });
