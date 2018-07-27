@@ -98,7 +98,9 @@ const resolveTextDecoration = (resolvedStyle, style) => {
   const color = normalizeColor(textDecorationColor) || '';
   const lineStyle = textDecorationStyle || '';
   if (textDecorationLine) {
-    resolvedStyle.textDecoration = `${textDecorationLine} ${lineStyle} ${color}`.trim();
+    resolvedStyle.textDecorationColor = color;
+    resolvedStyle.textDecorationStyle = lineStyle;
+    resolvedStyle.textDecorationLine = textDecorationLine;
   }
 };
 
