@@ -95,11 +95,14 @@ const resolveShadow = (resolvedStyle, style) => {
 
 const resolveTextDecoration = (resolvedStyle, style) => {
   const { textDecorationColor, textDecorationLine, textDecorationStyle } = style;
-  const color = normalizeColor(textDecorationColor) || '';
-  const lineStyle = textDecorationStyle || '';
+  const color = normalizeColor(textDecorationColor);
   if (textDecorationLine) {
-    resolvedStyle.textDecorationColor = color;
-    resolvedStyle.textDecorationStyle = lineStyle;
+    if (textDecorationColor) {
+      resolvedStyle.textDecorationColor = color;
+    }
+    if (textDecorationStyle) {
+      resolvedStyle.textDecorationStyle = textDecorationStyle;
+    }
     resolvedStyle.textDecorationLine = textDecorationLine;
   }
 };

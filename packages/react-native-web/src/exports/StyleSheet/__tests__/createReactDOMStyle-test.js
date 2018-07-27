@@ -227,7 +227,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
           textDecorationLine: 'underline'
         })
       ).toEqual({
-        textDecoration: 'underline'
+        textDecorationLine: 'underline'
       });
     });
 
@@ -247,7 +247,9 @@ describe('StyleSheet/createReactDOMStyle', () => {
           textDecorationStyle: 'dashed'
         })
       ).toEqual({
-        textDecoration: 'underline dashed rgba(255,0,0,1.00)'
+        textDecorationColor: 'rgba(255,0,0,1.00)',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'dashed'
       });
     });
   });
