@@ -7,17 +7,22 @@
  * @flow
  */
 
-import { arrayOf, number, object, oneOf, oneOfType, string } from 'prop-types';
+import { arrayOf, number, object, oneOf, oneOfType, shape, string } from 'prop-types';
+const numberOrString = oneOfType([number, string]);
 
 const AnimationPropTypes = {
-  animationDelay: string,
-  animationDirection: oneOf(['alternate', 'alternate-reverse', 'normal', 'reverse']),
-  animationDuration: string,
-  animationFillMode: oneOf(['none', 'forwards', 'backwards', 'both']),
-  animationIterationCount: oneOfType([number, string]),
-  animationName: oneOfType([string, arrayOf(oneOfType([string, object]))]),
-  animationPlayState: oneOf(['paused', 'running']),
-  animationTimingFunction: string,
+  animation: arrayOf(
+    shape({
+      animationName: oneOfType([string, arrayOf(oneOfType([string, object]))]),
+      animationDuration: string,
+      animationTimingFunction: string,
+      animationDelay: string,
+      animationDirection: oneOf(['alternate', 'alternate-reverse', 'normal', 'reverse']),
+      animationIterationCount: numberOrString,
+      animationFillMode: oneOf(['none', 'forwards', 'backwards', 'both']),
+      animationPlayState: oneOf(['paused', 'running'])
+    })
+  ),
   transitionDelay: string,
   transitionDuration: string,
   transitionProperty: string,
