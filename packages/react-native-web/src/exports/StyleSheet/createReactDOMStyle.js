@@ -10,6 +10,7 @@
 import normalizeColor from '../../modules/normalizeColor';
 import normalizeValue from './normalizeValue';
 import resolveShadowValue from './resolveShadowValue';
+import { isBrowser } from 'fbjs/lib/UserAgent';
 
 /**
  * The browser implements the CSS cascade, where the order of properties is a
@@ -96,6 +97,11 @@ const resolveShadow = (resolvedStyle, style) => {
 const resolveTextDecoration = (resolvedStyle, style) => {
   const { textDecorationColor, textDecorationLine, textDecorationStyle } = style;
   const color = normalizeColor(textDecorationColor);
+
+  if (isBrowser('Edge') || isBrowser('IE')) {
+    resolvedStyle.textDecoration = textDecorationLine;
+  }
+
   if (textDecorationLine) {
     if (textDecorationColor) {
       resolvedStyle.textDecorationColor = color;
