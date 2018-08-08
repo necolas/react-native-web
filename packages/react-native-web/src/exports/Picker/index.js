@@ -18,10 +18,11 @@ import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import StyleSheet from '../StyleSheet';
 import TextPropTypes from '../Text/TextPropTypes';
 import { arrayOf, bool, func, number, oneOfType, string } from 'prop-types';
+import ViewPropTypes, { type ViewProps } from '../ViewPropTypes';
 
 const pickerStyleType = StyleSheetPropType(PickerStylePropTypes);
 
-type Props = {
+type Props = ViewProps & {
   children?: PickerItem | Array<typeof PickerItem>,
   enabled?: boolean,
   onValueChange?: Function,
@@ -36,6 +37,7 @@ type Props = {
 
 class Picker extends Component<Props> {
   static propTypes = {
+    ...ViewPropTypes,
     children: oneOfType([PickerItemPropType, arrayOf(PickerItemPropType)]),
     enabled: bool,
     onValueChange: func,
@@ -56,8 +58,9 @@ class Picker extends Component<Props> {
       /* eslint-disable */
       itemStyle,
       mode,
-      prompt
+      prompt,
       /* eslint-enable */
+      ...otherProps
     } = this.props;
 
     return createElement('select', {
@@ -66,7 +69,8 @@ class Picker extends Component<Props> {
       onChange: this._handleChange,
       style: [styles.initial, style],
       testID,
-      value: selectedValue
+      value: selectedValue,
+      ...otherProps
     });
   }
 

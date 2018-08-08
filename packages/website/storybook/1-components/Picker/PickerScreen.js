@@ -23,6 +23,8 @@ const PickerScreen = () => (
         <AppText>Renders the native &lt;select&gt; component.</AppText>
       </Description>
       <Section title="Props">
+        <DocItem name="...View props" />
+
         <DocItem
           name="children"
           typeInfo="?Array<Picker.Item>"
