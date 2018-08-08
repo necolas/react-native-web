@@ -59,8 +59,9 @@ class Picker extends Component<Props> {
       /* eslint-disable */
       itemStyle,
       mode,
-      prompt
+      prompt,
       /* eslint-enable */
+      ...otherProps
     } = this.props;
 
     return createElement('select', {
@@ -70,7 +71,8 @@ class Picker extends Component<Props> {
       onChange: this._handleChange,
       style: [styles.initial, style],
       testID,
-      value: selectedValue
+      value: selectedValue,
+      ...otherProps
     });
   }
 
