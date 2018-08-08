@@ -24,6 +24,15 @@ const PickerScreen = () => (
       </Description>
       <Section title="Props">
         <DocItem
+          name="accessiblityLabel"
+          typeInfo="?string"
+          description="If a string is supplied, the accessibilityLabel is rendered as an aria-label"
+          example={{
+            render: () => <PickerExample accessibilityLabel="Please make a selection:" />
+          }}
+        />
+
+        <DocItem
           name="children"
           typeInfo="?Array<Picker.Item>"
           description="The items to display in the picker."

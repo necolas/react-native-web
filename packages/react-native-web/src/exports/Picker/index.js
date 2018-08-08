@@ -22,6 +22,7 @@ import { arrayOf, bool, func, number, oneOfType, string } from 'prop-types';
 const pickerStyleType = StyleSheetPropType(PickerStylePropTypes);
 
 type Props = {
+  accessibilityLabel?: string,
   children?: PickerItem | Array<typeof PickerItem>,
   enabled?: boolean,
   onValueChange?: Function,
@@ -36,6 +37,7 @@ type Props = {
 
 class Picker extends Component<Props> {
   static propTypes = {
+    accessibilityLabel: string,
     children: oneOfType([PickerItemPropType, arrayOf(PickerItemPropType)]),
     enabled: bool,
     onValueChange: func,
@@ -48,6 +50,7 @@ class Picker extends Component<Props> {
 
   render() {
     const {
+      accessibilityLabel,
       children,
       enabled,
       selectedValue,
@@ -61,6 +64,7 @@ class Picker extends Component<Props> {
     } = this.props;
 
     return createElement('select', {
+      accessibilityLabel,
       children,
       disabled: enabled === false ? true : undefined,
       onChange: this._handleChange,
