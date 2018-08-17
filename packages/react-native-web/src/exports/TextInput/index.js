@@ -143,7 +143,7 @@ class TextInput extends Component<*> {
     editable: true,
     keyboardType: 'default',
     multiline: false,
-    numberOfLines: 2,
+    numberOfLines: 1,
     secureTextEntry: false,
     style: emptyObject
   };
