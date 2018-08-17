@@ -320,6 +320,10 @@ const stylePropTypes = [
     typeInfo: 'string'
   },
   {
+    name: 'animation',
+    typeInfo: 'Array<Object>'
+  },
+  {
     label: 'web',
     name: 'animationDelay',
     typeInfo: 'string'
@@ -341,13 +345,13 @@ const stylePropTypes = [
   },
   {
     label: 'web',
-    name: 'animationName',
-    typeInfo: 'string | Array<Object>'
+    name: 'animationIterationCount',
+    typeInfo: 'number | "infinite"'
   },
   {
     label: 'web',
-    name: 'animationIterationCount',
-    typeInfo: 'number | "infinite"'
+    name: 'animationName',
+    typeInfo: 'string | Array<Object>'
   },
   {
     label: 'web',
