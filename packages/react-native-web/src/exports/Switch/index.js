@@ -67,6 +67,7 @@ class Switch extends Component<*> {
 
   render() {
     const {
+      accessibilityLabel,
       activeThumbColor,
       activeTrackColor,
       disabled,
@@ -115,6 +116,7 @@ class Switch extends Component<*> {
     ];
 
     const nativeControl = createElement('input', {
+      accessibilityLabel,
       checked: value,
       disabled: disabled,
       onBlur: this._handleFocusState,

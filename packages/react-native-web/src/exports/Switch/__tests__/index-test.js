@@ -7,6 +7,11 @@ import Switch from '..';
 const checkboxSelector = 'input[type="checkbox"]';
 
 describe('components/Switch', () => {
+  test('accessibilityLabel is applied to native checkbox', () => {
+    const component = shallow(<Switch accessibilityLabel="switch" />);
+    expect(component.find(checkboxSelector).prop('aria-label')).toBe('switch');
+  });
+
   describe('disabled', () => {
     test('when "false" a default checkbox is rendered', () => {
       const component = shallow(<Switch />);
