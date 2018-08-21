@@ -129,7 +129,10 @@ export default class ScrollViewBase extends Component<*> {
         onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
         onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
         ref={this._setViewRef}
-        style={StyleSheet.compose(style, !scrollEnabled && styles.scrollDisabled)}
+        style={StyleSheet.compose(
+          style,
+          !scrollEnabled && styles.scrollDisabled
+        )}
       />
     );
   }
@@ -167,6 +170,13 @@ export default class ScrollViewBase extends Component<*> {
   _handleScrollStart(e: Object) {
     this._state.isScrolling = true;
     this._state.scrollLastTick = Date.now();
+    const { onScrollBeginDrag, onMomentumScrollBegin } = this.props;
+    if (onScrollBeginDrag) {
+      onScrollBeginDrag(normalizeScrollEvent(e));
+    }
+    if (onMomentumScrollBegin) {
+      onMomentumScrollBegin(normalizeScrollEvent(e));
+    }
   }
 
   _handleScrollTick(e: Object) {
@@ -178,10 +188,16 @@ export default class ScrollViewBase extends Component<*> {
   }
 
   _handleScrollEnd(e: Object) {
-    const { onScroll } = this.props;
+    const { onScroll, onScrollEndDrag, onMomentumScrollEnd } = this.props;
     this._state.isScrolling = false;
     if (onScroll) {
       onScroll(normalizeScrollEvent(e));
+    }
+    if (onScrollEndDrag) {
+      onScrollEndDrag(normalizeScrollEvent(e));
+    }
+    if (onMomentumScrollEnd) {
+      onMomentumScrollEnd(normalizeScrollEvent(e));
     }
   }
 
