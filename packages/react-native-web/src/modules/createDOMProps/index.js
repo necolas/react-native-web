@@ -134,12 +134,12 @@ const createDOMProps = (component, props, styleResolver) => {
   } else if (role === 'button' || role === 'textbox') {
     if (accessible !== false && focusable) {
       domProps['data-focusable'] = true;
-      domProps.tabIndex = '0';
+      domProps.tabIndex = domProps.tabIndex || '0';
     }
   } else {
     if (accessible === true && focusable) {
       domProps['data-focusable'] = true;
-      domProps.tabIndex = '0';
+      domProps.tabIndex = domProps.tabIndex || '0';
     }
   }
 
