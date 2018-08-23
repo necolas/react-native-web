@@ -59,6 +59,7 @@ const whitelist = {
   onClick: true,
   onClickCapture: true,
   rel: true,
+  tabIndex: true,
   target: true
 };
 
