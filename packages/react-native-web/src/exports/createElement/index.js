@@ -23,8 +23,6 @@ EventPluginHub.injection.injectEventPluginsByName({
 const isModifiedEvent = event =>
   !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 
-const buttonLikeRoles = ['button', 'menuitem'];
-
 /**
  * Ensure event handlers receive an event of the expected shape. The 'button'
  * role – for accessibility reasons and functional equivalence to the native
@@ -50,7 +48,7 @@ const eventHandlerNames = {
 const adjustProps = domProps => {
   const { onClick, onResponderRelease, role } = domProps;
 
-  const isButtonLikeRole = buttonLikeRoles.indexOf(role) > -1;
+  const isButtonLikeRole = AccessibilityUtil.isButtonLikeRole(role);
   const isDisabled = AccessibilityUtil.isDisabled(domProps);
   const isLinkRole = role === 'link';
 
