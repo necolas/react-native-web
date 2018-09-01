@@ -59,7 +59,9 @@ const TextStylePropTypes = {
   whiteSpace: string,
   wordWrap: string,
   MozOsxFontSmoothing: string,
-  WebkitFontSmoothing: string
+  WebkitBoxOrient: oneOf(['vertical', 'horizontal']),
+  WebkitFontSmoothing: string,
+  WebkitLineClamp: oneOfType([string, number])
 };
 
 export default TextStylePropTypes;

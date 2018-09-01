@@ -73,6 +73,8 @@ class Text extends Component<*> {
       style,
       selectable === false && styles.notSelectable,
       numberOfLines === 1 && styles.singleLineStyle,
+      numberOfLines > 1 && styles.multiLineStyle,
+      numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
       onPress && styles.pressable
     ];
 
@@ -132,6 +134,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
+  },
+  multiLineStyle: {
+    display: '-webkit-box',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    WebkitBoxOrient: 'vertical'
   }
 });
 
