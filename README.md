@@ -62,7 +62,7 @@ and [animations](https://facebook.github.io/react-native/docs/animations.html).
 ## Examples
 
 There are examples [on the website][website-url] ([source
-code](https://github.com/necolas/react-native-web/blob/master/packages/website).
+code](https://github.com/necolas/react-native-web/blob/master/packages/website)).
 And all the [React Native examples][examples-url] ([source
 code](https://github.com/necolas/react-native-web/blob/master/packages/examples))
 are also available. Here is an example to get you started:
