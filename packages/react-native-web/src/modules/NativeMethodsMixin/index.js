@@ -100,12 +100,14 @@ const NativeMethodsMixin = {
       return;
     }
     const node = findNodeHandle(this);
-    // Next state is determined by comparison to existing state (in the DOM).
-    // Existing state has already gone through i18n transform
-    const domProps = createDOMProps(null, nativeProps, style =>
-      styleResolver.resolveWithNode(style, node)
-    );
-    UIManager.updateView(node, domProps, this);
+    if (node) {
+      // Next state is determined by comparison to existing state (in the DOM).
+      // Existing state has already gone through i18n transform
+      const domProps = createDOMProps(null, nativeProps, style =>
+        styleResolver.resolveWithNode(style, node)
+      );
+      UIManager.updateView(node, domProps, this);
+    }
   }
 };
 

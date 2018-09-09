@@ -8,4 +8,15 @@
  */
 
 import { findDOMNode } from 'react-dom';
-export default findDOMNode;
+
+const findNodeHandle = component => {
+  let node;
+
+  try {
+    node = findDOMNode(component);
+  } catch (e) {}
+
+  return node;
+};
+
+export default findNodeHandle;
