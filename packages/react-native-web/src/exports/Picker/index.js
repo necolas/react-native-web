@@ -59,6 +59,7 @@ class Picker extends Component<Props> {
       itemStyle,
       mode,
       prompt,
+      onValueChange,
       /* eslint-enable */
       ...otherProps
     } = this.props;
