@@ -9,14 +9,12 @@
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
+import { injectEventPluginsByName } from 'react-dom/unstable-native-dependencies';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
 
-const { EventPluginHub } = ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-
-EventPluginHub.injection.injectEventPluginsByName({
+injectEventPluginsByName({
   ResponderEventPlugin
 });
 

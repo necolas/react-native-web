@@ -25,9 +25,9 @@
     "react-timer-mixin": "^0.13.3"
   },
   "peerDependencies": {
-    "react": "16.4.x",
-    "react-art": "16.4.x",
-    "react-dom": "16.4.x"
+    "react": ">=16.5.1",
+    "react-art": ">=16.5.1",
+    "react-dom": ">=16.5.1"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",

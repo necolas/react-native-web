@@ -10,8 +10,8 @@
   "dependencies": {
     "@storybook/addon-options": "^3.4.3",
     "@storybook/react": "^3.4.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
     "react-native-web": "0.8.11"
   },
   "devDependencies": {
