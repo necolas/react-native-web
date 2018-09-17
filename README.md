@@ -73,7 +73,7 @@ recipes" guide.
 
 Examples of using React Native for Web with other web tools:
 
-* [Docz](https://github.com/pedronauck/docz/tree/master/examples/react-native-flow)
+* [Docz](https://github.com/pedronauck/docz-plugin-react-native)
 * [Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-react-native-web)
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
