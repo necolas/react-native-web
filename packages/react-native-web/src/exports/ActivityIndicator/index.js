@@ -85,18 +85,26 @@ const styles = StyleSheet.create({
     visibility: 'hidden'
   },
   animation: {
-    animationDuration: '0.75s',
-    animationName: [
+    animation: [
       {
-        '0%': { transform: [{ rotate: '0deg' }] },
-        '100%': { transform: [{ rotate: '360deg' }] }
+        animationDuration: '0.75s',
+        animationName: [
+          {
+            '0%': { transform: [{ rotate: '0deg' }] },
+            '100%': { transform: [{ rotate: '360deg' }] }
+          }
+        ],
+        animationTimingFunction: 'linear',
+        animationIterationCount: 'infinite'
       }
-    ],
-    animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite'
+    ]
   },
   animationPause: {
-    animationPlayState: 'paused'
+    animation: [
+      {
+        animationPlayState: 'paused'
+      }
+    ]
   }
 });
 

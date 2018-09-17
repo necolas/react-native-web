@@ -93,15 +93,19 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   animation: {
-    animationDuration: '1s',
-    animationName: [
+    animation: [
       {
-        '0%': { transform: [{ translateX: '-100%' }] },
-        '100%': { transform: [{ translateX: '400%' }] }
+        animationDuration: '1s',
+        animationName: [
+          {
+            '0%': { transform: [{ translateX: '-100%' }] },
+            '100%': { transform: [{ translateX: '400%' }] }
+          }
+        ],
+        animationTimingFunction: 'linear',
+        animationIterationCount: 'infinite'
       }
-    ],
-    animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite'
+    ]
   }
 });
 
