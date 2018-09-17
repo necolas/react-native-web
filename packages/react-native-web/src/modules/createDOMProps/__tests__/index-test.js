@@ -65,58 +65,59 @@ describe('modules/createDOMProps', () => {
       });
     });
 
-    describe('"accessibilityRole" of "button"', () => {
-      const accessibilityRole = 'button';
+    const buttonLikeAccessibilityRoles = ['button', 'menuitem'];
+    buttonLikeAccessibilityRoles.forEach(accessibilityRole => {
+      describe(`"accessibilityRole" of "${accessibilityRole}"`, () => {
+        test('default case', () => {
+          expect(createProps({ accessibilityRole })).toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+        });
 
-      test('default case', () => {
-        expect(createProps({ accessibilityRole })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-      });
+        test('when "accessible" is true', () => {
+          expect(createProps({ accessibilityRole, accessible: true })).toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+        });
 
-      test('when "accessible" is true', () => {
-        expect(createProps({ accessibilityRole, accessible: true })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-      });
+        test('when "accessible" is false', () => {
+          expect(createProps({ accessibilityRole, accessible: false })).not.toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+        });
 
-      test('when "accessible" is false', () => {
-        expect(createProps({ accessibilityRole, accessible: false })).not.toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-      });
+        test('when "disabled" is true', () => {
+          expect(createProps({ accessibilityRole, disabled: true })).toEqual(
+            expect.objectContaining({ 'aria-disabled': true, disabled: true })
+          );
+          expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
+            expect.objectContaining({ 'aria-disabled': true, disabled: true })
+          );
+        });
 
-      test('when "disabled" is true', () => {
-        expect(createProps({ accessibilityRole, disabled: true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true })
-        );
-      });
+        test('when "disabled" is false', () => {
+          expect(createProps({ accessibilityRole, disabled: false })).toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+          expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+        });
 
-      test('when "disabled" is false', () => {
-        expect(createProps({ accessibilityRole, disabled: false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-      });
+        test('when "importantForAccessibility" is "no"', () => {
+          expect(createProps({ accessibilityRole, importantForAccessibility: 'no' })).not.toEqual(
+            expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
+          );
+        });
 
-      test('when "importantForAccessibility" is "no"', () => {
-        expect(createProps({ accessibilityRole, importantForAccessibility: 'no' })).not.toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-      });
-
-      test('when "importantForAccessibility" is "no-hide-descendants"', () => {
-        expect(
-          createProps({
-            accessibilityRole,
-            importantForAccessibility: 'no-hide-descendants'
-          })
-        ).not.toEqual(expect.objectContaining({ 'data-focusable': true, tabIndex: '0' }));
+        test('when "importantForAccessibility" is "no-hide-descendants"', () => {
+          expect(
+            createProps({
+              accessibilityRole,
+              importantForAccessibility: 'no-hide-descendants'
+            })
+          ).not.toEqual(expect.objectContaining({ 'data-focusable': true, tabIndex: '0' }));
+        });
       });
     });
 
