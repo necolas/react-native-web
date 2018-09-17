@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 export default class Sandbox extends React.PureComponent {
   render() {
-    return <View styles={styles.root} />;
+    return <View style={styles.root} />;
   }
 }
 
