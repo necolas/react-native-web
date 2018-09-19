@@ -35,6 +35,34 @@ using `aria-label`.
 </TouchableOpacity>
 ```
 
+### accessibilityLiveRegion
+
+When components dynamically change we may need to inform the user. The
+`accessibilityLiveRegion` property serves this purpose and can be set to
+`none`, `polite` and `assertive`. On web, `accessibilityLiveRegion` is
+implemented using `aria-live`.
+
+* `none`: Accessibility services should not announce changes to this view.
+* `polite`: Accessibility services should announce changes to this view.
+* `assertive`: Accessibility services should interrupt ongoing speech to immediately announce changes to this view.
+
+```
+<TouchableWithoutFeedback onPress={this._addOne}>
+  <View style={styles.embedded}>
+    <Text>Click me</Text>
+  </View>
+</TouchableWithoutFeedback>
+
+<Text accessibilityLiveRegion="polite">
+  Clicked {this.state.count} times
+</Text>
+```
+
+In the above example, method `_addOne` changes the `state.count` variable. As
+soon as an end user clicks the `TouchableWithoutFeedback`, screen readers
+announce text in the `Text` view because of its
+`accessibilityLiveRegion="polite"` property.
+
 ### accessibilityRole
 
 In some cases, we also want to alert the end user of the type of selected
@@ -49,7 +77,8 @@ element][html-aria-url] and ARIA `role`, where possible. In most cases, both
 the element and ARIA `role` are rendered. While this may contradict some ARIA
 recommendations, it also helps avoid certain browser bugs, HTML5 conformance
 errors, and accessibility anti-patterns (e.g., giving a `heading` role to a
-`button` element).
+`button` element). On the Web, `accessibilityRole` supports more values than
+React Native does for [Andriod and iOS](https://facebook.github.io/react-native/docs/accessibility#accessibilityrole-ios-android).
 
 Straight-forward examples:
 
@@ -85,33 +114,12 @@ Note: Avoid changing `accessibilityRole` values over time or after user
 actions. Generally, accessibility APIs do not provide a means of notifying
 assistive technologies of a `role` value change.
 
-### accessibilityLiveRegion
+### accessibilityStates
 
-When components dynamically change we may need to inform the user. The
-`accessibilityLiveRegion` property serves this purpose and can be set to
-`none`, `polite` and `assertive`. On web, `accessibilityLiveRegion` is
-implemented using `aria-live`.
-
-* `none`: Accessibility services should not announce changes to this view.
-* `polite`: Accessibility services should announce changes to this view.
-* `assertive`: Accessibility services should interrupt ongoing speech to immediately announce changes to this view.
-
-```
-<TouchableWithoutFeedback onPress={this._addOne}>
-  <View style={styles.embedded}>
-    <Text>Click me</Text>
-  </View>
-</TouchableWithoutFeedback>
-
-<Text accessibilityLiveRegion="polite">
-  Clicked {this.state.count} times
-</Text>
-```
-
-In the above example, method `_addOne` changes the `state.count` variable. As
-soon as an end user clicks the `TouchableWithoutFeedback`, screen readers
-announce text in the `Text` view because of its
-`accessibilityLiveRegion="polite"` property.
+The `accessibilityStates` prop is an array of values used to infer the
+analogous ARIA states, e.g., `aria-disabled`, `aria-pressed`, `aria-selected`.
+On the Web, `accessibilityStates` supports more values than React Native does
+for [Andriod and iOS](https://facebook.github.io/react-native/docs/accessibility#accessibilitystate-ios-android).
 
 ### importantForAccessibility
 
