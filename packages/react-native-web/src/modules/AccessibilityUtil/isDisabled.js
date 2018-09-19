@@ -7,6 +7,8 @@
  * @flow
  */
 
-const isDisabled = (props: Object) => props.disabled || props['aria-disabled'];
+const isDisabled = (props: Object) =>
+  props.disabled ||
+  (Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf('disabled') > -1);
 
 export default isDisabled;

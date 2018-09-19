@@ -35,16 +35,10 @@ describe('modules/createDOMProps', () => {
         expect(createProps({ accessibilityRole, disabled: true })).toEqual(
           expect.objectContaining({ 'aria-disabled': true, disabled: true, tabIndex: '-1' })
         );
-        expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true, tabIndex: '-1' })
-        );
       });
 
       test('when "disabled" is false', () => {
         expect(createProps({ accessibilityRole, disabled: false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
           expect.objectContaining({ 'data-focusable': true })
         );
       });
@@ -88,16 +82,10 @@ describe('modules/createDOMProps', () => {
         expect(createProps({ accessibilityRole, disabled: true })).toEqual(
           expect.objectContaining({ 'aria-disabled': true, disabled: true })
         );
-        expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true })
-        );
       });
 
       test('when "disabled" is false', () => {
         expect(createProps({ accessibilityRole, disabled: false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
           expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
         );
       });
@@ -164,12 +152,17 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-live']).toEqual('off');
   });
 
-  describe('prop "accessibilityRole"', () => {
-    test('does not become "role" when value is "label"', () => {
-      const accessibilityRole = 'label';
-      const props = createProps({ accessibilityRole });
-      expect(props.role).toBeUndefined();
-    });
+  test('prop "accessibilityRole" becomes "role"', () => {
+    const accessibilityRole = 'button';
+    const props = createProps({ accessibilityRole });
+    expect(props.role).toEqual('button');
+  });
+
+  test('prop "accessibilityStates" becomes ARIA states', () => {
+    const accessibilityStates = ['disabled', 'selected'];
+    const props = createProps({ accessibilityStates });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props['aria-selected']).toEqual(true);
   });
 
   test('prop "className" is preserved', () => {
