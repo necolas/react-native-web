@@ -23,6 +23,22 @@ const accessibilityTraitsToRole = {
   summary: 'region'
 };
 
+// 'false' value indicates role doesn't map to ARIA role
+const accessibilityRoleToWeb = {
+  adjustable: 'slider',
+  button: 'button',
+  header: 'heading',
+  image: 'img',
+  imagebutton: false,
+  keyboardkey: false,
+  label: false,
+  link: 'link',
+  none: 'presentation',
+  search: 'search',
+  summary: 'region',
+  text: false
+};
+
 /**
  * Provides compatibility with React Native's "accessibilityTraits" (iOS) and
  * "accessibilityComponentType" (Android), converting them to equivalent ARIA
@@ -34,7 +50,11 @@ const propsToAriaRole = ({
   accessibilityTraits
 }: Object) => {
   if (accessibilityRole) {
-    return accessibilityRole;
+    const inferredRole = accessibilityRoleToWeb[accessibilityRole];
+    if (inferredRole !== false) {
+      // ignore roles that don't map to web
+      return inferredRole || accessibilityRole;
+    }
   }
   if (accessibilityTraits) {
     const trait = Array.isArray(accessibilityTraits) ? accessibilityTraits[0] : accessibilityTraits;

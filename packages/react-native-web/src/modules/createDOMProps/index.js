@@ -76,6 +76,7 @@ const createDOMProps = (component, props, styleResolver) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
+    accessibilityStates,
     importantForAccessibility,
     placeholderTextColor,
     pointerEvents,
@@ -103,7 +104,12 @@ const createDOMProps = (component, props, styleResolver) => {
   if (accessibilityLiveRegion && accessibilityLiveRegion.constructor === String) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (role && role.constructor === String && role !== 'label') {
+  if (Array.isArray(accessibilityStates)) {
+    for (let i = 0; i < accessibilityStates.length; i += 1) {
+      domProps[`aria-${accessibilityStates[i]}`] = true;
+    }
+  }
+  if (role && role.constructor === String) {
     domProps.role = role;
   }
 

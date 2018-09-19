@@ -164,12 +164,17 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-live']).toEqual('off');
   });
 
-  describe('prop "accessibilityRole"', () => {
-    test('does not become "role" when value is "label"', () => {
-      const accessibilityRole = 'label';
-      const props = createProps({ accessibilityRole });
-      expect(props.role).toBeUndefined();
-    });
+  test('prop "accessibilityRole" becomes "role"', () => {
+    const accessibilityRole = 'button';
+    const props = createProps({ accessibilityRole });
+    expect(props.role).toEqual('button');
+  });
+
+  test('prop "accessibilityStates" becomes ARIA states', () => {
+    const accessibilityStates = ['disabled', 'selected'];
+    const props = createProps({ accessibilityStates });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props['aria-selected']).toEqual(true);
   });
 
   test('prop "className" is preserved', () => {

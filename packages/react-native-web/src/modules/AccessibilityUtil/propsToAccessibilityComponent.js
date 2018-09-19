@@ -15,7 +15,6 @@ const roleComponents = {
   complementary: 'aside',
   contentinfo: 'footer',
   form: 'form',
-  label: 'label',
   link: 'a',
   list: 'ul',
   listitem: 'li',
@@ -27,6 +26,11 @@ const roleComponents = {
 const emptyObject = {};
 
 const propsToAccessibilityComponent = (props: Object = emptyObject) => {
+  // special-case for "label" role which doesn't map to an ARIA role
+  if (props.accessibilityRole === 'label') {
+    return 'label';
+  }
+
   const role = propsToAriaRole(props);
   if (role) {
     if (role === 'heading') {

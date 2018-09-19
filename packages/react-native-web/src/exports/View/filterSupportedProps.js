@@ -1,8 +1,9 @@
-const whitelist = {
+const supportedProps = {
   accessibilityComponentType: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
+  accessibilityStates: true,
   accessibilityTraits: true,
   accessible: true,
   children: true,
@@ -66,7 +67,7 @@ const filterSupportedProps = props => {
   const safeProps = {};
   for (const prop in props) {
     if (props.hasOwnProperty(prop)) {
-      if (whitelist[prop] || prop.indexOf('aria-') === 0 || prop.indexOf('data-') === 0) {
+      if (supportedProps[prop] || prop.indexOf('aria-') === 0 || prop.indexOf('data-') === 0) {
         safeProps[prop] = props[prop];
       }
     }
