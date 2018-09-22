@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { processColor, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
 export default class TouchableCustomStyleOverridesExample extends React.Component {
   buttons = ['One', 'Two', 'Three'];
@@ -26,7 +26,7 @@ export default class TouchableCustomStyleOverridesExample extends React.Componen
               key={button}
               onPress={this.select(button)}
               style={[styles.touchable, this.state[button] && styles.blue]}
-              underlayColor={processColor('#1B95E0', 0.125)}
+              underlayColor="#1b95e020"
             >
               <Text style={[!this.state[button] && styles.text]}>{button}</Text>
             </TouchableHighlight>
@@ -39,7 +39,7 @@ export default class TouchableCustomStyleOverridesExample extends React.Componen
 
 const styles = StyleSheet.create({
   blue: {
-    backgroundColor: processColor('#1B95E0', 0.25),
+    backgroundColor: '#1b95e040',
     borderColor: '#1B95E0'
   },
   text: {
