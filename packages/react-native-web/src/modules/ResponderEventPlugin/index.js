@@ -44,6 +44,9 @@ if (!ResponderEventPlugin.eventTypes.responderMove.dependencies) {
 }
 
 let lastActiveTouchTimestamp = null;
+// The length of time after a touch that we ignore the browser's emulated mouse events
+// https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
+const EMULATED_MOUSE_THERSHOLD_MS = 1000;
 
 const originalExtractEvents = ResponderEventPlugin.extractEvents;
 ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nativeEventTarget) => {
@@ -55,7 +58,7 @@ ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nat
     lastActiveTouchTimestamp = Date.now();
   } else if (lastActiveTouchTimestamp && eventType.indexOf('mouse') > -1) {
     const now = Date.now();
-    shouldSkipMouseAfterTouch = now - lastActiveTouchTimestamp < 250;
+    shouldSkipMouseAfterTouch = now - lastActiveTouchTimestamp < EMULATED_MOUSE_THERSHOLD_MS;
   }
 
   if (
