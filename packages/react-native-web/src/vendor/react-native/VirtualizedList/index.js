@@ -410,7 +410,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   }
 
   static defaultProps = {
-    disableVirtualization: false,
+    disableVirtualization: process.env.NODE_ENV === 'test',
     horizontal: false,
     initialNumToRender: 10,
     keyExtractor: (item: Item, index: number) => {
