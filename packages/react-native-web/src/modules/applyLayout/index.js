@@ -97,7 +97,9 @@ const applyLayout = Component => {
     function componentDidMount() {
       this._layoutState = emptyObject;
       this._isMounted = true;
-      observe(this);
+      if (this.props.onLayout) {
+        observe(this);
+      }
     }
   );
 
@@ -116,7 +118,9 @@ const applyLayout = Component => {
     componentWillUnmount,
     function componentWillUnmount() {
       this._isMounted = false;
-      unobserve(this);
+      if (this.props.onLayout) {
+        unobserve(this);
+      }
     }
   );
 
