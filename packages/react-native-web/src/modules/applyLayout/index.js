@@ -97,7 +97,7 @@ const applyLayout = Component => {
     function componentDidMount() {
       this._layoutState = emptyObject;
       this._isMounted = true;
-      observe(this);
+      this.props.onLayout && observe(this);
     }
   );
 
