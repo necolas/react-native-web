@@ -7,12 +7,14 @@
  * @flow
  */
 
+import ColorPropType from '../ColorPropType';
 import TextStylePropTypes from '../Text/TextStylePropTypes';
 import { oneOf } from 'prop-types';
 
 const TextInputStylePropTypes = {
   ...TextStylePropTypes,
   /* @platform web */
+  caretColor: ColorPropType,
   resize: oneOf(['none', 'vertical', 'horizontal', 'both'])
 };
 
