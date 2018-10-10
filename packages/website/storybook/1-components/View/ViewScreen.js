@@ -119,6 +119,12 @@ const ViewScreen = () => (
         ]}
       />
 
+      <DocItem
+        name="nativeID"
+        typeInfo="?string"
+        description="Used to locate this view from any native DOM code, or to define accessibility relationships. This is rendered to the native 'id' DOM attribute"
+      />
+
       <DocItem name="onBlur" typeInfo="?function" />
       <DocItem name="onContextMenu" typeInfo="?function" />
       <DocItem name="onFocus" typeInfo="?function" />
