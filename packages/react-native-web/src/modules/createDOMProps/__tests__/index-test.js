@@ -183,6 +183,12 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-hidden']).toEqual(true);
   });
 
+  test('prop "nativeID" becomes "id"', () => {
+    const nativeID = 'Example.nativeID';
+    const props = createProps({ nativeID });
+    expect(props.id).toEqual(nativeID);
+  });
+
   test('prop "testID" becomes "data-testid"', () => {
     const testID = 'Example.testID';
     const props = createProps({ testID });
