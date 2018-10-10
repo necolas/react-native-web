@@ -210,6 +210,14 @@ class TextInput extends Component<*> {
       selectionState,
       textBreakStrategy,
       underlineColorAndroid,
+      hitSlop,
+      onAccessibilityTap,
+      onMagicTap,
+      removeClippedSubviews,
+      needsOffscreenAlphaCompositing,
+      renderToHardwareTextureAndroid,
+      accessibilityViewIsModal,
+      shouldRasterizeIOS,
       /* eslint-enable */
       ...otherProps
     } = this.props;
