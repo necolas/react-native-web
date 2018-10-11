@@ -63,15 +63,15 @@ const observe = instance => {
 };
 
 const unobserve = instance => {
-  const node = findNodeHandle(instance);
-  const registryId = node ? node._layoutId : instance._layoutId;
-  delete registry[registryId];
   if (resizeObserver) {
+    const node = findNodeHandle(instance);
     if (node) {
+      delete registry[node._layoutId];
       delete node._layoutId;
       resizeObserver.unobserve(node);
     }
   } else {
+    delete registry[instance._layoutId];
     delete instance._layoutId;
   }
 };
