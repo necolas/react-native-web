@@ -117,6 +117,12 @@ const TextScreen = () => (
       />
 
       <DocItem
+        name="nativeID"
+        typeInfo="?string"
+        description="Used to locate this view from any native DOM code, or to define accessibility relationships. This is rendered to the native 'id' DOM attribute"
+      />
+
+      <DocItem
         name="numberOfLines"
         typeInfo="?number"
         description="Truncates the text with an ellipsis after this many lines. Currently only supports `1`."
