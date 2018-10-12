@@ -598,12 +598,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       });
     }
     if (this.props.inverted) {
-      const scrollNode = this.getScrollableNode();
-      scrollNode.addEventListener("wheel", (e) => {
-        if (this.props.horizontal) scrollNode.scrollLeft += (e.wheelDeltaX || -e.deltaX);
-        else scrollNode.scrollTop += (e.wheelDeltaY || -e.deltaY);
-        e.preventDefault();
-      });
+      this._invertScrolling(true);
     }
   }
 
@@ -637,6 +632,22 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       ),
       last: Math.max(0, Math.min(prevState.last, getItemCount(data) - 1)),
     };
+  }
+
+  _invertScrolling(invert) {
+    const scrollNode = this.getScrollableNode();
+    if (invert) {
+      scrollNode.addEventListener("wheel", this._invertedWheelEvent);
+    } else {
+      scrollNode.removeEventListener("wheel", this._invertedWheelEvent);
+    }
+  }
+
+  _invertedWheelEvent = (e) => {
+    const scrollNode = this.getScrollableNode();
+    if (this.props.horizontal) scrollNode.scrollLeft += (e.wheelDeltaX || -e.deltaX);
+    else scrollNode.scrollTop += (e.wheelDeltaY || -e.deltaY);
+    e.preventDefault();
   }
 
   _pushCells(
@@ -934,7 +945,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const {data, extraData} = this.props;
+    const {data, extraData, inverted} = this.props;
     if (data !== prevProps.data || extraData !== prevProps.extraData) {
       this._hasDataChangedSinceEndReached = true;
 
@@ -945,6 +956,11 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       });
     }
     this._scheduleCellsToRenderUpdate();
+
+    if (prevProps.inverted !== inverted) {
+      if (inverted) this._invertScrolling(true);
+      else this._invertScrolling(false);
+    }
   }
 
   _averageCellLength = 0;
