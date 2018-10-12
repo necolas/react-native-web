@@ -597,6 +597,14 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         ref: this,
       });
     }
+    if (this.props.inverted) {
+      const scrollNode = this.getScrollableNode();
+      scrollNode.addEventListener("wheel", (e) => {
+        if (this.props.horizontal) scrollNode.scrollLeft += (e.wheelDeltaX || -e.deltaX);
+        else scrollNode.scrollTop += (e.wheelDeltaY || -e.deltaY);
+        e.preventDefault();
+      });
+    }
   }
 
   componentWillUnmount() {
