@@ -332,9 +332,20 @@ class TextInput extends Component<*> {
   };
 
   _handleKeyPress = e => {
-    const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
+    const {
+      blurOnSubmit,
+      multiline,
+      maxLength,
+      keyboardType,
+      onKeyPress,
+      onSubmitEditing
+    } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+    if (keyboardType === 'numeric' && e.target.value.length >= maxLength) {
+      this._node.value = e.target.value;
+      e.preventDefault();
+    }
 
     if (onKeyPress) {
       let keyValue;
