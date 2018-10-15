@@ -554,6 +554,11 @@ const stylePropTypes = [
   },
   {
     label: 'web',
+    name: 'clipPath',
+    typeInfo: 'string'
+  },
+  {
+    label: 'web',
     name: 'cursor',
     typeInfo: 'string'
   },

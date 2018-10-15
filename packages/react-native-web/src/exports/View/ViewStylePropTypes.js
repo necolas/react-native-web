@@ -45,6 +45,7 @@ const ViewStylePropTypes = {
   backgroundSize: string,
   boxShadow: string,
   clip: string,
+  clipPath: string,
   filter: string,
   outline: string,
   outlineColor: ColorPropType,
