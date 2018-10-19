@@ -11,7 +11,7 @@
 import PropTypes from 'prop-types';
 import UIManager from '../../../exports/UIManager';
 
-const __DEV__ = process.env.NODE !== 'production';
+const __DEV__ = process.env.NODE_ENV !== 'production';
 const { checkPropTypes } = PropTypes;
 
 const Types = {
