@@ -8,11 +8,16 @@
  * @flow
  */
 
+let clipboardAvailable;
+
 export default class Clipboard {
   static isAvailable() {
-    return (
-      typeof document.queryCommandSupported === 'function' && document.queryCommandSupported('copy')
-    );
+    if (clipboardAvailable === undefined) {
+      clipboardAvailable =
+        typeof document.queryCommandSupported === 'function' &&
+        document.queryCommandSupported('copy');
+    }
+    return clipboardAvailable;
   }
 
   static getString(): Promise<string> {
