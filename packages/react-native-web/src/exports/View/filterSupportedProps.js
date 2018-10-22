@@ -8,6 +8,7 @@ const whitelist = {
   children: true,
   disabled: true,
   importantForAccessibility: true,
+  nativeID: true,
   onBlur: true,
   onContextMenu: true,
   onFocus: true,
