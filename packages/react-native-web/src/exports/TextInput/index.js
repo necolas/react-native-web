@@ -342,7 +342,11 @@ class TextInput extends Component<*> {
     } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
-    if (keyboardType === 'numeric' && e.target.value.length >= maxLength) {
+    if (
+      keyboardType === 'numeric' &&
+      e.target.value.length >= maxLength &&
+      !Number.isNaN(parseInt(e.key, 10))
+    ) {
       this._node.value = e.target.value;
       e.preventDefault();
     }
