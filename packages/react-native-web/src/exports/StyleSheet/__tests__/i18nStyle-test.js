@@ -32,11 +32,13 @@ describe('StyleSheet/i18nStyle', () => {
     test('converts end/start values', () => {
       const initial = {
         float: 'start',
-        textAlign: 'end'
+        textAlign: 'end',
+        transitionProperty: 'marginStart'
       };
       const expected = {
         float: 'left',
-        textAlign: 'right'
+        textAlign: 'right',
+        transitionProperty: 'marginLeft'
       };
       expect(i18nStyle(initial)).toEqual(expected);
     });
@@ -56,7 +58,8 @@ describe('StyleSheet/i18nStyle', () => {
         clear: 'left',
         float: 'left',
         textAlign: 'right',
-        textShadowOffset: { width: '1rem', height: 10 }
+        textShadowOffset: { width: '1rem', height: 10 },
+        transitionProperty: 'marginLeft'
       };
       expect(i18nStyle(initial)).toEqual(initial);
     });
@@ -116,11 +119,13 @@ describe('StyleSheet/i18nStyle', () => {
       test('converts end/start values', () => {
         const initial = {
           float: 'start',
-          textAlign: 'end'
+          textAlign: 'end',
+          transitionProperty: 'marginStart'
         };
         const expected = {
           float: 'right',
-          textAlign: 'left'
+          textAlign: 'left',
+          transitionProperty: 'marginRight'
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -140,7 +145,8 @@ describe('StyleSheet/i18nStyle', () => {
           clear: 'left',
           float: 'left',
           textAlign: 'right',
-          textShadowOffset: { width: '1rem', height: 10 }
+          textShadowOffset: { width: '1rem', height: 10 },
+          transitionProperty: 'marginLeft'
         };
         expect(i18nStyle(initial)).toEqual(initial);
       });
@@ -183,11 +189,13 @@ describe('StyleSheet/i18nStyle', () => {
       test('converts end/start values', () => {
         const initial = {
           float: 'start',
-          textAlign: 'end'
+          textAlign: 'end',
+          transitionProperty: 'marginStart'
         };
         const expected = {
           float: 'right',
-          textAlign: 'left'
+          textAlign: 'left',
+          transitionProperty: 'marginRight'
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -212,12 +220,14 @@ describe('StyleSheet/i18nStyle', () => {
         const initial = {
           float: 'left',
           textAlign: 'right',
-          textShadowOffset: { width: '1rem', height: 10 }
+          textShadowOffset: { width: '1rem', height: 10 },
+          transitionProperty: 'marginLeft'
         };
         const expected = {
           float: 'right',
           textAlign: 'left',
-          textShadowOffset: { width: '-1rem', height: 10 }
+          textShadowOffset: { width: '-1rem', height: 10 },
+          transitionProperty: 'marginRight'
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });

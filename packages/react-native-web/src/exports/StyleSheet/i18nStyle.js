@@ -116,6 +116,19 @@ const i18nStyle = originalStyle => {
       }
     }
 
+    // BiDi flip transitionProperty value
+    if (prop === 'transitionProperty') {
+      // BiDi flip properties
+      if (PROPERTIES_I18N.hasOwnProperty(value)) {
+        // convert start/end
+        const convertedValue = PROPERTIES_I18N[originalValue];
+        value = isRTL ? PROPERTIES_FLIP[convertedValue] : convertedValue;
+      } else if (isRTL && doLeftAndRightSwapInRTL && PROPERTIES_FLIP[originalValue]) {
+        value = PROPERTIES_FLIP[originalValue];
+      }
+    }
+
+    // Create finalized style
     if (isRTL && prop === 'textShadowOffset') {
       nextStyle[prop] = value;
       nextStyle[prop].width = additiveInverse(value.width);
