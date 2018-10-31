@@ -1,6 +1,17 @@
 const babelPreset = require('../../scripts/babel/preset');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const styleSheet = require('style-sheet/babel');
+const { RawSource } = require('webpack-sources');
 const path = require('path');
+
+class StyleSheetPlugin {
+  apply(compiler) {
+    compiler.plugin('emit', (compilation, cb) => {
+      compilation.assets['style-sheet-bundle.css'] = new RawSource(styleSheet.getCss());
+      cb();
+    });
+  }
+}
 
 const appDirectory = path.resolve(__dirname);
 
@@ -32,7 +43,7 @@ module.exports = {
           options: {
             cacheDirectory: false,
             presets: babelPreset,
-            plugins: ['styled-jsx/babel']
+            plugins: ['styled-jsx/babel', styleSheet.default]
           }
         }
       }
@@ -42,7 +53,8 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false
-    })
+    }),
+    new StyleSheetPlugin()
   ],
   resolve: {
     alias: {

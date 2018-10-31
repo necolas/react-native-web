@@ -20,6 +20,7 @@
     "react-jss": "^8.6.1",
     "react-native-web": "0.9.3",
     "reactxp": "^1.3.0",
+    "style-sheet": "^3.0.1",
     "styled-components": "^3.3.3",
     "styled-jsx": "^2.2.7",
     "styletron-engine-atomic": "^1.0.5",
