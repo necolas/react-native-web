@@ -9,7 +9,7 @@
 
 import StyleSheet from '../StyleSheet';
 import TouchableOpacity from '../TouchableOpacity';
-import { bool, func, string } from 'prop-types';
+import { bool, func, string, object } from 'prop-types';
 import React, { Component } from 'react';
 
 class Button extends Component<*> {
@@ -17,6 +17,8 @@ class Button extends Component<*> {
     accessibilityLabel: string,
     disabled: bool,
     onPress: func.isRequired,
+    style: object,
+    children: object,
     testID: string
   };
 
