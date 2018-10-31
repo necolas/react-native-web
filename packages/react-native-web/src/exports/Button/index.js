@@ -17,15 +17,13 @@ import React, { Component } from 'react';
 class Button extends Component<*> {
   static propTypes = {
     accessibilityLabel: string,
-    color: ColorPropType,
     disabled: bool,
     onPress: func.isRequired,
-    testID: string,
-    title: string.isRequired
+    testID: string
   };
 
   render() {
-    const { accessibilityLabel, color, disabled, onPress, testID, title } = this.props;
+    const { accessibilityLabel, color, disabled, onPress, testID, title, style, children, ...other } = this.props;
 
     return (
       <TouchableOpacity
@@ -33,36 +31,22 @@ class Button extends Component<*> {
         accessibilityRole="button"
         disabled={disabled}
         onPress={onPress}
-        style={[
-          styles.button,
-          color && { backgroundColor: color },
-          disabled && styles.buttonDisabled
-        ]}
-        testID={testID}
+        style={StyleSheet.compose(styles.base, style)}
+        testID={testID} 
+        {...other}
       >
-        <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
+      { children }
       </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#2196F3',
-    borderRadius: 2
-  },
-  text: {
-    color: '#fff',
-    fontWeight: '500',
-    padding: 8,
-    textAlign: 'center',
-    textTransform: 'uppercase'
-  },
-  buttonDisabled: {
-    backgroundColor: '#dfdfdf'
-  },
-  textDisabled: {
-    color: '#a1a1a1'
+  base: {
+    backgroundColor: 'rgb(26, 113, 177)',
+    borderRadius: 2,
+    width: '100%',
+    height: '100%'
   }
 });
 
