@@ -696,9 +696,16 @@ const TouchableMixin = {
     const touch = TouchEventUtils.extractSingleTouch(e.nativeEvent);
     const pageX = touch && touch.pageX;
     const pageY = touch && touch.pageY;
-    const locationX = touch && touch.locationX;
-    const locationY = touch && touch.locationY;
-    this.pressInLocation = { pageX, pageY, locationX, locationY };
+    this.pressInLocation = {
+      pageX,
+      pageY,
+      get locationX() {
+        return touch && touch.locationX;
+      },
+      get locationY() {
+        return touch && touch.locationY;
+      }
+    };
   },
 
   _getDistanceBetweenPoints: function(aX: number, aY: number, bX: number, bY: number) {

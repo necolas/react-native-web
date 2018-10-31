@@ -78,6 +78,7 @@ function normalizeTouchEvent(nativeEvent) {
     typeof nativeEvent.stopPropagation === 'function'
       ? nativeEvent.stopPropagation.bind(nativeEvent)
       : emptyFunction;
+  const singleChangedTouch = changedTouches[0];
 
   const event = {
     _normalized: true,
@@ -85,11 +86,15 @@ function normalizeTouchEvent(nativeEvent) {
     cancelable: nativeEvent.cancelable,
     changedTouches,
     defaultPrevented: nativeEvent.defaultPrevented,
-    identifier: undefined,
-    locationX: undefined,
-    locationY: undefined,
-    pageX: nativeEvent.pageX,
-    pageY: nativeEvent.pageY,
+    identifier: singleChangedTouch ? singleChangedTouch.identifier : undefined,
+    get locationX() {
+      return singleChangedTouch ? singleChangedTouch.locationX : undefined;
+    },
+    get locationY() {
+      return singleChangedTouch ? singleChangedTouch.locationY : undefined;
+    },
+    pageX: singleChangedTouch ? singleChangedTouch.pageX : nativeEvent.pageX,
+    pageY: singleChangedTouch ? singleChangedTouch.pageY : nativeEvent.pageY,
     preventDefault,
     stopImmediatePropagation,
     stopPropagation,
@@ -101,14 +106,6 @@ function normalizeTouchEvent(nativeEvent) {
     type: nativeEvent.type,
     which: nativeEvent.which
   };
-
-  if (changedTouches[0]) {
-    event.identifier = changedTouches[0].identifier;
-    event.pageX = changedTouches[0].pageX;
-    event.pageY = changedTouches[0].pageY;
-    event.locationX = changedTouches[0].locationX;
-    event.locationY = changedTouches[0].locationY;
-  }
 
   return event;
 }
@@ -164,8 +161,12 @@ function normalizeMouseEvent(nativeEvent) {
     changedTouches: touches,
     defaultPrevented: nativeEvent.defaultPrevented,
     identifier: touches[0].identifier,
-    locationX: touches[0].locationX,
-    locationY: touches[0].locationY,
+    get locationX() {
+      return touches[0].locationX;
+    },
+    get locationY() {
+      return touches[0].locationY;
+    },
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
     preventDefault,
