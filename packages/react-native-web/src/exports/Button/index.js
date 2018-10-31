@@ -15,15 +15,15 @@ import React, { Component } from 'react';
 class Button extends Component<*> {
   static propTypes = {
     accessibilityLabel: string,
+    children: object,
     disabled: bool,
     onPress: func.isRequired,
     style: object,
-    children: object,
     testID: string
   };
 
   render() {
-    const { accessibilityLabel, disabled, onPress, testID, style, children, ...other } = this.props;
+    const { accessibilityLabel, children, disabled, onPress, style, testID, ...other } = this.props;
 
     return (
       <TouchableOpacity
