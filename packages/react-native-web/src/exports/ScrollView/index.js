@@ -279,15 +279,13 @@ const styles = StyleSheet.create({
     ...commonStyle,
     flexDirection: 'column',
     overflowX: 'hidden',
-    overflowY: 'auto',
-    touchAction: 'pan-y'
+    overflowY: 'auto'
   },
   baseHorizontal: {
     ...commonStyle,
     flexDirection: 'row',
     overflowX: 'auto',
-    overflowY: 'hidden',
-    touchAction: 'pan-x'
+    overflowY: 'hidden'
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
