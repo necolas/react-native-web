@@ -54,7 +54,7 @@ from your web app build. To help with this, you can install the following Babel
 plugin:
 
 ```
-yarn install --dev babel-plugin-react-native-web
+yarn add --dev babel-plugin-react-native-web
 ```
 
 Create a `web/webpack.config.js` file:
