@@ -12,13 +12,34 @@ const safeRule = rule => `@media all{\n${rule}\n}`;
 
 const resets = [
   // minimal top-level reset
-  'html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
+  'html{' +
+    '-ms-text-size-adjust:100%;' +
+    '-webkit-text-size-adjust:100%;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);' +
+    '}',
   'body{margin:0;}',
   // minimal form pseudo-element reset
   'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}',
-  'input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,' +
-    'input::-webkit-search-cancel-button,input::-webkit-search-decoration,' +
-    'input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
+  'input::-webkit-inner-spin-button,' +
+    'input::-webkit-outer-spin-button,' +
+    'input::-webkit-search-cancel-button,' +
+    'input::-webkit-search-decoration,' +
+    'input::-webkit-search-results-button,' +
+    'input::-webkit-search-results-decoration{' +
+    'display:none;' +
+    '}',
+  // Reset styles for heading, link, and list DOM elements
+  '.rn-reset{' +
+    'background-color:transparent;' +
+    'color:inherit;' +
+    'font:inherit;' +
+    'list-style:none;' +
+    'margin:0;' +
+    'text-align:inherit;' +
+    'text-decoration:none;' +
+    '}',
+  // For pressable elements
+  '.rn-pointer{cursor:pointer;}'
 ];
 
 const reset = [safeRule(resets.join('\n'))];

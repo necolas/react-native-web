@@ -13,6 +13,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import { Component } from 'react';
 import createElement from '../createElement';
+import css from '../StyleSheet/css';
 import StyleSheet from '../StyleSheet';
 import TextPropTypes from './TextPropTypes';
 
@@ -65,10 +66,10 @@ class Text extends Component<*> {
       otherProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
+    otherProps.className = classes.text;
     // allow browsers to automatically infer the language writing direction
     otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
-      styles.initial,
       this.context.isInAParentText === true && styles.isInAParentText,
       style,
       selectable === false && styles.notSelectable,
@@ -97,24 +98,24 @@ class Text extends Component<*> {
   }
 }
 
-const styles = StyleSheet.create({
-  initial: {
+const classes = css.create({
+  text: {
+    backgroundColor: 'transparent',
     borderWidth: 0,
     boxSizing: 'border-box',
     color: 'inherit',
     display: 'inline',
-    fontFamily: 'System',
-    fontSize: 14,
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
+    font: '14px System',
     margin: 0,
     padding: 0,
-    textDecorationLine: 'none',
+    textAlign: 'inherit',
+    textDecoration: 'none',
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word'
-  },
+  }
+});
+
+const styles = StyleSheet.create({
   isInAParentText: {
     // inherit parent font styles
     fontFamily: 'inherit',

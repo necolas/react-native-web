@@ -15,9 +15,9 @@ import WebStyleSheet from './WebStyleSheet';
 const emptyObject = {};
 const STYLE_ELEMENT_ID = 'react-native-stylesheet';
 
-const createClassName = (prop, value) => {
-  const hashed = hash(prop + normalizeValue(value));
-  return process.env.NODE_ENV !== 'production' ? `rn-${prop}-${hashed}` : `rn-${hashed}`;
+const createClassName = (name, value) => {
+  const hashed = hash(name + normalizeValue(value));
+  return process.env.NODE_ENV !== 'production' ? `rn-${name}-${hashed}` : `rn-${hashed}`;
 };
 
 const normalizeValue = value => (typeof value === 'object' ? JSON.stringify(value) : value);
@@ -66,6 +66,13 @@ export default class StyleSheetManager {
         this._sheet.insertRuleOnce(rule);
       });
     }
+    return className;
+  }
+
+  injectRule(name, body: string): void {
+    const className = createClassName(name, body);
+    const rule = `.${className}{${body}}`;
+    this._sheet.insertRuleOnce(rule);
     return className;
   }
 

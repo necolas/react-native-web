@@ -103,10 +103,7 @@ StyleSheetValidation.addValidStylePropTypes({
   objectFit: oneOf(['fill', 'contain', 'cover', 'none', 'scale-down']),
   objectPosition: string,
   pointerEvents: string,
-  tableLayout: string,
-  /* @private */
-  MozAppearance: string,
-  WebkitAppearance: string
+  tableLayout: string
 });
 
 export default StyleSheetValidation;
