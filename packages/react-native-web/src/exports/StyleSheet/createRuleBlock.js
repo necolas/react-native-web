@@ -8,7 +8,6 @@
  */
 
 import hyphenateStyleName from 'hyphenate-style-name';
-import mapKeyValue from '../../modules/mapKeyValue';
 import normalizeValue from './normalizeValue';
 import prefixStyles from '../../modules/prefixStyles';
 
@@ -27,9 +26,15 @@ const createDeclarationString = (prop, val) => {
  * createRuleBlock({ width: 20, color: 'blue' });
  * // => 'color:blue;width:20px'
  */
-const createRuleBlock = style =>
-  mapKeyValue(prefixStyles(style), createDeclarationString)
-    .sort()
-    .join(';');
+const createRuleBlock = style => {
+  const prefixedStyle = prefixStyles(style);
+  return (
+    Object.keys(prefixedStyle)
+      .map(prop => createDeclarationString(prop, prefixedStyle[prop]))
+      // put short-form and vendor prefixed properties first
+      .sort()
+      .join(';')
+  );
+};
 
 export default createRuleBlock;

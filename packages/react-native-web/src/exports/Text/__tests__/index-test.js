@@ -29,9 +29,9 @@ describe('components/Text', () => {
   });
 
   test('prop "children"', () => {
-    const children = <Text testID="1" />;
-    const component = shallow(<Text children={children} />);
-    expect(component.contains(children)).toEqual(true);
+    const children = <Text testID="child" />;
+    const component = render(<Text children={children} />);
+    expect(component.children()).toMatchSnapshot();
   });
 
   test('prop "numberOfLines"', () => {});

@@ -13,40 +13,6 @@ import styleResolver from '../../exports/StyleSheet/styleResolver';
 
 const emptyObject = {};
 
-const resetStyles = StyleSheet.create({
-  ariaButton: {
-    cursor: 'pointer'
-  },
-  button: {
-    appearance: 'none',
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
-    textAlign: 'inherit'
-  },
-  heading: {
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit'
-  },
-  link: {
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    textDecorationLine: 'none'
-  },
-  list: {
-    listStyle: 'none'
-  }
-});
-
 const pointerEventsStyles = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
@@ -129,6 +95,8 @@ const createDOMProps = (component, props, styleResolver) => {
     importantForAccessibility !== 'no-hide-descendants';
   if (
     role === 'link' ||
+    component === 'a' ||
+    component === 'button' ||
     component === 'input' ||
     component === 'select' ||
     component === 'textarea'
@@ -152,22 +120,45 @@ const createDOMProps = (component, props, styleResolver) => {
 
   // STYLE
   // Resolve React Native styles to optimized browser equivalent
-  const reactNativeStyle = [
-    component === 'a' && resetStyles.link,
-    component === 'button' && resetStyles.button,
-    role === 'heading' && resetStyles.heading,
-    component === 'ul' && resetStyles.list,
-    role === 'button' && !disabled && resetStyles.ariaButton,
+  const reactNativeStyle = StyleSheet.compose(
     pointerEvents && pointerEventsStyles[pointerEvents],
-    providedStyle,
-    placeholderTextColor && { placeholderTextColor }
-  ];
+    StyleSheet.compose(
+      providedStyle,
+      placeholderTextColor && { placeholderTextColor }
+    )
+  );
   const { className, style } = styleResolver(reactNativeStyle);
-  if (className && className.constructor === String) {
-    domProps.className = props.className ? `${props.className} ${className}` : className;
-  }
   if (style) {
     domProps.style = style;
+  }
+
+  // CLASSNAME
+  // Apply static style resets
+  let c;
+  // style interactive elements for mouse and mobile browsers
+  if ((role === 'button' || role === 'link') && !disabled) {
+    c = 'rn-pointer';
+  }
+  // style reset various elements (not all are used internally)
+  if (
+    component === 'a' ||
+    component === 'button' ||
+    component === 'li' ||
+    component === 'ul' ||
+    role === 'heading'
+  ) {
+    c = 'rn-reset' + (c != null ? ' ' + c : '');
+  }
+  // style from createElement use
+  if (props.className != null) {
+    c = props.className + (c != null ? ' ' + c : '');
+  }
+  // style from React Native StyleSheets
+  if (className != null && className !== '') {
+    c = (c != null ? c + ' ' : '') + className;
+  }
+  if (c != null) {
+    domProps.className = c;
   }
 
   // OTHER
@@ -175,7 +166,7 @@ const createDOMProps = (component, props, styleResolver) => {
   if (nativeID && nativeID.constructor === String) {
     domProps.id = nativeID;
   }
-  // Link security and automation test ids
+  // Link security
   if (component === 'a' && domProps.target === '_blank') {
     domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }

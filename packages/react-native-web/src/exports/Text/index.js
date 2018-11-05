@@ -13,6 +13,7 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import { Component } from 'react';
 import createElement from '../createElement';
+import css from '../StyleSheet/css';
 import StyleSheet from '../StyleSheet';
 import TextPropTypes from './TextPropTypes';
 
@@ -57,7 +58,7 @@ class Text extends Component<*> {
       ...otherProps
     } = this.props;
 
-    const { isInAParentText } = this.context;
+    const { isInAParentText: hasTextAncestor } = this.context;
 
     if (onPress) {
       otherProps.accessible = true;
@@ -65,18 +66,20 @@ class Text extends Component<*> {
       otherProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
-    // allow browsers to automatically infer the language writing direction
-    otherProps.dir = dir !== undefined ? dir : 'auto';
+    otherProps.className = css.combine(
+      classes.text,
+      hasTextAncestor ? classes.textHasAncestor : classes.textIsRoot,
+      numberOfLines === 1 && classes.textSingleLine
+    );
     otherProps.style = [
-      styles.initial,
-      this.context.isInAParentText === true && styles.isInAParentText,
       style,
       selectable === false && styles.notSelectable,
-      numberOfLines === 1 && styles.singleLineStyle,
       onPress && styles.pressable
     ];
+    // allow browsers to automatically infer the language writing direction
+    otherProps.dir = dir !== undefined ? dir : 'auto';
 
-    const component = isInAParentText ? 'span' : 'div';
+    const component = hasTextAncestor ? 'span' : 'div';
 
     return createElement(component, otherProps);
   }
@@ -97,41 +100,45 @@ class Text extends Component<*> {
   }
 }
 
-const styles = StyleSheet.create({
-  initial: {
+const classes = css.create({
+  text: {
+    backgroundColor: 'transparent',
     borderWidth: 0,
     boxSizing: 'border-box',
-    color: 'inherit',
     display: 'inline',
-    fontFamily: 'System',
-    fontSize: 14,
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
     margin: 0,
     padding: 0,
-    textDecorationLine: 'none',
-    whiteSpace: 'pre-wrap',
+    textAlign: 'inherit',
     wordWrap: 'break-word'
   },
-  isInAParentText: {
-    // inherit parent font styles
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
+  textIsRoot: {
+    color: 'black',
+    font: 'normal 14px System',
+    textDecoration: 'none',
+    whiteSpace: 'pre-wrap'
+  },
+  textHasAncestor: {
+    color: 'inherit',
+    font: 'inherit',
+    textDecoration: 'inherit',
     whiteSpace: 'inherit'
   },
+  // "!important" is used to prevent essential styles from being overridden
+  // by merged styles
+  textSingleLine: {
+    maxWidth: '100%',
+    overflow: 'hidden !important',
+    textOverflow: 'ellipsis !important',
+    whiteSpace: 'nowrap !important'
+  }
+});
+
+const styles = StyleSheet.create({
   notSelectable: {
     userSelect: 'none'
   },
   pressable: {
     cursor: 'pointer'
-  },
-  singleLineStyle: {
-    maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
   }
 });
 

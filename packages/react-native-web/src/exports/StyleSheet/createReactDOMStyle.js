@@ -7,6 +7,7 @@
  * @noflow
  */
 
+import { monospaceFontStack, systemFontStack } from './constants';
 import normalizeColor from '../../modules/normalizeColor';
 import normalizeValue from './normalizeValue';
 import resolveShadowValue from './resolveShadowValue';
@@ -53,18 +54,6 @@ const colorProps = {
   borderLeftColor: true,
   color: true
 };
-
-const borderWidthProps = {
-  borderWidth: true,
-  borderTopWidth: true,
-  borderRightWidth: true,
-  borderBottomWidth: true,
-  borderLeftWidth: true
-};
-
-const monospaceFontStack = 'monospace, monospace';
-const systemFontStack =
-  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
 const alphaSortProps = propsArray =>
   propsArray.sort((a, b) => {
@@ -167,12 +156,6 @@ const createReducer = (style, styleProps) => {
   return (resolvedStyle, prop) => {
     let value = normalizeValue(prop, style[prop]);
 
-    // Make sure the default border width is explicitly set to '0' to avoid
-    // falling back to any unwanted user-agent styles.
-    if (borderWidthProps[prop]) {
-      value = value == null ? normalizeValue(null, 0) : value;
-    }
-
     // Normalize color values
     if (colorProps[prop]) {
       value = normalizeColor(value);
@@ -199,21 +182,6 @@ const createReducer = (style, styleProps) => {
         if (value === 'text') {
           resolvedStyle.backgroundClip = value;
           resolvedStyle.WebkitBackgroundClip = value;
-        }
-        break;
-      }
-
-      case 'display': {
-        resolvedStyle.display = value;
-        // A flex container in React Native has these defaults which should be
-        // set only if there is no otherwise supplied flex style.
-        if (style.display === 'flex' && style.flex == null) {
-          if (style.flexShrink == null) {
-            resolvedStyle.flexShrink = 0;
-          }
-          if (style.flexBasis == null) {
-            resolvedStyle.flexBasis = 'auto';
-          }
         }
         break;
       }

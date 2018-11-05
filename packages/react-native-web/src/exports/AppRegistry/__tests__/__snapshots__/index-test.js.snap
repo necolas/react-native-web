@@ -10,40 +10,17 @@ exports[`AppRegistry getApplication "getStyleElement" produces styles that are a
 `;
 
 exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element": CSS for an unstyled app 1`] = `
-"@media all{
+":focus:not([data-rn-focusvisible-x92cna]){outline: none;}
+@media all{
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+.rn-reset{background-color:transparent;color:inherit;font:inherit;list-style:none;margin:0;text-align:inherit;text-decoration:none;}
+.rn-pointer{cursor:pointer;}
 }
 .rn-pointerEvents-12vffkv > *{pointer-events:auto}
 .rn-pointerEvents-12vffkv{pointer-events:none !important}
-.rn-alignItems-1oszu61{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
-.rn-borderTopStyle-1efd50x{border-top-style:solid}
-.rn-borderRightStyle-14skgim{border-right-style:solid}
-.rn-borderBottomStyle-rull8r{border-bottom-style:solid}
-.rn-borderLeftStyle-mm0ijv{border-left-style:solid}
-.rn-borderTopWidth-13yce4e{border-top-width:0px}
-.rn-borderRightWidth-fnigne{border-right-width:0px}
-.rn-borderBottomWidth-ndvcnb{border-bottom-width:0px}
-.rn-borderLeftWidth-gxnn5r{border-left-width:0px}
-.rn-boxSizing-deolkf{box-sizing:border-box}
-.rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
-.rn-flexShrink-1qe8dj5{-ms-flex-negative:0;-webkit-flex-shrink:0;flex-shrink:0}
-.rn-flexBasis-1mlwlqe{-ms-flex-preferred-size:auto;-webkit-flex-basis:auto;flex-basis:auto}
-.rn-flexDirection-eqz5dr{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
-.rn-marginTop-1mnahxq{margin-top:0px}
-.rn-marginRight-61z16t{margin-right:0px}
-.rn-marginBottom-p1pxzi{margin-bottom:0px}
-.rn-marginLeft-11wrixw{margin-left:0px}
-.rn-minHeight-ifefl9{min-height:0px}
-.rn-minWidth-bcqeeo{min-width:0px}
-.rn-paddingTop-wk8lta{padding-top:0px}
-.rn-paddingRight-9aemit{padding-right:0px}
-.rn-paddingBottom-1mdbw0j{padding-bottom:0px}
-.rn-paddingLeft-gy4na3{padding-left:0px}
-.rn-position-bnwqim{position:relative}
-.rn-zIndex-1lgpqti{z-index:0}
 .rn-flexGrow-16y2uox{-ms-flex-positive:1;-webkit-box-flex:1;-webkit-flex-grow:1;flex-grow:1}
 .rn-flexShrink-1wbh5a2{-ms-flex-negative:1;-webkit-flex-shrink:1;flex-shrink:1}
 .rn-flexBasis-1ro0kt6{-ms-flex-preferred-size:0%;-webkit-flex-basis:0%;flex-basis:0%}"
@@ -58,10 +35,20 @@ exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] 
 `;
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 2`] = `
-"<style id=\\"react-native-stylesheet\\">@media all{
+"<style id=\\"react-native-stylesheet\\">:focus:not([data-rn-focusvisible-x92cna]){outline: none;}
+@media all{
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-}</style>"
+.rn-reset{background-color:transparent;color:inherit;font:inherit;list-style:none;margin:0;text-align:inherit;text-decoration:none;}
+.rn-pointer{cursor:pointer;}
+}
+.rn-ui-textinput-11ngujt{-moz-appearance:textfield;-webkit-appearance:none;background-color:transparent;border-radius:0px;border:0 solid black;box-sizing:border-box;font-family:14px System;padding:0px;resize:none}
+.rn-ui-textSingleLine-1xjj19i{max-width:100%;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important}
+.rn-ui-textHasAncestor-z2plr{color:inherit;font:inherit;text-decoration:inherit;white-space:inherit}
+.rn-ui-textIsRoot-gw3a6r{color:black;font:normal 14px system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif;text-decoration:none;white-space:pre-wrap}
+.rn-ui-text-1ntzlq4{background-color:transparent;border-width:0px;box-sizing:border-box;display:inline;margin:0px;padding:0px;text-align:inherit;word-wrap:break-word}
+.rn-ui-hitSlop-14nrb4u{bottom:0px;left:0px;position:absolute;right:0px;top:0px;z-index:-1}
+.rn-ui-view-15pvbv0{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;background-color:transparent;border:0 solid black;box-sizing:border-box;color:inherit;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;font:inherit;list-style:none;margin:0px;min-height:0px;min-width:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;z-index:0}</style>"
 `;

@@ -28,7 +28,9 @@ const focusVisibleAttributeName =
 
 const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 
-const modality = styleElement => {
+const modality = insertRule => {
+  insertRule(rule);
+
   if (!canUseDOM) {
     return;
   }
@@ -263,8 +265,6 @@ const modality = styleElement => {
     hadKeyboardEvent = false;
     removeInitialPointerMoveListeners();
   }
-
-  styleElement.sheet.insertRule(rule, 0);
 
   document.addEventListener('keydown', onKeyDown, true);
   document.addEventListener('mousedown', onPointerDown, true);

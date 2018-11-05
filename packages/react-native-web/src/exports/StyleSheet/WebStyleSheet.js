@@ -30,12 +30,13 @@ export default class WebStyleSheet {
       }
 
       if (domStyleElement) {
-        modality(domStyleElement);
         // $FlowFixMe
         this._sheet = domStyleElement.sheet;
         this._textContent = domStyleElement.textContent;
       }
     }
+
+    modality((rule) => this.insertRuleOnce(rule, 0));
   }
 
   containsRule(rule: string): boolean {
@@ -49,7 +50,11 @@ export default class WebStyleSheet {
   insertRuleOnce(rule: string, position: ?number) {
     // Reduce chance of duplicate rules
     if (!this.containsRule(rule)) {
-      this._cssRules.push(rule);
+      if (position != null) {
+        this._cssRules.splice(position, 0, rule);
+      } else {
+        this._cssRules.push(rule);
+      }
 
       // Check whether a rule was part of any prerendered styles (textContent
       // doesn't include styles injected via 'insertRule')

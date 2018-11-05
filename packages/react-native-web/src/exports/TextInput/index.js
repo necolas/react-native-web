@@ -14,8 +14,8 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { Component } from 'react';
 import ColorPropType from '../ColorPropType';
 import createElement from '../createElement';
+import css from '../StyleSheet/css';
 import findNodeHandle from '../findNodeHandle';
-import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';
 import TextInputState from '../../modules/TextInputState';
@@ -254,6 +254,7 @@ class TextInput extends Component<*> {
 
     Object.assign(otherProps, {
       autoCorrect: autoCorrect ? 'on' : 'off',
+      className: classes.textinput,
       dir: 'auto',
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
@@ -264,7 +265,7 @@ class TextInput extends Component<*> {
       readOnly: !editable,
       ref: this._setNode,
       spellCheck: spellCheck != null ? spellCheck : autoCorrect,
-      style: [styles.initial, style]
+      style
     });
 
     if (multiline) {
@@ -388,18 +389,15 @@ class TextInput extends Component<*> {
   };
 }
 
-const styles = StyleSheet.create({
-  initial: {
+const classes = css.create({
+  textinput: {
     MozAppearance: 'textfield',
     WebkitAppearance: 'none',
     backgroundColor: 'transparent',
-    borderColor: 'black',
+    border: '0 solid black',
     borderRadius: 0,
-    borderStyle: 'solid',
-    borderWidth: 0,
     boxSizing: 'border-box',
-    fontFamily: 'System',
-    fontSize: 14,
+    fontFamily: '14px System',
     padding: 0,
     resize: 'none'
   }
