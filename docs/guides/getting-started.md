@@ -35,7 +35,7 @@ Multi-platform: [create-react-native-app](https://github.com/react-community/cre
 includes experimental support for Web.
 
 ```
-create-react-native-app my-app --with-web-support
+create-react-native-app my-app --with-web-support --scripts-version 1.2.0-alpha.4
 ```
 
 ## Configuring a module bundler
@@ -56,7 +56,7 @@ module.exports = {
       'react-native$': 'react-native-web'
     }
   }
-}
+};
 ```
 
 Now you can create your components and applications with the React Native API.
