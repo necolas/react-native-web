@@ -10,7 +10,11 @@ import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const Title = ({ children }) => <AppText style={styles.title}>{children}</AppText>;
+const Title = ({ children }) => (
+  <AppText accessibilityRole="heading" style={styles.title}>
+    {children}
+  </AppText>
+);
 
 export const Description = ({ children }) => (
   <AppText style={styles.description}>

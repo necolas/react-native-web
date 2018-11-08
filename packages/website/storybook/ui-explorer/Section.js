@@ -8,7 +8,11 @@ import AppText from './AppText';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const SectionTitle = ({ children }) => <AppText style={styles.sectionTitle}>{children}</AppText>;
+const SectionTitle = ({ children }) => (
+  <AppText accessibilityRole="heading" aria-level="2" style={styles.sectionTitle}>
+    {children}
+  </AppText>
+);
 
 const Section = ({ children, title }) => (
   <View>

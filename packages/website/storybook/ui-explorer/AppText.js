@@ -14,12 +14,12 @@ class AppText extends React.PureComponent {
   };
 
   render() {
-    const { style, ...rest } = this.props;
+    const { accessibilityRole, style, ...rest } = this.props;
     const isInAParentText = this.context;
     return (
       <Text
         {...rest}
-        accessibilityRole={rest.href ? 'link' : undefined}
+        accessibilityRole={rest.href ? 'link' : accessibilityRole}
         style={[!isInAParentText && styles.baseText, style, rest.href && styles.link]}
       />
     );
