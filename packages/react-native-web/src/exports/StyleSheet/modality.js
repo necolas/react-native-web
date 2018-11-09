@@ -17,9 +17,15 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import hash from '../../vendor/hash';
 
-const rule = ':focus { outline: none; }';
-let ruleExists = false;
+const modalityClassName =
+  'rn-' +
+  (process.env.NODE_ENV === 'production'
+    ? hash('rnw-modality')
+    : 'modality-' + hash('rnw-modality'));
+
+const rule = `:focus:not(.${modalityClassName}) { outline: none; }`;
 
 const modality = styleElement => {
   if (!canUseDOM) {
@@ -70,26 +76,6 @@ const modality = styleElement => {
   };
 
   /**
-   * Add the focus ring style
-   */
-  const addFocusRing = () => {
-    if (styleElement && ruleExists) {
-      styleElement.sheet.deleteRule(0);
-      ruleExists = false;
-    }
-  };
-
-  /**
-   * Remove the focus ring style
-   */
-  const removeFocusRing = () => {
-    if (styleElement && !ruleExists) {
-      styleElement.sheet.insertRule(rule, 0);
-      ruleExists = true;
-    }
-  };
-
-  /**
    * On `keydown`, set `hadKeyboardEvent`, to be removed 100ms later if there
    * are no further keyboard events. The 100ms throttle handles cases where
    * focus is redirected programmatically after a keyboard event, such as
@@ -106,26 +92,30 @@ const modality = styleElement => {
     }, 100);
   };
 
+  let hasModality = false;
+
   /**
    * Display the focus-ring when the keyboard was used to focus
    */
   const handleFocus = e => {
     if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-      addFocusRing();
+      e.target.classList.add(modalityClassName);
+      hasModality = true;
     }
   };
 
   /**
    * Remove the focus-ring when the keyboard was used to focus
    */
-  const handleBlur = () => {
-    if (!hadKeyboardEvent) {
-      removeFocusRing();
+  const handleBlur = e => {
+    if (hasModality) {
+      e.target.classList.remove(modalityClassName);
+      hasModality = false;
     }
   };
 
   if (document.body && document.body.addEventListener) {
-    removeFocusRing();
+    styleElement.sheet.insertRule(rule, 0);
     document.body.addEventListener('keydown', handleKeyDown, true);
     document.body.addEventListener('focus', handleFocus, true);
     document.body.addEventListener('blur', handleBlur, true);
