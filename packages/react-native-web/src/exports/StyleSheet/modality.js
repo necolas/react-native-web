@@ -17,77 +17,46 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import hash from '../../vendor/hash';
 
-const rule = ':focus { outline: none; }';
-let ruleExists = false;
+const modalityClassName =
+  'rn-' +
+  (process.env.NODE_ENV === 'production'
+    ? hash('rnw-modality')
+    : 'modality-' + hash('rnw-modality'));
+// These elements should always have a focus ring drawn, because they are
+// associated with switching to a keyboard modality.
+const keyboardModalityWhitelist = [
+  '[type="text"]',
+  '[type="search"]',
+  '[type="url"]',
+  '[type="tel"]',
+  '[type="email"]',
+  '[type="password"]',
+  '[type="number"]',
+  '[type="date"]',
+  '[type="month"]',
+  '[type="week"]',
+  '[type="time"]',
+  '[type="datetime"]',
+  '[type="datetime-local"]',
+  'textarea',
+  '[role="textbox"]'
+]
+  .map(s => `:not(${s})`)
+  .join('');
+
+const rule = `:focus:not(.${modalityClassName})${keyboardModalityWhitelist} { outline: none; }`;
 
 const modality = styleElement => {
   if (!canUseDOM) {
     return;
   }
 
+  styleElement.sheet.insertRule(rule, 0);
+
   let hadKeyboardEvent = false;
   let keyboardThrottleTimeoutID = 0;
-
-  const proto = window.Element.prototype;
-  const matches =
-    proto.matches ||
-    proto.mozMatchesSelector ||
-    proto.msMatchesSelector ||
-    proto.webkitMatchesSelector;
-
-  // These elements should always have a focus ring drawn, because they are
-  // associated with switching to a keyboard modality.
-  const keyboardModalityWhitelist = [
-    'input:not([type])',
-    'input[type=text]',
-    'input[type=search]',
-    'input[type=url]',
-    'input[type=tel]',
-    'input[type=email]',
-    'input[type=password]',
-    'input[type=number]',
-    'input[type=date]',
-    'input[type=month]',
-    'input[type=week]',
-    'input[type=time]',
-    'input[type=datetime]',
-    'input[type=datetime-local]',
-    'textarea',
-    '[role=textbox]'
-  ].join(',');
-
-  /**
-   * Computes whether the given element should automatically trigger the
-   * `focus-ring`.
-   */
-  const focusTriggersKeyboardModality = el => {
-    if (matches) {
-      return matches.call(el, keyboardModalityWhitelist) && matches.call(el, ':not([readonly])');
-    } else {
-      return false;
-    }
-  };
-
-  /**
-   * Add the focus ring style
-   */
-  const addFocusRing = () => {
-    if (styleElement && ruleExists) {
-      styleElement.sheet.deleteRule(0);
-      ruleExists = false;
-    }
-  };
-
-  /**
-   * Remove the focus ring style
-   */
-  const removeFocusRing = () => {
-    if (styleElement && !ruleExists) {
-      styleElement.sheet.insertRule(rule, 0);
-      ruleExists = true;
-    }
-  };
 
   /**
    * On `keydown`, set `hadKeyboardEvent`, to be removed 100ms later if there
@@ -106,26 +75,29 @@ const modality = styleElement => {
     }, 100);
   };
 
+  let hasModality = false;
+
   /**
    * Display the focus-ring when the keyboard was used to focus
    */
   const handleFocus = e => {
-    if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-      addFocusRing();
+    if (hadKeyboardEvent) {
+      hasModality = true;
+      e.target.classList.add(modalityClassName);
     }
   };
 
   /**
    * Remove the focus-ring when the keyboard was used to focus
    */
-  const handleBlur = () => {
-    if (!hadKeyboardEvent) {
-      removeFocusRing();
+  const handleBlur = e => {
+    if (hasModality) {
+      e.target.classList.remove(modalityClassName);
+      hasModality = false;
     }
   };
 
   if (document.body && document.body.addEventListener) {
-    removeFocusRing();
     document.body.addEventListener('keydown', handleKeyDown, true);
     document.body.addEventListener('focus', handleFocus, true);
     document.body.addEventListener('blur', handleBlur, true);
