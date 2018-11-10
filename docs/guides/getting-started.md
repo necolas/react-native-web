@@ -24,18 +24,11 @@ yarn add react-art
 
 ## Starter kits
 
-Web: [create-react-app](https://github.com/facebookincubator/create-react-app)
+[create-react-app](https://github.com/facebookincubator/create-react-app)
 includes built-in support for aliasing `react-native-web` to `react-native`.
 
 ```
 create-react-app my-app
-```
-
-Multi-platform: [create-react-native-app](https://github.com/react-community/create-react-native-app)
-includes experimental support for Web.
-
-```
-create-react-native-app my-app --with-web-support
 ```
 
 ## Configuring a module bundler
