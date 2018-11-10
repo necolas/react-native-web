@@ -37,6 +37,13 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
   }
 };
 
+const focusableElements = {
+  A: true,
+  INPUT: true,
+  SELECT: true,
+  TEXTAREA: true
+};
+
 const UIManager = {
   blur(node) {
     try {
@@ -46,6 +53,13 @@ const UIManager = {
 
   focus(node) {
     try {
+      const name = node.nodeName;
+      // A tabIndex of -1 allows element to be programmatically focused but
+      // prevents keyboard focus, so we don't want to set the value on elements
+      // that support keyboard focus by default.
+      if (node.getAttribute('tabIndex') == null && focusableElements[name] == null) {
+        node.setAttribute('tabIndex', '-1');
+      }
       node.focus();
     } catch (err) {}
   },
