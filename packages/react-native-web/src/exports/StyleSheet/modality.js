@@ -11,7 +11,9 @@
  * 1. a keydown event occurred immediately before a focus event;
  * 2. a focus event happened on an element which requires keyboard interaction (e.g., a text field);
  *
- * Based on https://github.com/WICG/focus-ring
+ * This software or document includes material copied from or derived from https://github.com/WICG/focus-visible.
+ * Copyright © 2018 W3C® (MIT, ERCIM, Keio, Beihang).
+ * W3C Software Notice and License: https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
  *
  * @noflow
  */
@@ -19,107 +21,242 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import hash from '../../vendor/hash';
 
-const modalityClassName =
+const focusVisibleClass =
   'rn-' +
   (process.env.NODE_ENV === 'production'
-    ? hash('rnw-modality')
-    : 'modality-' + hash('rnw-modality'));
+    ? hash('focus-visible')
+    : 'focusVisible-' + hash('focus-visible'));
 
-const rule = `:focus:not(.${modalityClassName}) { outline: none; }`;
+const rule = `:focus:not(.${focusVisibleClass}) { outline: none; }`;
 
 const modality = styleElement => {
   if (!canUseDOM) {
     return;
   }
 
-  let hadKeyboardEvent = false;
-  let keyboardThrottleTimeoutID = 0;
+  let hadKeyboardEvent = true;
+  let hadFocusVisibleRecently = false;
+  let hadFocusVisibleRecentlyTimeout = null;
 
-  const proto = window.Element.prototype;
-  const matches =
-    proto.matches ||
-    proto.mozMatchesSelector ||
-    proto.msMatchesSelector ||
-    proto.webkitMatchesSelector;
+  const inputTypesWhitelist = {
+    text: true,
+    search: true,
+    url: true,
+    tel: true,
+    email: true,
+    password: true,
+    number: true,
+    date: true,
+    month: true,
+    week: true,
+    time: true,
+    datetime: true,
+    'datetime-local': true
+  };
 
-  // These elements should always have a focus ring drawn, because they are
-  // associated with switching to a keyboard modality.
-  const keyboardModalityWhitelist = [
-    'input:not([type])',
-    'input[type=text]',
-    'input[type=search]',
-    'input[type=url]',
-    'input[type=tel]',
-    'input[type=email]',
-    'input[type=password]',
-    'input[type=number]',
-    'input[type=date]',
-    'input[type=month]',
-    'input[type=week]',
-    'input[type=time]',
-    'input[type=datetime]',
-    'input[type=datetime-local]',
-    'textarea',
-    '[role=textbox]'
-  ].join(',');
+  /**
+   * Helper function for legacy browsers and iframes which sometimes focus
+   * elements like document, body, and non-interactive SVG.
+   */
+  function isValidFocusTarget(el) {
+    if (
+      el &&
+      el !== document &&
+      el.nodeName !== 'HTML' &&
+      el.nodeName !== 'BODY' &&
+      'classList' in el &&
+      'contains' in el.classList
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   /**
    * Computes whether the given element should automatically trigger the
-   * `focus-ring`.
+   * `focus-visible` class being added, i.e. whether it should always match
+   * `:focus-visible` when focused.
    */
-  const focusTriggersKeyboardModality = el => {
-    if (matches) {
-      return matches.call(el, keyboardModalityWhitelist) && matches.call(el, ':not([readonly])');
-    } else {
-      return false;
+  function focusTriggersKeyboardModality(el) {
+    const type = el.type;
+    const tagName = el.tagName;
+    const isReadOnly = el.readOnly;
+
+    if (tagName === 'INPUT' && inputTypesWhitelist[type] && !isReadOnly) {
+      return true;
     }
-  };
 
-  /**
-   * On `keydown`, set `hadKeyboardEvent`, to be removed 100ms later if there
-   * are no further keyboard events. The 100ms throttle handles cases where
-   * focus is redirected programmatically after a keyboard event, such as
-   * opening a menu or dialog.
-   */
-  const handleKeyDown = e => {
-    hadKeyboardEvent = true;
-    if (keyboardThrottleTimeoutID !== 0) {
-      clearTimeout(keyboardThrottleTimeoutID);
+    if (tagName === 'TEXTAREA' && !isReadOnly) {
+      return true;
     }
-    keyboardThrottleTimeoutID = setTimeout(() => {
-      hadKeyboardEvent = false;
-      keyboardThrottleTimeoutID = 0;
-    }, 100);
-  };
 
-  let hasModality = false;
-
-  /**
-   * Display the focus-ring when the keyboard was used to focus
-   */
-  const handleFocus = e => {
-    if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-      e.target.classList.add(modalityClassName);
-      hasModality = true;
+    if (el.isContentEditable) {
+      return true;
     }
-  };
 
-  /**
-   * Remove the focus-ring when the keyboard was used to focus
-   */
-  const handleBlur = e => {
-    if (hasModality) {
-      e.target.classList.remove(modalityClassName);
-      hasModality = false;
-    }
-  };
-
-  if (document.body && document.body.addEventListener) {
-    styleElement.sheet.insertRule(rule, 0);
-    document.body.addEventListener('keydown', handleKeyDown, true);
-    document.body.addEventListener('focus', handleFocus, true);
-    document.body.addEventListener('blur', handleBlur, true);
+    return false;
   }
+
+  /**
+   * Add the `focus-visible` class to the given element if it was not added by
+   * the author.
+   */
+  function addFocusVisibleClass(el) {
+    if (el.classList.contains(focusVisibleClass)) {
+      return;
+    }
+    el.classList.add(focusVisibleClass);
+  }
+
+  /**
+   * Remove the `focus-visible` class from the given element if it was not
+   * originally added by the author.
+   */
+  function removeFocusVisibleClass(el) {
+    if (!el.classList.contains(focusVisibleClass)) {
+      return;
+    }
+    el.classList.remove(focusVisibleClass);
+  }
+
+  /**
+   * Treat `keydown` as a signal that the user is in keyboard modality.
+   * Apply `focus-visible` to any current active element and keep track
+   * of our keyboard modality state with `hadKeyboardEvent`.
+   */
+  function onKeyDown(e) {
+    if (isValidFocusTarget(document.activeElement)) {
+      addFocusVisibleClass(document.activeElement);
+    }
+
+    hadKeyboardEvent = true;
+  }
+
+  /**
+   * If at any point a user clicks with a pointing device, ensure that we change
+   * the modality away from keyboard.
+   * This avoids the situation where a user presses a key on an already focused
+   * element, and then clicks on a different element, focusing it with a
+   * pointing device, while we still think we're in keyboard modality.
+   */
+  function onPointerDown(e) {
+    hadKeyboardEvent = false;
+  }
+
+  /**
+   * On `focus`, add the `focus-visible` class to the target if:
+   * - the target received focus as a result of keyboard navigation, or
+   * - the event target is an element that will likely require interaction
+   *   via the keyboard (e.g. a text box)
+   */
+  function onFocus(e) {
+    // Prevent IE from focusing the document or HTML element.
+    if (!isValidFocusTarget(e.target)) {
+      return;
+    }
+
+    if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
+      addFocusVisibleClass(e.target);
+    }
+  }
+
+  /**
+   * On `blur`, remove the `focus-visible` class from the target.
+   */
+  function onBlur(e) {
+    if (!isValidFocusTarget(e.target)) {
+      return;
+    }
+
+    if (e.target.classList.contains(focusVisibleClass)) {
+      // To detect a tab/window switch, we look for a blur event followed
+      // rapidly by a visibility change.
+      // If we don't see a visibility change within 100ms, it's probably a
+      // regular focus change.
+      hadFocusVisibleRecently = true;
+      window.clearTimeout(hadFocusVisibleRecentlyTimeout);
+      hadFocusVisibleRecentlyTimeout = window.setTimeout(function() {
+        hadFocusVisibleRecently = false;
+        window.clearTimeout(hadFocusVisibleRecentlyTimeout);
+      }, 100);
+      removeFocusVisibleClass(e.target);
+    }
+  }
+
+  /**
+   * If the user changes tabs, keep track of whether or not the previously
+   * focused element had .focus-visible.
+   */
+  function onVisibilityChange(e) {
+    if (document.visibilityState === 'hidden') {
+      // If the tab becomes active again, the browser will handle calling focus
+      // on the element (Safari actually calls it twice).
+      // If this tab change caused a blur on an element with focus-visible,
+      // re-apply the class when the user switches back to the tab.
+      if (hadFocusVisibleRecently) {
+        hadKeyboardEvent = true;
+      }
+      addInitialPointerMoveListeners();
+    }
+  }
+
+  /**
+   * Add a group of listeners to detect usage of any pointing devices.
+   * These listeners will be added when the polyfill first loads, and anytime
+   * the window is blurred, so that they are active when the window regains
+   * focus.
+   */
+  function addInitialPointerMoveListeners() {
+    document.addEventListener('mousemove', onInitialPointerMove);
+    document.addEventListener('mousedown', onInitialPointerMove);
+    document.addEventListener('mouseup', onInitialPointerMove);
+    document.addEventListener('pointermove', onInitialPointerMove);
+    document.addEventListener('pointerdown', onInitialPointerMove);
+    document.addEventListener('pointerup', onInitialPointerMove);
+    document.addEventListener('touchmove', onInitialPointerMove);
+    document.addEventListener('touchstart', onInitialPointerMove);
+    document.addEventListener('touchend', onInitialPointerMove);
+  }
+
+  function removeInitialPointerMoveListeners() {
+    document.removeEventListener('mousemove', onInitialPointerMove);
+    document.removeEventListener('mousedown', onInitialPointerMove);
+    document.removeEventListener('mouseup', onInitialPointerMove);
+    document.removeEventListener('pointermove', onInitialPointerMove);
+    document.removeEventListener('pointerdown', onInitialPointerMove);
+    document.removeEventListener('pointerup', onInitialPointerMove);
+    document.removeEventListener('touchmove', onInitialPointerMove);
+    document.removeEventListener('touchstart', onInitialPointerMove);
+    document.removeEventListener('touchend', onInitialPointerMove);
+  }
+
+  /**
+   * When the polfyill first loads, assume the user is in keyboard modality.
+   * If any event is received from a pointing device (e.g. mouse, pointer,
+   * touch), turn off keyboard modality.
+   * This accounts for situations where focus enters the page from the URL bar.
+   */
+  function onInitialPointerMove(e) {
+    // Work around a Safari quirk that fires a mousemove on <html> whenever the
+    // window blurs, even if you're tabbing out of the page. ¯\_(ツ)_/¯
+    if (e.target.nodeName.toLowerCase() === 'html') {
+      return;
+    }
+
+    hadKeyboardEvent = false;
+    removeInitialPointerMoveListeners();
+  }
+
+  styleElement.sheet.insertRule(rule, 0);
+
+  document.addEventListener('keydown', onKeyDown, true);
+  document.addEventListener('mousedown', onPointerDown, true);
+  document.addEventListener('pointerdown', onPointerDown, true);
+  document.addEventListener('touchstart', onPointerDown, true);
+  document.addEventListener('focus', onFocus, true);
+  document.addEventListener('blur', onBlur, true);
+  document.addEventListener('visibilitychange', onVisibilityChange, true);
+  addInitialPointerMoveListeners();
 };
 
 export default modality;
