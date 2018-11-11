@@ -125,6 +125,10 @@ const modality = styleElement => {
    * of our keyboard modality state with `hadKeyboardEvent`.
    */
   function onKeyDown(e) {
+    if (e.metaKey || e.altKey || e.ctrlKey) {
+      return;
+    }
+
     if (isValidFocusTarget(document.activeElement)) {
       addFocusVisibleClass(document.activeElement);
     }
