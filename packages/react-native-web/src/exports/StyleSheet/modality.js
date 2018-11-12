@@ -113,9 +113,6 @@ const modality = styleElement => {
    * originally added by the author.
    */
   function removeFocusVisibleClass(el) {
-    if (!el.classList.contains(focusVisibleClass)) {
-      return;
-    }
     el.classList.remove(focusVisibleClass);
   }
 
@@ -125,7 +122,7 @@ const modality = styleElement => {
    * of our keyboard modality state with `hadKeyboardEvent`.
    */
   function onKeyDown(e) {
-    if (e.metaKey || e.altKey || e.ctrlKey) {
+    if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
       return;
     }
 
@@ -243,7 +240,7 @@ const modality = styleElement => {
   function onInitialPointerMove(e) {
     // Work around a Safari quirk that fires a mousemove on <html> whenever the
     // window blurs, even if you're tabbing out of the page. ¯\_(ツ)_/¯
-    if (e.target.nodeName.toLowerCase() === 'html') {
+    if (e.target.nodeName === 'HTML') {
       return;
     }
 
