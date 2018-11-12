@@ -141,13 +141,7 @@ describe('components/Image', () => {
   });
 
   describe('prop "resizeMode"', () => {
-    [
-      Image.resizeMode.contain,
-      Image.resizeMode.cover,
-      Image.resizeMode.none,
-      Image.resizeMode.stretch,
-      undefined
-    ].forEach(resizeMode => {
+    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach(resizeMode => {
       test(`value "${resizeMode}"`, () => {
         const component = shallow(<Image resizeMode={resizeMode} />);
         expect(findImageSurfaceStyle(component).backgroundSize).toMatchSnapshot();
@@ -214,7 +208,7 @@ describe('components/Image', () => {
 
   describe('prop "style"', () => {
     test('supports "resizeMode" property', () => {
-      const component = shallow(<Image style={{ resizeMode: Image.resizeMode.contain }} />);
+      const component = shallow(<Image style={{ resizeMode: 'contain' }} />);
       expect(findImageSurfaceStyle(component).backgroundSize).toMatchSnapshot();
     });
 
