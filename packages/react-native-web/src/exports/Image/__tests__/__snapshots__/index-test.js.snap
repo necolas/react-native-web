@@ -12,6 +12,8 @@ exports[`components/Image prop "resizeMode" value "cover" 1`] = `"cover"`;
 
 exports[`components/Image prop "resizeMode" value "none" 1`] = `"auto"`;
 
+exports[`components/Image prop "resizeMode" value "repeat" 1`] = `"auto"`;
+
 exports[`components/Image prop "resizeMode" value "stretch" 1`] = `"100% 100%"`;
 
 exports[`components/Image prop "resizeMode" value "undefined" 1`] = `"cover"`;

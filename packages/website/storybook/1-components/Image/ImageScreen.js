@@ -136,16 +136,6 @@ const ImageScreen = () => (
       />
     </Section>
 
-    <Section title="Properties">
-      <DocItem
-        name="static resizeMode"
-        typeInfo="object"
-        example={{
-          code: '<Image resizeMode={Image.resizeMode.contain} />'
-        }}
-      />
-    </Section>
-
     <Section title="Methods">
       <DocItem
         name="static getSize"

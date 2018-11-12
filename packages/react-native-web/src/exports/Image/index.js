@@ -132,8 +132,6 @@ class Image extends Component<*, State> {
     return ImageLoader.prefetch(uri);
   }
 
-  static resizeMode = ImageResizeMode;
-
   _filterId = 0;
   _imageRef = null;
   _imageRequestId = null;
