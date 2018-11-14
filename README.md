@@ -26,7 +26,7 @@ Who is using React Native in production web apps?
 [Twitter](https://mobile.twitter.com), [Major League
 Soccer](https://matchcenter.mlssoccer.com),
 [Flipkart](https://www.flipkart.com/), Uber, [The
-Times](https://github.com/newsuk/times-components).
+Times](https://github.com/newsuk/times-components), [DataCamp](https://www.datacamp.com/community/tech/porting-practice-to-web-part1).
 
 Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 
