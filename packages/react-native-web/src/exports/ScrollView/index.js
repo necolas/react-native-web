@@ -168,7 +168,7 @@ const ScrollView = createReactClass({
       !horizontal && Array.isArray(stickyHeaderIndices)
         ? React.Children.map(this.props.children, (child, i) => {
             if (stickyHeaderIndices.indexOf(i) > -1) {
-              return React.cloneElement(child, { style: [child.props.style, styles.stickyHeader] });
+              return <View style={styles.stickyHeader}>{child}</View>;
             } else {
               return child;
             }
