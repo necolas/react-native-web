@@ -1561,8 +1561,7 @@ class CellRenderer extends React.Component<
       getItemLayout?: ?Function,
       renderItem: renderItemType,
     },
-    prevCellKey: ?string,
-    style: ?DangerouslyImpreciseStyleProp,
+    prevCellKey: ?string
   },
   $FlowFixMeState,
 > {
@@ -1631,7 +1630,6 @@ class CellRenderer extends React.Component<
       index,
       inversionStyle,
       parentProps,
-      style,
     } = this.props;
     const {renderItem, getItemLayout} = parentProps;
     invariant(renderItem, 'no renderItem!');
@@ -1651,9 +1649,9 @@ class CellRenderer extends React.Component<
     );
     const cellStyle = inversionStyle
       ? horizontal
-        ? [styles.rowReverse, inversionStyle, style]
-        : [styles.columnReverse, inversionStyle, style]
-      : horizontal ? [styles.row, inversionStyle, style] : [inversionStyle, style];
+        ? [styles.rowReverse, inversionStyle]
+        : [styles.columnReverse, inversionStyle]
+      : horizontal ? [styles.row, inversionStyle] : inversionStyle;
     if (!CellRendererComponent) {
       return (
         <View style={cellStyle} onLayout={onLayout}>
