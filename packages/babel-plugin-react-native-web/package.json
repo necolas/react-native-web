@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-native-web",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Babel plugin for React Native for Web",
   "main": "index.js",
   "devDependencies": {
