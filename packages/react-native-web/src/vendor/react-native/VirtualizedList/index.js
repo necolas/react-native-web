@@ -1638,7 +1638,6 @@ class CellRenderer extends React.Component<
       getItemLayout?: ?Function,
       renderItem: renderItemType,
     },
-    prevCellKey: ?string
     prevCellKey: ?string,
   },
   $FlowFixMeState,
