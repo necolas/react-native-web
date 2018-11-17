@@ -7,17 +7,20 @@
  * @noflow
  * @format
  */
+'use strict';
 
 import UnimplementedView from '../../../modules/UnimplementedView';
 import React from 'react';
+import StyleSheet from '../../../exports/StyleSheet';
 import View from '../../../exports/View';
 import VirtualizedList, { type Props as VirtualizedListProps } from '../VirtualizedList';
+import invariant from 'fbjs/lib/invariant';
+
 import type {
   ViewabilityConfig,
   ViewToken,
   ViewabilityConfigCallbackPair
 } from '../ViewabilityHelper';
-import invariant from 'fbjs/lib/invariant';
 
 export type SeparatorsObj = {
   highlight: () => void,
@@ -82,10 +85,18 @@ type OptionalProps<ItemT> = {
    */
   ListFooterComponent?: ?(React.ComponentType<any> | React.Element<any>),
   /**
+   * Styling for internal View for ListFooterComponent
+   */
+  ListFooterComponentStyle?: any,
+  /**
    * Rendered at the top of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
   ListHeaderComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  /**
+   * Styling for internal View for ListHeaderComponent
+   */
+  ListHeaderComponentStyle?: any,
   /**
    * Optional custom style for multi-item rows generated when numColumns > 1.
    */
@@ -340,6 +351,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     viewPosition?: number,
   }) {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       this._listRef.scrollToIndex(params);
     }
   }
@@ -356,6 +368,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     viewPosition?: number,
   }) {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       this._listRef.scrollToItem(params);
     }
   }
@@ -367,6 +380,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
    */
   scrollToOffset(params: {animated?: ?boolean, offset: number}) {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       this._listRef.scrollToOffset(params);
     }
   }
@@ -378,6 +392,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
    */
   recordInteraction() {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       this._listRef.recordInteraction();
     }
   }
@@ -389,6 +404,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
    */
   flashScrollIndicators() {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       this._listRef.flashScrollIndicators();
     }
   }
@@ -398,51 +414,27 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
    */
   getScrollResponder() {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       return this._listRef.getScrollResponder();
     }
   }
 
   getScrollableNode() {
     if (this._listRef) {
+      // $FlowFixMe Found when typing ListView
       return this._listRef.getScrollableNode();
     }
   }
 
-  setNativeProps(props: Object) {
+  setNativeProps(props: {[string]: mixed}) {
     if (this._listRef) {
       this._listRef.setNativeProps(props);
     }
   }
 
-  UNSAFE_componentWillMount() {
-    this._checkProps(this.props);
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps: Props<ItemT>) {
-    invariant(
-      nextProps.numColumns === this.props.numColumns,
-      'Changing numColumns on the fly is not supported. Change the key prop on FlatList when ' +
-        'changing the number of columns to force a fresh render of the component.',
-    );
-    invariant(
-      nextProps.onViewableItemsChanged === this.props.onViewableItemsChanged,
-      'Changing onViewableItemsChanged on the fly is not supported',
-    );
-    invariant(
-      nextProps.viewabilityConfig === this.props.viewabilityConfig,
-      'Changing viewabilityConfig on the fly is not supported',
-    );
-    invariant(
-      nextProps.viewabilityConfigCallbackPairs ===
-        this.props.viewabilityConfigCallbackPairs,
-      'Changing viewabilityConfigCallbackPairs on the fly is not supported',
-    );
-
-    this._checkProps(nextProps);
-  }
-
-  constructor(props: Props<*>) {
+  constructor(props: Props<ItemT>) {
     super(props);
+    this._checkProps(this.props);
     if (this.props.viewabilityConfigCallbackPairs) {
       this._virtualizedListPairs = this.props.viewabilityConfigCallbackPairs.map(
         pair => ({
@@ -463,6 +455,29 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
         ),
       });
     }
+  }
+
+  componentDidUpdate(prevProps: Props<ItemT>) {
+    invariant(
+      prevProps.numColumns === this.props.numColumns,
+      'Changing numColumns on the fly is not supported. Change the key prop on FlatList when ' +
+        'changing the number of columns to force a fresh render of the component.',
+    );
+    invariant(
+      prevProps.onViewableItemsChanged === this.props.onViewableItemsChanged,
+      'Changing onViewableItemsChanged on the fly is not supported',
+    );
+    invariant(
+      prevProps.viewabilityConfig === this.props.viewabilityConfig,
+      'Changing viewabilityConfig on the fly is not supported',
+    );
+    invariant(
+      prevProps.viewabilityConfigCallbackPairs ===
+        this.props.viewabilityConfigCallbackPairs,
+      'Changing viewabilityConfigCallbackPairs on the fly is not supported',
+    );
+
+    this._checkProps(this.props);
   }
 
   _hasWarnedLegacy = false;
@@ -505,8 +520,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       // comparison.
       if (!this._hasWarnedLegacy) {
         console.warn(
-          'FlatList: Using legacyImplementation - some features not supported and performance ' +
-            'may suffer',
+          'FlatList: legacyImplementation is deprecated and will be removed in a ' +
+            'future release - some features not supported and performance may suffer. ' +
+            'Please migrate to the default implementation.',
         );
         this._hasWarnedLegacy = true;
       }
@@ -524,7 +540,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       const ret = [];
       for (let kk = 0; kk < numColumns; kk++) {
         const item = data[index * numColumns + kk];
-        item && ret.push(item);
+        if (item != null) {
+          ret.push(item);
+        }
       }
       return ret;
     } else {
@@ -601,7 +619,11 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
         'Expected array of items with numColumns > 1',
       );
       return (
-        <View style={[{flexDirection: 'row'}, columnWrapperStyle]}>
+        <View
+          style={StyleSheet.compose(
+            styles.row,
+            columnWrapperStyle,
+          )}>
           {item.map((it, kk) => {
             const element = renderItem({
               item: it,
@@ -647,5 +669,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   }
 }
+
+const styles = StyleSheet.create({
+  row: {flexDirection: 'row'},
+});
 
 export default FlatList;
