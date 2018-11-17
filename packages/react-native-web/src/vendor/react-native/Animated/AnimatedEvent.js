@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  * @format
  */
 'use strict';
@@ -158,6 +158,7 @@ class AnimatedEvent {
     };
   }
 
+  // $FlowFixMe
   _callListeners(...args) {
     this._listeners.forEach(listener => listener(...args));
   }

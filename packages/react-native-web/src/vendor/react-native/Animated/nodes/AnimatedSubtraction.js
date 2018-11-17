@@ -11,29 +11,29 @@
 
 import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedNode from './AnimatedNode';
+import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
 import type {InterpolationConfigType} from './AnimatedInterpolation';
 
-class AnimatedModulo extends AnimatedWithChildren {
+class AnimatedSubtraction extends AnimatedWithChildren {
   _a: AnimatedNode;
-  _modulus: number;
+  _b: AnimatedNode;
 
-  constructor(a: AnimatedNode, modulus: number) {
+  constructor(a: AnimatedNode | number, b: AnimatedNode | number) {
     super();
-    this._a = a;
-    this._modulus = modulus;
+    this._a = typeof a === 'number' ? new AnimatedValue(a) : a;
+    this._b = typeof b === 'number' ? new AnimatedValue(b) : b;
   }
 
   __makeNative() {
     this._a.__makeNative();
+    this._b.__makeNative();
     super.__makeNative();
   }
 
   __getValue(): number {
-    return (
-      ((this._a.__getValue() % this._modulus) + this._modulus) % this._modulus
-    );
+    return this._a.__getValue() - this._b.__getValue();
   }
 
   interpolate(config: InterpolationConfigType): AnimatedInterpolation {
@@ -42,20 +42,21 @@ class AnimatedModulo extends AnimatedWithChildren {
 
   __attach(): void {
     this._a.__addChild(this);
+    this._b.__addChild(this);
   }
 
   __detach(): void {
     this._a.__removeChild(this);
+    this._b.__removeChild(this);
     super.__detach();
   }
 
   __getNativeConfig(): any {
     return {
-      type: 'modulus',
-      input: this._a.__getNativeTag(),
-      modulus: this._modulus,
+      type: 'subtraction',
+      input: [this._a.__getNativeTag(), this._b.__getNativeTag()],
     };
   }
 }
 
-export default AnimatedModulo;
+export default AnimatedSubtraction;

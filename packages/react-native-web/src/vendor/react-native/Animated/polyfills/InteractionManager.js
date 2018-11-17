@@ -9,5 +9,5 @@
 
 module.exports = {
   createInteractionHandle: function() {},
-  clearInteractionHandle: function() {}
+  clearInteractionHandle: function() {},
 };
