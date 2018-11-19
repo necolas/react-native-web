@@ -284,6 +284,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
 
     test('textShadowColor and textShadowRadius only', () => {
+      expect(createReactDOMStyle({ textShadowColor: 'red', textShadowRadius: 0 })).toEqual({});
       expect(createReactDOMStyle({ textShadowColor: 'red', textShadowRadius: 5 })).toEqual({
         textShadow: '0px 0px 5px rgba(255,0,0,1.00)'
       });
