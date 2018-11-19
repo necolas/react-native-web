@@ -106,12 +106,13 @@ const resolveTextDecoration = (resolvedStyle, style) => {
 const resolveTextShadow = (resolvedStyle, style) => {
   const { textShadowColor, textShadowOffset, textShadowRadius } = style;
   const { height, width } = textShadowOffset || defaultOffset;
+  const radius = textShadowRadius || 0;
   const offsetX = normalizeValue(null, width);
   const offsetY = normalizeValue(null, height);
-  const blurRadius = normalizeValue(null, textShadowRadius || 0);
+  const blurRadius = normalizeValue(null, radius);
   const color = normalizeColor(textShadowColor);
 
-  if (color && (height !== 0 || width !== 0)) {
+  if (color && (height !== 0 || width !== 0 || radius !== 0)) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 };
