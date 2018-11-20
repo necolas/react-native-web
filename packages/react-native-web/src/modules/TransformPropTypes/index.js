@@ -23,6 +23,7 @@ const TransformPropTypes = {
       shape({ scale: number }),
       shape({ scaleX: number }),
       shape({ scaleY: number }),
+      shape({ scale3d: string }),
       shape({ skewX: string }),
       shape({ skewY: string }),
       shape({ translateX: numberOrString }),
