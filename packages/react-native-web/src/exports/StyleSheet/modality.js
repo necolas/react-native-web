@@ -21,10 +21,12 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import hash from '../../vendor/hash';
 
-const focusVisibleClass =
-  'rn-' + (process.env.NODE_ENV !== 'production' ? 'focusVisible-' : '') + hash('focus-visible');
+const focusVisibleAttributeName =
+  'data-rn-' +
+  (process.env.NODE_ENV !== 'production' ? 'focusvisible-' : '') +
+  hash('focusvisible');
 
-const rule = `:focus:not(.${focusVisibleClass}) { outline: none; }`;
+const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 
 const modality = styleElement => {
   if (!canUseDOM) {
@@ -71,7 +73,7 @@ const modality = styleElement => {
 
   /**
    * Computes whether the given element should automatically trigger the
-   * `focus-visible` class being added, i.e. whether it should always match
+   * `focus-visible` attribute being added, i.e. whether it should always match
    * `:focus-visible` when focused.
    */
   function focusTriggersKeyboardModality(el) {
@@ -95,22 +97,32 @@ const modality = styleElement => {
   }
 
   /**
-   * Add the `focus-visible` class to the given element if it was not added by
+   * Add the `focus-visible` attribute to the given element if it was not added by
    * the author.
    */
-  function addFocusVisibleClass(el) {
-    if (el.classList.contains(focusVisibleClass)) {
+  function addFocusVisibleAttribute(el) {
+    if (el.hasAttribute(focusVisibleAttributeName)) {
       return;
     }
-    el.classList.add(focusVisibleClass);
+    el.setAttribute(focusVisibleAttributeName, true);
   }
 
   /**
-   * Remove the `focus-visible` class from the given element if it was not
+   * Remove the `focus-visible` attribute from the given element if it was not
    * originally added by the author.
    */
-  function removeFocusVisibleClass(el) {
-    el.classList.remove(focusVisibleClass);
+  function removeFocusVisibleAttribute(el) {
+    el.removeAttribute(focusVisibleAttributeName);
+  }
+
+  /**
+   * Remove the `focus-visible` attribute from all elements in the document.
+   */
+  function removeAllFocusVisibleAttributes() {
+    const list = document.querySelectorAll(`[${focusVisibleAttributeName}]`);
+    for (let i = 0; i < list.length; i += 1) {
+      removeFocusVisibleAttribute(list[i]);
+    }
   }
 
   /**
@@ -124,7 +136,7 @@ const modality = styleElement => {
     }
 
     if (isValidFocusTarget(document.activeElement)) {
-      addFocusVisibleClass(document.activeElement);
+      addFocusVisibleAttribute(document.activeElement);
     }
 
     hadKeyboardEvent = true;
@@ -136,13 +148,20 @@ const modality = styleElement => {
    * This avoids the situation where a user presses a key on an already focused
    * element, and then clicks on a different element, focusing it with a
    * pointing device, while we still think we're in keyboard modality.
+   * It also avoids the situation where a user presses on an element within a
+   * previously keyboard-focused element (i.e., `e.target` is not the previously
+   * focused element, but one of its descendants) and we need to remove the
+   * focus ring because a `blur` event doesn't occur.
    */
   function onPointerDown(e) {
+    if (hadKeyboardEvent === true) {
+      removeAllFocusVisibleAttributes();
+    }
     hadKeyboardEvent = false;
   }
 
   /**
-   * On `focus`, add the `focus-visible` class to the target if:
+   * On `focus`, add the `focus-visible` attribute to the target if:
    * - the target received focus as a result of keyboard navigation, or
    * - the event target is an element that will likely require interaction
    *   via the keyboard (e.g. a text box)
@@ -154,19 +173,19 @@ const modality = styleElement => {
     }
 
     if (hadKeyboardEvent || focusTriggersKeyboardModality(e.target)) {
-      addFocusVisibleClass(e.target);
+      addFocusVisibleAttribute(e.target);
     }
   }
 
   /**
-   * On `blur`, remove the `focus-visible` class from the target.
+   * On `blur`, remove the `focus-visible` attribute from the target.
    */
   function onBlur(e) {
     if (!isValidFocusTarget(e.target)) {
       return;
     }
 
-    if (e.target.classList.contains(focusVisibleClass)) {
+    if (e.target.hasAttribute(focusVisibleAttributeName)) {
       // To detect a tab/window switch, we look for a blur event followed
       // rapidly by a visibility change.
       // If we don't see a visibility change within 100ms, it's probably a
@@ -177,20 +196,20 @@ const modality = styleElement => {
         hadFocusVisibleRecently = false;
         window.clearTimeout(hadFocusVisibleRecentlyTimeout);
       }, 100);
-      removeFocusVisibleClass(e.target);
+      removeFocusVisibleAttribute(e.target);
     }
   }
 
   /**
    * If the user changes tabs, keep track of whether or not the previously
-   * focused element had .focus-visible.
+   * focused element had the focus-visible attribute.
    */
   function onVisibilityChange(e) {
     if (document.visibilityState === 'hidden') {
       // If the tab becomes active again, the browser will handle calling focus
       // on the element (Safari actually calls it twice).
       // If this tab change caused a blur on an element with focus-visible,
-      // re-apply the class when the user switches back to the tab.
+      // re-apply the attribute when the user switches back to the tab.
       if (hadFocusVisibleRecently) {
         hadKeyboardEvent = true;
       }
