@@ -317,11 +317,13 @@ class TextInput extends Component<*> {
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
 
-    // Backspace, Tab, Cmd+Enter, and Arrow keys only fire 'keydown' DOM events
+    // Backspace, Escape, Tab, Cmd+Enter, and Arrow keys only fire 'keydown'
+    // DOM events
     if (
       e.which === 8 ||
       e.which === 9 ||
       (e.which === 13 && e.metaKey) ||
+      e.which === 27 ||
       e.which === 37 ||
       e.which === 38 ||
       e.which === 39 ||
@@ -347,6 +349,9 @@ class TextInput extends Component<*> {
           break;
         case 13:
           keyValue = 'Enter';
+          break;
+        case 27:
+          keyValue = 'Escape';
           break;
         case 32:
           keyValue = ' ';
