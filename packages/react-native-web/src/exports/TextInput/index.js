@@ -316,18 +316,19 @@ class TextInput extends Component<*> {
   _handleKeyDown = e => {
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
+    const key = e.key || e.keycode || e.which;
 
     // Backspace, Escape, Tab, Cmd+Enter, and Arrow keys only fire 'keydown'
     // DOM events
     if (
-      e.which === 8 ||
-      e.which === 9 ||
-      (e.which === 13 && e.metaKey) ||
-      e.which === 27 ||
-      e.which === 37 ||
-      e.which === 38 ||
-      e.which === 39 ||
-      e.which === 40
+      key === 8 ||
+      key === 9 ||
+      (key === 13 && e.metaKey) ||
+      key === 27 ||
+      key === 37 ||
+      key === 38 ||
+      key === 39 ||
+      key === 40
     ) {
       this._handleKeyPress(e);
     }
@@ -337,10 +338,11 @@ class TextInput extends Component<*> {
     const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+    const key = e.key || e.keycode || e.which;
 
     if (onKeyPress) {
       let keyValue;
-      switch (e.which) {
+      switch (key) {
         case 8:
           keyValue = 'Backspace';
           break;
@@ -371,9 +373,9 @@ class TextInput extends Component<*> {
         default: {
           // Trim to only care about the keys that have a textual representation
           if (e.shiftKey) {
-            keyValue = String.fromCharCode(e.which).trim();
+            keyValue = String.fromCharCode(key).trim();
           } else {
-            keyValue = String.fromCharCode(e.which)
+            keyValue = String.fromCharCode(key)
               .toLowerCase()
               .trim();
           }
@@ -393,7 +395,7 @@ class TextInput extends Component<*> {
       }
     }
 
-    if (!e.isDefaultPrevented() && e.which === 13 && !e.shiftKey) {
+    if (!e.isDefaultPrevented() && key === 13 && !e.shiftKey) {
       if ((blurOnSubmit || !multiline) && onSubmitEditing) {
         // prevent "Enter" from inserting a newline
         e.preventDefault();

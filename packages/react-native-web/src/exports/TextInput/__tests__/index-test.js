@@ -313,6 +313,275 @@ describe('components/TextInput', () => {
       );
     });
 
+    describe('prop "onKeyPress"', () => {
+      test('arrow key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { key: 37 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'ArrowLeft',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('backspace key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyDown', { key: 8 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Backspace',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('enter key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { key: 13 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Enter',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('escape key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { key: 27 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Escape',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('space key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { key: 32 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: ' ',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('tab key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyDown', { key: 9 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Tab',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('text key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { key: 97 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'a',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+    });
+    describe('prop "onKeyPress"', () => {
+      test('arrow key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { keycode: 37 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'ArrowLeft',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('backspace key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyDown', { keycode: 8 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Backspace',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+
+      test('enter key', () => {
+        const onKeyPress = jest.fn();
+        const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+        input.simulate('keyPress', { keycode: 13 });
+        expect(onKeyPress).toHaveBeenCalledTimes(1);
+        expect(onKeyPress).toBeCalledWith(
+          expect.objectContaining({
+            nativeEvent: {
+              altKey: undefined,
+              ctrlKey: undefined,
+              key: 'Enter',
+              metaKey: undefined,
+              shiftKey: undefined,
+              target: expect.anything()
+            }
+          })
+        );
+      });
+    });
+
+    test('escape key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { keycode: 27 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'Escape',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('space key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { keycode: 32 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: ' ',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('tab key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyDown', { keycode: 9 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'Tab',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
+    test('text key', () => {
+      const onKeyPress = jest.fn();
+      const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
+      input.simulate('keyPress', { keycode: 97 });
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: {
+            altKey: undefined,
+            ctrlKey: undefined,
+            key: 'a',
+            metaKey: undefined,
+            shiftKey: undefined,
+            target: expect.anything()
+          }
+        })
+      );
+    });
+
     test('modifier keys are included', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
@@ -321,7 +590,9 @@ describe('components/TextInput', () => {
         ctrlKey: true,
         metaKey: true,
         shiftKey: true,
-        which: 32
+        which: 32,
+        key: 32,
+        keycode: 32
       });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
