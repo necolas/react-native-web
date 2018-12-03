@@ -7,11 +7,32 @@ export { ColorPropType, StyleSheet, Text, createElement } from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { default as View } from 'react-native-web/dist/exports/View';
-export { default as ColorPropType } from 'react-native-web/dist/exports/ColorPropType';
-export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
-export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as createElement } from 'react-native-web/dist/exports/createElement';
+\\"use strict\\";
+
+exports.__esModule = true;
+exports.createElement = exports.Text = exports.StyleSheet = exports.ColorPropType = exports.View = void 0;
+
+var _View = _interopRequireDefault(require(\\"react-native-web/dist/exports/View\\"));
+
+exports.View = _View.default;
+
+var _ColorPropType = _interopRequireDefault(require(\\"react-native-web/dist/exports/ColorPropType\\"));
+
+exports.ColorPropType = _ColorPropType.default;
+
+var _StyleSheet = _interopRequireDefault(require(\\"react-native-web/dist/exports/StyleSheet\\"));
+
+exports.StyleSheet = _StyleSheet.default;
+
+var _Text = _interopRequireDefault(require(\\"react-native-web/dist/exports/Text\\"));
+
+exports.Text = _Text.default;
+
+var _createElement = _interopRequireDefault(require(\\"react-native-web/dist/exports/createElement\\"));
+
+exports.createElement = _createElement.default;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 "
 `;
 
@@ -22,11 +43,32 @@ export { ColorPropType, StyleSheet, Text, createElement } from 'react-native-web
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { default as View } from 'react-native-web/dist/exports/View';
-export { default as ColorPropType } from 'react-native-web/dist/exports/ColorPropType';
-export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
-export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as createElement } from 'react-native-web/dist/exports/createElement';
+\\"use strict\\";
+
+exports.__esModule = true;
+exports.createElement = exports.Text = exports.StyleSheet = exports.ColorPropType = exports.View = void 0;
+
+var _View = _interopRequireDefault(require(\\"react-native-web/dist/exports/View\\"));
+
+exports.View = _View.default;
+
+var _ColorPropType = _interopRequireDefault(require(\\"react-native-web/dist/exports/ColorPropType\\"));
+
+exports.ColorPropType = _ColorPropType.default;
+
+var _StyleSheet = _interopRequireDefault(require(\\"react-native-web/dist/exports/StyleSheet\\"));
+
+exports.StyleSheet = _StyleSheet.default;
+
+var _Text = _interopRequireDefault(require(\\"react-native-web/dist/exports/Text\\"));
+
+exports.Text = _Text.default;
+
+var _createElement = _interopRequireDefault(require(\\"react-native-web/dist/exports/createElement\\"));
+
+exports.createElement = _createElement.default;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 "
 `;
 
@@ -39,12 +81,17 @@ import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import ReactNative from 'react-native-web/dist/index';
-import View from 'react-native-web/dist/exports/View';
-import { Invalid } from 'react-native-web/dist/index';
-import MyView from 'react-native-web/dist/exports/View';
-import ViewPropTypes from 'react-native-web/dist/exports/ViewPropTypes';
-import * as ReactNativeModules from 'react-native-web/dist/index';
+\\"use strict\\";
+
+var ReactNativeModules = _interopRequireWildcard(require(\\"react-native-web/dist/index\\"));
+
+var _View = _interopRequireDefault(require(\\"react-native-web/dist/exports/View\\"));
+
+var _ViewPropTypes = _interopRequireDefault(require(\\"react-native-web/dist/exports/ViewPropTypes\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 "
 `;
 
@@ -57,12 +104,17 @@ import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import ReactNative from 'react-native-web/dist/cjs/index';
-import View from 'react-native-web/dist/cjs/exports/View';
-import { Invalid } from 'react-native-web/dist/cjs/index';
-import MyView from 'react-native-web/dist/cjs/exports/View';
-import ViewPropTypes from 'react-native-web/dist/cjs/exports/ViewPropTypes';
-import * as ReactNativeModules from 'react-native-web/dist/cjs/index';
+\\"use strict\\";
+
+var ReactNativeModules = _interopRequireWildcard(require(\\"react-native-web/dist/cjs/index\\"));
+
+var _View = _interopRequireDefault(require(\\"react-native-web/dist/cjs/exports/View\\"));
+
+var _ViewPropTypes = _interopRequireDefault(require(\\"react-native-web/dist/cjs/exports/ViewPropTypes\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 "
 `;
 
@@ -74,13 +126,25 @@ import * as ReactNativeModules from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import createElement from 'react-native-web/dist/exports/createElement';
-import ColorPropType from 'react-native-web/dist/exports/ColorPropType';
-import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
-import View from 'react-native-web/dist/exports/View';
-import TouchableOpacity from 'react-native-web/dist/exports/TouchableOpacity';
-import processColor from 'react-native-web/dist/exports/processColor';
-import * as ReactNativeModules from 'react-native-web/dist/index';
+\\"use strict\\";
+
+var _createElement = _interopRequireDefault(require(\\"react-native-web/dist/exports/createElement\\"));
+
+var _ColorPropType = _interopRequireDefault(require(\\"react-native-web/dist/exports/ColorPropType\\"));
+
+var _StyleSheet = _interopRequireDefault(require(\\"react-native-web/dist/exports/StyleSheet\\"));
+
+var _View = _interopRequireDefault(require(\\"react-native-web/dist/exports/View\\"));
+
+var _TouchableOpacity = _interopRequireDefault(require(\\"react-native-web/dist/exports/TouchableOpacity\\"));
+
+var _processColor = _interopRequireDefault(require(\\"react-native-web/dist/exports/processColor\\"));
+
+var ReactNativeModules = _interopRequireWildcard(require(\\"react-native-web/dist/index\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 "
 `;
 
@@ -92,13 +156,15 @@ const { StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index').default;
+\\"use strict\\";
 
-const View = require('react-native-web/dist/exports/View').default;
+var ReactNative = require(\\"react-native-web/dist/index\\").default;
 
-const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
+var View = require(\\"react-native-web/dist/exports/View\\").default;
 
-const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity').default;
+var StyleSheet = require(\\"react-native-web/dist/exports/StyleSheet\\").default;
+
+var TouchableOpacity = require(\\"react-native-web/dist/exports/TouchableOpacity\\").default;
 "
 `;
 
@@ -110,13 +176,15 @@ const { StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/cjs/index').default;
+\\"use strict\\";
 
-const View = require('react-native-web/dist/cjs/exports/View').default;
+var ReactNative = require(\\"react-native-web/dist/cjs/index\\").default;
 
-const StyleSheet = require('react-native-web/dist/cjs/exports/StyleSheet').default;
+var View = require(\\"react-native-web/dist/cjs/exports/View\\").default;
 
-const TouchableOpacity = require('react-native-web/dist/cjs/exports/TouchableOpacity').default;
+var StyleSheet = require(\\"react-native-web/dist/cjs/exports/StyleSheet\\").default;
+
+var TouchableOpacity = require(\\"react-native-web/dist/cjs/exports/TouchableOpacity\\").default;
 "
 `;
 
@@ -128,18 +196,20 @@ const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = requ
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index').default;
+\\"use strict\\";
 
-const createElement = require('react-native-web/dist/exports/createElement').default;
+var ReactNative = require(\\"react-native-web/dist/index\\").default;
 
-const ColorPropType = require('react-native-web/dist/exports/ColorPropType').default;
+var createElement = require(\\"react-native-web/dist/exports/createElement\\").default;
 
-const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
+var ColorPropType = require(\\"react-native-web/dist/exports/ColorPropType\\").default;
 
-const View = require('react-native-web/dist/exports/View').default;
+var StyleSheet = require(\\"react-native-web/dist/exports/StyleSheet\\").default;
 
-const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity').default;
+var View = require(\\"react-native-web/dist/exports/View\\").default;
 
-const processColor = require('react-native-web/dist/exports/processColor').default;
+var TouchableOpacity = require(\\"react-native-web/dist/exports/TouchableOpacity\\").default;
+
+var processColor = require(\\"react-native-web/dist/exports/processColor\\").default;
 "
 `;

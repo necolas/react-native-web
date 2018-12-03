@@ -401,7 +401,7 @@ class TextInput extends Component<*> {
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit) {
-        this.blur();
+        if (this.blur) this.blur();
       }
     }
   };
