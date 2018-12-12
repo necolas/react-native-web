@@ -42,12 +42,12 @@ const TextStylePropTypes = {
   textShadowColor: ColorPropType,
   textShadowOffset: shape({ width: number, height: number }),
   textShadowRadius: number,
+  textTransform: oneOf(['capitalize', 'lowercase', 'none', 'uppercase']),
   writingDirection: oneOf(['auto', 'ltr', 'rtl']),
   /* @platform web */
   textIndent: numberOrString,
   textOverflow: string,
   textRendering: oneOf(['auto', 'geometricPrecision', 'optimizeLegibility', 'optimizeSpeed']),
-  textTransform: oneOf(['capitalize', 'lowercase', 'none', 'uppercase']),
   unicodeBidi: oneOf([
     'normal',
     'bidi-override',
@@ -57,6 +57,7 @@ const TextStylePropTypes = {
     'plaintext'
   ]),
   whiteSpace: string,
+  wordBreak: oneOf(['normal', 'break-all', 'break-word', 'keep-all']),
   wordWrap: string,
   MozOsxFontSmoothing: string,
   WebkitFontSmoothing: string

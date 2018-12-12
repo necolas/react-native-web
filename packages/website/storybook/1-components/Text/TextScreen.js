@@ -266,7 +266,6 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
-    label: 'web',
     name: 'textTransform',
     typeInfo: 'string'
   },
@@ -279,6 +278,12 @@ const stylePropTypes = [
     name: 'whiteSpace',
     typeInfo: 'string'
   },
+  {
+    label: 'web',
+    name: 'wordBreak',
+    typeInfo: 'enum("normal", "break-all", "break-word", "keep-all")'
+  },
+
   {
     label: 'web',
     name: 'wordWrap',
