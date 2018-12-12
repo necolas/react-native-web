@@ -56,6 +56,7 @@ const TextStylePropTypes = {
     'isolate-override',
     'plaintext'
   ]),
+  wordBreak: oneOf(['normal', 'break-all', 'keep-all', 'break-word']),
   whiteSpace: string,
   wordWrap: string,
   MozOsxFontSmoothing: string,
