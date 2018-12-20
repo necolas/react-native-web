@@ -12,7 +12,7 @@ const testIfDocumentIsFocused = (message, fn) => {
   if (document.hasFocus && document.hasFocus()) {
     test(message, fn);
   } else {
-    test.skip(`${message} – document is not focused`);
+    test.skip(`${message} – document is not focused`, () => {});
   }
 };
 
