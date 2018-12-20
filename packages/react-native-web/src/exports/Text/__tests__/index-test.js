@@ -34,7 +34,7 @@ describe('components/Text', () => {
     expect(component.contains(children)).toEqual(true);
   });
 
-  test('prop "numberOfLines"');
+  test('prop "numberOfLines"', () => {});
 
   test('prop "onPress"', () => {
     const onPress = e => {};

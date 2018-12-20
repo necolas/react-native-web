@@ -1,11 +1,11 @@
 const createConfig = ({ modules }) => ({
   presets: [
     [
-      'babel-preset-env',
+      '@babel/preset-env',
       {
         loose: true,
         modules,
-        exclude: ['transform-es2015-typeof-symbol'],
+        exclude: ['transform-typeof-symbol'],
         targets: {
           browsers: [
             'chrome 38',
@@ -24,17 +24,19 @@ const createConfig = ({ modules }) => ({
         }
       }
     ],
-    'babel-preset-react',
-    'babel-preset-flow'
+    '@babel/preset-react',
+    '@babel/preset-flow'
   ],
   plugins: [
-    ['babel-plugin-transform-class-properties', { loose: true }],
-    ['babel-plugin-transform-object-rest-spread', { useBuiltIns: true }],
-    ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }]
+    '@babel/plugin-transform-flow-strip-types',
+    ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }],
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+    ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
   ].concat(modules ? ['babel-plugin-add-module-exports'] : [])
 });
 
-module.exports =
-  process.env.BABEL_ENV === 'commonjs'
+module.exports = function() {
+  return process.env.BABEL_ENV === 'commonjs' || process.env.NODE_ENV === 'test'
     ? createConfig({ modules: 'commonjs' })
     : createConfig({ modules: false });
+};
