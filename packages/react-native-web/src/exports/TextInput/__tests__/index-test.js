@@ -183,7 +183,7 @@ describe('components/TextInput', () => {
     test('arrow key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 37 });
+      input.simulate('keyPress', { key: 'ArrowLeft' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -202,7 +202,7 @@ describe('components/TextInput', () => {
     test('backspace key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyDown', { which: 8 });
+      input.simulate('keyDown', { key: 'Backspace' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -221,7 +221,7 @@ describe('components/TextInput', () => {
     test('enter key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 13 });
+      input.simulate('keyPress', { key: 'Enter' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -240,7 +240,7 @@ describe('components/TextInput', () => {
     test('escape key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 27 });
+      input.simulate('keyPress', { key: 'Escape' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -259,7 +259,7 @@ describe('components/TextInput', () => {
     test('space key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 32 });
+      input.simulate('keyPress', { key: ' ' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -278,7 +278,7 @@ describe('components/TextInput', () => {
     test('tab key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyDown', { which: 9 });
+      input.simulate('keyDown', { key: 'Tab' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -297,7 +297,7 @@ describe('components/TextInput', () => {
     test('text key', () => {
       const onKeyPress = jest.fn();
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
-      input.simulate('keyPress', { which: 97 });
+      input.simulate('keyPress', { key: 'a' });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
@@ -321,7 +321,7 @@ describe('components/TextInput', () => {
         ctrlKey: true,
         metaKey: true,
         shiftKey: true,
-        which: 32
+        key: ' '
       });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
@@ -343,7 +343,7 @@ describe('components/TextInput', () => {
       const input = findNativeInput(mount(<TextInput onKeyPress={onKeyPress} />));
       input.simulate('keyDown', {
         metaKey: true,
-        which: 13
+        key: 'Enter'
       });
       expect(onKeyPress).toHaveBeenCalledTimes(1);
     });
@@ -377,7 +377,7 @@ describe('components/TextInput', () => {
       const input = findNativeInput(
         mount(<TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />)
       );
-      input.simulate('keyPress', { which: 13 });
+      input.simulate('keyPress', { key: 'Enter' });
       function onSubmitEditing(e) {
         expect(e.nativeEvent.target).toBeDefined();
         expect(e.nativeEvent.text).toBe('12345');
@@ -390,7 +390,7 @@ describe('components/TextInput', () => {
       const input = findNativeTextarea(
         mount(<TextInput defaultValue="12345" multiline onSubmitEditing={onSubmitEditing} />)
       );
-      input.simulate('keyPress', { which: 13 });
+      input.simulate('keyPress', { key: 'Enter' });
       expect(onSubmitEditing).not.toHaveBeenCalled();
     });
 
@@ -410,11 +410,11 @@ describe('components/TextInput', () => {
       );
 
       // shift+enter should enter newline, not submit
-      input.simulate('keyPress', { which: 13, preventDefault, shiftKey: true });
+      input.simulate('keyPress', { key: 'Enter', preventDefault, shiftKey: true });
       expect(onSubmitEditing).not.toHaveBeenCalledWith(expect.objectContaining({ shiftKey: true }));
       expect(preventDefault).not.toHaveBeenCalled();
 
-      input.simulate('keyPress', { which: 13, preventDefault });
+      input.simulate('keyPress', { key: 'Enter', preventDefault });
       expect(onSubmitEditing).toHaveBeenCalledTimes(1);
       expect(preventDefault).toHaveBeenCalledTimes(1);
     });
