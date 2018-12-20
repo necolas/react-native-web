@@ -318,14 +318,14 @@ class TextInput extends Component<*> {
     // Backspace, Escape, Tab, Cmd+Enter, and Arrow keys only fire 'keydown'
     // DOM events
     if (
-      e.which === 8 ||
-      e.which === 9 ||
-      (e.which === 13 && e.metaKey) ||
-      e.which === 27 ||
-      e.which === 37 ||
-      e.which === 38 ||
-      e.which === 39 ||
-      e.which === 40
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowRight' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'Backspace' ||
+      e.key === 'Escape' ||
+      (e.key === 'Enter' && e.metaKey) ||
+      e.key === 'Tab'
     ) {
       this._handleKeyPress(e);
     }
@@ -337,46 +337,7 @@ class TextInput extends Component<*> {
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
 
     if (onKeyPress) {
-      let keyValue;
-      switch (e.which) {
-        case 8:
-          keyValue = 'Backspace';
-          break;
-        case 9:
-          keyValue = 'Tab';
-          break;
-        case 13:
-          keyValue = 'Enter';
-          break;
-        case 27:
-          keyValue = 'Escape';
-          break;
-        case 32:
-          keyValue = ' ';
-          break;
-        case 37:
-          keyValue = 'ArrowLeft';
-          break;
-        case 38:
-          keyValue = 'ArrowUp';
-          break;
-        case 39:
-          keyValue = 'ArrowRight';
-          break;
-        case 40:
-          keyValue = 'ArrowDown';
-          break;
-        default: {
-          // Trim to only care about the keys that have a textual representation
-          if (e.shiftKey) {
-            keyValue = String.fromCharCode(e.which).trim();
-          } else {
-            keyValue = String.fromCharCode(e.which)
-              .toLowerCase()
-              .trim();
-          }
-        }
-      }
+      const keyValue = e.key;
 
       if (keyValue) {
         e.nativeEvent = {
@@ -391,7 +352,7 @@ class TextInput extends Component<*> {
       }
     }
 
-    if (!e.isDefaultPrevented() && e.which === 13 && !e.shiftKey) {
+    if (!e.isDefaultPrevented() && e.key === 'Enter' && !e.shiftKey) {
       if ((blurOnSubmit || !multiline) && onSubmitEditing) {
         // prevent "Enter" from inserting a newline
         e.preventDefault();
