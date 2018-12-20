@@ -150,8 +150,6 @@ class TextInput extends Component<*> {
 
   static State = TextInputState;
 
-  blur: Function;
-
   clear() {
     this._node.value = '';
   }
@@ -401,6 +399,7 @@ class TextInput extends Component<*> {
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit) {
+        // $FlowFixMe
         this.blur();
       }
     }

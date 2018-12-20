@@ -109,5 +109,5 @@ If you're using `skpm`, you can rely on an [undocumented
 feature](https://github.com/sketch-pm/skpm/blob/master/lib/utils/webpackConfig.js)
 which will merge your `webpack.config.js`, `.babelrc`, or `package.json` Babel
 config into its internal webpack config. The simplest option may be to use the
-[babel-plugin-module-alias](https://www.npmjs.com/package/babel-plugin-module-alias)
+[babel-plugin-module-resolver](https://www.npmjs.com/package/babel-plugin-module-resolver)
 and configure it in your `package.json`.

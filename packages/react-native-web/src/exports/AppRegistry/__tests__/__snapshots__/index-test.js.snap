@@ -51,7 +51,6 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
-  WrapperComponent={undefined}
   rootTag={Object {}}
 >
   <RootComponent />

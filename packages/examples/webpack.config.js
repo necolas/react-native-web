@@ -34,10 +34,10 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: false,
-            presets: ['react-native'],
+            presets: ['module:metro-react-native-babel-preset'],
             plugins: [
               // needed to support async/await
-              'transform-runtime'
+              '@babel/plugin-transform-runtime'
             ]
           }
         }
