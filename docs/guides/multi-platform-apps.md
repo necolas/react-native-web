@@ -36,7 +36,7 @@ target platform.
 
 What follows is merely an _example_ of one basic way to package a web app using
 [Webpack](https://webpack.js.org) and [Babel](https://babeljs.io/). (You can
-also the React Native bundler, [Metro](https://github.com/facebook/metro), to
+also use the React Native bundler, [Metro](https://github.com/facebook/metro), to
 build web apps.)
 
 Packaging web apps is subtly different to packaging React Native apps and is
