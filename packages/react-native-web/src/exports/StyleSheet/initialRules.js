@@ -7,9 +7,6 @@
  * @flow
  */
 
-// Prevent browsers throwing parse errors, e.g., on vendor-prefixed pseudo-elements
-const safeRule = rule => `@media all{\n${rule}\n}`;
-
 const resets = [
   // minimal top-level reset
   'html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
@@ -21,6 +18,6 @@ const resets = [
     'input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
 ];
 
-const reset = [safeRule(resets.join('\n'))];
+const reset = [resets.join('\n')];
 
 export default reset;

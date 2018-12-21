@@ -55,7 +55,15 @@ export default class WebStyleSheet {
       // doesn't include styles injected via 'insertRule')
       if (this._textContent.indexOf(rule) === -1 && this._sheet) {
         const pos = position || this._sheet.cssRules.length;
-        this._sheet.insertRule(rule, pos);
+        try {
+          this._sheet.insertRule(rule, pos);
+        } catch (e) {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(
+              `Failed to inject CSS: "${rule}". This is rarely a problem and may be due to the browser rejecting unrecognized vendor prefixes.`
+            );
+          }
+        }
       }
     }
   }

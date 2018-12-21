@@ -30,14 +30,10 @@ const createAtomicRules = (selector, prop, value) => {
 
     case 'placeholderTextColor': {
       const block = createRuleBlock({ color: value, opacity: 1 });
-      rules.push(
-        '@media all {' +
-          `${selector}::-webkit-input-placeholder{${block}}` +
-          `${selector}::-moz-placeholder{${block}}` +
-          `${selector}:-ms-input-placeholder{${block}}` +
-          `${selector}::placeholder{${block}}` +
-          '}'
-      );
+      rules.push(`${selector}::-webkit-input-placeholder{${block}}`);
+      rules.push(`${selector}::-moz-placeholder{${block}}`);
+      rules.push(`${selector}:-ms-input-placeholder{${block}}`);
+      rules.push(`${selector}::placeholder{${block}}`);
       break;
     }
 
