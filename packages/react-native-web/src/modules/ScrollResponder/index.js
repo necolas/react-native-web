@@ -375,7 +375,12 @@ const ScrollResponderMixin = {
       ({ x, y, animated } = x || emptyObject);
     }
     const node = this.scrollResponderGetScrollableNode();
-    node.scroll({ top: y || 0, left: x || 0, behavior: !animated ? 'auto' : 'smooth' });
+    if (typeof node.scroll === 'function') {
+      node.scroll({ top: y || 0, left: x || 0, behavior: !animated ? 'auto' : 'smooth' });
+    } else {
+      node.scrollLeft = x || 0;
+      node.scrollTop = y || 0;
+    }
   },
 
   /**
