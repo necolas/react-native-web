@@ -136,11 +136,10 @@ const ScrollView = createReactClass({
       horizontal,
       onContentSizeChange,
       refreshControl,
-      stickyHeaderIndices,
+      pagingEnabled,
       /* eslint-disable */
       keyboardDismissMode,
       onScroll,
-      pagingEnabled,
       /* eslint-enable */
       ...other
     } = this.props;
@@ -164,16 +163,7 @@ const ScrollView = createReactClass({
       };
     }
 
-    const children =
-      !horizontal && Array.isArray(stickyHeaderIndices)
-        ? React.Children.map(this.props.children, (child, i) => {
-            if (child && stickyHeaderIndices.indexOf(i) > -1) {
-              return <View style={styles.stickyHeader}>{child}</View>;
-            } else {
-              return child;
-            }
-          })
-        : this.props.children;
+    const children = this._mapPagingEnabledStyle(this._mapStickyHeaderStyle(this.props.children));
 
     const contentContainer = (
       <View
@@ -186,10 +176,13 @@ const ScrollView = createReactClass({
     );
 
     const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
+    const pagingEnabledStyle = horizontal
+      ? styles.pagingEnabledHorizontal
+      : styles.pagingEnabledVertical;
 
     const props = {
       ...other,
-      style: [baseStyle, this.props.style],
+      style: [baseStyle, pagingEnabled && pagingEnabledStyle, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -227,6 +220,35 @@ const ScrollView = createReactClass({
         {contentContainer}
       </ScrollViewClass>
     );
+  },
+
+  _mapStickyHeaderStyle(children: React.ReactChildren): React.ReactChildren {
+    const { horizontal, stickyHeaderIndices } = this.props;
+    if (!horizontal && Array.isArray(stickyHeaderIndices)) {
+      return React.Children.map(children, (child, i) => {
+        if (child && stickyHeaderIndices.indexOf(i) > -1) {
+          return <View style={styles.stickyHeader}>{child}</View>;
+        } else {
+          return child;
+        }
+      });
+    }
+    return children;
+  },
+
+  _mapPagingEnabledStyle(children: React.ReactChildren): React.ReactChildren {
+    const { pagingEnabled } = this.props;
+    if (pagingEnabled) {
+      return React.Children.map(children, child => {
+        return (
+          child &&
+          React.cloneElement(child, {
+            style: [child.props.style, styles.pagingEnabledChild]
+          })
+        );
+      });
+    }
+    return children;
   },
 
   _handleContentOnLayout(e: Object) {
@@ -294,6 +316,15 @@ const styles = StyleSheet.create({
     position: 'sticky',
     top: 0,
     zIndex: 10
+  },
+  pagingEnabledHorizontal: {
+    scrollSnapType: 'x mandatory'
+  },
+  pagingEnabledVertical: {
+    scrollSnapType: 'y mandatory'
+  },
+  pagingEnabledChild: {
+    scrollSnapAlign: 'start'
   }
 });
 
