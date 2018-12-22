@@ -102,6 +102,12 @@ const ScrollViewScreen = () => (
       />
 
       <DocItem
+        name="pagingEnabled"
+        typeInfo="?boolean = false"
+        description="When true, the scroll view snaps to individual items in the list when scrolling."
+      />
+
+      <DocItem
         name="scrollEnabled"
         typeInfo="?boolean = true"
         description="When false, the content does not scroll."

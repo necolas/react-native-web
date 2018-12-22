@@ -140,7 +140,7 @@ React Native v0.55
 | Picker                   | ✓      |  |
 | RefreshControl           | ✘      | Not started ([#1027](https://github.com/necolas/react-native-web/issues/1027)). |
 | SafeAreaView             | ✓      |  |
-| ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)) and `pagingEnabled` ([#1057](https://github.com/necolas/react-native-web/issues/1057)). |
+| ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)). |
 | SectionList              | ✓      |  |
 | Slider                   | ✘      | Not started ([#1022](https://github.com/necolas/react-native-web/issues/1022)). |
 | StatusBar                | (✓)    | Mock. No equivalent web APIs. |

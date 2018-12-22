@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/ScrollView "pagingEnabled" prop 1`] = `undefined`;
+
+exports[`components/ScrollView "pagingEnabled" prop 2`] = `"y mandatory"`;
+
+exports[`components/ScrollView "pagingEnabled" prop 3`] = `"start"`;

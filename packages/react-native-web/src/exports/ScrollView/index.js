@@ -137,10 +137,10 @@ const ScrollView = createReactClass({
       onContentSizeChange,
       refreshControl,
       stickyHeaderIndices,
+      pagingEnabled,
       /* eslint-disable */
       keyboardDismissMode,
       onScroll,
-      pagingEnabled,
       /* eslint-enable */
       ...other
     } = this.props;
@@ -164,11 +164,24 @@ const ScrollView = createReactClass({
       };
     }
 
+    const hasStickyHeaderIndices = !horizontal && Array.isArray(stickyHeaderIndices);
     const children =
-      !horizontal && Array.isArray(stickyHeaderIndices)
+      hasStickyHeaderIndices || pagingEnabled
         ? React.Children.map(this.props.children, (child, i) => {
-            if (child && stickyHeaderIndices.indexOf(i) > -1) {
-              return <View style={styles.stickyHeader}>{child}</View>;
+            if (child != null) {
+              const isSticky = hasStickyHeaderIndices && stickyHeaderIndices.indexOf(i) > -1;
+              if (isSticky || pagingEnabled) {
+                return (
+                  <View
+                    style={StyleSheet.compose(
+                      isSticky && styles.stickyHeader,
+                      pagingEnabled && styles.pagingEnabledChild
+                    )}
+                  >
+                    {child}
+                  </View>
+                );
+              }
             } else {
               return child;
             }
@@ -181,15 +194,21 @@ const ScrollView = createReactClass({
         children={children}
         collapsable={false}
         ref={this._setInnerViewRef}
-        style={[horizontal && styles.contentContainerHorizontal, contentContainerStyle]}
+        style={StyleSheet.compose(
+          horizontal && styles.contentContainerHorizontal,
+          contentContainerStyle
+        )}
       />
     );
 
     const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
+    const pagingEnabledStyle = horizontal
+      ? styles.pagingEnabledHorizontal
+      : styles.pagingEnabledVertical;
 
     const props = {
       ...other,
-      style: [baseStyle, this.props.style],
+      style: [baseStyle, pagingEnabled && pagingEnabledStyle, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
       onTouchEnd: this.scrollResponderHandleTouchEnd,
@@ -223,7 +242,7 @@ const ScrollView = createReactClass({
     }
 
     return (
-      <ScrollViewClass {...props} ref={this._setScrollViewRef} style={props.style}>
+      <ScrollViewClass {...props} ref={this._setScrollViewRef}>
         {contentContainer}
       </ScrollViewClass>
     );
@@ -294,6 +313,15 @@ const styles = StyleSheet.create({
     position: 'sticky',
     top: 0,
     zIndex: 10
+  },
+  pagingEnabledHorizontal: {
+    scrollSnapType: 'x mandatory'
+  },
+  pagingEnabledVertical: {
+    scrollSnapType: 'y mandatory'
+  },
+  pagingEnabledChild: {
+    scrollSnapAlign: 'start'
   }
 });
 
