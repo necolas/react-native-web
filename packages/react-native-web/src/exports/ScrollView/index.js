@@ -136,6 +136,7 @@ const ScrollView = createReactClass({
       horizontal,
       onContentSizeChange,
       refreshControl,
+      stickyHeaderIndices,
       pagingEnabled,
       /* eslint-disable */
       keyboardDismissMode,
@@ -163,7 +164,28 @@ const ScrollView = createReactClass({
       };
     }
 
-    const children = this._mapPagingEnabledStyle(this._mapStickyHeaderStyle(this.props.children));
+    const hasStickyHeaderIndices = !horizontal && Array.isArray(stickyHeaderIndices);
+    const children =
+      hasStickyHeaderIndices || pagingEnabled
+        ? React.Children.map(this.props.children, (child, i) => {
+            if (child) {
+              const isSticky = hasStickyHeaderIndices && stickyHeaderIndices.indexOf(i) > -1;
+              if (isSticky || pagingEnabled) {
+                return (
+                  <View
+                    style={[
+                      isSticky && styles.stickyHeader,
+                      pagingEnabled && styles.pagingEnabledChild
+                    ]}
+                  >
+                    {child}
+                  </View>
+                );
+              }
+            }
+            return child;
+          })
+        : this.props.children;
 
     const contentContainer = (
       <View
@@ -220,35 +242,6 @@ const ScrollView = createReactClass({
         {contentContainer}
       </ScrollViewClass>
     );
-  },
-
-  _mapStickyHeaderStyle(children: React.ReactChildren): React.ReactChildren {
-    const { horizontal, stickyHeaderIndices } = this.props;
-    if (!horizontal && Array.isArray(stickyHeaderIndices)) {
-      return React.Children.map(children, (child, i) => {
-        if (child && stickyHeaderIndices.indexOf(i) > -1) {
-          return <View style={styles.stickyHeader}>{child}</View>;
-        } else {
-          return child;
-        }
-      });
-    }
-    return children;
-  },
-
-  _mapPagingEnabledStyle(children: React.ReactChildren): React.ReactChildren {
-    const { pagingEnabled } = this.props;
-    if (pagingEnabled) {
-      return React.Children.map(children, child => {
-        return (
-          child &&
-          React.cloneElement(child, {
-            style: [child.props.style, styles.pagingEnabledChild]
-          })
-        );
-      });
-    }
-    return children;
   },
 
   _handleContentOnLayout(e: Object) {
