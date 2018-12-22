@@ -87,10 +87,12 @@ export default class ReactNativeStyleResolver {
     let cacheKey = '';
     for (let i = 0; i < flatArray.length; i++) {
       const id = flatArray[i];
-      if (isArrayOfNumbers && (typeof id !== 'number')) {
+      if (typeof id !== 'number') {
         isArrayOfNumbers = false;
       } else {
-        cacheKey += (id + '-');
+        if (isArrayOfNumbers) {
+          cacheKey += (id + '-');
+        }
         this._injectRegisteredStyle(id);
       }
     }
