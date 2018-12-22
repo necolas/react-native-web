@@ -84,15 +84,19 @@ export default class ReactNativeStyleResolver {
     // otherwise fallback to resolving
     const flatArray = flattenArray(style);
     let isArrayOfNumbers = true;
+    let cacheKey = '';
     for (let i = 0; i < flatArray.length; i++) {
       const id = flatArray[i];
       if (typeof id !== 'number') {
         isArrayOfNumbers = false;
       } else {
+        if (isArrayOfNumbers) {
+          cacheKey += (id + '-');
+        }
         this._injectRegisteredStyle(id);
       }
     }
-    const key = isArrayOfNumbers ? createCacheKey(flatArray.join('-')) : null;
+    const key = isArrayOfNumbers ? createCacheKey(cacheKey) : null;
     return this._resolveStyleIfNeeded(flatArray, key);
   }
 
