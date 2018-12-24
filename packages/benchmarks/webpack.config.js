@@ -12,6 +12,9 @@ module.exports = {
     path: path.resolve(appDirectory, 'dist'),
     filename: 'bundle.js'
   },
+  optimization: {
+    minimize: process.env.NODE_ENV === 'production'
+  },
   module: {
     rules: [
       {
