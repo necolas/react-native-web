@@ -2,12 +2,12 @@
  * The MIT License (MIT)
  * Copyright (c) 2017 Paul Armstrong
  * https://github.com/paularmstrong/react-component-benchmark
+ * @flow
  */
 
 /* global $Values */
-/**
- * @flow
- */
+/* eslint-disable react/prop-types */
+
 import * as Timing from './timing';
 import React, { Component } from 'react';
 import { getMean, getMedian, getStdDev } from './math';
