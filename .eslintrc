@@ -1,4 +1,11 @@
 {
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "16.6",
+      "flowVersion": "0.78" // Flow version
+    }
+  },
   // babel parser to support ES6/7 features
   "parser": "babel-eslint",
   "parserOptions": {
