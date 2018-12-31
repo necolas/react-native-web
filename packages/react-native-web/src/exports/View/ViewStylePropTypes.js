@@ -35,6 +35,7 @@ const ViewStylePropTypes = {
   /**
    * @platform web
    */
+  backdropFilter: string,
   backgroundAttachment: string,
   backgroundBlendMode: string,
   backgroundClip: string,
