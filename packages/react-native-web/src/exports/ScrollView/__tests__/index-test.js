@@ -3,6 +3,7 @@
 import React from 'react';
 import ScrollView from '..';
 import StyleSheet from '../../StyleSheet';
+import View from '../../View';
 import { mount, shallow } from 'enzyme';
 
 describe('components/ScrollView', () => {
@@ -11,6 +12,21 @@ describe('components/ScrollView', () => {
     expect(() => {
       instance.setNativeProps();
     }).not.toThrow();
+  });
+
+  test('"children" prop', () => {
+    const component = shallow(
+      <ScrollView>
+        <View testID="child" />
+      </ScrollView>
+    );
+    expect(component.find({ testID: 'child' }).length).toBe(1);
+
+    component.setProps({ stickyHeaderIndices: [4] });
+    expect(component.find({ testID: 'child' }).length).toBe(1);
+
+    component.setProps({ pagingEnabled: true });
+    expect(component.find({ testID: 'child' }).length).toBe(1);
   });
 
   test('"pagingEnabled" prop', () => {

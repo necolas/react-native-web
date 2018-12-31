@@ -168,20 +168,18 @@ const ScrollView = createReactClass({
     const children =
       hasStickyHeaderIndices || pagingEnabled
         ? React.Children.map(this.props.children, (child, i) => {
-            if (child != null) {
-              const isSticky = hasStickyHeaderIndices && stickyHeaderIndices.indexOf(i) > -1;
-              if (isSticky || pagingEnabled) {
-                return (
-                  <View
-                    style={StyleSheet.compose(
-                      isSticky && styles.stickyHeader,
-                      pagingEnabled && styles.pagingEnabledChild
-                    )}
-                  >
-                    {child}
-                  </View>
-                );
-              }
+            const isSticky = hasStickyHeaderIndices && stickyHeaderIndices.indexOf(i) > -1;
+            if (child != null && (isSticky || pagingEnabled)) {
+              return (
+                <View
+                  style={StyleSheet.compose(
+                    isSticky && styles.stickyHeader,
+                    pagingEnabled && styles.pagingEnabledChild
+                  )}
+                >
+                  {child}
+                </View>
+              );
             } else {
               return child;
             }
