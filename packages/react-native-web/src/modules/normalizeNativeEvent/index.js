@@ -7,17 +7,10 @@
  * @flow
  */
 
+import getBoundingClientRect from '../getBoundingClientRect';
+
 const emptyArray = [];
 const emptyFunction = () => {};
-
-const getRect = node => {
-  if (node) {
-    const isElement = node.nodeType === 1 /* Node.ELEMENT_NODE */;
-    if (isElement && typeof node.getBoundingClientRect === 'function') {
-      return node.getBoundingClientRect();
-    }
-  }
-};
 
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
 const normalizeTouches = touches => {
@@ -35,13 +28,13 @@ const normalizeTouches = touches => {
       clientY: touch.clientY,
       force: touch.force,
       get locationX() {
-        rect = rect || getRect(touch.target);
+        rect = rect || getBoundingClientRect(touch.target);
         if (rect) {
           return touch.pageX - rect.left;
         }
       },
       get locationY() {
-        rect = rect || getRect(touch.target);
+        rect = rect || getBoundingClientRect(touch.target);
         if (rect) {
           return touch.pageY - rect.top;
         }
@@ -121,13 +114,13 @@ function normalizeMouseEvent(nativeEvent) {
       force: nativeEvent.force,
       identifier: 0,
       get locationX() {
-        rect = rect || getRect(nativeEvent.target);
+        rect = rect || getBoundingClientRect(nativeEvent.target);
         if (rect) {
           return nativeEvent.pageX - rect.left;
         }
       },
       get locationY() {
-        rect = rect || getRect(nativeEvent.target);
+        rect = rect || getBoundingClientRect(nativeEvent.target);
         if (rect) {
           return nativeEvent.pageY - rect.top;
         }
