@@ -7,7 +7,7 @@
  * @flow
  */
 
-import createPrefixer from 'inline-style-prefixer/static/createPrefixer';
+import createPrefixer from 'inline-style-prefixer/lib/createPrefixer';
 import staticData from './static';
 
 const prefixAll = createPrefixer(staticData);

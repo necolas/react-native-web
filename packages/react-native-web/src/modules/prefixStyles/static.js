@@ -1,14 +1,15 @@
-import crossFade from 'inline-style-prefixer/static/plugins/crossFade';
-import cursor from 'inline-style-prefixer/static/plugins/cursor';
-import filter from 'inline-style-prefixer/static/plugins/filter';
-import flex from 'inline-style-prefixer/static/plugins/flex';
-import flexboxIE from 'inline-style-prefixer/static/plugins/flexboxIE';
-import flexboxOld from 'inline-style-prefixer/static/plugins/flexboxOld';
-import gradient from 'inline-style-prefixer/static/plugins/gradient';
-import imageSet from 'inline-style-prefixer/static/plugins/imageSet';
-import position from 'inline-style-prefixer/static/plugins/position';
-import sizing from 'inline-style-prefixer/static/plugins/sizing';
-import transition from 'inline-style-prefixer/static/plugins/transition';
+import backgroundClip from 'inline-style-prefixer/lib/plugins/backgroundClip';
+import crossFade from 'inline-style-prefixer/lib/plugins/crossFade';
+import cursor from 'inline-style-prefixer/lib/plugins/cursor';
+import filter from 'inline-style-prefixer/lib/plugins/filter';
+import flex from 'inline-style-prefixer/lib/plugins/flex';
+import flexboxIE from 'inline-style-prefixer/lib/plugins/flexboxIE';
+import flexboxOld from 'inline-style-prefixer/lib/plugins/flexboxOld';
+import gradient from 'inline-style-prefixer/lib/plugins/gradient';
+import imageSet from 'inline-style-prefixer/lib/plugins/imageSet';
+import position from 'inline-style-prefixer/lib/plugins/position';
+import sizing from 'inline-style-prefixer/lib/plugins/sizing';
+import transition from 'inline-style-prefixer/lib/plugins/transition';
 const w = ['Webkit'];
 const m = ['Moz'];
 const ms = ['ms'];
@@ -18,6 +19,7 @@ const wmms = ['Webkit', 'Moz', 'ms'];
 
 export default {
   plugins: [
+    backgroundClip,
     crossFade,
     cursor,
     filter,
@@ -120,6 +122,7 @@ export default {
     flowInto: wms,
     flowFrom: wms,
     regionFragment: wms,
+    textOrientation: w,
     textAlignLast: m,
     tabSize: m,
     wrapFlow: ms,
@@ -144,7 +147,7 @@ export default {
     gridRowGap: ms,
     gridArea: ms,
     gridGap: ms,
-    textSizeAdjust: wms,
+    textSizeAdjust: ['ms', 'Webkit'],
     borderImage: w,
     borderImageOutset: w,
     borderImageRepeat: w,

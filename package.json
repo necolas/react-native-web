@@ -49,6 +49,7 @@
     "flow-bin": "^0.63.1",
     "glob": "^7.1.2",
     "husky": "^0.14.3",
+    "inline-style-prefixer": "^5.0.3",
     "jest": "^22.4.3",
     "jest-canvas-mock": "^1.0.2",
     "lint-staged": "^7.1.0",
