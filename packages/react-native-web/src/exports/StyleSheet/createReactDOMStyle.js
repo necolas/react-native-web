@@ -55,17 +55,6 @@ const colorProps = {
   color: true
 };
 
-const alphaSortProps = propsArray =>
-  propsArray.sort((a, b) => {
-    if (a < b) {
-      return -1;
-    }
-    if (a > b) {
-      return 1;
-    }
-    return 0;
-  });
-
 const defaultOffset = { height: 0, width: 0 };
 
 /**
@@ -292,7 +281,7 @@ const createReactDOMStyle = style => {
     return emptyObject;
   }
   const styleProps = Object.keys(style);
-  const sortedStyleProps = alphaSortProps(styleProps);
+  const sortedStyleProps = styleProps.sort();
   const reducer = createReducer(style, styleProps);
   const resolvedStyle = sortedStyleProps.reduce(reducer, {});
   return resolvedStyle;
