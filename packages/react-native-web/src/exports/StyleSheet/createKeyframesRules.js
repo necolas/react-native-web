@@ -7,7 +7,7 @@ const hashObject = obj => hash(JSON.stringify(obj));
 
 const createIdentifier = obj => {
   const hashed = hashObject(obj);
-  return process.env.NODE_ENV !== 'production' ? `rn-anim-${hashed}` : `rn-${hashed}`;
+  return process.env.NODE_ENV !== 'production' ? `r-anim-${hashed}` : `r-${hashed}`;
 };
 
 const prefixes = ['-webkit-', ''];

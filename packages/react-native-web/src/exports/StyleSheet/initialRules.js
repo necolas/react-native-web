@@ -29,7 +29,7 @@ const resets = [
     'display:none;' +
     '}',
   // Reset styles for heading, link, and list DOM elements
-  '.rn-reset{' +
+  '.r-reset{' +
     'background-color:transparent;' +
     'color:inherit;' +
     'font:inherit;' +
@@ -39,7 +39,7 @@ const resets = [
     'text-decoration:none;' +
     '}',
   // For pressable elements
-  '.rn-pointer{cursor:pointer;}'
+  '.r-pointer{cursor:pointer;}'
 ];
 
 const reset = [safeRule(resets.join('\n'))];

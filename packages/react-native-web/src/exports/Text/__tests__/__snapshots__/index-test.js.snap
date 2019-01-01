@@ -2,7 +2,7 @@
 
 exports[`components/Text prop "children" 1`] = `
 <span
-  class="rn-ui-text-1ntzlq4 rn-ui-textHasAncestor-z2plr"
+  class="r-ui-text-1ntzlq4 r-ui-textHasAncestor-z2plr"
   data-testid="child"
   dir="auto"
 />
@@ -10,7 +10,7 @@ exports[`components/Text prop "children" 1`] = `
 
 exports[`components/Text prop "onPress" 1`] = `
 <div
-  className="rn-ui-text-1ntzlq4 rn-ui-textIsRoot-gw3a6r rn-cursor-1loqt21"
+  className="r-ui-text-1ntzlq4 r-ui-textIsRoot-gw3a6r r-cursor-1loqt21"
   data-focusable={true}
   dir="auto"
   onClick={[Function]}
@@ -21,14 +21,14 @@ exports[`components/Text prop "onPress" 1`] = `
 
 exports[`components/Text prop "selectable" 1`] = `
 <div
-  className="rn-ui-text-1ntzlq4 rn-ui-textIsRoot-gw3a6r"
+  className="r-ui-text-1ntzlq4 r-ui-textIsRoot-gw3a6r"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
 <div
-  className="rn-ui-text-1ntzlq4 rn-ui-textIsRoot-gw3a6r rn-userSelect-lrvibr"
+  className="r-ui-text-1ntzlq4 r-ui-textIsRoot-gw3a6r r-userSelect-lrvibr"
   dir="auto"
 />
 `;

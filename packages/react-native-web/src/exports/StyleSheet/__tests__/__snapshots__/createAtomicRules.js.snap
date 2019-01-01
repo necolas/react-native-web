@@ -2,11 +2,11 @@
 
 exports[`StyleSheet/createAtomicRules transforms custom "animationName" declaration 1`] = `
 Array [
-  "@-webkit-keyframes rn-anim-2k74q5{0%{top:0px}50%{top:5px}100%{top:10px}}",
-  "@keyframes rn-anim-2k74q5{0%{top:0px}50%{top:5px}100%{top:10px}}",
-  "@-webkit-keyframes rn-anim-zc91cv{from{left:0px}to{left:10px}}",
-  "@keyframes rn-anim-zc91cv{from{left:0px}to{left:10px}}",
-  ".test{-webkit-animation-name:rn-anim-2k74q5,rn-anim-zc91cv;animation-name:rn-anim-2k74q5,rn-anim-zc91cv}",
+  "@-webkit-keyframes r-anim-2k74q5{0%{top:0px}50%{top:5px}100%{top:10px}}",
+  "@keyframes r-anim-2k74q5{0%{top:0px}50%{top:5px}100%{top:10px}}",
+  "@-webkit-keyframes r-anim-zc91cv{from{left:0px}to{left:10px}}",
+  "@keyframes r-anim-zc91cv{from{left:0px}to{left:10px}}",
+  ".test{-webkit-animation-name:r-anim-2k74q5,r-anim-zc91cv;animation-name:r-anim-2k74q5,r-anim-zc91cv}",
 ]
 `;
 

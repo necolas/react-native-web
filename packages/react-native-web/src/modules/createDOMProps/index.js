@@ -137,7 +137,7 @@ const createDOMProps = (component, props, styleResolver) => {
   let c;
   // style interactive elements for mouse and mobile browsers
   if ((role === 'button' || role === 'link') && !disabled) {
-    c = 'rn-pointer';
+    c = 'r-pointer';
   }
   // style reset various elements (not all are used internally)
   if (
@@ -147,7 +147,7 @@ const createDOMProps = (component, props, styleResolver) => {
     component === 'ul' ||
     role === 'heading'
   ) {
-    c = 'rn-reset' + (c != null ? ' ' + c : '');
+    c = 'r-reset' + (c != null ? ' ' + c : '');
   }
   // style from createElement use
   if (props.className != null) {

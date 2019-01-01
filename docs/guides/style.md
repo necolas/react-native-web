@@ -148,8 +148,8 @@ styles defined using `StyleSheet.create` will ultimately be rendered using CSS
 class names.
 
 React Native for Web introduced a novel strategy to achieve this. Each rule is
-broken down into declarations, properties are expanded to their long-form, and
-the resulting key-value pairs are mapped to unique "atomic CSS" class names.
+broken down into declarations and the resulting key-value pairs are mapped to
+unique "atomic CSS" class names.
 
 Input:
 
@@ -158,7 +158,9 @@ const Box = () => <View style={styles.box} />
 
 const styles = StyleSheet.create({
   box: {
-    margin: 0
+    backgroundColor: 'red',
+    height: 100,
+    width: 100,
   }
 });
 ```
@@ -167,13 +169,12 @@ Output:
 
 ```html
 <style>
-.rn-1mnahxq { margin-top: 0px; }
-.rn-61z16t { margin-right: 0px; }
-.rn-p1pxzi { margin-bottom: 0px; }
-.rn-11wrixw { margin-left: 0px; }
+.r-1mnahxq { background-color: red; }
+.r-p1pxzi { height: 100px; }
+.r-61z16t { width: 100px; }
 </style>
 
-<div class="rn-156q2ks rn-61z16t rn-p1pxzi rn-11wrixw"></div>
+<div class="rn-156q2ks rn-61z16t rn-p1pxzi"></div>
 ```
 
 This ensures that CSS order doesn't impact rendering and CSS rules are
@@ -226,6 +227,6 @@ handled at the component-level.
 
 ### What about using Dev Tools?
 
-React Dev Tools supports inspecting and editing of React Native styles. It's
+React Dev Tools supports inspecting of React Native styles. It's
 recommended that you rely more on React Dev Tools and live/hot-reloading rather
 than inspecting and editing the DOM directly.

@@ -2,14 +2,14 @@
 
 exports[`modules/createDOMProps includes "rel" values for "a" elements (to securely open external links) 1`] = `" noopener noreferrer"`;
 
-exports[`modules/createDOMProps includes base reset style for browser-styled elements 1`] = `"rn-reset"`;
+exports[`modules/createDOMProps includes base reset style for browser-styled elements 1`] = `"r-reset"`;
 
-exports[`modules/createDOMProps includes base reset style for browser-styled elements 2`] = `"rn-reset"`;
+exports[`modules/createDOMProps includes base reset style for browser-styled elements 2`] = `"r-reset"`;
 
-exports[`modules/createDOMProps includes base reset style for browser-styled elements 3`] = `"rn-reset"`;
+exports[`modules/createDOMProps includes base reset style for browser-styled elements 3`] = `"r-reset"`;
 
-exports[`modules/createDOMProps includes base reset style for browser-styled elements 4`] = `"rn-reset"`;
+exports[`modules/createDOMProps includes base reset style for browser-styled elements 4`] = `"r-reset"`;
 
-exports[`modules/createDOMProps includes cursor style for pressable roles 1`] = `"rn-pointer"`;
+exports[`modules/createDOMProps includes cursor style for pressable roles 1`] = `"r-pointer"`;
 
-exports[`modules/createDOMProps includes cursor style for pressable roles 2`] = `"rn-pointer"`;
+exports[`modules/createDOMProps includes cursor style for pressable roles 2`] = `"r-pointer"`;
