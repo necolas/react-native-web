@@ -90,7 +90,7 @@ export default class AppRegistry {
   }
 
   static runApplication(appKey: string, appParameters: Object): void {
-    const isDevelopment = process.env.NODE_ENV !== 'production';
+    const isDevelopment = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
     if (isDevelopment) {
       const params = { ...appParameters };
       params.rootTag = `#${params.rootTag.id}`;
