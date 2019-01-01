@@ -167,6 +167,9 @@ const createDOMProps = (component, props, styleResolver) => {
     domProps.id = nativeID;
   }
   // Link security
+  // https://mathiasbynens.github.io/rel-noopener/
+  // Note: using "noreferrer" doesn't impact referrer tracking for https
+  // transfers (i.e., from https to https).
   if (component === 'a' && domProps.target === '_blank') {
     domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }
