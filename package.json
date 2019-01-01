@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.9.12",
+  "version": "0.9.13",
   "name": "react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",
