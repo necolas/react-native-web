@@ -66,17 +66,6 @@ const monospaceFontStack = 'monospace, monospace';
 const systemFontStack =
   'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
-const alphaSortProps = propsArray =>
-  propsArray.sort((a, b) => {
-    if (a < b) {
-      return -1;
-    }
-    if (a > b) {
-      return 1;
-    }
-    return 0;
-  });
-
 const defaultOffset = { height: 0, width: 0 };
 
 /**
@@ -324,7 +313,7 @@ const createReactDOMStyle = style => {
     return emptyObject;
   }
   const styleProps = Object.keys(style);
-  const sortedStyleProps = alphaSortProps(styleProps);
+  const sortedStyleProps = styleProps.sort();
   const reducer = createReducer(style, styleProps);
   const resolvedStyle = sortedStyleProps.reduce(reducer, {});
   return resolvedStyle;
