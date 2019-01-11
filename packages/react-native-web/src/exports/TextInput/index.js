@@ -68,6 +68,8 @@ const setSelection = (node, selection) => {
 
 class TextInput extends Component<*> {
   _node: HTMLInputElement;
+  _nodeHeight: number;
+  _nodeWidth: number;
 
   static displayName = 'TextInput';
 
@@ -272,9 +274,30 @@ class TextInput extends Component<*> {
     }
   };
 
+  _handleContentSizeChange = () => {
+    const { onContentSizeChange, multiline } = this.props;
+    if (multiline && onContentSizeChange) {
+      const newHeight = this._node.scrollHeight;
+      const newWidth = this._node.scrollWidth;
+      if (newHeight !== this._nodeHeight || newWidth !== this._nodeWidth) {
+        this._nodeHeight = newHeight;
+        this._nodeWidth = newWidth;
+        onContentSizeChange({
+          nativeEvent: {
+            contentSize: {
+              height: this._nodeHeight,
+              width: this._nodeWidth
+            }
+          }
+        });
+      }
+    }
+  };
+
   _handleChange = e => {
     const { onChange, onChangeText } = this.props;
     const { text } = e.nativeEvent;
+    this._handleContentSizeChange();
     if (onChange) {
       onChange(e);
     }
@@ -403,6 +426,9 @@ class TextInput extends Component<*> {
 
   _setNode = component => {
     this._node = findNodeHandle(component);
+    if (this._node) {
+      this._handleContentSizeChange();
+    }
   };
 }
 

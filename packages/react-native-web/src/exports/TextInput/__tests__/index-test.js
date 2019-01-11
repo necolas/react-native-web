@@ -166,6 +166,32 @@ describe('components/TextInput', () => {
     expect(onChangeText).toBeCalledWith(newText);
   });
 
+  describe('prop "onContentSizeChange"', () => {
+    test('without "multiline"', () => {
+      const onContentSizeChange = jest.fn();
+      const input = findNativeInput(mount(<TextInput onContentSizeChange={onContentSizeChange} />));
+      input.simulate('change');
+      expect(onContentSizeChange).toHaveBeenCalledTimes(0);
+    });
+
+    test('with "multiline"', () => {
+      const onContentSizeChange = jest.fn();
+      const input = findNativeTextarea(
+        mount(<TextInput multiline onContentSizeChange={onContentSizeChange} />)
+      );
+      const newText = 'my text';
+      input.simulate('change', { target: { value: newText } });
+      // NOTE: enzyme/jsdom don't support scrollHeight/scrollWidth so we only get 0
+      // That also means we don't know whent the content size has "changed"
+      // In practice we would expect this spy to be called twice, once on mount
+      // and once when the text changes.
+      expect(onContentSizeChange).toHaveBeenCalledTimes(1);
+      expect(onContentSizeChange).toBeCalledWith({
+        nativeEvent: { contentSize: { width: 0, height: 0 } }
+      });
+    });
+  });
+
   test('prop "onFocus"', () => {
     const onFocus = jest.fn();
     const input = findNativeInput(mount(<TextInput onFocus={onFocus} />));
