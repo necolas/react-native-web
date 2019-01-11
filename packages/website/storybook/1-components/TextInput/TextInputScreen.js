@@ -207,6 +207,12 @@ const TextInputScreen = () => (
       />
 
       <DocItem
+        name="onContentSizeChange"
+        typeInfo="?function"
+        description="Callback that is called when the text input's content size changes. This will be called with { nativeEvent: { contentSize: { width, height } } }. Only called for multiline text inputs."
+      />
+
+      <DocItem
         name="onFocus"
         typeInfo="?function"
         description="Callback that is called when the text input is focused."
