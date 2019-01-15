@@ -222,6 +222,8 @@ class Image extends Component<*, State> {
     const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
     const flatStyle = { ...StyleSheet.flatten(this.props.style) };
     const finalResizeMode = resizeMode || flatStyle.resizeMode || ImageResizeMode.cover;
+    const backgroundColor = flatStyle.backgroundColor;
+    const borderRadius = flatStyle.borderRadius;
 
     // CSS filters
     const filters = [];
@@ -251,6 +253,8 @@ class Image extends Component<*, State> {
     // these styles are not supported on View
     delete flatStyle.overlayColor;
     delete flatStyle.resizeMode;
+    // these styles will be moved to the inner View (#1228)
+    delete flatStyle.backgroundColor;
 
     // Accessibility image allows users to trigger the browser's image context menu
     const hiddenImage = displayImageUri
@@ -283,6 +287,8 @@ class Image extends Component<*, State> {
             resizeModeStyles[finalResizeMode],
             this._getBackgroundSize(finalResizeMode),
             backgroundImage && { backgroundImage },
+            backgroundColor && { backgroundColor },
+            borderRadius && { borderRadius },
             filters.length > 0 && { filter: filters.join(' ') }
           ]}
         />
