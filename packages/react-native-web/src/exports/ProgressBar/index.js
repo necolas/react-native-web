@@ -22,6 +22,7 @@ class ProgressBar extends Component<*> {
 
   static propTypes = {
     ...ViewPropTypes,
+    animating: bool,
     color: ColorPropType,
     indeterminate: bool,
     progress: number,
@@ -29,6 +30,7 @@ class ProgressBar extends Component<*> {
   };
 
   static defaultProps = {
+    animating: true,
     color: '#1976D2',
     indeterminate: false,
     progress: 0,
@@ -44,7 +46,7 @@ class ProgressBar extends Component<*> {
   }
 
   render() {
-    const { color, indeterminate, progress, trackColor, style, ...other } = this.props;
+    const { animating, color, indeterminate, progress, trackColor, style, ...other } = this.props;
 
     const percentageProgress = progress * 100;
 
@@ -55,7 +57,7 @@ class ProgressBar extends Component<*> {
         aria-valuemax="100"
         aria-valuemin="0"
         aria-valuenow={indeterminate ? null : percentageProgress}
-        style={[styles.track, style, { backgroundColor: trackColor }]}
+        style={[styles.track, style, { backgroundColor: trackColor, opacity: animating ? 1 : 0 }]}
       >
         <View
           ref={this._setProgressRef}
@@ -86,7 +88,9 @@ const styles = StyleSheet.create({
     height: 5,
     overflow: 'hidden',
     userSelect: 'none',
-    zIndex: 0
+    zIndex: 0,
+    transitionProperty: 'opacity',
+    transitionDuration: '300ms',
   },
   progress: {
     height: '100%',
