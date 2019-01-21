@@ -24,8 +24,12 @@ describe('StyleSheet/StyleSheetManager', () => {
   });
 
   test('getStyleSheet', () => {
-    styleSheetManager.injectDeclaration('--test-property', 'test-value');
-    expect(styleSheetManager.getStyleSheet()).toMatchSnapshot();
+    expect(styleSheetManager.getStyleSheet()).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        textContent: expect.any(String)
+      })
+    );
   });
 
   test('injectDeclaration', () => {

@@ -1,54 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element": Additional CSS for styled app 1`] = `
-"
-.rn-backgroundColor-aot4c7{background-color:rgba(128,0,128,1.00)}
-.rn-borderTopWidth-10pzpfo{border-top-width:1234px}
-.rn-borderRightWidth-1y24uml{border-right-width:1234px}
-.rn-borderBottomWidth-98wxn4{border-bottom-width:1234px}
-.rn-borderLeftWidth-150mub4{border-left-width:1234px}"
-`;
-
-exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element": CSS for an unstyled app 1`] = `
-"@media all{
-html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
-body{margin:0;}
-button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
-input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-}
-.rn-pointerEvents-12vffkv > *{pointer-events:auto}
-.rn-pointerEvents-12vffkv{pointer-events:none !important}
-.rn-alignItems-1oszu61{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch}
-.rn-borderTopStyle-1efd50x{border-top-style:solid}
-.rn-borderRightStyle-14skgim{border-right-style:solid}
-.rn-borderBottomStyle-rull8r{border-bottom-style:solid}
-.rn-borderLeftStyle-mm0ijv{border-left-style:solid}
-.rn-borderTopWidth-13yce4e{border-top-width:0px}
-.rn-borderRightWidth-fnigne{border-right-width:0px}
-.rn-borderBottomWidth-ndvcnb{border-bottom-width:0px}
-.rn-borderLeftWidth-gxnn5r{border-left-width:0px}
-.rn-boxSizing-deolkf{box-sizing:border-box}
-.rn-display-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
-.rn-flexShrink-1qe8dj5{-ms-flex-negative:0;-webkit-flex-shrink:0;flex-shrink:0}
-.rn-flexBasis-1mlwlqe{-ms-flex-preferred-size:auto;-webkit-flex-basis:auto;flex-basis:auto}
-.rn-flexDirection-eqz5dr{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column}
-.rn-marginTop-1mnahxq{margin-top:0px}
-.rn-marginRight-61z16t{margin-right:0px}
-.rn-marginBottom-p1pxzi{margin-bottom:0px}
-.rn-marginLeft-11wrixw{margin-left:0px}
-.rn-minHeight-ifefl9{min-height:0px}
-.rn-minWidth-bcqeeo{min-width:0px}
-.rn-paddingTop-wk8lta{padding-top:0px}
-.rn-paddingRight-9aemit{padding-right:0px}
-.rn-paddingBottom-1mdbw0j{padding-bottom:0px}
-.rn-paddingLeft-gy4na3{padding-left:0px}
-.rn-position-bnwqim{position:relative}
-.rn-zIndex-1lgpqti{z-index:0}
-.rn-flexGrow-16y2uox{-ms-flex-positive:1;-webkit-box-flex:1;-webkit-flex-grow:1;flex-grow:1}
-.rn-flexShrink-1wbh5a2{-ms-flex-negative:1;-webkit-flex-shrink:1;flex-shrink:1}
-.rn-flexBasis-1ro0kt6{-ms-flex-preferred-size:0%;-webkit-flex-basis:0%;flex-basis:0%}"
-`;
-
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
   rootTag={Object {}}

@@ -57,14 +57,11 @@ describe('AppRegistry', () => {
       // First render "RootComponent"
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
-      expect(first).toMatchSnapshot('CSS for an unstyled app');
 
       // Second render "AlternativeComponent"
       AppRegistry.registerComponent('AlternativeApp', () => AlternativeComponent);
       const second = getApplicationStyles('AlternativeApp');
-      const diff = second.split(first)[1];
       expect(first).not.toEqual(second);
-      expect(diff).toMatchSnapshot('Additional CSS for styled app');
 
       // Third render "RootComponent" again
       const third = getApplicationStyles('App');
