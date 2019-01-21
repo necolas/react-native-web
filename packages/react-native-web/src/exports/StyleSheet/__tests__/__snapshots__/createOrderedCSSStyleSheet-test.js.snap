@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createOrderedCSSStyleSheet #insert deduplication for same group 1`] = `""`;
+
+exports[`createOrderedCSSStyleSheet #insert deduplication for same group 2`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+.one {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet #insert deduplication for same group 3`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+.one {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet #insert insertion order for different groups 1`] = `
+"@media all {
+[stylesheet-group=\\"1\\"]{}
+.one {}
+}
+@media all {
+[stylesheet-group=\\"2.2\\"]{}
+.two {}
+}
+@media all {
+[stylesheet-group=\\"3\\"]{}
+.three {}
+}
+@media all {
+[stylesheet-group=\\"4\\"]{}
+.four-1 {}
+.four-2 {}
+}
+@media all {
+[stylesheet-group=\\"9.9\\"]{}
+.nine-1 {}
+.nine-2 {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet #insert insertion order for same group 1`] = `""`;
+
+exports[`createOrderedCSSStyleSheet #insert insertion order for same group 2`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+.one {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet #insert insertion order for same group 3`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+.one {}
+.two {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet #insert insertion order for same group 4`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+.one {}
+.two {}
+.three {}
+}"
+`;
+
+exports[`createOrderedCSSStyleSheet client-side hydration from SSR CSS 1`] = `
+"@media all {
+[stylesheet-group=\\"1\\"] {}
+.one {width: 10px;}
+}
+@media all {
+[stylesheet-group=\\"2\\"] {}
+.two-1 {height: 20px;}
+.two-2 {color: red;}
+@keyframes anim { 
+  0% {opacity: 1;} 
+}
+}"
+`;

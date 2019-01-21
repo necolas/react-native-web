@@ -7,10 +7,12 @@
  * @noflow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createAtomicRules from './createAtomicRules';
 import hash from '../../vendor/hash';
 import initialRules from './initialRules';
-import WebStyleSheet from './WebStyleSheet';
+import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
+import modality from './modality';
 
 const emptyObject = {};
 const STYLE_ELEMENT_ID = 'react-native-stylesheet';
@@ -18,6 +20,22 @@ const STYLE_ELEMENT_ID = 'react-native-stylesheet';
 const createClassName = (prop, value) => {
   const hashed = hash(prop + normalizeValue(value));
   return process.env.NODE_ENV !== 'production' ? `rn-${prop}-${hashed}` : `rn-${hashed}`;
+};
+
+const createCSSStyleSheet = () => {
+  const id = STYLE_ELEMENT_ID;
+
+  let element;
+  element = document.getElementById(id);
+  if (!element) {
+    element = document.createElement('style');
+    element.setAttribute('id', id);
+    const head = document.head;
+    if (head) {
+      head.insertBefore(element, head.firstChild);
+    }
+  }
+  return element.sheet;
 };
 
 const normalizeValue = value => (typeof value === 'object' ? JSON.stringify(value) : value);
@@ -29,9 +47,10 @@ export default class StyleSheetManager {
   };
 
   constructor() {
-    this._sheet = new WebStyleSheet(STYLE_ELEMENT_ID);
+    this._sheet = createOrderedCSSStyleSheet(canUseDOM ? createCSSStyleSheet() : null);
+    modality(rule => this._sheet.insert(rule, 0));
     initialRules.forEach(rule => {
-      this._sheet.insertRuleOnce(rule);
+      this._sheet.insert(rule, 0);
     });
   }
 
@@ -47,11 +66,11 @@ export default class StyleSheetManager {
   }
 
   getStyleSheet() {
-    const { cssText } = this._sheet;
+    const textContent = this._sheet.getTextContent();
 
     return {
       id: STYLE_ELEMENT_ID,
-      textContent: cssText
+      textContent
     };
   }
 
@@ -63,7 +82,7 @@ export default class StyleSheetManager {
       this._addToCache(className, prop, val);
       const rules = createAtomicRules(`.${className}`, prop, value);
       rules.forEach(rule => {
-        this._sheet.insertRuleOnce(rule);
+        this._sheet.insert(rule, 1);
       });
     }
     return className;
