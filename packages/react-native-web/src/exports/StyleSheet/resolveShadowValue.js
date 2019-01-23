@@ -8,16 +8,16 @@
  */
 
 import normalizeColor from '../../modules/normalizeColor';
-import normalizeValue from './normalizeValue';
+import normalizeValueWithProperty from './normalizeValueWithProperty';
 
 const defaultOffset = { height: 0, width: 0 };
 
 const resolveShadowValue = (style: Object) => {
   const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
   const { height, width } = shadowOffset || defaultOffset;
-  const offsetX = normalizeValue(null, width);
-  const offsetY = normalizeValue(null, height);
-  const blurRadius = normalizeValue(null, shadowRadius || 0);
+  const offsetX = normalizeValueWithProperty(width);
+  const offsetY = normalizeValueWithProperty(height);
+  const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
   const color = normalizeColor(shadowColor || 'black', shadowOpacity);
   if (color) {
     return `${offsetX} ${offsetY} ${blurRadius} ${color}`;

@@ -31,7 +31,7 @@ const createConfig = ({ modules }) => ({
     '@babel/plugin-transform-flow-strip-types',
     ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
-    ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
+    ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }]
   ].concat(modules ? ['babel-plugin-add-module-exports'] : [])
 });
 

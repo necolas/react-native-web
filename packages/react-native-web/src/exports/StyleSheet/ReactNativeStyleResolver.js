@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,13 +13,17 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import createReactDOMStyle from './createReactDOMStyle';
+import createCSSStyleSheet from './createCSSStyleSheet';
+import createCompileableStyle from './createCompileableStyle';
+import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
 import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
 import i18nStyle from './i18nStyle';
-import { prefixInlineStyles } from '../../modules/prefixStyles';
-import StyleSheetManager from './StyleSheetManager';
+import { atomic, inline, stringifyValueWithProperty } from './compile';
+import initialRules from './initialRules';
+import modality from './modality';
+import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
 const emptyObject = {};
 
@@ -27,33 +31,65 @@ export default class ReactNativeStyleResolver {
   _init() {
     this.cache = { ltr: {}, rtl: {}, rtlNoSwap: {} };
     this.injectedCache = { ltr: {}, rtl: {}, rtlNoSwap: {} };
-    this.styleSheetManager = new StyleSheetManager();
+    this.sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
+    this._lookupCache = {
+      byClassName: {},
+      byProp: {}
+    };
   }
 
   constructor() {
     this._init();
+    modality(rule => this.sheet.insert(rule, STYLE_GROUPS.modality));
+    initialRules.forEach(rule => {
+      this.sheet.insert(rule, STYLE_GROUPS.reset);
+    });
+  }
+
+  _addToCache(className, prop, value) {
+    const cache = this._lookupCache;
+    if (!cache.byProp[prop]) {
+      cache.byProp[prop] = {};
+    }
+    cache.byProp[prop][value] = className;
+    cache.byClassName[className] = { prop, value };
+  }
+
+  getClassName(prop, value) {
+    const val = stringifyValueWithProperty(value, prop);
+    const cache = this._lookupCache.byProp;
+    return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
+  }
+
+  getDeclaration(className) {
+    const cache = this._lookupCache.byClassName;
+    return cache[className] || emptyObject;
   }
 
   getStyleSheet() {
     // reset state on the server so critical css is always the result
-    const sheet = this.styleSheetManager.getStyleSheet();
+    const textContent = this.sheet.getTextContent();
     if (!canUseDOM) {
       this._init();
     }
-    return sheet;
+    return {
+      id: STYLE_ELEMENT_ID,
+      textContent
+    };
   }
 
   _injectRegisteredStyle(id) {
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
     if (!this.injectedCache[dir][id]) {
-      const style = flattenStyle(id);
-      const domStyle = createReactDOMStyle(i18nStyle(style));
-      Object.keys(domStyle).forEach(styleProp => {
-        const value = domStyle[styleProp];
-        if (value != null) {
-          this.styleSheetManager.injectDeclaration(styleProp, value);
-        }
+      const style = createCompileableStyle(i18nStyle(flattenStyle(id)));
+      const results = atomic(style);
+      Object.values(results).forEach(({ identifier, property, rules, value }) => {
+        this._addToCache(identifier, property, value);
+        rules.forEach(rule => {
+          const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
+          this.sheet.insert(rule, group);
+        });
       });
       this.injectedCache[dir][id] = true;
     }
@@ -91,7 +127,7 @@ export default class ReactNativeStyleResolver {
         isArrayOfNumbers = false;
       } else {
         if (isArrayOfNumbers) {
-          cacheKey += (id + '-');
+          cacheKey += id + '-';
         }
         this._injectRegisteredStyle(id);
       }
@@ -113,7 +149,7 @@ export default class ReactNativeStyleResolver {
     // Preserves unrecognized class names.
     const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
       (styleProps, className) => {
-        const { prop, value } = this.styleSheetManager.getDeclaration(className);
+        const { prop, value } = this.getDeclaration(className);
         if (prop) {
           styleProps.style[prop] = value;
         } else {
@@ -138,7 +174,7 @@ export default class ReactNativeStyleResolver {
     // Next class names take priority over current inline styles
     const style = { ...rdomStyle };
     rdomClassListNext.forEach(className => {
-      const { prop } = this.styleSheetManager.getDeclaration(className);
+      const { prop } = this.getDeclaration(className);
       if (style[prop]) {
         style[prop] = '';
       }
@@ -154,45 +190,50 @@ export default class ReactNativeStyleResolver {
    */
   _resolveStyle(style) {
     const flatStyle = flattenStyle(style);
-    const domStyle = createReactDOMStyle(i18nStyle(flatStyle));
+    const localizedStyle = createCompileableStyle(i18nStyle(flatStyle));
 
-    const props = Object.keys(domStyle).reduce(
-      (props, styleProp) => {
-        const value = domStyle[styleProp];
-        if (value != null) {
-          const className = this.styleSheetManager.getClassName(styleProp, value);
-          if (className) {
-            props.classList.push(className);
-          } else {
-            // Certain properties and values are not transformed by 'createReactDOMStyle' as they
-            // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
-            // can bind these styles to a className, and prevent them becoming invalid inline-styles.
-            if (
-              styleProp === 'pointerEvents' ||
-              styleProp === 'placeholderTextColor' ||
-              styleProp === 'animationName'
-            ) {
-              const className = this.styleSheetManager.injectDeclaration(styleProp, value);
-              if (className) {
-                props.classList.push(className);
-              }
+    const props = Object.keys(localizedStyle)
+      .sort()
+      .reduce(
+        (props, styleProp) => {
+          const value = localizedStyle[styleProp];
+          if (value != null) {
+            const className = this.getClassName(styleProp, value);
+            if (className) {
+              props.classList.push(className);
             } else {
-              if (!props.style) {
-                props.style = {};
+              // Certain properties and values are not transformed by 'createReactDOMStyle' as they
+              // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
+              // can bind these styles to a className, and prevent them becoming invalid inline-styles.
+              if (
+                styleProp === 'pointerEvents' ||
+                styleProp === 'placeholderTextColor' ||
+                styleProp === 'animationKeyframes'
+              ) {
+                const a = atomic({ [styleProp]: value });
+                Object.values(a).forEach(({ identifier, rules }) => {
+                  props.classList.push(identifier);
+                  rules.forEach(rule => {
+                    this.sheet.insert(rule, STYLE_GROUPS.atomic);
+                  });
+                });
+              } else {
+                if (!props.style) {
+                  props.style = {};
+                }
+                // 4x slower render
+                props.style[styleProp] = value;
               }
-              // 4x slower render
-              props.style[styleProp] = value;
             }
           }
-        }
-        return props;
-      },
-      { classList: [] }
-    );
+          return props;
+        },
+        { classList: [] }
+      );
 
     props.className = classListToString(props.classList);
     if (props.style) {
-      props.style = prefixInlineStyles(props.style);
+      props.style = inline(props.style);
     }
     return props;
   }
