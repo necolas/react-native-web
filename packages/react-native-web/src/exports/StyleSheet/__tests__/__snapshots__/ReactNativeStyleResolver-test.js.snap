@@ -34,60 +34,42 @@ Object {
 exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 1`] = `
 Object {
   "classList": Array [
-    "rn-borderTopColor-3vzq9n",
-    "rn-borderRightColor-ycnuvz",
-    "rn-borderBottomColor-wqks8h",
-    "rn-borderLeftColor-3se2kx",
-    "rn-borderTopWidth-13yce4e",
-    "rn-borderRightWidth-fnigne",
-    "rn-borderBottomWidth-ndvcnb",
-    "rn-borderLeftWidth-gxnn5r",
+    "rn-borderColor-4a18lf",
+    "rn-borderWidth-1yadl64",
     "rn-left-1tsx3h3",
     "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-b8lwoo",
   ],
-  "className": "rn-borderTopColor-3vzq9n rn-borderRightColor-ycnuvz rn-borderBottomColor-wqks8h rn-borderLeftColor-3se2kx rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
+  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
 }
 `;
 
 exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 2`] = `
 Object {
   "classList": Array [
-    "rn-borderTopColor-3vzq9n",
-    "rn-borderRightColor-ycnuvz",
-    "rn-borderBottomColor-wqks8h",
-    "rn-borderLeftColor-3se2kx",
-    "rn-borderTopWidth-13yce4e",
-    "rn-borderRightWidth-fnigne",
-    "rn-borderBottomWidth-ndvcnb",
-    "rn-borderLeftWidth-gxnn5r",
+    "rn-borderColor-4a18lf",
+    "rn-borderWidth-1yadl64",
     "rn-left-1tsx3h3",
     "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-l0gwng",
   ],
-  "className": "rn-borderTopColor-3vzq9n rn-borderRightColor-ycnuvz rn-borderBottomColor-wqks8h rn-borderLeftColor-3se2kx rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
+  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
 }
 `;
 
 exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 3`] = `
 Object {
   "classList": Array [
-    "rn-borderTopColor-3vzq9n",
-    "rn-borderRightColor-ycnuvz",
-    "rn-borderBottomColor-wqks8h",
-    "rn-borderLeftColor-3se2kx",
-    "rn-borderTopWidth-13yce4e",
-    "rn-borderRightWidth-fnigne",
-    "rn-borderBottomWidth-ndvcnb",
-    "rn-borderLeftWidth-gxnn5r",
+    "rn-borderColor-4a18lf",
+    "rn-borderWidth-1yadl64",
     "rn-left-1tsx3h3",
     "rn-opacity-icoktb",
     "rn-position-u8s1d",
     "rn-width-b8lwoo",
   ],
-  "className": "rn-borderTopColor-3vzq9n rn-borderRightColor-ycnuvz rn-borderBottomColor-wqks8h rn-borderLeftColor-3se2kx rn-borderTopWidth-13yce4e rn-borderRightWidth-fnigne rn-borderBottomWidth-ndvcnb rn-borderLeftWidth-gxnn5r rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
+  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
 }
 `;
 

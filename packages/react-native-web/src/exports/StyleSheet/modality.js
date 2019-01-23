@@ -19,12 +19,8 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import hash from '../../vendor/hash';
 
-const focusVisibleAttributeName =
-  'data-rn-' +
-  (process.env.NODE_ENV !== 'production' ? 'focusvisible-' : '') +
-  hash('focusvisible');
+const focusVisibleAttributeName = 'data-focusvisible-polyfill';
 
 const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 

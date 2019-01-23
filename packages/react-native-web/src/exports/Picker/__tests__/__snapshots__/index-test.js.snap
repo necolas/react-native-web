@@ -10,7 +10,7 @@ exports[`components/Picker prop "children" items 1`] = `
 
 exports[`components/Picker prop "children" renders items 1`] = `
 <select
-  className="rn-fontFamily-14xgk7a rn-fontSize-7cikom rn-marginTop-1mnahxq rn-marginRight-61z16t rn-marginBottom-p1pxzi rn-marginLeft-11wrixw"
+  className="rn-fontFamily-1qd0xha rn-fontSize-7cikom rn-margin-crgep1"
   data-focusable={true}
   onChange={[Function]}
 >

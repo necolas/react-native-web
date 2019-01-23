@@ -17,7 +17,7 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [
@@ -97,7 +97,7 @@ exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [
@@ -211,7 +211,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [
@@ -290,7 +290,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [
@@ -370,7 +370,7 @@ exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [
@@ -448,7 +448,7 @@ exports[`components/ActivityIndicator prop "size" is a number 1`] = `
       Object {
         "animationDuration": "0.75s",
         "animationIterationCount": "infinite",
-        "animationName": Array [
+        "animationKeyframes": Array [
           Object {
             "0%": Object {
               "transform": Array [

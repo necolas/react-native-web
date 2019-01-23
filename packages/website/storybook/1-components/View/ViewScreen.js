@@ -347,8 +347,8 @@ const stylePropTypes = [
   },
   {
     label: 'web',
-    name: 'animationName',
-    typeInfo: 'string | Array<Object>'
+    name: 'animationKeyframes',
+    typeInfo: 'Array<Object|string>'
   },
   {
     label: 'web',

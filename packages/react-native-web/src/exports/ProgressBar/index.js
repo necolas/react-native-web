@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   animation: {
     animationDuration: '1s',
-    animationName: [
+    animationKeyframes: [
       {
         '0%': { transform: [{ translateX: '-100%' }] },
         '100%': { transform: [{ translateX: '400%' }] }
