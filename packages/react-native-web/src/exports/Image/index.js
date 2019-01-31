@@ -10,6 +10,7 @@
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
+import css from '../StyleSheet/css';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
@@ -254,10 +255,10 @@ class Image extends Component<*, State> {
     const hiddenImage = displayImageUri
       ? createElement('img', {
           alt: accessibilityLabel || '',
+          className: classes.accessibilityImage,
           draggable: draggable || false,
           ref: this._setImageRef,
-          src: displayImageUri,
-          style: styles.accessibilityImage
+          src: displayImageUri
         })
       : null;
 
@@ -387,6 +388,16 @@ class Image extends Component<*, State> {
   }
 }
 
+const classes = css.create({
+  accessibilityImage: {
+    ...StyleSheet.absoluteFillObject,
+    height: '100%',
+    opacity: 0,
+    width: '100%',
+    zIndex: -1
+  }
+});
+
 const styles = StyleSheet.create({
   root: {
     flexBasis: 'auto',
@@ -403,13 +414,6 @@ const styles = StyleSheet.create({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100%',
-    width: '100%',
-    zIndex: -1
-  },
-  accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
-    height: '100%',
-    opacity: 0,
     width: '100%',
     zIndex: -1
   }

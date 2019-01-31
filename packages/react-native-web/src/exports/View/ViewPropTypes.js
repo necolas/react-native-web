@@ -37,6 +37,7 @@ export type ViewProps = {
   accessibilityTraits?: string | Array<string>,
   accessible?: boolean,
   children?: any,
+  className?: string,
   hitSlop?: EdgeInsetsProp,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
   nativeID?: string,

@@ -146,7 +146,7 @@ React Native v0.55
 | SwipeableFlatList        | ✓      |  |
 | SwipeableListView        | ✓      |  |
 | Switch                   | ✓      |  |
-| Text                     | ✓      | Missing `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)) and `numberOfLines` ([#13](https://github.com/necolas/react-native-web/issues/13)) support. |
+| Text                     | ✓      | Missing `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)) support. |
 | TextInput                | ✓      | Missing rich text features ([#1023](https://github.com/necolas/react-native-web/issues/1023)), and auto-expanding behaviour ([#795](https://github.com/necolas/react-native-web/issues/795)). |
 | Touchable                | ✓      | Includes additional support for mouse and keyboard interactions. |
 | TouchableHighlight       | ✓      |  |

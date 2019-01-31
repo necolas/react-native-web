@@ -8,42 +8,25 @@
  */
 
 import AccessibilityUtil from '../AccessibilityUtil';
+import css from '../../exports/StyleSheet/css';
 import StyleSheet from '../../exports/StyleSheet';
 import styleResolver from '../../exports/StyleSheet/styleResolver';
 
 const emptyObject = {};
 
-const resetStyles = StyleSheet.create({
-  ariaButton: {
+// Reset styles for heading, link, and list DOM elements
+const classes = css.create({
+  reset: {
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    font: 'inherit',
+    listStyle: 'none',
+    margin: 0,
+    textAlign: 'inherit',
+    textDecoration: 'none'
+  },
+  cursor: {
     cursor: 'pointer'
-  },
-  button: {
-    appearance: 'none',
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
-    textAlign: 'inherit'
-  },
-  heading: {
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit'
-  },
-  link: {
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    textDecorationLine: 'none'
-  },
-  list: {
-    listStyle: 'none'
   }
 });
 
@@ -129,6 +112,8 @@ const createDOMProps = (component, props, styleResolver) => {
     importantForAccessibility !== 'no-hide-descendants';
   if (
     role === 'link' ||
+    component === 'a' ||
+    component === 'button' ||
     component === 'input' ||
     component === 'select' ||
     component === 'textarea'
@@ -152,22 +137,47 @@ const createDOMProps = (component, props, styleResolver) => {
 
   // STYLE
   // Resolve React Native styles to optimized browser equivalent
-  const reactNativeStyle = [
-    component === 'a' && resetStyles.link,
-    component === 'button' && resetStyles.button,
-    role === 'heading' && resetStyles.heading,
-    component === 'ul' && resetStyles.list,
-    role === 'button' && !disabled && resetStyles.ariaButton,
+  const reactNativeStyle = StyleSheet.compose(
     pointerEvents && pointerEventsStyles[pointerEvents],
-    providedStyle,
-    placeholderTextColor && { placeholderTextColor }
-  ];
+    StyleSheet.compose(
+      providedStyle,
+      placeholderTextColor && { placeholderTextColor }
+    )
+  );
+
   const { className, style } = styleResolver(reactNativeStyle);
-  if (className && className.constructor === String) {
-    domProps.className = props.className ? `${props.className} ${className}` : className;
-  }
+
   if (style) {
     domProps.style = style;
+  }
+
+  // CLASSNAME
+  // Apply static style resets
+  let c;
+  // style interactive elements for mouse and mobile browsers
+  if ((role === 'button' || role === 'link') && !disabled) {
+    c = classes.cursor;
+  }
+  // style reset various elements (not all are used internally)
+  if (
+    component === 'a' ||
+    component === 'button' ||
+    component === 'li' ||
+    component === 'ul' ||
+    role === 'heading'
+  ) {
+    c = classes.reset + (c != null ? ' ' + c : '');
+  }
+  // style from createElement use
+  if (props.className != null) {
+    c = props.className + (c != null ? ' ' + c : '');
+  }
+  // style from React Native StyleSheets
+  if (className != null && className !== '') {
+    c = (c != null ? c + ' ' : '') + className;
+  }
+  if (c != null) {
+    domProps.className = c;
   }
 
   // OTHER
