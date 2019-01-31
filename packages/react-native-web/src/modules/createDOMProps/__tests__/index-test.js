@@ -193,23 +193,15 @@ describe('modules/createDOMProps', () => {
     expect(props.rel).toMatchSnapshot();
   });
 
-  test('includes reset styles for "a" elements', () => {
-    const props = createDOMProps('a');
-    expect(props.className).toMatchSnapshot();
+  test('includes cursor style for pressable roles', () => {
+    expect(createDOMProps('span', { accessibilityRole: 'link' }).className).toMatchSnapshot();
+    expect(createDOMProps('span', { accessibilityRole: 'button' }).className).toMatchSnapshot();
   });
 
-  test('includes reset styles for "button" elements', () => {
-    const props = createDOMProps('button');
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes cursor style for "button" role', () => {
-    const props = createDOMProps('span', { accessibilityRole: 'button' });
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes reset styles for "ul" elements', () => {
-    const props = createDOMProps('ul');
-    expect(props.className).toMatchSnapshot();
+  test('includes base reset style for browser-styled elements', () => {
+    expect(createDOMProps('a').className).toMatchSnapshot();
+    expect(createDOMProps('button').className).toMatchSnapshot();
+    expect(createDOMProps('li').className).toMatchSnapshot();
+    expect(createDOMProps('ul').className).toMatchSnapshot();
   });
 });

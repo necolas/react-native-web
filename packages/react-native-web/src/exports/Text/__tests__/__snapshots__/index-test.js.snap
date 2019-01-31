@@ -2,7 +2,7 @@
 
 exports[`components/Text prop "onPress" 1`] = `
 <div
-  className="rn-borderWidth-1yadl64 rn-boxSizing-deolkf rn-color-homxoj rn-cursor-1loqt21 rn-display-1471scf rn-fontFamily-1qd0xha rn-fontSize-1b43r93 rn-fontStyle-o11vmf rn-fontVariant-1kfwfc5 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-margin-crgep1 rn-padding-t60dpp rn-textDecorationLine-13wfysu rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+  className="css-text-76zvg2 rn-cursor-1loqt21"
   data-focusable={true}
   dir="auto"
   onClick={[Function]}
@@ -13,14 +13,14 @@ exports[`components/Text prop "onPress" 1`] = `
 
 exports[`components/Text prop "selectable" 1`] = `
 <div
-  className="rn-borderWidth-1yadl64 rn-boxSizing-deolkf rn-color-homxoj rn-display-1471scf rn-fontFamily-1qd0xha rn-fontSize-1b43r93 rn-fontStyle-o11vmf rn-fontVariant-1kfwfc5 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-margin-crgep1 rn-padding-t60dpp rn-textDecorationLine-13wfysu rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+  className="css-text-76zvg2"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "selectable" 2`] = `
 <div
-  className="rn-borderWidth-1yadl64 rn-boxSizing-deolkf rn-color-homxoj rn-display-1471scf rn-fontFamily-1qd0xha rn-fontSize-1b43r93 rn-fontStyle-o11vmf rn-fontVariant-1kfwfc5 rn-fontWeight-gul640 rn-lineHeight-t9a87b rn-margin-crgep1 rn-padding-t60dpp rn-textDecorationLine-13wfysu rn-userSelect-lrvibr rn-whiteSpace-q42fyq rn-wordWrap-qvutc0"
+  className="css-text-76zvg2 rn-userSelect-lrvibr"
   dir="auto"
 />
 `;

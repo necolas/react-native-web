@@ -1,14 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`StyleSheet/createReactDOMStyle fontFamily "Noto, BlinkMacSystemFont" 1`] = `
+Object {
+  "fontFamily": "Noto, BlinkMacSystemFont",
+}
+`;
+
 exports[`StyleSheet/createReactDOMStyle fontFamily "Noto, System" 1`] = `
 Object {
   "fontFamily": "Noto, system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif",
 }
 `;
 
+exports[`StyleSheet/createReactDOMStyle fontFamily "Noto, System" 2`] = `
+Object {
+  "font": "14px Noto, system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif",
+}
+`;
+
 exports[`StyleSheet/createReactDOMStyle fontFamily "System" 1`] = `
 Object {
   "fontFamily": "system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif",
+}
+`;
+
+exports[`StyleSheet/createReactDOMStyle fontFamily "System" 2`] = `
+Object {
+  "font": "14px system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif",
 }
 `;
 

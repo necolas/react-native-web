@@ -42,14 +42,6 @@ const styleShortFormProperties = {
   writingDirection: ['direction']
 };
 
-const borderWidthProps = {
-  borderWidth: true,
-  borderTopWidth: true,
-  borderRightWidth: true,
-  borderBottomWidth: true,
-  borderLeftWidth: true
-};
-
 const monospaceFontStack = 'monospace, monospace';
 const systemFontStack =
   'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
@@ -96,13 +88,7 @@ const createReactDOMStyle = style => {
   Object.keys(style)
     .sort()
     .forEach(prop => {
-      let value = normalizeValueWithProperty(style[prop], prop);
-
-      // Make sure the default border width is explicitly set to '0' to avoid
-      // falling back to any unwanted user-agent styles.
-      if (borderWidthProps[prop]) {
-        value = value == null ? normalizeValueWithProperty(0) : value;
-      }
+      const value = normalizeValueWithProperty(style[prop], prop);
 
       // Ignore everything else with a null value
       if (value == null) {
@@ -125,21 +111,6 @@ const createReactDOMStyle = style => {
           if (value === 'text') {
             resolvedStyle.backgroundClip = value;
             resolvedStyle.WebkitBackgroundClip = value;
-          }
-          break;
-        }
-
-        case 'display': {
-          resolvedStyle.display = value;
-          // A flex container in React Native has these defaults which should be
-          // set only if there is no otherwise supplied flex style.
-          if (style.display === 'flex' && style.flex == null) {
-            if (style.flexShrink == null) {
-              resolvedStyle.flexShrink = 0;
-            }
-            if (style.flexBasis == null) {
-              resolvedStyle.flexBasis = 'auto';
-            }
           }
           break;
         }

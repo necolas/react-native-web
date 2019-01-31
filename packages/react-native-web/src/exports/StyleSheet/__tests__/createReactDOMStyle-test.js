@@ -39,44 +39,17 @@ describe('StyleSheet/createReactDOMStyle', () => {
     expect(createReactDOMStyle(style)).toMatchSnapshot();
   });
 
-  describe('borderWidth styles', () => {
-    test('defaults to 0 when "null"', () => {
-      expect(createReactDOMStyle({ borderWidth: null })).toEqual({
-        borderTopWidth: '0px',
-        borderRightWidth: '0px',
-        borderBottomWidth: '0px',
-        borderLeftWidth: '0px'
-      });
-      expect(createReactDOMStyle({ borderWidth: 2, borderRightWidth: null })).toEqual({
-        borderTopWidth: '2px',
-        borderRightWidth: '0px',
-        borderBottomWidth: '2px',
-        borderLeftWidth: '2px'
-      });
-    });
-  });
-
   describe('flexbox styles', () => {
-    test('flex defaults', () => {
-      expect(createReactDOMStyle({ display: 'flex' })).toEqual({
-        display: 'flex',
-        flexShrink: 0,
-        flexBasis: 'auto'
-      });
-    });
-
     test('flex: -1', () => {
-      expect(createReactDOMStyle({ display: 'flex', flex: -1 })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: -1 })).toEqual({
+        flexBasis: 'auto',
         flexGrow: 0,
-        flexShrink: 1,
-        flexBasis: 'auto'
+        flexShrink: 1
       });
     });
 
     test('flex: 0', () => {
-      expect(createReactDOMStyle({ display: 'flex', flex: 0 })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: 0 })).toEqual({
         flexGrow: 0,
         flexShrink: 0,
         flexBasis: '0%'
@@ -84,8 +57,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
 
     test('flex: 1', () => {
-      expect(createReactDOMStyle({ display: 'flex', flex: 1 })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: 1 })).toEqual({
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: '0%'
@@ -93,8 +65,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
 
     test('flex: 10', () => {
-      expect(createReactDOMStyle({ display: 'flex', flex: 10 })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: 10 })).toEqual({
         flexGrow: 10,
         flexShrink: 1,
         flexBasis: '0%'
@@ -103,15 +74,12 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
     test('flexBasis overrides', () => {
       // is flex-basis applied?
-      expect(createReactDOMStyle({ display: 'flex', flexBasis: '25%' })).toEqual({
-        display: 'flex',
-        flexShrink: 0,
+      expect(createReactDOMStyle({ flexBasis: '25%' })).toEqual({
         flexBasis: '25%'
       });
 
       // can flex-basis override the 'flex' expansion?
-      expect(createReactDOMStyle({ display: 'flex', flex: 1, flexBasis: '25%' })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: 1, flexBasis: '25%' })).toEqual({
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: '25%'
@@ -120,15 +88,12 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
     test('flexShrink overrides', () => {
       // is flex-shrink applied?
-      expect(createReactDOMStyle({ display: 'flex', flexShrink: 1 })).toEqual({
-        display: 'flex',
-        flexShrink: 1,
-        flexBasis: 'auto'
+      expect(createReactDOMStyle({ flexShrink: 1 })).toEqual({
+        flexShrink: 1
       });
 
       // can flex-shrink override the 'flex' expansion?
-      expect(createReactDOMStyle({ display: 'flex', flex: 1, flexShrink: 2 })).toEqual({
-        display: 'flex',
+      expect(createReactDOMStyle({ flex: 1, flexShrink: 2 })).toEqual({
         flexGrow: 1,
         flexShrink: 2,
         flexBasis: '0%'
@@ -147,10 +112,16 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
     test('"System"', () => {
       expect(createReactDOMStyle({ fontFamily: 'System' })).toMatchSnapshot();
+      expect(createReactDOMStyle({ font: '14px System' })).toMatchSnapshot();
     });
 
     test('"Noto, System"', () => {
       expect(createReactDOMStyle({ fontFamily: 'Noto, System' })).toMatchSnapshot();
+      expect(createReactDOMStyle({ font: '14px Noto, System' })).toMatchSnapshot();
+    });
+
+    test('"Noto, BlinkMacSystemFont"', () => {
+      expect(createReactDOMStyle({ fontFamily: 'Noto, BlinkMacSystemFont' })).toMatchSnapshot();
     });
   });
 
