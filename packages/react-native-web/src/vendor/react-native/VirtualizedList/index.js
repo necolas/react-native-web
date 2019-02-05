@@ -26,6 +26,7 @@ import findNodeHandle from '../../../exports/findNodeHandle';
 import infoLog from '../infoLog';
 import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 const flattenStyle = StyleSheet.flatten;
 const __DEV__ = process.env.NODE_ENV !== 'production';
@@ -887,6 +888,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       ...this.props,
       onContentSizeChange: this._onContentSizeChange,
       onLayout: this._onLayout,
+      onWheel: this._onWheel,
       onScroll: this._onScroll,
       onScrollBeginDrag: this._onScrollBeginDrag,
       onScrollEndDrag: this._onScrollEndDrag,
@@ -1178,6 +1180,34 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     return !this.props.horizontal ? metrics.y : metrics.x;
   }
 
+  _selectWheelDelta = (e: object, scrollNode): number => {
+    let delta, direction
+
+    // prepare direction and delta based on scroll orientation
+    if (this.props.horizontal) {
+      delta = e.wheelDeltaX || -e.deltaX
+      direction = 'scrollLeft'
+    } else {
+      delta = e.wheelDeltaY || -e.deltaY
+      direction = 'scrollTop'
+
+      // if deltaMode is 1 (Firefox) then the deltaY is reported in lines, not pixels
+      // use the computed lineHeight of the element to calculate the actual pixel delta
+      // this is not an issue with Safari / Chrome ... etc.
+      if (e.deltaMode === 1) {
+        let lineHeight = 19.2 // default font-size (16) * by default line-height (1.2)
+        if (canUseDOM) {
+          const styles  = window.getComputedStyle(scrollNode)
+          lineHeight = styles.getPropertyValue('line-height')
+        }
+
+        delta *= parseFloat(lineHeight)
+      }
+    }
+
+    return { delta, direction }
+  }
+
   _maybeCallOnEndReached() {
     const {
       data,
@@ -1247,6 +1277,24 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       dOffset,
     };
   };
+
+  _onWheel = (e: Object) => {
+    this._nestedChildLists.forEach(childList => {
+      childList.ref && childList.ref._onWheel(e);
+    });
+    if (this.props.onWheel) {
+      this.props.onWheel(e);
+    }
+
+    if (this.props.inverted) {
+      const scrollNode = this.getScrollableNode()
+      const { delta, direction } = this._selectWheelDelta(e, scrollNode)
+
+      scrollNode[direction] += delta
+
+      e.preventDefault();
+    }
+  }
 
   _onScroll = (e: Object) => {
     this._nestedChildLists.forEach(childList => {
