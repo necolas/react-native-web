@@ -1290,7 +1290,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       const scrollNode = this.getScrollableNode()
       const { delta, direction } = this._selectWheelDelta(e, scrollNode)
 
-      scrollNode[direction] += delta
+      setTimeout(() => {
+        scrollNode[direction] += delta
+      })
 
       e.preventDefault();
     }
