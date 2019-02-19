@@ -1185,10 +1185,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
     // prepare direction and delta based on scroll orientation
     if (this.props.horizontal) {
-      delta = e.wheelDeltaX || -e.deltaX
+      delta = -e.wheelDeltaX || -e.deltaX
       direction = 'scrollLeft'
     } else {
-      delta = e.wheelDeltaY || -e.deltaY
+      delta = -e.wheelDeltaY || -e.deltaY
       direction = 'scrollTop'
 
       // if deltaMode is 1 (Firefox) then the deltaY is reported in lines, not pixels
