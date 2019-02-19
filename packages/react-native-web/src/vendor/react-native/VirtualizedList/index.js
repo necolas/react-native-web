@@ -1185,10 +1185,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
     // prepare direction and delta based on scroll orientation
     if (this.props.horizontal) {
-      delta = -e.wheelDeltaX || -e.deltaX
+      delta = -e.deltaX || e.wheelDeltaX
       direction = 'scrollLeft'
     } else {
-      delta = -e.wheelDeltaY || -e.deltaY
+      delta = -e.deltaY || e.wheelDeltaY
       direction = 'scrollTop'
 
       // if deltaMode is 1 (Firefox) then the deltaY is reported in lines, not pixels
@@ -1201,7 +1201,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           lineHeight = styles.getPropertyValue('line-height')
         }
 
-        delta *= parseFloat(lineHeight)
+        delta *= (parseFloat(lineHeight) * 2)
       }
     }
 
