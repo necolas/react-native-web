@@ -128,7 +128,7 @@ React Native v0.55
 | Name                     | Status | Notes |
 | :----------------------- | :----- | :---- |
 | ActivityIndicator        | ✓      |  |
-| ART                      | ✓      |  |
+| ART                      | (✓)      | import from `react-art` |
 | Button                   | ✓      |  |
 | CheckBox                 | ✓      |  |
 | FlatList                 | ✓      |  |

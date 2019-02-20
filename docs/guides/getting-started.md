@@ -22,6 +22,12 @@ And if you need to use `ART`:
 yarn add react-art
 ```
 
+then import it from `react-art`:
+
+```js
+import ART from 'react-art';
+```
+
 ## Starter kits
 
 [create-react-app](https://github.com/facebookincubator/create-react-app)
