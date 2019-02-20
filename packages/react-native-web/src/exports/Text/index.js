@@ -10,30 +10,20 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { bool } from 'prop-types';
-import { Component } from 'react';
+import { Component, createContext } from 'react';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import TextPropTypes from './TextPropTypes';
+
+const { Provider, Consumer } = createContext(false);
+export const IsInAParentTextConsumer = Consumer;
 
 class Text extends Component<*> {
   static displayName = 'Text';
 
   static propTypes = TextPropTypes;
 
-  static childContextTypes = {
-    isInAParentText: bool
-  };
-
-  static contextTypes = {
-    isInAParentText: bool
-  };
-
-  getChildContext() {
-    return { isInAParentText: true };
-  }
-
-  render() {
+  renderInner(isInAParentText) {
     const {
       dir,
       numberOfLines,
@@ -57,8 +47,6 @@ class Text extends Component<*> {
       ...otherProps
     } = this.props;
 
-    const { isInAParentText } = this.context;
-
     if (onPress) {
       otherProps.accessible = true;
       otherProps.onClick = this._createPressHandler(onPress);
@@ -69,7 +57,7 @@ class Text extends Component<*> {
     otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
       styles.initial,
-      this.context.isInAParentText === true && styles.isInAParentText,
+      isInAParentText === true && styles.isInAParentText,
       style,
       selectable === false && styles.notSelectable,
       numberOfLines === 1 && styles.singleLineStyle,
@@ -79,6 +67,12 @@ class Text extends Component<*> {
     const component = isInAParentText ? 'span' : 'div';
 
     return createElement(component, otherProps);
+  }
+
+  render() {
+    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
+      return createElement(Provider, { value: true }, this.renderInner(isInAParentText));
+    });
   }
 
   _createEnterHandler(fn) {

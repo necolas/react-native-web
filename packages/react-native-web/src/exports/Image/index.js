@@ -17,6 +17,7 @@ import ImageResizeMode from './ImageResizeMode';
 import ImageSourcePropType from './ImageSourcePropType';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
+import { IsInAParentTextConsumer } from '../Text';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import View from '../View';
@@ -95,10 +96,6 @@ type State = {
 
 class Image extends Component<*, State> {
   static displayName = 'Image';
-
-  static contextTypes = {
-    isInAParentText: bool
-  };
 
   static propTypes = {
     ...ViewPropTypes,
@@ -179,7 +176,7 @@ class Image extends Component<*, State> {
     this._isMounted = false;
   }
 
-  render() {
+  renderInner(isInAParentText) {
     const { shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
@@ -267,12 +264,7 @@ class Image extends Component<*, State> {
         accessibilityLabel={accessibilityLabel}
         accessible={accessible}
         onLayout={this._createLayoutHandler(finalResizeMode)}
-        style={[
-          styles.root,
-          this.context.isInAParentText && styles.inline,
-          imageSizeStyle,
-          flatStyle
-        ]}
+        style={[styles.root, isInAParentText && styles.inline, imageSizeStyle, flatStyle]}
         testID={testID}
       >
         <View
@@ -288,6 +280,12 @@ class Image extends Component<*, State> {
         {createTintColorSVG(tintColor, this._filterId)}
       </View>
     );
+  }
+
+  render() {
+    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
+      return this.renderInner(isInAParentText);
+    });
   }
 
   _createImageLoader() {

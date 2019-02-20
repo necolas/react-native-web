@@ -8,10 +8,10 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { bool } from 'prop-types';
 import createElement from '../createElement';
 import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
+import { IsInAParentTextConsumer } from '../Text';
 import StyleSheet from '../StyleSheet';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
 import React, { Component } from 'react';
@@ -30,13 +30,9 @@ const calculateHitSlopStyle = hitSlop => {
 class View extends Component<ViewProps> {
   static displayName = 'View';
 
-  static contextTypes = {
-    isInAParentText: bool
-  };
-
   static propTypes = ViewPropTypes;
 
-  render() {
+  renderInner(isInAParentText) {
     const hitSlop = this.props.hitSlop;
     const supportedProps = filterSupportedProps(this.props);
 
@@ -49,11 +45,12 @@ class View extends Component<ViewProps> {
       });
     }
 
-    const { isInAParentText } = this.context;
-
     supportedProps.style = StyleSheet.compose(
       styles.initial,
-      StyleSheet.compose(isInAParentText && styles.inline, this.props.style)
+      StyleSheet.compose(
+        isInAParentText && styles.inline,
+        this.props.style
+      )
     );
 
     if (hitSlop) {
@@ -63,6 +60,12 @@ class View extends Component<ViewProps> {
     }
 
     return createElement('div', supportedProps);
+  }
+
+  render() {
+    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
+      return this.renderInner(isInAParentText);
+    });
   }
 }
 
