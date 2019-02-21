@@ -3,7 +3,7 @@
   "version": "0.10.0",
   "name": "react-native-web-monorepo",
   "scripts": {
-    "clean": "del ./packages/*/dist",
+    "clean": "del-cli ./packages/*/dist",
     "compile": "npm-run-all clean -p \"compile:* -- {@}\" --",
     "compile:commonjs": "cd packages/react-native-web && BABEL_ENV=commonjs babel --root-mode upward src --out-dir dist/cjs --ignore \"**/__tests__\"",
     "compile:es": "cd packages/react-native-web && babel --root-mode upward src --out-dir dist --ignore \"**/__tests__\"",
