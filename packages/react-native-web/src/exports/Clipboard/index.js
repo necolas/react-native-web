@@ -14,6 +14,7 @@ export default class Clipboard {
   static isAvailable() {
     if (clipboardAvailable === undefined) {
       clipboardAvailable =
+        /* $FlowFixMe(<0.93.0) */
         typeof document.queryCommandSupported === 'function' &&
         document.queryCommandSupported('copy');
     }

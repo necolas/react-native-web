@@ -25,6 +25,7 @@ const normalizeTouches = touches => {
     return emptyArray;
   }
 
+  // $FlowFixMe
   return Array.prototype.slice.call(touches).map(touch => {
     const identifier = touch.identifier > 20 ? touch.identifier % 20 : touch.identifier;
     let rect;
