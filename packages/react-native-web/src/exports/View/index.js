@@ -11,8 +11,8 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
-import { IsInAParentTextConsumer } from '../Text';
 import StyleSheet from '../StyleSheet';
+import TextAncestor from '../TextAncestor';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
 import React, { Component } from 'react';
 
@@ -32,7 +32,7 @@ class View extends Component<ViewProps> {
 
   static propTypes = ViewPropTypes;
 
-  renderInner(isInAParentText) {
+  renderInner(hasTextAncestor) {
     const hitSlop = this.props.hitSlop;
     const supportedProps = filterSupportedProps(this.props);
 
@@ -48,7 +48,7 @@ class View extends Component<ViewProps> {
     supportedProps.style = StyleSheet.compose(
       styles.initial,
       StyleSheet.compose(
-        isInAParentText && styles.inline,
+        hasTextAncestor && styles.inline,
         this.props.style
       )
     );
@@ -63,8 +63,8 @@ class View extends Component<ViewProps> {
   }
 
   render() {
-    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
-      return this.renderInner(isInAParentText);
+    return createElement(TextAncestor.Consumer, null, hasTextAncestor => {
+      return this.renderInner(hasTextAncestor);
     });
   }
 }

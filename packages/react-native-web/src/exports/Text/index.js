@@ -10,13 +10,11 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { Component, createContext } from 'react';
+import { Component } from 'react';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
+import TextAncestor from '../TextAncestor';
 import TextPropTypes from './TextPropTypes';
-
-const { Provider, Consumer } = createContext(false);
-export const IsInAParentTextConsumer = Consumer;
 
 class Text extends Component<*> {
   static displayName = 'Text';
@@ -70,8 +68,10 @@ class Text extends Component<*> {
   }
 
   render() {
-    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
-      return createElement(Provider, { value: true }, this.renderInner(isInAParentText));
+    return createElement(TextAncestor.Consumer, null, hasTextAncestor => {
+      return hasTextAncestor
+        ? this.renderInner(hasTextAncestor)
+        : createElement(TextAncestor.Provider, { value: true }, this.renderInner(hasTextAncestor));
     });
   }
 

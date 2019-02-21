@@ -17,9 +17,9 @@ import ImageResizeMode from './ImageResizeMode';
 import ImageSourcePropType from './ImageSourcePropType';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
-import { IsInAParentTextConsumer } from '../Text';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
+import TextAncestor from '../TextAncestor';
 import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
 import { bool, func, number, oneOf, shape } from 'prop-types';
@@ -176,7 +176,7 @@ class Image extends Component<*, State> {
     this._isMounted = false;
   }
 
-  renderInner(isInAParentText) {
+  renderInner(hasTextAncestor) {
     const { shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
@@ -264,7 +264,7 @@ class Image extends Component<*, State> {
         accessibilityLabel={accessibilityLabel}
         accessible={accessible}
         onLayout={this._createLayoutHandler(finalResizeMode)}
-        style={[styles.root, isInAParentText && styles.inline, imageSizeStyle, flatStyle]}
+        style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
         testID={testID}
       >
         <View
@@ -283,8 +283,8 @@ class Image extends Component<*, State> {
   }
 
   render() {
-    return createElement(IsInAParentTextConsumer, null, isInAParentText => {
-      return this.renderInner(isInAParentText);
+    return createElement(TextAncestor.Consumer, null, hasTextAncestor => {
+      return this.renderInner(hasTextAncestor);
     });
   }
 
