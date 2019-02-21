@@ -48,6 +48,7 @@ const ViewStylePropTypes = {
   clip: string,
   filter: string,
   outline: string,
+  outlineWidth: number,
   outlineColor: ColorPropType,
   overscrollBehavior: overscrollBehaviorType,
   overscrollBehaviorX: overscrollBehaviorType,

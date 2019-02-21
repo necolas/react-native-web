@@ -737,6 +737,11 @@ const stylePropTypes = [
   },
   {
     label: 'web',
+    name: 'outlineWidth',
+    typeInfo: 'number'
+  },
+  {
+    label: 'web',
     name: 'outlineColor',
     typeInfo: 'color'
   },
