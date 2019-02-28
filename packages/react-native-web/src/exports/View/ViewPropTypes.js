@@ -44,6 +44,11 @@ export type ViewProps = {
   onClick?: Function,
   onClickCapture?: Function,
   onContextMenu?: Function,
+  onDragStart?: Function,
+  onDragEnter?: Function,
+  onDragOver?: Function,
+  onDragLeave?: Function,
+  onDrop?: Function,
   onFocus?: Function,
   onLayout?: (event: ViewLayoutEvent) => void,
   onResponderGrant?: Function,
@@ -84,17 +89,19 @@ const ViewPropTypes = {
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRole: string,
-  accessibilityStates: arrayOf(oneOf([
-    'disabled',
-    'selected',
-    /* web-only */
-    'busy',
-    'checked',
-    'expanded',
-    'grabbed',
-    'invalid',
-    'pressed'
-  ])),
+  accessibilityStates: arrayOf(
+    oneOf([
+      'disabled',
+      'selected',
+      /* web-only */
+      'busy',
+      'checked',
+      'expanded',
+      'grabbed',
+      'invalid',
+      'pressed'
+    ])
+  ),
   accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,

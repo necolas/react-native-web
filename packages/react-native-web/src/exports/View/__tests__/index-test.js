@@ -56,4 +56,10 @@ describe('components/View', () => {
     const component = shallow(<View pointerEvents="box-only" />);
     expect(component.prop('className').indexOf('pointerEvents') > -1).toBe(true);
   });
+
+  test('prop "onDragStart"', () => {
+    const onDragStart = jest.fn();
+    const component = shallow(<View onDragStart={onDragStart} />);
+    expect(component.prop('onDragStart')).toBe(onDragStart);
+  });
 });
