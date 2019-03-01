@@ -114,14 +114,11 @@ to { left: 10px; }
 
 exports[`StyleSheet/compile inline converts style to inline styles 1`] = `
 Object {
-  "WebkitFlexBasis": "auto",
   "WebkitFlexShrink": 1,
   "display": "flex",
-  "flexBasis": "auto",
   "flexShrink": 1,
   "marginLeft": "10px",
   "marginRight": "10px",
   "msFlexNegative": 1,
-  "msFlexPreferredSize": "auto",
 }
 `;

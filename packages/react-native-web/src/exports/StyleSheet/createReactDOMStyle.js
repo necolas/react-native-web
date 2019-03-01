@@ -7,6 +7,7 @@
  * @noflow
  */
 
+import { MONOSPACE_FONT_STACK, SYSTEM_FONT_STACK, STYLE_SHORT_FORM_EXPANSIONS } from './constants';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
 /**
@@ -21,30 +22,6 @@ import normalizeValueWithProperty from './normalizeValueWithProperty';
  */
 
 const emptyObject = {};
-const styleShortFormProperties = {
-  borderColor: ['borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor'],
-  borderRadius: [
-    'borderTopLeftRadius',
-    'borderTopRightRadius',
-    'borderBottomRightRadius',
-    'borderBottomLeftRadius'
-  ],
-  borderStyle: ['borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle'],
-  borderWidth: ['borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'],
-  margin: ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],
-  marginHorizontal: ['marginRight', 'marginLeft'],
-  marginVertical: ['marginTop', 'marginBottom'],
-  overflow: ['overflowX', 'overflowY'],
-  overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
-  padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
-  paddingHorizontal: ['paddingRight', 'paddingLeft'],
-  paddingVertical: ['paddingTop', 'paddingBottom'],
-  writingDirection: ['direction']
-};
-
-const monospaceFontStack = 'monospace, monospace';
-const systemFontStack =
-  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif';
 
 /**
  * Transform
@@ -135,17 +112,17 @@ const createReactDOMStyle = style => {
         }
 
         case 'font': {
-          resolvedStyle[prop] = value.replace('System', systemFontStack);
+          resolvedStyle[prop] = value.replace('System', SYSTEM_FONT_STACK);
           break;
         }
 
         case 'fontFamily': {
           if (value.indexOf('System') > -1) {
             const stack = value.split(/,\s*/);
-            stack[stack.indexOf('System')] = systemFontStack;
+            stack[stack.indexOf('System')] = SYSTEM_FONT_STACK;
             resolvedStyle[prop] = stack.join(', ');
           } else if (value === 'monospace') {
-            resolvedStyle[prop] = monospaceFontStack;
+            resolvedStyle[prop] = MONOSPACE_FONT_STACK;
           } else {
             resolvedStyle[prop] = value;
           }
@@ -177,8 +154,13 @@ const createReactDOMStyle = style => {
           break;
         }
 
+        case 'writingDirection': {
+          resolvedStyle.direction = value;
+          break;
+        }
+
         default: {
-          const longFormProperties = styleShortFormProperties[prop];
+          const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
           if (longFormProperties) {
             longFormProperties.forEach((longForm, i) => {
               // The value of any longform property in the original styles takes
