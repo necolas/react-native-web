@@ -126,8 +126,7 @@ const calculatorKeyStyles = StyleSheet.create({
     borderTopStyle: 'solid',
     borderRightWidth: 1,
     borderRightColor: '#666',
-    borderRightStyle: 'solid',
-    outline: 'none'
+    borderRightStyle: 'solid'
   },
   text: {
     fontWeight: '100',
