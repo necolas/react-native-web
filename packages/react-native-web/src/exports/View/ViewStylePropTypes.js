@@ -15,8 +15,9 @@ import InteractionPropTypes from '../../modules/InteractionPropTypes';
 import LayoutPropTypes from '../../modules/LayoutPropTypes';
 import ShadowPropTypes from '../../modules/ShadowPropTypes';
 import TransformPropTypes from '../../modules/TransformPropTypes';
-import { number, oneOf, string } from 'prop-types';
+import { number, oneOf, oneOfType, string } from 'prop-types';
 
+const stringOrNumber = oneOfType([string, number]);
 const overscrollBehaviorType = oneOf(['auto', 'contain', 'none']);
 
 const ViewStylePropTypes = {
@@ -47,8 +48,10 @@ const ViewStylePropTypes = {
   boxShadow: string,
   clip: string,
   filter: string,
-  outline: string,
   outlineColor: ColorPropType,
+  outlineOffset: stringOrNumber,
+  outlineStyle: string,
+  outlineWidth: stringOrNumber,
   overscrollBehavior: overscrollBehaviorType,
   overscrollBehaviorX: overscrollBehaviorType,
   overscrollBehaviorY: overscrollBehaviorType,

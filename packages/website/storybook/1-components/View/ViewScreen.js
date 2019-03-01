@@ -732,13 +732,23 @@ const stylePropTypes = [
   },
   {
     label: 'web',
-    name: 'outline',
+    name: 'outlineColor',
+    typeInfo: 'color'
+  },
+  {
+    label: 'web',
+    name: 'outlineOffset',
+    typeInfo: 'number | string'
+  },
+  {
+    label: 'web',
+    name: 'outlineStyle',
     typeInfo: 'string'
   },
   {
     label: 'web',
-    name: 'outlineColor',
-    typeInfo: 'color'
+    name: 'outlineWidth',
+    typeInfo: 'number | string'
   },
   {
     name: 'overflow',
