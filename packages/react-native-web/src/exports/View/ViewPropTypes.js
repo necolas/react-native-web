@@ -12,6 +12,7 @@ import EdgeInsetsPropType, { type EdgeInsetsProp } from '../EdgeInsetsPropType';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { any, array, arrayOf, bool, func, object, oneOf, oneOfType, string } from 'prop-types';
+import { type StyleObj } from '../StyleSheet';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
@@ -65,7 +66,7 @@ export type ViewProps = {
   onTouchStart?: Function,
   onTouchStartCapture?: Function,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
-  style?: stylePropType,
+  style?: StyleObj,
   testID?: string,
   // compatibility with React Native
   accessibilityViewIsModal?: boolean,
@@ -84,17 +85,19 @@ const ViewPropTypes = {
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRole: string,
-  accessibilityStates: arrayOf(oneOf([
-    'disabled',
-    'selected',
-    /* web-only */
-    'busy',
-    'checked',
-    'expanded',
-    'grabbed',
-    'invalid',
-    'pressed'
-  ])),
+  accessibilityStates: arrayOf(
+    oneOf([
+      'disabled',
+      'selected',
+      /* web-only */
+      'busy',
+      'checked',
+      'expanded',
+      'grabbed',
+      'invalid',
+      'pressed'
+    ])
+  ),
   accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
