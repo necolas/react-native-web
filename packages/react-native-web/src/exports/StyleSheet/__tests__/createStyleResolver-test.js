@@ -2,13 +2,13 @@
 
 import I18nManager from '../../I18nManager';
 import ReactNativePropRegistry from '../../../modules/ReactNativePropRegistry';
-import ReactNativeStyleResolver from '../ReactNativeStyleResolver';
+import createStyleResolver from '../createStyleResolver';
 
 let styleResolver;
 
-describe('StyleSheet/ReactNativeStyleResolver', () => {
+describe('StyleSheet/createStyleResolver', () => {
   beforeEach(() => {
-    styleResolver = new ReactNativeStyleResolver();
+    styleResolver = createStyleResolver({ insert() {} });
   });
 
   describe('resolve', () => {
