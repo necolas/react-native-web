@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import PickerItem from './PickerItem'; // Fix cyclic dependency
+import PickerItem from './PickerItem';
 
 const PickerItemPropType = (props: Object, propName: string, componentName: string) => {
   const prop = props[propName];
