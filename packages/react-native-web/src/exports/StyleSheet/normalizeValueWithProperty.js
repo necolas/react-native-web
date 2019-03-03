@@ -24,10 +24,11 @@ const colorProps = {
 };
 
 export default function normalizeValueWithProperty(value: any, property?: ?string) {
+  let returnValue = value;
   if ((property == null || !unitlessNumbers[property]) && typeof value === 'number') {
-    value = `${value}px`;
+    returnValue = `${value}px`;
   } else if (property != null && colorProps[property]) {
-    value = normalizeColor(value);
+    returnValue = normalizeColor(value);
   }
-  return value;
+  return returnValue;
 }

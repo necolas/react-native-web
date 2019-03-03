@@ -67,15 +67,13 @@ export default function validate(key: string, styles: Object) {
   for (const k in obj) {
     const prop = k.trim();
     const value = obj[prop];
-    const isValidProp = validProperties[prop];
-    const isInvalidShorthand = invalidShortforms[prop];
     let isInvalid = false;
 
     if (value === null) {
       continue;
     }
 
-    if (!isValidProp) {
+    if (validProperties[prop] == null) {
       let suggestion = '';
       if (prop === 'animation' || prop === 'animationName') {
         suggestion = 'Did you mean "animationKeyframes"?';
@@ -85,7 +83,7 @@ export default function validate(key: string, styles: Object) {
         suggestion = 'Did you mean "writingDirection"?';
       } else if (prop === 'verticalAlign') {
         suggestion = 'Did you mean "textAlignVertical"?';
-      } else if (isInvalidShorthand) {
+      } else if (invalidShortforms[prop]) {
         suggestion = 'Please use long-form properties.';
       }
       isInvalid = true;

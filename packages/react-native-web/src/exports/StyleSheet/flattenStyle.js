@@ -10,9 +10,7 @@
 
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import invariant from 'fbjs/lib/invariant';
-
-type Atom = number | boolean | Object | Array<?Atom>;
-type StyleObj = Atom;
+import type { StyleObj } from './StyleSheetTypes';
 
 function getStyle(style) {
   if (typeof style === 'number') {
@@ -31,7 +29,6 @@ function flattenStyle(style: ?StyleObj): ?Object {
   }
 
   if (!Array.isArray(style)) {
-    // $FlowFixMe
     return getStyle(style);
   }
 

@@ -12,6 +12,7 @@ import EdgeInsetsPropType, { type EdgeInsetsProp } from '../EdgeInsetsPropType';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
 import { any, array, arrayOf, bool, func, object, oneOf, oneOfType, string } from 'prop-types';
+import { type StyleObj } from '../StyleSheet/StyleSheetTypes';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
@@ -65,7 +66,7 @@ export type ViewProps = {
   onTouchStart?: Function,
   onTouchStartCapture?: Function,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
-  style?: stylePropType,
+  style?: StyleObj,
   testID?: string,
   // web extensions
   onContextMenu?: Function,

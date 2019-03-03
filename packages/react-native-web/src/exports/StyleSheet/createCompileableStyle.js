@@ -29,7 +29,11 @@ function textShadowReducer(resolvedStyle, style) {
   const blurRadius = normalizeValueWithProperty(radius);
   const color = normalizeValueWithProperty(textShadowColor, 'textShadowColor');
 
-  if (color && (height !== 0 || width !== 0 || radius !== 0)) {
+  if (
+    color &&
+    (height !== 0 || width !== 0 || radius !== 0) &&
+    (offsetX != null && offsetY != null && blurRadius != null)
+  ) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 }

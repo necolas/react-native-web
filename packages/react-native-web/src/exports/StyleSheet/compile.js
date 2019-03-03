@@ -110,7 +110,9 @@ export function inline(style: Style) {
 export function stringifyValueWithProperty(value: Value, property: ?string) {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
-  return typeof normalizedValue !== 'string' ? JSON.stringify(normalizedValue) : normalizedValue;
+  return typeof normalizedValue !== 'string'
+    ? JSON.stringify(normalizedValue || '')
+    : normalizedValue;
 }
 
 /**

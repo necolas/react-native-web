@@ -16,6 +16,8 @@ import invariant from 'fbjs/lib/invariant';
 // Note(vjeux): this would be better as an interface but flow doesn't
 // support them yet
 class AnimatedNode {
+  +update: () => void
+  
   __attach(): void {}
   __detach(): void {
     if (this.__isNative && this.__nativeTag != null) {

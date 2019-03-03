@@ -19,7 +19,7 @@ const resolveShadowValue = (style: Object) => {
   const offsetY = normalizeValueWithProperty(height);
   const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
   const color = normalizeColor(shadowColor || 'black', shadowOpacity);
-  if (color) {
+  if (color != null && offsetX != null && offsetY != null && blurRadius != null) {
     return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 };
