@@ -200,8 +200,23 @@ const createReducer = (style, styleProps) => {
           if (style.flexShrink == null) {
             resolvedStyle.flexShrink = 0;
           }
-          if (style.flexBasis == null) {
-            resolvedStyle.flexBasis = 'auto';
+
+          if (!style.flexBasis) {
+            if (style.flexShrink || style.flexGrow) {
+              resolvedStyle.flexBasis = '0%';
+
+              // 0 or any other flasy set to auto
+              if (!style.minWidth) {
+                resolvedStyle.minWidth = 'auto';
+              }
+
+              // 0 or any other flasy set to auto
+              if (!style.minHeight) {
+                resolvedStyle.minHeight = 'auto';
+              }
+            } else {
+              resolvedStyle.flexBasis = 'auto';
+            }
           }
         }
         break;
@@ -212,8 +227,22 @@ const createReducer = (style, styleProps) => {
       case 'flex': {
         if (value > 0) {
           resolvedStyle.flexGrow = value;
-          resolvedStyle.flexShrink = 1;
-          resolvedStyle.flexBasis = 'auto';
+          resolvedStyle.flexShrink = value;
+
+          // 0 or any other flasy set to 0%
+          if (!style.flexBasis) {
+            resolvedStyle.flexBasis = '0%';
+          }
+
+          // 0 or any other flasy set to auto
+          if (!style.minWidth && resolvedStyle.flexBasis === '0%') {
+            resolvedStyle.minWidth = 'auto';
+          }
+
+          // 0 or any other flasy set to auto
+          if (!style.minHeight && resolvedStyle.flexBasis === '0%') {
+            resolvedStyle.minHeight = 'auto';
+          }
         } else if (value === 0) {
           resolvedStyle.flexGrow = 0;
           resolvedStyle.flexShrink = 0;
