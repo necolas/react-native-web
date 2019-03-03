@@ -346,7 +346,7 @@ class AnimatedInterpolation extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __transformDataType(range: Array<any>) {
+  __transformDataType(range: Array<string>): Array<number> {
     // Change the string array type to number array
     // So we can reuse the same logic in iOS and Android platform
     return range.map(function(value) {
