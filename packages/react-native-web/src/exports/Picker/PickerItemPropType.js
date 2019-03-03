@@ -9,14 +9,14 @@
  */
 
 import React from 'react';
-import PickerItem from './PickerItem'; // Fix cyclic dependency
+import Picker from './';
 
 const PickerItemPropType = (props: Object, propName: string, componentName: string) => {
   const prop = props[propName];
   let error = null;
   React.Children.forEach(prop, function(child) {
-    if (child.type !== PickerItem) {
-      error = new Error('`Picker` children must be of type `PickerItem`.');
+    if (child.type !== Picker.Item) {
+      error = new Error('`Picker` children must be of type `Picker.Item`.');
     }
   });
   return error;
