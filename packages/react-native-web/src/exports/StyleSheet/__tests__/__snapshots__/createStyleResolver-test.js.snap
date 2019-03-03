@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve resolves inline-style pointerEvents to classname 1`] = `
+exports[`StyleSheet/createStyleResolver resolve resolves inline-style pointerEvents to classname 1`] = `
 Object {
   "classList": Array [
     "rn-pointerEvents-12vffkv",
@@ -9,7 +9,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register before RTL, resolves to correct className 1`] = `
+exports[`StyleSheet/createStyleResolver resolve with register before RTL, resolves to correct className 1`] = `
 Object {
   "classList": Array [
     "rn-marginRight-zso239",
@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register before RTL, resolves to correct className 2`] = `
+exports[`StyleSheet/createStyleResolver resolve with register before RTL, resolves to correct className 2`] = `
 Object {
   "classList": Array [
     "rn-left-2s0hu9",
@@ -31,7 +31,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 1`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 1`] = `
 Object {
   "classList": Array [
     "rn-borderColor-4a18lf",
@@ -45,7 +45,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 2`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 2`] = `
 Object {
   "classList": Array [
     "rn-borderColor-4a18lf",
@@ -59,7 +59,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to className 3`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 3`] = `
 Object {
   "classList": Array [
     "rn-borderColor-4a18lf",
@@ -73,7 +73,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to mixed 1`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 1`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -95,7 +95,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to mixed 2`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 2`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -117,7 +117,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve with register, resolves to mixed 3`] = `
+exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 3`] = `
 Object {
   "classList": Array [
     "rn-left-1tsx3h3",
@@ -139,7 +139,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve without register, resolves to inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolve without register, resolves to inline styles 1`] = `
 Object {
   "classList": Array [],
   "className": "",
@@ -160,7 +160,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve without register, resolves to inline styles 2`] = `
+exports[`StyleSheet/createStyleResolver resolve without register, resolves to inline styles 2`] = `
 Object {
   "classList": Array [],
   "className": "",
@@ -181,7 +181,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolve without register, resolves to inline styles 3`] = `
+exports[`StyleSheet/createStyleResolver resolve without register, resolves to inline styles 3`] = `
 Object {
   "classList": Array [],
   "className": "",
@@ -202,7 +202,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode next class names have priority over current inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode next class names have priority over current inline styles 1`] = `
 Object {
   "className": "rn-opacity-6dt33c",
   "style": Object {
@@ -211,7 +211,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode next inline styles have priority over current inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode next inline styles have priority over current inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {
@@ -222,14 +222,14 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode preserves unrelated class names 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode preserves unrelated class names 1`] = `
 Object {
   "className": "unknown-class-1 unknown-class-2",
   "style": Object {},
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode preserves unrelated inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode preserves unrelated inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {
@@ -239,7 +239,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true & doLeftAndRightSwapInRTL=false, resolves to non-flipped inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode when isRTL=true & doLeftAndRightSwapInRTL=false, resolves to non-flipped inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {
@@ -250,7 +250,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true, resolves to flipped classNames 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode when isRTL=true, resolves to flipped classNames 1`] = `
 Object {
   "className": "rn-left-1u10d71 rn-marginRight-zso239",
   "style": Object {
@@ -260,7 +260,7 @@ Object {
 }
 `;
 
-exports[`StyleSheet/ReactNativeStyleResolver resolveWithNode when isRTL=true, resolves to flipped inline styles 1`] = `
+exports[`StyleSheet/createStyleResolver resolveWithNode when isRTL=true, resolves to flipped inline styles 1`] = `
 Object {
   "className": "",
   "style": Object {

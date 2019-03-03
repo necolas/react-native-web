@@ -7,6 +7,6 @@
  * @flow
  */
 
-import ReactNativeStyleResolver from './ReactNativeStyleResolver';
-const styleResolver = new ReactNativeStyleResolver();
+import createStyleResolver from './createStyleResolver';
+const styleResolver = createStyleResolver();
 export default styleResolver;
