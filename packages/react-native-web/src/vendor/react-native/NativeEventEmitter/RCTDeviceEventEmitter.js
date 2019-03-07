@@ -17,20 +17,6 @@ import type EmitterSubscription from '../emitter/EmitterSubscription';
 
 function checkNativeEventModule(eventType: ?string) {
   if (eventType) {
-    if (eventType.lastIndexOf('statusBar', 0) === 0) {
-      throw new Error(
-        '`' +
-          eventType +
-          '` event should be registered via the StatusBarIOS module',
-      );
-    }
-    if (eventType.lastIndexOf('keyboard', 0) === 0) {
-      throw new Error(
-        '`' +
-          eventType +
-          '` event should be registered via the Keyboard module',
-      );
-    }
     if (eventType === 'appStateDidChange' || eventType === 'memoryWarning') {
       throw new Error(
         '`' +
