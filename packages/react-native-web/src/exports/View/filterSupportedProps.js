@@ -58,6 +58,9 @@ const supportedProps = {
   // unstable escape-hatches for web
   className: true,
   href: true,
+  itemprop: true,
+  itemscope: true,
+  itemtype: true,
   onClick: true,
   onClickCapture: true,
   rel: true,

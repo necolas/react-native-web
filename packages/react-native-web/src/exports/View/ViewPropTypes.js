@@ -43,7 +43,6 @@ export type ViewProps = {
   onBlur?: Function,
   onClick?: Function,
   onClickCapture?: Function,
-  onContextMenu?: Function,
   onFocus?: Function,
   onLayout?: (event: ViewLayoutEvent) => void,
   onResponderGrant?: Function,
@@ -67,6 +66,11 @@ export type ViewProps = {
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
   style?: stylePropType,
   testID?: string,
+  // web extensions
+  onContextMenu?: Function,
+  itemprop?: string,
+  itemscope?: string,
+  itemtype?: string,
   // compatibility with React Native
   accessibilityViewIsModal?: boolean,
   collapsable?: boolean,
@@ -84,17 +88,19 @@ const ViewPropTypes = {
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRole: string,
-  accessibilityStates: arrayOf(oneOf([
-    'disabled',
-    'selected',
-    /* web-only */
-    'busy',
-    'checked',
-    'expanded',
-    'grabbed',
-    'invalid',
-    'pressed'
-  ])),
+  accessibilityStates: arrayOf(
+    oneOf([
+      'disabled',
+      'selected',
+      /* web-only */
+      'busy',
+      'checked',
+      'expanded',
+      'grabbed',
+      'invalid',
+      'pressed'
+    ])
+  ),
   accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
@@ -104,7 +110,6 @@ const ViewPropTypes = {
   onBlur: func,
   onClick: func,
   onClickCapture: func,
-  onContextMenu: func,
   onFocus: func,
   onLayout: func,
   onMoveShouldSetResponder: func,
@@ -128,6 +133,11 @@ const ViewPropTypes = {
   pointerEvents: oneOf(['auto', 'box-none', 'box-only', 'none']),
   style: stylePropType,
   testID: string,
+  // web extensions
+  onContextMenu: func,
+  itemprop: string,
+  itemscope: string,
+  itemtype: string,
   // compatibility with React Native
   accessibilityViewIsModal: bool,
   collapsable: bool,

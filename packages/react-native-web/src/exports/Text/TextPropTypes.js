@@ -24,13 +24,17 @@ const TextPropTypes = {
   nativeID: string,
   numberOfLines: number,
   onBlur: func,
-  onContextMenu: func,
   onFocus: func,
   onLayout: func,
   onPress: func,
   selectable: bool,
   style: StyleSheetPropType(TextStylePropTypes),
-  testID: string
+  testID: string,
+  // web extensions
+  onContextMenu: func,
+  itemprop: string,
+  itemscope: string,
+  itemtype: string
 };
 
 export default TextPropTypes;
