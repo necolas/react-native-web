@@ -171,6 +171,7 @@ class TextInput extends Component<*> {
 
   render() {
     const {
+      autoComplete,
       autoCorrect,
       editable,
       keyboardType,
@@ -253,6 +254,9 @@ class TextInput extends Component<*> {
     const component = multiline ? 'textarea' : 'input';
 
     Object.assign(otherProps, {
+      // Browser's treat autocomplete "off" as "on"
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
+      autoComplete: autoComplete === 'off' ? 'noop' : autoComplete,
       autoCorrect: autoCorrect ? 'on' : 'off',
       dir: 'auto',
       onBlur: normalizeEventHandler(this._handleBlur),

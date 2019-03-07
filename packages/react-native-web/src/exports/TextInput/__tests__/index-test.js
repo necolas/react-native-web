@@ -25,7 +25,7 @@ describe('components/TextInput', () => {
 
     test('value "off"', () => {
       const input = findNativeInput(shallow(<TextInput autoComplete="off" />));
-      expect(input.prop('autoComplete')).toEqual('off');
+      expect(input.prop('autoComplete')).toEqual('noop');
     });
   });
 
