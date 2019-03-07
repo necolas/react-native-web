@@ -3,84 +3,84 @@
 exports[`StyleSheet/createStyleResolver resolve resolves inline-style pointerEvents to classname 1`] = `
 Object {
   "classList": Array [
-    "rn-pointerEvents-12vffkv",
+    "r-pointerEvents-12vffkv",
   ],
-  "className": "rn-pointerEvents-12vffkv",
+  "className": "r-pointerEvents-12vffkv",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register before RTL, resolves to correct className 1`] = `
 Object {
   "classList": Array [
-    "rn-marginRight-zso239",
-    "rn-right-1bnbe1j",
-    "rn-textAlign-1ff274t",
+    "r-marginRight-zso239",
+    "r-right-1bnbe1j",
+    "r-textAlign-1ff274t",
   ],
-  "className": "rn-marginRight-zso239 rn-right-1bnbe1j rn-textAlign-1ff274t",
+  "className": "r-marginRight-zso239 r-right-1bnbe1j r-textAlign-1ff274t",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register before RTL, resolves to correct className 2`] = `
 Object {
   "classList": Array [
-    "rn-left-2s0hu9",
-    "rn-marginLeft-1n0xq6e",
-    "rn-textAlign-fdjqy7",
+    "r-left-2s0hu9",
+    "r-marginLeft-1n0xq6e",
+    "r-textAlign-fdjqy7",
   ],
-  "className": "rn-left-2s0hu9 rn-marginLeft-1n0xq6e rn-textAlign-fdjqy7",
+  "className": "r-left-2s0hu9 r-marginLeft-1n0xq6e r-textAlign-fdjqy7",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 1`] = `
 Object {
   "classList": Array [
-    "rn-borderColor-4a18lf",
-    "rn-borderWidth-1yadl64",
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
-    "rn-width-b8lwoo",
+    "r-borderColor-4a18lf",
+    "r-borderWidth-1yadl64",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
+    "r-width-b8lwoo",
   ],
-  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
+  "className": "r-borderColor-4a18lf r-borderWidth-1yadl64 r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d r-width-b8lwoo",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 2`] = `
 Object {
   "classList": Array [
-    "rn-borderColor-4a18lf",
-    "rn-borderWidth-1yadl64",
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
-    "rn-width-l0gwng",
+    "r-borderColor-4a18lf",
+    "r-borderWidth-1yadl64",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
+    "r-width-l0gwng",
   ],
-  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
+  "className": "r-borderColor-4a18lf r-borderWidth-1yadl64 r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d r-width-l0gwng",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to className 3`] = `
 Object {
   "classList": Array [
-    "rn-borderColor-4a18lf",
-    "rn-borderWidth-1yadl64",
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
-    "rn-width-b8lwoo",
+    "r-borderColor-4a18lf",
+    "r-borderWidth-1yadl64",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
+    "r-width-b8lwoo",
   ],
-  "className": "rn-borderColor-4a18lf rn-borderWidth-1yadl64 rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-b8lwoo",
+  "className": "r-borderColor-4a18lf r-borderWidth-1yadl64 r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d r-width-b8lwoo",
 }
 `;
 
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 1`] = `
 Object {
   "classList": Array [
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
   ],
-  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d",
+  "className": "r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d",
   "style": Object {
     "borderBottomColor": "rgba(255,0,0,1.00)",
     "borderBottomWidth": "0px",
@@ -98,12 +98,12 @@ Object {
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 2`] = `
 Object {
   "classList": Array [
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
-    "rn-width-l0gwng",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
+    "r-width-l0gwng",
   ],
-  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d rn-width-l0gwng",
+  "className": "r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d r-width-l0gwng",
   "style": Object {
     "borderBottomColor": "rgba(255,0,0,1.00)",
     "borderBottomWidth": "0px",
@@ -120,11 +120,11 @@ Object {
 exports[`StyleSheet/createStyleResolver resolve with register, resolves to mixed 3`] = `
 Object {
   "classList": Array [
-    "rn-left-1tsx3h3",
-    "rn-opacity-icoktb",
-    "rn-position-u8s1d",
+    "r-left-1tsx3h3",
+    "r-opacity-icoktb",
+    "r-position-u8s1d",
   ],
-  "className": "rn-left-1tsx3h3 rn-opacity-icoktb rn-position-u8s1d",
+  "className": "r-left-1tsx3h3 r-opacity-icoktb r-position-u8s1d",
   "style": Object {
     "borderBottomColor": "rgba(255,0,0,1.00)",
     "borderBottomWidth": "0px",
@@ -204,7 +204,7 @@ Object {
 
 exports[`StyleSheet/createStyleResolver resolveWithNode next class names have priority over current inline styles 1`] = `
 Object {
-  "className": "rn-opacity-6dt33c",
+  "className": "r-opacity-6dt33c",
   "style": Object {
     "opacity": "",
   },
@@ -252,7 +252,7 @@ Object {
 
 exports[`StyleSheet/createStyleResolver resolveWithNode when isRTL=true, resolves to flipped classNames 1`] = `
 Object {
-  "className": "rn-left-1u10d71 rn-marginRight-zso239",
+  "className": "r-left-1u10d71 r-marginRight-zso239",
   "style": Object {
     "marginRight": "",
     "right": "5px",

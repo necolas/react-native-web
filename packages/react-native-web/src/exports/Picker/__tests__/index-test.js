@@ -14,7 +14,7 @@ describe('components/Picker', () => {
         </Picker>
       );
       const component = shallow(picker);
-      expect(component).toMatchSnapshot();
+      expect(component.children()).toMatchSnapshot();
     });
 
     test('items', () => {
