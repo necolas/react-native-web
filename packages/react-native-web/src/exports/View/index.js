@@ -13,6 +13,7 @@ import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
+import warning from 'fbjs/lib/warning';
 import StyleSheet from '../StyleSheet';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
 import React, { Component } from 'react';
@@ -42,6 +43,8 @@ class View extends Component<ViewProps> {
     const supportedProps = filterSupportedProps(this.props);
 
     if (process.env.NODE_ENV !== 'production') {
+      warning(this.props.className == null, 'Using the "className" prop on <View> is deprecated.');
+
       React.Children.toArray(this.props.children).forEach(item => {
         invariant(
           typeof item !== 'string',

@@ -14,6 +14,7 @@ import { bool } from 'prop-types';
 import { Component } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import warning from 'fbjs/lib/warning';
 import StyleSheet from '../StyleSheet';
 import TextPropTypes from './TextPropTypes';
 
@@ -59,6 +60,10 @@ class Text extends Component<*> {
     } = this.props;
 
     const { isInAParentText } = this.context;
+
+    if (process.env.NODE_ENV !== 'production') {
+      warning(this.props.className == null, 'Using the "className" prop on <Text> is deprecated.');
+    }
 
     if (onPress) {
       otherProps.accessible = true;
