@@ -9,18 +9,14 @@ exports[`components/Picker prop "children" items 1`] = `
 `;
 
 exports[`components/Picker prop "children" renders items 1`] = `
-<select
-  className="rn-fontFamily-1qd0xha rn-fontSize-7cikom rn-margin-crgep1"
-  data-focusable={true}
-  onChange={[Function]}
->
+Array [
   <PickerItem
     label="label-1"
     value="value-1"
-  />
+  />,
   <PickerItem
     label="label-2"
     value="value-2"
-  />
-</select>
+  />,
+]
 `;

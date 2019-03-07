@@ -58,7 +58,7 @@ export function atomic(style: Style): CompilerOutput {
           const { identifier } = cachedResult;
           acc[identifier] = cachedResult;
         } else {
-          const identifier = createIdentifier('rn', property, value);
+          const identifier = createIdentifier('r', property, value);
           const rules = createAtomicRules(identifier, property, value);
           const cachedResult = cache.set(property, valueString, {
             property,
