@@ -11,6 +11,7 @@
 import invariant from 'fbjs/lib/invariant';
 
 import EventEmitter from '../emitter/EventEmitter';
+import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
 
 
 import type EmitterSubscription from '../emitter/EmitterSubscription';
@@ -28,7 +29,7 @@ class NativeEventEmitter extends EventEmitter {
   _nativeModule: ?NativeModule;
 
   constructor(nativeModule: ?NativeModule) {
-    super();
+    super(RCTDeviceEventEmitter.sharedSubscriber);
   }
 
   addListener(
