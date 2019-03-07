@@ -1,4 +1,7 @@
 {
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "name": "babel-plugin-react-native-web",
   "version": "0.10.0",
   "description": "Babel plugin for React Native for Web",

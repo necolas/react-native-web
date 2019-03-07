@@ -1,4 +1,7 @@
 {
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "name": "react-native-web",
   "version": "0.10.0",
   "description": "React Native for Web",
