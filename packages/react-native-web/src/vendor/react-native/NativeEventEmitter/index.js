@@ -8,11 +8,11 @@
  * @flow
  */
 'use strict';
+import invariant from 'fbjs/lib/invariant';
 
 import EventEmitter from '../emitter/EventEmitter';
-import Platform from '../../../exports/Platform';
+import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
 
-import invariant from 'fbjs/lib/invariant';
 
 import type EmitterSubscription from '../emitter/EmitterSubscription';
 
@@ -29,11 +29,7 @@ class NativeEventEmitter extends EventEmitter {
   _nativeModule: ?NativeModule;
 
   constructor(nativeModule: ?NativeModule) {
-    super();
-    if (Platform.OS === 'ios') {
-      invariant(nativeModule, 'Native module cannot be null.');
-      this._nativeModule = nativeModule;
-    }
+    super(RCTDeviceEventEmitter.sharedSubscriber);
   }
 
   addListener(
