@@ -8,11 +8,10 @@
  * @flow
  */
 'use strict';
+import invariant from 'fbjs/lib/invariant';
 
 import EventEmitter from '../emitter/EventEmitter';
-import Platform from '../../../exports/Platform';
 
-import invariant from 'fbjs/lib/invariant';
 
 import type EmitterSubscription from '../emitter/EmitterSubscription';
 
@@ -30,10 +29,6 @@ class NativeEventEmitter extends EventEmitter {
 
   constructor(nativeModule: ?NativeModule) {
     super();
-    if (Platform.OS === 'ios') {
-      invariant(nativeModule, 'Native module cannot be null.');
-      this._nativeModule = nativeModule;
-    }
   }
 
   addListener(
