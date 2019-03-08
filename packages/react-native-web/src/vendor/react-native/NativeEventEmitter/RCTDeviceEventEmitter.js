@@ -15,6 +15,8 @@ import EventSubscriptionVendor from '../emitter/EventSubscriptionVendor';
 
 import type EmitterSubscription from '../emitter/EmitterSubscription';
 
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
 function checkNativeEventModule(eventType: ?string) {
   if (eventType) {
     if (eventType === 'appStateDidChange' || eventType === 'memoryWarning') {
