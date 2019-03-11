@@ -29,7 +29,6 @@
   },
   "peerDependencies": {
     "react": ">=16.5.1",
-    "react-art": ">=16.5.1",
     "react-dom": ">=16.5.1"
   },
   "author": "Nicolas Gallagher",

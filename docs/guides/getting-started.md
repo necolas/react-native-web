@@ -16,12 +16,6 @@ the recommendations in the [React documentation](https://reactjs.org/).
 yarn add react react-dom react-native-web
 ```
 
-And if you need to use `ART`:
-
-```
-yarn add react-art
-```
-
 ## Starter kits
 
 [create-react-app](https://github.com/facebookincubator/create-react-app)

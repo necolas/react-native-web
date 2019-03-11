@@ -21,10 +21,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('./ActivityIndicatorExample')
   },
   {
-    key: 'ARTExample',
-    module: require('./ARTExample')
-  },
-  {
     key: 'ButtonExample',
     module: require('./ButtonExample')
   },
