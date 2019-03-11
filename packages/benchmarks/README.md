@@ -47,24 +47,24 @@ included.
 
 ### MacBook Pro (2011)
 
-MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3 RAM. Google Chrome 63.
+MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3 RAM. Google Chrome 72.
 
 Typical render timings: mean ± standard deviations.
 
 | Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
 | :--- | ---: | ---: | ---: |
-| `css-modules`                         |     `30.19` `±04.84` |     `38.25` `±04.85` |                   - |
-| `react-native-web@0.4.0`              |     `36.40` `±04.98` |     `51.28` `±05.58` |    `19.36` `±02.56` |
-| `inline-styles`                       |     `64.12` `±07.69` |     `94.49` `±11.34` |    `09.84` `±02.36` |
+| `css-modules`                         |     `23.41` `±03.06` |     `35.38` `±06.41` |                   - |
+| `react-native-web@0.10.1`             |     `30.97` `±04.39` |     `45.92` `±06.28` |    `23.13` `±03.51` |
+| `inline-styles`                       |     `66.19` `±06.31` |    `104.22` `±10.22` |    `09.96` `±02.76` |
 
 ### Moto G4
 
-Moto G4 (Android 7); Octa-core (4x1.5 GHz & 4x1.2 Ghz); 2 GB RAM. Google Chrome 63.
+Moto G4 (Android 7); Octa-core (4x1.5 GHz & 4x1.2 Ghz); 2 GB RAM. Google Chrome 72.
 
 Typical render timings: mean ± standard deviations.
 
 | Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
 | :--- | ---: | ---: | ---: |
-| `css-modules`                         |     `98.24` `±20.26` |    `143.75` `±25.50` |                   - |
-| `react-native-web@0.4.0`              |    `131.46` `±18.96` |    `174.70` `±14.88` |    `60.87` `±06.32` |
-| `inline-styles`                       |    `184.58` `±26.23` |    `273.86` `±26.23` |    `30.28` `±07.44` |
+| `css-modules`                         |     `71.33` `±09.68` |    `101.36` `±12.36` |                   - |
+| `react-native-web@0.10.1`             |    `101.27` `±10.70` |    `151.48` `±14.15` |    `73.12` `±06.71` |
+| `inline-styles`                       |    `188.35` `±17.69` |    `282.35` `±22.48` |    `28.10` `±06.87` |
