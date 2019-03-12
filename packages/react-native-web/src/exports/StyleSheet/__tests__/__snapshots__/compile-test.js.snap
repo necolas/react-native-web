@@ -6,7 +6,7 @@ Object {
     "identifier": "r-animationDirection-1kmv48j",
     "property": "animationDirection",
     "rules": Array [
-      ".r-animationDirection-1kmv48j { -webkit-animation-direction: alternate, alternate-reverse; animation-direction: alternate, alternate-reverse; }",
+      ".r-animationDirection-1kmv48j{-webkit-animation-direction:alternate,alternate-reverse;animation-direction:alternate,alternate-reverse;}",
     ],
     "value": "[\\"alternate\\",\\"alternate-reverse\\"]",
   },
@@ -14,25 +14,11 @@ Object {
     "identifier": "r-animationKeyframes-zacbmr",
     "property": "animationKeyframes",
     "rules": Array [
-      ".r-animationKeyframes-zacbmr { -webkit-animation-name: r-animation-8jhqzh, r-animation-5azpl5; animation-name: r-animation-8jhqzh, r-animation-5azpl5; }",
-      "@-webkit-keyframes r-animation-8jhqzh {
-0% { top: 0px; }
-50% { top: 5px; }
-100% { top: 10px; }
-}",
-      "@keyframes r-animation-8jhqzh {
-0% { top: 0px; }
-50% { top: 5px; }
-100% { top: 10px; }
-}",
-      "@-webkit-keyframes r-animation-5azpl5 {
-from { left: 0px; }
-to { left: 10px; }
-}",
-      "@keyframes r-animation-5azpl5 {
-from { left: 0px; }
-to { left: 10px; }
-}",
+      ".r-animationKeyframes-zacbmr{-webkit-animation-name:r-animation-8jhqzh,r-animation-5azpl5;animation-name:r-animation-8jhqzh,r-animation-5azpl5;}",
+      "@-webkit-keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+      "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+      "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
+      "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
     ],
     "value": "[{\\"0%\\":{\\"top\\":0},\\"50%\\":{\\"top\\":5},\\"100%\\":{\\"top\\":10}},{\\"from\\":{\\"left\\":0},\\"to\\":{\\"left\\":10}}]",
   },
@@ -40,7 +26,7 @@ to { left: 10px; }
     "identifier": "r-fontFamily-1qd0xha",
     "property": "fontFamily",
     "rules": Array [
-      ".r-fontFamily-1qd0xha { font-family: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif; }",
+      ".r-fontFamily-1qd0xha{font-family:system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;}",
     ],
     "value": "System",
   },
@@ -48,7 +34,7 @@ to { left: 10px; }
     "identifier": "r-marginHorizontal-vlx1xi",
     "property": "marginHorizontal",
     "rules": Array [
-      ".r-marginHorizontal-vlx1xi { margin-left: 10px; margin-right: 10px; }",
+      ".r-marginHorizontal-vlx1xi{margin-left:10px;margin-right:10px;}",
     ],
     "value": "10px",
   },
@@ -56,10 +42,10 @@ to { left: 10px; }
     "identifier": "r-placeholderTextColor-1418aci",
     "property": "placeholderTextColor",
     "rules": Array [
-      ".r-placeholderTextColor-1418aci::-webkit-input-placeholder { color: rgba(128,128,128,1.00); opacity: 1; }",
-      ".r-placeholderTextColor-1418aci::-moz-placeholder { color: rgba(128,128,128,1.00); opacity: 1; }",
-      ".r-placeholderTextColor-1418aci:-ms-input-placeholder { color: rgba(128,128,128,1.00); opacity: 1; }",
-      ".r-placeholderTextColor-1418aci::placeholder { color: rgba(128,128,128,1.00); opacity: 1; }",
+      ".r-placeholderTextColor-1418aci::-webkit-input-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
+      ".r-placeholderTextColor-1418aci::-moz-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
+      ".r-placeholderTextColor-1418aci:-ms-input-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
+      ".r-placeholderTextColor-1418aci::placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
     ],
     "value": "gray",
   },
@@ -67,8 +53,8 @@ to { left: 10px; }
     "identifier": "r-pointerEvents-ah5dr5",
     "property": "pointerEvents",
     "rules": Array [
-      ".r-pointerEvents-ah5dr5 > * { pointer-events: none; }",
-      ".r-pointerEvents-ah5dr5 { pointer-events: auto !important; }",
+      ".r-pointerEvents-ah5dr5>*{pointer-events:none;}",
+      ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
     ],
     "value": "box-only",
   },
@@ -76,7 +62,7 @@ to { left: 10px; }
     "identifier": "r-transform-1ehiua4",
     "property": "transform",
     "rules": Array [
-      ".r-transform-1ehiua4 { -webkit-transform: translateX(50px); transform: translateX(50px); }",
+      ".r-transform-1ehiua4{-webkit-transform:translateX(50px);transform:translateX(50px);}",
     ],
     "value": "[{\\"translateX\\":50,\\"scale\\":-1}]",
   },
@@ -88,25 +74,11 @@ Object {
   "css-text-1jr0ypv": Object {
     "identifier": "css-text-1jr0ypv",
     "rules": Array [
-      "@-webkit-keyframes r-animation-8jhqzh {
-0% { top: 0px; }
-50% { top: 5px; }
-100% { top: 10px; }
-}",
-      "@keyframes r-animation-8jhqzh {
-0% { top: 0px; }
-50% { top: 5px; }
-100% { top: 10px; }
-}",
-      "@-webkit-keyframes r-animation-5azpl5 {
-from { left: 0px; }
-to { left: 10px; }
-}",
-      "@keyframes r-animation-5azpl5 {
-from { left: 0px; }
-to { left: 10px; }
-}",
-      ".css-text-1jr0ypv { -webkit-animation-direction: alternate, alternate-reverse; -webkit-animation-name: r-animation-8jhqzh, r-animation-5azpl5; -webkit-transform: translateX(50px); animation-direction: alternate, alternate-reverse; animation-name: r-animation-8jhqzh, r-animation-5azpl5; font: 14px system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Ubuntu, \\"Helvetica Neue\\", sans-serif; margin-left: 10px; margin-right: 10px; transform: translateX(50px); }",
+      "@-webkit-keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+      "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+      "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
+      "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
+      ".css-text-1jr0ypv{-webkit-animation-direction:alternate,alternate-reverse;-webkit-animation-name:r-animation-8jhqzh,r-animation-5azpl5;-webkit-transform:translateX(50px);animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px);}",
     ],
   },
 }

@@ -120,7 +120,7 @@ const createReactDOMStyle = style => {
           if (value.indexOf('System') > -1) {
             const stack = value.split(/,\s*/);
             stack[stack.indexOf('System')] = SYSTEM_FONT_STACK;
-            resolvedStyle[prop] = stack.join(', ');
+            resolvedStyle[prop] = stack.join(',');
           } else if (value === 'monospace') {
             resolvedStyle[prop] = MONOSPACE_FONT_STACK;
           } else {
@@ -170,7 +170,7 @@ const createReactDOMStyle = style => {
               }
             });
           } else {
-            resolvedStyle[prop] = Array.isArray(value) ? value.join(', ') : value;
+            resolvedStyle[prop] = Array.isArray(value) ? value.join(',') : value;
           }
         }
       }

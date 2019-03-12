@@ -86,11 +86,11 @@ export function classic(style: Style, name: string): CompilerOutput {
   let animationName;
   if (animationKeyframes != null) {
     const { animationNames, rules: keyframesRules } = processKeyframesValue(animationKeyframes);
-    animationName = animationNames.join(', ');
+    animationName = animationNames.join(',');
     rules.push(...keyframesRules);
   }
   const block = createDeclarationBlock({ ...rest, animationName });
-  rules.push(`${selector} ${block}`);
+  rules.push(`${selector}${block}`);
 
   return { [identifier]: { identifier, rules } };
 }
@@ -126,18 +126,18 @@ function createAtomicRules(identifier: string, property, value): Rules {
   switch (property) {
     case 'animationKeyframes': {
       const { animationNames, rules: keyframesRules } = processKeyframesValue(value);
-      const block = createDeclarationBlock({ animationName: animationNames.join(', ') });
-      rules.push(`${selector} ${block}`, ...keyframesRules);
+      const block = createDeclarationBlock({ animationName: animationNames.join(',') });
+      rules.push(`${selector}${block}`, ...keyframesRules);
       break;
     }
 
     case 'placeholderTextColor': {
       const block = createDeclarationBlock({ color: value, opacity: 1 });
       rules.push(
-        `${selector}::-webkit-input-placeholder ${block}`,
-        `${selector}::-moz-placeholder ${block}`,
-        `${selector}:-ms-input-placeholder ${block}`,
-        `${selector}::placeholder ${block}`
+        `${selector}::-webkit-input-placeholder${block}`,
+        `${selector}::-moz-placeholder${block}`,
+        `${selector}:-ms-input-placeholder${block}`,
+        `${selector}::placeholder${block}`
       );
       break;
     }
@@ -146,26 +146,26 @@ function createAtomicRules(identifier: string, property, value): Rules {
     case 'pointerEvents': {
       let finalValue = value;
       if (value === 'auto' || value === 'box-only') {
-        finalValue = 'auto !important';
+        finalValue = 'auto!important';
         if (value === 'box-only') {
           const block = createDeclarationBlock({ [property]: 'none' });
-          rules.push(`${selector} > * ${block}`);
+          rules.push(`${selector}>*${block}`);
         }
       } else if (value === 'none' || value === 'box-none') {
-        finalValue = 'none !important';
+        finalValue = 'none!important';
         if (value === 'box-none') {
           const block = createDeclarationBlock({ [property]: 'auto' });
-          rules.push(`${selector} > * ${block}`);
+          rules.push(`${selector}>*${block}`);
         }
       }
       const block = createDeclarationBlock({ [property]: finalValue });
-      rules.push(`${selector} ${block}`);
+      rules.push(`${selector}${block}`);
       break;
     }
 
     default: {
       const block = createDeclarationBlock({ [property]: value });
-      rules.push(`${selector} ${block}`);
+      rules.push(`${selector}${block}`);
       break;
     }
   }
@@ -187,17 +187,17 @@ function createDeclarationBlock(style: Style) {
       // to represent "fallback" declarations
       // { display: -webkit-flex; display: flex; }
       if (Array.isArray(value)) {
-        return value.map(v => `${prop}: ${v}`).join(';');
+        return value.map(v => `${prop}:${v}`).join(';');
       } else {
-        return `${prop}: ${value}`;
+        return `${prop}:${value}`;
       }
     })
     // Once properties are hyphenated, this will put the vendor
     // prefixed and short-form properties first in the list.
     .sort()
-    .join('; ');
+    .join(';');
 
-  return `{ ${declarationsString}; }`;
+  return `{${declarationsString};}`;
 }
 
 /**
@@ -218,18 +218,18 @@ function createKeyframes(keyframes) {
   const identifier = createIdentifier('r', 'animation', keyframes);
 
   const steps =
-    '{\n' +
+    '{' +
     Object.keys(keyframes)
       .map(stepName => {
         const rule = keyframes[stepName];
         const block = createDeclarationBlock(rule);
-        return `${stepName} ${block}`;
+        return `${stepName}${block}`;
       })
-      .join('\n') +
-    '\n}';
+      .join('') +
+    '}';
 
   const rules = prefixes.map(prefix => {
-    return `@${prefix}keyframes ${identifier} ${steps}`;
+    return `@${prefix}keyframes ${identifier}${steps}`;
   });
   return { identifier, rules };
 }
