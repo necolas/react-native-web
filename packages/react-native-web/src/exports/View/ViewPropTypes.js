@@ -69,9 +69,11 @@ export type ViewProps = {
   testID?: string,
   // web extensions
   onContextMenu?: Function,
-  itemprop?: string,
-  itemscope?: string,
-  itemtype?: string,
+  itemID?: string,
+  itemRef?: string,
+  itemProp?: string,
+  itemScope?: string,
+  itemType?: string,
   // compatibility with React Native
   accessibilityViewIsModal?: boolean,
   collapsable?: boolean,
@@ -136,9 +138,11 @@ const ViewPropTypes = {
   testID: string,
   // web extensions
   onContextMenu: func,
-  itemprop: string,
-  itemscope: string,
-  itemtype: string,
+  itemID: string,
+  itemRef: string,
+  itemProp: string,
+  itemScope: string,
+  itemType: string,
   // compatibility with React Native
   accessibilityViewIsModal: bool,
   collapsable: bool,

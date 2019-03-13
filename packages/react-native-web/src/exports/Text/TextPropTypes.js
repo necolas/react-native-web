@@ -32,9 +32,11 @@ const TextPropTypes = {
   testID: string,
   // web extensions
   onContextMenu: func,
-  itemprop: string,
-  itemscope: string,
-  itemtype: string
+  itemID: string,
+  itemRef: string,
+  itemProp: string,
+  itemScope: string,
+  itemType: string
 };
 
 export default TextPropTypes;
