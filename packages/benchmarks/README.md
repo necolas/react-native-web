@@ -54,7 +54,7 @@ Typical render timings: mean ± standard deviations.
 | Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
 | :--- | ---: | ---: | ---: |
 | `css-modules`                         |     `23.41` `±03.06` |     `35.38` `±06.41` |                   - |
-| `react-native-web@0.10.1`             |     `30.97` `±04.39` |     `45.92` `±06.28` |    `23.13` `±03.51` |
+| `react-native-web@0.11.0`             |     `28.37` `±04.39` |     `41.50` `±05.75` |    `23.13` `±03.51` |
 | `inline-styles`                       |     `66.19` `±06.31` |    `104.22` `±10.22` |    `09.96` `±02.76` |
 
 ### Moto G4
@@ -66,5 +66,5 @@ Typical render timings: mean ± standard deviations.
 | Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
 | :--- | ---: | ---: | ---: |
 | `css-modules`                         |     `71.33` `±09.68` |    `101.36` `±12.36` |                   - |
-| `react-native-web@0.10.1`             |    `101.27` `±10.70` |    `151.48` `±14.15` |    `73.12` `±06.71` |
+| `react-native-web@0.11.0`             |     `83.65` `±12.40` |    `123.59` `±14.40` |    `75.41` `±07.74` |
 | `inline-styles`                       |    `188.35` `±17.69` |    `282.35` `±22.48` |    `28.10` `±06.87` |
