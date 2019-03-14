@@ -11,24 +11,28 @@ import AccessibilityUtil from '../AccessibilityUtil';
 import css from '../../exports/StyleSheet/css';
 import StyleSheet from '../../exports/StyleSheet';
 import styleResolver from '../../exports/StyleSheet/styleResolver';
+import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
 
 // Reset styles for heading, link, and list DOM elements
-const classes = css.create({
-  reset: {
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    font: 'inherit',
-    listStyle: 'none',
-    margin: 0,
-    textAlign: 'inherit',
-    textDecoration: 'none'
+const classes = css.create(
+  {
+    reset: {
+      backgroundColor: 'transparent',
+      color: 'inherit',
+      font: 'inherit',
+      listStyle: 'none',
+      margin: 0,
+      textAlign: 'inherit',
+      textDecoration: 'none'
+    },
+    cursor: {
+      cursor: 'pointer'
+    }
   },
-  cursor: {
-    cursor: 'pointer'
-  }
-});
+  STYLE_GROUPS.classicReset
+);
 
 const pointerEventsStyles = StyleSheet.create({
   auto: {
@@ -45,7 +49,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const defaultStyleResolver = style => styleResolver.resolve(style);
+const defaultStyleResolver = (style, classList) => styleResolver.resolve(style, classList);
 
 const createDOMProps = (component, props, styleResolver) => {
   if (!styleResolver) {
@@ -60,6 +64,8 @@ const createDOMProps = (component, props, styleResolver) => {
     accessibilityLabel,
     accessibilityLiveRegion,
     accessibilityStates,
+    classList,
+    className: deprecatedClassName,
     importantForAccessibility,
     nativeID,
     placeholderTextColor,
@@ -136,7 +142,6 @@ const createDOMProps = (component, props, styleResolver) => {
   }
 
   // STYLE
-  // Resolve React Native styles to optimized browser equivalent
   const reactNativeStyle = StyleSheet.compose(
     pointerEvents && pointerEventsStyles[pointerEvents],
     StyleSheet.compose(
@@ -145,39 +150,31 @@ const createDOMProps = (component, props, styleResolver) => {
     )
   );
 
-  const { className, style } = styleResolver(reactNativeStyle);
-
-  if (style) {
-    domProps.style = style;
-  }
-
-  // CLASSNAME
-  // Apply static style resets
-  let c;
-  // style interactive elements for mouse and mobile browsers
-  if ((role === 'button' || role === 'link') && !disabled) {
-    c = classes.cursor;
-  }
-  // style reset various elements (not all are used internally)
-  if (
+  // Additional style resets for interactive elements
+  const needsCursor = (role === 'button' || role === 'link') && !disabled;
+  const needsReset =
     component === 'a' ||
     component === 'button' ||
     component === 'li' ||
     component === 'ul' ||
-    role === 'heading'
-  ) {
-    c = classes.reset + (c != null ? ' ' + c : '');
-  }
-  // style from createElement use
-  if (props.className != null) {
-    c = props.className + (c != null ? ' ' + c : '');
-  }
-  // style from React Native StyleSheets
+    role === 'heading';
+  // Classic CSS styles
+  const finalClassList = [
+    deprecatedClassName,
+    needsReset && classes.reset,
+    needsCursor && classes.cursor,
+    classList
+  ];
+
+  // Resolve styles
+  const { className, style } = styleResolver(reactNativeStyle, finalClassList);
+
   if (className != null && className !== '') {
-    c = (c != null ? c + ' ' : '') + className;
+    domProps.className = className;
   }
-  if (c != null) {
-    domProps.className = c;
+
+  if (style) {
+    domProps.style = style;
   }
 
   // OTHER

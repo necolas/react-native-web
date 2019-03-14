@@ -258,7 +258,7 @@ class TextInput extends Component<*> {
       // https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
       autoComplete: autoComplete === 'off' ? 'noop' : autoComplete,
       autoCorrect: autoCorrect ? 'on' : 'off',
-      className: classes.textinput,
+      classList: [classes.textinput],
       dir: 'auto',
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),

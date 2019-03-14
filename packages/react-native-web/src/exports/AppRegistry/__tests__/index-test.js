@@ -6,12 +6,14 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'enzyme';
 import StyleSheet from '../../StyleSheet';
+import Text from '../../Text';
 import View from '../../View';
 
-const RootComponent = () => <div />;
+const NoopComponent = () => <div />;
 
 const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
-const AlternativeComponent = () => <View style={styles.root} />;
+const RootComponent = () => <View />;
+const AlternativeComponent = () => <Text style={styles.root} />;
 
 describe('AppRegistry', () => {
   describe('getApplication', () => {
@@ -26,12 +28,12 @@ describe('AppRegistry', () => {
     });
 
     test('does not throw when missing appParameters', () => {
-      AppRegistry.registerComponent('App', () => RootComponent);
+      AppRegistry.registerComponent('App', () => NoopComponent);
       expect(() => AppRegistry.getApplication('App')).not.toThrow();
     });
 
     test('returns "element" and "getStyleElement"', () => {
-      AppRegistry.registerComponent('App', () => RootComponent);
+      AppRegistry.registerComponent('App', () => NoopComponent);
       const { element, getStyleElement } = AppRegistry.getApplication('App', {});
       const styleElement = ReactDOMServer.renderToStaticMarkup(getStyleElement());
 
@@ -41,7 +43,7 @@ describe('AppRegistry', () => {
 
     test('"getStyleElement" adds props to <style>', () => {
       const nonce = '2Bz9RM/UHvBbmo3jK/PbYZ==';
-      AppRegistry.registerComponent('App', () => RootComponent);
+      AppRegistry.registerComponent('App', () => NoopComponent);
       const { getStyleElement } = AppRegistry.getApplication('App', {});
       const styleElement = getStyleElement({ nonce });
       expect(styleElement.props.nonce).toBe(nonce);
@@ -57,6 +59,7 @@ describe('AppRegistry', () => {
       // First render "RootComponent"
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
+      expect(first).toMatchSnapshot();
 
       // Second render "AlternativeComponent"
       AppRegistry.registerComponent('AlternativeApp', () => AlternativeComponent);
@@ -65,7 +68,7 @@ describe('AppRegistry', () => {
 
       // Third render "RootComponent" again
       const third = getApplicationStyles('App');
-      expect(first).toEqual(third);
+      expect(third).toEqual(first);
     });
   });
 
@@ -77,7 +80,7 @@ describe('AppRegistry', () => {
       document.body.appendChild(rootTag);
 
       const callback = jest.fn();
-      AppRegistry.registerComponent('App', () => RootComponent);
+      AppRegistry.registerComponent('App', () => NoopComponent);
       AppRegistry.runApplication('App', { initialProps: {}, rootTag, callback });
       expect(callback).toHaveBeenCalledTimes(1);
 

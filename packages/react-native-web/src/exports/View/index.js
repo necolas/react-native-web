@@ -55,7 +55,7 @@ class View extends Component<ViewProps> {
 
     const { isInAParentText } = this.context;
 
-    supportedProps.className = css.combine(this.props.className, classes.view);
+    supportedProps.classList = [this.props.className, classes.view];
     supportedProps.style = StyleSheet.compose(
       isInAParentText && styles.inline,
       this.props.style
@@ -64,7 +64,7 @@ class View extends Component<ViewProps> {
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
       const hitSlopChild = createElement('span', {
-        className: classes.hitSlop,
+        classList: [classes.hitSlop],
         style: hitSlopStyle
       });
       supportedProps.children = React.Children.toArray([hitSlopChild, supportedProps.children]);

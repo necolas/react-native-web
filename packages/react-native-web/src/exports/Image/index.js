@@ -255,7 +255,7 @@ class Image extends Component<*, State> {
     const hiddenImage = displayImageUri
       ? createElement('img', {
           alt: accessibilityLabel || '',
-          className: classes.accessibilityImage,
+          classList: [classes.accessibilityImage],
           draggable: draggable || false,
           ref: this._setImageRef,
           src: displayImageUri

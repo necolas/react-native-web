@@ -7,9 +7,7 @@
  * @noflow
  */
 
-import { classic } from './compile';
 import styleResolver from './styleResolver';
-import { STYLE_GROUPS } from './constants';
 
 /**
  * A simple (and dangerous) CSS system.
@@ -20,31 +18,8 @@ const css = {
   /**
    * const classes = css.create({ base: {}, extra: {} })
    */
-  create(rules) {
-    const result = {};
-    Object.keys(rules).forEach(name => {
-      const style = rules[name];
-      const compiled = classic(style, name);
-
-      Object.values(compiled).forEach(({ identifier, rules }) => {
-        rules.forEach(rule => {
-          styleResolver.sheet.insert(rule, STYLE_GROUPS.classic);
-        });
-        result[name] = identifier;
-      });
-    });
-    return result;
-  },
-  /**
-   * css.combine(classes.base, classes.extra)
-   */
-  combine(...args) {
-    return args.reduce((className, value) => {
-      if (value) {
-        className += className.length > 0 ? ' ' + value : value;
-      }
-      return className;
-    }, '');
+  create(rules, group) {
+    return styleResolver.createCSS(rules, group);
   }
 };
 
