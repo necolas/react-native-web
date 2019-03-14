@@ -11,7 +11,7 @@
   "files": [
     "dist",
     "jest",
-    "jest-preset.json",
+    "jest-preset.js",
     "src",
     "!**/__tests__"
   ],
