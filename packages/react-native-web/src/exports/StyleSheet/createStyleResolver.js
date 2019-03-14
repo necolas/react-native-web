@@ -20,7 +20,7 @@ import flattenArray from '../../modules/flattenArray';
 import flattenStyle from './flattenStyle';
 import I18nManager from '../I18nManager';
 import i18nStyle from './i18nStyle';
-import { atomic, inline, stringifyValueWithProperty } from './compile';
+import { atomic, classic, inline, stringifyValueWithProperty } from './compile';
 import initialRules from './initialRules';
 import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
@@ -28,11 +28,11 @@ import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 const emptyObject = {};
 
 export default function createStyleResolver() {
-  let resolved, inserted, sheet, lookup;
+  let inserted, sheet, lookup;
+  const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
 
   const init = () => {
-    resolved = { ltr: {}, rtl: {}, rtlNoSwap: {} };
-    inserted = { ltr: {}, rtl: {}, rtlNoSwap: {} };
+    inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
     sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
     lookup = {
       byClassName: {},
@@ -80,42 +80,72 @@ export default function createStyleResolver() {
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  function resolve(style) {
-    if (!style) {
-      return emptyObject;
+  function resolve(style, classList) {
+    const nextClassList = [];
+    let props = {};
+
+    if (!style && !classList) {
+      return props;
     }
 
-    // fast and cachable
+    if (Array.isArray(classList)) {
+      flattenArray(classList).forEach(identifier => {
+        if (identifier) {
+          if (inserted.css[identifier] == null && resolved.css[identifier] != null) {
+            const item = resolved.css[identifier];
+            item.rules.forEach(rule => {
+              sheet.insert(rule, item.group);
+              inserted.css[identifier] = true;
+            });
+          }
+          if (nextClassList.indexOf(identifier) === -1) {
+            nextClassList.push(identifier);
+          }
+        }
+      });
+    }
+
     if (typeof style === 'number') {
+      // fast and cachable
       _injectRegisteredStyle(style);
       const key = createCacheKey(style);
-      return _resolveStyle(style, key);
-    }
-
-    // resolve a plain RN style object
-    if (!Array.isArray(style)) {
-      return _resolveStyle(style);
-    }
-
-    // flatten the style array
-    // cache resolved props when all styles are registered
-    // otherwise fallback to resolving
-    const flatArray = flattenArray(style);
-    let isArrayOfNumbers = true;
-    let cacheKey = '';
-    for (let i = 0; i < flatArray.length; i++) {
-      const id = flatArray[i];
-      if (typeof id !== 'number') {
-        isArrayOfNumbers = false;
-      } else {
-        if (isArrayOfNumbers) {
-          cacheKey += id + '-';
+      props = _resolveStyle(style, key);
+    } else if (!Array.isArray(style)) {
+      // resolve a plain RN style object
+      props = _resolveStyle(style);
+    } else {
+      // flatten the style array
+      // cache resolved props when all styles are registered
+      // otherwise fallback to resolving
+      const flatArray = flattenArray(style);
+      let isArrayOfNumbers = true;
+      let cacheKey = '';
+      for (let i = 0; i < flatArray.length; i++) {
+        const id = flatArray[i];
+        if (typeof id !== 'number') {
+          isArrayOfNumbers = false;
+        } else {
+          if (isArrayOfNumbers) {
+            cacheKey += id + '-';
+          }
+          _injectRegisteredStyle(id);
         }
-        _injectRegisteredStyle(id);
       }
+      const key = isArrayOfNumbers ? createCacheKey(cacheKey) : null;
+      props = _resolveStyle(flatArray, key);
     }
-    const key = isArrayOfNumbers ? createCacheKey(cacheKey) : null;
-    return _resolveStyle(flatArray, key);
+
+    nextClassList.push(...props.classList);
+
+    const finalProps = {
+      className: classListToString(nextClassList),
+      classList: nextClassList
+    };
+    if (props.style) {
+      finalProps.style = props.style;
+    }
+
+    return finalProps;
   }
 
   /**
@@ -194,6 +224,7 @@ export default function createStyleResolver() {
           const value = localizedStyle[styleProp];
           if (value != null) {
             const className = getClassName(styleProp, value);
+
             if (className) {
               props.classList.push(className);
             } else {
@@ -226,7 +257,6 @@ export default function createStyleResolver() {
         { classList: [] }
       );
 
-    props.className = classListToString(props.classList);
     if (props.style) {
       props.style = inline(props.style);
     }
@@ -250,6 +280,22 @@ export default function createStyleResolver() {
         id: STYLE_ELEMENT_ID,
         textContent
       };
+    },
+    /**
+     * const classes = css.create({ base: {}, extra: {} })
+     */
+    createCSS(rules, group) {
+      const result = {};
+      Object.keys(rules).forEach(name => {
+        const style = rules[name];
+        const compiled = classic(style, name);
+
+        Object.values(compiled).forEach(({ identifier, rules }) => {
+          resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
+          result[name] = identifier;
+        });
+      });
+      return result;
     },
     resolve,
     sheet,

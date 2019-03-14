@@ -3,6 +3,7 @@ export const STYLE_ELEMENT_ID = 'react-native-stylesheet';
 export const STYLE_GROUPS = {
   reset: 0,
   modality: 0.1,
+  classicReset: 0.5,
   classic: 1,
   atomic: 2.2,
   custom: {

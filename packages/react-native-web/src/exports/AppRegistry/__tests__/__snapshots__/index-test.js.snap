@@ -1,10 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element" 1`] = `
+"@media all {
+[stylesheet-group=\\"0\\"]{}
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{margin:0;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+}
+@media all {
+[stylesheet-group=\\"0.1\\"]{}
+:focus:not([data-focusvisible-polyfill]){outline: none;}
+}
+@media all {
+[stylesheet-group=\\"1\\"]{}
+.css-view-1dbjc4n{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;border:0 solid black;box-sizing:border-box;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;min-height:0px;min-width:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;position:relative;z-index:0;}
+}
+@media all {
+[stylesheet-group=\\"2\\"]{}
+.r-flex-13awgt0{-ms-flex-negative:1;-ms-flex-positive:1;-ms-flex-preferred-size:0%;-webkit-box-flex:1;-webkit-flex-basis:0%;-webkit-flex-grow:1;-webkit-flex-shrink:1;flex-basis:0%;flex-grow:1;flex-shrink:1;}
+}
+@media all {
+[stylesheet-group=\\"2.2\\"]{}
+.r-pointerEvents-12vffkv>*{pointer-events:auto;}
+.r-pointerEvents-12vffkv{pointer-events:none!important;}
+}"
+`;
+
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
 <AppContainer
   rootTag={Object {}}
 >
-  <RootComponent />
+  <NoopComponent />
 </AppContainer>
 `;
 
@@ -19,18 +46,5 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 @media all {
 [stylesheet-group=\\"0.1\\"]{}
 :focus:not([data-focusvisible-polyfill]){outline: none;}
-}
-@media all {
-[stylesheet-group=\\"1\\"]{}
-.css-reset-4rbku5{background-color:rgba(0,0,0,0.00);color:inherit;font:inherit;list-style:none;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;text-align:inherit;text-decoration:none;}
-.css-cursor-18t94o4{cursor:pointer;}
-.css-view-1dbjc4n{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;border:0 solid black;box-sizing:border-box;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;min-height:0px;min-width:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;position:relative;z-index:0;}
-.css-hitSlop-mjp8i1{bottom:0px;left:0px;position:absolute;right:0px;top:0px;z-index:-1;}
-.css-accessibilityImage-9pa8cd{bottom:0px;height:100%;left:0px;opacity:0;position:absolute;right:0px;top:0px;width:100%;z-index:-1;}
-.css-text-76zvg2{border-bottom-width:0px;border-left-width:0px;border-right-width:0px;border-top-width:0px;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;white-space:pre-wrap;word-wrap:break-word;}
-.css-textHasAncestor-16my406{color:inherit;font:inherit;white-space:inherit;}
-.css-textOneLine-bfa6kz{max-width:100%;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.css-textMultiLine-cens5h{-webkit-box-orient:vertical;display:-webkit-box;max-width:100%;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;}
-.css-textinput-1cwyjr8{-moz-appearance:textfield;-webkit-appearance:none;background-color:rgba(0,0,0,0.00);border-bottom-left-radius:0px;border-bottom-right-radius:0px;border-top-left-radius:0px;border-top-right-radius:0px;border:0 solid black;box-sizing:border-box;font:14px system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;resize:none;}
 }</style>"
 `;

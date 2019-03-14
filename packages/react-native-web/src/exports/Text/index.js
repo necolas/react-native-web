@@ -71,13 +71,13 @@ class Text extends Component<*> {
       otherProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
-    otherProps.className = css.combine(
+    otherProps.classList = [
       this.props.className,
       classes.text,
       this.context.isInAParentText === true && classes.textHasAncestor,
       numberOfLines === 1 && classes.textOneLine,
       numberOfLines > 1 && classes.textMultiLine
-    );
+    ];
     // allow browsers to automatically infer the language writing direction
     otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
