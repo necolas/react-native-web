@@ -78,7 +78,7 @@ the element and ARIA `role` are rendered. While this may contradict some ARIA
 recommendations, it also helps avoid certain browser bugs, HTML5 conformance
 errors, and accessibility anti-patterns (e.g., giving a `heading` role to a
 `button` element). On the Web, `accessibilityRole` supports more values than
-React Native does for [Andriod and iOS](https://facebook.github.io/react-native/docs/accessibility#accessibilityrole-ios-android).
+React Native does for [Android and iOS](https://facebook.github.io/react-native/docs/accessibility#accessibilityrole-ios-android).
 
 Straight-forward examples:
 
