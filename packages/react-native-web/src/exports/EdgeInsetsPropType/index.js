@@ -7,21 +7,20 @@
  * @flow
  */
 
-import createStrictShapeTypeChecker from '../../modules/createStrictShapeTypeChecker';
-import { number } from 'prop-types';
+import PropTypes from 'prop-types';
 
-export type EdgeInsetsProp = {
-  top: number,
-  left: number,
-  bottom: number,
-  right: number
-};
-
-const EdgeInsetsPropType = createStrictShapeTypeChecker({
-  top: number,
-  left: number,
-  bottom: number,
-  right: number
+const EdgeInsetsPropType = PropTypes.shape({
+  top: PropTypes.number,
+  left: PropTypes.number,
+  bottom: PropTypes.number,
+  right: PropTypes.number
 });
+
+export type EdgeInsetsProp = $ReadOnly<{|
+  top?: ?number,
+  left?: ?number,
+  bottom?: ?number,
+  right?: ?number
+|}>;
 
 export default EdgeInsetsPropType;

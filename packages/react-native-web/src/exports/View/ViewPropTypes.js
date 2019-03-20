@@ -11,121 +11,150 @@
 import EdgeInsetsPropType, { type EdgeInsetsProp } from '../EdgeInsetsPropType';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
-import { any, array, bool, func, object, oneOf, oneOfType, string } from 'prop-types';
+import AccessibilityPropType, {
+  type AccessibilityComponentType,
+  type AccessibilityTrait,
+  type AccessibilityRole,
+  type AccessibilityState
+} from './ViewAccessibility';
+
+import PropTypes from 'prop-types';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
-export type ViewLayout = {
+export type Layout = $ReadOnly<{|
   x: number,
   y: number,
   width: number,
   height: number
-};
+|}>;
 
-export type ViewLayoutEvent = {
-  nativeEvent: {
-    layout: ViewLayout
-  }
-};
+export type LayoutEvent = SyntheticEvent<
+  $ReadOnly<{|
+    layout: Layout
+  |}>
+>;
 
-export type ViewProps = {
-  accessibilityComponentType?: string,
-  accessibilityLabel?: string,
-  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
-  accessibilityRole?: string,
-  accessibilityTraits?: string | Array<string>,
+export type ViewLayout = Layout;
+export type ViewLayoutEvent = LayoutEvent;
+
+type DirectEventProps = $ReadOnly<{|
+  onAccessibilityAction?: Function,
+  onAccessibilityTap?: Function,
+  onLayout?: ?(event: LayoutEvent) => void,
+  onMagicTap?: Function
+|}>;
+
+type TouchEventProps = $ReadOnly<{|
+  onTouchCancel?: ?Function,
+  onTouchCancelCapture?: ?Function,
+  onTouchEnd?: ?Function,
+  onTouchEndCapture?: ?Function,
+  onTouchMove?: ?Function,
+  onTouchMoveCapture?: ?Function,
+  onTouchStart?: ?Function,
+  onTouchStartCapture?: ?Function
+|}>;
+
+type GestureResponderEventProps = $ReadOnly<{|
+  onMoveShouldSetResponder?: ?Function,
+  onMoveShouldSetResponderCapture?: ?Function,
+  onResponderGrant?: ?Function,
+  onResponderMove?: ?Function,
+  onResponderReject?: ?Function,
+  onResponderRelease?: ?Function,
+  onResponderStart?: ?Function,
+  onResponderTerminate?: ?Function,
+  onResponderTerminationRequest?: ?Function,
+  onStartShouldSetResponder?: ?Function,
+  onStartShouldSetResponderCapture?: ?Function
+|}>;
+
+export type ViewProps = $ReadOnly<{|
+  ...DirectEventProps,
+  ...TouchEventProps,
+  ...GestureResponderEventProps,
+
   accessible?: boolean,
-  children?: any,
-  hitSlop?: EdgeInsetsProp,
+  accessibilityLabel?: null | string | Array<any> | any,
+  accessibilityHint?: string,
+  accessibilityActions?: Array<string>,
+  accessibilityComponentType?: AccessibilityComponentType,
+  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
+  accessibilityIgnoresInvertColors?: boolean,
+  accessibilityTraits?: AccessibilityTrait | Array<AccessibilityTrait>,
+  accessibilityRole?: AccessibilityRole,
+  accessibilityStates?: Array<AccessibilityState>,
+  accessibilityViewIsModal?: boolean,
+  accessibilityElementsHidden?: boolean,
+  children?: any,
+  testID?: ?string,
   nativeID?: string,
+  hitSlop?: ?EdgeInsetsProp,
+  pointerEvents?: null | 'box-none' | 'none' | 'box-only' | 'auto',
+  style?: stylePropType,
+  removeClippedSubviews?: boolean,
+  renderToHardwareTextureAndroid?: boolean,
+  shouldRasterizeIOS?: boolean,
+  collapsable?: boolean,
+  needsOffscreenAlphaCompositing?: boolean,
   onBlur?: Function,
   onClick?: Function,
   onClickCapture?: Function,
   onContextMenu?: Function,
-  onFocus?: Function,
-  onLayout?: (event: ViewLayoutEvent) => void,
-  onResponderGrant?: Function,
-  onResponderMove?: Function,
-  onResponderReject?: Function,
-  onResponderRelease?: Function,
-  onResponderTerminate?: Function,
-  onResponderTerminationRequest?: Function,
-  onStartShouldSetResponder?: Function,
-  onStartShouldSetResponderCapture?: Function,
-  onMoveShouldSetResponder?: Function,
-  onMoveShouldSetResponderCapture?: Function,
-  onTouchCancel?: Function,
-  onTouchCancelCapture?: Function,
-  onTouchEnd?: Function,
-  onTouchEndCapture?: Function,
-  onTouchMove?: Function,
-  onTouchMoveCapture?: Function,
-  onTouchStart?: Function,
-  onTouchStartCapture?: Function,
-  pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
-  style?: stylePropType,
-  testID?: string,
-  // compatibility with React Native
-  accessibilityViewIsModal?: boolean,
-  collapsable?: boolean,
-  needsOffscreenAlphaCompositing?: boolean,
-  onAccessibilityTap?: Function,
-  onMagicTap?: Function,
-  removeClippedSubviews?: boolean,
-  renderToHardwareTextureAndroid?: boolean,
-  shouldRasterizeIOS?: boolean,
-  tvParallaxProperties?: {}
-};
+  onFocus?: Function
+|}>;
 
 const ViewPropTypes = {
-  accessibilityComponentType: string,
-  accessibilityLabel: string,
-  accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
-  accessibilityRole: string,
-  accessibilityTraits: oneOfType([array, string]),
-  accessible: bool,
-  children: any,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  onClickCapture: PropTypes.func,
+  onContextMenu: PropTypes.func,
+  onFocus: PropTypes.func,
+
+  accessible: PropTypes.bool,
+  accessibilityLabel: PropTypes.node,
+  accessibilityHint: PropTypes.string,
+  accessibilityActions: PropTypes.arrayOf(PropTypes.string),
+  accessibilityIgnoresInvertColors: PropTypes.bool,
+  accessibilityComponentType: PropTypes.oneOf(AccessibilityPropType.AccessibilityComponentTypes),
+  accessibilityRole: PropTypes.oneOf(AccessibilityPropType.AccessibilityRoles),
+  accessibilityStates: PropTypes.arrayOf(
+    PropTypes.oneOf(AccessibilityPropType.AccessibilityStates)
+  ),
+  accessibilityLiveRegion: PropTypes.oneOf(['none', 'polite', 'assertive']),
+  importantForAccessibility: PropTypes.oneOf(['auto', 'yes', 'no', 'no-hide-descendants']),
+  accessibilityTraits: PropTypes.oneOfType([
+    PropTypes.oneOf(AccessibilityPropType.AccessibilityTraits),
+    PropTypes.arrayOf(PropTypes.oneOf(AccessibilityPropType.AccessibilityTraits))
+  ]),
+  accessibilityViewIsModal: PropTypes.bool,
+  accessibilityElementsHidden: PropTypes.bool,
+  onAccessibilityAction: PropTypes.func,
+  onAccessibilityTap: PropTypes.func,
+  onMagicTap: PropTypes.func,
+  testID: PropTypes.string,
+  nativeID: PropTypes.string,
+  onResponderGrant: PropTypes.func,
+  onResponderMove: PropTypes.func,
+  onResponderReject: PropTypes.func,
+  onResponderRelease: PropTypes.func,
+  onResponderTerminate: PropTypes.func,
+  onResponderTerminationRequest: PropTypes.func,
+  onStartShouldSetResponder: PropTypes.func,
+  onStartShouldSetResponderCapture: PropTypes.func,
+  onMoveShouldSetResponder: PropTypes.func,
+  onMoveShouldSetResponderCapture: PropTypes.func,
   hitSlop: EdgeInsetsPropType,
-  importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
-  nativeID: string,
-  onBlur: func,
-  onClick: func,
-  onClickCapture: func,
-  onContextMenu: func,
-  onFocus: func,
-  onLayout: func,
-  onMoveShouldSetResponder: func,
-  onMoveShouldSetResponderCapture: func,
-  onResponderGrant: func,
-  onResponderMove: func,
-  onResponderReject: func,
-  onResponderRelease: func,
-  onResponderTerminate: func,
-  onResponderTerminationRequest: func,
-  onStartShouldSetResponder: func,
-  onStartShouldSetResponderCapture: func,
-  onTouchCancel: func,
-  onTouchCancelCapture: func,
-  onTouchEnd: func,
-  onTouchEndCapture: func,
-  onTouchMove: func,
-  onTouchMoveCapture: func,
-  onTouchStart: func,
-  onTouchStartCapture: func,
-  pointerEvents: oneOf(['auto', 'box-none', 'box-only', 'none']),
+  onLayout: PropTypes.func,
+  pointerEvents: PropTypes.oneOf(['box-none', 'none', 'box-only', 'auto']),
   style: stylePropType,
-  testID: string,
-  // compatibility with React Native
-  accessibilityViewIsModal: bool,
-  collapsable: bool,
-  needsOffscreenAlphaCompositing: bool,
-  onAccessibilityTap: func,
-  onMagicTap: func,
-  removeClippedSubviews: bool,
-  renderToHardwareTextureAndroid: bool,
-  shouldRasterizeIOS: bool,
-  tvParallaxProperties: object
+  removeClippedSubviews: PropTypes.bool,
+  renderToHardwareTextureAndroid: PropTypes.bool,
+  shouldRasterizeIOS: PropTypes.bool,
+  collapsable: PropTypes.bool,
+  needsOffscreenAlphaCompositing: PropTypes.bool
 };
 
 export default ViewPropTypes;

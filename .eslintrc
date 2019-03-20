@@ -9,14 +9,8 @@
     },
     "sourceType": "module"
   },
-  "extends": [
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": [
-    "promise",
-    "react"
-  ],
+  "extends": ["prettier", "prettier/react"],
+  "plugins": ["promise", "react"],
   "env": {
     "es6": true,
     "node": true
@@ -33,15 +27,16 @@
     "ReactElement": false,
     "ReactPropsChainableTypeChecker": false,
     "ReactPropsCheckType": false,
-    "ReactPropTypes": false,
+    "$ReadOnly": false,
+    "$ReadOnlyArray": false,
     "SyntheticEvent": false
   },
   "rules": {
     "camelcase": 0,
     "constructor-super": 2,
-    "default-case": [2, { commentPattern: '^no default$' }],
+    "default-case": [2, { "commentPattern": "^no default$" }],
     "eqeqeq": [2, "allow-null"],
-    "handle-callback-err": [2, "^(err|error)$" ],
+    "handle-callback-err": [2, "^(err|error)$"],
     "new-cap": [2, { "newIsCap": true, "capIsNew": false }],
     "no-alert": 1,
     "no-array-constructor": 2,
