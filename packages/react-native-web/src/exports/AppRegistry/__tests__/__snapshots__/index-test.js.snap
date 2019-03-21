@@ -1,30 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppRegistry getApplication "getStyleElement" produces styles that are a function of rendering "element" 1`] = `
-"@media all {
-[stylesheet-group=\\"0\\"]{}
+"[stylesheet-group=\\"0\\"]{}
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-}
-@media all {
 [stylesheet-group=\\"0.1\\"]{}
 :focus:not([data-focusvisible-polyfill]){outline: none;}
-}
-@media all {
 [stylesheet-group=\\"1\\"]{}
 .css-view-1dbjc4n{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;border:0 solid black;box-sizing:border-box;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;min-height:0px;min-width:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;position:relative;z-index:0;}
-}
-@media all {
 [stylesheet-group=\\"2\\"]{}
 .r-flex-13awgt0{-ms-flex-negative:1;-ms-flex-positive:1;-ms-flex-preferred-size:0%;-webkit-box-flex:1;-webkit-flex-basis:0%;-webkit-flex-grow:1;-webkit-flex-shrink:1;flex-basis:0%;flex-grow:1;flex-shrink:1;}
-}
-@media all {
 [stylesheet-group=\\"2.2\\"]{}
 .r-pointerEvents-12vffkv>*{pointer-events:auto;}
-.r-pointerEvents-12vffkv{pointer-events:none!important;}
-}"
+.r-pointerEvents-12vffkv{pointer-events:none!important;}"
 `;
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
@@ -36,15 +26,11 @@ exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] 
 `;
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 2`] = `
-"<style id=\\"react-native-stylesheet\\">@media all {
-[stylesheet-group=\\"0\\"]{}
+"<style id=\\"react-native-stylesheet\\">[stylesheet-group=\\"0\\"]{}
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 body{margin:0;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-}
-@media all {
 [stylesheet-group=\\"0.1\\"]{}
-:focus:not([data-focusvisible-polyfill]){outline: none;}
-}</style>"
+:focus:not([data-focusvisible-polyfill]){outline: none;}</style>"
 `;
