@@ -7,7 +7,7 @@
  * @flow strict-local
  */
 
-type Groups = { [key: number]: Array<string> };
+type Groups = { [key: number]: { start: ?number, rules: Array<string> } };
 type Selectors = { [key: string]: boolean };
 
 const slice = Array.prototype.slice;
@@ -15,17 +15,17 @@ const slice = Array.prototype.slice;
 /**
  * Order-based insertion of CSS.
  *
- * Each rule can be inserted (appended) into a numerically defined group.
+ * Each rule is associated with a numerically defined group.
  * Groups are ordered within the style sheet according to their number, with the
  * lowest first.
  *
- * Groups are implemented using Media Query blocks. CSSMediaRule implements the
- * CSSGroupingRule, which includes 'insertRule', allowing groups to be treated as
- * a sub-sheet.
+ * Groups are implemented using marker rules. The selector of the first rule of
+ * each group is used only to encode the group number for hydration. An
+ * alternative implementation could rely on CSSMediaRule, allowing groups to be
+ * treated as a sub-sheet, but the Edge implementation of CSSMediaRule is
+ * broken.
  * https://developer.mozilla.org/en-US/docs/Web/API/CSSMediaRule
- *
- * The selector of the first rule of each group is used only to encode the group
- * number for hydration.
+ * https://gist.github.com/necolas/aa0c37846ad6bd3b05b727b959e82674
  */
 export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
   const groups: Groups = {};
@@ -35,59 +35,78 @@ export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
    * Hydrate approximate record from any existing rules in the sheet.
    */
   if (sheet != null) {
-    slice.call(sheet.cssRules).forEach(mediaRule => {
-      if (mediaRule.media == null) {
-        throw new Error(
-          'OrderedCSSStyleSheet: hydrating invalid stylesheet. Expected only @media rules.'
-        );
-      }
-
-      // Create group number
-      const group = decodeGroupRule(mediaRule);
-      groups[group] = [];
-
+    let group;
+    slice.call(sheet.cssRules).forEach((cssRule, i) => {
+      const cssText = cssRule.cssText;
       // Create record of existing selectors and rules
-      slice.call(mediaRule.cssRules).forEach(rule => {
-        const selectorText = getSelectorText(rule.cssText);
+      if (cssText.indexOf('stylesheet-group') > -1) {
+        group = decodeGroupRule(cssRule);
+        groups[group] = { start: i, rules: [cssText] };
+      } else {
+        const selectorText = getSelectorText(cssText);
         if (selectorText != null) {
           selectors[selectorText] = true;
-          groups[group].push(rule.cssText);
+          groups[group].rules.push(cssText);
         }
-      });
+      }
     });
+  }
+
+  function sheetInsert(sheet, group, text) {
+    const orderedGroups = getOrderedGroups(groups);
+    const groupIndex = orderedGroups.indexOf(group);
+    const nextGroupIndex = groupIndex + 1;
+    const nextGroup = orderedGroups[nextGroupIndex];
+    // Insert rule before the next group, or at the end of the stylesheet
+    const position =
+      nextGroup != null && groups[nextGroup].start != null
+        ? groups[nextGroup].start
+        : sheet.cssRules.length;
+    const isInserted = insertRuleAt(sheet, text, position);
+
+    if (isInserted) {
+      // Set the starting index of the new group
+      if (groups[group].start == null) {
+        groups[group].start = position;
+      }
+      // Increment the starting index of all subsequent groups
+      for (let i = nextGroupIndex; i < orderedGroups.length; i += 1) {
+        const groupNumber = orderedGroups[i];
+        const previousStart = groups[groupNumber].start;
+        groups[groupNumber].start = previousStart + 1;
+      }
+    }
+
+    return isInserted;
   }
 
   const OrderedCSSStyleSheet = {
     /**
      * The textContent of the style sheet.
-     * Each group's rules are wrapped in a media query.
      */
     getTextContent(): string {
       return getOrderedGroups(groups)
         .map(group => {
-          const rules = groups[group];
-          const str = rules.join('\n');
-          return createMediaRule(str);
+          const rules = groups[group].rules;
+          return rules.join('\n');
         })
         .join('\n');
     },
 
     /**
-     * Insert a rule into a media query in the style sheet
+     * Insert a rule into the style sheet
      */
-    insert(cssText: string, group: number) {
+    insert(cssText: string, groupValue: number) {
+      const group = Number(groupValue);
+
       // Create a new group.
       if (groups[group] == null) {
         const markerRule = encodeGroupRule(group);
-
         // Create the internal record.
-        groups[group] = [];
-        groups[group].push(markerRule);
-
-        // Create CSSOM CSSMediaRule.
+        groups[group] = { start: null, rules: [markerRule] };
+        // Update CSSOM.
         if (sheet != null) {
-          const groupIndex = getOrderedGroups(groups).indexOf(group);
-          insertRuleAt(sheet, createMediaRule(markerRule), groupIndex);
+          sheetInsert(sheet, group, markerRule);
         }
       }
 
@@ -98,14 +117,14 @@ export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
       if (selectorText != null && selectors[selectorText] == null) {
         // Update the internal records.
         selectors[selectorText] = true;
-        groups[group].push(cssText);
-        // Update CSSOM CSSMediaRule.
+        groups[group].rules.push(cssText);
+        // Update CSSOM.
         if (sheet != null) {
-          const groupIndex = getOrderedGroups(groups).indexOf(group);
-          const root = sheet.cssRules[groupIndex];
-          if (root != null) {
-            // $FlowFixMe: Flow is missing CSSOM types
-            insertRuleAt(root, cssText, root.cssRules.length);
+          const isInserted = sheetInsert(sheet, group, cssText);
+          if (!isInserted) {
+            // Revert internal record change if a rule was rejected (e.g.,
+            // unrecognized pseudo-selector)
+            groups[group].rules.pop();
           }
         }
       }
@@ -119,16 +138,12 @@ export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
  * Helper functions
  */
 
-function createMediaRule(content) {
-  return `@media all {\n${content}\n}`;
-}
-
 function encodeGroupRule(group) {
   return `[stylesheet-group="${group}"]{}`;
 }
 
-function decodeGroupRule(mediaRule) {
-  return mediaRule.cssRules[0].selectorText.split('"')[1];
+function decodeGroupRule(cssRule) {
+  return Number(cssRule.selectorText.split('"')[1]);
 }
 
 function getOrderedGroups(obj: { [key: number]: any }) {
@@ -143,12 +158,14 @@ function getSelectorText(cssText) {
   return selector !== '' ? selector.replace(pattern, '$1') : null;
 }
 
-function insertRuleAt(root, cssText: string, position: number) {
+function insertRuleAt(root, cssText: string, position: number): boolean {
   try {
     // $FlowFixMe: Flow is missing CSSOM types needed to type 'root'.
     root.insertRule(cssText, position);
+    return true;
   } catch (e) {
     // JSDOM doesn't support `CSSSMediaRule#insertRule`.
     // Also ignore errors that occur from attempting to insert vendor-prefixed selectors.
+    return false;
   }
 }
