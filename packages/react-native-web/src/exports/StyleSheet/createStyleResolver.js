@@ -230,6 +230,7 @@ export default function createStyleResolver() {
               // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
               // can bind these styles to a className, and prevent them becoming invalid inline-styles.
               if (
+                styleProp === 'scrollIndicator' ||
                 styleProp === 'pointerEvents' ||
                 styleProp === 'placeholderTextColor' ||
                 styleProp === 'animationKeyframes'

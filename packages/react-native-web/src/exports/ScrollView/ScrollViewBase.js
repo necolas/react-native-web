@@ -68,7 +68,9 @@ export default class ScrollViewBase extends Component<*> {
 
   static defaultProps = {
     scrollEnabled: true,
-    scrollEventThrottle: 0
+    scrollEventThrottle: 0,
+    showsHorizontalScrollIndicator: true,
+    showsVerticalScrollIndicator: true
   };
 
   _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
@@ -122,6 +124,7 @@ export default class ScrollViewBase extends Component<*> {
       ...other
     } = this.props;
 
+    const showScrollIndicator = showsHorizontalScrollIndicator && showsVerticalScrollIndicator;
     return (
       <View
         {...other}
@@ -131,7 +134,8 @@ export default class ScrollViewBase extends Component<*> {
         ref={this._setViewRef}
         style={StyleSheet.compose(
           style,
-          !scrollEnabled && styles.scrollDisabled
+          !scrollEnabled && styles.scrollDisabled,
+          !showScrollIndicator && style.disableScrollIndicator
         )}
       />
     );
@@ -204,5 +208,8 @@ export default class ScrollViewBase extends Component<*> {
 const styles = StyleSheet.create({
   scrollDisabled: {
     touchAction: 'none'
+  },
+  disableScrollIndicator: {
+    scrollIndicator: 'none'
   }
 });
