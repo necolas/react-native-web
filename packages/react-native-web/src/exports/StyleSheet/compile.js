@@ -75,7 +75,7 @@ export function atomic(style: Style): CompilerOutput {
 
 /**
  * Compile simple style object to classic CSS rules.
- * No support for 'placeholderTextColor' or 'pointerEvents'.
+ * No support for 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function classic(style: Style, name: string): CompilerOutput {
   const identifier = createIdentifier('css', name, style);
@@ -97,7 +97,7 @@ export function classic(style: Style, name: string): CompilerOutput {
 
 /**
  * Compile simple style object to inline DOM styles.
- * No support for 'animationKeyframes', 'placeholderTextColor', or 'pointerEvents'.
+ * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function inline(style: Style) {
   return prefixInlineStyles(createReactDOMStyle(style));
@@ -141,6 +141,18 @@ function createAtomicRules(identifier: string, property, value): Rules {
         `${selector}:-ms-input-placeholder${block}`,
         `${selector}::placeholder${block}`
       );
+      break;
+    }
+
+    // Polyfill for draft spec
+    // https://drafts.csswg.org/css-scrollbars-1/
+    case 'scrollbarWidth': {
+      if (value === 'none') {
+        rules.push(
+          `${selector}::-webkit-scrollbar{display:none}`,
+          `${selector}{overflow:-moz-scrollbars-none;-ms-overflow-style:none}`
+        );
+      }
       break;
     }
 

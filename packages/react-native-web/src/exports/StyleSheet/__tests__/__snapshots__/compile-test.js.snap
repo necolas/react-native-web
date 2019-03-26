@@ -58,6 +58,15 @@ Object {
     ],
     "value": "box-only",
   },
+  "r-scrollbarWidth-2eszeu": Object {
+    "identifier": "r-scrollbarWidth-2eszeu",
+    "property": "scrollbarWidth",
+    "rules": Array [
+      ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
+      ".r-scrollbarWidth-2eszeu{overflow:-moz-scrollbars-none;-ms-overflow-style:none}",
+    ],
+    "value": "none",
+  },
   "r-transform-1ehiua4": Object {
     "identifier": "r-transform-1ehiua4",
     "property": "transform",

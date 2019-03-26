@@ -231,9 +231,10 @@ export default function createStyleResolver() {
               // require more complex transforms into multiple CSS rules. Here we assume that StyleManager
               // can bind these styles to a className, and prevent them becoming invalid inline-styles.
               if (
-                styleProp === 'pointerEvents' ||
+                styleProp === 'animationKeyframes' ||
                 styleProp === 'placeholderTextColor' ||
-                styleProp === 'animationKeyframes'
+                styleProp === 'pointerEvents' ||
+                styleProp === 'scrollbarWidth'
               ) {
                 const a = atomic({ [styleProp]: value });
                 Object.values(a).forEach(({ identifier, rules }) => {

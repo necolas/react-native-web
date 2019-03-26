@@ -16,6 +16,7 @@ describe('StyleSheet/compile', () => {
         fontFamily: 'System',
         marginHorizontal: 10,
         placeholderTextColor: 'gray',
+        scrollbarWidth: 'none',
         pointerEvents: 'box-only',
         transform: [
           {

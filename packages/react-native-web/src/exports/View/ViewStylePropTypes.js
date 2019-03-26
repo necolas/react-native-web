@@ -55,6 +55,7 @@ const ViewStylePropTypes = {
   overscrollBehavior: overscrollBehaviorType,
   overscrollBehaviorX: overscrollBehaviorType,
   overscrollBehaviorY: overscrollBehaviorType,
+  scrollbarWidth: oneOf(['auto', 'none']),
   scrollSnapAlign: string,
   scrollSnapType: string,
   WebkitMaskImage: string,
