@@ -147,7 +147,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
     case 'scrollIndicator': {
       if (value === 'none') {
         rules.push(
-          `${selector}::-webkit-scrollbar{width: 0 !important}`,
+          `${selector}::-webkit-scrollbar{display: none;}`,
           `${selector}{overflow: -moz-scrollbars-none;-ms-overflow-style: none;}`
         );
       }
