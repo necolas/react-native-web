@@ -58,6 +58,15 @@ Object {
     ],
     "value": "box-only",
   },
+  "r-scrollIndicator-1j953gk": Object {
+    "identifier": "r-scrollIndicator-1j953gk",
+    "property": "scrollIndicator",
+    "rules": Array [
+      ".r-scrollIndicator-1j953gk::-webkit-scrollbar{display: none;}",
+      ".r-scrollIndicator-1j953gk{overflow: -moz-scrollbars-none;-ms-overflow-style: none;}",
+    ],
+    "value": "none",
+  },
   "r-transform-1ehiua4": Object {
     "identifier": "r-transform-1ehiua4",
     "property": "transform",
