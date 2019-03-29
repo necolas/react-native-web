@@ -21,6 +21,7 @@ const TextPropTypes = {
   accessible: bool,
   children: any,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
+  maxFontSizeMultiplier: number,
   nativeID: string,
   numberOfLines: number,
   onBlur: func,
