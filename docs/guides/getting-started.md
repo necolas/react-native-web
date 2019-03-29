@@ -50,7 +50,7 @@ Now you can create your components and applications with the React Native API.
 
 ## Configuring Babel
 
-If you need to do the aliasing with Babel you can use
+[Babel](https://babeljs.io/) supports module aliasing using
 [babel-plugin-module-resolver](https://www.npmjs.com/package/babel-plugin-module-resolver)
 
 ```
@@ -91,6 +91,22 @@ module.name_mapper='^react-native$' -> 'react-native-web'
 You may also need to include a custom libdef
 ([example](https://gist.github.com/paularmstrong/f60b40d16fc83e1e8e532d483336f9bb))
 in your config.
+
+## Configuring Node.js
+
+Node.js can alias `react-native` to `react-native-web` using
+[`module-alias`](https://www.npmjs.com/package/module-alias). This is useful if
+you want to pre-render the app (e.g., server-side rendering or build-time
+rendering).  
+
+```js
+// Install the `module-alias` package as a dependency first
+const moduleAlias = require("module-alias");
+moduleAlias.addAliases({
+  "react-native": require.resolve("react-native-web"),
+});
+moduleAlias();
+```
 
 ## Other notes
 
