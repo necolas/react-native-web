@@ -47,6 +47,7 @@ class Text extends Component<*> {
       allowFontScaling,
       ellipsizeMode,
       lineBreakMode,
+      maxFontSizeMultiplier,
       minimumFontScale,
       onLayout,
       onLongPress,

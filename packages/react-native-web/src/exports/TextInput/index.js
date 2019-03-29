@@ -95,6 +95,7 @@ class TextInput extends Component<*> {
       'url',
       'web-search'
     ]),
+    maxFontSizeMultiplier: number,
     maxLength: number,
     multiline: bool,
     numberOfLines: number,
@@ -202,6 +203,7 @@ class TextInput extends Component<*> {
       inlineImagePadding,
       inputAccessoryViewID,
       keyboardAppearance,
+      maxFontSizeMultiplier,
       needsOffscreenAlphaCompositing,
       onAccessibilityTap,
       onContentSizeChange,
