@@ -92,6 +92,21 @@ You may also need to include a custom libdef
 ([example](https://gist.github.com/paularmstrong/f60b40d16fc83e1e8e532d483336f9bb))
 in your config.
 
+## Configuring Node.js
+
+In case you want to use `react-native-web` to generate raw HTML (eg: server-side, static sites)
+without any bundler, you can use [`module-alias`](https://www.npmjs.com/package/module-alias)
+that will enable aliases in Node.js:
+
+```js
+// require to install `module-alias` package via npm or yarn
+const moduleAlias = require("module-alias");
+moduleAlias.addAliases({
+  "react-native": require.resolve("react-native-web"),
+});
+moduleAlias();
+```
+
 ## Other notes
 
 ### Safari flexbox performance
