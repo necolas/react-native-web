@@ -110,7 +110,7 @@ class Text extends Component<*> {
 
 const classes = css.create({
   text: {
-    borderWidth: 0,
+    border: '0 solid black',
     boxSizing: 'border-box',
     color: 'black',
     display: 'inline',

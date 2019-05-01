@@ -26,6 +26,13 @@ describe('components/Text', () => {
       const component = shallow(<Text dir="rtl" />);
       expect(component.prop('dir')).toBe('rtl');
     });
+
+    test('renders correctly with borderWidth style', () => {
+      const component = shallow(<Text style={{ borderWidth: 1 }} />);
+      const div = component.find('div');
+      expect(div.prop('style')).toMatchSnapshot();
+      expect(div.prop('className')).toMatchSnapshot();
+    });
   });
 
   test('prop "children"', () => {

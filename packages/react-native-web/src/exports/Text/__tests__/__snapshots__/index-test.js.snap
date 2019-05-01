@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Text rendered element renders correctly with borderWidth style 1`] = `
+Object {
+  "borderBottomWidth": "1px",
+  "borderLeftWidth": "1px",
+  "borderRightWidth": "1px",
+  "borderTopWidth": "1px",
+}
+`;
+
+exports[`components/Text rendered element renders correctly with borderWidth style 2`] = `"css-text-901oao"`;
