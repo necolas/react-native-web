@@ -118,12 +118,9 @@ module.exports = function({ types: t }) {
             const importIndex = t.variableDeclaration(path.node.kind, [
               t.variableDeclarator(
                 t.identifier(name),
-                t.memberExpression(
-                  t.callExpression(t.identifier('require'), [
-                    t.stringLiteral(getDistLocation('index', state.opts))
-                  ]),
-                  t.identifier('default')
-                )
+                t.callExpression(t.identifier('require'), [
+                  t.stringLiteral(getDistLocation('index', state.opts))
+                ])
               )
             ]);
 

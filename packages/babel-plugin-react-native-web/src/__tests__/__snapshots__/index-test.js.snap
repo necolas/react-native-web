@@ -92,7 +92,7 @@ const { StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index').default;
+const ReactNative = require('react-native-web/dist/index');
 
 const View = require('react-native-web/dist/exports/View').default;
 
@@ -110,7 +110,7 @@ const { StyleSheet, TouchableOpacity } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/cjs/index').default;
+const ReactNative = require('react-native-web/dist/cjs/index');
 
 const View = require('react-native-web/dist/cjs/exports/View').default;
 
@@ -128,7 +128,7 @@ const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = requ
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index').default;
+const ReactNative = require('react-native-web/dist/index');
 
 const createElement = require('react-native-web/dist/exports/createElement').default;
 
