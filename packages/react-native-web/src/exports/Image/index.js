@@ -166,7 +166,7 @@ class Image extends Component<*, State> {
       ImageUriCache.remove(prevUri);
       const isPreviouslyLoaded = ImageUriCache.has(uri);
       isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
+      this._updateImageState(getImageState(uri, isPreviouslyLoaded), !!this.props.defaultSource);
     }
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
@@ -364,8 +364,8 @@ class Image extends Component<*, State> {
   }
 
   _onLoadStart() {
-    const { onLoadStart } = this.props;
-    this._updateImageState(STATUS_LOADING);
+    const { defaultSource, onLoadStart } = this.props;
+    this._updateImageState(STATUS_LOADING, !!defaultSource);
     if (onLoadStart) {
       onLoadStart();
     }
@@ -375,11 +375,12 @@ class Image extends Component<*, State> {
     this._imageRef = ref;
   };
 
-  _updateImageState(status) {
+  _updateImageState(status, hasDefaultSource = false) {
     this._imageState = status;
     const shouldDisplaySource =
-      this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
-    // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
+      this._imageState === STATUS_LOADED ||
+      (this._imageState === STATUS_LOADING && !hasDefaultSource);
+    // only triggers a re-render when the image is loading and has no default image (to support PJPEG), loaded, or failed
     if (shouldDisplaySource !== this.state.shouldDisplaySource) {
       if (this._isMounted) {
         this.setState(() => ({ shouldDisplaySource }));
