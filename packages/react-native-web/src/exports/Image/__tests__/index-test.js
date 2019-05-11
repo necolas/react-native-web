@@ -14,6 +14,7 @@ const findImageSurfaceStyle = wrapper => StyleSheet.flatten(wrapper.childAt(0).p
 
 describe('components/Image', () => {
   beforeEach(() => {
+    ImageUriCache._entries = {};
     window.Image = jest.fn(() => ({}));
   });
 
@@ -111,8 +112,8 @@ describe('components/Image', () => {
       });
       const onLoadStub = jest.fn();
       const uri = 'https://test.com/img.jpg';
-      shallow(<Image onLoad={onLoadStub} source={uri} />);
       ImageUriCache.add(uri);
+      shallow(<Image onLoad={onLoadStub} source={uri} />);
       jest.runOnlyPendingTimers();
       expect(ImageLoader.load).not.toBeCalled();
       expect(onLoadStub).toBeCalled();
@@ -162,6 +163,19 @@ describe('components/Image', () => {
       const source = { uri };
       const component = shallow(<Image source={source} />);
       expect(component.find('img')).toBeUndefined;
+    });
+
+    test('is set immediately if the image was preloaded', () => {
+      const uri = 'https://yahoo.com/favicon.ico';
+      ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
+        onLoad();
+      });
+      return Image.prefetch(uri).then(() => {
+        const source = { uri };
+        const component = shallow(<Image source={source} />, { disableLifecycleMethods: true });
+        expect(component.find('img').prop('src')).toBe(uri);
+        ImageUriCache.remove(uri);
+      });
     });
 
     test('is set immediately if the image has already been loaded', () => {
@@ -246,5 +260,18 @@ describe('components/Image', () => {
     const fn = () => {};
     const component = shallow(<Image onResponderGrant={fn} />);
     expect(component.prop('onResponderGrant')).toBe(fn);
+  });
+
+  test('queryCache', () => {
+    const uriOne = 'https://google.com/favicon.ico';
+    const uriTwo = 'https://twitter.com/favicon.ico';
+    ImageUriCache.add(uriOne);
+    ImageUriCache.add(uriTwo);
+    return Image.queryCache([uriOne, uriTwo, 'oops']).then(res => {
+      expect(res).toEqual({
+        [uriOne]: 'disk/memory',
+        [uriTwo]: 'disk/memory'
+      });
+    });
   });
 });

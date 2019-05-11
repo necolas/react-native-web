@@ -130,7 +130,22 @@ class Image extends Component<*, State> {
   }
 
   static prefetch(uri) {
-    return ImageLoader.prefetch(uri);
+    return ImageLoader.prefetch(uri).then(() => {
+      // Add the uri to the cache so it can be immediately displayed when used
+      // but also immediately remove it to correctly reflect that it has no active references
+      ImageUriCache.add(uri);
+      ImageUriCache.remove(uri);
+    });
+  }
+
+  static queryCache(uris) {
+    const result = {};
+    uris.forEach(u => {
+      if (ImageUriCache.has(u)) {
+        result[u] = 'disk/memory';
+      }
+    });
+    return Promise.resolve(result);
   }
 
   _filterId = 0;
