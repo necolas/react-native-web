@@ -377,7 +377,7 @@ class Image extends Component<*, State> {
     this._imageRef = ref;
   };
 
-  _updateImageState(status, hasDefaultSource = false) {
+  _updateImageState(status: ?string, hasDefaultSource: ?boolean = false) {
     this._imageState = status;
     const shouldDisplaySource =
       this._imageState === STATUS_LOADED ||

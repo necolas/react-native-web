@@ -21,7 +21,7 @@ describe('components/Image', () => {
     window.Image = originalImage;
   });
 
-  test('prop "accessibilityLabel"', () => {
+  test.only('prop "accessibilityLabel"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const component = shallow(
       <Image accessibilityLabel="accessibilityLabel" defaultSource={defaultSource} />
