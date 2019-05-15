@@ -16,7 +16,16 @@ const TextPropTypes = {
   accessibilityComponentType: string,
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
-  accessibilityRole: oneOf(['button', 'heading', 'label', 'link', 'listitem', 'none']),
+  accessibilityRole: oneOf([
+    'button',
+    'header',
+    'heading',
+    'label',
+    'link',
+    'listitem',
+    'none',
+    'text'
+  ]),
   accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
