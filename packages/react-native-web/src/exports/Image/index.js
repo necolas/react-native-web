@@ -167,6 +167,8 @@ class Image extends Component<*, State> {
       const isPreviouslyLoaded = ImageUriCache.has(uri);
       isPreviouslyLoaded && ImageUriCache.add(uri);
       this._updateImageState(getImageState(uri, isPreviouslyLoaded), !!this.props.defaultSource);
+    } else if (!!prevProps.defaultSource !== !!this.props.defaultSource) {
+      this._updateImageState(this._imageState, !!this.props.defaultSource);
     }
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
