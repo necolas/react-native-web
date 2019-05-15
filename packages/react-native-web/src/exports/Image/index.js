@@ -162,13 +162,14 @@ class Image extends Component<*, State> {
   componentDidUpdate(prevProps) {
     const prevUri = resolveAssetUri(prevProps.source);
     const uri = resolveAssetUri(this.props.source);
+    const hasDefaultSource = this.props.defaultSource !== undefined;
     if (prevUri !== uri) {
       ImageUriCache.remove(prevUri);
       const isPreviouslyLoaded = ImageUriCache.has(uri);
       isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded), !!this.props.defaultSource);
-    } else if (!!prevProps.defaultSource !== !!this.props.defaultSource) {
-      this._updateImageState(this._imageState, !!this.props.defaultSource);
+      this._updateImageState(getImageState(uri, isPreviouslyLoaded), hasDefaultSource);
+    } else if (hasDefaultSource && prevProps.defaultSource !== this.props.defaultSource) {
+      this._updateImageState(this._imageState, hasDefaultSource);
     }
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
