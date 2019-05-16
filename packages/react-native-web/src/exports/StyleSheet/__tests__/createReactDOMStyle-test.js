@@ -141,16 +141,6 @@ describe('StyleSheet/createReactDOMStyle', () => {
     });
   });
 
-  test('textDecorationLine', () => {
-    expect(
-      createReactDOMStyle({
-        textDecorationLine: 'underline'
-      })
-    ).toEqual({
-      textDecoration: 'underline'
-    });
-  });
-
   describe('transform', () => {
     // passthrough if transform value is ever a string
     test('string', () => {

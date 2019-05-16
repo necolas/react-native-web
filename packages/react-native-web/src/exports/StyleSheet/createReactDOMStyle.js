@@ -7,6 +7,7 @@
  * @noflow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import { MONOSPACE_FONT_STACK, SYSTEM_FONT_STACK, STYLE_SHORT_FORM_EXPANSIONS } from './constants';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
@@ -22,6 +23,13 @@ import normalizeValueWithProperty from './normalizeValueWithProperty';
  */
 
 const emptyObject = {};
+
+const supportsCSS3TextDecoration =
+  !canUseDOM ||
+  (window.CSS != null &&
+    window.CSS.supports != null &&
+    (window.CSS.supports('text-decoration-line', 'none') ||
+      window.CSS.supports('-webkit-text-decoration-line', 'none')));
 
 /**
  * Transform
@@ -144,7 +152,11 @@ const createReactDOMStyle = style => {
         case 'textDecorationLine': {
           // use 'text-decoration' for browsers that only support CSS2
           // text-decoration (e.g., IE, Edge)
-          resolvedStyle.textDecoration = value;
+          if (!supportsCSS3TextDecoration) {
+            resolvedStyle.textDecoration = value;
+          } else {
+            resolvedStyle.textDecorationLine = value;
+          }
           break;
         }
 
