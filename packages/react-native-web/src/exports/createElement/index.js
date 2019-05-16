@@ -70,12 +70,16 @@ const adjustProps = domProps => {
   // element. Click events are not an expected part of the React Native API,
   // and browsers dispatch click events that cannot otherwise be cancelled from
   // preceding mouse events in the responder system.
+  // Handle overrides gracefully if the user provides an onClick method.
+  // If this is provided, the user must make sure to handle the edge cases.
   if (isLinkRole && onResponderRelease) {
-    domProps.onClick = function(e) {
-      if (!e.isDefaultPrevented() && !isModifiedEvent(e.nativeEvent) && !domProps.target) {
-        e.preventDefault();
-      }
-    };
+    domProps.onClick =
+      onClick ||
+      function(e) {
+        if (!e.isDefaultPrevented() && !isModifiedEvent(e.nativeEvent) && !domProps.target) {
+          e.preventDefault();
+        }
+      };
   }
 
   // Button-like roles should trigger 'onClick' if SPACE or ENTER keys are pressed.

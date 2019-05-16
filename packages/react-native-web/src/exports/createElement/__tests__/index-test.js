@@ -24,6 +24,45 @@ describe('modules/createElement', () => {
     });
   });
 
+  test('gracefully handles onClick for links', () => {
+    let wasCalled = false;
+    const component = shallow(
+      createElement('div', {
+        accessibilityRole: 'link',
+        onClick: () => {
+          wasCalled = true;
+        }
+      })
+    );
+    component.find('a').simulate('click', {
+      isDefaultPrevented() {},
+      nativeEvent: {},
+      preventDefault() {}
+    });
+
+    expect(wasCalled).toBe(true);
+  });
+
+  test('gracefully handles onClick for touchable links', () => {
+    let wasCalled = false;
+    const component = shallow(
+      createElement('div', {
+        accessibilityRole: 'link',
+        onResponderRelease: () => {}, // fake touchable
+        onClick: () => {
+          wasCalled = true;
+        }
+      })
+    );
+    component.find('a').simulate('click', {
+      isDefaultPrevented() {},
+      nativeEvent: {},
+      preventDefault() {}
+    });
+
+    expect(wasCalled).toBe(true);
+  });
+
   describe('prop "accessibilityRole"', () => {
     test('and string component type', () => {
       const component = shallow(createElement('span', { accessibilityRole: 'link' }));
