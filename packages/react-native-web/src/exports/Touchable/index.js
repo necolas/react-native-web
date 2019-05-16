@@ -800,6 +800,15 @@ const TouchableMixin = {
     const ENTER = 13;
     const SPACE = 32;
     const { type, which } = e;
+    const { onKeyUp, onKeyDown } = this.props;
+
+    let eventHandlerFromProps: ?(e: Event) => any = null;
+    if (type === 'keyup') {
+      eventHandlerFromProps = onKeyUp;
+    } else if (type === 'keydown') {
+      eventHandlerFromProps = onKeyDown;
+    }
+
     if (which === ENTER || which === SPACE) {
       if (type === 'keydown') {
         if (!this._isTouchableKeyboardActive) {
@@ -822,11 +831,17 @@ const TouchableMixin = {
           }
         }
       }
-      e.stopPropagation();
-      // prevent the default behaviour unless the Touchable functions as a link
-      // and Enter is pressed
-      if (!(which === ENTER && AccessibilityUtil.propsToAriaRole(this.props) === 'link')) {
-        e.preventDefault();
+
+      if (typeof eventHandlerFromProps === 'function') {
+        // the user decided to opt out, we do not handle stopPropagation/preventDefault then
+        eventHandlerFromProps(e);
+      } else {
+        e.stopPropagation();
+        // prevent the default behaviour unless the Touchable functions as a link
+        // and Enter is pressed
+        if (!(which === ENTER && AccessibilityUtil.propsToAriaRole(this.props) === 'link')) {
+          e.preventDefault();
+        }
       }
     }
   }
