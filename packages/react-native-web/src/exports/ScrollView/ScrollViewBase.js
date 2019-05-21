@@ -134,7 +134,7 @@ export default class ScrollViewBase extends Component<*> {
         style={[
           style,
           !scrollEnabled && styles.scrollDisabled,
-          hideScrollbar && style.hideScrollbar
+          hideScrollbar && styles.hideScrollbar
         ]}
       />
     );
