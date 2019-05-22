@@ -7,6 +7,7 @@
  * @flow
  */
 
+import PixelRatio from '../PixelRatio';
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
 
@@ -18,6 +19,11 @@ const absoluteFillObject = {
   bottom: 0
 };
 const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
+
+let hairlineWidth = PixelRatio.roundToNearestPixel(0.4);
+if (hairlineWidth === 0) {
+  hairlineWidth = 1 / PixelRatio.get();
+}
 
 const StyleSheet = {
   absoluteFill,
@@ -57,7 +63,7 @@ const StyleSheet = {
     return result;
   },
   flatten: flattenStyle,
-  hairlineWidth: 1
+  hairlineWidth
 };
 
 export default StyleSheet;
