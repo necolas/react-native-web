@@ -25,7 +25,7 @@ export default class AlertOverlay extends Component {
     others.buttons = this.getOverridenButtons();
 
     return (
-      <TouchableWithoutFeedback onPress={this._onClickOut}>
+      <TouchableWithoutFeedback onPressIn={this._onClickOut}>
         <View style={styles.container}>
           <View accessible={true} data-focustrap="alert" />
           <Animated.View data-alert="bg" style={[styles.overlay, this.getAnimatedStyles()]}>

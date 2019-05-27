@@ -30,9 +30,10 @@ class Alert {
     title: string,
     message: string,
     buttons: Array<AlertButton>,
-    options: AlertOptions = {}
+    options: AlertOptions = { cancelable: true }
   ): void {
     const node = createAnchorNode();
+
     const alert = renderOverlay({
       onClose: () => unmountNode(node),
       title,
@@ -48,6 +49,12 @@ class Alert {
     hideBackgroundFromScreenReaders(node);
 
     ReactDom.render(alert, node);
+
+    /*
+    if( options.cancelable ){
+      dismissOnEscape()
+    }
+    */
 
     saveAndDeactivateBackgroundFocus(node);
   };
@@ -114,6 +121,8 @@ function saveAndDeactivateBackgroundFocus(node) {
   // Focus the trap
   focusTrap = document.querySelector('[data-focustrap=alert]');
   focusTrap.focus();
+  // turn body into a focusable element
+  document.body.tabIndex = 0;
   // Deactivate text selection
   bodySelect = document.body.style.userSelect;
   document.body.style.userSelect = 'none';
@@ -130,6 +139,7 @@ function restoreBackgroundFocus(node) {
   focusTrap = false;
   prevActiveElement = false;
   bodySelect = false;
+  document.body.removeAttribute('tabIndex');
 }
 
 function trapTabKey(e) {
@@ -137,11 +147,13 @@ function trapTabKey(e) {
 
   // If the body (first element) is focused and hit the key tab, go to trap
   if (document.activeElement === document.body && !e.shiftKey) {
+    e.preventDefault();
     focusTrap.focus();
   }
 
   // If the trap is focused and hit the shift+tab, go to body
   if (document.activeElement === focusTrap && e.shiftKey) {
+    e.preventDefault();
     document.body.focus();
   }
 }
