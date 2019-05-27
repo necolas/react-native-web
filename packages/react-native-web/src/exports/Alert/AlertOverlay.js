@@ -14,6 +14,11 @@ export default class AlertOverlay extends Component {
     options: PropTypes.array
   };
 
+  constructor() {
+    super();
+    this.bg = React.createRef();
+  }
+
   render() {
     const { Alert, ...others } = this.props;
 
@@ -22,7 +27,8 @@ export default class AlertOverlay extends Component {
     return (
       <TouchableWithoutFeedback onPress={this._onClickOut}>
         <View style={styles.container}>
-          <Animated.View style={[styles.overlay, this.getAnimatedStyles()]}>
+          <View accessible={true} data-focustrap="alert" />
+          <Animated.View data-alert="bg" style={[styles.overlay, this.getAnimatedStyles()]}>
             <Alert {...others} />
           </Animated.View>
         </View>
@@ -49,6 +55,8 @@ export default class AlertOverlay extends Component {
 
   componentDidMount() {
     this.setState({ inTransition: true });
+    this.bg = document.querySelector('[data-alert=bg]');
+
     Animated.timing(this.props.animatedValue, {
       toValue: 1,
       duration: 200
@@ -77,7 +85,8 @@ export default class AlertOverlay extends Component {
   }
 
   _onClickOut = e => {
-    if (this.props.options.cancelable) {
+    console.log(e);
+    if (this.props.options.cancelable && e.target === this.bg) {
       this.props.options.onDismiss();
       this.close();
     }
@@ -92,7 +101,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     overflow: 'hidden',
-    cursor: 'default'
+    cursor: 'default',
+    userSelect: 'text'
   },
 
   overlay: {

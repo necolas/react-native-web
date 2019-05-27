@@ -44,7 +44,12 @@ class Alert {
         ...options
       }
     });
+
+    hideBackgroundFromScreenReaders(node);
+
     ReactDom.render(alert, node);
+
+    saveAndDeactivateBackgroundFocus(node);
   };
 }
 
@@ -70,5 +75,73 @@ function renderOverlay(props) {
 }
 
 function unmountNode(node) {
+  showBackgroundToScreeReaders();
   document.body.removeChild(node);
+  restoreBackgroundFocus(node);
+}
+
+function hideBackgroundFromScreenReaders(node) {
+  Array.prototype.forEach.call(document.body.children, target => {
+    if (target === node) return;
+
+    const ariaHidden = target.getAttribute('aria-hidden') || 'null';
+    target.setAttribute('data-ah', ariaHidden);
+    target.setAttribute('aria-hidden', 'true');
+  });
+}
+
+function showBackgroundToScreeReaders() {
+  Array.prototype.forEach.call(document.body.children, target => {
+    const prevAH = target.getAttribute('data-ah');
+    if (prevAH === 'null') {
+      target.setAttribute('aria-hidden', prevAH);
+    } else {
+      target.removeAttribute('aria-hidden');
+    }
+
+    target.removeAttribute('data-ah');
+  });
+}
+
+let prevActiveElement;
+let focusTrap;
+let bodySelect;
+function saveAndDeactivateBackgroundFocus(node) {
+  // Save active element for later
+  prevActiveElement = document.activeElement;
+  // Trap the tab key
+  window.addEventListener('keydown', trapTabKey);
+  // Focus the trap
+  focusTrap = document.querySelector('[data-focustrap=alert]');
+  focusTrap.focus();
+  // Deactivate text selection
+  bodySelect = document.body.style.userSelect;
+  document.body.style.userSelect = 'none';
+}
+
+function restoreBackgroundFocus(node) {
+  // Open the trap
+  window.removeEventListener('keydown', trapTabKey);
+  // Focus previous active element
+  prevActiveElement.focus();
+  // Reactivate text selection
+  document.body.style.userSelect = bodySelect;
+  // Clean up
+  focusTrap = false;
+  prevActiveElement = false;
+  bodySelect = false;
+}
+
+function trapTabKey(e) {
+  if (e.which !== 9) return;
+
+  // If the body (first element) is focused and hit the key tab, go to trap
+  if (document.activeElement === document.body && !e.shiftKey) {
+    focusTrap.focus();
+  }
+
+  // If the trap is focused and hit the shift+tab, go to body
+  if (document.activeElement === focusTrap && e.shiftKey) {
+    document.body.focus();
+  }
 }
