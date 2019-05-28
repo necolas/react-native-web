@@ -45,8 +45,8 @@ class Alert {
 
     ReactDom.render(alert, node);
 
-    hideBackgroundFromScreenReaders(node);
-    saveAndDeactivateBackgroundFocus(node);
+    deactivateBackground(node);
+
     addURLParamter();
   };
 }
@@ -126,7 +126,7 @@ function showBackgroundToScreeReaders() {
 let prevActiveElement;
 let focusTrap;
 let bodySelect;
-function saveAndDeactivateBackgroundFocus(node) {
+function deactivateBackground(node) {
   // Save active element for later
   prevActiveElement = document.activeElement;
   // Trap the tab key
@@ -139,6 +139,10 @@ function saveAndDeactivateBackgroundFocus(node) {
   // Deactivate text selection
   bodySelect = document.body.style.userSelect;
   document.body.style.userSelect = 'none';
+  // Disable for screen readers
+  hideBackgroundFromScreenReaders();
+  // Disable background scroll
+  disableBackgroundScroll();
 }
 
 function restoreBackgroundFocus(node) {
@@ -148,6 +152,10 @@ function restoreBackgroundFocus(node) {
   prevActiveElement.focus();
   // Reactivate text selection
   document.body.style.userSelect = bodySelect;
+  // Enable screen readers
+  showBackgroundToScreeReaders();
+  // Enable scroll
+  enableBackgroundScroll();
   // Clean up
   focusTrap = false;
   prevActiveElement = false;
@@ -193,4 +201,20 @@ function removeURLParameter() {
   if (param) {
     window.history.back();
   }
+}
+
+let prevBodyOF, prevBodyMR;
+function disableBackgroundScroll() {
+  const scrollBarWidth = window.innerWidth - document.body.clientWidth;
+  const style = document.body.style;
+  prevBodyOF = style.overflow;
+  prevBodyMR = style.marginRight;
+
+  style.overflow = 'hidden';
+  style.marginRight = `${scrollBarWidth + prevBodyMR}px`;
+}
+
+function enableBackgroundScroll() {
+  document.body.style.marginRight = prevBodyMR;
+  document.body.style.overflow = prevBodyOF;
 }

@@ -26,7 +26,7 @@ export default class AlertOverlay extends Component {
 
     return (
       <TouchableWithoutFeedback onPressIn={this._onClickOut}>
-        <View style={styles.container}>
+        <View onWheel={this._preventBGScroll} style={styles.container}>
           <View accessible={true} data-focustrap="alert" />
           <Animated.View data-alert="bg" style={[styles.overlay, this.getAnimatedStyles()]}>
             <Alert {...others} />
@@ -116,11 +116,17 @@ export default class AlertOverlay extends Component {
     this.props.options.onDismiss();
     this.close();
   }
+
+  _preventBGScroll(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('wheel');
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     bottom: 0,
     left: 0,
