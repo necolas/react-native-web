@@ -33,28 +33,26 @@ class Alert {
     options: AlertOptions = { cancelable: true }
   ): void {
     const node = createAnchorNode();
-
-    const alert = renderOverlay({
-      onClose: () => onClose(node),
-      title,
-      message,
-      buttons,
-      options: {
-        onDismiss: () => {},
-        cancelable: true,
-        ...options
-      }
-    });
-
-    hideBackgroundFromScreenReaders(node);
+    const alert = renderOverlay(
+      {
+        title,
+        message,
+        buttons,
+        options
+      },
+      node
+    );
 
     ReactDom.render(alert, node);
 
+    hideBackgroundFromScreenReaders(node);
     saveAndDeactivateBackgroundFocus(node);
-
     addURLParamter();
   };
 }
+
+Alert.Component = AlertDefaultComponent;
+Alert.Button = AlertDefaultButton;
 
 export default Alert;
 
@@ -66,11 +64,23 @@ function createAnchorNode() {
   return div;
 }
 
-function renderOverlay(props) {
+function nofn() {}
+
+function renderOverlay(args, node) {
+  const props = {
+    ...args,
+    onClose: () => onClose(node),
+    options: {
+      onDismiss: nofn,
+      cancelable: true,
+      ...args.options
+    }
+  };
+
   return (
     <AlertOverlay
-      Alert={AlertDefaultComponent}
-      Button={AlertDefaultButton}
+      Alert={Alert.Component}
+      Button={Alert.Button}
       animatedValue={new Animated.Value(0)}
       {...props}
     />
