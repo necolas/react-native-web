@@ -7,11 +7,11 @@ import TouchableWithoutFeedback from '../TouchableWithoutFeedback';
 
 export default class AlertOverlay extends Component {
   static propTypes = {
-    Alert: PropTypes.node,
+    Alert: PropTypes.oneOfType([PropTypes.instanceOf(Component), PropTypes.func]),
     animatedValue: PropTypes.object,
     buttons: PropTypes.array,
     onClose: PropTypes.func,
-    options: PropTypes.array
+    options: PropTypes.object
   };
 
   constructor() {
@@ -61,9 +61,15 @@ export default class AlertOverlay extends Component {
       toValue: 1,
       duration: 200
     }).start();
+
+    document.addEventListener('keydown', this._onKeyDown);
+    window.addEventListener('popstate', this._onURLChange);
   }
 
   close() {
+    document.removeEventListener('keydown', this._onKeyDown);
+    window.removeEventListener('popstate', this._onURLChange);
+
     Animated.timing(this.props.animatedValue, {
       toValue: 0,
       duration: 200
@@ -84,13 +90,32 @@ export default class AlertOverlay extends Component {
     return this.overridenButtons;
   }
 
-  _onClickOut = e => {
-    console.log(e);
-    if (this.props.options.cancelable && e.target === this.bg) {
-      this.props.options.onDismiss();
-      this.close();
+  _onKeyDown = e => {
+    if (e.which === 27) {
+      this.tryDismiss();
     }
   };
+
+  _onClickOut = e => {
+    if (e.target === this.bg) {
+      this.tryDismiss();
+    }
+  };
+
+  _onURLChange = () => {
+    this.dismiss();
+  };
+
+  tryDismiss() {
+    if (this.props.options.cancelable) {
+      this.dismiss();
+    }
+  }
+
+  dismiss() {
+    this.props.options.onDismiss();
+    this.close();
+  }
 }
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Text from '../Text';
 import View from '../View';
@@ -19,7 +19,7 @@ export default function AlertDefaultComponent(props) {
 }
 
 AlertDefaultComponent.propTypes = {
-  Button: PropTypes.element,
+  Button: PropTypes.oneOfType([PropTypes.instanceOf(Component), PropTypes.func]),
   buttons: PropTypes.array,
   message: PropTypes.string,
   title: PropTypes.string

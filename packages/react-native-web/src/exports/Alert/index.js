@@ -35,7 +35,7 @@ class Alert {
     const node = createAnchorNode();
 
     const alert = renderOverlay({
-      onClose: () => unmountNode(node),
+      onClose: () => onClose(node),
       title,
       message,
       buttons,
@@ -50,13 +50,9 @@ class Alert {
 
     ReactDom.render(alert, node);
 
-    /*
-    if( options.cancelable ){
-      dismissOnEscape()
-    }
-    */
-
     saveAndDeactivateBackgroundFocus(node);
+
+    addURLParamter();
   };
 }
 
@@ -81,7 +77,14 @@ function renderOverlay(props) {
   );
 }
 
-function unmountNode(node) {
+function onClose(node) {
+  unmount(node);
+  removeURLParameter();
+}
+
+function unmount(node) {
+  if (!node.parentNode) return;
+
   showBackgroundToScreeReaders();
   document.body.removeChild(node);
   restoreBackgroundFocus(node);
@@ -155,5 +158,29 @@ function trapTabKey(e) {
   if (document.activeElement === focusTrap && e.shiftKey) {
     e.preventDefault();
     document.body.focus();
+  }
+}
+
+const URL_PARAM = 'rnwalert';
+const URL_REGEX = new RegExp(`[&?]${URL_PARAM}`);
+
+function getURLParameter() {
+  const href = window.location.href;
+  const match = href.match(URL_REGEX);
+  return match && match[0];
+}
+
+function addURLParamter() {
+  if (getURLParameter()) return;
+
+  const href = window.location.href;
+  const link = href.indexOf('?') === -1 ? '&' : '?';
+  window.history.pushState({}, '', `${href}${link}${URL_PARAM}`);
+}
+
+function removeURLParameter() {
+  const param = getURLParameter();
+  if (param) {
+    window.history.back();
   }
 }
