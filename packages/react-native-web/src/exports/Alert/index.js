@@ -49,10 +49,10 @@ class Alert {
 
     addURLParamter();
   };
-}
 
-Alert.Component = AlertDefaultComponent;
-Alert.Button = AlertDefaultButton;
+  static Component = AlertDefaultComponent;
+  static Button = AlertDefaultButton;
+}
 
 export default Alert;
 
@@ -60,7 +60,7 @@ export default Alert;
 function createAnchorNode() {
   const div = document.createElement('div');
   div.id = 'rnw_alert' + Math.round(Math.random() * 1000);
-  document.body.appendChild(div);
+  document.body && document.body.appendChild(div);
   return div;
 }
 
@@ -96,12 +96,14 @@ function unmount(node) {
   if (!node.parentNode) return;
 
   showBackgroundToScreeReaders();
-  document.body.removeChild(node);
+  document.body && document.body.removeChild(node);
   restoreBackgroundFocus(node);
 }
 
 function hideBackgroundFromScreenReaders(node) {
-  Array.prototype.forEach.call(document.body.children, target => {
+  const children = (document.body && document.body.children) || [];
+
+  Array.prototype.forEach.call(children, target => {
     if (target === node) return;
 
     const ariaHidden = target.getAttribute('aria-hidden') || 'null';
@@ -111,7 +113,9 @@ function hideBackgroundFromScreenReaders(node) {
 }
 
 function showBackgroundToScreeReaders() {
-  Array.prototype.forEach.call(document.body.children, target => {
+  const children = (document.body && document.body.children) || [];
+
+  Array.prototype.forEach.call(children, target => {
     const prevAH = target.getAttribute('data-ah');
     if (prevAH === 'null') {
       target.setAttribute('aria-hidden', prevAH);
@@ -127,18 +131,20 @@ let prevActiveElement;
 let focusTrap;
 let bodySelect;
 function deactivateBackground(node) {
+  const body = document.body || { style: {}, tabIndex: -1 };
+
   // Save active element for later
   prevActiveElement = document.activeElement;
   // Trap the tab key
   window.addEventListener('keydown', trapTabKey);
   // Focus the trap
   focusTrap = document.querySelector('[data-focustrap=alert]');
-  focusTrap.focus();
+  focusTrap && focusTrap.focus();
   // turn body into a focusable element
-  document.body.tabIndex = 0;
+  body.tabIndex = 0;
   // Deactivate text selection
-  bodySelect = document.body.style.userSelect;
-  document.body.style.userSelect = 'none';
+  bodySelect = body.style.userSelect;
+  body.style.userSelect = 'none';
   // Disable for screen readers
   hideBackgroundFromScreenReaders();
   // Disable background scroll
@@ -146,21 +152,20 @@ function deactivateBackground(node) {
 }
 
 function restoreBackgroundFocus(node) {
+  const body = document.body || { style: {} };
+
   // Open the trap
   window.removeEventListener('keydown', trapTabKey);
   // Focus previous active element
-  prevActiveElement.focus();
+  prevActiveElement && prevActiveElement.focus();
   // Reactivate text selection
-  document.body.style.userSelect = bodySelect;
+  body.style.userSelect = bodySelect;
   // Enable screen readers
   showBackgroundToScreeReaders();
   // Enable scroll
   enableBackgroundScroll();
   // Clean up
-  focusTrap = false;
-  prevActiveElement = false;
-  bodySelect = false;
-  document.body.removeAttribute('tabIndex');
+  document.body && document.body.removeAttribute('tabIndex');
 }
 
 function trapTabKey(e) {
@@ -169,13 +174,13 @@ function trapTabKey(e) {
   // If the body (first element) is focused and hit the key tab, go to trap
   if (document.activeElement === document.body && !e.shiftKey) {
     e.preventDefault();
-    focusTrap.focus();
+    focusTrap && focusTrap.focus();
   }
 
   // If the trap is focused and hit the shift+tab, go to body
   if (document.activeElement === focusTrap && e.shiftKey) {
     e.preventDefault();
-    document.body.focus();
+    document.body && document.body.focus();
   }
 }
 
@@ -205,8 +210,8 @@ function removeURLParameter() {
 
 let prevBodyOF, prevBodyMR;
 function disableBackgroundScroll() {
-  const scrollBarWidth = window.innerWidth - document.body.clientWidth;
-  const style = document.body.style;
+  const scrollBarWidth = window.innerWidth - ((document.body && document.body.clientWidth) || 0);
+  const style = (document.body && document.body.style) || {};
   prevBodyOF = style.overflow;
   prevBodyMR = style.marginRight;
 
@@ -215,6 +220,7 @@ function disableBackgroundScroll() {
 }
 
 function enableBackgroundScroll() {
-  document.body.style.marginRight = prevBodyMR;
-  document.body.style.overflow = prevBodyOF;
+  const body = document.body || { style: {} };
+  body.style.marginRight = prevBodyMR;
+  body.style.overflow = prevBodyOF;
 }
