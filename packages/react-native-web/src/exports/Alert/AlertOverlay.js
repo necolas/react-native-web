@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'rgba(0,0,0,.5)',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    willChange: 'content'
   }
 });
