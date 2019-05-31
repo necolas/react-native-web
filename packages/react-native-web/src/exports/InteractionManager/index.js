@@ -27,6 +27,8 @@ const InteractionManager = {
       handle = requestIdleCallback(() => {
         if (task) {
           resolve(task());
+        } else {
+          resolve();
         }
       });
     });
