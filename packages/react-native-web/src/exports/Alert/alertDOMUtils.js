@@ -2,8 +2,8 @@ function body() {
   return document.body || { style: {}, tabIndex: -1 };
 }
 
-function bodyCall(method, arg) {
-  return document.body && document.body[method](arg);
+function bodyCall(method, arg1, arg2) {
+  return document.body && document.body[method](arg1, arg2);
 }
 
 function bodyChildren() {
@@ -13,6 +13,7 @@ function bodyChildren() {
 export function mountAnchorNode() {
   const node = document.createElement('div');
   node.id = 'rnw_alert' + Math.round(Math.random() * 1000);
+  node.setAttribute('data-alert', 'true');
   bodyCall('appendChild', node);
   return node;
 }
@@ -34,12 +35,12 @@ export function deactivateBackground(node) {
   focusTrap = document.querySelector('[data-focustrap=alert]');
   focusTrap && focusTrap.focus();
   // turn body into a focusable element
-  body().tabIndex = 0;
+  bodyCall('setAttribute', 'tabIndex', '0');
   // Deactivate text selection
   bodySelect = body().style.userSelect;
   body().style.userSelect = 'none';
   // Disable for screen readers
-  hideBackgroundFromScreenReaders();
+  hideBackgroundFromScreenReaders(node);
   // Disable background scroll
   disableBackgroundScroll();
 }
