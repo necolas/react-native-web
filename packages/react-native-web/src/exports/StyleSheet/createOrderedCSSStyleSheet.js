@@ -148,8 +148,8 @@ function decodeGroupRule(cssRule) {
 
 function getOrderedGroups(obj: { [key: number]: any }) {
   return Object.keys(obj)
-    .sort()
-    .map(k => Number(k));
+    .map(Number)
+    .sort((a, b) => (a > b ? 1 : -1));
 }
 
 const pattern = /\s*([,])\s*/g;
