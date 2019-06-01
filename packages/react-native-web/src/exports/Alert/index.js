@@ -46,8 +46,12 @@ class Alert {
     addURLParamter();
   };
 
-  static Component = AlertDefaultComponent;
-  static Button = AlertDefaultButton;
+  // These are meant to be overrriden for customization
+  static Button = undefined;
+  static Component = undefined;
+  static getCustomStyles = function(animatedValue: Animated.Value): Object {
+    return {};
+  };
 }
 
 export default Alert;
@@ -64,11 +68,13 @@ function renderOverlay(args, node) {
     }
   };
 
+  const av = new Animated.Value(0);
   return (
     <AlertOverlay
-      Alert={Alert.Component}
-      Button={Alert.Button}
-      animatedValue={new Animated.Value(0)}
+      Alert={Alert.Component || AlertDefaultComponent}
+      Button={Alert.Button || AlertDefaultButton}
+      animatedValue={av}
+      customStyles={(Alert.getCustomStyles && Alert.getCustomStyles(av)) || {}}
       {...props}
     />
   );

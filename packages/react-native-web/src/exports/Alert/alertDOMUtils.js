@@ -1,5 +1,5 @@
 function body() {
-  return document.body || { style: {}, tabIndex: -1 };
+  return document.body || { style: {}, tabindex: -1 };
 }
 
 function bodyCall(method, arg1, arg2) {
@@ -35,7 +35,7 @@ export function deactivateBackground(node) {
   focusTrap = document.querySelector('[data-focustrap=alert]');
   focusTrap && focusTrap.focus();
   // turn body into a focusable element
-  bodyCall('setAttribute', 'tabIndex', '0');
+  setBodyFocusable(true);
   // Deactivate text selection
   bodySelect = body().style.userSelect;
   body().style.userSelect = 'none';
@@ -57,7 +57,7 @@ export function reactivateBackground(node) {
   // Enable scroll
   enableBackgroundScroll();
   // Clean up
-  bodyCall('removeAttribute', 'tabIndex');
+  setBodyFocusable(false);
 }
 
 export function trapTabKey(e) {
@@ -90,7 +90,7 @@ export function showBackgroundToScreeReaders() {
   Array.prototype.forEach.call(bodyChildren(), target => {
     const prevAH = target.getAttribute('data-ah');
 
-    if (prevAH === 'null') {
+    if (prevAH !== 'null') {
       target.setAttribute('aria-hidden', prevAH);
     } else {
       target.removeAttribute('aria-hidden');
@@ -115,4 +115,21 @@ export function enableBackgroundScroll() {
   const style = body().style;
   style.marginRight = prevBodyMR;
   style.overflow = prevBodyOF;
+}
+
+const TI_BUFFER = 'data-ti';
+export function setBodyFocusable(active) {
+  if (active) {
+    const ti = bodyCall('getAttribute', 'tabindex');
+    bodyCall('setAttribute', TI_BUFFER, ti);
+    bodyCall('setAttribute', 'tabindex', '0');
+  } else {
+    const originalTi = bodyCall('getAttribute', TI_BUFFER);
+    if (originalTi === 'null') {
+      bodyCall('removeAttribute', 'tabindex');
+    } else {
+      bodyCall('setAttribute', 'tabindex', originalTi);
+    }
+    bodyCall('removeAttribute', TI_BUFFER);
+  }
 }
