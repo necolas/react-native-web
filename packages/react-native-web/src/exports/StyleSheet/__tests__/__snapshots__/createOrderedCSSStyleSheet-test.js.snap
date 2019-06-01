@@ -24,7 +24,13 @@ exports[`createOrderedCSSStyleSheet #insert insertion order for different groups
 .four-2 {}
 [stylesheet-group=\\"9.9\\"]{}
 .nine-1 {}
-.nine-2 {}"
+.nine-2 {}
+[stylesheet-group=\\"10\\"]{}
+.ten {}
+[stylesheet-group=\\"20\\"]{}
+.twenty {}
+[stylesheet-group=\\"20.2\\"]{}
+.twenty-point2 {}"
 `;
 
 exports[`createOrderedCSSStyleSheet #insert insertion order for same group 1`] = `""`;

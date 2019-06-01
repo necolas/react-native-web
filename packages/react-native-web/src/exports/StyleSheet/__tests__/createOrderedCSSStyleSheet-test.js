@@ -54,6 +54,9 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('.two {}', 2.2);
       sheet.insert('.four-1 {}', 4);
       sheet.insert('.four-2 {}', 4);
+      sheet.insert('.twenty {}', 20);
+      sheet.insert('.ten {}', 10);
+      sheet.insert('.twenty-point2 {}', 20.2);
 
       expect(sheet.getTextContent()).toMatchSnapshot();
     });
