@@ -34,12 +34,25 @@ class SafeAreaView extends React.Component<ViewProps> {
   }
 }
 
+function getSupportedEnv(): 'env' | 'constant' | null {
+  if (!window.CSS || typeof window.CSS.supports !== 'function') {
+    return null;
+  } else if (window.CSS.supports('top: env(safe-area-inset-top)')) {
+    return 'env';
+  } else if (window.CSS.supports('top: constant(safe-area-inset-top)')) {
+    return 'constant';
+  }
+  return null;
+}
+
+const envType = getSupportedEnv();
+
 const styles = StyleSheet.create({
   root: {
-    paddingTop: 'env(safe-area-inset-top)',
-    paddingRight: 'env(safe-area-inset-right)',
-    paddingBottom: 'env(safe-area-inset-bottom)',
-    paddingLeft: 'env(safe-area-inset-left)'
+    paddingTop: `${envType}(safe-area-inset-top)`,
+    paddingRight: `${envType}(safe-area-inset-right)`,
+    paddingBottom: `${envType}(safe-area-inset-bottom)`,
+    paddingLeft: `${envType}(safe-area-inset-left)`
   }
 });
 
