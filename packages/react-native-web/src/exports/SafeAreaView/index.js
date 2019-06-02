@@ -8,6 +8,7 @@
  * @flow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -34,12 +35,24 @@ class SafeAreaView extends React.Component<ViewProps> {
   }
 }
 
+const cssFunction: 'constant' | 'env' = (function() {
+  if (
+    canUseDOM &&
+    window.CSS &&
+    window.CSS.supports &&
+    window.CSS.supports('top: constant(safe-area-inset-top)')
+  ) {
+    return 'constant';
+  }
+  return 'env';
+})();
+
 const styles = StyleSheet.create({
   root: {
-    paddingTop: 'env(safe-area-inset-top)',
-    paddingRight: 'env(safe-area-inset-right)',
-    paddingBottom: 'env(safe-area-inset-bottom)',
-    paddingLeft: 'env(safe-area-inset-left)'
+    paddingTop: `${cssFunction}(safe-area-inset-top)`,
+    paddingRight: `${cssFunction}(safe-area-inset-right)`,
+    paddingBottom: `${cssFunction}(safe-area-inset-bottom)`,
+    paddingLeft: `${cssFunction}(safe-area-inset-left)`
   }
 });
 
