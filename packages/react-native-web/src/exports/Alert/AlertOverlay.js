@@ -16,7 +16,7 @@ export default class AlertOverlay extends Component {
 
   constructor() {
     super();
-    this.bg = React.createRef();
+    this._onClickOut = this._onClickOut.bind(this);
   }
 
   render() {
