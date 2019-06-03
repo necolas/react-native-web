@@ -54,7 +54,6 @@ export default class AlertOverlay extends Component {
   }
 
   componentDidMount() {
-    this.setState({ inTransition: true });
     this.bg = document.querySelector('[data-alert=bg]');
 
     Animated.timing(this.props.animatedValue, {
