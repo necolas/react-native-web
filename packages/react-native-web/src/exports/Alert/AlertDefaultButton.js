@@ -24,7 +24,7 @@ export default function AlertDefaultButton(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  buttonWrapper: {
     marginTop: 10
   },
 
