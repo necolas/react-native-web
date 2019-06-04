@@ -10,8 +10,14 @@ export default function AlertDefaultButton(props) {
     color = 'red';
   }
 
+  const wrapperStyles = [
+    styles.buttonWrapper,
+    !props.index && styles.containerFirst,
+    props.customStyles.buttonWrapper
+  ];
+
   return (
-    <View style={[styles.container, !props.index && styles.containerFirst]}>
+    <View style={wrapperStyles}>
       <Button color={color} onPress={props.onPress} title={props.text} />
     </View>
   );
@@ -28,6 +34,7 @@ const styles = StyleSheet.create({
 });
 
 AlertDefaultButton.propTypes = {
+  customStyles: PropTypes.object,
   index: PropTypes.number,
   onPress: PropTypes.func,
   text: PropTypes.string,

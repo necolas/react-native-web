@@ -5,13 +5,15 @@ import View from '../View';
 import StyleSheet from '../StyleSheet';
 
 export default function AlertDefaultComponent(props) {
+  const customStyles = props.customStyles;
+
   return (
-    <View style={styles.container}>
-      <View style={styles.titleWrapper}>
-        <Text style={styles.title}>{props.title}</Text>
+    <View style={[styles.alertWrapper, customStyles.alertWrapper]}>
+      <View style={[styles.titleWrapper, customStyles.titleWrapper]}>
+        <Text style={[styles.title, customStyles.title]}>{props.title}</Text>
       </View>
-      <View style={styles.messageWrapper}>
-        <Text style={styles.message}>{props.message}</Text>
+      <View style={[styles.messageWrapper, customStyles.messageWrapper]}>
+        <Text style={[styles.message, customStyles.message]}>{props.message}</Text>
       </View>
       {renderButtons(props)}
     </View>
@@ -21,6 +23,7 @@ export default function AlertDefaultComponent(props) {
 AlertDefaultComponent.propTypes = {
   Button: PropTypes.oneOfType([PropTypes.instanceOf(Component), PropTypes.func]),
   buttons: PropTypes.array,
+  customStyles: PropTypes.object,
   message: PropTypes.string,
   title: PropTypes.string
 };
@@ -28,19 +31,29 @@ AlertDefaultComponent.propTypes = {
 function renderButtons(props) {
   const Button = props.Button;
   const components = props.buttons.map((b, i) => (
-    <Button index={i} key={'b' + i} onPress={b.onPress} text={b.text} type={b.type} />
+    <Button
+      customStyles={props.customStyles}
+      index={i}
+      key={'b' + i}
+      onPress={b.onPress}
+      text={b.text}
+      type={b.type}
+    />
   ));
 
-  return <View style={styles.buttonsWrapper}>{components}</View>;
+  return (
+    <View style={[styles.buttonsWrapper, props.customStyles.buttonsWrapper]}>{components}</View>
+  );
 }
 
 renderButtons.propTypes = {
   Button: PropTypes.element,
-  buttons: PropTypes.array
+  buttons: PropTypes.array,
+  customStyles: PropTypes.object
 };
 
 const styles = StyleSheet.create({
-  container: {
+  alertWrapper: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 5,

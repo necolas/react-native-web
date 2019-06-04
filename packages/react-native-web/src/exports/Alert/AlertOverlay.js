@@ -10,8 +10,13 @@ export default class AlertOverlay extends Component {
     Alert: PropTypes.oneOfType([PropTypes.instanceOf(Component), PropTypes.func]),
     animatedValue: PropTypes.object,
     buttons: PropTypes.array,
+    customStyles: PropTypes.object,
     onClose: PropTypes.func,
     options: PropTypes.object
+  };
+
+  static defaultProps = {
+    customStyles: {}
   };
 
   constructor() {
@@ -21,14 +26,18 @@ export default class AlertOverlay extends Component {
 
   render() {
     const { Alert, ...others } = this.props;
+    const customStyles = this.props.customStyles;
 
     others.buttons = this.getOverridenButtons();
 
     return (
       <TouchableWithoutFeedback onPressIn={this._onClickOut}>
-        <View onWheel={this._preventBGScroll} style={styles.container}>
+        <View onWheel={this._preventBGScroll} style={[styles.wrapper, customStyles.wrapper]}>
           <View accessible={true} data-focustrap="alert" />
-          <Animated.View data-alert="bg" style={[styles.overlay, this.getAnimatedStyles()]}>
+          <Animated.View
+            data-alert="bg"
+            style={[styles.overlay, this.getAnimatedStyles(), customStyles.overlay]}
+          >
             <Alert {...others} />
           </Animated.View>
         </View>
@@ -124,7 +133,7 @@ export default class AlertOverlay extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     position: 'fixed',
     top: 0,
     bottom: 0,
@@ -144,6 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    willChange: 'content'
+    willChange: 'transform, opacity'
   }
 });

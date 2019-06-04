@@ -1,7 +1,7 @@
 import StyleSheet from '../StyleSheet';
 
 const styles = StyleSheet.create({
-  container: {},
+  wrapper: {},
   overlay: {},
   alertWrapper: {},
   titleWrapper: {},

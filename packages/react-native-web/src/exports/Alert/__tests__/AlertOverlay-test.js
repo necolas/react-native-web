@@ -12,7 +12,8 @@ const defaultProps = {
   message: 'Message',
   Alert: AlertDefaultComponent,
   Button: AlertDefaultButton,
-  options: { cancelable: true, onDismiss: () => {} }
+  options: { cancelable: true, onDismiss: () => {} },
+  customStyles: {}
 };
 
 function renderOverlay(customProps = {}) {
@@ -50,6 +51,7 @@ describe('<AlertOverlay>', () => {
     expect(alertProps.buttons.length).toBe(defaultProps.buttons.length);
     expect(alertProps.buttons[0].text).toBe(defaultProps.buttons[0].text);
     expect(alertProps.Button).toBe(defaultProps.Button);
+    expect(alertProps.customStyles).toBe(defaultProps.customStyles);
   });
 
   test('click on the overlay layer should dismiss the alert', () => {
@@ -121,6 +123,48 @@ describe('<AlertOverlay>', () => {
     expect(props.options.onDismiss.mock.calls.length).toBe(0);
   });
 
+  test('pressing on ESC key should dismiss the alert', () => {
+    jest.useFakeTimers();
+
+    const props = {
+      onClose: jest.fn(),
+      options: {
+        cancelable: true,
+        onDismiss: jest.fn()
+      }
+    };
+
+    renderOverlay(props);
+    const event = new KeyboardEvent('keydown', { which: 27 }); // eslint-disable-line
+    document.dispatchEvent(event);
+
+    jest.runAllTimers();
+
+    expect(props.onClose.mock.calls.length).toBe(1);
+    expect(props.options.onDismiss.mock.calls.length).toBe(1);
+  });
+
+  test('pressing on ESC key should NOT dismiss the alert if cancelable=false', () => {
+    jest.useFakeTimers();
+
+    const props = {
+      onClose: jest.fn(),
+      options: {
+        cancelable: false,
+        onDismiss: jest.fn()
+      }
+    };
+
+    renderOverlay(props);
+    const event = new KeyboardEvent('keydown', { which: 27 }); // eslint-disable-line
+    document.dispatchEvent(event);
+
+    jest.runAllTimers();
+
+    expect(props.onClose.mock.calls.length).toBe(0);
+    expect(props.options.onDismiss.mock.calls.length).toBe(0);
+  });
+
   test('clicking a button should call the action', () => {
     const onPress1 = jest.fn();
     const onPress2 = jest.fn();
@@ -149,5 +193,29 @@ describe('<AlertOverlay>', () => {
     expect(onClose.mock.calls.length).toBe(1);
   });
 
-  test('');
+  test('custom styles must be applied to the overlay wrapper', () => {
+    const wrapperStyle = {};
+    const wrapper = renderOverlay({
+      customStyles: {
+        wrapper: wrapperStyle
+      }
+    });
+
+    const overlay = wrapper.find('View').first();
+    const styles = overlay.props().style[1];
+    expect(styles[styles.length - 1]).toBe(wrapperStyle);
+  });
+
+  test('custom styles must be applied to the overlay background', () => {
+    const overlayStyle = {};
+    const wrapper = renderOverlay({
+      customStyles: {
+        overlay: overlayStyle
+      }
+    });
+
+    const overlay = wrapper.find(Animated.View).first();
+    const styles = overlay.props().style;
+    expect(styles[styles.length - 1]).toBe(overlayStyle);
+  });
 });
