@@ -5,7 +5,7 @@ export default class AlertExample extends Component {
   render() {
     return (
       <View>
-        <Button onPress={this.openAlert} title="Open alert" />
+        <Button onPress={this.openAlert} title="Open default alert" />
       </View>
     );
   }
