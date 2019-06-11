@@ -91,7 +91,7 @@ function addURLParamter() {
   if (getURLParameter()) return;
 
   const href = window.location.href;
-  const link = href.indexOf('?') === -1 ? '&' : '?';
+  const link = href.indexOf('?') === -1 ? '?' : '&';
   window.history.pushState({}, '', `${href}${link}${URL_PARAM}`);
 }
 

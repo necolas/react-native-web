@@ -102,13 +102,17 @@ export function showBackgroundToScreeReaders() {
 
 let prevBodyOF, prevBodyMR;
 export function disableBackgroundScroll() {
-  const scrollBarWidth = window.innerWidth - ((document.body && document.body.clientWidth) || 0);
   const style = body().style;
   prevBodyOF = style.overflow;
   prevBodyMR = style.marginRight;
-
   style.overflow = 'hidden';
-  style.marginRight = `${scrollBarWidth + prevBodyMR}px`;
+
+  const html = document && document.children && document.children[0];
+  const b = document.body;
+  if (html && b) {
+    const scrollBarWidth = html.getBoundingClientRect().width - (b.clientWidth || 0);
+    style.marginRight = `${scrollBarWidth + prevBodyMR}px`;
+  }
 }
 
 export function enableBackgroundScroll() {
