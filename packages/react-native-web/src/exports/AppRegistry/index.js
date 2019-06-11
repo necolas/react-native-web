@@ -96,7 +96,7 @@ export default class AppRegistry {
       params.rootTag = `#${params.rootTag.id}`;
 
       console.log(
-        `Running application "${appKey}" with appParams: ${JSON.stringify(params)}.\n` +
+        `Running application "${appKey}" with appParams: ${params}.\n` +
           `Development-level warnings: ${isDevelopment ? 'ON' : 'OFF'}.\n` +
           `Performance optimizations: ${isDevelopment ? 'OFF' : 'ON'}.`
       );
