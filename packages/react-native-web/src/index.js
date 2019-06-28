@@ -70,7 +70,6 @@ import PointPropType from './exports/PointPropType';
 // compat (components)
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import InputAccessoryView from './exports/InputAccessoryView';
-import SnapshotViewIOS from './exports/SnapshotViewIOS';
 import TabBarIOS from './exports/TabBarIOS';
 import ToastAndroid from './exports/ToastAndroid';
 import ToolbarAndroid from './exports/ToolbarAndroid';
@@ -159,7 +158,6 @@ export {
   // compat (components)
   DrawerLayoutAndroid,
   InputAccessoryView,
-  SnapshotViewIOS,
   TabBarIOS,
   ToastAndroid,
   ToolbarAndroid,
