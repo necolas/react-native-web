@@ -152,7 +152,6 @@ React Native v0.55
 | TouchableWithoutFeedback | ✓      |  |
 | View                     | ✓      |  |
 | VirtualizedList          | ✓      |  |
-| WebView                  | ✘      | Not started ([1025](https://github.com/necolas/react-native-web/issues/1025)). |
 | YellowBox                | (✓)    | Mock. No YellowBox functionality. |
 
 ### Modules
