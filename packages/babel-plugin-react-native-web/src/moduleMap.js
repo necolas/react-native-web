@@ -37,7 +37,6 @@ module.exports = {
   Platform: true,
   PointPropType: true,
   ProgressBar: true,
-  PushNotificationIOS: true,
   RefreshControl: true,
   SafeAreaView: true,
   ScrollView: true,

@@ -80,7 +80,6 @@ import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
 import PermissionsAndroid from './exports/PermissionsAndroid';
-import PushNotificationIOS from './exports/PushNotificationIOS';
 import Settings from './exports/Settings';
 import StatusBarIOS from './exports/StatusBarIOS';
 import Systrace from './exports/Systrace';
@@ -172,7 +171,6 @@ export {
   WebView,
   // compat (apis)
   PermissionsAndroid,
-  PushNotificationIOS,
   Settings,
   StatusBarIOS,
   Systrace,
