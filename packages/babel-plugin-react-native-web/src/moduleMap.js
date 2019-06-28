@@ -41,7 +41,6 @@ module.exports = {
   SafeAreaView: true,
   ScrollView: true,
   SectionList: true,
-  SegmentedControlIOS: true,
   Settings: true,
   Share: true,
   Slider: true,

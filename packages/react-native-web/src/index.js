@@ -71,7 +71,6 @@ import PointPropType from './exports/PointPropType';
 // compat (components)
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import InputAccessoryView from './exports/InputAccessoryView';
-import SegmentedControlIOS from './exports/SegmentedControlIOS';
 import SnapshotViewIOS from './exports/SnapshotViewIOS';
 import TabBarIOS from './exports/TabBarIOS';
 import ToastAndroid from './exports/ToastAndroid';
@@ -162,7 +161,6 @@ export {
   // compat (components)
   DrawerLayoutAndroid,
   InputAccessoryView,
-  SegmentedControlIOS,
   SnapshotViewIOS,
   TabBarIOS,
   ToastAndroid,
