@@ -27,7 +27,6 @@ module.exports = {
   KeyboardAvoidingView: true,
   LayoutAnimation: true,
   Linking: true,
-  ListView: true,
   MaskedViewIOS: true,
   Modal: true,
   NativeEventEmitter: true,
