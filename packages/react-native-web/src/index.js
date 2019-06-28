@@ -71,7 +71,6 @@ import EdgeInsetsPropType from './exports/EdgeInsetsPropType';
 import PointPropType from './exports/PointPropType';
 
 // compat (components)
-import DatePickerIOS from './exports/DatePickerIOS';
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import ImageEditor from './exports/ImageEditor';
 import ImageStore from './exports/ImageStore';
@@ -89,7 +88,6 @@ import ToolbarAndroid from './exports/ToolbarAndroid';
 import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
-import DatePickerAndroid from './exports/DatePickerAndroid';
 import ImagePickerIOS from './exports/ImagePickerIOS';
 import PermissionsAndroid from './exports/PermissionsAndroid';
 import PushNotificationIOS from './exports/PushNotificationIOS';
@@ -175,7 +173,6 @@ export {
   EdgeInsetsPropType,
   PointPropType,
   // compat (components)
-  DatePickerIOS,
   DrawerLayoutAndroid,
   ImageEditor,
   ImageStore,
@@ -193,7 +190,6 @@ export {
   ViewPagerAndroid,
   WebView,
   // compat (apis)
-  DatePickerAndroid,
   ImagePickerIOS,
   PermissionsAndroid,
   PushNotificationIOS,

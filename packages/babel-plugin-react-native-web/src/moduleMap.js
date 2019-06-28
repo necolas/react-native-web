@@ -11,8 +11,6 @@ module.exports = {
   CheckBox: true,
   Clipboard: true,
   ColorPropType: true,
-  DatePickerAndroid: true,
-  DatePickerIOS: true,
   DeviceEventEmitter: true,
   DeviceInfo: true,
   Dimensions: true,
