@@ -63,7 +63,6 @@ module.exports = {
   UIManager: true,
   Vibration: true,
   View: true,
-  ViewPagerAndroid: true,
   ViewPropTypes: true,
   VirtualizedList: true,
   WebView: true,

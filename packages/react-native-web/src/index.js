@@ -71,7 +71,6 @@ import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import InputAccessoryView from './exports/InputAccessoryView';
 import TabBarIOS from './exports/TabBarIOS';
 import ToastAndroid from './exports/ToastAndroid';
-import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
 import PermissionsAndroid from './exports/PermissionsAndroid';
@@ -155,7 +154,6 @@ export {
   InputAccessoryView,
   TabBarIOS,
   ToastAndroid,
-  ViewPagerAndroid,
   WebView,
   // compat (apis)
   PermissionsAndroid,
