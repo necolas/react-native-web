@@ -21,7 +21,6 @@ module.exports = {
   I18nManager: true,
   Image: true,
   ImageBackground: true,
-  ImageStore: true,
   InputAccessoryView: true,
   InteractionManager: true,
   Keyboard: true,

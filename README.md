@@ -176,7 +176,6 @@ React Native v0.55
 | EdgeInsetsPropType       | ✓      |  |
 | Geolocation              | ✓      |  |
 | I18nManager              | ✓      | Includes additional support for runtime switch to RTL. |
-| ImageStore               | ✘      | No equivalent web APIs. |
 | InteractionManager       | (✓)    |  |
 | Keyboard                 | (✓)    | Mock. |
 | LayoutAnimation          | (✓)    | Missing translation to web animations. |
