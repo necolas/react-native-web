@@ -13,7 +13,6 @@ import Alert from './exports/Alert';
 import Animated from './exports/Animated';
 import AppRegistry from './exports/AppRegistry';
 import AppState from './exports/AppState';
-import AsyncStorage from './exports/AsyncStorage';
 import BackHandler from './exports/BackHandler';
 import Clipboard from './exports/Clipboard';
 import DeviceInfo from './exports/DeviceInfo';
@@ -122,7 +121,6 @@ export {
   Animated,
   AppRegistry,
   AppState,
-  AsyncStorage,
   BackHandler,
   Clipboard,
   DeviceInfo,

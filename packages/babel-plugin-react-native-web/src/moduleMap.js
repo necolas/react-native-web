@@ -6,7 +6,6 @@ module.exports = {
   Animated: true,
   AppRegistry: true,
   AppState: true,
-  AsyncStorage: true,
   BackHandler: true,
   Button: true,
   CameraRoll: true,
