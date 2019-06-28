@@ -15,9 +15,9 @@ import React from 'react';
 import ViewStylePropTypes from '../../../exports/View/ViewStylePropTypes';
 import invariant from 'fbjs/lib/invariant';
 
-function createAnimatedComponent(Component: any): any {
+function createAnimatedComponent(Component: any, defaultProps: any): any {
   invariant(
-    typeof Component === 'string' ||
+    typeof Component !== 'function' ||
       (Component.prototype && Component.prototype.isReactComponent),
     '`createAnimatedComponent` does not support stateless functional components; ' +
       'use a class component instead.',
@@ -29,13 +29,11 @@ function createAnimatedComponent(Component: any): any {
     _prevComponent: any;
     _propsAnimated: AnimatedProps;
     _eventDetachers: Array<Function> = [];
-    _setComponentRef: Function;
 
     static __skipSetNativeProps_FOR_TESTS_ONLY = false;
 
     constructor(props: Object) {
       super(props);
-      this._setComponentRef = this._setComponentRef.bind(this);
     }
 
     componentWillUnmount() {
@@ -150,23 +148,22 @@ function createAnimatedComponent(Component: any): any {
       const props = this._propsAnimated.__getValue();
       return (
         <Component
+          {...defaultProps}
           {...props}
           ref={this._setComponentRef}
           // The native driver updates views directly through the UI thread so we
           // have to make sure the view doesn't get optimized away because it cannot
           // go through the NativeViewHierarchyManager since it operates on the shadow
           // thread.
-          collapsable={
-            this._propsAnimated.__isNative ? false : props.collapsable
-          }
+          collapsable={false}
         />
       );
     }
 
-    _setComponentRef(c) {
+    _setComponentRef = c => {
       this._prevComponent = this._component;
       this._component = c;
-    }
+    };
 
     // A third party library can use getNode()
     // to get the node reference of the decorated component

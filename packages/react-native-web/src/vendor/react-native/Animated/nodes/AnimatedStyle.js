@@ -96,20 +96,22 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   __makeNative() {
-    super.__makeNative();
     for (const key in this._style) {
       const value = this._style[key];
       if (value instanceof AnimatedNode) {
         value.__makeNative();
       }
     }
+    super.__makeNative();
   }
 
   __getNativeConfig(): Object {
     const styleConfig = {};
     for (const styleKey in this._style) {
       if (this._style[styleKey] instanceof AnimatedNode) {
-        styleConfig[styleKey] = this._style[styleKey].__getNativeTag();
+        const style = this._style[styleKey];
+        style.__makeNative();
+        styleConfig[styleKey] = style.__getNativeTag();
       }
       // Non-animated styles are set using `setNativeProps`, no need
       // to pass those as a part of the node config
