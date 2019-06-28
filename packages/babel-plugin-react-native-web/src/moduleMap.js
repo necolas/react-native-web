@@ -44,7 +44,6 @@ module.exports = {
   Settings: true,
   Share: true,
   StatusBar: true,
-  StatusBarIOS: true,
   StyleSheet: true,
   SwipeableFlatList: true,
   SwipeableListView: true,

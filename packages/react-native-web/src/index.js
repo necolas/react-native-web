@@ -78,7 +78,6 @@ import WebView from './exports/WebView';
 // compat (apis)
 import PermissionsAndroid from './exports/PermissionsAndroid';
 import Settings from './exports/Settings';
-import StatusBarIOS from './exports/StatusBarIOS';
 import Systrace from './exports/Systrace';
 import TimePickerAndroid from './exports/TimePickerAndroid';
 import TVEventHandler from './exports/TVEventHandler';
@@ -166,7 +165,6 @@ export {
   // compat (apis)
   PermissionsAndroid,
   Settings,
-  StatusBarIOS,
   Systrace,
   TimePickerAndroid,
   TVEventHandler,
