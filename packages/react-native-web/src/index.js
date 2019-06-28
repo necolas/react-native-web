@@ -49,7 +49,6 @@ import ScrollView from './exports/ScrollView';
 import SectionList from './exports/SectionList';
 import StatusBar from './exports/StatusBar';
 import SwipeableFlatList from './exports/SwipeableFlatList';
-import SwipeableListView from './exports/SwipeableListView';
 import Switch from './exports/Switch';
 import Text from './exports/Text';
 import TextInput from './exports/TextInput';
@@ -138,7 +137,6 @@ export {
   SectionList,
   StatusBar,
   SwipeableFlatList,
-  SwipeableListView,
   Switch,
   Text,
   TextInput,

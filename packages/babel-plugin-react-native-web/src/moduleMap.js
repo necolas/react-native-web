@@ -46,7 +46,6 @@ module.exports = {
   StatusBar: true,
   StyleSheet: true,
   SwipeableFlatList: true,
-  SwipeableListView: true,
   Switch: true,
   Systrace: true,
   TVEventHandler: true,
