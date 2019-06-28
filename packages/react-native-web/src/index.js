@@ -90,7 +90,6 @@ import ToolbarAndroid from './exports/ToolbarAndroid';
 import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
-import ActionSheetIOS from './exports/ActionSheetIOS';
 import AlertIOS from './exports/AlertIOS';
 import CameraRoll from './exports/CameraRoll';
 import DatePickerAndroid from './exports/DatePickerAndroid';
@@ -198,7 +197,6 @@ export {
   ViewPagerAndroid,
   WebView,
   // compat (apis)
-  ActionSheetIOS,
   AlertIOS,
   CameraRoll,
   DatePickerAndroid,
