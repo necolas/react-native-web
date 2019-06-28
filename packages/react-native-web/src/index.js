@@ -72,7 +72,6 @@ import PointPropType from './exports/PointPropType';
 
 // compat (components)
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
-import ImageEditor from './exports/ImageEditor';
 import ImageStore from './exports/ImageStore';
 import InputAccessoryView from './exports/InputAccessoryView';
 import MaskedViewIOS from './exports/MaskedViewIOS';
@@ -174,7 +173,6 @@ export {
   PointPropType,
   // compat (components)
   DrawerLayoutAndroid,
-  ImageEditor,
   ImageStore,
   InputAccessoryView,
   MaskedViewIOS,
