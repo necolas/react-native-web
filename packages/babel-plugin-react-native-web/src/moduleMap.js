@@ -30,7 +30,6 @@ module.exports = {
   Modal: true,
   NativeEventEmitter: true,
   NativeModules: true,
-  NavigatorIOS: true,
   NetInfo: true,
   PanResponder: true,
   PermissionsAndroid: true,
