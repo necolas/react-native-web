@@ -24,7 +24,6 @@ import InteractionManager from './exports/InteractionManager';
 import LayoutAnimation from './exports/LayoutAnimation';
 import Linking from './exports/Linking';
 import NativeEventEmitter from './exports/NativeEventEmitter';
-import NetInfo from './exports/NetInfo';
 import PanResponder from './exports/PanResponder';
 import PixelRatio from './exports/PixelRatio';
 import Platform from './exports/Platform';
@@ -123,7 +122,6 @@ export {
   LayoutAnimation,
   Linking,
   NativeEventEmitter,
-  NetInfo,
   PanResponder,
   PixelRatio,
   Platform,

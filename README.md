@@ -182,7 +182,6 @@ React Native v0.55
 | NativeEventEmitter       | ✓      |  |
 | NativeMethodsMixin       | ✓      |  |
 | NativeModules            | (✓)    | Mocked. Missing ability to load native modules. |
-| NetInfo                  | ✓      | Missing functionality to detect expensive connections as there are no equivalent web APIs. |
 | PanResponder             | ✓      |  |
 | PixelRatio               | ✓      |  |
 | Platform                 | ✓      |  |
