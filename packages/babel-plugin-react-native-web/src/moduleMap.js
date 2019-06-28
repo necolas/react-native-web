@@ -43,7 +43,6 @@ module.exports = {
   SectionList: true,
   Settings: true,
   Share: true,
-  Slider: true,
   SnapshotViewIOS: true,
   StatusBar: true,
   StatusBarIOS: true,

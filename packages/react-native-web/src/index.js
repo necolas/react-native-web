@@ -47,7 +47,6 @@ import RefreshControl from './exports/RefreshControl';
 import SafeAreaView from './exports/SafeAreaView';
 import ScrollView from './exports/ScrollView';
 import SectionList from './exports/SectionList';
-import Slider from './exports/Slider';
 import StatusBar from './exports/StatusBar';
 import SwipeableFlatList from './exports/SwipeableFlatList';
 import SwipeableListView from './exports/SwipeableListView';
@@ -139,7 +138,6 @@ export {
   SafeAreaView,
   ScrollView,
   SectionList,
-  Slider,
   StatusBar,
   SwipeableFlatList,
   SwipeableListView,

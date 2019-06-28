@@ -140,7 +140,6 @@ React Native v0.55
 | SafeAreaView             | ✓      |  |
 | ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)). |
 | SectionList              | ✓      |  |
-| Slider                   | ✘      | Not started ([#1022](https://github.com/necolas/react-native-web/issues/1022)). |
 | StatusBar                | (✓)    | Mock. No equivalent web APIs. |
 | SwipeableFlatList        | ✓      |  |
 | SwipeableListView        | ✓      |  |
