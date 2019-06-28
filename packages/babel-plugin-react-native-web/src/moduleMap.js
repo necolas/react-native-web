@@ -8,7 +8,6 @@ module.exports = {
   AppState: true,
   BackHandler: true,
   Button: true,
-  CameraRoll: true,
   CheckBox: true,
   Clipboard: true,
   ColorPropType: true,

@@ -89,7 +89,6 @@ import ToolbarAndroid from './exports/ToolbarAndroid';
 import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
-import CameraRoll from './exports/CameraRoll';
 import DatePickerAndroid from './exports/DatePickerAndroid';
 import ImagePickerIOS from './exports/ImagePickerIOS';
 import PermissionsAndroid from './exports/PermissionsAndroid';
@@ -194,7 +193,6 @@ export {
   ViewPagerAndroid,
   WebView,
   // compat (apis)
-  CameraRoll,
   DatePickerAndroid,
   ImagePickerIOS,
   PermissionsAndroid,
