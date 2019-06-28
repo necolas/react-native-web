@@ -33,7 +33,6 @@ module.exports = {
   PanResponder: true,
   PermissionsAndroid: true,
   Picker: true,
-  PickerIOS: true,
   PixelRatio: true,
   Platform: true,
   PointPropType: true,

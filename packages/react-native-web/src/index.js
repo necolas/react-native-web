@@ -71,7 +71,6 @@ import PointPropType from './exports/PointPropType';
 // compat (components)
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import InputAccessoryView from './exports/InputAccessoryView';
-import PickerIOS from './exports/PickerIOS';
 import ProgressBarAndroid from './exports/ProgressBarAndroid';
 import ProgressViewIOS from './exports/ProgressViewIOS';
 import SegmentedControlIOS from './exports/SegmentedControlIOS';
@@ -166,7 +165,6 @@ export {
   // compat (components)
   DrawerLayoutAndroid,
   InputAccessoryView,
-  PickerIOS,
   ProgressBarAndroid,
   ProgressViewIOS,
   SegmentedControlIOS,
