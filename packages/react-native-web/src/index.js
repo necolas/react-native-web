@@ -87,7 +87,6 @@ import ToolbarAndroid from './exports/ToolbarAndroid';
 import ViewPagerAndroid from './exports/ViewPagerAndroid';
 import WebView from './exports/WebView';
 // compat (apis)
-import ImagePickerIOS from './exports/ImagePickerIOS';
 import PermissionsAndroid from './exports/PermissionsAndroid';
 import PushNotificationIOS from './exports/PushNotificationIOS';
 import Settings from './exports/Settings';
@@ -188,7 +187,6 @@ export {
   ViewPagerAndroid,
   WebView,
   // compat (apis)
-  ImagePickerIOS,
   PermissionsAndroid,
   PushNotificationIOS,
   Settings,

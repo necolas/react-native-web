@@ -21,7 +21,6 @@ module.exports = {
   I18nManager: true,
   Image: true,
   ImageBackground: true,
-  ImagePickerIOS: true,
   ImageStore: true,
   InputAccessoryView: true,
   InteractionManager: true,
