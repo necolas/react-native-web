@@ -79,7 +79,6 @@ import Settings from './exports/Settings';
 import Systrace from './exports/Systrace';
 import TimePickerAndroid from './exports/TimePickerAndroid';
 import TVEventHandler from './exports/TVEventHandler';
-import VibrationIOS from './exports/VibrationIOS';
 
 // plugins
 import DeviceEventEmitter from './exports/DeviceEventEmitter';
@@ -164,7 +163,6 @@ export {
   Systrace,
   TimePickerAndroid,
   TVEventHandler,
-  VibrationIOS,
   // plugins
   DeviceEventEmitter
 };
