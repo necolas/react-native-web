@@ -520,6 +520,8 @@ exports.examples = [
     description: 'The `resizeMode` style prop controls how the image is ' +
       'rendered within the frame.',
     render: function() {
+      // Check resizeMode of class Image
+      var resizeMode = Image.resizeMode || null;
       return (
         <View>
           {[smallImage, fullImage].map((image, index) => {
@@ -532,7 +534,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.contain}
+                    resizeMode={resizeMode ? resizeMode.contain : 'contain'}
                     source={image}
                   />
                 </View>
@@ -542,7 +544,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.cover}
+                    resizeMode={resizeMode ? resizeMode.cover : 'cover'}
                     source={image}
                   />
                 </View>
@@ -554,7 +556,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.stretch}
+                    resizeMode={resizeMode ? resizeMode.stretch : 'stretch'}
                     source={image}
                   />
                 </View>
@@ -565,7 +567,7 @@ exports.examples = [
                     </Text>
                     <Image
                       style={styles.resizeMode}
-                      resizeMode={Image.resizeMode.repeat}
+                      resizeMode={resizeMode ? resizeMode.repeat : 'repeat'}
                       source={image}
                     />
                   </View>
@@ -576,7 +578,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.center}
+                    resizeMode={resizeMode ? resizeMode.center : 'center'}
                     source={image}
                   />
                 </View>
