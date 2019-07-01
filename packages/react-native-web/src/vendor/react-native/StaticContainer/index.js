@@ -1,15 +1,16 @@
 /**
- * Copyright (c) 2015-present, Nicolas Gallagher.
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @format
+ * @flow strict-local
  */
 
-import { any, bool } from 'prop-types';
-import { Children, Component } from 'react';
+'use strict';
+
+import * as React from 'react';
 
 /**
  * Renders static content efficiently by allowing React to short-circuit the
@@ -27,23 +28,28 @@ import { Children, Component } from 'react';
  * React reconciliation.
  */
 
-type Props = {
-  children: any,
-  shouldUpdate: boolean
-};
-
-export default class StaticContainer extends Component<Props> {
-  static propTypes = {
-    children: any.isRequired,
-    shouldUpdate: bool.isRequired
-  };
-
-  shouldComponentUpdate(nextProps: { shouldUpdate: boolean }): boolean {
-    return nextProps.shouldUpdate;
+type Props = $ReadOnly<{|
+  /**
+   * Whether or not this component should update.
+   */
+  shouldUpdate: ?boolean,
+  /**
+   * Content short-circuited by React reconciliation process.
+   */
+  children: React.Node,
+|}>;
+class StaticContainer extends React.Component<Props> {
+  shouldComponentUpdate(nextProps: Props): boolean {
+    return !!nextProps.shouldUpdate;
   }
 
   render() {
     const child = this.props.children;
-    return child === null || child === false ? null : Children.only(child);
+    return child === null || child === false
+      ? null
+      : React.Children.only(child);
   }
 }
+
+export default StaticContainer;
+

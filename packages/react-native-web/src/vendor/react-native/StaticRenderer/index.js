@@ -1,46 +1,38 @@
 /**
- * Copyright (c) 2015-present, Nicolas Gallagher.
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @format
  * @flow
  */
 
-import { Component } from 'react';
-import { bool, func } from 'prop-types';
+'use strict';
 
-/**
- * Renders static content efficiently by allowing React to short-circuit the
- * reconciliation process. This component should be used when you know that a
- * subtree of components will never need to be updated.
- *
- *   const someValue = ...; // We know for certain this value will never change.
- *   return (
- *     <StaticRenderer render={() => <MyComponent value={someValue} />} />
- *   );
- *
- * Typically, you will not need to use this component and should opt for normal
- * React reconciliation.
- */
+import * as React from 'react';
 
-type Props = {
-  render: Function,
-  shouldUpdate: boolean
-};
+type Props = $ReadOnly<{|
+  /**
+   * Indicates whether the render function needs to be called again
+   */
+  shouldUpdate: boolean,
+  /**
+   * () => renderable
+   * A function that returns a renderable component
+   */
+  render: () => React.Node,
+|}>;
 
-export default class StaticRenderer extends Component<Props> {
-  static propTypes = {
-    render: func.isRequired,
-    shouldUpdate: bool.isRequired
-  };
-
-  shouldComponentUpdate(nextProps: { shouldUpdate: boolean }): boolean {
+class StaticRenderer extends React.Component<Props> {
+  shouldComponentUpdate(nextProps: Props): boolean {
     return nextProps.shouldUpdate;
   }
 
-  render() {
+  render(): React.Node {
     return this.props.render();
   }
 }
+
+export default StaticRenderer;
+

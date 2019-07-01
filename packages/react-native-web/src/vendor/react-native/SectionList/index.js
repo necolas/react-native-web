@@ -1,51 +1,28 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  * @format
  */
-import UnimplementedView from '../../../modules/UnimplementedView';
+'use strict';
+
 import Platform from '../../../exports/Platform';
-import React from 'react';
+import * as React from 'react';
 import ScrollView from '../../../exports/ScrollView';
-import VirtualizedSectionList, {
-  type Props as VirtualizedSectionListProps
+import VirtualizedSectionList from '../VirtualizedSectionList';
+
+import type {ViewToken} from '../ViewabilityHelper';
+import type {
+  SectionBase as _SectionBase,
+  Props as VirtualizedSectionListProps,
 } from '../VirtualizedSectionList';
-import type { ViewToken } from '../ViewabilityHelper';
 
 type Item = any;
 
-export type SectionBase<SectionItemT> = {
-  /**
-   * The data for rendering items in this section.
-   */
-  data: $ReadOnlyArray<SectionItemT>,
-  /**
-   * Optional key to keep track of section re-ordering. If you don't plan on re-ordering sections,
-   * the array index will be used by default.
-   */
-  key?: string,
-
-  // Optional props will override list-wide props just for this section.
-  renderItem?: ?(info: {
-    item: SectionItemT,
-    index: number,
-    section: SectionBase<SectionItemT>,
-    separators: {
-      highlight: () => void,
-      unhighlight: () => void,
-      updateProps: (select: 'leading' | 'trailing', newProps: Object) => void,
-    },
-  }) => ?React.Element<any>,
-  ItemSeparatorComponent?: ?React.ComponentType<any>,
-  keyExtractor?: (item: SectionItemT) => string,
-
-  // TODO: support more optional/override props
-  // onViewableItemsChanged?: ...
-};
+export type SectionBase<SectionItemT> = _SectionBase<SectionItemT>;
 
 type RequiredProps<SectionT: SectionBase<any>> = {
   /**
@@ -179,7 +156,10 @@ type OptionalProps<SectionT: SectionBase<any>> = {
    */
   stickySectionHeadersEnabled?: boolean,
 
-  legacyImplementation?: ?boolean,
+  /**
+   * The legacy implementation is no longer supported.
+   */
+  legacyImplementation?: empty,
 };
 
 export type Props<SectionT> = RequiredProps<SectionT> &
@@ -272,7 +252,9 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
     viewOffset?: number,
     viewPosition?: number,
   }) {
-    this._wrapperListRef.scrollToLocation(params);
+    if (this._wrapperListRef != null) {
+      this._wrapperListRef.scrollToLocation(params);
+    }
   }
 
   /**
@@ -320,20 +302,21 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
   }
 
   render() {
-    const List = this.props.legacyImplementation
-      ? UnimplementedView
-      : VirtualizedSectionList;
-    /* $FlowFixMe(>=0.66.0 site=react_native_fb) This comment suppresses an
-     * error found when Flow v0.66 was deployed. To see the error delete this
-     * comment and run Flow. */
-    return <List {...this.props} ref={this._captureRef} />;
+    return (
+      /* $FlowFixMe(>=0.66.0 site=react_native_fb) This comment suppresses an
+       * error found when Flow v0.66 was deployed. To see the error delete this
+       * comment and run Flow. */
+      <VirtualizedSectionList
+        {...this.props}
+        ref={this._captureRef}
+        getItemCount={items => items.length}
+        getItem={(items, index) => items[index]}
+      />
+    );
   }
 
-  _wrapperListRef: VirtualizedSectionList<any>;
+  _wrapperListRef: ?React.ElementRef<typeof VirtualizedSectionList>;
   _captureRef = ref => {
-    /* $FlowFixMe(>=0.53.0 site=react_native_fb,react_native_oss) This comment
-     * suppresses an error when upgrading Flow's support for React. To see the
-     * error delete this comment and run Flow. */
     this._wrapperListRef = ref;
   };
 }

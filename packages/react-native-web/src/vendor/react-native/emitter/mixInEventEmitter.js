@@ -1,23 +1,20 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule mixInEventEmitter
+ * @format
  * @flow
  */
+
 'use strict';
 
 import EventEmitter from './EventEmitter';
 import EventEmitterWithHolding from './EventEmitterWithHolding';
 import EventHolder from './EventHolder';
-import EventValidator from './EventValidator';
 
 import invariant from 'fbjs/lib/invariant';
-/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
- * found when Flow v0.54 was deployed. To see the error delete this comment and
- * run Flow. */
 import keyOf from 'fbjs/lib/keyOf';
 
 import type EmitterSubscription from './EmitterSubscription';
@@ -59,7 +56,7 @@ function mixInEventEmitter(cls: Function | Object, types: Object) {
   if (ctor) {
     invariant(
       ctor === Object || ctor === Function,
-      'Mix EventEmitter into a class, not an instance'
+      'Mix EventEmitter into a class, not an instance',
     );
   }
 
@@ -96,7 +93,7 @@ const EventEmitterMixin = {
     return this.__getEventEmitter().addRetroactiveListener(
       eventType,
       listener,
-      context
+      context,
     );
   },
 
@@ -124,6 +121,7 @@ const EventEmitterMixin = {
     if (!this.__eventEmitter) {
       let emitter = new EventEmitter();
       if (__DEV__) {
+        const EventValidator = require('./EventValidator').default;
         emitter = EventValidator.addValidation(emitter, this.__types);
       }
 
@@ -131,7 +129,7 @@ const EventEmitterMixin = {
       this.__eventEmitter = new EventEmitterWithHolding(emitter, holder);
     }
     return this.__eventEmitter;
-  }
+  },
 };
 
 export default mixInEventEmitter;

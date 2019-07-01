@@ -11,14 +11,11 @@
 'use strict';
 
 import infoLog from '../infoLog';
-/* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
- * found when Flow v0.54 was deployed. To see the error delete this comment and
- * run Flow. */
 import performanceNow from 'fbjs/lib/performanceNow';
 
 type Handler = {
   onIterate?: () => void,
-  onStall: (params: { lastInterval: number, busyTime: number }) => ?string
+  onStall: (params: {lastInterval: number, busyTime: number}) => ?string,
 };
 
 /**
@@ -35,7 +32,7 @@ type Handler = {
  */
 const JSEventLoopWatchdog = {
   getStats: function(): Object {
-    return { stallCount, totalStallTime, longestStall, acceptableBusyTime };
+    return {stallCount, totalStallTime, longestStall, acceptableBusyTime};
   },
   reset: function() {
     infoLog('JSEventLoopWatchdog: reset');
@@ -47,7 +44,7 @@ const JSEventLoopWatchdog = {
   addHandler: function(handler: Handler) {
     handlers.push(handler);
   },
-  install: function({ thresholdMS }: { thresholdMS: number }) {
+  install: function({thresholdMS}: {thresholdMS: number}) {
     acceptableBusyTime = thresholdMS;
     if (installed) {
       return;
@@ -66,7 +63,7 @@ const JSEventLoopWatchdog = {
           `JSEventLoopWatchdog: JS thread busy for ${busyTime}ms. ` +
           `${totalStallTime}ms in ${stallCount} stalls so far. `;
         handlers.forEach(handler => {
-          msg += handler.onStall({ lastInterval, busyTime }) || '';
+          msg += handler.onStall({lastInterval, busyTime}) || '';
         });
         infoLog(msg);
       }
@@ -77,7 +74,7 @@ const JSEventLoopWatchdog = {
       setTimeout(iteration, thresholdMS / 5);
     }
     iteration();
-  }
+  },
 };
 
 let acceptableBusyTime = 0;

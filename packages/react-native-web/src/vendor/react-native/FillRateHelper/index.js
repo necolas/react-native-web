@@ -8,6 +8,8 @@
  * @format
  */
 
+'use strict';
+
 import performanceNow from 'fbjs/lib/performanceNow';
 import warning from 'fbjs/lib/warning';
 

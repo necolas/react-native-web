@@ -1,12 +1,13 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  * @format
  */
+'use strict';
 
 import invariant from 'fbjs/lib/invariant';
 
@@ -120,10 +121,13 @@ class ViewabilityHelper {
     }
     let firstVisible = -1;
     const {first, last} = renderRange || {first: 0, last: itemCount - 1};
-    invariant(
-      last < itemCount,
-      'Invalid render range ' + JSON.stringify({renderRange, itemCount}),
-    );
+    if (last >= itemCount) {
+      console.warn(
+        'Invalid render range computing viewability ' +
+          JSON.stringify({renderRange, itemCount}),
+      );
+      return [];
+    }
     for (let idx = first; idx <= last; idx++) {
       const metrics = getFrameMetrics(idx);
       if (!metrics) {

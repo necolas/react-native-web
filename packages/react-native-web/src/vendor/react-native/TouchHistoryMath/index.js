@@ -1,4 +1,13 @@
-var TouchHistoryMath = {
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
+
+const TouchHistoryMath = {
   /**
    * This code is optimized and not intended to look beautiful. This allows
    * computing of touch centroids that have moved after `touchesChangedAfter`
@@ -19,13 +28,13 @@ var TouchHistoryMath = {
     touchHistory,
     touchesChangedAfter,
     isXAxis,
-    ofCurrent
+    ofCurrent,
   ) {
-    var touchBank = touchHistory.touchBank;
-    var total = 0;
-    var count = 0;
+    const touchBank = touchHistory.touchBank;
+    let total = 0;
+    let count = 0;
 
-    var oneTouchData =
+    const oneTouchData =
       touchHistory.numberActiveTouches === 1
         ? touchHistory.touchBank[touchHistory.indexOfSingleActiveTouch]
         : null;
@@ -39,22 +48,22 @@ var TouchHistoryMath = {
           ofCurrent && isXAxis
             ? oneTouchData.currentPageX
             : ofCurrent && !isXAxis
-              ? oneTouchData.currentPageY
-              : !ofCurrent && isXAxis
-                ? oneTouchData.previousPageX
-                : oneTouchData.previousPageY;
+            ? oneTouchData.currentPageY
+            : !ofCurrent && isXAxis
+            ? oneTouchData.previousPageX
+            : oneTouchData.previousPageY;
         count = 1;
       }
     } else {
-      for (var i = 0; i < touchBank.length; i++) {
-        var touchTrack = touchBank[i];
+      for (let i = 0; i < touchBank.length; i++) {
+        const touchTrack = touchBank[i];
         if (
           touchTrack !== null &&
           touchTrack !== undefined &&
           touchTrack.touchActive &&
           touchTrack.currentTimeStamp >= touchesChangedAfter
         ) {
-          var toAdd = void 0; // Yuck, program temporarily in invalid state.
+          let toAdd; // Yuck, program temporarily in invalid state.
           if (ofCurrent && isXAxis) {
             toAdd = touchTrack.currentPageX;
           } else if (ofCurrent && !isXAxis) {
@@ -74,49 +83,49 @@ var TouchHistoryMath = {
 
   currentCentroidXOfTouchesChangedAfter: function(
     touchHistory,
-    touchesChangedAfter
+    touchesChangedAfter,
   ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       true, // isXAxis
-      true
+      true, // ofCurrent
     );
   },
 
   currentCentroidYOfTouchesChangedAfter: function(
     touchHistory,
-    touchesChangedAfter
+    touchesChangedAfter,
   ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       false, // isXAxis
-      true
+      true, // ofCurrent
     );
   },
 
   previousCentroidXOfTouchesChangedAfter: function(
     touchHistory,
-    touchesChangedAfter
+    touchesChangedAfter,
   ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       true, // isXAxis
-      false
+      false, // ofCurrent
     );
   },
 
   previousCentroidYOfTouchesChangedAfter: function(
     touchHistory,
-    touchesChangedAfter
+    touchesChangedAfter,
   ) {
     return TouchHistoryMath.centroidDimension(
       touchHistory,
       touchesChangedAfter,
       false, // isXAxis
-      false
+      false, // ofCurrent
     );
   },
 
@@ -125,7 +134,7 @@ var TouchHistoryMath = {
       touchHistory,
       0, // touchesChangedAfter
       true, // isXAxis
-      true
+      true, // ofCurrent
     );
   },
 
@@ -134,11 +143,11 @@ var TouchHistoryMath = {
       touchHistory,
       0, // touchesChangedAfter
       false, // isXAxis
-      true
+      true, // ofCurrent
     );
   },
 
-  noCentroid: -1
+  noCentroid: -1,
 };
 
 export default TouchHistoryMath;

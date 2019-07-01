@@ -1,20 +1,22 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @providesModule EventEmitter
+ * @format
  * @noflow
  * @typecheck
  */
+
 'use strict';
 
 import EmitterSubscription from './EmitterSubscription';
 import EventSubscriptionVendor from './EventSubscriptionVendor';
 
-import emptyFunction from 'fbjs/lib/emptyFunction';
 import invariant from 'fbjs/lib/invariant';
+
+const sparseFilterPredicate = () => true;
 
 /**
  * @class EventEmitter
@@ -30,7 +32,6 @@ import invariant from 'fbjs/lib/invariant';
  * more advanced emitter may use an EventHolder and EventFactory.
  */
 class EventEmitter {
-
   _subscriber: EventSubscriptionVendor;
   _currentSubscription: ?EmitterSubscription;
 
@@ -59,12 +60,14 @@ class EventEmitter {
    *   listener
    */
   addListener(
-    eventType: string, listener: Function, context: ?Object): EmitterSubscription {
-
+    eventType: string,
+    listener: Function,
+    context: ?Object,
+  ): EmitterSubscription {
     return (this._subscriber.addSubscription(
       eventType,
-      new EmitterSubscription(this, this._subscriber, listener, context)
-    ) : any);
+      new EmitterSubscription(this, this._subscriber, listener, context),
+    ): any);
   }
 
   /**
@@ -77,7 +80,11 @@ class EventEmitter {
    * @param {*} context - Optional context object to use when invoking the
    *   listener
    */
-  once(eventType: string, listener: Function, context: ?Object): EmitterSubscription {
+  once(
+    eventType: string,
+    listener: Function,
+    context: ?Object,
+  ): EmitterSubscription {
     return this.addListener(eventType, (...args) => {
       this.removeCurrentListener();
       listener.apply(context, args);
@@ -119,7 +126,7 @@ class EventEmitter {
   removeCurrentListener() {
     invariant(
       !!this._currentSubscription,
-      'Not in an emitting cycle; there is no current subscription'
+      'Not in an emitting cycle; there is no current subscription',
     );
     this.removeSubscription(this._currentSubscription);
   }
@@ -131,7 +138,7 @@ class EventEmitter {
   removeSubscription(subscription: EmitterSubscription) {
     invariant(
       subscription.emitter === this,
-      'Subscription does not belong to this emitter.'
+      'Subscription does not belong to this emitter.',
     );
     this._subscriber.removeSubscription(subscription);
   }
@@ -144,12 +151,15 @@ class EventEmitter {
    * @returns {array}
    */
   listeners(eventType: string): [EmitterSubscription] {
-    const subscriptions: ?[EmitterSubscription] = (this._subscriber.getSubscriptionsForType(eventType): any);
+    const subscriptions = this._subscriber.getSubscriptionsForType(eventType);
     return subscriptions
-      ? subscriptions.filter(emptyFunction.thatReturnsTrue).map(
-          function(subscription) {
-            return subscription.listener;
-          })
+      ? subscriptions
+          // We filter out missing entries because the array is sparse.
+          // "callbackfn is called only for elements of the array which actually
+          // exist; it is not called for missing elements of the array."
+          // https://www.ecma-international.org/ecma-262/9.0/index.html#sec-array.prototype.filter
+          .filter(sparseFilterPredicate)
+          .map(subscription => subscription.listener)
       : [];
   }
 
@@ -168,17 +178,17 @@ class EventEmitter {
    *   emitter.emit('someEvent', 'abc'); // logs 'abc'
    */
   emit(eventType: string) {
-    const subscriptions: ?[EmitterSubscription] = (this._subscriber.getSubscriptionsForType(eventType): any);
+    const subscriptions = this._subscriber.getSubscriptionsForType(eventType);
     if (subscriptions) {
       for (let i = 0, l = subscriptions.length; i < l; i++) {
         const subscription = subscriptions[i];
 
         // The subscription may have been removed during this event loop.
-        if (subscription) {
+        if (subscription && subscription.listener) {
           this._currentSubscription = subscription;
           subscription.listener.apply(
             subscription.context,
-            Array.prototype.slice.call(arguments, 1)
+            Array.prototype.slice.call(arguments, 1),
           );
         }
       }
@@ -200,7 +210,7 @@ class EventEmitter {
    *
    */
   removeListener(eventType: String, listener) {
-    const subscriptions: ?[EmitterSubscription] = (this._subscriber.getSubscriptionsForType(eventType): any);
+    const subscriptions = this._subscriber.getSubscriptionsForType(eventType);
     if (subscriptions) {
       for (let i = 0, l = subscriptions.length; i < l; i++) {
         const subscription = subscriptions[i];
