@@ -10,7 +10,13 @@
 
 const Platform = {
   OS: 'web',
-  select: (obj: Object) => ('web' in obj ? obj.web : obj.default)
+  select: (obj: Object) => ('web' in obj ? obj.web : obj.default),
+  get isTesting(): boolean {
+    if (process.env.NODE_DEV === 'test') {
+      return true;
+    }
+    return false;
+  }
 };
 
 export default Platform;
