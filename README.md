@@ -130,7 +130,7 @@ React Native v0.55
 | ActivityIndicator        | ✓      |  |
 | Button                   | ✓      |  |
 | CheckBox                 | ✓      |  |
-| FlatList                 | ✓      |  |
+| FlatList                 | ✓      | Doesn't fully support web (virtualization doesn't work as expected) |
 | Image                    | ✓      | Missing multiple sources ([#515](https://github.com/necolas/react-native-web/issues/515)) and HTTP headers ([#1019](https://github.com/necolas/react-native-web/issues/1019)). |
 | ImageBackground          | ✓      |  |
 | KeyboardAvoidingView     | (✓)    | Mock. No equivalent web APIs. |
