@@ -532,7 +532,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.contain}
+                    resizeMode='contain'
                     source={image}
                   />
                 </View>
@@ -542,7 +542,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.cover}
+                    resizeMode='cover'
                     source={image}
                   />
                 </View>
@@ -554,7 +554,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.stretch}
+                    resizeMode='stretch'
                     source={image}
                   />
                 </View>
@@ -565,7 +565,7 @@ exports.examples = [
                     </Text>
                     <Image
                       style={styles.resizeMode}
-                      resizeMode={Image.resizeMode.repeat}
+                      resizeMode='repeat'
                       source={image}
                     />
                   </View>
@@ -576,7 +576,7 @@ exports.examples = [
                   </Text>
                   <Image
                     style={styles.resizeMode}
-                    resizeMode={Image.resizeMode.center}
+                    resizeMode='center'
                     source={image}
                   />
                 </View>
