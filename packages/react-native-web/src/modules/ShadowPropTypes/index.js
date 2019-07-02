@@ -19,8 +19,7 @@ const ShadowPropTypes = {
     height: numberOrString
   }),
   shadowOpacity: number,
-  shadowRadius: numberOrString,
-  shadowSpread: numberOrString
+  shadowRadius: numberOrString
 };
 
 export default ShadowPropTypes;
