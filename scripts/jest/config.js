@@ -11,7 +11,10 @@ module.exports = {
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages'],
   setupFiles: ['jest-canvas-mock'],
-  setupFilesAfterEnv: [require.resolve('./setupFramework.js')],
+  setupFilesAfterEnv: [
+    '@testing-library/react/cleanup-after-each',
+    require.resolve('./setupFramework.js')
+  ],
   snapshotSerializers: ['enzyme-to-json/serializer'],
   testEnvironment: 'jsdom',
   timers: 'fake'

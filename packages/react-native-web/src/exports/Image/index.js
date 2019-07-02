@@ -20,6 +20,7 @@ import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
+import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
 import { bool, func, number, oneOf, shape } from 'prop-types';
@@ -96,10 +97,6 @@ type State = {
 
 class Image extends Component<*, State> {
   static displayName = 'Image';
-
-  static contextTypes = {
-    isInAParentText: bool
-  };
 
   static propTypes = {
     ...ViewPropTypes,
@@ -198,7 +195,7 @@ class Image extends Component<*, State> {
     this._isMounted = false;
   }
 
-  render() {
+  renderImage(hasTextAncestor) {
     const { shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
@@ -286,12 +283,7 @@ class Image extends Component<*, State> {
         accessibilityLabel={accessibilityLabel}
         accessible={accessible}
         onLayout={this._createLayoutHandler(finalResizeMode)}
-        style={[
-          styles.root,
-          this.context.isInAParentText && styles.inline,
-          imageSizeStyle,
-          flatStyle
-        ]}
+        style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
         testID={testID}
       >
         <View
@@ -306,6 +298,14 @@ class Image extends Component<*, State> {
         {hiddenImage}
         {createTintColorSVG(tintColor, this._filterId)}
       </View>
+    );
+  }
+
+  render() {
+    return (
+      <TextAncestorContext.Consumer>
+        {hasTextAncestor => this.renderImage(hasTextAncestor)}
+      </TextAncestorContext.Consumer>
     );
   }
 

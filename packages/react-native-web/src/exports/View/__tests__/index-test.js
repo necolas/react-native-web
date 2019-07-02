@@ -1,59 +1,52 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import View from '../';
 
 describe('components/View', () => {
-  describe('rendered element', () => {
-    test('is a "div" by default', () => {
-      const component = shallow(<View />);
-      expect(component.type()).toBe('div');
-    });
+  test('default', () => {
+    const { container } = render(<View />);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
-  describe('prop "children"', () => {
-    test('text node throws error (single)', () => {
-      const render = () => shallow(<View>'hello'</View>);
-      expect(render).toThrow();
-    });
+  test('text node throws error (single)', () => {
+    const subject = () => render(<View>hello</View>);
+    expect(subject).toThrow();
+  });
 
-    test('text node throws error (array)', () => {
-      const render = () =>
-        shallow(
-          <View>
-            <View />
-            'hello'
-            <View />
-          </View>
-        );
-      expect(render).toThrow();
-    });
+  test('text node throws error (array)', () => {
+    const subject = () =>
+      render(
+        <View>
+          <View />
+          hello
+          <View />
+        </View>
+      );
+    expect(subject).toThrow();
+  });
 
-    test('non-text is rendered', () => {
-      const children = <View testID="1" />;
-      const component = shallow(<View>{children}</View>);
-      expect(component.contains(children)).toEqual(true);
-    });
+  test('non-text is rendered', () => {
+    const children = <View testID="1" />;
+    const { container } = render(<View>{children}</View>);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "hitSlop"', () => {
     it('renders a span with negative position offsets', () => {
-      const component = shallow(<View hitSlop={{ top: 10, bottom: 10, right: 5, left: 5 }} />);
-      const span = component.find('span');
-      expect(span.length).toBe(1);
-      expect(span.prop('style')).toMatchSnapshot();
+      const { container } = render(<View hitSlop={{ top: 10, bottom: 10, right: 5, left: 5 }} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     it('handles partial offsets', () => {
-      const component = shallow(<View hitSlop={{ top: 10 }} />);
-      const span = component.find('span');
-      expect(span.prop('style')).toMatchSnapshot();
+      const { container } = render(<View hitSlop={{ top: 10 }} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('prop "pointerEvents"', () => {
-    const component = shallow(<View pointerEvents="box-only" />);
-    expect(component.prop('className').indexOf('pointerEvents') > -1).toBe(true);
+    const { container } = render(<View pointerEvents="box-only" />);
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

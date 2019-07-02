@@ -10,32 +10,20 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { bool } from 'prop-types';
-import { Component } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import warning from 'fbjs/lib/warning';
+import React from 'react';
 import StyleSheet from '../StyleSheet';
+import TextAncestorContext from './TextAncestorContext';
 import TextPropTypes from './TextPropTypes';
 
-class Text extends Component<*> {
+class Text extends React.Component<*> {
   static displayName = 'Text';
 
   static propTypes = TextPropTypes;
 
-  static childContextTypes = {
-    isInAParentText: bool
-  };
-
-  static contextTypes = {
-    isInAParentText: bool
-  };
-
-  getChildContext() {
-    return { isInAParentText: true };
-  }
-
-  render() {
+  renderText(hasTextAncestor) {
     const {
       dir,
       numberOfLines,
@@ -60,8 +48,6 @@ class Text extends Component<*> {
       ...otherProps
     } = this.props;
 
-    const { isInAParentText } = this.context;
-
     if (process.env.NODE_ENV !== 'production') {
       warning(this.props.className == null, 'Using the "className" prop on <Text> is deprecated.');
     }
@@ -75,7 +61,7 @@ class Text extends Component<*> {
     otherProps.classList = [
       this.props.className,
       classes.text,
-      this.context.isInAParentText === true && classes.textHasAncestor,
+      hasTextAncestor === true && classes.textHasAncestor,
       numberOfLines === 1 && classes.textOneLine,
       numberOfLines > 1 && classes.textMultiLine
     ];
@@ -88,9 +74,24 @@ class Text extends Component<*> {
       onPress && styles.pressable
     ];
 
-    const component = isInAParentText ? 'span' : 'div';
+    const component = hasTextAncestor ? 'span' : 'div';
 
     return createElement(component, otherProps);
+  }
+
+  render() {
+    return (
+      <TextAncestorContext.Consumer>
+        {hasTextAncestor => {
+          const element = this.renderText(hasTextAncestor);
+          return hasTextAncestor ? (
+            element
+          ) : (
+            <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
+          );
+        }}
+      </TextAncestorContext.Consumer>
+    );
   }
 
   _createEnterHandler(fn) {

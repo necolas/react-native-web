@@ -10,13 +10,13 @@
 
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import { bool } from 'prop-types';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
 import StyleSheet from '../StyleSheet';
+import TextAncestorContext from '../Text/TextAncestorContext';
 import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
 import React, { Component } from 'react';
 
@@ -34,13 +34,9 @@ const calculateHitSlopStyle = hitSlop => {
 class View extends Component<ViewProps> {
   static displayName = 'View';
 
-  static contextTypes = {
-    isInAParentText: bool
-  };
-
   static propTypes = ViewPropTypes;
 
-  render() {
+  renderView(hasTextAncestor) {
     const hitSlop = this.props.hitSlop;
     const supportedProps = filterSupportedProps(this.props);
 
@@ -55,11 +51,9 @@ class View extends Component<ViewProps> {
       });
     }
 
-    const { isInAParentText } = this.context;
-
     supportedProps.classList = [this.props.className, classes.view];
     supportedProps.style = StyleSheet.compose(
-      isInAParentText && styles.inline,
+      hasTextAncestor && styles.inline,
       this.props.style
     );
 
@@ -73,6 +67,14 @@ class View extends Component<ViewProps> {
     }
 
     return createElement('div', supportedProps);
+  }
+
+  render() {
+    return (
+      <TextAncestorContext.Consumer>
+        {hasTextAncestor => this.renderView(hasTextAncestor)}
+      </TextAncestorContext.Consumer>
+    );
   }
 }
 

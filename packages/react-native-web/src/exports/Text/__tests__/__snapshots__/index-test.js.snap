@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Text allows "dir" to be overridden 1`] = `
+<div
+  class="css-text-901oao"
+  dir="rtl"
+/>
+`;
+
+exports[`components/Text default 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text nested 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+>
+  <span
+    class="css-text-901oao css-textHasAncestor-16my406"
+    data-testid="child"
+    dir="auto"
+  />
+</div>
+`;
