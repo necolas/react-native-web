@@ -64,6 +64,7 @@ Object {
     "rules": Array [
       ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
       ".r-scrollbarWidth-2eszeu{overflow:-moz-scrollbars-none;-ms-overflow-style:none}",
+      ".r-scrollbarWidth-2eszeu{scrollbar-width:none;}",
     ],
     "value": "none",
   },
