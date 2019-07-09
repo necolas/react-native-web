@@ -12,13 +12,15 @@ import Image from '../Image';
 import ScrollView from '../ScrollView';
 import Text from '../Text';
 import View from '../View';
+import FlatList from '../FlatList';
 
 const Animated = {
   ...AnimatedImplementation,
   Image: AnimatedImplementation.createAnimatedComponent(Image),
   ScrollView: AnimatedImplementation.createAnimatedComponent(ScrollView),
   View: AnimatedImplementation.createAnimatedComponent(View),
-  Text: AnimatedImplementation.createAnimatedComponent(Text)
+  Text: AnimatedImplementation.createAnimatedComponent(Text),
+  FlatList: AnimatedImplementation.createAnimatedComponent(FlatList)
 };
 
 export default Animated;

@@ -19,6 +19,7 @@ import AnimatedModulo from './nodes/AnimatedModulo';
 import AnimatedMultiplication from './nodes/AnimatedMultiplication';
 import AnimatedNode from './nodes/AnimatedNode';
 import AnimatedProps from './nodes/AnimatedProps';
+import AnimatedSubtraction from './nodes/AnimatedSubtraction';
 import AnimatedTracking from './nodes/AnimatedTracking';
 import AnimatedValue from './nodes/AnimatedValue';
 import AnimatedValueXY from './nodes/AnimatedValueXY';
@@ -48,6 +49,13 @@ const add = function(
 ): AnimatedAddition {
   return new AnimatedAddition(a, b);
 };
+
+const subtract = function(
+  a: AnimatedNode | number,
+  b: AnimatedNode | number,
+): AnimatedSubtraction {
+  return new AnimatedSubtraction(a, b);
+}
 
 const divide = function(
   a: AnimatedNode | number,
@@ -562,6 +570,14 @@ const AnimatedImplementation = {
    * See http://facebook.github.io/react-native/docs/animated.html#add
    */
   add,
+
+  /**
+   * Creates a new Animated value composed by subtracting the second Animated
+   * value from the first Animated value.
+   *
+   * See https://facebook.github.io/react-native/docs/animated#subtract
+   */
+  subtract,
 
   /**
    * Creates a new Animated value composed by dividing the first Animated value
