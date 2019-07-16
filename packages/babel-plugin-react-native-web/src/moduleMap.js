@@ -17,6 +17,7 @@ module.exports = {
   ColorPropType: true,
   DatePickerAndroid: true,
   DatePickerIOS: true,
+  DeviceEventEmitter: true,
   DeviceInfo: true,
   Dimensions: true,
   DrawerLayoutAndroid: true,

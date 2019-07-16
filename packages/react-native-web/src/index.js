@@ -104,6 +104,9 @@ import TimePickerAndroid from './exports/TimePickerAndroid';
 import TVEventHandler from './exports/TVEventHandler';
 import VibrationIOS from './exports/VibrationIOS';
 
+// plugins
+import DeviceEventEmitter from './exports/DeviceEventEmitter';
+
 export {
   // top-level API
   createElement,
@@ -207,5 +210,7 @@ export {
   Systrace,
   TimePickerAndroid,
   TVEventHandler,
-  VibrationIOS
+  VibrationIOS,
+  // plugins
+  DeviceEventEmitter
 };
