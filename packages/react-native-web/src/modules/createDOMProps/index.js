@@ -74,9 +74,7 @@ const createDOMProps = (component, props, styleResolver) => {
     testID,
     /* eslint-disable */
     accessible,
-    accessibilityComponentType,
     accessibilityRole,
-    accessibilityTraits,
     /* eslint-enable */
     ...domProps
   } = props;

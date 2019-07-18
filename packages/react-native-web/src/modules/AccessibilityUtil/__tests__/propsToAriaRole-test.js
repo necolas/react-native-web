@@ -11,21 +11,6 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
     expect(propsToAriaRole({ accessibilityRole: 'banner' })).toEqual('banner');
   });
 
-  test('when iOS/Android accessibility prop equals "button"', () => {
-    expect(propsToAriaRole({ accessibilityComponentType: 'button' })).toEqual('button');
-    expect(propsToAriaRole({ accessibilityTraits: 'button' })).toEqual('button');
-  });
-
-  test('prioritizes "accessibilityRole" when defined', () => {
-    expect(
-      propsToAriaRole({
-        accessibilityComponentType: 'button',
-        accessibilityRole: 'link',
-        accessibilityTraits: 'button'
-      })
-    ).toEqual('link');
-  });
-
   test('when "accessibilityRole" is a native-only value', () => {
     expect(propsToAriaRole({ accessibilityRole: 'none' })).toEqual('presentation');
     expect(propsToAriaRole({ accessibilityRole: 'imagebutton' })).toEqual(undefined);

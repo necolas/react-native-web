@@ -10,10 +10,9 @@
 
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import TextStylePropTypes from './TextStylePropTypes';
-import { any, array, bool, func, number, oneOf, oneOfType, string } from 'prop-types';
+import { any, bool, func, number, oneOf, string } from 'prop-types';
 
 const TextPropTypes = {
-  accessibilityComponentType: string,
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRole: oneOf([
@@ -26,7 +25,6 @@ const TextPropTypes = {
     'none',
     'text'
   ]),
-  accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),

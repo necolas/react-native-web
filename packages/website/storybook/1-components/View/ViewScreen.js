@@ -64,9 +64,7 @@ const ViewScreen = () => (
             Allows assistive technologies to present and support interaction with the view in a
             manner that is consistent with user expectations for similar views of that type. For
             example, marking a touchable view with an <Code>accessibilityRole</Code> of{' '}
-            <Code>button</Code>. For compatibility with React Native{' '}
-            <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are mapped
-            to <Code>accessibilityRole</Code>. (This is implemented using ARIA roles.)
+            <Code>button</Code>. (This is implemented using ARIA roles.)
           </AppText>
         }
       />
@@ -267,28 +265,6 @@ const ViewScreen = () => (
         name="testID"
         typeInfo="?string"
         description="Used to locate this view in end-to-end tests. The test ID is rendered to a 'data-testid' DOM attribute"
-      />
-
-      <DocItem
-        label="compat"
-        name="accessibilityComponentType"
-        typeInfo="?enum(roles)"
-        description={
-          <AppText>
-            (For compatibility with React Native. Equivalent to <Code>accessibilityRole</Code>.)
-          </AppText>
-        }
-      />
-
-      <DocItem
-        label="compat"
-        name="accessibilityTraits"
-        typeInfo="?enum(roles) | Array<role>"
-        description={
-          <AppText>
-            (For compatibility with React Native. Equivalent to <Code>accessibilityRole</Code>.)
-          </AppText>
-        }
       />
     </Section>
 

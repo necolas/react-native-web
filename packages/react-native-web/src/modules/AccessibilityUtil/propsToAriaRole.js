@@ -7,22 +7,6 @@
  * @flow
  */
 
-const accessibilityComponentTypeToRole = {
-  button: 'button',
-  none: 'presentation'
-};
-
-const accessibilityTraitsToRole = {
-  adjustable: 'slider',
-  button: 'button',
-  header: 'heading',
-  image: 'img',
-  link: 'link',
-  none: 'presentation',
-  search: 'search',
-  summary: 'region'
-};
-
 const accessibilityRoleToWebRole = {
   adjustable: 'slider',
   button: 'button',
@@ -38,29 +22,13 @@ const accessibilityRoleToWebRole = {
   text: null
 };
 
-/**
- * Provides compatibility with React Native's "accessibilityTraits" (iOS) and
- * "accessibilityComponentType" (Android), converting them to equivalent ARIA
- * roles.
- */
-const propsToAriaRole = ({
-  accessibilityComponentType,
-  accessibilityRole,
-  accessibilityTraits
-}: Object) => {
+const propsToAriaRole = ({ accessibilityRole }: Object) => {
   if (accessibilityRole) {
     const inferredRole = accessibilityRoleToWebRole[accessibilityRole];
     if (inferredRole !== null) {
       // ignore roles that don't map to web
       return inferredRole || accessibilityRole;
     }
-  }
-  if (accessibilityTraits) {
-    const trait = Array.isArray(accessibilityTraits) ? accessibilityTraits[0] : accessibilityTraits;
-    return accessibilityTraitsToRole[trait];
-  }
-  if (accessibilityComponentType) {
-    return accessibilityComponentTypeToRole[accessibilityComponentType];
   }
 };
 

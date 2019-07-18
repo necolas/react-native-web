@@ -11,7 +11,7 @@
 import EdgeInsetsPropType, { type EdgeInsetsProp } from '../EdgeInsetsPropType';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
-import { any, array, arrayOf, bool, func, object, oneOf, oneOfType, string } from 'prop-types';
+import { any, arrayOf, bool, func, object, oneOf, string } from 'prop-types';
 import { type StyleObj } from '../StyleSheet/StyleSheetTypes';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
@@ -35,7 +35,6 @@ export type ViewProps = {
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   accessibilityRole?: string,
   accessibilityStates?: Array<string>,
-  accessibilityTraits?: string | Array<string>,
   accessible?: boolean,
   children?: any,
   className?: string,
@@ -105,7 +104,6 @@ const ViewPropTypes = {
       'pressed'
     ])
   ),
-  accessibilityTraits: oneOfType([array, string]),
   accessible: bool,
   children: any,
   hitSlop: EdgeInsetsPropType,

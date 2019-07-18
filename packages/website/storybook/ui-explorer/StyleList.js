@@ -5,9 +5,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const StyleList = ({ stylePropTypes }) => (
-  <View accessibilityTraits="list">
+  <View accessibilityRole="list">
     {stylePropTypes.map(({ label, name, typeInfo }, i) => (
-      <AppText accessibilityTraits="listitem" key={i} style={styles.item}>
+      <AppText accessibilityRole="listitem" key={i} style={styles.item}>
         {label ? <Text style={styles.label}>{label}</Text> : null}
         <Text style={styles.name}>{name}</Text>
         {typeInfo ? ': ' : null}

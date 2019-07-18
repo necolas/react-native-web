@@ -8,12 +8,10 @@
  */
 
 const supportedProps = {
-  accessibilityComponentType: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
   accessibilityStates: true,
-  accessibilityTraits: true,
   accessible: true,
   children: true,
   disabled: true,

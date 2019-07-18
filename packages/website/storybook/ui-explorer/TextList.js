@@ -5,9 +5,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const TextList = ({ items }) => (
-  <View accessibilityTraits="list" style={styles.list}>
+  <View accessibilityRole="list" style={styles.list}>
     {items.map((item, i) => (
-      <AppText accessibilityTraits="listitem" key={i} style={styles.item}>
+      <AppText accessibilityRole="listitem" key={i} style={styles.item}>
         <View style={styles.bullet} />
         {item}
       </AppText>

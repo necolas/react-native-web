@@ -37,10 +37,8 @@ const TouchableWithoutFeedback = createReactClass({
   mixins: [TimerMixin, Touchable.Mixin],
 
   propTypes: {
-    accessibilityComponentType: ViewPropTypes.accessibilityComponentType,
     accessibilityLabel: string,
     accessibilityRole: ViewPropTypes.accessibilityRole,
-    accessibilityTraits: ViewPropTypes.accessibilityTraits,
     accessible: bool,
     children: any,
     /**

@@ -67,10 +67,7 @@ announce text in the `Text` view because of its
 
 In some cases, we also want to alert the end user of the type of selected
 component (i.e., that it is a “button”). To provide more context to screen
-readers on the web, you should use the `accessibilityRole` property. (Note that
-React Native for Web also provides a compatibility mapping of equivalent
-`accessibilityTraits` and `accessibilityComponentType` values to
-`accessibilityRole`).
+readers on the web, you should use the `accessibilityRole` property.
 
 The `accessibilityRole` prop is used to infer an [analogous HTML
 element][html-aria-url] and ARIA `role`, where possible. In most cases, both

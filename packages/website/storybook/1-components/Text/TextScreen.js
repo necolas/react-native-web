@@ -68,9 +68,7 @@ const TextScreen = () => (
             Allows assistive technologies to present and support interaction with the view in a
             manner that is consistent with user expectations for similar views of that type. For
             example, marking a touchable view with an <Code>accessibilityRole</Code> of{' '}
-            <Code>button</Code>. For compatibility with React Native{' '}
-            <Code>accessibilityTraits</Code> and <Code>accessibilityComponentType</Code> are mapped
-            to <Code>accessibilityRole</Code>. (This is implemented using ARIA roles.)
+            <Code>button</Code>. (This is implemented using ARIA roles.)
           </AppText>
         }
       />
