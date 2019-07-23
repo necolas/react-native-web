@@ -63,9 +63,11 @@ const createDOMProps = (component, props, styleResolver) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessibilityStates,
+    accessibilityRelationship,
+    accessibilityState,
     classList,
     className: deprecatedClassName,
+    disabled: providedDisabled,
     importantForAccessibility,
     nativeID,
     placeholderTextColor,
@@ -79,32 +81,59 @@ const createDOMProps = (component, props, styleResolver) => {
     ...domProps
   } = props;
 
-  const disabled = AccessibilityUtil.isDisabled(props);
+  const disabled =
+    (accessibilityState != null && accessibilityState.disabled === true) || providedDisabled;
   const role = AccessibilityUtil.propsToAriaRole(props);
 
-  // GENERAL ACCESSIBILITY
-  if (importantForAccessibility === 'no-hide-descendants') {
-    domProps['aria-hidden'] = true;
-  }
-  if (accessibilityLabel && accessibilityLabel.constructor === String) {
+  // accessibilityLabel
+  if (accessibilityLabel != null) {
     domProps['aria-label'] = accessibilityLabel;
   }
-  if (accessibilityLiveRegion && accessibilityLiveRegion.constructor === String) {
+
+  // accessibilityLiveRegion
+  if (accessibilityLiveRegion != null) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (Array.isArray(accessibilityStates)) {
-    for (let i = 0; i < accessibilityStates.length; i += 1) {
-      domProps[`aria-${accessibilityStates[i]}`] = true;
+
+  // accessibilityRelationship
+  if (accessibilityRelationship != null) {
+    for (const prop in accessibilityRelationship) {
+      const value = accessibilityRelationship[prop];
+      if (value != null) {
+        domProps[`aria-${prop}`] = value;
+      }
     }
   }
-  if (role && role.constructor === String) {
+
+  // accessibilityRole
+  if (role != null) {
     domProps.role = role;
   }
 
-  // DISABLED
-  if (disabled) {
-    domProps['aria-disabled'] = disabled;
-    domProps.disabled = disabled;
+  // accessibilityState
+  if (accessibilityState != null) {
+    for (const prop in accessibilityState) {
+      const value = accessibilityState[prop];
+      if (value != null) {
+        if (prop === 'disabled' || prop === 'hidden') {
+          if (value === true) {
+            domProps[`aria-${prop}`] = value;
+            // also set prop directly to pick up host component behaviour
+            domProps[prop] = value;
+          }
+        } else {
+          domProps[`aria-${prop}`] = value;
+        }
+      }
+    }
+  }
+  // legacy fallbacks
+  if (importantForAccessibility === 'no-hide-descendants') {
+    domProps['aria-hidden'] = true;
+  }
+  if (disabled === true) {
+    domProps['aria-disabled'] = true;
+    domProps.disabled = true;
   }
 
   // FOCUS

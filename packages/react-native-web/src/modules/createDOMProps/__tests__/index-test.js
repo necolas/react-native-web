@@ -158,11 +158,67 @@ describe('modules/createDOMProps', () => {
     expect(props.role).toEqual('button');
   });
 
-  test('prop "accessibilityStates" becomes ARIA states', () => {
-    const accessibilityStates = ['disabled', 'selected'];
-    const props = createProps({ accessibilityStates });
-    expect(props['aria-disabled']).toEqual(true);
-    expect(props['aria-selected']).toEqual(true);
+  describe('prop "accessibilityState"', () => {
+    function createAccessibilityState(value) {
+      return {
+        busy: value,
+        checked: value,
+        disabled: value,
+        expanded: value,
+        grabbed: value,
+        hidden: value,
+        invalid: value,
+        modal: value,
+        pressed: value,
+        readonly: value,
+        required: value,
+        selected: value
+      };
+    }
+
+    test('values are "undefined"', () => {
+      const accessibilityState = createAccessibilityState(undefined);
+      const props = createProps({ accessibilityState });
+      expect(props).toMatchSnapshot();
+    });
+
+    test('values are "false"', () => {
+      const accessibilityState = createAccessibilityState(false);
+      const props = createProps({ accessibilityState });
+      expect(props).toMatchSnapshot();
+    });
+
+    test('values are "true"', () => {
+      const accessibilityState = createAccessibilityState(true);
+      const props = createProps({ accessibilityState });
+      expect(props).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "accessibilityRelationship"', () => {
+    function createAccessibilityRelationship(value) {
+      return {
+        activedescendant: value,
+        controls: value,
+        describedby: value,
+        details: value,
+        haspopup: value,
+        labelledby: value,
+        owns: value
+      };
+    }
+
+    test('values are "undefined"', () => {
+      const accessibilityRelationship = createAccessibilityRelationship(undefined);
+      const props = createProps({ accessibilityRelationship });
+      expect(props).toMatchSnapshot();
+    });
+
+    test('values are "id" string', () => {
+      const accessibilityRelationship = createAccessibilityRelationship('id');
+      const props = createProps({ accessibilityRelationship });
+      expect(props).toMatchSnapshot();
+    });
   });
 
   test('prop "className" is preserved', () => {

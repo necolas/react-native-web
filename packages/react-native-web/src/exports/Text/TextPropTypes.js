@@ -10,11 +10,12 @@
 
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import TextStylePropTypes from './TextStylePropTypes';
-import { any, bool, func, number, oneOf, string } from 'prop-types';
+import { any, bool, func, number, object, oneOf, string } from 'prop-types';
 
 const TextPropTypes = {
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
+  accessibilityRelationship: object,
   accessibilityRole: oneOf([
     'button',
     'header',
@@ -26,6 +27,7 @@ const TextPropTypes = {
     'text'
   ]),
   accessible: bool,
+  accessibilityState: object,
   children: any,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
   maxFontSizeMultiplier: number,

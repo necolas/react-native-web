@@ -13,3 +13,53 @@ exports[`modules/createDOMProps includes base reset style for browser-styled ele
 exports[`modules/createDOMProps includes cursor style for pressable roles 1`] = `"css-cursor-18t94o4"`;
 
 exports[`modules/createDOMProps includes cursor style for pressable roles 2`] = `"css-cursor-18t94o4"`;
+
+exports[`modules/createDOMProps prop "accessibilityRelationship" values are "id" string 1`] = `
+Object {
+  "aria-activedescendant": "id",
+  "aria-controls": "id",
+  "aria-describedby": "id",
+  "aria-details": "id",
+  "aria-haspopup": "id",
+  "aria-labelledby": "id",
+  "aria-owns": "id",
+}
+`;
+
+exports[`modules/createDOMProps prop "accessibilityRelationship" values are "undefined" 1`] = `Object {}`;
+
+exports[`modules/createDOMProps prop "accessibilityState" values are "false" 1`] = `
+Object {
+  "aria-busy": false,
+  "aria-checked": false,
+  "aria-expanded": false,
+  "aria-grabbed": false,
+  "aria-invalid": false,
+  "aria-modal": false,
+  "aria-pressed": false,
+  "aria-readonly": false,
+  "aria-required": false,
+  "aria-selected": false,
+}
+`;
+
+exports[`modules/createDOMProps prop "accessibilityState" values are "true" 1`] = `
+Object {
+  "aria-busy": true,
+  "aria-checked": true,
+  "aria-disabled": true,
+  "aria-expanded": true,
+  "aria-grabbed": true,
+  "aria-hidden": true,
+  "aria-invalid": true,
+  "aria-modal": true,
+  "aria-pressed": true,
+  "aria-readonly": true,
+  "aria-required": true,
+  "aria-selected": true,
+  "disabled": true,
+  "hidden": true,
+}
+`;
+
+exports[`modules/createDOMProps prop "accessibilityState" values are "undefined" 1`] = `Object {}`;

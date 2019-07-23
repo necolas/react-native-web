@@ -11,7 +11,7 @@
 import EdgeInsetsPropType, { type EdgeInsetsProp } from '../EdgeInsetsPropType';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import ViewStylePropTypes from './ViewStylePropTypes';
-import { any, arrayOf, bool, func, object, oneOf, string } from 'prop-types';
+import { any, bool, func, object, oneOf, string } from 'prop-types';
 import { type StyleObj } from '../StyleSheet/StyleSheetTypes';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
@@ -33,8 +33,30 @@ export type ViewProps = {
   accessibilityComponentType?: string,
   accessibilityLabel?: string,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
+  accessibilityRelationship?: {
+    activedescendant?: ?string,
+    controls?: ?string,
+    describedby?: ?string,
+    details?: ?string,
+    haspopup?: ?string,
+    labelledby?: ?string,
+    owns?: ?string
+  },
   accessibilityRole?: string,
-  accessibilityStates?: Array<string>,
+  accessibilityState?: {
+    busy?: ?boolean,
+    checked?: ?boolean | 'mixed',
+    disabled?: ?boolean,
+    expanded?: ?boolean,
+    grabbed?: ?boolean,
+    hidden?: ?boolean,
+    invalid?: ?boolean,
+    modal?: ?boolean,
+    pressed?: ?boolean,
+    readonly?: ?boolean,
+    required?: ?boolean,
+    selected?: ?boolean
+  },
   accessible?: boolean,
   children?: any,
   className?: string,
@@ -90,20 +112,9 @@ const ViewPropTypes = {
   accessibilityComponentType: string,
   accessibilityLabel: string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
+  accessibilityRelationship: object,
   accessibilityRole: string,
-  accessibilityStates: arrayOf(
-    oneOf([
-      'disabled',
-      'selected',
-      /* web-only */
-      'busy',
-      'checked',
-      'expanded',
-      'grabbed',
-      'invalid',
-      'pressed'
-    ])
-  ),
+  accessibilityState: object,
   accessible: bool,
   children: any,
   hitSlop: EdgeInsetsPropType,

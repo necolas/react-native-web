@@ -15,7 +15,7 @@ describe('components/Switch', () => {
   describe('disabled', () => {
     test('when "false" a default checkbox is rendered', () => {
       const component = shallow(<Switch />);
-      expect(component.find(checkboxSelector).prop('disabled')).toBe(false);
+      expect(component.find(checkboxSelector).prop('disabled')).toBe(undefined);
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
