@@ -193,6 +193,7 @@ class TextInput extends Component<*> {
       /* react-native compat */
       accessibilityViewIsModal,
       allowFontScaling,
+      autoCompleteType,
       caretHidden,
       clearButtonMode,
       dataDetectorTypes,
