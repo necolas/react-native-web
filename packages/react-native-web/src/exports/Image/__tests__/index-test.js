@@ -1,9 +1,11 @@
 /* eslint-env jasmine, jest */
 /* eslint-disable react/jsx-no-bind */
 
+import * as AssetRegistry from '../../../modules/AssetRegistry';
 import Image from '../';
 import ImageLoader from '../../../modules/ImageLoader';
 import ImageUriCache from '../ImageUriCache';
+import PixelRatio from '../../PixelRatio';
 import React from 'react';
 import { render } from '@testing-library/react';
 
@@ -199,6 +201,23 @@ describe('components/Image', () => {
       expect(container.firstChild).toMatchSnapshot();
       loadCallback();
       expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('it correctly selects the source scale', () => {
+      AssetRegistry.getAssetByID = jest.fn(() => ({
+        httpServerLocation: 'static',
+        name: 'img',
+        scales: [1, 2, 3],
+        type: 'png'
+      }));
+
+      PixelRatio.get = jest.fn(() => 1.0);
+      let { container } = render(<Image source={1} />);
+      expect(container.querySelector('img').src).toBe('http://localhost/static/img.png');
+
+      PixelRatio.get = jest.fn(() => 2.2);
+      ({ container } = render(<Image source={1} />));
+      expect(container.querySelector('img').src).toBe('http://localhost/static/img@2x.png');
     });
   });
 
