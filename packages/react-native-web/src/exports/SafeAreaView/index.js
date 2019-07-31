@@ -12,28 +12,24 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import ViewPropTypes, { type ViewProps } from '../ViewPropTypes';
+import { type ViewProps } from '../ViewPropTypes';
 
-class SafeAreaView extends React.Component<ViewProps> {
-  static displayName = 'SafeAreaView';
+const SafeAreaView = React.forwardRef<View, ViewProps>((props: ViewProps, ref) => {
+  const { style, ...rest } = props;
 
-  static propTypes = {
-    ...ViewPropTypes
-  };
+  return (
+    <View
+      {...rest}
+      ref={ref}
+      style={StyleSheet.compose(
+        styles.root,
+        style
+      )}
+    />
+  );
+});
 
-  render() {
-    const { style, ...rest } = this.props;
-    return (
-      <View
-        {...rest}
-        style={StyleSheet.compose(
-          styles.root,
-          style
-        )}
-      />
-    );
-  }
-}
+SafeAreaView.displayName = 'SafeAreaView';
 
 const cssFunction: 'constant' | 'env' = (function() {
   if (
