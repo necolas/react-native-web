@@ -182,6 +182,7 @@ const createDOMProps = (component, props, styleResolver) => {
   if (nativeID && nativeID.constructor === String) {
     domProps.id = nativeID;
   }
+
   // Link security
   // https://mathiasbynens.github.io/rel-noopener/
   // Note: using "noreferrer" doesn't impact referrer tracking for https

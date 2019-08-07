@@ -420,6 +420,12 @@ describe('components/TextInput', () => {
     });
   });
 
+  test('prop "returnKeyType"', () => {
+    const returnKeyType = 'previous';
+    const input = findNativeInput(shallow(<TextInput returnKeyType={returnKeyType} />));
+    expect(input.prop('enterkeyhint')).toEqual(returnKeyType);
+  });
+
   test('prop "secureTextEntry"', () => {
     let input = findNativeInput(shallow(<TextInput secureTextEntry />));
     expect(input.prop('type')).toEqual('password');

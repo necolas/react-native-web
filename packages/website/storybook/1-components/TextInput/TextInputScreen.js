@@ -280,6 +280,12 @@ nativeEvent: { key: keyValue } }`}</Code>{' '}
       />
 
       <DocItem
+        name="returnKeyType"
+        typeInfo="?enum('enter', 'done', 'go', 'next', 'previous', 'search', 'send')"
+        description="Specifies what action label (or icon) to present for the enter key on virtual keyboards. Maps to the enterkeyhint attribute on web."
+      />
+
+      <DocItem
         name="secureTextEntry"
         typeInfo="?boolean = false"
         description="If true, the text input obscures the text entered so that sensitive text like passwords stay secure. (Not available when `multiline` is `true`.)"
