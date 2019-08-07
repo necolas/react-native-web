@@ -182,6 +182,12 @@ describe('modules/createDOMProps', () => {
     expect(props.id).toEqual(nativeID);
   });
 
+  test('prop "returnKeyType" becomes "enterkeyhint"', () => {
+    const returnKeyType = 'previous';
+    const props = createProps({ returnKeyType });
+    expect(props.enterkeyhint).toEqual(returnKeyType);
+  });
+
   test('prop "testID" becomes "data-testid"', () => {
     const testID = 'Example.testID';
     const props = createProps({ testID });
