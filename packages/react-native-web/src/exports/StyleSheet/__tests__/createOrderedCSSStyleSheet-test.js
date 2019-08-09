@@ -86,5 +86,25 @@ describe('createOrderedCSSStyleSheet', () => {
       const clientSheet = createOrderedCSSStyleSheet(element.sheet);
       expect(clientSheet.getTextContent()).toMatchSnapshot();
     });
+
+    test('works when the group marker is in single quotes', () => {
+      // Setup SSR CSS
+      const serverSheet = createOrderedCSSStyleSheet();
+      serverSheet.insert('.a { color: red }', 0);
+      serverSheet.insert('.b { color: red }', 1);
+      const textContent = serverSheet.getTextContent().replace(/"/g, "'");
+
+      // Add SSR CSS to client style sheet
+      element.appendChild(document.createTextNode(textContent));
+      const clientSheet = createOrderedCSSStyleSheet(element.sheet);
+      clientSheet.insert('.c { color: red }', 0);
+      expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
+"[stylesheet-group='0'] {}
+.a {color: red;}
+.c { color: red }
+[stylesheet-group='1'] {}
+.b {color: red;}"
+`);
+    });
   });
 });
