@@ -19,7 +19,7 @@ import AnimatedModulo from './nodes/AnimatedModulo';
 import AnimatedMultiplication from './nodes/AnimatedMultiplication';
 import AnimatedNode from './nodes/AnimatedNode';
 import AnimatedProps from './nodes/AnimatedProps';
-import AnimateSubtraction from './nodes/AnimateSubtraction';
+import AnimatedSubtraction from './nodes/AnimatedSubtraction';
 import AnimatedTracking from './nodes/AnimatedTracking';
 import AnimatedValue from './nodes/AnimatedValue';
 import AnimatedValueXY from './nodes/AnimatedValueXY';
