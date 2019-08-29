@@ -87,9 +87,9 @@ describe('components/Image', () => {
   test('prop "draggable"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const component = shallow(<Image defaultSource={defaultSource} />);
-    expect(component.find('img').prop('draggable')).toBe(false);
-    component.setProps({ defaultSource, draggable: true });
     expect(component.find('img').prop('draggable')).toBe(true);
+    component.setProps({ defaultSource, draggable: false });
+    expect(component.find('img').prop('draggable')).toBe(false);
   });
 
   describe('prop "onLoad"', () => {

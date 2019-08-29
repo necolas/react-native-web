@@ -122,7 +122,8 @@ class Image extends Component<*, State> {
   };
 
   static defaultProps = {
-    style: emptyObject
+    style: emptyObject,
+    draggable: true
   };
 
   static getSize(uri, success, failure) {
@@ -274,7 +275,7 @@ class Image extends Component<*, State> {
       ? createElement('img', {
           alt: accessibilityLabel || '',
           classList: [classes.accessibilityImage],
-          draggable: draggable || false,
+          draggable: draggable,
           ref: this._setImageRef,
           src: displayImageUri
         })
