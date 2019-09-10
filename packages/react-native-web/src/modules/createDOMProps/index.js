@@ -189,10 +189,14 @@ const createDOMProps = (component, props, styleResolver) => {
   // transfers (i.e., from https to https).
   // Note: Specifying rel="opener" will explicitly bypass this safeguard.
   if (component === 'a' && domProps.target === '_blank' && domProps.rel !== 'opener') {
-    const existingRel = domProps.rel ? domProps.rel.split(' ') : [];
-    // Ensure that we don't end up with duplicates.
-    const newRel = new Set([...existingRel, 'noopener', 'noreferrer']);
-    domProps.rel = Array.from(newRel).join(' ');
+    const relList = domProps.rel ? domProps.rel.split(' ') : [];
+    if (relList.indexOf('noopener') === -1) {
+      relList.push('noopener');
+    }
+    if (relList.indexOf('noreferrer') === -1) {
+      relList.push('noreferrer');
+    }
+    domProps.rel = relList.join(' ');
   }
   // Automated test IDs
   if (testID && testID.constructor === String) {
