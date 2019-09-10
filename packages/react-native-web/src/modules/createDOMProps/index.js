@@ -187,8 +187,12 @@ const createDOMProps = (component, props, styleResolver) => {
   // https://mathiasbynens.github.io/rel-noopener/
   // Note: using "noreferrer" doesn't impact referrer tracking for https
   // transfers (i.e., from https to https).
-  if (component === 'a' && domProps.target === '_blank') {
-    domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
+  // Note: Specifying rel="opener" will explicitly bypass this safeguard.
+  if (component === 'a' && domProps.target === '_blank' && domProps.rel !== 'opener') {
+    const existingRel = domProps.rel ? domProps.rel.split(' ') : [];
+    // Ensure that we don't end up with duplicates.
+    const newRel = new Set([...existingRel, 'noopener', 'noreferrer']);
+    domProps.rel = Array.from(newRel).join(' ');
   }
   // Automated test IDs
   if (testID && testID.constructor === String) {

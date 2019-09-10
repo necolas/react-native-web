@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/createDOMProps includes "rel" values for "a" elements (to securely open external links) 1`] = `" noopener noreferrer"`;
+exports[`modules/createDOMProps includes "rel" values for "a" elements (to securely open external links) 1`] = `"noopener noreferrer"`;
 
 exports[`modules/createDOMProps includes base reset style for browser-styled elements 1`] = `"css-reset-4rbku5"`;
 

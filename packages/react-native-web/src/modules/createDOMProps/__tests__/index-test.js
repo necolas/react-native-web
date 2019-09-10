@@ -193,6 +193,16 @@ describe('modules/createDOMProps', () => {
     expect(props.rel).toMatchSnapshot();
   });
 
+  test('allow explicit rel="opener" for "a" elements', () => {
+    const props = createDOMProps('a', { target: '_blank', rel: 'opener' });
+    expect(props.rel).toEqual('opener');
+  });
+
+  test('don\'t duplicate "rel" values for "a" elements', () => {
+    const props = createDOMProps('a', { target: '_blank', rel: 'noopener' });
+    expect(props.rel).toEqual('noopener noreferrer');
+  });
+
   test('includes cursor style for pressable roles', () => {
     expect(createDOMProps('span', { accessibilityRole: 'link' }).className).toMatchSnapshot();
     expect(createDOMProps('span', { accessibilityRole: 'button' }).className).toMatchSnapshot();
