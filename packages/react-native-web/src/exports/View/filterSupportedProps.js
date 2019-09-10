@@ -67,6 +67,7 @@ const supportedProps = {
   // unstable escape-hatches for web
   className: true,
   href: true,
+  download: true,
   itemID: true,
   itemRef: true,
   itemProp: true,

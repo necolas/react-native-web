@@ -36,6 +36,36 @@ describe('modules/createElement', () => {
       expect(component.find('div').length).toBe(1);
     });
 
+    test('does prevent default link action', () => {
+      const preventDefault = jest.fn();
+      const component = shallow(
+        createElement('a', { accessibilityRole: 'link', onResponderRelease: () => {} })
+      );
+      component.find('a').simulate('click', {
+        isDefaultPrevented: () => false,
+        nativeEvent: {},
+        preventDefault
+      });
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+    });
+
+    test('does not prevent default if download prop present', () => {
+      const preventDefault = jest.fn();
+      const component = shallow(
+        createElement('a', {
+          accessibilityRole: 'link',
+          download: '',
+          onResponderRelease: () => {}
+        })
+      );
+      component.find('a').simulate('click', {
+        isDefaultPrevented: () => false,
+        nativeEvent: {},
+        preventDefault
+      });
+      expect(preventDefault).toHaveBeenCalledTimes(0);
+    });
+
     const testRole = ({ accessibilityRole, disabled }) => {
       [{ key: 'Enter', which: 13 }, { key: 'Space', which: 32 }].forEach(({ key, which }) => {
         test(`"onClick" is ${disabled ? 'not ' : ''}called when "${key}" key is pressed`, () => {

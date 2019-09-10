@@ -72,7 +72,12 @@ const adjustProps = domProps => {
   // preceding mouse events in the responder system.
   if (isLinkRole && onResponderRelease) {
     domProps.onClick = function(e) {
-      if (!e.isDefaultPrevented() && !isModifiedEvent(e.nativeEvent) && !domProps.target) {
+      if (
+        !e.isDefaultPrevented() &&
+        !isModifiedEvent(e.nativeEvent) &&
+        !domProps.target &&
+        domProps.download == null
+      ) {
         e.preventDefault();
       }
     };
