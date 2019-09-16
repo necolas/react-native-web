@@ -15,7 +15,7 @@ import React from 'react';
 import ViewStylePropTypes from '../../../exports/View/ViewStylePropTypes';
 import invariant from 'fbjs/lib/invariant';
 
-function createAnimatedComponent(Component: any): any {
+function createAnimatedComponent(Component: any, defaultProps: any): any {
   invariant(
     typeof Component === 'string' ||
       (Component.prototype && Component.prototype.isReactComponent),
@@ -29,13 +29,11 @@ function createAnimatedComponent(Component: any): any {
     _prevComponent: any;
     _propsAnimated: AnimatedProps;
     _eventDetachers: Array<Function> = [];
-    _setComponentRef: Function;
 
     static __skipSetNativeProps_FOR_TESTS_ONLY = false;
 
     constructor(props: Object) {
       super(props);
-      this._setComponentRef = this._setComponentRef.bind(this);
     }
 
     componentWillUnmount() {
@@ -150,6 +148,7 @@ function createAnimatedComponent(Component: any): any {
       const props = this._propsAnimated.__getValue();
       return (
         <Component
+          {...defaultProps}
           {...props}
           ref={this._setComponentRef}
           // The native driver updates views directly through the UI thread so we
@@ -163,7 +162,7 @@ function createAnimatedComponent(Component: any): any {
       );
     }
 
-    _setComponentRef(c) {
+    _setComponentRef = c => {
       this._prevComponent = this._component;
       this._component = c;
     }
