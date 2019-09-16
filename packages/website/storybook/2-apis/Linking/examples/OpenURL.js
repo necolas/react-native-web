@@ -14,11 +14,29 @@ export default class OpenURL extends PureComponent {
     });
   }
 
+  handlePressSelf() {
+    Linking.canOpenURL(url).then(supported => {
+      return Linking.openURL(url, '_self');
+    });
+  }
+
+  handlePressNoOpener() {
+    Linking.canOpenURL(url).then(supported => {
+      return Linking.openURL(url, '_target', 'noopener');
+    });
+  }
+
   render() {
     return (
       <View>
         <Text onPress={this.handlePress} style={styles.text}>
-          Linking.openURL
+          Click this to trigger Linking.openURL('some_url')
+        </Text>
+        <Text onPress={this.handlePressSelf} style={styles.text}>
+          Click this to trigger Linking.openURL('some_url', '_self')
+        </Text>
+        <Text onPress={this.handlePressNoOpener} style={styles.text}>
+          Click this to trigger Linking.openURL('some_url', '_target', 'noopener')
         </Text>
         <Text
           accessibilityRole="link"
@@ -26,7 +44,8 @@ export default class OpenURL extends PureComponent {
           style={styles.text}
           target="_blank"
         >
-          target="_blank"
+          Click this to open a link without using the Linking API{'\n'}
+          &lt;Text href='some_url' target='_blank'&gt;
         </Text>
       </View>
     );

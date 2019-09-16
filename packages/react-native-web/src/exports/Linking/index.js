@@ -22,9 +22,13 @@ const Linking = {
   getInitialURL(): Promise<string> {
     return Promise.resolve(initialURL);
   },
-  openURL(url: string, target: string): Promise<Object | void> {
+  openURL(
+    url: string,
+    target: '_blank' | '_self' = '_blank',
+    noopener?: 'noopener'
+  ): Promise<Object | void> {
     try {
-      open(url, target);
+      open(url, target, noopener);
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
@@ -36,16 +40,11 @@ const Linking = {
   }
 };
 
-const open = (url, target) => {
+const open = (url, target, noopener) => {
   if (canUseDOM) {
     const urlToOpen = new URL(url, window.location).toString();
-    const targetToUse = validateTarget(target) ? target : "_blank";
-    window.open(urlToOpen, targetToUse);
+    window.open(urlToOpen, target, noopener);
   }
 };
-
-const validateTarget = target => {
-  return target === "_blank" || target === "_self"
-}
 
 export default Linking;

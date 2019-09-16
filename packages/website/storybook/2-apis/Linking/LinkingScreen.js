@@ -11,7 +11,9 @@ import UIExplorer, { Description, DocItem, Section, storiesOf } from '../../ui-e
 const LinkingScreen = () => (
   <UIExplorer title="Linking" url="2-apis/Linking">
     <Description>
-      Linking gives you a general interface for securely opening external URLs from JavaScript.
+      Linking gives you a general interface for securely opening external URLs from JavaScript. As
+      an alternative to the Linking API, &lt;Text&gt; elements may be appended with the "href" and
+      "target" attributes to resemble web hyperlinks.
     </Description>
 
     <Section title="Methods">
@@ -21,8 +23,8 @@ const LinkingScreen = () => (
 
       <DocItem
         name="openURL"
-        typeInfo="(url: string) => Promise<>"
-        description="Try to open the given url in a secure fashion. The method returns a Promise object. If the url opens, the promise is resolved. If not, the promise is rejected."
+        typeInfo="(url: string, target: '_blank' | '_self', noopener?: 'noopener') => Promise<>"
+        description="Try to open the given url in a secure fashion. The method returns a Promise object. If the url opens, the promise is resolved. If not, the promise is rejected. By default, all links are opened in an external window or tab. To open a link in the same window, include the target '_self'. To disable the window.opener object in the new window, include the 'noopener' parameter."
         example={{
           render: () => <OpenURL />
         }}
