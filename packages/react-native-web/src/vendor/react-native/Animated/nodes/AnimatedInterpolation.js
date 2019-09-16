@@ -181,7 +181,7 @@ function colorToRgba(input: string): string {
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
-const stringShapeRegex = /[0-9\.-]+/g;
+const stringShapeRegex = /[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g;
 
 /**
  * Supports string shapes by extracting numbers so new values can be computed,
@@ -242,10 +242,11 @@ function createInterpolationFromStringOutputRange(
     // ->
     // 'rgba(${interpolations[0](input)}, ${interpolations[1](input)}, ...'
     return outputRange[0].replace(stringShapeRegex, () => {
-      const val = +interpolations[i++](input);
-      const rounded =
-        shouldRound && i < 4 ? Math.round(val) : Math.round(val * 1000) / 1000;
-      return String(rounded);
+      let val = +interpolations[i++](input);
+      if (shouldRound) {
+        val = i < 4 ? Math.round(val) : Math.round(val * 1000) / 1000;
+      }
+      return String(val);
     });
   };
 }
@@ -346,22 +347,8 @@ class AnimatedInterpolation extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __transformDataType(range: Array<string>): Array<number> {
-    // Change the string array type to number array
-    // So we can reuse the same logic in iOS and Android platform
-    return range.map(function(value) {
-      if (typeof value !== 'string') {
-        return value;
-      }
-      if (/deg$/.test(value)) {
-        const degrees = parseFloat(value) || 0;
-        const radians = degrees * Math.PI / 180.0;
-        return radians;
-      } else {
-        // Assume radians
-        return parseFloat(value) || 0;
-      }
-    });
+  __transformDataType(range: Array<any>) {
+    return range.map(NativeAnimatedHelper.transformDataType);
   }
 
   __getNativeConfig(): any {
