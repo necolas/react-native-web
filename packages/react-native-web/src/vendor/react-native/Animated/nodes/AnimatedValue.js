@@ -21,10 +21,6 @@ import type AnimatedTracking from './AnimatedTracking';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 
-type ValueListenerCallback = (state: {value: number}) => void;
-
-let _uniqueId = 1;
-
 /**
  * Animated works by building a directed acyclic graph of dependencies
  * transparently when you render your Animated components.
@@ -74,15 +70,12 @@ class AnimatedValue extends AnimatedWithChildren {
   _offset: number;
   _animation: ?Animation;
   _tracking: ?AnimatedTracking;
-  _listeners: {[key: string]: ValueListenerCallback};
-  __nativeAnimatedValueListener: ?any;
 
   constructor(value: number) {
     super();
     this._startingValue = this._value = value;
     this._offset = 0;
     this._animation = null;
-    this._listeners = {};
   }
 
   __detach() {
@@ -92,14 +85,6 @@ class AnimatedValue extends AnimatedWithChildren {
 
   __getValue(): number {
     return this._value + this._offset;
-  }
-
-  __makeNative() {
-    super.__makeNative();
-
-    if (Object.keys(this._listeners).length) {
-      this._startListeningToNativeValueUpdates();
-    }
   }
 
   /**
@@ -165,74 +150,6 @@ class AnimatedValue extends AnimatedWithChildren {
   }
 
   /**
-   * Adds an asynchronous listener to the value so you can observe updates from
-   * animations.  This is useful because there is no way to
-   * synchronously read the value because it might be driven natively.
-   *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#addlistener
-   */
-  addListener(callback: ValueListenerCallback): string {
-    const id = String(_uniqueId++);
-    this._listeners[id] = callback;
-    if (this.__isNative) {
-      this._startListeningToNativeValueUpdates();
-    }
-    return id;
-  }
-
-  /**
-   * Unregister a listener. The `id` param shall match the identifier
-   * previously returned by `addListener()`.
-   *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#removelistener
-   */
-  removeListener(id: string): void {
-    delete this._listeners[id];
-    if (this.__isNative && Object.keys(this._listeners).length === 0) {
-      this._stopListeningForNativeValueUpdates();
-    }
-  }
-
-  /**
-   * Remove all registered listeners.
-   *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#removealllisteners
-   */
-  removeAllListeners(): void {
-    this._listeners = {};
-    if (this.__isNative) {
-      this._stopListeningForNativeValueUpdates();
-    }
-  }
-
-  _startListeningToNativeValueUpdates() {
-    if (this.__nativeAnimatedValueListener) {
-      return;
-    }
-
-    NativeAnimatedAPI.startListeningToAnimatedNodeValue(this.__getNativeTag());
-    this.__nativeAnimatedValueListener = NativeAnimatedHelper.nativeEventEmitter.addListener(
-      'onAnimatedValueUpdate',
-      data => {
-        if (data.tag !== this.__getNativeTag()) {
-          return;
-        }
-        this._updateValue(data.value, false /* flush */);
-      },
-    );
-  }
-
-  _stopListeningForNativeValueUpdates() {
-    if (!this.__nativeAnimatedValueListener) {
-      return;
-    }
-
-    this.__nativeAnimatedValueListener.remove();
-    this.__nativeAnimatedValueListener = null;
-    NativeAnimatedAPI.stopListeningToAnimatedNodeValue(this.__getNativeTag());
-  }
-
-  /**
    * Stops any running animation or tracking. `callback` is invoked with the
    * final value after stopping the animation, which is useful for updating
    * state to match the animation position with layout.
@@ -256,6 +173,10 @@ class AnimatedValue extends AnimatedWithChildren {
     this._value = this._startingValue;
   }
 
+  _onAnimatedValueUpdateReceived(value: number): void {
+    this._updateValue(value, false /*flush*/);
+  }
+  
   /**
    * Interpolates the value before updating the property, e.g. mapping 0-1 to
    * 0-10.
@@ -318,9 +239,7 @@ class AnimatedValue extends AnimatedWithChildren {
     if (flush) {
       _flush(this);
     }
-    for (const key in this._listeners) {
-      this._listeners[key]({value: this.__getValue()});
-    }
+    super._callListeners(this.__getValue());
   }
 
   __getNativeConfig(): Object {

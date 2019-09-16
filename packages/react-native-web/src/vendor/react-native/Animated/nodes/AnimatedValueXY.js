@@ -14,7 +14,7 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 
 import invariant from 'fbjs/lib/invariant';
 
-type ValueXYListenerCallback = (value: {x: number, y: number}) => void;
+type ValueXYListenerCallback = (value: {x: number, y: number}) => mixed;
 
 let _uniqueId = 1;
 
