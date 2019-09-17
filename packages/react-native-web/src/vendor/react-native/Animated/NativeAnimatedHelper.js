@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 'use strict';
@@ -13,7 +13,7 @@ import invariant from 'fbjs/lib/invariant';
 import NativeModules from '../../../exports/NativeModules';
 import NativeEventEmitter from '../NativeEventEmitter';
 
-import type {AnimationConfig} from './animations/Animation';
+import type {AnimationConfig, EndCallback} from './animations/Animation';
 import type {EventConfig} from './AnimatedEvent';
 
 const NativeAnimatedModule = NativeModules.NativeAnimatedModule;
@@ -22,20 +22,44 @@ let __nativeAnimatedNodeTagCount = 1; /* used for animated nodes */
 let __nativeAnimationIdCount = 1; /* used for started animations */
 
 type EndResult = {finished: boolean};
-type EndCallback = (result: EndResult) => void;
 type EventMapping = {
   nativeEventPath: Array<string>,
   animatedValueTag: ?number,
 };
+type AnimatingNodeConfig = {|
+  // TODO: Type this with better enums.
+  type: string,
+|};
+type AnimatedNodeConfig = {|
+  // TODO: Type this with better enums.
+  type: string,
+|};
+
+import type {InterpolationConfigType} from './nodes/AnimatedInterpolation';
 
 let nativeEventEmitter;
 
+let queueConnections = false;
+const queue = [];
+
 /**
- * Simple wrappers around NativeAnimatedModule to provide flow and autocmplete support for
+ * Simple wrappers around NativeAnimatedModule to provide flow and autocomplete support for
  * the native module methods
  */
 const API = {
-  createAnimatedNode: function(tag: ?number, config: Object): void {
+  enableQueue: function(): void {
+    queueConnections = true;
+  },
+  disableQueue: function(): void {
+    assertNativeAnimatedModule();
+    queueConnections = false;
+    for (let q = 0, l = queue.length; q < l; q++) {
+      const args = queue[q];
+      NativeAnimatedModule.connectAnimatedNodes(args[0], args[1]);
+    }
+    queue.length = 0;
+  },
+  createAnimatedNode: function(tag: ?number, config: AnimatedNodeConfig): void {
     assertNativeAnimatedModule();
     NativeAnimatedModule.createAnimatedNode(tag, config);
   },
@@ -49,6 +73,10 @@ const API = {
   },
   connectAnimatedNodes: function(parentTag: ?number, childTag: ?number): void {
     assertNativeAnimatedModule();
+    if (queueConnections) {
+      queue.push([parentTag, childTag]);
+      return;
+    }
     NativeAnimatedModule.connectAnimatedNodes(parentTag, childTag);
   },
   disconnectAnimatedNodes: function(
@@ -61,7 +89,7 @@ const API = {
   startAnimatingNode: function(
     animationId: ?number,
     nodeTag: ?number,
-    config: Object,
+    config: AnimatingNodeConfig,
     endCallback: EndCallback,
   ): void {
     assertNativeAnimatedModule();
@@ -145,6 +173,16 @@ const API = {
 const STYLES_WHITELIST = {
   opacity: true,
   transform: true,
+  borderRadius: true,
+  borderBottomEndRadius: true,
+  borderBottomLeftRadius: true,
+  borderBottomRightRadius: true,
+  borderBottomStartRadius: true,
+  borderTopEndRadius: true,
+  borderTopLeftRadius: true,
+  borderTopRightRadius: true,
+  borderTopStartRadius: true,
+  elevation: true,
   /* ios styles */
   shadowOpacity: true,
   shadowRadius: true,
@@ -187,7 +225,12 @@ function addWhitelistedInterpolationParam(param: string): void {
   SUPPORTED_INTERPOLATION_PARAMS[param] = true;
 }
 
-function validateTransform(configs: Array<Object>): void {
+function validateTransform(
+  configs: Array<
+    | {type: 'animated', property: string, nodeTag: ?number}
+    | {type: 'static', property: string, value: number | string},
+  >,
+): void {
   configs.forEach(config => {
     if (!TRANSFORM_WHITELIST.hasOwnProperty(config.property)) {
       throw new Error(
@@ -199,8 +242,8 @@ function validateTransform(configs: Array<Object>): void {
   });
 }
 
-function validateStyles(styles: Object): void {
-  for (var key in styles) {
+function validateStyles(styles: {[key: string]: ?number}): void {
+  for (const key in styles) {
     if (!STYLES_WHITELIST.hasOwnProperty(key)) {
       throw new Error(
         `Style property '${key}' is not supported by native animated module`,
@@ -209,8 +252,8 @@ function validateStyles(styles: Object): void {
   }
 }
 
-function validateInterpolation(config: Object): void {
-  for (var key in config) {
+function validateInterpolation(config: InterpolationConfigType): void {
+  for (const key in config) {
     if (!SUPPORTED_INTERPOLATION_PARAMS.hasOwnProperty(key)) {
       throw new Error(
         `Interpolation property '${key}' is not supported by native animated module`,
@@ -234,7 +277,7 @@ function assertNativeAnimatedModule(): void {
 let _warnedMissingNativeAnimated = false;
 
 function shouldUseNativeDriver(config: AnimationConfig | EventConfig): boolean {
-  if (config.useNativeDriver && !NativeAnimatedModule) {
+  if (config.useNativeDriver === true && !NativeAnimatedModule) {
     if (!_warnedMissingNativeAnimated) {
       console.warn(
         'Animated: `useNativeDriver` is not supported because the native ' +
@@ -251,6 +294,21 @@ function shouldUseNativeDriver(config: AnimationConfig | EventConfig): boolean {
   return config.useNativeDriver || false;
 }
 
+function transformDataType(value: number | string): number | string {
+  // Change the string type to number type so we can reuse the same logic in
+  // iOS and Android platform
+  if (typeof value !== 'string') {
+    return value;
+  }
+  if (/deg$/.test(value)) {
+    const degrees = parseFloat(value) || 0;
+    const radians = (degrees * Math.PI) / 180.0;
+    return radians;
+  } else {
+    return value;
+  }
+}
+
 const NativeAnimatedHelper = {
   API,
   addWhitelistedStyleProp,
@@ -263,6 +321,7 @@ const NativeAnimatedHelper = {
   generateNewAnimationId,
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
+  transformDataType,
   get nativeEventEmitter() {
     if (!nativeEventEmitter) {
       nativeEventEmitter = new NativeEventEmitter(NativeAnimatedModule);
@@ -282,7 +341,8 @@ export {
   generateNewNodeTag,
   generateNewAnimationId,
   assertNativeAnimatedModule,
-  shouldUseNativeDriver
+  shouldUseNativeDriver,
+  transformDataType,
 };
 
 export default NativeAnimatedHelper;
