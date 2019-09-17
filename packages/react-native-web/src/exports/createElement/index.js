@@ -14,9 +14,11 @@ import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
 import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
 
-injectEventPluginsByName({
-  ResponderEventPlugin
-});
+if (typeof window !== 'undefined') {
+  injectEventPluginsByName({
+    ResponderEventPlugin
+  });
+}
 
 const isModifiedEvent = event =>
   !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
