@@ -25,7 +25,6 @@ class AnimatedNode {
   _listeners: {[key: string]: ValueListenerCallback};
   __nativeAnimatedValueListener: ?any;
   +update: () => void
-  
   __attach(): void {}
   __detach(): void {
     if (this.__isNative && this.__nativeTag != null) {
@@ -46,7 +45,8 @@ class AnimatedNode {
   /* Methods and props used by native Animated impl */
   __isNative: boolean;
   __nativeTag: ?number;
-  
+  __shouldUpdateListenersForNewNativeTag: boolean;
+
   constructor() {
     this._listeners = {};
   }
@@ -56,7 +56,7 @@ class AnimatedNode {
       throw new Error('This node cannot be made a "native" animated node');
     }
     
-    if (Object.keys(this._listeners).length) {
+    if (this.hasListeners()) {
       this._startListeningToNativeValueUpdates();
     }
   }
@@ -102,9 +102,21 @@ class AnimatedNode {
     }
   }
 
+  hasListeners(): boolean {
+    return !!Object.keys(this._listeners).length;
+  }
+
   _startListeningToNativeValueUpdates() {
-    if (this.__nativeAnimatedValueListener) {
+    if (
+      this.__nativeAnimatedValueListener &&
+      !this.__shouldUpdateListenersForNewNativeTag
+    ) {
       return;
+    }
+
+    if (this.__shouldUpdateListenersForNewNativeTag) {
+      this.__shouldUpdateListenersForNewNativeTag = false;
+      this._stopListeningForNativeValueUpdates();
     }
 
     NativeAnimatedAPI.startListeningToAnimatedNodeValue(this.__getNativeTag());
@@ -147,11 +159,12 @@ class AnimatedNode {
     );
     if (this.__nativeTag == null) {
       const nativeTag: ?number = NativeAnimatedHelper.generateNewNodeTag();
+      this.__nativeTag = nativeTag;
       NativeAnimatedHelper.API.createAnimatedNode(
         nativeTag,
         this.__getNativeConfig(),
       );
-      this.__nativeTag = nativeTag;
+      this.__shouldUpdateListenersForNewNativeTag = true;
     }
     return this.__nativeTag;
   }
