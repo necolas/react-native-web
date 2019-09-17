@@ -8,15 +8,18 @@
  */
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createDOMProps from '../../modules/createDOMProps';
 import { injectEventPluginsByName } from 'react-dom/unstable-native-dependencies';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
 import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
 
-injectEventPluginsByName({
-  ResponderEventPlugin
-});
+if (canUseDOM) {
+  injectEventPluginsByName({
+    ResponderEventPlugin
+  });
+}
 
 const isModifiedEvent = event =>
   !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
