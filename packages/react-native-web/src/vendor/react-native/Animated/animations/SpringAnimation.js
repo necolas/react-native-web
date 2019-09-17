@@ -95,7 +95,7 @@ class SpringAnimation extends Animation {
     this._delay = withDefault(config.delay, 0);
     this._useNativeDriver = shouldUseNativeDriver(config);
     this.__isInteraction =
-      config.isInteraction !== undefined ? config.isInteraction : true;
+      config.isInteraction !== undefined ? config.isInteraction : !this._useNativeDriver;
     this.__iterations = config.iterations !== undefined ? config.iterations : 1;
 
     if (
