@@ -18,7 +18,7 @@ yarn add react react-dom react-native-web
 
 ## Starter kits
 
-[create-react-app](https://github.com/facebookincubator/create-react-app)
+[create-react-app](https://github.com/facebook/create-react-app)
 includes built-in support for aliasing `react-native-web` to `react-native`.
 
 ```
