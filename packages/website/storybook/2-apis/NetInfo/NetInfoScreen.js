@@ -24,7 +24,8 @@ const NetInfoScreen = () => (
         Note that connection type information is limited to how well the browser supports the{' '}
         <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation">
           NetworkInformation API
-        </ExternalLink>. Connection types will be <Code>unknown</Code> when support is missing.
+        </ExternalLink>
+        . Connection types will be <Code>unknown</Code> when support is missing.
       </AppText>
     </Description>
 

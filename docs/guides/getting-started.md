@@ -97,7 +97,7 @@ in your config.
 Node.js can alias `react-native` to `react-native-web` using
 [`module-alias`](https://www.npmjs.com/package/module-alias). This is useful if
 you want to pre-render the app (e.g., server-side rendering or build-time
-rendering).  
+rendering).
 
 ```js
 // Install the `module-alias` package as a dependency first

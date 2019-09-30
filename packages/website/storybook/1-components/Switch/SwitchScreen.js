@@ -105,21 +105,21 @@ const SwitchScreen = () => (
       />
 
       <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;activeTrackColor&quot;)"
+        description='(For compatibility with React Native. Equivalent to "activeTrackColor")'
         label="compat"
         name="onTintColor"
         typeInfo="?color"
       />
 
       <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;trackColor&quot;)"
+        description='(For compatibility with React Native. Equivalent to "trackColor")'
         label="compat"
         name="tintColor"
         typeInfo="?color"
       />
 
       <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;thumbColor&quot;)"
+        description='(For compatibility with React Native. Equivalent to "thumbColor")'
         label="compat"
         name="thumbTintColor"
         typeInfo="?color"

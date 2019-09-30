@@ -28,8 +28,7 @@ const TextChildrenExample = () => (
         (Normal text,
         <Text style={{ fontWeight: 'bold' }}>
           (and bold
-          <Text style={{ fontSize: 11, color: '#527fe4' }}>(and tiny inherited bold blue)</Text>
-          )
+          <Text style={{ fontSize: 11, color: '#527fe4' }}>(and tiny inherited bold blue)</Text>)
         </Text>
         )
       </Text>

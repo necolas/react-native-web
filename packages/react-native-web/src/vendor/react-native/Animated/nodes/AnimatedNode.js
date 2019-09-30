@@ -17,7 +17,7 @@ import invariant from 'fbjs/lib/invariant';
 // support them yet
 class AnimatedNode {
   +update: () => void
-  
+
   __attach(): void {}
   __detach(): void {
     if (this.__isNative && this.__nativeTag != null) {

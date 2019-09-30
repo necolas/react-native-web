@@ -18,7 +18,12 @@ const Title = ({ children }) => (
 
 export const Description = ({ children }) => (
   <AppText style={styles.description}>
-    {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(children))}
+    {insertBetween(
+      () => (
+        <Divider key={Math.random()} />
+      ),
+      React.Children.toArray(children)
+    )}
   </AppText>
 );
 

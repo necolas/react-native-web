@@ -34,7 +34,7 @@ const AppStateScreen = () => (
 
       <DocItem
         name="static currentState"
-        description="Returns the current state of the app: &quot;active&quot; or &quot;background&quot;."
+        description='Returns the current state of the app: "active" or "background".'
       />
     </Section>
 

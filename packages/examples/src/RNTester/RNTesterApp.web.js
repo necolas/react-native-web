@@ -198,4 +198,3 @@ RNTesterList.ComponentExamples.concat(RNTesterList.APIExamples).forEach((Example
 });
 
 module.exports = RNTesterApp;
-
