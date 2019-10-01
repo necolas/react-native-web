@@ -58,7 +58,7 @@ let lastActiveTouchTimestamp = null;
 const EMULATED_MOUSE_THERSHOLD_MS = 1000;
 
 const originalExtractEvents = ResponderEventPlugin.extractEvents;
-ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nativeEventTarget) => {
+ResponderEventPlugin.extractEvents = (topLevelType, eventSystemFlags, targetInst, nativeEvent, nativeEventTarget) => {
   const hasActiveTouches = ResponderTouchHistoryStore.touchHistory.numberActiveTouches > 0;
   const eventType = nativeEvent.type;
 
@@ -88,6 +88,7 @@ ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nat
   return originalExtractEvents.call(
     ResponderEventPlugin,
     topLevelType,
+    eventSystemFlags,
     targetInst,
     normalizedEvent,
     nativeEventTarget
