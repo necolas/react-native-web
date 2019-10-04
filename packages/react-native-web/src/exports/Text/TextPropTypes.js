@@ -29,6 +29,7 @@ const TextPropTypes = {
   accessible: bool,
   accessibilityState: object,
   children: any,
+  forwardedRef: any,
   importantForAccessibility: oneOf(['auto', 'no', 'no-hide-descendants', 'yes']),
   maxFontSizeMultiplier: number,
   nativeID: string,

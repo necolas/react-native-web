@@ -52,6 +52,7 @@ class View extends Component<ViewProps> {
     }
 
     supportedProps.classList = [this.props.className, classes.view];
+    supportedProps.ref = this.props.forwardedRef;
     supportedProps.style = StyleSheet.compose(
       hasTextAncestor && styles.inline,
       this.props.style

@@ -26,6 +26,7 @@ class Text extends React.Component<*> {
   renderText(hasTextAncestor) {
     const {
       dir,
+      forwardedRef,
       numberOfLines,
       onPress,
       selectable,
@@ -67,6 +68,7 @@ class Text extends React.Component<*> {
     ];
     // allow browsers to automatically infer the language writing direction
     otherProps.dir = dir !== undefined ? dir : 'auto';
+    otherProps.ref = forwardedRef;
     otherProps.style = [
       style,
       numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
