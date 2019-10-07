@@ -3,7 +3,7 @@
 exports[`Rewrite react-native to react-native-web export from "react-native": export from "react-native" 1`] = `
 "
 export { View } from 'react-native';
-export { ColorPropType, StyleSheet, Text, createElement } from 'react-native';
+export { ColorPropType, StyleSheet, Text, unstable_createElement } from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -11,14 +11,14 @@ export { default as View } from 'react-native-web/dist/exports/View';
 export { default as ColorPropType } from 'react-native-web/dist/exports/ColorPropType';
 export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
 export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as createElement } from 'react-native-web/dist/exports/createElement';
+export { default as unstable_createElement } from 'react-native-web/dist/exports/createElement';
 "
 `;
 
 exports[`Rewrite react-native to react-native-web export from "react-native-web": export from "react-native-web" 1`] = `
 "
 export { View } from 'react-native-web';
-export { ColorPropType, StyleSheet, Text, createElement } from 'react-native-web';
+export { ColorPropType, StyleSheet, Text, unstable_createElement } from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -26,7 +26,7 @@ export { default as View } from 'react-native-web/dist/exports/View';
 export { default as ColorPropType } from 'react-native-web/dist/exports/ColorPropType';
 export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
 export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as createElement } from 'react-native-web/dist/exports/createElement';
+export { default as unstable_createElement } from 'react-native-web/dist/exports/createElement';
 "
 `;
 
@@ -68,13 +68,13 @@ import * as ReactNativeModules from 'react-native-web/dist/cjs/index';
 
 exports[`Rewrite react-native to react-native-web import from "react-native-web": import from "react-native-web" 1`] = `
 "
-import { createElement } from 'react-native-web';
+import { unstable_createElement } from 'react-native-web';
 import { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } from 'react-native-web';
 import * as ReactNativeModules from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import createElement from 'react-native-web/dist/exports/createElement';
+import unstable_createElement from 'react-native-web/dist/exports/createElement';
 import ColorPropType from 'react-native-web/dist/exports/ColorPropType';
 import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
 import View from 'react-native-web/dist/exports/View';
@@ -123,14 +123,14 @@ const TouchableOpacity = require('react-native-web/dist/cjs/exports/TouchableOpa
 exports[`Rewrite react-native to react-native-web require "react-native-web": require "react-native-web" 1`] = `
 "
 const ReactNative = require('react-native-web');
-const { createElement } = require('react-native-web');
+const { unstable_createElement } = require('react-native-web');
 const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = require('react-native-web');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const ReactNative = require('react-native-web/dist/index');
 
-const createElement = require('react-native-web/dist/exports/createElement').default;
+const unstable_createElement = require('react-native-web/dist/exports/createElement').default;
 
 const ColorPropType = require('react-native-web/dist/exports/ColorPropType').default;
 

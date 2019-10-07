@@ -2,7 +2,7 @@
  * @flow
  */
 
-import { createElement, StyleSheet } from 'react-native';
+import { unstable_createElement as createElement, StyleSheet } from 'react-native';
 
 const Code = props => createElement('code', { ...props, style: [styles.code, props.style] });
 

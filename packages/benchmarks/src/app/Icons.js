@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { createElement, StyleSheet, Text } from 'react-native';
+import { unstable_createElement as createElement, StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   root: {
@@ -18,7 +18,10 @@ const createIcon = children => {
     createElement(
       'svg',
       {
-        style: StyleSheet.compose(styles.root, props.style),
+        style: StyleSheet.compose(
+          styles.root,
+          props.style
+        ),
         width: 24,
         height: 24,
         viewBox: '0 0 24 24'

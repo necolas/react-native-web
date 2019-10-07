@@ -4,10 +4,11 @@ const isCommonJS = opts => opts.commonjs === true;
 
 const getDistLocation = (importName, opts) => {
   const format = isCommonJS(opts) ? 'cjs/' : '';
-  if (importName === 'index') {
+  const internalName = importName === 'unstable_createElement' ? 'createElement' : importName;
+  if (internalName === 'index') {
     return `react-native-web/dist/${format}index`;
-  } else if (importName && moduleMap[importName]) {
-    return `react-native-web/dist/${format}exports/${importName}`;
+  } else if (internalName && moduleMap[internalName]) {
+    return `react-native-web/dist/${format}exports/${internalName}`;
   }
 };
 

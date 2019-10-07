@@ -2,7 +2,7 @@
 
 ## Use with existing React DOM components
 
-React Native for Web exports a web-specific module called `createElement`,
+React Native for Web exports a web-specific module called `unstable_createElement`,
 which can be used to wrap React DOM components. This allows you to use React
 Native's accessibility and style optimizations.
 
@@ -11,8 +11,8 @@ In the example below, `Video` will now accept common React Native props such as
 props.
 
 ```js
-import { createElement } from 'react-native-web';
-const Video = (props) => createElement('video', props);
+import { unstable_createElement } from 'react-native-web';
+const Video = (props) => unstable_createElement('video', props);
 ```
 
 This also works with composite components defined in your existing component
@@ -20,10 +20,10 @@ gallery or dependencies ([live example](https://www.webpackbin.com/bins/-KiTSGFw
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
-import { createElement } from 'react-native-web';
+import { unstable_createElement } from 'react-native-web';
 import { StyleSheet } from 'react-native';
 
-const CustomButton = (props) => createElement(RaisedButton, {
+const CustomButton = (props) => unstable_createElement(RaisedButton, {
   ...props,
   style: [ styles.button, props.style ]
 });
@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
 });
 ```
 
-And `createElement` can be used as drop-in replacement for `React.createElement`:
+And `unstable_createElement` can be used as drop-in replacement for `React.createElement`:
 
 ```js
-/* @jsx createElement */
-import { createElement } from 'react-native-web';
+/* @jsx unstable_createElement */
+import { unstable_createElement } from 'react-native-web';
 const Video = (props) => <video {...props} style={[ { marginVertical: 10 }, props.style ]} />
 ```
 
@@ -55,7 +55,7 @@ an API inspired by styled-components ([live
 example](https://www.webpackbin.com/bins/-KjT9ziwv4O7FDZdvsnX)).
 
 ```js
-import { createElement } from 'react-native-web';
+import { unstable_createElement } from 'react-native-web';
 import { StyleSheet } from 'react-native';
 
 /**
@@ -78,7 +78,7 @@ const styled = (Component, styler) => {
 
       return (
         isDOMComponent
-          ? createElement(Component, nextProps)
+          ? unstable_createElement(Component, nextProps)
           : <Component {...nextProps} />
       );
     }

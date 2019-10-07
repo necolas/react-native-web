@@ -82,7 +82,7 @@ import DeviceEventEmitter from './exports/DeviceEventEmitter';
 
 export {
   // top-level API
-  createElement,
+  createElement as unstable_createElement,
   findNodeHandle,
   render,
   unmountComponentAtNode,
