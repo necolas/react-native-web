@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 
 /**
- * Copyright (c) Nicolas Gallagher.
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
+ * @format
  */
+
+'use strict';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import BoundingDimensions from './BoundingDimensions';
@@ -16,11 +18,25 @@ import findNodeHandle from '../findNodeHandle';
 import normalizeColor from 'normalize-css-color';
 import Position from './Position';
 import React from 'react';
-import TouchEventUtils from 'fbjs/lib/TouchEventUtils';
 import UIManager from '../UIManager';
 import View from '../View';
 
 type Event = Object;
+type PressEvent = Object;
+type EdgeInsetsProp = Object;
+
+const extractSingleTouch = nativeEvent => {
+  const touches = nativeEvent.touches;
+  const changedTouches = nativeEvent.changedTouches;
+  const hasTouches = touches && touches.length > 0;
+  const hasChangedTouches = changedTouches && changedTouches.length > 0;
+
+  return !hasTouches && hasChangedTouches
+    ? changedTouches[0]
+    : hasTouches
+    ? touches[0]
+    : nativeEvent;
+};
 
 /**
  * `Touchable`: Taps done right.
@@ -110,6 +126,7 @@ type Event = Object;
 /**
  * Touchable states.
  */
+
 const States = {
   NOT_RESPONDER: 'NOT_RESPONDER', // Not the responder
   RESPONDER_INACTIVE_PRESS_IN: 'RESPONDER_INACTIVE_PRESS_IN', // Responder, inactive, in the `PressRect`
@@ -121,10 +138,33 @@ const States = {
   ERROR: 'ERROR'
 };
 
-/**
+type State =
+  | typeof States.NOT_RESPONDER
+  | typeof States.RESPONDER_INACTIVE_PRESS_IN
+  | typeof States.RESPONDER_INACTIVE_PRESS_OUT
+  | typeof States.RESPONDER_ACTIVE_PRESS_IN
+  | typeof States.RESPONDER_ACTIVE_PRESS_OUT
+  | typeof States.RESPONDER_ACTIVE_LONG_PRESS_IN
+  | typeof States.RESPONDER_ACTIVE_LONG_PRESS_OUT
+  | typeof States.ERROR;
+
+/*
  * Quick lookup map for states that are considered to be "active"
  */
+
+const baseStatesConditions = {
+  NOT_RESPONDER: false,
+  RESPONDER_INACTIVE_PRESS_IN: false,
+  RESPONDER_INACTIVE_PRESS_OUT: false,
+  RESPONDER_ACTIVE_PRESS_IN: false,
+  RESPONDER_ACTIVE_PRESS_OUT: false,
+  RESPONDER_ACTIVE_LONG_PRESS_IN: false,
+  RESPONDER_ACTIVE_LONG_PRESS_OUT: false,
+  ERROR: false
+};
+
 const IsActive = {
+  ...baseStatesConditions,
   RESPONDER_ACTIVE_PRESS_OUT: true,
   RESPONDER_ACTIVE_PRESS_IN: true
 };
@@ -134,12 +174,14 @@ const IsActive = {
  * therefore eligible to result in a "selection" if the press stops.
  */
 const IsPressingIn = {
+  ...baseStatesConditions,
   RESPONDER_INACTIVE_PRESS_IN: true,
   RESPONDER_ACTIVE_PRESS_IN: true,
   RESPONDER_ACTIVE_LONG_PRESS_IN: true
 };
 
 const IsLongPressingIn = {
+  ...baseStatesConditions,
   RESPONDER_ACTIVE_LONG_PRESS_IN: true
 };
 
@@ -155,6 +197,15 @@ const Signals = {
   LEAVE_PRESS_RECT: 'LEAVE_PRESS_RECT',
   LONG_PRESS_DETECTED: 'LONG_PRESS_DETECTED'
 };
+
+type Signal =
+  | typeof Signals.DELAY
+  | typeof Signals.RESPONDER_GRANT
+  | typeof Signals.RESPONDER_RELEASE
+  | typeof Signals.RESPONDER_TERMINATED
+  | typeof Signals.ENTER_PRESS_RECT
+  | typeof Signals.LEAVE_PRESS_RECT
+  | typeof Signals.LONG_PRESS_DETECTED;
 
 /**
  * Mapping from States x Signals => States
@@ -382,13 +433,16 @@ const TouchableMixin = {
 
   /**
    * Place as callback for a DOM element's `onResponderGrant` event.
+   * @param {SyntheticEvent} e Synthetic event from event system.
+   *
    */
-  touchableHandleResponderGrant: function(e: Event) {
+  touchableHandleResponderGrant: function(e: PressEvent) {
     const dispatchID = e.currentTarget;
     // Since e is used in a callback invoked on another event loop
     // (as in setTimeout etc), we need to call e.persist() on the
     // event to make sure it doesn't get reused in the event object pool.
     e.persist();
+
     this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);
     this.pressOutDelayTimeout = null;
 
@@ -403,7 +457,6 @@ const TouchableMixin = {
     if (delayMS !== 0) {
       this.touchableDelayTimeout = setTimeout(this._handleDelay.bind(this, e), delayMS);
     } else {
-      this.state.touchable.positionOnActivate = null;
       this._handleDelay(e);
     }
 
@@ -421,27 +474,23 @@ const TouchableMixin = {
   /**
    * Place as callback for a DOM element's `onResponderRelease` event.
    */
-  touchableHandleResponderRelease: function(e: Event) {
+  touchableHandleResponderRelease: function(e: PressEvent) {
+    this.pressInLocation = null;
     this._receiveSignal(Signals.RESPONDER_RELEASE, e);
   },
 
   /**
    * Place as callback for a DOM element's `onResponderTerminate` event.
    */
-  touchableHandleResponderTerminate: function(e: Event) {
+  touchableHandleResponderTerminate: function(e: PressEvent) {
+    this.pressInLocation = null;
     this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
   },
 
   /**
    * Place as callback for a DOM element's `onResponderMove` event.
    */
-  touchableHandleResponderMove: function(e: Event) {
-    // Not enough time elapsed yet, wait for highlight -
-    // this is just a perf optimization.
-    if (this.state.touchable.touchState === States.RESPONDER_INACTIVE_PRESS_IN) {
-      return;
-    }
-
+  touchableHandleResponderMove: function(e: PressEvent) {
     // Measurement may not have returned yet.
     if (!this.state.touchable.positionOnActivate) {
       return;
@@ -466,13 +515,13 @@ const TouchableMixin = {
     const hitSlop = this.touchableGetHitSlop ? this.touchableGetHitSlop() : null;
 
     if (hitSlop) {
-      pressExpandLeft += hitSlop.left;
-      pressExpandTop += hitSlop.top;
-      pressExpandRight += hitSlop.right;
-      pressExpandBottom += hitSlop.bottom;
+      pressExpandLeft += hitSlop.left || 0;
+      pressExpandTop += hitSlop.top || 0;
+      pressExpandRight += hitSlop.right || 0;
+      pressExpandBottom += hitSlop.bottom || 0;
     }
 
-    const touch = TouchEventUtils.extractSingleTouch(e.nativeEvent);
+    const touch = extractSingleTouch(e.nativeEvent);
     const pageX = touch && touch.pageX;
     const pageY = touch && touch.pageY;
 
@@ -494,9 +543,13 @@ const TouchableMixin = {
       pageX < positionOnActivate.left + dimensionsOnActivate.width + pressExpandRight &&
       pageY < positionOnActivate.top + dimensionsOnActivate.height + pressExpandBottom;
     if (isTouchWithinActive) {
+      const prevState = this.state.touchable.touchState;
       this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
       const curState = this.state.touchable.touchState;
-      if (curState === States.RESPONDER_INACTIVE_PRESS_IN) {
+      if (
+        curState === States.RESPONDER_INACTIVE_PRESS_IN &&
+        prevState !== States.RESPONDER_INACTIVE_PRESS_IN
+      ) {
         // fix for t7967420
         this._cancelLongPressDelayTimeout();
       }
@@ -504,6 +557,30 @@ const TouchableMixin = {
       this._cancelLongPressDelayTimeout();
       this._receiveSignal(Signals.LEAVE_PRESS_RECT, e);
     }
+  },
+
+  /**
+   * Invoked when the item receives focus. Mixers might override this to
+   * visually distinguish the `VisualRect` so that the user knows that it
+   * currently has the focus. Most platforms only support a single element being
+   * focused at a time, in which case there may have been a previously focused
+   * element that was blurred just prior to this. This can be overridden when
+   * using `Touchable.Mixin.withoutDefaultFocusAndBlur`.
+   */
+  touchableHandleFocus: function(e: Event) {
+    this.props.onFocus && this.props.onFocus(e);
+  },
+
+  /**
+   * Invoked when the item loses focus. Mixers might override this to
+   * visually distinguish the `VisualRect` so that the user knows that it
+   * no longer has focus. Most platforms only support a single element being
+   * focused at a time, in which case the focus may have moved to another.
+   * This can be overridden when using
+   * `Touchable.Mixin.withoutDefaultFocusAndBlur`.
+   */
+  touchableHandleBlur: function(e: Event) {
+    this.props.onBlur && this.props.onBlur(e);
   },
 
   // ==== Abstract Application Callbacks ====
@@ -592,33 +669,31 @@ const TouchableMixin = {
   },
 
   _handleQueryLayout: function(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
+    l: number,
+    t: number,
+    w: number,
+    h: number,
     globalX: number,
     globalY: number
   ) {
-    // don't do anything if UIManager failed to measure node
-    if (!x && !y && !width && !height && !globalX && !globalY) {
+    //don't do anything UIManager failed to measure node
+    if (!l && !t && !w && !h && !globalX && !globalY) {
       return;
     }
     this.state.touchable.positionOnActivate &&
       Position.release(this.state.touchable.positionOnActivate);
     this.state.touchable.dimensionsOnActivate &&
-      // $FlowFixMe
       BoundingDimensions.release(this.state.touchable.dimensionsOnActivate);
     this.state.touchable.positionOnActivate = Position.getPooled(globalX, globalY);
-    // $FlowFixMe
-    this.state.touchable.dimensionsOnActivate = BoundingDimensions.getPooled(width, height);
+    this.state.touchable.dimensionsOnActivate = BoundingDimensions.getPooled(w, h);
   },
 
-  _handleDelay: function(e: Event) {
+  _handleDelay: function(e: PressEvent) {
     this.touchableDelayTimeout = null;
     this._receiveSignal(Signals.DELAY, e);
   },
 
-  _handleLongDelay: function(e: Event) {
+  _handleLongDelay: function(e: PressEvent) {
     this.longPressDelayTimeout = null;
     const curState = this.state.touchable.touchState;
     if (
@@ -646,7 +721,7 @@ const TouchableMixin = {
    * @throws Error if invalid state transition or unrecognized signal.
    * @sideeffects
    */
-  _receiveSignal: function(signal: string, e: Event) {
+  _receiveSignal: function(signal: Signal, e: PressEvent) {
     const responderID = this.state.touchable.responderID;
     const curState = this.state.touchable.touchState;
     const nextState = Transitions[curState] && Transitions[curState][signal];
@@ -686,26 +761,19 @@ const TouchableMixin = {
     this.longPressDelayTimeout = null;
   },
 
-  _isHighlight: function(state: string) {
+  _isHighlight: function(state: State) {
     return (
       state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN
     );
   },
 
-  _savePressInLocation: function(e: Event) {
-    const touch = TouchEventUtils.extractSingleTouch(e.nativeEvent);
+  _savePressInLocation: function(e: PressEvent) {
+    const touch = extractSingleTouch(e.nativeEvent);
     const pageX = touch && touch.pageX;
     const pageY = touch && touch.pageY;
-    this.pressInLocation = {
-      pageX,
-      pageY,
-      get locationX() {
-        return touch && touch.locationX;
-      },
-      get locationY() {
-        return touch && touch.locationY;
-      }
-    };
+    const locationX = touch && touch.locationX;
+    const locationY = touch && touch.locationY;
+    this.pressInLocation = { pageX, pageY, locationX, locationY };
   },
 
   _getDistanceBetweenPoints: function(aX: number, aY: number, bX: number, bY: number) {
@@ -726,10 +794,10 @@ const TouchableMixin = {
    * @sideeffects
    */
   _performSideEffectsForTransition: function(
-    curState: string,
-    nextState: string,
-    signal: string,
-    e: Event
+    curState: State,
+    nextState: State,
+    signal: Signal,
+    e: PressEvent
   ) {
     const curIsHighlight = this._isHighlight(curState);
     const newIsHighlight = this._isHighlight(nextState);
@@ -741,7 +809,11 @@ const TouchableMixin = {
       this._cancelLongPressDelayTimeout();
     }
 
-    if (!IsActive[curState] && IsActive[nextState]) {
+    const isInitialTransition =
+      curState === States.NOT_RESPONDER && nextState === States.RESPONDER_INACTIVE_PRESS_IN;
+
+    const isActiveTransition = !IsActive[curState] && IsActive[nextState];
+    if (isInitialTransition || isActiveTransition) {
       this._remeasureMetricsOnActivation();
     }
 
@@ -758,9 +830,8 @@ const TouchableMixin = {
     if (IsPressingIn[curState] && signal === Signals.RESPONDER_RELEASE) {
       const hasLongPressHandler = !!this.props.onLongPress;
       const pressIsLongButStillCallOnPress =
-        IsLongPressingIn[curState] && // We *are* long pressing..
-        (!hasLongPressHandler || // But either has no long handler
-          !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
+        IsLongPressingIn[curState] && // We *are* long pressing.. // But either has no long handler
+        (!hasLongPressHandler || !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
 
       const shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
       if (shouldInvokePress && this.touchableHandlePress) {
@@ -777,12 +848,16 @@ const TouchableMixin = {
     this.touchableDelayTimeout = null;
   },
 
-  _startHighlight: function(e: Event) {
+  _playTouchSound: function() {
+    UIManager.playTouchSound();
+  },
+
+  _startHighlight: function(e: PressEvent) {
     this._savePressInLocation(e);
     this.touchableHandleActivePressIn && this.touchableHandleActivePressIn(e);
   },
 
-  _endHighlight: function(e: Event) {
+  _endHighlight: function(e: PressEvent) {
     if (this.touchableHandleActivePressOut) {
       if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
         this.pressOutDelayTimeout = setTimeout(() => {
@@ -797,10 +872,8 @@ const TouchableMixin = {
   // HACK (part 2): basic support for touchable interactions using a keyboard (including
   // delays and longPress)
   touchableHandleKeyEvent: function(e: Event) {
-    const ENTER = 13;
-    const SPACE = 32;
-    const { type, which } = e;
-    if (which === ENTER || which === SPACE) {
+    const { type, key } = e;
+    if (key === 'Enter' || key === ' ') {
       if (type === 'keydown') {
         if (!this._isTouchableKeyboardActive) {
           if (
@@ -825,12 +898,29 @@ const TouchableMixin = {
       e.stopPropagation();
       // prevent the default behaviour unless the Touchable functions as a link
       // and Enter is pressed
-      if (!(which === ENTER && AccessibilityUtil.propsToAriaRole(this.props) === 'link')) {
+      if (!(key === 'Enter' && AccessibilityUtil.propsToAriaRole(this.props) === 'link')) {
         e.preventDefault();
       }
     }
-  }
+  },
+
+  withoutDefaultFocusAndBlur: {}
 };
+
+/**
+ * Provide an optional version of the mixin where `touchableHandleFocus` and
+ * `touchableHandleBlur` can be overridden. This allows appropriate defaults to
+ * be set on TV platforms, without breaking existing implementations of
+ * `Touchable`.
+ */
+const {
+  // eslint-disable-next-line no-unused-vars
+  touchableHandleFocus,
+  // eslint-disable-next-line no-unused-vars
+  touchableHandleBlur,
+  ...TouchableMixinWithoutDefaultFocusAndBlur
+} = TouchableMixin;
+TouchableMixin.withoutDefaultFocusAndBlur = TouchableMixinWithoutDefaultFocusAndBlur;
 
 const Touchable = {
   Mixin: TouchableMixin,
@@ -838,31 +928,36 @@ const Touchable = {
   /**
    * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
    */
-  renderDebugView: ({ color, hitSlop }: Object) => {
-    if (process.env.NODE_ENV !== 'production') {
-      if (!Touchable.TOUCH_TARGET_DEBUG) {
-        return null;
-      }
-      const debugHitSlopStyle = {};
-      hitSlop = hitSlop || { top: 0, bottom: 0, left: 0, right: 0 };
-      for (const key in hitSlop) {
-        debugHitSlopStyle[key] = -hitSlop[key];
-      }
-      const hexColor = '#' + ('00000000' + normalizeColor(color).toString(16)).substr(-8);
-      return (
-        <View
-          pointerEvents="none"
-          style={{
-            position: 'absolute',
-            borderColor: hexColor.slice(0, -2) + '55', // More opaque
-            borderWidth: 1,
-            borderStyle: 'dashed',
-            backgroundColor: hexColor.slice(0, -2) + '0F', // Less opaque
-            ...debugHitSlopStyle
-          }}
-        />
-      );
+  renderDebugView: ({ color, hitSlop }: { color: string | number, hitSlop: EdgeInsetsProp }) => {
+    if (!Touchable.TOUCH_TARGET_DEBUG) {
+      return null;
     }
+    if (process.env.NODE_ENV !== 'production') {
+      throw Error('Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!');
+    }
+    const debugHitSlopStyle = {};
+    hitSlop = hitSlop || { top: 0, bottom: 0, left: 0, right: 0 };
+    for (const key in hitSlop) {
+      debugHitSlopStyle[key] = -hitSlop[key];
+    }
+    const normalizedColor = normalizeColor(color);
+    if (typeof normalizedColor !== 'number') {
+      return null;
+    }
+    const hexColor = '#' + ('00000000' + normalizedColor.toString(16)).substr(-8);
+    return (
+      <View
+        pointerEvents="none"
+        style={{
+          position: 'absolute',
+          borderColor: hexColor.slice(0, -2) + '55', // More opaque
+          borderWidth: 1,
+          borderStyle: 'dashed',
+          backgroundColor: hexColor.slice(0, -2) + '0F', // Less opaque
+          ...debugHitSlopStyle
+        }}
+      />
+    );
   }
 };
 
