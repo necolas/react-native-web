@@ -51,7 +51,9 @@ export default class TouchableDelayEvents extends PureComponent {
           </Touchable>
         </View>
         <View style={styles.eventLogBox}>
-          {this.state.eventLog.map((e, ii) => <Text key={ii}>{e}</Text>)}
+          {this.state.eventLog.map((e, ii) => (
+            <Text key={ii}>{e}</Text>
+          ))}
         </View>
       </View>
     );

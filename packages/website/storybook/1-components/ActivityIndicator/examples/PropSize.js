@@ -9,7 +9,9 @@ const sizes = [20, 'small', 36, 'large', 60];
 
 const ActivityIndicatorSizeExample = () => (
   <View style={styles.horizontal}>
-    {sizes.map((size, i) => <ActivityIndicator key={i} size={size} style={styles.rightPadding} />)}
+    {sizes.map((size, i) => (
+      <ActivityIndicator key={i} size={size} style={styles.rightPadding} />
+    ))}
     <ActivityIndicator size="large" style={styles.large} />
   </View>
 );
