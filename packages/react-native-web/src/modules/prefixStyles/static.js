@@ -6,7 +6,9 @@ import flex from 'inline-style-prefixer/lib/plugins/flex';
 import flexboxIE from 'inline-style-prefixer/lib/plugins/flexboxIE';
 import flexboxOld from 'inline-style-prefixer/lib/plugins/flexboxOld';
 import gradient from 'inline-style-prefixer/lib/plugins/gradient';
+import grid from 'inline-style-prefixer/lib/plugins/grid';
 import imageSet from 'inline-style-prefixer/lib/plugins/imageSet';
+import logical from 'inline-style-prefixer/lib/plugins/logical';
 import position from 'inline-style-prefixer/lib/plugins/position';
 import sizing from 'inline-style-prefixer/lib/plugins/sizing';
 import transition from 'inline-style-prefixer/lib/plugins/transition';
@@ -27,7 +29,9 @@ export default {
     flexboxIE,
     flexboxOld,
     gradient,
+    grid,
     imageSet,
+    logical,
     position,
     sizing,
     transition
@@ -129,24 +133,6 @@ export default {
     wrapThrough: ms,
     wrapMargin: ms,
     touchAction: ms,
-    gridTemplateColumns: ms,
-    gridTemplateRows: ms,
-    gridTemplateAreas: ms,
-    gridTemplate: ms,
-    gridAutoColumns: ms,
-    gridAutoRows: ms,
-    gridAutoFlow: ms,
-    grid: ms,
-    gridRowStart: ms,
-    gridColumnStart: ms,
-    gridRowEnd: ms,
-    gridRow: ms,
-    gridColumn: ms,
-    gridColumnEnd: ms,
-    gridColumnGap: ms,
-    gridRowGap: ms,
-    gridArea: ms,
-    gridGap: ms,
     textSizeAdjust: ['ms', 'Webkit'],
     borderImage: w,
     borderImageOutset: w,

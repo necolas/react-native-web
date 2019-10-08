@@ -21,8 +21,8 @@
     "debounce": "^1.2.0",
     "deep-assign": "^3.0.0",
     "fbjs": "^1.0.0",
-    "hyphenate-style-name": "^1.0.2",
-    "inline-style-prefixer": "^5.0.3",
+    "hyphenate-style-name": "^1.0.3",
+    "inline-style-prefixer": "^5.1.0",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
     "react-timer-mixin": "^0.13.4"
