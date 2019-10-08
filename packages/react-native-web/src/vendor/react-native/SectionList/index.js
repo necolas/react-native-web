@@ -316,7 +316,9 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
   }
 
   _wrapperListRef: ?React.ElementRef<typeof VirtualizedSectionList>;
+  // $FlowFixMe
   _captureRef = ref => {
+    // $FlowFixMe
     this._wrapperListRef = ref;
   };
 }

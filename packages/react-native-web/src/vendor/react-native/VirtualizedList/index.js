@@ -1037,6 +1037,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   _updateCellsToRenderBatcher: Batchinator;
   _viewabilityTuples: Array<ViewabilityHelperCallbackTuple> = [];
 
+  // $FlowFixMe
   _captureScrollRef = ref => {
     this._scrollRef = ref;
   };
@@ -1049,6 +1050,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     );
   }
 
+  // $FlowFixMe
   _defaultRenderScrollComponent = props => {
     const onRefresh = props.onRefresh;
     if (this._isNestedWithSameOrientation()) {
@@ -1084,6 +1086,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     }
   };
 
+  // $FlowFixMe
   _onCellLayout(e, cellKey, index) {
     const layout = e.nativeEvent.layout;
     const next = {
@@ -1190,14 +1193,17 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     this._maybeCallOnEndReached();
   };
 
+  // $FlowFixMe
   _onLayoutEmpty = e => {
     this.props.onLayout && this.props.onLayout(e);
   };
 
+  // $FlowFixMe
   _onLayoutFooter = e => {
     this._footerLength = this._selectLength(e.nativeEvent.layout);
   };
 
+  // $FlowFixMe
   _onLayoutHeader = e => {
     this._headerLength = this._selectLength(e.nativeEvent.layout);
   };
@@ -1460,6 +1466,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     }
   }
 
+  // $FlowFixMe
   _onScrollBeginDrag = (e): void => {
     this._nestedChildLists.forEach(childList => {
       childList.ref && childList.ref._onScrollBeginDrag(e);
@@ -1471,6 +1478,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     this.props.onScrollBeginDrag && this.props.onScrollBeginDrag(e);
   };
 
+  // $FlowFixMe
   _onScrollEndDrag = (e): void => {
     const {velocity} = e.nativeEvent;
     if (velocity) {
@@ -1480,6 +1488,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     this.props.onScrollEndDrag && this.props.onScrollEndDrag(e);
   };
 
+  // $FlowFixMe
   _onMomentumScrollEnd = (e): void => {
     this._scrollMetrics.velocity = 0;
     this._computeBlankness();

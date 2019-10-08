@@ -698,4 +698,4 @@ const AnimatedImplementation = {
   __PropsOnlyForTests: AnimatedProps,
 };
 
-export default AnimatedImplementation
+export default AnimatedImplementation;

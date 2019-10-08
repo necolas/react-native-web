@@ -348,6 +348,7 @@ class AnimatedInterpolation extends AnimatedWithChildren {
   }
 
   __transformDataType(range: Array<any>) {
+    // $FlowFixMe
     return range.map(NativeAnimatedHelper.transformDataType);
   }
 

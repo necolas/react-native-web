@@ -27,6 +27,7 @@ let _uniqueId = 1;
 class AnimatedValueXY extends AnimatedWithChildren {
   x: AnimatedValue;
   y: AnimatedValue;
+  // $FlowFixMe
   _listeners: {[key: string]: {x: string, y: string}};
 
   constructor(
@@ -134,6 +135,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See http://facebook.github.io/react-native/docs/animatedvaluexy.html#addlistener
    */
+  // $FlowFixMe
   addListener(callback: ValueXYListenerCallback): string {
     const id = String(_uniqueId++);
     const jointCallback = ({value: number}) => {

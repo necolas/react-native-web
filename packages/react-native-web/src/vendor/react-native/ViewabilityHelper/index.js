@@ -232,8 +232,11 @@ class ViewabilityHelper {
   }
 
   _onUpdateSync(
+    // $FlowFixMe
     viewableIndicesToCheck,
+    // $FlowFixMe
     onViewableItemsChanged,
+    // $FlowFixMe
     createViewToken,
   ) {
     // Filter out indices that have gone out of view since this call was scheduled.

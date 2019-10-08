@@ -1,11 +1,10 @@
 [version]
-^0.98.0
+^0.109.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
 <PROJECT_ROOT>/packages/examples/.*
-<PROJECT_ROOT>/packages/react-native-web/src/vendor/.*
 <PROJECT_ROOT>/packages/website/.*
 .*/node_modules/babel-plugin-transform-react-remove-prop-types/*
 
