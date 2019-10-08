@@ -27,7 +27,7 @@ export default function renderApplication<Props: Object>(
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
+    <AppContainer rootTag={rootTag} WrapperComponent={WrapperComponent}>
       <RootComponent {...initialProps} />
     </AppContainer>,
     rootTag,
@@ -41,7 +41,7 @@ export function getApplication(
   WrapperComponent?: ?ComponentType<*>
 ): Object {
   const element = (
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
+    <AppContainer rootTag={{}} WrapperComponent={WrapperComponent}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );
