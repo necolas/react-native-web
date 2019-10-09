@@ -5,8 +5,6 @@
  */
 
 import CustomSize from './examples/CustomSize';
-import PropActiveThumbColor from './examples/PropActiveThumbColor';
-import PropActiveTrackColor from './examples/PropActiveTrackColor';
 import PropDisabled from './examples/PropDisabled';
 import PropOnValueChange from './examples/PropOnValueChange';
 import PropThumbColor from './examples/PropThumbColor';
@@ -38,26 +36,6 @@ const SwitchScreen = () => (
       <DocItem name="...View props" />
 
       <DocItem
-        description="The color of the thumb grip when the switch is turned on."
-        example={{
-          render: () => <PropActiveThumbColor />
-        }}
-        label="web"
-        name="activeThumbColor"
-        typeInfo="?color = #009688"
-      />
-
-      <DocItem
-        description="The color of the track when the switch is turned on."
-        example={{
-          render: () => <PropActiveTrackColor />
-        }}
-        label="web"
-        name="activeTrackColor"
-        typeInfo="?color = #A3D3CF"
-      />
-
-      <DocItem
         description="If true, the user won't be able to interact with the switch."
         example={{
           render: () => <PropDisabled />
@@ -76,23 +54,21 @@ const SwitchScreen = () => (
       />
 
       <DocItem
-        description="The color of the thumb grip when the switch is turned off."
+        description="The color of the thumb grip."
         example={{
           render: () => <PropThumbColor />
         }}
-        label="web"
         name="thumbColor"
-        typeInfo="?color = #FAFAFA"
+        typeInfo="?color = #009688"
       />
 
       <DocItem
-        description="The color of the track when the switch is turned off."
+        description="The colors of the track when the switch is turned off and turned on."
         example={{
           render: () => <PropTrackColor />
         }}
-        label="web"
         name="trackColor"
-        typeInfo="?color = #939393"
+        typeInfo="?object = { true = #939393, false = #A3D3CF }"
       />
 
       <DocItem
@@ -102,27 +78,6 @@ const SwitchScreen = () => (
         }}
         name="value"
         typeInfo="?boolean = false"
-      />
-
-      <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;activeTrackColor&quot;)"
-        label="compat"
-        name="onTintColor"
-        typeInfo="?color"
-      />
-
-      <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;trackColor&quot;)"
-        label="compat"
-        name="tintColor"
-        typeInfo="?color"
-      />
-
-      <DocItem
-        description="(For compatibility with React Native. Equivalent to &quot;thumbColor&quot;)"
-        label="compat"
-        name="thumbTintColor"
-        typeInfo="?color"
       />
     </Section>
 

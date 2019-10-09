@@ -43,7 +43,7 @@ class Switch extends Component<*> {
   static defaultProps = {
     disabled: false,
     style: emptyObject,
-    thumbColor: '#FAFAFA',
+    thumbColor: '#009688',
     trackColor: {
       true: '#939393',
       false: '#A3D3CF'
