@@ -18,6 +18,7 @@ import ImageResizeMode from './ImageResizeMode';
 import ImageSourcePropType from './ImageSourcePropType';
 import ImageStylePropTypes from './ImageStylePropTypes';
 import ImageUriCache from './ImageUriCache';
+import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import View from '../View';
@@ -55,7 +56,7 @@ const resolveAssetUri = source => {
     const asset = getAssetByID(source);
     let scale = asset.scales[0];
     if (asset.scales.length > 1) {
-      const preferredScale = window.devicePixelRatio;
+      const preferredScale = PixelRatio.get();
       // Get the scale which is closest to the preferred scale
       scale = asset.scales.reduce((prev, curr) =>
         Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
