@@ -15,6 +15,7 @@ import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
+import { exact } from 'prop-types';
 import React, { Component } from 'react';
 import { bool, func } from 'prop-types';
 
@@ -30,21 +31,14 @@ class Switch extends Component<*> {
 
   static propTypes = {
     ...ViewPropTypes,
-    activeThumbColor: ColorPropType,
-    activeTrackColor: ColorPropType,
     disabled: bool,
     onValueChange: func,
     thumbColor: ColorPropType,
-    trackColor: ColorPropType,
+    trackColor: exact({
+      true: ColorPropType,
+      false: ColorPropType
+    }),
     value: bool,
-
-    /* eslint-disable react/sort-prop-types */
-    // Equivalent of 'activeTrackColor'
-    onTintColor: ColorPropType,
-    // Equivalent of 'thumbColor'
-    thumbTintColor: ColorPropType,
-    // Equivalent of 'trackColor'
-    tintColor: ColorPropType
   };
 
   static defaultProps = {
@@ -68,19 +62,12 @@ class Switch extends Component<*> {
   render() {
     const {
       accessibilityLabel,
-      activeThumbColor,
-      activeTrackColor,
       disabled,
       onValueChange, // eslint-disable-line
       style,
       thumbColor,
       trackColor,
       value,
-
-      // React Native compatibility
-      onTintColor,
-      thumbTintColor,
-      tintColor,
       ...other
     } = this.props;
 
@@ -89,8 +76,9 @@ class Switch extends Component<*> {
     const minWidth = multiplyStyleLengthValue(height, 2);
     const width = styleWidth > minWidth ? styleWidth : minWidth;
     const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const trackCurrentColor = value ? onTintColor || activeTrackColor : tintColor || trackColor;
-    const thumbCurrentColor = value ? activeThumbColor : thumbTintColor || thumbColor;
+    const activeTrackColor = trackColor ? trackColor[true] : undefined;
+    const trackColor = trackColor ? trackColor[false] : undefined;
+    const trackCurrentColor = value ? activeTrackColor : trackColor;
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
@@ -108,7 +96,7 @@ class Switch extends Component<*> {
     const thumbStyle = [
       styles.thumb,
       {
-        backgroundColor: thumbCurrentColor,
+        backgroundColor: thumbColor,
         height: thumbHeight,
         width: thumbWidth
       },
