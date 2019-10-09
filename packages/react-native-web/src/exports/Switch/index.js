@@ -15,9 +15,8 @@ import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
-import { exact } from 'prop-types';
 import React, { Component } from 'react';
-import { bool, func } from 'prop-types';
+import { exact, bool, func } from 'prop-types';
 
 const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
@@ -38,16 +37,17 @@ class Switch extends Component<*> {
       true: ColorPropType,
       false: ColorPropType
     }),
-    value: bool,
+    value: bool
   };
 
   static defaultProps = {
-    activeThumbColor: '#009688',
-    activeTrackColor: '#A3D3CF',
     disabled: false,
     style: emptyObject,
     thumbColor: '#FAFAFA',
-    trackColor: '#939393',
+    trackColor: {
+      true: '#939393',
+      false: '#A3D3CF'
+    },
     value: false
   };
 
@@ -76,9 +76,7 @@ class Switch extends Component<*> {
     const minWidth = multiplyStyleLengthValue(height, 2);
     const width = styleWidth > minWidth ? styleWidth : minWidth;
     const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const activeTrackColor = trackColor ? trackColor[true] : undefined;
-    const trackColor = trackColor ? trackColor[false] : undefined;
-    const trackCurrentColor = value ? activeTrackColor : trackColor;
+    const trackCurrentColor = value ? trackColor[true] : trackColor[false];
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
