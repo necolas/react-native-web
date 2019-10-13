@@ -1,9 +1,11 @@
 /* eslint-env jasmine, jest */
 /* eslint-disable react/jsx-no-bind */
 
+import * as AssetRegistry from '../../../modules/AssetRegistry';
 import Image from '../';
 import ImageLoader from '../../../modules/ImageLoader';
 import ImageUriCache from '../ImageUriCache';
+import PixelRatio from '../../PixelRatio';
 import React from 'react';
 import { shallow } from 'enzyme';
 import StyleSheet from '../../StyleSheet';
@@ -224,6 +226,24 @@ describe('components/Image', () => {
       expect(component.find('img').prop('src')).toBe(defaultUri);
       loadCallback();
       expect(component.find('img').prop('src')).toBe(uri);
+    });
+
+    test('it correctly selects the source scale', () => {
+      AssetRegistry.getAssetByID = jest.fn(() => ({
+        httpServerLocation: 'static',
+        name: 'img',
+        scales: [1, 2, 3],
+        type: 'png'
+      }));
+      PixelRatio.get = jest.fn(() => 2.2);
+
+      const component = shallow(<Image source={1} />);
+      expect(
+        component
+          .render()
+          .find('img')
+          .attr('src')
+      ).toBe('static/img@2x.png');
     });
   });
 
