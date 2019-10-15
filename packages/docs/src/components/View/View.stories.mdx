@@ -1,0 +1,299 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './View.stories.js';
+
+<Meta title="Components|View" />
+
+# View
+
+View is the fundamental UI building block. It is a component that supports
+style, layout with flexbox, and accessibility controls. It can be nested inside
+another View and has zero-to-many children of any type.
+
+## Props
+
+Please also refer to the in-depth "Accessibility" and "Style" guides.
+
+<Props of={stories.ofProps} />
+
+### hitSlop
+
+This defines how far a touch event can start away from the view (in pixels).
+Typical interface guidelines recommend touch targets that are at least 30 - 40
+points/density-independent pixels.
+
+For example, if a touchable view has a height of 20 the touchable height can be
+extended to 40 with hitSlop.
+
+```js
+<View hitSlop={{top: 10, bottom: 10, left: 0, right: 0}} />
+```
+
+### onLayout
+
+This is invoked when a component is mounted and when its layout changes. `x` and
+`y` are the offsets from the parent node.
+
+```
+const onLayout = ({
+  nativeEvent: {
+    layout: { x, y, width, height }
+  }
+}) => {}
+
+<View onLayout={onLayout} />
+```
+
+<Preview withSource='none'>
+  <Story name="onLayout">{stories.onLayout}</Story>
+</Preview>
+
+### onMoveShouldSetResponder
+
+Does this view want to "claim" touch responsiveness? This is called for every
+touch move on the View when it is not the responder.
+
+### onMoveShouldSetResponderCapture
+
+If a parent View wants to prevent a child View from becoming responder on a
+move, it should have this handler return `true`.
+
+### onResponderGrant
+
+The View is now responding to touch events. This is the time to highlight and
+show the user what is happening. For most touch interactions, you'll simply want
+to wrap your component in `TouchableHighlight` or `TouchableOpacity`.
+
+### onResponderMove
+
+The user is moving their finger.
+
+### onResponderReject
+
+Another responder is already active and will not release it to the View asking
+to be the responder.
+
+### onResponderRelease
+
+Fired at the end of the touch.
+
+### onResponderTerminate
+
+The responder has been taken from the view.
+
+### onResponderTerminationRequest
+
+Some other view wants to become responder and is asking this view to release its
+responder. Returning `true` allows its release.
+
+### onStartShouldSetResponder
+
+Does this view want to become responder on the start of a touch?
+
+### onStartShouldSetResponderCapture
+
+If a parent view wants to prevent a child view from becoming the responder on a
+touch start, it should have this handler return true.
+
+### pointerEvents
+
+Controls whether the View can be the target of touch events. Allowed values are
+`auto`, `box-only`, `box-none`, and `none`. A value of `box-none` preserves
+pointer events on the element's children; `box-only` disables pointer events on
+the element's children.
+
+<Preview withSource='none'>
+  <Story name="pointerEvents">{stories.pointerEvents}</Story>
+</Preview>
+
+### testID
+
+Used to locate this view in end-to-end tests. The test ID is rendered to a
+`data-testid` DOM attribute.
+
+### style
+
+...
+
+```js
+{
+  ...CSSCustomProperties,
+  alignContent: string,
+  alignItems: string,
+  alignSelf: string,
+  animationDelay: string,
+  animationDirection: string,
+  animationFillMode: string,
+  animationKeyframes: Array<Object|string>,
+  animationIterationCount: number | "infinite",
+  animationPlayState: string,
+  animationTimingFunction: string,
+  backfaceVisibility: string,
+  backgroundAttachment: string,
+  backgroundBlendMode: string,
+  backgroundClip: string,
+  backgroundColor: color,
+  backgroundImage: string,
+  backgroundOrigin: string,
+  backgroundPosition: string,
+  backgroundRepeat: string,
+  backgroundSize: string,
+  borderColor: color,
+  borderBottomColor: color,
+  borderEndColor: color,
+  borderLeftColor: color,
+  borderRightColor: color,
+  borderStartColor: color,
+  borderTopColor: color,
+  borderRadius: number | string,
+  borderBottomEndRadius: number | string,
+  borderBottomLeftRadius: number | string,
+  borderBottomRightRadius: number | string,
+  borderBottomStartRadius: number | string,
+  borderTopEndRadius: number | string,
+  borderTopLeftRadius: number | string,
+  borderTopRightRadius: number | string,
+  borderTopStartRadius: number | string,
+  borderStyle: string,
+  borderBottomStyle: string,
+  borderEndStyle: string,
+  borderLeftStyle: string,
+  borderRightStyle: string,
+  borderStartStyle: string,
+  borderTopStyle: string,
+  borderWidth: number | string,
+  borderBottomWidth: number | string,
+  borderEndWidth: number | string,
+  borderLeftWidth: number | string,
+  borderRightWidth: number | string,
+  borderStartWidth: number | string,
+  borderTopWidth: number | string,
+  bottom: number | string,
+  boxShadow: string,
+  boxSizing: string,
+  clip: string,
+  cursor: string,
+  direction: string,
+  display: string,
+  end: number | string,
+  filter: string,
+  flex: number,
+  flexBasis: string,
+  flexDirection: string,
+  flexGrow: number,
+  flexShrink: number,
+  flexWrap: string,
+  gridAutoColumns: string,
+  gridAutoFlow: string,
+  gridAutoRows: string,
+  gridColumnEnd: string,
+  gridColumnGap: string,
+  gridColumnStart: string,
+  gridRowEnd: string,
+  gridRowGap: string,
+  gridRowStart: string,
+  gridTemplateColumns: string,
+  gridTemplateRows: string,
+  gridTemplateAreas: string,
+  height: number | string,
+  justifyContent: string,
+  left: number | string,
+  margin: number | string,
+  marginBottom: number | string,
+  marginEnd: number | string,
+  marginHorizontal: number | string,
+  marginLeft: number | string,
+  marginRight: number | string,
+  marginStart: number | string,
+  marginTop: number | string,
+  marginVertical: number | string,
+  maxHeight: number | string,
+  maxWidth: number | string,
+  minHeight: number | string,
+  minWidth: number | string,
+  opacity: number,
+  order: number,
+  outlineColor: color,
+  outlineOffset: number | string,
+  outlineStyle: string,
+  outlineWidth: number | string,
+  overflow: string,
+  overflowX: string,
+  overflowY: string,
+  overscrollBehavior: "auto" | "contain" | "none",
+  overscrollBehaviorX: "auto" | "contain" | "none",
+  overscrollBehaviorY: "auto" | "contain" | "none",
+  padding: number | string,
+  paddingBottom: number | string,
+  paddingEnd: number | string,
+  paddingHorizontal: number | string,
+  paddingLeft: number | string,
+  paddingRight: number | string,
+  paddingStart: number | string,
+  paddingTop: number | string,
+  paddingVertical: number | string,
+  perspective: string,
+  perspectiveOrigin: string,
+  position: string,
+  right: number | string,
+  shadowColor: color,
+  shadowOffset: { height: number | string, width: number | string },
+  shadowOpacity: number,
+  shadowRadius: number | string,
+  start: number | string,
+  touchAction: string,
+  top: number | string,
+  transform: Array<Object>,
+  transformOrigin: string,
+  transformStyle: "flat" | "preserve-3d",
+  transitionDelay: string,
+  transitionDuration: string,
+  transitionProperty: string,
+  transitionTimingFunction: string,
+  userSelect: string,
+  visibility: string,
+  width: number | string,
+  willChange: string,
+  zIndex: number
+}
+```
+
+#### flexbox
+
+Flexbox is the default layout for Views. By default, every view has a column
+layout that stretches its children, which is very similar to block layout.
+
+<Preview withSource='none'>
+  <Story name="styleFlexbox">{stories.styleFlexbox}</Story>
+</Preview>
+
+#### shadows
+
+<Preview withSource='none'>
+  <Story name="styleBoxShadow">{stories.styleBoxShadow}</Story>
+</Preview>
+
+#### transform
+
+The `transform` value must be an array of objects, for example:
+
+```js
+const style = {
+  transform: [
+    { perspective: 300 },
+    { translateX: 100 },
+    { translateY: 50 },
+    { rotate: '30deg' },
+    { scaleX: 2 },
+  ]
+}
+```
+
+#### zIndex
+
+Every instance of `View` has `relative` positioning by default and `zIndex` can
+only be used to control the relative Z-axis stacking of siblings within their
+parent.
+
+<Preview withSource='none'>
+  <Story name="styleZIndex">{stories.styleZIndex}</Story>
+</Preview>

@@ -1,0 +1,83 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './Switch.stories.js';
+
+<Meta title="Components|Switch" />
+
+# Switch
+
+This is a controlled component that requires an `onValueChange` callback that
+updates the value prop in order for the component to reflect user actions. If
+the value prop is not updated, the component will continue to render the
+supplied value prop instead of the expected result of any user actions.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### activeThumbColor
+
+The color of the thumb grip when the switch is turned on. (Web-only)
+
+<Preview withSource='none'>
+  <Story name="activeThumbColor">{stories.activeThumbColor}</Story>
+</Preview>
+
+### activeTrackColor
+
+The color of the track when the switch is turned on. (Web-only, equivalent to React Native's `onTintColor`)
+
+<Preview withSource='none'>
+  <Story name="activeTrackColor">{stories.activeTrackColor}</Story>
+</Preview>
+
+### disabled
+
+If `true`, the user won't be able to interact with the switch.
+
+<Preview withSource='none'>
+  <Story name="disabled">{stories.disabled}</Story>
+</Preview>
+
+### onValueChange
+
+Invoked with the new value when the value changes.
+
+<Preview withSource='none'>
+  <Story name="onValueChange">{stories.onValueChange}</Story>
+</Preview>
+
+### thumbColor
+
+The color of the thumb grip when the switch is turned off. (Web-only, equivalent to React Native's `thumbTintColor`)
+
+<Preview withSource='none'>
+  <Story name="thumbColor">{stories.thumbColor}</Story>
+</Preview>
+
+### trackColor
+
+The color of the track when the switch is turned off. (Web-only, equivalent to React Native's `tintColor`)
+
+<Preview withSource='none'>
+  <Story name="trackColor">{stories.trackColor}</Story>
+</Preview>
+
+### value
+
+The value of the switch. If `true` the switch will be turned on.
+
+<Preview withSource='none'>
+  <Story name="value">{stories.value}</Story>
+</Preview>
+
+## Notes
+
+Custom sizes can be created using styles.
+
+```js
+<Switch style={{ height: 30 }} />
+```
+
+<Preview withSource='none'>
+  <Story name="customSize">{stories.customSize}</Story>
+</Preview>

@@ -1,0 +1,38 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './TouchableHighlight.stories.js';
+
+<Meta title="Components|TouchableHighlight" />
+
+# TouchableHighlight
+
+A wrapper for making views respond properly to touches. On press down, the
+opacity of the wrapped view is decreased, which allows the underlay color to
+show through, darkening or tinting the view.
+
+The underlay comes from wrapping the child in a new View, which can affect
+layout, and sometimes cause unwanted visual artifacts if not used correctly, for
+example if the backgroundColor of the wrapped view isn't explicitly set to an
+opaque color.
+
+TouchableHighlight must have one child (not zero or more than one). If you wish
+to have several child components, wrap them in a View.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### activeOpacity
+
+Determines what the opacity of the wrapped view should be when active.
+
+### onHideUnderlay
+
+Called immediately after the underlay is hidden.
+
+### onShowUnderlay
+
+Called immediately after the underlay is shown
+
+### underlayColor
+
+The color of the underlay that will show through when the touch is active.

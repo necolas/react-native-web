@@ -1,0 +1,63 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './TouchableWithoutFeedback.stories.js';
+
+<Meta title="Components|TouchableWithoutFeedback" />
+
+# TouchableWithoutFeedback
+
+Do not use unless you have a very good reason. All the elements that respond to
+press should have a visual feedback when touched. This is one of the primary
+reason a "web" app doesn't feel "native".
+
+NOTE: `TouchableWithoutFeedback` supports only one child. If you wish to have
+several child components, wrap them in a `View`.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### delayLongPress
+
+Delay in ms, from `onPressIn` to before `onLongPress` is called. The default is `500`.
+
+### delayPressIn
+
+Delay in ms, from pointer down to before `onPressIn` is called.
+
+### delayPressOut
+
+Delay in ms, from pointer up to before `onPressOut` is called.
+
+### disabled
+
+Disables all pointer interactions with the element.
+
+<Preview withSource='none'>
+  <Story name="disabled">{stories.disabled}</Story>
+</Preview>
+
+### onLongPress
+
+Called when the pointer is held down for as long as the value of `delayLongPress`.
+
+### onPress
+
+Called when the pointer is released, but not if cancelled (e.g. by a scroll that steals the responder lock).
+
+### pressRetentionOffset
+
+When the scroll view is disabled, this defines how far the pointer may move off
+of the element before it becomes deactivated. Once deactivated, try moving the pointer
+back over the element and you'll see that the element is once again reactivated!
+Move it back and forth several times while the scroll view is disabled. Ensure
+you pass in a constant to reduce memory allocations.
+
+## Examples
+
+<Preview withSource='none'>
+  <Story name="delayEvents">{stories.delayEvents}</Story>
+</Preview>
+
+<Preview withSource='none'>
+  <Story name="feedbackEvents">{stories.feedbackEvents}</Story>
+</Preview>

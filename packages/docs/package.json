@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "docs",
+  "version": "0.11.7",
+  "scripts": {
+    "build": "build-storybook --docs -o ./dist -c ./.storybook",
+    "start": "start-storybook --docs -p 9001 -c ./.storybook",
+    "release": "yarn build && git checkout gh-pages && rm -rf ../../docs && mv dist ../../docs && git add -A && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -"
+  },
+  "dependencies": {
+    "@storybook/addon-docs": "5.3.0-alpha.43",
+    "@storybook/addon-options": "5.3.0-alpha.43",
+    "@storybook/cli": "5.3.0-alpha.43",
+    "@storybook/react": "5.3.0-alpha.43",
+    "@storybook/theming": "5.3.0-alpha.43",
+    "react-native-web": "0.11.7"
+  },
+  "devDependencies": {
+    "babel-plugin-react-native-web": "0.11.7",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2"
+  }
+}

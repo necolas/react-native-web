@@ -1,0 +1,141 @@
+<Meta title="Guides|Accessibility" />
+
+# Accessibility
+
+On the Web, assistive technologies (e.g., VoiceOver, TalkBack screen readers)
+derive useful information about the structure, purpose, and interactivity of
+apps from their [HTML elements][html-accessibility-url], attributes, and [ARIA
+in HTML][aria-in-html-url]. React Native for Web includes APIs designed to
+provide developers with support for making apps more accessible. The most
+common and best supported accessibility features of the Web are exposed as the
+props: `accessible`, `accessibilityLabel`, `accessibilityLiveRegion`,
+`accessibilityRole`, and `importantForAccessibility`.
+
+## Accessibility properties
+
+### accessibilityLabel
+
+Overrides the text that's read by a screen reader when a person interacts with
+the element. (This is implemented using `aria-label`.)
+
+```js
+<View accessibilityLabel="Timeline: trending topics">
+  <View>...</View>
+</View>
+```
+
+### accessibilityLiveRegion: 'assertive' | 'none' | 'polite'
+
+Allows assistive technologies to announce dynamic changes to a view. The values
+of this attribute are expressed in degrees of importance. When regions are
+specified as `polite` (recommended), updates take low priority. When regions are
+specified as `assertive`, assistive technologies will interrupt and immediately
+announce the change. (This is implemented using `aria-live`.)
+
+* `none`: Accessibility services should not announce changes to this view.
+* `polite`: Accessibility services should announce changes to this view.
+* `assertive`: Accessibility services should interrupt ongoing speech to immediately announce changes to this view.
+
+```js
+<Text accessibilityLiveRegion="polite">
+  Clicked {count} times
+</Text>
+```
+
+### accessibilityRelationship: ?object
+
+...
+
+### accessibilityRole: ?string
+
+Indicates to assistive technologies how to describe the view, e.g., that it is a "button".
+
+Allows assistive technologies to present and support interaction with the view
+in a manner that is consistent with user expectations for similar views of that
+type. For example, marking a touchable view with an accessibilityRole of button.
+(This is implemented using ARIA roles.)
+
+The `accessibilityRole` prop is used to infer an [analogous HTML
+element][html-aria-url] and ARIA `role`, where possible. In most cases, both
+the element and ARIA `role` are rendered. While this may contradict some ARIA
+recommendations, it also helps avoid certain browser bugs, HTML5 conformance
+errors, and accessibility anti-patterns (e.g., giving a `heading` role to a
+`button` element).
+
+Straight-forward examples:
+
+* `<View accessibilityRole="article" />` => `<article role="article" />`.
+* `<View accessibilityRole="banner" />` => `<header role="banner" />`.
+* `<Text accessibilityRole="label" />` => `<label />`.
+* `<Text accessibilityRole="link" />` => `<a role="link" />`.
+* `<View accessibilityRole="main" />` => `<main role="main" />`.
+
+The `heading` role can be combined with `aria-level`:
+
+* `<Text accessibilityRole="heading" />` => `<h1 />`.
+* `<Text accessibilityRole="heading" aria-level="3" />` => `<h3 />`.
+
+The `button` role renders an accessible button but is not implemented using the
+native `button` element due to some browsers limiting the use of flexbox layout
+on its children.
+
+* `<View accessibilityRole="button" />` => `<div role="button" tabIndex="0" />`.
+
+Note: Avoid changing `accessibilityRole` values over time or after user
+actions. Generally, accessibility APIs do not provide a means of notifying
+assistive technologies of a `role` value change.
+
+### accessibilityState: ?object
+
+...
+
+### accessible
+
+When `true`, indicates that the view is an accessibility element. When a view
+is an accessibility element, it groups its children into a single focusable
+component. By default, all touchable elements, buttons, and links are
+"accessible". Prefer using `accessibilityRole` (e.g., `button`, `link`) to
+create focusable HTML elements wherever possible. On web, `accessible={true}`
+is implemented using `tabIndex`.
+
+When `true`, indicates that the view is an accessibility element (i.e.,
+focusable) and groups its child content. By default, all the touchable elements
+and elements with `accessibilityRole` of `button` and `link` are accessible.
+(This is implemented using `tabindex`.)
+
+### importantForAccessibility
+
+The `importantForAccessibility` property controls if a view appears in the
+accessibility tree and if it is reported to accessibility services. On web, a
+value of `no` will remove a focusable element from the tab flow, and a value of
+`no-hide-descendants` will also hide the entire subtree from assistive
+technologies. (This is implemented using `aria-hidden`).
+
+### nativeID
+
+Used to locate this view from any native DOM code, or to define accessibility
+relationships. This is rendered to the native `id` DOM attribute.
+
+## Additional topics
+
+### Spatial navigation
+
+Focus-based web UIs, e.g., for TVs and Game Consoles can implement [TV remote
+control navigation](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS_for_TV/TV_remote_control_navigation)
+outside of React using existing directional-focus libraries. Every DOM element
+that React Native considers focusable can be matched by the attribute
+`data-focusable="true"`.
+
+```js
+const focusableElements = document.querySelectorAll('[data-focusable="true"]');
+```
+
+### Other ARIA properties
+
+Other ARIA properties can be set via [direct
+manipulation](./direct-manipulation.md) or props (this may change in the
+future).
+
+[aria-in-html-url]: https://w3c.github.io/aria-in-html/
+[html-accessibility-url]: http://www.html5accessibility.com/
+[html-aria-url]: http://www.w3.org/TR/html-aria/

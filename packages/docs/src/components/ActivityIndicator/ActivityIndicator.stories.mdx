@@ -1,0 +1,45 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './ActivityIndicator.stories.js';
+
+<Meta title="Components|ActivityIndicator" />
+
+# ActivityIndicator
+
+Displays a customizable activity indicator.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### animating
+
+Controls whether to show the indicator or hide it.
+
+<Preview withSource='none'>
+  <Story name="animating">{stories.animating}</Story>
+</Preview>
+
+### color
+
+Customize the foreground color of the indicator.
+
+<Preview withSource='none'>
+  <Story name="color">{stories.color}</Story>
+</Preview>
+
+### hidesWhenStopped
+
+Control whether to show the indicator when it is not animating.
+
+<Preview withSource='none'>
+  <Story name="hidesWhenStopped">{stories.hidesWhenStopped}</Story>
+</Preview>
+
+### size
+
+Customize the size of the indicator. `small` has a height of `20px`, large has a
+height of `36px`. Scale transforms can also be used.
+
+<Preview withSource='none'>
+  <Story name="size">{stories.size}</Story>
+</Preview>

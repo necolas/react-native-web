@@ -1,0 +1,59 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './ProgressBar.stories.js';
+
+<Meta title="Components|ProgressBar" />
+
+# ProgressBar
+
+Display an activity progress bar.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### color
+
+Customize the color of the progress bar.
+
+<Preview withSource='none'>
+  <Story name="color">{stories.color}</Story>
+</Preview>
+
+### indeterminate
+
+Whether the progress bar will show indeterminate progress.
+
+<Preview withSource='none'>
+  <Story name="indeterminate">{stories.indeterminate}</Story>
+</Preview>
+
+### progress
+
+The progress value (between 0 and 1).
+
+<Preview withSource='none'>
+  <Story name="progress">{stories.progress}</Story>
+</Preview>
+
+### trackColor
+
+Customize the color of the track bar.
+
+<Preview withSource='none'>
+  <Story name="trackColor">{stories.trackColor}</Story>
+</Preview>
+
+## Notes
+
+Custom sizes can be created using `style`.
+
+```js
+<ProgressBar
+  style={{ borderRadius: 10, height: 10 }}
+  trackColor="#D1E3F6"
+/>
+```
+
+<Preview withSource='none'>
+  <Story name="customSize">{stories.customSize}</Story>
+</Preview>

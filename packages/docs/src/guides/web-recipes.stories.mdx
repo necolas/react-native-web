@@ -1,0 +1,53 @@
+<Meta title="Guides|Web recipes" />
+
+# Web recipes
+
+Examples of how to implement web patterns with React Native.
+
+#### `html` and `body` styles
+
+The `html` and `body` elements require certain styles to support full-screen
+React Native apps, and disable "features" like pull-to-refresh in mobile
+browsers. Using the `body` as the root scroll view is [not reliably
+supported](https://github.com/necolas/react-native-web/issues/829).
+
+[Example code](https://codesandbox.io/s/52x1871vjl).
+
+#### Hover styles
+
+Relying on the web's native hover styles can result in several unwanted UX
+consequences. Hover styles might be displayed during touch interactions and can
+remain visually "stuck". Furthermore, there's no way to delay or persist hover
+for accessibility purposes. This recipe shows how to apply hover styles that
+integrate with the Responder event system (e.g., the `Touchable*` press styles)
+and display styles *only* when the mouse is active. It can also be used as the
+basis for programmatic hover delays and rendering of components (e.g., hover
+cards).
+
+[Example code](https://codesandbox.io/s/o9q8vy70l5)
+
+#### Link styles
+
+Cross-platform link components are straight-forward to create and can be
+combined with the hover recipe.
+
+[Example code](https://codesandbox.io/s/53r88k5opx)
+
+<!--
+#### Typography
+
+Rather than relying on inhereted global typography styles, React Native allows
+you to define components that encapsulate a typographic system. This has the
+added benefit of enabling content-specific typography adjustments, e.g.,
+different font sizes or weights for different languages.
+
+[Example code]()
+
+#### Responsive font size
+
+[Example code]()
+
+#### SVG icons
+
+[Example code]()
+-->

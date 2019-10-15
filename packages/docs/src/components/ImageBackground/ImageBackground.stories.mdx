@@ -1,0 +1,20 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './ImageBackground.stories.js';
+
+<Meta title="Components|ImageBackground" />
+
+# ImageBackground
+
+A image component with support for child content.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### children
+
+Content to display over the image.
+
+<Preview withSource='none'>
+  <Story name="children">{stories.children}</Story>
+</Preview>

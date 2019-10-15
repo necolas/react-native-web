@@ -1,7 +1,7 @@
 {
   "private": true,
   "version": "0.11.7",
-  "name": "react-native-web-monorepo",
+  "name": "monorepo",
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
     "compile": "npm-run-all clean -p \"compile:* -- {@}\" --",
@@ -9,10 +9,8 @@
     "compile:es": "cd packages/react-native-web && babel --root-mode upward src --out-dir dist --ignore \"**/__tests__\"",
     "benchmarks": "cd packages/benchmarks && yarn build",
     "benchmarks:release": "cd packages/benchmarks && yarn release",
-    "examples": "cd packages/examples && yarn build",
-    "examples:release": "cd packages/examples && yarn release",
-    "website": "cd packages/website && yarn start",
-    "website:release": "cd packages/website && yarn release",
+    "docs": "cd packages/docs && yarn start",
+    "docs:release": "cd packages/docs && yarn release",
     "flow": "flow",
     "fmt": "prettier --write \"**/*.js\"",
     "jest": "jest --config ./scripts/jest/config.js",
@@ -21,7 +19,7 @@
     "precommit": "lint-staged",
     "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn benchmarks:release && yarn examples:release && yarn website:release",
+    "postrelease": "yarn benchmarks:release && yarn docs:release",
     "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
   },
   "devDependencies": {

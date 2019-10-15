@@ -1,0 +1,48 @@
+import { Meta, Props, Preview, Story } from '@storybook/addon-docs/blocks';
+import * as stories from './I18nManager.stories.js';
+
+<Meta title="APIs|I18nManager" />
+
+# I18nManager
+
+Control and query the layout and writing direction of the application.
+
+## Properties
+
+### isRTL
+
+Whether the application is currently in RTL mode.
+
+### doLeftAndRightSwapInRTL
+
+Whether the application swaps left/right styles in RTL mode. (Default is `true`
+but will eventually be changed to `false`).
+
+## Methods
+
+### allowRTL(bool)
+
+Allow the application to display in RTL mode.
+
+### forceRTL(bool)
+
+Force the application to display in RTL mode.
+
+### swapLeftAndRightInRTL(bool)
+
+Control whether the application swaps `left`/`right` styles in RTL mode. It is
+recommended that applications rely on `start`/`end` styles and disable automatic
+BiDi-flipping of `left`/`right` styles, as this will eventually become the
+default.
+
+### setPreferredLanguageRTL(bool)
+
+Set the application's preferred writing direction to RTL. You may need to infer
+the user's preferred locale on the server (from HTTP headers) and decide whether
+it's an RTL language. (Web-only)
+
+## Example
+
+<Preview withSource='none'>
+  <Story inline={false} name="layoutRTL">{stories.layoutRTL}</Story>
+</Preview>

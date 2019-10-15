@@ -1,0 +1,26 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './FlatList.stories.js';
+
+<Meta title="Components|FlatList" />
+
+# FlatList
+
+An interface for rendering basic, flat lists. Please refer to the React Native
+[documentation for FlatList](https://facebook.github.io/react-native/docs/flatlist).
+
+Note that `FlatList` is not optimized for the web. You may wish to consider
+alternatives such as
+[recyclerlistview](https://github.com/Flipkart/recyclerlistview) and
+[FastList](https://gist.github.com/vishnevskiy/f4ba74adf5cf1d269b860fab86e8feef).
+
+### Single column
+
+<Preview withSource='none'>
+  <Story name="singleColumn">{stories.singleColumn}</Story>
+</Preview>
+
+### Multiple columns
+
+<Preview withSource='none'>
+  <Story name="multiColumn">{stories.multiColumn}</Story>
+</Preview>

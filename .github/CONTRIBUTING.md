@@ -70,15 +70,16 @@ yarn compile
 yarn compile --watch
 ```
 
-## Website and visual tests
+## Documentation and visual tests
 
 To run the interactive storybook:
 
 ```
-yarn website
+yarn docs
 ```
 
-When you're also making changes to the 'react-native-web' source files, run this command in another process:
+When you're also making changes to the 'react-native-web' source files, run this
+command in another process:
 
 ```
 yarn compile --watch

@@ -1,0 +1,28 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './TouchableOpacity.stories.js';
+
+<Meta title="Components|TouchableOpacity" />
+
+# TouchableOpacity
+
+A wrapper for making views respond properly to touches. On press down, the
+opacity of the wrapped view is decreased, dimming it.
+
+Opacity is controlled by wrapping the children in an Animated.View, which is
+added to the view hierarchy. Be aware that this can affect layout.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### activeOpacity
+
+Determines what the opacity of the wrapped view should be when active.
+
+### focusedOpacity
+
+Determines what the opacity of the wrapped view should be when it is focused.
+
+## Instance methods
+
+<Props of={stories.ofMethods} />

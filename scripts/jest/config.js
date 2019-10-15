@@ -8,6 +8,7 @@ module.exports = {
     '<rootDir>/packages/react-native-web/dist/',
     '<rootDir>/packages/website/'
   ],
+  // resetMocks: true,
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages'],
   setupFiles: ['jest-canvas-mock'],

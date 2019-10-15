@@ -1,0 +1,230 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './TextInput.stories.js';
+
+<Meta title="Components|TextInput" />
+
+# TextInput
+
+Accessible single- and multi-line text input via a keyboard. Supports features
+such as auto-complete, auto-focus, placeholder text, and event callbacks. Note:
+some props are exclusive to or excluded from `multiline`.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### autoCapitalize
+
+Automatically capitalize certain characters (only available in Chrome and iOS Safari).
+
+* `characters`: Automatically capitalize all characters.
+* `none`: Completely disables automatic capitalization.
+* `sentences`: Automatically capitalize the first letter of sentences (default).
+* `words`: Automatically capitalize the first letter of words.
+
+<Preview withSource='none'>
+  <Story name="autoCapitalize">{stories.autoCapitalize}</Story>
+</Preview>
+
+### autoComplete
+
+Indicates whether the value of the control can be automatically completed by the
+browser. [Accepted values](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
+
+### autoCorrect
+
+Automatically correct spelling mistakes. (Only available in iOS Safari.)
+
+### autoFocus
+
+If `true`, focuses the input on `componentDidMount`. Only the first form element
+in a document with `autofocus` is focused.
+
+### blurOnSubmit
+
+If `true`, the text field will blur when submitted. The default value is `true`
+for single-line fields and `false` for multiline fields. Note, for `multiline`
+fields setting `blurOnSubmit` to `true` means that pressing return will blur the
+field and trigger the `onSubmitEditing` event instead of inserting a newline
+into the field.
+
+<Preview withSource='none'>
+  <Story name="blurOnSubmit">{stories.blurOnSubmit}</Story>
+</Preview>
+
+### clearTextOnFocus: ?boolean = false
+
+If `true`, clears the text field automatically when focused.
+
+<Preview withSource='none'>
+  <Story name="clearTextOnFocus">{stories.clearTextOnFocus}</Story>
+</Preview>
+
+### defaultValue
+
+Provides an initial value that will change when the user starts typing. Useful
+for simple use-cases where you don't want to deal with listening to events and
+updating the value prop to keep the controlled state in sync.
+
+### editable
+
+If `false`, text is not editable (i.e., read-only).
+
+<Preview withSource='none'>
+  <Story name="editable">{stories.editable}</Story>
+</Preview>
+
+### keyboardType
+
+Possible values: `"default" | "email-address" | "numeric" | "phone-pad" | "search" | "url" | "web-search"`.
+
+Determines which keyboard to open on devices with a virtual keyboard. Safari iOS
+requires an ancestral `<form action>` element to display the `search` keyboard).
+(Not available when `multiline` is `true`.)
+
+<Preview withSource='none'>
+  <Story name="keyboardType">{stories.keyboardType}</Story>
+</Preview>
+
+### maxLength
+
+Limits the maximum number of characters that can be entered.
+
+<Preview withSource='none'>
+  <Story name="maxLength">{stories.maxLength}</Story>
+</Preview>
+
+### multiline
+
+If `true`, the text input can be multiple lines.
+
+<Preview withSource='none'>
+  <Story name="multiline">{stories.multiline}</Story>
+</Preview>
+
+### numberOfLines
+
+Sets the number of lines for a multiline `TextInput`. (Requires `multiline` to be `true`.)
+
+<Preview withSource='none'>
+  <Story name="numberOfLines">{stories.numberOfLines}</Story>
+</Preview>
+
+### onChange
+
+Callback that is called when the text input's text changes.
+
+### onChangeText
+
+Callback that is called when the text input's text changes. The text is passed as an argument to the callback handler.
+
+### onContentSizeChange
+
+Callback that is called when the text input's content size changes. This will be
+called with `{ nativeEvent: { contentSize: { width, height } } }`. Only called
+for multiline text inputs.
+
+### onKeyPress
+
+Callback that is called when a key is pressed. This will be called with `{
+nativeEvent: { key: keyValue } }` where `keyValue` is `Enter`, `Backspace`,
+`Tab`, `Arrow{Up,Right,Down,Left}` for respective keys and the typed-in
+character otherwise including `' '` for space. Modifier keys (e.g., `shiftKey`)
+are also included in the `nativeEvent`. Fires before `onChange` callbacks.
+
+### onSelectionChange
+
+Callback that is called when the text input's selection changes. This will be
+called with `{ nativeEvent: { selection: { start, end } } }`.
+
+<Preview withSource='none'>
+  <Story name="onSelectionChange">{stories.onSelectionChange}</Story>
+</Preview>
+
+### onSubmitEditing
+
+Callback that is called when the keyboard's submit button is pressed. When
+`multiline={true}`, this is only called if `blurOnSubmit={true}`.
+
+### placeholder
+
+The string that will be rendered in an empty `TextInput` before text has been entered.
+
+<Preview withSource='none'>
+  <Story name="placeholder">{stories.placeholder}</Story>
+</Preview>
+
+### placeholderTextColor: ?color
+
+The text color of the placeholder string.
+
+<Preview withSource='none'>
+  <Story name="placeholderTextColor">{stories.placeholderTextColor}</Story>
+</Preview>
+
+### returnKeyType
+
+Possible values: `'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send'`.
+
+Specifies what action label (or icon) to present for the enter key on virtual
+keyboards. Maps to the `enterkeyhint` attribute on web.
+
+### secureTextEntry
+
+If `true`, the text input obscures the text entered so that sensitive text like
+passwords stay secure. (Not available when `multiline` is `true`.)
+
+<Preview withSource='none'>
+  <Story name="secureTextEntry">{stories.secureTextEntry}</Story>
+</Preview>
+
+### selection: ?{ start: number, end: ?number }
+
+The start and end of the text input's selection. Set start and end to the same
+value to position the cursor.
+
+### selectTextOnFocus
+
+If `true`, all text will automatically be selected on focus.
+
+<Preview withSource='none'>
+  <Story name="selectTextOnFocus">{stories.selectTextOnFocus}</Story>
+</Preview>
+
+### spellCheck
+
+If `false`, disables spell-check style (i.e. red underlines). The default value
+is inherited from `autoCorrect`. (Only available in supporting browsers).
+
+### style: ?style
+
+```js
+{
+  ...TextProps.style
+  resize: string, // web-only
+}
+```
+
+### value
+
+The value to show for the text input. TextInput is a controlled component, which means the native value will be forced to match this prop if provided. Read about how [React form components](https://reactjs.org/docs/forms.html) work. To prevent user edits to the value set `editable={false}`.
+
+## Instance methods
+
+<Props of={stories.ofMethods} />
+
+### blur()
+
+Blur the underlying DOM input.
+
+### clear()
+
+Clear the text from the underlying DOM input.
+
+### focus()
+
+Focus the underlying DOM input.
+
+### isFocused()
+
+Returns `true` if the input is currently focused; `false` otherwise.

@@ -1,0 +1,126 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './ScrollView.stories.js';
+
+<Meta title="Components|ScrollView" />
+
+# ScrollView
+
+A scrollable view that provides integration with the touch-locking responder
+system. `ScrollView` must have a bounded height: either set the height of the
+view directly (discouraged) or make sure all parent views have bounded height
+(e.g., transfer `{ flex: 1}` down the view stack).
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### contentContainerStyle
+
+These styles will be applied to the scroll view content container which wraps all of the child views.
+
+### horizontal
+
+When `true`, the scroll view's children are arranged horizontally in a row instead of vertically in a column.
+
+<Preview withSource='none'>
+  <Story name="vertical">{stories.vertical}</Story>
+</Preview>
+
+<Preview withSource='none'>
+  <Story name="horizontal">{stories.horizontal}</Story>
+</Preview>
+
+### keyboardDismissMode
+
+Determines whether the keyboard gets dismissed in response to a scroll drag.
+
+* `none` (the default): drags do not dismiss the keyboard.
+* `on-drag`: the keyboard is dismissed when a drag begins.
+* `interactive` (not supported on web; same as `none`)
+
+### onContentSizeChange
+
+Called when scrollable content view of the `ScrollView` changes. It's
+implemented using the `onLayout` handler attached to the content container which
+this `ScrollView` renders.
+
+### onScroll
+
+Fires at most once per frame during scrolling. The frequency of the events can
+be controlled using the `scrollEventThrottle` prop.
+
+Invoked on scroll with the following event:
+
+```js
+{
+  nativeEvent: {
+    contentOffset: { x, y },
+    contentSize: { height, width },
+    layoutMeasurement: { height, width }
+  }
+}
+```
+
+<Preview withSource='none'>
+  <Story name="onScroll">{stories.onScroll}</Story>
+</Preview>
+
+### pagingEnabled
+
+When `true`, the scroll view snaps to individual items in the list when scrolling.
+
+### scrollEnabled
+
+When `false`, the content does not scroll.
+
+<Preview withSource='none'>
+  <Story name="scrollEnabled">{stories.scrollEnabled}</Story>
+</Preview>
+
+### scrollEventThrottle
+
+This controls how often the scroll event will be fired while scrolling (as a
+time interval in ms). A lower number yields better accuracy for code that is
+tracking the scroll position, but can lead to scroll performance problems. The
+default value is `0`, which means the scroll event will be sent only once each
+time the view is scrolled.
+
+### stickyHeaderIndices
+
+An array of child indices determining which children get docked to the top of
+the screen when scrolling. For example, passing `stickyHeaderIndices=0` will cause
+the first child to be fixed to the top of the scroll view. This property is not
+supported in conjunction with the `horizontal` prop.
+
+## Instance methods
+
+### getInnerViewNode()
+
+Returns a reference to the underlying content container DOM node within the `ScrollView`.
+
+### getScrollableNode()
+
+Returns a reference to the underlying scrollable DOM node.
+
+### getScrollResponder()
+
+Returns a reference to the underlying scroll responder, which supports
+operations like `scrollTo()`. All `ScrollView`-like components should implement
+this method so that they can be composed while providing access to the
+underlying scroll responder's methods.
+
+### scrollTo()
+
+Scrolls to a given `x`, `y` offset (animation depends on browser support for `scroll-behavior`).
+
+```js
+scrollRef.scrollTo({ x, y, animated });
+```
+
+### scrollToEnd()
+
+Scrolls to the end of the scroll view.
+
+```js
+scrollRef.scrollToEnd({ animated });
+```

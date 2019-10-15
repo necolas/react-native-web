@@ -1,0 +1,91 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './Text.stories.js';
+
+<Meta title="Components|Text" />
+
+# Text
+
+Text is component for displaying text. It supports style, basic touch handling,
+and inherits typographic styles from ancestor elements.
+
+Text is unique relative to layout: child elements use text layout ("inline")
+rather than flexbox layout. This means that elements inside of a Text are not
+rectangles, as they wrap when reaching the edge of their container.
+
+NOTE: Text currently transfers all other props to the rendered HTML element.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### children
+
+Nested text components will inherit the typographic styles of their parents.
+
+<Preview withSource='none'>
+  <Story name="children">{stories.children}</Story>
+</Preview>
+
+### numberOfLines
+
+Truncates the text with an ellipsis after this many lines.
+
+<Preview withSource='none'>
+  <Story name="numberOfLines">{stories.numberOfLines}</Story>
+</Preview>
+
+### onPress
+
+Called when the `Text` is pressed.
+
+<Preview withSource='none'>
+  <Story name="onPress">{stories.onPress}</Story>
+</Preview>
+
+### selectable
+
+When `false`, the text is not selectable.
+
+<Preview withSource='none'>
+  <Story name="selectable">{stories.selectable}</Story>
+</Preview>
+
+### style
+
+Text supports typographic styles.
+
+```js
+{
+  ...ViewStyle,
+  color: color,
+  fontFamily: string,
+  fontFeatureSettings: string,
+  fontSize: number | string,
+  fontStyle: string,
+  fontVariant: Array<string>,
+  fontWeight: string,
+  letterSpacing: string,
+  lineHeight: string,
+  textAlign: "center" | "end" | "inherit" | "justify" | "justify-all" | "left" | "right" | "start",
+  textAlignVertical: string,
+  textDecorationColor: color,
+  textDecorationLine: string,
+  textDecorationStyle: string,
+  textIndent: string,
+  textOverflow: string,
+  textRendering: string,
+  textShadowColor: color,
+  textShadowOffset: { height: number, width: number },
+  textShadowRadius: number | string,
+  textTransform: string,
+  unicodeBidi: string,
+  whiteSpace: string,
+  wordBreak: "normal" | "break-all" | "break-word" | "keep-all",
+  wordWrap: string,
+  writingDirection: string
+}
+```
+
+<Preview withSource='none'>
+  <Story name="style">{stories.style}</Story>
+</Preview>

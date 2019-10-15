@@ -1,0 +1,56 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as stories from './CheckBox.stories.js';
+
+<Meta title="Components|CheckBox" />
+
+# CheckBox
+
+This is a controlled component that requires an `onValueChange` callback that
+updates the value prop in order for the component to reflect user actions. If
+the `value` prop is not updated, the component will continue to render the
+supplied `value` prop instead of the expected result of any user actions.
+
+## Props
+
+<Props of={stories.ofProps} />
+
+### color
+
+Customize the color of the active checkbox.
+
+<Preview withSource='none'>
+  <Story name="color">{stories.color}</Story>
+</Preview>
+
+### disabled
+
+Prevent interaction with the checkbox.
+
+<Preview withSource='none'>
+  <Story name="disabled">{stories.disabled}</Story>
+</Preview>
+
+### onValueChange
+
+Called with the event when the value changes.
+
+<Preview withSource='none'>
+  <Story name="onValueChange">{stories.onValueChange}</Story>
+</Preview>
+
+### value
+
+Controls whether the checkbox is active or not.
+
+<Preview withSource='none'>
+  <Story name="value">{stories.value}</Story>
+</Preview>
+
+## Notes
+
+The checkbox size can be controlled by changing the `height` and `width` style
+properties.
+
+<Preview withSource='none'>
+  <Story name="customSize">{stories.customSize}</Story>
+</Preview>
