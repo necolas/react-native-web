@@ -430,7 +430,8 @@ const classes = css.create({
     font: '14px System',
     margin: 0,
     padding: 0,
-    resize: 'none'
+    resize: 'none',
+    outline: 'none'
   }
 });
 
