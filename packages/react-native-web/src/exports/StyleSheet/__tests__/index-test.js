@@ -15,7 +15,7 @@ const isPlainObject = x => {
 
 describe('StyleSheet', () => {
   test('absoluteFill', () => {
-    expect(Number.isInteger(StyleSheet.absoluteFill) === true).toBeTruthy();
+    expect(isPlainObject(StyleSheet.absoluteFill) === true).toBeTruthy();
   });
 
   test('absoluteFillObject', () => {
@@ -46,13 +46,6 @@ describe('StyleSheet', () => {
           2
         )
       ).toBe(2);
-    });
-  });
-
-  describe('create', () => {
-    test('replaces styles with numbers', () => {
-      const style = StyleSheet.create({ root: { position: 'absolute' } });
-      expect(Number.isInteger(style.root) === true).toBeTruthy();
     });
   });
 

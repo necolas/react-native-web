@@ -7,21 +7,25 @@
  * @flow
  */
 
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
 
-const absoluteFillObject = {
+const isDev = process.env.NODE_ENV !== 'production';
+
+const absoluteFill = {
   position: 'absolute',
   left: 0,
   right: 0,
   top: 0,
   bottom: 0
 };
-const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
+
+if (isDev) {
+  Object.freeze(absoluteFill);
+}
 
 const StyleSheet = {
   absoluteFill,
-  absoluteFillObject,
+  absoluteFillObject: absoluteFill,
   compose(style1: any, style2: any) {
     if (process.env.NODE_ENV !== 'production') {
       /* eslint-disable prefer-rest-params */
@@ -44,17 +48,19 @@ const StyleSheet = {
     }
   },
   create(styles: Object) {
-    const result = {};
-    Object.keys(styles).forEach(key => {
-      if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production') {
+      Object.keys(styles).forEach(key => {
         const validate = require('./validate');
         const interopValidate = validate.default ? validate.default : validate;
         interopValidate(key, styles);
-      }
-      const id = styles[key] && ReactNativePropRegistry.register(styles[key]);
-      result[key] = id;
-    });
-    return result;
+
+        if (styles[key]) {
+          Object.freeze(styles[key]);
+        }
+      });
+    }
+
+    return styles;
   },
   flatten: flattenStyle,
   hairlineWidth: 1

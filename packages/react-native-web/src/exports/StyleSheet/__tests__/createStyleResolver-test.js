@@ -1,7 +1,6 @@
 /* eslint-env jasmine, jest */
 
 import I18nManager from '../../I18nManager';
-import ReactNativePropRegistry from '../../../modules/ReactNativePropRegistry';
 import createStyleResolver from '../createStyleResolver';
 
 let styleResolver;
@@ -35,38 +34,6 @@ describe('StyleSheet/createStyleResolver', () => {
       expect(resolve3).not.toEqual(resolve4);
     };
 
-    test('with register, resolves to className', () => {
-      const a = ReactNativePropRegistry.register(styleA);
-      const b = ReactNativePropRegistry.register(styleB);
-      const c = ReactNativePropRegistry.register(styleC);
-      testResolve(a, b, c);
-    });
-
-    test('with register before RTL, resolves to correct className', () => {
-      const a = ReactNativePropRegistry.register({ left: '12.34%' });
-      const b = ReactNativePropRegistry.register({ textAlign: 'left' });
-      const c = ReactNativePropRegistry.register({ marginLeft: 10 });
-      I18nManager.forceRTL(true);
-
-      const resolved1 = styleResolver.resolve([a, b, c]);
-      expect(resolved1).toMatchSnapshot();
-
-      I18nManager.swapLeftAndRightInRTL(false);
-
-      const resolved2 = styleResolver.resolve([a, b, c]);
-      expect(resolved2).toMatchSnapshot();
-
-      I18nManager.swapLeftAndRightInRTL(true);
-      I18nManager.forceRTL(false);
-    });
-
-    test('with register, resolves to mixed', () => {
-      const a = styleA;
-      const b = ReactNativePropRegistry.register(styleB);
-      const c = ReactNativePropRegistry.register(styleC);
-      testResolve(a, b, c);
-    });
-
     test('without register, resolves to inline styles', () => {
       testResolve(styleA, styleB, styleC);
     });
@@ -97,7 +64,7 @@ describe('StyleSheet/createStyleResolver', () => {
 
     test('next class names have priority over current inline styles', () => {
       node.style.cssText = 'opacity: 0.5;';
-      const nextStyle = ReactNativePropRegistry.register({ opacity: 1 });
+      const nextStyle = { opacity: 1 };
       const resolved = styleResolver.resolveWithNode(nextStyle, node);
       expect(resolved).toMatchSnapshot();
     });
@@ -122,7 +89,7 @@ describe('StyleSheet/createStyleResolver', () => {
     test('when isRTL=true, resolves to flipped classNames', () => {
       // note: DOM state resolved from { marginLeft: 5, left: 5 }
       node.style.cssText = 'margin-right: 5px; right: 5px;';
-      const nextStyle = ReactNativePropRegistry.register({ marginLeft: 10, right: 1 });
+      const nextStyle = { marginLeft: 10, right: 1 };
 
       I18nManager.forceRTL(true);
       const resolved = styleResolver.resolveWithNode(nextStyle, node);

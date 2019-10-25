@@ -8,28 +8,15 @@
  * @flow
  */
 
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
-import invariant from 'fbjs/lib/invariant';
 import type { StyleObj } from './StyleSheetTypes';
 
-function getStyle(style) {
-  if (typeof style === 'number') {
-    return ReactNativePropRegistry.getByID(style);
-  }
-  return style;
-}
-
 function flattenStyle(style: ?StyleObj): ?Object {
-  if (!style) {
+  if (style === null || typeof style !== 'object') {
     return undefined;
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    invariant(style !== true, 'style may be false but not true');
-  }
-
   if (!Array.isArray(style)) {
-    return getStyle(style);
+    return style;
   }
 
   const result = {};
@@ -37,8 +24,7 @@ function flattenStyle(style: ?StyleObj): ?Object {
     const computedStyle = flattenStyle(style[i]);
     if (computedStyle) {
       for (const key in computedStyle) {
-        const value = computedStyle[key];
-        result[key] = value;
+        result[key] = computedStyle[key];
       }
     }
   }
