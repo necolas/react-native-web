@@ -13,6 +13,7 @@ import View from '../View';
 import ViewPropTypes from '../ViewPropTypes';
 import React, { Component } from 'react';
 import { bool, func, number } from 'prop-types';
+import findNodeHandle from '../findNodeHandle';
 
 const normalizeScrollEvent = e => ({
   nativeEvent: {
@@ -44,6 +45,37 @@ const normalizeScrollEvent = e => ({
   timeStamp: Date.now()
 });
 
+const normalizeWindowScrollEvent = e => ({
+  nativeEvent: {
+    contentOffset: {
+      get x() {
+        return window.scrollX;
+      },
+      get y() {
+        return window.scrollY;
+      }
+    },
+    contentSize: {
+      get height() {
+        return window.innerHeight;
+      },
+      get width() {
+        return window.innerWidth;
+      }
+    },
+    layoutMeasurement: {
+      get height() {
+        // outer dimensions do not apply for windows
+        return window.innerHeight;
+      },
+      get width() {
+        return window.innerWidth;
+      }
+    }
+  },
+  timeStamp: Date.now()
+});
+
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
@@ -63,20 +95,112 @@ export default class ScrollViewBase extends Component<*> {
     scrollEnabled: bool,
     scrollEventThrottle: number,
     showsHorizontalScrollIndicator: bool,
-    showsVerticalScrollIndicator: bool
+    showsVerticalScrollIndicator: bool,
+    useWindowScrolling: bool
   };
 
   static defaultProps = {
     scrollEnabled: true,
-    scrollEventThrottle: 0
+    scrollEventThrottle: 0,
+    useWindowScrolling: false
   };
 
   _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
   _state = { isScrolling: false, scrollLastTick: 0 };
+  _windowResizeObserver: any | null = null;
 
   setNativeProps(props: Object) {
     if (this._viewRef) {
       this._viewRef.setNativeProps(props);
+    }
+  }
+
+  _handleWindowLayout = () => {
+    const { onLayout } = this.props;
+
+    if (typeof onLayout === 'function') {
+      const layout = {
+        x: 0,
+        y: 0,
+        get width() {
+          return window.innerWidth;
+        },
+        get height() {
+          return window.innerHeight;
+        }
+      };
+
+      const nativeEvent = {
+        layout
+      };
+
+      // $FlowFixMe
+      Object.defineProperty(nativeEvent, 'target', {
+        enumerable: true,
+        get: () => findNodeHandle(this)
+      });
+
+      onLayout({
+        nativeEvent,
+        timeStamp: Date.now()
+      });
+    }
+  };
+
+  registerWindowHandlers() {
+    window.addEventListener('scroll', this._handleScroll);
+    window.addEventListener('touchmove', this._handleWindowTouchMove);
+    window.addEventListener('wheel', this._handleWindowWheel);
+    window.addEventListener('resize', this._handleWindowLayout);
+
+    if (typeof window.ResizeObserver === 'function') {
+      this._windowResizeObserver = new window.ResizeObserver((/*entries*/) => {
+        this._handleWindowLayout();
+      });
+      // handle changes of the window content size.
+      // It technically works with regular onLayout of the container,
+      // but this called very often if the content change based on scrolling, e.g. FlatList
+      this._windowResizeObserver.observe(window.document.body);
+    } else if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+      console.warn(
+        '"useWindowScrolling" relies on ResizeObserver which is not supported by your browser. ' +
+          'Please include a polyfill, e.g., https://github.com/que-etc/resize-observer-polyfill. ' +
+          'Only handling the window.onresize event.'
+      );
+    }
+    this._handleWindowLayout();
+  }
+
+  unregisterWindowHandlers() {
+    window.removeEventListener('scroll', this._handleScroll);
+    window.removeEventListener('touchmove', this._handleWindowTouchMove);
+    window.removeEventListener('wheel', this._handleWindowWheel);
+    const { _windowResizeObserver } = this;
+    if (_windowResizeObserver) {
+      _windowResizeObserver.disconnect();
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.useWindowScrolling) {
+      this.registerWindowHandlers();
+    }
+  }
+
+  componentDidUpdate({ useWindowScrolling: wasUsingBodyScroll }: Object) {
+    const { useWindowScrolling } = this.props;
+    if (wasUsingBodyScroll !== useWindowScrolling) {
+      if (wasUsingBodyScroll) {
+        this.unregisterWindowHandlers();
+      } else {
+        this.registerWindowHandlers();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.useWindowScrolling) {
+      this.unregisterWindowHandlers();
     }
   }
 
@@ -118,6 +242,7 @@ export default class ScrollViewBase extends Component<*> {
       snapToInterval,
       snapToAlignment,
       zoomScale,
+      useWindowScrolling,
       /* eslint-enable */
       ...other
     } = this.props;
@@ -127,9 +252,17 @@ export default class ScrollViewBase extends Component<*> {
     return (
       <View
         {...other}
-        onScroll={this._handleScroll}
-        onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
-        onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
+        onLayout={useWindowScrolling ? undefined : other.onLayout}
+        // disable regular scroll handling if window scrolling is used
+        onScroll={useWindowScrolling ? undefined : this._handleScroll}
+        onTouchMove={
+          useWindowScrolling
+            ? undefined
+            : this._createPreventableScrollHandler(this.props.onTouchMove)
+        }
+        onWheel={
+          useWindowScrolling ? undefined : this._createPreventableScrollHandler(this.props.onWheel)
+        }
         ref={this._setViewRef}
         style={[
           style,
@@ -153,8 +286,26 @@ export default class ScrollViewBase extends Component<*> {
     };
   };
 
+  _handleWindowTouchMove = this._createPreventableScrollHandler(() => {
+    const { onTouchMove } = this.props;
+    if (typeof onTouchMove === 'function') {
+      return onTouchMove();
+    }
+  });
+
+  _handleWindowWheel = this._createPreventableScrollHandler(() => {
+    const { onWheel } = this.props;
+    if (typeof onWheel === 'function') {
+      return onWheel();
+    }
+  });
+
   _handleScroll = (e: Object) => {
-    e.persist();
+    if (typeof e.persist === 'function') {
+      // this is a react SyntheticEvent, but not for window scrolling
+      e.persist();
+    }
+
     e.stopPropagation();
     const { scrollEventThrottle } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
@@ -176,18 +327,20 @@ export default class ScrollViewBase extends Component<*> {
   }
 
   _handleScrollTick(e: Object) {
-    const { onScroll } = this.props;
+    const { onScroll, useWindowScrolling } = this.props;
     this._state.scrollLastTick = Date.now();
     if (onScroll) {
-      onScroll(normalizeScrollEvent(e));
+      const transformEvent = useWindowScrolling ? normalizeWindowScrollEvent : normalizeScrollEvent;
+      onScroll(transformEvent(e));
     }
   }
 
   _handleScrollEnd(e: Object) {
-    const { onScroll } = this.props;
+    const { onScroll, useWindowScrolling } = this.props;
     this._state.isScrolling = false;
     if (onScroll) {
-      onScroll(normalizeScrollEvent(e));
+      const transformEvent = useWindowScrolling ? normalizeWindowScrollEvent : normalizeScrollEvent;
+      onScroll(transformEvent(e));
     }
   }
 

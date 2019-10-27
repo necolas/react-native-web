@@ -204,7 +204,19 @@ const ScrollView = createReactClass({
       />
     );
 
-    const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
+    // window scrolling should not block overflow automatically as it needs to be able to grow the page.
+    const { useWindowScrolling } = other;
+    const horizontalStyle = [
+      styles.baseHorizontal,
+      useWindowScrolling ? null : styles.baseHorizontalOverflow
+    ];
+    const verticalStyle = [
+      styles.baseVertical,
+      useWindowScrolling ? null : styles.baseVerticalOverflow
+    ];
+
+    const baseStyle = horizontal ? horizontalStyle : verticalStyle;
+
     const pagingEnabledStyle = horizontal
       ? styles.pagingEnabledHorizontal
       : styles.pagingEnabledVertical;
@@ -299,13 +311,17 @@ const commonStyle = {
 const styles = StyleSheet.create({
   baseVertical: {
     ...commonStyle,
-    flexDirection: 'column',
+    flexDirection: 'column'
+  },
+  baseVerticalOverflow: {
     overflowX: 'hidden',
     overflowY: 'auto'
   },
   baseHorizontal: {
     ...commonStyle,
-    flexDirection: 'row',
+    flexDirection: 'row'
+  },
+  baseHorizontalOverflow: {
     overflowX: 'auto',
     overflowY: 'hidden'
   },
