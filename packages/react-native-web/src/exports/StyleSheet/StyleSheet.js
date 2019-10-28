@@ -27,7 +27,7 @@ const StyleSheet = {
   absoluteFill,
   absoluteFillObject: absoluteFill,
   compose(style1: any, style2: any) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDev) {
       /* eslint-disable prefer-rest-params */
       const len = arguments.length;
       if (len > 2) {
