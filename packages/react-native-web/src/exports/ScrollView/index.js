@@ -66,7 +66,12 @@ const ScrollView = createReactClass({
   },
 
   getScrollableNode(): any {
-    return findNodeHandle(this._scrollViewRef);
+    // when window scrolling is enabled, the scroll node is not the div, but the full page
+    if (this.props.useWindowScrolling) {
+      return window.document.documentElement;
+    } else {
+      return findNodeHandle(this._scrollViewRef);
+    }
   },
 
   getInnerViewNode(): any {
