@@ -7,36 +7,39 @@
  * @flow
  */
 
-const dataUriPattern = /^data:/;
-
 export default class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
-  static has(uri: string) {
+  static has(cacheId: string) {
     const entries = ImageUriCache._entries;
-    const isDataUri = dataUriPattern.test(uri);
-    return isDataUri || Boolean(entries[uri]);
+    return Boolean(entries[cacheId]);
   }
 
-  static add(uri: string) {
+  static get(cacheId: string) {
+    const entries = ImageUriCache._entries;
+    return entries[cacheId];
+  }
+
+  static add(cacheId: string, displayImageUri: string) {
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
-    if (entries[uri]) {
-      entries[uri].lastUsedTimestamp = lastUsedTimestamp;
-      entries[uri].refCount += 1;
+    if (entries[cacheId]) {
+      entries[cacheId].lastUsedTimestamp = lastUsedTimestamp;
+      entries[cacheId].refCount += 1;
     } else {
-      entries[uri] = {
+      entries[cacheId] = {
         lastUsedTimestamp,
-        refCount: 1
+        refCount: 1,
+        displayImageUri
       };
     }
   }
 
-  static remove(uri: string) {
+  static remove(cacheId: string) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    if (entries[cacheId]) {
+      entries[cacheId].refCount -= 1;
     }
     // Free up entries when the cache is "full"
     ImageUriCache._cleanUpIfNeeded();
@@ -44,20 +47,20 @@ export default class ImageUriCache {
 
   static _cleanUpIfNeeded() {
     const entries = ImageUriCache._entries;
-    const imageUris = Object.keys(entries);
+    const cacheIds = Object.keys(entries);
 
-    if (imageUris.length + 1 > ImageUriCache._maximumEntries) {
+    if (cacheIds.length + 1 > ImageUriCache._maximumEntries) {
       let leastRecentlyUsedKey;
       let leastRecentlyUsedEntry;
 
-      imageUris.forEach(uri => {
-        const entry = entries[uri];
+      cacheIds.forEach(cacheId => {
+        const entry = entries[cacheId];
         if (
           (!leastRecentlyUsedEntry ||
             entry.lastUsedTimestamp < leastRecentlyUsedEntry.lastUsedTimestamp) &&
           entry.refCount === 0
         ) {
-          leastRecentlyUsedKey = uri;
+          leastRecentlyUsedKey = cacheId;
           leastRecentlyUsedEntry = entry;
         }
       });

@@ -9,6 +9,7 @@
 
 let id = 0;
 const requests = {};
+const dataUriPattern = /^data:/;
 
 const ImageLoader = {
   abort(requestId: number) {
@@ -21,7 +22,7 @@ const ImageLoader = {
   getSize(uri, success, failure) {
     let complete = false;
     const interval = setInterval(callback, 16);
-    const requestId = ImageLoader.load(uri, callback, errorCallback);
+    const requestId = ImageLoader.load({ uri }, callback, errorCallback);
 
     function callback() {
       const image = requests[`${requestId}`];
@@ -46,8 +47,11 @@ const ImageLoader = {
       clearInterval(interval);
     }
   },
-  load(uri, onLoad, onError): number {
+  load(source, onLoad, onError): number {
+    const { uri, method, headers, body } = { uri: '', method: 'GET', headers: {}, ...source };
     id += 1;
+
+    // Create image
     const image = new window.Image();
     image.onerror = onError;
     image.onload = e => {
@@ -62,13 +66,54 @@ const ImageLoader = {
         setTimeout(onDecode, 0);
       }
     };
-    image.src = uri;
     requests[`${id}`] = image;
+
+    // If the important source properties are empty, return the image directly
+    if (!source || !uri) {
+      return id;
+    }
+
+    // If the image is a dataUri, display it directly via image
+    const isDataUri = dataUriPattern.test(uri);
+    if (isDataUri) {
+      image.src = uri;
+      return id;
+    }
+
+    // If the image can be retrieved via GET, we can fallback to image loading method
+    if (method === 'GET') {
+      image.src = uri;
+      return id;
+    }
+
+    // Load image via XHR
+    const request = new window.XMLHttpRequest();
+    request.open(method, uri);
+    request.responseType = 'blob';
+    request.withCredentials = false;
+    request.onerror = () => {
+      // Fall back to image (e.g. for CORS issues)
+      image.src = uri;
+    };
+
+    // Add request headers
+    for (const [name, value] of Object.entries(headers)) {
+      request.setRequestHeader(name, value);
+    }
+
+    // When the request finished loading, pass it on to the image
+    request.onload = () => {
+      image.src = window.URL.createObjectURL(request.response);
+    };
+
+    // Send the request
+    request.send(body);
+
     return id;
   },
   prefetch(uri): Promise {
     return new Promise((resolve, reject) => {
-      ImageLoader.load(uri, resolve, reject);
+      ImageLoader.load({ uri }, resolve, reject);
     });
   }
 };

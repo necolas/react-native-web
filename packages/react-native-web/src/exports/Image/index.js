@@ -38,41 +38,57 @@ const getImageState = (uri, shouldDisplaySource) => {
 };
 
 const resolveAssetDimensions = source => {
-  if (typeof source === 'number') {
-    const { height, width } = getAssetByID(source);
-    return { height, width };
-  } else if (typeof source === 'object') {
-    const { height, width } = source;
-    return { height, width };
-  }
+  return {
+    height: source.height,
+    width: source.width
+  };
 };
 
 const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
-const resolveAssetUri = source => {
-  let uri = '';
+const resolveAssetSource = source => {
+  let resolvedSource = {
+    method: 'GET',
+    uri: '',
+    headers: {},
+    width: undefined,
+    height: undefined
+  };
   if (typeof source === 'number') {
     // get the URI from the packager
     const asset = getAssetByID(source);
     const scale = asset.scales[0];
     const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
+    resolvedSource.uri = asset
+      ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}`
+      : '';
+    resolvedSource.width = asset.width;
+    resolvedSource.height = asset.height;
   } else if (typeof source === 'string') {
-    uri = source;
-  } else if (source && typeof source.uri === 'string') {
-    uri = source.uri;
+    resolvedSource.uri = source;
+  } else if (typeof source === 'object') {
+    resolvedSource = {
+      ...resolvedSource,
+      ...source
+    };
   }
 
-  if (uri) {
-    const match = uri.match(svgDataUriPattern);
+  if (resolvedSource.uri) {
+    const match = resolvedSource.uri.match(svgDataUriPattern);
     // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
     if (match) {
       const [, prefix, svg] = match;
       const encodedSvg = encodeURIComponent(svg);
-      return `${prefix}${encodedSvg}`;
+      resolvedSource.uri = `${prefix}${encodedSvg}`;
     }
   }
 
-  return uri;
+  return resolvedSource;
+};
+const getCacheId = source => {
+  return JSON.stringify(resolveAssetSource(source));
+};
+const getCacheUrl = e => {
+  return e.path && e.path[0].src;
 };
 
 let filterId = 0;
@@ -91,7 +107,8 @@ const createTintColorSVG = (tintColor, id) =>
 
 type State = {
   layout: Object,
-  shouldDisplaySource: boolean
+  shouldDisplaySource: boolean,
+  displayImageUri: string
 };
 
 class Image extends Component<*, State> {
@@ -130,10 +147,10 @@ class Image extends Component<*, State> {
   }
 
   static prefetch(uri) {
-    return ImageLoader.prefetch(uri).then(() => {
+    return ImageLoader.prefetch(uri).then(e => {
       // Add the uri to the cache so it can be immediately displayed when used
       // but also immediately remove it to correctly reflect that it has no active references
-      ImageUriCache.add(uri);
+      ImageUriCache.add(uri, getCacheUrl(e));
       ImageUriCache.remove(uri);
     });
   }
@@ -157,10 +174,19 @@ class Image extends Component<*, State> {
   constructor(props, context) {
     super(props, context);
     // If an image has been loaded before, render it immediately
-    const uri = resolveAssetUri(props.source);
-    const shouldDisplaySource = ImageUriCache.has(uri);
-    this.state = { layout: {}, shouldDisplaySource };
-    this._imageState = getImageState(uri, shouldDisplaySource);
+    const cacheId = getCacheId(props.source);
+    const resolvedSource = resolveAssetSource(props.source);
+    const resolvedDefaultSource = resolveAssetSource(props.defaultSource);
+    const cachedSource = ImageUriCache.get(cacheId);
+    const shouldDisplaySource = !!cachedSource;
+    this.state = {
+      layout: {},
+      shouldDisplaySource,
+      displayImageUri: shouldDisplaySource
+        ? cachedSource.uri
+        : resolvedDefaultSource.uri || resolvedSource.uri
+    };
+    this._imageState = getImageState(resolvedSource.uri, shouldDisplaySource);
     this._filterId = filterId;
     filterId++;
   }
@@ -175,14 +201,14 @@ class Image extends Component<*, State> {
   }
 
   componentDidUpdate(prevProps) {
-    const prevUri = resolveAssetUri(prevProps.source);
-    const uri = resolveAssetUri(this.props.source);
+    const prevCacheId = getCacheId(prevProps.source);
+    const cacheId = getCacheId(this.props.source);
     const hasDefaultSource = this.props.defaultSource != null;
-    if (prevUri !== uri) {
-      ImageUriCache.remove(prevUri);
-      const isPreviouslyLoaded = ImageUriCache.has(uri);
-      isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded), hasDefaultSource);
+    if (prevCacheId !== cacheId) {
+      ImageUriCache.remove(prevCacheId);
+      const isPreviouslyLoaded = ImageUriCache.has(cacheId);
+      isPreviouslyLoaded && ImageUriCache.add(cacheId);
+      this._updateImageState(getImageState(cacheId, isPreviouslyLoaded), hasDefaultSource);
     } else if (hasDefaultSource && prevProps.defaultSource !== this.props.defaultSource) {
       this._updateImageState(this._imageState, hasDefaultSource);
     }
@@ -192,14 +218,14 @@ class Image extends Component<*, State> {
   }
 
   componentWillUnmount() {
-    const uri = resolveAssetUri(this.props.source);
-    ImageUriCache.remove(uri);
+    const cacheId = getCacheId(this.props.source);
+    ImageUriCache.remove(cacheId);
     this._destroyImageLoader();
     this._isMounted = false;
   }
 
   render() {
-    const { shouldDisplaySource } = this.state;
+    const { displayImageUri, shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
       accessible,
@@ -233,8 +259,7 @@ class Image extends Component<*, State> {
       }
     }
 
-    const selectedSource = shouldDisplaySource ? source : defaultSource;
-    const displayImageUri = resolveAssetUri(selectedSource);
+    const selectedSource = resolveAssetSource(shouldDisplaySource ? source : defaultSource);
     const imageSizeStyle = resolveAssetDimensions(selectedSource);
     const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
     const flatStyle = { ...StyleSheet.flatten(this.props.style) };
@@ -312,8 +337,11 @@ class Image extends Component<*, State> {
   _createImageLoader() {
     const { source } = this.props;
     this._destroyImageLoader();
-    const uri = resolveAssetUri(source);
-    this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
+    this._imageRequestId = ImageLoader.load(
+      resolveAssetSource(source),
+      this._onLoad,
+      this._onError
+    );
     this._onLoadStart();
   }
 
@@ -356,7 +384,7 @@ class Image extends Component<*, State> {
     if (onError) {
       onError({
         nativeEvent: {
-          error: `Failed to load resource ${resolveAssetUri(source)} (404)`
+          error: `Failed to load resource ${resolveAssetSource(source).uri} (404)`
         }
       });
     }
@@ -366,7 +394,7 @@ class Image extends Component<*, State> {
   _onLoad = e => {
     const { onLoad, source } = this.props;
     const event = { nativeEvent: e };
-    ImageUriCache.add(resolveAssetUri(source));
+    ImageUriCache.add(getCacheId(source), getCacheUrl(e));
     this._updateImageState(STATUS_LOADED);
     if (onLoad) {
       onLoad(event);
@@ -394,14 +422,26 @@ class Image extends Component<*, State> {
   };
 
   _updateImageState(status: ?string, hasDefaultSource: ?boolean = false) {
+    const { source } = this.props;
     this._imageState = status;
     const shouldDisplaySource =
       this._imageState === STATUS_LOADED ||
       (this._imageState === STATUS_LOADING && !hasDefaultSource);
+    const cachedId = getCacheId(source);
+    const { displayImageUri } = ImageUriCache.has(cachedId)
+      ? ImageUriCache.get(cachedId)
+      : this.state;
+
     // only triggers a re-render when the image is loading and has no default image (to support PJPEG), loaded, or failed
-    if (shouldDisplaySource !== this.state.shouldDisplaySource) {
+    if (
+      shouldDisplaySource !== this.state.shouldDisplaySource ||
+      displayImageUri !== this.state.displayImageUri
+    ) {
       if (this._isMounted) {
-        this.setState(() => ({ shouldDisplaySource }));
+        this.setState(() => ({
+          shouldDisplaySource,
+          displayImageUri
+        }));
       }
     }
   }
