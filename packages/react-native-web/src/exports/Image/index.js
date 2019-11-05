@@ -304,7 +304,8 @@ class Image extends Component<*, State> {
     this._imageRequestId = ImageLoader.load(
       ImageLoader.resolveSource(source),
       this._onLoad,
-      this._onError
+      this._onError,
+      this._onProgress
     );
     this._onLoadStart();
   }
@@ -339,6 +340,15 @@ class Image extends Component<*, State> {
           backgroundSize: `${x}px ${y}px`
         };
       }
+    }
+  };
+
+  _onProgress = event => {
+    const { onProgress } = this.props;
+    if (onProgress) {
+      onProgress({
+        nativeEvent: event
+      });
     }
   };
 

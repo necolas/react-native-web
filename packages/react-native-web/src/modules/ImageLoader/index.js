@@ -50,7 +50,7 @@ const ImageLoader = {
       clearInterval(interval);
     }
   },
-  load(source, onLoad, onError): number {
+  load(source, onLoad, onError, onProgress): number {
     const { uri, method, headers, body } = { uri: '', method: 'GET', headers: {}, ...source };
     id += 1;
 
@@ -109,6 +109,9 @@ const ImageLoader = {
     request.onload = () => {
       image.src = window.URL.createObjectURL(request.response);
     };
+
+    // Track progress
+    request.onprogress = onProgress;
 
     // Send the request
     request.send(body);
