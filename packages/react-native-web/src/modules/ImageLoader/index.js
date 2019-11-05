@@ -7,8 +7,11 @@
  * @noflow
  */
 
+import { getAssetByID } from '../AssetRegistry';
+
 let id = 0;
 const requests = {};
+const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 const dataUriPattern = /^data:/;
 
 const ImageLoader = {
@@ -57,6 +60,7 @@ const ImageLoader = {
     image.onload = e => {
       // avoid blocking the main thread
       const onDecode = () => onLoad(e);
+
       if (typeof image.decode === 'function') {
         // Safari currently throws exceptions when decoding svgs.
         // We want to catch that error and allow the load handler
@@ -115,6 +119,45 @@ const ImageLoader = {
     return new Promise((resolve, reject) => {
       ImageLoader.load({ uri }, resolve, reject);
     });
+  },
+  resolveSource(source) {
+    let resolvedSource = {
+      method: 'GET',
+      uri: '',
+      headers: {},
+      width: undefined,
+      height: undefined
+    };
+    if (typeof source === 'number') {
+      // get the URI from the packager
+      const asset = getAssetByID(source);
+      const scale = asset.scales[0];
+      const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
+      resolvedSource.uri = asset
+        ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}`
+        : '';
+      resolvedSource.width = asset.width;
+      resolvedSource.height = asset.height;
+    } else if (typeof source === 'string') {
+      resolvedSource.uri = source;
+    } else if (typeof source === 'object') {
+      resolvedSource = {
+        ...resolvedSource,
+        ...source
+      };
+    }
+
+    if (resolvedSource.uri) {
+      const match = resolvedSource.uri.match(svgDataUriPattern);
+      // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
+      if (match) {
+        const [, prefix, svg] = match;
+        const encodedSvg = encodeURIComponent(svg);
+        resolvedSource.uri = `${prefix}${encodedSvg}`;
+      }
+    }
+
+    return resolvedSource;
   }
 };
 

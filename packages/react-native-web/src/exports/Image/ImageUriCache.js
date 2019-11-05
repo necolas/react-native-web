@@ -7,23 +7,42 @@
  * @flow
  */
 
+import ImageLoader from '../../modules/ImageLoader';
+
+type ImageSource =
+  | string
+  | number
+  | {
+      method: ?string,
+      uri: ?string,
+      headers: ?Object,
+      body: ?string
+    };
+
 export default class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
-  static has(cacheId: string) {
+  static createCacheId(source: ImageSource) {
+    return JSON.stringify(ImageLoader.resolveSource(source));
+  }
+
+  static has(source: ImageSource) {
     const entries = ImageUriCache._entries;
+    const cacheId = ImageUriCache.createCacheId(source);
     return Boolean(entries[cacheId]);
   }
 
-  static get(cacheId: string) {
+  static get(source: ImageSource) {
     const entries = ImageUriCache._entries;
+    const cacheId = ImageUriCache.createCacheId(source);
     return entries[cacheId];
   }
 
-  static add(cacheId: string, displayImageUri: string) {
+  static add(source: ImageSource, displayImageUri: ?string) {
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
+    const cacheId = ImageUriCache.createCacheId(source);
     if (entries[cacheId]) {
       entries[cacheId].lastUsedTimestamp = lastUsedTimestamp;
       entries[cacheId].refCount += 1;
@@ -31,13 +50,14 @@ export default class ImageUriCache {
       entries[cacheId] = {
         lastUsedTimestamp,
         refCount: 1,
-        displayImageUri
+        displayImageUri: displayImageUri || ImageLoader.resolveSource(source).uri
       };
     }
   }
 
-  static remove(cacheId: string) {
+  static remove(source: ImageSource) {
     const entries = ImageUriCache._entries;
+    const cacheId = ImageUriCache.createCacheId(source);
     if (entries[cacheId]) {
       entries[cacheId].refCount -= 1;
     }

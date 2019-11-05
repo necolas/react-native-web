@@ -8,9 +8,18 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import StyleSheet from '../../StyleSheet';
 
-const originalImage = window.Image;
+const OriginalImage = window.Image;
 
 const findImageSurfaceStyle = wrapper => StyleSheet.flatten(wrapper.childAt(0).prop('style'));
+
+const createLoadEvent = uri => {
+  const target = new OriginalImage();
+  target.src = uri;
+  const event = new window.Event('load');
+  event.path = [target];
+
+  return event;
+};
 
 describe('components/Image', () => {
   beforeEach(() => {
@@ -19,7 +28,7 @@ describe('components/Image', () => {
   });
 
   afterEach(() => {
-    window.Image = originalImage;
+    window.Image = OriginalImage;
   });
 
   test('prop "accessibilityLabel"', () => {
@@ -95,11 +104,12 @@ describe('components/Image', () => {
   describe('prop "onLoad"', () => {
     test('is called after image is loaded from network', () => {
       jest.useFakeTimers();
+      const uri = 'https://test.com/img.jpg';
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
+        onLoad(createLoadEvent(uri));
       });
       const onLoadStub = jest.fn();
-      shallow(<Image onLoad={onLoadStub} source="https://test.com/img.jpg" />);
+      shallow(<Image onLoad={onLoadStub} source={uri} />);
       jest.runOnlyPendingTimers();
       expect(ImageLoader.load).toBeCalled();
       expect(onLoadStub).toBeCalled();
@@ -107,11 +117,11 @@ describe('components/Image', () => {
 
     test('is called after image is loaded from cache', () => {
       jest.useFakeTimers();
+      const uri = 'https://test.com/img.jpg';
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
+        onLoad(createLoadEvent(uri));
       });
       const onLoadStub = jest.fn();
-      const uri = 'https://test.com/img.jpg';
       ImageUriCache.add(uri);
       shallow(<Image onLoad={onLoadStub} source={uri} />);
       jest.runOnlyPendingTimers();
@@ -164,7 +174,7 @@ describe('components/Image', () => {
     test('is set immediately if the image was preloaded', () => {
       const uri = 'https://yahoo.com/favicon.ico';
       ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        onLoad();
+        onLoad(createLoadEvent(uri));
       });
       return Image.prefetch(uri).then(() => {
         const source = { uri };
@@ -222,7 +232,7 @@ describe('components/Image', () => {
       });
       const component = shallow(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
       expect(component.find('img').prop('src')).toBe(defaultUri);
-      loadCallback();
+      loadCallback(createLoadEvent(uri));
       expect(component.find('img').prop('src')).toBe(uri);
     });
   });
