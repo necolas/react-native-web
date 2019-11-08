@@ -43,19 +43,6 @@ const resolveAssetDimensions = source => {
   };
 };
 
-const getCacheUrl = e => {
-  if (e.target) {
-    return e.target.src;
-  }
-
-  // Target is not defined at this moment anymore in Chrome and thus we use path
-  if (e.path && e.path[0]) {
-    return e.path[0].src;
-  }
-
-  return undefined;
-};
-
 let filterId = 0;
 
 const createTintColorSVG = (tintColor, id) =>
@@ -112,10 +99,10 @@ class Image extends Component<*, State> {
   }
 
   static prefetch(uri) {
-    return ImageLoader.prefetch(uri).then(e => {
+    return ImageLoader.prefetch(uri).then(displayImageUri => {
       // Add the uri to the cache so it can be immediately displayed when used
       // but also immediately remove it to correctly reflect that it has no active references
-      ImageUriCache.add(uri, getCacheUrl(e));
+      ImageUriCache.add(uri, displayImageUri);
       ImageUriCache.remove(uri);
     });
   }
@@ -160,7 +147,7 @@ class Image extends Component<*, State> {
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     } else if (this._imageState === STATUS_LOADED) {
-      this._onLoad({ target: this._imageRef });
+      this._onLoad(this.state.displayImageUri, { target: this._imageRef });
     }
   }
 
@@ -365,11 +352,11 @@ class Image extends Component<*, State> {
     this._onLoadEnd();
   };
 
-  _onLoad = e => {
+  _onLoad = (displayImageUri, e) => {
     const { onLoad, source } = this.props;
     const event = { nativeEvent: e };
 
-    ImageUriCache.add(source, getCacheUrl(e));
+    ImageUriCache.add(source, displayImageUri);
     this._updateImageState(STATUS_LOADED);
     if (onLoad) {
       onLoad(event);

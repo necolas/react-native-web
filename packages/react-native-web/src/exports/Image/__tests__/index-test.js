@@ -12,15 +12,6 @@ const OriginalImage = window.Image;
 
 const findImageSurfaceStyle = wrapper => StyleSheet.flatten(wrapper.childAt(0).prop('style'));
 
-const createLoadEvent = uri => {
-  const target = new OriginalImage();
-  target.src = uri;
-  const event = new window.Event('load');
-  event.path = [target];
-
-  return event;
-};
-
 describe('components/Image', () => {
   beforeEach(() => {
     ImageUriCache._entries = {};
@@ -106,7 +97,7 @@ describe('components/Image', () => {
       jest.useFakeTimers();
       const uri = 'https://test.com/img.jpg';
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad(createLoadEvent(uri));
+        onLoad(uri);
       });
       const onLoadStub = jest.fn();
       shallow(<Image onLoad={onLoadStub} source={uri} />);
@@ -119,7 +110,7 @@ describe('components/Image', () => {
       jest.useFakeTimers();
       const uri = 'https://test.com/img.jpg';
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad(createLoadEvent(uri));
+        onLoad(uri);
       });
       const onLoadStub = jest.fn();
       ImageUriCache.add(uri);
@@ -174,7 +165,7 @@ describe('components/Image', () => {
     test('is set immediately if the image was preloaded', () => {
       const uri = 'https://yahoo.com/favicon.ico';
       ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        onLoad(createLoadEvent(uri));
+        onLoad(uri);
       });
       return Image.prefetch(uri).then(() => {
         const source = { uri };
@@ -232,7 +223,7 @@ describe('components/Image', () => {
       });
       const component = shallow(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
       expect(component.find('img').prop('src')).toBe(defaultUri);
-      loadCallback(createLoadEvent(uri));
+      loadCallback(uri);
       expect(component.find('img').prop('src')).toBe(uri);
     });
   });
