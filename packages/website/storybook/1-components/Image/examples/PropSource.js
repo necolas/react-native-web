@@ -36,6 +36,20 @@ const ImageSourceExample = () => (
         <Image source={sources.dataSvg} style={styles.image} />
       </View>
     </View>
+    <View style={styles.row}>
+      <View style={styles.column}>
+        <Text style={styles.text}>WebP</Text>
+        <Image source={sources.webP} style={styles.image} />
+      </View>
+      <View style={styles.column}>
+        <Text style={styles.text}>Dynamic (POST)</Text>
+        <Image source={sources.dynamic} style={styles.image} />
+      </View>
+      <View style={styles.column}>
+        <Text style={styles.text}>Redirect</Text>
+        <Image source={sources.redirect} style={styles.image} />
+      </View>
+    </View>
   </React.Fragment>
 );
 

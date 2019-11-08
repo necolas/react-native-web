@@ -44,7 +44,18 @@ const sources = {
   },
   dataSvg,
   dataBase64Png,
-  dataBase64Svg
+  dataBase64Svg,
+  webP: {
+    uri: 'https://www.gstatic.com/webp/gallery/4.sm.webp'
+  },
+  dynamic: {
+    uri: 'https://chart.googleapis.com/chart',
+    method: 'POST',
+    body: 'cht=lc&chtt=Test&chs=300x200&chxt=x&chd=t:40,20,50,20,100'
+  },
+  redirect: {
+    uri: 'https://twitter.com/twitter/profile_image?size=original'
+  }
 };
 
 export default sources;

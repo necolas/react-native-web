@@ -11,11 +11,12 @@ import { ActivityIndicator, Image, Text, View } from 'react-native';
 class NetworkImageExample extends PureComponent {
   state = {
     error: false,
-    loading: false
+    loading: false,
+    messages: []
   };
 
   static propTypes = {
-    logMethod: oneOf(['onError', 'onLoad', 'onLoadEnd', 'onLoadStart']),
+    logMethod: oneOf(['onError', 'onLoad', 'onLoadEnd', 'onLoadStart', 'onProgress']),
     source: Image.propTypes.source
   };
 
@@ -39,44 +40,94 @@ class NetworkImageExample extends PureComponent {
           onLoad={this._handleLoad}
           onLoadEnd={this._handleLoadEnd}
           onLoadStart={this._handleLoadStart}
+          onProgress={this._handleProgress}
           source={this.props.source}
           style={helpers.styles.base}
         />
-        {this.state.message && <Text style={helpers.styles.marginTop}>{this.state.message}</Text>}
+        {this.state.messages.map((message, index) => {
+          return (
+            <Text key={index} style={helpers.styles.marginTop}>
+              {message}
+            </Text>
+          );
+        })}
       </View>
     );
   }
 
   _handleError = e => {
-    const nextState = { loading: false };
-    if (this.props.logMethod === 'onError') {
-      nextState.message = `✘ onError ${JSON.stringify(e.nativeEvent)}`;
-    }
-    this.setState(() => nextState);
+    this.setState(state => {
+      const messages = [...state.messages];
+      if (this.props.logMethod === 'onError') {
+        messages.push(`✘ onError ${JSON.stringify(e.nativeEvent)}`);
+      }
+
+      return {
+        loading: false,
+        messages
+      };
+    });
   };
 
   _handleLoad = () => {
-    const nextState = { loading: false };
-    if (this.props.logMethod === 'onLoad') {
-      nextState.message = '✔ onLoad';
-    }
-    this.setState(() => nextState);
+    this.setState(state => {
+      const messages = [...state.messages];
+      if (this.props.logMethod === 'onLoad') {
+        messages.push('✔ onLoad');
+      }
+
+      return {
+        loading: false,
+        messages
+      };
+    });
   };
 
   _handleLoadEnd = () => {
-    const nextState = { loading: false };
-    if (this.props.logMethod === 'onLoadEnd') {
-      nextState.message = '✔ onLoadEnd';
-    }
-    this.setState(() => nextState);
+    this.setState(state => {
+      const messages = [...state.messages];
+      if (this.props.logMethod === 'onLoadEnd') {
+        messages.push('✔ onLoadEnd');
+      }
+
+      return {
+        loading: false,
+        messages
+      };
+    });
   };
 
   _handleLoadStart = () => {
-    const nextState = { loading: true };
-    if (this.props.logMethod === 'onLoadStart') {
-      nextState.message = '✔ onLoadStart';
-    }
-    this.setState(() => nextState);
+    this.setState(state => {
+      const messages = [...state.messages];
+      if (this.props.logMethod === 'onLoadStart') {
+        messages.push('✔ onLoadStart');
+      }
+
+      return {
+        loading: false,
+        messages
+      };
+    });
+  };
+
+  _handleProgress = e => {
+    this.setState(state => {
+      const messages = [...state.messages];
+      if (this.props.logMethod === 'onProgress') {
+        const { loaded, total } = e.nativeEvent;
+        messages.push(
+          `✔ onProgress ${JSON.stringify({
+            loaded,
+            total
+          })}`
+        );
+      }
+
+      return {
+        messages
+      };
+    });
   };
 }
 

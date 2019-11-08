@@ -11,7 +11,6 @@
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageResizeMode from './ImageResizeMode';
@@ -33,46 +32,15 @@ const STATUS_LOADING = 'LOADING';
 const STATUS_PENDING = 'PENDING';
 const STATUS_IDLE = 'IDLE';
 
-const getImageState = (uri, shouldDisplaySource) => {
-  return shouldDisplaySource ? STATUS_LOADED : uri ? STATUS_PENDING : STATUS_IDLE;
+const getImageState = (source, shouldDisplaySource) => {
+  return shouldDisplaySource ? STATUS_LOADED : source ? STATUS_PENDING : STATUS_IDLE;
 };
 
 const resolveAssetDimensions = source => {
-  if (typeof source === 'number') {
-    const { height, width } = getAssetByID(source);
-    return { height, width };
-  } else if (typeof source === 'object') {
-    const { height, width } = source;
-    return { height, width };
-  }
-};
-
-const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
-const resolveAssetUri = source => {
-  let uri = '';
-  if (typeof source === 'number') {
-    // get the URI from the packager
-    const asset = getAssetByID(source);
-    const scale = asset.scales[0];
-    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
-  } else if (typeof source === 'string') {
-    uri = source;
-  } else if (source && typeof source.uri === 'string') {
-    uri = source.uri;
-  }
-
-  if (uri) {
-    const match = uri.match(svgDataUriPattern);
-    // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
-    if (match) {
-      const [, prefix, svg] = match;
-      const encodedSvg = encodeURIComponent(svg);
-      return `${prefix}${encodedSvg}`;
-    }
-  }
-
-  return uri;
+  return {
+    height: source.height,
+    width: source.width
+  };
 };
 
 let filterId = 0;
@@ -91,7 +59,8 @@ const createTintColorSVG = (tintColor, id) =>
 
 type State = {
   layout: Object,
-  shouldDisplaySource: boolean
+  shouldDisplaySource: boolean,
+  displayImageUri: string
 };
 
 class Image extends Component<*, State> {
@@ -130,10 +99,10 @@ class Image extends Component<*, State> {
   }
 
   static prefetch(uri) {
-    return ImageLoader.prefetch(uri).then(() => {
+    return ImageLoader.prefetch(uri).then(displayImageUri => {
       // Add the uri to the cache so it can be immediately displayed when used
       // but also immediately remove it to correctly reflect that it has no active references
-      ImageUriCache.add(uri);
+      ImageUriCache.add(uri, displayImageUri);
       ImageUriCache.remove(uri);
     });
   }
@@ -157,10 +126,18 @@ class Image extends Component<*, State> {
   constructor(props, context) {
     super(props, context);
     // If an image has been loaded before, render it immediately
-    const uri = resolveAssetUri(props.source);
-    const shouldDisplaySource = ImageUriCache.has(uri);
-    this.state = { layout: {}, shouldDisplaySource };
-    this._imageState = getImageState(uri, shouldDisplaySource);
+    const resolvedSource = ImageLoader.resolveSource(props.source);
+    const resolvedDefaultSource = ImageLoader.resolveSource(props.defaultSource);
+    const cachedSource = ImageUriCache.get(props.source);
+    const shouldDisplaySource = !!cachedSource;
+    this.state = {
+      layout: {},
+      shouldDisplaySource,
+      displayImageUri: shouldDisplaySource
+        ? cachedSource.displayImageUri
+        : resolvedDefaultSource.uri || resolvedSource.uri
+    };
+    this._imageState = getImageState(props.source, shouldDisplaySource);
     this._filterId = filterId;
     filterId++;
   }
@@ -170,20 +147,21 @@ class Image extends Component<*, State> {
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
     } else if (this._imageState === STATUS_LOADED) {
-      this._onLoad({ target: this._imageRef });
+      this._onLoad(this.state.displayImageUri, { target: this._imageRef });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const prevUri = resolveAssetUri(prevProps.source);
-    const uri = resolveAssetUri(this.props.source);
-    const hasDefaultSource = this.props.defaultSource != null;
-    if (prevUri !== uri) {
-      ImageUriCache.remove(prevUri);
-      const isPreviouslyLoaded = ImageUriCache.has(uri);
-      isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded), hasDefaultSource);
-    } else if (hasDefaultSource && prevProps.defaultSource !== this.props.defaultSource) {
+    const { defaultSource, source } = this.props;
+    const prevCacheId = ImageUriCache.createCacheId(prevProps.source);
+    const cacheId = ImageUriCache.createCacheId(source);
+    const hasDefaultSource = defaultSource != null;
+    if (prevCacheId !== cacheId) {
+      ImageUriCache.remove(prevProps.source);
+      const shouldDisplaySource = ImageUriCache.has(source);
+      shouldDisplaySource && ImageUriCache.add(source);
+      this._updateImageState(getImageState(source, shouldDisplaySource), hasDefaultSource);
+    } else if (hasDefaultSource && prevProps.defaultSource !== defaultSource) {
       this._updateImageState(this._imageState, hasDefaultSource);
     }
     if (this._imageState === STATUS_PENDING) {
@@ -192,14 +170,13 @@ class Image extends Component<*, State> {
   }
 
   componentWillUnmount() {
-    const uri = resolveAssetUri(this.props.source);
-    ImageUriCache.remove(uri);
+    ImageUriCache.remove(this.props.source);
     this._destroyImageLoader();
     this._isMounted = false;
   }
 
   render() {
-    const { shouldDisplaySource } = this.state;
+    const { displayImageUri, shouldDisplaySource } = this.state;
     const {
       accessibilityLabel,
       accessible,
@@ -233,8 +210,7 @@ class Image extends Component<*, State> {
       }
     }
 
-    const selectedSource = shouldDisplaySource ? source : defaultSource;
-    const displayImageUri = resolveAssetUri(selectedSource);
+    const selectedSource = ImageLoader.resolveSource(shouldDisplaySource ? source : defaultSource);
     const imageSizeStyle = resolveAssetDimensions(selectedSource);
     const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
     const flatStyle = { ...StyleSheet.flatten(this.props.style) };
@@ -312,8 +288,12 @@ class Image extends Component<*, State> {
   _createImageLoader() {
     const { source } = this.props;
     this._destroyImageLoader();
-    const uri = resolveAssetUri(source);
-    this._imageRequestId = ImageLoader.load(uri, this._onLoad, this._onError);
+    this._imageRequestId = ImageLoader.load(
+      ImageLoader.resolveSource(source),
+      this._onLoad,
+      this._onError,
+      this._onProgress
+    );
     this._onLoadStart();
   }
 
@@ -350,23 +330,33 @@ class Image extends Component<*, State> {
     }
   };
 
+  _onProgress = event => {
+    const { onProgress } = this.props;
+    if (onProgress) {
+      onProgress({
+        nativeEvent: event
+      });
+    }
+  };
+
   _onError = () => {
     const { onError, source } = this.props;
     this._updateImageState(STATUS_ERRORED);
     if (onError) {
       onError({
         nativeEvent: {
-          error: `Failed to load resource ${resolveAssetUri(source)} (404)`
+          error: `Failed to load resource ${ImageLoader.resolveSource(source).uri} (404)`
         }
       });
     }
     this._onLoadEnd();
   };
 
-  _onLoad = e => {
+  _onLoad = (displayImageUri, e) => {
     const { onLoad, source } = this.props;
     const event = { nativeEvent: e };
-    ImageUriCache.add(resolveAssetUri(source));
+
+    ImageUriCache.add(source, displayImageUri);
     this._updateImageState(STATUS_LOADED);
     if (onLoad) {
       onLoad(event);
@@ -394,14 +384,29 @@ class Image extends Component<*, State> {
   };
 
   _updateImageState(status: ?string, hasDefaultSource: ?boolean = false) {
+    const { source, defaultSource } = this.props;
+    const resolvedSource = ImageLoader.resolveSource(defaultSource);
+    const resolvedDefaultSource = ImageLoader.resolveSource(source);
     this._imageState = status;
     const shouldDisplaySource =
       this._imageState === STATUS_LOADED ||
       (this._imageState === STATUS_LOADING && !hasDefaultSource);
+    const { displayImageUri } = ImageUriCache.has(source)
+      ? ImageUriCache.get(source)
+      : {
+          displayImageUri: resolvedSource.uri || resolvedDefaultSource.uri
+        };
+
     // only triggers a re-render when the image is loading and has no default image (to support PJPEG), loaded, or failed
-    if (shouldDisplaySource !== this.state.shouldDisplaySource) {
+    if (
+      shouldDisplaySource !== this.state.shouldDisplaySource ||
+      displayImageUri !== this.state.displayImageUri
+    ) {
       if (this._isMounted) {
-        this.setState(() => ({ shouldDisplaySource }));
+        this.setState(() => ({
+          shouldDisplaySource,
+          displayImageUri
+        }));
       }
     }
   }

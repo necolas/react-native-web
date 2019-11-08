@@ -7,36 +7,59 @@
  * @flow
  */
 
-const dataUriPattern = /^data:/;
+import ImageLoader from '../../modules/ImageLoader';
+
+type ImageSource =
+  | string
+  | number
+  | {
+      method: ?string,
+      uri: ?string,
+      headers: ?Object,
+      body: ?string
+    };
 
 export default class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
-  static has(uri: string) {
-    const entries = ImageUriCache._entries;
-    const isDataUri = dataUriPattern.test(uri);
-    return isDataUri || Boolean(entries[uri]);
+  static createCacheId(source: ImageSource) {
+    return JSON.stringify(ImageLoader.resolveSource(source));
   }
 
-  static add(uri: string) {
+  static has(source: ImageSource) {
+    const entries = ImageUriCache._entries;
+    const cacheId = ImageUriCache.createCacheId(source);
+    return Boolean(entries[cacheId]);
+  }
+
+  static get(source: ImageSource) {
+    const entries = ImageUriCache._entries;
+    const cacheId = ImageUriCache.createCacheId(source);
+    return entries[cacheId];
+  }
+
+  static add(source: ImageSource, displayImageUri: ?string) {
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
-    if (entries[uri]) {
-      entries[uri].lastUsedTimestamp = lastUsedTimestamp;
-      entries[uri].refCount += 1;
+    const cacheId = ImageUriCache.createCacheId(source);
+    if (entries[cacheId]) {
+      entries[cacheId].lastUsedTimestamp = lastUsedTimestamp;
+      entries[cacheId].refCount += 1;
     } else {
-      entries[uri] = {
+      entries[cacheId] = {
         lastUsedTimestamp,
-        refCount: 1
+        refCount: 1,
+        displayImageUri: displayImageUri || ImageLoader.resolveSource(source).uri
       };
     }
   }
 
-  static remove(uri: string) {
+  static remove(source: ImageSource) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    const cacheId = ImageUriCache.createCacheId(source);
+    if (entries[cacheId]) {
+      entries[cacheId].refCount -= 1;
     }
     // Free up entries when the cache is "full"
     ImageUriCache._cleanUpIfNeeded();
@@ -44,20 +67,20 @@ export default class ImageUriCache {
 
   static _cleanUpIfNeeded() {
     const entries = ImageUriCache._entries;
-    const imageUris = Object.keys(entries);
+    const cacheIds = Object.keys(entries);
 
-    if (imageUris.length + 1 > ImageUriCache._maximumEntries) {
+    if (cacheIds.length + 1 > ImageUriCache._maximumEntries) {
       let leastRecentlyUsedKey;
       let leastRecentlyUsedEntry;
 
-      imageUris.forEach(uri => {
-        const entry = entries[uri];
+      cacheIds.forEach(cacheId => {
+        const entry = entries[cacheId];
         if (
           (!leastRecentlyUsedEntry ||
             entry.lastUsedTimestamp < leastRecentlyUsedEntry.lastUsedTimestamp) &&
           entry.refCount === 0
         ) {
-          leastRecentlyUsedKey = uri;
+          leastRecentlyUsedKey = cacheId;
           leastRecentlyUsedEntry = entry;
         }
       });

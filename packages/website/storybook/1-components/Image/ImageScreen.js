@@ -11,6 +11,7 @@ import PropOnError from './examples/PropOnError';
 import PropOnLoad from './examples/PropOnLoad';
 import PropOnLoadEnd from './examples/PropOnLoadEnd';
 import PropOnLoadStart from './examples/PropOnLoadStart';
+import PropOnProgress from './examples/PropOnProgress';
 import PropResizeMode from './examples/PropResizeMode';
 import PropSource from './examples/PropSource';
 import StaticGetSizeExample from './examples/StaticGetSize';
@@ -102,6 +103,19 @@ const ImageScreen = () => (
         description="Invoked on load start."
         example={{
           render: () => <PropOnLoadStart />
+        }}
+      />
+
+      <DocItem
+        name="onProgress"
+        typeInfo="?function"
+        description={
+          <AppText>
+            Invoked on download progress with <Code>{'{nativeEvent: {loaded, total}}'}</Code>.
+          </AppText>
+        }
+        example={{
+          render: () => <PropOnProgress />
         }}
       />
 
