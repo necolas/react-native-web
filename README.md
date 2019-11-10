@@ -2,7 +2,7 @@
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
-**Compatibility: React Native 0.55**.
+**Compatibility: React Native 0.55 to 0.61.2 and beyond**.
 
 "React Native for Web" makes it possible to run [React
 Native][react-native-url] components and APIs on the web using React DOM. Check
