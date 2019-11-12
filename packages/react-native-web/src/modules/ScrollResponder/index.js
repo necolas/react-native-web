@@ -491,7 +491,7 @@ const ScrollResponderMixin = {
    *
    * The `keyboardWillShow` is called before input focus.
    */
-  componentWillMount: function() {
+  UNSAFE_componentWillMount: function() {
     this.keyboardWillOpenTo = null;
     this.additionalScrollOffset = 0;
     // this.addListenerOn(RCTDeviceEventEmitter, 'keyboardWillShow', this.scrollResponderKeyboardWillShow);
