@@ -13,6 +13,9 @@ function createStrictShapeTypeChecker(shapeTypes: {
   [key: string]: ReactPropsCheckType
 }): ReactPropsChainableTypeChecker {
   function checkType(isRequired, props, propName, componentName, location?, ...rest) {
+    if (process.env.NODE_ENV === 'production' || process.env.DELIBERATELY_SKIP_RNW_STYLE_CHECKING) {
+      return;
+    }
     if (!props[propName]) {
       if (isRequired) {
         invariant(
