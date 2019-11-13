@@ -63,10 +63,13 @@ export default class AppRegistry {
       run: appParameters =>
         renderApplication(
           componentProviderInstrumentationHook(componentProvider),
-          appParameters.initialProps || emptyObject,
-          appParameters.rootTag,
           wrapperComponentProvider && wrapperComponentProvider(appParameters),
-          appParameters.callback
+          appParameters.callback,
+          {
+            hydrate: appParameters.hydrate || false,
+            initialProps: appParameters.initialProps || emptyObject,
+            rootTag: appParameters.rootTag
+          }
         )
     };
     return appKey;

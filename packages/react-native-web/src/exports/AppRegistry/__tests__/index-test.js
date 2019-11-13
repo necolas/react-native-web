@@ -73,19 +73,23 @@ describe('AppRegistry', () => {
   });
 
   describe('runApplication', () => {
-    test('callback after render', () => {
-      // setup
-      const rootTag = document.createElement('div');
+    let rootTag;
+
+    beforeEach(() => {
+      rootTag = document.createElement('div');
       rootTag.id = 'react-root';
       document.body.appendChild(rootTag);
+    });
 
+    afterEach(() => {
+      document.body.removeChild(rootTag);
+    });
+
+    test('callback after render', () => {
       const callback = jest.fn();
       AppRegistry.registerComponent('App', () => NoopComponent);
       AppRegistry.runApplication('App', { initialProps: {}, rootTag, callback });
       expect(callback).toHaveBeenCalledTimes(1);
-
-      // cleanup
-      document.body.removeChild(rootTag);
     });
   });
 });

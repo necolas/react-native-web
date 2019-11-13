@@ -15,15 +15,19 @@ import render from '../render';
 import styleResolver from '../StyleSheet/styleResolver';
 import React, { type ComponentType } from 'react';
 
-const renderFn = process.env.NODE_ENV !== 'production' ? render : hydrate;
-
 export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
-  initialProps: Props,
-  rootTag: any,
   WrapperComponent?: ?ComponentType<*>,
-  callback?: () => void
+  callback?: () => void,
+  options: {
+    hydrate: boolean,
+    initialProps: Props,
+    rootTag: any
+  }
 ) {
+  const { hydrate: shouldHydrate, initialProps, rootTag } = options;
+  const renderFn = shouldHydrate ? hydrate : render;
+
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(

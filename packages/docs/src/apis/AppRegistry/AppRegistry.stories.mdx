@@ -76,15 +76,17 @@ AppRegistry.registerRunnable('MyApp', (appParams) => { ... });
 
 ### runApplication(appKey, appParams)
 
-Runs the application that was registered under `appKey`. The `appParameters` must
-include the `rootTag` into which the application is rendered, and optionally any
-`initialProps` or render callback.
+Runs the application that was registered under `appKey`. The `appParameters`
+must include the `rootTag` into which the application is rendered, and
+optionally any `initialProps` or render callback. If the client should hydrate
+server-rendered HTML, set `hydrate` to `true`.
 
 ```js
 AppRegistry.runApplication('MyApp', {
+  callback: () => { console.log('React rendering has finished') },
+  hydrate: true,
   initialProps: {},
   rootTag: document.getElementById('react-root'),
-  callback: () => { console.log('React rendering has finished') }
 })
 ```
 
