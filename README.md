@@ -2,12 +2,10 @@
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
-**Compatibility: React Native 0.55**.
+**Compatibility: React Native >= 0.60**.
 
 "React Native for Web" makes it possible to run [React
-Native][react-native-url] components and APIs on the web using React DOM. Check
-out the live demo of the [React Native examples][examples-url] running on the
-web.
+Native][react-native-url] components and APIs on the web using React DOM.
 
 * **High-quality web interfaces**: makes it easy to
 create [fast](https://github.com/necolas/react-native-web/blob/master/packages/benchmarks/README.md),
@@ -27,48 +25,27 @@ Who is using React Native in production web apps?
 [Major League Soccer](https://matchcenter.mlssoccer.com),
 [Flipkart](https://twitter.com/naqvitalha/status/969577892991549440),
 [Uber](https://www.youtube.com/watch?v=RV9rxrNIxnY),
-[The Times](https://github.com/newsuk/times-components), [DataCamp](https://www.datacamp.com/community/tech/porting-practice-to-web-part1).
+[The Times](https://github.com/newsuk/times-components),
+[DataCamp](https://www.datacamp.com/community/tech/porting-practice-to-web-part1).
 
 Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 
 ## Quick start
 
 The easiest way to get started is to edit this
-[CodeSandbox](https://codesandbox.io/s/q4qymyp2l6) template (or
-[Glitch](https://glitch.com/edit/#!/react-native)). You don’t need to install
-anything to try it out.
-
-For installation and configuration details please read the [getting
-started](https://github.com/necolas/react-native-web/blob/master/docs/guides/getting-started.md)
-guide.
+[CodeSandbox](https://codesandbox.io/s/q4qymyp2l6) template. You don’t need to
+install anything to try it out.
 
 ## Documentation
 
-Please refer to the [React Native documentation][react-native-url] for the
-overall API, design details, and information about the [Gesture Responder
-system](https://facebook.github.io/react-native/docs/gesture-responder-system.html)
-and [animations](https://facebook.github.io/react-native/docs/animations.html).
+The [documentation app](https://necolas.github.com/react-native-web/docs) covers
+installation, configuration, APIs, and guides.
 
-Some components and APIs are extended with additional features for the web. And
-in a few cases, features present for Android or iOS are missing on the web.
-These differences are documented [on the website][website-url].
-
-### Guides
-
-These guides provide a detailed look at using React Native to create accessible
-web experiences. Certain web-specific patterns are documented in the "web
-recipes" guide.
-
-* [Getting started](https://github.com/necolas/react-native-web/blob/master/docs/guides/getting-started.md)
-* [Client-side rendering](https://github.com/necolas/react-native-web/blob/master/docs/guides/client-side-rendering.md)
-* [Server-side rendering](https://github.com/necolas/react-native-web/blob/master/docs/guides/server-side-rendering.md)
-* [Style](https://github.com/necolas/react-native-web/blob/master/docs/guides/style.md)
-* [Accessibility](https://github.com/necolas/react-native-web/blob/master/docs/guides/accessibility.md)
-* [Internationalization](https://github.com/necolas/react-native-web/blob/master/docs/guides/internationalization.md)
-* [Direct manipulation](https://github.com/necolas/react-native-web/blob/master/docs/guides/direct-manipulation.md)
-* [Web recipes](https://github.com/necolas/react-native-web/blob/master/docs/guides/web-recipes.md)
-* [Multi-platform apps](https://github.com/necolas/react-native-web/blob/master/docs/guides/multi-platform-apps.md)
-* [Experimental / unstable use](https://github.com/necolas/react-native-web/blob/master/docs/guides/advanced.md)
+The [React Native documentation][react-native-url] contains more information
+about the [Gesture Responder
+system](https://facebook.github.io/react-native/docs/gesture-responder-system.html),
+[animations](https://facebook.github.io/react-native/docs/animations.html), and
+other design details.
 
 ## Integrations
 
@@ -76,7 +53,8 @@ Examples of using React Native for Web with other web tools:
 
 * [Docz](https://github.com/pedronauck/docz-plugin-react-native)
 * [Gatsby](https://github.com/slorber/gatsby-plugin-react-native-web)
-* [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web) (and [example recipes](https://gist.github.com/necolas/f9034091723f1b279be86c7429eb0c96))
+* [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
+  (and [example recipes](https://gist.github.com/necolas/f9034091723f1b279be86c7429eb0c96))
 * [Phenomic](https://github.com/phenomic/phenomic/tree/master/examples/react-native-web-app)
 * [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
 * [Storybook](https://github.com/necolas/react-native-web/tree/master/packages/website/storybook/.storybook)
@@ -84,11 +62,10 @@ Examples of using React Native for Web with other web tools:
 
 ## Examples
 
-Check out all the [React Native examples][examples-url] ([source
-code](https://github.com/necolas/react-native-web/blob/master/packages/examples)).
-There are more examples [on the website][website-url] ([source
-code](https://github.com/necolas/react-native-web/blob/master/packages/website)).
-And here is a simple example to get you started:
+And here is a simple example to get you started. The documentation include
+interactive examples and the [source
+code](https://github.com/necolas/react-native-web/blob/master/packages/docs) is
+also available.
 
 ```js
 import React from 'react';
@@ -121,7 +98,7 @@ Native. This allows the app to be rendered to web and native platforms.
 
 ## Compatibility with React Native
 
-React Native v0.55
+React Native v0.60
 
 ### Components
 
@@ -141,7 +118,6 @@ React Native v0.55
 | ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)). |
 | SectionList              | ✓      |  |
 | StatusBar                | (✓)    | Mock. No equivalent web APIs. |
-| SwipeableFlatList        | ✓      |  |
 | Switch                   | ✓      |  |
 | Text                     | ✓      | Missing `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)) support. |
 | TextInput                | ✓      | Missing rich text features ([#1023](https://github.com/necolas/react-native-web/issues/1023)), and auto-expanding behaviour ([#795](https://github.com/necolas/react-native-web/issues/795)). |
@@ -228,8 +204,6 @@ MIT license.
 [package-url]: https://yarnpkg.com/en/package/react-native-web
 [ci-badge]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
 [ci-url]: https://travis-ci.org/necolas/react-native-web
-[examples-url]: https://necolas.github.io/react-native-web/examples/
-[website-url]: https://necolas.github.io/react-native-web/storybook/
 [react-native-url]: https://facebook.github.io/react-native/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/.github/CONTRIBUTING.md
 [good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue
