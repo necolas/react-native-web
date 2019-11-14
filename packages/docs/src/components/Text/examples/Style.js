@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-// eslint-disable-next-line react/prop-types
 const Heading = ({ children }) => (
   <Text
     accessibilityRole="heading"

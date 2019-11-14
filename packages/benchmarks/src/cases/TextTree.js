@@ -1,19 +1,10 @@
 import { BenchmarkType } from '../app/Benchmark';
-import { number, object } from 'prop-types';
 import React, { Component } from 'react';
 
 class TextTree extends Component {
   static displayName = 'TextTree';
 
   static benchmarkType = BenchmarkType.MOUNT;
-
-  static propTypes = {
-    breadth: number.isRequired,
-    components: object,
-    depth: number.isRequired,
-    id: number.isRequired,
-    wrap: number.isRequired
-  };
 
   render() {
     const { breadth, components, depth, id, wrap } = this.props;

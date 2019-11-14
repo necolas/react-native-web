@@ -6,7 +6,6 @@
  */
 
 /* global $Values */
-/* eslint-disable react/prop-types */
 
 import * as Timing from './timing';
 import React, { Component } from 'react';

@@ -9,6 +9,13 @@
  */
 'use strict';
 
+import type {ViewProps} from '../../../exports/View';
+import type {
+  ViewabilityConfig,
+  ViewToken,
+  ViewabilityConfigCallbackPair,
+} from '../ViewabilityHelper';
+
 import Batchinator from '../Batchinator';
 import FillRateHelper from '../FillRateHelper';
 import PropTypes from 'prop-types';
@@ -26,13 +33,6 @@ import infoLog from '../infoLog';
 import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
 import { computeWindowedRenderLimits } from '../VirtualizeUtils';
-
-import type {ViewProps} from '../../../exports/View/ViewPropTypes';
-import type {
-  ViewabilityConfig,
-  ViewToken,
-  ViewabilityConfigCallbackPair,
-} from '../ViewabilityHelper';
 
 type Item = any;
 type ViewStyleProp = $PropertyType<ViewProps, 'style'>;

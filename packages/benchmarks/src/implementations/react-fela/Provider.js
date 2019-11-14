@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { createRenderer } from 'fela';
 import { Provider as FelaProvider } from 'react-fela';

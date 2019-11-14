@@ -1,5 +1,4 @@
 import * as helpers from '../helpers';
-import { oneOf } from 'prop-types';
 import sources from '../sources';
 import React, { PureComponent } from 'react';
 import { ActivityIndicator, Image, Text, View } from 'react-native';
@@ -8,11 +7,6 @@ class NetworkImageExample extends PureComponent {
   state = {
     error: false,
     loading: false
-  };
-
-  static propTypes = {
-    logMethod: oneOf(['onError', 'onLoad', 'onLoadEnd', 'onLoadStart']),
-    source: Image.propTypes.source
   };
 
   static defaultProps = {

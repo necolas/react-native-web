@@ -12,7 +12,6 @@
 import { AnimatedEvent } from './AnimatedEvent';
 import AnimatedProps from './nodes/AnimatedProps';
 import React from 'react';
-import ViewStylePropTypes from '../../../exports/View/ViewStylePropTypes';
 import invariant from 'fbjs/lib/invariant';
 
 function createAnimatedComponent(Component: any, defaultProps: any): any {
@@ -173,28 +172,6 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
   }
 
   const propTypes = Component.propTypes;
-
-  AnimatedComponent.propTypes = {
-    style: function(props, propName, componentName) {
-      if (!propTypes) {
-        return;
-      }
-
-      for (const key in ViewStylePropTypes) {
-        if (!propTypes[key] && props[key] !== undefined) {
-          console.warn(
-            'You are setting the style `{ ' +
-              key +
-              ': ... }` as a prop. You ' +
-              'should nest it in a style object. ' +
-              'E.g. `{ style: { ' +
-              key +
-              ': ... } }`',
-          );
-        }
-      }
-    },
-  };
 
   return AnimatedComponent;
 }

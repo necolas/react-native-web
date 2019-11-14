@@ -10,16 +10,14 @@
 
 'use strict';
 
+import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createReactClass from 'create-react-class';
 import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import Touchable from '../Touchable';
-import TouchableWithoutFeedback, {
-  type Props as TouchableWithoutFeedbackProps
-} from '../TouchableWithoutFeedback';
 import View from '../View';
 
 const flattenStyle = StyleSheet.flatten;
@@ -128,56 +126,6 @@ type Props = $ReadOnly<{|
 const TouchableOpacity = ((createReactClass({
   displayName: 'TouchableOpacity',
   mixins: [Touchable.Mixin.withoutDefaultFocusAndBlur],
-
-  propTypes: {
-    /* $FlowFixMe(>=0.89.0 site=react_native_fb) This comment suppresses an
-     * error found when Flow v0.89 was deployed. To see the error, delete this
-     * comment and run Flow. */
-    ...TouchableWithoutFeedback.propTypes,
-    /**
-     * Determines what the opacity of the wrapped view should be when touch is
-     * active. Defaults to 0.2.
-     */
-    activeOpacity: PropTypes.number,
-    /**
-     * TV preferred focus (see documentation for the View component).
-     */
-    hasTVPreferredFocus: PropTypes.bool,
-    /**
-     * TV next focus down (see documentation for the View component).
-     *
-     * @platform android
-     */
-    nextFocusDown: PropTypes.number,
-    /**
-     * TV next focus forward (see documentation for the View component).
-     *
-     * @platform android
-     */
-    nextFocusForward: PropTypes.number,
-    /**
-     * TV next focus left (see documentation for the View component).
-     *
-     * @platform android
-     */
-    nextFocusLeft: PropTypes.number,
-    /**
-     * TV next focus right (see documentation for the View component).
-     *
-     * @platform android
-     */
-    nextFocusRight: PropTypes.number,
-    /**
-     * TV next focus up (see documentation for the View component).
-     *
-     * @platform android
-     */
-    nextFocusUp: PropTypes.number,
-    /**
-     * Apple TV parallax effects
-     */
-    tvParallaxProperties: PropTypes.object
-  },
 
   getDefaultProps: function() {
     return {

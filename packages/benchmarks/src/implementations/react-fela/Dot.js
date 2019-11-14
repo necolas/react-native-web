@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createComponent } from 'react-fela';
 
 const Dot = createComponent(

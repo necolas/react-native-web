@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { withStyle } from 'styletron-react';
 import View from './View';
 

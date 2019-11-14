@@ -9,15 +9,7 @@
  */
 'use strict';
 
-import deepDiffer from '../deepDiffer';
-import * as React from 'react';
-import StyleSheet from '../../../exports/StyleSheet';
-import View from '../../../exports/View';
-import VirtualizedList from '../VirtualizedList';
-
-import invariant from 'fbjs/lib/invariant';
-
-import type {ViewProps} from '../../../exports/View/ViewPropTypes';
+import type {ViewProps} from '../../../exports/View';
 
 import type {
   ViewabilityConfig,
@@ -25,6 +17,14 @@ import type {
   ViewabilityConfigCallbackPair,
 } from '../ViewabilityHelper';
 import type {Props as VirtualizedListProps} from '../VirtualizedList';
+
+import deepDiffer from '../deepDiffer';
+import * as React from 'react';
+import StyleSheet from '../../../exports/StyleSheet';
+import View from '../../../exports/View';
+import VirtualizedList from '../VirtualizedList';
+
+import invariant from 'fbjs/lib/invariant';
 
 export type SeparatorsObj = {
   highlight: () => void,

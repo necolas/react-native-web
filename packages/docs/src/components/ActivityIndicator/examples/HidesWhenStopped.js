@@ -1,13 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { bool } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-class ToggleAnimatingActivityIndicator extends PureComponent {
-  static propTypes = {
-    hidesWhenStopped: bool,
-    style: ActivityIndicator.propTypes.style
-  };
-
+class ToggleAnimatingActivityIndicator extends React.Component {
   state = {
     animating: true
   };

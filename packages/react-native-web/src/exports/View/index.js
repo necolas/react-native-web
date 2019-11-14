@@ -8,17 +8,19 @@
  * @flow
  */
 
+import type { ViewProps } from './types';
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from './filterSupportedProps';
 import invariant from 'fbjs/lib/invariant';
-import warning from 'fbjs/lib/warning';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import ViewPropTypes, { type ViewProps } from './ViewPropTypes';
-import React, { Component } from 'react';
+import React from 'react';
+
+export type { ViewProps };
 
 const calculateHitSlopStyle = hitSlop => {
   const hitStyle = {};
@@ -31,18 +33,14 @@ const calculateHitSlopStyle = hitSlop => {
   return hitStyle;
 };
 
-class View extends Component<ViewProps> {
+class View extends React.Component<ViewProps> {
   static displayName = 'View';
-
-  static propTypes = ViewPropTypes;
 
   renderView(hasTextAncestor) {
     const hitSlop = this.props.hitSlop;
     const supportedProps = filterSupportedProps(this.props);
 
     if (process.env.NODE_ENV !== 'production') {
-      warning(this.props.className == null, 'Using the "className" prop on <View> is deprecated.');
-
       React.Children.toArray(this.props.children).forEach(item => {
         invariant(
           typeof item !== 'string',
@@ -51,7 +49,7 @@ class View extends Component<ViewProps> {
       });
     }
 
-    supportedProps.classList = [this.props.className, classes.view];
+    supportedProps.classList = [classes.view];
     supportedProps.ref = this.props.forwardedRef;
     supportedProps.style = StyleSheet.compose(
       hasTextAncestor && styles.inline,

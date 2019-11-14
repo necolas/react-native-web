@@ -1,8 +1,6 @@
-/* eslint-disable react/prop-types */
-
-import { bool } from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { bool } from 'prop-types';
 import { colors } from './theme';
 
 class AppText extends React.Component {

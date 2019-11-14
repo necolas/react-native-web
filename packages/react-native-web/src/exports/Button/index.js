@@ -8,23 +8,21 @@
  * @flow
  */
 
-import ColorPropType from '../ColorPropType';
 import StyleSheet from '../StyleSheet';
 import TouchableOpacity from '../TouchableOpacity';
 import Text from '../Text';
-import { bool, func, string } from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-class Button extends Component<*> {
-  static propTypes = {
-    accessibilityLabel: string,
-    color: ColorPropType,
-    disabled: bool,
-    onPress: func.isRequired,
-    testID: string,
-    title: string.isRequired
-  };
+type ButtonProps = {|
+  accessibilityLabel?: ?string,
+  color?: ?string,
+  disabled?: boolean,
+  onPress?: ?(e: any) => void,
+  testID?: ?string,
+  title: string
+|};
 
+class Button extends React.Component<ButtonProps> {
   render() {
     const { accessibilityLabel, color, disabled, onPress, testID, title } = this.props;
 

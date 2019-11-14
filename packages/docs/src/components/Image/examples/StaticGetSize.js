@@ -4,10 +4,6 @@ import React, { PureComponent } from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
 
 class ImageGetSizeExample extends PureComponent {
-  static propTypes = {
-    source: Image.propTypes.source
-  };
-
   state = {
     showButton: true,
     startLoad: false,

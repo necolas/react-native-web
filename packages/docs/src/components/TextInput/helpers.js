@@ -1,5 +1,4 @@
 import React from 'react';
-import { any, string } from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -24,11 +23,6 @@ export const styles = StyleSheet.create({
 });
 
 export class WithLabel extends React.Component {
-  static propTypes = {
-    children: any,
-    label: string
-  };
-
   render() {
     return (
       <View style={withLabelStyles.labelContainer}>

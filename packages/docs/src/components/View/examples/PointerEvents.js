@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native-web';
 

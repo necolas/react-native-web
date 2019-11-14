@@ -8,77 +8,50 @@
  * @flow
  */
 
+import type { TextProps } from './types';
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import warning from 'fbjs/lib/warning';
+import filterSupportedProps from '../View/filterSupportedProps';
 import React from 'react';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
-import TextPropTypes from './TextPropTypes';
 
-class Text extends React.Component<*> {
+class Text extends React.Component<TextProps> {
   static displayName = 'Text';
 
-  static propTypes = TextPropTypes;
-
   renderText(hasTextAncestor) {
-    const {
-      dir,
-      forwardedRef,
-      numberOfLines,
-      onPress,
-      selectable,
-      style,
-      /* eslint-disable */
-      adjustsFontSizeToFit,
-      allowFontScaling,
-      ellipsizeMode,
-      lineBreakMode,
-      maxFontSizeMultiplier,
-      minimumFontScale,
-      onLayout,
-      onLongPress,
-      pressRetentionOffset,
-      selectionColor,
-      suppressHighlighting,
-      textBreakStrategy,
-      tvParallaxProperties,
-      /* eslint-enable */
-      ...otherProps
-    } = this.props;
+    const { dir, forwardedRef, numberOfLines, onPress, selectable, style } = this.props;
 
-    if (process.env.NODE_ENV !== 'production') {
-      warning(this.props.className == null, 'Using the "className" prop on <Text> is deprecated.');
-    }
+    const supportedProps = filterSupportedProps(this.props);
 
     if (onPress) {
-      otherProps.accessible = true;
-      otherProps.onClick = this._createPressHandler(onPress);
-      otherProps.onKeyDown = this._createEnterHandler(onPress);
+      supportedProps.accessible = true;
+      supportedProps.onClick = this._createPressHandler(onPress);
+      supportedProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
-    otherProps.classList = [
-      this.props.className,
+    supportedProps.classList = [
       classes.text,
       hasTextAncestor === true && classes.textHasAncestor,
       numberOfLines === 1 && classes.textOneLine,
-      numberOfLines > 1 && classes.textMultiLine
+      numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
     ];
     // allow browsers to automatically infer the language writing direction
-    otherProps.dir = dir !== undefined ? dir : 'auto';
-    otherProps.ref = forwardedRef;
-    otherProps.style = [
+    supportedProps.dir = dir !== undefined ? dir : 'auto';
+    supportedProps.ref = forwardedRef;
+    supportedProps.style = [
       style,
-      numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
       selectable === false && styles.notSelectable,
       onPress && styles.pressable
     ];
 
     const component = hasTextAncestor ? 'span' : 'div';
 
-    return createElement(component, otherProps);
+    return createElement(component, supportedProps);
   }
 
   render() {

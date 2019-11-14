@@ -8,43 +8,28 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { Component } from 'react';
 import createElement from '../createElement';
 import PickerItem from './PickerItem';
-import PickerItemPropType from './PickerItemPropType';
-import PickerStylePropTypes from './PickerStylePropTypes';
-import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
-import { arrayOf, bool, func, number, oneOfType, string } from 'prop-types';
-import ViewPropTypes, { type ViewProps } from '../ViewPropTypes';
 
-const pickerStyleType = StyleSheetPropType(PickerStylePropTypes);
-
-type Props = ViewProps & {
+type PickerProps = {
+  ...ViewProps,
   children?: PickerItem | Array<typeof PickerItem>,
   enabled?: boolean,
-  onValueChange?: Function,
+  onValueChange?: (number | string, number) => void,
   selectedValue?: number | string,
   style?: StyleObj,
-  testID?: string,
   /* compat */
   itemStyle?: StyleObj,
   mode?: string,
   prompt?: string
 };
 
-class Picker extends Component<Props> {
-  static propTypes = {
-    ...ViewPropTypes,
-    children: oneOfType([PickerItemPropType, arrayOf(PickerItemPropType)]),
-    enabled: bool,
-    onValueChange: func,
-    selectedValue: oneOfType([number, string]),
-    style: pickerStyleType,
-    testID: string
-  };
-
+class Picker extends Component<PickerProps> {
   static Item = PickerItem;
 
   render() {

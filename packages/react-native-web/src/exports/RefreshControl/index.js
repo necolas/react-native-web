@@ -8,27 +8,27 @@
  * @flow
  */
 
-import ColorPropType from '../ColorPropType';
+import type { ColorValue } from '../../types';
+import type { ViewProps } from '../View';
+
 import View from '../View';
-import ViewPropTypes from '../ViewPropTypes';
-import { arrayOf, bool, func, number, oneOf, string } from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-class RefreshControl extends Component<*> {
-  static propTypes = {
-    ...ViewPropTypes,
-    colors: arrayOf(ColorPropType),
-    enabled: bool,
-    onRefresh: func,
-    progressBackgroundColor: ColorPropType,
-    progressViewOffset: number,
-    refreshing: bool.isRequired,
-    size: oneOf([0, 1]),
-    tintColor: ColorPropType,
-    title: string,
-    titleColor: ColorPropType
-  };
+type RefreshControlProps = {
+  ...ViewProps,
+  colors?: Array<ColorValue>,
+  enabled?: boolean,
+  onRefresh?: () => void,
+  progressBackgroundColor?: ColorValue,
+  progressViewOffset?: number,
+  refreshing: boolean,
+  size?: 0 | 1,
+  tintColor?: ColorValue,
+  title?: string,
+  titleColor?: ColorValue
+};
 
+class RefreshControl extends React.Component<RefreshControlProps> {
   render() {
     const {
       /* eslint-disable */

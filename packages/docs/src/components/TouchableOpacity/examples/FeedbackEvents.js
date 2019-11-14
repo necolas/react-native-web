@@ -1,4 +1,3 @@
-import { oneOf } from 'prop-types';
 import React, { PureComponent } from 'react';
 import {
   StyleSheet,
@@ -16,10 +15,6 @@ const Touchables = {
 };
 
 export default class TouchableFeedbackEvents extends PureComponent {
-  static propTypes = {
-    touchable: oneOf(['highlight', 'opacity', 'withoutFeedback'])
-  };
-
   static defaultProps = {
     touchable: 'highlight'
   };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { any, bool, string } from 'prop-types';
 import { styles } from '../helpers';
 import { Text, TextInput, View } from 'react-native';
 
@@ -15,12 +14,6 @@ class OnSelectionChangeExample extends React.Component {
   state: SelectionExampleState;
 
   _textInput: any;
-
-  static propTypes = {
-    multiline: bool,
-    style: any,
-    value: string
-  };
 
   constructor(props) {
     super(props);

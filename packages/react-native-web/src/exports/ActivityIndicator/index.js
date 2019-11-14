@@ -8,37 +8,37 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import ViewPropTypes from '../ViewPropTypes';
-import { bool, number, oneOf, oneOfType, string } from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
 const createSvgCircle = style => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
 
-class ActivityIndicator extends Component<*> {
+type ActivityIndicatorProps = {
+  ...ViewProps,
+  animating?: boolean,
+  color?: ?string,
+  hidesWhenStopped?: boolean,
+  size?: 'small' | 'large' | number
+};
+
+class ActivityIndicator extends React.Component<ActivityIndicatorProps> {
   static displayName = 'ActivityIndicator';
 
-  static propTypes = {
-    ...ViewPropTypes,
-    animating: bool,
-    color: string,
-    hidesWhenStopped: bool,
-    size: oneOfType([oneOf(['small', 'large']), number])
-  };
-
-  static defaultProps = {
-    animating: true,
-    color: '#1976D2',
-    hidesWhenStopped: true,
-    size: 'small'
-  };
-
   render() {
-    const { animating, color, hidesWhenStopped, size, style, ...other } = this.props;
+    const {
+      animating = true,
+      color = '#1976D2',
+      hidesWhenStopped = true,
+      size = 'small',
+      style,
+      ...other
+    } = this.props;
 
     const svg = (
       <svg height="100%" viewBox="0 0 32 32" width="100%">
