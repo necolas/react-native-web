@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { css } from 'emotion';
 import React from 'react';
 

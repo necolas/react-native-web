@@ -30,6 +30,8 @@ Who is using React Native in production web apps?
 
 Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 
+Components and APIs deprecated in React Native are not supported by React Native for Web.
+
 ## Quick start
 
 The easiest way to get started is to edit this
@@ -141,11 +143,9 @@ React Native v0.60
 | AppState                 | ✓      |  |
 | BackHandler              | (✓)    | Mock. No equivalent web APIs. |
 | Clipboard                | ✓      |  |
-| ColorPropType            | ✓      |  |
 | DeviceInfo               | (✓)    | Limited information. |
 | Dimensions               | ✓      |  |
 | Easing                   | ✓      |  |
-| EdgeInsetsPropType       | ✓      |  |
 | Geolocation              | ✓      |  |
 | I18nManager              | ✓      | Includes additional support for runtime switch to RTL. |
 | InteractionManager       | (✓)    |  |
@@ -158,14 +158,11 @@ React Native v0.60
 | PanResponder             | ✓      |  |
 | PixelRatio               | ✓      |  |
 | Platform                 | ✓      |  |
-| PointPropType            | ✓      |  |
 | Settings                 | ✘      | No equivalent web APIs. |
 | Share                    | ✓      | Only available over HTTPS. Read about the [Web Share API](https://wicg.github.io/web-share/). |
 | StyleSheet               | ✓      |  |
-| TextPropTypes            | ✓      |  |
 | UIManager                | ✓      |  |
 | Vibration                | ✓      |  |
-| ViewPropTypes            | ✓      |  |
 
 ## Contributing
 

@@ -1,5 +1,4 @@
 import { BenchmarkType } from '../app/Benchmark';
-import { number, object } from 'prop-types';
 import React from 'react';
 import { interpolatePurples, interpolateBuPu, interpolateRdPu } from 'd3-scale-chromatic';
 
@@ -9,15 +8,6 @@ class SierpinskiTriangle extends React.Component {
   static displayName = 'SierpinskiTriangle';
 
   static benchmarkType = BenchmarkType.UPDATE;
-
-  static propTypes = {
-    components: object,
-    depth: number,
-    renderCount: number,
-    s: number,
-    x: number,
-    y: number
-  };
 
   static defaultProps = {
     depth: 0,

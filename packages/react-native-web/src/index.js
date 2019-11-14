@@ -4,8 +4,6 @@ import processColor from './exports/processColor';
 import render from './exports/render';
 import unmountComponentAtNode from './exports/unmountComponentAtNode';
 import NativeModules from './exports/NativeModules';
-import TextPropTypes from './exports/TextPropTypes';
-import ViewPropTypes from './exports/ViewPropTypes';
 
 // APIs
 import AccessibilityInfo from './exports/AccessibilityInfo';
@@ -60,11 +58,6 @@ import View from './exports/View';
 import VirtualizedList from './exports/VirtualizedList';
 import YellowBox from './exports/YellowBox';
 
-// propTypes
-import ColorPropType from './exports/ColorPropType';
-import EdgeInsetsPropType from './exports/EdgeInsetsPropType';
-import PointPropType from './exports/PointPropType';
-
 // compat (components)
 import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
 import InputAccessoryView from './exports/InputAccessoryView';
@@ -89,8 +82,6 @@ export {
   // modules
   processColor,
   NativeModules,
-  TextPropTypes,
-  ViewPropTypes,
   // APIs
   AccessibilityInfo,
   Alert,
@@ -142,10 +133,6 @@ export {
   View,
   VirtualizedList,
   YellowBox,
-  // propTypes
-  ColorPropType,
-  EdgeInsetsPropType,
-  PointPropType,
   // compat (components)
   DrawerLayoutAndroid,
   InputAccessoryView,

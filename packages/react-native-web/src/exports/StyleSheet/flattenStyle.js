@@ -10,7 +10,6 @@
 
 import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
 import invariant from 'fbjs/lib/invariant';
-import type { StyleObj } from './StyleSheetTypes';
 
 function getStyle(style) {
   if (typeof style === 'number') {
@@ -19,7 +18,7 @@ function getStyle(style) {
   return style;
 }
 
-function flattenStyle(style: ?StyleObj): ?Object {
+function flattenStyle(style: ?any): ?Object {
   if (!style) {
     return undefined;
   }

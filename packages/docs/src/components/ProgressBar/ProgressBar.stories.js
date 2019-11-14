@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const ofProps = () => {};
 
 ofProps.propTypes = {
-  '...ViewPropTypes': PropTypes.any,
+  '...ViewProps': PropTypes.any,
   color: PropTypes.any,
   indeterminate: PropTypes.bool,
   progress: PropTypes.number,

@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import Benchmark from './Benchmark';
 import { Picker, StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { Component } from 'react';

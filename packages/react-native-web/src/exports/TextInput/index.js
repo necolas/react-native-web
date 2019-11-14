@@ -8,19 +8,17 @@
  * @flow
  */
 
+import type { TextInputProps } from './types';
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { Component } from 'react';
-import ColorPropType from '../ColorPropType';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import filterSupportedProps from '../View/filterSupportedProps';
 import findNodeHandle from '../findNodeHandle';
-import StyleSheetPropType from '../../modules/StyleSheetPropType';
-import TextInputStylePropTypes from './TextInputStylePropTypes';
+import React from 'react';
 import TextInputState from '../../modules/TextInputState';
-import ViewPropTypes from '../ViewPropTypes';
-import { any, bool, func, number, oneOf, shape, string } from 'prop-types';
 
 const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
 const emptyObject = {};
@@ -40,7 +38,7 @@ const normalizeEventHandler = handler => e => {
  * selection state.
  */
 const isSelectionStale = (node, selection) => {
-  if (node && selection) {
+  if (node != null && selection != null) {
     const { selectionEnd, selectionStart } = node;
     const { start, end } = selection;
     return start !== selectionStart || end !== selectionEnd;
@@ -54,7 +52,7 @@ const isSelectionStale = (node, selection) => {
  */
 const setSelection = (node, selection) => {
   try {
-    if (isSelectionStale(node, selection)) {
+    if (node != null && selection != null && isSelectionStale(node, selection)) {
       const { start, end } = selection;
       // workaround for Blink on Android: see https://github.com/text-mask/text-mask/issues/300
       if (isAndroid) {
@@ -66,89 +64,12 @@ const setSelection = (node, selection) => {
   } catch (e) {}
 };
 
-class TextInput extends Component<*> {
+class TextInput extends React.Component<TextInputProps> {
   _node: HTMLInputElement;
   _nodeHeight: number;
   _nodeWidth: number;
 
   static displayName = 'TextInput';
-
-  static propTypes = {
-    ...ViewPropTypes,
-    autoCapitalize: oneOf(['characters', 'none', 'sentences', 'words']),
-    autoComplete: string,
-    autoCorrect: bool,
-    autoFocus: bool,
-    blurOnSubmit: bool,
-    clearTextOnFocus: bool,
-    defaultValue: string,
-    editable: bool,
-    inputAccessoryViewID: string,
-    keyboardType: oneOf([
-      'default',
-      'email-address',
-      'number-pad',
-      'numbers-and-punctuation',
-      'numeric',
-      'phone-pad',
-      'search',
-      'url',
-      'web-search'
-    ]),
-    maxFontSizeMultiplier: number,
-    maxLength: number,
-    multiline: bool,
-    numberOfLines: number,
-    onBlur: func,
-    onChange: func,
-    onChangeText: func,
-    onFocus: func,
-    onKeyPress: func,
-    onSelectionChange: func,
-    onSubmitEditing: func,
-    placeholder: string,
-    placeholderTextColor: ColorPropType,
-    returnKeyType: oneOf(['enter', 'done', 'go', 'next', 'previous', 'search', 'send']),
-    secureTextEntry: bool,
-    selectTextOnFocus: bool,
-    selection: shape({
-      start: number.isRequired,
-      end: number
-    }),
-    spellCheck: bool,
-    style: StyleSheetPropType(TextInputStylePropTypes),
-    value: string,
-    /* react-native compat */
-    /* eslint-disable */
-    caretHidden: bool,
-    clearButtonMode: string,
-    dataDetectorTypes: string,
-    disableFullscreenUI: bool,
-    enablesReturnKeyAutomatically: bool,
-    keyboardAppearance: string,
-    inlineImageLeft: string,
-    inlineImagePadding: number,
-    onContentSizeChange: func,
-    onEndEditing: func,
-    onScroll: func,
-    returnKeyLabel: string,
-    selectionColor: ColorPropType,
-    selectionState: any,
-    textBreakStrategy: string,
-    underlineColorAndroid: ColorPropType
-    /* eslint-enable */
-  };
-
-  static defaultProps = {
-    autoCapitalize: 'sentences',
-    autoComplete: 'on',
-    autoCorrect: true,
-    editable: true,
-    keyboardType: 'default',
-    multiline: false,
-    numberOfLines: 1,
-    secureTextEntry: false
-  };
 
   static State = TextInputState;
 
@@ -173,56 +94,20 @@ class TextInput extends Component<*> {
 
   render() {
     const {
-      autoComplete,
-      autoCorrect,
-      editable,
-      keyboardType,
-      multiline,
-      numberOfLines,
+      autoCapitalize = 'sentences',
+      autoComplete = 'on',
+      autoCorrect = true,
+      autoFocus,
+      defaultValue,
+      editable = true,
+      keyboardType = 'default',
+      maxLength,
+      multiline = false,
+      numberOfLines = 1,
       returnKeyType,
-      secureTextEntry,
-      /* eslint-disable */
-      blurOnSubmit,
-      clearTextOnFocus,
-      onChangeText,
-      onLayout,
-      onSelectionChange,
-      onSubmitEditing,
-      selection,
-      selectTextOnFocus,
+      secureTextEntry = false,
       spellCheck,
-      /* react-native compat */
-      accessibilityViewIsModal,
-      allowFontScaling,
-      caretHidden,
-      clearButtonMode,
-      dataDetectorTypes,
-      disableFullscreenUI,
-      enablesReturnKeyAutomatically,
-      hitSlop,
-      inlineImageLeft,
-      inlineImagePadding,
-      inputAccessoryViewID,
-      keyboardAppearance,
-      maxFontSizeMultiplier,
-      needsOffscreenAlphaCompositing,
-      onAccessibilityTap,
-      onContentSizeChange,
-      onEndEditing,
-      onMagicTap,
-      onScroll,
-      removeClippedSubviews,
-      renderToHardwareTextureAndroid,
-      returnKeyLabel,
-      scrollEnabled,
-      selectionColor,
-      selectionState,
-      shouldRasterizeIOS,
-      textBreakStrategy,
-      textContentType,
-      underlineColorAndroid,
-      /* eslint-enable */
-      ...otherProps
+      value
     } = this.props;
 
     let type;
@@ -254,15 +139,20 @@ class TextInput extends Component<*> {
     }
 
     const component = multiline ? 'textarea' : 'input';
+    const supportedProps = filterSupportedProps(this.props);
 
-    Object.assign(otherProps, {
+    Object.assign(supportedProps, {
+      autoCapitalize,
       // Browser's treat autocomplete "off" as "on"
       // https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
       autoComplete: autoComplete === 'off' ? 'noop' : autoComplete,
       autoCorrect: autoCorrect ? 'on' : 'off',
+      autoFocus,
       classList: [classes.textinput],
+      defaultValue,
       dir: 'auto',
       enterkeyhint: returnKeyType,
+      maxLength,
       onBlur: normalizeEventHandler(this._handleBlur),
       onChange: normalizeEventHandler(this._handleChange),
       onFocus: normalizeEventHandler(this._handleFocus),
@@ -271,16 +161,17 @@ class TextInput extends Component<*> {
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       readOnly: !editable,
       ref: this._setNode,
-      spellCheck: spellCheck != null ? spellCheck : autoCorrect
+      spellCheck: spellCheck != null ? spellCheck : autoCorrect,
+      value
     });
 
     if (multiline) {
-      otherProps.rows = numberOfLines;
+      supportedProps.rows = numberOfLines;
     } else {
-      otherProps.type = type;
+      supportedProps.type = type;
     }
 
-    return createElement(component, otherProps);
+    return createElement(component, supportedProps);
   }
 
   _handleBlur = e => {

@@ -7,33 +7,26 @@
  * @flow
  */
 
+import type { ColorValue } from '../../types';
+import type { ViewProps } from '../View';
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import ColorPropType from '../ColorPropType';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import ViewPropTypes from '../ViewPropTypes';
-import React, { Component } from 'react';
-import { bool, number } from 'prop-types';
+import React from 'react';
 
-class ProgressBar extends Component<*> {
+type ProgressBarProps = {
+  ...ViewProps,
+  color?: ColorValue,
+  indeterminate?: boolean,
+  progress?: number,
+  trackColor?: ColorValue
+};
+
+class ProgressBar extends React.Component<ProgressBarProps> {
   _progressElement: View;
 
   static displayName = 'ProgressBar';
-
-  static propTypes = {
-    ...ViewPropTypes,
-    color: ColorPropType,
-    indeterminate: bool,
-    progress: number,
-    trackColor: ColorPropType
-  };
-
-  static defaultProps = {
-    color: '#1976D2',
-    indeterminate: false,
-    progress: 0,
-    trackColor: 'transparent'
-  };
 
   componentDidMount() {
     this._updateProgressWidth();
@@ -44,7 +37,14 @@ class ProgressBar extends Component<*> {
   }
 
   render() {
-    const { color, indeterminate, progress, trackColor, style, ...other } = this.props;
+    const {
+      color = '#1976D2',
+      indeterminate = false,
+      progress = 0,
+      trackColor = 'transparent',
+      style,
+      ...other
+    } = this.props;
 
     const percentageProgress = progress * 100;
 
@@ -70,7 +70,7 @@ class ProgressBar extends Component<*> {
   };
 
   _updateProgressWidth = () => {
-    const { indeterminate, progress } = this.props;
+    const { indeterminate = false, progress = 0 } = this.props;
     const percentageProgress = indeterminate ? 50 : progress * 100;
     const width = indeterminate ? '25%' : `${percentageProgress}%`;
     if (this._progressElement) {

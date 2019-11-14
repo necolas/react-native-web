@@ -11,10 +11,8 @@
 'use strict';
 
 import createReactClass from 'create-react-class';
-import DeprecatedEdgeInsetsPropType from '../EdgeInsetsPropType';
 import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Touchable from '../Touchable';
 import View from '../View';
 
@@ -79,90 +77,6 @@ const TouchableWithoutFeedback = ((createReactClass({
   displayName: 'TouchableWithoutFeedback',
   mixins: [Touchable.Mixin],
 
-  propTypes: {
-    accessibilityHint: PropTypes.string,
-    accessibilityIgnoresInvertColors: PropTypes.bool,
-    accessibilityLabel: PropTypes.node,
-    accessibilityRole: PropTypes.string,
-    accessibilityState: PropTypes.object,
-    accessible: PropTypes.bool,
-    /**
-     * When `accessible` is true (which is the default) this may be called when
-     * the OS-specific concept of "focus" occurs. Some platforms may not have
-     * the concept of focus.
-     */
-    delayLongPress: PropTypes.number,
-    /**
-     * When `accessible` is true (which is the default) this may be called when
-     * the OS-specific concept of "blur" occurs, meaning the element lost focus.
-     * Some platforms may not have the concept of blur.
-     */
-    delayPressIn: PropTypes.number,
-    /**
-     * If true, disable all interactions for this component.
-     */
-    delayPressOut: PropTypes.number,
-    /**
-     * Called when the touch is released, but not if cancelled (e.g. by a scroll
-     * that steals the responder lock).
-     */
-    disabled: PropTypes.bool,
-    /**
-     * Called as soon as the touchable element is pressed and invoked even before onPress.
-     * This can be useful when making network requests.
-     */
-    hitSlop: DeprecatedEdgeInsetsPropType,
-    /**
-     * Called as soon as the touch is released even before onPress.
-     */
-    nativeID: PropTypes.string,
-    /**
-     * Invoked on mount and layout changes with
-     *
-     *   `{nativeEvent: {layout: {x, y, width, height}}}`
-     */
-    onBlur: PropTypes.func,
-    /**
-     * If true, doesn't play system sound on touch (Android Only)
-     **/
-    onFocus: PropTypes.func,
-
-    onLayout: PropTypes.func,
-
-    onLongPress: PropTypes.func,
-    onPress: PropTypes.func,
-
-    /**
-     * Delay in ms, from the start of the touch, before onPressIn is called.
-     */
-    onPressIn: PropTypes.func,
-    /**
-     * Delay in ms, from the release of the touch, before onPressOut is called.
-     */
-    onPressOut: PropTypes.func,
-    /**
-     * Delay in ms, from onPressIn, before onLongPress is called.
-     */
-    pressRetentionOffset: DeprecatedEdgeInsetsPropType,
-    /**
-     * When the scroll view is disabled, this defines how far your touch may
-     * move off of the button, before deactivating the button. Once deactivated,
-     * try moving it back and you'll see that the button is once again
-     * reactivated! Move it back and forth several times while the scroll view
-     * is disabled. Ensure you pass in a constant to reduce memory allocations.
-     */
-    testID: PropTypes.string,
-    /**
-     * This defines how far your touch can start away from the button. This is
-     * added to `pressRetentionOffset` when moving off of the button.
-     * ** NOTE **
-     * The touch area never extends past the parent view bounds and the Z-index
-     * of sibling views always takes precedence if a touch hits two overlapping
-     * views.
-     */
-    touchSoundDisabled: PropTypes.bool
-  },
-
   getInitialState: function() {
     return this.touchableGetInitialState();
   },
@@ -219,7 +133,7 @@ const TouchableWithoutFeedback = ((createReactClass({
   render: function(): React.Element<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     // $FlowFixMe(>=0.41.0)
-    // eslint-disable-next-line react/prop-types
+    // eslint-disable-next-line
     const child = React.Children.only(this.props.children);
     let children = child.props.children;
     if (Touchable.TOUCH_TARGET_DEBUG && child.type === View) {

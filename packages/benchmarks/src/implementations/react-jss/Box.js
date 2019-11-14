@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import classnames from 'classnames';
 import injectSheet from 'react-jss';
 import React from 'react';

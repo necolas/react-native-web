@@ -8,37 +8,34 @@
  * @flow
  */
 
+import type { LayoutEvent, LayoutValue } from '../../types';
+import type { ViewProps } from '../View';
+
 import View from '../View';
-import { number, oneOf } from 'prop-types';
-import React, { Component } from 'react';
-import ViewPropTypes, { type ViewLayout, type ViewLayoutEvent } from '../ViewPropTypes';
+import React from 'react';
 
-class KeyboardAvoidingView extends Component<*> {
-  static propTypes = {
-    ...ViewPropTypes,
-    behavior: oneOf(['height', 'padding', 'position']),
-    contentContainerStyle: ViewPropTypes.style,
-    keyboardVerticalOffset: number.isRequired
-  };
+type KeyboardAvoidingViewProps = {
+  ...ViewProps,
+  behavior?: 'height' | 'padding' | 'position',
+  contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
+  keyboardVerticalOffset: number
+};
 
-  static defaultProps = {
-    keyboardVerticalOffset: 0
-  };
-
-  frame: ?ViewLayout = null;
+class KeyboardAvoidingView extends React.Component<KeyboardAvoidingViewProps> {
+  frame: ?LayoutValue = null;
 
   relativeKeyboardHeight(keyboardFrame: Object): number {
     const frame = this.frame;
     if (!frame || !keyboardFrame) {
       return 0;
     }
-    const keyboardY = keyboardFrame.screenY - this.props.keyboardVerticalOffset;
+    const keyboardY = keyboardFrame.screenY - (this.props.keyboardVerticalOffset || 0);
     return Math.max(frame.y + frame.height - keyboardY, 0);
   }
 
   onKeyboardChange(event: Object) {}
 
-  onLayout = (event: ViewLayoutEvent) => {
+  onLayout = (event: LayoutEvent) => {
     this.frame = event.nativeEvent.layout;
   };
 

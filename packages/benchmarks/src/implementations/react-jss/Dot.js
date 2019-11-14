@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import injectSheet from 'react-jss';
 import React from 'react';
 

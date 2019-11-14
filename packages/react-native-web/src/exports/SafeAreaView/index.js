@@ -8,11 +8,12 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import { type ViewProps } from '../ViewPropTypes';
 
 const SafeAreaView = React.forwardRef<View, ViewProps>((props: ViewProps, ref) => {
   const { style, ...rest } = props;

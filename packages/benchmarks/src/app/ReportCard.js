@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Text from './Text';
 import { StyleSheet, View } from 'react-native';
 import React, { Fragment } from 'react';

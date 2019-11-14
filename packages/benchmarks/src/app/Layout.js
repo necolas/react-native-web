@@ -1,15 +1,8 @@
 import { colors } from './theme';
-import { element } from 'prop-types';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 export default class Layout extends Component {
-  static propTypes = {
-    actionPanel: element,
-    listPanel: element,
-    viewPanel: element
-  };
-
   state = {
     widescreen: false
   };

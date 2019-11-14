@@ -1,20 +1,8 @@
-import { ColorPropType, StyleSheet, TouchableHighlight, Text } from 'react-native';
+import { StyleSheet, TouchableHighlight, Text } from 'react-native';
 import React, { Component } from 'react';
-import { bool, func, string } from 'prop-types';
 
 export default class Button extends Component<*> {
   static displayName = '@app/Button';
-
-  static propTypes = {
-    accessibilityLabel: string,
-    color: ColorPropType,
-    disabled: bool,
-    onPress: func.isRequired,
-    style: TouchableHighlight.propTypes.style,
-    testID: string,
-    textStyle: Text.propTypes.style,
-    title: string.isRequired
-  };
 
   render() {
     const {

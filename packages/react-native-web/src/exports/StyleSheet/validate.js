@@ -7,37 +7,7 @@
  * @flow strict-local
  */
 
-// import { STYLE_SHORT_FORM_EXPANSIONS } from './constants';
-import ImageStylePropTypes from '../Image/ImageStylePropTypes';
-import TextInputStylePropTypes from '../TextInput/TextInputStylePropTypes';
-import TextStylePropTypes from '../Text/TextStylePropTypes';
-import ViewStylePropTypes from '../View/ViewStylePropTypes';
 import warning from 'fbjs/lib/warning';
-
-const validProperties = [
-  ...Object.keys(ImageStylePropTypes),
-  ...Object.keys(TextInputStylePropTypes),
-  ...Object.keys(TextStylePropTypes),
-  ...Object.keys(ViewStylePropTypes),
-  'appearance',
-  'borderCollapse',
-  'borderSpacing',
-  'clear',
-  'cursor',
-  'fill',
-  'float',
-  'listStyle',
-  'objectFit',
-  'objectPosition',
-  'pointerEvents',
-  'placeholderTextColor',
-  'tableLayout'
-]
-  .sort()
-  .reduce((acc, curr) => {
-    acc[curr] = true;
-    return acc;
-  }, {});
 
 const invalidShortforms = {
   background: true,
@@ -50,13 +20,6 @@ const invalidShortforms = {
   outline: true,
   textDecoration: true
 };
-
-/*
-const singleValueShortForms = Object.keys(STYLE_SHORT_FORM_EXPANSIONS).reduce((a, c) => {
-  a[c] = true;
-  return a;
-}, {});
-*/
 
 function error(message) {
   warning(false, message);
@@ -73,35 +36,29 @@ export default function validate(key: string, styles: Object) {
       continue;
     }
 
-    if (validProperties[prop] == null) {
+    if (typeof value === 'string' && value.indexOf('!important') > -1) {
+      error(`Invalid style declaration "${prop}:${value}". Values cannot include "!important"`);
+      isInvalid = true;
+    } else {
       let suggestion = '';
       if (prop === 'animation' || prop === 'animationName') {
         suggestion = 'Did you mean "animationKeyframes"?';
         // } else if (prop === 'boxShadow') {
         //  suggestion = 'Did you mean "shadow{Color,Offset,Opacity,Radius}"?';
+        isInvalid = true;
       } else if (prop === 'direction') {
         suggestion = 'Did you mean "writingDirection"?';
+        isInvalid = true;
       } else if (prop === 'verticalAlign') {
         suggestion = 'Did you mean "textAlignVertical"?';
+        isInvalid = true;
       } else if (invalidShortforms[prop]) {
         suggestion = 'Please use long-form properties.';
+        isInvalid = true;
       }
-      isInvalid = true;
-      error(`Invalid style property of "${prop}". ${suggestion}`);
-    }
-
-    // else if (singleValueShortForms[prop]) {
-    //   TODO: fix check
-    //   if (typeof value === 'string' && value.indexOf(' ') > -1) {
-    //     error(
-    //       `Invalid style declaration "${prop}:${value}". This property must only specify a single value.`
-    //     );
-    //     isInvalid = true;
-    //   }
-    // }
-    else if (typeof value === 'string' && value.indexOf('!important') > -1) {
-      error(`Invalid style declaration "${prop}:${value}". Values cannot include "!important"`);
-      isInvalid = true;
+      if (suggestion !== '') {
+        error(`Invalid style property of "${prop}". ${suggestion}`);
+      }
     }
 
     if (isInvalid) {

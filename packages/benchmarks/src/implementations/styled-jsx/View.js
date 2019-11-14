@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 
 class View extends React.Component {

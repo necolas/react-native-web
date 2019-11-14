@@ -7,55 +7,40 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
-import ColorPropType from '../ColorPropType';
 import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import View from '../View';
-import ViewPropTypes from '../ViewPropTypes';
-import React, { Component } from 'react';
-import { bool, func } from 'prop-types';
+import React from 'react';
+
+type SwitchProps = {
+  ...ViewProps,
+  activeThumbColor?: any,
+  activeTrackColor?: any,
+  disabled?: boolean,
+  onValueChange?: (e: any) => void,
+  thumbColor?: any,
+  trackColor?: any,
+  value?: boolean,
+  // RN compat
+  onTintColor?: string,
+  thumbTintColor?: string,
+  tintColor?: string
+};
 
 const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-class Switch extends Component<*> {
+class Switch extends React.Component<SwitchProps> {
   _checkboxElement: HTMLInputElement;
   _thumbElement: View;
 
   static displayName = 'Switch';
-
-  static propTypes = {
-    ...ViewPropTypes,
-    activeThumbColor: ColorPropType,
-    activeTrackColor: ColorPropType,
-    disabled: bool,
-    onValueChange: func,
-    thumbColor: ColorPropType,
-    trackColor: ColorPropType,
-    value: bool,
-
-    /* eslint-disable react/sort-prop-types */
-    // Equivalent of 'activeTrackColor'
-    onTintColor: ColorPropType,
-    // Equivalent of 'thumbColor'
-    thumbTintColor: ColorPropType,
-    // Equivalent of 'trackColor'
-    tintColor: ColorPropType
-  };
-
-  static defaultProps = {
-    activeThumbColor: '#009688',
-    activeTrackColor: '#A3D3CF',
-    disabled: false,
-    style: emptyObject,
-    thumbColor: '#FAFAFA',
-    trackColor: '#939393',
-    value: false
-  };
 
   blur() {
     UIManager.blur(this._checkboxElement);
@@ -68,15 +53,14 @@ class Switch extends Component<*> {
   render() {
     const {
       accessibilityLabel,
-      activeThumbColor,
-      activeTrackColor,
-      disabled,
+      activeThumbColor = '#009688',
+      activeTrackColor = '#A3D3CF',
+      disabled = false,
       onValueChange, // eslint-disable-line
-      style,
-      thumbColor,
-      trackColor,
-      value,
-
+      style = emptyObject,
+      thumbColor = '#FAFAFA',
+      trackColor = '#939393',
+      value = false,
       // React Native compatibility
       onTintColor,
       thumbTintColor,
