@@ -8,7 +8,7 @@
   "main": "index.js",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-plugin-tester": "^5.0.0"
+    "babel-plugin-tester": "^7.0.4"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",

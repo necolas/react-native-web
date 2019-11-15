@@ -64,6 +64,13 @@ const { ColorPropType, StyleSheet, View, TouchableOpacity, processColor } = requ
 ];
 
 pluginTester({
+  babelOptions: {
+    generatorOpts: {
+      jsescOption: {
+        quotes: 'single'
+      }
+    }
+  },
   plugin,
   tests
 });
