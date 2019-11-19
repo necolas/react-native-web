@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
 
 ### hairlineWidth
 
-Enables borders of just one physical pixel on retina screens, otherwise it is
-equal to a CSS value of 1px.
+Equal to 1px. It is not implemented using screen density like in React Native.
+Even on high DPI screens, browsers can round sub-pixel values down to `0`.
+Using a value computed using screen density could cause borders/heights/etc not to be rendered.
