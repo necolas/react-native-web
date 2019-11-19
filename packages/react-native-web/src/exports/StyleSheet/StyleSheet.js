@@ -57,6 +57,10 @@ const StyleSheet = {
     return result;
   },
   flatten: flattenStyle,
+
+  // `hairlineWidth` is not implemented using screen density like in RN.
+  // Even on high DPI screens, browsers can round sub-pixel values down to
+  // `0`. This causes hairlineWidth borders/heights/etc not to be rendered
   hairlineWidth: 1
 };
 
