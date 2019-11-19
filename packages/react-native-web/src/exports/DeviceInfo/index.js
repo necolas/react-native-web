@@ -8,11 +8,11 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import Dimensions from '../Dimensions';
+import Dimensions, { type DisplayMetrics } from '../Dimensions';
 
 const DeviceInfo = {
   Dimensions: {
-    get windowPhysicalPixels() {
+    get windowPhysicalPixels(): DisplayMetrics {
       const { width, height, fontScale, scale } = Dimensions.get('window');
       return {
         width: width * scale,
@@ -21,7 +21,7 @@ const DeviceInfo = {
         fontScale
       };
     },
-    get screenPhysicalPixels() {
+    get screenPhysicalPixels(): DisplayMetrics {
       const { width, height, fontScale, scale } = Dimensions.get('screen');
       return {
         width: width * scale,

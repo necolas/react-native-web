@@ -12,6 +12,21 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
 import invariant from 'fbjs/lib/invariant';
 
+type DimensionAcceptedKey = 'window' | 'screen';
+export type DisplayMetrics = {|
+  width: number,
+  height: number,
+  scale: number,
+  fontScale: number
+|};
+
+type DimensionsPayload = {|
+  window: DisplayMetrics,
+  screen: DisplayMetrics
+|};
+
+type DimensionEventListenerType = 'change';
+
 const win = canUseDOM
   ? window
   : {
@@ -28,12 +43,14 @@ const dimensions = {};
 const listeners = {};
 
 export default class Dimensions {
-  static get(dimension: string): Object {
+  // @todo
+  // static get(dimension: DimensionAcceptedKey): DisplayMetrics {
+  static get(dimension: DimensionAcceptedKey): Object {
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
   }
 
-  static set(initialDimensions: ?{ [key: string]: any }): void {
+  static set(initialDimensions: ?DimensionsPayload): void {
     if (initialDimensions) {
       if (canUseDOM) {
         invariant(false, 'Dimensions cannot be set in the browser');
@@ -64,12 +81,18 @@ export default class Dimensions {
     }
   }
 
-  static addEventListener(type: string, handler: Function): void {
+  static addEventListener(
+    type: DimensionEventListenerType,
+    handler: DimensionsPayload => void
+  ): void {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
   }
 
-  static removeEventListener(type: string, handler: Function): void {
+  static removeEventListener(
+    type: DimensionEventListenerType,
+    handler: DimensionsPayload => void
+  ): void {
     if (Array.isArray(listeners[type])) {
       listeners[type] = listeners[type].filter(_handler => _handler !== handler);
     }
