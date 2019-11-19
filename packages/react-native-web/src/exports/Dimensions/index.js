@@ -12,15 +12,31 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import debounce from 'debounce';
 import invariant from 'fbjs/lib/invariant';
 
+export type DisplayMetrics = {|
+  fontScale: number,
+  height: number,
+  scale: number,
+  width: number
+|};
+
+type DimensionsValue = {|
+  window?: DisplayMetrics,
+  screen?: DisplayMetrics
+|};
+
+type DimensionKey = 'window' | 'screen';
+
+type DimensionEventListenerType = 'change';
+
 const win = canUseDOM
   ? window
   : {
       devicePixelRatio: undefined,
-      innerHeight: undefined,
-      innerWidth: undefined,
+      innerHeight: (undefined: any),
+      innerWidth: (undefined: any),
       screen: {
-        height: undefined,
-        width: undefined
+        height: (undefined: any),
+        width: (undefined: any)
       }
     };
 
@@ -28,12 +44,12 @@ const dimensions = {};
 const listeners = {};
 
 export default class Dimensions {
-  static get(dimension: string): Object {
+  static get(dimension: DimensionKey): DisplayMetrics {
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
   }
 
-  static set(initialDimensions: ?{ [key: string]: any }): void {
+  static set(initialDimensions: ?DimensionsValue): void {
     if (initialDimensions) {
       if (canUseDOM) {
         invariant(false, 'Dimensions cannot be set in the browser');
@@ -64,12 +80,18 @@ export default class Dimensions {
     }
   }
 
-  static addEventListener(type: string, handler: Function): void {
+  static addEventListener(
+    type: DimensionEventListenerType,
+    handler: DimensionsValue => void
+  ): void {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
   }
 
-  static removeEventListener(type: string, handler: Function): void {
+  static removeEventListener(
+    type: DimensionEventListenerType,
+    handler: DimensionsValue => void
+  ): void {
     if (Array.isArray(listeners[type])) {
       listeners[type] = listeners[type].filter(_handler => _handler !== handler);
     }

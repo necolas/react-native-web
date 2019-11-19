@@ -73,6 +73,9 @@ import TVEventHandler from './exports/TVEventHandler';
 // plugins
 import DeviceEventEmitter from './exports/DeviceEventEmitter';
 
+// hooks
+import useWindowDimensions from './exports/useWindowDimensions';
+
 export {
   // top-level API
   createElement as unstable_createElement,
@@ -145,5 +148,7 @@ export {
   TimePickerAndroid,
   TVEventHandler,
   // plugins
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  // hooks
+  useWindowDimensions
 };
