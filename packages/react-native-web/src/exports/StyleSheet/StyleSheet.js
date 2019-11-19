@@ -57,6 +57,9 @@ const StyleSheet = {
     return result;
   },
   flatten: flattenStyle,
+
+  // `hairlineWidth` is not implemented using screen density as browsers may
+  // round sub-pixel values down to `0`, causing the line not to be rendered.
   hairlineWidth: 1
 };
 

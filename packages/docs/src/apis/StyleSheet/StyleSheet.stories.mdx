@@ -79,5 +79,5 @@ const styles = StyleSheet.create({
 
 ### hairlineWidth
 
-Enables borders of just one physical pixel on retina screens, otherwise it is
-equal to a CSS value of 1px.
+Equal to 1px. This is not implemented using screen density as browsers may
+round sub-pixel values down to `0`, causing the line not to be rendered.
