@@ -92,6 +92,7 @@ const LayoutPropTypes = {
   /**
    * @platform web
    */
+  gridArea: string,
   gridAutoColumns: string,
   gridAutoFlow: string,
   gridAutoRows: string,
