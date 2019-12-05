@@ -252,7 +252,7 @@ const ScrollView = ((createReactClass({
 
   _handleScroll(e: Object) {
     if (process.env.NODE_ENV !== 'production') {
-      if (this.props.onScroll && !this.props.scrollEventThrottle) {
+      if (this.props.onScroll && this.props.scrollEventThrottle == null) {
         console.log(
           'You specified `onScroll` on a <ScrollView> but not ' +
             '`scrollEventThrottle`. You will only receive one event. ' +
