@@ -253,11 +253,15 @@ const ScrollView = createReactClass({
 
   _handleScroll(e: Object) {
     if (process.env.NODE_ENV !== 'production') {
-      if (this.props.onScroll && !this.props.scrollEventThrottle) {
+      if (
+        this.props.onScroll &&
+        (this.props.scrollEventThrottle === undefined || this.props.scrollEventThrottle === null)
+      ) {
         console.log(
           'You specified `onScroll` on a <ScrollView> but not ' +
             '`scrollEventThrottle`. You will only receive one event. ' +
-            'Using `16` you get all the events but be aware that it may ' +
+            'Use `0` as the default value to have the scroll event being sent only once each time the view is scrolled. ' +
+            'Alternatively, using `16` you get all the events but be aware that it may ' +
             "cause frame drops, use a bigger number if you don't need as " +
             'much precision.'
         );
