@@ -42,9 +42,42 @@ to setup a simple, web-only React app with built-in support for aliasing
 ```
 npx create-react-app my-app
 cd my-app
-npm install react-native-web
+npm install --save react-native-web
 npm start
 ```
+
+*With typescript:*
+```
+npx create-react-app my-app --template typescript
+cd my-app
+npm install react-native-web
+npm install --save-dev @types/react-native
+```
+
+Edit `tsconfig.json`:
+```json
+  "baseUrl": ".",
+  "paths": {
+	  "react-native": ["./node_modules/react-native-web"]
+  },
+```
+
+Try to use `react-native`'s component in your `App.tsx`:
+```typescript
+const App: React.FC = () => {
+  return (
+	  <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+		  <Text style={{color: "blue"}}>OK</Text>
+	  </View>
+  );
+}
+```
+
+Then run:
+```
+npm start
+```
+
 
 ## Standalone configurations
 
