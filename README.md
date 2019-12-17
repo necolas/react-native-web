@@ -51,7 +51,7 @@ other design details.
 
 Examples of using React Native for Web with other web tools:
 
-* [Docz](https://github.com/pedronauck/docz-plugin-react-native)
+* [Docz](https://github.com/doczjs/docz/tree/master/examples/react-native)
 * [Gatsby](https://github.com/slorber/gatsby-plugin-react-native-web)
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web)
   (and [example recipes](https://gist.github.com/necolas/f9034091723f1b279be86c7429eb0c96))
