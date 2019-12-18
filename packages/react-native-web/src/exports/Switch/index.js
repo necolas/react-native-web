@@ -25,12 +25,8 @@ type SwitchProps = {
   disabled?: boolean,
   onValueChange?: (e: any) => void,
   thumbColor?: ColorValue,
-  trackColor?: ColorValue,
-  value?: boolean,
-  // RN compat
-  onTintColor?: ColorValue,
-  thumbTintColor?: ColorValue,
-  tintColor?: ColorValue
+  trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
+  value?: boolean
 };
 
 const emptyObject = {};
@@ -62,10 +58,6 @@ class Switch extends React.Component<SwitchProps> {
       thumbColor = '#FAFAFA',
       trackColor = '#939393',
       value = false,
-      // React Native compatibility
-      onTintColor,
-      thumbTintColor,
-      tintColor,
       ...other
     } = this.props;
 
@@ -74,30 +66,33 @@ class Switch extends React.Component<SwitchProps> {
     const minWidth = multiplyStyleLengthValue(height, 2);
     const width = styleWidth > minWidth ? styleWidth : minWidth;
     const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const trackCurrentColor = value ? onTintColor || activeTrackColor : tintColor || trackColor;
-    const thumbCurrentColor = value ? activeThumbColor : thumbTintColor || thumbColor;
+    const trackCurrentColor = value
+      ? (trackColor != null && typeof trackColor === 'object' && trackColor.true) ||
+        activeTrackColor
+      : (trackColor != null && typeof trackColor === 'object' && trackColor.false) || trackColor;
+    const thumbCurrentColor = value ? activeThumbColor : thumbColor;
     const thumbHeight = height;
     const thumbWidth = thumbHeight;
 
-    const rootStyle = [styles.root, style, { height, width }, disabled && styles.cursorDefault];
+    const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
 
     const trackStyle = [
       styles.track,
       {
-        backgroundColor: trackCurrentColor,
+        backgroundColor: disabled ? '#D5D5D5' : trackCurrentColor,
         borderRadius: trackBorderRadius
-      },
-      disabled && styles.disabledTrack
+      }
     ];
 
     const thumbStyle = [
       styles.thumb,
+      value && styles.thumbActive,
       {
-        backgroundColor: thumbCurrentColor,
+        backgroundColor: disabled ? '#BDBDBD' : thumbCurrentColor,
         height: thumbHeight,
+        marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0,
         width: thumbWidth
-      },
-      disabled && styles.disabledThumb
+      }
     ];
 
     const nativeControl = createElement('input', {
@@ -115,16 +110,7 @@ class Switch extends React.Component<SwitchProps> {
     return (
       <View {...other} style={rootStyle}>
         <View style={trackStyle} />
-        <View
-          ref={this._setThumbRef}
-          style={[
-            thumbStyle,
-            value && styles.thumbOn,
-            {
-              marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0
-            }
-          ]}
-        />
+        <View ref={this._setThumbRef} style={thumbStyle} />
         {nativeControl}
       </View>
     );
@@ -170,9 +156,6 @@ const styles = StyleSheet.create({
     transitionDuration: '0.1s',
     width: '100%'
   },
-  disabledTrack: {
-    backgroundColor: '#D5D5D5'
-  },
   thumb: {
     alignSelf: 'flex-start',
     borderRadius: '100%',
@@ -181,11 +164,8 @@ const styles = StyleSheet.create({
     transform: [{ translateZ: 0 }],
     transitionDuration: '0.1s'
   },
-  thumbOn: {
+  thumbActive: {
     start: '100%'
-  },
-  disabledThumb: {
-    backgroundColor: '#BDBDBD'
   },
   nativeControl: {
     ...StyleSheet.absoluteFillObject,
