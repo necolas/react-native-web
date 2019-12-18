@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './FlatList.stories.js';
+import * as Stories from './FlatList.stories.js';
 
 <Meta title="Components|FlatList" />
 
@@ -16,11 +16,15 @@ alternatives such as
 ### Single column
 
 <Preview withSource='none'>
-  <Story name="singleColumn">{stories.singleColumn}</Story>
+  <Story name="singleColumn">
+    <Stories.singleColumn />
+  </Story>
 </Preview>
 
 ### Multiple columns
 
 <Preview withSource='none'>
-  <Story name="multiColumn">{stories.multiColumn}</Story>
+  <Story name="multiColumn">
+    <Stories.multiColumn />
+  </Story>
 </Preview>

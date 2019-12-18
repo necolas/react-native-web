@@ -1,5 +1,5 @@
 import { Meta, Props, Preview, Story } from '@storybook/addon-docs/blocks';
-import * as stories from './I18nManager.stories.js';
+import * as Stories from './I18nManager.stories.js';
 
 <Meta title="APIs|I18nManager" />
 
@@ -44,5 +44,7 @@ it's an RTL language. (Web-only)
 ## Example
 
 <Preview withSource='none'>
-  <Story inline={false} name="layoutRTL">{stories.layoutRTL}</Story>
+  <Story inline={false} name="layoutRTL">
+    <Stories.layoutRTL />
+  </Story>
 </Preview>

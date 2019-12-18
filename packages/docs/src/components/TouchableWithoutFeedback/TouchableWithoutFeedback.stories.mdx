@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './TouchableWithoutFeedback.stories.js';
+import * as Stories from './TouchableWithoutFeedback.stories.js';
 
 <Meta title="Components|TouchableWithoutFeedback" />
 
@@ -14,7 +14,7 @@ several child components, wrap them in a `View`.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### delayLongPress
 
@@ -33,7 +33,9 @@ Delay in ms, from pointer up to before `onPressOut` is called.
 Disables all pointer interactions with the element.
 
 <Preview withSource='none'>
-  <Story name="disabled">{stories.disabled}</Story>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
 </Preview>
 
 ### onLongPress
@@ -55,9 +57,13 @@ you pass in a constant to reduce memory allocations.
 ## Examples
 
 <Preview withSource='none'>
-  <Story name="delayEvents">{stories.delayEvents}</Story>
+  <Story name="delayEvents">
+    <Stories.delayEvents />
+  </Story>
 </Preview>
 
 <Preview withSource='none'>
-  <Story name="feedbackEvents">{stories.feedbackEvents}</Story>
+  <Story name="feedbackEvents">
+    <Stories.feedbackEvents />
+  </Story>
 </Preview>

@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './Switch.stories.js';
+import * as Stories from './Switch.stories.js';
 
 <Meta title="Components|Switch" />
 
@@ -12,14 +12,16 @@ supplied value prop instead of the expected result of any user actions.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### activeThumbColor
 
 The color of the thumb grip when the switch is turned on. (Web-only)
 
 <Preview withSource='none'>
-  <Story name="activeThumbColor">{stories.activeThumbColor}</Story>
+  <Story name="activeThumbColor">
+    <Stories.activeThumbColor />
+  </Story>
 </Preview>
 
 ### activeTrackColor
@@ -27,7 +29,9 @@ The color of the thumb grip when the switch is turned on. (Web-only)
 The color of the track when the switch is turned on. (Web-only, equivalent to React Native's `onTintColor`)
 
 <Preview withSource='none'>
-  <Story name="activeTrackColor">{stories.activeTrackColor}</Story>
+  <Story name="activeTrackColor">
+    <Stories.activeTrackColor />
+  </Story>
 </Preview>
 
 ### disabled
@@ -35,7 +39,9 @@ The color of the track when the switch is turned on. (Web-only, equivalent to Re
 If `true`, the user won't be able to interact with the switch.
 
 <Preview withSource='none'>
-  <Story name="disabled">{stories.disabled}</Story>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
 </Preview>
 
 ### onValueChange
@@ -43,7 +49,9 @@ If `true`, the user won't be able to interact with the switch.
 Invoked with the new value when the value changes.
 
 <Preview withSource='none'>
-  <Story name="onValueChange">{stories.onValueChange}</Story>
+  <Story name="onValueChange">
+    <Stories.onValueChange />
+  </Story>
 </Preview>
 
 ### thumbColor
@@ -51,7 +59,9 @@ Invoked with the new value when the value changes.
 The color of the thumb grip when the switch is turned off. (Web-only, equivalent to React Native's `thumbTintColor`)
 
 <Preview withSource='none'>
-  <Story name="thumbColor">{stories.thumbColor}</Story>
+  <Story name="thumbColor">
+    <Stories.thumbColor />
+  </Story>
 </Preview>
 
 ### trackColor
@@ -59,7 +69,9 @@ The color of the thumb grip when the switch is turned off. (Web-only, equivalent
 The color of the track when the switch is turned off. (Web-only, equivalent to React Native's `tintColor`)
 
 <Preview withSource='none'>
-  <Story name="trackColor">{stories.trackColor}</Story>
+  <Story name="trackColor">
+    <Stories.trackColor />
+  </Story>
 </Preview>
 
 ### value
@@ -67,7 +79,9 @@ The color of the track when the switch is turned off. (Web-only, equivalent to R
 The value of the switch. If `true` the switch will be turned on.
 
 <Preview withSource='none'>
-  <Story name="value">{stories.value}</Story>
+  <Story name="value">
+    <Stories.value />
+  </Story>
 </Preview>
 
 ## Notes
@@ -79,5 +93,7 @@ Custom sizes can be created using styles.
 ```
 
 <Preview withSource='none'>
-  <Story name="customSize">{stories.customSize}</Story>
+  <Story name="customSize">
+    <Stories.customSize />
+  </Story>
 </Preview>

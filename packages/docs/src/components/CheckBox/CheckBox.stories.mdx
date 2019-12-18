@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './CheckBox.stories.js';
+import * as Stories from './CheckBox.stories.js';
 
 <Meta title="Components|CheckBox" />
 
@@ -12,14 +12,16 @@ supplied `value` prop instead of the expected result of any user actions.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### color
 
 Customize the color of the active checkbox.
 
 <Preview withSource='none'>
-  <Story name="color">{stories.color}</Story>
+  <Story name="color">
+    <Stories.color />
+  </Story>
 </Preview>
 
 ### disabled
@@ -27,7 +29,9 @@ Customize the color of the active checkbox.
 Prevent interaction with the checkbox.
 
 <Preview withSource='none'>
-  <Story name="disabled">{stories.disabled}</Story>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
 </Preview>
 
 ### onValueChange
@@ -35,7 +39,9 @@ Prevent interaction with the checkbox.
 Called with the event when the value changes.
 
 <Preview withSource='none'>
-  <Story name="onValueChange">{stories.onValueChange}</Story>
+  <Story name="onValueChange">
+    <Stories.onValueChange />
+  </Story>
 </Preview>
 
 ### value
@@ -43,7 +49,9 @@ Called with the event when the value changes.
 Controls whether the checkbox is active or not.
 
 <Preview withSource='none'>
-  <Story name="value">{stories.value}</Story>
+  <Story name="value">
+    <Stories.value />
+  </Story>
 </Preview>
 
 ## Notes
@@ -52,5 +60,7 @@ The checkbox size can be controlled by changing the `height` and `width` style
 properties.
 
 <Preview withSource='none'>
-  <Story name="customSize">{stories.customSize}</Story>
+  <Story name="customSize">
+    <Stories.customSize />
+  </Story>
 </Preview>

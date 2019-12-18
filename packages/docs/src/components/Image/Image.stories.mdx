@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './Image.stories.js';
+import * as Stories from './Image.stories.js';
 
 <Meta title="Components|Image" />
 
@@ -9,7 +9,7 @@ An accessible and responsive image component.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### blurRadius
 
@@ -24,7 +24,9 @@ type Source = { uri: string, width: number, height: number }
 ```
 
 <Preview withSource='none'>
-  <Story name="defaultSource">{stories.defaultSource}</Story>
+  <Story name="defaultSource">
+    <Stories.defaultSource />
+  </Story>
 </Preview>
 
 ### draggable
@@ -33,7 +35,9 @@ This is a web-only prop that indicates whether the image can be dragged with
 native browser behavior. The default is `false`.
 
 <Preview withSource='none'>
-  <Story name="draggable">{stories.draggable}</Story>
+  <Story name="draggable">
+    <Stories.draggable />
+  </Story>
 </Preview>
 
 ### onError
@@ -41,7 +45,9 @@ native browser behavior. The default is `false`.
 Called on load error with ``{nativeEvent: {error}}``.
 
 <Preview withSource='none'>
-  <Story name="onError">{stories.onError}</Story>
+  <Story name="onError">
+    <Stories.onError />
+  </Story>
 </Preview>
 
 ### onLoad
@@ -49,7 +55,9 @@ Called on load error with ``{nativeEvent: {error}}``.
 Called when load completes successfully.
 
 <Preview withSource='none'>
-  <Story name="onLoad">{stories.onLoad}</Story>
+  <Story name="onLoad">
+    <Stories.onLoad />
+  </Story>
 </Preview>
 
 ### resizeMode
@@ -61,7 +69,9 @@ type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch'
 ```
 
 <Preview withSource='none'>
-  <Story name="resizeMode">{stories.resizeMode}</Story>
+  <Story name="resizeMode">
+    <Stories.resizeMode />
+  </Story>
 </Preview>
 
 ### source
@@ -73,7 +83,9 @@ type Source = { uri: string, width: number, height: number }
 ```
 
 <Preview withSource='none'>
-  <Story name="source">{stories.source}</Story>
+  <Story name="source">
+    <Stories.source />
+  </Story>
 </Preview>
 
 ### style
@@ -91,7 +103,9 @@ type Source = { uri: string, width: number, height: number }
 Image shadows are derived exactly from the pixels.
 
 <Preview withSource='none'>
-  <Story name="styleBoxShadow">{stories.styleBoxShadow}</Story>
+  <Story name="styleBoxShadow">
+    <Stories.styleBoxShadow />
+  </Story>
 </Preview>
 
 #### tintColor
@@ -99,12 +113,14 @@ Image shadows are derived exactly from the pixels.
 Tint color is applied to all opaque pixels.
 
 <Preview withSource='none'>
-  <Story name="styleTintColor">{stories.styleTintColor}</Story>
+  <Story name="styleTintColor">
+    <Stories.styleTintColor />
+  </Story>
 </Preview>
 
 ## Static methods
 
-<Props of={stories.ofStatics} />
+<Props of={Stories.ofStatics} />
 
 ### getSize(url, callback)
 
@@ -129,7 +145,9 @@ Image.getSize(uri, ((width, height) => {
 ```
 
 <Preview withSource='none'>
-  <Story name="getSize">{stories.getSize}</Story>
+  <Story name="getSize">
+    <Stories.getSize />
+  </Story>
 </Preview>
 
 ### prefetch(url)
@@ -150,7 +168,9 @@ Image.prefetch(uri).then(() => {
 ```
 
 <Preview withSource='none'>
-  <Story name="prefetch">{stories.prefetch}</Story>
+  <Story name="prefetch">
+    <Stories.prefetch />
+  </Story>
 </Preview>
 
 ### queryCache(list)

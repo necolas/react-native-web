@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './View.stories.js';
+import * as Stories from './View.stories.js';
 
 <Meta title="Components|View" />
 
@@ -13,7 +13,7 @@ another View and has zero-to-many children of any type.
 
 Please also refer to the in-depth "Accessibility" and "Style" guides.
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### hitSlop
 
@@ -44,7 +44,9 @@ const onLayout = ({
 ```
 
 <Preview withSource='none'>
-  <Story name="onLayout">{stories.onLayout}</Story>
+  <Story name="onLayout">
+    <Stories.onLayout />
+  </Story>
 </Preview>
 
 ### onMoveShouldSetResponder
@@ -102,7 +104,9 @@ pointer events on the element's children; `box-only` disables pointer events on
 the element's children.
 
 <Preview withSource='none'>
-  <Story name="pointerEvents">{stories.pointerEvents}</Story>
+  <Story name="pointerEvents">
+    <Stories.pointerEvents />
+  </Story>
 </Preview>
 
 ### testID
@@ -263,13 +267,17 @@ Flexbox is the default layout for Views. By default, every view has a column
 layout that stretches its children, which is very similar to block layout.
 
 <Preview withSource='none'>
-  <Story name="styleFlexbox">{stories.styleFlexbox}</Story>
+  <Story name="styleFlexbox">
+    <Stories.styleFlexbox />
+  </Story>
 </Preview>
 
 #### shadows
 
 <Preview withSource='none'>
-  <Story name="styleBoxShadow">{stories.styleBoxShadow}</Story>
+  <Story name="styleBoxShadow">
+    <Stories.styleBoxShadow />
+  </Story>
 </Preview>
 
 #### transform
@@ -295,5 +303,7 @@ only be used to control the relative Z-axis stacking of siblings within their
 parent.
 
 <Preview withSource='none'>
-  <Story name="styleZIndex">{stories.styleZIndex}</Story>
+  <Story name="styleZIndex">
+    <Stories.styleZIndex />
+  </Story>
 </Preview>

@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './ScrollView.stories.js';
+import * as Stories from './ScrollView.stories.js';
 
 <Meta title="Components|ScrollView" />
 
@@ -12,7 +12,7 @@ view directly (discouraged) or make sure all parent views have bounded height
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### contentContainerStyle
 
@@ -23,11 +23,15 @@ These styles will be applied to the scroll view content container which wraps al
 When `true`, the scroll view's children are arranged horizontally in a row instead of vertically in a column.
 
 <Preview withSource='none'>
-  <Story name="vertical">{stories.vertical}</Story>
+  <Story name="vertical">
+    <Stories.vertical />
+  </Story>
 </Preview>
 
 <Preview withSource='none'>
-  <Story name="horizontal">{stories.horizontal}</Story>
+  <Story name="horizontal">
+    <Stories.horizontal />
+  </Story>
 </Preview>
 
 ### keyboardDismissMode
@@ -62,7 +66,9 @@ Invoked on scroll with the following event:
 ```
 
 <Preview withSource='none'>
-  <Story name="onScroll">{stories.onScroll}</Story>
+  <Story name="onScroll">
+    <Stories.onScroll />
+  </Story>
 </Preview>
 
 ### pagingEnabled
@@ -74,7 +80,9 @@ When `true`, the scroll view snaps to individual items in the list when scrollin
 When `false`, the content does not scroll.
 
 <Preview withSource='none'>
-  <Story name="scrollEnabled">{stories.scrollEnabled}</Story>
+  <Story name="scrollEnabled">
+    <Stories.scrollEnabled />
+  </Story>
 </Preview>
 
 ### scrollEventThrottle

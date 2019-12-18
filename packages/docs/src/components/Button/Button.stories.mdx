@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './Button.stories.js';
+import * as Stories from './Button.stories.js';
 
 <Meta title="Components|Button" />
 
@@ -10,14 +10,16 @@ build your own custom button using `TouchableOpacity` or `TouchableHighlight`.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### color
 
 Customize the background color of the button.
 
 <Preview withSource='none'>
-  <Story name="color">{stories.color}</Story>
+  <Story name="color">
+    <Stories.color />
+  </Story>
 </Preview>
 
 ### disabled
@@ -25,7 +27,9 @@ Customize the background color of the button.
 Prevent all interactions with the button.
 
 <Preview withSource='none'>
-  <Story name="disabled">{stories.disabled}</Story>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
 </Preview>
 
 ### onPress
@@ -33,7 +37,8 @@ Prevent all interactions with the button.
 Called when the button is pressed by a pointer or keyboard.
 
 <Preview withSource='none'>
-  <Story name="onPress">{stories.onPress}</Story>
+  <Story name="onPress">
+    <Stories.onPress /></Story>
 </Preview>
 
 ### title

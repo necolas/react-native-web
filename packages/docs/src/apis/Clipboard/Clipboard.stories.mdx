@@ -1,5 +1,5 @@
 import { Meta, Props, Preview, Story } from '@storybook/addon-docs/blocks';
-import * as stories from './Clipboard.stories.js';
+import * as Stories from './Clipboard.stories.js';
 
 <Meta title="APIs|Clipboard" />
 
@@ -31,7 +31,9 @@ const wasSet = Clipboard.setString('add this to clipboard');
 ```
 
 <Preview withSource='none'>
-  <Story name="setString">{stories.setString}</Story>
+  <Story name="setString">
+    <Stories.setString />
+  </Story>
 </Preview>
 
 ### getString()

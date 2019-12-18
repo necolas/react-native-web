@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './Text.stories.js';
+import * as Stories from './Text.stories.js';
 
 <Meta title="Components|Text" />
 
@@ -16,14 +16,16 @@ NOTE: Text currently transfers all other props to the rendered HTML element.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### children
 
 Nested text components will inherit the typographic styles of their parents.
 
 <Preview withSource='none'>
-  <Story name="children">{stories.children}</Story>
+  <Story name="children">
+    <Stories.children />
+  </Story>
 </Preview>
 
 ### numberOfLines
@@ -31,7 +33,9 @@ Nested text components will inherit the typographic styles of their parents.
 Truncates the text with an ellipsis after this many lines.
 
 <Preview withSource='none'>
-  <Story name="numberOfLines">{stories.numberOfLines}</Story>
+  <Story name="numberOfLines">
+    <Stories.numberOfLines />
+  </Story>
 </Preview>
 
 ### onPress
@@ -39,7 +43,9 @@ Truncates the text with an ellipsis after this many lines.
 Called when the `Text` is pressed.
 
 <Preview withSource='none'>
-  <Story name="onPress">{stories.onPress}</Story>
+  <Story name="onPress">
+    <Stories.onPress />
+  </Story>
 </Preview>
 
 ### selectable
@@ -47,7 +53,9 @@ Called when the `Text` is pressed.
 When `false`, the text is not selectable.
 
 <Preview withSource='none'>
-  <Story name="selectable">{stories.selectable}</Story>
+  <Story name="selectable">
+    <Stories.selectable />
+  </Story>
 </Preview>
 
 ### style
@@ -87,5 +95,7 @@ Text supports typographic styles.
 ```
 
 <Preview withSource='none'>
-  <Story name="style">{stories.style}</Story>
+  <Story name="style">
+    <Stories.style />
+  </Story>
 </Preview>

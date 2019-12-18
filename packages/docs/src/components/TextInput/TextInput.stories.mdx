@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './TextInput.stories.js';
+import * as Stories from './TextInput.stories.js';
 
 <Meta title="Components|TextInput" />
 
@@ -11,7 +11,7 @@ some props are exclusive to or excluded from `multiline`.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### autoCapitalize
 
@@ -23,7 +23,9 @@ Automatically capitalize certain characters (only available in Chrome and iOS Sa
 * `words`: Automatically capitalize the first letter of words.
 
 <Preview withSource='none'>
-  <Story name="autoCapitalize">{stories.autoCapitalize}</Story>
+  <Story name="autoCapitalize">
+    <Stories.autoCapitalize />
+  </Story>
 </Preview>
 
 ### autoComplete
@@ -49,7 +51,9 @@ field and trigger the `onSubmitEditing` event instead of inserting a newline
 into the field.
 
 <Preview withSource='none'>
-  <Story name="blurOnSubmit">{stories.blurOnSubmit}</Story>
+  <Story name="blurOnSubmit">
+    <Stories.blurOnSubmit />
+  </Story>
 </Preview>
 
 ### clearTextOnFocus: ?boolean = false
@@ -57,7 +61,9 @@ into the field.
 If `true`, clears the text field automatically when focused.
 
 <Preview withSource='none'>
-  <Story name="clearTextOnFocus">{stories.clearTextOnFocus}</Story>
+  <Story name="clearTextOnFocus">
+    <Stories.clearTextOnFocus />
+  </Story>
 </Preview>
 
 ### defaultValue
@@ -71,7 +77,9 @@ updating the value prop to keep the controlled state in sync.
 If `false`, text is not editable (i.e., read-only).
 
 <Preview withSource='none'>
-  <Story name="editable">{stories.editable}</Story>
+  <Story name="editable">
+    <Stories.editable />
+  </Story>
 </Preview>
 
 ### keyboardType
@@ -83,7 +91,9 @@ requires an ancestral `<form action>` element to display the `search` keyboard).
 (Not available when `multiline` is `true`.)
 
 <Preview withSource='none'>
-  <Story name="keyboardType">{stories.keyboardType}</Story>
+  <Story name="keyboardType">
+    <Stories.keyboardType />
+  </Story>
 </Preview>
 
 ### maxLength
@@ -91,7 +101,9 @@ requires an ancestral `<form action>` element to display the `search` keyboard).
 Limits the maximum number of characters that can be entered.
 
 <Preview withSource='none'>
-  <Story name="maxLength">{stories.maxLength}</Story>
+  <Story name="maxLength">
+    <Stories.maxLength />
+  </Story>
 </Preview>
 
 ### multiline
@@ -99,7 +111,9 @@ Limits the maximum number of characters that can be entered.
 If `true`, the text input can be multiple lines.
 
 <Preview withSource='none'>
-  <Story name="multiline">{stories.multiline}</Story>
+  <Story name="multiline">
+    <Stories.multiline />
+  </Story>
 </Preview>
 
 ### numberOfLines
@@ -107,7 +121,9 @@ If `true`, the text input can be multiple lines.
 Sets the number of lines for a multiline `TextInput`. (Requires `multiline` to be `true`.)
 
 <Preview withSource='none'>
-  <Story name="numberOfLines">{stories.numberOfLines}</Story>
+  <Story name="numberOfLines">
+    <Stories.numberOfLines />
+  </Story>
 </Preview>
 
 ### onChange
@@ -138,7 +154,9 @@ Callback that is called when the text input's selection changes. This will be
 called with `{ nativeEvent: { selection: { start, end } } }`.
 
 <Preview withSource='none'>
-  <Story name="onSelectionChange">{stories.onSelectionChange}</Story>
+  <Story name="onSelectionChange">
+    <Stories.onSelectionChange />
+  </Story>
 </Preview>
 
 ### onSubmitEditing
@@ -151,7 +169,9 @@ Callback that is called when the keyboard's submit button is pressed. When
 The string that will be rendered in an empty `TextInput` before text has been entered.
 
 <Preview withSource='none'>
-  <Story name="placeholder">{stories.placeholder}</Story>
+  <Story name="placeholder">
+    <Stories.placeholder />
+  </Story>
 </Preview>
 
 ### placeholderTextColor: ?color
@@ -159,7 +179,9 @@ The string that will be rendered in an empty `TextInput` before text has been en
 The text color of the placeholder string.
 
 <Preview withSource='none'>
-  <Story name="placeholderTextColor">{stories.placeholderTextColor}</Story>
+  <Story name="placeholderTextColor">
+    <Stories.placeholderTextColor />
+  </Story>
 </Preview>
 
 ### returnKeyType
@@ -175,7 +197,9 @@ If `true`, the text input obscures the text entered so that sensitive text like
 passwords stay secure. (Not available when `multiline` is `true`.)
 
 <Preview withSource='none'>
-  <Story name="secureTextEntry">{stories.secureTextEntry}</Story>
+  <Story name="secureTextEntry">
+    <Stories.secureTextEntry />
+  </Story>
 </Preview>
 
 ### selection: ?{ start: number, end: ?number }
@@ -188,7 +212,9 @@ value to position the cursor.
 If `true`, all text will automatically be selected on focus.
 
 <Preview withSource='none'>
-  <Story name="selectTextOnFocus">{stories.selectTextOnFocus}</Story>
+  <Story name="selectTextOnFocus">
+    <Stories.selectTextOnFocus />
+  </Story>
 </Preview>
 
 ### spellCheck
@@ -211,7 +237,7 @@ The value to show for the text input. TextInput is a controlled component, which
 
 ## Instance methods
 
-<Props of={stories.ofMethods} />
+<Props of={Stories.ofMethods} />
 
 ### blur()
 

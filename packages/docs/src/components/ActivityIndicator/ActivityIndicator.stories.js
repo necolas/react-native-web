@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const ofProps = () => {};
+const ofProps = () => null;
 
 ofProps.propTypes = {
   '...ViewPropTypes': PropTypes.any,

@@ -8,11 +8,11 @@
     "release": "yarn build && git checkout gh-pages && rm -rf ../../docs && mv dist ../../docs && git add -A && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -"
   },
   "dependencies": {
-    "@storybook/addon-docs": "5.3.0-alpha.43",
-    "@storybook/addon-options": "5.3.0-alpha.43",
-    "@storybook/cli": "5.3.0-alpha.43",
-    "@storybook/react": "5.3.0-alpha.43",
-    "@storybook/theming": "5.3.0-alpha.43",
+    "@storybook/addon-docs": "^5.3.0-beta.31",
+    "@storybook/addon-options": "^5.3.0-beta.31",
+    "@storybook/cli": "^5.3.0-beta.31",
+    "@storybook/react": "^5.3.0-beta.31",
+    "@storybook/theming": "^5.3.0-beta.31",
     "react-native-web": "0.11.7"
   },
   "devDependencies": {

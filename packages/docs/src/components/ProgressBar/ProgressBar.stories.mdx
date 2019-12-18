@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as stories from './ProgressBar.stories.js';
+import * as Stories from './ProgressBar.stories.js';
 
 <Meta title="Components|ProgressBar" />
 
@@ -9,14 +9,16 @@ Display an activity progress bar.
 
 ## Props
 
-<Props of={stories.ofProps} />
+<Props of={Stories.ofProps} />
 
 ### color
 
 Customize the color of the progress bar.
 
 <Preview withSource='none'>
-  <Story name="color">{stories.color}</Story>
+  <Story name="color">
+    <Stories.color />
+  </Story>
 </Preview>
 
 ### indeterminate
@@ -24,7 +26,9 @@ Customize the color of the progress bar.
 Whether the progress bar will show indeterminate progress.
 
 <Preview withSource='none'>
-  <Story name="indeterminate">{stories.indeterminate}</Story>
+  <Story name="indeterminate">
+    <Stories.indeterminate />
+  </Story>
 </Preview>
 
 ### progress
@@ -32,7 +36,9 @@ Whether the progress bar will show indeterminate progress.
 The progress value (between 0 and 1).
 
 <Preview withSource='none'>
-  <Story name="progress">{stories.progress}</Story>
+  <Story name="progress">
+    <Stories.progress />
+  </Story>
 </Preview>
 
 ### trackColor
@@ -40,7 +46,9 @@ The progress value (between 0 and 1).
 Customize the color of the track bar.
 
 <Preview withSource='none'>
-  <Story name="trackColor">{stories.trackColor}</Story>
+  <Story name="trackColor">
+    <Stories.trackColor />
+  </Story>
 </Preview>
 
 ## Notes
@@ -55,5 +63,7 @@ Custom sizes can be created using `style`.
 ```
 
 <Preview withSource='none'>
-  <Story name="customSize">{stories.customSize}</Story>
+  <Story name="customSize">
+    <Stories.customSize />
+  </Story>
 </Preview>
