@@ -21,6 +21,7 @@ export type TextInputProps = {
   ...ViewProps,
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words',
   autoComplete?: string,
+  autoCompleteType?: string, // Compat with React Native (Bug react-native#26003)
   autoCorrect?: boolean,
   autoFocus?: boolean,
   blurOnSubmit?: boolean,

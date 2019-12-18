@@ -95,7 +95,8 @@ class TextInput extends React.Component<TextInputProps> {
   render() {
     const {
       autoCapitalize = 'sentences',
-      autoComplete = 'on',
+      autoComplete,
+      autoCompleteType,
       autoCorrect = true,
       autoFocus,
       defaultValue,
@@ -144,9 +145,7 @@ class TextInput extends React.Component<TextInputProps> {
 
     Object.assign(supportedProps, {
       autoCapitalize,
-      // Browser's treat autocomplete "off" as "on"
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-      autoComplete: autoComplete === 'off' ? 'noop' : autoComplete,
+      autoComplete: autoComplete || autoCompleteType || 'on',
       autoCorrect: autoCorrect ? 'on' : 'off',
       autoFocus,
       classList: [classes.textinput],
