@@ -49,7 +49,7 @@ export type ViewStyle = {
   overscrollBehavior?: OverscrollBehaviorValue,
   overscrollBehaviorX?: OverscrollBehaviorValue,
   overscrollBehaviorY?: OverscrollBehaviorValue,
-  scrollbarWidth?: 'auto' | 'none',
+  scrollbarWidth?: 'auto' | 'none' | 'thin',
   scrollSnapAlign?: string,
   scrollSnapType?: string,
   WebkitMaskImage?: string,
