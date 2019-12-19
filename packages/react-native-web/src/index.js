@@ -1,154 +1,77 @@
-import createElement from './exports/createElement';
-import findNodeHandle from './exports/findNodeHandle';
-import processColor from './exports/processColor';
-import render from './exports/render';
-import unmountComponentAtNode from './exports/unmountComponentAtNode';
-import NativeModules from './exports/NativeModules';
+export { default as unstable_createElement } from './exports/createElement';
+export { default as findNodeHandle } from './exports/findNodeHandle';
+export { default as processColor } from './exports/processColor';
+export { default as render } from './exports/render';
+export { default as unmountComponentAtNode } from './exports/unmountComponentAtNode';
+export { default as NativeModules } from './exports/NativeModules';
 
 // APIs
-import AccessibilityInfo from './exports/AccessibilityInfo';
-import Alert from './exports/Alert';
-import Animated from './exports/Animated';
-import AppRegistry from './exports/AppRegistry';
-import AppState from './exports/AppState';
-import BackHandler from './exports/BackHandler';
-import Clipboard from './exports/Clipboard';
-import DeviceInfo from './exports/DeviceInfo';
-import Dimensions from './exports/Dimensions';
-import Easing from './exports/Easing';
-import I18nManager from './exports/I18nManager';
-import Keyboard from './exports/Keyboard';
-import InteractionManager from './exports/InteractionManager';
-import LayoutAnimation from './exports/LayoutAnimation';
-import Linking from './exports/Linking';
-import NativeEventEmitter from './exports/NativeEventEmitter';
-import PanResponder from './exports/PanResponder';
-import PixelRatio from './exports/PixelRatio';
-import Platform from './exports/Platform';
-import Share from './exports/Share';
-import StyleSheet from './exports/StyleSheet';
-import UIManager from './exports/UIManager';
-import Vibration from './exports/Vibration';
+export { default as AccessibilityInfo } from './exports/AccessibilityInfo';
+export { default as Alert } from './exports/Alert';
+export { default as Animated } from './exports/Animated';
+export { default as AppRegistry } from './exports/AppRegistry';
+export { default as AppState } from './exports/AppState';
+export { default as BackHandler } from './exports/BackHandler';
+export { default as Clipboard } from './exports/Clipboard';
+export { default as DeviceInfo } from './exports/DeviceInfo';
+export { default as Dimensions } from './exports/Dimensions';
+export { default as Easing } from './exports/Easing';
+export { default as I18nManager } from './exports/I18nManager';
+export { default as Keyboard } from './exports/Keyboard';
+export { default as InteractionManager } from './exports/InteractionManager';
+export { default as LayoutAnimation } from './exports/LayoutAnimation';
+export { default as Linking } from './exports/Linking';
+export { default as NativeEventEmitter } from './exports/NativeEventEmitter';
+export { default as PanResponder } from './exports/PanResponder';
+export { default as PixelRatio } from './exports/PixelRatio';
+export { default as Platform } from './exports/Platform';
+export { default as Share } from './exports/Share';
+export { default as StyleSheet } from './exports/StyleSheet';
+export { default as UIManager } from './exports/UIManager';
+export { default as Vibration } from './exports/Vibration';
 
 // components
-import ActivityIndicator from './exports/ActivityIndicator';
-import Button from './exports/Button';
-import CheckBox from './exports/CheckBox';
-import FlatList from './exports/FlatList';
-import Image from './exports/Image';
-import ImageBackground from './exports/ImageBackground';
-import KeyboardAvoidingView from './exports/KeyboardAvoidingView';
-import Modal from './exports/Modal';
-import Picker from './exports/Picker';
-import ProgressBar from './exports/ProgressBar';
-import RefreshControl from './exports/RefreshControl';
-import SafeAreaView from './exports/SafeAreaView';
-import ScrollView from './exports/ScrollView';
-import SectionList from './exports/SectionList';
-import StatusBar from './exports/StatusBar';
-import Switch from './exports/Switch';
-import Text from './exports/Text';
-import TextInput from './exports/TextInput';
-import Touchable from './exports/Touchable';
-import TouchableHighlight from './exports/TouchableHighlight';
-import TouchableNativeFeedback from './exports/TouchableNativeFeedback';
-import TouchableOpacity from './exports/TouchableOpacity';
-import TouchableWithoutFeedback from './exports/TouchableWithoutFeedback';
-import View from './exports/View';
-import VirtualizedList from './exports/VirtualizedList';
-import YellowBox from './exports/YellowBox';
+export { default as ActivityIndicator } from './exports/ActivityIndicator';
+export { default as Button } from './exports/Button';
+export { default as CheckBox } from './exports/CheckBox';
+export { default as FlatList } from './exports/FlatList';
+export { default as Image } from './exports/Image';
+export { default as ImageBackground } from './exports/ImageBackground';
+export { default as KeyboardAvoidingView } from './exports/KeyboardAvoidingView';
+export { default as Modal } from './exports/Modal';
+export { default as Picker } from './exports/Picker';
+export { default as ProgressBar } from './exports/ProgressBar';
+export { default as RefreshControl } from './exports/RefreshControl';
+export { default as SafeAreaView } from './exports/SafeAreaView';
+export { default as ScrollView } from './exports/ScrollView';
+export { default as SectionList } from './exports/SectionList';
+export { default as StatusBar } from './exports/StatusBar';
+export { default as Switch } from './exports/Switch';
+export { default as Text } from './exports/Text';
+export { default as TextInput } from './exports/TextInput';
+export { default as Touchable } from './exports/Touchable';
+export { default as TouchableHighlight } from './exports/TouchableHighlight';
+export { default as TouchableNativeFeedback } from './exports/TouchableNativeFeedback';
+export { default as TouchableOpacity } from './exports/TouchableOpacity';
+export { default as TouchableWithoutFeedback } from './exports/TouchableWithoutFeedback';
+export { default as View } from './exports/View';
+export { default as VirtualizedList } from './exports/VirtualizedList';
+export { default as YellowBox } from './exports/YellowBox';
 
 // compat (components)
-import DrawerLayoutAndroid from './exports/DrawerLayoutAndroid';
-import InputAccessoryView from './exports/InputAccessoryView';
-import TabBarIOS from './exports/TabBarIOS';
-import ToastAndroid from './exports/ToastAndroid';
+export { default as DrawerLayoutAndroid } from './exports/DrawerLayoutAndroid';
+export { default as InputAccessoryView } from './exports/InputAccessoryView';
+export { default as TabBarIOS } from './exports/TabBarIOS';
+export { default as ToastAndroid } from './exports/ToastAndroid';
 // compat (apis)
-import PermissionsAndroid from './exports/PermissionsAndroid';
-import Settings from './exports/Settings';
-import Systrace from './exports/Systrace';
-import TimePickerAndroid from './exports/TimePickerAndroid';
-import TVEventHandler from './exports/TVEventHandler';
+export { default as PermissionsAndroid } from './exports/PermissionsAndroid';
+export { default as Settings } from './exports/Settings';
+export { default as Systrace } from './exports/Systrace';
+export { default as TimePickerAndroid } from './exports/TimePickerAndroid';
+export { default as TVEventHandler } from './exports/TVEventHandler';
 
 // plugins
-import DeviceEventEmitter from './exports/DeviceEventEmitter';
+export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 
 // hooks
-import useWindowDimensions from './exports/useWindowDimensions';
-
-export {
-  // top-level API
-  createElement as unstable_createElement,
-  findNodeHandle,
-  render,
-  unmountComponentAtNode,
-  // modules
-  processColor,
-  NativeModules,
-  // APIs
-  AccessibilityInfo,
-  Alert,
-  Animated,
-  AppRegistry,
-  AppState,
-  BackHandler,
-  Clipboard,
-  DeviceInfo,
-  Dimensions,
-  Easing,
-  I18nManager,
-  InteractionManager,
-  Keyboard,
-  LayoutAnimation,
-  Linking,
-  NativeEventEmitter,
-  PanResponder,
-  PixelRatio,
-  Platform,
-  Share,
-  StyleSheet,
-  UIManager,
-  Vibration,
-  // components
-  ActivityIndicator,
-  Button,
-  CheckBox,
-  FlatList,
-  Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Modal,
-  Picker,
-  ProgressBar,
-  RefreshControl,
-  SafeAreaView,
-  ScrollView,
-  SectionList,
-  StatusBar,
-  Switch,
-  Text,
-  TextInput,
-  Touchable,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  VirtualizedList,
-  YellowBox,
-  // compat (components)
-  DrawerLayoutAndroid,
-  InputAccessoryView,
-  TabBarIOS,
-  ToastAndroid,
-  // compat (apis)
-  PermissionsAndroid,
-  Settings,
-  Systrace,
-  TimePickerAndroid,
-  TVEventHandler,
-  // plugins
-  DeviceEventEmitter,
-  // hooks
-  useWindowDimensions
-};
+export { default as useWindowDimensions } from './exports/useWindowDimensions';
