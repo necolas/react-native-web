@@ -1,17 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
+const INDICES = [[0, -1, 2, 1], [1, 2, -1, 0], ['auto', 'auto', 'auto', 'auto']];
+
 class ZIndex extends React.Component {
   state = {
-    flipped: false
+    current: 0
   };
 
   render() {
-    const indices = this.state.flipped ? [-1, 0, 1, 2] : [2, 1, 0, -1];
+    const indices = INDICES[this.state.current];
+
     return (
       <TouchableWithoutFeedback onPress={this._handlePress}>
         <View>
-          <Text style={{ paddingBottom: 10 }}>Tap to flip sorting order</Text>
+          <Text style={{ paddingBottom: 10 }}>Tap to change order</Text>
           <View
             style={[
               styles.zIndex,
@@ -50,7 +53,7 @@ class ZIndex extends React.Component {
   }
 
   _handlePress = () => {
-    this.setState({ flipped: !this.state.flipped });
+    this.setState({ current: (this.state.current + 1) % INDICES.length });
   };
 }
 

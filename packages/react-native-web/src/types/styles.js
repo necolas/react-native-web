@@ -214,7 +214,7 @@ export type LayoutStyles = {|
   top?: DimensionValue,
   visibility?: VisiblilityValue,
   width?: DimensionValue,
-  zIndex?: number,
+  zIndex?: number | 'auto',
   /**
    * @platform unsupported
    */
