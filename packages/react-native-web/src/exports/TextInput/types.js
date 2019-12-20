@@ -27,6 +27,7 @@ export type TextInputProps = {
   blurOnSubmit?: boolean,
   clearTextOnFocus?: boolean,
   defaultValue?: string,
+  disabled?: boolean,
   editable?: boolean,
   inputAccessoryViewID?: string,
   keyboardType?:

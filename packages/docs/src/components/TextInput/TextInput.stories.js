@@ -11,6 +11,7 @@ ofProps.propTypes = {
   blurOnSubmit: PropTypes.bool,
   clearTextOnFocus: PropTypes.bool,
   defaultValue: PropTypes.string,
+  disabled: PropTypes.bool,
   editable: PropTypes.bool,
   keyboardType: PropTypes.string,
   maxLength: PropTypes.number,
@@ -52,6 +53,7 @@ export { default as autoCapitalize } from './examples/AutoCapitalize';
 export { default as blurOnSubmit } from './examples/BlurOnSubmit';
 export { default as clearButtonMode } from './examples/ClearButtonMode';
 export { default as clearTextOnFocus } from './examples/ClearTextOnFocus';
+export { default as disabled } from './examples/Disabled';
 export { default as editable } from './examples/Editable';
 export { default as keyboardType } from './examples/KeyboardType';
 export { default as maxLength } from './examples/MaxLength';

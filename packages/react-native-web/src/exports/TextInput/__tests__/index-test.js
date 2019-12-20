@@ -70,6 +70,18 @@ describe('components/TextInput', () => {
     expect(input.prop('defaultValue')).toEqual(defaultValue);
   });
 
+  describe('prop "disabled"', () => {
+    test('value "false"', () => {
+      const input = findNativeInput(shallow(<TextInput />));
+      expect(input.prop('disabled')).toEqual(undefined);
+    });
+
+    test('value "true"', () => {
+      const input = findNativeInput(shallow(<TextInput disabled={true} />));
+      expect(input.prop('disabled')).toEqual(true);
+    });
+  });
+
   describe('prop "editable"', () => {
     test('value "true"', () => {
       const input = findNativeInput(shallow(<TextInput />));
