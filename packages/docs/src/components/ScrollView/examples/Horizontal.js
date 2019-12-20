@@ -27,9 +27,9 @@ export default function Horizontal() {
         }}
       />
       <Button
-        label="Scroll to 200px"
+        label="Scroll to 50px"
         onPress={() => {
-          scrollRef.current.scrollTo({ x: 200 });
+          scrollRef.current.scrollTo({ x: 50 });
         }}
       />
       <Button

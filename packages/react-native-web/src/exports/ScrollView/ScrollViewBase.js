@@ -125,9 +125,6 @@ export default class ScrollViewBase extends React.Component<Props> {
         if (handler) {
           handler(e);
         }
-      } else {
-        // To disable scrolling in all browsers except Chrome
-        e.preventDefault();
       }
     };
   };
@@ -185,6 +182,8 @@ export default class ScrollViewBase extends React.Component<Props> {
 // https://developers.google.com/web/updates/2017/01/scrolling-intervention
 const styles = StyleSheet.create({
   scrollDisabled: {
+    overflowX: 'hidden',
+    overflowY: 'hidden',
     touchAction: 'none'
   },
   hideScrollbar: {

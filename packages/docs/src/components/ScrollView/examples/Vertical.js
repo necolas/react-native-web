@@ -23,9 +23,9 @@ export default function Vertical() {
         }}
       />
       <Button
-        label="Scroll to 200px"
+        label="Scroll to 50px"
         onPress={() => {
-          scrollRef.current.scrollTo({ y: 200 });
+          scrollRef.current.scrollTo({ y: 50 });
         }}
       />
       <Button
