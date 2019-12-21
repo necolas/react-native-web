@@ -15,7 +15,6 @@ import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from './filterSupportedProps';
-import invariant from 'fbjs/lib/invariant';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import React from 'react';
@@ -42,10 +41,11 @@ class View extends React.Component<ViewProps> {
 
     if (process.env.NODE_ENV !== 'production') {
       React.Children.toArray(this.props.children).forEach(item => {
-        invariant(
-          typeof item !== 'string',
-          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
-        );
+        if (typeof item === 'string') {
+          console.error(
+            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+          );
+        }
       });
     }
 

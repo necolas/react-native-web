@@ -10,13 +10,28 @@ describe('components/View', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  test('text node throws error (single)', () => {
-    const subject = () => render(<View>hello</View>);
-    expect(subject).toThrow();
+  test('non-text is rendered', () => {
+    const children = <View testID="1" />;
+    const { container } = render(<View>{children}</View>);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
-  test('text node throws error (array)', () => {
-    const subject = () =>
+  describe('raw text nodes as children', () => {
+    beforeEach(() => {
+      jest.spyOn(console, 'error');
+      console.error.mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      console.error.mockRestore();
+    });
+
+    test('error logged (single)', () => {
+      render(<View>hello</View>);
+      expect(console.error).toBeCalled();
+    });
+
+    test('error logged (array)', () => {
       render(
         <View>
           <View />
@@ -24,13 +39,8 @@ describe('components/View', () => {
           <View />
         </View>
       );
-    expect(subject).toThrow();
-  });
-
-  test('non-text is rendered', () => {
-    const children = <View testID="1" />;
-    const { container } = render(<View>{children}</View>);
-    expect(container.firstChild).toMatchSnapshot();
+      expect(console.error).toBeCalled();
+    });
   });
 
   describe('prop "hitSlop"', () => {
