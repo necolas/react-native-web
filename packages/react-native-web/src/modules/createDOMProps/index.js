@@ -70,7 +70,6 @@ const createDOMProps = (component, props, styleResolver) => {
     disabled: providedDisabled,
     importantForAccessibility,
     nativeID,
-    placeholderTextColor,
     pointerEvents,
     style: providedStyle,
     testID,
@@ -171,10 +170,7 @@ const createDOMProps = (component, props, styleResolver) => {
   // STYLE
   const reactNativeStyle = StyleSheet.compose(
     pointerEvents && pointerEventsStyles[pointerEvents],
-    StyleSheet.compose(
-      providedStyle,
-      placeholderTextColor && { placeholderTextColor }
-    )
+    providedStyle
   );
 
   // Additional style resets for interactive elements

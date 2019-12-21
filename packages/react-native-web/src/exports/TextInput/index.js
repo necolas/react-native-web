@@ -18,6 +18,7 @@ import css from '../StyleSheet/css';
 import filterSupportedProps from '../View/filterSupportedProps';
 import findNodeHandle from '../findNodeHandle';
 import React from 'react';
+import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
 const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
@@ -111,6 +112,7 @@ class TextInput extends React.Component<TextInputProps> {
       returnKeyType,
       secureTextEntry = false,
       spellCheck,
+      style,
       value
     } = this.props;
 
@@ -163,10 +165,13 @@ class TextInput extends React.Component<TextInputProps> {
       onKeyPress: this._handleKeyPress,
       onSelect: normalizeEventHandler(this._handleSelectionChange),
       placeholder,
-      placeholderTextColor,
       readOnly: !editable,
       ref: this._setNode,
       spellCheck: spellCheck != null ? spellCheck : autoCorrect,
+      style: StyleSheet.compose(
+        style,
+        placeholderTextColor && { placeholderTextColor }
+      ),
       value
     });
 
