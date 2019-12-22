@@ -11,7 +11,7 @@
 'use strict';
 
 import type {TurboModule} from './RCTExport';
-import invariant from 'invariant';
+import invariant from 'fbjs/lib/invariant';
 
 export function get<T: TurboModule>(name: string): ?T {
   return null;
