@@ -52,7 +52,7 @@
  * https://github.com/paulmillr/es6-shim/
  */
 
-/** @license React v16.11.0
+/** @license React v16.12.0
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -61,7 +61,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.11.0
+/** @license React v16.12.0
  * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -95,7 +95,7 @@ object-assign
  */
 
 /*!
- * Fuse.js v3.4.5 - Lightweight fuzzy-search (http://fusejs.io)
+ * Fuse.js v3.4.6 - Lightweight fuzzy-search (http://fusejs.io)
  * 
  * Copyright (c) 2012-2017 Kirollos Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0

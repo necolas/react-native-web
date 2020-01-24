@@ -1,9 +1,3 @@
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
 /**
  * @license
  * Lodash <https://lodash.com/>
@@ -12,6 +6,12 @@ object-assign
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
@@ -54,7 +54,7 @@ object-assign
  * https://github.com/paulmillr/es6-shim/
  */
 
-/** @license React v16.10.2
+/** @license React v16.12.0
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -72,7 +72,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.10.2
+/** @license React v16.12.0
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -81,7 +81,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v0.16.2
+/** @license React v0.18.0
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -107,24 +107,24 @@ object-assign
  */
 
 /*!
+ * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*!
  * isobject <https://github.com/jonschlinkert/isobject>
  *
  * Copyright (c) 2014-2017, Jon Schlinkert.
  * Released under the MIT License.
  */
 
-/** @license React v16.10.2
+/** @license React v16.12.0
  * react-dom-unstable-native-dependencies.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-/*!
- * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
- *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
  */
