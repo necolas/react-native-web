@@ -45,7 +45,8 @@ class Text extends React.Component<TextProps> {
     supportedProps.style = [
       style,
       numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-      selectable !== false ? styles.selectable : styles.notSelectable,
+      selectable === true && styles.selectable,
+      selectable === false && styles.notSelectable,
       onPress && styles.pressable
     ];
 
