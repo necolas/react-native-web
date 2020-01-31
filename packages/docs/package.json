@@ -8,16 +8,16 @@
     "release": "yarn build && git checkout gh-pages && rm -rf ../../docs && mv dist ../../docs && git add -A && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -"
   },
   "dependencies": {
-    "@storybook/addon-docs": "^5.3.0-beta.31",
-    "@storybook/addon-options": "^5.3.0-beta.31",
-    "@storybook/cli": "^5.3.0-beta.31",
-    "@storybook/react": "^5.3.0-beta.31",
-    "@storybook/theming": "^5.3.0-beta.31",
+    "@storybook/addon-docs": "^5.3.9",
+    "@storybook/addon-options": "^5.3.9",
+    "@storybook/cli": "^5.3.9",
+    "@storybook/react": "^5.3.9",
+    "@storybook/theming": "^5.3.9",
     "react-native-web": "0.12.0"
   },
   "devDependencies": {
     "babel-plugin-react-native-web": "0.12.0",
-    "url-loader": "^2.2.0",
-    "webpack": "^4.41.2"
+    "url-loader": "^3.0.0",
+    "webpack": "^4.41.5"
   }
 }
