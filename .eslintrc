@@ -45,6 +45,7 @@
     "ReactPropsChainableTypeChecker": false,
     "ReactPropsCheckType": false,
     "ReactPropTypes": false,
+    "ResizeObserver": false,
     "SyntheticEvent": false
   },
   "rules": {
