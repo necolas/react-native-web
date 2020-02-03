@@ -31,6 +31,7 @@ class NativeEventEmitter extends EventEmitter {
 
   constructor(nativeModule: ?NativeModule) {
     super(RCTDeviceEventEmitter.sharedSubscriber);
+    this._nativeModule = nativeModule;
   }
 
   addListener(
