@@ -10,66 +10,45 @@
 
 import type { TextProps } from './types';
 
-import applyLayout from '../../modules/applyLayout';
-import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from '../View/filterSupportedProps';
-import React from 'react';
+import setAndForwardRef from '../../modules/setAndForwardRef';
+import useElementLayout from '../../hooks/useElementLayout';
+import usePlatformMethods from '../../hooks/usePlatformMethods';
+import React, { forwardRef, useContext, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 
-class Text extends React.Component<TextProps> {
-  static displayName = 'Text';
+const Text = forwardRef<TextProps, *>((props, ref) => {
+  const { dir, forwardedRef, numberOfLines, onLayout, onPress, selectable } = props;
 
-  renderText(hasTextAncestor) {
-    const { dir, forwardedRef, numberOfLines, onPress, selectable, style } = this.props;
-
-    const supportedProps = filterSupportedProps(this.props);
-
-    if (onPress) {
-      supportedProps.accessible = true;
-      supportedProps.onClick = this._createPressHandler(onPress);
-      supportedProps.onKeyDown = this._createEnterHandler(onPress);
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const hostRef = useRef(null);
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: c => {
+      hostRef.current = c;
     }
+  });
 
-    supportedProps.classList = [
-      classes.text,
-      hasTextAncestor === true && classes.textHasAncestor,
-      numberOfLines === 1 && classes.textOneLine,
-      numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
-    ];
-    // allow browsers to automatically infer the language writing direction
-    supportedProps.dir = dir !== undefined ? dir : 'auto';
-    supportedProps.ref = forwardedRef;
-    supportedProps.style = [
-      style,
-      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-      selectable === false && styles.notSelectable,
-      onPress && styles.pressable
-    ];
+  const classList = [
+    classes.text,
+    hasTextAncestor === true && classes.textHasAncestor,
+    numberOfLines === 1 && classes.textOneLine,
+    numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
+  ];
+  const style = [
+    props.style,
+    numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+    selectable === false && styles.notSelectable,
+    onPress && styles.pressable
+  ];
 
-    const component = hasTextAncestor ? 'span' : 'div';
+  useElementLayout(hostRef, onLayout);
+  usePlatformMethods(hostRef, ref, classList, style);
 
-    return createElement(component, supportedProps);
-  }
-
-  render() {
-    return (
-      <TextAncestorContext.Consumer>
-        {hasTextAncestor => {
-          const element = this.renderText(hasTextAncestor);
-          return hasTextAncestor ? (
-            element
-          ) : (
-            <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
-          );
-        }}
-      </TextAncestorContext.Consumer>
-    );
-  }
-
-  _createEnterHandler(fn) {
+  function createEnterHandler(fn) {
     return e => {
       if (e.keyCode === 13) {
         fn && fn(e);
@@ -77,13 +56,38 @@ class Text extends React.Component<TextProps> {
     };
   }
 
-  _createPressHandler(fn) {
+  function createPressHandler(fn) {
     return e => {
       e.stopPropagation();
       fn && fn(e);
     };
   }
-}
+
+  const supportedProps = filterSupportedProps(props);
+
+  if (onPress) {
+    supportedProps.accessible = true;
+    supportedProps.onClick = createPressHandler(onPress);
+    supportedProps.onKeyDown = createEnterHandler(onPress);
+  }
+
+  supportedProps.classList = classList;
+  // allow browsers to automatically infer the language writing direction
+  supportedProps.dir = dir !== undefined ? dir : 'auto';
+  supportedProps.ref = setRef;
+  supportedProps.style = style;
+
+  const component = hasTextAncestor ? 'span' : 'div';
+  const element = createElement(component, supportedProps);
+
+  return hasTextAncestor ? (
+    element
+  ) : (
+    <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
+  );
+});
+
+Text.displayName = 'Text';
 
 const classes = css.create({
   text: {
@@ -127,4 +131,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyLayout(applyNativeMethods(Text));
+export default Text;
