@@ -10,10 +10,9 @@
 
 import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 const createSvgCircle = style => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
@@ -27,54 +26,53 @@ type ActivityIndicatorProps = {
   size?: 'small' | 'large' | number
 };
 
-class ActivityIndicator extends React.Component<ActivityIndicatorProps> {
-  static displayName = 'ActivityIndicator';
+const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, ref) => {
+  const {
+    animating = true,
+    color = '#1976D2',
+    hidesWhenStopped = true,
+    size = 'small',
+    style,
+    ...other
+  } = props;
 
-  render() {
-    const {
-      animating = true,
-      color = '#1976D2',
-      hidesWhenStopped = true,
-      size = 'small',
-      style,
-      ...other
-    } = this.props;
+  const svg = (
+    <svg height="100%" viewBox="0 0 32 32" width="100%">
+      {createSvgCircle({
+        stroke: color,
+        opacity: 0.2
+      })}
+      {createSvgCircle({
+        stroke: color,
+        strokeDasharray: 80,
+        strokeDashoffset: 60
+      })}
+    </svg>
+  );
 
-    const svg = (
-      <svg height="100%" viewBox="0 0 32 32" width="100%">
-        {createSvgCircle({
-          stroke: color,
-          opacity: 0.2
-        })}
-        {createSvgCircle({
-          stroke: color,
-          strokeDasharray: 80,
-          strokeDashoffset: 60
-        })}
-      </svg>
-    );
-
-    return (
+  return (
+    <View
+      {...other}
+      accessibilityRole="progressbar"
+      aria-valuemax="1"
+      aria-valuemin="0"
+      ref={ref}
+      style={[styles.container, style]}
+    >
       <View
-        {...other}
-        accessibilityRole="progressbar"
-        aria-valuemax="1"
-        aria-valuemin="0"
-        style={[styles.container, style]}
-      >
-        <View
-          children={svg}
-          style={[
-            typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
-            styles.animation,
-            !animating && styles.animationPause,
-            !animating && hidesWhenStopped && styles.hidesWhenStopped
-          ]}
-        />
-      </View>
-    );
-  }
-}
+        children={svg}
+        style={[
+          typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
+          styles.animation,
+          !animating && styles.animationPause,
+          !animating && hidesWhenStopped && styles.hidesWhenStopped
+        ]}
+      />
+    </View>
+  );
+});
+
+ActivityIndicator.displayName = 'ActivityIndicator';
 
 const styles = StyleSheet.create({
   container: {
@@ -111,4 +109,4 @@ const indicatorSizes = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(ActivityIndicator);
+export default ActivityIndicator;

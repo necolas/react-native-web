@@ -2,47 +2,50 @@
 
 import ActivityIndicator from '..';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 describe('components/ActivityIndicator', () => {
   describe('prop "animating"', () => {
     test('is "true"', () => {
-      const component = shallow(<ActivityIndicator animating={true} />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(<ActivityIndicator animating={true} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     test('is "false"', () => {
-      const component = shallow(<ActivityIndicator animating={false} />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(<ActivityIndicator animating={false} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('prop "color"', () => {
-    const component = shallow(<ActivityIndicator color="red" />).find('svg');
-    expect(component).toMatchSnapshot();
+    const { container } = render(<ActivityIndicator color="red" />);
+    const svg = container.firstChild.querySelector('svg');
+    expect(svg).toMatchSnapshot();
   });
 
   describe('prop "hidesWhenStopped"', () => {
     test('is "true"', () => {
-      const component = shallow(<ActivityIndicator animating={false} hidesWhenStopped={true} />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(<ActivityIndicator animating={false} hidesWhenStopped={true} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     test('is "false"', () => {
-      const component = shallow(<ActivityIndicator animating={false} hidesWhenStopped={false} />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(
+        <ActivityIndicator animating={false} hidesWhenStopped={false} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "size"', () => {
     test('is "large"', () => {
-      const component = shallow(<ActivityIndicator size="large" />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(<ActivityIndicator size="large" />);
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     test('is a number', () => {
-      const component = shallow(<ActivityIndicator size={30} />);
-      expect(component).toMatchSnapshot();
+      const { container } = render(<ActivityIndicator size={30} />);
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 });
