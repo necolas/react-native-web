@@ -70,6 +70,6 @@ export default function usePlatformMethods(
         }
       };
     },
-    [classList, hostRef, ref, style]
+    [classList, hostRef, style]
   );
 }

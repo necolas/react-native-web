@@ -8,19 +8,19 @@ export default function StateChanges() {
     currentState: AppState.currentState
   });
 
-  const handleChange = nextState => {
-    updateState(previousState => ({
-      ...previousState,
-      [nextState]: previousState[nextState] + 1
-    }));
-  };
-
   React.useEffect(() => {
+    const handleChange = nextState => {
+      updateState(previousState => ({
+        ...previousState,
+        [nextState]: previousState[nextState] + 1
+      }));
+    };
+
     AppState.addEventListener('change', handleChange);
     return () => {
       AppState.removeEventListener('change', handleChange);
     };
-  }, [handleChange]);
+  }, []);
 
   return (
     <View>
