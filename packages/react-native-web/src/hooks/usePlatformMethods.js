@@ -17,7 +17,7 @@ import { useImperativeHandle, useRef } from 'react';
 export default function usePlatformMethods(
   hostRef: ElementRef<any>,
   ref: ElementRef<any>,
-  classList: Array<string>,
+  classList: Array<boolean | string>,
   style: GenericStyleProp<any>
 ) {
   const previousStyle = useRef(null);

@@ -37,7 +37,7 @@ function createHitSlopElement(hitSlop) {
 }
 
 const View = forwardRef<ViewProps, *>((props, ref) => {
-  const { forwardedRef, hitSlop, onLayout, style, ...rest } = props;
+  const { children, forwardedRef, hitSlop, onLayout } = props;
 
   if (process.env.NODE_ENV !== 'production') {
     React.Children.toArray(props.children).forEach(item => {
@@ -47,10 +47,8 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     });
   }
 
-  const classList = [classes.view];
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-
   const setRef = setAndForwardRef({
     getForwardedRef: () => forwardedRef,
     setLocalRef: c => {
@@ -58,19 +56,22 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     }
   });
 
+  const classList = [classes.view];
+  const style = StyleSheet.compose(
+    hasTextAncestor && styles.inline,
+    props.style
+  );
+
   useElementLayout(hostRef, onLayout);
   usePlatformMethods(hostRef, ref, classList, style);
 
-  const supportedProps = filterSupportedProps(rest);
+  const supportedProps = filterSupportedProps(props);
   supportedProps.children = hitSlop
-    ? React.Children.toArray([createHitSlopElement(hitSlop), props.children])
-    : props.children;
+    ? React.Children.toArray([createHitSlopElement(hitSlop), children])
+    : children;
   supportedProps.classList = classList;
   supportedProps.ref = setRef;
-  supportedProps.style = StyleSheet.compose(
-    hasTextAncestor && styles.inline,
-    style
-  );
+  supportedProps.style = style;
 
   return createElement('div', supportedProps);
 });
