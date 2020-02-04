@@ -22,27 +22,25 @@ type ButtonProps = {|
   title: string
 |};
 
-class Button extends React.Component<ButtonProps> {
-  render() {
-    const { accessibilityLabel, color, disabled, onPress, testID, title } = this.props;
+export default function Button(props: ButtonProps) {
+  const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
 
-    return (
-      <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
-        disabled={disabled}
-        onPress={onPress}
-        style={[
-          styles.button,
-          color && { backgroundColor: color },
-          disabled && styles.buttonDisabled
-        ]}
-        testID={testID}
-      >
-        <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
-      </TouchableOpacity>
-    );
-  }
+  return (
+    <TouchableOpacity
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      disabled={disabled}
+      onPress={onPress}
+      style={[
+        styles.button,
+        color && { backgroundColor: color },
+        disabled && styles.buttonDisabled
+      ]}
+      testID={testID}
+    >
+      <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,5 +62,3 @@ const styles = StyleSheet.create({
     color: '#a1a1a1'
   }
 });
-
-export default Button;
