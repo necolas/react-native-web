@@ -10,13 +10,12 @@
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import View from '../View';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type SwitchProps = {
   ...ViewProps,
@@ -33,110 +32,119 @@ const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-class Switch extends React.Component<SwitchProps> {
-  _checkboxElement: HTMLInputElement;
-  _thumbElement: View;
+const Switch = forwardRef<SwitchProps, *>((props, ref) => {
+  const {
+    accessibilityLabel,
+    activeThumbColor = '#009688',
+    activeTrackColor = '#A3D3CF',
+    disabled = false,
+    onValueChange,
+    style = emptyObject,
+    thumbColor = '#FAFAFA',
+    trackColor = '#939393',
+    value = false,
+    ...other
+  } = props;
 
-  static displayName = 'Switch';
+  const checkboxRef = useRef(null);
+  const thumbRef = useRef(null);
 
-  blur() {
-    UIManager.blur(this._checkboxElement);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        blur() {
+          UIManager.blur(checkboxRef.current);
+        },
+        focus() {
+          UIManager.focus(checkboxRef.current);
+        }
+      };
+    },
+    [checkboxRef]
+  );
+
+  function handleChange(event: Object) {
+    if (onValueChange != null) {
+      onValueChange(event.nativeEvent.target.checked);
+    }
   }
 
-  focus() {
-    UIManager.focus(this._checkboxElement);
-  }
-
-  render() {
-    const {
-      accessibilityLabel,
-      activeThumbColor = '#009688',
-      activeTrackColor = '#A3D3CF',
-      disabled = false,
-      onValueChange, // eslint-disable-line
-      style = emptyObject,
-      thumbColor = '#FAFAFA',
-      trackColor = '#939393',
-      value = false,
-      ...other
-    } = this.props;
-
-    const { height: styleHeight, width: styleWidth } = StyleSheet.flatten(style);
-    const height = styleHeight || 20;
-    const minWidth = multiplyStyleLengthValue(height, 2);
-    const width = styleWidth > minWidth ? styleWidth : minWidth;
-    const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-    const trackCurrentColor = value
-      ? (trackColor != null && typeof trackColor === 'object' && trackColor.true) ||
-        activeTrackColor
-      : (trackColor != null && typeof trackColor === 'object' && trackColor.false) || trackColor;
-    const thumbCurrentColor = value ? activeThumbColor : thumbColor;
-    const thumbHeight = height;
-    const thumbWidth = thumbHeight;
-
-    const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
-
-    const trackStyle = [
-      styles.track,
-      {
-        backgroundColor: disabled ? '#D5D5D5' : trackCurrentColor,
-        borderRadius: trackBorderRadius
-      }
-    ];
-
-    const thumbStyle = [
-      styles.thumb,
-      value && styles.thumbActive,
-      {
-        backgroundColor: disabled ? '#BDBDBD' : thumbCurrentColor,
-        height: thumbHeight,
-        marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0,
-        width: thumbWidth
-      }
-    ];
-
-    const nativeControl = createElement('input', {
-      accessibilityLabel,
-      checked: value,
-      disabled: disabled,
-      onBlur: this._handleFocusState,
-      onChange: this._handleChange,
-      onFocus: this._handleFocusState,
-      ref: this._setCheckboxRef,
-      style: [styles.nativeControl, styles.cursorInherit],
-      type: 'checkbox'
-    });
-
-    return (
-      <View {...other} style={rootStyle}>
-        <View style={trackStyle} />
-        <View ref={this._setThumbRef} style={thumbStyle} />
-        {nativeControl}
-      </View>
-    );
-  }
-
-  _handleChange = (event: Object) => {
-    const { onValueChange } = this.props;
-    onValueChange && onValueChange(event.nativeEvent.target.checked);
-  };
-
-  _handleFocusState = (event: Object) => {
+  function handleFocusState(event: Object) {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
-    if (this._thumbElement) {
-      this._thumbElement.setNativeProps({ style: { boxShadow } });
+    if (thumbRef.current != null) {
+      thumbRef.current.setNativeProps({ style: { boxShadow } });
     }
-  };
+  }
 
-  _setCheckboxRef = element => {
-    this._checkboxElement = element;
-  };
+  const { height: styleHeight, width: styleWidth } = StyleSheet.flatten(style);
+  const height = styleHeight || 20;
+  const minWidth = multiplyStyleLengthValue(height, 2);
+  const width = styleWidth > minWidth ? styleWidth : minWidth;
+  const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
+  const trackCurrentColor = (function() {
+    if (value === true) {
+      if (trackColor != null && typeof trackColor === 'object') {
+        return trackColor.true;
+      } else {
+        return activeTrackColor;
+      }
+    } else {
+      if (trackColor != null && typeof trackColor === 'object') {
+        return trackColor.false;
+      } else {
+        return trackColor;
+      }
+    }
+  })();
+  const thumbCurrentColor = value ? activeThumbColor : thumbColor;
+  const thumbHeight = height;
+  const thumbWidth = thumbHeight;
 
-  _setThumbRef = element => {
-    this._thumbElement = element;
-  };
-}
+  const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
+
+  const trackStyle = [
+    styles.track,
+    {
+      backgroundColor: disabled ? '#D5D5D5' : trackCurrentColor,
+      borderRadius: trackBorderRadius
+    }
+  ];
+
+  const thumbStyle = [
+    styles.thumb,
+    value && styles.thumbActive,
+    {
+      backgroundColor: disabled ? '#BDBDBD' : thumbCurrentColor,
+      height: thumbHeight,
+      marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0,
+      width: thumbWidth
+    }
+  ];
+
+  const nativeControl = createElement('input', {
+    accessibilityLabel,
+    checked: value,
+    disabled: disabled,
+    onBlur: handleFocusState,
+    onChange: handleChange,
+    onFocus: handleFocusState,
+    ref: checkboxRef,
+    style: [styles.nativeControl, styles.cursorInherit],
+    type: 'checkbox'
+  });
+
+  return (
+    <View {...other} style={rootStyle}>
+      <View style={trackStyle} />
+      <View ref={thumbRef} style={thumbStyle} />
+      {nativeControl}
+    </View>
+  );
+});
+
+Switch.displayName = 'Switch';
 
 const styles = StyleSheet.create({
   root: {
@@ -177,4 +185,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(Switch);
+export default Switch;
