@@ -8,10 +8,11 @@
  * @flow
  */
 
+import type { ComponentType } from 'react';
+
 import invariant from 'fbjs/lib/invariant';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
-import type { ComponentType } from 'react';
 
 const emptyObject = {};
 const runnables = {};
