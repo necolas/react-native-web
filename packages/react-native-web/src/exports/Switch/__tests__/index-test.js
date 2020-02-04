@@ -1,54 +1,58 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Switch from '..';
 
-const checkboxSelector = 'input[type="checkbox"]';
+function findCheckbox(container) {
+  return container.firstChild.querySelector('input');
+}
 
 describe('components/Switch', () => {
   test('accessibilityLabel is applied to native checkbox', () => {
-    const component = shallow(<Switch accessibilityLabel="switch" />);
-    expect(component.find(checkboxSelector).prop('aria-label')).toBe('switch');
+    const { container } = render(<Switch accessibilityLabel="switch" />);
+    expect(findCheckbox(container).getAttribute('aria-label')).toBe('switch');
   });
 
   describe('disabled', () => {
     test('when "false" a default checkbox is rendered', () => {
-      const component = shallow(<Switch />);
-      expect(component.find(checkboxSelector).prop('disabled')).toBe(undefined);
+      const { container } = render(<Switch />);
+      expect(findCheckbox(container).disabled).toBe(false);
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
-      const component = shallow(<Switch disabled />);
-      expect(component.find(checkboxSelector).prop('disabled')).toBe(true);
+      const { container } = render(<Switch disabled />);
+      expect(findCheckbox(container).disabled).toBe(true);
     });
   });
 
   describe('onValueChange', () => {
     test('when value is "false" it receives "true"', () => {
       const onValueChange = jest.fn();
-      const component = shallow(<Switch onValueChange={onValueChange} value={false} />);
-      component.find('input').simulate('change', { nativeEvent: { target: { checked: true } } });
+      const { container } = render(<Switch onValueChange={onValueChange} value={false} />);
+      const checkbox = findCheckbox(container);
+      checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
     test('when value is "true" it receives "false"', () => {
       const onValueChange = jest.fn();
-      const component = shallow(<Switch onValueChange={onValueChange} value />);
-      component.find('input').simulate('change', { nativeEvent: { target: { checked: false } } });
+      const { container } = render(<Switch onValueChange={onValueChange} value />);
+      const checkbox = findCheckbox(container);
+      checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(false);
     });
   });
 
   describe('value', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
-      const component = shallow(<Switch value={false} />);
-      expect(component.find(checkboxSelector).prop('checked')).toBe(false);
+      const { container } = render(<Switch value={false} />);
+      expect(findCheckbox(container).checked).toBe(false);
     });
 
     test('when "true" a checked checkbox is rendered', () => {
-      const component = shallow(<Switch value />);
-      expect(component.find(checkboxSelector).prop('checked')).toBe(true);
+      const { container } = render(<Switch value />);
+      expect(findCheckbox(container).checked).toBe(true);
     });
   });
 });
