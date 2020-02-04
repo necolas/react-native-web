@@ -10,12 +10,11 @@
 
 import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import View from '../View';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type CheckBoxProps = {
   ...ViewProps,
@@ -26,74 +25,64 @@ type CheckBoxProps = {
   value?: boolean
 };
 
-class CheckBox extends React.Component<CheckBoxProps> {
-  _checkboxElement: HTMLInputElement;
+const CheckBox = forwardRef<CheckBoxProps, *>((props, ref) => {
+  const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
 
-  static displayName = 'CheckBox';
+  const checkboxRef = useRef(null);
 
-  blur() {
-    UIManager.blur(this._checkboxElement);
-  }
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        blur() {
+          UIManager.blur(checkboxRef.current);
+        },
+        focus() {
+          UIManager.focus(checkboxRef.current);
+        }
+      };
+    },
+    [checkboxRef]
+  );
 
-  focus() {
-    UIManager.focus(this._checkboxElement);
-  }
-
-  render() {
-    const {
-      color,
-      disabled,
-      /* eslint-disable */
-      onChange,
-      onValueChange,
-      /* eslint-enable */
-      style,
-      value,
-      ...other
-    } = this.props;
-
-    const fakeControl = (
-      <View
-        style={[
-          styles.fakeControl,
-          value && styles.fakeControlChecked,
-          // custom color
-          value && color && { backgroundColor: color, borderColor: color },
-          disabled && styles.fakeControlDisabled,
-          value && disabled && styles.fakeControlCheckedAndDisabled
-        ]}
-      />
-    );
-
-    const nativeControl = createElement('input', {
-      checked: value,
-      disabled: disabled,
-      onChange: this._handleChange,
-      ref: this._setCheckboxRef,
-      style: [styles.nativeControl, styles.cursorInherit],
-      type: 'checkbox'
-    });
-
-    return (
-      <View {...other} style={[styles.root, style, disabled && styles.cursorDefault]}>
-        {fakeControl}
-        {nativeControl}
-      </View>
-    );
-  }
-
-  _handleChange = (event: Object) => {
-    const { onChange, onValueChange } = this.props;
+  function handleChange(event: Object) {
     const value = event.nativeEvent.target.checked;
     event.nativeEvent.value = value;
     onChange && onChange(event);
     onValueChange && onValueChange(value);
-  };
+  }
 
-  _setCheckboxRef = element => {
-    this._checkboxElement = element;
-  };
-}
+  const fakeControl = (
+    <View
+      style={[
+        styles.fakeControl,
+        value && styles.fakeControlChecked,
+        // custom color
+        value && color && { backgroundColor: color, borderColor: color },
+        disabled && styles.fakeControlDisabled,
+        value && disabled && styles.fakeControlCheckedAndDisabled
+      ]}
+    />
+  );
+
+  const nativeControl = createElement('input', {
+    checked: value,
+    disabled: disabled,
+    onChange: handleChange,
+    ref: checkboxRef,
+    style: [styles.nativeControl, styles.cursorInherit],
+    type: 'checkbox'
+  });
+
+  return (
+    <View {...other} ref={ref} style={[styles.root, style, disabled && styles.cursorDefault]}>
+      {fakeControl}
+      {nativeControl}
+    </View>
+  );
+});
+
+CheckBox.displayName = 'CheckBox';
 
 const styles = StyleSheet.create({
   root: {
@@ -143,4 +132,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(CheckBox);
+export default CheckBox;
