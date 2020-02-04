@@ -10,9 +10,10 @@
 import type { ViewProps } from '../View';
 
 import debounce from 'debounce';
+import setAndForwardRef from '../../modules/setAndForwardRef';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type Props = {
   ...ViewProps,
@@ -29,153 +30,167 @@ type Props = {
   showsVerticalScrollIndicator?: boolean
 };
 
-const normalizeScrollEvent = e => ({
-  nativeEvent: {
-    contentOffset: {
-      get x() {
-        return e.target.scrollLeft;
+function normalizeScrollEvent(e) {
+  return {
+    nativeEvent: {
+      contentOffset: {
+        get x() {
+          return e.target.scrollLeft;
+        },
+        get y() {
+          return e.target.scrollTop;
+        }
       },
-      get y() {
-        return e.target.scrollTop;
+      contentSize: {
+        get height() {
+          return e.target.scrollHeight;
+        },
+        get width() {
+          return e.target.scrollWidth;
+        }
+      },
+      layoutMeasurement: {
+        get height() {
+          return e.target.offsetHeight;
+        },
+        get width() {
+          return e.target.offsetWidth;
+        }
       }
     },
-    contentSize: {
-      get height() {
-        return e.target.scrollHeight;
-      },
-      get width() {
-        return e.target.scrollWidth;
-      }
-    },
-    layoutMeasurement: {
-      get height() {
-        return e.target.offsetHeight;
-      },
-      get width() {
-        return e.target.offsetWidth;
-      }
-    }
-  },
-  timeStamp: Date.now()
-});
+    timeStamp: Date.now()
+  };
+}
+
+function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
+  const timeSinceLastTick = Date.now() - lastTick;
+  return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
+}
 
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-export default class ScrollViewBase extends React.Component<Props> {
-  _viewRef: View;
+const ScrollViewBase = forwardRef<Props, *>((props, ref) => {
+  const {
+    accessibilityLabel,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    children,
+    forwardedRef,
+    importantForAccessibility,
+    nativeID,
+    onLayout,
+    onScroll,
+    onTouchMove,
+    onWheel,
+    pointerEvents,
+    scrollEnabled = true,
+    scrollEventThrottle = 0,
+    showsHorizontalScrollIndicator,
+    showsVerticalScrollIndicator,
+    style,
+    testID
+  } = props;
 
-  _debouncedOnScrollEnd = debounce(this._handleScrollEnd, 100);
-  _state = { isScrolling: false, scrollLastTick: 0 };
+  const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
+  const viewRef = useRef(null);
 
-  setNativeProps(props: Object) {
-    if (this._viewRef) {
-      this._viewRef.setNativeProps(props);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        setNativeProps(props: Object) {
+          if (viewRef.current != null) {
+            viewRef.current.setNativeProps(props);
+          }
+        }
+      };
+    },
+    []
+  );
+
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => ref,
+    setLocalRef: c => {
+      viewRef.current = c;
     }
-  }
+  });
 
-  render() {
-    const {
-      accessibilityLabel,
-      accessibilityRelationship,
-      accessibilityRole,
-      accessibilityState,
-      children,
-      importantForAccessibility,
-      nativeID,
-      onLayout,
-      pointerEvents,
-      scrollEnabled = true,
-      showsHorizontalScrollIndicator,
-      showsVerticalScrollIndicator,
-      style,
-      testID
-    } = this.props;
-
-    const hideScrollbar =
-      showsHorizontalScrollIndicator === false || showsVerticalScrollIndicator === false;
-    return (
-      <View
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRelationship={accessibilityRelationship}
-        accessibilityRole={accessibilityRole}
-        accessibilityState={accessibilityState}
-        children={children}
-        importantForAccessibility={importantForAccessibility}
-        nativeID={nativeID}
-        onLayout={onLayout}
-        onScroll={this._handleScroll}
-        onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
-        onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
-        pointerEvents={pointerEvents}
-        ref={this._setViewRef}
-        style={[
-          style,
-          !scrollEnabled && styles.scrollDisabled,
-          hideScrollbar && styles.hideScrollbar
-        ]}
-        testID={testID}
-      />
-    );
-  }
-
-  _createPreventableScrollHandler = (handler: Function) => {
+  function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {
-      if (this.props.scrollEnabled) {
+      if (scrollEnabled) {
         if (handler) {
           handler(e);
         }
       }
     };
-  };
+  }
 
-  _handleScroll = (e: Object) => {
+  function handleScroll(e: Object) {
     e.persist();
     e.stopPropagation();
-    const { scrollEventThrottle = 0 } = this.props;
     // A scroll happened, so the scroll bumps the debounce.
-    this._debouncedOnScrollEnd(e);
-    if (this._state.isScrolling) {
+    const debouncedOnScrollEnd = debounce(handleScrollEnd, 100);
+    debouncedOnScrollEnd(e);
+    if (scrollState.current.isScrolling) {
       // Scroll last tick may have changed, check if we need to notify
-      if (this._shouldEmitScrollEvent(this._state.scrollLastTick, scrollEventThrottle)) {
-        this._handleScrollTick(e);
+      if (shouldEmitScrollEvent(scrollState.current.scrollLastTick, scrollEventThrottle)) {
+        handleScrollTick(e);
       }
     } else {
       // Weren't scrolling, so we must have just started
-      this._handleScrollStart(e);
+      handleScrollStart(e);
     }
-  };
-
-  _handleScrollStart(e: Object) {
-    this._state.isScrolling = true;
-    this._state.scrollLastTick = Date.now();
   }
 
-  _handleScrollTick(e: Object) {
-    const { onScroll } = this.props;
-    this._state.scrollLastTick = Date.now();
+  function handleScrollStart(e: Object) {
+    scrollState.current.isScrolling = true;
+    scrollState.current.scrollLastTick = Date.now();
+  }
+
+  function handleScrollTick(e: Object) {
+    scrollState.current.scrollLastTick = Date.now();
     if (onScroll) {
       onScroll(normalizeScrollEvent(e));
     }
   }
 
-  _handleScrollEnd(e: Object) {
-    const { onScroll } = this.props;
-    this._state.isScrolling = false;
+  function handleScrollEnd(e: Object) {
+    scrollState.current.isScrolling = false;
     if (onScroll) {
       onScroll(normalizeScrollEvent(e));
     }
   }
 
-  _setViewRef = (element: View) => {
-    this._viewRef = element;
-  };
+  const hideScrollbar =
+    showsHorizontalScrollIndicator === false || showsVerticalScrollIndicator === false;
 
-  _shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
-    const timeSinceLastTick = Date.now() - lastTick;
-    return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
-  }
-}
+  return (
+    <View
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRelationship={accessibilityRelationship}
+      accessibilityRole={accessibilityRole}
+      accessibilityState={accessibilityState}
+      children={children}
+      forwardedRef={forwardedRef}
+      importantForAccessibility={importantForAccessibility}
+      nativeID={nativeID}
+      onLayout={onLayout}
+      onScroll={handleScroll}
+      onTouchMove={createPreventableScrollHandler(onTouchMove)}
+      onWheel={createPreventableScrollHandler(onWheel)}
+      pointerEvents={pointerEvents}
+      ref={setRef}
+      style={[
+        style,
+        !scrollEnabled && styles.scrollDisabled,
+        hideScrollbar && styles.hideScrollbar
+      ]}
+      testID={testID}
+    />
+  );
+});
 
 // Chrome doesn't support e.preventDefault in this case; touch-action must be
 // used to disable scrolling.
@@ -190,3 +205,5 @@ const styles = StyleSheet.create({
     scrollbarWidth: 'none'
   }
 });
+
+export default ScrollViewBase;

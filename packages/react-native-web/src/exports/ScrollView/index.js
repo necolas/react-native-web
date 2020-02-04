@@ -12,7 +12,6 @@ import type { ViewProps, ViewStyle } from '../View/types';
 
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
-import findNodeHandle from '../findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
@@ -65,11 +64,11 @@ const ScrollView = ((createReactClass({
   },
 
   getScrollableNode(): any {
-    return findNodeHandle(this._scrollViewRef);
+    return this._scrollNodeRef;
   },
 
   getInnerViewNode(): any {
-    return findNodeHandle(this._innerViewRef);
+    return this._innerViewRef;
   },
 
   /**
@@ -190,7 +189,7 @@ const ScrollView = ((createReactClass({
         {...contentSizeChangeProps}
         children={children}
         collapsable={false}
-        ref={this._setInnerViewRef}
+        forwardedRef={this._setInnerViewRef}
         style={StyleSheet.compose(
           horizontal && styles.contentContainerHorizontal,
           contentContainerStyle
@@ -232,14 +231,23 @@ const ScrollView = ((createReactClass({
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={baseStyle}>
+        <ScrollViewClass
+          {...props}
+          forwardedRef={this._setScrollNodeRef}
+          ref={this._setScrollViewRef}
+          style={baseStyle}
+        >
           {contentContainer}
         </ScrollViewClass>
       );
     }
 
     return (
-      <ScrollViewClass {...props} ref={this._setScrollViewRef}>
+      <ScrollViewClass
+        {...props}
+        forwardedRef={this._setScrollNodeRef}
+        ref={this._setScrollViewRef}
+      >
         {contentContainer}
       </ScrollViewClass>
     );
@@ -276,6 +284,10 @@ const ScrollView = ((createReactClass({
 
   _setScrollViewRef(component) {
     this._scrollViewRef = component;
+  },
+
+  _setScrollNodeRef(component) {
+    this._scrollNodeRef = component;
   }
 }): any): React.ComponentType<ScrollViewProps>);
 
