@@ -10,72 +10,72 @@
 
 import type { ViewProps } from './types';
 
-import applyLayout from '../../modules/applyLayout';
-import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import filterSupportedProps from './filterSupportedProps';
+import setAndForwardRef from '../../modules/setAndForwardRef';
+import useElementLayout from '../../hooks/useElementLayout';
+import usePlatformMethods from '../../hooks/usePlatformMethods';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import React from 'react';
+import React, { forwardRef, useContext, useRef } from 'react';
 
 export type { ViewProps };
 
-const calculateHitSlopStyle = hitSlop => {
-  const hitStyle = {};
+function createHitSlopElement(hitSlop) {
+  const hitSlopStyle = {};
   for (const prop in hitSlop) {
     if (hitSlop.hasOwnProperty(prop)) {
       const value = hitSlop[prop];
-      hitStyle[prop] = value > 0 ? -1 * value : 0;
+      hitSlopStyle[prop] = value > 0 ? -1 * value : 0;
     }
   }
-  return hitStyle;
-};
-
-class View extends React.Component<ViewProps> {
-  static displayName = 'View';
-
-  renderView(hasTextAncestor) {
-    const hitSlop = this.props.hitSlop;
-    const supportedProps = filterSupportedProps(this.props);
-
-    if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(this.props.children).forEach(item => {
-        if (typeof item === 'string') {
-          console.error(
-            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
-          );
-        }
-      });
-    }
-
-    supportedProps.classList = [classes.view];
-    supportedProps.ref = this.props.forwardedRef;
-    supportedProps.style = StyleSheet.compose(
-      hasTextAncestor && styles.inline,
-      this.props.style
-    );
-
-    if (hitSlop) {
-      const hitSlopStyle = calculateHitSlopStyle(hitSlop);
-      const hitSlopChild = createElement('span', {
-        classList: [classes.hitSlop],
-        style: hitSlopStyle
-      });
-      supportedProps.children = React.Children.toArray([hitSlopChild, supportedProps.children]);
-    }
-
-    return createElement('div', supportedProps);
-  }
-
-  render() {
-    return (
-      <TextAncestorContext.Consumer>
-        {hasTextAncestor => this.renderView(hasTextAncestor)}
-      </TextAncestorContext.Consumer>
-    );
-  }
+  return createElement('span', {
+    classList: [classes.hitSlop],
+    style: hitSlopStyle
+  });
 }
+
+const View = forwardRef<ViewProps, *>((props, ref) => {
+  const { forwardedRef, hitSlop, onLayout, style, ...rest } = props;
+
+  if (process.env.NODE_ENV !== 'production') {
+    React.Children.toArray(props.children).forEach(item => {
+      if (typeof item === 'string') {
+        console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
+      }
+    });
+  }
+
+  const classList = [classes.view];
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const hostRef = useRef(null);
+
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: c => {
+      hostRef.current = c;
+    }
+  });
+
+  useElementLayout(hostRef, onLayout);
+  usePlatformMethods(hostRef, ref, classList, style);
+
+  const supportedProps = filterSupportedProps(rest);
+  supportedProps.children = hitSlop
+    ? React.Children.toArray([createHitSlopElement(hitSlop), props.children])
+    : props.children;
+  supportedProps.classList = classList;
+  supportedProps.ref = setRef;
+  supportedProps.style = StyleSheet.compose(
+    hasTextAncestor && styles.inline,
+    style
+  );
+
+  return createElement('div', supportedProps);
+});
+
+View.displayName = 'View';
 
 const classes = css.create({
   view: {
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyLayout(applyNativeMethods(View));
+export default View;
