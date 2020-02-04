@@ -4,21 +4,16 @@ import AppRegistry from '..';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { render } from 'enzyme';
+import { render } from '@testing-library/react';
 import StyleSheet from '../../StyleSheet';
 import Text from '../../Text';
 import View from '../../View';
 
+const canUseDOM = ExecutionEnvironment.canUseDOM;
 const NoopComponent = () => <div />;
-
-const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
-const RootComponent = () => <View />;
-const AlternativeComponent = () => <Text style={styles.root} />;
 
 describe('AppRegistry', () => {
   describe('getApplication', () => {
-    const canUseDOM = ExecutionEnvironment.canUseDOM;
-
     beforeEach(() => {
       ExecutionEnvironment.canUseDOM = false;
     });
@@ -55,6 +50,10 @@ describe('AppRegistry', () => {
         render(element);
         return getStyleElement().props.dangerouslySetInnerHTML.__html;
       };
+
+      const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
+      const RootComponent = () => <View />;
+      const AlternativeComponent = () => <Text style={styles.root} />;
 
       // First render "RootComponent"
       AppRegistry.registerComponent('App', () => RootComponent);
