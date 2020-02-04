@@ -1,36 +1,39 @@
 /* eslint-env jasmine, jest */
 
-import Image from '../../Image';
 import ImageBackground from '..';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Text from '../../Text';
+
+function findImage(container) {
+  return container.firstChild.firstChild;
+}
 
 describe('components/ImageBackground', () => {
   describe('prop "children"', () => {
-    it('render child content', () => {
-      const component = shallow(
+    test('render child content', () => {
+      const { getByText } = render(
         <ImageBackground>
           <Text>Hello World!</Text>
         </ImageBackground>
       );
-      expect(component.find(Text)).toBeDefined();
+      expect(getByText('Hello World!')).toBeDefined();
     });
   });
 
   describe('prop "imageStyle"', () => {
-    it('sets the style of the underlying Image', () => {
+    test('sets the style of the underlying Image', () => {
       const imageStyle = { width: 40, height: 60 };
-      const component = shallow(<ImageBackground imageStyle={imageStyle} />);
-      expect(component.find(Image).prop('style')).toContain(imageStyle);
+      const { container } = render(<ImageBackground imageStyle={imageStyle} />);
+      expect(findImage(container).getAttribute('style')).toBe('height: 60px; width: 40px;');
     });
   });
 
   describe('prop "style"', () => {
-    it('sets the style of the container View', () => {
+    test('sets the style of the container View', () => {
       const style = { margin: 40 };
-      const component = shallow(<ImageBackground style={style} />);
-      expect(component.prop('style')).toEqual(style);
+      const { container } = render(<ImageBackground style={style} />);
+      expect(container.firstChild.getAttribute('style')).toEqual('margin: 40px 40px 40px 40px;');
     });
   });
 });
