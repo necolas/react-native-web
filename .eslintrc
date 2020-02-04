@@ -22,7 +22,8 @@
   ],
   "plugins": [
     "promise",
-    "react"
+    "react",
+    "react-hooks"
   ],
   "env": {
     "es6": true,
@@ -160,6 +161,10 @@
     "react/self-closing-comp": 2,
     "react/sort-comp": 0,
     "react/sort-prop-types": 2,
-    "react/wrap-multilines": 0
+    "react/wrap-multilines": 0,
+
+    // react-hooks
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
