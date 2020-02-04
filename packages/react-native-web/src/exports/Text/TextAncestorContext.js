@@ -7,6 +7,9 @@
  * @flow strict
  */
 
-import * as React from 'react';
-const TextAncestorContext = React.createContext(false);
-export default (TextAncestorContext: React.Context<boolean>);
+import type { Context } from 'react';
+
+import { createContext } from 'react';
+
+const TextAncestorContext = createContext(false);
+export default (TextAncestorContext: Context<boolean>);

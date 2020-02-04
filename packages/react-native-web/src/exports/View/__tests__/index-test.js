@@ -44,12 +44,12 @@ describe('components/View', () => {
   });
 
   describe('prop "hitSlop"', () => {
-    it('renders a span with negative position offsets', () => {
+    test('renders a span with negative position offsets', () => {
       const { container } = render(<View hitSlop={{ top: 10, bottom: 10, right: 5, left: 5 }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    it('handles partial offsets', () => {
+    test('handles partial offsets', () => {
       const { container } = render(<View hitSlop={{ top: 10 }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
