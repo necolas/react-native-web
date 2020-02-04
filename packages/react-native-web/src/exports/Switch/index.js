@@ -136,7 +136,7 @@ const Switch = forwardRef<SwitchProps, *>((props, ref) => {
   });
 
   return (
-    <View {...other} style={rootStyle}>
+    <View {...other} ref={ref} style={rootStyle}>
       <View style={trackStyle} />
       <View ref={thumbRef} style={thumbStyle} />
       {nativeControl}
