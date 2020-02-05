@@ -9,14 +9,9 @@ exports[`components/Picker prop "children" items 1`] = `
 `;
 
 exports[`components/Picker prop "children" renders items 1`] = `
-Array [
-  <PickerItem
-    label="label-1"
-    value="value-1"
-  />,
-  <PickerItem
-    label="label-2"
-    value="value-2"
-  />,
-]
+<option
+  value="value-1"
+>
+  label-1
+</option>
 `;
