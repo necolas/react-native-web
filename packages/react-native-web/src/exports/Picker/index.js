@@ -10,11 +10,12 @@
 
 import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
-import { Component } from 'react';
 import createElement from '../createElement';
+import setAndForwardRef from '../../modules/setAndForwardRef';
+import usePlatformMethods from '../../hooks/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
+import { forwardRef, useRef } from 'react';
 
 type PickerProps = {
   ...ViewProps,
@@ -29,44 +30,51 @@ type PickerProps = {
   prompt?: string
 };
 
-class Picker extends Component<PickerProps> {
-  static Item = PickerItem;
+const Picker = forwardRef<PickerProps, *>((props, ref) => {
+  const {
+    children,
+    enabled,
+    onValueChange,
+    selectedValue,
+    style,
+    testID,
+    /* eslint-disable */
+    itemStyle,
+    mode,
+    prompt,
+    /* eslint-enable */
+    ...other
+  } = props;
 
-  render() {
-    const {
-      children,
-      enabled,
-      selectedValue,
-      style,
-      testID,
-      /* eslint-disable */
-      itemStyle,
-      mode,
-      prompt,
-      onValueChange,
-      /* eslint-enable */
-      ...otherProps
-    } = this.props;
+  const hostRef = useRef(null);
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => ref,
+    setLocalRef: c => {
+      hostRef.current = c;
+    }
+  });
+  usePlatformMethods(hostRef, ref, null, style);
 
-    return createElement('select', {
-      children,
-      disabled: enabled === false ? true : undefined,
-      onChange: this._handleChange,
-      style: [styles.initial, style],
-      testID,
-      value: selectedValue,
-      ...otherProps
-    });
-  }
-
-  _handleChange = (e: Object) => {
-    const { onValueChange } = this.props;
+  function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
     if (onValueChange) {
       onValueChange(value, selectedIndex);
     }
-  };
-}
+  }
+
+  return createElement('select', {
+    children,
+    disabled: enabled === false ? true : undefined,
+    onChange: handleChange,
+    ref: setRef,
+    style: [styles.initial, style],
+    testID,
+    value: selectedValue,
+    ...other
+  });
+});
+
+Picker.Item = PickerItem;
 
 const styles = StyleSheet.create({
   initial: {
@@ -76,4 +84,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(Picker);
+export default Picker;
