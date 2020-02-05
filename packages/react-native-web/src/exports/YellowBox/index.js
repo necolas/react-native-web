@@ -11,11 +11,10 @@
 import React from 'react';
 import UnimplementedView from '../../modules/UnimplementedView';
 
-class YellowBox extends React.Component<*> {
-  static ignoreWarnings() {}
-  render() {
-    return <UnimplementedView {...this.props} />;
-  }
+function YellowBox(props: Object) {
+  return <UnimplementedView {...props} />;
 }
+
+YellowBox.ignoreWarnings = () => {};
 
 export default YellowBox;

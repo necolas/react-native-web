@@ -7,15 +7,16 @@
  * @flow
  */
 
-import { Component } from 'react';
+const emptyFunction = () => {};
 
-export default class StatusBar extends Component<*> {
-  static setBackgroundColor() {}
-  static setBarStyle() {}
-  static setHidden() {}
-  static setNetworkActivityIndicatorVisible() {}
-  static setTranslucent() {}
-  render() {
-    return null;
-  }
+function StatusBar() {
+  return null;
 }
+
+StatusBar.setBackgroundColor = emptyFunction;
+StatusBar.setBarStyle = emptyFunction;
+StatusBar.setHidden = emptyFunction;
+StatusBar.setNetworkActivityIndicatorVisible = emptyFunction;
+StatusBar.setTranslucent = emptyFunction;
+
+export default StatusBar;
