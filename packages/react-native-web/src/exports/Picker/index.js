@@ -53,7 +53,7 @@ const Picker = forwardRef<PickerProps, *>((props, ref) => {
       hostRef.current = c;
     }
   });
-  usePlatformMethods(hostRef, ref, null, style);
+  usePlatformMethods(hostRef, ref, [], style);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
@@ -74,6 +74,7 @@ const Picker = forwardRef<PickerProps, *>((props, ref) => {
   });
 });
 
+// $FlowFixMe
 Picker.Item = PickerItem;
 
 const styles = StyleSheet.create({

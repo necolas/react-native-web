@@ -28,26 +28,24 @@ type RefreshControlProps = {
   titleColor?: ColorValue
 };
 
-class RefreshControl extends React.Component<RefreshControlProps> {
-  render() {
-    const {
-      /* eslint-disable */
-      colors,
-      enabled,
-      onRefresh,
-      progressBackgroundColor,
-      progressViewOffset,
-      refreshing,
-      size,
-      tintColor,
-      title,
-      titleColor,
-      /* eslint-enable */
-      ...rest
-    } = this.props;
+function RefreshControl(props: RefreshControlProps) {
+  const {
+    /* eslint-disable */
+    colors,
+    enabled,
+    onRefresh,
+    progressBackgroundColor,
+    progressViewOffset,
+    refreshing,
+    size,
+    tintColor,
+    title,
+    titleColor,
+    /* eslint-enable */
+    ...rest
+  } = props;
 
-    return <View {...rest} />;
-  }
+  return <View {...rest} />;
 }
 
 export default RefreshControl;
