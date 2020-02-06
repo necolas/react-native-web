@@ -14,6 +14,8 @@ import StyleSheet from '../StyleSheet';
 import View from '../View';
 import React, { forwardRef } from 'react';
 
+const accessibilityValue = { max: 1, min: 0 };
+
 const createSvgCircle = style => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
@@ -54,8 +56,7 @@ const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, ref) => 
     <View
       {...other}
       accessibilityRole="progressbar"
-      aria-valuemax="1"
-      aria-valuemin="0"
+      accessibilityValue={accessibilityValue}
       ref={ref}
       style={[styles.container, style]}
     >

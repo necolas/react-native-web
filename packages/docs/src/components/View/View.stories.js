@@ -3,12 +3,12 @@ import PropTypes, { any, bool, func, object, oneOf, string } from 'prop-types';
 const ofProps = () => {};
 
 ofProps.propTypes = {
-  /* test */
   accessibilityLabel: PropTypes.string,
   accessibilityLiveRegion: oneOf(['assertive', 'none', 'polite']),
   accessibilityRelationship: object,
   accessibilityRole: string,
   accessibilityState: object,
+  accessibilityValue: object,
   accessible: bool,
   children: any,
   forwardedRef: any,
