@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     height: 26,
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
-    flex: 1,
     padding: 4
   },
   eventLabel: {
@@ -16,7 +15,6 @@ export const styles = StyleSheet.create({
   multiline: {
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
-    flex: 1,
     padding: 4,
     marginBottom: 4
   }
