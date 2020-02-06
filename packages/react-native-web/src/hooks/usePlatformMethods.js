@@ -13,6 +13,35 @@ import type { ElementRef } from 'react';
 import UIManager from '../exports/UIManager';
 import createDOMProps from '../modules/createDOMProps';
 import { useImperativeHandle, useRef } from 'react';
+import TextInputState from '../modules/TextInputState';
+
+function setNativeProps(nativeProps, hostRef, classList, style, previousStyle) {
+  const node = hostRef.current;
+  if (node && nativeProps) {
+    const domProps = createDOMProps(null, {
+      ...nativeProps,
+      classList: [nativeProps.className, classList],
+      style: [style, nativeProps.style]
+    });
+
+    const nextDomStyle = domProps.style;
+
+    if (previousStyle.current != null) {
+      if (domProps.style == null) {
+        domProps.style = {};
+      }
+      for (const styleName in previousStyle.current) {
+        if (domProps.style[styleName] == null) {
+          domProps.style[styleName] = '';
+        }
+      }
+    }
+
+    previousStyle.current = nextDomStyle;
+
+    UIManager.updateView(node, domProps);
+  }
+}
 
 export default function usePlatformMethods(
   hostRef: ElementRef<any>,
@@ -43,35 +72,57 @@ export default function usePlatformMethods(
           UIManager.measureInWindow(hostRef.current, callback);
         },
         setNativeProps(nativeProps) {
-          const node = hostRef.current;
-          if (node && nativeProps) {
-            const domProps = createDOMProps(null, {
-              ...nativeProps,
-              classList: [nativeProps.className, classList],
-              style: [style, nativeProps.style]
-            });
-
-            const nextDomStyle = domProps.style;
-
-            if (previousStyle.current != null) {
-              if (domProps.style == null) {
-                domProps.style = {};
-              }
-              for (const styleName in previousStyle.current) {
-                if (domProps.style[styleName] == null) {
-                  domProps.style[styleName] = '';
-                }
-              }
-            }
-
-            previousStyle.current = nextDomStyle;
-
-            UIManager.updateView(node, domProps);
-          }
-        },
-        ...extras
+          setNativeProps(nativeProps, hostRef, classList, style, previousStyle);
+        }
       };
     },
-    [classList, hostRef, style, extras]
+    [classList, hostRef, style]
+  );
+}
+
+export function usePlatformInputMethods(
+  hostRef: ElementRef<any>,
+  ref: ElementRef<any>,
+  classList: Array<boolean | string>,
+  style: GenericStyleProp<any>,
+  extras: any
+) {
+  const previousStyle = useRef(null);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        blur() {
+          UIManager.blur(hostRef.current);
+        },
+        clear() {
+          if (hostRef.current != null) {
+            hostRef.current.value = '';
+          }
+        },
+        focus() {
+          UIManager.focus(hostRef.current);
+        },
+        isFocused() {
+          return (
+            hostRef.current != null && TextInputState.currentlyFocusedField() === hostRef.current
+          );
+        },
+        measure(callback) {
+          UIManager.measure(hostRef.current, callback);
+        },
+        measureLayout(relativeToNativeNode, onFail, onSuccess) {
+          UIManager.measureLayout(hostRef.current, relativeToNativeNode, onFail, onSuccess);
+        },
+        measureInWindow(callback) {
+          UIManager.measureInWindow(hostRef.current, callback);
+        },
+        setNativeProps(nativeProps) {
+          setNativeProps(nativeProps, hostRef, classList, style, previousStyle);
+        }
+      };
+    },
+    [classList, hostRef, style]
   );
 }

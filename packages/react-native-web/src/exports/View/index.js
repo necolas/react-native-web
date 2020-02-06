@@ -12,7 +12,6 @@ import type { ViewProps } from './types';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import filterSupportedProps from './filterSupportedProps';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
@@ -37,7 +36,73 @@ function createHitSlopElement(hitSlop) {
 }
 
 const View = forwardRef<ViewProps, *>((props, ref) => {
-  const { children, forwardedRef, hitSlop, onLayout } = props;
+  const {
+    accessibilityLabel,
+    accessibilityLiveRegion,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    accessibilityValue,
+    forwardedRef,
+    hitSlop,
+    importantForAccessibility,
+    nativeID,
+    onBlur,
+    onContextMenu,
+    onFocus,
+    onLayout,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    pointerEvents,
+    testID,
+    // unstable
+    onClick,
+    onClickCapture,
+    onScroll,
+    onWheel,
+    onKeyDown,
+    onKeyPress,
+    onKeyUp,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+    onMouseOver,
+    onMouseOut,
+    onMouseUp,
+    onTouchCancel,
+    onTouchCancelCapture,
+    onTouchEnd,
+    onTouchEndCapture,
+    onTouchMove,
+    onTouchMoveCapture,
+    onTouchStart,
+    onTouchStartCapture,
+    href,
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    rel,
+    target,
+    unstable_ariaSet,
+    unstable_dataSet
+  } = props;
 
   if (process.env.NODE_ENV !== 'production') {
     React.Children.toArray(props.children).forEach(item => {
@@ -56,6 +121,9 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     }
   });
 
+  const children = hitSlop
+    ? React.Children.toArray([createHitSlopElement(hitSlop), props.children])
+    : props.children;
   const classList = [classes.view];
   const style = StyleSheet.compose(
     hasTextAncestor && styles.inline,
@@ -65,15 +133,74 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
   useElementLayout(hostRef, onLayout);
   usePlatformMethods(hostRef, ref, classList, style);
 
-  const supportedProps = filterSupportedProps(props);
-  supportedProps.children = hitSlop
-    ? React.Children.toArray([createHitSlopElement(hitSlop), children])
-    : children;
-  supportedProps.classList = classList;
-  supportedProps.ref = setRef;
-  supportedProps.style = style;
-
-  return createElement('div', supportedProps);
+  return createElement('div', {
+    accessibilityLabel,
+    accessibilityLiveRegion,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    accessibilityValue,
+    children,
+    classList,
+    importantForAccessibility,
+    nativeID,
+    onBlur,
+    onContextMenu,
+    onFocus,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    pointerEvents,
+    ref: setRef,
+    style,
+    testID,
+    // unstable
+    onClick,
+    onClickCapture,
+    onScroll,
+    onWheel,
+    onKeyDown,
+    onKeyPress,
+    onKeyUp,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+    onMouseOver,
+    onMouseOut,
+    onMouseUp,
+    onTouchCancel,
+    onTouchCancelCapture,
+    onTouchEnd,
+    onTouchEndCapture,
+    onTouchMove,
+    onTouchMoveCapture,
+    onTouchStart,
+    onTouchStartCapture,
+    href,
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    rel,
+    target,
+    unstable_ariaSet,
+    unstable_dataSet
+  });
 });
 
 View.displayName = 'View';

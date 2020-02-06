@@ -17,7 +17,10 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
 
   test('when "accessibilityRole" is "heading" and "aria-level" is set', () => {
     expect(
-      propsToAccessibilityComponent({ accessibilityRole: 'heading', 'aria-level': 3 })
+      propsToAccessibilityComponent({
+        accessibilityRole: 'heading',
+        unstable_ariaSet: { level: 3 }
+      })
     ).toEqual('h3');
   });
 
