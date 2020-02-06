@@ -12,11 +12,11 @@ import type { TextInputProps } from './types';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import filterSupportedProps from '../View/filterSupportedProps';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
-import usePlatformMethods from '../../hooks/usePlatformMethods';
-import { forwardRef, useEffect, useRef } from 'react';
+import useLayoutEffect from '../../hooks/useLayoutEffect';
+import { usePlatformInputMethods } from '../../hooks/usePlatformMethods';
+import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
@@ -50,6 +50,9 @@ const setSelection = (node, selection) => {
 
 const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
   const {
+    accessibilityLabel,
+    accessibilityRelationship,
+    accessibilityState,
     autoCapitalize = 'sentences',
     autoComplete,
     autoCompleteType,
@@ -60,27 +63,58 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     defaultValue,
     disabled,
     editable = true,
+    forwardedRef,
+    importantForAccessibility,
     keyboardType = 'default',
     maxLength,
     multiline = false,
+    nativeID,
     numberOfLines = 1,
     onBlur,
     onChange,
     onChangeText,
     onContentSizeChange,
+    onContextMenu,
     onFocus,
     onKeyPress,
     onLayout,
+    onScroll,
     onSelectionChange,
     onSubmitEditing,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
     placeholder,
     placeholderTextColor,
+    pointerEvents,
     returnKeyType,
     secureTextEntry = false,
     selection = emptyObject,
     selectTextOnFocus,
     spellCheck,
-    value
+    testID,
+    value,
+    // unstable
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    unstable_ariaSet,
+    unstable_dataSet
   } = props;
 
   let type;
@@ -114,7 +148,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
   const hostRef = useRef(null);
   const dimensions = useRef({ height: null, width: null });
   const setRef = setAndForwardRef({
-    getForwardedRef: () => ref,
+    getForwardedRef: () => forwardedRef,
     setLocalRef: c => {
       hostRef.current = c;
       if (hostRef.current != null) {
@@ -124,7 +158,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
   });
 
   const component = multiline ? 'textarea' : 'input';
-  const supportedProps = filterSupportedProps(props);
   const classList = [classes.textinput];
   const style = StyleSheet.compose(
     props.style,
@@ -160,7 +193,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
   }
 
   function handleChange(e) {
-    const { text } = e.nativeEvent;
+    const text = e.target.value;
     e.nativeEvent.text = text;
     handleContentSizeChange();
     if (onChange) {
@@ -219,7 +252,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
         e.nativeEvent = { target: e.target, text: e.target.value };
         onSubmitEditing(e);
       }
-      if (shouldBlurOnSubmit) {
+      if (shouldBlurOnSubmit && hostRef.current != null) {
         // $FlowFixMe
         hostRef.current.blur();
       }
@@ -243,26 +276,21 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     }
   }
 
-  useEffect(() => {
-    setSelection(hostRef.current, selection);
-    if (document.activeElement === hostRef.current) {
-      TextInputState._currentlyFocusedNode = hostRef.current;
+  useLayoutEffect(() => {
+    const node = hostRef.current;
+    setSelection(node, selection);
+    if (document.activeElement === node) {
+      TextInputState._currentlyFocusedNode = node;
     }
   }, [hostRef, selection]);
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, ref, classList, style, {
-    clear() {
-      if (hostRef.current != null) {
-        hostRef.current.value = '';
-      }
-    },
-    isFocused() {
-      return hostRef.current != null && TextInputState.currentlyFocusedField() === hostRef.current;
-    }
-  });
+  usePlatformInputMethods(hostRef, ref, classList, style);
 
-  Object.assign(supportedProps, {
+  return createElement(component, {
+    accessibilityLabel,
+    accessibilityRelationship,
+    accessibilityState,
     autoCapitalize,
     autoComplete: autoComplete || autoCompleteType || 'on',
     autoCorrect: autoCorrect ? 'on' : 'off',
@@ -272,27 +300,51 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     dir: 'auto',
     disabled,
     enterkeyhint: returnKeyType,
+    importantForAccessibility,
     maxLength,
+    nativeID,
     onBlur: handleBlur,
     onChange: handleChange,
+    onContextMenu,
     onFocus: handleFocus,
     onKeyDown: handleKeyDown,
+    onScroll,
     onSelect: handleSelectionChange,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
     placeholder,
+    pointerEvents,
+    testID,
     readOnly: !editable,
     ref: setRef,
+    rows: multiline ? numberOfLines : undefined,
     spellCheck: spellCheck != null ? spellCheck : autoCorrect,
     style,
-    value
+    type: multiline ? undefined : type,
+    value,
+    // unstable
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    unstable_ariaSet,
+    unstable_dataSet
   });
-
-  if (multiline) {
-    supportedProps.rows = numberOfLines;
-  } else {
-    supportedProps.type = type;
-  }
-
-  return createElement(component, supportedProps);
 });
 
 TextInput.displayName = 'TextInput';

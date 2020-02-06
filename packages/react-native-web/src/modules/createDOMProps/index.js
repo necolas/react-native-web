@@ -14,6 +14,7 @@ import styleResolver from '../../exports/StyleSheet/styleResolver';
 import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
+const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 // Reset styles for heading, link, and list DOM elements
 const classes = css.create(
@@ -65,8 +66,8 @@ const createDOMProps = (component, props, styleResolver) => {
     accessibilityLiveRegion,
     accessibilityRelationship,
     accessibilityState,
+    accessibilityValue,
     classList,
-    className: deprecatedClassName,
     disabled: providedDisabled,
     importantForAccessibility,
     nativeID,
@@ -77,12 +78,38 @@ const createDOMProps = (component, props, styleResolver) => {
     accessible,
     accessibilityRole,
     /* eslint-enable */
+    unstable_ariaSet,
+    unstable_dataSet,
     ...domProps
   } = props;
 
   const disabled =
     (accessibilityState != null && accessibilityState.disabled === true) || providedDisabled;
   const role = AccessibilityUtil.propsToAriaRole(props);
+
+  // unstable_ariaSet
+  if (unstable_ariaSet != null) {
+    for (const prop in unstable_ariaSet) {
+      if (hasOwnProperty.call(unstable_ariaSet, prop)) {
+        const value = unstable_ariaSet[prop];
+        if (value != null) {
+          domProps[`aria-${prop}`] = value;
+        }
+      }
+    }
+  }
+
+  // unstable_dataSet
+  if (unstable_dataSet != null) {
+    for (const prop in unstable_dataSet) {
+      if (hasOwnProperty.call(unstable_dataSet, prop)) {
+        const value = unstable_dataSet[prop];
+        if (value != null) {
+          domProps[`data-${prop}`] = value;
+        }
+      }
+    }
+  }
 
   // accessibilityLabel
   if (accessibilityLabel != null) {
@@ -126,6 +153,17 @@ const createDOMProps = (component, props, styleResolver) => {
       }
     }
   }
+
+  // accessibilityValue
+  if (accessibilityValue != null) {
+    for (const prop in accessibilityValue) {
+      const value = accessibilityValue[prop];
+      if (value != null) {
+        domProps[`aria-value${prop}`] = value;
+      }
+    }
+  }
+
   // legacy fallbacks
   if (importantForAccessibility === 'no-hide-descendants') {
     domProps['aria-hidden'] = true;
@@ -182,12 +220,7 @@ const createDOMProps = (component, props, styleResolver) => {
     component === 'ul' ||
     role === 'heading';
   // Classic CSS styles
-  const finalClassList = [
-    deprecatedClassName,
-    needsReset && classes.reset,
-    needsCursor && classes.cursor,
-    classList
-  ];
+  const finalClassList = [needsReset && classes.reset, needsCursor && classes.cursor, classList];
 
   // Resolve styles
   const { className, style } = styleResolver(reactNativeStyle, finalClassList);
@@ -202,7 +235,7 @@ const createDOMProps = (component, props, styleResolver) => {
 
   // OTHER
   // Native element ID
-  if (nativeID && nativeID.constructor === String) {
+  if (nativeID != null) {
     domProps.id = nativeID;
   }
 
@@ -214,7 +247,7 @@ const createDOMProps = (component, props, styleResolver) => {
     domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }
   // Automated test IDs
-  if (testID && testID.constructor === String) {
+  if (testID != null) {
     domProps['data-testid'] = testID;
   }
 
