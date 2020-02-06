@@ -18,7 +18,8 @@ export default function usePlatformMethods(
   hostRef: ElementRef<any>,
   ref: ElementRef<any>,
   classList: Array<boolean | string>,
-  style: GenericStyleProp<any>
+  style: GenericStyleProp<any>,
+  extras: any
 ) {
   const previousStyle = useRef(null);
 
@@ -67,9 +68,10 @@ export default function usePlatformMethods(
 
             UIManager.updateView(node, domProps);
           }
-        }
+        },
+        ...extras
       };
     },
-    [classList, hostRef, style]
+    [classList, hostRef, style, extras]
   );
 }
