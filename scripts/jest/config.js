@@ -4,9 +4,8 @@ module.exports = {
   coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/packages/react-native-web/src/vendor/'],
   modulePathIgnorePatterns: [
     '<rootDir>/packages/benchmarks/',
-    '<rootDir>/packages/examples/',
-    '<rootDir>/packages/react-native-web/dist/',
-    '<rootDir>/packages/website/'
+    '<rootDir>/packages/docs/',
+    '<rootDir>/packages/react-native-web/dist/'
   ],
   // resetMocks: true,
   rootDir: process.cwd(),
