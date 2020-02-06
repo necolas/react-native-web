@@ -12,7 +12,6 @@ import type { TextProps } from './types';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import filterSupportedProps from '../View/filterSupportedProps';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
@@ -21,7 +20,68 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 
 const Text = forwardRef<TextProps, *>((props, ref) => {
-  const { dir, forwardedRef, numberOfLines, onLayout, onPress, selectable } = props;
+  const {
+    accessibilityLabel,
+    accessibilityLiveRegion,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    children,
+    dir,
+    forwardedRef,
+    importantForAccessibility,
+    nativeID,
+    numberOfLines,
+    onBlur,
+    onContextMenu,
+    onFocus,
+    onLayout,
+    onPress,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    selectable,
+    testID,
+    // unstable
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+    onMouseOver,
+    onMouseOut,
+    onMouseUp,
+    onTouchCancel,
+    onTouchCancelCapture,
+    onTouchEnd,
+    onTouchEndCapture,
+    onTouchMove,
+    onTouchMoveCapture,
+    onTouchStart,
+    onTouchStartCapture,
+    href,
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    rel,
+    target,
+    unstable_ariaSet,
+    unstable_dataSet
+  } = props;
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
@@ -63,22 +123,71 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     };
   }
 
-  const supportedProps = filterSupportedProps(props);
-
-  if (onPress) {
-    supportedProps.accessible = true;
-    supportedProps.onClick = createPressHandler(onPress);
-    supportedProps.onKeyDown = createEnterHandler(onPress);
-  }
-
-  supportedProps.classList = classList;
-  // allow browsers to automatically infer the language writing direction
-  supportedProps.dir = dir !== undefined ? dir : 'auto';
-  supportedProps.ref = setRef;
-  supportedProps.style = style;
-
   const component = hasTextAncestor ? 'span' : 'div';
-  const element = createElement(component, supportedProps);
+  const element = createElement(component, {
+    accessibilityLabel,
+    accessibilityLiveRegion,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    accessible: onPress != null ? true : null,
+    children,
+    classList,
+    // allow browsers to automatically infer the language writing direction
+    dir: dir !== undefined ? dir : 'auto',
+    importantForAccessibility,
+    nativeID,
+    onBlur,
+    onFocus,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    ref: setRef,
+    style,
+    testID,
+    // unstable
+    onClick: onPress != null ? createPressHandler(onPress) : null,
+    onContextMenu,
+    onKeyDown: onPress != null ? createEnterHandler(onPress) : null,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+    onMouseOver,
+    onMouseOut,
+    onMouseUp,
+    onTouchCancel,
+    onTouchCancelCapture,
+    onTouchEnd,
+    onTouchEndCapture,
+    onTouchMove,
+    onTouchMoveCapture,
+    onTouchStart,
+    onTouchStartCapture,
+    href,
+    itemID,
+    itemRef,
+    itemProp,
+    itemScope,
+    itemType,
+    rel,
+    target,
+    unstable_ariaSet,
+    unstable_dataSet
+  });
 
   return hasTextAncestor ? (
     element

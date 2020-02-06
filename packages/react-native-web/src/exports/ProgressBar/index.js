@@ -48,9 +48,11 @@ const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
     <View
       {...other}
       accessibilityRole="progressbar"
-      aria-valuemax="100"
-      aria-valuemin="0"
-      aria-valuenow={indeterminate ? null : percentageProgress}
+      accessibilityValue={{
+        max: 100,
+        min: 0,
+        now: indeterminate ? null : percentageProgress
+      }}
       ref={ref}
       style={[styles.track, style, { backgroundColor: trackColor }]}
     >

@@ -148,6 +148,11 @@ const TouchableWithoutFeedback = ((createReactClass({
       }
     }
 
+    overrides.accessibilityState = {
+      disabled: this.props.disabled,
+      ...this.props.accessibilityState
+    };
+
     return (React: any).cloneElement(child, {
       ...overrides,
       accessible: this.props.accessible !== false,
