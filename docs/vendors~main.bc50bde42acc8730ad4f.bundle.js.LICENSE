@@ -54,7 +54,7 @@ object-assign
  * https://github.com/paulmillr/es6-shim/
  */
 
-/** @license React v16.12.0
+/** @license React v16.10.2
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -72,7 +72,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.12.0
+/** @license React v16.10.2
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -81,7 +81,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v0.18.0
+/** @license React v0.16.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -120,7 +120,7 @@ object-assign
  * Released under the MIT License.
  */
 
-/** @license React v16.12.0
+/** @license React v16.10.2
  * react-dom-unstable-native-dependencies.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
