@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './Text.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|Text" />
 
@@ -12,11 +12,16 @@ Text is unique relative to layout: child elements use text layout ("inline")
 rather than flexbox layout. This means that elements inside of a Text are not
 rectangles, as they wrap when reaching the edge of their container.
 
-NOTE: Text currently transfers all other props to the rendered HTML element.
-
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              |           | |
+| dir                       | ?string   | 'auto' |
+| numberOfLines             | ?number   | |
+| onPress                   | ?Function | |
+| selectable                | ?boolean  | true |
+| style                     | ?Style    | |
 
 ### children
 
