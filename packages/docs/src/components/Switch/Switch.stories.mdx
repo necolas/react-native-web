@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './Switch.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|Switch" />
 
@@ -12,7 +12,16 @@ supplied value prop instead of the expected result of any user actions.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| activeThumbColor          | ?Color    | '#009688' |
+| activeTrackColor          | ?Color    | '#A3D3CF' |
+| disabled                  | ?boolean  | false |
+| onValueChange             | ?Function | |
+| thumbColor                | ?Color    | '#FAFAFA' |
+| trackColor                | ?Color    | '#939393' |
+| value                     | ?boolean  | false |
 
 ### activeThumbColor
 

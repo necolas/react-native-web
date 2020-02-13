@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './View.stories.js';
+import * as Stories from './examples';
 
 <Meta title="Components|View" />
 
@@ -13,7 +13,42 @@ another View and has zero-to-many children of any type.
 
 Please also refer to the in-depth "Accessibility" and "Style" guides.
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| accessibilityLabel        | ?string   | |
+| accessibilityLiveRegion   | ?string   | |
+| accessibilityRelationship | ?Object   | |
+| accessibilityRole         | ?string   | |
+| accessibilityState        | ?Object   | |
+| accessibilityValue        | ?Object   | |
+| accessible                | ?boolean  | |
+| children                  | ?any      | |
+| forwardedRef              | ?Ref      | |
+| hitSlop                   | ?Object   | |
+| importantForAccessibility | ?string   | |
+| nativeID                  | ?string   | |
+| onBlur                    | ?Function | |
+| onFocus                   | ?Function | |
+| onLayout                  | ?Function | |
+| onMoveShouldSetResponder  | ?Function | |
+| onMoveShouldSetResponderCapture | ?Function | |
+| onResponderEnd            | ?Function | |
+| onResponderGrant          | ?Function | |
+| onResponderMove           | ?Function | |
+| onResponderReject         | ?Function | |
+| onResponderRelease        | ?Function | |
+| onResponderStart          | ?Function | |
+| onResponderTerminate      | ?Function | |
+| onResponderTerminationRequest | ?Function | |
+| onScrollShouldSetResponder | ?Function | |
+| onScrollShouldSetResponderCapture | ?Function | |
+| onSelectionChangeShouldSetResponder | ?Function | |
+| onSelectionChangeShouldSetResponderCapture | ?Function | |
+| onStartShouldSetResponder | ?Function | |
+| onStartShouldSetResponderCapture | ?Function | |
+| pointerEvents             | ?string | 'auto' |
+| style                     | ?Style | |
+| testID                    | ?string | |
 
 ### hitSlop
 

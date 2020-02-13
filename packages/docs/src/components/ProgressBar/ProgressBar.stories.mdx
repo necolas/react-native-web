@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './ProgressBar.stories.js';
+import * as Stories from './examples';
 
 <Meta title="Components|ProgressBar" />
 
@@ -9,7 +9,13 @@ Display an activity progress bar.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| color                     | ?Color   | '#1976D2' |
+| indeterminate             | ?boolean  | false |
+| progress                  | ?number  | 0 |
+| trackColor                | ?Color | 'transparent' |
 
 ### color
 
