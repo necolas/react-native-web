@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './Image.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|Image" />
 
@@ -9,7 +9,19 @@ An accessible and responsive image component.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| blurRadius                | ?number   | |
+| defaultSource             | ?Source   | |
+| draggable                 | ?boolean  | false |
+| onError                   | ?Function | |
+| onLoad                    | ?Function | false |
+| onLoadEnd                 | ?Function | false |
+| onLoadStart               | ?Function | false |
+| resizeMode                | ?ResizeMode | 'cover' |
+| source                    | Source    | false |
+| style                     | ?Style    | |
 
 ### blurRadius
 
@@ -119,8 +131,6 @@ Tint color is applied to all opaque pixels.
 </Preview>
 
 ## Static methods
-
-<Props of={Stories.ofStatics} />
 
 ### getSize(url, callback)
 
