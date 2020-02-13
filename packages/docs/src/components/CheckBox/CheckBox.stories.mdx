@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './CheckBox.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|CheckBox" />
 
@@ -12,7 +12,14 @@ supplied `value` prop instead of the expected result of any user actions.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| color                     | ?Color    | '#AAB8C2' |
+| disabled                  | ?boolean  | false |
+| onChange                  | ?Function | |
+| onValueChange             | ?Function | |
+| value                     | ?boolean  | false |
 
 ### color
 

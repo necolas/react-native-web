@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './ScrollView.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|ScrollView" />
 
@@ -12,7 +12,18 @@ view directly (discouraged) or make sure all parent views have bounded height
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| contentContainerStyle     | ?Style    | '#AAB8C2' |
+| horizontal                | ?boolean  | false |
+| keyboardDismissMode       | 'none' \| 'on-drag' \| 'interactive' | |
+| onContentSizeChange       | ?Function | |
+| onScroll                  | ?Function  | false |
+| pagingEnabled             | ?boolean  | false |
+| scrollEnabled             | ?boolean  | true |
+| scrollEventThrottle       | ?boolean  | 0 |
+| stickyHeaderIndices       | ?Array<number\>  | |
 
 ### contentContainerStyle
 
