@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './ImageBackground.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|ImageBackground" />
 
@@ -9,7 +9,11 @@ A image component with support for child content.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ImagePropTypes         | | |
+| children                  | ?any   | |
+| imageStyle                | ?Style  | |
 
 ### children
 

@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './Picker.stories.js';
+import * as Stories from './examples';
 
 <Meta title="Components|Picker" />
 
@@ -9,7 +9,14 @@ Renders the native `<select>` component.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              |           | |
+| children                  | ?any      | |
+| enabled                   | ?boolean  | true |
+| onValueChange             | ?Function | |
+| selectedValue             | ?string   | |
+| style                     | ?Style    | |
 
 ### children
 
@@ -51,7 +58,12 @@ Individual selectable item in a `Picker`.
 
 ## Props
 
-<Props of={Stories.ofPropsItem} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| color                     | ?any      | |
+| label                     | ?string   | |
+| testID                    | ?string   | |
+| value                     | ?string  \| ?number | |
 
 ### color
 

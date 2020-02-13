@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './TouchableHighlight.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|TouchableHighlight" />
 
@@ -19,7 +19,13 @@ to have several child components, wrap them in a View.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...TouchableWithoutFeedbackProps      | |
+| activeOpacity             | ?number   | 0.85 |
+| onHideUnderlay            | ?Function | |
+| onShowUnderlay            | ?Function | |
+| underlayColor             | ?Color    | 'black' |
 
 ### activeOpacity
 
