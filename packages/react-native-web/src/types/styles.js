@@ -22,18 +22,18 @@ type AnimationKeyframes = string | Object;
 type AnimationPlayState = 'paused' | 'running';
 
 export type AnimationStyles = {|
-  animationDelay?: string | Array<string>,
-  animationDirection?: AnimationDirection | Array<AnimationDirection>,
-  animationDuration?: string | Array<string>,
-  animationFillMode?: AnimationFillMode | Array<AnimationFillMode>,
-  animationIterationCount?: AnimationIterationCount | Array<AnimationIterationCount>,
-  animationKeyframes?: AnimationKeyframes | Array<AnimationKeyframes>,
-  animationPlayState?: AnimationPlayState | Array<AnimationPlayState>,
-  animationTimingFunction?: string | Array<string>,
-  transitionDelay?: string | Array<string>,
-  transitionDuration?: string | Array<string>,
-  transitionProperty?: string | Array<string>,
-  transitionTimingFunction?: string | Array<string>
+  animationDelay?: ?(string | Array<string>),
+  animationDirection?: ?(AnimationDirection | Array<AnimationDirection>),
+  animationDuration?: ?(string | Array<string>),
+  animationFillMode?: ?(AnimationFillMode | Array<AnimationFillMode>),
+  animationIterationCount?: ?(AnimationIterationCount | Array<AnimationIterationCount>),
+  animationKeyframes?: ?(AnimationKeyframes | Array<AnimationKeyframes>),
+  animationPlayState?: ?(AnimationPlayState | Array<AnimationPlayState>),
+  animationTimingFunction?: ?(string | Array<string>),
+  transitionDelay?: ?(string | Array<string>),
+  transitionDuration?: ?(string | Array<string>),
+  transitionProperty?: ?(string | Array<string>),
+  transitionTimingFunction?: ?(string | Array<string>)
 |};
 
 /**
@@ -44,29 +44,29 @@ type BorderRadiusValue = number | string;
 type BorderStyleValue = 'solid' | 'dotted' | 'dashed';
 
 export type BorderStyles = {|
-  borderColor?: ColorValue,
-  borderBottomColor?: ColorValue,
-  borderEndColor?: ColorValue,
-  borderLeftColor?: ColorValue,
-  borderRightColor?: ColorValue,
-  borderStartColor?: ColorValue,
-  borderTopColor?: ColorValue,
-  borderRadius?: BorderRadiusValue,
-  borderBottomEndRadius?: BorderRadiusValue,
-  borderBottomLeftRadius?: BorderRadiusValue,
-  borderBottomRightRadius?: BorderRadiusValue,
-  borderBottomStartRadius?: BorderRadiusValue,
-  borderTopEndRadius?: BorderRadiusValue,
-  borderTopLeftRadius?: BorderRadiusValue,
-  borderTopRightRadius?: BorderRadiusValue,
-  borderTopStartRadius?: BorderRadiusValue,
-  borderStyle?: BorderStyleValue,
-  borderBottomStyle?: BorderStyleValue,
-  borderEndStyle?: BorderStyleValue,
-  borderLeftStyle?: BorderStyleValue,
-  borderRightStyle?: BorderStyleValue,
-  borderStartStyle?: BorderStyleValue,
-  borderTopStyle?: BorderStyleValue
+  borderColor?: ?ColorValue,
+  borderBottomColor?: ?ColorValue,
+  borderEndColor?: ?ColorValue,
+  borderLeftColor?: ?ColorValue,
+  borderRightColor?: ?ColorValue,
+  borderStartColor?: ?ColorValue,
+  borderTopColor?: ?ColorValue,
+  borderRadius?: ?BorderRadiusValue,
+  borderBottomEndRadius?: ?BorderRadiusValue,
+  borderBottomLeftRadius?: ?BorderRadiusValue,
+  borderBottomRightRadius?: ?BorderRadiusValue,
+  borderBottomStartRadius?: ?BorderRadiusValue,
+  borderTopEndRadius?: ?BorderRadiusValue,
+  borderTopLeftRadius?: ?BorderRadiusValue,
+  borderTopRightRadius?: ?BorderRadiusValue,
+  borderTopStartRadius?: ?BorderRadiusValue,
+  borderStyle?: ?BorderStyleValue,
+  borderBottomStyle?: ?BorderStyleValue,
+  borderEndStyle?: ?BorderStyleValue,
+  borderLeftStyle?: ?BorderStyleValue,
+  borderRightStyle?: ?BorderStyleValue,
+  borderStartStyle?: ?BorderStyleValue,
+  borderTopStyle?: ?BorderStyleValue
 |};
 
 /**
@@ -129,12 +129,12 @@ type UserSelect = 'all' | 'auto' | 'contain' | 'none' | 'text';
 
 export type InteractionStyles = {|
   // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Formal_syntax
-  cursor?: CursorValue,
+  cursor?: ?CursorValue,
   // https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action#Formal_syntax
-  touchAction?: TouchActionValue,
+  touchAction?: ?TouchActionValue,
   // https://developer.mozilla.org/en-US/docs/Web/CSS/user-select#Formal_syntax_2
-  userSelect?: UserSelect,
-  willChange?: string
+  userSelect?: ?UserSelect,
+  willChange?: ?string
 |};
 
 /**
@@ -152,88 +152,89 @@ export type LayoutStyles = {|
     | 'space-around'
     | 'space-between'
     | 'stretch',
-  alignItems?: 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch',
-  alignSelf?: 'auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch',
-  backfaceVisibility?: VisiblilityValue,
-  borderWidth?: DimensionValue,
-  borderBottomWidth?: DimensionValue,
-  borderEndWidth?: DimensionValue,
-  borderLeftWidth?: DimensionValue,
-  borderRightWidth?: DimensionValue,
-  borderStartWidth?: DimensionValue,
-  borderTopWidth?: DimensionValue,
-  bottom?: DimensionValue,
-  boxSizing?: 'border-box' | 'content-box' | 'padding-box',
-  direction?: 'inherit' | 'ltr' | 'rtl',
-  display?: string,
-  end?: DimensionValue,
-  flex?: number,
-  flexBasis?: DimensionValue,
-  flexDirection?: 'column' | 'column-reverse' | 'row' | 'row-reverse',
-  flexGrow?: number,
-  flexShrink?: number,
-  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse',
-  height?: DimensionValue,
-  justifyContent?:
+  alignItems?: ?('baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
+  alignSelf?: ?('auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
+  backfaceVisibility?: ?VisiblilityValue,
+  borderWidth?: ?DimensionValue,
+  borderBottomWidth?: ?DimensionValue,
+  borderEndWidth?: ?DimensionValue,
+  borderLeftWidth?: ?DimensionValue,
+  borderRightWidth?: ?DimensionValue,
+  borderStartWidth?: ?DimensionValue,
+  borderTopWidth?: ?DimensionValue,
+  bottom?: ?DimensionValue,
+  boxSizing?: ?('border-box' | 'content-box' | 'padding-box'),
+  direction?: ?('inherit' | 'ltr' | 'rtl'),
+  display?: ?string,
+  end?: ?DimensionValue,
+  flex?: ?number,
+  flexBasis?: ?DimensionValue,
+  flexDirection?: ?('column' | 'column-reverse' | 'row' | 'row-reverse'),
+  flexGrow?: ?number,
+  flexShrink?: ?number,
+  flexWrap?: ?('nowrap' | 'wrap' | 'wrap-reverse'),
+  height?: ?DimensionValue,
+  justifyContent?: ?(
     | 'center'
     | 'flex-end'
     | 'flex-start'
     | 'space-around'
     | 'space-between'
-    | 'space-evenly',
-  left?: DimensionValue,
-  margin?: DimensionValue,
-  marginBottom?: DimensionValue,
-  marginHorizontal?: DimensionValue,
-  marginEnd?: DimensionValue,
-  marginLeft?: DimensionValue,
-  marginRight?: DimensionValue,
-  marginStart?: DimensionValue,
-  marginTop?: DimensionValue,
-  marginVertical?: DimensionValue,
-  maxHeight?: DimensionValue,
-  maxWidth?: DimensionValue,
-  minHeight?: DimensionValue,
-  minWidth?: DimensionValue,
-  order?: number,
-  overflow?: OverflowValue,
-  overflowX?: OverflowValue,
-  overflowY?: OverflowValue,
-  padding?: DimensionValue,
-  paddingBottom?: DimensionValue,
-  paddingHorizontal?: DimensionValue,
-  paddingEnd?: DimensionValue,
-  paddingLeft?: DimensionValue,
-  paddingRight?: DimensionValue,
-  paddingStart?: DimensionValue,
-  paddingTop?: DimensionValue,
-  paddingVertical?: DimensionValue,
-  position?: 'absolute' | 'fixed' | 'relative' | 'static' | 'sticky',
-  right?: DimensionValue,
-  start?: DimensionValue,
-  top?: DimensionValue,
-  visibility?: VisiblilityValue,
-  width?: DimensionValue,
-  zIndex?: number,
+    | 'space-evenly'
+  ),
+  left?: ?DimensionValue,
+  margin?: ?DimensionValue,
+  marginBottom?: ?DimensionValue,
+  marginHorizontal?: ?DimensionValue,
+  marginEnd?: ?DimensionValue,
+  marginLeft?: ?DimensionValue,
+  marginRight?: ?DimensionValue,
+  marginStart?: ?DimensionValue,
+  marginTop?: ?DimensionValue,
+  marginVertical?: ?DimensionValue,
+  maxHeight?: ?DimensionValue,
+  maxWidth?: ?DimensionValue,
+  minHeight?: ?DimensionValue,
+  minWidth?: ?DimensionValue,
+  order?: ?number,
+  overflow?: ?OverflowValue,
+  overflowX?: ?OverflowValue,
+  overflowY?: ?OverflowValue,
+  padding?: ?DimensionValue,
+  paddingBottom?: ?DimensionValue,
+  paddingHorizontal?: ?DimensionValue,
+  paddingEnd?: ?DimensionValue,
+  paddingLeft?: ?DimensionValue,
+  paddingRight?: ?DimensionValue,
+  paddingStart?: ?DimensionValue,
+  paddingTop?: ?DimensionValue,
+  paddingVertical?: ?DimensionValue,
+  position?: ?('absolute' | 'fixed' | 'relative' | 'static' | 'sticky'),
+  right?: ?DimensionValue,
+  start?: ?DimensionValue,
+  top?: ?DimensionValue,
+  visibility?: ?VisiblilityValue,
+  width?: ?DimensionValue,
+  zIndex?: ?number,
   /**
    * @platform unsupported
    */
-  aspectRatio?: number,
+  aspectRatio?: ?number,
   /**
    * @platform web
    */
-  gridAutoColumns?: string,
-  gridAutoFlow?: string,
-  gridAutoRows?: string,
-  gridColumnEnd?: string,
-  gridColumnGap?: string,
-  gridColumnStart?: string,
-  gridRowEnd?: string,
-  gridRowGap?: string,
-  gridRowStart?: string,
-  gridTemplateColumns?: string,
-  gridTemplateRows?: string,
-  gridTemplateAreas?: string
+  gridAutoColumns?: ?string,
+  gridAutoFlow?: ?string,
+  gridAutoRows?: ?string,
+  gridColumnEnd?: ?string,
+  gridColumnGap?: ?string,
+  gridColumnStart?: ?string,
+  gridRowEnd?: ?string,
+  gridRowGap?: ?string,
+  gridRowStart?: ?string,
+  gridTemplateColumns?: ?string,
+  gridTemplateRows?: ?string,
+  gridTemplateAreas?: ?string
 |};
 
 /**
@@ -241,13 +242,13 @@ export type LayoutStyles = {|
  */
 
 export type ShadowStyles = {|
-  shadowColor?: ColorValue,
+  shadowColor?: ?ColorValue,
   shadowOffset?: {|
     width?: DimensionValue,
     height?: DimensionValue
   |},
-  shadowOpacity?: number,
-  shadowRadius?: DimensionValue
+  shadowOpacity?: ?number,
+  shadowRadius?: ?DimensionValue
 |};
 
 /**
@@ -255,8 +256,8 @@ export type ShadowStyles = {|
  */
 
 export type TransformStyles = {|
-  perspective?: NumberOrString,
-  perspectiveOrigin?: string,
+  perspective?: ?NumberOrString,
+  perspectiveOrigin?: ?string,
   transform?: Array<
     | {| +perspective: NumberOrString |}
     | {| +rotate: string |}
@@ -275,6 +276,6 @@ export type TransformStyles = {|
     | {| +translateZ: NumberOrString |}
     | {| +translate3d: string |}
   >,
-  transformOrigin?: string,
-  transformStyle?: 'flat' | 'preserve-3d'
+  transformOrigin?: ?string,
+  transformStyle?: ?('flat' | 'preserve-3d')
 |};
