@@ -19,6 +19,8 @@ import type {
   TransformStyles
 } from '../../types/styles';
 
+type NumberOrString = number | string;
+
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
 
 export type ViewStyle = {
@@ -28,36 +30,36 @@ export type ViewStyle = {
   ...LayoutStyles,
   ...ShadowStyles,
   ...TransformStyles,
-  backdropFilter?: string,
-  backgroundAttachment?: string,
-  backgroundBlendMode?: string,
-  backgroundClip?: string,
-  backgroundColor?: ColorValue,
+  backdropFilter?: ?string,
+  backgroundAttachment?: ?string,
+  backgroundBlendMode?: ?string,
+  backgroundClip?: ?string,
+  backgroundColor?: ?ColorValue,
   backgroundImage?: ?string,
   backgroundOrigin?: 'border-box' | 'content-box' | 'padding-box',
-  backgroundPosition?: string,
-  backgroundRepeat?: string,
-  backgroundSize?: string,
-  boxShadow?: string,
-  clip?: string,
+  backgroundPosition?: ?string,
+  backgroundRepeat?: ?string,
+  backgroundSize?: ?string,
+  boxShadow?: ?string,
+  clip?: ?string,
   filter?: ?string,
-  opacity?: number,
-  outlineColor?: ColorValue,
-  outlineOffset?: string | number,
-  outlineStyle?: string,
-  outlineWidth?: string | number,
-  overscrollBehavior?: OverscrollBehaviorValue,
-  overscrollBehaviorX?: OverscrollBehaviorValue,
-  overscrollBehaviorY?: OverscrollBehaviorValue,
+  opacity?: ?number,
+  outlineColor?: ?ColorValue,
+  outlineOffset?: ?NumberOrString,
+  outlineStyle?: ?string,
+  outlineWidth?: ?NumberOrString,
+  overscrollBehavior?: ?OverscrollBehaviorValue,
+  overscrollBehaviorX?: ?OverscrollBehaviorValue,
+  overscrollBehaviorY?: ?OverscrollBehaviorValue,
   scrollbarWidth?: 'auto' | 'none' | 'thin',
-  scrollSnapAlign?: string,
-  scrollSnapType?: string,
-  WebkitMaskImage?: string,
+  scrollSnapAlign?: ?string,
+  scrollSnapType?: ?string,
+  WebkitMaskImage?: ?string,
   WebkitOverflowScrolling?: 'auto' | 'touch'
 };
 
 export type ViewProps = {
-  accessibilityLabel?: string,
+  accessibilityLabel?: ?string,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   accessibilityRelationship?: {
     activedescendant?: ?string,
@@ -68,7 +70,7 @@ export type ViewProps = {
     labelledby?: ?string,
     owns?: ?string
   },
-  accessibilityRole?: string,
+  accessibilityRole?: ?string,
   accessibilityState?: {
     busy?: ?boolean,
     checked?: ?boolean | 'mixed',
@@ -90,11 +92,11 @@ export type ViewProps = {
     text?: ?string
   },
   accessible?: boolean,
-  children?: any,
+  children?: ?any,
   forwardedRef?: any,
-  hitSlop?: EdgeInsetsValue,
+  hitSlop?: ?EdgeInsetsValue,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
-  nativeID?: string,
+  nativeID?: ?string,
   onBlur?: (e: any) => void,
   onFocus?: (e: any) => void,
   onLayout?: (e: LayoutEvent) => void,
@@ -116,7 +118,7 @@ export type ViewProps = {
   onStartShouldSetResponderCapture?: (e: any) => boolean,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
   style?: GenericStyleProp<ViewStyle>,
-  testID?: string,
+  testID?: ?string,
   // unstable
   onClick?: (e: any) => void,
   onClickCapture?: (e: any) => void,
@@ -141,14 +143,14 @@ export type ViewProps = {
   onTouchMoveCapture?: (e: any) => void,
   onTouchStart?: (e: any) => void,
   onTouchStartCapture?: (e: any) => void,
-  href?: string,
-  itemID?: string,
-  itemRef?: string,
-  itemProp?: string,
-  itemScope?: string,
-  itemType?: string,
-  rel?: string,
-  target?: string,
+  href?: ?string,
+  itemID?: ?string,
+  itemRef?: ?string,
+  itemProp?: ?string,
+  itemScope?: ?string,
+  itemType?: ?string,
+  rel?: ?string,
+  target?: ?string,
   unstable_ariaSet?: Object,
   unstable_dataSet?: Object
 };

@@ -24,43 +24,45 @@ type FontWeightValue =
   | '800'
   | '900';
 
+type NumberOrString = number | string;
+
 export type TextStyle = {
   ...ViewStyle,
-  color?: ColorValue,
-  fontFamily?: string,
-  fontFeatureSettings?: string,
-  fontSize?: number | string,
+  color?: ?ColorValue,
+  fontFamily?: ?string,
+  fontFeatureSettings?: ?string,
+  fontSize?: ?NumberOrString,
   fontStyle?: 'italic' | 'normal',
-  fontWeight?: FontWeightValue,
+  fontWeight?: ?FontWeightValue,
   fontVariant?: $ReadOnlyArray<
     'small-caps' | 'oldstyle-nums' | 'lining-nums' | 'tabular-nums' | 'proportional-nums'
   >,
-  letterSpacing?: number | string,
-  lineHeight?: number | string,
+  letterSpacing?: ?NumberOrString,
+  lineHeight?: ?NumberOrString,
   textAlign?: 'center' | 'end' | 'inherit' | 'justify' | 'justify-all' | 'left' | 'right' | 'start',
-  textAlignVertical?: string,
-  textDecorationColor?: ColorValue,
+  textAlignVertical?: ?string,
+  textDecorationColor?: ?ColorValue,
   textDecorationLine?: 'none' | 'underline' | 'line-through' | 'underline line-through',
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed',
-  textIndent?: number | string,
-  textOverflow?: string,
+  textIndent?: ?NumberOrString,
+  textOverflow?: ?string,
   textRendering?: 'auto' | 'geometricPrecision' | 'optimizeLegibility' | 'optimizeSpeed',
-  textShadowColor?: ColorValue,
+  textShadowColor?: ?ColorValue,
   textShadowOffset?: {| width?: number, height?: number |},
-  textShadowRadius?: number,
+  textShadowRadius?: ?number,
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase',
   unicodeBidi?: 'normal' | 'bidi-override' | 'embed' | 'isolate' | 'isolate-override' | 'plaintext',
-  whiteSpace?: string,
+  whiteSpace?: ?string,
   wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all',
-  wordWrap?: string,
+  wordWrap?: ?string,
   writingDirection?: 'auto' | 'ltr' | 'rtl',
   /* @platform web */
-  MozOsxFontSmoothing?: string,
-  WebkitFontSmoothing?: string
+  MozOsxFontSmoothing?: ?string,
+  WebkitFontSmoothing?: ?string
 };
 
 export type TextProps = {
-  accessibilityLabel?: string,
+  accessibilityLabel?: ?string,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
   accessibilityRelationship?: {
     activedescendant?: ?string,
@@ -93,13 +95,13 @@ export type TextProps = {
     required?: ?boolean,
     selected?: ?boolean
   },
-  accessible?: boolean,
-  children?: any,
+  accessible?: ?boolean,
+  children?: ?any,
   dir?: 'auto' | 'ltr' | 'rtl',
   forwardedRef?: any,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
-  nativeID?: string,
-  numberOfLines?: number,
+  nativeID?: ?string,
+  numberOfLines?: ?number,
   onBlur?: (e: any) => void,
   onFocus?: (e: any) => void,
   onLayout?: (e: LayoutEvent) => void,
@@ -122,7 +124,7 @@ export type TextProps = {
   onStartShouldSetResponderCapture?: (e: any) => boolean,
   selectable?: boolean,
   style?: GenericStyleProp<TextStyle>,
-  testID?: string,
+  testID?: ?string,
   // unstable
   onContextMenu?: (e: any) => void,
   onKeyDown?: (e: any) => void,
@@ -143,14 +145,14 @@ export type TextProps = {
   onTouchMoveCapture?: (e: any) => void,
   onTouchStart?: (e: any) => void,
   onTouchStartCapture?: (e: any) => void,
-  href?: string,
-  itemID?: string,
-  itemRef?: string,
-  itemProp?: string,
-  itemScope?: string,
-  itemType?: string,
-  rel?: string,
-  target?: string,
+  href?: ?string,
+  itemID?: ?string,
+  itemRef?: ?string,
+  itemProp?: ?string,
+  itemScope?: ?string,
+  itemType?: ?string,
+  rel?: ?string,
+  target?: ?string,
   unstable_ariaSet?: Object,
   unstable_dataSet?: Object
 };
