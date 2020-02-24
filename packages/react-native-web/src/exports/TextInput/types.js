@@ -20,16 +20,16 @@ export type TextInputStyle = {
 export type TextInputProps = {
   ...ViewProps,
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words',
-  autoComplete?: string,
-  autoCompleteType?: string, // Compat with React Native (Bug react-native#26003)
-  autoCorrect?: boolean,
-  autoFocus?: boolean,
-  blurOnSubmit?: boolean,
-  clearTextOnFocus?: boolean,
-  defaultValue?: string,
-  disabled?: boolean,
-  editable?: boolean,
-  inputAccessoryViewID?: string,
+  autoComplete?: ?string,
+  autoCompleteType?: ?string, // Compat with React Native (Bug react-native#26003)
+  autoCorrect?: ?boolean,
+  autoFocus?: ?boolean,
+  blurOnSubmit?: ?boolean,
+  clearTextOnFocus?: ?boolean,
+  defaultValue?: ?string,
+  disabled?: ?boolean,
+  editable?: ?boolean,
+  inputAccessoryViewID?: ?string,
   keyboardType?:
     | 'default'
     | 'email-address'
@@ -40,9 +40,9 @@ export type TextInputProps = {
     | 'search'
     | 'url'
     | 'web-search',
-  maxLength?: number,
-  multiline?: boolean,
-  numberOfLines?: number,
+  maxLength?: ?number,
+  multiline?: ?boolean,
+  numberOfLines?: ?number,
   onBlur?: (e: any) => void,
   onChange?: (e: any) => void,
   onChangeText?: (e: string) => void,
@@ -53,17 +53,17 @@ export type TextInputProps = {
   onSelectionChange?: (e: any) => void,
   onScroll?: (e: any) => void,
   onSubmitEditing?: (e: any) => void,
-  placeholder?: string,
-  placeholderTextColor?: ColorValue,
+  placeholder?: ?string,
+  placeholderTextColor?: ?ColorValue,
   returnKeyType?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send',
-  secureTextEntry?: boolean,
-  selectTextOnFocus?: boolean,
+  secureTextEntry?: ?boolean,
+  selectTextOnFocus?: ?boolean,
   selection?: {|
     start: number,
     end?: number
   |},
-  selectionColor?: ColorValue,
-  spellCheck?: boolean,
-  style?: GenericStyleProp<TextInputStyle>,
-  value?: string
+  selectionColor?: ?ColorValue,
+  spellCheck?: ?boolean,
+  style?: ?GenericStyleProp<TextInputStyle>,
+  value?: ?string
 };
