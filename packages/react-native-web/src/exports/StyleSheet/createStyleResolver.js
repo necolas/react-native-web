@@ -237,7 +237,8 @@ export default function createStyleResolver() {
                 styleProp === 'scrollbarWidth'
               ) {
                 const a = atomic({ [styleProp]: value });
-                Object.values(a).forEach(({ identifier, rules }) => {
+                Object.keys(a).forEach(key => {
+                  const { identifier, rules } = a[key];
                   props.classList.push(identifier);
                   rules.forEach(rule => {
                     sheet.insert(rule, STYLE_GROUPS.atomic);
@@ -287,7 +288,8 @@ export default function createStyleResolver() {
         const style = rules[name];
         const compiled = classic(style, name);
 
-        Object.values(compiled).forEach(({ identifier, rules }) => {
+        Object.keys(compiled).forEach(key => {
+          const { identifier, rules } = compiled[key];
           resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
           result[name] = identifier;
         });
