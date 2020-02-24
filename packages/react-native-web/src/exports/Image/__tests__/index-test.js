@@ -1,10 +1,10 @@
 /* eslint-env jasmine, jest */
 /* eslint-disable react/jsx-no-bind */
 
+import { act } from 'react-dom/test-utils';
 import * as AssetRegistry from '../../../modules/AssetRegistry';
 import Image from '../';
-import ImageLoader from '../../../modules/ImageLoader';
-import ImageUriCache from '../ImageUriCache';
+import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
 import React from 'react';
 import { render } from '@testing-library/react';
@@ -89,10 +89,18 @@ describe('components/Image', () => {
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
         onLoad();
       });
+      const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
-      render(<Image onLoad={onLoadStub} source="https://test.com/img.jpg" />);
+      const onLoadEndStub = jest.fn();
+      render(
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source="https://test.com/img.jpg"
+        />
+      );
       jest.runOnlyPendingTimers();
-      expect(ImageLoader.load).toBeCalled();
       expect(onLoadStub).toBeCalled();
     });
 
@@ -101,32 +109,74 @@ describe('components/Image', () => {
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
         onLoad();
       });
+      const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
       const uri = 'https://test.com/img.jpg';
       ImageUriCache.add(uri);
-      render(<Image onLoad={onLoadStub} source={uri} />);
+      render(
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={uri}
+        />
+      );
       jest.runOnlyPendingTimers();
-      expect(ImageLoader.load).not.toBeCalled();
       expect(onLoadStub).toBeCalled();
       ImageUriCache.remove(uri);
     });
 
     test('is called on update if "uri" is different', () => {
+      const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
       const { rerender } = render(
-        <Image onLoad={onLoadStub} source={'https://test.com/img.jpg'} />
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={'https://test.com/img.jpg'}
+        />
       );
-      rerender(<Image onLoad={onLoadStub} source={'https://blah.com/img.png'} />);
+      act(() => {
+        rerender(
+          <Image
+            onLoad={onLoadStub}
+            onLoadEnd={onLoadEndStub}
+            onLoadStart={onLoadStartStub}
+            source={'https://blah.com/img.png'}
+          />
+        );
+      });
       expect(onLoadStub.mock.calls.length).toBe(2);
+      expect(onLoadEndStub.mock.calls.length).toBe(2);
     });
 
     test('is not called on update if "uri" is the same', () => {
+      const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
       const { rerender } = render(
-        <Image onLoad={onLoadStub} source={'https://test.com/img.jpg'} />
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={'https://test.com/img.jpg'}
+        />
       );
-      rerender(<Image onLoad={onLoadStub} source={'https://test.com/img.jpg'} />);
+      act(() => {
+        rerender(
+          <Image
+            onLoad={onLoadStub}
+            onLoadEnd={onLoadEndStub}
+            onLoadStart={onLoadStartStub}
+            source={'https://test.com/img.jpg'}
+          />
+        );
+      });
       expect(onLoadStub.mock.calls.length).toBe(1);
+      expect(onLoadEndStub.mock.calls.length).toBe(1);
     });
   });
 
@@ -178,15 +228,19 @@ describe('components/Image', () => {
       ImageUriCache.remove(uriOne);
       expect(container.firstChild).toMatchSnapshot();
       // props update
-      rerender(<Image source={{ uri: uriTwo }} />);
-      ImageUriCache.remove(uriTwo);
+      act(() => {
+        rerender(<Image source={{ uri: uriTwo }} />);
+        ImageUriCache.remove(uriTwo);
+      });
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('is correctly updated when missing in initial render', () => {
       const uri = 'https://testing.com/img.jpg';
       const { container, rerender } = render(<Image />);
-      rerender(<Image source={{ uri }} />);
+      act(() => {
+        rerender(<Image source={{ uri }} />);
+      });
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -199,7 +253,9 @@ describe('components/Image', () => {
       });
       const { container } = render(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
       expect(container.firstChild).toMatchSnapshot();
-      loadCallback();
+      act(() => {
+        loadCallback();
+      });
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -215,8 +271,10 @@ describe('components/Image', () => {
       let { container } = render(<Image source={1} />);
       expect(container.querySelector('img').src).toBe('http://localhost/static/img.png');
 
-      PixelRatio.get = jest.fn(() => 2.2);
-      ({ container } = render(<Image source={1} />));
+      act(() => {
+        PixelRatio.get = jest.fn(() => 2.2);
+        ({ container } = render(<Image source={1} />));
+      });
       expect(container.querySelector('img').src).toBe('http://localhost/static/img@2x.png');
     });
   });
