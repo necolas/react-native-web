@@ -9,8 +9,6 @@
  */
 
 import type { ColorValue } from '../../types';
-
-import React from 'react';
 import createElement from '../createElement';
 
 type Props = {
@@ -20,10 +18,7 @@ type Props = {
   value?: number | string
 };
 
-export default class PickerItem extends React.Component<Props> {
-  render() {
-    const { color, label, testID, value } = this.props;
-    const style = { color };
-    return createElement('option', { style, testID, value }, label);
-  }
+export default function PickerItem({ color, label, testID, value }: Props) {
+  const style = { color };
+  return createElement('option', { style, testID, value }, label);
 }
