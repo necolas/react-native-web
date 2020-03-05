@@ -16,9 +16,15 @@ import React from 'react';
 import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
 
 if (canUseDOM) {
-  injectEventPluginsByName({
-    ResponderEventPlugin
-  });
+  try {
+    injectEventPluginsByName({
+      ResponderEventPlugin
+    });
+  } catch (error) {
+    // Ignore errors caused by attempting to re-inject the plugin when app
+    // scripts are being re-evaluated (e.g., development hot reloading) while
+    // the ReactDOM instance is preserved.
+  }
 }
 
 const isModifiedEvent = event =>
