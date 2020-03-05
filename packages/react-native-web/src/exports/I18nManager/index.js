@@ -20,7 +20,10 @@ type I18nManagerStatus = {
 };
 
 let doLeftAndRightSwapInRTL = true;
-let isPreferredLanguageRTL = false;
+let isPreferredLanguageRTL =
+  ExecutionEnvironment.canUseDOM &&
+  document.documentElement != null &&
+  document.documentElement.getAttribute('dir') === 'rtl';
 let isRTLAllowed = true;
 let isRTLForced = false;
 

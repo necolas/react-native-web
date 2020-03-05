@@ -3,8 +3,30 @@
 import I18nManager from '..';
 
 const getDocumentDir = () => document.documentElement.getAttribute('dir');
+const setDocumentDir = dir => document.documentElement.setAttribute('dir', dir);
 
 describe('apis/I18nManager', () => {
+  describe('detect preferred language direction from document.dir', () => {
+    const _dir = getDocumentDir();
+    beforeEach(() => {
+      jest.resetModules();
+    });
+
+    afterEach(() => {
+      setDocumentDir(_dir);
+    });
+
+    test('when set to ltr, isRTL is false', () => {
+      setDocumentDir('ltr');
+      expect(require('..').isRTL).toBe(false);
+    });
+
+    test('when set to rtl, isRTL is true', () => {
+      setDocumentDir('rtl');
+      expect(require('..').isRTL).toBe(true);
+    });
+  });
+
   describe('preferred language is LTR', () => {
     beforeEach(() => {
       I18nManager.setPreferredLanguageRTL(false);
