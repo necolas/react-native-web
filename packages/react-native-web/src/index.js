@@ -69,6 +69,7 @@ export { default as Settings } from './exports/Settings';
 export { default as Systrace } from './exports/Systrace';
 export { default as TimePickerAndroid } from './exports/TimePickerAndroid';
 export { default as TVEventHandler } from './exports/TVEventHandler';
+export { default as ViewPropTypes } from './exports/ViewPropTypes';
 
 // plugins
 export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
