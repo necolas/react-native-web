@@ -35,6 +35,7 @@ export default class Clipboard {
       node.style.opacity = '0';
       node.style.position = 'absolute';
       node.style.whiteSpace = 'pre-wrap';
+      node.style.userSelect = 'auto';
       body.appendChild(node);
 
       // select the text
