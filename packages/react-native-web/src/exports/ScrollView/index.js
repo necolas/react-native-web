@@ -73,7 +73,7 @@ const ScrollView = ((createReactClass({
   },
     
   getNativeScrollRef(): any {
-    return findNodeHandler(this._scrollViewRef);
+    return findNodeHandle(this._scrollViewRef);
   },
 
   /**
