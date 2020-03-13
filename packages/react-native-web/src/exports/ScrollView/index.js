@@ -71,6 +71,10 @@ const ScrollView = ((createReactClass({
   getInnerViewNode(): any {
     return findNodeHandle(this._innerViewRef);
   },
+    
+  getNativeScrollRef(): any {
+    return findNodeHandler(this._scrollViewRef);
+  },
 
   /**
    * Scrolls to a given x, y offset, either immediately or with a smooth animation.
