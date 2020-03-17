@@ -15,10 +15,14 @@ import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithout
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createReactClass from 'create-react-class';
 import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
+import findNodeHandle from "../findNodeHandle";
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import Touchable from '../Touchable';
 import View from '../View';
+import UIManager from "../UIManager";
+import Platform from "../Platform";
+import TVEventHandler from "../TVEventHandler";
 
 const flattenStyle = StyleSheet.flatten;
 
@@ -167,6 +171,15 @@ const TouchableOpacity = ((createReactClass({
   },
 
   /**
+   * Set focus to current element
+   */
+  setTVPreferredFocus(hasTVPreferredFocus) {
+    if(Platform.isTV && hasTVPreferredFocus === true) {
+      UIManager.focus(findNodeHandle(this));
+    }
+  },
+
+  /**
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
    * defined on your component.
    */
@@ -174,28 +187,56 @@ const TouchableOpacity = ((createReactClass({
     if (e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
-      this._opacityActive(150);
+      this._opacityInactive(250);
+    }
+    if(Platform.isTV) {
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      this.props.onPress && this.props.onPress(tvEvent);
     }
     this.props.onPressIn && this.props.onPressIn(e);
   },
 
   touchableHandleActivePressOut: function(e: PressEvent) {
     this._opacityInactive(250);
+    if(Platform.isTV) {
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      this.props.onPress && this.props.onPress(tvEvent);
+    }
     this.props.onPressOut && this.props.onPressOut(e);
   },
 
   touchableHandleFocus: function(e: Event) {
-    //if (Platform.isTV) {
-    //  this._opacityActive(150);
-    //}
-    this.props.onFocus && this.props.onFocus(e);
+    if(Platform.isTV) {
+      this.state.focused = true;
+      // Keep underlay visible
+      this._opacityActive(0);
+      // Get tvEvent
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      // Dispatch tvEvent to component
+      this.props.onFocus && this.props.onFocus(tvEvent);
+      // Dispatch tvEvent to all listeners
+      TVEventHandler.dispatchEvent(tvEvent);
+    }
+    else {
+      this.props.onFocus && this.props.onFocus(e);
+    }
   },
 
   touchableHandleBlur: function(e: Event) {
-    //if (Platform.isTV) {
-    //  this._opacityInactive(250);
-    //}
-    this.props.onBlur && this.props.onBlur(e);
+    if(Platform.isTV) {
+      this.state.focused = false;
+      // Hide underlay
+      this._opacityInactive(250);
+      // Get tvEvent
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      // Dispatch tvEvent to component
+      this.props.onBlur && this.props.onBlur(tvEvent);
+      // Dispatch tvEvent to all listeners
+      TVEventHandler.dispatchEvent(tvEvent);
+    }
+    else {
+      this.props.onBlur && this.props.onBlur(e);
+    }
   },
 
   touchableHandlePress: function(e: PressEvent) {
@@ -231,6 +272,9 @@ const TouchableOpacity = ((createReactClass({
   },
 
   _opacityInactive: function(duration: number) {
+    if(Platform.isTV && this.state.focused) {
+      return;
+    }
     this.setOpacityTo(this._getChildStyleOpacityWithDefault(), duration);
   },
 
@@ -260,7 +304,9 @@ const TouchableOpacity = ((createReactClass({
         //nextFocusLeft={this.props.nextFocusLeft}
         //nextFocusRight={this.props.nextFocusRight}
         //nextFocusUp={this.props.nextFocusUp}
-        //hasTVPreferredFocus={this.props.hasTVPreferredFocus}
+        hasTVPreferredFocus={this.props.hasTVPreferredFocus}
+        onFocus={this.touchableHandleFocus}
+        onBlur={this.touchableHandleBlur}
         //tvParallaxProperties={this.props.tvParallaxProperties}
         onResponderMove={this.touchableHandleResponderMove}
         //clickable={

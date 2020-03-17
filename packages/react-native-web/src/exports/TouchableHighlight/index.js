@@ -14,10 +14,14 @@ import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithout
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createReactClass from 'create-react-class';
 import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
+import findNodeHandle from '../../exports/findNodeHandle';
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import Touchable from '../Touchable';
 import View from '../View';
+import UIManager from '../UIManager';
+import Platform from '../Platform';
+import TVEventHandler from "../TVEventHandler";
 
 type Event = Object;
 type PressEvent = Object;
@@ -169,6 +173,10 @@ const TouchableHighlight = ((createReactClass({
   componentDidMount: function() {
     this._isMounted = true;
     ensurePositiveDelayProps(this.props);
+    // Focus component
+    if(Platform.isTV && this.props.hasTVPreferredFocus === true) {
+      UIManager.focus(findNodeHandle(this));
+    }
   },
 
   componentWillUnmount: function() {
@@ -186,6 +194,15 @@ const TouchableHighlight = ((createReactClass({
     validAttributes: ReactNativeViewAttributes.RCTView,
   },
   */
+
+  /**
+   * Set focus to current element
+   */
+  setTVPreferredFocus(hasTVPreferredFocus) {
+    if(Platform.isTV && hasTVPreferredFocus === true) {
+      UIManager.focus(findNodeHandle(this));
+    }
+  },
 
   /**
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
@@ -206,11 +223,37 @@ const TouchableHighlight = ((createReactClass({
   },
 
   touchableHandleFocus: function(e: Event) {
-    this.props.onFocus && this.props.onFocus(e);
+    if(Platform.isTV) {
+      this.state.focused = true;
+      // Keep underlay visible
+      this._showUnderlay();
+      // Get tvEvent
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      // Dispatch tvEvent to component
+      this.props.onFocus && this.props.onFocus(tvEvent);
+      // Dispatch tvEvent to all listeners
+      TVEventHandler.dispatchEvent(tvEvent);
+    }
+    else {
+      this.props.onFocus && this.props.onFocus(e);
+    }
   },
 
   touchableHandleBlur: function(e: Event) {
-    this.props.onBlur && this.props.onBlur(e);
+    if(Platform.isTV) {
+      this.state.focused = false;
+      // Hide underlay
+      this._hideUnderlay();
+      // Get tvEvent
+      const tvEvent = TVEventHandler.getTVEvent(e);
+      // Dispatch tvEvent to component
+      this.props.onBlur && this.props.onBlur(tvEvent);
+      // Dispatch tvEvent to all listeners
+      TVEventHandler.dispatchEvent(tvEvent);
+    }
+    else {
+      this.props.onBlur && this.props.onBlur(e);
+    }
   },
 
   touchableHandlePress: function(e: PressEvent) {
@@ -262,6 +305,9 @@ const TouchableHighlight = ((createReactClass({
   _hideUnderlay: function() {
     clearTimeout(this._hideTimeout);
     this._hideTimeout = null;
+    if(Platform.isTV && this.state.focused) {
+      return;
+    }
     if (this.props.testOnly_pressed) {
       return;
     }
@@ -298,7 +344,9 @@ const TouchableHighlight = ((createReactClass({
         onKeyDown={this.touchableHandleKeyEvent}
         //isTVSelectable={true}
         //tvParallaxProperties={this.props.tvParallaxProperties}
-        //hasTVPreferredFocus={this.props.hasTVPreferredFocus}
+        hasTVPreferredFocus={this.props.hasTVPreferredFocus}
+        onFocus={this.touchableHandleFocus}
+        onBlur={this.touchableHandleBlur}
         //nextFocusDown={this.props.nextFocusDown}
         //nextFocusForward={this.props.nextFocusForward}
         //nextFocusLeft={this.props.nextFocusLeft}

@@ -20,6 +20,7 @@ import findNodeHandle from '../findNodeHandle';
 import React from 'react';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
+import Platform from '../Platform';
 
 const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
 const emptyObject = {};
@@ -241,8 +242,10 @@ class TextInput extends React.Component<TextInputProps> {
   };
 
   _handleKeyDown = e => {
-    // Prevent key events bubbling (see #612)
-    e.stopPropagation();
+    if(!Platform.isTV) {
+      // Prevent key events bubbling (see #612)
+      e.stopPropagation();
+    }
 
     // Backspace, Escape, Tab, Cmd+Enter, and Arrow keys only fire 'keydown'
     // DOM events

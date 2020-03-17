@@ -12,9 +12,12 @@ function emptyFunction() {}
 
 const BackHandler = {
   exitApp: emptyFunction,
-  addEventListener() {
+  addEventListener(event, callback) {
+    document.addEventListener(event, callback);
     return {
-      remove: emptyFunction
+      remove: () => {
+        document.removeEventListener(event, callback);
+      }
     };
   },
   removeEventListener: emptyFunction
