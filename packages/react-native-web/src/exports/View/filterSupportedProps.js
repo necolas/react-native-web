@@ -10,8 +10,9 @@
 const supportedProps = {
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
+  accessibilityRelationship: true,
   accessibilityRole: true,
-  accessibilityStates: true,
+  accessibilityState: true,
   accessible: true,
   children: true,
   disabled: true,

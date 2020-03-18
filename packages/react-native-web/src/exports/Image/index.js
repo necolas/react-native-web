@@ -18,6 +18,7 @@ import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
 import ImageUriCache from './ImageUriCache';
+import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
@@ -70,7 +71,14 @@ const resolveAssetUri = source => {
   if (typeof source === 'number') {
     // get the URI from the packager
     const asset = getAssetByID(source);
-    const scale = asset.scales[0];
+    let scale = asset.scales[0];
+    if (asset.scales.length > 1) {
+      const preferredScale = PixelRatio.get();
+      // Get the scale which is closest to the preferred scale
+      scale = asset.scales.reduce((prev, curr) =>
+        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
+      );
+    }
     const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
     uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
   } else if (typeof source === 'string') {
