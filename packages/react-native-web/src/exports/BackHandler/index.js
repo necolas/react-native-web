@@ -12,7 +12,14 @@ function emptyFunction() {}
 
 const BackHandler = {
   exitApp: emptyFunction,
-  addEventListener(event, callback) {
+  /**
+   * Listen to "hardwareBackPress" event
+   *
+   * @param event
+   * @param callback
+   * @returns {{remove: remove}}
+   */
+  addEventListener(event: string, callback: Function) {
     document.addEventListener(event, callback);
     return {
       remove: () => {

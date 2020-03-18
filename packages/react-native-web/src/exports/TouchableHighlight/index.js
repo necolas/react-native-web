@@ -21,7 +21,7 @@ import Touchable from '../Touchable';
 import View from '../View';
 import UIManager from '../UIManager';
 import Platform from '../Platform';
-import TVEventHandler from "../TVEventHandler";
+import TVEventHandler from '../TVEventHandler';
 
 type Event = Object;
 type PressEvent = Object;
@@ -174,7 +174,7 @@ const TouchableHighlight = ((createReactClass({
     this._isMounted = true;
     ensurePositiveDelayProps(this.props);
     // Focus component
-    if(Platform.isTV && this.props.hasTVPreferredFocus === true) {
+    if (Platform.isTV && this.props.hasTVPreferredFocus === true) {
       UIManager.focus(findNodeHandle(this));
     }
   },
@@ -199,7 +199,7 @@ const TouchableHighlight = ((createReactClass({
    * Set focus to current element
    */
   setTVPreferredFocus(hasTVPreferredFocus) {
-    if(Platform.isTV && hasTVPreferredFocus === true) {
+    if (Platform.isTV && hasTVPreferredFocus === true) {
       UIManager.focus(findNodeHandle(this));
     }
   },
@@ -223,8 +223,8 @@ const TouchableHighlight = ((createReactClass({
   },
 
   touchableHandleFocus: function(e: Event) {
-    if(Platform.isTV) {
-      this.state.focused = true;
+    if (Platform.isTV) {
+      this._isFocused = true;
       // Keep underlay visible
       this._showUnderlay();
       // Get tvEvent
@@ -233,15 +233,14 @@ const TouchableHighlight = ((createReactClass({
       this.props.onFocus && this.props.onFocus(tvEvent);
       // Dispatch tvEvent to all listeners
       TVEventHandler.dispatchEvent(tvEvent);
-    }
-    else {
+    } else {
       this.props.onFocus && this.props.onFocus(e);
     }
   },
 
   touchableHandleBlur: function(e: Event) {
-    if(Platform.isTV) {
-      this.state.focused = false;
+    if (Platform.isTV) {
+      this._isFocused = false;
       // Hide underlay
       this._hideUnderlay();
       // Get tvEvent
@@ -250,8 +249,7 @@ const TouchableHighlight = ((createReactClass({
       this.props.onBlur && this.props.onBlur(tvEvent);
       // Dispatch tvEvent to all listeners
       TVEventHandler.dispatchEvent(tvEvent);
-    }
-    else {
+    } else {
       this.props.onBlur && this.props.onBlur(e);
     }
   },
@@ -305,7 +303,7 @@ const TouchableHighlight = ((createReactClass({
   _hideUnderlay: function() {
     clearTimeout(this._hideTimeout);
     this._hideTimeout = null;
-    if(Platform.isTV && this.state.focused) {
+    if (Platform.isTV && this._isFocused) {
       return;
     }
     if (this.props.testOnly_pressed) {
@@ -339,14 +337,14 @@ const TouchableHighlight = ((createReactClass({
         accessibilityRole={this.props.accessibilityRole}
         accessibilityState={this.props.accessibilityState}
         accessible={this.props.accessible !== false}
+        hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
         nativeID={this.props.nativeID}
-        onKeyDown={this.touchableHandleKeyEvent}
         //isTVSelectable={true}
         //tvParallaxProperties={this.props.tvParallaxProperties}
-        hasTVPreferredFocus={this.props.hasTVPreferredFocus}
-        onFocus={this.touchableHandleFocus}
         onBlur={this.touchableHandleBlur}
+        onFocus={this.touchableHandleFocus}
+        onKeyDown={this.touchableHandleKeyEvent}
         //nextFocusDown={this.props.nextFocusDown}
         //nextFocusForward={this.props.nextFocusForward}
         //nextFocusLeft={this.props.nextFocusLeft}
