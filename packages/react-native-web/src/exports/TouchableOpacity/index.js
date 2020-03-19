@@ -187,7 +187,7 @@ const TouchableOpacity = ((createReactClass({
     if (e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
-      this._opacityInactive(250);
+      this._opacityActive(150);
     }
     if (Platform.isTV) {
       const tvEvent = TVEventHandler.getTVEvent(e);
