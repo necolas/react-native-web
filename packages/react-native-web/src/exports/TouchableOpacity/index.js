@@ -282,6 +282,9 @@ const TouchableOpacity = ((createReactClass({
   },
 
   render: function() {
+    // Add this event listeners only for TVs
+    const onBlur = Platform.isTV ? { onBlur: this.touchableHandleBlur } : {};
+    const onFocus = Platform.isTV ? { onFocus: this.touchableHandleFocus } : {};
     return (
       <View
         {...this.props}
@@ -293,8 +296,8 @@ const TouchableOpacity = ((createReactClass({
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
         nativeID={this.props.nativeID}
-        onBlur={this.touchableHandleBlur}
-        onFocus={this.touchableHandleFocus}
+        {...onBlur}
+        {...onFocus}
         onKeyDown={this.touchableHandleKeyEvent}
         //isTVSelectable={true}
         //nextFocusDown={this.props.nextFocusDown}

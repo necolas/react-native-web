@@ -329,6 +329,9 @@ const TouchableHighlight = ((createReactClass({
 
   render: function() {
     const child = React.Children.only(this.props.children);
+    // Add this event listeners only for TVs
+    const onBlur = Platform.isTV ? { onBlur: this.touchableHandleBlur } : {};
+    const onFocus = Platform.isTV ? { onFocus: this.touchableHandleFocus } : {};
     return (
       <View
         {...this.props}
@@ -342,8 +345,8 @@ const TouchableHighlight = ((createReactClass({
         nativeID={this.props.nativeID}
         //isTVSelectable={true}
         //tvParallaxProperties={this.props.tvParallaxProperties}
-        onBlur={this.touchableHandleBlur}
-        onFocus={this.touchableHandleFocus}
+        {...onBlur}
+        {...onFocus}
         onKeyDown={this.touchableHandleKeyEvent}
         //nextFocusDown={this.props.nextFocusDown}
         //nextFocusForward={this.props.nextFocusForward}
