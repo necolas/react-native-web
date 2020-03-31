@@ -25,7 +25,7 @@ describe('modules/createElement', () => {
     });
 
     const testRole = ({ accessibilityRole, disabled }) => {
-      [{ key: 'Enter', which: 13 }, { key: 'Space', which: 32 }].forEach(({ key, which }) => {
+      [{ key: 'Enter' }, { key: ' ' }].forEach(({ key }) => {
         test(`"onClick" is ${disabled ? 'not ' : ''}called when "${key}" key is pressed`, () => {
           const onClick = jest.fn();
           const component = shallow(
@@ -35,7 +35,7 @@ describe('modules/createElement', () => {
             isDefaultPrevented() {},
             nativeEvent: {},
             preventDefault() {},
-            which
+            key
           });
           expect(onClick).toHaveBeenCalledTimes(disabled ? 0 : 1);
         });
