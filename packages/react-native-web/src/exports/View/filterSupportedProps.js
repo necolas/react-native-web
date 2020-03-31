@@ -17,6 +17,7 @@ const supportedProps = {
   children: true,
   disabled: true,
   importantForAccessibility: true,
+  inputMode: true,
   nativeID: true,
   onBlur: true,
   onContextMenu: true,
