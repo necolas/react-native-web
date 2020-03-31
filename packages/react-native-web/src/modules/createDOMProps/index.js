@@ -67,6 +67,7 @@ const createDOMProps = (component, props, styleResolver) => {
     accessibilityRelationship,
     accessibilityState,
     accessibilityValue,
+    accessible,
     classList,
     disabled: providedDisabled,
     importantForAccessibility,
@@ -75,7 +76,6 @@ const createDOMProps = (component, props, styleResolver) => {
     style: providedStyle,
     testID,
     /* eslint-disable */
-    accessible,
     accessibilityRole,
     /* eslint-enable */
     unstable_ariaSet,
@@ -176,18 +176,18 @@ const createDOMProps = (component, props, styleResolver) => {
   // FOCUS
   // Assume that 'link' is focusable by default (uses <a>).
   // Assume that 'button' is not (uses <div role='button'>) but must be treated as such.
-  const focusable =
-    !disabled &&
-    importantForAccessibility !== 'no' &&
-    importantForAccessibility !== 'no-hide-descendants';
-  if (
+  const isInteractiveElement =
     role === 'link' ||
     component === 'a' ||
     component === 'button' ||
     component === 'input' ||
     component === 'select' ||
-    component === 'textarea'
-  ) {
+    component === 'textarea';
+  const focusable =
+    !disabled &&
+    importantForAccessibility !== 'no' &&
+    importantForAccessibility !== 'no-hide-descendants';
+  if (isInteractiveElement) {
     if (accessible === false || !focusable) {
       domProps.tabIndex = '-1';
     } else {
@@ -249,6 +249,29 @@ const createDOMProps = (component, props, styleResolver) => {
   // Automated test IDs
   if (testID != null) {
     domProps['data-testid'] = testID;
+  }
+
+  // Keyboard accessibility
+  // Button-like roles should trigger 'onClick' if SPACE or ENTER keys are pressed.
+  // Button-like roles should not trigger 'onClick' if they are disabled.
+  if (domProps['data-focusable']) {
+    const onClick = domProps.onClick;
+    if (onClick != null) {
+      if (disabled) {
+        domProps.onClick = undefined;
+      } else if (!isInteractiveElement) {
+        const onKeyDown = domProps.onKeyDown;
+        domProps.onKeyDown = function(e) {
+          if (!e.isDefaultPrevented() && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            if (onKeyDown != null) {
+              onKeyDown(e);
+            }
+            onClick(e);
+          }
+        };
+      }
+    }
   }
 
   return domProps;
