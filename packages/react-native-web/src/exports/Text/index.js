@@ -35,6 +35,7 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     nativeID,
     numberOfLines,
     onBlur,
+    onClick,
     onContextMenu,
     onFocus,
     onLayout,
@@ -128,19 +129,14 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     onStartShouldSetResponderCapture
   });
 
-  function createEnterHandler(fn) {
-    return e => {
-      if (e.keyCode === 13) {
-        fn && fn(e);
-      }
-    };
-  }
-
-  function createPressHandler(fn) {
-    return e => {
+  function handleClick(e) {
+    if (onClick != null) {
+      onClick(e);
+    }
+    if (onClick == null && onPress != null) {
       e.stopPropagation();
-      fn && fn(e);
-    };
+      onPress(e);
+    }
   }
 
   const component = hasTextAncestor ? 'span' : 'div';
@@ -159,14 +155,13 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     lang,
     nativeID,
     onBlur,
+    onClick: handleClick,
     onContextMenu,
     onFocus,
     ref: setRef,
     style,
     testID,
     // unstable
-    onClick: onPress != null ? createPressHandler(onPress) : null,
-    onKeyDown: onPress != null ? createEnterHandler(onPress) : null,
     onMouseDown,
     onMouseEnter,
     onMouseLeave,
