@@ -16,6 +16,7 @@ import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import useLayoutEffect from '../../hooks/useLayoutEffect';
 import { usePlatformInputMethods } from '../../hooks/usePlatformMethods';
+import useResponderEvents from '../../hooks/useResponderEvents';
 import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
@@ -286,6 +287,24 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
 
   useElementLayout(hostRef, onLayout);
   usePlatformInputMethods(hostRef, ref, classList, style);
+  useResponderEvents(hostRef, {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  });
 
   return createElement(component, {
     accessibilityLabel,
@@ -310,22 +329,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     onKeyDown: handleKeyDown,
     onScroll,
     onSelect: handleSelectionChange,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture,
     placeholder,
     pointerEvents,
     testID,
