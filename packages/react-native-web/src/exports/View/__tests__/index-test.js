@@ -1,8 +1,8 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import View from '../';
+import { render } from '@testing-library/react';
 
 describe('components/View', () => {
   test('default', () => {
