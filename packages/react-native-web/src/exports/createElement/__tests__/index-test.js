@@ -12,18 +12,6 @@ describe('modules/createElement', () => {
     expect(component).toMatchSnapshot();
   });
 
-  test('normalizes event.nativeEvent', done => {
-    const onClick = e => {
-      e.nativeEvent.timestamp = 1496876171255;
-      expect(e.nativeEvent).toMatchSnapshot();
-      done();
-    };
-    const component = shallow(createElement('span', { onClick }));
-    component.find('span').simulate('click', {
-      nativeEvent: {}
-    });
-  });
-
   describe('prop "accessibilityRole"', () => {
     test('and string component type', () => {
       const component = shallow(createElement('span', { accessibilityRole: 'link' }));

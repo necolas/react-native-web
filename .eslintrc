@@ -39,6 +39,7 @@
     "$ReadOnly": false,
     "$ReadOnlyArray": false,
     "CSSStyleSheet": false,
+    "HTMLElement": false,
     "HTMLInputElement": false,
     "ReactClass": false,
     "ReactComponent": false,

@@ -15,6 +15,7 @@ import css from '../StyleSheet/css';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
+import useResponderEvents from '../../hooks/useResponderEvents';
 import React, { forwardRef, useContext, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
@@ -108,6 +109,24 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
 
   useElementLayout(hostRef, onLayout);
   usePlatformMethods(hostRef, ref, classList, style);
+  useResponderEvents(hostRef, {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  });
 
   function createEnterHandler(fn) {
     return e => {
@@ -140,29 +159,13 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     lang,
     nativeID,
     onBlur,
+    onContextMenu,
     onFocus,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture,
     ref: setRef,
     style,
     testID,
     // unstable
     onClick: onPress != null ? createPressHandler(onPress) : null,
-    onContextMenu,
     onKeyDown: onPress != null ? createEnterHandler(onPress) : null,
     onMouseDown,
     onMouseEnter,
