@@ -16,6 +16,17 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when a screen reader is enabled and `false` otherwise.
    */
+  isScreenReaderEnabled: function(): Promise<*> {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  },
+  
+   /**
+   * Deprecated
+   *
+   * Same as `isScreenReaderEnabled`
+   */
   fetch: function(): Promise<*> {
     return new Promise((resolve, reject) => {
       resolve(true);
