@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/createElement renders different DOM elements 1`] = `<span />`;
+exports[`exports/createElement renders different DOM elements 1`] = `<span />`;
 
-exports[`modules/createElement renders different DOM elements 2`] = `<main />`;
+exports[`exports/createElement renders different DOM elements 2`] = `<main />`;
