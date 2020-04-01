@@ -15,6 +15,7 @@ import css from '../StyleSheet/css';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
+import useResponderEvents from '../../hooks/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import React, { forwardRef, useContext, useRef } from 'react';
@@ -132,21 +133,7 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
 
   useElementLayout(hostRef, onLayout);
   usePlatformMethods(hostRef, ref, classList, style);
-
-  return createElement('div', {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessibilityRelationship,
-    accessibilityRole,
-    accessibilityState,
-    accessibilityValue,
-    children,
-    classList,
-    importantForAccessibility,
-    nativeID,
-    onBlur,
-    onContextMenu,
-    onFocus,
+  useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
     onResponderEnd,
@@ -162,7 +149,23 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     onSelectionChangeShouldSetResponder,
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
-    onStartShouldSetResponderCapture,
+    onStartShouldSetResponderCapture
+  });
+
+  return createElement('div', {
+    accessibilityLabel,
+    accessibilityLiveRegion,
+    accessibilityRelationship,
+    accessibilityRole,
+    accessibilityState,
+    accessibilityValue,
+    children,
+    classList,
+    importantForAccessibility,
+    nativeID,
+    onBlur,
+    onContextMenu,
+    onFocus,
     pointerEvents,
     ref: setRef,
     style,
