@@ -2,41 +2,40 @@
 
 import createElement from '..';
 import React from 'react';
-import { render, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
-describe('modules/createElement', () => {
+describe('exports/createElement', () => {
   test('renders different DOM elements', () => {
-    let component = render(createElement('span'));
-    expect(component).toMatchSnapshot();
-    component = render(createElement('main'));
-    expect(component).toMatchSnapshot();
+    let { container } = render(createElement('span'));
+    expect(container.firstChild).toMatchSnapshot();
+    ({ container } = render(createElement('main')));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "accessibilityRole"', () => {
-    test('and string component type', () => {
-      const component = shallow(createElement('span', { accessibilityRole: 'link' }));
-      expect(component.find('a').length).toBe(1);
+    test('string component type', () => {
+      const { container } = render(createElement('span', { accessibilityRole: 'link' }));
+      console.log(container.firstChild.type);
+      expect(container.firstChild.nodeName).toBe('A');
     });
 
-    test('and function component type', () => {
+    test('function component type', () => {
       const Custom = () => <div />;
-      const component = shallow(createElement(Custom, { accessibilityRole: 'link' }));
-      expect(component.find('div').length).toBe(1);
+      const { container } = render(createElement(Custom, { accessibilityRole: 'link' }));
+      expect(container.firstChild.nodeName).toBe('DIV');
     });
 
     const testRole = ({ accessibilityRole, disabled }) => {
       [{ key: 'Enter' }, { key: ' ' }].forEach(({ key }) => {
         test(`"onClick" is ${disabled ? 'not ' : ''}called when "${key}" key is pressed`, () => {
           const onClick = jest.fn();
-          const component = shallow(
+          const { container } = render(
             createElement('span', { accessibilityRole, disabled, onClick })
           );
-          component.find('span').simulate('keyPress', {
-            isDefaultPrevented() {},
-            nativeEvent: {},
-            preventDefault() {},
-            key
-          });
+          const event = document.createEvent('CustomEvent');
+          event.initCustomEvent('keydown', true, true);
+          event.key = key;
+          container.firstChild.dispatchEvent(event);
           expect(onClick).toHaveBeenCalledTimes(disabled ? 0 : 1);
         });
       });
