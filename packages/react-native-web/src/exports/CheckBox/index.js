@@ -21,7 +21,7 @@ type CheckBoxProps = {
   ...ViewProps,
   color?: ?string,
   disabled?: boolean,
-  id?: ?string,
+  name?: ?string,
   onChange?: ?(e: any) => void,
   onValueChange?: ?(e: any) => void,
   value?: boolean
@@ -44,13 +44,13 @@ class CheckBox extends React.Component<CheckBoxProps> {
     const {
       color,
       disabled,
+      name,
       /* eslint-disable */
       onChange,
       onValueChange,
       /* eslint-enable */
       style,
       value,
-      id,
       ...other
     } = this.props;
 
@@ -70,7 +70,7 @@ class CheckBox extends React.Component<CheckBoxProps> {
     const nativeControl = createElement('input', {
       checked: value,
       disabled: disabled,
-      id,
+      name,
       onChange: this._handleChange,
       ref: this._setCheckboxRef,
       style: [styles.nativeControl, styles.cursorInherit],

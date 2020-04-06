@@ -58,10 +58,10 @@ describe('CheckBox', () => {
     });
   });
 
-  describe('id', () => {
-    test('when value is set it exposes id', () => {
-      const component = shallow(<CheckBox id="testId" />);
-      expect(component.find(checkboxSelector).prop('id')).toBe('testId');
+  describe('name', () => {
+    test('when value is set it exposes name', () => {
+      const component = shallow(<CheckBox name="testName" />);
+      expect(component.find(checkboxSelector).prop('name')).toBe('testName');
     });
   });
 });
