@@ -57,4 +57,11 @@ describe('CheckBox', () => {
       expect(component.find(checkboxSelector).prop('checked')).toBe(true);
     });
   });
+
+  describe('id', () => {
+    test('when value is set it exposes id', () => {
+      const component = shallow(<CheckBox id="testId" />);
+      expect(component.find(checkboxSelector).prop('id')).toBe('testId');
+    });
+  });
 });

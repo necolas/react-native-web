@@ -51,4 +51,11 @@ describe('components/Switch', () => {
       expect(component.find(checkboxSelector).prop('checked')).toBe(true);
     });
   });
+
+  describe('id', () => {
+    test('when value is set it exposes id', () => {
+      const component = shallow(<Switch id="testId" />);
+      expect(component.find(checkboxSelector).prop('id')).toBe('testId');
+    });
+  });
 });

@@ -23,6 +23,7 @@ type SwitchProps = {
   activeThumbColor?: ColorValue,
   activeTrackColor?: ColorValue,
   disabled?: boolean,
+  id?: ?string,
   onValueChange?: (e: any) => void,
   thumbColor?: ColorValue,
   trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
@@ -53,6 +54,7 @@ class Switch extends React.Component<SwitchProps> {
       activeThumbColor = '#009688',
       activeTrackColor = '#A3D3CF',
       disabled = false,
+      id,
       onValueChange, // eslint-disable-line
       style = emptyObject,
       thumbColor = '#FAFAFA',
@@ -99,6 +101,7 @@ class Switch extends React.Component<SwitchProps> {
       accessibilityLabel,
       checked: value,
       disabled: disabled,
+      id,
       onBlur: this._handleFocusState,
       onChange: this._handleChange,
       onFocus: this._handleFocusState,
