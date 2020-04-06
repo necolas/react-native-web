@@ -6,7 +6,7 @@ ofProps.propTypes = {
   '...ViewPropTypes': PropTypes.any,
   color: PropTypes.string,
   disabled: PropTypes.bool,
-  id: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func,
   onValueChange: PropTypes.func,
   value: PropTypes.bool

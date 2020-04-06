@@ -7,6 +7,7 @@ ofProps.propTypes = {
   activeThumbColor: PropTypes.any,
   activeTrackColor: PropTypes.any,
   disabled: PropTypes.bool,
+  name: PropTypes.string,
   onValueChange: PropTypes.func,
   thumbColor: PropTypes.any,
   trackColor: PropTypes.any,
