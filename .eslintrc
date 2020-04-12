@@ -34,6 +34,8 @@
     "navigator": false,
     "window": false,
     // Flow global types,
+    "$Diff": false,
+    "$ElementType": false,
     "$Enum": false,
     "$PropertyType": false,
     "$ReadOnly": false,
@@ -48,7 +50,8 @@
     "ReactPropsCheckType": false,
     "ReactPropTypes": false,
     "ResizeObserver": false,
-    "SyntheticEvent": false
+    "SyntheticEvent": false,
+    "TimeoutID": false,
   },
   "rules": {
     "camelcase": 0,
