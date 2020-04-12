@@ -698,7 +698,7 @@ const TouchableMixin = {
     const curState = this.state.touchable.touchState;
     if (
       curState === States.RESPONDER_ACTIVE_PRESS_IN ||
-      curState !== States.RESPONDER_ACTIVE_LONG_PRESS_IN
+      curState === States.RESPONDER_ACTIVE_LONG_PRESS_IN
     ) {
       this._receiveSignal(Signals.LONG_PRESS_DETECTED, e);
     }
