@@ -4,293 +4,151 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow strict-local
  * @format
- * @flow
  */
 
 'use strict';
 
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
+import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
-import createReactClass from 'create-react-class';
-import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
 import * as React from 'react';
+import { useCallback, useMemo, useState, useRef, useImperativeHandle } from 'react';
+import usePressEvents from '../../modules/PressResponder/usePressEvents';
 import StyleSheet from '../StyleSheet';
-import Touchable from '../Touchable';
 import View from '../View';
 
-const flattenStyle = StyleSheet.flatten;
-
-type Event = Object;
-type PressEvent = Object;
-
-const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
+type ViewStyle = $PropertyType<ViewProps, 'style'>;
 
 type Props = $ReadOnly<{|
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
-  style?: ?any
+  style?: ?ViewStyle
 |}>;
+
+function getStyleOpacityWithDefault(style): number {
+  const flatStyle = StyleSheet.flatten(style);
+  const opacityValue = flatStyle != null ? flatStyle.opacity : null;
+  return typeof opacityValue === 'number' ? opacityValue : 1;
+}
 
 /**
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, dimming it.
- *
- * Opacity is controlled by wrapping the children in an Animated.View, which is
- * added to the view hiearchy.  Be aware that this can affect layout.
- *
- * Example:
- *
- * ```
- * renderButton: function() {
- *   return (
- *     <TouchableOpacity onPress={this._onPressButton}>
- *       <Image
- *         style={styles.button}
- *         source={require('./myButton.png')}
- *       />
- *     </TouchableOpacity>
- *   );
- * },
- * ```
- * ### Example
- *
- * ```ReactNativeWebPlayer
- * import React, { Component } from 'react'
- * import {
- *   AppRegistry,
- *   StyleSheet,
- *   TouchableOpacity,
- *   Text,
- *   View,
- * } from 'react-native'
- *
- * class App extends Component {
- *   constructor(props) {
- *     super(props)
- *     this.state = { count: 0 }
- *   }
- *
- *   onPress = () => {
- *     this.setState({
- *       count: this.state.count+1
- *     })
- *   }
- *
- *  render() {
- *    return (
- *      <View style={styles.container}>
- *        <TouchableOpacity
- *          style={styles.button}
- *          onPress={this.onPress}
- *        >
- *          <Text> Touch Here </Text>
- *        </TouchableOpacity>
- *        <View style={[styles.countContainer]}>
- *          <Text style={[styles.countText]}>
- *             { this.state.count !== 0 ? this.state.count: null}
- *           </Text>
- *         </View>
- *       </View>
- *     )
- *   }
- * }
- *
- * const styles = StyleSheet.create({
- *   container: {
- *     flex: 1,
- *     justifyContent: 'center',
- *     paddingHorizontal: 10
- *   },
- *   button: {
- *     alignItems: 'center',
- *     backgroundColor: '#DDDDDD',
- *     padding: 10
- *   },
- *   countContainer: {
- *     alignItems: 'center',
- *     padding: 10
- *   },
- *   countText: {
- *     color: '#FF00FF'
- *   }
- * })
- *
- * AppRegistry.registerComponent('App', () => App)
- * ```
- *
  */
+function TouchableOpacity(props: Props, forwardedRef): React.Node {
+  const {
+    accessible,
+    activeOpacity,
+    delayPressIn,
+    delayPressOut,
+    delayLongPress,
+    disabled,
+    focusable,
+    onLongPress,
+    onPress,
+    onPressIn,
+    onPressOut,
+    rejectResponderTermination,
+    style,
+    ...rest
+  } = props;
 
-// eslint-disable-next-line react/prefer-es6-class
-const TouchableOpacity = ((createReactClass({
-  displayName: 'TouchableOpacity',
-  mixins: [Touchable.Mixin.withoutDefaultFocusAndBlur],
+  const hostRef = useRef(null);
+  const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
+  useImperativeHandle(forwardedRef, () => viewRef.current);
 
-  getDefaultProps: function() {
-    return {
-      activeOpacity: 0.2
-    };
-  },
+  const styleOpacity = getStyleOpacityWithDefault(style);
+  const [duration, setDuration] = useState('0s');
+  const [opacity, setOpacity] = useState(styleOpacity);
 
-  getInitialState: function() {
-    return {
-      ...this.touchableGetInitialState(),
-      anim: this._getChildStyleOpacityWithDefault()
-    };
-  },
+  const setOpacityTo = useCallback(
+    (value: number, duration: number) => {
+      setOpacity(value);
+      setDuration(duration ? `${duration / 1000}s` : '0s');
+    },
+    [setOpacity, setDuration]
+  );
 
-  componentDidMount: function() {
-    ensurePositiveDelayProps(this.props);
-  },
+  const opacityActive = useCallback(
+    (duration: number) => {
+      setOpacityTo(activeOpacity ?? 0.2, duration);
+    },
+    [activeOpacity, setOpacityTo]
+  );
 
-  UNSAFE_componentWillReceiveProps: function(nextProps) {
-    ensurePositiveDelayProps(nextProps);
-  },
+  const opacityInactive = useCallback(
+    (duration: number) => {
+      setOpacityTo(styleOpacity, duration);
+    },
+    [setOpacityTo, styleOpacity]
+  );
 
-  componentDidUpdate: function(prevProps, prevState) {
-    if (this.props.disabled !== prevProps.disabled) {
-      this._opacityInactive(250);
-    }
-  },
+  const pressEventHandlers = usePressEvents(
+    hostRef,
+    useMemo(
+      () => ({
+        cancelable: !rejectResponderTermination,
+        disabled,
+        delayLongPress,
+        delayPressStart: delayPressIn,
+        delayPressEnd: delayPressOut,
+        onLongPress,
+        onPress,
+        onPressStart(event) {
+          opacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
+          if (onPressIn != null) {
+            onPressIn(event);
+          }
+        },
+        onPressEnd(event) {
+          opacityInactive(250);
+          if (onPressOut != null) {
+            onPressOut(event);
+          }
+        }
+      }),
+      [
+        delayLongPress,
+        delayPressIn,
+        delayPressOut,
+        disabled,
+        onLongPress,
+        onPress,
+        onPressIn,
+        onPressOut,
+        opacityActive,
+        opacityInactive,
+        rejectResponderTermination
+      ]
+    )
+  );
 
-  /**
-   * Animate the touchable to a new opacity.
-   */
-  setOpacityTo: function(value: number, duration: number) {
-    this.setNativeProps({
-      style: {
-        opacity: value,
-        transitionDuration: duration ? `${duration / 1000}s` : '0s'
-      }
-    });
-  },
-
-  /**
-   * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
-   * defined on your component.
-   */
-  touchableHandleActivePressIn: function(e: PressEvent) {
-    if (e.dispatchConfig.registrationName === 'onResponderGrant') {
-      this._opacityActive(0);
-    } else {
-      this._opacityActive(150);
-    }
-    this.props.onPressIn && this.props.onPressIn(e);
-  },
-
-  touchableHandleActivePressOut: function(e: PressEvent) {
-    this._opacityInactive(250);
-    this.props.onPressOut && this.props.onPressOut(e);
-  },
-
-  touchableHandleFocus: function(e: Event) {
-    //if (Platform.isTV) {
-    //  this._opacityActive(150);
-    //}
-    this.props.onFocus && this.props.onFocus(e);
-  },
-
-  touchableHandleBlur: function(e: Event) {
-    //if (Platform.isTV) {
-    //  this._opacityInactive(250);
-    //}
-    this.props.onBlur && this.props.onBlur(e);
-  },
-
-  touchableHandlePress: function(e: PressEvent) {
-    this.props.onPress && this.props.onPress(e);
-  },
-
-  touchableHandleLongPress: function(e: PressEvent) {
-    this.props.onLongPress && this.props.onLongPress(e);
-  },
-
-  touchableGetPressRectOffset: function() {
-    return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET;
-  },
-
-  touchableGetHitSlop: function() {
-    return this.props.hitSlop;
-  },
-
-  touchableGetHighlightDelayMS: function() {
-    return this.props.delayPressIn || 0;
-  },
-
-  touchableGetLongPressDelayMS: function() {
-    return this.props.delayLongPress === 0 ? 0 : this.props.delayLongPress || 500;
-  },
-
-  touchableGetPressOutDelayMS: function() {
-    return this.props.delayPressOut;
-  },
-
-  _opacityActive: function(duration: number) {
-    this.setOpacityTo(this.props.activeOpacity, duration);
-  },
-
-  _opacityInactive: function(duration: number) {
-    this.setOpacityTo(this._getChildStyleOpacityWithDefault(), duration);
-  },
-
-  _getChildStyleOpacityWithDefault: function() {
-    const childStyle = flattenStyle(this.props.style) || {};
-    return childStyle.opacity == null ? 1 : childStyle.opacity;
-  },
-
-  render: function() {
-    return (
-      <View
-        {...this.props}
-        accessibilityHint={this.props.accessibilityHint}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityRole={this.props.accessibilityRole}
-        accessibilityState={{
-          disabled: this.props.disabled,
-          ...this.props.accessibilityState
-        }}
-        accessible={this.props.accessible !== false}
-        hitSlop={this.props.hitSlop}
-        nativeID={this.props.nativeID}
-        onKeyDown={this.touchableHandleKeyEvent}
-        onKeyUp={this.touchableHandleKeyEvent}
-        onLayout={this.props.onLayout}
-        onResponderGrant={this.touchableHandleResponderGrant}
-        //isTVSelectable={true}
-        //nextFocusDown={this.props.nextFocusDown}
-        //nextFocusForward={this.props.nextFocusForward}
-        //nextFocusLeft={this.props.nextFocusLeft}
-        //nextFocusRight={this.props.nextFocusRight}
-        //nextFocusUp={this.props.nextFocusUp}
-        //hasTVPreferredFocus={this.props.hasTVPreferredFocus}
-        //tvParallaxProperties={this.props.tvParallaxProperties}
-        onResponderMove={this.touchableHandleResponderMove}
-        //clickable={
-        //  this.props.clickable !== false && this.props.onPress !== undefined
-        //}
-        //onClick={this.touchableHandlePress}
-        onResponderRelease={this.touchableHandleResponderRelease}
-        onResponderTerminate={this.touchableHandleResponderTerminate}
-        onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
-        onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
-        style={[
-          styles.root,
-          !this.props.disabled && styles.actionable,
-          this.props.style,
-          { opacity: this.state.anim }
-        ]}
-        testID={this.props.testID}
-      >
-        {this.props.children}
-        {Touchable.renderDebugView({
-          color: 'cyan',
-          hitSlop: this.props.hitSlop
-        })}
-      </View>
-    );
-  }
-}): any): React.ComponentType<Props>);
+  return (
+    <View
+      {...rest}
+      {...pressEventHandlers}
+      accessibilityState={{
+        disabled,
+        ...props.accessibilityState
+      }}
+      accessible={accessible !== false}
+      focusable={focusable !== false && onPress !== undefined}
+      forwardedRef={hostRef}
+      ref={viewRef}
+      style={[
+        styles.root,
+        !disabled && styles.actionable,
+        style,
+        {
+          opacity,
+          transitionDuration: duration
+        }
+      ]}
+    />
+  );
+}
 
 const styles = StyleSheet.create({
   root: {
@@ -304,4 +162,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(TouchableOpacity);
+const MemoedTouchableOpacity = React.memo(React.forwardRef(TouchableOpacity));
+MemoedTouchableOpacity.displayName = 'TouchableOpacity';
+
+export default (MemoedTouchableOpacity: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof View>
+>);
