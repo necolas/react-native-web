@@ -33,6 +33,7 @@ module.exports = {
   Picker: true,
   PixelRatio: true,
   Platform: true,
+  Pressable: true,
   ProgressBar: true,
   RefreshControl: true,
   SafeAreaView: true,

@@ -1,0 +1,66 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
+
+<Meta title="Components|Pressable" />
+
+# Pressable
+
+...
+
+## Props
+
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              |           | |
+| delayLongPress            | ?number   | 500 |
+| delayPressIn              | ?number   | 0 |
+| delayPressOut             | ?number   | 0 |
+| disabled                  | ?boolean  | false |
+| onLongPress               | ?Function | |
+| onPress                   | ?Function | |
+| onPressIn                 | ?Function | |
+| onPressOut                | ?Function | |
+
+### delayLongPress
+
+Delay in ms, from `onPressIn` to before `onLongPress` is called. The default is `500`.
+
+### delayPressIn
+
+Delay in ms, from pointer down to before `onPressIn` is called.
+
+### delayPressOut
+
+Delay in ms, from pointer up to before `onPressOut` is called.
+
+### disabled
+
+Disables all pointer interactions with the element.
+
+<Preview withSource='none'>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
+</Preview>
+
+### onLongPress
+
+Called when the pointer is held down for as long as the value of `delayLongPress`.
+
+### onPress
+
+Called when the pointer is released, but not if cancelled (e.g. by a scroll that steals the responder lock).
+
+## Examples
+
+<Preview withSource='none'>
+  <Story name="delayEvents">
+    <Stories.delayEvents />
+  </Story>
+</Preview>
+
+<Preview withSource='none'>
+  <Story name="feedbackEvents">
+    <Stories.feedbackEvents />
+  </Story>
+</Preview>
