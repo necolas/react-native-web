@@ -1,32 +1,14 @@
 import React, { PureComponent } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View
-} from 'react-native';
-
-const Touchables = {
-  highlight: TouchableHighlight,
-  opacity: TouchableOpacity,
-  withoutFeedback: TouchableWithoutFeedback
-};
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class TouchableFeedbackEvents extends PureComponent {
-  static defaultProps = {
-    touchable: 'highlight'
-  };
-
   state = { eventLog: [] };
 
   render() {
-    const Touchable = Touchables[this.props.touchable];
     return (
       <View>
         <View>
-          <Touchable
+          <TouchableOpacity
             onLongPress={this._createPressHandler('longPress')}
             onPress={this._createPressHandler('press')}
             onPressIn={this._createPressHandler('pressIn')}
@@ -35,7 +17,7 @@ export default class TouchableFeedbackEvents extends PureComponent {
             <View>
               <Text style={styles.touchableText}>Press Me</Text>
             </View>
-          </Touchable>
+          </TouchableOpacity>
         </View>
         <View style={styles.eventLogBox}>
           {this.state.eventLog.map((e, ii) => (

@@ -1,28 +1,10 @@
 import React, { PureComponent } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View
-} from 'react-native';
-
-const Touchables = {
-  highlight: TouchableHighlight,
-  opacity: TouchableOpacity,
-  withoutFeedback: TouchableWithoutFeedback
-};
+import { StyleSheet, Text, TouchableOpacity as Touchable, View } from 'react-native';
 
 export default class TouchableDelayEvents extends PureComponent {
-  static defaultProps = {
-    touchable: 'highlight'
-  };
-
   state = { eventLog: [] };
 
   render() {
-    const Touchable = Touchables[this.props.touchable];
     const { displayName } = Touchable;
     return (
       <View>

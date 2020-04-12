@@ -1,36 +1,33 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
-export default class TouchableCustomStyleOverridesExample extends React.Component {
-  buttons = ['One', 'Two', 'Three'];
-  state = {};
+const buttons = ['One', 'Two', 'Three'];
 
-  select = selectedButton => event => {
-    const newState = {};
-    this.buttons.forEach(button => {
-      newState[button] = selectedButton === button;
-    });
-    this.setState(newState);
-  };
+export default function TouchableCustomStyleOverridesExample() {
+  const [state, setState] = React.useState({});
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.buttons.map(button => {
-          return (
-            <TouchableHighlight
-              key={button}
-              onPress={this.select(button)}
-              style={[styles.touchable, this.state[button] && styles.blue]}
-              underlayColor="#1b95e020"
-            >
-              <Text style={[!this.state[button] && styles.text]}>{button}</Text>
-            </TouchableHighlight>
-          );
-        })}
-      </View>
-    );
+  function select(item) {
+    return function handler(e) {
+      setState({ [item]: true });
+    };
   }
+
+  return (
+    <View style={styles.container}>
+      {buttons.map(button => {
+        return (
+          <TouchableHighlight
+            key={button}
+            onPress={select(button)}
+            style={[styles.touchable, state[button] && styles.blue]}
+            underlayColor="#1b95e020"
+          >
+            <Text style={[!state[button] && styles.text]}>{button}</Text>
+          </TouchableHighlight>
+        );
+      })}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

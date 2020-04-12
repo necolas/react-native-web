@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 export const Button = ({ label, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.button}>
@@ -9,9 +9,9 @@ export const Button = ({ label, onPress }) => (
 
 function Item(props) {
   return (
-    <View style={[styles.item, props.style]}>
+    <TouchableOpacity style={[styles.item, props.style]}>
       <Text>{props.msg}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
