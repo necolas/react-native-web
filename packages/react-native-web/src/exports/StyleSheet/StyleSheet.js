@@ -7,7 +7,7 @@
  * @flow
  */
 
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import ReactNativePropRegistry from './ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
 
 const absoluteFillObject = {
