@@ -16,8 +16,6 @@ import React from 'react';
 class UnimplementedView extends React.Component<*, *> {
   setNativeProps() {
     // Do nothing.
-    // This method is required in order to use this view as a Touchable* child.
-    // See ensureComponentIsNative.js for more info
   }
 
   render() {
