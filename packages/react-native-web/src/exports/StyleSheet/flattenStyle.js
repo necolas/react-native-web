@@ -8,7 +8,7 @@
  * @flow
  */
 
-import ReactNativePropRegistry from '../../modules/ReactNativePropRegistry';
+import ReactNativePropRegistry from './ReactNativePropRegistry';
 import invariant from 'fbjs/lib/invariant';
 
 function getStyle(style) {
