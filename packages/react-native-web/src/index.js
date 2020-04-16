@@ -62,13 +62,11 @@ export { default as YellowBox } from './exports/YellowBox';
 // compat (components)
 export { default as DrawerLayoutAndroid } from './exports/DrawerLayoutAndroid';
 export { default as InputAccessoryView } from './exports/InputAccessoryView';
-export { default as TabBarIOS } from './exports/TabBarIOS';
 export { default as ToastAndroid } from './exports/ToastAndroid';
 // compat (apis)
 export { default as PermissionsAndroid } from './exports/PermissionsAndroid';
 export { default as Settings } from './exports/Settings';
 export { default as Systrace } from './exports/Systrace';
-export { default as TimePickerAndroid } from './exports/TimePickerAndroid';
 export { default as TVEventHandler } from './exports/TVEventHandler';
 
 // plugins
