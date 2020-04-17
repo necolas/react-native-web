@@ -14,7 +14,8 @@ import type { PressResponderConfig } from '../../modules/PressResponder';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { useMemo, useState, useRef, useImperativeHandle } from 'react';
+import { forwardRef, memo, useMemo, useState, useRef } from 'react';
+import setAndForwardRef from '../../modules/setAndForwardRef';
 import usePressEvents from '../../modules/PressResponder/usePressEvents';
 import View from '../View';
 
@@ -94,41 +95,45 @@ function Pressable(props: Props, forwardedRef): React.Node {
     ...rest
   } = props;
 
-  const hostRef = useRef(null);
-  const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
-  useImperativeHandle(forwardedRef, () => viewRef.current);
 
-  const pressEventHandlers = usePressEvents(
-    hostRef,
-    useMemo(
-      () => ({
-        delayLongPress,
-        delayPressStart: delayPressIn,
-        delayPressEnd: delayPressOut,
-        disabled,
-        onLongPress,
-        onPress,
-        onPressChange: setPressed,
-        onPressStart: onPressIn,
-        onPressMove,
-        onPressEnd: onPressOut
-      }),
-      [
-        delayLongPress,
-        delayPressIn,
-        delayPressOut,
-        disabled,
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressMove,
-        onPressOut,
-        setPressed
-      ]
-    )
+  const hostRef = useRef(null);
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
+    }
+  });
+
+  const pressConfig = useMemo(
+    () => ({
+      delayLongPress,
+      delayPressStart: delayPressIn,
+      delayPressEnd: delayPressOut,
+      disabled,
+      onLongPress,
+      onPress,
+      onPressChange: setPressed,
+      onPressStart: onPressIn,
+      onPressMove,
+      onPressEnd: onPressOut
+    }),
+    [
+      delayLongPress,
+      delayPressIn,
+      delayPressOut,
+      disabled,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressMove,
+      onPressOut,
+      setPressed
+    ]
   );
+
+  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
   const accessibilityState = { disabled, ...props.accessibilityState };
   const interactionState = { focused, pressed };
@@ -152,10 +157,9 @@ function Pressable(props: Props, forwardedRef): React.Node {
       accessibilityState={accessibilityState}
       accessible={accessible !== false}
       focusable={focusable !== false}
-      forwardedRef={hostRef}
       onBlur={createFocusHandler(onBlur, false)}
       onFocus={createFocusHandler(onFocus, true)}
-      ref={viewRef}
+      ref={setRef}
       style={typeof style === 'function' ? style(interactionState) : style}
     >
       {typeof children === 'function' ? children(interactionState) : children}
@@ -168,7 +172,7 @@ function useForceableState(forced: boolean): [boolean, (boolean) => void] {
   return [pressed || forced, setPressed];
 }
 
-const MemoedPressable = React.memo(React.forwardRef(Pressable));
+const MemoedPressable = memo(forwardRef(Pressable));
 MemoedPressable.displayName = 'Pressable';
 
 export default (MemoedPressable: React.AbstractComponent<Props, React.ElementRef<typeof View>>);

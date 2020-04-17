@@ -10,14 +10,15 @@
 
 import type { TextInputProps } from './types';
 
+import { forwardRef, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import pick from '../../modules/pick';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import useLayoutEffect from '../../hooks/useLayoutEffect';
-import { usePlatformInputMethods } from '../../hooks/usePlatformMethods';
+import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
-import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
@@ -49,33 +50,87 @@ const setSelection = (node, selection) => {
   }
 };
 
-const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRelationship: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  autoCapitalize: true,
+  autoComplete: true,
+  autoCorrect: true,
+  autoFocus: true,
+  children: true,
+  classList: true,
+  defaultValue: true,
+  dir: true,
+  disabled: true,
+  importantForAccessibility: true,
+  maxLength: true,
+  nativeID: true,
+  onBlur: true,
+  onChange: true,
+  onClick: true,
+  onClickCapture: true,
+  onContextMenu: true,
+  onFocus: true,
+  onScroll: true,
+  onTouchCancel: true,
+  onTouchCancelCapture: true,
+  onTouchEnd: true,
+  onTouchEndCapture: true,
+  onTouchMove: true,
+  onTouchMoveCapture: true,
+  onTouchStart: true,
+  onTouchStartCapture: true,
+  placeholder: true,
+  pointerEvents: true,
+  readOnly: true,
+  ref: true,
+  rows: true,
+  spellCheck: true,
+  style: true,
+  value: true,
+  testID: true,
+  type: true,
+  // unstable
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true,
+  itemID: true,
+  itemRef: true,
+  itemProp: true,
+  itemScope: true,
+  itemType: true,
+  unstable_ariaSet: true,
+  unstable_dataSet: true
+};
+
+const pickProps = props => pick(props, forwardPropsList);
+
+const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   const {
-    accessibilityLabel,
-    accessibilityRelationship,
-    accessibilityState,
     autoCapitalize = 'sentences',
     autoComplete,
     autoCompleteType,
     autoCorrect = true,
-    autoFocus,
     blurOnSubmit,
     clearTextOnFocus,
-    defaultValue,
-    disabled,
+    dir,
     editable = true,
-    forwardedRef,
-    importantForAccessibility,
     keyboardType = 'default',
-    maxLength,
     multiline = false,
-    nativeID,
     numberOfLines = 1,
     onBlur,
     onChange,
     onChangeText,
     onContentSizeChange,
-    onContextMenu,
     onFocus,
     onKeyPress,
     onLayout,
@@ -89,7 +144,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     onResponderStart,
     onResponderTerminate,
     onResponderTerminationRequest,
-    onScroll,
     onScrollShouldSetResponder,
     onScrollShouldSetResponderCapture,
     onSelectionChange,
@@ -98,24 +152,12 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
     onSubmitEditing,
-    placeholder,
     placeholderTextColor,
-    pointerEvents,
     returnKeyType,
     secureTextEntry = false,
     selection = emptyObject,
     selectTextOnFocus,
-    spellCheck,
-    testID,
-    value,
-    // unstable
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    unstable_ariaSet,
-    unstable_dataSet
+    spellCheck
   } = props;
 
   let type;
@@ -150,20 +192,26 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
   const dimensions = useRef({ height: null, width: null });
   const setRef = setAndForwardRef({
     getForwardedRef: () => forwardedRef,
-    setLocalRef: c => {
-      hostRef.current = c;
+    setLocalRef: hostNode => {
+      // TextInput needs to add more methods to the hostNode in addition to those
+      // added by `usePlatformMethods`. This is temporarily until an API like
+      // `TextInput.clear(hostRef)` is added to React Native.
+      if (hostNode != null) {
+        hostNode.clear = function() {
+          if (hostNode != null) {
+            hostNode.value = '';
+          }
+        };
+        hostNode.isFocused = function() {
+          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
+        };
+      }
+      hostRef.current = hostNode;
       if (hostRef.current != null) {
         handleContentSizeChange();
       }
     }
   });
-
-  const component = multiline ? 'textarea' : 'input';
-  const classList = [classes.textinput];
-  const style = StyleSheet.compose(
-    props.style,
-    placeholderTextColor && { placeholderTextColor }
-  );
 
   function handleBlur(e) {
     TextInputState._currentlyFocusedNode = null;
@@ -285,8 +333,15 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     }
   }, [hostRef, selection]);
 
+  const component = multiline ? 'textarea' : 'input';
+  const classList = [classes.textinput];
+  const style = StyleSheet.compose(
+    props.style,
+    placeholderTextColor && { placeholderTextColor }
+  );
+
   useElementLayout(hostRef, onLayout);
-  usePlatformInputMethods(hostRef, ref, classList, style);
+  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -306,48 +361,27 @@ const TextInput = forwardRef<TextInputProps, *>((props, ref) => {
     onStartShouldSetResponderCapture
   });
 
-  return createElement(component, {
-    accessibilityLabel,
-    accessibilityRelationship,
-    accessibilityState,
-    autoCapitalize,
-    autoComplete: autoComplete || autoCompleteType || 'on',
-    autoCorrect: autoCorrect ? 'on' : 'off',
-    autoFocus,
-    classList,
-    defaultValue,
-    dir: 'auto',
-    disabled,
-    enterkeyhint: returnKeyType,
-    importantForAccessibility,
-    maxLength,
-    nativeID,
-    onBlur: handleBlur,
-    onChange: handleChange,
-    onContextMenu,
-    onFocus: handleFocus,
-    onKeyDown: handleKeyDown,
-    onScroll,
-    onSelect: handleSelectionChange,
-    placeholder,
-    pointerEvents,
-    testID,
-    readOnly: !editable,
-    ref: setRef,
-    rows: multiline ? numberOfLines : undefined,
-    spellCheck: spellCheck != null ? spellCheck : autoCorrect,
-    style,
-    type: multiline ? undefined : type,
-    value,
-    // unstable
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    unstable_ariaSet,
-    unstable_dataSet
-  });
+  const supportedProps = pickProps(props);
+  supportedProps.autoCapitalize = autoCapitalize;
+  supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
+  supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
+  supportedProps.classList = classList;
+  // 'auto' by default allows browsers to infer writing direction
+  supportedProps.dir = dir !== undefined ? dir : 'auto';
+  supportedProps.enterkeyhint = returnKeyType;
+  supportedProps.onBlur = handleBlur;
+  supportedProps.onChange = handleChange;
+  supportedProps.onFocus = handleFocus;
+  supportedProps.onKeyDown = handleKeyDown;
+  supportedProps.onSelect = handleSelectionChange;
+  supportedProps.readOnly = !editable;
+  supportedProps.ref = setRef;
+  supportedProps.rows = multiline ? numberOfLines : undefined;
+  supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
+  supportedProps.style = style;
+  supportedProps.type = multiline ? undefined : type;
+
+  return createElement(component, supportedProps);
 });
 
 TextInput.displayName = 'TextInput';

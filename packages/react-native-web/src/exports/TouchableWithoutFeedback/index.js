@@ -14,7 +14,9 @@ import type { PressResponderConfig } from '../../modules/PressResponder';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { useMemo, useRef, useImperativeHandle } from 'react';
+import { useMemo, useRef } from 'react';
+import pick from '../../modules/pick';
+import setAndForwardRef from '../../modules/setAndForwardRef';
 import usePressEvents from '../../modules/PressResponder/usePressEvents';
 
 export type Props = $ReadOnly<{|
@@ -44,20 +46,26 @@ export type Props = $ReadOnly<{|
   testID?: $PropertyType<ViewProps, 'testID'>
 |}>;
 
-const PASSTHROUGH_PROPS = [
-  'accessibilityLabel',
-  'accessibilityLiveRegion',
-  'accessibilityRole',
-  'accessibilityState',
-  'accessibilityValue',
-  'hitSlop',
-  'importantForAccessibility',
-  'nativeID',
-  'onBlur',
-  'onFocus',
-  'onLayout',
-  'testID'
-];
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  children: true,
+  disabled: true,
+  focusable: true,
+  hitSlop: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  onBlur: true,
+  onFocus: true,
+  onLayout: true,
+  testID: true
+};
+
+const pickProps = props => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const {
@@ -75,56 +83,49 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const viewRef = useRef(null);
-  useImperativeHandle(forwardedRef, () => viewRef.current);
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
+    }
+  });
 
-  const pressEventHandlers = usePressEvents(
-    hostRef,
-    useMemo(
-      () => ({
-        cancelable: !rejectResponderTermination,
-        disabled,
-        delayLongPress,
-        delayPressStart: delayPressIn,
-        delayPressEnd: delayPressOut,
-        onLongPress,
-        onPress,
-        onPressStart: onPressIn,
-        onPressEnd: onPressOut
-      }),
-      [
-        disabled,
-        delayPressIn,
-        delayPressOut,
-        delayLongPress,
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressOut,
-        rejectResponderTermination
-      ]
-    )
+  const pressConfig = useMemo(
+    () => ({
+      cancelable: !rejectResponderTermination,
+      disabled,
+      delayLongPress,
+      delayPressStart: delayPressIn,
+      delayPressEnd: delayPressOut,
+      onLongPress,
+      onPress,
+      onPressStart: onPressIn,
+      onPressEnd: onPressOut
+    }),
+    [
+      disabled,
+      delayPressIn,
+      delayPressOut,
+      delayLongPress,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      rejectResponderTermination
+    ]
   );
+
+  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
   const element = React.Children.only(props.children);
   const children = [element.props.children];
-  const elementProps: { [string]: mixed, ... } = {
-    ...pressEventHandlers,
-    accessible: accessible !== false,
-    accessibilityState: {
-      disabled,
-      ...props.accessibilityState
-    },
-    focusable: focusable !== false && onPress !== undefined,
-    forwardedRef: hostRef,
-    ref: viewRef
-  };
+  const supportedProps = pickProps(props);
+  supportedProps.accessible = accessible !== false;
+  supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
+  supportedProps.focusable = focusable !== false && onPress !== undefined;
+  supportedProps.ref = setRef;
 
-  for (const prop of PASSTHROUGH_PROPS) {
-    if (props[prop] !== undefined) {
-      elementProps[prop] = props[prop];
-    }
-  }
+  const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
   return React.cloneElement(element, elementProps, ...children);
 }
