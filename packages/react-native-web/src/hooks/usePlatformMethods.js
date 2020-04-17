@@ -13,9 +13,8 @@ import type { ElementRef } from 'react';
 import UIManager from '../exports/UIManager';
 import createDOMProps from '../modules/createDOMProps';
 import { useImperativeHandle, useRef } from 'react';
-import TextInputState from '../modules/TextInputState';
 
-function setNativeProps(node, nativeProps, classList, style, previousStyle) {
+function setNativeProps(node, nativeProps, classList, style, previousStyleRef) {
   if (node != null && nativeProps) {
     const domProps = createDOMProps(null, {
       ...nativeProps,
@@ -25,102 +24,45 @@ function setNativeProps(node, nativeProps, classList, style, previousStyle) {
 
     const nextDomStyle = domProps.style;
 
-    if (previousStyle.current != null) {
+    if (previousStyleRef.current != null) {
       if (domProps.style == null) {
         domProps.style = {};
       }
-      for (const styleName in previousStyle.current) {
+      for (const styleName in previousStyleRef.current) {
         if (domProps.style[styleName] == null) {
           domProps.style[styleName] = '';
         }
       }
     }
 
-    previousStyle.current = nextDomStyle;
+    previousStyleRef.current = nextDomStyle;
 
     UIManager.updateView(node, domProps);
   }
 }
 
+/**
+ * Adds non-standard methods to the hode element. This is temporarily until an
+ * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
+ */
 export default function usePlatformMethods(
   hostRef: ElementRef<any>,
-  ref: ElementRef<any>,
   classList: Array<boolean | string>,
-  style: GenericStyleProp<any>,
-  extras: any
+  style: GenericStyleProp<any>
 ) {
-  const previousStyle = useRef(null);
+  const previousStyleRef = useRef(null);
 
   useImperativeHandle(
-    ref,
+    hostRef,
     () => {
       const hostNode = hostRef.current;
-      return {
-        blur() {
-          UIManager.blur(hostNode);
-        },
-        focus() {
-          UIManager.focus(hostNode);
-        },
-        measure(callback) {
-          UIManager.measure(hostNode, callback);
-        },
-        measureLayout(relativeToNativeNode, onFail, onSuccess) {
-          UIManager.measureLayout(hostNode, relativeToNativeNode, onFail, onSuccess);
-        },
-        measureInWindow(callback) {
-          UIManager.measureInWindow(hostNode, callback);
-        },
-        setNativeProps(nativeProps) {
-          setNativeProps(hostNode, nativeProps, classList, style, previousStyle);
-        }
-      };
-    },
-    [classList, hostRef, style]
-  );
-}
-
-export function usePlatformInputMethods(
-  hostRef: ElementRef<any>,
-  ref: ElementRef<any>,
-  classList: Array<boolean | string>,
-  style: GenericStyleProp<any>,
-  extras: any
-) {
-  const previousStyle = useRef(null);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      const hostNode = hostRef.current;
-      return {
-        blur() {
-          UIManager.blur(hostNode);
-        },
-        clear() {
-          if (hostNode != null) {
-            hostNode.value = '';
-          }
-        },
-        focus() {
-          UIManager.focus(hostNode);
-        },
-        isFocused() {
-          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
-        },
-        measure(callback) {
-          UIManager.measure(hostNode, callback);
-        },
-        measureLayout(relativeToNativeNode, onFail, onSuccess) {
-          UIManager.measureLayout(hostNode, relativeToNativeNode, onFail, onSuccess);
-        },
-        measureInWindow(callback) {
-          UIManager.measureInWindow(hostNode, callback);
-        },
-        setNativeProps(nativeProps) {
-          setNativeProps(hostNode, nativeProps, classList, style, previousStyle);
-        }
-      };
+      hostNode.measure = callback => UIManager.measure(hostNode, callback);
+      hostNode.measureLayout = (relativeToNode, success, failure) =>
+        UIManager.measureLayout(hostNode, relativeToNode, success, failure);
+      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
+      hostNode.setNativeProps = nativeProps =>
+        setNativeProps(hostNode, nativeProps, classList, style, previousStyleRef);
+      return hostNode;
     },
     [classList, hostRef, style]
   );

@@ -10,11 +10,11 @@
 import type { ImageProps } from '../Image';
 import type { ViewProps } from '../View';
 
-import setAndForwardRef from '../../modules/setAndForwardRef';
+import * as React from 'react';
+import { forwardRef } from 'react';
 import Image from '../Image';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type ImageBackgroundProps = {
   ...ImageProps,
@@ -28,33 +28,12 @@ const emptyObject = {};
 /**
  * Very simple drop-in replacement for <Image> which supports nesting views.
  */
-const ImageBackground = forwardRef<ImageBackgroundProps, *>((props, ref) => {
+const ImageBackground = forwardRef<ImageBackgroundProps, *>((props, forwardedRef) => {
   const { children, style = emptyObject, imageStyle, imageRef, ...rest } = props;
   const { height, width } = StyleSheet.flatten(style);
 
-  const containerRef = useRef(null);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      setNativeProps(props) {
-        if (containerRef.current != null) {
-          containerRef.current.setNativeProps(props);
-        }
-      }
-    }),
-    [containerRef]
-  );
-
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => ref,
-    setLocalRef: c => {
-      containerRef.current = c;
-    }
-  });
-
   return (
-    <View ref={setRef} style={style}>
+    <View ref={forwardedRef} style={style}>
       <Image
         {...rest}
         ref={imageRef}

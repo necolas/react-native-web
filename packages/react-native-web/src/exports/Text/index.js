@@ -10,33 +10,79 @@
 
 import type { TextProps } from './types';
 
+import * as React from 'react';
+import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import pick from '../../modules/pick';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
-import React, { forwardRef, useContext, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 
-const Text = forwardRef<TextProps, *>((props, ref) => {
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRelationship: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  children: true,
+  classList: true,
+  dir: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  onBlur: true,
+  onClick: true,
+  onClickCapture: true,
+  onContextMenu: true,
+  onFocus: true,
+  onKeyDown: true,
+  onKeyUp: true,
+  onTouchCancel: true,
+  onTouchCancelCapture: true,
+  onTouchEnd: true,
+  onTouchEndCapture: true,
+  onTouchMove: true,
+  onTouchMoveCapture: true,
+  onTouchStart: true,
+  onTouchStartCapture: true,
+  pointerEvents: true,
+  ref: true,
+  style: true,
+  testID: true,
+  // unstable
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true,
+  onScroll: true,
+  onWheel: true,
+  href: true,
+  itemID: true,
+  itemRef: true,
+  itemProp: true,
+  itemScope: true,
+  itemType: true,
+  rel: true,
+  target: true,
+  unstable_ariaSet: true,
+  unstable_dataSet: true
+};
+
+const pickProps = props => pick(props, forwardPropsList);
+
+const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessibilityRelationship,
-    accessibilityRole,
-    accessibilityState,
-    children,
     dir,
-    forwardedRef,
-    importantForAccessibility,
-    nativeID,
     numberOfLines,
-    onBlur,
     onClick,
-    onContextMenu,
-    onFocus,
     onLayout,
     onPress,
     onMoveShouldSetResponder,
@@ -55,42 +101,15 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
-    selectable,
-    testID,
-    // unstable
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseMove,
-    onMouseOver,
-    onMouseOut,
-    onMouseUp,
-    onTouchCancel,
-    onTouchCancelCapture,
-    onTouchEnd,
-    onTouchEndCapture,
-    onTouchMove,
-    onTouchMoveCapture,
-    onTouchStart,
-    onTouchStartCapture,
-    href,
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    rel,
-    target,
-    unstable_ariaSet,
-    unstable_dataSet
+    selectable
   } = props;
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
   const setRef = setAndForwardRef({
     getForwardedRef: () => forwardedRef,
-    setLocalRef: c => {
-      hostRef.current = c;
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
     }
   });
 
@@ -108,7 +127,7 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
   ];
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, ref, classList, style);
+  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -139,53 +158,15 @@ const Text = forwardRef<TextProps, *>((props, ref) => {
   }
 
   const component = hasTextAncestor ? 'span' : 'div';
-  const element = createElement(component, {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessibilityRelationship,
-    accessibilityRole,
-    accessibilityState,
-    accessible: onPress != null ? true : null,
-    children,
-    classList,
-    // allow browsers to automatically infer the language writing direction
-    dir: dir !== undefined ? dir : 'auto',
-    importantForAccessibility,
-    nativeID,
-    onBlur,
-    onClick: handleClick,
-    onContextMenu,
-    onFocus,
-    ref: setRef,
-    style,
-    testID,
-    // unstable
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseMove,
-    onMouseOver,
-    onMouseOut,
-    onMouseUp,
-    onTouchCancel,
-    onTouchCancelCapture,
-    onTouchEnd,
-    onTouchEndCapture,
-    onTouchMove,
-    onTouchMoveCapture,
-    onTouchStart,
-    onTouchStartCapture,
-    href,
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    rel,
-    target,
-    unstable_ariaSet,
-    unstable_dataSet
-  });
+  const supportedProps = pickProps(props);
+  supportedProps.classList = classList;
+  // 'auto' by default allows browsers to infer writing direction
+  supportedProps.dir = dir !== undefined ? dir : 'auto';
+  supportedProps.onClick = handleClick;
+  supportedProps.ref = setRef;
+  supportedProps.style = style;
+
+  const element = createElement(component, supportedProps);
 
   return hasTextAncestor ? (
     element
