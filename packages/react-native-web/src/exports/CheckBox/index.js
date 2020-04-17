@@ -8,42 +8,26 @@
  * @flow
  */
 
+import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
+import { forwardRef } from 'react';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
-import UIManager from '../UIManager';
 import View from '../View';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type CheckBoxProps = {
   ...ViewProps,
-  color?: ?string,
+  color?: ?ColorValue,
   disabled?: boolean,
   onChange?: ?(e: any) => void,
   onValueChange?: ?(e: any) => void,
   value?: boolean
 };
 
-const CheckBox = forwardRef<CheckBoxProps, *>((props, ref) => {
+const CheckBox = forwardRef<CheckBoxProps, *>((props, forwardedRef) => {
   const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
-
-  const checkboxRef = useRef(null);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        blur() {
-          UIManager.blur(checkboxRef.current);
-        },
-        focus() {
-          UIManager.focus(checkboxRef.current);
-        }
-      };
-    },
-    [checkboxRef]
-  );
 
   function handleChange(event: Object) {
     const value = event.nativeEvent.target.checked;
@@ -69,13 +53,13 @@ const CheckBox = forwardRef<CheckBoxProps, *>((props, ref) => {
     checked: value,
     disabled: disabled,
     onChange: handleChange,
-    ref: checkboxRef,
+    ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'
   });
 
   return (
-    <View {...other} ref={ref} style={[styles.root, style, disabled && styles.cursorDefault]}>
+    <View {...other} style={[styles.root, style, disabled && styles.cursorDefault]}>
       {fakeControl}
       {nativeControl}
     </View>

@@ -30,7 +30,7 @@ type PickerProps = {
   prompt?: string
 };
 
-const Picker = forwardRef<PickerProps, *>((props, ref) => {
+const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
   const {
     children,
     enabled,
@@ -48,12 +48,13 @@ const Picker = forwardRef<PickerProps, *>((props, ref) => {
 
   const hostRef = useRef(null);
   const setRef = setAndForwardRef({
-    getForwardedRef: () => ref,
-    setLocalRef: c => {
-      hostRef.current = c;
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
     }
   });
-  usePlatformMethods(hostRef, ref, [], style);
+
+  usePlatformMethods(hostRef, [], style);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;

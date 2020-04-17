@@ -14,8 +14,9 @@ import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithout
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { useCallback, useMemo, useState, useRef, useImperativeHandle } from 'react';
+import { useCallback, useMemo, useState, useRef } from 'react';
 import usePressEvents from '../../modules/PressResponder/usePressEvents';
+import setAndForwardRef from '../../modules/setAndForwardRef';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
@@ -56,8 +57,12 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
-  useImperativeHandle(forwardedRef, () => viewRef.current);
+  const setRef = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
+    }
+  });
 
   const styleOpacity = getStyleOpacityWithDefault(style);
   const [duration, setDuration] = useState('0s');
@@ -85,45 +90,44 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
     [setOpacityTo, styleOpacity]
   );
 
-  const pressEventHandlers = usePressEvents(
-    hostRef,
-    useMemo(
-      () => ({
-        cancelable: !rejectResponderTermination,
-        disabled,
-        delayLongPress,
-        delayPressStart: delayPressIn,
-        delayPressEnd: delayPressOut,
-        onLongPress,
-        onPress,
-        onPressStart(event) {
-          opacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
-          if (onPressIn != null) {
-            onPressIn(event);
-          }
-        },
-        onPressEnd(event) {
-          opacityInactive(250);
-          if (onPressOut != null) {
-            onPressOut(event);
-          }
+  const pressConfig = useMemo(
+    () => ({
+      cancelable: !rejectResponderTermination,
+      disabled,
+      delayLongPress,
+      delayPressStart: delayPressIn,
+      delayPressEnd: delayPressOut,
+      onLongPress,
+      onPress,
+      onPressStart(event) {
+        opacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
+        if (onPressIn != null) {
+          onPressIn(event);
         }
-      }),
-      [
-        delayLongPress,
-        delayPressIn,
-        delayPressOut,
-        disabled,
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressOut,
-        opacityActive,
-        opacityInactive,
-        rejectResponderTermination
-      ]
-    )
+      },
+      onPressEnd(event) {
+        opacityInactive(250);
+        if (onPressOut != null) {
+          onPressOut(event);
+        }
+      }
+    }),
+    [
+      delayLongPress,
+      delayPressIn,
+      delayPressOut,
+      disabled,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      opacityActive,
+      opacityInactive,
+      rejectResponderTermination
+    ]
   );
+
+  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
   return (
     <View
@@ -135,8 +139,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       }}
       accessible={accessible !== false}
       focusable={focusable !== false && onPress !== undefined}
-      forwardedRef={hostRef}
-      ref={viewRef}
+      ref={setRef}
       style={[
         styles.root,
         !disabled && styles.actionable,

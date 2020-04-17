@@ -48,8 +48,8 @@ const ScrollView = ((createReactClass({
   },
 
   setNativeProps(props: Object) {
-    if (this._scrollViewRef) {
-      this._scrollViewRef.setNativeProps(props);
+    if (this._scrollNodeRef) {
+      this._scrollNodeRef.setNativeProps(props);
     }
   },
 
@@ -189,7 +189,7 @@ const ScrollView = ((createReactClass({
         {...contentSizeChangeProps}
         children={children}
         collapsable={false}
-        forwardedRef={this._setInnerViewRef}
+        ref={this._setInnerViewRef}
         style={StyleSheet.compose(
           horizontal && styles.contentContainerHorizontal,
           contentContainerStyle
@@ -231,23 +231,14 @@ const ScrollView = ((createReactClass({
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        <ScrollViewClass
-          {...props}
-          forwardedRef={this._setScrollNodeRef}
-          ref={this._setScrollViewRef}
-          style={baseStyle}
-        >
+        <ScrollViewClass {...props} ref={this._setScrollNodeRef} style={baseStyle}>
           {contentContainer}
         </ScrollViewClass>
       );
     }
 
     return (
-      <ScrollViewClass
-        {...props}
-        forwardedRef={this._setScrollNodeRef}
-        ref={this._setScrollViewRef}
-      >
+      <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
         {contentContainer}
       </ScrollViewClass>
     );
@@ -280,10 +271,6 @@ const ScrollView = ((createReactClass({
 
   _setInnerViewRef(component) {
     this._innerViewRef = component;
-  },
-
-  _setScrollViewRef(component) {
-    this._scrollViewRef = component;
   },
 
   _setScrollNodeRef(component) {

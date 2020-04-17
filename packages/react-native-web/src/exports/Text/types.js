@@ -8,8 +8,8 @@
  * @flow
  */
 
-import type { ColorValue, GenericStyleProp, LayoutEvent } from '../../types';
-import type { ViewStyle } from '../View/types';
+import type { ColorValue, GenericStyleProp } from '../../types';
+import type { ViewProps, ViewStyle } from '../View/types';
 
 type FontWeightValue =
   | 'normal'
@@ -61,9 +61,10 @@ export type TextStyle = {
   WebkitFontSmoothing?: ?string
 };
 
+type AllowedViewProps = $Diff<ViewProps, { hitSlop: any }>;
+
 export type TextProps = {
-  accessibilityLabel?: ?string,
-  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
+  ...AllowedViewProps,
   accessibilityRelationship?: {
     activedescendant?: ?string,
     controls?: ?string,
@@ -95,62 +96,10 @@ export type TextProps = {
     required?: ?boolean,
     selected?: ?boolean
   },
-  accessible?: ?boolean,
-  children?: ?any,
   dir?: 'auto' | 'ltr' | 'rtl',
-  forwardedRef?: any,
-  importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
-  nativeID?: ?string,
   numberOfLines?: ?number,
-  onBlur?: (e: any) => void,
-  onClick?: (e: any) => void,
-  onContextMenu?: (e: any) => void,
-  onFocus?: (e: any) => void,
-  onLayout?: (e: LayoutEvent) => void,
   onPress?: (e: any) => void,
-  onMoveShouldSetResponder?: (e: any) => boolean,
-  onMoveShouldSetResponderCapture?: (e: any) => boolean,
-  onResponderEnd?: (e: any) => void,
-  onResponderGrant?: (e: any) => void,
-  onResponderMove?: (e: any) => void,
-  onResponderReject?: (e: any) => void,
-  onResponderRelease?: (e: any) => void,
-  onResponderStart?: (e: any) => void,
-  onResponderTerminate?: (e: any) => void,
-  onResponderTerminationRequest?: (e: any) => boolean,
-  onScrollShouldSetResponder?: (e: any) => boolean,
-  onScrollShouldSetResponderCapture?: (e: any) => boolean,
-  onSelectionChangeShouldSetResponder?: (e: any) => boolean,
-  onSelectionChangeShouldSetResponderCapture?: (e: any) => boolean,
-  onStartShouldSetResponder?: (e: any) => boolean,
-  onStartShouldSetResponderCapture?: (e: any) => boolean,
   selectable?: boolean,
   style?: GenericStyleProp<TextStyle>,
-  testID?: ?string,
-  // unstable
-  onMouseDown?: (e: any) => void,
-  onMouseEnter?: (e: any) => void,
-  onMouseLeave?: (e: any) => void,
-  onMouseMove?: (e: any) => void,
-  onMouseOver?: (e: any) => void,
-  onMouseOut?: (e: any) => void,
-  onMouseUp?: (e: any) => void,
-  onTouchCancel?: (e: any) => void,
-  onTouchCancelCapture?: (e: any) => void,
-  onTouchEnd?: (e: any) => void,
-  onTouchEndCapture?: (e: any) => void,
-  onTouchMove?: (e: any) => void,
-  onTouchMoveCapture?: (e: any) => void,
-  onTouchStart?: (e: any) => void,
-  onTouchStartCapture?: (e: any) => void,
-  href?: ?string,
-  itemID?: ?string,
-  itemRef?: ?string,
-  itemProp?: ?string,
-  itemScope?: ?string,
-  itemType?: ?string,
-  rel?: ?string,
-  target?: ?string,
-  unstable_ariaSet?: Object,
-  unstable_dataSet?: Object
+  testID?: ?string
 };

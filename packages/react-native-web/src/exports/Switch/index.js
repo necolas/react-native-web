@@ -10,12 +10,12 @@
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
+import { forwardRef, useRef } from 'react';
 import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
-import UIManager from '../UIManager';
 import View from '../View';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type SwitchProps = {
   ...ViewProps,
@@ -32,7 +32,7 @@ const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-const Switch = forwardRef<SwitchProps, *>((props, ref) => {
+const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
   const {
     accessibilityLabel,
     activeThumbColor = '#009688',
@@ -46,23 +46,7 @@ const Switch = forwardRef<SwitchProps, *>((props, ref) => {
     ...other
   } = props;
 
-  const checkboxRef = useRef(null);
   const thumbRef = useRef(null);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        blur() {
-          UIManager.blur(checkboxRef.current);
-        },
-        focus() {
-          UIManager.focus(checkboxRef.current);
-        }
-      };
-    },
-    [checkboxRef]
-  );
 
   function handleChange(event: Object) {
     if (onValueChange != null) {
@@ -74,7 +58,7 @@ const Switch = forwardRef<SwitchProps, *>((props, ref) => {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     if (thumbRef.current != null) {
-      thumbRef.current.setNativeProps({ style: { boxShadow } });
+      thumbRef.current.style.boxShadow = boxShadow;
     }
   }
 
@@ -130,13 +114,13 @@ const Switch = forwardRef<SwitchProps, *>((props, ref) => {
     onBlur: handleFocusState,
     onChange: handleChange,
     onFocus: handleFocusState,
-    ref: checkboxRef,
+    ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'
   });
 
   return (
-    <View {...other} ref={ref} style={rootStyle}>
+    <View {...other} style={rootStyle}>
       <View style={trackStyle} />
       <View ref={thumbRef} style={thumbStyle} />
       {nativeControl}
