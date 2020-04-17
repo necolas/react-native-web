@@ -9,11 +9,11 @@
 
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
+import { forwardRef, useRef } from 'react';
 import debounce from 'debounce';
-import setAndForwardRef from '../../modules/setAndForwardRef';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 
 type Props = {
   ...ViewProps,
@@ -70,14 +70,13 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase = forwardRef<Props, *>((props, ref) => {
+const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   const {
     accessibilityLabel,
     accessibilityRelationship,
     accessibilityRole,
     accessibilityState,
     children,
-    forwardedRef,
     importantForAccessibility,
     nativeID,
     onLayout,
@@ -94,28 +93,6 @@ const ScrollViewBase = forwardRef<Props, *>((props, ref) => {
   } = props;
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
-  const viewRef = useRef(null);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        setNativeProps(props: Object) {
-          if (viewRef.current != null) {
-            viewRef.current.setNativeProps(props);
-          }
-        }
-      };
-    },
-    []
-  );
-
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => ref,
-    setLocalRef: c => {
-      viewRef.current = c;
-    }
-  });
 
   function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {
@@ -173,7 +150,6 @@ const ScrollViewBase = forwardRef<Props, *>((props, ref) => {
       accessibilityRole={accessibilityRole}
       accessibilityState={accessibilityState}
       children={children}
-      forwardedRef={forwardedRef}
       importantForAccessibility={importantForAccessibility}
       nativeID={nativeID}
       onLayout={onLayout}
@@ -181,7 +157,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, ref) => {
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
       pointerEvents={pointerEvents}
-      ref={setRef}
+      ref={forwardedRef}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,

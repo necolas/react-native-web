@@ -10,17 +10,73 @@
 
 import type { ViewProps } from './types';
 
+import * as React from 'react';
+import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import pick from '../../modules/pick';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import React, { forwardRef, useContext, useRef } from 'react';
 
-export type { ViewProps };
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRelationship: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  children: true,
+  classList: true,
+  disabled: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  onBlur: true,
+  onClick: true,
+  onClickCapture: true,
+  onContextMenu: true,
+  onFocus: true,
+  onKeyDown: true,
+  onKeyUp: true,
+  onTouchCancel: true,
+  onTouchCancelCapture: true,
+  onTouchEnd: true,
+  onTouchEndCapture: true,
+  onTouchMove: true,
+  onTouchMoveCapture: true,
+  onTouchStart: true,
+  onTouchStartCapture: true,
+  pointerEvents: true,
+  ref: true,
+  style: true,
+  testID: true,
+  // unstable
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true,
+  onScroll: true,
+  onWheel: true,
+  href: true,
+  itemID: true,
+  itemRef: true,
+  itemProp: true,
+  itemScope: true,
+  itemType: true,
+  rel: true,
+  target: true,
+  unstable_ariaSet: true,
+  unstable_dataSet: true
+};
+
+const pickProps = props => pick(props, forwardPropsList);
 
 function createHitSlopElement(hitSlop) {
   const hitSlopStyle = {};
@@ -36,23 +92,9 @@ function createHitSlopElement(hitSlop) {
   });
 }
 
-const View = forwardRef<ViewProps, *>((props, ref) => {
+const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessibilityRelationship,
-    accessibilityRole,
-    accessibilityState,
-    accessibilityValue,
-    accessible,
-    forwardedRef,
     hitSlop,
-    importantForAccessibility,
-    nativeID,
-    onBlur,
-    onClick,
-    onContextMenu,
-    onFocus,
     onLayout,
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -69,39 +111,7 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     onSelectionChangeShouldSetResponder,
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
-    onStartShouldSetResponderCapture,
-    pointerEvents,
-    testID,
-    // unstable
-    onKeyDown,
-    onKeyUp,
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseMove,
-    onMouseOver,
-    onMouseOut,
-    onMouseUp,
-    onScroll,
-    onTouchCancel,
-    onTouchCancelCapture,
-    onTouchEnd,
-    onTouchEndCapture,
-    onTouchMove,
-    onTouchMoveCapture,
-    onTouchStart,
-    onTouchStartCapture,
-    onWheel,
-    href,
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    rel,
-    target,
-    unstable_ariaSet,
-    unstable_dataSet
+    onStartShouldSetResponderCapture
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -116,8 +126,8 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
   const hostRef = useRef(null);
   const setRef = setAndForwardRef({
     getForwardedRef: () => forwardedRef,
-    setLocalRef: c => {
-      hostRef.current = c;
+    setLocalRef: hostNode => {
+      hostRef.current = hostNode;
     }
   });
 
@@ -131,7 +141,7 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
   );
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, ref, classList, style);
+  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -151,57 +161,13 @@ const View = forwardRef<ViewProps, *>((props, ref) => {
     onStartShouldSetResponderCapture
   });
 
-  return createElement('div', {
-    accessibilityLabel,
-    accessibilityLiveRegion,
-    accessibilityRelationship,
-    accessibilityRole,
-    accessibilityState,
-    accessibilityValue,
-    accessible,
-    children,
-    classList,
-    importantForAccessibility,
-    nativeID,
-    onBlur,
-    onClick,
-    onContextMenu,
-    onFocus,
-    pointerEvents,
-    ref: setRef,
-    style,
-    testID,
-    // unstable
-    onKeyDown,
-    onKeyUp,
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseMove,
-    onMouseOver,
-    onMouseOut,
-    onMouseUp,
-    onScroll,
-    onTouchCancel,
-    onTouchCancelCapture,
-    onTouchEnd,
-    onTouchEndCapture,
-    onTouchMove,
-    onTouchMoveCapture,
-    onTouchStart,
-    onTouchStartCapture,
-    onWheel,
-    href,
-    itemID,
-    itemRef,
-    itemProp,
-    itemScope,
-    itemType,
-    rel,
-    target,
-    unstable_ariaSet,
-    unstable_dataSet
-  });
+  const supportedProps = pickProps(props);
+  supportedProps.children = children;
+  supportedProps.classList = classList;
+  supportedProps.ref = setRef;
+  supportedProps.style = style;
+
+  return createElement('div', supportedProps);
 });
 
 View.displayName = 'View';
@@ -239,5 +205,7 @@ const styles = StyleSheet.create({
     display: 'inline-flex'
   }
 });
+
+export type { ViewProps };
 
 export default View;

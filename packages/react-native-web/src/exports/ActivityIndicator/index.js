@@ -28,7 +28,7 @@ type ActivityIndicatorProps = {
   size?: 'small' | 'large' | number
 };
 
-const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, ref) => {
+const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwardedRef) => {
   const {
     animating = true,
     color = '#1976D2',
@@ -57,7 +57,7 @@ const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, ref) => 
       {...other}
       accessibilityRole="progressbar"
       accessibilityValue={accessibilityValue}
-      ref={ref}
+      ref={forwardedRef}
       style={[styles.container, style]}
     >
       <View
