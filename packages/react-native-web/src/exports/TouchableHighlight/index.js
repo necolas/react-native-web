@@ -16,7 +16,7 @@ import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { useCallback, useMemo, useState, useRef } from 'react';
-import usePressEvents from '../../modules/PressResponder/usePressEvents';
+import usePressEvents from '../../hooks/usePressEvents';
 import setAndForwardRef from '../../modules/setAndForwardRef';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
