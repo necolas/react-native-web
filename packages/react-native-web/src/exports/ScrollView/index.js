@@ -120,14 +120,6 @@ const ScrollView = ((createReactClass({
     scrollResponder.scrollResponderScrollTo({ x, y, animated });
   },
 
-  /**
-   * Deprecated, do not use.
-   */
-  scrollWithoutAnimationTo(y: number = 0, x: number = 0) {
-    console.warn('`scrollWithoutAnimationTo` is deprecated. Use `scrollTo` instead');
-    this.scrollTo({ x, y, animated: false });
-  },
-
   render() {
     const {
       contentContainerStyle,
