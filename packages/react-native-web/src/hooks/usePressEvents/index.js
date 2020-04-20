@@ -10,8 +10,10 @@
 
 'use strict';
 
-import PressResponder, { type EventHandlers, type PressResponderConfig } from './index';
-import { useEffect, useRef } from 'react';
+import type { EventHandlers, PressResponderConfig } from './PressResponder';
+
+import PressResponder from './PressResponder';
+import { useDebugValue, useEffect, useRef } from 'react';
 
 export default function usePressEvents(hostRef: any, config: PressResponderConfig): EventHandlers {
   const pressResponderRef = useRef<?PressResponder>(null);
@@ -32,6 +34,8 @@ export default function usePressEvents(hostRef: any, config: PressResponderConfi
       pressResponder.reset();
     };
   }, [pressResponder]);
+
+  useDebugValue(config);
 
   return pressResponder.getEventHandlers();
 }

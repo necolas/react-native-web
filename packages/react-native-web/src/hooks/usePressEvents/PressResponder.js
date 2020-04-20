@@ -11,6 +11,8 @@
 'use strict';
 
 import invariant from 'fbjs/lib/invariant';
+import isLink from '../../modules/isLink';
+import isSelectionValid from '../../modules/isSelectionValid';
 
 type ClickEvent = any;
 type KeyboardEvent = any;
@@ -128,6 +130,11 @@ const isPressStartSignal = signal =>
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
 const isTerminalSignal = signal => signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
+
+const isKeyPress = event => {
+  const target = event.currentTarget;
+  return (!isLink(target) && event.key === ' ') || event.key === 'Enter';
+};
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
 const DEFAULT_PRESS_DELAY_MS = 50;
@@ -299,21 +306,19 @@ export default class PressResponder {
       },
 
       onKeyDown: event => {
-        if (this._touchState === NOT_RESPONDER) {
-          if (event.key === ' ' || event.key === 'Enter') {
+        if (isKeyPress(event)) {
+          if (this._touchState === NOT_RESPONDER) {
             start(event, false);
           }
-        }
-        if (this._responderID) {
           event.stopPropagation();
         }
       },
 
       onKeyUp: event => {
-        if (event.key === ' ' || event.key === 'Enter') {
+        if (isKeyPress(event)) {
           end(event);
+          event.stopPropagation();
         }
-        event.stopPropagation();
       },
 
       onResponderGrant: event => start(event),
@@ -356,7 +361,7 @@ export default class PressResponder {
         return cancelable;
       },
 
-      // NOTE: this diverges from react-native@0.62 in 2 significant ways
+      // NOTE: this diverges from react-native@0.62 in 3 significant ways
       // * The `onPress` callback is not connected to the responder system (the native
       //  `click` event must be used but is dispatched in many scenarios where no pointers
       //   are on the screen.) Therefore, it's possible for `onPress` to be called without
@@ -368,7 +373,10 @@ export default class PressResponder {
         const { disabled, onPress } = this._config;
         if (!disabled) {
           if (event.nativeEvent.__responderStoppedPropagation !== true) {
-            if (this._longPressDispatched) {
+            // If long press dispatched, cancel default click behavior.
+            // If text is selected it means the user selected text during the gesture,
+            // cancel default click behavior.
+            if (this._longPressDispatched || isSelectionValid()) {
               event.preventDefault();
             } else if (event.ctrlKey === false && event.altKey === false && onPress != null) {
               onPress(event);
@@ -433,7 +441,9 @@ export default class PressResponder {
 
     if (isPressStartSignal(prevState) && signal === LONG_PRESS_DETECTED) {
       const { onLongPress } = this._config;
-      if (onLongPress != null) {
+      // Long press is not supported for keyboards because 'click' can be dispatched
+      // immediately (and multiple times) after 'keydown'.
+      if (onLongPress != null && event.nativeEvent.key == null) {
         onLongPress(event);
         this._longPressDispatched = true;
       }
