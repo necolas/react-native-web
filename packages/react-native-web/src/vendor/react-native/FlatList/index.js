@@ -428,6 +428,15 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   }
 
+  /**
+   * Provides a reference to the underlying host component
+   */
+  getNativeScrollRef() {
+    if (this._listRef) {
+      return this._listRef.getScrollRef();
+    }
+  }
+
   getScrollableNode() {
     if (this._listRef) {
       return this._listRef.getScrollableNode();
