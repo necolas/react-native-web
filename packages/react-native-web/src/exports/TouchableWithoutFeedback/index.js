@@ -30,6 +30,7 @@ const OVERRIDE_PROPS = [
   'accessibilityIgnoresInvertColors',
   'accessibilityRole',
   'accessibilityState',
+  'disabled',
   'hitSlop',
   'nativeID',
   'onBlur',
