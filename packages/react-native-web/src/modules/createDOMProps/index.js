@@ -86,6 +86,14 @@ const createDOMProps = (component, props, styleResolver) => {
   const disabled =
     (accessibilityState != null && accessibilityState.disabled === true) || providedDisabled;
   const role = AccessibilityUtil.propsToAriaRole(props);
+  const isNativeInteractiveElement =
+    role === 'link' ||
+    component === 'a' ||
+    component === 'button' ||
+    component === 'input' ||
+    component === 'select' ||
+    component === 'textarea' ||
+    domProps.contentEditable != null;
 
   // unstable_ariaSet
   if (unstable_ariaSet != null) {
@@ -176,24 +184,17 @@ const createDOMProps = (component, props, styleResolver) => {
   // FOCUS
   // Assume that 'link' is focusable by default (uses <a>).
   // Assume that 'button' is not (uses <div role='button'>) but must be treated as such.
-  const isInteractiveElement =
-    role === 'link' ||
-    component === 'a' ||
-    component === 'button' ||
-    component === 'input' ||
-    component === 'select' ||
-    component === 'textarea';
   const focusable =
     !disabled &&
     importantForAccessibility !== 'no' &&
     importantForAccessibility !== 'no-hide-descendants';
-  if (isInteractiveElement) {
+  if (isNativeInteractiveElement) {
     if (accessible === false || !focusable) {
       domProps.tabIndex = '-1';
     } else {
       domProps['data-focusable'] = true;
     }
-  } else if (AccessibilityUtil.buttonLikeRoles[role] || role === 'textbox') {
+  } else if (role === 'button' || role === 'menuitem' || role === 'textbox') {
     if (accessible !== false && focusable) {
       domProps['data-focusable'] = true;
       domProps.tabIndex = '0';
@@ -252,22 +253,30 @@ const createDOMProps = (component, props, styleResolver) => {
   }
 
   // Keyboard accessibility
-  // Button-like roles should trigger 'onClick' if SPACE or ENTER keys are pressed.
+  // Button-like roles should trigger 'onClick' if SPACE key is pressed.
   // Button-like roles should not trigger 'onClick' if they are disabled.
   if (domProps['data-focusable']) {
     const onClick = domProps.onClick;
     if (onClick != null) {
       if (disabled) {
         domProps.onClick = undefined;
-      } else if (!isInteractiveElement) {
+      } else if (!isNativeInteractiveElement) {
+        // For native elements that are focusable but don't dispatch 'click' events
+        // for keyboards.
         const onKeyDown = domProps.onKeyDown;
         domProps.onKeyDown = function(e) {
-          if (!e.isDefaultPrevented() && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault();
-            if (onKeyDown != null) {
-              onKeyDown(e);
-            }
+          const key = e.key;
+          const isSpacebarKey = key === ' ' || key === 'Spacebar';
+          const isButtonRole = role === 'button' || role === 'menuitem';
+          if (onKeyDown != null) {
+            onKeyDown(e);
+          }
+          if (key === 'Enter') {
             onClick(e);
+          } else if (isSpacebarKey && isButtonRole) {
+            onClick(e);
+            // Prevent spacebar scrolling the window
+            e.preventDefault();
           }
         };
       }
