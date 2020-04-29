@@ -11,7 +11,6 @@
 'use strict';
 
 import invariant from 'fbjs/lib/invariant';
-import isLink from '../../modules/isLink';
 import isSelectionValid from '../../modules/isSelectionValid';
 
 type ClickEvent = any;
@@ -131,9 +130,12 @@ const isPressStartSignal = signal =>
 
 const isTerminalSignal = signal => signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
-const isKeyPress = event => {
+const isValidKeyPress = event => {
+  const key = event.key;
   const target = event.currentTarget;
-  return (!isLink(target) && event.key === ' ') || event.key === 'Enter';
+  const role = target.getAttribute('role');
+  const isSpacebar = key === ' ' || key === 'Spacebar';
+  return key === 'Enter' || (isSpacebar && (role === 'button' || role === 'menuitem'));
 };
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
@@ -306,7 +308,7 @@ export default class PressResponder {
       },
 
       onKeyDown: event => {
-        if (isKeyPress(event)) {
+        if (isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
           }
@@ -315,7 +317,7 @@ export default class PressResponder {
       },
 
       onKeyUp: event => {
-        if (isKeyPress(event)) {
+        if (isValidKeyPress(event)) {
           end(event);
           event.stopPropagation();
         }

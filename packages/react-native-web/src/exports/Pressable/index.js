@@ -153,7 +153,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      accessibilityRole={props.accessibilityRole ?? 'button'}
       accessibilityState={accessibilityState}
       accessible={accessible !== false}
       focusable={focusable !== false}
