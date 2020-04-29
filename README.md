@@ -26,7 +26,8 @@ Who is using React Native in production web apps?
 [Flipkart](https://twitter.com/naqvitalha/status/969577892991549440),
 [Uber](https://www.youtube.com/watch?v=RV9rxrNIxnY),
 [The Times](https://github.com/newsuk/times-components),
-[DataCamp](https://www.datacamp.com/community/tech/porting-practice-to-web-part1).
+[DataCamp](https://www.datacamp.com/community/tech/porting-practice-to-web-part1) and
+[Wlingua](https://wlingua.com)
 
 Browser support: Chrome, Firefox, Edge, Safari 7+, IE 10+.
 
