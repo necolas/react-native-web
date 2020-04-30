@@ -7,9 +7,15 @@
  *
  * @flow
  */
-import * as React from 'react';
 
-export type ColorSchemeName = 'light' | 'dark' | 'no-preference';
+export type ColorSchemeName = 'light' | 'dark';
+
+export type AppearancePreferences = {|
+  colorScheme?: ?ColorSchemeName
+|};
+
+type AppearanceListener = (preferences: AppearancePreferences) => void;
+type DomAppearanceListener = (ev: MediaQueryListEvent) => any;
 
 function getQuery(): MediaQueryList | null {
   if (typeof window === 'undefined' || !window.matchMedia) return null;
@@ -17,27 +23,30 @@ function getQuery(): MediaQueryList | null {
 }
 
 const query = getQuery();
+const listenerMapping = new WeakMap<AppearanceListener, DomAppearanceListener>();
 
-export function getColorScheme(): ColorSchemeName {
-  return query && query.matches ? 'dark' : 'light';
-}
+module.exports = {
+  getColorScheme(): ColorSchemeName {
+    if (query && query.matches) return 'dark';
+    return 'light';
+  },
 
-export function useColorScheme(): ColorSchemeName {
-  const [colorScheme, setColorScheme] = React.useState(getColorScheme());
-
-  React.useEffect(() => {
-    function listener({ matches }: MediaQueryListEvent) {
-      setColorScheme(matches ? 'dark' : 'light');
+  addChangeListener(listener: AppearanceListener): void {
+    let mappedListener = listenerMapping.get(listener);
+    if (!mappedListener) {
+      mappedListener = ({ matches }: MediaQueryListEvent) => {
+        listener({ colorScheme: matches ? 'dark' : 'light' });
+      };
+      listenerMapping.set(listener, mappedListener);
     }
+    if (query) query.addListener(mappedListener);
+  },
 
-    if (query) query.addListener(listener);
-
-    return () => {
-      if (query) {
-        query.removeListener(listener);
-      }
-    };
-  });
-
-  return colorScheme;
-}
+  removeChangeListener(listener: AppearanceListener): void {
+    const mappedListener = listenerMapping.get(listener);
+    if (mappedListener) {
+      if (query) query.removeListener(mappedListener);
+      listenerMapping.delete(listener);
+    }
+  }
+};

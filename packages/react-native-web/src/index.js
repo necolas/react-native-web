@@ -75,4 +75,4 @@ export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 
 // hooks
 export { default as useWindowDimensions } from './exports/useWindowDimensions';
-export { useColorScheme } from './exports/Appearance';
+export { default as useColorScheme } from './exports/hooks/useColorScheme';
