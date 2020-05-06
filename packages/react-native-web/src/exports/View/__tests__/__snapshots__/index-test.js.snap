@@ -17,28 +17,6 @@ exports[`components/View non-text is rendered 1`] = `
 </div>
 `;
 
-exports[`components/View prop "hitSlop" handles partial offsets 1`] = `
-<div
-  class="css-view-1dbjc4n"
->
-  <span
-    class="css-hitSlop-mjp8i1"
-    style="top: -10px;"
-  />
-</div>
-`;
-
-exports[`components/View prop "hitSlop" renders a span with negative position offsets 1`] = `
-<div
-  class="css-view-1dbjc4n"
->
-  <span
-    class="css-hitSlop-mjp8i1"
-    style="bottom: -10px; left: -5px; right: -5px; top: -10px;"
-  />
-</div>
-`;
-
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
   class="css-view-1dbjc4n r-pointerEvents-ah5dr5"

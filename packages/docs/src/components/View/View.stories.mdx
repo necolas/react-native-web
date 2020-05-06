@@ -23,7 +23,6 @@ Please also refer to the in-depth "Accessibility" and "Style" guides.
 | accessibilityValue        | ?Object   | |
 | accessible                | ?boolean  | |
 | children                  | ?any      | |
-| hitSlop                   | ?Object   | |
 | importantForAccessibility | ?string   | |
 | nativeID                  | ?string   | |
 | onBlur                    | ?Function | |
@@ -48,19 +47,6 @@ Please also refer to the in-depth "Accessibility" and "Style" guides.
 | pointerEvents             | ?string | 'auto' |
 | style                     | ?Style | |
 | testID                    | ?string | |
-
-### hitSlop
-
-This defines how far a touch event can start away from the view (in pixels).
-Typical interface guidelines recommend touch targets that are at least 30 - 40
-points/density-independent pixels.
-
-For example, if a touchable view has a height of 20 the touchable height can be
-extended to 40 with hitSlop.
-
-```js
-<View hitSlop={{top: 10, bottom: 10, left: 0, right: 0}} />
-```
 
 ### onLayout
 

@@ -43,18 +43,6 @@ describe('components/View', () => {
     });
   });
 
-  describe('prop "hitSlop"', () => {
-    test('renders a span with negative position offsets', () => {
-      const { container } = render(<View hitSlop={{ top: 10, bottom: 10, right: 5, left: 5 }} />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('handles partial offsets', () => {
-      const { container } = render(<View hitSlop={{ top: 10 }} />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-  });
-
   test('prop "pointerEvents"', () => {
     const { container } = render(<View pointerEvents="box-only" />);
     expect(container.firstChild).toMatchSnapshot();

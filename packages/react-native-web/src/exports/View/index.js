@@ -78,23 +78,8 @@ const forwardPropsList = {
 
 const pickProps = props => pick(props, forwardPropsList);
 
-function createHitSlopElement(hitSlop) {
-  const hitSlopStyle = {};
-  for (const prop in hitSlop) {
-    if (hitSlop.hasOwnProperty(prop)) {
-      const value = hitSlop[prop];
-      hitSlopStyle[prop] = value > 0 ? -1 * value : 0;
-    }
-  }
-  return createElement('span', {
-    classList: [classes.hitSlop],
-    style: hitSlopStyle
-  });
-}
-
 const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const {
-    hitSlop,
     onLayout,
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -131,9 +116,6 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
     }
   });
 
-  const children = hitSlop
-    ? React.Children.toArray([createHitSlopElement(hitSlop), props.children])
-    : props.children;
   const classList = [classes.view];
   const style = StyleSheet.compose(
     hasTextAncestor && styles.inline,
@@ -162,7 +144,6 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   });
 
   const supportedProps = pickProps(props);
-  supportedProps.children = children;
   supportedProps.classList = classList;
   supportedProps.ref = setRef;
   supportedProps.style = style;
@@ -187,16 +168,6 @@ const classes = css.create({
     padding: 0,
     position: 'relative',
     zIndex: 0
-  },
-  // this zIndex-ordering positions the hitSlop above the View but behind
-  // its children
-  hitSlop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1
   }
 });
 
