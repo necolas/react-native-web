@@ -61,10 +61,8 @@ export type TextStyle = {
   WebkitFontSmoothing?: ?string
 };
 
-type AllowedViewProps = $Diff<ViewProps, { hitSlop: any }>;
-
 export type TextProps = {
-  ...AllowedViewProps,
+  ...ViewProps,
   accessibilityRelationship?: {
     activedescendant?: ?string,
     controls?: ?string,

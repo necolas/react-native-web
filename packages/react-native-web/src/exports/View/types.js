@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ColorValue, EdgeInsetsValue, GenericStyleProp, LayoutEvent } from '../../types';
+import type { ColorValue, GenericStyleProp, LayoutEvent } from '../../types';
 
 import type {
   AnimationStyles,
@@ -93,7 +93,6 @@ export type ViewProps = {
   },
   accessible?: boolean,
   children?: ?any,
-  hitSlop?: ?EdgeInsetsValue,
   importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
   nativeID?: ?string,
   onBlur?: (e: any) => void,

@@ -44,8 +44,6 @@ type Props = $ReadOnly<{|
   delayPressOut?: ?number,
   // Whether the press behavior is disabled.
   disabled?: ?boolean,
-  // Additional distance outside of this view in which a press is detected.
-  hitSlop?: $PropertyType<ViewProps, 'hitSlop'>,
   // Called when the view blurs
   onBlur?: $PropertyType<ViewProps, 'onBlur'>,
   // Called when the view is focused
