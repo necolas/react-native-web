@@ -1,3 +1,7 @@
+/**
+ * @noflow
+ */
+
 import React from 'react';
 import { styles } from '../helpers';
 import { Text, TextInput, View } from 'react-native';

@@ -1,4 +1,16 @@
-import type { ColorValue } from '../../types';
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+
+import type { ColorValue, GenericStyleProp } from '../../types';
+import type { ViewProps } from '../View/types';
+
 import type {
   AnimationStyles,
   BorderStyles,
@@ -69,7 +81,7 @@ export type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 's
 
 export type Source = number | string | SourceObject | Array<SourceObject>;
 
-export type Style = {
+export type ImageStyle = {
   ...AnimationStyles,
   ...BorderStyles,
   ...InteractionStyles,
@@ -82,4 +94,20 @@ export type Style = {
   opacity?: number,
   resizeMode?: ResizeMode,
   tintColor?: ColorValue
+};
+
+export type ImageProps = {
+  ...ViewProps,
+  blurRadius?: number,
+  defaultSource?: Source,
+  draggable?: boolean,
+  onError?: (e: any) => void,
+  onLayout?: (e: any) => void,
+  onLoad?: (e: any) => void,
+  onLoadEnd?: (e: any) => void,
+  onLoadStart?: (e: any) => void,
+  onProgress?: (e: any) => void,
+  resizeMode?: ResizeMode,
+  source: Source,
+  style?: GenericStyleProp<ImageStyle>
 };

@@ -8,8 +8,7 @@
  * @flow
  */
 
-import type { ViewProps } from '../View';
-import type { ResizeMode, Source, Style } from './types';
+import type { ImageProps } from './types';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
@@ -22,21 +21,7 @@ import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
 import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 
-export type ImageProps = {
-  ...ViewProps,
-  blurRadius?: number,
-  defaultSource?: Source,
-  draggable?: boolean,
-  onError?: (e: any) => void,
-  onLayout?: (e: any) => void,
-  onLoad?: (e: any) => void,
-  onLoadEnd?: (e: any) => void,
-  onLoadStart?: (e: any) => void,
-  onProgress?: (e: any) => void,
-  resizeMode?: ResizeMode,
-  source: Source,
-  style?: Style
-};
+export type { ImageProps };
 
 const ERRORED = 'ERRORED';
 const LOADED = 'LOADED';
@@ -108,7 +93,7 @@ function resolveAssetDimensions(source) {
   if (typeof source === 'number') {
     const { height, width } = getAssetByID(source);
     return { height, width };
-  } else if (source != null && typeof source === 'object') {
+  } else if (source != null && !Array.isArray(source) && typeof source === 'object') {
     const { height, width } = source;
     return { height, width };
   }
