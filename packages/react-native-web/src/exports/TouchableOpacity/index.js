@@ -28,12 +28,6 @@ type Props = $ReadOnly<{|
   style?: ?ViewStyle
 |}>;
 
-function getStyleOpacityWithDefault(style): number {
-  const flatStyle = StyleSheet.flatten(style);
-  const opacityValue = flatStyle != null ? flatStyle.opacity : null;
-  return typeof opacityValue === 'number' ? opacityValue : 1;
-}
-
 /**
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, dimming it.
@@ -64,30 +58,29 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
     }
   });
 
-  const styleOpacity = getStyleOpacityWithDefault(style);
   const [duration, setDuration] = useState('0s');
-  const [opacity, setOpacity] = useState(styleOpacity);
+  const [opacityOverride, setOpacityOverride] = useState(null);
 
   const setOpacityTo = useCallback(
-    (value: number, duration: number) => {
-      setOpacity(value);
+    (value: ?number, duration: number) => {
+      setOpacityOverride(value);
       setDuration(duration ? `${duration / 1000}s` : '0s');
     },
-    [setOpacity, setDuration]
+    [setOpacityOverride, setDuration]
   );
 
-  const opacityActive = useCallback(
+  const setOpacityActive = useCallback(
     (duration: number) => {
       setOpacityTo(activeOpacity ?? 0.2, duration);
     },
     [activeOpacity, setOpacityTo]
   );
 
-  const opacityInactive = useCallback(
+  const setOpacityInactive = useCallback(
     (duration: number) => {
-      setOpacityTo(styleOpacity, duration);
+      setOpacityTo(null, duration);
     },
-    [setOpacityTo, styleOpacity]
+    [setOpacityTo]
   );
 
   const pressConfig = useMemo(
@@ -100,13 +93,13 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       onLongPress,
       onPress,
       onPressStart(event) {
-        opacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
+        setOpacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
         if (onPressIn != null) {
           onPressIn(event);
         }
       },
       onPressEnd(event) {
-        opacityInactive(250);
+        setOpacityInactive(250);
         if (onPressOut != null) {
           onPressOut(event);
         }
@@ -121,9 +114,9 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       onPress,
       onPressIn,
       onPressOut,
-      opacityActive,
-      opacityInactive,
-      rejectResponderTermination
+      rejectResponderTermination,
+      setOpacityActive,
+      setOpacityInactive
     ]
   );
 
@@ -144,10 +137,8 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
         styles.root,
         !disabled && styles.actionable,
         style,
-        {
-          opacity,
-          transitionDuration: duration
-        }
+        opacityOverride != null && { opacity: opacityOverride },
+        { transitionDuration: duration }
       ]}
     />
   );
