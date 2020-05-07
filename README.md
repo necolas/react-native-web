@@ -2,7 +2,7 @@
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
-**Compatibility: React Native >= 0.60**.
+**Compatibility: React Native >= 0.63**.
 
 "React Native for Web" makes it possible to run [React
 Native][react-native-url] components and APIs on the web using React DOM.
@@ -20,8 +20,9 @@ develop new components for native and web without rewriting existing code.
 React Native for Web can also render to HTML and critical CSS on the server
 using Node.js.
 
-Who is using React Native in production web apps?
+Who is using React Native for Web in production?
 [Twitter](https://mobile.twitter.com),
+[Expo](https://docs.expo.io/workflow/web/),
 [Major League Soccer](https://matchcenter.mlssoccer.com),
 [Flipkart](https://twitter.com/naqvitalha/status/969577892991549440),
 [Uber](https://www.youtube.com/watch?v=RV9rxrNIxnY),
@@ -49,7 +50,11 @@ system](https://facebook.github.io/react-native/docs/gesture-responder-system.ht
 [animations](https://facebook.github.io/react-native/docs/animations.html), and
 other design details.
 
-## Integrations
+## Libraries and integrations
+
+List of React Native packages with known web compatibility:
+
+* [React Native Directory](https://reactnative.directory/?web=true)
 
 Examples of using React Native for Web with other web tools:
 
@@ -115,6 +120,7 @@ React Native v0.60
 | KeyboardAvoidingView     | (✓)    | Mock. No equivalent web APIs. |
 | Modal                    | ✘      | Not started ([#1020](https://github.com/necolas/react-native-web/issues/1020)). |
 | Picker                   | ✓      |  |
+| Pressable                | ✓      |  |
 | RefreshControl           | ✘      | Not started ([#1027](https://github.com/necolas/react-native-web/issues/1027)). |
 | SafeAreaView             | ✓      |  |
 | ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)). |
@@ -139,6 +145,7 @@ React Native v0.60
 | AccessibilityInfo        | (✓)    | Mock. No equivalent web APIs. |
 | Alert                    | ✘      | Not started ([#1026](https://github.com/necolas/react-native-web/issues/1026)). |
 | Animated                 | ✓      | Missing `useNativeDriver` support. |
+| Appearance               | ✓      |  |
 | AppRegistry              | ✓      | Includes additional support for server rendering with `getApplication`. |
 | AppState                 | ✓      |  |
 | BackHandler              | (✓)    | Mock. No equivalent web APIs. |
@@ -163,6 +170,8 @@ React Native v0.60
 | StyleSheet               | ✓      |  |
 | UIManager                | ✓      |  |
 | Vibration                | ✓      |  |
+| useColorScheme           | ✓      |  |
+| useWindowDimensions      | ✓      |  |
 
 ## Contributing
 
