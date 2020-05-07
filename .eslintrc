@@ -17,41 +17,23 @@
     "sourceType": "module"
   },
   "extends": [
+    "plugin:flowtype/recommended",
     "prettier",
     "prettier/react"
   ],
   "plugins": [
+    "flowtype",
     "promise",
     "react",
     "react-hooks"
   ],
   "env": {
+    "browser": true,
     "es6": true,
     "node": true
   },
   "globals": {
-    "document": false,
-    "navigator": false,
-    "window": false,
-    // Flow global types,
-    "$Diff": false,
-    "$ElementType": false,
-    "$Enum": false,
-    "$PropertyType": false,
-    "$ReadOnly": false,
-    "$ReadOnlyArray": false,
-    "CSSStyleSheet": false,
-    "HTMLElement": false,
-    "HTMLInputElement": false,
-    "ReactClass": false,
-    "ReactComponent": false,
-    "ReactElement": false,
-    "ReactPropsChainableTypeChecker": false,
-    "ReactPropsCheckType": false,
-    "ReactPropTypes": false,
-    "ResizeObserver": false,
-    "SyntheticEvent": false,
-    "TimeoutID": false,
+
   },
   "rules": {
     "camelcase": 0,
@@ -140,6 +122,10 @@
     "use-isnan": 2,
     "valid-typeof": 2,
     "yoda": [2, "never"],
+
+    // flow
+    "flowtype/generic-spacing": 0,
+    "flowtype/space-after-type-colon": 0,
 
     // promise
     "promise/param-names": 2,

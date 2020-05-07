@@ -6875,6 +6875,13 @@ eslint-config-prettier@^6.4.0:
   dependencies:
     get-stdin "^6.0.0"
 
+eslint-plugin-flowtype@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-4.7.0.tgz#903a6ea3eb5cbf4c7ba7fa73cc43fc39ab7e4a70"
+  integrity sha512-M+hxhSCk5QBEValO5/UqrS4UunT+MgplIJK5wA1sCtXjzBcZkpTGRwxmLHhGpbHcrmQecgt6ZL/KDdXWqGB7VA==
+  dependencies:
+    lodash "^4.17.15"
+
 eslint-plugin-promise@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
