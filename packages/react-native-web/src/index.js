@@ -9,6 +9,7 @@ export { default as NativeModules } from './exports/NativeModules';
 export { default as AccessibilityInfo } from './exports/AccessibilityInfo';
 export { default as Alert } from './exports/Alert';
 export { default as Animated } from './exports/Animated';
+export { default as Appearance } from './exports/Appearance';
 export { default as AppRegistry } from './exports/AppRegistry';
 export { default as AppState } from './exports/AppState';
 export { default as BackHandler } from './exports/BackHandler';
@@ -73,4 +74,5 @@ export { default as TVEventHandler } from './exports/TVEventHandler';
 export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 
 // hooks
+export { default as useColorScheme } from './exports/useColorScheme';
 export { default as useWindowDimensions } from './exports/useWindowDimensions';

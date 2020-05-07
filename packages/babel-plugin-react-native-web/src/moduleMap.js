@@ -6,6 +6,7 @@ module.exports = {
   Animated: true,
   AppRegistry: true,
   AppState: true,
+  Appearance: true,
   BackHandler: true,
   Button: true,
   CheckBox: true,
@@ -64,5 +65,6 @@ module.exports = {
   processColor: true,
   render: true,
   unmountComponentAtNode: true,
+  useColorScheme: true,
   useWindowDimensions: true
 };
