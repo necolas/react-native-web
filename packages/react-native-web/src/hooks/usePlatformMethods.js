@@ -58,7 +58,7 @@ export default function usePlatformMethods(
       const hostNode = hostRef.current;
       hostNode.measure = callback => UIManager.measure(hostNode, callback);
       hostNode.measureLayout = (relativeToNode, success, failure) =>
-        UIManager.measureLayout(hostNode, relativeToNode, success, failure);
+        UIManager.measureLayout(hostNode, relativeToNode, failure, success);
       hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = nativeProps =>
         setNativeProps(hostNode, nativeProps, classList, style, previousStyleRef);
