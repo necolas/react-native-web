@@ -11,7 +11,6 @@
 'use strict';
 
 import invariant from 'fbjs/lib/invariant';
-import isSelectionValid from '../../modules/isSelectionValid';
 
 type ClickEvent = any;
 type KeyboardEvent = any;
@@ -224,6 +223,7 @@ export default class PressResponder {
   _pressDelayTimeout: ?TimeoutID = null;
   _pressOutDelayTimeout: ?TimeoutID = null;
   _responderID: ?any;
+  _selectionTerminated: ?boolean;
   _touchActivatePosition: ?$ReadOnly<{|
     pageX: number,
     pageY: number
@@ -265,6 +265,7 @@ export default class PressResponder {
 
       this._longPressDispatched = false;
       this._responderID = event.currentTarget;
+      this._selectionTerminated = false;
       this._touchState = NOT_RESPONDER;
       this._isPointerTouch = event.nativeEvent.type === 'touchstart';
 
@@ -342,6 +343,9 @@ export default class PressResponder {
       onResponderRelease: event => end(event),
 
       onResponderTerminate: event => {
+        if (event.nativeEvent.type === 'selectionchange') {
+          this._selectionTerminated = true;
+        }
         this._receiveSignal(RESPONDER_TERMINATED, event);
       },
 
@@ -375,9 +379,9 @@ export default class PressResponder {
         const { disabled, onPress } = this._config;
         if (!disabled) {
           // If long press dispatched, cancel default click behavior.
-          // If text is selected it means the user selected text during the gesture,
-          // cancel default click behavior.
-          if (this._longPressDispatched || isSelectionValid()) {
+          // If the responder terminated because text was selected during the gesture,
+          // cancel the default click behavior.
+          if (this._longPressDispatched || this._selectionTerminated) {
             event.preventDefault();
           } else if (onPress != null && event.ctrlKey === false && event.altKey === false) {
             onPress(event);
