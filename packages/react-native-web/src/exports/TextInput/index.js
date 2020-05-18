@@ -22,19 +22,14 @@ import useResponderEvents from '../../hooks/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
-const emptyObject = {};
-
 /**
  * Determines whether a 'selection' prop differs from a node's existing
  * selection state.
  */
 const isSelectionStale = (node, selection) => {
-  if (node != null && selection != null && selection.start != null) {
-    const { selectionEnd, selectionStart } = node;
-    const { start, end } = selection;
-    return start !== selectionStart || end !== selectionEnd;
-  }
-  return false;
+  const { selectionEnd, selectionStart } = node;
+  const { start, end } = selection;
+  return start !== selectionStart || end !== selectionEnd;
 };
 
 /**
@@ -42,7 +37,7 @@ const isSelectionStale = (node, selection) => {
  * error.
  */
 const setSelection = (node, selection) => {
-  if (node != null && selection != null && isSelectionStale(node, selection)) {
+  if (isSelectionStale(node, selection)) {
     const { start, end } = selection;
     try {
       node.setSelectionRange(start, end || start);
@@ -155,7 +150,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     placeholderTextColor,
     returnKeyType,
     secureTextEntry = false,
-    selection = emptyObject,
+    selection,
     selectTextOnFocus,
     spellCheck
   } = props;
@@ -251,7 +246,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     if (onChangeText) {
       onChangeText(text);
     }
-    handleSelectionChange(e);
   }
 
   function handleFocus(e) {
@@ -312,22 +306,22 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     if (onSelectionChange) {
       try {
         const node = e.target;
-        if (isSelectionStale(node, selection)) {
-          const { selectionStart, selectionEnd } = node;
-          e.nativeEvent.selection = {
-            start: selectionStart,
-            end: selectionEnd
-          };
-          e.nativeEvent.text = e.target.value;
-          onSelectionChange(e);
-        }
+        const { selectionStart, selectionEnd } = node;
+        e.nativeEvent.selection = {
+          start: selectionStart,
+          end: selectionEnd
+        };
+        e.nativeEvent.text = e.target.value;
+        onSelectionChange(e);
       } catch (e) {}
     }
   }
 
   useLayoutEffect(() => {
     const node = hostRef.current;
-    setSelection(node, selection);
+    if (node != null && selection != null) {
+      setSelection(node, selection);
+    }
     if (document.activeElement === node) {
       TextInputState._currentlyFocusedNode = node;
     }

@@ -9,6 +9,7 @@ export { default as maxLength } from './MaxLength';
 export { default as multiline } from './Multiline';
 export { default as numberOfLines } from './NumberOfLines';
 export { default as onSelectionChange } from './OnSelectionChange';
+export { default as onSelectionChangeControlled } from './OnSelectionChangeControlled';
 export { default as placeholder } from './Placeholder';
 export { default as placeholderTextColor } from './PlaceholderTextColor';
 export { default as secureTextEntry } from './SecureTextEntry';
