@@ -26,16 +26,13 @@ import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
 export default function createStyleResolver() {
-  let inserted, sheet, lookup;
+  let inserted, sheet, cache;
   const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
 
   const init = () => {
     inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
     sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
-    lookup = {
-      byClassName: {},
-      byProp: {}
-    };
+    cache = {};
     modality(rule => sheet.insert(rule, STYLE_GROUPS.modality));
     initialRules.forEach(rule => {
       sheet.insert(rule, STYLE_GROUPS.reset);
@@ -44,17 +41,15 @@ export default function createStyleResolver() {
 
   init();
 
-  function addToLookup(className, prop, value) {
-    if (!lookup.byProp[prop]) {
-      lookup.byProp[prop] = {};
+  function addToCache(className, prop, value) {
+    if (!cache[prop]) {
+      cache[prop] = {};
     }
-    lookup.byProp[prop][value] = className;
-    lookup.byClassName[className] = { prop, value };
+    cache[prop][value] = className;
   }
 
   function getClassName(prop, value) {
     const val = stringifyValueWithProperty(value, prop);
-    const cache = lookup.byProp;
     return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
   }
 
@@ -66,7 +61,7 @@ export default function createStyleResolver() {
       const results = atomic(style);
       Object.keys(results).forEach(key => {
         const { identifier, property, rules, value } = results[key];
-        addToLookup(identifier, property, value);
+        addToCache(identifier, property, value);
         rules.forEach(rule => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
           sheet.insert(rule, group);
