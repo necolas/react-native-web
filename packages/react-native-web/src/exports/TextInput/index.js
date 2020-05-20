@@ -98,11 +98,6 @@ const forwardPropsList = {
   onMouseOver: true,
   onMouseOut: true,
   onMouseUp: true,
-  itemID: true,
-  itemRef: true,
-  itemProp: true,
-  itemScope: true,
-  itemType: true,
   unstable_ariaSet: true,
   unstable_dataSet: true
 };
