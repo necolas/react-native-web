@@ -73,7 +73,6 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   const {
     accessibilityLabel,
-    accessibilityRelationship,
     accessibilityRole,
     accessibilityState,
     children,
@@ -146,7 +145,6 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   return (
     <View
       accessibilityLabel={accessibilityLabel}
-      accessibilityRelationship={accessibilityRelationship}
       accessibilityRole={accessibilityRole}
       accessibilityState={accessibilityState}
       children={children}

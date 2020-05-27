@@ -195,32 +195,6 @@ describe('modules/createDOMProps', () => {
     });
   });
 
-  describe('prop "accessibilityRelationship"', () => {
-    function createAccessibilityRelationship(value) {
-      return {
-        activedescendant: value,
-        controls: value,
-        describedby: value,
-        details: value,
-        haspopup: value,
-        labelledby: value,
-        owns: value
-      };
-    }
-
-    test('values are "undefined"', () => {
-      const accessibilityRelationship = createAccessibilityRelationship(undefined);
-      const props = createProps({ accessibilityRelationship });
-      expect(props).toMatchSnapshot();
-    });
-
-    test('values are "id" string', () => {
-      const accessibilityRelationship = createAccessibilityRelationship('id');
-      const props = createProps({ accessibilityRelationship });
-      expect(props).toMatchSnapshot();
-    });
-  });
-
   test('prop "className" is preserved', () => {
     const className = 'external-class-name';
     const props = createProps({ className });

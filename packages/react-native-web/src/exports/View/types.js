@@ -61,15 +61,6 @@ export type ViewStyle = {
 export type ViewProps = {
   accessibilityLabel?: ?string,
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
-  accessibilityRelationship?: {
-    activedescendant?: ?string,
-    controls?: ?string,
-    describedby?: ?string,
-    details?: ?string,
-    haspopup?: ?string,
-    labelledby?: ?string,
-    owns?: ?string
-  },
   accessibilityRole?: ?string,
   accessibilityState?: {
     busy?: ?boolean,
@@ -123,6 +114,7 @@ export type ViewProps = {
   style?: GenericStyleProp<ViewStyle>,
   testID?: ?string,
   // unstable
+  dataSet?: ?Object,
   onMouseDown?: (e: any) => void,
   onMouseEnter?: (e: any) => void,
   onMouseLeave?: (e: any) => void,
@@ -142,7 +134,5 @@ export type ViewProps = {
   onWheel?: (e: any) => void,
   href?: ?string,
   rel?: ?string,
-  target?: ?string,
-  unstable_ariaSet?: Object,
-  unstable_dataSet?: Object
+  target?: ?string
 };

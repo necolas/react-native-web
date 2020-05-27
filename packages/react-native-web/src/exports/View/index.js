@@ -25,7 +25,6 @@ import TextAncestorContext from '../Text/TextAncestorContext';
 const forwardPropsList = {
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
-  accessibilityRelationship: true,
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityValue: true,
@@ -55,6 +54,7 @@ const forwardPropsList = {
   style: true,
   testID: true,
   // unstable
+  dataSet: true,
   onMouseDown: true,
   onMouseEnter: true,
   onMouseLeave: true,
@@ -66,9 +66,7 @@ const forwardPropsList = {
   onWheel: true,
   href: true,
   rel: true,
-  target: true,
-  unstable_ariaSet: true,
-  unstable_dataSet: true
+  target: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);

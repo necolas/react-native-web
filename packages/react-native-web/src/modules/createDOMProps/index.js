@@ -50,13 +50,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const defaultStyleResolver = (style, classList) => styleResolver.resolve(style, classList);
-
-const createDOMProps = (component, props, styleResolver) => {
-  if (!styleResolver) {
-    styleResolver = defaultStyleResolver;
-  }
-
+const createDOMProps = (component, props) => {
   if (!props) {
     props = emptyObject;
   }
@@ -64,11 +58,11 @@ const createDOMProps = (component, props, styleResolver) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessibilityRelationship,
     accessibilityState,
     accessibilityValue,
     accessible,
     classList,
+    dataSet,
     disabled: providedDisabled,
     importantForAccessibility,
     nativeID,
@@ -78,8 +72,6 @@ const createDOMProps = (component, props, styleResolver) => {
     /* eslint-disable */
     accessibilityRole,
     /* eslint-enable */
-    unstable_ariaSet,
-    unstable_dataSet,
     ...domProps
   } = props;
 
@@ -95,23 +87,11 @@ const createDOMProps = (component, props, styleResolver) => {
     component === 'textarea' ||
     domProps.contentEditable != null;
 
-  // unstable_ariaSet
-  if (unstable_ariaSet != null) {
-    for (const prop in unstable_ariaSet) {
-      if (hasOwnProperty.call(unstable_ariaSet, prop)) {
-        const value = unstable_ariaSet[prop];
-        if (value != null) {
-          domProps[`aria-${prop}`] = value;
-        }
-      }
-    }
-  }
-
-  // unstable_dataSet
-  if (unstable_dataSet != null) {
-    for (const prop in unstable_dataSet) {
-      if (hasOwnProperty.call(unstable_dataSet, prop)) {
-        const value = unstable_dataSet[prop];
+  // dataSet
+  if (dataSet != null) {
+    for (const prop in dataSet) {
+      if (hasOwnProperty.call(dataSet, prop)) {
+        const value = dataSet[prop];
         if (value != null) {
           domProps[`data-${prop}`] = value;
         }
@@ -127,16 +107,6 @@ const createDOMProps = (component, props, styleResolver) => {
   // accessibilityLiveRegion
   if (accessibilityLiveRegion != null) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
-  }
-
-  // accessibilityRelationship
-  if (accessibilityRelationship != null) {
-    for (const prop in accessibilityRelationship) {
-      const value = accessibilityRelationship[prop];
-      if (value != null) {
-        domProps[`aria-${prop}`] = value;
-      }
-    }
   }
 
   // accessibilityRole
@@ -224,7 +194,7 @@ const createDOMProps = (component, props, styleResolver) => {
   const finalClassList = [needsReset && classes.reset, needsCursor && classes.cursor, classList];
 
   // Resolve styles
-  const { className, style } = styleResolver(reactNativeStyle, finalClassList);
+  const { className, style } = styleResolver.resolve(reactNativeStyle, finalClassList);
 
   if (className != null && className !== '') {
     domProps.className = className;

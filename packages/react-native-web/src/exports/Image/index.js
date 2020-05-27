@@ -136,7 +136,6 @@ function resolveAssetUri(source): ?string {
 const Image = forwardRef<ImageProps, *>((props, ref) => {
   const {
     accessibilityLabel,
-    accessibilityRelationship,
     accessibilityRole,
     accessibilityState,
     accessible,
@@ -276,7 +275,6 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
   return (
     <View
       accessibilityLabel={accessibilityLabel}
-      accessibilityRelationship={accessibilityRelationship}
       accessibilityRole={accessibilityRole}
       accessibilityState={accessibilityState}
       accessible={accessible}

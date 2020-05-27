@@ -63,15 +63,6 @@ export type TextStyle = {
 
 export type TextProps = {
   ...ViewProps,
-  accessibilityRelationship?: {
-    activedescendant?: ?string,
-    controls?: ?string,
-    describedby?: ?string,
-    details?: ?string,
-    haspopup?: ?string,
-    labelledby?: ?string,
-    owns?: ?string
-  },
   accessibilityRole?:
     | 'button'
     | 'header'

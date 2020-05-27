@@ -48,7 +48,6 @@ const setSelection = (node, selection) => {
 const forwardPropsList = {
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
-  accessibilityRelationship: true,
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityValue: true,
@@ -91,15 +90,14 @@ const forwardPropsList = {
   testID: true,
   type: true,
   // unstable
+  dataSet: true,
   onMouseDown: true,
   onMouseEnter: true,
   onMouseLeave: true,
   onMouseMove: true,
   onMouseOver: true,
   onMouseOut: true,
-  onMouseUp: true,
-  unstable_ariaSet: true,
-  unstable_dataSet: true
+  onMouseUp: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);
