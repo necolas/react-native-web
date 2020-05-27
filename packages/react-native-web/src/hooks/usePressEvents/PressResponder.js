@@ -10,8 +10,6 @@
 
 'use strict';
 
-import invariant from 'fbjs/lib/invariant';
-
 type ClickEvent = any;
 type KeyboardEvent = any;
 type ResponderEvent = any;
@@ -222,7 +220,7 @@ export default class PressResponder {
   _longPressDispatched: ?boolean = false;
   _pressDelayTimeout: ?TimeoutID = null;
   _pressOutDelayTimeout: ?TimeoutID = null;
-  _responderID: ?any;
+  _responder: ?any;
   _selectionTerminated: ?boolean;
   _touchActivatePosition: ?$ReadOnly<{|
     pageX: number,
@@ -264,7 +262,7 @@ export default class PressResponder {
       this._cancelPressOutDelayTimeout();
 
       this._longPressDispatched = false;
-      this._responderID = event.currentTarget;
+      this._responder = event.currentTarget;
       this._selectionTerminated = false;
       this._touchState = NOT_RESPONDER;
       this._isPointerTouch = event.nativeEvent.type === 'touchstart';
@@ -319,7 +317,9 @@ export default class PressResponder {
 
       onKeyUp: event => {
         if (isValidKeyPress(event)) {
-          end(event);
+          if (this._touchState !== NOT_RESPONDER) {
+            end(event);
+          }
           event.stopPropagation();
         }
       },
@@ -411,17 +411,12 @@ export default class PressResponder {
     if (Transitions[prevState] != null) {
       nextState = Transitions[prevState][signal];
     }
-    if (this._responderID == null && signal === RESPONDER_RELEASE) {
+    if (this._responder == null && signal === RESPONDER_RELEASE) {
       return;
     }
-    invariant(
-      nextState != null && nextState !== ERROR,
-      'PressResponder: Invalid signal `%s` for state `%s` on responder: %s',
-      signal,
-      prevState,
-      this._responderID
-    );
-    if (prevState !== nextState) {
+    if (nextState == null || nextState === ERROR) {
+      console.error(`PressResponder: Invalid signal ${signal} for state ${prevState} on responder`);
+    } else if (prevState !== nextState) {
       this._performTransitionSideEffects(prevState, nextState, signal, event);
       this._touchState = nextState;
     }
