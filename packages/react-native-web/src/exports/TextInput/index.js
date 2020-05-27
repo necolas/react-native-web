@@ -104,6 +104,12 @@ const forwardPropsList = {
 
 const pickProps = props => pick(props, forwardPropsList);
 
+// If an Input Method Editor is processing key input, the 'keyCode' is 229.
+// https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
+function isEventComposing(nativeEvent) {
+  return nativeEvent.isComposing || nativeEvent.keyCode === 229;
+}
+
 const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   const {
     autoCapitalize = 'sentences',
@@ -267,31 +273,27 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
 
-    if (onKeyPress) {
-      const keyValue = e.key;
+    const nativeEvent = e.nativeEvent;
+    const isComposing = isEventComposing(nativeEvent);
 
-      if (keyValue) {
-        e.nativeEvent = {
-          altKey: e.altKey,
-          ctrlKey: e.ctrlKey,
-          key: keyValue,
-          metaKey: e.metaKey,
-          shiftKey: e.shiftKey,
-          target: e.target
-        };
-        onKeyPress(e);
-      }
+    if (onKeyPress) {
+      onKeyPress(e);
     }
 
-    if (!e.isDefaultPrevented() && e.key === 'Enter' && !e.shiftKey) {
+    if (
+      e.key === 'Enter' &&
+      !e.shiftKey &&
+      // Do not call submit if composition is occuring.
+      !isComposing &&
+      !e.isDefaultPrevented()
+    ) {
       if ((blurOnSubmit || !multiline) && onSubmitEditing) {
-        // prevent "Enter" from inserting a newline
+        // prevent "Enter" from inserting a newline or submitting a form
         e.preventDefault();
-        e.nativeEvent = { target: e.target, text: e.target.value };
+        nativeEvent.text = e.target.value;
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit && hostRef.current != null) {
-        // $FlowFixMe
         hostRef.current.blur();
       }
     }

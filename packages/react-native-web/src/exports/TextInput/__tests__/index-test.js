@@ -42,6 +42,7 @@ function createKeyboardEvent(
     ctrlKey = false,
     isComposing = false,
     key = '',
+    keyCode = 0,
     metaKey = false,
     preventDefault = () => {},
     shiftKey = false
@@ -52,6 +53,7 @@ function createKeyboardEvent(
     ctrlKey,
     isComposing,
     key,
+    keyCode,
     metaKey,
     preventDefault,
     shiftKey
@@ -271,14 +273,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'ArrowLeft',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -293,14 +295,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'Backspace',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -315,14 +317,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'Enter',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -337,14 +339,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'Escape',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -359,14 +361,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: ' ',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -381,14 +383,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'Tab',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -403,14 +405,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: false,
             ctrlKey: false,
             key: 'a',
             metaKey: false,
             shiftKey: false,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -433,14 +435,14 @@ describe('components/TextInput', () => {
       expect(onKeyPress).toHaveBeenCalledTimes(1);
       expect(onKeyPress).toBeCalledWith(
         expect.objectContaining({
-          nativeEvent: {
+          nativeEvent: expect.objectContaining({
             altKey: true,
             ctrlKey: true,
             key: ' ',
             metaKey: true,
             shiftKey: true,
             target: expect.anything()
-          }
+          })
         })
       );
     });
@@ -498,6 +500,17 @@ describe('components/TextInput', () => {
         expect(e.nativeEvent.text).toBe('12345');
         done();
       }
+    });
+
+    test('single-line input while composing', () => {
+      const onSubmitEditing = jest.fn();
+      const { container } = render(
+        <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
+      );
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Enter', isComposing: true, keyCode: 13 }));
+      input.dispatchEvent(keydown({ key: 'Enter', isComposing: false, keyCode: 229 }));
+      expect(onSubmitEditing).not.toHaveBeenCalled();
     });
 
     test('multi-line input', () => {
@@ -567,17 +580,15 @@ describe('components/TextInput', () => {
     test('set cursor location', () => {
       const cursorLocation = { start: 3, end: 3 };
       const { container: defaultContainer } = render(<TextInput defaultValue="12345" />);
-      const { container: customContainer } = render(
-        <TextInput defaultValue="12345" selection={cursorLocation} />
-      );
-
       const inputDefaultSelection = findInput(defaultContainer);
-      const inputCustomSelection = findInput(customContainer);
-
       // default selection is 0
       expect(inputDefaultSelection.selectionStart).toEqual(0);
       expect(inputDefaultSelection.selectionEnd).toEqual(0);
 
+      const { container: customContainer } = render(
+        <TextInput defaultValue="12345" selection={cursorLocation} />
+      );
+      const inputCustomSelection = findInput(customContainer);
       // custom selection sets cursor at custom position
       expect(inputCustomSelection.selectionStart).toEqual(cursorLocation.start);
       expect(inputCustomSelection.selectionEnd).toEqual(cursorLocation.end);
