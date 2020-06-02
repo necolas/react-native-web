@@ -49,6 +49,7 @@ const supportedProps = {
   style: true,
   testID: true,
   /* @platform web */
+  lang: true,
   onScroll: true,
   onWheel: true,
   // keyboard events
