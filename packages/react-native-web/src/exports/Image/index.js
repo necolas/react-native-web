@@ -206,7 +206,8 @@ class Image extends React.Component<ImageProps, State> {
       pointerEvents,
       resizeMode,
       source,
-      testID
+      testID,
+      ...otherProps
     } = this.props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -277,6 +278,7 @@ class Image extends React.Component<ImageProps, State> {
         pointerEvents={pointerEvents}
         style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
         testID={testID}
+        {...otherProps}
       >
         <View
           style={[
