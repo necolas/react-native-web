@@ -1,0 +1,88 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './Modal.stories.js';
+
+<Meta title="Components|Modal" />
+
+# Modal
+
+## Props
+
+<Props of={Stories.ofProps} />
+
+### children
+
+
+
+### visible
+
+Whether or not the modal is visible.
+
+When set to `false` the contents are not rendered & the modal removes itself
+from the screen.
+
+### animationType
+
+The `animationType` prop can be used to add animation to the modal
+being opened or dismissed.
+
+* `none` - the modal appears without any animation.
+* `slide` - the modal slides up from the bottom of the screen.
+* `fade` - the modal fades in.
+
+By default this is `none`.
+
+### transparent
+
+The `transparent` prop determines if the modal is rendered with a `transparent` backdrop or
+a `white` backdrop.
+
+### onRequestClose
+
+The `onRequestClose` callback is called when the user is attempting to close the modal -
+such as when they hit `Escape`.
+
+### onShow
+
+### onDismiss
+
+### presentationStyle
+
+On `web` this is ignored.
+
+### statusBarTranslucent
+
+On `web` this is ignored.
+
+### hardwareAccelerated
+
+On `web` this is ignored.
+
+### onOrientationChange
+
+On `web` this is ignored.
+
+### supportedOrientations
+
+On `web` this is ignored.
+
+## Examples
+
+### Modal
+
+Open a Modal
+
+<Preview withSource='none'>
+  <Story name="modal">
+    <Stories.modal />
+  </Story>
+</Preview>
+
+### modal with backdrop
+
+Open a Modal
+
+<Preview withSource='none'>
+  <Story name="modalBackdrop">
+    <Stories.modalBackdrop />
+  </Story>
+</Preview>
