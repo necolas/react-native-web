@@ -11,8 +11,8 @@
 import React from 'react';
 
 import View from '../View';
-
 import StyleSheet from '../StyleSheet';
+
 import { ModalProps } from './types';
 import ModalPortal from './ModalPortal';
 
@@ -90,7 +90,7 @@ class Modal extends React.Component<ModalProps> {
 
     return (
       <ModalPortal>
-        <View style={[styles.modal]}>
+        <View accessibilityRole="dialog" aria-modal style={[styles.modal]}>
           <View style={[styles.container, containerStyles]}>
             {children}
           </View>
