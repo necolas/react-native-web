@@ -59,12 +59,30 @@ class Modal extends React.Component<ModalProps> {
     this.setState({ visible: false });
   }
 
+  onKeyUp = (e) => {
+    const { visible } = this.props;
+
+    if (visible && e.key === 'Escape') {
+      event.stopPropagation();
+
+      this.onRequestClose();
+    }
+  }
+
   componentDidMount() {
     const { visible } = this.props;
 
     if (visible) {
       this.show();
     }
+
+    // Add `Escape` listener
+    document.addEventListener('keyup', this.onKeyUp, false);
+  }
+
+  componentWillUnmount() {
+    // Remove `Escape` listener
+    document.removeEventListener('keyup', this.onKeyUp, false);
   }
 
   componentDidUpdate(prevProps: ModalProps) {
