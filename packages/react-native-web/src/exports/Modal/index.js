@@ -26,18 +26,26 @@ class Modal extends React.Component<ModalProps> {
   }
 
   onDismiss () {
-    const { onDismiss: propsOnDismiss } = this.props;
+    const { onDismiss } = this.props;
 
-    if (propsOnDismiss) {
-      propsOnDismiss.call(this);
+    if (onDismiss) {
+      onDismiss.call(this);
     }
   }
 
   onShow () {
-    const { onShow: propsOnShow } = this.props;
+    const { onShow } = this.props;
 
-    if (propsOnShow) {
-      propsOnShow.call(this);
+    if (onShow) {
+      onShow.call(this);
+    }
+  }
+
+  onRequestClose () {
+    const { onRequestClose } = this.props;
+
+    if (onRequestClose) {
+      onRequestClose.call(this);
     }
   }
 
