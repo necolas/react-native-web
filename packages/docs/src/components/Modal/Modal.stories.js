@@ -30,5 +30,7 @@ ofProps.propTypes = {
 };
 
 export { ofProps };
+
 export { default as modal } from './examples/Modal';
 export { default as modalBackdrop } from './examples/ModalBackdrop';
+export { default as modalception } from './examples/Modalception'
