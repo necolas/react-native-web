@@ -15,8 +15,43 @@ import StyleSheet from '../StyleSheet';
 
 import { ModalProps } from './types';
 import ModalPortal from './ModalPortal';
+import FocusBracket from './FocusBracket';
+
+function attemptFocus (element) {
+  try {
+    element.focus();
+  } catch (e) {
+    // Do nothing
+  }
+
+  return document.activeElement === element;
+}
+
+function focusFirstDescendant (element) {
+  for (let i = 0; i < element.childNodes.length; i++) {
+    const child = element.childNodes[i];
+    if (attemptFocus(child) || focusFirstDescendant(child)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function focusLastDescendant (element) {
+  for (let i = element.childNodes.length - 1; i >= 0; i--) {
+    const child = element.childNodes[i];
+    if (attemptFocus(child) || focusLastDescendant(child)) {
+      return true;
+    }
+  }
+  return false;
+}
 
 class Modal extends React.Component<ModalProps> {
+  _modalElement;
+  _trapFocusInProgress = false;
+  _lastFocusedElement;
+
   constructor(props) {
     super(props);
 
@@ -59,14 +94,49 @@ class Modal extends React.Component<ModalProps> {
     this.setState({ visible: false });
   }
 
-  onKeyUp = (e) => {
+  _trapFocus = (e) => {
     const { visible } = this.props;
 
-    if (visible && e.key === 'Escape') {
+    if (!visible || this._modalElement == null) {
+      return;
+    }
+
+    if (this._trapFocusInProgress) {
+      return;
+    }
+
+    try {
+      this._trapFocusInProgress = true;
+
+      if (!this._modalElement.contains(e.target)) {
+        focusFirstDescendant(this._modalElement);
+        if (this._lastFocusedElement === document.activeElement) {
+          focusLastDescendant(this._modalElement);
+        }
+      }
+    } finally {
+      this._trapFocusInProgress = false;
+    }
+
+    this._lastFocusedElement = document.activeElement;
+  }
+
+  _closeOnEscape = (e) => {
+    const { visible } = this.props;
+
+    if (!visible) {
+      return;
+    }
+
+    if (e.key === 'Escape') {
       event.stopPropagation();
 
       this.onRequestClose();
     }
+  }
+
+  _setModalElementRef = (element) => {
+    this._modalElement = element
   }
 
   componentDidMount() {
@@ -76,13 +146,13 @@ class Modal extends React.Component<ModalProps> {
       this.show();
     }
 
-    // Add `Escape` listener
-    document.addEventListener('keyup', this.onKeyUp, false);
+    document.addEventListener('keyup', this._closeOnEscape, false);
+    document.addEventListener('focus', this._trapFocus, true);
   }
 
   componentWillUnmount() {
-    // Remove `Escape` listener
-    document.removeEventListener('keyup', this.onKeyUp, false);
+    document.removeEventListener('keyup', this._closeOnEscape, false);
+    document.removeEventListener('focus', this._trapFocus, true);
   }
 
   componentDidUpdate(prevProps: ModalProps) {
@@ -109,6 +179,7 @@ class Modal extends React.Component<ModalProps> {
     const { visible } = this.state;
 
     if (visible !== true) {
+      this._setModalElementRef(null);
       return null;
     }
 
@@ -116,11 +187,13 @@ class Modal extends React.Component<ModalProps> {
 
     return (
       <ModalPortal>
-        <View accessibilityRole="dialog" aria-modal style={[styles.modal]}>
+        <FocusBracket />
+        <View forwardedRef={this._setModalElementRef} accessibilityRole="dialog" aria-modal style={[styles.modal]}>
           <View style={[styles.container, containerStyles]}>
             {children}
           </View>
         </View>
+        <FocusBracket />
       </ModalPortal>
     );
   }
@@ -144,6 +217,9 @@ const styles = StyleSheet.create({
   container: {
     top: 0,
     flex: 1
+  },
+  focusBracket: {
+    outline: 'none'
   }
 });
 
