@@ -10,6 +10,8 @@
 
 import React from 'react';
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 
@@ -78,6 +80,9 @@ class Modal extends React.Component<ModalProps> {
   _onDismiss = () => {
     const { onDismiss } = this.props;
 
+    // When we dismiss we can't assume that we're dismissing the
+    // top element in the stack - so search the stack and remove
+    // ourselves from it if need be.
     if (visibleModalStack.includes(this)) {
       visibleModalStack.splice(visibleModalStack.indexOf(this), 1);
     }
@@ -100,14 +105,26 @@ class Modal extends React.Component<ModalProps> {
   _trapFocus = (e) => {
     const { visible } = this.props;
 
-    if (!visible || this._modalElement == null) {
+    // If the modal isn't currently visible it shouldn't trap focus.
+    if (!visible) {
       return;
     }
 
+    // If the underlying modal element reference hasn't been set yet
+    // we can't do much with trapping focus.
+    if (this._modalElement == null) {
+      return;
+    }
+
+    // If this isn't the top modal we won't be counting it
+    // for trapping focus.
     if (!this.isTopModal()) {
       return;
     }
 
+    // Given that we re-focus as part of trapping focus,
+    // we don't run to run this functionality while we're already
+    // running it.
     if (this._trapFocusInProgress) {
       return;
     }
@@ -115,7 +132,15 @@ class Modal extends React.Component<ModalProps> {
     try {
       this._trapFocusInProgress = true;
 
+      // Only muck with the focus if the event target isn't within this modal
       if (!this._modalElement.contains(e.target)) {
+        // To handle keyboard focusing we can make an assumption here.
+        // If you're tabbing through the focusable elements, the previously
+        // active element will either be the first or the last.
+        //
+        // If the previously selected element is the "first" descendant
+        // and we're leaving it - this means that we should
+        // be looping around to the other side of the modal.
         focusFirstDescendant(this._modalElement);
         if (this._lastFocusedElement === document.activeElement) {
           focusLastDescendant(this._modalElement);
@@ -141,7 +166,6 @@ class Modal extends React.Component<ModalProps> {
 
     if (e.key === 'Escape') {
       event.stopPropagation();
-
       this._onRequestClose();
     }
   }
@@ -151,13 +175,17 @@ class Modal extends React.Component<ModalProps> {
   }
 
   componentDidMount() {
-    document.addEventListener('keyup', this._closeOnEscape, false);
-    document.addEventListener('focus', this._trapFocus, true);
+    if (canUseDOM) {
+      document.addEventListener('keyup', this._closeOnEscape, false);
+      document.addEventListener('focus', this._trapFocus, true);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keyup', this._closeOnEscape, false);
-    document.removeEventListener('focus', this._trapFocus, true);
+    if (canUseDOM) {
+      document.removeEventListener('keyup', this._closeOnEscape, false);
+      document.removeEventListener('focus', this._trapFocus, true);
+    }
   }
 
   render() {
