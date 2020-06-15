@@ -47,10 +47,12 @@ function focusLastDescendant (element) {
   return false;
 }
 
+const visibleModalStack = [];
+
 class Modal extends React.Component<ModalProps> {
-  _modalElement;
-  _trapFocusInProgress = false;
-  _lastFocusedElement;
+  _modalElement: Node;
+  _trapFocusInProgress: boolean = false;
+  _lastFocusedElement: Node;
 
   constructor(props) {
     super(props);
@@ -58,6 +60,14 @@ class Modal extends React.Component<ModalProps> {
     this.state = {
       visible: false
     };
+  }
+
+  isTopModal () {
+    if (visibleModalStack.length === 0) {
+      return false;
+    }
+
+    return visibleModalStack[visibleModalStack.length - 1] === this;
   }
 
   onDismiss () {
@@ -85,11 +95,17 @@ class Modal extends React.Component<ModalProps> {
   }
 
   show () {
+    visibleModalStack.push(this);
+
     this.onShow();
     this.setState({ visible: true });
   }
 
   close () {
+    if (visibleModalStack.includes(this)) {
+      visibleModalStack.splice(visibleModalStack.indexOf(this), 1);
+    }
+
     this.onDismiss();
     this.setState({ visible: false });
   }
@@ -98,6 +114,10 @@ class Modal extends React.Component<ModalProps> {
     const { visible } = this.props;
 
     if (!visible || this._modalElement == null) {
+      return;
+    }
+
+    if (!this.isTopModal()) {
       return;
     }
 
@@ -125,6 +145,10 @@ class Modal extends React.Component<ModalProps> {
     const { visible } = this.props;
 
     if (!visible) {
+      return;
+    }
+
+    if (!this.isTopModal()) {
       return;
     }
 
