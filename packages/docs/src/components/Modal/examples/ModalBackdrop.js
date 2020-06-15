@@ -11,7 +11,7 @@ export default function ExampleModal() {
         <View style={[style.backdrop]} />
         <View style={[style.modal]}>
           <View style={[style.container]}>
-            <Text>This is in the Modal.  Hello!</Text>
+            <Text>This is in the Modal. Hello!</Text>
             <Button onPress={() => setIsVisible(false)} title={'Close Modal'} />
           </View>
         </View>

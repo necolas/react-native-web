@@ -11,8 +11,8 @@ export default function Modalception({ depth = 1 }) {
         <View style={[style.backdrop]} />
         <View style={[style.modal]}>
           <View style={[style.container]}>
-            <Text>This is in Modal {depth}.  Hello!</Text>
-            <Modalception depth={depth+1} />
+            <Text>This is in Modal {depth}. Hello!</Text>
+            <Modalception depth={depth + 1} />
             <Button onPress={() => setIsVisible(false)} title={'Close Modal'} />
           </View>
         </View>

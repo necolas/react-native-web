@@ -5,13 +5,12 @@ import * as Stories from './Modal.stories.js';
 
 # Modal
 
+The Modal component is a basic way to present content above an enclosing view.
+Modals may be nested within other Modals.
+
 ## Props
 
 <Props of={Stories.ofProps} />
-
-### children
-
-
 
 ### visible
 
@@ -43,7 +42,11 @@ such as when they hit `Escape`.
 
 ### onShow
 
+The `onShow` callback is called once the modal has been shown and may be visible.
+
 ### onDismiss
+
+The `onDismiss` callback is called after the modal has been dismissed and is no longer visible.
 
 ### presentationStyle
 

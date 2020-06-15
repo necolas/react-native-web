@@ -7,8 +7,8 @@ export default function ExampleModal() {
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Open Modal'} />
-      <Modal visible={isVisible} onRequestClose={() => setIsVisible(false)}>
-        <Text>This is in the Modal.  Hello!</Text>
+      <Modal animationType={'slide'} visible={isVisible} onRequestClose={() => setIsVisible(false)}>
+        <Text>This is in the Modal. Hello!</Text>
         <Button onPress={() => setIsVisible(false)} title={'Close Modal'} />
       </Modal>
     </>

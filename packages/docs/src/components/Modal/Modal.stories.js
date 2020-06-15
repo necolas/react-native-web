@@ -19,18 +19,26 @@ ofProps.propTypes = {
   transparent: PropTypes.bool,
 
   onOrientationChange: PropTypes.func,
-  supportedOrientations: PropTypes.arrayOf(PropTypes.oneOf('portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right')),
+  supportedOrientations: PropTypes.arrayOf(
+    PropTypes.oneOf(
+      'portrait',
+      'portrait-upside-down',
+      'landscape',
+      'landscape-left',
+      'landscape-right'
+    )
+  ),
 
   statusBarTranslucent: PropTypes.bool,
   hardwareAccelerated: PropTypes.bool,
 
   onRequestClose: PropTypes.func,
   onShow: PropTypes.func,
-  onDismiss: PropTypes.func,
+  onDismiss: PropTypes.func
 };
 
 export { ofProps };
 
 export { default as modal } from './examples/Modal';
 export { default as modalBackdrop } from './examples/ModalBackdrop';
-export { default as modalception } from './examples/Modalception'
+export { default as modalception } from './examples/Modalception';
