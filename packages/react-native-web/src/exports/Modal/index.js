@@ -8,6 +8,11 @@
  * @flow
  */
 
+/* global HTMLElement */
+/* global FocusEvent */
+/* global KeyboardEvent */
+/* global Node */
+
 import React from 'react';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
@@ -15,12 +20,13 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 
-import { ModalProps } from './types';
+import type { ModalProps } from './types';
+
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import FocusBracket from './FocusBracket';
 
-function attemptFocus(element) {
+function attemptFocus(element: any) {
   try {
     element.focus();
   } catch (e) {
@@ -30,7 +36,7 @@ function attemptFocus(element) {
   return document.activeElement === element;
 }
 
-function focusFirstDescendant(element) {
+function focusFirstDescendant(element: any) {
   for (let i = 0; i < element.childNodes.length; i++) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusFirstDescendant(child)) {
@@ -40,7 +46,7 @@ function focusFirstDescendant(element) {
   return false;
 }
 
-function focusLastDescendant(element) {
+function focusLastDescendant(element: any) {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusLastDescendant(child)) {
@@ -53,13 +59,9 @@ function focusLastDescendant(element) {
 const visibleModalStack = [];
 
 class Modal extends React.Component<ModalProps> {
-  _modalElement: Node;
+  _modalElement: ?HTMLElement;
   _trapFocusInProgress: boolean = false;
-  _lastFocusedElement: Node;
-
-  constructor(props) {
-    super(props);
-  }
+  _lastFocusedElement: ?HTMLElement;
 
   isTopModal() {
     if (visibleModalStack.length === 0) {
@@ -102,17 +104,11 @@ class Modal extends React.Component<ModalProps> {
     }
   };
 
-  _trapFocus = e => {
+  _trapFocus = (e: FocusEvent) => {
     const { visible } = this.props;
 
     // If the modal isn't currently visible it shouldn't trap focus.
     if (!visible) {
-      return;
-    }
-
-    // If the underlying modal element reference hasn't been set yet
-    // we can't do much with trapping focus.
-    if (this._modalElement == null) {
       return;
     }
 
@@ -129,11 +125,17 @@ class Modal extends React.Component<ModalProps> {
       return;
     }
 
+    // If the underlying modal element reference hasn't been set yet
+    // we can't do much with trapping focus.
+    if (!this._modalElement) {
+      return;
+    }
+
     try {
       this._trapFocusInProgress = true;
 
       // Only muck with the focus if the event target isn't within this modal
-      if (!this._modalElement.contains(e.target)) {
+      if (e.target instanceof Node && !this._modalElement.contains(e.target)) {
         // To handle keyboard focusing we can make an assumption here.
         // If you're tabbing through the focusable elements, the previously
         // active element will either be the first or the last.
@@ -153,7 +155,7 @@ class Modal extends React.Component<ModalProps> {
     this._lastFocusedElement = document.activeElement;
   };
 
-  _closeOnEscape = e => {
+  _closeOnEscape = (e: KeyboardEvent) => {
     const { visible } = this.props;
 
     if (!visible) {
@@ -165,12 +167,12 @@ class Modal extends React.Component<ModalProps> {
     }
 
     if (e.key === 'Escape') {
-      event.stopPropagation();
+      e.stopPropagation();
       this._onRequestClose();
     }
   };
 
-  _setModalElementRef = element => {
+  _setModalElementRef = (element: ?HTMLElement) => {
     this._modalElement = element;
   };
 
@@ -189,22 +191,22 @@ class Modal extends React.Component<ModalProps> {
   }
 
   render() {
-    let { visible, animated, animationType, transparent, children } = this.props;
+    const { visible, animated, animationType, transparent, children } = this.props;
 
     const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
 
     return (
       <ModalPortal>
         <ModalAnimation
-          visible={visible}
-          onDismiss={this._onDismiss}
-          onShow={this._onShow}
           animated={animated}
           animationType={animationType}
+          onDismiss={this._onDismiss}
+          onShow={this._onShow}
           style={[styles.modal, backgroundStyle]}
+          visible={visible}
         >
           <FocusBracket />
-          <View forwardedRef={this._setModalElementRef} accessibilityRole="dialog" aria-modal>
+          <View accessibilityRole="dialog" aria-modal forwardedRef={this._setModalElementRef}>
             <View style={[styles.container]}>{children}</View>
           </View>
           <FocusBracket />

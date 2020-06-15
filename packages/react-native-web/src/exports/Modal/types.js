@@ -8,18 +8,21 @@
  * @flow
  */
 
-import type { ViewProps } from '../View';
-
 export type OrientationChangeEvent = {|
   orientation: 'portrait' | 'landscape'
 |};
 
+export type PortalState = {|
+  element: any,
+  target: any
+|};
+
 export type PortalProps = {|
-  children?: any
+  children: any
 |};
 
 export type ModalProps = {|
-  ...ViewProps,
+  children: any,
 
   visible?: ?boolean,
 

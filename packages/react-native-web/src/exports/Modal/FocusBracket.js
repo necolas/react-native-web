@@ -22,7 +22,7 @@ export default class FocusBracket extends React.PureComponent<> {
   }
 
   render() {
-    return <Text style={[styles.focusBracket]} ref={this.ref} />;
+    return <Text ref={this.ref} style={[styles.focusBracket]} />;
   }
 }
 

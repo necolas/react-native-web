@@ -11,10 +11,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { PortalProps } from './types';
+import type { PortalProps, PortalState } from './types';
 
-class ModalPortal extends React.Component<PortalProps> {
-  constructor(props) {
+class ModalPortal extends React.Component<PortalProps, PortalState> {
+  constructor(props: PortalProps) {
     super(props);
     this.state = {
       element: null,

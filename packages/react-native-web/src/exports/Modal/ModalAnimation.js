@@ -113,8 +113,6 @@ export default class ModalAnimation extends React.Component {
   _onDismiss = () => {
     const { onDismiss } = this.props;
 
-    const animationType = this._getAnimationType();
-
     const callback = () => {
       this.setState({ visible: false });
       if (onDismiss) {
