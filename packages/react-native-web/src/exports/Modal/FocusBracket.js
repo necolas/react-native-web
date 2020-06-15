@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Text from '../Text';
+import StyleSheet from '../StyleSheet';
 
 // This is used to wrap "wrap" the dialog we're opening so that
 // when you're tab focusing you'll never leave the document and
@@ -24,3 +25,9 @@ export default class FocusBracket extends React.PureComponent<> {
     return <Text style={[styles.focusBracket]} ref={this.ref} />;
   }
 }
+
+const styles = StyleSheet.create({
+  focusBracket: {
+    outline: 'none'
+  }
+});

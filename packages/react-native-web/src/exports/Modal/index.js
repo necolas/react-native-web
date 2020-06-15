@@ -15,6 +15,7 @@ import StyleSheet from '../StyleSheet';
 
 import { ModalProps } from './types';
 import ModalPortal from './ModalPortal';
+import ModalAnimation from './ModalAnimation';
 import FocusBracket from './FocusBracket';
 
 function attemptFocus (element) {
@@ -56,10 +57,6 @@ class Modal extends React.Component<ModalProps> {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      visible: false
-    };
   }
 
   isTopModal () {
@@ -70,23 +67,7 @@ class Modal extends React.Component<ModalProps> {
     return visibleModalStack[visibleModalStack.length - 1] === this;
   }
 
-  onDismiss () {
-    const { onDismiss } = this.props;
-
-    if (onDismiss) {
-      onDismiss.call(this);
-    }
-  }
-
-  onShow () {
-    const { onShow } = this.props;
-
-    if (onShow) {
-      onShow.call(this);
-    }
-  }
-
-  onRequestClose () {
+  _onRequestClose = () => {
     const { onRequestClose } = this.props;
 
     if (onRequestClose) {
@@ -94,20 +75,26 @@ class Modal extends React.Component<ModalProps> {
     }
   }
 
-  show () {
-    visibleModalStack.push(this);
+  _onDismiss = () => {
+    const { onDismiss } = this.props;
 
-    this.onShow();
-    this.setState({ visible: true });
-  }
-
-  close () {
     if (visibleModalStack.includes(this)) {
       visibleModalStack.splice(visibleModalStack.indexOf(this), 1);
     }
 
-    this.onDismiss();
-    this.setState({ visible: false });
+    if (onDismiss) {
+      onDismiss();
+    }
+  }
+
+  _onShow = () => {
+    const { onShow } = this.props;
+
+    visibleModalStack.push(this);
+
+    if (onShow) {
+      onShow();
+    }
   }
 
   _trapFocus = (e) => {
@@ -155,7 +142,7 @@ class Modal extends React.Component<ModalProps> {
     if (e.key === 'Escape') {
       event.stopPropagation();
 
-      this.onRequestClose();
+      this._onRequestClose();
     }
   }
 
@@ -164,12 +151,6 @@ class Modal extends React.Component<ModalProps> {
   }
 
   componentDidMount() {
-    const { visible } = this.props;
-
-    if (visible) {
-      this.show();
-    }
-
     document.addEventListener('keyup', this._closeOnEscape, false);
     document.addEventListener('focus', this._trapFocus, true);
   }
@@ -179,45 +160,35 @@ class Modal extends React.Component<ModalProps> {
     document.removeEventListener('focus', this._trapFocus, true);
   }
 
-  componentDidUpdate(prevProps: ModalProps) {
-    const { visible: wasVisible } = prevProps;
-    const {
-      visible
-    } = this.props;
-
-    if (visible !== wasVisible) {
-      if (visible) {
-        this.show();
-      } else {
-        this.close();
-      }
-    }
-  }
-
   render() {
     let {
+      visible,
+      animated,
+      animationType,
       transparent,
       children
     } = this.props;
 
-    const { visible } = this.state;
-
-    if (visible !== true) {
-      this._setModalElementRef(null);
-      return null;
-    }
-
-    const containerStyles = transparent ? styles.modalTransparent : styles.modalOpaque;
+    const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
 
     return (
       <ModalPortal>
-        <FocusBracket />
-        <View forwardedRef={this._setModalElementRef} accessibilityRole="dialog" aria-modal style={[styles.modal]}>
-          <View style={[styles.container, containerStyles]}>
-            {children}
+        <ModalAnimation
+          visible={visible}
+          onDismiss={this._onDismiss}
+          onShow={this._onShow}
+          animated={animated}
+          animationType={animationType}
+          style={[styles.modal, backgroundStyle]}
+        >
+          <FocusBracket />
+          <View forwardedRef={this._setModalElementRef} accessibilityRole="dialog" aria-modal>
+            <View style={[styles.container]}>
+              {children}
+            </View>
           </View>
-        </View>
-        <FocusBracket />
+          <FocusBracket />
+        </ModalAnimation>
       </ModalPortal>
     );
   }
@@ -241,9 +212,6 @@ const styles = StyleSheet.create({
   container: {
     top: 0,
     flex: 1
-  },
-  focusBracket: {
-    outline: 'none'
   }
 });
 
