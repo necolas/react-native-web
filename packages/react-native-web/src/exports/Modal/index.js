@@ -20,7 +20,7 @@ import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import FocusBracket from './FocusBracket';
 
-function attemptFocus (element) {
+function attemptFocus(element) {
   try {
     element.focus();
   } catch (e) {
@@ -30,7 +30,7 @@ function attemptFocus (element) {
   return document.activeElement === element;
 }
 
-function focusFirstDescendant (element) {
+function focusFirstDescendant(element) {
   for (let i = 0; i < element.childNodes.length; i++) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusFirstDescendant(child)) {
@@ -40,7 +40,7 @@ function focusFirstDescendant (element) {
   return false;
 }
 
-function focusLastDescendant (element) {
+function focusLastDescendant(element) {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusLastDescendant(child)) {
@@ -61,7 +61,7 @@ class Modal extends React.Component<ModalProps> {
     super(props);
   }
 
-  isTopModal () {
+  isTopModal() {
     if (visibleModalStack.length === 0) {
       return false;
     }
@@ -75,7 +75,7 @@ class Modal extends React.Component<ModalProps> {
     if (onRequestClose) {
       onRequestClose.call(this);
     }
-  }
+  };
 
   _onDismiss = () => {
     const { onDismiss } = this.props;
@@ -90,7 +90,7 @@ class Modal extends React.Component<ModalProps> {
     if (onDismiss) {
       onDismiss();
     }
-  }
+  };
 
   _onShow = () => {
     const { onShow } = this.props;
@@ -100,9 +100,9 @@ class Modal extends React.Component<ModalProps> {
     if (onShow) {
       onShow();
     }
-  }
+  };
 
-  _trapFocus = (e) => {
+  _trapFocus = e => {
     const { visible } = this.props;
 
     // If the modal isn't currently visible it shouldn't trap focus.
@@ -151,9 +151,9 @@ class Modal extends React.Component<ModalProps> {
     }
 
     this._lastFocusedElement = document.activeElement;
-  }
+  };
 
-  _closeOnEscape = (e) => {
+  _closeOnEscape = e => {
     const { visible } = this.props;
 
     if (!visible) {
@@ -168,11 +168,11 @@ class Modal extends React.Component<ModalProps> {
       event.stopPropagation();
       this._onRequestClose();
     }
-  }
+  };
 
-  _setModalElementRef = (element) => {
-    this._modalElement = element
-  }
+  _setModalElementRef = element => {
+    this._modalElement = element;
+  };
 
   componentDidMount() {
     if (canUseDOM) {
@@ -189,13 +189,7 @@ class Modal extends React.Component<ModalProps> {
   }
 
   render() {
-    let {
-      visible,
-      animated,
-      animationType,
-      transparent,
-      children
-    } = this.props;
+    let { visible, animated, animationType, transparent, children } = this.props;
 
     const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
 
@@ -211,9 +205,7 @@ class Modal extends React.Component<ModalProps> {
         >
           <FocusBracket />
           <View forwardedRef={this._setModalElementRef} accessibilityRole="dialog" aria-modal>
-            <View style={[styles.container]}>
-              {children}
-            </View>
+            <View style={[styles.container]}>{children}</View>
           </View>
           <FocusBracket />
         </ModalAnimation>
@@ -229,7 +221,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    zIndex: 9999,
+    zIndex: 9999
   },
   modalTransparent: {
     backgroundColor: 'transparent'

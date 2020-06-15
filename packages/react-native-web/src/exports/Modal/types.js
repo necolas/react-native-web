@@ -30,12 +30,14 @@ export type ModalProps = {|
   transparent?: ?boolean,
 
   onOrientationChange?: ?(e: OrientationChangeEvent) => void,
-  supportedOrientations?: ?Array<'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'>,
+  supportedOrientations?: ?Array<
+    'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
+  >,
 
   statusBarTranslucent?: ?boolean,
   hardwareAccelerated?: ?boolean,
 
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
-  onDismiss?: ?() => mixed,
+  onDismiss?: ?() => mixed
 |};

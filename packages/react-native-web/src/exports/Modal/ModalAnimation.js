@@ -13,14 +13,11 @@ export default class ModalAnimation extends React.Component {
       visible: false,
       animation: null,
       animationValue: new Animated.Value(0)
-    }
+    };
   }
 
-  _getAnimationType () {
-    const {
-      animated,
-      animationType
-    } = this.props;
+  _getAnimationType() {
+    const { animated, animationType } = this.props;
 
     if (!animationType) {
       if (animated) {
@@ -33,15 +30,12 @@ export default class ModalAnimation extends React.Component {
     return animationType;
   }
 
-  _isAnimated () {
+  _isAnimated() {
     return this._getAnimationType() === 'none';
   }
 
-  _animate ({ fromValue, toValue, duration = 300, easing, callback }) {
-    const {
-      animation,
-      animationValue
-    } = this.state;
+  _animate({ fromValue, toValue, duration = 300, easing, callback }) {
+    const { animation, animationValue } = this.state;
 
     if (animation) {
       animation.stop();
@@ -53,14 +47,11 @@ export default class ModalAnimation extends React.Component {
 
     this.setState(
       {
-        animation: Animated.timing(
-          animationValue,
-          {
-            duration,
-            toValue,
-            easing
-          }
-        ),
+        animation: Animated.timing(animationValue, {
+          duration,
+          toValue,
+          easing
+        })
       },
       () => {
         this.state.animation.start(callback);
@@ -68,27 +59,23 @@ export default class ModalAnimation extends React.Component {
     );
   }
 
-  _getAnimationStyle () {
-    const {
-      animationValue
-    } = this.state;
+  _getAnimationStyle() {
+    const { animationValue } = this.state;
 
-    const animationType = this._getAnimationType()
+    const animationType = this._getAnimationType();
 
     if (animationType === 'slide') {
       return [
         {
           transform: [
             {
-              translateY: animationValue.interpolate(
-                {
-                  inputRange: [0, 1],
-                  outputRange: [Dimensions.get('window').height, 0],
-                  extrapolate: 'clamp',
-                }
-              )
-            },
-          ],
+              translateY: animationValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [Dimensions.get('window').height, 0],
+                extrapolate: 'clamp'
+              })
+            }
+          ]
         }
       ];
     }
@@ -114,16 +101,14 @@ export default class ModalAnimation extends React.Component {
     if (this._isAnimated()) {
       callback();
     } else {
-      this._animate(
-        {
-          fromValue: 0,
-          toValue: 1,
-          easing: Easing.out(Easing.poly(4)),
-          callback
-        }
-      );
+      this._animate({
+        fromValue: 0,
+        toValue: 1,
+        easing: Easing.out(Easing.poly(4)),
+        callback
+      });
     }
-  }
+  };
 
   _onDismiss = () => {
     const { onDismiss } = this.props;
@@ -140,22 +125,18 @@ export default class ModalAnimation extends React.Component {
     if (this._isAnimated()) {
       callback();
     } else {
-      this._animate(
-        {
-          fromValue: 1,
-          toValue: 0,
-          easing: Easing.in(Easing.poly(4)),
-          callback
-        }
-      );
+      this._animate({
+        fromValue: 1,
+        toValue: 0,
+        easing: Easing.in(Easing.poly(4)),
+        callback
+      });
     }
-  }
+  };
 
   componentDidUpdate(prevProps: ModalProps) {
     const { visible: wasVisible } = prevProps;
-    const {
-      visible
-    } = this.props;
+    const { visible } = this.props;
 
     if (visible !== wasVisible) {
       if (visible) {
@@ -166,24 +147,17 @@ export default class ModalAnimation extends React.Component {
     }
   }
 
-  render () {
-    const {
-      children,
-      style
-    } = this.props;
+  render() {
+    const { children, style } = this.props;
 
-    const {
-      visible
-    } = this.state;
+    const { visible } = this.state;
 
     if (!visible) {
       return null;
     }
 
     return (
-      <Animated.View style={[...style, ...this._getAnimationStyle()]}>
-        {children}
-      </Animated.View>
+      <Animated.View style={[...style, ...this._getAnimationStyle()]}>{children}</Animated.View>
     );
   }
 }
