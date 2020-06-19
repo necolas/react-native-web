@@ -530,6 +530,13 @@ const TouchableMixin = {
         this.pressInLocation.pageX,
         this.pressInLocation.pageY
       );
+
+      // fix scrollView&List Component press and slide conflict
+      if (movedDistance > 2) {
+        this._receiveSignal(Signals.LEAVE_PRESS_RECT, e)
+        this._cancelLongPressDelayTimeout()
+      }
+      
       if (movedDistance > LONG_PRESS_ALLOWED_MOVEMENT) {
         this._cancelLongPressDelayTimeout();
       }
