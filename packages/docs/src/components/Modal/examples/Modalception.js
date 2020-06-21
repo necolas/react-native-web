@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, Button } from 'react-native';
 
-export default function Modalception({ depth = 1 }) {
+export default function Modalception ({ depth = 1 }) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Open Modal'} />
-      <Modal visible={isVisible} onRequestClose={() => setIsVisible(false)} transparent>
+      <Modal onRequestClose={() => setIsVisible(false)} transparent visible={isVisible}>
         <View style={[style.backdrop]} />
         <View style={[style.modal]}>
           <View style={[style.container]}>

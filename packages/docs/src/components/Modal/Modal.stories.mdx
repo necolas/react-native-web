@@ -19,6 +19,12 @@ Whether or not the modal is visible.
 When set to `false` the contents are not rendered & the modal removes itself
 from the screen.
 
+<Preview withSource='none'>
+  <Story name="propsExample-visible">
+    <Stories.simpleModal />
+  </Story>
+</Preview>
+
 ### animationType
 
 The `animationType` prop can be used to add animation to the modal
@@ -30,15 +36,35 @@ being opened or dismissed.
 
 By default this is `none`.
 
+<Preview withSource='none'>
+  <Story name="propsExample-animationType">
+    <Stories.animatedModal />
+  </Story>
+</Preview>
+
 ### transparent
 
 The `transparent` prop determines if the modal is rendered with a `transparent` backdrop or
 a `white` backdrop.
 
+<Preview withSource='none'>
+  <Story name="propsExample-transparent">
+    <Stories.transparentModal />
+  </Story>
+</Preview>
+
 ### onRequestClose
 
 The `onRequestClose` callback is called when the user is attempting to close the modal -
 such as when they hit `Escape`.
+
+Only the top-most Modal responds to hitting `Escape`.
+
+<Preview withSource='none'>
+  <Story name="propsExample-onRequestClose">
+    <Stories.modalception />
+  </Story>
+</Preview>
 
 ### onShow
 
@@ -67,35 +93,3 @@ On `web` this is ignored.
 ### supportedOrientations
 
 On `web` this is ignored.
-
-## Examples
-
-### Modal
-
-Open a Modal
-
-<Preview withSource='none'>
-  <Story name="modal">
-    <Stories.modal />
-  </Story>
-</Preview>
-
-### modal with backdrop
-
-Open a Modal
-
-<Preview withSource='none'>
-  <Story name="modalBackdrop">
-    <Stories.modalBackdrop />
-  </Story>
-</Preview>
-
-### modal in a modal in a ...
-
-Open a Modal
-
-<Preview withSource='none'>
-  <Story name="modalception">
-    <Stories.modalception />
-  </Story>
-</Preview>
