@@ -158,11 +158,17 @@ describe('modules/createDOMProps', () => {
     expect(props.role).toEqual('button');
   });
 
-  test('accessibilityRole="label" leaves "htmlFor"', () => {
+  test('"label" component lets "htmlFor" through', () => {
     const component = 'label';
     const htmlFor = 'email';
     const props = createDOMProps(component, { htmlFor });
     expect(props.htmlFor).toEqual(htmlFor);
+  });
+
+  test('non-"label" removes "htmlFor"', () => {
+    const htmlFor = 'email';
+    const props = createProps({ htmlFor });
+    expect(props.htmlFor).toEqual(undefined);
   });
 
   describe('prop "accessibilityState"', () => {
