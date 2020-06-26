@@ -73,6 +73,7 @@ const createDOMProps = (component, props, styleResolver) => {
     pointerEvents,
     style: providedStyle,
     testID,
+    htmlFor,
     /* eslint-disable */
     accessible,
     accessibilityRole,
@@ -148,7 +149,8 @@ const createDOMProps = (component, props, styleResolver) => {
     component === 'button' ||
     component === 'input' ||
     component === 'select' ||
-    component === 'textarea'
+    component === 'textarea' ||
+    component === 'label'
   ) {
     if (accessible === false || !focusable) {
       domProps.tabIndex = '-1';
@@ -201,6 +203,11 @@ const createDOMProps = (component, props, styleResolver) => {
   }
 
   // OTHER
+
+  // label for attribute
+  if (component === 'label') {
+    domProps.htmlFor = htmlFor;
+  }
   // Native element ID
   if (nativeID && nativeID.constructor === String) {
     domProps.id = nativeID;

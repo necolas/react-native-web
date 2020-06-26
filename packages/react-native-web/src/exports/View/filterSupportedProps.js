@@ -65,6 +65,7 @@ const supportedProps = {
   onMouseOut: true,
   onMouseUp: true,
   // unstable escape-hatches for web
+  htmlFor: true,
   href: true,
   itemID: true,
   itemRef: true,
