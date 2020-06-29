@@ -95,6 +95,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
+    pointerEvents,
     selectable
   } = props;
 
@@ -121,7 +122,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   ];
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, classList, style);
+  usePlatformMethods(hostRef, classList, style, pointerEvents);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,

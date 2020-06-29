@@ -14,9 +14,10 @@ import UIManager from '../exports/UIManager';
 import createDOMProps from '../modules/createDOMProps';
 import { useImperativeHandle, useRef } from 'react';
 
-function setNativeProps(node, nativeProps, classList, style, previousStyleRef) {
+function setNativeProps(node, nativeProps, classList, style, previousStyleRef, pointerEvents) {
   if (node != null && nativeProps) {
     const domProps = createDOMProps(null, {
+      pointerEvents,
       ...nativeProps,
       classList: [nativeProps.className, classList],
       style: [style, nativeProps.style]
@@ -48,7 +49,8 @@ function setNativeProps(node, nativeProps, classList, style, previousStyleRef) {
 export default function usePlatformMethods(
   hostRef: ElementRef<any>,
   classList: Array<boolean | string>,
-  style: GenericStyleProp<any>
+  style: GenericStyleProp<any>,
+  pointerEvents?: string | undefined
 ) {
   const previousStyleRef = useRef(null);
 
@@ -61,9 +63,9 @@ export default function usePlatformMethods(
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
       hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = nativeProps =>
-        setNativeProps(hostNode, nativeProps, classList, style, previousStyleRef);
+        setNativeProps(hostNode, nativeProps, classList, style, previousStyleRef, pointerEvents);
       return hostNode;
     },
-    [classList, hostRef, style]
+    [classList, hostRef, style, pointerEvents]
   );
 }
