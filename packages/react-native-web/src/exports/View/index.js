@@ -89,7 +89,8 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
     onSelectionChangeShouldSetResponder,
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
+    onStartShouldSetResponderCapture,
+    pointerEvents
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -116,7 +117,7 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   );
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, classList, style);
+  usePlatformMethods(hostRef, classList, style, pointerEvents);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
