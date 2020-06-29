@@ -330,7 +330,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   );
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -369,6 +368,8 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = style;
   supportedProps.type = multiline ? undefined : type;
+
+  usePlatformMethods(hostRef, supportedProps);
 
   return createElement(component, supportedProps);
 });

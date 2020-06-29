@@ -54,8 +54,6 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   });
 
-  usePlatformMethods(hostRef, [], style);
-
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
     if (onValueChange) {
@@ -63,7 +61,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   }
 
-  return createElement('select', {
+  const supportedProps = {
     children,
     disabled: enabled === false ? true : undefined,
     onChange: handleChange,
@@ -72,7 +70,11 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     testID,
     value: selectedValue,
     ...other
-  });
+  };
+
+  usePlatformMethods(hostRef, supportedProps);
+
+  return createElement('select', supportedProps);
 });
 
 // $FlowFixMe

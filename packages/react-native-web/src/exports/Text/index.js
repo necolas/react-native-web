@@ -121,7 +121,6 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   ];
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -159,6 +158,8 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   supportedProps.onClick = handleClick;
   supportedProps.ref = setRef;
   supportedProps.style = style;
+
+  usePlatformMethods(hostRef, supportedProps);
 
   const element = createElement(component, supportedProps);
 

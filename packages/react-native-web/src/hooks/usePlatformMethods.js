@@ -7,18 +7,18 @@
  * @flow
  */
 
-import type { GenericStyleProp } from '../types';
 import type { ElementRef } from 'react';
 
 import UIManager from '../exports/UIManager';
 import createDOMProps from '../modules/createDOMProps';
 import { useImperativeHandle, useRef } from 'react';
 
-function setNativeProps(node, nativeProps, classList, style, previousStyleRef) {
+function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
     const domProps = createDOMProps(null, {
+      pointerEvents,
       ...nativeProps,
-      classList: [nativeProps.className, classList],
+      classList: [classList, nativeProps.className],
       style: [style, nativeProps.style]
     });
 
@@ -45,12 +45,9 @@ function setNativeProps(node, nativeProps, classList, style, previousStyleRef) {
  * Adds non-standard methods to the hode element. This is temporarily until an
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
-export default function usePlatformMethods(
-  hostRef: ElementRef<any>,
-  classList: Array<boolean | string>,
-  style: GenericStyleProp<any>
-) {
+export default function usePlatformMethods(hostRef: ElementRef<any>, props: Object) {
   const previousStyleRef = useRef(null);
+  const { classList, style, pointerEvents } = props;
 
   useImperativeHandle(
     hostRef,
@@ -61,9 +58,9 @@ export default function usePlatformMethods(
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
       hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = nativeProps =>
-        setNativeProps(hostNode, nativeProps, classList, style, previousStyleRef);
+        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
       return hostNode;
     },
-    [classList, hostRef, style]
+    [hostRef, classList, pointerEvents, style]
   );
 }

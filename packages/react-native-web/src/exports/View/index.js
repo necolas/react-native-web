@@ -116,7 +116,6 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   );
 
   useElementLayout(hostRef, onLayout);
-  usePlatformMethods(hostRef, classList, style);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -140,6 +139,8 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   supportedProps.classList = classList;
   supportedProps.ref = setRef;
   supportedProps.style = style;
+
+  usePlatformMethods(hostRef, supportedProps);
 
   return createElement('div', supportedProps);
 });
