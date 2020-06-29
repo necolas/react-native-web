@@ -1,5 +1,5 @@
 on: push
-name: Main Workflow
+name: develop
 jobs:
   sonarQubeTrigger:
     name: SonarQube Trigger
