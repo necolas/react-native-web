@@ -81,12 +81,6 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
 
   const pressConfig = useMemo(
     () => ({
@@ -121,7 +115,20 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   supportedProps.accessible = accessible !== false;
   supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
   supportedProps.focusable = focusable !== false && onPress !== undefined;
-  supportedProps.ref = setRef;
+  supportedProps.ref = setAndForwardRef({
+    getForwardedRef: () => forwardedRef,
+    setLocalRef: hostNode => {
+      const { ref } = element;
+      if (ref != null) {
+        if (typeof ref === 'function') {
+          ref(hostNode);
+        } else {
+          ref.current = hostNode;
+        }
+      }
+      hostRef.current = hostNode;
+    }
+  });
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
