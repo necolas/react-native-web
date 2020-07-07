@@ -36,7 +36,7 @@ function createTintColorSVG(tintColor, id) {
     <svg style={{ position: 'absolute', height: 0, visibility: 'hidden', width: 0 }}>
       <defs>
         <filter id={`tint-${id}`}>
-          <feFlood floodColor={`${tintColor}`} />
+          <feFlood floodColor={`${tintColor}`} key={tintColor} />
           <feComposite in2="SourceAlpha" operator="atop" />
         </filter>
       </defs>
