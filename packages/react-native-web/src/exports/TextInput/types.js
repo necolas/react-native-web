@@ -64,5 +64,6 @@ export type TextInputProps = {
   selectionColor?: ?ColorValue,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
+  underlineColorAndroid?: ?ColorValue,
   value?: ?string
 };
