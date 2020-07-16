@@ -88,6 +88,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
     showsHorizontalScrollIndicator,
     showsVerticalScrollIndicator,
     style,
+    dataSet,
     testID
   } = props;
 
@@ -148,6 +149,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
       accessibilityRole={accessibilityRole}
       accessibilityState={accessibilityState}
       children={children}
+      dataSet={dataSet}
       importantForAccessibility={importantForAccessibility}
       nativeID={nativeID}
       onLayout={onLayout}
