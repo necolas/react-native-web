@@ -88,6 +88,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
     showsHorizontalScrollIndicator,
     showsVerticalScrollIndicator,
     style,
+    dataSet,
     testID
   } = props;
 
@@ -161,6 +162,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
         !scrollEnabled && styles.scrollDisabled,
         hideScrollbar && styles.hideScrollbar
       ]}
+      dataSet={dataSet}
       testID={testID}
     />
   );
