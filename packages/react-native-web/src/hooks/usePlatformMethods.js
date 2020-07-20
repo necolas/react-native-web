@@ -53,12 +53,14 @@ export default function usePlatformMethods(hostRef: ElementRef<any>, props: Obje
     hostRef,
     () => {
       const hostNode = hostRef.current;
-      hostNode.measure = callback => UIManager.measure(hostNode, callback);
-      hostNode.measureLayout = (relativeToNode, success, failure) =>
-        UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-      hostNode.setNativeProps = nativeProps =>
-        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+      if (hostNode != null) {
+        hostNode.measure = callback => UIManager.measure(hostNode, callback);
+        hostNode.measureLayout = (relativeToNode, success, failure) =>
+          UIManager.measureLayout(hostNode, relativeToNode, failure, success);
+        hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
+        hostNode.setNativeProps = nativeProps =>
+          setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+      }
       return hostNode;
     },
     [hostRef, classList, pointerEvents, style]
