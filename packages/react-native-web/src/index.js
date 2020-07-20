@@ -3,6 +3,7 @@ export { default as findNodeHandle } from './exports/findNodeHandle';
 export { default as processColor } from './exports/processColor';
 export { default as render } from './exports/render';
 export { default as unmountComponentAtNode } from './exports/unmountComponentAtNode';
+export { default as createRNElement } from './exports/createRNElement';
 export { default as NativeModules } from './exports/NativeModules';
 
 // APIs
