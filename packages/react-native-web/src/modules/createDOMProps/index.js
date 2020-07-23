@@ -164,7 +164,7 @@ const createDOMProps = (component, props) => {
     } else {
       domProps['data-focusable'] = true;
     }
-  } else if (role === 'button' || role === 'menuitem' || role === 'textbox') {
+  } else if (role === 'button' || role === 'option' || role === 'menuitem' || role === 'textbox') {
     if (accessible !== false && focusable) {
       domProps['data-focusable'] = true;
       domProps.tabIndex = '0';
