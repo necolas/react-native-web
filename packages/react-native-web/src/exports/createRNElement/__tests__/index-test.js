@@ -40,12 +40,4 @@ describe('exports/createRNElement', () => {
     fireEvent.click(container.firstChild);
     expect(myFn).toHaveBeenCalledTimes(1);
   });
-
-  test('onLayout callback', () => {
-    const myFn = jest.fn();
-    const View = createRNElement('div');
-    const { rerender } = render(<View onLayout={myFn} style={{ height: 10, width: 10 }} />);
-    rerender(<View onLayout={myFn} style={{ height: 15, width: 15 }} />);
-    expect(myFn).toHaveBeenCalledTimes(2);
-  });
 });
