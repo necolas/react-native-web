@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exports/createRNElement prop "href" 1`] = `
+<a
+  class="css-reset-4rbku5 9"
+  data-focusable="true"
+  href="http://mylink.com"
+/>
+`;
+
+exports[`exports/createRNElement renders default style 1`] = `
+<div
+  class="8"
+  style="height: 10px; width: 10px;"
+/>
+`;
+
+exports[`exports/createRNElement renders different DOM elements 1`] = `
+<h3
+  class="6"
+/>
+`;
+
+exports[`exports/createRNElement renders different DOM elements 2`] = `
+<button
+  class="css-reset-4rbku5 7"
+  data-focusable="true"
+/>
+`;

@@ -8,15 +8,16 @@
  */
 
 import React from 'react';
-import { unstable_createElement as createElement } from '../createElement';
+import createElement from '../createElement';
+import StyleSheet from '../StyleSheet';
 import useElementLayout from '../../hooks/useElementLayout';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
 import setAndForwardRef from '../..//modules/setAndForwardRef';
 import pick from '../../modules/pick';
 
-const createRNElement = (tagname, forwardPropsList, defaultStyle) => {
-  return React.forwardRef((props, ref) => {
+const createRNElement = (tagname, forwardPropsList = {}, defaultStyle = {}) => {
+  const Element = React.forwardRef((props, ref) => {
     const {
       onLayout,
       onMoveShouldSetResponder,
@@ -41,7 +42,7 @@ const createRNElement = (tagname, forwardPropsList, defaultStyle) => {
       }
     });
 
-    const classList = [defaultStyle];
+    const classList = [StyleSheet.create({ default: defaultStyle }).default];
     useElementLayout(hostRef, onLayout);
     usePlatformMethods(hostRef, { classList, style });
     useResponderEvents(hostRef, {
@@ -67,6 +68,7 @@ const createRNElement = (tagname, forwardPropsList, defaultStyle) => {
     }, [props, classList, setRef, style]);
     return createElement(tagname, supportedProps);
   });
+  return Element;
 };
 
 export default createRNElement;
