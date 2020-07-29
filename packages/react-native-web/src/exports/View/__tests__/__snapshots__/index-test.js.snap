@@ -22,3 +22,10 @@ exports[`components/View prop "pointerEvents" 1`] = `
   class="css-view-1dbjc4n r-pointerEvents-ah5dr5"
 />
 `;
+
+exports[`components/View prop "title" 1`] = `
+<div
+  class="css-view-1dbjc4n"
+  title="I like the hover!"
+/>
+`;

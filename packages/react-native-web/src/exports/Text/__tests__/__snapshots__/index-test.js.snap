@@ -26,3 +26,11 @@ exports[`components/Text nested 1`] = `
   />
 </div>
 `;
+
+exports[`components/Text prop "title" 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+  title="I like the hover!"
+/>
+`;

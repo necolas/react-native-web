@@ -134,5 +134,6 @@ export type ViewProps = {
   onWheel?: (e: any) => void,
   href?: ?string,
   rel?: ?string,
-  target?: ?string
+  target?: ?string,
+  title?: ?string
 };

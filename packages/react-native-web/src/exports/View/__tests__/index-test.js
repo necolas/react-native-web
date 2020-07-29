@@ -47,4 +47,9 @@ describe('components/View', () => {
     const { container } = render(<View pointerEvents="box-only" />);
     expect(container.firstChild).toMatchSnapshot();
   });
+
+  test('prop "title"', () => {
+    const { container } = render(<View title="I like the hover!" />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
 });

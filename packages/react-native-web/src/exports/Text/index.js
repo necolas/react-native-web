@@ -67,7 +67,8 @@ const forwardPropsList = {
   onWheel: true,
   href: true,
   rel: true,
-  target: true
+  target: true,
+  title: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);

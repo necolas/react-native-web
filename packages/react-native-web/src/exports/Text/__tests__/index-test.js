@@ -22,4 +22,9 @@ describe('components/Text', () => {
   });
 
   test('prop "numberOfLines"', () => {});
+
+  test('prop "title"', () => {
+    const { container } = render(<Text title="I like the hover!" />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
 });
