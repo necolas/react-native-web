@@ -136,14 +136,9 @@ function resolveAssetUri(source): ?string {
 const Image = forwardRef<ImageProps, *>((props, ref) => {
   const {
     accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    accessible,
     blurRadius,
     defaultSource,
     draggable,
-    importantForAccessibility,
-    nativeID,
     onError,
     onLayout,
     onLoad,
@@ -151,7 +146,8 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
     onLoadStart,
     pointerEvents,
     source,
-    testID
+    style,
+    ...rest
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -180,7 +176,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
   const requestRef = useRef(null);
   const shouldDisplaySource = state === LOADED || (state === LOADING && defaultSource == null);
   const [flatStyle, _resizeMode, filter, tintColor] = getFlatStyle(
-    props.style,
+    style,
     blurRadius,
     filterRef.current
   );
@@ -274,17 +270,12 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
 
   return (
     <View
+      {...rest}
       accessibilityLabel={accessibilityLabel}
-      accessibilityRole={accessibilityRole}
-      accessibilityState={accessibilityState}
-      accessible={accessible}
-      importantForAccessibility={importantForAccessibility}
-      nativeID={nativeID}
       onLayout={handleLayout}
       pointerEvents={pointerEvents}
       ref={ref}
       style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
-      testID={testID}
     >
       <View
         style={[
