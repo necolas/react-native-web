@@ -56,4 +56,4 @@ export const STYLE_SHORT_FORM_EXPANSIONS = {
 
 export const MONOSPACE_FONT_STACK = 'monospace,monospace';
 export const SYSTEM_FONT_STACK =
-  'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif';
+  '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
