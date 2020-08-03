@@ -9,7 +9,6 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import debounce from 'debounce';
 import invariant from 'fbjs/lib/invariant';
 
 export type DisplayMetrics = {|
@@ -101,5 +100,5 @@ export default class Dimensions {
 Dimensions._update();
 
 if (canUseDOM) {
-  window.addEventListener('resize', debounce(Dimensions._update, 16), false);
+  window.addEventListener('resize', Dimensions._update, false);
 }
