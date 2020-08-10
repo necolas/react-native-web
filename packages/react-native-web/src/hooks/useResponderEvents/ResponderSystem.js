@@ -329,21 +329,28 @@ function eventListener(domEvent: any) {
 
     if (currentResponderIdPath != null && eventIdPath != null) {
       const lowestCommonAncestor = getLowestCommonAncestor(currentResponderIdPath, eventIdPath);
-      const indexOfLowestCommonAncestor = eventIdPath.indexOf(lowestCommonAncestor);
-      // Skip the current responder so it doesn't receive unexpected "shouldSet" events.
-      const index =
-        indexOfLowestCommonAncestor + (lowestCommonAncestor === currentResponder.id ? 1 : 0);
-      eventPaths = {
-        idPath: eventIdPath.slice(index),
-        nodePath: eventPaths.nodePath.slice(index)
-      };
+      if (lowestCommonAncestor != null) {
+        const indexOfLowestCommonAncestor = eventIdPath.indexOf(lowestCommonAncestor);
+        // Skip the current responder so it doesn't receive unexpected "shouldSet" events.
+        const index =
+          indexOfLowestCommonAncestor + (lowestCommonAncestor === currentResponder.id ? 1 : 0);
+        eventPaths = {
+          idPath: eventIdPath.slice(index),
+          nodePath: eventPaths.nodePath.slice(index)
+        };
+      } else {
+        eventPaths = null;
+      }
     }
-    // If a node wants to become the responder, attempt to transfer.
-    wantsResponder = findWantsResponder(eventPaths, domEvent, responderEvent);
-    if (wantsResponder != null) {
-      // Sets responder if none exists, or negotates with existing responder.
-      attemptTransfer(responderEvent, wantsResponder);
-      wasNegotiated = true;
+
+    if (eventPaths != null) {
+      // If a node wants to become the responder, attempt to transfer.
+      wantsResponder = findWantsResponder(eventPaths, domEvent, responderEvent);
+      if (wantsResponder != null) {
+        // Sets responder if none exists, or negotates with existing responder.
+        attemptTransfer(responderEvent, wantsResponder);
+        wasNegotiated = true;
+      }
     }
   }
 

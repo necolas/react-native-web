@@ -2155,6 +2155,106 @@ describe('useResponderEvents', () => {
     });
 
     /**
+     * If siblings are connected to the responder system but have no ancestors
+     * connected, there should be no negotiation between siblings after one
+     * becomes the active responder.
+     */
+    test('no negotation between siblings with no responder ancestors', () => {
+      const pointerType = 'mouse';
+      const eventLog = [];
+
+      const targetConfig = {
+        onStartShouldSetResponderCapture(e) {
+          eventLog.push('target: onStartShouldSetResponderCapture');
+          return false;
+        },
+        onStartShouldSetResponder(e) {
+          eventLog.push('target: onStartShouldSetResponder');
+          return true;
+        },
+        onMoveShouldSetResponderCapture(e) {
+          eventLog.push('target: onMoveShouldSetResponderCapture');
+          return false;
+        },
+        onMoveShouldSetResponder(e) {
+          eventLog.push('target: onMoveShouldSetResponder');
+          return false;
+        },
+        onResponderGrant(e) {
+          eventLog.push('target: onResponderGrant');
+        },
+        onResponderStart(e) {
+          eventLog.push('target: onResponderStart');
+        },
+        onResponderMove(e) {
+          eventLog.push('target: onResponderMove');
+        }
+      };
+      const siblingConfig = {
+        onStartShouldSetResponderCapture(e) {
+          eventLog.push('sibling: onStartShouldSetResponderCapture');
+          return true;
+        },
+        onStartShouldSetResponder(e) {
+          eventLog.push('sibling: onStartShouldSetResponder');
+          return true;
+        },
+        onMoveShouldSetResponderCapture(e) {
+          eventLog.push('sibling: onMoveShouldSetResponderCapture');
+          return true;
+        },
+        onMoveShouldSetResponder(e) {
+          eventLog.push('sibling: onMoveShouldSetResponder');
+          return true;
+        },
+        onResponderGrant(e) {
+          eventLog.push('sibling: onResponderGrant');
+        },
+        onResponderStart(e) {
+          eventLog.push('sibling: onResponderStart');
+        },
+        onResponderMove(e) {
+          eventLog.push('sibling: onResponderMove');
+        }
+      };
+
+      const Component = () => {
+        useResponderEvents(targetRef, targetConfig);
+        useResponderEvents(siblingRef, siblingConfig);
+        return (
+          <div id="grandParent">
+            <div id="parent">
+              <div id="target" ref={targetRef} />
+              <div id="sibling" ref={siblingRef} />
+            </div>
+          </div>
+        );
+      };
+
+      // render
+      act(() => {
+        render(<Component />);
+      });
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
+      // gesture start and move on target
+      act(() => {
+        target.pointerdown({ pointerType });
+        target.pointermove({ pointerType });
+        sibling.pointermove({ pointerType });
+      });
+      // target remains responder, no negotation occurs
+      expect(eventLog).toEqual([
+        'target: onStartShouldSetResponderCapture',
+        'target: onStartShouldSetResponder',
+        'target: onResponderGrant',
+        'target: onResponderStart',
+        'target: onResponderMove',
+        'target: onResponderMove'
+      ]);
+    });
+
+    /**
      * If a node is responder and it rejects a termination request, it
      * should continue to receive responder events.
      */
