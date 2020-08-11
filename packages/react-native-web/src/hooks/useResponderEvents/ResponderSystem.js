@@ -133,6 +133,7 @@ to return true:wantsResponderID|                            |
 
 import type { ResponderEvent } from './createResponderEvent';
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createResponderEvent from './createResponderEvent';
 import {
   isCancelish,
@@ -580,7 +581,7 @@ const documentEventsBubblePhase = [
   'selectionchange'
 ];
 export function attachListeners() {
-  if (window.__reactResponderSystemActive == null) {
+  if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach(eventType => {
       document.addEventListener(eventType, eventListener);
