@@ -41,7 +41,7 @@ export default function Modal({
   React.useEffect(() => {
     if (internalVisible !== visible) {
       // show fade out / slide out animation
-      if (shouldDelayingUnmounting) {
+      if (!visible && shouldDelayingUnmounting) {
         setDelayUnmounting(true)
         setTimeout(() => {
           setDelayUnmounting(false)
@@ -49,7 +49,7 @@ export default function Modal({
       }
       setInternalVisible(visible)
     }
-  }, [internalVisible, animationType, visible])
+  }, [shouldDelayingUnmounting, internalVisible, animationType, visible])
 
   const getFocusableNodes = React.useCallback(
     () =>
@@ -62,7 +62,6 @@ export default function Modal({
   const retainFocus = React.useCallback(
     (event) => {
       let focusableNodes = getFocusableNodes()
-
       // nothing to focus on
       if (focusableNodes.length === 0) {
         return
@@ -128,6 +127,7 @@ export default function Modal({
         <dialog
           ref={modalRef}
           aria-role="dialog"
+          aria-hidden={!open}
           aria-modal={true}
           style={dialogStyle}
           open={open}
