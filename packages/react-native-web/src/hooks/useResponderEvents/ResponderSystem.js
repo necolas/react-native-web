@@ -580,7 +580,7 @@ const documentEventsBubblePhase = [
   'selectionchange'
 ];
 export function attachListeners() {
-  if (window.__reactResponderSystemActive == null) {
+  if (typeof window !== 'undefined' && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach(eventType => {
       document.addEventListener(eventType, eventListener);
