@@ -38,18 +38,22 @@ export default function Modal({
   const [delayUnmounting, setDelayUnmounting] = React.useState(false)
   const [internalVisible, setInternalVisible] = React.useState(visible)
 
+  // show animation
   React.useEffect(() => {
     if (internalVisible !== visible) {
-      // show fade out / slide out animation
-      if (!visible && shouldDelayingUnmounting) {
-        setDelayUnmounting(true)
-        setTimeout(() => {
-          setDelayUnmounting(false)
-        }, animationDurationMs + 100)
-      }
       setInternalVisible(visible)
     }
-  }, [shouldDelayingUnmounting, internalVisible, animationType, visible])
+  }, [internalVisible, visible])
+
+  // show fade out / slide out animation
+  React.useEffect(() => {
+    if (!visible && shouldDelayingUnmounting) {
+      setDelayUnmounting(true)
+      setTimeout(() => {
+        setDelayUnmounting(false)
+      }, animationDurationMs + 100)
+    }
+  }, [shouldDelayingUnmounting, setDelayUnmounting, visible])
 
   const getFocusableNodes = React.useCallback(
     () =>
