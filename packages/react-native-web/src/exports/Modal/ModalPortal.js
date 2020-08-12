@@ -8,52 +8,26 @@
  * @flow
  */
 
-import React from 'react';
+import { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
-import type { PortalProps, PortalState } from './types';
+import type { PortalProps } from './types';
 
-class ModalPortal extends React.Component<PortalProps, PortalState> {
-  constructor(props: PortalProps) {
-    super(props);
-    this.state = {
-      element: null,
-      target: null
-    };
-  }
+function ModalPortal(props: PortalProps) {
+  const { children } = props;
 
-  componentDidMount() {
-    this.setState(
-      {
-        element: document.createElement('div'),
-        target: document.body
-      },
-      () => {
-        const { target, element } = this.state;
+  // Only create the element once.
+  const element = useMemo(() => document.createElement('div'), []);
 
-        target.appendChild(element);
-      }
-    );
-  }
+  useEffect(() => {
+    document.body.appendChild(element);
 
-  componentWillUnmount() {
-    const { element, target } = this.state;
-
-    if (target) {
-      target.removeChild(element);
+    return () => {
+      document.body.removeChild(element);
     }
-  }
+  }, [element]);
 
-  render() {
-    const { children } = this.props;
-    const { element } = this.state;
-
-    if (!element) {
-      return null;
-    }
-
-    return ReactDOM.createPortal(children, element);
-  }
+  return ReactDOM.createPortal(children, element);
 }
 
 export default ModalPortal;

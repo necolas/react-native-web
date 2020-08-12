@@ -8,12 +8,7 @@
  * @flow
  */
 
-/* global HTMLElement */
-/* global FocusEvent */
-/* global KeyboardEvent */
-/* global Node */
-
-import React from 'react';
+import React, { forwardRef, useRef, useCallback, useMemo, useEffect } from 'react';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
@@ -56,57 +51,76 @@ function focusLastDescendant(element: any) {
   return false;
 }
 
+let uniqueModalIdentifier = 0;
+
 const visibleModalStack = [];
 
-class Modal extends React.Component<ModalProps> {
-  _modalElement: ?HTMLElement;
-  _trapFocusInProgress: boolean = false;
-  _lastFocusedElement: ?HTMLElement;
-
-  isTopModal() {
-    if (visibleModalStack.length === 0) {
-      return false;
-    }
-
-    return visibleModalStack[visibleModalStack.length - 1] === this;
+function isTopModal(modalId) {
+  if (visibleModalStack.length === 0) {
+    return false;
   }
 
-  _onRequestClose = () => {
-    const { onRequestClose } = this.props;
+  return visibleModalStack[visibleModalStack.length - 1] === modalId;
+}
 
-    if (onRequestClose) {
-      onRequestClose.call(this);
+const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
+  const {
+    visible,
+    animated,
+    animationType,
+    transparent,
+    children,
+    onShow: onShowProp,
+    onDismiss: onDismissProp,
+    onRequestClose: onRequestCloseProp
+  } = props;
+
+  const modalElementRef = useRef();
+
+  // Sync the internal ref we track into the forwarded ref
+  useEffect(() => {
+    if (!forwardedRef) {
+      return;
     }
-  };
 
-  _onDismiss = () => {
-    const { onDismiss } = this.props;
+    if (typeof forwardedRef === 'function') {
+      forwardedRef(modalElementRef.current);
+    } else {
+      forwardedRef.current = modalElementRef.current;
+    }
+  }, [forwardedRef])
 
+
+  // Set a unique model identifier so we can correctly route
+  // dismissals and check the layering of modals.
+  const modalId = useMemo(() => uniqueModalIdentifier++, []);
+
+  // Ref used to track trapping of focus and to prevent focus from leaving a modal
+  // for accessibility reasons per W3CAG.
+  const focusRef = useRef({ trapFocusInProgress: false, lastFocusedElement: null });
+
+  const onDismiss = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
     // top element in the stack - so search the stack and remove
     // ourselves from it if need be.
-    if (visibleModalStack.includes(this)) {
-      visibleModalStack.splice(visibleModalStack.indexOf(this), 1);
+    if (visibleModalStack.includes(modalId)) {
+      visibleModalStack.splice(visibleModalStack.indexOf(modalId), 1);
     }
 
-    if (onDismiss) {
-      onDismiss();
+    if (onDismissProp) {
+      onDismissProp();
     }
-  };
+  }, [modalId, onDismissProp]);
 
-  _onShow = () => {
-    const { onShow } = this.props;
+  const onShow = useCallback(() => {
+    visibleModalStack.push(modalId);
 
-    visibleModalStack.push(this);
-
-    if (onShow) {
-      onShow();
+    if (onShowProp) {
+      onShowProp();
     }
-  };
+  }, [modalId, onShowProp]);
 
-  _trapFocus = (e: FocusEvent) => {
-    const { visible } = this.props;
-
+  const trapFocus = useCallback((e: FocusEvent) => {
     // If the modal isn't currently visible it shouldn't trap focus.
     if (!visible) {
       return;
@@ -114,28 +128,28 @@ class Modal extends React.Component<ModalProps> {
 
     // If this isn't the top modal we won't be counting it
     // for trapping focus.
-    if (!this.isTopModal()) {
+    if (!isTopModal(modalId)) {
       return;
     }
 
     // Given that we re-focus as part of trapping focus,
     // we don't run to run this functionality while we're already
     // running it.
-    if (this._trapFocusInProgress) {
+    if (focusRef.current.trapFocusInProgress) {
       return;
     }
 
     // If the underlying modal element reference hasn't been set yet
     // we can't do much with trapping focus.
-    if (!this._modalElement) {
+    if (!modalElementRef.current) {
       return;
     }
 
     try {
-      this._trapFocusInProgress = true;
+      focusRef.current.trapFocusInProgress = true;
 
       // Only muck with the focus if the event target isn't within this modal
-      if (e.target instanceof Node && !this._modalElement.contains(e.target)) {
+      if (e.target instanceof Node && !modalElementRef.current.contains(e.target)) {
         // To handle keyboard focusing we can make an assumption here.
         // If you're tabbing through the focusable elements, the previously
         // active element will either be the first or the last.
@@ -143,78 +157,72 @@ class Modal extends React.Component<ModalProps> {
         // If the previously selected element is the "first" descendant
         // and we're leaving it - this means that we should
         // be looping around to the other side of the modal.
-        focusFirstDescendant(this._modalElement);
-        if (this._lastFocusedElement === document.activeElement) {
-          focusLastDescendant(this._modalElement);
+        focusFirstDescendant(modalElementRef.current);
+        if (focusRef.current.lastFocusedElement === document.activeElement) {
+          focusLastDescendant(modalElementRef.current);
         }
       }
     } finally {
-      this._trapFocusInProgress = false;
+      focusRef.current.trapFocusInProgress = false;
     }
 
-    this._lastFocusedElement = document.activeElement;
-  };
+    focusRef.current.lastFocusedElement = document.activeElement;
+  }, [modalId, visible, modalElementRef]);
 
-  _closeOnEscape = (e: KeyboardEvent) => {
-    const { visible } = this.props;
-
+  const closeOnEscape = useCallback((e: KeyboardEvent) => {
     if (!visible) {
       return;
     }
 
-    if (!this.isTopModal()) {
+    if (!isTopModal(modalId)) {
       return;
     }
 
     if (e.key === 'Escape') {
       e.stopPropagation();
-      this._onRequestClose();
+
+      if (onRequestCloseProp) {
+        onRequestCloseProp();
+      }
     }
-  };
+  }, [modalId, visible, onRequestCloseProp]);
 
-  _setModalElementRef = (element: ?HTMLElement) => {
-    this._modalElement = element;
-  };
-
-  componentDidMount() {
+  // Bind to the document itself for this component
+  useEffect(() => {
     if (canUseDOM) {
-      document.addEventListener('keyup', this._closeOnEscape, false);
-      document.addEventListener('focus', this._trapFocus, true);
+      document.addEventListener('keyup', closeOnEscape, false);
+      document.addEventListener('focus', trapFocus, true);
     }
-  }
 
-  componentWillUnmount() {
-    if (canUseDOM) {
-      document.removeEventListener('keyup', this._closeOnEscape, false);
-      document.removeEventListener('focus', this._trapFocus, true);
-    }
-  }
+    return () => {
+      if (canUseDOM) {
+        document.removeEventListener('keyup', closeOnEscape, false);
+        document.removeEventListener('focus', trapFocus, true);
+      }
+    };
+  }, [closeOnEscape, trapFocus]);
 
-  render() {
-    const { visible, animated, animationType, transparent, children } = this.props;
+  const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
 
-    const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
-
-    return (
-      <ModalPortal>
-        <ModalAnimation
-          animated={animated}
-          animationType={animationType}
-          onDismiss={this._onDismiss}
-          onShow={this._onShow}
-          style={[styles.modal, backgroundStyle]}
-          visible={visible}
-        >
-          <FocusBracket />
-          <View accessibilityRole="dialog" aria-modal forwardedRef={this._setModalElementRef}>
-            <View style={[styles.container]}>{children}</View>
-          </View>
-          <FocusBracket />
-        </ModalAnimation>
-      </ModalPortal>
-    );
-  }
-}
+  return (
+    <ModalPortal>
+      <ModalAnimation
+        animated={animated}
+        animationType={animationType}
+        onDismiss={onDismiss}
+        onShow={onShow}
+        style={[styles.modal, backgroundStyle]}
+        visible={visible}
+      >
+        <FocusBracket />
+        <View accessibilityRole="dialog" aria-modal ref={modalElementRef}>
+          <View style={[styles.container]}>{children}</View>
+        </View>
+        <FocusBracket />
+      </ModalAnimation>
+    </ModalPortal>
+  );
+});
 
 const styles = StyleSheet.create({
   modal: {

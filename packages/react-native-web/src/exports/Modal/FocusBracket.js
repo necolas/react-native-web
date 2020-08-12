@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import Text from '../Text';
 import StyleSheet from '../StyleSheet';
@@ -17,27 +17,25 @@ import StyleSheet from '../StyleSheet';
  * This Component is used to "wrap" the modal we're opening
  * so that changing focus via tab will never leave the document.
  *
- * This allowsus to properly trap the focus within a modal
+ * This allows us to properly trap the focus within a modal
  * even if the modal is at the start or end of a document.
  */
-export default class FocusBracket extends React.PureComponent<> {
-  ref = React.createRef();
 
-  componentDidMount() {
-    const { current } = this.ref;
-    if (!current) {
-      return;
+const FocusBracket = () => {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.setNativeProps({
+        tabIndex: 0
+      });
     }
+  }, [ref]);
 
-    current.setNativeProps({
-      tabIndex: 0
-    });
-  }
+  return <Text ref={ref} style={[styles.focusBracket]} />;
+};
 
-  render() {
-    return <Text ref={this.ref} style={[styles.focusBracket]} />;
-  }
-}
+export default FocusBracket;
 
 const styles = StyleSheet.create({
   focusBracket: {

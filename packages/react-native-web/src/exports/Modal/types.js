@@ -12,11 +12,6 @@ export type OrientationChangeEvent = {|
   orientation: 'portrait' | 'landscape'
 |};
 
-export type PortalState = {|
-  element: any,
-  target: any
-|};
-
 export type PortalProps = {|
   children: any
 |};

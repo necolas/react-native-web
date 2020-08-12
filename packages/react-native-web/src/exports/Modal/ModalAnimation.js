@@ -8,27 +8,52 @@
  * @flow
  */
 
-import React from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 
 import Animated from '../Animated';
 import Dimensions from '../Dimensions';
 import Easing from '../Easing';
-import type { ModalProps } from './types';
 
-export default class ModalAnimation extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      visible: false,
-      animation: null,
-      animationValue: new Animated.Value(0)
-    };
+function getAnimationStyle(animationType, animationValue) {
+  if (animationType === 'slide') {
+    return [
+      {
+        transform: [
+          {
+            translateY: animationValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [Dimensions.get('window').height, 0],
+              extrapolate: 'clamp'
+            })
+          }
+        ]
+      }
+    ];
   }
 
-  _getAnimationType() {
-    const { animated, animationType } = this.props;
+  if (animationType === 'fade') {
+    return [{ opacity: animationValue }];
+  }
 
+  return [];
+}
+
+function ModalAnimation(props) {
+  const {
+    children,
+    style,
+    animated,
+    animationType,
+    onShow,
+    onDismiss,
+    visible
+  } = props;
+
+  const [isRendering, setIsRendering] = useState(false);
+
+  // Resolve the "actual" animation type by checking the (somewhat deprecated)
+  // animated prop against the animationType prop
+  const computedAnimationType = useMemo(() => {
     if (!animationType) {
       if (animated) {
         return 'slide';
@@ -38,134 +63,102 @@ export default class ModalAnimation extends React.Component {
     }
 
     return animationType;
-  }
+  }, [animationType, animated]);
 
-  _isAnimated() {
-    return this._getAnimationType() === 'none';
-  }
+  const isAnimated = computedAnimationType !== 'none';
 
-  _animate({ fromValue, toValue, duration = 300, easing, callback }) {
-    const { animation, animationValue } = this.state;
+  // Wrap the callbacks so we don't have to worry about them being null
+  const onShowCallback = useCallback(() => { if (onShow) { onShow(); } }, [onShow]);
+  const onDismissCallback = useCallback(() => { if (onDismiss) { onDismiss(); } }, [onDismiss])
 
-    if (animation) {
-      animation.stop();
+  // Activate the `Animated` value to start off the animation happening
+  const animationRef = useRef({
+    animation: null,
+    animationValue: new Animated.Value(0)
+  });
+  const animate = useCallback(({ fromValue, toValue, duration = 300, easing, callback }) => {
+    if (animationRef.current.animation) {
+      animationRef.current.animation.stop();
     }
 
     if (typeof fromValue !== 'undefined') {
-      animationValue.setValue(fromValue);
+      animationRef.current.animationValue.setValue(fromValue);
     }
 
-    this.setState(
+    animationRef.current.animation = Animated.timing(
+      animationRef.current.animationValue,
       {
-        animation: Animated.timing(animationValue, {
-          duration,
-          toValue,
-          easing
-        })
-      },
-      () => {
-        this.state.animation.start(callback);
+        duration,
+        toValue,
+        easing
       }
     );
-  }
 
-  _getAnimationStyle() {
-    const { animationValue } = this.state;
+    animationRef.current.animation.start(callback);
+  }, []);
 
-    const animationType = this._getAnimationType();
+  // Function to fire off the animations that show the modal.
+  // Sets the rendering flag BEFORE the animation has occurred.
+  const showModal = useCallback(() => {
+    setIsRendering(true);
 
-    if (animationType === 'slide') {
-      return [
-        {
-          transform: [
-            {
-              translateY: animationValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [Dimensions.get('window').height, 0],
-                extrapolate: 'clamp'
-              })
-            }
-          ]
-        }
-      ];
-    }
-
-    if (animationType === 'fade') {
-      return [{ opacity: animationValue }];
-    }
-
-    return [];
-  }
-
-  _onShow = () => {
-    const { onShow } = this.props;
-
-    this.setState({ visible: true });
-
-    const callback = () => {
-      if (onShow) {
-        onShow();
-      }
-    };
-
-    if (this._isAnimated()) {
-      callback();
+    if (!isAnimated) {
+      onShowCallback();
     } else {
-      this._animate({
+      animate({
         fromValue: 0,
         toValue: 1,
         easing: Easing.out(Easing.poly(4)),
-        callback
+        callback: () => {
+          onShowCallback();
+        }
       });
     }
-  };
+  }, [animate, isAnimated, onShowCallback]);
 
-  _onDismiss = () => {
-    const { onDismiss } = this.props;
-
-    const callback = () => {
-      this.setState({ visible: false });
-      if (onDismiss) {
-        onDismiss();
-      }
-    };
-
-    if (this._isAnimated()) {
-      callback();
+  // Function to fire off the animations that dismiss the modal.
+  // Sets the rendering flag AFTER the animation has occurred.
+  const dismissModal = useCallback(() => {
+    if (!isAnimated) {
+      onDismissCallback();
+      setIsRendering(false);
     } else {
-      this._animate({
+      animate({
         fromValue: 1,
         toValue: 0,
         easing: Easing.in(Easing.poly(4)),
-        callback
+        callback: () => {
+          onDismissCallback();
+          setIsRendering(false);
+        }
       });
     }
-  };
+  }, [animate, isAnimated, onDismissCallback]);
 
-  componentDidUpdate(prevProps: ModalProps) {
-    const { visible: wasVisible } = prevProps;
-    const { visible } = this.props;
+  // If the `visible` flag is changing we want to kick off the showing / dismissal
+  // of the modal - we do this here so all the other effects are isolated.
+  const previousVisibility = useRef(false);
+  useEffect(() =>  {
+    if (previousVisibility.current !== visible) {
+      previousVisibility.current = visible;
 
-    if (visible !== wasVisible) {
       if (visible) {
-        this._onShow();
+        showModal();
       } else {
-        this._onDismiss();
+        dismissModal();
       }
     }
+  }, [dismissModal, showModal, visible]);
+
+  if (!isRendering) {
+    return null;
   }
 
-  render() {
-    const { children, style } = this.props;
+  const animationStyle = getAnimationStyle(computedAnimationType, animationRef.current.animationValue);
 
-    const { visible } = this.state;
-
-    if (!visible) {
-      return null;
-    }
-
-    return (
-      <Animated.View style={[...style, ...this._getAnimationStyle()]}>{children}</Animated.View>
-    );
-  }
+  return (
+    <Animated.View style={[...style, ...animationStyle]}>{children}</Animated.View>
+  );
 }
+
+export default ModalAnimation;
