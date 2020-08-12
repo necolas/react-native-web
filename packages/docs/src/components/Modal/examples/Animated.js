@@ -8,7 +8,7 @@ function Animated ({ animationType }) {
     <>
       <Button onPress={() => setIsVisible(true)} title={`Open Modal with '${animationType}'`} />
       <Modal animationType={animationType} onRequestClose={() => setIsVisible(false)} visible={isVisible}>
-        <Text>This is in the ${animationType} Modal. Hello!</Text>
+        <Text>This is in the {animationType} Modal. Hello!</Text>
         <Button onPress={() => setIsVisible(false)} title={'Close Modal'} />
       </Modal>
     </>
