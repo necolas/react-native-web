@@ -97,7 +97,10 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
 
   // Ref used to track trapping of focus and to prevent focus from leaving a modal
   // for accessibility reasons per W3CAG.
-  const focusRef = useRef({ trapFocusInProgress: false, lastFocusedElement: null });
+  const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
+    trapFocusInProgress: false,
+    lastFocusedElement: null
+  });
 
   const onDismiss = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the

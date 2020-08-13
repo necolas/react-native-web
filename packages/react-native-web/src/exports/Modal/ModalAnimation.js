@@ -14,6 +14,10 @@ import Animated from '../Animated';
 import Dimensions from '../Dimensions';
 import Easing from '../Easing';
 
+import type { ModalAnimationProps } from './types';
+import type { CompositeAnimation,  } from '../../vendor/react-native/Animated/AnimatedImplementation';
+import AnimatedValue from '../../vendor/react-native/Animated/nodes/AnimatedValue';
+
 function getAnimationStyle(animationType, animationValue) {
   if (animationType === 'slide') {
     return [
@@ -38,7 +42,7 @@ function getAnimationStyle(animationType, animationValue) {
   return [];
 }
 
-function ModalAnimation(props) {
+function ModalAnimation(props: ModalAnimationProps) {
   const {
     children,
     style,
@@ -72,7 +76,7 @@ function ModalAnimation(props) {
   const onDismissCallback = useCallback(() => { if (onDismiss) { onDismiss(); } }, [onDismiss])
 
   // Activate the `Animated` value to start off the animation happening
-  const animationRef = useRef({
+  const animationRef = useRef<{animation: ?CompositeAnimation, animationValue: AnimatedValue}>({
     animation: null,
     animationValue: new Animated.Value(0)
   });
@@ -154,10 +158,13 @@ function ModalAnimation(props) {
     return null;
   }
 
-  const animationStyle = getAnimationStyle(computedAnimationType, animationRef.current.animationValue);
+  const animationStyle = [
+    ...(style || []),
+    ...getAnimationStyle(computedAnimationType, animationRef.current.animationValue)
+  ];
 
   return (
-    <Animated.View style={[...style, ...animationStyle]}>{children}</Animated.View>
+    <Animated.View style={animationStyle}>{children}</Animated.View>
   );
 }
 

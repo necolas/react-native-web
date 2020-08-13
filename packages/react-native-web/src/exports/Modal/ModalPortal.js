@@ -20,10 +20,14 @@ function ModalPortal(props: PortalProps) {
   const element = useMemo(() => document.createElement('div'), []);
 
   useEffect(() => {
-    document.body.appendChild(element);
+    if (document.body) {
+      document.body.appendChild(element);
+    }
 
     return () => {
-      document.body.removeChild(element);
+      if (document.body) {
+        document.body.removeChild(element);
+      }
     }
   }, [element]);
 
