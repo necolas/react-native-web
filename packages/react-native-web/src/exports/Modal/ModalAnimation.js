@@ -8,35 +8,33 @@
  * @flow
  */
 
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 
-import Animated from '../Animated';
-import Dimensions from '../Dimensions';
-import Easing from '../Easing';
+import StyleSheet from '../StyleSheet';
+import createElement from '../createElement';
 
 import type { ModalAnimationProps } from './types';
-import type { CompositeAnimation,  } from '../../vendor/react-native/Animated/AnimatedImplementation';
-import AnimatedValue from '../../vendor/react-native/Animated/nodes/AnimatedValue';
 
-function getAnimationStyle(animationType, animationValue) {
+
+const ANIMATION_DURATION = 300;
+
+function getAnimationStyle(animationType, visible) {
   if (animationType === 'slide') {
     return [
-      {
-        transform: [
-          {
-            translateY: animationValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [Dimensions.get('window').height, 0],
-              extrapolate: 'clamp'
-            })
-          }
-        ]
-      }
-    ];
+      (visible ? styles.animatedIn : styles.animatedOut),
+      (visible ? styles.slideIn : styles.slideOut)
+    ]
   }
 
   if (animationType === 'fade') {
-    return [{ opacity: animationValue }];
+    return [
+      (visible ? styles.animatedIn : styles.animatedOut),
+      (visible ? styles.fadeIn : styles.fadeOut)
+    ]
+  }
+
+  if (!visible) {
+    return styles.hidden;
   }
 
   return [];
@@ -48,9 +46,9 @@ function ModalAnimation(props: ModalAnimationProps) {
     style,
     animated,
     animationType,
+    visible,
     onShow,
-    onDismiss,
-    visible
+    onDismiss
   } = props;
 
   const [isRendering, setIsRendering] = useState(false);
@@ -75,97 +73,84 @@ function ModalAnimation(props: ModalAnimationProps) {
   const onShowCallback = useCallback(() => { if (onShow) { onShow(); } }, [onShow]);
   const onDismissCallback = useCallback(() => { if (onDismiss) { onDismiss(); } }, [onDismiss])
 
-  // Activate the `Animated` value to start off the animation happening
-  const animationRef = useRef<{animation: ?CompositeAnimation, animationValue: AnimatedValue}>({
-    animation: null,
-    animationValue: new Animated.Value(0)
-  });
-  const animate = useCallback(({ fromValue, toValue, duration = 300, easing, callback }) => {
-    if (animationRef.current.animation) {
-      animationRef.current.animation.stop();
+  // If the `visible` flag is changing we want to set the rendering flag to true
+  // before the animations ever will start
+  useEffect(() =>  {
+    if (visible) {
+      setIsRendering(true);
+    } else if (!isAnimated) {
+      setIsRendering(false);
     }
+  }, [isAnimated, visible]);
 
-    if (typeof fromValue !== 'undefined') {
-      animationRef.current.animationValue.setValue(fromValue);
-    }
-
-    animationRef.current.animation = Animated.timing(
-      animationRef.current.animationValue,
-      {
-        duration,
-        toValue,
-        easing
-      }
-    );
-
-    animationRef.current.animation.start(callback);
-  }, []);
-
-  // Function to fire off the animations that show the modal.
-  // Sets the rendering flag BEFORE the animation has occurred.
-  const showModal = useCallback(() => {
-    setIsRendering(true);
-
-    if (!isAnimated) {
+  const animationEndCallback = useCallback(() => {
+    if (visible) {
+      // If animation completed and we're visible,
+      // fire off the onShow callback
       onShowCallback();
     } else {
-      animate({
-        fromValue: 0,
-        toValue: 1,
-        easing: Easing.out(Easing.poly(4)),
-        callback: () => {
-          onShowCallback();
-        }
-      });
-    }
-  }, [animate, isAnimated, onShowCallback]);
-
-  // Function to fire off the animations that dismiss the modal.
-  // Sets the rendering flag AFTER the animation has occurred.
-  const dismissModal = useCallback(() => {
-    if (!isAnimated) {
-      onDismissCallback();
+      // If animation completed and we're visible,
+      // fire off the onDismiss callback and stop rendering
       setIsRendering(false);
-    } else {
-      animate({
-        fromValue: 1,
-        toValue: 0,
-        easing: Easing.in(Easing.poly(4)),
-        callback: () => {
-          onDismissCallback();
-          setIsRendering(false);
-        }
-      });
+      onDismissCallback();
     }
-  }, [animate, isAnimated, onDismissCallback]);
-
-  // If the `visible` flag is changing we want to kick off the showing / dismissal
-  // of the modal - we do this here so all the other effects are isolated.
-  const previousVisibility = useRef(false);
-  useEffect(() =>  {
-    if (previousVisibility.current !== visible) {
-      previousVisibility.current = visible;
-
-      if (visible) {
-        showModal();
-      } else {
-        dismissModal();
-      }
-    }
-  }, [dismissModal, showModal, visible]);
+  }, [onDismissCallback, onShowCallback, visible]);
 
   if (!isRendering) {
     return null;
   }
 
-  const animationStyle = [
-    ...(style || []),
-    ...getAnimationStyle(computedAnimationType, animationRef.current.animationValue)
-  ];
-
-  return (
-    <Animated.View style={animationStyle}>{children}</Animated.View>
+  return createElement(
+    'div',
+    {
+      style: [style, getAnimationStyle(animationType, visible)],
+      onAnimationEnd: animationEndCallback,
+      children
+    }
   );
 }
+
+const styles = StyleSheet.create({
+  animatedIn: {
+    animationDuration: `${ANIMATION_DURATION}ms`,
+    animationTimingFunction: 'ease-in'
+  },
+  animatedOut: {
+    pointerEvents: 'none',
+    animationDuration: `${ANIMATION_DURATION}ms`,
+    animationTimingFunction: 'ease-out'
+  },
+  fadeIn: {
+    opacity: 1,
+    animationKeyframes: {
+      '0%': { opacity: 0 },
+      '100%': { opacity: 1 }
+    }
+  },
+  fadeOut: {
+    opacity: 0,
+    animationKeyframes: {
+      '0%': { opacity: 1 },
+      '100%': { opacity: 0 }
+    }
+  },
+  slideIn: {
+    transform: [ { translateY: '0%' } ],
+    animationKeyframes: {
+      '0%': { transform: [ { translateY: '100%' } ] },
+      '100%': { transform: [ { translateY: '0%' } ] }
+    }
+  },
+  slideOut: {
+    transform: [ { translateY: '100%' } ],
+    animationKeyframes: {
+      '0%': { transform: [ { translateY: '0%' } ] },
+      '100%': { transform: [ { translateY: '100%' } ] }
+    }
+  },
+  hidden: {
+    display: 'none'
+  }
+});
 
 export default ModalAnimation;
