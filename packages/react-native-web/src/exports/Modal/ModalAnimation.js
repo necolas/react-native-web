@@ -73,16 +73,6 @@ function ModalAnimation(props: ModalAnimationProps) {
   const onShowCallback = useCallback(() => { if (onShow) { onShow(); } }, [onShow]);
   const onDismissCallback = useCallback(() => { if (onDismiss) { onDismiss(); } }, [onDismiss])
 
-  // If the `visible` flag is changing we want to set the rendering flag to true
-  // before the animations ever will start
-  useEffect(() =>  {
-    if (visible) {
-      setIsRendering(true);
-    } else if (!isAnimated) {
-      setIsRendering(false);
-    }
-  }, [isAnimated, visible]);
-
   const animationEndCallback = useCallback(() => {
     if (visible) {
       // If animation completed and we're visible,
@@ -95,6 +85,20 @@ function ModalAnimation(props: ModalAnimationProps) {
       onDismissCallback();
     }
   }, [onDismissCallback, onShowCallback, visible]);
+
+  // If the `visible` flag is changing we want to set the rendering flag to true
+  // before the animations ever will start
+  useEffect(() =>  {
+    if (visible) {
+      setIsRendering(true);
+    }
+
+    if (!isAnimated) {
+      // If !isAnimated we have to manually call `animationEndCallback` - if we
+      // don't it will never get called
+      animationEndCallback();
+    }
+  }, [isAnimated, visible, animationEndCallback]);
 
   if (!isRendering) {
     return null;
