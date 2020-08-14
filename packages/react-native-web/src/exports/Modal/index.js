@@ -106,7 +106,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     // When we dismiss we can't assume that we're dismissing the
     // top element in the stack - so search the stack and remove
     // ourselves from it if need be.
-    if (visibleModalStack.includes(modalId)) {
+    if (visibleModalStack.indexOf(modalId) !== -1) {
       visibleModalStack.splice(visibleModalStack.indexOf(modalId), 1);
     }
 
