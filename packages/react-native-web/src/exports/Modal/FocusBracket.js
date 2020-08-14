@@ -8,9 +8,7 @@
  * @flow
  */
 
-import React, { useRef, useEffect } from 'react';
-
-import Text from '../Text';
+import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 
 /**
@@ -22,23 +20,22 @@ import StyleSheet from '../StyleSheet';
  */
 
 const FocusBracket = () => {
-  const ref = useRef();
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.setNativeProps({
-        tabIndex: 0
-      });
+  return createElement(
+    'div',
+    {
+      style: styles.focusBracket,
+      accessibilityRole: 'none',
+      focusable: true,
+      tabIndex: 0
     }
-  }, [ref]);
-
-  return <Text ref={ref} style={[styles.focusBracket]} />;
+  );
 };
 
 export default FocusBracket;
 
 const styles = StyleSheet.create({
   focusBracket: {
+    visibility: 'none',
     outline: 'none'
   }
 });
