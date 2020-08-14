@@ -23,21 +23,21 @@ function getAnimationStyle(animationType, visible) {
     return [
       (visible ? styles.animatedIn : styles.animatedOut),
       (visible ? styles.slideIn : styles.slideOut)
-    ]
+    ];
   }
 
   if (animationType === 'fade') {
     return [
       (visible ? styles.animatedIn : styles.animatedOut),
       (visible ? styles.fadeIn : styles.fadeOut)
-    ]
+    ];
   }
 
   if (!visible) {
     return styles.hidden;
   }
 
-  return [];
+  return null;
 }
 
 function ModalAnimation(props: ModalAnimationProps) {
