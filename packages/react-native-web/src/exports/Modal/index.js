@@ -70,9 +70,9 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     animationType,
     transparent,
     children,
-    onShow: onShowProp,
-    onDismiss: onDismissProp,
-    onRequestClose: onRequestCloseProp
+    onShow,
+    onDismiss,
+    onRequestClose
   } = props;
 
   const modalElementRef = useRef();
@@ -102,7 +102,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     lastFocusedElement: null
   });
 
-  const onDismiss = useCallback(() => {
+  const onDismissCallback = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
     // top element in the stack - so search the stack and remove
     // ourselves from it if need be.
@@ -110,18 +110,18 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
       visibleModalStack.splice(visibleModalStack.indexOf(modalId), 1);
     }
 
-    if (onDismissProp) {
-      onDismissProp();
+    if (onDismiss) {
+      onDismiss();
     }
-  }, [modalId, onDismissProp]);
+  }, [modalId, onDismiss]);
 
-  const onShow = useCallback(() => {
+  const onShowCallback = useCallback(() => {
     visibleModalStack.push(modalId);
 
-    if (onShowProp) {
-      onShowProp();
+    if (onShow) {
+      onShow();
     }
-  }, [modalId, onShowProp]);
+  }, [modalId, onShow]);
 
   const trapFocus = useCallback((e: FocusEvent) => {
     // If the modal isn't currently visible it shouldn't trap focus.
@@ -184,11 +184,11 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     if (e.key === 'Escape') {
       e.stopPropagation();
 
-      if (onRequestCloseProp) {
-        onRequestCloseProp();
+      if (onRequestClose) {
+        onRequestClose();
       }
     }
-  }, [modalId, visible, onRequestCloseProp]);
+  }, [modalId, visible, onRequestClose]);
 
   // Bind to the document itself for this component
   useEffect(() => {
@@ -212,8 +212,8 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
       <ModalAnimation
         animated={animated}
         animationType={animationType}
-        onDismiss={onDismiss}
-        onShow={onShow}
+        onDismiss={onDismissCallback}
+        onShow={onShowCallback}
         style={[styles.modal, backgroundStyle]}
         visible={visible}
       >

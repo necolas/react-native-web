@@ -69,22 +69,22 @@ function ModalAnimation(props: ModalAnimationProps) {
 
   const isAnimated = computedAnimationType !== 'none';
 
-  // Wrap the callbacks so we don't have to worry about them being null
-  const onShowCallback = useCallback(() => { if (onShow) { onShow(); } }, [onShow]);
-  const onDismissCallback = useCallback(() => { if (onDismiss) { onDismiss(); } }, [onDismiss])
-
   const animationEndCallback = useCallback(() => {
     if (visible) {
       // If animation completed and we're visible,
       // fire off the onShow callback
-      onShowCallback();
+      if (onShow) {
+        onShow();
+      }
     } else {
       // If animation completed and we're visible,
       // fire off the onDismiss callback and stop rendering
       setIsRendering(false);
-      onDismissCallback();
+      if (onDismiss) {
+        onDismiss();
+      }
     }
-  }, [onDismissCallback, onShowCallback, visible]);
+  }, [onDismiss, onShow, visible]);
 
   // If the `visible` flag is changing we want to set the rendering flag to true
   // before the animations ever will start
