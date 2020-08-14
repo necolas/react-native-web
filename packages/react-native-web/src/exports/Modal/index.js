@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React, { forwardRef, useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { forwardRef, useCallback, useMemo, useEffect } from 'react';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
@@ -19,37 +19,7 @@ import type { ModalProps } from './types';
 
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
-import FocusBracket from './FocusBracket';
-
-function attemptFocus(element: any) {
-  try {
-    element.focus();
-  } catch (e) {
-    // Do nothing
-  }
-
-  return document.activeElement === element;
-}
-
-function focusFirstDescendant(element: any) {
-  for (let i = 0; i < element.childNodes.length; i++) {
-    const child = element.childNodes[i];
-    if (attemptFocus(child) || focusFirstDescendant(child)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function focusLastDescendant(element: any) {
-  for (let i = element.childNodes.length - 1; i >= 0; i--) {
-    const child = element.childNodes[i];
-    if (attemptFocus(child) || focusLastDescendant(child)) {
-      return true;
-    }
-  }
-  return false;
-}
+import ModalFocusTrap from './ModalFocusTrap';
 
 let uniqueModalIdentifier = 0;
 
@@ -75,32 +45,9 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     onRequestClose
   } = props;
 
-  const modalElementRef = useRef();
-
-  // Sync the internal ref we track into the forwarded ref
-  useEffect(() => {
-    if (!forwardedRef) {
-      return;
-    }
-
-    if (typeof forwardedRef === 'function') {
-      forwardedRef(modalElementRef.current);
-    } else {
-      forwardedRef.current = modalElementRef.current;
-    }
-  }, [forwardedRef])
-
-
   // Set a unique model identifier so we can correctly route
   // dismissals and check the layering of modals.
   const modalId = useMemo(() => uniqueModalIdentifier++, []);
-
-  // Ref used to track trapping of focus and to prevent focus from leaving a modal
-  // for accessibility reasons per W3CAG.
-  const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
-    trapFocusInProgress: false,
-    lastFocusedElement: null
-  });
 
   const onDismissCallback = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
@@ -123,41 +70,11 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     }
   }, [modalId, onShow]);
 
-  const trapFocus = useCallback((e: FocusEvent) => {
-    // We shold not trap focus if:
-    // - The modal is currently not visible - it shouldn't even be rendering!
-    // - The modal is not currently the top-most modal in the stack
-    // - The modal hasn't fully initialized with an HTMLElement ref
-    // - Focus is already in the process of being trapped (eg, we're refocusing)
-    if (!visible || !isTopModal(modalId) || !modalElementRef.current || focusRef.current.trapFocusInProgress) {
-      return;
-    }
+  const isTrappingCallback = useCallback(() => {
+    return visible && isTopModal(modalId)
+  }, [visible, modalId]);
 
-    try {
-      focusRef.current.trapFocusInProgress = true;
-
-      // Only muck with the focus if the event target isn't within this modal
-      if (e.target instanceof Node && !modalElementRef.current.contains(e.target)) {
-        // To handle keyboard focusing we can make an assumption here.
-        // If you're tabbing through the focusable elements, the previously
-        // active element will either be the first or the last.
-        //
-        // If the previously selected element is the "first" descendant
-        // and we're leaving it - this means that we should
-        // be looping around to the other side of the modal.
-        focusFirstDescendant(modalElementRef.current);
-        if (focusRef.current.lastFocusedElement === document.activeElement) {
-          focusLastDescendant(modalElementRef.current);
-        }
-      }
-    } finally {
-      focusRef.current.trapFocusInProgress = false;
-    }
-
-    focusRef.current.lastFocusedElement = document.activeElement;
-  }, [modalId, visible, modalElementRef]);
-
-  const closeOnEscape = useCallback((e: KeyboardEvent) => {
+  const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
     // If the modal that received this event is not visible or
     // is not the top modal in the stack it should ignore the event.
     if (!visible || !isTopModal(modalId)) {
@@ -176,17 +93,15 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   // Bind to the document itself for this component
   useEffect(() => {
     if (canUseDOM) {
-      document.addEventListener('keyup', closeOnEscape, false);
-      document.addEventListener('focus', trapFocus, true);
+      document.addEventListener('keyup', closeOnEscapeCallback, false);
     }
 
     return () => {
       if (canUseDOM) {
-        document.removeEventListener('keyup', closeOnEscape, false);
-        document.removeEventListener('focus', trapFocus, true);
+        document.removeEventListener('keyup', closeOnEscapeCallback, false);
       }
     };
-  }, [closeOnEscape, trapFocus]);
+  }, [closeOnEscapeCallback]);
 
   const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
 
@@ -200,11 +115,11 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         style={[styles.modal, backgroundStyle]}
         visible={visible}
       >
-        <FocusBracket />
-        <View accessibilityRole="dialog" aria-modal ref={modalElementRef}>
-          <View style={[styles.container]}>{children}</View>
-        </View>
-        <FocusBracket />
+        <ModalFocusTrap active={isTrappingCallback}>
+          <View accessibilityRole="dialog" aria-modal ref={forwardedRef}>
+            <View style={[styles.container]}>{children}</View>
+          </View>
+        </ModalFocusTrap>
       </ModalAnimation>
     </ModalPortal>
   );
