@@ -124,27 +124,12 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   }, [modalId, onShow]);
 
   const trapFocus = useCallback((e: FocusEvent) => {
-    // If the modal isn't currently visible it shouldn't trap focus.
-    if (!visible) {
-      return;
-    }
-
-    // If this isn't the top modal we won't be counting it
-    // for trapping focus.
-    if (!isTopModal(modalId)) {
-      return;
-    }
-
-    // Given that we re-focus as part of trapping focus,
-    // we don't run to run this functionality while we're already
-    // running it.
-    if (focusRef.current.trapFocusInProgress) {
-      return;
-    }
-
-    // If the underlying modal element reference hasn't been set yet
-    // we can't do much with trapping focus.
-    if (!modalElementRef.current) {
+    // We shold not trap focus if:
+    // - The modal is currently not visible - it shouldn't even be rendering!
+    // - The modal is not currently the top-most modal in the stack
+    // - The modal hasn't fully initialized with an HTMLElement ref
+    // - Focus is already in the process of being trapped (eg, we're refocusing)
+    if (!visible || !isTopModal(modalId) || !modalElementRef.current || focusRef.current.trapFocusInProgress) {
       return;
     }
 
@@ -173,11 +158,9 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   }, [modalId, visible, modalElementRef]);
 
   const closeOnEscape = useCallback((e: KeyboardEvent) => {
-    if (!visible) {
-      return;
-    }
-
-    if (!isTopModal(modalId)) {
+    // If the modal that received this event is not visible or
+    // is not the top modal in the stack it should ignore the event.
+    if (!visible || !isTopModal(modalId)) {
       return;
     }
 
