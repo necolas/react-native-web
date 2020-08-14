@@ -71,7 +71,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   }, [modalId, onShow]);
 
   const isTrappingCallback = useCallback(() => {
-    return visible && isTopModal(modalId)
+    return !!(visible && isTopModal(modalId));
   }, [visible, modalId]);
 
   const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {

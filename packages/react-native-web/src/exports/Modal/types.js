@@ -8,28 +8,8 @@
  * @flow
  */
 
-type AnimationType = ?('none' | 'slide' | 'fade');
-
 export type OrientationChangeEvent = {|
   orientation: 'portrait' | 'landscape'
-|};
-
-export type PortalProps = {|
-  children: any
-|};
-
-export type ModalAnimationProps = {|
-  children?: any,
-
-  style?: any,
-
-  animated?: ?boolean,
-  animationType?: AnimationType,
-
-  visible?: ?boolean,
-
-  onShow?: ?() => void,
-  onDismiss?: ?() => void
 |};
 
 export type ModalProps = {|
@@ -38,7 +18,7 @@ export type ModalProps = {|
   visible?: ?boolean,
 
   animated?: ?boolean,
-  animationType?: AnimationType,
+  animationType?: ?('none' | 'slide' | 'fade'),
 
   presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),
   transparent?: ?boolean,

@@ -66,7 +66,13 @@ function focusLastDescendant(element: any) {
   return false;
 }
 
-const ModalFocusTrap = ({ active, children }) => {
+export type ModalFocusTrapProps = {|
+  children?: any,
+
+  active?: boolean | () => boolean,
+|};
+
+const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
   const trapElementRef = useRef();
 
   // Ref used to track trapping of focus and to prevent focus from leaving a modal
@@ -77,7 +83,7 @@ const ModalFocusTrap = ({ active, children }) => {
   });
 
   const trapFocus = useCallback((e: FocusEvent) => {
-    const isTrapActive = !!(typeof active === 'function' ? active() : active);
+    const isTrapActive = typeof active === 'function' ? active() : active;
 
     // We should not trap focus if:
     // - The modal hasn't fully initialized with an HTMLElement ref

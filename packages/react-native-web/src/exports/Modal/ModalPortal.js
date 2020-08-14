@@ -11,9 +11,11 @@
 import { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
-import type { PortalProps } from './types';
+export type ModalPortalProps = {|
+  children: any
+|};
 
-function ModalPortal(props: PortalProps) {
+function ModalPortal(props: ModalPortalProps) {
   const { children } = props;
 
   // Only create the element once.

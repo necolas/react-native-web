@@ -13,9 +13,6 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
 
-import type { ModalAnimationProps } from './types';
-
-
 const ANIMATION_DURATION = 300;
 
 function getAnimationStyle(animationType, visible) {
@@ -39,6 +36,20 @@ function getAnimationStyle(animationType, visible) {
 
   return null;
 }
+
+export type ModalAnimationProps = {|
+  children?: any,
+
+  style?: any,
+
+  animated?: ?boolean,
+  animationType?: ?('none' | 'slide' | 'fade'),
+
+  visible?: ?boolean,
+
+  onShow?: ?() => void,
+  onDismiss?: ?() => void
+|};
 
 function ModalAnimation(props: ModalAnimationProps) {
   const {
