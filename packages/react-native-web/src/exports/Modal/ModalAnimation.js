@@ -17,17 +17,11 @@ const ANIMATION_DURATION = 300;
 
 function getAnimationStyle(animationType, visible) {
   if (animationType === 'slide') {
-    return [
-      (visible ? styles.animatedIn : styles.animatedOut),
-      (visible ? styles.slideIn : styles.slideOut)
-    ];
+    return visible ? animatedSlideInStyles : animatedSlideOutStyles;
   }
 
   if (animationType === 'fade') {
-    return [
-      (visible ? styles.animatedIn : styles.animatedOut),
-      (visible ? styles.fadeIn : styles.fadeOut)
-    ];
+    return visible ? animatedFadeInStyles : animatedFadeOutStyles;
   }
 
   if (!visible) {
@@ -167,5 +161,11 @@ const styles = StyleSheet.create({
     display: 'none'
   }
 });
+
+const animatedSlideInStyles = [styles.animatedIn, styles.slideIn];
+const animatedSlideOutStyles = [styles.animatedOut, styles.slideOut];
+
+const animatedFadeInStyles = [styles.animatedIn, styles.fadeIn];
+const animatedFadeOutStyles = [styles.animatedOut, styles.fadeOut];
 
 export default ModalAnimation;
