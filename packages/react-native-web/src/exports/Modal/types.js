@@ -17,7 +17,6 @@ export type ModalProps = {|
 
   visible?: ?boolean,
 
-  animated?: ?boolean,
   animationType?: ?('none' | 'slide' | 'fade'),
 
   presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),

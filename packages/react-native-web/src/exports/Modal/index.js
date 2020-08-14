@@ -36,7 +36,6 @@ function isTopModal(modalId) {
 const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   const {
     visible,
-    animated,
     animationType,
     transparent,
     children,
@@ -108,7 +107,6 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   return (
     <ModalPortal>
       <ModalAnimation
-        animated={animated}
         animationType={animationType}
         onDismiss={onDismissCallback}
         onShow={onShowCallback}

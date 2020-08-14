@@ -36,7 +36,6 @@ export type ModalAnimationProps = {|
 
   style?: any,
 
-  animated?: ?boolean,
   animationType?: ?('none' | 'slide' | 'fade'),
 
   visible?: ?boolean,
@@ -49,7 +48,6 @@ function ModalAnimation(props: ModalAnimationProps) {
   const {
     children,
     style,
-    animated,
     animationType,
     visible,
     onShow,
@@ -62,15 +60,11 @@ function ModalAnimation(props: ModalAnimationProps) {
   // animated prop against the animationType prop
   const computedAnimationType = useMemo(() => {
     if (!animationType) {
-      if (animated) {
-        return 'slide';
-      } else {
-        return 'none';
-      }
+      return 'none';
     }
 
     return animationType;
-  }, [animationType, animated]);
+  }, [animationType]);
 
   const isAnimated = computedAnimationType !== 'none';
 
