@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Modal, View, Text, Button } from 'react-native';
+
+const WIGGLE_ROOM = 128;
 
 export default function Modalception ({ depth = 1 }) {
   const [isVisible, setIsVisible] = useState(false);
+
+  const offset = useMemo(() => {
+    return {
+      top: (Math.random() * WIGGLE_ROOM)-(WIGGLE_ROOM/2),
+      left: (Math.random() * WIGGLE_ROOM)-(WIGGLE_ROOM/2),
+    }
+  }, []);
 
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Open Modal'} />
       <Modal onRequestClose={() => setIsVisible(false)} transparent visible={isVisible}>
         <View style={[style.backdrop]} />
-        <View style={[style.modal]}>
+        <View style={[style.modal, offset]}>
           <View style={[style.container]}>
             <Text>This is in Modal {depth}. Hello!</Text>
             <Modalception depth={depth + 1} />
@@ -33,7 +42,8 @@ const style = {
   },
   modal: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   },
   container: {
     width: 600,
