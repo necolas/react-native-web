@@ -105,9 +105,14 @@ const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
         // If the previously selected element is the "first" descendant
         // and we're leaving it - this means that we should
         // be looping around to the other side of the modal.
-        focusFirstDescendant(trapElementRef.current);
+        let hasFocused = focusFirstDescendant(trapElementRef.current);
         if (focusRef.current.lastFocusedElement === document.activeElement) {
-          focusLastDescendant(trapElementRef.current);
+          hasFocused = focusLastDescendant(trapElementRef.current);
+        }
+
+        // If we couldn't focus a new element then we need to blur the active element
+        if (!hasFocused && document.activeElement) {
+          document.activeElement.blur();
         }
       }
     } finally {
