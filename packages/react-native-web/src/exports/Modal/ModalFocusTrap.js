@@ -145,6 +145,6 @@ export default ModalFocusTrap;
 
 const styles = StyleSheet.create({
   focusBracket: {
-    outline: 'none'
+    outlineStyle: 'none'
   }
 });
