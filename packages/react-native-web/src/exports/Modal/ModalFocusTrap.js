@@ -82,7 +82,7 @@ const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
     lastFocusedElement: null
   });
 
-  const trapFocus = useCallback((e: FocusEvent) => {
+  const trapFocus = useCallback(() => {
     const isTrapActive = () => (typeof active === 'function' ? active() : active);
 
     // We should not trap focus if:
@@ -97,7 +97,7 @@ const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
       focusRef.current.trapFocusInProgress = true;
 
       // Only muck with the focus if the event target isn't within this modal
-      if (e.target instanceof Node && !trapElementRef.current.contains(e.target)) {
+      if (document.activeElement instanceof Node && !trapElementRef.current.contains(document.activeElement)) {
         // To handle keyboard focusing we can make an assumption here.
         // If you're tabbing through the focusable elements, the previously
         // active element will either be the first or the last.
@@ -127,6 +127,10 @@ const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
     if (canUseDOM) {
       document.addEventListener('focus', trapFocus, true);
     }
+
+    // Call the trapFocus callback at least once when this modal has been
+    // re-rendered / trapFocus has changed!
+    trapFocus();
 
     return () => {
       if (canUseDOM) {
