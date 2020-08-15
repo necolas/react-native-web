@@ -23,14 +23,28 @@ import ModalFocusTrap from './ModalFocusTrap';
 
 let uniqueModalIdentifier = 0;
 
-const visibleModalStack = [];
+const activeModalStack = [];
 
-function isTopModal(modalId) {
-  if (visibleModalStack.length === 0) {
+function isActiveModal(modalId) {
+  if (activeModalStack.length === 0) {
     return false;
   }
 
-  return visibleModalStack[visibleModalStack.length - 1] === modalId;
+  return activeModalStack[activeModalStack.length - 1] === modalId;
+}
+
+function removeActiveModal(modalId) {
+  // In the off chance the active modal appears multiple times
+  // we can do this as a loop
+  while (activeModalStack.indexOf(modalId) !== -1) {
+    activeModalStack.splice(activeModalStack.indexOf(modalId), 1);
+  }
+}
+
+function addActiveModal(modalId) {
+  removeActiveModal(modalId);
+
+  activeModalStack.push(modalId);
 }
 
 const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
@@ -48,17 +62,15 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   // dismissals and check the layering of modals.
   const modalId = useMemo(() => uniqueModalIdentifier++, []);
 
-  const isActiveModal = useCallback(() => {
-    return !!(visible && isTopModal(modalId));
+  const isActive = useCallback(() => {
+    return !!(visible && isActiveModal(modalId));
   }, [visible, modalId]);
 
   const onDismissCallback = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
     // top element in the stack - so search the stack and remove
     // ourselves from it if need be.
-    if (visibleModalStack.indexOf(modalId) !== -1) {
-      visibleModalStack.splice(visibleModalStack.indexOf(modalId), 1);
-    }
+    removeActiveModal(modalId);
 
     if (onDismiss) {
       onDismiss();
@@ -66,7 +78,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   }, [modalId, onDismiss]);
 
   const onShowCallback = useCallback(() => {
-    visibleModalStack.push(modalId);
+    addActiveModal(modalId);
 
     if (onShow) {
       onShow();
@@ -76,7 +88,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
     // If the modal that received this event is not visible or
     // is not the top modal in the stack it should ignore the event.
-    if (isActiveModal()) {
+    if (isActive()) {
       return;
     }
 
@@ -87,7 +99,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         onRequestClose();
       }
     }
-  }, [isActiveModal, onRequestClose]);
+  }, [isActive, onRequestClose]);
 
   // Bind to the document itself for this component
   useEffect(() => {
@@ -106,6 +118,13 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
   }, [transparent]);
 
+  useEffect(() => {
+    // When this component is unmounted we should remove the modal from
+    // the active modal stack.  This is to handle the case of us unmounting
+    // a visible modal so we don't end up with a broken stack
+    return () => removeActiveModal(modalId)
+  }, [modalId]);
+
   return (
     <ModalPortal>
       <ModalAnimation
@@ -114,7 +133,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         onShow={onShowCallback}
         visible={visible}
       >
-        <ModalFocusTrap active={isActiveModal}>
+        <ModalFocusTrap active={isActive}>
           <View accessibilityRole="dialog" aria-modal ref={forwardedRef} style={style}>
             <View style={styles.container}>{children}</View>
           </View>
