@@ -72,7 +72,7 @@ export type ModalFocusTrapProps = {|
   active?: boolean | () => boolean,
 |};
 
-const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
+const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
   const trapElementRef = useRef();
 
   // Ref used to track trapping of focus and to prevent focus from leaving a modal
