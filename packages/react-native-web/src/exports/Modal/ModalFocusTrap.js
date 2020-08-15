@@ -88,7 +88,7 @@ const ModalFocusTrap = ({ active = true, children }: ModalFocusTrapProps) => {
     // We should not trap focus if:
     // - The modal hasn't fully initialized with an HTMLElement ref
     // - Focus is already in the process of being trapped (eg, we're refocusing)
-    // - isTrapping prop tells us to do nothing
+    // - isTrapActive prop being false-ish tells us to do nothing
     if (!trapElementRef.current || focusRef.current.trapFocusInProgress || !isTrapActive) {
       return;
     }

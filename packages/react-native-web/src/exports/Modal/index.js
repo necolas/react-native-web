@@ -48,6 +48,10 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   // dismissals and check the layering of modals.
   const modalId = useMemo(() => uniqueModalIdentifier++, []);
 
+  const isActiveModal = useCallback(() => {
+    return !!(visible && isTopModal(modalId));
+  }, [visible, modalId]);
+
   const onDismissCallback = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
     // top element in the stack - so search the stack and remove
@@ -69,14 +73,10 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     }
   }, [modalId, onShow]);
 
-  const isTrappingCallback = useCallback(() => {
-    return !!(visible && isTopModal(modalId));
-  }, [visible, modalId]);
-
   const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
     // If the modal that received this event is not visible or
     // is not the top modal in the stack it should ignore the event.
-    if (!visible || !isTopModal(modalId)) {
+    if (isActiveModal()) {
       return;
     }
 
@@ -87,7 +87,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         onRequestClose();
       }
     }
-  }, [modalId, visible, onRequestClose]);
+  }, [isActiveModal, onRequestClose]);
 
   // Bind to the document itself for this component
   useEffect(() => {
@@ -113,7 +113,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         style={[styles.modal, backgroundStyle]}
         visible={visible}
       >
-        <ModalFocusTrap active={isTrappingCallback}>
+        <ModalFocusTrap active={isActiveModal}>
           <View accessibilityRole="dialog" aria-modal ref={forwardedRef}>
             <View style={[styles.container]}>{children}</View>
           </View>
