@@ -24,17 +24,11 @@ function getAnimationStyle(animationType, visible) {
     return visible ? animatedFadeInStyles : animatedFadeOutStyles;
   }
 
-  if (!visible) {
-    return styles.hidden;
-  }
-
-  return null;
+  return visible ? styles.container : styles.hidden;
 }
 
 export type ModalAnimationProps = {|
   children?: any,
-
-  style?: any,
 
   animationType?: ?('none' | 'slide' | 'fade'),
 
@@ -47,7 +41,6 @@ export type ModalAnimationProps = {|
 function ModalAnimation(props: ModalAnimationProps) {
   const {
     children,
-    style,
     animationType,
     visible,
     onShow,
@@ -106,7 +99,7 @@ function ModalAnimation(props: ModalAnimationProps) {
   return createElement(
     'div',
     {
-      style: [style, getAnimationStyle(animationType, visible)],
+      style: getAnimationStyle(animationType, visible),
       onAnimationEnd: animationEndCallback,
       children
     }
@@ -114,6 +107,13 @@ function ModalAnimation(props: ModalAnimationProps) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  },
   animatedIn: {
     animationDuration: `${ANIMATION_DURATION}ms`,
     animationTimingFunction: 'ease-in'
@@ -156,10 +156,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const animatedSlideInStyles = [styles.animatedIn, styles.slideIn];
-const animatedSlideOutStyles = [styles.animatedOut, styles.slideOut];
+const animatedSlideInStyles = [styles.container, styles.animatedIn, styles.slideIn];
+const animatedSlideOutStyles = [styles.container, styles.animatedOut, styles.slideOut];
 
-const animatedFadeInStyles = [styles.animatedIn, styles.fadeIn];
-const animatedFadeOutStyles = [styles.animatedOut, styles.fadeOut];
+const animatedFadeInStyles = [styles.container, styles.animatedIn, styles.fadeIn];
+const animatedFadeOutStyles = [styles.container, styles.animatedOut, styles.fadeOut];
 
 export default ModalAnimation;

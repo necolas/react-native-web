@@ -102,7 +102,9 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     };
   }, [closeOnEscapeCallback]);
 
-  const backgroundStyle = transparent ? styles.modalTransparent : styles.modalOpaque;
+  const style = useMemo(() => {
+    return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
+  }, [transparent]);
 
   return (
     <ModalPortal>
@@ -110,12 +112,11 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         animationType={animationType}
         onDismiss={onDismissCallback}
         onShow={onShowCallback}
-        style={[styles.modal, backgroundStyle]}
         visible={visible}
       >
         <ModalFocusTrap active={isActiveModal}>
-          <View accessibilityRole="dialog" aria-modal ref={forwardedRef}>
-            <View style={[styles.container]}>{children}</View>
+          <View accessibilityRole="dialog" aria-modal ref={forwardedRef} style={style}>
+            <View style={styles.container}>{children}</View>
           </View>
         </ModalFocusTrap>
       </ModalAnimation>
