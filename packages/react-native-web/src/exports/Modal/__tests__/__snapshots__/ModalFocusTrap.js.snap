@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Modal/ModalFocusTrap creates focusable "brackets" 1`] = `
+<div>
+  <div
+    class="r-outlineStyle-1ny4l3l"
+    focusable="true"
+    role="presentation"
+    tabindex="0"
+  />
+  <div
+    class="css-view-1dbjc4n"
+  >
+    <a
+      data-focusvisible-polyfill="true"
+      href="#hello"
+    >
+      Hello
+    </a>
+  </div>
+  <div
+    class="r-outlineStyle-1ny4l3l"
+    focusable="true"
+    role="presentation"
+    tabindex="0"
+  />
+</div>
+`;
