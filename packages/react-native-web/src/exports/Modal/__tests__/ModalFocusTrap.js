@@ -31,7 +31,7 @@ describe('components/Modal/ModalFocusTrap', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('focus is trapped by default', () => {
+  test('focus is not trapped by default', () => {
     const { getByTestId } = render(
       <>
         <a data-testid={'outside'} href={'#outside'}>Outside</a>
@@ -42,11 +42,10 @@ describe('components/Modal/ModalFocusTrap', () => {
     );
 
     const outsideElement = getByTestId('outside');
-    const insideElement = getByTestId('inside');
 
     outsideElement.focus();
 
-    expect(document.activeElement).toBe(insideElement);
+    expect(document.activeElement).toBe(outsideElement);
   });
 
   test('focus is trapped when active flag changes', () => {
@@ -97,7 +96,7 @@ describe('components/Modal/ModalFocusTrap', () => {
     const { getByTestId } = render(
       <>
         <a data-testid={'outside'} href={'#outside'}>Outside</a>
-        <ModalFocusTrap>
+        <ModalFocusTrap active>
           <div data-testid={'inside'}>There are no focusable contents.</div>
         </ModalFocusTrap>
       </>
