@@ -10,15 +10,11 @@
 
 import React, { forwardRef, useCallback, useMemo, useEffect } from 'react';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-
-import View from '../View';
-import StyleSheet from '../StyleSheet';
-
 import type { ModalProps } from './types';
 
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
+import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
 
 let uniqueModalIdentifier = 0;
@@ -85,39 +81,6 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     }
   }, [modalId, onShow]);
 
-  const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
-    // If the modal that received this event is not visible or
-    // is not the top modal in the stack it should ignore the event.
-    if (isActive()) {
-      return;
-    }
-
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-
-      if (onRequestClose) {
-        onRequestClose();
-      }
-    }
-  }, [isActive, onRequestClose]);
-
-  // Bind to the document itself for this component
-  useEffect(() => {
-    if (canUseDOM) {
-      document.addEventListener('keyup', closeOnEscapeCallback, false);
-    }
-
-    return () => {
-      if (canUseDOM) {
-        document.removeEventListener('keyup', closeOnEscapeCallback, false);
-      }
-    };
-  }, [closeOnEscapeCallback]);
-
-  const style = useMemo(() => {
-    return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
-  }, [transparent]);
-
   useEffect(() => {
     // When this component is unmounted we should remove the modal from
     // the active modal stack.  This is to handle the case of us unmounting
@@ -134,34 +97,18 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         visible={visible}
       >
         <ModalFocusTrap active={isActive}>
-          <View accessibilityRole="dialog" aria-modal ref={forwardedRef} style={style}>
-            <View style={styles.container}>{children}</View>
-          </View>
+          <ModalContent
+            active={isActive}
+            transparent={transparent}
+            onRequestClose={onRequestClose}
+            ref={forwardedRef}
+          >
+            {children}
+          </ModalContent>
         </ModalFocusTrap>
       </ModalAnimation>
     </ModalPortal>
   );
-});
-
-const styles = StyleSheet.create({
-  modal: {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 9999
-  },
-  modalTransparent: {
-    backgroundColor: 'transparent'
-  },
-  modalOpaque: {
-    backgroundColor: 'white'
-  },
-  container: {
-    top: 0,
-    flex: 1
-  }
 });
 
 export default Modal;
