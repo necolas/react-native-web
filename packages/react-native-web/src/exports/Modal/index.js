@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React, { forwardRef, useCallback, useMemo, useEffect } from 'react';
+import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
 
 import type { ModalProps } from './types';
 
@@ -20,27 +20,45 @@ import ModalFocusTrap from './ModalFocusTrap';
 let uniqueModalIdentifier = 0;
 
 const activeModalStack = [];
+const activeModalListeners = {};
 
-function isActiveModal(modalId) {
+function notifyActiveModalListeners () {
   if (activeModalStack.length === 0) {
-    return false;
+    return;
   }
 
-  return activeModalStack[activeModalStack.length - 1] === modalId;
+  const activeModalId = activeModalStack[activeModalStack.length - 1];
+
+  for (const modalId of activeModalStack) {
+    if (modalId in activeModalListeners) {
+      activeModalListeners[modalId](modalId === activeModalId);
+    }
+  }
 }
 
 function removeActiveModal(modalId) {
-  // In the off chance the active modal appears multiple times
-  // we can do this as a loop
-  while (activeModalStack.indexOf(modalId) !== -1) {
-    activeModalStack.splice(activeModalStack.indexOf(modalId), 1);
+  if (modalId in activeModalListeners) {
+    // Before removing this listener we should probably tell it
+    // that it's no longer the active modal for sure.
+    activeModalListeners[modalId](false);
+    delete activeModalListeners[modalId];
+  }
+
+  const index = activeModalStack.indexOf(modalId);
+
+  if (index !== -1) {
+    activeModalStack.splice(index, 1);
+    notifyActiveModalListeners();
   }
 }
 
-function addActiveModal(modalId) {
+function addActiveModal(modalId, listener) {
   removeActiveModal(modalId);
 
   activeModalStack.push(modalId);
+  activeModalListeners[modalId] = listener;
+
+  notifyActiveModalListeners();
 }
 
 const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
@@ -58,9 +76,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   // dismissals and check the layering of modals.
   const modalId = useMemo(() => uniqueModalIdentifier++, []);
 
-  const isActive = useCallback(() => {
-    return !!(visible && isActiveModal(modalId));
-  }, [visible, modalId]);
+  const [isActive, setIsActive] = useState(false);
 
   const onDismissCallback = useCallback(() => {
     // When we dismiss we can't assume that we're dismissing the
@@ -74,7 +90,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   }, [modalId, onDismiss]);
 
   const onShowCallback = useCallback(() => {
-    addActiveModal(modalId);
+    addActiveModal(modalId, setIsActive);
 
     if (onShow) {
       onShow();

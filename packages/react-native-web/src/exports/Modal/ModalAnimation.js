@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';

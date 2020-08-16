@@ -34,11 +34,9 @@ const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
   } = props;
 
   const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
-    const isActive = typeof active === 'function' ? active() : active;
-
     // If the modal that received this event is not considered the "active" modal we
     // should ignore this event
-    if (!isActive) {
+    if (!active) {
       return;
     }
 

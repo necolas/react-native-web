@@ -82,30 +82,6 @@ describe('components/Modal/ModalFocusTrap', () => {
     expect(document.activeElement).toBe(insideElement);
   });
 
-  test('focus is trapped when active function', () => {
-    const active = jest.fn().mockReturnValue(true);
-
-    const { getByTestId } = render(
-      <>
-        <a data-testid={'outside'} href={'#outside'}>Outside</a>
-        <ModalFocusTrap active={active}>
-          <a data-testid={'inside'} href={'#hello'}>Hello</a>
-        </ModalFocusTrap>
-      </>
-    );
-
-    expect(active).toBeCalledTimes(1);
-
-    const outsideElement = getByTestId('outside');
-    const insideElement = getByTestId('inside');
-
-    outsideElement.focus();
-
-    expect(active).toBeCalledTimes(2);
-
-    expect(document.activeElement).toBe(insideElement);
-  });
-
   test('focus is trapped without contents', () => {
     const { getByTestId } = render(
       <>
@@ -139,27 +115,4 @@ describe('components/Modal/ModalFocusTrap', () => {
 
     expect(document.activeElement).toBe(outsideElement);
   });
-
-  test('focus is trapped when inactive function', () => {
-    const active = jest.fn().mockReturnValue(false);
-
-    const { getByTestId } = render(
-      <>
-        <a data-testid={'outside'} href={'#outside'}>Outside</a>
-        <ModalFocusTrap active={active}>
-          <a data-testid={'inside'} href={'#hello'}>Hello</a>
-        </ModalFocusTrap>
-      </>
-    );
-
-    expect(active).toBeCalledTimes(1);
-
-    const outsideElement = getByTestId('outside');
-
-    outsideElement.focus();
-
-    expect(active).toBeCalledTimes(2);
-    expect(document.activeElement).toBe(outsideElement);
-  });
-
 });
