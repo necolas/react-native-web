@@ -29,9 +29,9 @@ const FocusBracket = () => {
     'div',
     {
       style: styles.focusBracket,
-      accessible: true,
 
-      // Sets `aria-hidden` to true
+      // Sets `aria-hidden` to true & remove the semantic meaning
+      accessible: true,
       importantForAccessibility: 'no-hide-descendants',
       accessibilityRole: 'none',
 

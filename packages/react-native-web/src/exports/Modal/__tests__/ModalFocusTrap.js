@@ -15,8 +15,19 @@ describe('components/Modal/ModalFocusTrap', () => {
     );
 
     expect(container.children.length).toBe(3);
-    expect(container.firstChild.children.length).toBe(0);
-    expect(container.lastChild.children.length).toBe(0);
+
+    const beforeBracket = container.firstChild;
+    const afterBracket = container.lastChild;
+
+    expect(beforeBracket.children.length).toBe(0);
+    expect(afterBracket.children.length).toBe(0);
+
+    expect(beforeBracket.getAttribute('aria-hidden')).toBe('true');
+    expect(beforeBracket.getAttribute('tabindex')).toBe('0');
+
+    expect(afterBracket.getAttribute('aria-hidden')).toBe('true');
+    expect(afterBracket.getAttribute('tabindex')).toBe('0');
+
     expect(container).toMatchSnapshot();
   });
 
