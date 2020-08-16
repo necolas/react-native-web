@@ -67,7 +67,7 @@ const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
   }, [transparent]);
 
   return (
-    <View accessibilityRole="dialog" aria-modal ref={forwardedRef} style={style}>
+    <View accessibilityRole={active ? 'dialog' : null} aria-modal ref={forwardedRef} style={style}>
       <View style={styles.container}>{children}</View>
     </View>
   );
