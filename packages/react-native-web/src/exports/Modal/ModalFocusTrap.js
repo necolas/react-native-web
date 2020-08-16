@@ -29,8 +29,15 @@ const FocusBracket = () => {
     'div',
     {
       style: styles.focusBracket,
+      accessible: true,
+
+      // Sets `aria-hidden` to true
+      importantForAccessibility: 'no-hide-descendants',
       accessibilityRole: 'none',
-      focusable: true,
+
+      // `importantForAccessibility` being set to `no-hide-descendants`  will prevent
+      // these two attributes from being set as needed.
+      ['data-focusable']: true,
       tabIndex: 0
     }
   );
