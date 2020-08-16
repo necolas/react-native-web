@@ -69,7 +69,7 @@ Examples of using React Native for Web with other web tools:
 
 ## Examples
 
-And here is a simple example to get you started. The documentation include
+And here is a simple example to get you started. The documentation includes
 interactive examples and the [source
 code](https://github.com/necolas/react-native-web/blob/master/packages/docs) is
 also available.
