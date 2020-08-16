@@ -49,17 +49,7 @@ function ModalAnimation(props: ModalAnimationProps) {
 
   const [isRendering, setIsRendering] = useState(false);
 
-  // Resolve the "actual" animation type by checking the (somewhat deprecated)
-  // animated prop against the animationType prop
-  const computedAnimationType = useMemo(() => {
-    if (!animationType) {
-      return 'none';
-    }
-
-    return animationType;
-  }, [animationType]);
-
-  const isAnimated = computedAnimationType !== 'none';
+  const isAnimated = animationType && animationType !== 'none';
 
   const animationEndCallback = useCallback(() => {
     if (visible) {
