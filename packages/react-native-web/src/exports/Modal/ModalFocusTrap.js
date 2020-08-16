@@ -37,7 +37,7 @@ const FocusBracket = () => {
 
       // `importantForAccessibility` being set to `no-hide-descendants`  will prevent
       // these two attributes from being set as needed.
-      ['data-focusable']: true,
+      'data-focusable': true,
       tabIndex: 0
     }
   );
