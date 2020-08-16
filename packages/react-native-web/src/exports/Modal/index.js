@@ -115,9 +115,9 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
         <ModalFocusTrap active={isActive}>
           <ModalContent
             active={isActive}
-            transparent={transparent}
             onRequestClose={onRequestClose}
             ref={forwardedRef}
+            transparent={transparent}
           >
             {children}
           </ModalContent>
