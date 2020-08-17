@@ -361,7 +361,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.classList = classList;
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
-  supportedProps.enterkeyhint = returnKeyType;
+  supportedProps.enterKeyHint = returnKeyType;
   supportedProps.onBlur = handleBlur;
   supportedProps.onChange = handleChange;
   supportedProps.onFocus = handleFocus;
