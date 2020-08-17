@@ -61,23 +61,32 @@ function getResizeObserver(): ?ResizeObserver {
 
 export default function useElementLayout(
   ref: ElementRef<any>,
-  onLayout?: (e: LayoutEvent) => void
+  onLayout?: ?(e: LayoutEvent) => void
 ) {
   const observer = getResizeObserver();
 
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null && observer != null && typeof onLayout === 'function') {
-      observer.observe(node);
-      // $FlowFixMe
+    if (node != null) {
       node[DOM_LAYOUT_HANDLER_NAME] = onLayout;
+    }
+  }, [ref, onLayout]);
+
+  // Observing is done in a separate effect to avoid this effect running
+  // when 'onLayout' changes.
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (node != null && observer != null) {
+      if (typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function') {
+        observer.observe(node);
+      } else {
+        observer.unobserve(node);
+      }
     }
     return () => {
       if (node != null && observer != null) {
         observer.unobserve(node);
-        // $FlowFixMe
-        delete node[DOM_LAYOUT_HANDLER_NAME];
       }
     };
-  }, [ref, onLayout, observer]);
+  }, [ref, observer]);
 }
