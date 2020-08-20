@@ -163,7 +163,11 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
       break;
     case 'number-pad':
     case 'numeric':
-      inputMode = 'number';
+      inputMode = 'numeric';
+      break;
+    case 'decimal-pad':
+    case 'decimal':
+      inputMode = 'decimal';
       break;
     case 'phone-pad':
       type = 'tel';
