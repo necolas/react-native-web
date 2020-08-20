@@ -155,7 +155,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   } = props;
 
   let type;
-  let inputType;
+  let inputMode;
 
   switch (keyboardType) {
     case 'email-address':
@@ -163,7 +163,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
       break;
     case 'number-pad':
     case 'numeric':
-      inputType = 'number';
+      inputMode = 'number';
       break;
     case 'phone-pad':
       type = 'tel';
@@ -369,7 +369,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = style;
   supportedProps.type = multiline ? undefined : type;
-  supportedProps.inputType = inputType;
+  supportedProps.inputMode = inputMode;
 
   usePlatformMethods(hostRef, supportedProps);
 
