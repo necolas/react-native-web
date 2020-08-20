@@ -165,10 +165,22 @@ describe('components/TextInput', () => {
       expect(input.type).toEqual('email');
     });
 
+    test('value "decimal-pad"', () => {
+      const { container } = render(<TextInput keyboardType="decimal-pad" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('decimal');
+    });
+    
+    test('value "number-pad"', () => {
+      const { container } = render(<TextInput keyboardType="number-pad" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('numeric');
+    });
+    
     test('value "numeric"', () => {
       const { container } = render(<TextInput keyboardType="numeric" />);
       const input = findInput(container);
-      expect(input.inputType).toEqual('number');
+      expect(input.inputMode).toEqual('numeric');
     });
 
     test('value "phone-pad"', () => {
