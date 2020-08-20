@@ -168,7 +168,7 @@ describe('components/TextInput', () => {
     test('value "numeric"', () => {
       const { container } = render(<TextInput keyboardType="numeric" />);
       const input = findInput(container);
-      expect(input.type).toEqual('number');
+      expect(input.inputType).toEqual('number');
     });
 
     test('value "phone-pad"', () => {
