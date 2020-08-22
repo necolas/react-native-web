@@ -64,6 +64,10 @@ const forwardPropsList = {
   onMouseUp: true,
   onScroll: true,
   onWheel: true,
+  onTransitionEnd: true,
+  onAnimationStart: true,
+  onAnimationEnd: true,
+  onAnimationIteration: true,
   href: true,
   rel: true,
   target: true
