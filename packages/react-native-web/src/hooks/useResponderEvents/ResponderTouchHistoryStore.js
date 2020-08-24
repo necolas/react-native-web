@@ -84,9 +84,17 @@ function getTouchIdentifier({ identifier }: Touch): number {
   if (identifier == null) {
     console.error('Touch object is missing identifier.');
   }
-  // Safari produces very large identifiers that would cause the array length
-  // to be so large as to crash the browser, if not normalized like this.
-  return identifier > MAX_TOUCH_BANK ? identifier % 20 : identifier;
+  if (__DEV__) {
+    if (identifier > MAX_TOUCH_BANK) {
+      console.error(
+        'Touch identifier %s is greater than maximum supported %s which causes ' +
+          'performance issues backfilling array locations for all of the indices.',
+        identifier,
+        MAX_TOUCH_BANK
+      );
+    }
+  }
+  return identifier;
 }
 
 function recordTouchStart(touch: Touch): void {

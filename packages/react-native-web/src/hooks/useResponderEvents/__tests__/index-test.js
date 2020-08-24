@@ -162,6 +162,33 @@ describe('useResponderEvents', () => {
     expect(targetCallbacks.onResponderGrant).toBeCalledTimes(4);
   });
 
+  // NOTE: this is only needed for performance reasons while the
+  // `touchBank` is an array.
+  test('normalizes touch identifiers', () => {
+    const targetRef = createRef();
+    let identifier;
+    const Component = () => {
+      useResponderEvents(targetRef, {
+        onStartShouldSetResponder: () => true,
+        onResponderStart: jest.fn(e => {
+          identifier = e.nativeEvent.identifier;
+        })
+      });
+      return <div ref={targetRef} />;
+    };
+
+    // render
+    act(() => {
+      render(<Component />);
+    });
+    const target = createEventTarget(targetRef.current);
+    // gesture
+    act(() => {
+      target.pointerdown({ pointerId: 123456, pointerType: 'touch' });
+    });
+    expect(identifier <= 20).toBe(true);
+  });
+
   /**
    * SET: onStartShouldSetResponderCapture
    */
