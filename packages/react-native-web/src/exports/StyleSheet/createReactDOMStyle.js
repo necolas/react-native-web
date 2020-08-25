@@ -106,15 +106,12 @@ const createReactDOMStyle = style => {
           if (value > 0) {
             resolvedStyle.flexGrow = value;
             resolvedStyle.flexShrink = 1;
-            resolvedStyle.flexBasis = '0%';
           } else if (value === 0) {
             resolvedStyle.flexGrow = 0;
             resolvedStyle.flexShrink = 0;
-            resolvedStyle.flexBasis = '0%';
           } else if (value === -1) {
             resolvedStyle.flexGrow = 0;
             resolvedStyle.flexShrink = 1;
-            resolvedStyle.flexBasis = 'auto';
           }
           break;
         }
