@@ -153,8 +153,11 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const component = hasTextAncestor ? 'span' : 'div';
   const supportedProps = pickProps(props);
   supportedProps.classList = classList;
-  // 'auto' by default allows browsers to infer writing direction
-  supportedProps.dir = dir !== undefined ? dir : 'auto';
+  supportedProps.dir = dir;
+  // 'auto' by default allows browsers to infer writing direction (root elements only)
+  if (!hasTextAncestor) {
+    supportedProps.dir = dir != null ? dir : 'auto';
+  }
   supportedProps.onClick = handleClick;
   supportedProps.ref = setRef;
   supportedProps.style = style;

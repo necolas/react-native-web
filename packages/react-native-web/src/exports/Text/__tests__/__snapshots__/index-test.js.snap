@@ -22,7 +22,6 @@ exports[`components/Text nested 1`] = `
   <span
     class="css-text-901oao css-textHasAncestor-16my406"
     data-testid="child"
-    dir="auto"
   />
 </div>
 `;
