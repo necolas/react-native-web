@@ -231,7 +231,7 @@ describe('components/Modal', () => {
     );
 
     const animationMissingElement = baseElement.lastChild.lastChild;
-    const animationMissingStyle = window.getComputedStyle(animationNoneElement, null);
+    const animationMissingStyle = window.getComputedStyle(animationMissingElement, null);
 
     const styleProps = new Set();
 
