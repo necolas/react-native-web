@@ -17,11 +17,8 @@ import StyleSheet from '../StyleSheet';
 
 export type ModalContentProps = {|
   children?: any,
-
   active?: ?(boolean | () => boolean),
-
   transparent?: ?boolean,
-
   onRequestClose?: ?() => void,
 |};
 

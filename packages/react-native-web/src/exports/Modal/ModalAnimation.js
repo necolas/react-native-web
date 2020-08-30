@@ -29,11 +29,8 @@ function getAnimationStyle(animationType, visible) {
 
 export type ModalAnimationProps = {|
   children?: any,
-
   animationType?: ?('none' | 'slide' | 'fade'),
-
   visible?: ?boolean,
-
   onShow?: ?() => void,
   onDismiss?: ?() => void
 |};

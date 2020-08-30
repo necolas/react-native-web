@@ -23,22 +23,16 @@ export type AnimationType = 'none' | 'slide' | 'fade';
 
 export type ModalProps = {|
   children: any,
-
   visible?: ?boolean,
-
   animationType?: AnimationType,
-
   presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),
   transparent?: ?boolean,
-
   onOrientationChange?: ?(e: OrientationChangeEvent) => void,
   supportedOrientations?: ?Array<
     'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
     >,
-
   statusBarTranslucent?: ?boolean,
   hardwareAccelerated?: ?boolean,
-
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
   onDismiss?: ?() => mixed

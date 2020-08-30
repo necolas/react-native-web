@@ -81,7 +81,6 @@ function focusLastDescendant(element: any) {
 
 export type ModalFocusTrapProps = {|
   children?: any,
-
   active?: boolean | () => boolean,
 |};
 
