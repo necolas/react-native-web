@@ -10,12 +10,39 @@
 
 import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
 
-import type { ModalProps } from './types';
-
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
+
+type OrientationChangeEvent = {|
+  orientation: 'portrait' | 'landscape'
+|};
+
+export type AnimationType = 'none' | 'slide' | 'fade';
+
+export type ModalProps = {|
+  children: any,
+
+  visible?: ?boolean,
+
+  animationType?: AnimationType,
+
+  presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),
+  transparent?: ?boolean,
+
+  onOrientationChange?: ?(e: OrientationChangeEvent) => void,
+  supportedOrientations?: ?Array<
+    'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
+    >,
+
+  statusBarTranslucent?: ?boolean,
+  hardwareAccelerated?: ?boolean,
+
+  onRequestClose?: ?() => void,
+  onShow?: ?() => void,
+  onDismiss?: ?() => mixed
+|};
 
 let uniqueModalIdentifier = 0;
 
