@@ -141,17 +141,13 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
   useEffect(() => {
     if (canUseDOM) {
       document.addEventListener('focus', trapFocus, true);
+
+      // Call the trapFocus callback at least once when this modal has been
+      // re-rendered / trapFocus has changed!
+      trapFocus();
+
+      return () => document.removeEventListener('focus', trapFocus, true);
     }
-
-    // Call the trapFocus callback at least once when this modal has been
-    // re-rendered / trapFocus has changed!
-    trapFocus();
-
-    return () => {
-      if (canUseDOM) {
-        document.removeEventListener('focus', trapFocus, true);
-      }
-    };
   }, [trapFocus]);
 
   return (
