@@ -49,13 +49,9 @@ const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
   useEffect(() => {
     if (canUseDOM) {
       document.addEventListener('keyup', closeOnEscapeCallback, false);
-    }
 
-    return () => {
-      if (canUseDOM) {
-        document.removeEventListener('keyup', closeOnEscapeCallback, false);
-      }
-    };
+      return () => document.removeEventListener('keyup', closeOnEscapeCallback, false);
+    }
   }, [closeOnEscapeCallback]);
 
   const style = useMemo(() => {
