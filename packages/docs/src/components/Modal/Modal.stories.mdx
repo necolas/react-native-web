@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './Modal.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|Modal" />
 
@@ -10,7 +10,15 @@ Modals may be nested within other Modals.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type           | Default |
+| ------------------------- | -------------- | ------- |
+| children                  | ?any           | |
+| visible                   | ?boolean       | false |
+| animationType             | ?AnimationType | 'none' |
+| transparent               | ?boolean       | false |
+| onRequestClose            | ?Function      | |
+| onShow                    | ?Function      | |
+| onDismiss                 | ?Function      | |
 
 ### visible
 
