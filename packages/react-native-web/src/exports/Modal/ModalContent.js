@@ -36,11 +36,7 @@ const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
   const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
     // If the modal that received this event is not considered the "active" modal we
     // should ignore this event
-    if (!active) {
-      return;
-    }
-
-    if (e.key === 'Escape') {
+    if (active && e.key === 'Escape') {
       e.stopPropagation();
 
       if (onRequestClose) {
