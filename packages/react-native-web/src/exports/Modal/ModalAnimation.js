@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
@@ -47,8 +47,6 @@ function ModalAnimation(props: ModalAnimationProps) {
     onDismiss
   } = props;
 
-  const [isRendering, setIsRendering] = useState(false);
-
   const isAnimated = animationType && animationType !== 'none';
 
   const animationEndCallback = useCallback(() => {
@@ -60,8 +58,7 @@ function ModalAnimation(props: ModalAnimationProps) {
       }
     } else {
       // If animation completed and we're visible,
-      // fire off the onDismiss callback and stop rendering
-      setIsRendering(false);
+      // fire off the onDismiss callback
       if (onDismiss) {
         onDismiss();
       }
@@ -71,20 +68,12 @@ function ModalAnimation(props: ModalAnimationProps) {
   // If the `visible` flag is changing we want to set the rendering flag to true
   // before the animations ever will start
   useEffect(() =>  {
-    if (visible) {
-      setIsRendering(true);
-    }
-
     if (!isAnimated) {
       // If !isAnimated we have to manually call `animationEndCallback` - if we
       // don't it will never get called
       animationEndCallback();
     }
   }, [isAnimated, visible, animationEndCallback]);
-
-  if (!isRendering) {
-    return null;
-  }
 
   return createElement(
     'div',

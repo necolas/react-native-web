@@ -13,6 +13,14 @@ export default function Modalception ({ depth = 1 }) {
     }
   }, []);
 
+  if (!isVisible) {
+    return (
+      <>
+        <Button onPress={() => setIsVisible(true)} title={'Open Modal'} />
+      </>
+    );
+  }
+
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Open Modal'} />
