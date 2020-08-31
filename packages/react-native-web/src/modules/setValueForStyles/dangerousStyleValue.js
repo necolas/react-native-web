@@ -10,7 +10,7 @@
  * @noflow
  */
 
-import isUnitlessNumber from '../../../modules/unitlessNumbers';
+import isUnitlessNumber from '../unitlessNumbers';
 
 /**
  * Convert a value into the proper css writable value. The style name `name`

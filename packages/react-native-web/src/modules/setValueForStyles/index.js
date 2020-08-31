@@ -10,7 +10,7 @@
  * @noflow
  */
 
-import dangerousStyleValue from '../dangerousStyleValue';
+import dangerousStyleValue from './dangerousStyleValue';
 
 /**
  * Sets the value for multiple styles on a node.  If a value is specified as
