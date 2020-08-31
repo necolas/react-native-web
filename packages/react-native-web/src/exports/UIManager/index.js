@@ -8,7 +8,7 @@
  */
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
-import setValueForStyles from '../../vendor/react-dom/setValueForStyles';
+import setValueForStyles from '../../modules/setValueForStyles';
 
 const getRect = node => {
   // Unlike the DOM's getBoundingClientRect, React Native layout measurements
