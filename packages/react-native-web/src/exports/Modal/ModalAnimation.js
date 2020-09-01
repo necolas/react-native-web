@@ -45,7 +45,9 @@ function ModalAnimation(props: ModalAnimationProps) {
   } = props;
 
   const [isRendering, setIsRendering] = useState(false);
-  const wasVisible = useRef(false);
+
+  // Undefined by default so the initial `onDismiss` callback is fired
+  const wasVisible = useRef();
 
   const isAnimated = animationType && animationType !== 'none';
 
