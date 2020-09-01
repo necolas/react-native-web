@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
@@ -21,32 +21,37 @@ export type ModalPortalProps = {|
 function ModalPortal(props: ModalPortalProps) {
   const { children } = props;
 
-  // Only create the element once.
-  const element = useMemo(() => {
+  const elementRef = useRef();
+  const [mounted, setMounted] = useState()
+
+  useEffect(() => {
     if (canUseDOM) {
-      return document.createElement('div')
+      const element = document.createElement('div');
+
+      if (element && document.body) {
+        document.body.appendChild(element);
+        elementRef.current = element;
+        setMounted(true);
+      }
+
+      return () => {
+        // Check for document.body existence 'cause if we don't
+        // the flow typing checks get unhappy.
+        if (document.body) {
+          document.body.removeChild(element);
+        }
+      };
     }
   }, []);
 
-  useEffect(() => {
-    if (canUseDOM && element && document.body) {
-      document.body.appendChild(element);
-    }
-
-    return () => {
-      if (canUseDOM && element && document.body) {
-        document.body.removeChild(element);
-      }
-    }
-  }, [element]);
-
-  if (!canUseDOM || !element) {
-    // If we can't use the DOM we cannot actually create a portal
-    // via the ReactDOM.createPortal function!
+  // For Next.JS compatibility, we keep track of the DOM actually being
+  // mounted & if it's not we don't render anything - per the next.js docs
+  // on thinking with portals.
+  if (!mounted || !elementRef.current || !canUseDOM) {
     return null;
   }
 
-  return ReactDOM.createPortal(children, element);
+  return ReactDOM.createPortal(children, elementRef.current);
 }
 
 export default ModalPortal;
