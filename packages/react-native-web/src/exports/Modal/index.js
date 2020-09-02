@@ -84,7 +84,7 @@ function addActiveModal(modalId, listener) {
 
 const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   const {
-    visible,
+    visible = true,
     animationType,
     transparent,
     children,

@@ -5,6 +5,20 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 describe('components/Modal', () => {
+  test('visible by default', () => {
+    const { getByTestId } = render(
+      <>
+        <Modal>
+          <a data-testid={'inside'} href={'#hello'}>Hello</a>
+        </Modal>
+      </>
+    );
+    const insideElement = getByTestId('inside')
+
+    expect(insideElement).not.toBeNull();
+    expect(insideElement).not.toBe(document.body);
+  });
+
   test('render children when visible', () => {
     const { getByTestId } = render(
       <>
@@ -262,7 +276,7 @@ describe('components/Modal', () => {
     expect(dialogElement.getAttribute('aria-modal')).toBe('true');
   });
 
-  test('focus is not trapped by default', () => {
+  test('focus is trapped by default', () => {
     render(
       <>
         <a data-testid={'outside'} href={'#outside'}>Outside</a>
@@ -273,10 +287,11 @@ describe('components/Modal', () => {
     );
 
     const outsideElement = document.querySelector('[data-testid="outside"]');
+    const insideElement = document.querySelector('[data-testid="inside"]');
 
     outsideElement.focus();
 
-    expect(document.activeElement).toBe(outsideElement);
+    expect(document.activeElement).toBe(insideElement);
   });
 
   test('focus is trapped when active flag changes', () => {
