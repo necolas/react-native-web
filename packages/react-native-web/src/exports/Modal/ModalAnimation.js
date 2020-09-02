@@ -83,6 +83,10 @@ function ModalAnimation(props: ModalAnimationProps) {
     wasVisible.current = visible;
   }, [isAnimated, visible, animationEndCallback]);
 
+  if (!isRendering && !visible) {
+    return null;
+  }
+
   return createElement(
     'div',
     {
