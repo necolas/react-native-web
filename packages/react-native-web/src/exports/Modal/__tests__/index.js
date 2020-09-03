@@ -340,6 +340,52 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(insideElement);
   });
 
+  test('focus wraps forwards', () => {
+    render(
+      <>
+        <Modal visible={true}>
+          <a data-testid={'inside-a'} href={'#'}>Inside A</a>
+          <a data-testid={'inside-b'} href={'#'}>Inside B</a>
+          <a data-testid={'inside-c'} href={'#'}>Inside C</a>
+        </Modal>
+      </>
+    );
+
+    const insideStartElement = document.querySelector('[data-testid="inside-a"]');
+    const insideEndElement = document.querySelector('[data-testid="inside-c"]');
+
+    // This is ugly - perhaps there's a better way?
+    const focusBracket = insideEndElement.parentNode.parentNode.parentNode.nextSibling;
+
+    insideEndElement.focus();
+    focusBracket.focus();
+
+    expect(document.activeElement).toBe(insideStartElement);
+  });
+
+  test('focus wraps backwards', () => {
+    render(
+      <>
+        <Modal visible={true}>
+          <a data-testid={'inside-a'} href={'#'}>Inside A</a>
+          <a data-testid={'inside-b'} href={'#'}>Inside B</a>
+          <a data-testid={'inside-c'} href={'#'}>Inside C</a>
+        </Modal>
+      </>
+    );
+
+    const insideStartElement = document.querySelector('[data-testid="inside-a"]');
+    const insideEndElement = document.querySelector('[data-testid="inside-c"]');
+
+    // This is ugly - perhaps there's a better way?
+    const focusBracket = insideEndElement.parentNode.parentNode.parentNode.previousSibling;
+
+    insideStartElement.focus();
+    focusBracket.focus();
+
+    expect(document.activeElement).toBe(insideEndElement);
+  });
+
   test('focus is trapped without contents', () => {
     render(
       <>

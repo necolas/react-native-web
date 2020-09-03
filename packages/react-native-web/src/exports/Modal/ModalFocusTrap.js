@@ -43,20 +43,18 @@ const FocusBracket = () => {
   );
 };
 
-function getActiveElement() {
-  if (canUseDOM) {
-    return document.activeElement;
-  }
-}
-
 function attemptFocus(element: any) {
+  if (!canUseDOM) {
+    return false;
+  }
+
   try {
     element.focus();
   } catch (e) {
     // Do nothing
   }
 
-  return getActiveElement() === element;
+  return document.activeElement === element;
 }
 
 function focusFirstDescendant(element: any) {
@@ -95,13 +93,12 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
   });
 
   const trapFocus = useCallback(() => {
-    let activeElement = getActiveElement();
-
     // We should not trap focus if:
     // - The modal hasn't fully initialized with an HTMLElement ref
     // - Focus is already in the process of being trapped (eg, we're refocusing)
     // - isTrapActive prop being false-ish tells us to do nothing
-    if (!trapElementRef.current || focusRef.current.trapFocusInProgress || !active) {
+    // - we cannot use the DOM
+    if (!trapElementRef.current || focusRef.current.trapFocusInProgress || !active || !canUseDOM) {
       return;
     }
 
@@ -109,7 +106,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
       focusRef.current.trapFocusInProgress = true;
 
       // Only muck with the focus if the event target isn't within this modal
-      if (activeElement instanceof Node && !trapElementRef.current.contains(activeElement)) {
+      if (document.activeElement instanceof Node && !trapElementRef.current.contains(document.activeElement)) {
         // To handle keyboard focusing we can make an assumption here.
         // If you're tabbing through the focusable elements, the previously
         // active element will either be the first or the last.
@@ -118,23 +115,21 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
         // and we're leaving it - this means that we should
         // be looping around to the other side of the modal.
         let hasFocused = focusFirstDescendant(trapElementRef.current);
-        if (focusRef.current.lastFocusedElement === activeElement) {
+
+        if (focusRef.current.lastFocusedElement === document.activeElement) {
           hasFocused = focusLastDescendant(trapElementRef.current);
         }
 
-        // Reload fetching the active element
-        activeElement = getActiveElement();
-
         // If we couldn't focus a new element then we need to blur the active element
-        if (!hasFocused && activeElement) {
-          activeElement.blur();
+        if (!hasFocused && document.activeElement) {
+          document.activeElement.blur();
         }
       }
     } finally {
       focusRef.current.trapFocusInProgress = false;
     }
 
-    focusRef.current.lastFocusedElement = getActiveElement();
+    focusRef.current.lastFocusedElement = document.activeElement;
   }, [active]);
 
   // Bind to the document itself for this component
