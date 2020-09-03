@@ -239,7 +239,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
             onLoad(e);
           }
           if (onLoadEnd) {
-            onLoadEnd(e);
+            onLoadEnd();
           }
         },
         function error() {
