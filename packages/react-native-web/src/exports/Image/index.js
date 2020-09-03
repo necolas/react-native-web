@@ -236,7 +236,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
         function load(e) {
           updateState(LOADED);
           if (onLoad) {
-            onLoad();
+            onLoad(e);
           }
           if (onLoadEnd) {
             onLoadEnd();
