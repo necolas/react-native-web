@@ -164,7 +164,7 @@ describe('components/Modal', () => {
     expect(onShowCallback).toBeCalledTimes(0);
   });
 
-  test('executes onDismiss callback when initially hidden', () => {
+  test('does not execute onDismiss callback when initially hidden', () => {
     const onDismissCallback = jest.fn();
 
     render(
@@ -173,7 +173,7 @@ describe('components/Modal', () => {
       </>
     );
 
-    expect(onDismissCallback).toBeCalledTimes(1);
+    expect(onDismissCallback).toBeCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially showing', () => {
