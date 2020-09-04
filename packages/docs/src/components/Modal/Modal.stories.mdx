@@ -12,26 +12,13 @@ Modals may be nested within other Modals.
 
 | Name                      | Type           | Default |
 | ------------------------- | -------------- | ------- |
-| children                  | ?any           | |
-| visible                   | ?boolean       | true |
 | animationType             | ?AnimationType | 'none' |
-| transparent               | ?boolean       | false |
+| children                  | ?any           | |
+| onDismiss                 | ?Function      | |
 | onRequestClose            | ?Function      | |
 | onShow                    | ?Function      | |
-| onDismiss                 | ?Function      | |
-
-### visible
-
-Whether or not the modal is visible.
-
-When set to `false` the contents are not rendered & the modal removes itself
-from the screen.
-
-<Preview withSource='none'>
-  <Story name="propsExample-visible">
-    <Stories.simpleModal />
-  </Story>
-</Preview>
+| transparent               | ?boolean       | false |
+| visible                   | ?boolean       | true |
 
 ### animationType
 
@@ -50,16 +37,9 @@ By default this is `none`.
   </Story>
 </Preview>
 
-### transparent
+### onDismiss
 
-The `transparent` prop determines if the modal is rendered with a `transparent` backdrop or
-a `white` backdrop.
-
-<Preview withSource='none'>
-  <Story name="propsExample-transparent">
-    <Stories.transparentModal />
-  </Story>
-</Preview>
+The `onDismiss` callback is called after the modal has been dismissed and is no longer visible.
 
 ### onRequestClose
 
@@ -78,6 +58,26 @@ Only the top-most Modal responds to hitting `Escape`.
 
 The `onShow` callback is called once the modal has been shown and may be visible.
 
-### onDismiss
+### transparent
 
-The `onDismiss` callback is called after the modal has been dismissed and is no longer visible.
+The `transparent` prop determines if the modal is rendered with a `transparent` backdrop or
+a `white` backdrop.
+
+<Preview withSource='none'>
+  <Story name="propsExample-transparent">
+    <Stories.transparentModal />
+  </Story>
+</Preview>
+
+### visible
+
+Whether or not the modal is visible.
+
+When set to `false` the contents are not rendered & the modal removes itself
+from the screen.
+
+<Preview withSource='none'>
+  <Story name="propsExample-visible">
+    <Stories.simpleModal />
+  </Story>
+</Preview>
