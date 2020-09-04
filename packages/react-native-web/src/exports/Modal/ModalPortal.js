@@ -9,9 +9,7 @@
  */
 
 import { useEffect, useState, useRef } from 'react';
-
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-
 import ReactDOM from 'react-dom';
 
 export type ModalPortalProps = {|
@@ -35,8 +33,6 @@ function ModalPortal(props: ModalPortalProps) {
       }
 
       return () => {
-        // Check for document.body existence 'cause if we don't
-        // the flow typing checks get unhappy.
         if (document.body) {
           document.body.removeChild(element);
         }
@@ -44,14 +40,7 @@ function ModalPortal(props: ModalPortalProps) {
     }
   }, []);
 
-  // For Next.JS compatibility, we keep track of the DOM actually being
-  // mounted & if it's not we don't render anything - per the next.js docs
-  // on thinking with portals.
-  if (!mounted || !elementRef.current || !canUseDOM) {
-    return null;
-  }
-
-  return ReactDOM.createPortal(children, elementRef.current);
+  return (mounted && elementRef.current && canUseDOM) ? ReactDOM.createPortal(children, elementRef.current) : null;
 }
 
 export default ModalPortal;

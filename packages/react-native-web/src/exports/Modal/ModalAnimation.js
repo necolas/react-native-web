@@ -9,7 +9,6 @@
  */
 
 import { useEffect, useCallback, useState, useRef } from 'react';
-
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
 
@@ -28,20 +27,20 @@ function getAnimationStyle(animationType, visible) {
 }
 
 export type ModalAnimationProps = {|
-  children?: any,
   animationType?: ?('none' | 'slide' | 'fade'),
-  visible?: ?boolean,
+  children?: any,
+  onDismiss?: ?() => void,
   onShow?: ?() => void,
-  onDismiss?: ?() => void
+  visible?: ?boolean,
 |};
 
 function ModalAnimation(props: ModalAnimationProps) {
   const {
-    children,
     animationType,
-    visible,
+    children,
+    onDismiss,
     onShow,
-    onDismiss
+    visible
   } = props;
 
   const [isRendering, setIsRendering] = useState(false);
@@ -53,14 +52,10 @@ function ModalAnimation(props: ModalAnimationProps) {
 
   const animationEndCallback = useCallback(() => {
     if (visible) {
-      // If animation completed and we're visible,
-      // fire off the onShow callback
       if (onShow) {
         onShow();
       }
     } else {
-      // If animation completed and we're visible,
-      // fire off the onDismiss callback and stop rendering
       setIsRendering(false);
       if (onDismiss) {
         onDismiss();
@@ -83,18 +78,14 @@ function ModalAnimation(props: ModalAnimationProps) {
     wasVisible.current = visible;
   }, [isAnimated, visible, animationEndCallback]);
 
-  if (!isRendering && !visible) {
-    return null;
-  }
-
-  return createElement(
+  return (isRendering || visible) ? createElement(
     'div',
     {
       style: isRendering ? getAnimationStyle(animationType, visible) : styles.hidden,
       onAnimationEnd: animationEndCallback,
       children
     }
-  );
+  ) : null;
 }
 
 const styles = StyleSheet.create({

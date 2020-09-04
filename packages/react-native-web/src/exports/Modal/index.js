@@ -9,33 +9,26 @@
  */
 
 import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
-
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
 
-type OrientationChangeEvent = {|
-  orientation: 'portrait' | 'landscape'
-|};
-
-export type AnimationType = 'none' | 'slide' | 'fade';
-
 export type ModalProps = {|
+  animationType?: 'none' | 'slide' | 'fade',
   children: any,
-  visible?: ?boolean,
-  animationType?: AnimationType,
+  hardwareAccelerated?: ?boolean,
+  onDismiss?: ?() => mixed,
+  onOrientationChange?: ?(e: {| orientation: 'portrait' | 'landscape' |}) => void,
+  onRequestClose?: ?() => void,
+  onShow?: ?() => void,
   presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),
-  transparent?: ?boolean,
-  onOrientationChange?: ?(e: OrientationChangeEvent) => void,
+  statusBarTranslucent?: ?boolean,
   supportedOrientations?: ?Array<
     'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
     >,
-  statusBarTranslucent?: ?boolean,
-  hardwareAccelerated?: ?boolean,
-  onRequestClose?: ?() => void,
-  onShow?: ?() => void,
-  onDismiss?: ?() => mixed
+  transparent?: ?boolean,
+  visible?: ?boolean,
 |};
 
 let uniqueModalIdentifier = 0;
@@ -47,14 +40,12 @@ function notifyActiveModalListeners () {
   if (activeModalStack.length === 0) {
     return;
   }
-
   const activeModalId = activeModalStack[activeModalStack.length - 1];
-
-  for (const modalId of activeModalStack) {
+  activeModalStack.forEach(modalId => {
     if (modalId in activeModalListeners) {
       activeModalListeners[modalId](modalId === activeModalId);
     }
-  }
+  });
 }
 
 function removeActiveModal(modalId) {
@@ -64,9 +55,7 @@ function removeActiveModal(modalId) {
     activeModalListeners[modalId](false);
     delete activeModalListeners[modalId];
   }
-
   const index = activeModalStack.indexOf(modalId);
-
   if (index !== -1) {
     activeModalStack.splice(index, 1);
     notifyActiveModalListeners();
@@ -75,22 +64,20 @@ function removeActiveModal(modalId) {
 
 function addActiveModal(modalId, listener) {
   removeActiveModal(modalId);
-
   activeModalStack.push(modalId);
   activeModalListeners[modalId] = listener;
-
   notifyActiveModalListeners();
 }
 
 const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
   const {
-    visible = true,
     animationType,
-    transparent,
     children,
-    onShow,
     onDismiss,
-    onRequestClose
+    onRequestClose,
+    onShow,
+    transparent,
+    visible = true,
   } = props;
 
   // Set a unique model identifier so we can correctly route
@@ -104,7 +91,6 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     // top element in the stack - so search the stack and remove
     // ourselves from it if need be.
     removeActiveModal(modalId);
-
     if (onDismiss) {
       onDismiss();
     }
@@ -112,7 +98,6 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
 
   const onShowCallback = useCallback(() => {
     addActiveModal(modalId, setIsActive);
-
     if (onShow) {
       onShow();
     }

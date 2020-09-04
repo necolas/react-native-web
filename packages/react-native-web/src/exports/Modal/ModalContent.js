@@ -8,48 +8,40 @@
  * @flow
  */
 
-import React, { forwardRef, useCallback, useMemo, useEffect } from 'react';
-
+import React, { forwardRef, useMemo, useEffect } from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 
 export type ModalContentProps = {|
-  children?: any,
   active?: ?(boolean | () => boolean),
-  transparent?: ?boolean,
+  children?: any,
   onRequestClose?: ?() => void,
+  transparent?: ?boolean,
 |};
 
 const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
   const {
     active,
-    transparent,
     children,
-    onRequestClose
+    onRequestClose,
+    transparent,
   } = props;
 
-  const closeOnEscapeCallback = useCallback((e: KeyboardEvent) => {
-    // If the modal that received this event is not considered the "active" modal we
-    // should ignore this event
-    if (active && e.key === 'Escape') {
-      e.stopPropagation();
-
-      if (onRequestClose) {
-        onRequestClose();
-      }
-    }
-  }, [active, onRequestClose]);
-
-  // Bind to the document itself for this component
   useEffect(() => {
     if (canUseDOM) {
-      document.addEventListener('keyup', closeOnEscapeCallback, false);
-
-      return () => document.removeEventListener('keyup', closeOnEscapeCallback, false);
+      const closeOnEscape = (e: KeyboardEvent) => {
+        if (active && e.key === 'Escape') {
+          e.stopPropagation();
+          if (onRequestClose) {
+            onRequestClose();
+          }
+        }
+      };
+      document.addEventListener('keyup', closeOnEscape, false);
+      return () => document.removeEventListener('keyup', closeOnEscape, false);
     }
-  }, [closeOnEscapeCallback]);
+  }, [active, onRequestClose]);
 
   const style = useMemo(() => {
     return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
