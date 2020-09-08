@@ -10,7 +10,6 @@
 
 import React, { useRef, useEffect } from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 
@@ -33,6 +32,19 @@ const FocusBracket = () => {
     }
   );
 };
+
+const FocusTarget = React.forwardRef((props, ref) => {
+  return createElement(
+    'div',
+    {
+      ...props,
+      ref,
+      accessibilityRole: 'none',
+      'data-focusable': true,
+      tabIndex: -1
+    }
+  );
+});
 
 function attemptFocus(element: any) {
   if (!canUseDOM) {
@@ -74,7 +86,7 @@ export type ModalFocusTrapProps = {|
 |};
 
 const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
-  const trapElementRef = useRef<?Node>();
+  const trapElementRef = useRef<?HTMLElement>();
 
   // Ref used to track trapping of focus and to prevent focus from leaving a modal
   // for accessibility reasons per W3CAG.
@@ -113,9 +125,9 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
               hasFocused = focusLastDescendant(trapElementRef.current);
             }
 
-            // If we couldn't focus a new element then we need to blur the active element
-            if (!hasFocused && document.activeElement) {
-              document.activeElement.blur();
+            // If we couldn't focus a new element then we need to focus onto the trap target
+            if (!hasFocused && trapElementRef.current) {
+              trapElementRef.current.focus();
             }
           }
         } finally {
@@ -136,9 +148,9 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
   return (
     <>
       <FocusBracket />
-      <View ref={trapElementRef}>
+      <FocusTarget ref={trapElementRef}>
         {children}
-      </View>
+      </FocusTarget>
       <FocusBracket />
     </>
   );

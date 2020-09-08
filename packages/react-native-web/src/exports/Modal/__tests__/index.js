@@ -400,7 +400,8 @@ describe('components/Modal', () => {
 
     outsideElement.focus();
 
-    expect(document.activeElement).toBe(document.body);
+    expect(document.activeElement).not.toBe(outsideElement);
+    expect(document.activeElement).not.toBe(document.body);
   });
 
   test('focus is not trapped when inactive', () => {
