@@ -45,7 +45,6 @@ export type EventHandlers = $ReadOnly<{|
   onClick: (event: ClickEvent) => void,
   onContextMenu: (event: ClickEvent) => void,
   onKeyDown: (event: KeyboardEvent) => void,
-  onKeyUp: (event: KeyboardEvent) => void,
   onResponderGrant: (event: ResponderEvent) => void,
   onResponderMove: (event: ResponderEvent) => void,
   onResponderRelease: (event: ResponderEvent) => void,
@@ -132,7 +131,9 @@ const isValidKeyPress = event => {
   const target = event.currentTarget;
   const role = target.getAttribute('role');
   const isSpacebar = key === ' ' || key === 'Spacebar';
-  return key === 'Enter' || (isSpacebar && (role === 'button' || role === 'menuitem'));
+  return (
+    !event.repeat && (key === 'Enter' || (isSpacebar && (role === 'button' || role === 'menuitem')))
+  );
 };
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
@@ -297,6 +298,13 @@ export default class PressResponder {
       this._receiveSignal(RESPONDER_RELEASE, event);
     };
 
+    const keyupHandler = (event: KeyboardEvent) => {
+      if (this._touchState !== NOT_RESPONDER) {
+        end(event);
+        document.removeEventListener('keyup', keyupHandler);
+      }
+    };
+
     return {
       onStartShouldSetResponder: (): boolean => {
         const { disabled } = this._config;
@@ -310,15 +318,9 @@ export default class PressResponder {
         if (isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
-          }
-          event.stopPropagation();
-        }
-      },
-
-      onKeyUp: event => {
-        if (isValidKeyPress(event)) {
-          if (this._touchState !== NOT_RESPONDER) {
-            end(event);
+            // Listen to 'keyup' on document to account for situations where
+            // focus is moved to another element during 'keydown'.
+            document.addEventListener('keyup', keyupHandler);
           }
           event.stopPropagation();
         }

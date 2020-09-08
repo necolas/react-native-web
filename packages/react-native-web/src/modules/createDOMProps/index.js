@@ -235,16 +235,18 @@ const createDOMProps = (component, props) => {
         // for keyboards.
         const onKeyDown = domProps.onKeyDown;
         domProps.onKeyDown = function(e) {
-          const key = e.key;
+          const { key, repeat } = e;
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
           const isButtonRole = role === 'button' || role === 'menuitem';
           if (onKeyDown != null) {
             onKeyDown(e);
           }
-          if (key === 'Enter') {
+          if (!repeat && key === 'Enter') {
             onClick(e);
           } else if (isSpacebarKey && isButtonRole) {
-            onClick(e);
+            if (!repeat) {
+              onClick(e);
+            }
             // Prevent spacebar scrolling the window
             e.preventDefault();
           }
