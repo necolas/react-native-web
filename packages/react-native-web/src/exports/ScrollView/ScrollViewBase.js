@@ -11,7 +11,6 @@ import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { forwardRef, useRef } from 'react';
-import debounce from 'debounce';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
@@ -93,6 +92,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   } = props;
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
+  const scrollTimeout = useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {
@@ -107,9 +107,11 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   function handleScroll(e: Object) {
     e.persist();
     e.stopPropagation();
-    // A scroll happened, so the scroll bumps the debounce.
-    const debouncedOnScrollEnd = debounce(handleScrollEnd, 100);
-    debouncedOnScrollEnd(e);
+    // A scroll happened, so the scroll resets the scrollend timeout.
+    if (scrollTimeout.current != null) {
+      clearTimeout(scrollTimeout.current);
+    }
+    scrollTimeout.current = setTimeout(handleScrollEnd, 100);
     if (scrollState.current.isScrolling) {
       // Scroll last tick may have changed, check if we need to notify
       if (shouldEmitScrollEvent(scrollState.current.scrollLastTick, scrollEventThrottle)) {
