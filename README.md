@@ -118,7 +118,7 @@ React Native v0.60
 | Image                    | ✓      | Missing multiple sources ([#515](https://github.com/necolas/react-native-web/issues/515)) and HTTP headers ([#1019](https://github.com/necolas/react-native-web/issues/1019)). |
 | ImageBackground          | ✓      |  |
 | KeyboardAvoidingView     | (✓)    | Mock. No equivalent web APIs. |
-| Modal                    | ✘      | Not started ([#1020](https://github.com/necolas/react-native-web/issues/1020)). |
+| Modal                    | ✓      |  |
 | Picker                   | ✓      |  |
 | Pressable                | ✓      |  |
 | RefreshControl           | ✘      | Not started ([#1027](https://github.com/necolas/react-native-web/issues/1027)). |
