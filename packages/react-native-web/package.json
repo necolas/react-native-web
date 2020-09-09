@@ -3,7 +3,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "react-native-web",
-  "version": "0.13.11",
+  "version": "0.13.12",
   "description": "React Native for Web",
   "module": "dist/index.js",
   "main": "dist/cjs/index.js",
