@@ -35,7 +35,7 @@ function createTintColorSVG(tintColor, id) {
   return tintColor && id != null ? (
     <svg style={{ position: 'absolute', height: 0, visibility: 'hidden', width: 0 }}>
       <defs>
-        <filter id={`tint-${id}`}>
+        <filter id={`tint-${id}`} suppressHydrationWarning={true}>
           <feFlood floodColor={`${tintColor}`} key={tintColor} />
           <feComposite in2="SourceAlpha" operator="atop" />
         </filter>
@@ -46,7 +46,6 @@ function createTintColorSVG(tintColor, id) {
 
 function getFlatStyle(style, blurRadius, filterId) {
   const flatStyle = { ...StyleSheet.flatten(style) };
-
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
 
   // Add CSS filters
@@ -284,6 +283,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
           { backgroundImage, filter },
           backgroundSize != null && { backgroundSize }
         ]}
+        suppressHydrationWarning={true}
       />
       {hiddenImage}
       {createTintColorSVG(tintColor, filterRef.current)}
