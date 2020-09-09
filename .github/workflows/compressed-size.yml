@@ -1,0 +1,13 @@
+name: compressed-size
+on: [pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: necolas/compressed-size-action@master
+      with:
+        build-script: "compile:es"
+        exclude: "./packages/react-native-web/dist/types/*.js"
+        pattern: "./packages/react-native-web/dist/{index.js,**/*.js}"
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
