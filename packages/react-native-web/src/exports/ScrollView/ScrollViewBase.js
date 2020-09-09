@@ -111,7 +111,9 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
     if (scrollTimeout.current != null) {
       clearTimeout(scrollTimeout.current);
     }
-    scrollTimeout.current = setTimeout(handleScrollEnd, 100);
+    scrollTimeout.current = setTimeout(() => {
+      handleScrollEnd(e);
+    }, 100);
     if (scrollState.current.isScrolling) {
       // Scroll last tick may have changed, check if we need to notify
       if (shouldEmitScrollEvent(scrollState.current.scrollLastTick, scrollEventThrottle)) {
