@@ -24,6 +24,12 @@ const createEventTarget = node => ({
   click(payload) {
     node.dispatchEvent(domEvents.click(payload));
   },
+  contextmenu(payload) {
+    domEventSequences.contextmenu(node, payload);
+  },
+  error() {
+    node.dispatchEvent(domEvents.error());
+  },
   focus(payload) {
     domEventSequences.focus(node, payload);
     try {
@@ -36,27 +42,14 @@ const createEventTarget = node => ({
   keyup(payload) {
     node.dispatchEvent(domEvents.keyup(payload));
   },
-  scroll(payload) {
-    node.dispatchEvent(domEvents.scroll(payload));
-  },
-  select(payload) {
-    node.dispatchEvent(domEvents.select(payload));
-  },
-  // selectionchange is only dispatched on 'document'
-  selectionchange(payload) {
-    document.dispatchEvent(domEvents.selectionchange(payload));
-  },
-  virtualclick(payload) {
-    node.dispatchEvent(domEvents.virtualclick(payload));
+  load(payload) {
+    node.dispatchEvent(domEvents.load(payload));
   },
   /**
    * PointerEvent abstraction.
    * Dispatches the expected sequence of PointerEvents, MouseEvents, and
    * TouchEvents for a given environment.
    */
-  contextmenu(payload) {
-    domEventSequences.contextmenu(node, payload);
-  },
   // node no longer receives events for the pointer
   pointercancel(payload) {
     domEventSequences.pointercancel(node, payload);
@@ -85,6 +78,16 @@ const createEventTarget = node => ({
   pointerup(payload) {
     domEventSequences.pointerup(node, payload);
   },
+  scroll(payload) {
+    node.dispatchEvent(domEvents.scroll(payload));
+  },
+  select(payload) {
+    node.dispatchEvent(domEvents.select(payload));
+  },
+  // selectionchange is only dispatched on 'document'
+  selectionchange(payload) {
+    document.dispatchEvent(domEvents.selectionchange(payload));
+  },
   /**
    * Gesture abstractions.
    * Helpers for event sequences expected in a gesture.
@@ -93,6 +96,9 @@ const createEventTarget = node => ({
   tap(payload) {
     domEventSequences.pointerdown(payload);
     domEventSequences.pointerup(payload);
+  },
+  virtualclick(payload) {
+    node.dispatchEvent(domEvents.virtualclick(payload));
   },
   /**
    * Utilities

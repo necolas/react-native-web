@@ -53,14 +53,12 @@ describe('createEventTarget', () => {
         "node",
         "blur",
         "click",
+        "contextmenu",
+        "error",
         "focus",
         "keydown",
         "keyup",
-        "scroll",
-        "select",
-        "selectionchange",
-        "virtualclick",
-        "contextmenu",
+        "load",
         "pointercancel",
         "pointerdown",
         "pointerhover",
@@ -68,7 +66,11 @@ describe('createEventTarget', () => {
         "pointerover",
         "pointerout",
         "pointerup",
+        "scroll",
+        "select",
+        "selectionchange",
         "tap",
+        "virtualclick",
         "setBoundingClientRect",
       ]
     `);
@@ -82,7 +84,7 @@ describe('createEventTarget', () => {
     test('default', () => {
       const target = createEventTarget(node);
       node.addEventListener('blur', e => {
-        expect(e.relatedTarget).toBeUndefined();
+        expect(e.relatedTarget).toBeNull();
       });
       target.blur();
     });
@@ -168,7 +170,7 @@ describe('createEventTarget', () => {
     test('default', () => {
       const target = createEventTarget(node);
       node.addEventListener('focus', e => {
-        expect(e.relatedTarget).toBeUndefined();
+        expect(e.relatedTarget).toBeNull();
       });
       target.focus();
     });

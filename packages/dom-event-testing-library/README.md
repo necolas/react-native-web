@@ -1,23 +1,16 @@
 # `dom-event-testing-library`
 
-A library for unit testing high-level interactions via simple pointer events, e.g.,
-`pointerdown`, that produce realistic and complete DOM event sequences.
+A library for unit testing high-level interactions via simple pointer events, e.g., `pointerdown`, that produce realistic and complete DOM event sequences.
 
-There are number of challenges involved in unit testing modules that work with
-DOM events.
+There are number of challenges involved in unit testing modules that work with DOM events.
 
 1. Testing environments with and without support for the `PointerEvent` API.
 2. Testing various user interaction modes including mouse, touch, and pen use.
-3. Testing against the event sequences browsers actually produce (e.g., emulated
-   touch and mouse events.)
-4. Testing against the event properties DOM events include (i.e., more complete
-   mock data)
-4. Testing against "virtual" events produced by tools like screen-readers.
+3. Testing against the event sequences browsers actually produce (e.g., emulated touch and mouse events.)
+4. Testing against the event properties DOM events include (i.e., more complete mock data)
+5. Testing against "virtual" events produced by tools like screen-readers.
 
-Writing unit tests to cover all these scenarios is tedious and error prone. This
-event testing library is designed to avoid these issues by allowing developers to
-more easily dispatch events in unit tests, and to more reliably test interactions
-while using an API based on `PointerEvent`.
+Writing unit tests to cover all these scenarios is tedious and error prone. This event testing library is designed to avoid these issues by allowing developers to more easily dispatch events in unit tests, and to more reliably test interactions while using an API based on `PointerEvent`.
 
 ## Example
 
@@ -45,34 +38,37 @@ describeWithPointerEvent('useTap', hasPointerEvent => {
   testWithPointerType('pointer down', pointerType => {
     const ref = createRef(null);
     const onTapStart = jest.fn();
-    render(() => {
-      useTap(ref, { onTapStart });
+
+    // component to test
+    function Component() {
+      useTapEvents(ref, { onTapStart });
       return <div ref={ref} />
+    }
+
+    // render component
+    act(() => {
+      render(<Component />);
     });
 
     // create an event target
     const target = createEventTarget(ref.current);
+
     // dispatch high-level pointer event
-    target.pointerdown({ pointerType });
+    act(() => {
+      target.pointerdown({ pointerType });
+    });
+
+    // assertion
     expect(onTapStart).toBeCalled();
   });
 });
 ```
 
-This tests the interaction in multiple scenarios. In each case, a realistic DOM
-event sequence–with complete mock events–is produced. When running in a mock
-environment without the `PointerEvent` API, the test runs for both `mouse` and
-`touch` pointer types. When `touch` is the pointer type it produces emulated mouse
-events. When running in a mock environment with the `PointerEvent` API, the test
-runs for `mouse`, `touch`, and `pen` pointer types.
+The example above tests the interaction in multiple scenarios. In each case, a realistic DOM event sequence–with complete mock events–is produced. When running in a mock environment without the `PointerEvent` API, the test runs for both `mouse` and `touch` pointer types. When `touch` is the pointer type it produces emulated mouse events. When running in a mock environment with the `PointerEvent` API, the test runs for `mouse`, `touch`, and `pen` pointer types.
 
-It's important to cover all these scenarios because it's very easy to introduce
-bugs – e.g., double calling of callbacks – if not accounting for emulated mouse
-events, differences in target capturing between `touch` and `mouse` pointers, and
-the different semantics of `button` across event APIs.
+It's important to cover all these scenarios because it's very easy to introduce bugs – e.g., double calling of callbacks – if not accounting for emulated mouse events, differences in target capturing between `touch` and `mouse` pointers, and the different semantics of `button` across event APIs.
 
-Default values are provided for the expected native events properties. They can
-also be customized as needed in a test.
+Default values are provided for the expected native events properties. They can also be customized as needed in a test.
 
 ```js
 target.pointerdown({
@@ -87,8 +83,7 @@ target.pointerdown({
 });
 ```
 
-Tests that dispatch multiple pointer events will dispatch multi-touch native events
-on the target.
+Tests that dispatch multiple pointer events will dispatch multi-touch native events on the target.
 
 ```js
 // first pointer is active
@@ -106,7 +101,7 @@ To create a new event target pass the DOM node to `createEventTarget(node)`. Thi
 * `blur`
 * `click`
 * `contextmenu`
-* `focus`
+* `focus` (includes the complete sequence of focus-related events)
 * `keydown`
 * `keyup`
 * `pointercancel`
