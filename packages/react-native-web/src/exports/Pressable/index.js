@@ -16,11 +16,13 @@ import type { ViewProps } from '../View';
 import * as React from 'react';
 import { forwardRef, memo, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
+import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
 import View from '../View';
 
 export type StateCallbackType = $ReadOnly<{|
   focused: boolean,
+  hovered: boolean,
   pressed: boolean
 |}>;
 
@@ -93,6 +95,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     ...rest
   } = props;
 
+  const [hovered, setHovered] = useForceableState(false);
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
@@ -128,8 +131,10 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
+  useHover(hostRef, { contain: true, disabled, onHoverChange: setHovered });
+
   const accessibilityState = { disabled, ...props.accessibilityState };
-  const interactionState = { focused, pressed };
+  const interactionState = { hovered, focused, pressed };
 
   function createFocusHandler(callback, value) {
     return function(event) {

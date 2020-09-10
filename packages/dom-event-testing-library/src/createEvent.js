@@ -13,35 +13,28 @@ const defaultConfig = {
 };
 
 const eventConfigs = {
-  // Focus Events
   blur: {
     constructorType: 'FocusEvent',
     defaultInit: { bubbles: false, cancelable: false, composed: true }
   },
-  focus: {
-    constructorType: 'FocusEvent',
-    defaultInit: { bubbles: false, cancelable: false, composed: true }
+  change: {
+    constructorType: 'Event',
+    defaultInit: { bubbles: true, cancelable: false }
   },
-  focusin: {
-    constructorType: 'FocusEvent',
-    defaultInit: { bubbles: true, cancelable: false, composed: true }
-  },
-  focusout: {
-    constructorType: 'FocusEvent',
-    defaultInit: { bubbles: true, cancelable: false, composed: true }
-  },
-  // Keyboard Events
-  keydown: {
-    constructorType: 'KeyboardEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  keyup: {
-    constructorType: 'KeyboardEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  // Mouse Events
   click: {
     constructorType: 'MouseEvent',
+    defaultInit: { bubbles: true, cancelable: true, composed: true }
+  },
+  compositionend: {
+    constructorType: 'CompositionEvent',
+    defaultInit: { bubbles: true, cancelable: true, composed: true }
+  },
+  compositionstart: {
+    constructorType: 'CompositionEvent',
+    defaultInit: { bubbles: true, cancelable: true, composed: true }
+  },
+  compositionupdate: {
+    constructorType: 'CompositionEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
   contextmenu: {
@@ -84,6 +77,42 @@ const eventConfigs = {
     constructorType: 'MouseEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
+  error: {
+    constructorType: 'Event',
+    defaultInit: { bubbles: false, cancelable: false }
+  },
+  focus: {
+    constructorType: 'FocusEvent',
+    defaultInit: { bubbles: false, cancelable: false, composed: true }
+  },
+  focusin: {
+    constructorType: 'FocusEvent',
+    defaultInit: { bubbles: true, cancelable: false, composed: true }
+  },
+  focusout: {
+    constructorType: 'FocusEvent',
+    defaultInit: { bubbles: true, cancelable: false, composed: true }
+  },
+  input: {
+    constructorType: 'InputEvent',
+    defaultInit: { bubbles: true, cancelable: false, composed: true }
+  },
+  invalid: {
+    constructorType: 'Event',
+    defaultInit: { bubbles: false, cancelable: true }
+  },
+  keydown: {
+    constructorType: 'KeyboardEvent',
+    defaultInit: { bubbles: true, cancelable: true, composed: true }
+  },
+  keyup: {
+    constructorType: 'KeyboardEvent',
+    defaultInit: { bubbles: true, cancelable: true, composed: true }
+  },
+  load: {
+    constructorType: 'UIEvent',
+    defaultInit: { bubbles: false, cancelable: false }
+  },
   mousedown: {
     constructorType: 'MouseEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
@@ -112,12 +141,18 @@ const eventConfigs = {
     constructorType: 'MouseEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
-  // Selection events
+  scroll: {
+    constructorType: 'UIEvent',
+    defaultInit: { bubbles: false, cancelable: false }
+  },
   select: {
     constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: false }
   },
-  // Touch events
+  submit: {
+    constructorType: 'Event',
+    defaultInit: { bubbles: true, cancelable: true }
+  },
   touchcancel: {
     constructorType: 'TouchEvent',
     defaultInit: { bubbles: true, cancelable: false, composed: true }
@@ -134,107 +169,46 @@ const eventConfigs = {
     constructorType: 'TouchEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
-  // Pointer events
+  // 'PointerEvent' constructor is not supported in jsdom
   gotpointercapture: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: false, cancelable: false, composed: true }
   },
   lostpointercapture: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: false, cancelable: false, composed: true }
   },
   pointercancel: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: false, composed: true }
   },
   pointerdown: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
   pointerenter: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: false, cancelable: false }
   },
   pointerleave: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: false, cancelable: false }
   },
   pointermove: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
   pointerout: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
   pointerover: {
-    constructorType: 'PointerEvent',
+    constructorType: 'Event',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
   },
   pointerup: {
-    constructorType: 'PointerEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  // Image events
-  error: {
     constructorType: 'Event',
-    defaultInit: { bubbles: false, cancelable: false }
-  },
-  load: {
-    constructorType: 'UIEvent',
-    defaultInit: { bubbles: false, cancelable: false }
-  },
-  // Form Events
-  change: {
-    constructorType: 'Event',
-    defaultInit: { bubbles: true, cancelable: false }
-  },
-  input: {
-    constructorType: 'InputEvent',
-    defaultInit: { bubbles: true, cancelable: false, composed: true }
-  },
-  invalid: {
-    constructorType: 'Event',
-    defaultInit: { bubbles: false, cancelable: true }
-  },
-  submit: {
-    constructorType: 'Event',
-    defaultInit: { bubbles: true, cancelable: true }
-  },
-  reset: {
-    constructorType: 'Event',
-    defaultInit: { bubbles: true, cancelable: true }
-  },
-  // Clipboard Events
-  copy: {
-    constructorType: 'ClipboardEvent',
     defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  cut: {
-    constructorType: 'ClipboardEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  paste: {
-    constructorType: 'ClipboardEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  // Composition Events
-  compositionend: {
-    constructorType: 'CompositionEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  compositionstart: {
-    constructorType: 'CompositionEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  compositionupdate: {
-    constructorType: 'CompositionEvent',
-    defaultInit: { bubbles: true, cancelable: true, composed: true }
-  },
-  // Other events
-  scroll: {
-    constructorType: 'UIEvent',
-    defaultInit: { bubbles: false, cancelable: false }
   },
   wheel: {
     constructorType: 'WheelEvent',
@@ -249,7 +223,7 @@ function getEventConfig(type) {
 export default function createEvent(type, init) {
   const config = getEventConfig(type);
   const { constructorType, defaultInit } = config;
-  const eventInit = { ...init, ...defaultInit };
+  const eventInit = { ...defaultInit, ...init };
 
   const event = document.createEvent(constructorType);
   const { bubbles, cancelable, ...data } = eventInit;
@@ -258,10 +232,20 @@ export default function createEvent(type, init) {
   if (data != null) {
     Object.keys(data).forEach(key => {
       const value = data[key];
-      if (key === 'timeStamp' && !value) {
-        return;
+      // Ensure the value of 'defaultPrevented' is updated if 'preventDefault' is mocked.
+      // The property is marked as 'configurable' to allow mocking.
+      if (key === 'preventDefault' && typeof value === 'function') {
+        const preventDefault = function() {
+          value();
+          Object.defineProperty(this, 'defaultPrevented', { value: true });
+        };
+        Object.defineProperty(event, key, {
+          configurable: true,
+          value: preventDefault
+        });
+      } else if (value != null) {
+        Object.defineProperty(event, key, { configurable: true, value });
       }
-      Object.defineProperty(event, key, { value });
     });
   }
   return event;

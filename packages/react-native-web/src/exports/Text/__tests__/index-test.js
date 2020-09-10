@@ -109,8 +109,8 @@ describe('components/Text', () => {
       });
       const target = createEventTarget(ref.current);
       act(() => {
-        target.pointerdown();
-        target.pointerup();
+        target.pointerdown({ button: 0 });
+        target.pointerup({ button: 0 });
       });
       expect(onPress).toBeCalled();
     });
