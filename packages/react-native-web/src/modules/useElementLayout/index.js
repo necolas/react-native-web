@@ -8,11 +8,11 @@
  */
 
 import type { ElementRef } from 'react';
-import type { LayoutEvent } from '../types';
+import type { LayoutEvent } from '../../types';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import useLayoutEffect from './useLayoutEffect';
-import UIManager from '../exports/UIManager';
+import useLayoutEffect from '../useLayoutEffect';
+import UIManager from '../../exports/UIManager';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
