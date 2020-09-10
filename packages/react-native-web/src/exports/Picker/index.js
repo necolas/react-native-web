@@ -12,7 +12,7 @@ import type { ViewProps } from '../View';
 
 import createElement from '../createElement';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../hooks/usePlatformMethods';
+import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
 import { forwardRef, useRef } from 'react';

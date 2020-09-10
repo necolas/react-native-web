@@ -10,14 +10,14 @@
 
 'use strict';
 
-import type { PressResponderConfig } from '../../hooks/usePressEvents/PressResponder';
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { useMemo, useRef } from 'react';
 import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePressEvents from '../../hooks/usePressEvents';
+import usePressEvents from '../../modules/usePressEvents';
 
 export type Props = $ReadOnly<{|
   accessibilityLabel?: $PropertyType<ViewProps, 'accessibilityLabel'>,

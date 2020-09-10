@@ -10,13 +10,13 @@
 
 'use strict';
 
-import type { PressResponderConfig } from '../../hooks/usePressEvents/PressResponder';
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { forwardRef, memo, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePressEvents from '../../hooks/usePressEvents';
+import usePressEvents from '../../modules/usePressEvents';
 import View from '../View';
 
 export type StateCallbackType = $ReadOnly<{|

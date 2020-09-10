@@ -14,11 +14,11 @@ import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import pick from '../../modules/pick';
-import useElementLayout from '../../hooks/useElementLayout';
-import useLayoutEffect from '../../hooks/useLayoutEffect';
+import useElementLayout from '../../modules/useElementLayout';
+import useLayoutEffect from '../../modules/useLayoutEffect';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../hooks/usePlatformMethods';
-import useResponderEvents from '../../hooks/useResponderEvents';
+import usePlatformMethods from '../../modules/usePlatformMethods';
+import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 

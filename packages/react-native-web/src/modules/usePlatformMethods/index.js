@@ -7,8 +7,8 @@
  * @flow
  */
 
-import UIManager from '../exports/UIManager';
-import createDOMProps from '../modules/createDOMProps';
+import UIManager from '../../exports/UIManager';
+import createDOMProps from '../createDOMProps';
 import { useMemo, useRef } from 'react';
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
