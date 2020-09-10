@@ -100,6 +100,7 @@ function createMouseEvent(
     pageX,
     pageY,
     preventDefault = emptyFunction,
+    relatedTarget,
     screenX,
     screenY,
     shiftKey = false,
@@ -129,6 +130,7 @@ function createMouseEvent(
     pageX: pageX || x,
     pageY: pageY || y,
     preventDefault,
+    relatedTarget,
     screenX: screenX === 0 ? screenX : x,
     screenY: screenY === 0 ? screenY : y + defaultBrowserChromeSize,
     shiftKey,
@@ -160,6 +162,7 @@ function createPointerEvent(
     pressure = 0,
     preventDefault = emptyFunction,
     pointerType = 'mouse',
+    relatedTarget,
     screenX,
     screenY,
     shiftKey = false,
@@ -199,6 +202,7 @@ function createPointerEvent(
     pointerType,
     pressure,
     preventDefault,
+    relatedTarget,
     releasePointerCapture: emptyFunction,
     screenX: screenX === 0 ? screenX : x,
     screenY: screenY === 0 ? screenY : y + defaultBrowserChromeSize,
@@ -219,7 +223,6 @@ function createPointerEvent(
 
 function createTouchEvent(type, payload) {
   return createEvent(type, {
-    preventDefault: emptyFunction,
     ...payload,
     detail: 0,
     sourceCapabilities: {
@@ -257,6 +260,10 @@ export function dragstart(payload) {
   });
 }
 
+export function error() {
+  return createEvent('error');
+}
+
 export function focus({ relatedTarget } = {}) {
   return createEvent('focus', { relatedTarget });
 }
@@ -279,6 +286,10 @@ export function keydown(payload) {
 
 export function keyup(payload) {
   return createKeyboardEvent('keyup', payload);
+}
+
+export function load(payload) {
+  return createEvent('load', payload);
 }
 
 export function lostpointercapture(payload) {

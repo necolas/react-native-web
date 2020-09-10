@@ -37,13 +37,23 @@ export default function FeedbackEvents() {
           onPress={handlePress('press')}
           onPressIn={handlePress('pressIn')}
           onPressOut={handlePress('pressOut')}
-          style={({ pressed, focused }) => ({
-            padding: 10,
-            margin: 10,
-            borderWidth: 1,
-            borderColor: focused ? 'blue' : null,
-            backgroundColor: pressed ? 'lightblue' : 'white'
-          })}
+          style={({ hovered, pressed, focused }) => {
+            let backgroundColor = 'white';
+            if (hovered) {
+              backgroundColor = 'lightgray';
+            }
+            if (pressed) {
+              backgroundColor = 'lightblue';
+            }
+            return {
+              padding: 10,
+              margin: 10,
+              borderWidth: 1,
+              borderColor: focused ? 'red' : null,
+              backgroundColor,
+              outlineWidth: 0
+            };
+          }}
         >
           <Pressable
             accessibilityRole="none"
@@ -51,13 +61,24 @@ export default function FeedbackEvents() {
             onPress={handlePress('press - inner')}
             onPressIn={handlePress('pressIn - inner')}
             onPressOut={handlePress('pressOut - inner')}
-            style={({ pressed, focused }) => ({
-              padding: 10,
-              margin: 10,
-              borderWidth: 1,
-              borderColor: focused ? 'blue' : null,
-              backgroundColor: pressed ? 'lightblue' : 'white'
-            })}
+            style={({ hovered, pressed, focused }) => {
+              console.log(focused);
+              let backgroundColor = 'white';
+              if (hovered) {
+                backgroundColor = 'lightgray';
+              }
+              if (pressed) {
+                backgroundColor = 'lightblue';
+              }
+              return {
+                padding: 10,
+                margin: 10,
+                borderWidth: 1,
+                borderColor: focused ? 'red' : null,
+                backgroundColor,
+                outlineWidth: 0
+              };
+            }}
           >
             <Text>Nested pressables</Text>
           </Pressable>
