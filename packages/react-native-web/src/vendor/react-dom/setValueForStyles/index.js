@@ -11,7 +11,6 @@
  */
 
 import dangerousStyleValue from '../dangerousStyleValue';
-import hyphenateStyleName from 'hyphenate-style-name';
 
 /**
  * Sets the value for multiple styles on a node.  If a value is specified as
@@ -32,8 +31,7 @@ function setValueForStyles(node, styles) {
       styleName = 'cssFloat';
     }
     if (isCustomProperty) {
-      const name = isCustomProperty ? styleName : hyphenateStyleName(styleName);
-      style.setProperty(name, styleValue);
+      style.setProperty(styleName, styleValue);
     } else {
       style[styleName] = styleValue;
     }
