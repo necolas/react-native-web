@@ -16,7 +16,7 @@ import type { ViewProps } from '../View';
 import * as React from 'react';
 import { useCallback, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePressEvents from '../../hooks/usePressEvents';
+import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
