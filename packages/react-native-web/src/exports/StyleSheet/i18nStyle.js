@@ -69,6 +69,19 @@ const PROPERTIES_I18N = {
   start: left
 };
 
+const isLogicalInlineStyleSupported = propertyKey => propertyKey in document.body.style;
+
+const LOGICAL_INLINE_STYLES = {
+  marginStart: 'marginInlineStart',
+  marginLeft: 'marginInlineStart',
+  marginEnd: 'marginInlineEnd',
+  marginRight: 'marginInlineEnd',
+  paddingStart: 'paddingInlineStart',
+  paddingLeft: 'paddingInlineStart',
+  paddingEnd: 'paddingInlineEnd',
+  paddingRight: 'paddingInlineEnd'
+};
+
 const PROPERTIES_VALUE = {
   clear: true,
   float: true,
@@ -92,8 +105,14 @@ const i18nStyle = originalStyle => {
     let prop = originalProp;
     let value = originalValue;
 
+    if (
+      LOGICAL_INLINE_STYLES.hasOwnProperty(originalProp) &&
+      isLogicalInlineStyleSupported(LOGICAL_INLINE_STYLES[originalProp])
+    ) {
+      prop = LOGICAL_INLINE_STYLES[originalProp];
+    }
     // BiDi flip properties
-    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
+    else if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
       // convert start/end
       const convertedProp = PROPERTIES_I18N[originalProp];
       prop = isRTL ? PROPERTIES_FLIP[convertedProp] : convertedProp;
