@@ -8,16 +8,22 @@
  * @flow
  */
 
-function emptyFunction() {}
-
 const BackHandler = {
-  exitApp: emptyFunction,
-  addEventListener() {
+  listeners: [],
+  exitApp: history.previous,
+  addEventListener: (listener) => {
+    listeners.push(listener)
     return {
-      remove: emptyFunction
+      remove: this.removeEventListener(listener)
     };
   },
-  removeEventListener: emptyFunction
+  removeEventListener: (listener) => this.listeners.splice(this.listeners.indexOf(listener), 1)
 };
+
+history.pushState(null, '', window.location.href)
+window.addEventListener('popstate', (event) => {
+  if(!BackHandler.listeners.find(callback => callback()) history.previous()
+  else history.pushState(null, '', window.location.href)
+})
 
 export default BackHandler;
