@@ -116,7 +116,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const style = [
     props.style,
     numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-    selectable === false && styles.notSelectable,
+    selectable === true ? styles.selectable : styles.notSelectable,
     onPress && styles.pressable
   ];
 
@@ -211,6 +211,9 @@ const classes = css.create({
 const styles = StyleSheet.create({
   notSelectable: {
     userSelect: 'none'
+  },
+  selectable: {
+    userSelect: 'text'
   },
   pressable: {
     cursor: 'pointer'
