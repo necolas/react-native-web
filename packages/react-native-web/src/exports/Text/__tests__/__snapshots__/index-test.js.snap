@@ -25,3 +25,17 @@ exports[`components/Text nested 1`] = `
   />
 </div>
 `;
+
+exports[`components/Text prop "selectable" value of false 1`] = `
+<div
+  class="css-text-901oao r-userSelect-lrvibr"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "selectable" value of true 1`] = `
+<div
+  class="css-text-901oao r-userSelect-1xnzce8"
+  dir="auto"
+/>
+`;

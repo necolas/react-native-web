@@ -21,5 +21,15 @@ describe('components/Text', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  test('prop "numberOfLines"', () => {});
+  describe('prop "selectable"', () => {
+    test('value of false', () => {
+      const { container } = render(<Text selectable={false} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value of true', () => {
+      const { container } = render(<Text selectable={true} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
 });
