@@ -22,9 +22,9 @@ const Linking = {
   getInitialURL(): Promise<string> {
     return Promise.resolve(initialURL);
   },
-  openURL(url: string): Promise<Object | void> {
+  openURL(url: string, target?: '_blank'): Promise<Object | void> {
     try {
-      open(url);
+      open(url, target);
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
@@ -36,9 +36,9 @@ const Linking = {
   }
 };
 
-const open = url => {
+const open = (url: string, target?: '_blank') => {
   if (canUseDOM) {
-    window.location = new URL(url, window.location).toString();
+    window.open(url, target).focus();
   }
 };
 
