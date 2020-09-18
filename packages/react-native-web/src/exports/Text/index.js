@@ -116,7 +116,8 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const style = [
     props.style,
     numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-    selectable === true ? styles.selectable : styles.notSelectable,
+    selectable === true && styles.selectable,
+    selectable === false && styles.notSelectable,
     onPress && styles.pressable
   ];
 
