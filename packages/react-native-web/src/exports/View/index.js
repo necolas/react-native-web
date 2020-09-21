@@ -11,7 +11,7 @@
 import type { ViewProps } from './types';
 
 import * as React from 'react';
-import { forwardRef, useContext, useRef } from 'react';
+import { forwardRef, useContext, useRef, useMemo } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import pick from '../../modules/pick';
@@ -102,12 +102,15 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        hostRef.current = hostNode;
+      },
+    }),
+    [forwardedRef]
+  );
 
   const classList = [classes.view];
   const style = StyleSheet.compose(

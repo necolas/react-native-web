@@ -115,20 +115,25 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   supportedProps.accessible = accessible !== false;
   supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
   supportedProps.focusable = focusable !== false && onPress !== undefined;
-  supportedProps.ref = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      const { ref } = element;
-      if (ref != null) {
-        if (typeof ref === 'function') {
-          ref(hostNode);
-        } else {
-          ref.current = hostNode;
+
+  const { ref } = element;
+
+  supportedProps.ref = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        if (ref != null) {
+          if (typeof ref === 'function') {
+            ref(hostNode);
+          } else {
+            ref.current = hostNode;
+          }
         }
+        hostRef.current = hostNode;
       }
-      hostRef.current = hostNode;
-    }
-  });
+    }),
+    [ref, forwardedRef]
+  );
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);
 

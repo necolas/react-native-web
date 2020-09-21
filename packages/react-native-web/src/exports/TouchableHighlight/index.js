@@ -93,12 +93,15 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        hostRef.current = hostNode;
+      }
+    }),
+    [forwardedRef]
+  );
 
   const [extraStyles, setExtraStyles] = useState(
     testOnly_pressed === true ? createExtraStyles(activeOpacity, underlayColor) : null

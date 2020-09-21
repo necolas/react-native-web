@@ -11,7 +11,7 @@
 import type { TextProps } from './types';
 
 import * as React from 'react';
-import { forwardRef, useContext, useRef } from 'react';
+import { forwardRef, useContext, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import pick from '../../modules/pick';
@@ -100,12 +100,15 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        hostRef.current = hostNode;
+      }
+    }),
+    [forwardedRef]
+  );
 
   const classList = [
     classes.text,

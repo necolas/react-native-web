@@ -15,7 +15,7 @@ import setAndForwardRef from '../../modules/setAndForwardRef';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 
 type PickerProps = {
   ...ViewProps,
@@ -47,12 +47,15 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        hostRef.current = hostNode;
+      },
+    }),
+    [forwardedRef]
+  );
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;

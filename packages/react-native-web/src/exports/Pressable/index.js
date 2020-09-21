@@ -97,12 +97,15 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMemo(
+    () => setAndForwardRef({
+      getForwardedRef: () => forwardedRef,
+      setLocalRef: hostNode => {
+        hostRef.current = hostNode;
+      }
+    }),
+    [forwardedRef]
+  );
 
   const pressConfig = useMemo(
     () => ({
