@@ -633,4 +633,18 @@ describe('components/TextInput', () => {
     const input = findInput(container);
     expect(input.value).toEqual(value);
   });
+
+  describe('imperative methods', () => {
+    test('node.clear()', () => {
+      const ref = React.createRef();
+      render(<TextInput ref={ref} />);
+      expect(typeof ref.current.clear).toBe('function');
+    });
+
+    test('node.isFocused()', () => {
+      const ref = React.createRef();
+      render(<TextInput ref={ref} />);
+      expect(typeof ref.current.isFocused).toBe('function');
+    });
+  });
 });

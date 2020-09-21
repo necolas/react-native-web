@@ -15,7 +15,7 @@ import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { forwardRef, memo, useMemo, useState, useRef } from 'react';
-import setAndForwardRef from '../../modules/setAndForwardRef';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../hooks/usePressEvents';
 import View from '../View';
 
@@ -97,12 +97,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   const pressConfig = useMemo(
     () => ({

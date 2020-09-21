@@ -15,8 +15,8 @@ import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import pick from '../../modules/pick';
-import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
 import StyleSheet from '../StyleSheet';
@@ -100,12 +100,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   const classList = [
     classes.text,

@@ -10,13 +10,13 @@
 
 import type { TextInputProps } from './types';
 
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import pick from '../../modules/pick';
-import setAndForwardRef from '../../modules/setAndForwardRef';
 import useElementLayout from '../../hooks/useElementLayout';
 import useLayoutEffect from '../../hooks/useLayoutEffect';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import useResponderEvents from '../../hooks/useResponderEvents';
 import StyleSheet from '../StyleSheet';
@@ -186,40 +186,10 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     type = 'password';
   }
 
-  const hostRef = useRef(null);
   const dimensions = useRef({ height: null, width: null });
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      // TextInput needs to add more methods to the hostNode in addition to those
-      // added by `usePlatformMethods`. This is temporarily until an API like
-      // `TextInput.clear(hostRef)` is added to React Native.
-      if (hostNode != null) {
-        hostNode.clear = function() {
-          if (hostNode != null) {
-            hostNode.value = '';
-          }
-        };
-        hostNode.isFocused = function() {
-          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
-        };
-      }
-      hostRef.current = hostNode;
-      if (hostRef.current != null) {
-        handleContentSizeChange();
-      }
-    }
-  });
+  const hostRef = useRef(null);
 
-  function handleBlur(e) {
-    TextInputState._currentlyFocusedNode = null;
-    if (onBlur) {
-      e.nativeEvent.text = e.target.value;
-      onBlur(e);
-    }
-  }
-
-  function handleContentSizeChange() {
+  const handleContentSizeChange = useCallback(() => {
     const node = hostRef.current;
     if (multiline && onContentSizeChange && node != null) {
       const newHeight = node.scrollHeight;
@@ -236,6 +206,36 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
           }
         });
       }
+    }
+  }, [hostRef, multiline, onContentSizeChange]);
+
+  const imperativeRef = useMemo(
+    () => hostNode => {
+      // TextInput needs to add more methods to the hostNode in addition to those
+      // added by `usePlatformMethods`. This is temporarily until an API like
+      // `TextInput.clear(hostRef)` is added to React Native.
+      if (hostNode != null) {
+        hostNode.clear = function() {
+          if (hostNode != null) {
+            hostNode.value = '';
+          }
+        };
+        hostNode.isFocused = function() {
+          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
+        };
+        handleContentSizeChange();
+      }
+    },
+    [handleContentSizeChange]
+  );
+
+  const setRef = useMergeRefs(forwardedRef, hostRef, imperativeRef);
+
+  function handleBlur(e) {
+    TextInputState._currentlyFocusedNode = null;
+    if (onBlur) {
+      e.nativeEvent.text = e.target.value;
+      onBlur(e);
     }
   }
 

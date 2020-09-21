@@ -11,7 +11,7 @@
 import type { ViewProps } from '../View';
 
 import createElement from '../createElement';
-import setAndForwardRef from '../../modules/setAndForwardRef';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../hooks/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
@@ -47,12 +47,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      hostRef.current = hostNode;
-    }
-  });
+  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;

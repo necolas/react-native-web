@@ -16,7 +16,7 @@ import type { ViewProps } from '../View';
 import * as React from 'react';
 import { useMemo, useRef } from 'react';
 import pick from '../../modules/pick';
-import setAndForwardRef from '../../modules/setAndForwardRef';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../hooks/usePressEvents';
 
 export type Props = $ReadOnly<{|
@@ -115,20 +115,7 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   supportedProps.accessible = accessible !== false;
   supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
   supportedProps.focusable = focusable !== false && onPress !== undefined;
-  supportedProps.ref = setAndForwardRef({
-    getForwardedRef: () => forwardedRef,
-    setLocalRef: hostNode => {
-      const { ref } = element;
-      if (ref != null) {
-        if (typeof ref === 'function') {
-          ref(hostNode);
-        } else {
-          ref.current = hostNode;
-        }
-      }
-      hostRef.current = hostNode;
-    }
-  });
+  supportedProps.ref = useMergeRefs(forwardedRef, hostRef, element.ref);
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
