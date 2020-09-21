@@ -83,5 +83,36 @@ describe('components/Picker', () => {
       const { container } = render(picker);
       expect(findSelect(container).value).toBe('22');
     });
+
+    test('ref function is called when ref changes', () => {
+      const refMock = jest.fn();
+      const otherRefMock = jest.fn();
+
+      const { rerender } = render(<Picker ref={refMock} />);
+      expect(refMock).toHaveBeenCalled();
+
+      rerender(<Picker ref={otherRefMock} />)
+      expect(otherRefMock).toHaveBeenCalled();
+    });
+
+    test('ref function is not called every render', () => {
+      const refMock = jest.fn();
+
+      const { rerender } = render(<Picker ref={refMock} />);
+      expect(refMock).toHaveBeenCalledTimes(1);
+
+      rerender(<Picker ref={refMock} />);
+      expect(refMock).toHaveBeenCalledTimes(1);
+    });
+
+    test('ref function is not called on prop changes', () => {
+      const refMock = jest.fn();
+
+      const { rerender } = render(<Picker ref={refMock} testID={'foo'} />);
+      expect(refMock).toHaveBeenCalledTimes(1);
+
+      rerender(<Picker ref={refMock} testID={'bar'} />);
+      expect(refMock).toHaveBeenCalledTimes(1);
+    });
   });
 });

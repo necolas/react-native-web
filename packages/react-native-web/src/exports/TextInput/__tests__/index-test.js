@@ -633,4 +633,35 @@ describe('components/TextInput', () => {
     const input = findInput(container);
     expect(input.value).toEqual(value);
   });
+
+  test('ref function is called when ref changes', () => {
+    const refMock = jest.fn();
+    const otherRefMock = jest.fn();
+
+    const { rerender } = render(<TextInput ref={refMock} />);
+    expect(refMock).toHaveBeenCalled();
+
+    rerender(<TextInput ref={otherRefMock} />)
+    expect(otherRefMock).toHaveBeenCalled();
+  });
+
+  test('ref function is not called every render', () => {
+    const refMock = jest.fn();
+
+    const { rerender } = render(<TextInput ref={refMock} />);
+    expect(refMock).toHaveBeenCalledTimes(1);
+
+    rerender(<TextInput ref={refMock} />);
+    expect(refMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('ref function is not called on prop changes', () => {
+    const refMock = jest.fn();
+
+    const { rerender } = render(<TextInput ref={refMock} testID={'foo'} />);
+    expect(refMock).toHaveBeenCalledTimes(1);
+
+    rerender(<TextInput ref={refMock} testID={'bar'} />);
+    expect(refMock).toHaveBeenCalledTimes(1);
+  });
 });
