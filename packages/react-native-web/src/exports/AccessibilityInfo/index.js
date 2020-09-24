@@ -7,13 +7,24 @@
  * @flow
  */
 
-function emptyFunction() {}
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 function isScreenReaderEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
     resolve(true);
   });
 }
+
+const prefersReducedMotionMedia = canUseDOM
+  ? window.matchMedia('(prefers-reduced-motion: reduce)')
+  : null;
+function isReduceMotionEnabled(): Promise<*> {
+  return new Promise((resolve, reject) => {
+    resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
+  });
+}
+
+const handlers = {};
 
 const AccessibilityInfo = {
   /**
@@ -25,16 +36,36 @@ const AccessibilityInfo = {
   isScreenReaderEnabled,
 
   /**
+   * Query whether the user prefers reduced motion.
+   *
+   * Returns a promise which resolves to a boolean.
+   * The result is `true` when a screen reader is enabled and `false` otherwise.
+   */
+  isReduceMotionEnabled,
+
+  /**
    * Deprecated
    */
   fetch: isScreenReaderEnabled,
 
   /**
-   * Add an event handler. Supported events:
+   * Add an event handler. Supported events: reduceMotionChanged
    */
   addEventListener: function(eventName: string, handler: Function): Object {
+    if (eventName === 'reduceMotionChanged') {
+      if (!prefersReducedMotionMedia) {
+        return;
+      }
+
+      const listener = event => {
+        handler(event.matches);
+      };
+      prefersReducedMotionMedia.addEventListener('change', listener);
+      handlers[handler] = listener;
+    }
+
     return {
-      remove: emptyFunction
+      remove: () => AccessibilityInfo.removeEventListener(eventName, handler)
     };
   },
 
@@ -52,6 +83,15 @@ const AccessibilityInfo = {
    * Remove an event handler.
    */
   removeEventListener: function(eventName: string, handler: Function): void {
+    if (eventName === 'reduceMotionChanged') {
+      const listener = handlers[handler];
+      if (!listener || !prefersReducedMotionMedia) {
+        return;
+      }
+
+      prefersReducedMotionMedia.removeEventListener('change', listener);
+    }
+
     return;
   }
 };
