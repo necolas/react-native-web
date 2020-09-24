@@ -11,11 +11,6 @@ import * as React from 'react';
 import mergeRefs from '../mergeRefs';
 
 export default function useMergeRefs(...args: $ReadOnlyArray<React.ElementRef<any>>) {
-  return React.useMemo(
-    () => mergeRefs(...args),
-    // Disable linter because args is always an array, and it is spread as
-    // arguments to mergeRefs correctly
-    // eslint-disable-next-line
-    [...args]
-  );
+  // TODO(memoize) #1755
+  return /*React.useMemo(() => */ mergeRefs(...args) /*, [args])*/;
 }

@@ -24,8 +24,8 @@ describe('modules/mergeRefs', () => {
 
     render(<Component />);
 
-    expect(ref.current).not.toBe(null);
-    expect(hookRef.current).not.toBe(null);
-    expect(functionRefValue).not.toBe(null);
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(hookRef.current).toBeInstanceOf(HTMLDivElement);
+    expect(functionRefValue).toBeInstanceOf(HTMLDivElement);
   });
 });
