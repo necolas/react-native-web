@@ -15,14 +15,10 @@ function isScreenReaderEnabled(): Promise<*> {
   });
 }
 
-const prefersReducedMotionMedia = canUseDOM ? window.matchMedia('(prefers-reduced-motion: reduce)') : { 
-    matches: true,
-    addEventListener: () => undefined,
-    removeEventListener: () => undefined,
-};
+const prefersReducedMotionMedia = canUseDOM ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
-    resolve(prefersReducedMotionMedia.matches);
+    resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
   });
 }
 
@@ -55,6 +51,10 @@ const AccessibilityInfo = {
    */
   addEventListener: function(eventName: string, handler: Function): Object {
     if (eventName === 'reduceMotionChanged') {
+      if (!prefersReducedMotionMedia) {
+        return;
+      }
+
       const listener = (event) => {
         handler(event.matches);
       };
