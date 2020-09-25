@@ -7,20 +7,22 @@
  * @flow
  */
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 function isScreenReaderEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
     resolve(true);
   });
 }
 
-const prefersReducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)')
+const prefersReducedMotionMedia = canUseDOM ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: true };
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
-    resolve(prefersReducedMotionMedia.match);
+    resolve(prefersReducedMotionMedia.matches);
   });
 }
 
-const handlerMap = {};
+const handlers = {};
 
 const AccessibilityInfo = {
   /**
@@ -53,7 +55,7 @@ const AccessibilityInfo = {
         handler(event.matches);
       };
       prefersReducedMotionMedia.addEventListener('change', listener);
-      handlerMap[handler] = listener;
+      handlers[handler] = listener;
     }
   
     return {
@@ -76,7 +78,7 @@ const AccessibilityInfo = {
    */
   removeEventListener: function(eventName: string, handler: Function): void {
     if (eventName === 'reduceMotionChanged') {
-      const listener = handlerMap[handler];
+      const listener = handlers[handler];
       if (!listener) {
         return;
       }
