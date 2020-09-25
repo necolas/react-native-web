@@ -15,7 +15,11 @@ function isScreenReaderEnabled(): Promise<*> {
   });
 }
 
-const prefersReducedMotionMedia = canUseDOM ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: true };
+const prefersReducedMotionMedia = canUseDOM ? window.matchMedia('(prefers-reduced-motion: reduce)') : { 
+    matches: true,
+    addEventListener: () => undefined,
+    removeEventListener: () => undefined,
+};
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
     resolve(prefersReducedMotionMedia.matches);
