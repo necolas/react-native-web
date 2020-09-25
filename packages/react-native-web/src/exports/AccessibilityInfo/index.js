@@ -83,7 +83,7 @@ const AccessibilityInfo = {
   removeEventListener: function(eventName: string, handler: Function): void {
     if (eventName === 'reduceMotionChanged') {
       const listener = handlers[handler];
-      if (!listener) {
+      if (!listener || !prefersReducedMotionMedia) {
         return;
       }
       
