@@ -36,6 +36,6 @@ const exitApp: () => {
 
 export default {
   addEventListener,
-  exitApp: history.previous,
+  exitApp,
   removeEventListener
 };
