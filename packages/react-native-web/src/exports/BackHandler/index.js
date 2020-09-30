@@ -29,7 +29,7 @@ window.addEventListener('popstate', (e) => {
   if (handled) e.preventDefault();
 });
 
-const exitApp: () => {
+const exitApp = () => {
   listeners.length = 0;
   history.previous();
 };
