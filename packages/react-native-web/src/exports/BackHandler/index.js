@@ -7,23 +7,35 @@
  *
  * @flow
  */
+const listeners = [] as (() => boolean | null | undefined)[]
+const addEventListener = (event: 'hardwareBackPress', listener: () => boolean | null | undefined) => {
+  listeners.unshift(listener)
+}
 
-const BackHandler = {
-  listeners: [],
-  exitApp: history.previous,
-  addEventListener: (listener) => {
-    listeners.push(listener)
-    return {
-      remove: this.removeEventListener(listener)
-    };
-  },
-  removeEventListener: (listener) => this.listeners.splice(this.listeners.indexOf(listener), 1)
-};
+const removeEventListener = (event: 'hardwareBackPress', listener: () => boolean | null | undefined) => {
+  listeners.splice(listeners.indexOf(listener), 1)
+}
 
-history.pushState(null, '', window.location.href)
-window.addEventListener('popstate', (event) => {
-  if(!BackHandler.listeners.find(callback => callback()) history.previous()
-  else history.pushState(null, '', window.location.href)
+// Hack for Chrome. See this issue: https://stackoverflow.com/questions/64001278/history-pushstate-on-chrome-is-being-ignored?noredirect=1#comment113174647_64001278
+const onFirstPress = () => {
+  history.pushState(null, '', window.location.href)
+  window.removeEventListener('focusin', onFirstPress)
+}
+window.addEventListener('focusin', onFirstPress)
+
+// Detect pressing back key on web browsers
+window.addEventListener('popstate', (e) => {
+  const handled = listeners.find(l => l())
+  if (handled) e.preventDefault()
 })
 
-export default BackHandler;
+const exitApp: () => {
+  listeners = []
+  history.previous()
+}
+
+export default {
+  addEventListener,
+  exitApp: history.previous,
+  removeEventListener
+}
