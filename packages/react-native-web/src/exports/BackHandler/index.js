@@ -30,7 +30,7 @@ window.addEventListener('popstate', (e) => {
 });
 
 const exitApp: () => {
-  listeners = [];
+  listeners.length = 0;
   history.previous();
 };
 
