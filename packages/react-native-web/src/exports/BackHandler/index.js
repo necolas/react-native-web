@@ -7,7 +7,7 @@
  *
  * @flow
  */
-const listeners: Array<() => boolean | null | undefined)> = []
+const listeners: Array<() => boolean | null | undefined> = []
 const addEventListener = (event: 'hardwareBackPress', listener: () => boolean | null | undefined) => {
   listeners.unshift(listener);
 };
