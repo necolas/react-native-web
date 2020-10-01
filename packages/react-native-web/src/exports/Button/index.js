@@ -8,10 +8,10 @@
  * @flow
  */
 
+import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import TouchableOpacity from '../TouchableOpacity';
 import Text from '../Text';
-import React from 'react';
 
 type ButtonProps = {|
   accessibilityLabel?: ?string,
@@ -22,7 +22,7 @@ type ButtonProps = {|
   title: string
 |};
 
-export default function Button(props: ButtonProps) {
+const Button = React.forwardRef<ButtonProps, *>((props, forwardedRef) => {
   const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
 
   return (
@@ -31,6 +31,7 @@ export default function Button(props: ButtonProps) {
       accessibilityRole="button"
       disabled={disabled}
       onPress={onPress}
+      ref={forwardedRef}
       style={[
         styles.button,
         color && { backgroundColor: color },
@@ -41,7 +42,9 @@ export default function Button(props: ButtonProps) {
       <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
     </TouchableOpacity>
   );
-}
+});
+
+Button.displayName = 'Button';
 
 const styles = StyleSheet.create({
   button: {
@@ -62,3 +65,7 @@ const styles = StyleSheet.create({
     color: '#a1a1a1'
   }
 });
+
+export type { ButtonProps };
+
+export default Button;

@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Button prop "accessibilityLabel" 1`] = `
+<div
+  aria-label="accessibility label"
+  class="css-cursor-18t94o4 css-view-1dbjc4n r-backgroundColor-14sbq61 r-borderRadius-1jkafct r-cursor-1loqt21 r-touchAction-1otgn73 r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  data-focusable="true"
+  role="button"
+  style="transition-duration: 0s;"
+  tabindex="0"
+>
+  <div
+    class="css-text-901oao r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
+    dir="auto"
+  />
+</div>
+`;
+
+exports[`components/Button prop "color" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-view-1dbjc4n r-borderRadius-1jkafct r-cursor-1loqt21 r-touchAction-1otgn73 r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  data-focusable="true"
+  role="button"
+  style="background-color: rgb(0, 0, 255); transition-duration: 0s;"
+  tabindex="0"
+>
+  <div
+    class="css-text-901oao r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
+    dir="auto"
+  />
+</div>
+`;
+
+exports[`components/Button prop "disabled" 1`] = `
+<div
+  aria-disabled="true"
+  class="css-view-1dbjc4n r-backgroundColor-11mpjr4 r-borderRadius-1jkafct r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  disabled=""
+  role="button"
+  style="transition-duration: 0s;"
+>
+  <div
+    class="css-text-901oao r-color-c68hjy r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
+    dir="auto"
+  />
+</div>
+`;
+
+exports[`components/Button prop "testID" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-view-1dbjc4n r-backgroundColor-14sbq61 r-borderRadius-1jkafct r-cursor-1loqt21 r-touchAction-1otgn73 r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  data-focusable="true"
+  data-testid="123"
+  role="button"
+  style="transition-duration: 0s;"
+  tabindex="0"
+>
+  <div
+    class="css-text-901oao r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
+    dir="auto"
+  />
+</div>
+`;
+
+exports[`components/Button prop "title" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-view-1dbjc4n r-backgroundColor-14sbq61 r-borderRadius-1jkafct r-cursor-1loqt21 r-touchAction-1otgn73 r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  data-focusable="true"
+  role="button"
+  style="transition-duration: 0s;"
+  tabindex="0"
+>
+  <div
+    class="css-text-901oao r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
+    dir="auto"
+  >
+    Click me
+  </div>
+</div>
+`;
