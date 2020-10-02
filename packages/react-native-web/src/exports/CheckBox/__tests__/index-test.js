@@ -2,6 +2,8 @@
 
 import CheckBox from '../';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { createEventTarget } from 'dom-event-testing-library';
 import { render } from '@testing-library/react';
 
 function findCheckbox(container) {
@@ -9,7 +11,28 @@ function findCheckbox(container) {
 }
 
 describe('CheckBox', () => {
-  describe('disabled', () => {
+  describe('prop "accessibilityLabel"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox accessibilityLabel="accessibility label" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "color"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox color="lightblue" value={true} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "dataSet"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox dataSet={{ one: 'one', two: 'two' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "disabled"', () => {
     test('when "false" a default checkbox is rendered', () => {
       const { container } = render(<CheckBox />);
       expect(findCheckbox(container).disabled).toBe(false);
@@ -21,7 +44,30 @@ describe('CheckBox', () => {
     });
   });
 
-  describe('onChange', () => {
+  describe('prop "nativeID"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox nativeID="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "onBlur"', () => {
+    test('is called', () => {
+      const onBlur = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<CheckBox onBlur={onBlur} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+        target.blur();
+      });
+      expect(onBlur).toBeCalled();
+    });
+  });
+
+  describe('prop "onChange"', () => {
     test('is called with the event object', () => {
       const onChange = jest.fn();
       const { container } = render(<CheckBox onChange={onChange} value={false} />);
@@ -31,7 +77,22 @@ describe('CheckBox', () => {
     });
   });
 
-  describe('onValueChange', () => {
+  describe('prop "onFocus"', () => {
+    test('is called', () => {
+      const onFocus = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<CheckBox onFocus={onFocus} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+      });
+      expect(onFocus).toBeCalled();
+    });
+  });
+
+  describe('prop "onValueChange"', () => {
     test('when value is "false" it receives "true"', () => {
       const onValueChange = jest.fn();
       const { container } = render(<CheckBox onValueChange={onValueChange} value={false} />);
@@ -49,7 +110,29 @@ describe('CheckBox', () => {
     });
   });
 
-  describe('value', () => {
+  describe('prop "ref"', () => {
+    test('value is set', () => {
+      const ref = jest.fn();
+      render(<CheckBox ref={ref} />);
+      expect(ref).toBeCalled();
+    });
+  });
+
+  describe('prop "style"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox style={{ borderWidth: 5 }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "testID"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox testID="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "value"', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
       const { container } = render(<CheckBox value={false} />);
       expect(findCheckbox(container).checked).toBe(false);
