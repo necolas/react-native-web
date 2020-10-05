@@ -26,6 +26,64 @@ exports[`components/Text nested 1`] = `
 </div>
 `;
 
+exports[`components/Text prop "accessibilityLabel" value is set 1`] = `
+<div
+  aria-label="accessibility label"
+  class="css-text-901oao"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "accessibilityLiveRegion" value is set 1`] = `
+<div
+  aria-live="polite"
+  class="css-text-901oao"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] = `
+<a
+  class="css-reset-4rbku5 css-cursor-18t94o4 css-text-901oao"
+  data-focusable="true"
+  dir="auto"
+  role="link"
+/>
+`;
+
+exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-text-901oao"
+  data-focusable="true"
+  dir="auto"
+  role="button"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Text prop "accessibilityRole" value is set 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+  role="presentation"
+/>
+`;
+
+exports[`components/Text prop "nativeID" value is set 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+  id="nativeID"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" value is set 1`] = `
+<div
+  class="css-text-901oao css-textMultiLine-cens5h"
+  dir="auto"
+/>
+`;
+
 exports[`components/Text prop "selectable" value of false 1`] = `
 <div
   class="css-text-901oao r-userSelect-lrvibr"
@@ -36,6 +94,22 @@ exports[`components/Text prop "selectable" value of false 1`] = `
 exports[`components/Text prop "selectable" value of true 1`] = `
 <div
   class="css-text-901oao r-userSelect-1xnzce8"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "style" value is set 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+  style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
+/>
+`;
+
+exports[`components/Text prop "testID" value is set 1`] = `
+<div
+  class="css-text-901oao"
+  data-testid="123"
   dir="auto"
 />
 `;
