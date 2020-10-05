@@ -229,7 +229,10 @@ const createDOMProps = (component, props) => {
     const onClick = domProps.onClick;
     if (onClick != null) {
       if (disabled) {
-        domProps.onClick = undefined;
+        // Prevent click propagating if the element is disabled. See #1757
+        domProps.onClick = function(e) {
+          e.stopPropagation();
+        };
       } else if (!isNativeInteractiveElement) {
         // For native elements that are focusable but don't dispatch 'click' events
         // for keyboards.

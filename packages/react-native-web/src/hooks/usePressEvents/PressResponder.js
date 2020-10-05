@@ -388,8 +388,8 @@ export default class PressResponder {
           } else if (onPress != null && event.ctrlKey === false && event.altKey === false) {
             onPress(event);
           }
-          event.stopPropagation();
         }
+        event.stopPropagation();
       },
 
       // If `onLongPress` is provided and a touch pointer is being used, prevent the
@@ -399,6 +399,7 @@ export default class PressResponder {
         if (!disabled && onLongPress != null && this._isPointerTouch && !event.defaultPrevented) {
           event.preventDefault();
         }
+        event.stopPropagation();
       }
     };
   }
