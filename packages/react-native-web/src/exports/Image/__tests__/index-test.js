@@ -83,6 +83,11 @@ describe('components/Image', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('prop "nativeID"', () => {
+    const { container } = render(<Image nativeID="nativeID" />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
   describe('prop "onLoad"', () => {
     test('is called after image is loaded from network', () => {
       jest.useFakeTimers();
