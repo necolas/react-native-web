@@ -171,10 +171,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
     // https://drafts.csswg.org/css-scrollbars-1/
     case 'scrollbarWidth': {
       if (value === 'none') {
-        rules.push(
-          `${selector}::-webkit-scrollbar{display:none}`,
-          `${selector}{overflow:-moz-scrollbars-none;-ms-overflow-style:none;}`
-        );
+        rules.push(`${selector}::-webkit-scrollbar{display:none}`);
       }
       const block = createDeclarationBlock({ [property]: value });
       rules.push(`${selector}${block}`);
