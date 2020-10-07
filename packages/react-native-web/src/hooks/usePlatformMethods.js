@@ -7,11 +7,9 @@
  * @flow
  */
 
-import type { ElementRef } from 'react';
-
 import UIManager from '../exports/UIManager';
 import createDOMProps from '../modules/createDOMProps';
-import { useImperativeHandle, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
@@ -45,14 +43,12 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
  * Adds non-standard methods to the hode element. This is temporarily until an
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
-export default function usePlatformMethods(hostRef: ElementRef<any>, props: Object) {
+export default function usePlatformMethods(props: Object) {
   const previousStyleRef = useRef(null);
   const { classList, style, pointerEvents } = props;
 
-  useImperativeHandle(
-    hostRef,
-    () => {
-      const hostNode = hostRef.current;
+  return useMemo(
+    () => (hostNode: any) => {
       if (hostNode != null) {
         hostNode.measure = callback => UIManager.measure(hostNode, callback);
         hostNode.measureLayout = (relativeToNode, success, failure) =>
@@ -63,6 +59,6 @@ export default function usePlatformMethods(hostRef: ElementRef<any>, props: Obje
       }
       return hostNode;
     },
-    [hostRef, classList, pointerEvents, style]
+    [classList, pointerEvents, style]
   );
 }

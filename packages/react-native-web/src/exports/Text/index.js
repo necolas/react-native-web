@@ -100,7 +100,6 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   const classList = [
     classes.text,
@@ -155,10 +154,12 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     supportedProps.dir = dir != null ? dir : 'auto';
   }
   supportedProps.onClick = handleClick;
-  supportedProps.ref = setRef;
   supportedProps.style = style;
 
-  usePlatformMethods(hostRef, supportedProps);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+  supportedProps.ref = setRef;
 
   const element = createElement(component, supportedProps);
 

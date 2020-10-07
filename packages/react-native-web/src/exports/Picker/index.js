@@ -47,7 +47,6 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
@@ -56,18 +55,21 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   }
 
-  const supportedProps = {
+  const supportedProps: any = {
     children,
     disabled: enabled === false ? true : undefined,
     onChange: handleChange,
-    ref: setRef,
     style: [styles.initial, style],
     testID,
     value: selectedValue,
     ...other
   };
 
-  usePlatformMethods(hostRef, supportedProps);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+  supportedProps.ref = setRef;
 
   return createElement('select', supportedProps);
 });

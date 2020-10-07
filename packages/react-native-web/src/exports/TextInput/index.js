@@ -229,8 +229,6 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     [handleContentSizeChange]
   );
 
-  const setRef = useMergeRefs(forwardedRef, hostRef, imperativeRef);
-
   function handleBlur(e) {
     TextInputState._currentlyFocusedNode = null;
     if (onBlur) {
@@ -367,14 +365,17 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
   supportedProps.readOnly = !editable;
-  supportedProps.ref = setRef;
   supportedProps.rows = multiline ? numberOfLines : undefined;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = style;
   supportedProps.type = multiline ? undefined : type;
   supportedProps.inputMode = inputMode;
 
-  usePlatformMethods(hostRef, supportedProps);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, forwardedRef);
+
+  supportedProps.ref = setRef;
 
   return createElement(component, supportedProps);
 });

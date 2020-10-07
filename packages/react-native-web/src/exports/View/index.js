@@ -102,7 +102,6 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
 
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
 
   const classList = [classes.view];
   const style = StyleSheet.compose(
@@ -132,10 +131,12 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
 
   const supportedProps = pickProps(props);
   supportedProps.classList = classList;
-  supportedProps.ref = setRef;
   supportedProps.style = style;
 
-  usePlatformMethods(hostRef, supportedProps);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+  supportedProps.ref = setRef;
 
   return createElement('div', supportedProps);
 });
