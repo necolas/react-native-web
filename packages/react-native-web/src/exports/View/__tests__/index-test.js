@@ -126,6 +126,18 @@ describe('components/View', () => {
       render(<View ref={ref} />);
       expect(ref).toBeCalled();
     });
+
+    test('node has imperative methods', () => {
+      const ref = React.createRef();
+      act(() => {
+        render(<View ref={ref} />);
+      });
+      const node = ref.current;
+      expect(typeof node.measure === 'function');
+      expect(typeof node.measureLayout === 'function');
+      expect(typeof node.measureInWindow === 'function');
+      expect(typeof node.setNativeProps === 'function');
+    });
   });
 
   test('prop "pointerEvents"', () => {

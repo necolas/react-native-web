@@ -122,6 +122,18 @@ describe('components/Text', () => {
       render(<Text ref={ref} />);
       expect(ref).toBeCalled();
     });
+
+    test('node has imperative methods', () => {
+      const ref = React.createRef();
+      act(() => {
+        render(<Text ref={ref} />);
+      });
+      const node = ref.current;
+      expect(typeof node.measure === 'function');
+      expect(typeof node.measureLayout === 'function');
+      expect(typeof node.measureInWindow === 'function');
+      expect(typeof node.setNativeProps === 'function');
+    });
   });
 
   describe('prop "selectable"', () => {
