@@ -16,7 +16,7 @@ import UIManager from '../exports/UIManager';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
-let didWarn = false;
+let didWarn = !canUseDOM;
 let resizeObserver = null;
 
 function getResizeObserver(): ?ResizeObserver {
