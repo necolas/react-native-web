@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Pressable default 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable focus interaction 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable focus interaction 2`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  data-focusvisible-polyfill="true"
+  style="outline: focus-ring;"
+  tabindex="0"
+>
+  <div
+    data-testid="focus-content"
+  />
+</div>
+`;
+
+exports[`components/Pressable focus interaction 3`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style=""
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable hover interaction 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable hover interaction 2`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style="outline: hover-ring;"
+  tabindex="0"
+>
+  <div
+    data-testid="hover-content"
+  />
+</div>
+`;
+
+exports[`components/Pressable hover interaction 3`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style=""
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable press interaction 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable press interaction 2`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style="outline: press-ring;"
+  tabindex="0"
+>
+  <div
+    data-testid="press-content"
+  />
+</div>
+`;
+
+exports[`components/Pressable press interaction 3`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style=""
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "accessibilityLabel" value is set 1`] = `
+<div
+  aria-label="label"
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "accessibilityLiveRegion" value is set 1`] = `
+<div
+  aria-live="polite"
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "accessibilityRole" value alters HTML element 1`] = `
+<a
+  class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  role="link"
+/>
+`;
+
+exports[`components/Pressable prop "accessibilityRole" value is "button" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  role="button"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "accessibilityRole" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  role="presentation"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "disabled" 1`] = `
+<div
+  aria-disabled="true"
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  disabled=""
+/>
+`;
+
+exports[`components/Pressable prop "nativeID" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  id="nativeID"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "pointerEvents" 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-pointerEvents-ah5dr5 r-touchAction-1otgn73"
+  data-focusable="true"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "style" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable prop "testID" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-focusable="true"
+  data-testid="123"
+  tabindex="0"
+/>
+`;

@@ -18,6 +18,7 @@ import { forwardRef, memo, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
+import StyleSheet from '../StyleSheet';
 import View from '../View';
 
 export type StateCallbackType = $ReadOnly<{|
@@ -157,7 +158,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onBlur={createFocusHandler(onBlur, false)}
       onFocus={createFocusHandler(onFocus, true)}
       ref={setRef}
-      style={typeof style === 'function' ? style(interactionState) : style}
+      style={[styles.root, typeof style === 'function' ? style(interactionState) : style]}
     >
       {typeof children === 'function' ? children(interactionState) : children}
     </View>
@@ -165,9 +166,16 @@ function Pressable(props: Props, forwardedRef): React.Node {
 }
 
 function useForceableState(forced: boolean): [boolean, (boolean) => void] {
-  const [pressed, setPressed] = useState(false);
-  return [pressed || forced, setPressed];
+  const [bool, setBool] = useState(false);
+  return [bool || forced, setBool];
 }
+
+const styles = StyleSheet.create({
+  root: {
+    cursor: 'pointer',
+    touchAction: 'manipulation'
+  }
+});
 
 const MemoedPressable = memo(forwardRef(Pressable));
 MemoedPressable.displayName = 'Pressable';
