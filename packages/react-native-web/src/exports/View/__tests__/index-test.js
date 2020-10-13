@@ -127,6 +127,19 @@ describe('components/View', () => {
       expect(ref).toBeCalled();
     });
 
+    test('is memoized on ref changes', () => {
+      const ref = jest.fn();
+      let rerender;
+      act(() => {
+        ({ rerender } = render(<View ref={ref} testID="123" />));
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+      act(() => {
+        rerender(<View ref={ref} testID="1234" />);
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+    });
+
     test('node has imperative methods', () => {
       const ref = React.createRef();
       act(() => {

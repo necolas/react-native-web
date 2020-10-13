@@ -58,7 +58,7 @@ describe('modules/useMergeRefs', () => {
     expect(nextRef).toHaveBeenCalled();
   });
 
-  test.skip('ref is not called for each rerender', () => {
+  test('ref is not called for each rerender', () => {
     const ref = jest.fn();
     let rerender;
 
@@ -72,7 +72,7 @@ describe('modules/useMergeRefs', () => {
     expect(ref).toHaveBeenCalledTimes(1);
   });
 
-  test.skip('ref is not called for props changes', () => {
+  test('ref is not called for props changes', () => {
     const ref = jest.fn();
     let rerender;
 

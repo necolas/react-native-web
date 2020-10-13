@@ -103,12 +103,6 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef(null);
 
-  const classList = [classes.view];
-  const style = StyleSheet.compose(
-    hasTextAncestor && styles.inline,
-    props.style
-  );
-
   useElementLayout(hostRef, onLayout);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
@@ -128,6 +122,11 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   });
+
+  const style = StyleSheet.compose(
+    hasTextAncestor && styles.inline,
+    props.style
+  );
 
   const supportedProps = pickProps(props);
   supportedProps.classList = classList;
@@ -160,6 +159,8 @@ const classes = css.create({
     zIndex: 0
   }
 });
+
+const classList = [classes.view];
 
 const styles = StyleSheet.create({
   inline: {
