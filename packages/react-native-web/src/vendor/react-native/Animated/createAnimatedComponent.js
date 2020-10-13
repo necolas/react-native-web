@@ -169,7 +169,7 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
           // have to make sure the view doesn't get optimized away because it cannot
           // go through the NativeViewHierarchyManager since it operates on the shadow
           // thread.
-          collapsable={false}
+          collapsable={undefined}
         />
       );
     }
