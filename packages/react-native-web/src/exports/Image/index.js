@@ -219,10 +219,9 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
   }
 
   // Image loading
+  const uri = resolveAssetUri(source);
   useEffect(() => {
     abortPendingRequest();
-
-    const uri = resolveAssetUri(source);
 
     if (uri != null) {
       updateState(LOADING);
@@ -265,7 +264,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
     }
 
     return abortPendingRequest;
-  }, [source, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+  }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
 
   return (
     <View
