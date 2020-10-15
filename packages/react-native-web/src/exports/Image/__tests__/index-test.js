@@ -183,6 +183,32 @@ describe('components/Image', () => {
       expect(onLoadStub.mock.calls.length).toBe(1);
       expect(onLoadEndStub.mock.calls.length).toBe(1);
     });
+
+    test('is not called on update if "uri" is the same and given as an object', () => {
+      const onLoadStartStub = jest.fn();
+      const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
+      const { rerender } = render(
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
+        />
+      );
+      act(() => {
+        rerender(
+          <Image
+            onLoad={onLoadStub}
+            onLoadEnd={onLoadEndStub}
+            onLoadStart={onLoadStartStub}
+            source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
+          />
+        );
+      });
+      expect(onLoadStub.mock.calls.length).toBe(1);
+      expect(onLoadEndStub.mock.calls.length).toBe(1);
+    });
   });
 
   describe('prop "resizeMode"', () => {
