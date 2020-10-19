@@ -148,21 +148,20 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
     test('array', () => {
       const style = {
-        transform: [{ perspective: 50 }, { scaleX: 20 }, { translateX: 20 }, { rotate: '20deg' }]
+        transform: [
+          { perspective: 50 },
+          { scaleX: 20 },
+          { translateX: 20 },
+          { rotate: '20deg' },
+          { matrix: [1, 2, 3, 4, 5, 6] },
+          { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
+        ]
       };
       const resolved = createReactDOMStyle(style);
 
       expect(resolved).toEqual({
-        transform: 'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)'
-      });
-    });
-
-    test('transformMatrix', () => {
-      const style = { transformMatrix: [1, 2, 3, 4, 5, 6] };
-      const resolved = createReactDOMStyle(style);
-
-      expect(resolved).toEqual({
-        transform: 'matrix3d(1,2,3,4,5,6)'
+        transform:
+          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
       });
     });
   });

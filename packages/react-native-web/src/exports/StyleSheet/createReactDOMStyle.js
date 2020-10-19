@@ -37,24 +37,22 @@ const supportsCSS3TextDecoration =
 
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
+// { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
 const mapTransform = transform => {
   const type = Object.keys(transform)[0];
-  const value = normalizeValueWithProperty(transform[type], type);
-  return `${type}(${value})`;
-};
-
-// [1,2,3,4,5,6] => 'matrix3d(1,2,3,4,5,6)'
-const convertTransformMatrix = transformMatrix => {
-  const matrix = transformMatrix.join(',');
-  return `matrix3d(${matrix})`;
+  const value = transform[type];
+  if (type === 'matrix' || type === 'matrix3d') {
+    return `${type}(${value.join(',')})`;
+  } else {
+    const normalizedValue = normalizeValueWithProperty(value, type);
+    return `${type}(${normalizedValue})`;
+  }
 };
 
 const resolveTransform = (resolvedStyle, style) => {
   let transform = style.transform;
   if (Array.isArray(style.transform)) {
     transform = style.transform.map(mapTransform).join(' ');
-  } else if (style.transformMatrix) {
-    transform = convertTransformMatrix(style.transformMatrix);
   }
   resolvedStyle.transform = transform;
 };
