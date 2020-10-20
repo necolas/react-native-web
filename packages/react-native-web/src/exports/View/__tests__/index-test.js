@@ -140,6 +140,19 @@ describe('components/View', () => {
       expect(ref).toHaveBeenCalledTimes(1);
     });
 
+    test('is not called for style changes', () => {
+      const ref = jest.fn();
+      let rerender;
+      act(() => {
+        ({ rerender } = render(<View ref={ref} style={{ borderWidth: 5 }} testID="123" />));
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+      act(() => {
+        rerender(<View ref={ref} style={{ borderWidth: 6 }} testID="1234" />);
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+    });
+
     test('node has imperative methods', () => {
       const ref = React.createRef();
       act(() => {

@@ -132,7 +132,12 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   supportedProps.classList = classList;
   supportedProps.style = style;
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
+  // Style is subject to frequent change an inline creation, plus we only need its value if the user actually calls setNativeProps,
+  // so we can instead use a ref here which will be present when needed, but ref-equivilant for setting ref and platform methods
+  const setNativePropsStyles = useRef(null);
+  setNativePropsStyles.current = { classList, pointerEvents: supportedProps.pointerEvents, style };
+
+  const platformMethodsRef = usePlatformMethods(setNativePropsStyles);
   const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
 
   supportedProps.ref = setRef;

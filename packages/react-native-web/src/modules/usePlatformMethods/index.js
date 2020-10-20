@@ -43,13 +43,13 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
  * Adds non-standard methods to the hode element. This is temporarily until an
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
-export default function usePlatformMethods(props: Object) {
+export default function usePlatformMethods(setNativePropsStyles: any) {
   const previousStyleRef = useRef(null);
-  const { classList, style, pointerEvents } = props;
 
   return useMemo(
     () => (hostNode: any) => {
       if (hostNode != null) {
+        const { classList, style, pointerEvents } = setNativePropsStyles.current;
         hostNode.measure = callback => UIManager.measure(hostNode, callback);
         hostNode.measureLayout = (relativeToNode, success, failure) =>
           UIManager.measureLayout(hostNode, relativeToNode, failure, success);
@@ -59,6 +59,6 @@ export default function usePlatformMethods(props: Object) {
       }
       return hostNode;
     },
-    [classList, pointerEvents, style]
+    [setNativePropsStyles]
   );
 }
