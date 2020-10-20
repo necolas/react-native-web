@@ -7,9 +7,15 @@
  * @flow
  */
 
+import type { GenericStyleProp } from '../../types';
+import type { ViewProps } from '../../Exports/View';
+
 import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
-import { useMemo, useRef } from 'react';
+import useStable from '../useStable';
+import { useRef } from 'react';
+
+const emptyObject = {};
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
@@ -43,22 +49,33 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
  * Adds non-standard methods to the hode element. This is temporarily until an
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
-export default function usePlatformMethods(props: Object) {
+export default function usePlatformMethods({
+  classList,
+  pointerEvents,
+  style
+}: {
+  classList?: Array<string | boolean>,
+  style?: GenericStyleProp<*>,
+  pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
+}) {
   const previousStyleRef = useRef(null);
-  const { classList, style, pointerEvents } = props;
+  const setNativePropsArgsRef = useRef(null);
+  setNativePropsArgsRef.current = { classList, pointerEvents, style };
 
-  return useMemo(
-    () => (hostNode: any) => {
-      if (hostNode != null) {
-        hostNode.measure = callback => UIManager.measure(hostNode, callback);
-        hostNode.measureLayout = (relativeToNode, success, failure) =>
-          UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-        hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-        hostNode.setNativeProps = nativeProps =>
-          setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
-      }
-      return hostNode;
-    },
-    [classList, pointerEvents, style]
-  );
+  // Avoid creating a new ref on every render. The props only need to be
+  // available to 'setNativeProps' when it is called.
+  const ref = useStable(() => (hostNode: any) => {
+    if (hostNode != null) {
+      hostNode.measure = callback => UIManager.measure(hostNode, callback);
+      hostNode.measureLayout = (relativeToNode, success, failure) =>
+        UIManager.measureLayout(hostNode, relativeToNode, failure, success);
+      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
+      hostNode.setNativeProps = nativeProps => {
+        const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
+        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+      };
+    }
+  });
+
+  return ref;
 }

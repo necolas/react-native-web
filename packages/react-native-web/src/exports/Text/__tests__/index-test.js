@@ -123,6 +123,19 @@ describe('components/Text', () => {
       expect(ref).toBeCalled();
     });
 
+    test('is not called for prop changes', () => {
+      const ref = jest.fn();
+      let rerender;
+      act(() => {
+        ({ rerender } = render(<Text nativeID="123" ref={ref} style={{ borderWidth: 5 }} />));
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+      act(() => {
+        rerender(<Text nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+    });
+
     test('node has imperative methods', () => {
       const ref = React.createRef();
       act(() => {
