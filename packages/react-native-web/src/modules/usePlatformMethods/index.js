@@ -56,13 +56,14 @@ export default function usePlatformMethods(setNativePropsStyles: {|
   return React.useMemo(
     () => (hostNode: any) => {
       if (hostNode != null) {
-        const { classList, style, pointerEvents } = setNativePropsStyles.current || {};
         hostNode.measure = callback => UIManager.measure(hostNode, callback);
         hostNode.measureLayout = (relativeToNode, success, failure) =>
           UIManager.measureLayout(hostNode, relativeToNode, failure, success);
         hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-        hostNode.setNativeProps = nativeProps =>
+        hostNode.setNativeProps = nativeProps => {
+          const { classList, style, pointerEvents } = setNativePropsStyles.current || {};
           setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+        };
       }
       return hostNode;
     },
