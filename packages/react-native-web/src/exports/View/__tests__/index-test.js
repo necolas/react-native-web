@@ -127,20 +127,7 @@ describe('components/View', () => {
       expect(ref).toBeCalled();
     });
 
-    test('is not called for props changes', () => {
-      const ref = jest.fn();
-      let rerender;
-      act(() => {
-        ({ rerender } = render(<View ref={ref} testID="123" />));
-      });
-      expect(ref).toHaveBeenCalledTimes(1);
-      act(() => {
-        rerender(<View ref={ref} testID="1234" />);
-      });
-      expect(ref).toHaveBeenCalledTimes(1);
-    });
-
-    test('is not called for style changes', () => {
+    test('is not called for prop or style changes', () => {
       const ref = jest.fn();
       let rerender;
       act(() => {
