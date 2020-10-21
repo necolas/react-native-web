@@ -11,6 +11,7 @@ import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
 import { useRef } from 'react';
 import type { ViewProps } from '../../Exports/View';
+import type { GenericStyleProp } from '../../types';
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
@@ -50,8 +51,8 @@ export default function usePlatformMethods({
   style
 }: {
   classList?: Array<string | boolean>,
-  style?: $PropertyType<ViewProps, 'style'>,
-  pointerEvents: $PropertyType<ViewProps, 'pointerEvents'>
+  style?: GenericStyleProp<*>,
+  pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
 }) {
   const previousStyleRef = useRef(null);
   const setNativePropsArgsRef = useRef(null);
