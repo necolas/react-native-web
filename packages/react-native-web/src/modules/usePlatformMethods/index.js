@@ -7,9 +7,9 @@
  * @flow
  */
 
-import * as React from 'react';
 import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
+import { useRef } from 'react';
 import type { ViewProps } from '../../Exports/View';
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
@@ -53,24 +53,21 @@ export default function usePlatformMethods({
   style?: $PropertyType<ViewProps, 'style'>,
   pointerEvents: $PropertyType<ViewProps, 'pointerEvents'>
 }) {
-  const previousStyleRef = React.useRef(null);
-  const setNativePropsArgsRef = React.useRef(null);
+  const previousStyleRef = useRef(null);
+  const setNativePropsArgsRef = useRef(null);
   setNativePropsArgsRef.current = { classList, pointerEvents, style };
 
-  return React.useCallback(
-    (hostNode: any) => {
-      if (hostNode != null) {
-        hostNode.measure = callback => UIManager.measure(hostNode, callback);
-        hostNode.measureLayout = (relativeToNode, success, failure) =>
-          UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-        hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-        hostNode.setNativeProps = nativeProps => {
-          const { classList, style, pointerEvents } = setNativePropsArgsRef.current || {};
-          setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
-        };
-      }
-      return hostNode;
-    },
-    [setNativePropsArgsRef]
-  );
+  return useRef((hostNode: any) => {
+    if (hostNode != null) {
+      hostNode.measure = callback => UIManager.measure(hostNode, callback);
+      hostNode.measureLayout = (relativeToNode, success, failure) =>
+        UIManager.measureLayout(hostNode, relativeToNode, failure, success);
+      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
+      hostNode.setNativeProps = nativeProps => {
+        const { classList, style, pointerEvents } = setNativePropsArgsRef.current || {};
+        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+      };
+    }
+    return hostNode;
+  }).current;
 }
