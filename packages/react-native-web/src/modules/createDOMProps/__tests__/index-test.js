@@ -140,6 +140,112 @@ describe('modules/createDOMProps', () => {
     });
   });
 
+  describe('onClick handlers', () => {
+    const callsOnClick = (component, accessibilityRole, disabled = false) => {
+      const onClick = jest.fn();
+      const event = { stopPropagation: jest.fn() };
+      const finalProps = createDOMProps(component, { accessibilityRole, disabled, onClick });
+      finalProps.onClick(event);
+      return onClick.mock.calls.length === 1;
+    };
+
+    test('are passed through and called for various roles', () => {
+      expect(callsOnClick('div', 'link')).toBe(true);
+      expect(callsOnClick('div', 'button')).toBe(true);
+      expect(callsOnClick('div', 'textbox')).toBe(true);
+      expect(callsOnClick('div', 'menuitem')).toBe(true);
+      expect(callsOnClick('div', 'bogus')).toBe(true);
+      expect(callsOnClick('a')).toBe(true);
+      expect(callsOnClick('button')).toBe(true);
+      expect(callsOnClick('input')).toBe(true);
+      expect(callsOnClick('select')).toBe(true);
+      expect(callsOnClick('textarea')).toBe(true);
+      expect(callsOnClick('h1')).toBe(true);
+    });
+
+    test('are not passed through or called for various roles when disabled is true', () => {
+      expect(callsOnClick('div', 'link', true)).toBe(false);
+      expect(callsOnClick('div', 'button', true)).toBe(false);
+      expect(callsOnClick('div', 'menuitem', true)).toBe(false);
+      expect(callsOnClick('a', undefined, true)).toBe(false);
+      expect(callsOnClick('button', undefined, true)).toBe(false);
+      expect(callsOnClick('input', undefined, true)).toBe(false);
+      expect(callsOnClick('select', undefined, true)).toBe(false);
+      expect(callsOnClick('textarea', undefined, true)).toBe(false);
+
+      expect(callsOnClick('div', 'textbox', true)).toBe(true);
+      expect(callsOnClick('div', 'bogus', true)).toBe(true);
+      expect(callsOnClick('h1', undefined, true)).toBe(true);
+    });
+  });
+
+  describe('keydown handlers', () => {
+    // These tests fire two events, one space and one enter to ensure each is handled correctly
+    const callsOnClick = key => (
+      component,
+      accessibilityRole,
+      disabled = false,
+      callOnSpace = false
+    ) => {
+      const onClick = jest.fn();
+      const onKeyDown = jest.fn();
+      const event = { key: 'Enter' };
+      const finalProps = createDOMProps(component, {
+        accessibilityRole,
+        disabled,
+        onClick,
+        onKeyDown
+      });
+      finalProps.onKeyDown(event);
+      // The original onKeyDown should always be called regardless of setup
+      expect(onKeyDown).toHaveBeenCalled();
+      return onClick.mock.calls.length === 1;
+    };
+
+    const respondsToEnter = callsOnClick('Enter');
+    const respondsToSpace = callsOnClick('Space');
+
+    test('are not modified for native elements', () => {
+      expect(respondsToEnter('a')).toBe(false);
+      expect(respondsToEnter('button')).toBe(false);
+      expect(respondsToEnter('input')).toBe(false);
+      expect(respondsToEnter('select')).toBe(false);
+      expect(respondsToEnter('textarea')).toBe(false);
+      expect(respondsToEnter('h1')).toBe(false);
+      expect(respondsToEnter('div', 'link')).toBe(false);
+
+      expect(respondsToSpace('a')).toBe(false);
+      expect(respondsToSpace('button')).toBe(false);
+      expect(respondsToSpace('input')).toBe(false);
+      expect(respondsToSpace('select')).toBe(false);
+      expect(respondsToSpace('textarea')).toBe(false);
+      expect(respondsToSpace('h1')).toBe(false);
+      expect(respondsToSpace('div', 'link')).toBe(false);
+    });
+
+    test('are enhanced to call OnClick for Enter on some roles', () => {
+      expect(respondsToEnter('div', 'button')).toBe(true);
+      expect(respondsToEnter('div', 'menuitem')).toBe(true);
+      expect(respondsToEnter('div', 'textbox')).toBe(false);
+      expect(respondsToEnter('div', 'bogus')).toBe(false);
+    });
+
+    test('are enhanced to call OnClick for Space for button or menuitem', () => {
+      expect(respondsToSpace('div', 'button')).toBe(true);
+      expect(respondsToSpace('div', 'menuitem')).toBe(true);
+      expect(respondsToSpace('div', 'textbox')).toBe(false);
+      expect(respondsToSpace('div', 'bogus')).toBe(false);
+    });
+
+    test('are not modified when disabled is true', () => {
+      expect(respondsToEnter('div', 'link', true)).toBe(false);
+      expect(respondsToEnter('div', 'button', true)).toBe(false);
+      expect(respondsToEnter('div', 'textbox', true)).toBe(false);
+      expect(respondsToEnter('div', 'menuitem', true)).toBe(false);
+      expect(respondsToEnter('div', 'bogus', true)).toBe(false);
+    });
+  });
+
   test('prop "accessibilityLabel" becomes "aria-label"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const props = createProps({ accessibilityLabel });
