@@ -8,7 +8,7 @@
  */
 
 import type { GenericStyleProp } from '../../types';
-import type { ViewProps } from '../../Exports/View';
+import type { ViewProps } from '../../exports/View';
 
 import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
