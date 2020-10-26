@@ -158,7 +158,10 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onBlur={createFocusHandler(onBlur, false)}
       onFocus={createFocusHandler(onFocus, true)}
       ref={setRef}
-      style={[styles.root, typeof style === 'function' ? style(interactionState) : style]}
+      style={[
+        !disabled && styles.root,
+        typeof style === 'function' ? style(interactionState) : style
+      ]}
     >
       {typeof children === 'function' ? children(interactionState) : children}
     </View>
