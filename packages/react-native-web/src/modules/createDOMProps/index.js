@@ -225,7 +225,12 @@ const createDOMProps = (component, props) => {
   // Keyboard accessibility
   // Button-like roles should trigger 'onClick' if SPACE key is pressed.
   // Button-like roles should not trigger 'onClick' if they are disabled.
-  if (isNativeInteractiveElement || role === 'button' || role === 'menuitem') {
+  if (
+    isNativeInteractiveElement ||
+    role === 'button' ||
+    role === 'menuitem' ||
+    (accessible === true && focusable)
+  ) {
     const onClick = domProps.onClick;
     if (onClick != null) {
       if (disabled) {

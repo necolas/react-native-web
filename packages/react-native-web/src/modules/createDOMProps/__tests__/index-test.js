@@ -232,6 +232,18 @@ describe('modules/createDOMProps', () => {
       expect(respondsToEnter('div', 'bogus')).toBe(false);
     });
 
+    test('emulates "onClick" for "Enter" for items marked accessible', () => {
+      const onClick = jest.fn();
+      const event = { key: 'Enter', preventDefault: jest.fn() };
+      const finalProps = createDOMProps('div', {
+        accessible: true,
+        accessibilityRole: 'article',
+        onClick
+      });
+      finalProps.onKeyDown(event);
+      expect(onClick).toHaveBeenCalled();
+    });
+
     test('emulates "onClick" for "Space" for certain roles', () => {
       expect(respondsToSpace('div', 'button')).toBe(true);
       expect(respondsToSpace('div', 'menuitem')).toBe(true);
