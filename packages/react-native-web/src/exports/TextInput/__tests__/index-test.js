@@ -546,7 +546,7 @@ describe('components/TextInput', () => {
     const returnKeyType = 'previous';
     const { container } = render(<TextInput returnKeyType={returnKeyType} />);
     const input = findInput(container);
-    expect(input.getAttribute('enterkeyhint')).toEqual(returnKeyType);
+    expect(input.getAttribute('enterKeyHint')).toEqual(returnKeyType);
   });
 
   test('prop "secureTextEntry"', () => {
