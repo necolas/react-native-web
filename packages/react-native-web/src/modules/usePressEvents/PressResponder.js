@@ -119,6 +119,8 @@ const Transitions = Object.freeze({
 const isActiveSignal = signal =>
   signal === RESPONDER_ACTIVE_PRESS_START || signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
+const isButtonRole = element => element.getAttribute('role') === 'button';
+
 const isPressStartSignal = signal =>
   signal === RESPONDER_INACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_PRESS_START ||
@@ -306,8 +308,11 @@ export default class PressResponder {
     };
 
     return {
-      onStartShouldSetResponder: (): boolean => {
+      onStartShouldSetResponder: (event): boolean => {
         const { disabled } = this._config;
+        if (disabled && isButtonRole(event.currentTarget)) {
+          event.stopPropagation();
+        }
         if (disabled == null) {
           return true;
         }
@@ -383,23 +388,33 @@ export default class PressResponder {
           // If long press dispatched, cancel default click behavior.
           // If the responder terminated because text was selected during the gesture,
           // cancel the default click behavior.
+          event.stopPropagation();
           if (this._longPressDispatched || this._selectionTerminated) {
             event.preventDefault();
           } else if (onPress != null && event.ctrlKey === false && event.altKey === false) {
             onPress(event);
           }
+        } else {
+          if (isButtonRole(event.currentTarget)) {
+            event.stopPropagation();
+          }
         }
-        event.stopPropagation();
       },
 
       // If `onLongPress` is provided and a touch pointer is being used, prevent the
       // default context menu from opening.
       onContextMenu: (event: any): void => {
         const { disabled, onLongPress } = this._config;
-        if (!disabled && onLongPress != null && this._isPointerTouch && !event.defaultPrevented) {
-          event.preventDefault();
+        if (!disabled) {
+          if (onLongPress != null && this._isPointerTouch && !event.defaultPrevented) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        } else {
+          if (isButtonRole(event.currentTarget)) {
+            event.stopPropagation();
+          }
         }
-        event.stopPropagation();
       }
     };
   }
