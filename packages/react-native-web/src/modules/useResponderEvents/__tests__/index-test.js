@@ -205,10 +205,9 @@ describe('useResponderEvents', () => {
     });
 
     testWithPointerType('start grants responder to grandParent', pointerType => {
-      let grantCurrentTarget, shouldSetCurrentTarget;
+      let grantCurrentTarget;
       const grandParentCallbacks = {
         onStartShouldSetResponderCapture: jest.fn(e => {
-          shouldSetCurrentTarget = e.currentTarget;
           return true;
         }),
         onResponderGrant: jest.fn(e => {
@@ -246,7 +245,6 @@ describe('useResponderEvents', () => {
       });
       // responder set (capture phase)
       expect(grandParentCallbacks.onStartShouldSetResponderCapture).toBeCalledTimes(1);
-      expect(shouldSetCurrentTarget).toBe(null);
       expect(parentCallbacks.onStartShouldSetResponderCapture).not.toBeCalled();
       expect(targetCallbacks.onStartShouldSetResponderCapture).not.toBeCalled();
       // responder grant
@@ -1637,11 +1635,185 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * When there is an active responder, negotiation captures to and bubbles from
-     * the ancestor registered with the system. The responder is transferred and
-     * the relevant termination events are called.
+     * When there is an active responder, negotiation of the active pointer captures to
+     * and bubbles from the closest common ancestor registered with the system. The
+     * responder is transferred and maintained for subsequent events of the same type.
      */
-    test('negotiates from first registered ancestor of responder and transfers', () => {
+    test('negotiates single-touch from first registered ancestor of responder and transfers', () => {
+      const pointerType = 'touch';
+      const eventLog = [];
+      const grandParentCallbacks = {
+        onStartShouldSetResponderCapture() {
+          eventLog.push('grandParent: onStartShouldSetResponderCapture');
+          return false;
+        },
+        onStartShouldSetResponder() {
+          eventLog.push('grandParent: onStartShouldSetResponder');
+          return false;
+        },
+        onMoveShouldSetResponderCapture() {
+          eventLog.push('grandParent: onMoveShouldSetResponderCapture');
+          return false;
+        },
+        onMoveShouldSetResponder() {
+          eventLog.push('grandParent: onMoveShouldSetResponder');
+          return true;
+        },
+        onResponderGrant() {
+          eventLog.push('grandParent: onResponderGrant');
+        },
+        onResponderStart() {
+          eventLog.push('grandParent: onResponderStart');
+        },
+        onResponderMove() {
+          eventLog.push('grandParent: onResponderMove');
+        },
+        onResponderEnd() {
+          eventLog.push('grandParent: onResponderEnd');
+        },
+        onResponderRelease() {
+          eventLog.push('grandParent: onResponderRelease');
+        },
+        onResponderTerminate() {
+          eventLog.push('grandParent: onResponderTerminate');
+        },
+        onResponderTerminationRequest() {
+          eventLog.push('grandParent: onResponderTerminationRequest');
+          return true;
+        }
+      };
+      const parentCallbacks = {
+        onStartShouldSetResponderCapture() {
+          eventLog.push('parent: onStartShouldSetResponderCapture');
+          return false;
+        },
+        onStartShouldSetResponder() {
+          eventLog.push('parent: onStartShouldSetResponder');
+          return false;
+        },
+        onMoveShouldSetResponderCapture() {
+          eventLog.push('parent: onMoveShouldSetResponderCapture');
+          return false;
+        },
+        onMoveShouldSetResponder() {
+          eventLog.push('parent: onMoveShouldSetResponder');
+          return false;
+        },
+        onResponderGrant() {
+          eventLog.push('parent: onResponderGrant');
+        },
+        onResponderStart() {
+          eventLog.push('parent: onResponderStart');
+        },
+        onResponderMove() {
+          eventLog.push('parent: onResponderMove');
+        },
+        onResponderEnd() {
+          eventLog.push('parent: onResponderEnd');
+        },
+        onResponderRelease() {
+          eventLog.push('parent: onResponderRelease');
+        },
+        onResponderTerminate() {
+          eventLog.push('parent: onResponderTerminate');
+        },
+        onResponderTerminationRequest() {
+          eventLog.push('parent: onResponderTerminationRequest');
+          return true;
+        }
+      };
+      const targetCallbacks = {
+        onStartShouldSetResponderCapture() {
+          eventLog.push('target: onStartShouldSetResponderCapture');
+          return false;
+        },
+        onStartShouldSetResponder() {
+          eventLog.push('target: onStartShouldSetResponder');
+          return true;
+        },
+        onMoveShouldSetResponderCapture() {
+          eventLog.push('target: onMoveShouldSetResponderCapture');
+          return false;
+        },
+        onMoveShouldSetResponder() {
+          eventLog.push('target: onMoveShouldSetResponder');
+          return false;
+        },
+        onResponderGrant() {
+          eventLog.push('target: onResponderGrant');
+        },
+        onResponderStart() {
+          eventLog.push('target: onResponderStart');
+        },
+        onResponderMove() {
+          eventLog.push('target: onResponderMove');
+        },
+        onResponderEnd() {
+          eventLog.push('target: onResponderEnd');
+        },
+        onResponderRelease() {
+          eventLog.push('target: onResponderRelease');
+        },
+        onResponderTerminate() {
+          eventLog.push('target: onResponderTerminate');
+        },
+        onResponderTerminationRequest() {
+          eventLog.push('target: onResponderTerminationRequest');
+          return true;
+        }
+      };
+
+      const Component = () => {
+        useResponderEvents(grandParentRef, grandParentCallbacks);
+        useResponderEvents(parentRef, parentCallbacks);
+        useResponderEvents(targetRef, targetCallbacks);
+        return (
+          <div ref={grandParentRef}>
+            <div ref={parentRef}>
+              <div ref={targetRef} />
+            </div>
+          </div>
+        );
+      };
+
+      // render
+      act(() => {
+        render(<Component />);
+      });
+      const target = createEventTarget(targetRef.current);
+
+      // gesture start
+      act(() => {
+        target.pointerdown({ pointerType, pointerId: 1 });
+        target.pointermove({ pointerType, pointerId: 1 });
+        target.pointermove({ pointerType, pointerId: 1 });
+      });
+      expect(eventLog).toEqual([
+        'grandParent: onStartShouldSetResponderCapture',
+        'parent: onStartShouldSetResponderCapture',
+        'target: onStartShouldSetResponderCapture',
+        'target: onStartShouldSetResponder',
+        'target: onResponderGrant',
+        'target: onResponderStart',
+        'grandParent: onMoveShouldSetResponderCapture',
+        'parent: onMoveShouldSetResponderCapture',
+        'parent: onMoveShouldSetResponder',
+        'grandParent: onMoveShouldSetResponder',
+        'target: onResponderTerminationRequest',
+        'target: onResponderTerminate',
+        'grandParent: onResponderGrant',
+        'grandParent: onResponderMove',
+        // Continues calling 'move' rather than entering into negotiation again
+        'grandParent: onResponderMove'
+      ]);
+    });
+
+    /**
+     * When there is an active responder, negotiation of a second pointer captures to
+     * and bubbles from the closest common ancestor registered with the system. The
+     * responder is transferred andvthe relevant termination events are called.
+     */
+    test('negotiates multi-touch from first registered ancestor of responder and transfers', () => {
       const pointerType = 'touch';
       let eventLog = [];
       const grandParentCallbacks = {
@@ -1666,6 +1838,9 @@ describe('useResponderEvents', () => {
         },
         onResponderStart() {
           eventLog.push('grandParent: onResponderStart');
+        },
+        onResponderMove() {
+          eventLog.push('grandParent: onResponderMove');
         },
         onResponderEnd() {
           eventLog.push('grandParent: onResponderEnd');
@@ -1704,6 +1879,9 @@ describe('useResponderEvents', () => {
         onResponderStart() {
           eventLog.push('parent: onResponderStart');
         },
+        onResponderMove() {
+          eventLog.push('parent: onResponderMove');
+        },
         onResponderEnd() {
           eventLog.push('parent: onResponderEnd');
         },
@@ -1740,6 +1918,9 @@ describe('useResponderEvents', () => {
         },
         onResponderStart() {
           eventLog.push('target: onResponderStart');
+        },
+        onResponderMove() {
+          eventLog.push('target: onResponderMove');
         },
         onResponderEnd() {
           eventLog.push('target: onResponderEnd');
@@ -1816,21 +1997,25 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponder',
         'target: onResponderTerminationRequest',
         'target: onResponderTerminate',
-        'parent: onResponderGrant'
+        'parent: onResponderGrant',
+        'parent: onResponderMove'
       ]);
       eventLog = [];
       // second move gesture
       act(() => {
         target.pointermove({ pointerType, pointerId: 1 });
+        target.pointermove({ pointerType, pointerId: 2 });
       });
-      // parent becomes responder, parent terminates
+      // grand parent becomes responder, parent terminates
       expect(getResponderNode()).toBe(grandParentRef.current);
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
         'grandParent: onMoveShouldSetResponder',
         'parent: onResponderTerminationRequest',
         'parent: onResponderTerminate',
-        'grandParent: onResponderGrant'
+        'grandParent: onResponderGrant',
+        'grandParent: onResponderMove',
+        'grandParent: onResponderMove'
       ]);
       eventLog = [];
       // end gestures

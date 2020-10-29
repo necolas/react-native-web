@@ -374,12 +374,14 @@ function eventListener(domEvent: any) {
     // Start
     if (isStartEvent) {
       if (onResponderStart != null) {
+        responderEvent.dispatchConfig.registrationName = 'onResponderStart';
         onResponderStart(responderEvent);
       }
     }
     // Move
     else if (isMoveEvent) {
       if (onResponderMove != null) {
+        responderEvent.dispatchConfig.registrationName = 'onResponderMove';
         onResponderMove(responderEvent);
       }
     } else {
@@ -404,12 +406,14 @@ function eventListener(domEvent: any) {
       // End
       if (isEndEvent) {
         if (onResponderEnd != null) {
+          responderEvent.dispatchConfig.registrationName = 'onResponderEnd';
           onResponderEnd(responderEvent);
         }
       }
       // Release
       if (isReleaseEvent) {
         if (onResponderRelease != null) {
+          responderEvent.dispatchConfig.registrationName = 'onResponderRelease';
           onResponderRelease(responderEvent);
         }
         changeCurrentResponder(emptyResponder);
@@ -424,18 +428,20 @@ function eventListener(domEvent: any) {
           eventType === 'scroll' ||
           eventType === 'selectionchange'
         ) {
-          if (
-            wasNegotiated ||
-            // Only call this function is it wasn't already called during negotiation.
-            (onResponderTerminationRequest != null &&
-              onResponderTerminationRequest(responderEvent) === false)
-          ) {
+          // Only call this function is it wasn't already called during negotiation.
+          if (wasNegotiated) {
             shouldTerminate = false;
+          } else if (onResponderTerminationRequest != null) {
+            responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
+            if (onResponderTerminationRequest(responderEvent) === false) {
+              shouldTerminate = false;
+            }
           }
         }
 
         if (shouldTerminate) {
           if (onResponderTerminate != null) {
+            responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
             onResponderTerminate(responderEvent);
           }
           changeCurrentResponder(emptyResponder);
@@ -466,8 +472,11 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
       const config = getResponderConfig(id);
       const shouldSetCallback = config[callbackName];
       if (shouldSetCallback != null) {
+        responderEvent.currentTarget = node;
         if (shouldSetCallback(responderEvent) === true) {
-          return { id, node, idPath };
+          // Start the path from the potential responder
+          const prunedIdPath = idPath.slice(idPath.indexOf(id));
+          return { id, node, idPath: prunedIdPath };
         }
       }
     };
@@ -521,6 +530,7 @@ function attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveR
   responderEvent.bubbles = false;
   responderEvent.cancelable = false;
   responderEvent.currentTarget = node;
+
   // Set responder
   if (currentId == null) {
     if (onResponderGrant != null) {
@@ -533,22 +543,35 @@ function attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveR
   // Negotiate with current responder
   else {
     const { onResponderTerminate, onResponderTerminationRequest } = getResponderConfig(currentId);
-    const allowTransfer =
-      onResponderTerminationRequest != null && onResponderTerminationRequest(responderEvent);
+
+    let allowTransfer = true;
+    if (onResponderTerminationRequest != null) {
+      responderEvent.currentTarget = currentNode;
+      responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
+      if (onResponderTerminationRequest(responderEvent) === false) {
+        allowTransfer = false;
+      }
+    }
+
     if (allowTransfer) {
       // Terminate existing responder
       if (onResponderTerminate != null) {
         responderEvent.currentTarget = currentNode;
+        responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
         onResponderTerminate(responderEvent);
       }
       // Grant next responder
       if (onResponderGrant != null) {
+        responderEvent.currentTarget = node;
+        responderEvent.dispatchConfig.registrationName = 'onResponderGrant';
         onResponderGrant(responderEvent);
       }
       changeCurrentResponder(wantsResponder);
     } else {
       // Reject responder request
       if (onResponderReject != null) {
+        responderEvent.currentTarget = node;
+        responderEvent.dispatchConfig.registrationName = 'onResponderReject';
         onResponderReject(responderEvent);
       }
     }

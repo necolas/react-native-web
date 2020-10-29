@@ -56,13 +56,12 @@ export default function FeedbackEvents() {
           }}
         >
           <Pressable
-            accessibilityRole="none"
+            accessibilityRole="button"
             onLongPress={handlePress('longPress - inner')}
             onPress={handlePress('press - inner')}
             onPressIn={handlePress('pressIn - inner')}
             onPressOut={handlePress('pressOut - inner')}
             style={({ hovered, pressed, focused }) => {
-              console.log(focused);
               let backgroundColor = 'white';
               if (hovered) {
                 backgroundColor = 'lightgray';
