@@ -188,6 +188,8 @@ type ActiveCallback = (
   gestureState: GestureState,
 ) => boolean;
 
+type InteractionState = {handle: ?number, shouldCancelClick: boolean, timeout: ?TimeoutID};
+
 type PassiveCallback = (event: PressEvent, gestureState: GestureState) => mixed;
 
 type PanResponderConfig = $ReadOnly<{|
@@ -384,9 +386,12 @@ const PanResponder = {
    *  are the responder.
    */
   create(config: PanResponderConfig) {
-    const interactionState = {
-      handle: (null: ?number),
+    const interactionState: InteractionState = {
+      handle: null,
+      shouldCancelClick: false,
+      timeout: null,
     };
+
     const gestureState: GestureState = {
       // Useful for debugging
       stateID: Math.random(),
@@ -427,15 +432,6 @@ const PanResponder = {
 
       onMoveShouldSetResponderCapture(event: PressEvent): boolean {
         const touchHistory = event.touchHistory;
-        // Responder system incorrectly dispatches should* to current responder
-        // Filter out any touch moves past the first one - we would have
-        // already processed multi-touch geometry during the first event.
-        if (
-          gestureState._accountsForMovesUpTo ===
-          touchHistory.mostRecentTimeStamp
-        ) {
-          return false;
-        }
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
         return config.onMoveShouldSetPanResponderCapture
           ? config.onMoveShouldSetPanResponderCapture(event, gestureState)
@@ -446,6 +442,10 @@ const PanResponder = {
         if (!interactionState.handle) {
           interactionState.handle = InteractionManager.createInteractionHandle();
         }
+        if (interactionState.timeout) {
+          clearInteractionTimeout(interactionState);
+        }
+        interactionState.shouldCancelClick = true;
         gestureState.x0 = currentCentroidX(event.touchHistory);
         gestureState.y0 = currentCentroidY(event.touchHistory);
         gestureState.dx = 0;
@@ -475,6 +475,7 @@ const PanResponder = {
           event,
           gestureState,
         );
+        setInteractionTimeout(interactionState);
         PanResponder._initializeGestureState(gestureState);
       },
 
@@ -488,14 +489,6 @@ const PanResponder = {
 
       onResponderMove(event: PressEvent): void {
         const touchHistory = event.touchHistory;
-        // Guard against the dispatch of two touch moves when there are two
-        // simultaneously changed touches.
-        if (
-          gestureState._accountsForMovesUpTo ===
-          touchHistory.mostRecentTimeStamp
-        ) {
-          return;
-        }
         // Filter out any touch moves past the first one - we would have
         // already processed multi-touch geometry during the first event.
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
@@ -522,6 +515,7 @@ const PanResponder = {
           event,
           gestureState,
         );
+        setInteractionTimeout(interactionState);
         PanResponder._initializeGestureState(gestureState);
       },
 
@@ -530,7 +524,19 @@ const PanResponder = {
           ? true
           : config.onPanResponderTerminationRequest(event, gestureState);
       },
+
+      // We do not want to trigger 'click' activated gestures or native behaviors
+      // on any pan target that is under a mouse cursor when it is released.
+      // Browsers will natively cancel 'click' events on a target if a non-mouse
+      // active pointer moves.
+      onClickCapture: (event: any): void => {
+        if (interactionState.shouldCancelClick === true) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      },
     };
+
     return {
       panHandlers,
       getInteractionHandle(): ?number {
@@ -541,7 +547,7 @@ const PanResponder = {
 };
 
 function clearInteractionHandle(
-  interactionState: {handle: ?number},
+  interactionState: InteractionState,
   callback: ?(ActiveCallback | PassiveCallback),
   event: PressEvent,
   gestureState: GestureState,
@@ -553,6 +559,16 @@ function clearInteractionHandle(
   if (callback) {
     callback(event, gestureState);
   }
+}
+
+function clearInteractionTimeout(interactionState: InteractionState) {
+  clearTimeout(interactionState.timeout);
+}
+
+function setInteractionTimeout(interactionState: InteractionState) {
+  interactionState.timeout = setTimeout(() => {
+    interactionState.shouldCancelClick = false;
+  }, 250);
 }
 
 export type PanResponderInstance = $Call<
