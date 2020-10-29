@@ -16,8 +16,9 @@ function isScreenReaderEnabled(): Promise<*> {
 }
 
 const prefersReducedMotionMedia = canUseDOM
-  ? window.matchMedia('(prefers-reduced-motion: reduce)')
+  ? typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)')
   : null;
+
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
     resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
