@@ -43,28 +43,26 @@ describe('StyleSheet/createReactDOMStyle', () => {
     test('flex: -1', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({
         flexGrow: 0,
-        flexShrink: 1
+        flexShrink: 1,
+        flexBasis: 'auto'
       });
     });
 
     test('flex: 0', () => {
       expect(createReactDOMStyle({ flex: 0 })).toEqual({
-        flexGrow: 0,
-        flexShrink: 0
+        flex: 0
       });
     });
 
     test('flex: 1', () => {
       expect(createReactDOMStyle({ flex: 1 })).toEqual({
-        flexGrow: 1,
-        flexShrink: 1
+        flex: 1
       });
     });
 
     test('flex: 10', () => {
       expect(createReactDOMStyle({ flex: 10 })).toEqual({
-        flexGrow: 10,
-        flexShrink: 1
+        flex: 10
       });
     });
 
@@ -76,8 +74,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
       // can flex-basis override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexBasis: '25%' })).toEqual({
-        flexGrow: 1,
-        flexShrink: 1,
+        flex: 1,
         flexBasis: '25%'
       });
     });
@@ -90,7 +87,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
       // can flex-shrink override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexShrink: 2 })).toEqual({
-        flexGrow: 1,
+        flex: 1,
         flexShrink: 2
       });
     });

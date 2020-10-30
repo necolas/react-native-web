@@ -101,15 +101,12 @@ const createReactDOMStyle = style => {
         // The 'flex' property value in React Native must be a positive integer,
         // 0, or -1.
         case 'flex': {
-          if (value > 0) {
-            resolvedStyle.flexGrow = value;
-            resolvedStyle.flexShrink = 1;
-          } else if (value === 0) {
-            resolvedStyle.flexGrow = 0;
-            resolvedStyle.flexShrink = 0;
-          } else if (value === -1) {
+          if (value === -1) {
             resolvedStyle.flexGrow = 0;
             resolvedStyle.flexShrink = 1;
+            resolvedStyle.flexBasis = 'auto';
+          } else {
+            resolvedStyle.flex = value;
           }
           break;
         }
