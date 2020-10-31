@@ -26,6 +26,7 @@ module.exports = {
   KeyboardAvoidingView: true,
   LayoutAnimation: true,
   Linking: true,
+  LogBox: true,
   Modal: true,
   NativeEventEmitter: true,
   NativeModules: true,

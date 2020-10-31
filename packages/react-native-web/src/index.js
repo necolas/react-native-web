@@ -59,6 +59,7 @@ export { default as TouchableWithoutFeedback } from './exports/TouchableWithoutF
 export { default as View } from './exports/View';
 export { default as VirtualizedList } from './exports/VirtualizedList';
 export { default as YellowBox } from './exports/YellowBox';
+export { default as LogBox } from './exports/LogBox';
 
 // compat (components)
 export { default as DrawerLayoutAndroid } from './exports/DrawerLayoutAndroid';
