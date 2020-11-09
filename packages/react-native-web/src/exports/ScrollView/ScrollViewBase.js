@@ -13,6 +13,7 @@ import * as React from 'react';
 import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import useMergeRefs from '../../modules/useMergeRefs';
 
 type Props = {
   ...ViewProps,
@@ -93,6 +94,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
   const scrollTimeout = useRef(null);
+  const scrollRef = useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {
@@ -105,29 +107,31 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   }
 
   function handleScroll(e: Object) {
-    e.persist();
     e.stopPropagation();
-    // A scroll happened, so the scroll resets the scrollend timeout.
-    if (scrollTimeout.current != null) {
-      clearTimeout(scrollTimeout.current);
-    }
-    scrollTimeout.current = setTimeout(() => {
-      handleScrollEnd(e);
-    }, 100);
-    if (scrollState.current.isScrolling) {
-      // Scroll last tick may have changed, check if we need to notify
-      if (shouldEmitScrollEvent(scrollState.current.scrollLastTick, scrollEventThrottle)) {
-        handleScrollTick(e);
+    if (e.target === scrollRef.current) {
+      e.persist();
+      // A scroll happened, so the scroll resets the scrollend timeout.
+      if (scrollTimeout.current != null) {
+        clearTimeout(scrollTimeout.current);
       }
-    } else {
-      // Weren't scrolling, so we must have just started
-      handleScrollStart(e);
+      scrollTimeout.current = setTimeout(() => {
+        handleScrollEnd(e);
+      }, 100);
+      if (scrollState.current.isScrolling) {
+        // Scroll last tick may have changed, check if we need to notify
+        if (shouldEmitScrollEvent(scrollState.current.scrollLastTick, scrollEventThrottle)) {
+          handleScrollTick(e);
+        }
+      } else {
+        // Weren't scrolling, so we must have just started
+        handleScrollStart(e);
+      }
     }
   }
 
   function handleScrollStart(e: Object) {
     scrollState.current.isScrolling = true;
-    scrollState.current.scrollLastTick = Date.now();
+    handleScrollTick(e);
   }
 
   function handleScrollTick(e: Object) {
@@ -161,7 +165,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
       pointerEvents={pointerEvents}
-      ref={forwardedRef}
+      ref={useMergeRefs(scrollRef, forwardedRef)}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
