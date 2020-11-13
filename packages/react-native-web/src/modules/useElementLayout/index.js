@@ -70,7 +70,7 @@ export default function useElementLayout(
     if (node != null) {
       node[DOM_LAYOUT_HANDLER_NAME] = onLayout;
     }
-  }, [ref, onLayout]);
+  }, [ref.current, onLayout]);
 
   // Observing is done in a separate effect to avoid this effect running
   // when 'onLayout' changes.
@@ -88,5 +88,5 @@ export default function useElementLayout(
         observer.unobserve(node);
       }
     };
-  }, [ref, observer]);
+  }, [ref.current, observer]);
 }
