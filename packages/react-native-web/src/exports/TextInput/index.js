@@ -261,7 +261,10 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
         node.value = '';
       }
       if (selectTextOnFocus) {
-        node.select();
+        // Safari requires selection to occur in a setTimeout
+        setTimeout(() => {
+          node.select();
+        }, 0);
       }
     }
   }
