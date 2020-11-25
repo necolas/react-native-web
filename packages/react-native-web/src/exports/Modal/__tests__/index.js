@@ -280,6 +280,121 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(insideElement);
   });
 
+  test('focus is brought back to the element that triggered modal after closing', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    expect(document.activeElement).toBe(modalTrigger);
+  });
+
+  test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    expect(document.activeElement).toBe(document.body);
+  });
+
   test('focus is trapped when active', () => {
     render(
       <>
