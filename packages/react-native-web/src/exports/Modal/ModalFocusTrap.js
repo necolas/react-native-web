@@ -131,7 +131,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
       lastFocusedElementOutsideTrap.current = document.activeElement;
       return () => {
         if (lastFocusedElementOutsideTrap.current) {
-          lastFocusedElementOutsideTrap.current.focus();
+          UIManager.focus(lastFocusedElementOutsideTrap.current);
         }
       };
     }
