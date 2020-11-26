@@ -15,14 +15,31 @@ function isScreenReaderEnabled(): Promise<*> {
   });
 }
 
-const prefersReducedMotionMedia = canUseDOM
-  ? typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)')
-  : null;
+const prefersReducedMotionMedia =
+  canUseDOM && typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
 
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
     resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
   });
+}
+
+function addChangeListener(fn) {
+  if (prefersReducedMotionMedia != null) {
+    prefersReducedMotionMedia.addEventListener != null
+      ? prefersReducedMotionMedia.addEventListener('change', fn)
+      : prefersReducedMotionMedia.addListener(fn);
+  }
+}
+
+function removeChangeListener(fn) {
+  if (prefersReducedMotionMedia != null) {
+    prefersReducedMotionMedia.removeEventListener != null
+      ? prefersReducedMotionMedia.removeEventListener('change', fn)
+      : prefersReducedMotionMedia.removeListener(fn);
+  }
 }
 
 const handlers = {};
@@ -57,11 +74,10 @@ const AccessibilityInfo = {
       if (!prefersReducedMotionMedia) {
         return;
       }
-
       const listener = event => {
         handler(event.matches);
       };
-      prefersReducedMotionMedia.addEventListener('change', listener);
+      addChangeListener(listener);
       handlers[handler] = listener;
     }
 
@@ -89,10 +105,8 @@ const AccessibilityInfo = {
       if (!listener || !prefersReducedMotionMedia) {
         return;
       }
-
-      prefersReducedMotionMedia.removeEventListener('change', listener);
+      removeChangeListener(listener);
     }
-
     return;
   }
 };
