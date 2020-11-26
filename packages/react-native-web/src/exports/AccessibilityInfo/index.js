@@ -61,7 +61,13 @@ const AccessibilityInfo = {
       const listener = event => {
         handler(event.matches);
       };
-      prefersReducedMotionMedia.addEventListener('change', listener);
+
+      //Prior to Safari 14, addListener() and removeListener() must be used for MediaQueryList
+      if (prefersReducedMotionMedia.addEventListener) {
+        prefersReducedMotionMedia.addEventListener('change', listener);
+      } else {
+        prefersReducedMotionMedia.addListener(listener);
+      }
       handlers[handler] = listener;
     }
 
@@ -90,7 +96,11 @@ const AccessibilityInfo = {
         return;
       }
 
-      prefersReducedMotionMedia.removeEventListener('change', listener);
+      if (prefersReducedMotionMedia.addEventListener) {
+        prefersReducedMotionMedia.removeEventListener('change', listener);
+      } else {
+        prefersReducedMotionMedia.removeListener(listener);
+      }
     }
 
     return;
