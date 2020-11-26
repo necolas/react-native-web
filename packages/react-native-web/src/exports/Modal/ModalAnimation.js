@@ -40,18 +40,27 @@ function ModalAnimation(props: ModalAnimationProps) {
 
   const isAnimated = animationType && animationType !== 'none';
 
-  const animationEndCallback = useCallback(() => {
-    if (visible) {
-      if (onShow) {
-        onShow();
+  const animationEndCallback = useCallback(
+    (e: any) => {
+      if (e && e.currentTarget !== e.target) {
+        // If the event was generated for something NOT this element we
+        // should ignore it as it's not relevant to us
+        return;
       }
-    } else {
-      setIsRendering(false);
-      if (onDismiss) {
-        onDismiss();
+
+      if (visible) {
+        if (onShow) {
+          onShow();
+        }
+      } else {
+        setIsRendering(false);
+        if (onDismiss) {
+          onDismiss();
+        }
       }
-    }
-  }, [onDismiss, onShow, visible]);
+    },
+    [onDismiss, onShow, visible]
+  );
 
   useEffect(() => {
     if (visible) {
