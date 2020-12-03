@@ -88,7 +88,11 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       onLongPress,
       onPress,
       onPressStart(event) {
-        setOpacityActive(event.dispatchConfig.registrationName === 'onResponderGrant' ? 0 : 150);
+        const isGrant =
+          event.dispatchConfig != null
+            ? event.dispatchConfig.registrationName === 'onResponderGrant'
+            : event.type === 'keydown';
+        setOpacityActive(isGrant ? 0 : 150);
         if (onPressIn != null) {
           onPressIn(event);
         }
