@@ -56,7 +56,6 @@ function getFlatStyle(style, blurRadius, filterId) {
   if (filter) {
     filters.push(filter);
   }
-  //
   if (blurRadius) {
     filters.push(`blur(${blurRadius}px)`);
   }
@@ -76,6 +75,7 @@ function getFlatStyle(style, blurRadius, filterId) {
 
   // These styles are converted to CSS filters applied to the
   // element displaying the background image.
+  delete flatStyle.blurRadius;
   delete flatStyle.shadowColor;
   delete flatStyle.shadowOpacity;
   delete flatStyle.shadowOffset;
