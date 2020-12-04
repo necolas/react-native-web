@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
+    left: 0,
+    zIndex: 9999
   },
   animatedIn: {
     animationDuration: `${ANIMATION_DURATION}ms`,
