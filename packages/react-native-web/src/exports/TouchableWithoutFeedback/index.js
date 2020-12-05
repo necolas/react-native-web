@@ -60,7 +60,21 @@ const forwardPropsList = {
   onBlur: true,
   onFocus: true,
   onLayout: true,
-  testID: true
+  testID: true,
+  // unstable
+  dataSet: true,
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true,
+  onScroll: true,
+  onWheel: true,
+  href: true,
+  rel: true,
+  target: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);
