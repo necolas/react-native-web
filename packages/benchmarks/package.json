@@ -9,17 +9,12 @@
   "dependencies": {
     "aphrodite": "^2.4.0",
     "classnames": "^2.2.6",
-    "d3-scale-chromatic": "^1.5.0",
-    "emotion": "^10.0.27",
-    "fela": "^11.0.2",
-    "react-fela": "^11.0.2",
-    "react-jss": "^10.0.4",
+    "d3-scale-chromatic": "^2.0.0",
+    "@emotion/css": "^11.0.0",
+    "react-jss": "^10.5.0",
     "react-native-web": "0.14.9",
-    "reactxp": "^2.0.0",
-    "styled-components": "^5.0.0",
-    "styled-jsx": "^3.2.4",
-    "styletron-engine-atomic": "^1.4.4",
-    "styletron-react": "^5.2.6"
+    "styled-components": "^5.2.1",
+    "styled-jsx": "^3.3.2"
   },
   "devDependencies": {
     "babel-plugin-react-native-web": "0.14.9",
