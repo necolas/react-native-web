@@ -4,6 +4,7 @@ export { default as onError } from './OnError';
 export { default as onLoad } from './OnLoad';
 export { default as onLoadEnd } from './OnLoadEnd';
 export { default as onLoadStart } from './OnLoadStart';
+export { default as onProgress } from './OnProgress';
 export { default as resizeMode } from './ResizeMode';
 export { default as source } from './Source';
 export { default as styleBoxShadow } from './StyleBoxShadow';

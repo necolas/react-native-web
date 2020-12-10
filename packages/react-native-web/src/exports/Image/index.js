@@ -12,10 +12,8 @@ import type { ImageProps } from './types';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
-import ImageLoader from '../../modules/ImageLoader';
-import PixelRatio from '../PixelRatio';
+import ImageLoader, { ImageUriCache } from '../../modules/ImageLoader';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
@@ -29,7 +27,6 @@ const LOADING = 'LOADING';
 const IDLE = 'IDLE';
 
 let _filterId = 0;
-const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 
 function createTintColorSVG(tintColor, id) {
   return tintColor && id != null ? (
@@ -88,50 +85,6 @@ function getFlatStyle(style, blurRadius, filterId) {
   return [flatStyle, resizeMode, _filter, tintColor];
 }
 
-function resolveAssetDimensions(source) {
-  if (typeof source === 'number') {
-    const { height, width } = getAssetByID(source);
-    return { height, width };
-  } else if (source != null && !Array.isArray(source) && typeof source === 'object') {
-    const { height, width } = source;
-    return { height, width };
-  }
-}
-
-function resolveAssetUri(source): ?string {
-  let uri = null;
-  if (typeof source === 'number') {
-    // get the URI from the packager
-    const asset = getAssetByID(source);
-    let scale = asset.scales[0];
-    if (asset.scales.length > 1) {
-      const preferredScale = PixelRatio.get();
-      // Get the scale which is closest to the preferred scale
-      scale = asset.scales.reduce((prev, curr) =>
-        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
-      );
-    }
-    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
-  } else if (typeof source === 'string') {
-    uri = source;
-  } else if (source && typeof source.uri === 'string') {
-    uri = source.uri;
-  }
-
-  if (uri) {
-    const match = uri.match(svgDataUriPattern);
-    // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
-    if (match) {
-      const [, prefix, svg] = match;
-      const encodedSvg = encodeURIComponent(svg);
-      return `${prefix}${encodedSvg}`;
-    }
-  }
-
-  return uri;
-}
-
 const Image = forwardRef<ImageProps, *>((props, ref) => {
   const {
     accessibilityLabel,
@@ -143,6 +96,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
     onLoad,
     onLoadEnd,
     onLoadStart,
+    onProgress,
     pointerEvents,
     source,
     style,
@@ -156,18 +110,20 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
       );
     }
   }
-
+  const cachedSource = ImageUriCache.get(source);
+  const resolvedSource = ImageLoader.resolveSource(source);
+  const resolvedDefaultSource = ImageLoader.resolveSource(defaultSource);
   const [state, updateState] = useState(() => {
-    const uri = resolveAssetUri(source);
-    if (uri != null) {
-      const isLoaded = ImageLoader.has(uri);
+    if (source != null) {
+      const isLoaded = ImageUriCache.has(source);
+
       if (isLoaded) {
         return LOADED;
       }
     }
+
     return IDLE;
   });
-
   const [layout, updateLayout] = useState({});
   const hasTextAncestor = useContext(TextAncestorContext);
   const hiddenImageRef = useRef(null);
@@ -180,13 +136,16 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
     filterRef.current
   );
   const resizeMode = props.resizeMode || _resizeMode || 'cover';
-  const selectedSource = shouldDisplaySource ? source : defaultSource;
-  const displayImageUri = resolveAssetUri(selectedSource);
-  const imageSizeStyle = resolveAssetDimensions(selectedSource);
+  const selectedSource = shouldDisplaySource ? resolvedSource : resolvedDefaultSource;
+  const displayImageUri = (cachedSource && cachedSource.displayImageUri) || selectedSource.uri;
+  const imageSizeStyle = {
+    height: selectedSource.height,
+    width: selectedSource.width
+  };
+
   const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
   const backgroundSize = getBackgroundSize();
 
-  // Accessibility image allows users to trigger the browser's image context menu
   const hiddenImage = displayImageUri
     ? createElement('img', {
         alt: accessibilityLabel || '',
@@ -219,19 +178,21 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
   }
 
   // Image loading
-  const uri = resolveAssetUri(source);
+  const { uri } = resolvedSource;
   useEffect(() => {
     abortPendingRequest();
 
-    if (uri != null) {
+    if (uri) {
       updateState(LOADING);
       if (onLoadStart) {
         onLoadStart();
       }
 
       requestRef.current = ImageLoader.load(
-        uri,
-        function load(e) {
+        source,
+        function load(e, imageUri) {
+          imageUri && ImageUriCache.add(source, imageUri);
+
           updateState(LOADED);
           if (onLoad) {
             onLoad(e);
@@ -252,6 +213,13 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
           if (onLoadEnd) {
             onLoadEnd();
           }
+        },
+        function progress(event) {
+          if (onProgress) {
+            onProgress({
+              nativeEvent: event
+            });
+          }
         }
       );
     }
@@ -264,7 +232,8 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
     }
 
     return abortPendingRequest;
-  }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uri, onError, onLoad, onProgress, onLoadEnd, onLoadStart]);
 
   return (
     <View

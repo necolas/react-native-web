@@ -19,6 +19,7 @@ An accessible and responsive image component.
 | onLoad                    | ?Function | false |
 | onLoadEnd                 | ?Function | false |
 | onLoadStart               | ?Function | false |
+| onProgress                | ?Function | false |
 | resizeMode                | ?ResizeMode | 'cover' |
 | source                    | Source    | false |
 | style                     | ?Style    | |
@@ -72,6 +73,16 @@ Called when load completes successfully.
   </Story>
 </Preview>
 
+### onProgress
+
+Invoked on download progress.
+
+<Preview withSource='none'>
+  <Story name="onProgress">
+    <Stories.onProgress />
+  </Story>
+</Preview>
+
 ### resizeMode
 
 Determines how to resize the image when the frame doesn't match the raw image dimensions.
@@ -91,7 +102,7 @@ type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch'
 The source `uri` is a string representing the resource identifier for the image, which could be an http address or a base64 encoded image.
 
 ```js
-type Source = { uri: string, width: number, height: number }
+type Source = { uri: string, width: number, height: number, method?: string, headers?: object }
 ```
 
 <Preview withSource='none'>

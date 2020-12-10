@@ -20,7 +20,7 @@ import type {
   TransformStyles
 } from '../../types/styles';
 
-type SourceObject = {
+export type SourceObject = {
   /**
    * `body` is the HTTP body to send with the request. This must be a valid
    * UTF-8 string, and will be sent exactly as specified, with no
@@ -73,8 +73,8 @@ type SourceObject = {
    * `width` and `height` can be specified if known at build time, in which case
    * these will be used to set the default `<Image/>` component dimensions.
    */
-  height?: number,
-  width?: number
+  height?: ?number,
+  width?: ?number
 };
 
 export type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch';
