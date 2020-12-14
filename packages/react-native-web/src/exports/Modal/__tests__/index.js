@@ -418,10 +418,14 @@ describe('components/Modal', () => {
 
     function TestComponent() {
       React.useEffect(() => spy('mount'), []);
-      return <Modal visible={true}><a ref={(ref) => ref ? spy('ref') : spy('noref')} /></Modal>;
+      return (
+        <Modal visible={true}>
+          <a ref={ref => (ref ? spy('ref') : spy('noref'))} />
+        </Modal>
+      );
     }
 
-    render(<TestComponent />)
+    render(<TestComponent />);
 
     expect(spy).toHaveBeenNthCalledWith(1, 'ref');
     expect(spy).toHaveBeenNthCalledWith(2, 'mount');

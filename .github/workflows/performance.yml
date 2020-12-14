@@ -1,7 +1,9 @@
-name: compressed-size
+name: performance
+
 on: [pull_request]
+
 jobs:
-  build:
+  compressed-size:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

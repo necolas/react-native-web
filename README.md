@@ -208,8 +208,8 @@ MIT license.
 
 [package-badge]: https://img.shields.io/npm/v/react-native-web.svg?style=flat
 [package-url]: https://yarnpkg.com/en/package/react-native-web
-[ci-badge]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
-[ci-url]: https://travis-ci.org/necolas/react-native-web
+[ci-badge]: https://github.com/necolas/react-native-web/workflows/test/badge.svg
+[ci-url]: https://github.com/necolas/react-native-web/actions
 [react-native-url]: https://facebook.github.io/react-native/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/.github/CONTRIBUTING.md
 [good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue

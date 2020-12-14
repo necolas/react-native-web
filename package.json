@@ -13,14 +13,15 @@
     "docs:release": "cd packages/docs && yarn release",
     "flow": "flow",
     "fmt": "prettier --write \"**/*.js\"",
+    "fmt:report": "prettier --check \"**/*.js\"",
     "jest": "jest --config ./scripts/jest/config.js",
-    "lint": "yarn lint:check --fix",
-    "lint:check": "eslint packages scripts",
+    "lint": "yarn lint:report --fix",
+    "lint:report": "eslint packages scripts",
     "precommit": "lint-staged",
     "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
     "postrelease": "yarn benchmarks:release && yarn docs:release",
-    "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
+    "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
