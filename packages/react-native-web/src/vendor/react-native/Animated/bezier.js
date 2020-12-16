@@ -79,7 +79,7 @@ function newtonRaphsonIterate(aX, _aGuessT, mX1, mX2) {
   return aGuessT;
 }
 
-module.exports = function bezier(
+export default function bezier(
   mX1: number,
   mY1: number,
   mX2: number,
