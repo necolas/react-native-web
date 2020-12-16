@@ -7,7 +7,9 @@
 
 'use strict';
 
-module.exports = {
-  createInteractionHandle: function() {},
-  clearInteractionHandle: function() {}
+const InteractionManager = {
+  createInteractionHandle() {},
+  clearInteractionHandle() {}
 };
+
+export default InteractionManager;
