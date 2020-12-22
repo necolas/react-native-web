@@ -233,7 +233,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
 
     return abortPendingRequest;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uri, onError, onLoad, onProgress, onLoadEnd, onLoadStart]);
+  }, [uri]);
 
   return (
     <View
