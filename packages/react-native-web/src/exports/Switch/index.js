@@ -117,7 +117,7 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox',
-    role: "switch"
+    role: 'switch'
   });
 
   return (
