@@ -116,7 +116,8 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     onFocus: handleFocusState,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox'
+    type: 'checkbox',
+    role: "switch"
   });
 
   return (
