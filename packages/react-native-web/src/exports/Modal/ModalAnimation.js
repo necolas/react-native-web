@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     }
   },
   hidden: {
-    display: 'none'
+    opacity: 0
   }
 });
 
