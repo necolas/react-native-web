@@ -12,18 +12,18 @@ view directly (discouraged) or make sure all parent views have bounded height
 
 ## Props
 
-| Name                      | Type      | Default |
-| ------------------------- | --------- | ------- |
-| ...ViewProps              | | |
-| contentContainerStyle     | ?Style    | '#AAB8C2' |
-| horizontal                | ?boolean  | false |
-| keyboardDismissMode       | 'none' \| 'on-drag' \| 'interactive' | |
-| onContentSizeChange       | ?Function | |
-| onScroll                  | ?Function  | false |
-| pagingEnabled             | ?boolean  | false |
-| scrollEnabled             | ?boolean  | true |
-| scrollEventThrottle       | ?boolean  | 0 |
-| stickyHeaderIndices       | ?Array<number\>  | |
+| Name                  | Type                                 | Default   |
+| --------------------- | ------------------------------------ | --------- |
+| ...ViewProps          |                                      |           |
+| contentContainerStyle | ?Style                               | '#AAB8C2' |
+| horizontal            | ?boolean                             | false     |
+| keyboardDismissMode   | 'none' \| 'on-drag' \| 'interactive' |           |
+| onContentSizeChange   | ?Function                            |           |
+| onScroll              | ?Function                            | false     |
+| pagingEnabled         | ?boolean                             | false     |
+| scrollEnabled         | ?boolean                             | true      |
+| scrollEventThrottle   | ?boolean                             | 0         |
+| stickyHeaderIndices   | ?Array<number\>                      |           |
 
 ### contentContainerStyle
 
@@ -33,13 +33,13 @@ These styles will be applied to the scroll view content container which wraps al
 
 When `true`, the scroll view's children are arranged horizontally in a row instead of vertically in a column.
 
-<Preview withSource='none'>
+<Preview withSource="none">
   <Story name="vertical">
     <Stories.vertical />
   </Story>
 </Preview>
 
-<Preview withSource='none'>
+<Preview withSource="none">
   <Story name="horizontal">
     <Stories.horizontal />
   </Story>
@@ -49,9 +49,9 @@ When `true`, the scroll view's children are arranged horizontally in a row inste
 
 Determines whether the keyboard gets dismissed in response to a scroll drag.
 
-* `none` (the default): drags do not dismiss the keyboard.
-* `on-drag`: the keyboard is dismissed when a drag begins.
-* `interactive` (not supported on web; same as `none`)
+- `none` (the default): drags do not dismiss the keyboard.
+- `on-drag`: the keyboard is dismissed when a drag begins.
+- `interactive` (not supported on web; same as `none`)
 
 ### onContentSizeChange
 
@@ -76,7 +76,7 @@ Invoked on scroll with the following event:
 }
 ```
 
-<Preview withSource='none'>
+<Preview withSource="none">
   <Story name="onScroll">
     <Stories.onScroll />
   </Story>
@@ -90,7 +90,7 @@ When `true`, the scroll view snaps to individual items in the list when scrollin
 
 When `false`, the content does not scroll.
 
-<Preview withSource='none'>
+<Preview withSource="none">
   <Story name="scrollEnabled">
     <Stories.scrollEnabled />
   </Story>

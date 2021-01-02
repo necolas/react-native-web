@@ -1,0 +1,80 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
+
+<Meta title="Components|RefreshControl" />
+
+# RefreshControl
+
+This component is used inside a ScrollView or ListView to add pull to refresh functionality. When the ScrollView is at scrollY: 0, swiping down triggers an onRefresh event.
+
+## Props
+
+| Name                    | Type      | Default   |
+| ----------------------- | --------- | --------- |
+| enabled                 | ?boolean  | true      |
+| onRefresh               | ?Function |           |
+| progressBackgroundColor | ?Color    | '#ffffff' |
+| progressViewOffset      | ?number   | 100       |
+| refreshing              | ?boolean  | false     |
+| size                    | ?0 \| 1   | 0         |
+| tintColor               | ?Color    | '#333333' |
+
+### default
+
+With all the default props. (pull to refresh works only on mobile)
+
+<Preview withSource="none">
+  <Story name="defaultprops">
+    <Stories.DefaultProps />
+  </Story>
+</Preview>
+
+### refreshing
+
+When `refreshing` is set to `true`
+
+<Preview withSource="none">
+  <Story name="refreshing">
+    <Stories.Refreshing />
+  </Story>
+</Preview>
+
+### progressBackgroundColor
+
+When `progressBackgroundColor` is set to `red`
+
+<Preview withSource="none">
+  <Story name="progressBackgroundColor">
+    <Stories.BackgroundColor />
+  </Story>
+</Preview>
+
+### progressViewOffset
+
+When `progressViewOffset` is set to `50`. (pull to refresh works only on mobile)
+
+<Preview withSource="none">
+  <Story name="progressViewOffset">
+    <Stories.CustomOffset />
+  </Story>
+</Preview>
+
+### size
+
+When `size` is set to `1`.
+
+<Preview withSource="none">
+  <Story name="size">
+    <Stories.Size />
+  </Story>
+</Preview>
+
+### tintColor
+
+When `tintColor` is set to `green`.
+
+<Preview withSource="none">
+  <Story name="tintColor">
+    <Stories.TintColor />
+  </Story>
+</Preview>

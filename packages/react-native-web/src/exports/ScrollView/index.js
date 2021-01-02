@@ -219,7 +219,7 @@ const ScrollView = ((createReactClass({
 
     invariant(ScrollViewClass !== undefined, 'ScrollViewClass must not be undefined');
 
-    if (refreshControl) {
+    if (refreshControl && !horizontal) {
       return React.cloneElement(
         refreshControl,
         { style: props.style },
