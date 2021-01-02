@@ -1,5 +1,5 @@
 [version]
-^0.141.0
+^0.109.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
@@ -15,7 +15,7 @@
 
 [options]
 
-types_first=false
+esproposal.optional_chaining=enable
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
