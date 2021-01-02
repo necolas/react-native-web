@@ -6,27 +6,27 @@ const DividerVertical = () => <View style={styles.verticalDivider} />;
 
 export const styles = StyleSheet.create({
   horizontalDivider: {
-    width: '0.6rem'
+    width: '0.6rem',
   },
   verticalDivider: {
-    height: '1.3125rem'
+    height: '1.3125rem',
   },
   row: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   marginRight: {
-    marginRight: 10
+    marginRight: 10,
   },
   marginBottom: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   marginVertical: {
-    marginVertical: 5
+    marginVertical: 5,
   },
   alignCenter: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export { DividerHorizontal, DividerVertical };

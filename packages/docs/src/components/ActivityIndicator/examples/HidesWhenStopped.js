@@ -3,7 +3,7 @@ import React from 'react';
 
 class ToggleAnimatingActivityIndicator extends React.Component {
   state = {
-    animating: true
+    animating: true,
   };
 
   setToggleTimeout = () => {
@@ -45,9 +45,9 @@ export default function HidesWhenStoppedExample() {
 const styles = StyleSheet.create({
   horizontal: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   item: {
-    paddingRight: 10
-  }
+    paddingRight: 10,
+  },
 });

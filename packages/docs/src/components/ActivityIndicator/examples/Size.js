@@ -17,13 +17,13 @@ export default function Size() {
 const styles = StyleSheet.create({
   horizontal: {
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   item: {
-    paddingRight: 10
+    paddingRight: 10,
   },
   large: {
     marginLeft: 20,
-    transform: [{ scale: 1.75 }]
-  }
+    transform: [{ scale: 1.75 }],
+  },
 });

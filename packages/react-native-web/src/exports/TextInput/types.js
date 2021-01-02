@@ -14,7 +14,7 @@ import type { ViewProps } from '../View/types';
 export type TextInputStyle = {
   ...TextStyle,
   caretColor?: ColorValue,
-  resize?: 'none' | 'vertical' | 'horizontal' | 'both'
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both',
 };
 
 export type TextInputProps = {
@@ -59,10 +59,10 @@ export type TextInputProps = {
   selectTextOnFocus?: ?boolean,
   selection?: {|
     start: number,
-    end?: number
+    end?: number,
   |},
   selectionColor?: ?ColorValue,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
-  value?: ?string
+  value?: ?string,
 };

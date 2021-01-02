@@ -10,10 +10,10 @@ module.exports = {
   entry: './src/index',
   output: {
     path: path.resolve(appDirectory, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   optimization: {
-    minimize: process.env.NODE_ENV === 'production'
+    minimize: process.env.NODE_ENV === 'production',
   },
   module: {
     rules: [
@@ -25,11 +25,11 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[hash:base64:8]'
-              }
-            }
-          }
-        ]
+                localIdentName: '[hash:base64:8]',
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.js$/,
@@ -39,21 +39,21 @@ module.exports = {
           options: {
             cacheDirectory: false,
             presets: [babelPreset],
-            plugins: ['styled-jsx/babel']
-          }
-        }
-      }
-    ]
+            plugins: ['styled-jsx/babel'],
+          },
+        },
+      },
+    ],
   },
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      openAnalyzer: false
-    })
+      openAnalyzer: false,
+    }),
   ],
   resolve: {
     alias: {
-      'react-native': 'react-native-web'
-    }
-  }
+      'react-native': 'react-native-web',
+    },
+  },
 };

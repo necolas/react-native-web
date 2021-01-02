@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: '#ececec',
     padding: 30,
-    marginVertical: 5
+    marginVertical: 5,
   },
   content: {
     backgroundColor: 'white',
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
-    borderStyle: 'solid'
-  }
+    borderStyle: 'solid',
+  },
 });

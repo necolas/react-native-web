@@ -193,7 +193,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
         classList: [classes.accessibilityImage],
         draggable: draggable || false,
         ref: hiddenImageRef,
-        src: displayImageUri
+        src: displayImageUri,
       })
     : null;
 
@@ -245,8 +245,8 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
           if (onError) {
             onError({
               nativeEvent: {
-                error: `Failed to load resource ${uri} (404)`
-              }
+                error: `Failed to load resource ${uri} (404)`,
+              },
             });
           }
           if (onLoadEnd) {
@@ -280,7 +280,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
           styles.image,
           resizeModeStyles[resizeMode],
           { backgroundImage, filter },
-          backgroundSize != null && { backgroundSize }
+          backgroundSize != null && { backgroundSize },
         ]}
         suppressHydrationWarning={true}
       />
@@ -293,17 +293,17 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
 Image.displayName = 'Image';
 
 // $FlowFixMe
-Image.getSize = function(uri, success, failure) {
+Image.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
 };
 
 // $FlowFixMe
-Image.prefetch = function(uri) {
+Image.prefetch = function (uri) {
   return ImageLoader.prefetch(uri);
 };
 
 // $FlowFixMe
-Image.queryCache = function(uris) {
+Image.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
@@ -313,18 +313,18 @@ const classes = css.create({
     height: '100%',
     opacity: 0,
     width: '100%',
-    zIndex: -1
-  }
+    zIndex: -1,
+  },
 });
 
 const styles = StyleSheet.create({
   root: {
     flexBasis: 'auto',
     overflow: 'hidden',
-    zIndex: 0
+    zIndex: 0,
   },
   inline: {
-    display: 'inline-flex'
+    display: 'inline-flex',
   },
   image: {
     ...StyleSheet.absoluteFillObject,
@@ -334,32 +334,32 @@ const styles = StyleSheet.create({
     backgroundSize: 'cover',
     height: '100%',
     width: '100%',
-    zIndex: -1
-  }
+    zIndex: -1,
+  },
 });
 
 const resizeModeStyles = StyleSheet.create({
   center: {
-    backgroundSize: 'auto'
+    backgroundSize: 'auto',
   },
   contain: {
-    backgroundSize: 'contain'
+    backgroundSize: 'contain',
   },
   cover: {
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
   },
   none: {
     backgroundPosition: '0 0',
-    backgroundSize: 'auto'
+    backgroundSize: 'auto',
   },
   repeat: {
     backgroundPosition: '0 0',
     backgroundRepeat: 'repeat',
-    backgroundSize: 'auto'
+    backgroundSize: 'auto',
   },
   stretch: {
-    backgroundSize: '100% 100%'
-  }
+    backgroundSize: '100% 100%',
+  },
 });
 
 export default Image;

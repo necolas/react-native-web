@@ -12,37 +12,37 @@ const dataSvg =
 const sources = {
   animatedGif: {
     uri:
-      'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif'
+      'http://38.media.tumblr.com/9e9bd08c6e2d10561dd1fb4197df4c4e/tumblr_mfqekpMktw1rn90umo1_500.gif',
   },
   broken: { uri: 'http://TYPO_ERROR.github.io/image.png' },
   small: smallflower,
   smallAlt: {
     uri:
-      'https://images.unsplash.com/photo-1481595357459-84468f6eeaac?dpr=1&auto=format&fit=crop&w=100&h=66&q=60&cs=tinysrgb'
+      'https://images.unsplash.com/photo-1481595357459-84468f6eeaac?dpr=1&auto=format&fit=crop&w=100&h=66&q=60&cs=tinysrgb',
   },
   large: {
     uri:
-      'https://images.unsplash.com/photo-1481595357459-84468f6eeaac?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb'
+      'https://images.unsplash.com/photo-1481595357459-84468f6eeaac?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb',
   },
   largeAlt: {
     uri:
-      'https://images.unsplash.com/photo-1471145653077-54c6f0aae511?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb'
+      'https://images.unsplash.com/photo-1471145653077-54c6f0aae511?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb',
   },
   placeholder,
   prefetchable: {
     uri:
-      'https://images.unsplash.com/photo-1471145653077-54c6f0aae511?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb'
+      'https://images.unsplash.com/photo-1471145653077-54c6f0aae511?dpr=1&auto=format&fit=crop&w=376&h=251&q=60&cs=tinysrgb',
   },
   static: staticImage,
   huge: {
-    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chestnut-mandibled_Toucan.jpg'
+    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chestnut-mandibled_Toucan.jpg',
   },
   pjpeg: {
-    uri: 'http://pooyak.com/p/progjpeg/jpegload.cgi?o=1'
+    uri: 'http://pooyak.com/p/progjpeg/jpegload.cgi?o=1',
   },
   dataSvg,
   dataBase64Png,
-  dataBase64Svg
+  dataBase64Svg,
 };
 
 export default sources;

@@ -22,7 +22,7 @@ const VISIBILITY_STATE_PROPERTY = isPrefixed ? 'webkitVisibilityState' : 'visibi
 
 const AppStates = {
   BACKGROUND: 'background',
-  ACTIVE: 'active'
+  ACTIVE: 'active',
 };
 
 const listeners = [];
@@ -68,7 +68,7 @@ export default class AppState {
         type
       );
       if (type === 'change') {
-        const listenerIndex = findIndex(listeners, pair => pair[0] === handler);
+        const listenerIndex = findIndex(listeners, (pair) => pair[0] === handler);
         invariant(
           listenerIndex !== -1,
           'Trying to remove AppState listener for unregistered handler'

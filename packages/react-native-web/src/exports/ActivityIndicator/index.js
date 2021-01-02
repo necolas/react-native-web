@@ -16,7 +16,7 @@ import React, { forwardRef } from 'react';
 
 const accessibilityValue = { max: 1, min: 0 };
 
-const createSvgCircle = style => (
+const createSvgCircle = (style) => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
 
@@ -25,7 +25,7 @@ type ActivityIndicatorProps = {
   animating?: boolean,
   color?: ?string,
   hidesWhenStopped?: boolean,
-  size?: 'small' | 'large' | number
+  size?: 'small' | 'large' | number,
 };
 
 const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwardedRef) => {
@@ -42,12 +42,12 @@ const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwarde
     <svg height="100%" viewBox="0 0 32 32" width="100%">
       {createSvgCircle({
         stroke: color,
-        opacity: 0.2
+        opacity: 0.2,
       })}
       {createSvgCircle({
         stroke: color,
         strokeDasharray: 80,
-        strokeDashoffset: 60
+        strokeDashoffset: 60,
       })}
     </svg>
   );
@@ -66,7 +66,7 @@ const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwarde
           typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
           styles.animation,
           !animating && styles.animationPause,
-          !animating && hidesWhenStopped && styles.hidesWhenStopped
+          !animating && hidesWhenStopped && styles.hidesWhenStopped,
         ]}
       />
     </View>
@@ -78,36 +78,36 @@ ActivityIndicator.displayName = 'ActivityIndicator';
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   hidesWhenStopped: {
-    visibility: 'hidden'
+    visibility: 'hidden',
   },
   animation: {
     animationDuration: '0.75s',
     animationKeyframes: [
       {
         '0%': { transform: [{ rotate: '0deg' }] },
-        '100%': { transform: [{ rotate: '360deg' }] }
-      }
+        '100%': { transform: [{ rotate: '360deg' }] },
+      },
     ],
     animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite'
+    animationIterationCount: 'infinite',
   },
   animationPause: {
-    animationPlayState: 'paused'
-  }
+    animationPlayState: 'paused',
+  },
 });
 
 const indicatorSizes = StyleSheet.create({
   small: {
     width: 20,
-    height: 20
+    height: 20,
   },
   large: {
     width: 36,
-    height: 36
-  }
+    height: 36,
+  },
 });
 
 export default ActivityIndicator;

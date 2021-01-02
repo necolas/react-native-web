@@ -14,7 +14,7 @@ export default function TouchableCustomStyleOverridesExample() {
 
   return (
     <View style={styles.container}>
-      {buttons.map(button => {
+      {buttons.map((button) => {
         return (
           <TouchableHighlight
             key={button}
@@ -33,19 +33,19 @@ export default function TouchableCustomStyleOverridesExample() {
 const styles = StyleSheet.create({
   blue: {
     backgroundColor: '#1b95e040',
-    borderColor: '#1B95E0'
+    borderColor: '#1B95E0',
   },
   text: {
-    color: '#555'
+    color: '#555',
   },
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   touchable: {
     borderWidth: 3,
     borderColor: '#ccc',
     padding: 20,
     marginVertical: 10,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });

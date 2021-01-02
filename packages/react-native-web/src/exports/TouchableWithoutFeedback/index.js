@@ -42,7 +42,7 @@ export type Props = $ReadOnly<{|
   onPressIn?: $PropertyType<PressResponderConfig, 'onPressStart'>,
   onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
   rejectResponderTermination?: ?boolean,
-  testID?: $PropertyType<ViewProps, 'testID'>
+  testID?: $PropertyType<ViewProps, 'testID'>,
 |}>;
 
 const forwardPropsList = {
@@ -60,10 +60,10 @@ const forwardPropsList = {
   onBlur: true,
   onFocus: true,
   onLayout: true,
-  testID: true
+  testID: true,
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const {
@@ -77,7 +77,7 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
     onPress,
     onPressIn,
     onPressOut,
-    rejectResponderTermination
+    rejectResponderTermination,
   } = props;
 
   const hostRef = useRef(null);
@@ -92,7 +92,7 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
       onLongPress,
       onPress,
       onPressStart: onPressIn,
-      onPressEnd: onPressOut
+      onPressEnd: onPressOut,
     }),
     [
       disabled,
@@ -103,7 +103,7 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
       onPress,
       onPressIn,
       onPressOut,
-      rejectResponderTermination
+      rejectResponderTermination,
     ]
   );
 

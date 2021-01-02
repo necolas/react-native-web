@@ -22,7 +22,7 @@ import {
   genItemData,
   getItemLayout,
   pressItem,
-  renderSmallSwitchOption
+  renderSmallSwitchOption,
 } from './shared';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -30,7 +30,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 3000,
   viewAreaCoveragePercentThreshold: 100,
-  waitForInteraction: true
+  waitForInteraction: true,
 };
 
 class SingleColumnExample extends React.PureComponent {
@@ -45,23 +45,23 @@ class SingleColumnExample extends React.PureComponent {
     filterText: '',
     fixedHeight: true,
     logViewable: false,
-    virtualized: true
+    virtualized: true,
   };
 
-  _onChangeFilterText = filterText => {
+  _onChangeFilterText = (filterText) => {
     this.setState({ filterText });
   };
 
-  _onChangeScrollToIndex = text => {
+  _onChangeScrollToIndex = (text) => {
     this._listRef.getNode().scrollToIndex({ viewPosition: 0.5, index: Number(text) });
   };
 
   _scrollPos = new Animated.Value(0);
   _scrollSinkX = Animated.event([{ nativeEvent: { contentOffset: { x: this._scrollPos } } }], {
-    useNativeDriver: true
+    useNativeDriver: true,
   });
   _scrollSinkY = Animated.event([{ nativeEvent: { contentOffset: { y: this._scrollPos } } }], {
-    useNativeDriver: true
+    useNativeDriver: true,
   });
 
   componentDidUpdate() {
@@ -70,7 +70,7 @@ class SingleColumnExample extends React.PureComponent {
 
   render() {
     const filterRegex = new RegExp(String(this.state.filterText), 'i');
-    const filter = item => filterRegex.test(item.text) || filterRegex.test(item.title);
+    const filter = (item) => filterRegex.test(item.text) || filterRegex.test(item.title);
     const filteredData = this.state.data.filter(filter);
     return (
       <View style={styles.container}>
@@ -122,7 +122,7 @@ class SingleColumnExample extends React.PureComponent {
       </View>
     );
   }
-  _captureRef = ref => {
+  _captureRef = (ref) => {
     this._listRef = ref;
   };
   _getItemLayout = (data: any, index: number) => {
@@ -132,8 +132,8 @@ class SingleColumnExample extends React.PureComponent {
     if (this.state.data.length >= 1000) {
       return;
     }
-    this.setState(state => ({
-      data: state.data.concat(genItemData(100, state.data.length))
+    this.setState((state) => ({
+      data: state.data.concat(genItemData(100, state.data.length)),
     }));
   };
   _onRefresh = () => console.log('onRefresh: nothing to refresh :P');
@@ -157,12 +157,15 @@ class SingleColumnExample extends React.PureComponent {
       isViewable: boolean,
       item: any,
       index: ?number,
-      section?: any
-    }>
+      section?: any,
+    }>,
   }) => {
     // Impressions can be logged here
     if (this.state.logViewable) {
-      console.log('onViewableItemsChanged: ', info.changed.map(v => ({ ...v, item: '...' })));
+      console.log(
+        'onViewableItemsChanged: ',
+        info.changed.map((v) => ({ ...v, item: '...' }))
+      );
     }
   };
   _pressItem = (key: string) => {
@@ -175,22 +178,22 @@ class SingleColumnExample extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgb(239, 239, 244)',
-    flex: 1
+    flex: 1,
   },
   list: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   options: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   searchRow: {
-    paddingHorizontal: 10
-  }
+    paddingHorizontal: 10,
+  },
 });
 
-export default function() {
+export default function () {
   return (
     <View style={{ height: 300 }}>
       <SingleColumnExample />

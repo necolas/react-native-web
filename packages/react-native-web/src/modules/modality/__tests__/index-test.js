@@ -11,10 +11,10 @@ import {
   testWithPointerType,
   clearPointers,
   createEventTarget,
-  setPointerEvent
+  setPointerEvent,
 } from 'dom-event-testing-library';
 
-describeWithPointerEvent('modules/modality', hasPointerEvent => {
+describeWithPointerEvent('modules/modality', (hasPointerEvent) => {
   let rootNode;
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ describeWithPointerEvent('modules/modality', hasPointerEvent => {
   });
 
   describe('getModality', () => {
-    testWithPointerType('reflects currently-in-use modality', pointerType => {
+    testWithPointerType('reflects currently-in-use modality', (pointerType) => {
       const target = createEventTarget(rootNode);
       expect(getModality()).toBe('keyboard');
       target.pointerdown({ pointerType });
@@ -49,7 +49,7 @@ describeWithPointerEvent('modules/modality', hasPointerEvent => {
   });
 
   describe('getActiveModality', () => {
-    testWithPointerType('reflects last actively used modality', pointerType => {
+    testWithPointerType('reflects last actively used modality', (pointerType) => {
       const target = createEventTarget(rootNode);
       expect(getActiveModality()).toBe('keyboard');
       target.pointerdown({ pointerType });

@@ -19,7 +19,7 @@ type ProgressBarProps = {
   color?: ColorValue,
   indeterminate?: boolean,
   progress?: number,
-  trackColor?: ColorValue
+  trackColor?: ColorValue,
 };
 
 const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
@@ -39,7 +39,7 @@ const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
     const width = indeterminate ? '25%' : `${percentageProgress}%`;
     if (progressRef.current != null) {
       progressRef.current.setNativeProps({
-        style: { width }
+        style: { width },
       });
     }
   }, [indeterminate, percentageProgress, progressRef]);
@@ -51,7 +51,7 @@ const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
       accessibilityValue={{
         max: 100,
         min: 0,
-        now: indeterminate ? null : percentageProgress
+        now: indeterminate ? null : percentageProgress,
       }}
       ref={ref}
       style={[styles.track, style, { backgroundColor: trackColor }]}
@@ -71,23 +71,23 @@ const styles = StyleSheet.create({
     height: 5,
     overflow: 'hidden',
     userSelect: 'none',
-    zIndex: 0
+    zIndex: 0,
   },
   progress: {
     height: '100%',
-    zIndex: -1
+    zIndex: -1,
   },
   animation: {
     animationDuration: '1s',
     animationKeyframes: [
       {
         '0%': { transform: [{ translateX: '-100%' }] },
-        '100%': { transform: [{ translateX: '400%' }] }
-      }
+        '100%': { transform: [{ translateX: '400%' }] },
+      },
     ],
     animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite'
-  }
+    animationIterationCount: 'infinite',
+  },
 });
 
 export default ProgressBar;

@@ -33,6 +33,6 @@ export default function ScrollEnabled() {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#eeeeee',
-    height: 300
-  }
+    height: 300,
+  },
 });

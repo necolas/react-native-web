@@ -9,7 +9,7 @@ export default function TouchableParent() {
     <View>
       <TouchableHighlight onPress={() => {}} style={style} underlayColor="#eee">
         <Switch
-          onValueChange={value => {
+          onValueChange={(value) => {
             updateState(value);
           }}
           value={state}
@@ -24,5 +24,5 @@ const style = {
   borderWidth: 1,
   borderColor: '#ddd',
   paddingHorizontal: 50,
-  paddingVertical: 20
+  paddingVertical: 20,
 };

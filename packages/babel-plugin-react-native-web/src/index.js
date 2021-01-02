@@ -1,6 +1,6 @@
 const moduleMap = require('./moduleMap');
 
-const isCommonJS = opts => opts.commonjs === true;
+const isCommonJS = (opts) => opts.commonjs === true;
 
 const getDistLocation = (importName, opts) => {
   const format = isCommonJS(opts) ? 'cjs/' : '';
@@ -33,7 +33,7 @@ const isReactNativeModule = ({ source, specifiers }) =>
   (source.value === 'react-native' || source.value === 'react-native-web') &&
   specifiers.length;
 
-module.exports = function({ types: t }) {
+module.exports = function ({ types: t }) {
   return {
     name: 'Rewrite react-native to react-native-web',
     visitor: {
@@ -41,7 +41,7 @@ module.exports = function({ types: t }) {
         const { specifiers } = path.node;
         if (isReactNativeModule(path.node)) {
           const imports = specifiers
-            .map(specifier => {
+            .map((specifier) => {
               if (t.isImportSpecifier(specifier)) {
                 const importName = specifier.imported.name;
                 const distLocation = getDistLocation(importName, state.opts);
@@ -67,7 +67,7 @@ module.exports = function({ types: t }) {
         const { specifiers } = path.node;
         if (isReactNativeModule(path.node)) {
           const exports = specifiers
-            .map(specifier => {
+            .map((specifier) => {
               if (t.isExportSpecifier(specifier)) {
                 const exportName = specifier.exported.name;
                 const localName = specifier.local.name;
@@ -97,7 +97,7 @@ module.exports = function({ types: t }) {
           const { id } = path.node.declarations[0];
           if (t.isObjectPattern(id)) {
             const imports = id.properties
-              .map(identifier => {
+              .map((identifier) => {
                 const distLocation = getDistLocation(identifier.key.name, state.opts);
                 if (distLocation) {
                   return t.variableDeclaration(path.node.kind, [
@@ -107,7 +107,7 @@ module.exports = function({ types: t }) {
                         t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)]),
                         t.identifier('default')
                       )
-                    )
+                    ),
                   ]);
                 }
               })
@@ -120,15 +120,15 @@ module.exports = function({ types: t }) {
               t.variableDeclarator(
                 t.identifier(name),
                 t.callExpression(t.identifier('require'), [
-                  t.stringLiteral(getDistLocation('index', state.opts))
+                  t.stringLiteral(getDistLocation('index', state.opts)),
                 ])
-              )
+              ),
             ]);
 
             path.replaceWith(importIndex);
           }
         }
-      }
-    }
+      },
+    },
   };
 };

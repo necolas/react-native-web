@@ -141,7 +141,7 @@ import {
   isMoveish,
   isScroll,
   isSelectionChange,
-  isStartish
+  isStartish,
 } from './ResponderEventTypes';
 import {
   getLowestCommonAncestor,
@@ -149,7 +149,7 @@ import {
   hasTargetTouches,
   hasValidSelection,
   isPrimaryPointerDown,
-  setResponderId
+  setResponderId,
 } from './utils';
 import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
 
@@ -160,13 +160,13 @@ type ResponderId = number;
 type ActiveResponderInstance = {
   id: ResponderId,
   idPath: Array<number>,
-  node: any
+  node: any,
 };
 
 type EmptyResponderInstance = {
   id: null,
   idPath: null,
-  node: null
+  node: null,
 };
 
 type ResponderInstance = ActiveResponderInstance | EmptyResponderInstance;
@@ -192,7 +192,7 @@ export type ResponderConfig = {
   onScrollShouldSetResponderCapture?: ?(e: ResponderEvent) => boolean,
   // On text selection change, should this element become the responder?
   onSelectionChangeShouldSetResponder?: ?(e: ResponderEvent) => boolean,
-  onSelectionChangeShouldSetResponderCapture?: ?(e: ResponderEvent) => boolean
+  onSelectionChangeShouldSetResponderCapture?: ?(e: ResponderEvent) => boolean,
 };
 
 const emptyObject = {};
@@ -202,24 +202,24 @@ const emptyObject = {};
 const startRegistration = [
   'onStartShouldSetResponderCapture',
   'onStartShouldSetResponder',
-  { bubbles: true }
+  { bubbles: true },
 ];
 const moveRegistration = [
   'onMoveShouldSetResponderCapture',
   'onMoveShouldSetResponder',
-  { bubbles: true }
+  { bubbles: true },
 ];
 const scrollRegistration = [
   'onScrollShouldSetResponderCapture',
   'onScrollShouldSetResponder',
-  { bubbles: false }
+  { bubbles: false },
 ];
 const shouldSetResponderEvents = {
   touchstart: startRegistration,
   mousedown: startRegistration,
   touchmove: moveRegistration,
   mousemove: moveRegistration,
-  scroll: scrollRegistration
+  scroll: scrollRegistration,
 };
 
 const emptyResponder = { id: null, idPath: null, node: null };
@@ -230,7 +230,7 @@ let trackedTouchCount = 0;
 let currentResponder: ResponderInstance = {
   id: null,
   node: null,
-  idPath: null
+  idPath: null,
 };
 
 function changeCurrentResponder(responder: ResponderInstance) {
@@ -337,7 +337,7 @@ function eventListener(domEvent: any) {
           indexOfLowestCommonAncestor + (lowestCommonAncestor === currentResponder.id ? 1 : 0);
         eventPaths = {
           idPath: eventIdPath.slice(index),
-          nodePath: eventPaths.nodePath.slice(index)
+          nodePath: eventPaths.nodePath.slice(index),
         };
       } else {
         eventPaths = null;
@@ -364,7 +364,7 @@ function eventListener(domEvent: any) {
       onResponderEnd,
       onResponderRelease,
       onResponderTerminate,
-      onResponderTerminationRequest
+      onResponderTerminationRequest,
     } = getResponderConfig(id);
 
     responderEvent.bubbles = false;
@@ -392,7 +392,7 @@ function eventListener(domEvent: any) {
         // window blur
         (eventType === 'blur' && eventTarget === window) ||
         // responder (or ancestors) blur
-        (eventType === 'blur' && (eventTarget.contains(node) && domEvent.relatedTarget !== node)) ||
+        (eventType === 'blur' && eventTarget.contains(node) && domEvent.relatedTarget !== node) ||
         // native scroll without using a pointer
         (isScrollEvent && trackedTouchCount === 0) ||
         // native scroll on node that is parent of the responder (allow siblings to scroll)
@@ -468,7 +468,7 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
     const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
     const { bubbles } = shouldSetCallbacks[2];
 
-    const check = function(id, node, callbackName) {
+    const check = function (id, node, callbackName) {
       const config = getResponderConfig(id);
       const shouldSetCallback = config[callbackName];
       if (shouldSetCallback != null) {
@@ -601,15 +601,15 @@ const documentEventsBubblePhase = [
   // other
   'contextmenu',
   'select',
-  'selectionchange'
+  'selectionchange',
 ];
 export function attachListeners() {
   if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
-    documentEventsBubblePhase.forEach(eventType => {
+    documentEventsBubblePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener);
     });
-    documentEventsCapturePhase.forEach(eventType => {
+    documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
     window.__reactResponderSystemActive = true;

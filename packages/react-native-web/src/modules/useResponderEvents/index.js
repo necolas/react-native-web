@@ -57,7 +57,7 @@ export default function useResponderEvents(hostRef: any, config: ResponderConfig
       onSelectionChangeShouldSetResponder,
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
+      onStartShouldSetResponderCapture,
     } = config;
 
     const requiresResponderSystem =

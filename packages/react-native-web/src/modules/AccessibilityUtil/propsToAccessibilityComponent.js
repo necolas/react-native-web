@@ -20,7 +20,7 @@ const roleComponents = {
   listitem: 'li',
   main: 'main',
   navigation: 'nav',
-  region: 'section'
+  region: 'section',
 };
 
 const emptyObject = {};

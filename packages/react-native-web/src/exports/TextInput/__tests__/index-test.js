@@ -24,7 +24,7 @@ function createEvent(type, data = {}) {
   const event = document.createEvent('CustomEvent');
   event.initCustomEvent(type, true, true);
   if (data != null) {
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       const value = data[key];
       if (key === 'timeStamp' && !value) {
         return;
@@ -45,7 +45,7 @@ function createKeyboardEvent(
     keyCode = 0,
     metaKey = false,
     preventDefault = () => {},
-    shiftKey = false
+    shiftKey = false,
   } = {}
 ) {
   return createEvent(type, {
@@ -56,7 +56,7 @@ function createKeyboardEvent(
     keyCode,
     metaKey,
     preventDefault,
-    shiftKey
+    shiftKey,
   });
 }
 
@@ -276,7 +276,7 @@ describe('components/TextInput', () => {
 
   describe('prop "onKeyPress"', () => {
     test('arrow key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -291,14 +291,14 @@ describe('components/TextInput', () => {
             key: 'ArrowLeft',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('backspace key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -313,14 +313,14 @@ describe('components/TextInput', () => {
             key: 'Backspace',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('enter key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -335,14 +335,14 @@ describe('components/TextInput', () => {
             key: 'Enter',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('escape key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -357,14 +357,14 @@ describe('components/TextInput', () => {
             key: 'Escape',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('space key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -379,14 +379,14 @@ describe('components/TextInput', () => {
             key: ' ',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('tab key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -401,14 +401,14 @@ describe('components/TextInput', () => {
             key: 'Tab',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('text key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -423,14 +423,14 @@ describe('components/TextInput', () => {
             key: 'a',
             metaKey: false,
             shiftKey: false,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('modifier keys are included', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -441,7 +441,7 @@ describe('components/TextInput', () => {
           ctrlKey: true,
           metaKey: true,
           shiftKey: true,
-          key: ' '
+          key: ' ',
         })
       );
       expect(onKeyPress).toHaveBeenCalledTimes(1);
@@ -453,14 +453,14 @@ describe('components/TextInput', () => {
             key: ' ',
             metaKey: true,
             shiftKey: true,
-            target: expect.anything()
-          })
+            target: expect.anything(),
+          }),
         })
       );
     });
 
     test('meta key + Enter calls "onKeyPress"', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -468,7 +468,7 @@ describe('components/TextInput', () => {
       input.dispatchEvent(
         keydown({
           metaKey: true,
-          key: 'Enter'
+          key: 'Enter',
         })
       );
       expect(onKeyPress).toHaveBeenCalledTimes(1);
@@ -501,7 +501,7 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', done => {
+    test('single-line input', (done) => {
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );

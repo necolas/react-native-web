@@ -21,7 +21,7 @@ type RulesData = {|
   property?: string,
   value?: string,
   identifier: string,
-  rules: Rules
+  rules: Rules,
 |};
 type CompilerOutput = { [key: string]: RulesData };
 
@@ -40,7 +40,7 @@ const cache = {
       cache[property] = {};
     }
     return (cache[property][value] = object);
-  }
+  },
 };
 
 /**
@@ -64,7 +64,7 @@ export function atomic(style: Style): CompilerOutput {
             property,
             value: stringifyValueWithProperty(value, property),
             identifier,
-            rules
+            rules,
           });
           acc[identifier] = cachedResult;
         }
@@ -194,7 +194,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
 function createDeclarationBlock(style: Style) {
   const domStyle = prefixStyles(createReactDOMStyle(style));
   const declarationsString = Object.keys(domStyle)
-    .map(property => {
+    .map((property) => {
       const value = domStyle[property];
       const prop = hyphenateStyleName(property);
       // The prefixer may return an array of values:
@@ -202,7 +202,7 @@ function createDeclarationBlock(style: Style) {
       // to represent "fallback" declarations
       // { display: -webkit-flex; display: flex; }
       if (Array.isArray(value)) {
-        return value.map(v => `${prop}:${v}`).join(';');
+        return value.map((v) => `${prop}:${v}`).join(';');
       } else {
         return `${prop}:${value}`;
       }
@@ -235,7 +235,7 @@ function createKeyframes(keyframes) {
   const steps =
     '{' +
     Object.keys(keyframes)
-      .map(stepName => {
+      .map((stepName) => {
         const rule = keyframes[stepName];
         const block = createDeclarationBlock(rule);
         return `${stepName}${block}`;
@@ -243,7 +243,7 @@ function createKeyframes(keyframes) {
       .join('') +
     '}';
 
-  const rules = prefixes.map(prefix => {
+  const rules = prefixes.map((prefix) => {
     return `@${prefix}keyframes ${identifier}${steps}`;
   });
   return { identifier, rules };
@@ -261,7 +261,7 @@ function processKeyframesValue(keyframesValue) {
   const rules = [];
   const value = Array.isArray(keyframesValue) ? keyframesValue : [keyframesValue];
 
-  value.forEach(keyframes => {
+  value.forEach((keyframes) => {
     if (typeof keyframes === 'string') {
       // Support external animation libraries (identifiers only)
       animationNames.push(keyframes);

@@ -36,7 +36,7 @@ export const buttonType = {
   // forward mouse
   forward: 4,
   // pen eraser
-  eraser: 5
+  eraser: 5,
 };
 
 /**
@@ -59,5 +59,5 @@ export const buttonsType = {
   // forward mouse
   forward: 16,
   // pen eraser
-  eraser: 32
+  eraser: 32,
 };

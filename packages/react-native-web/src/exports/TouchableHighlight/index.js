@@ -30,20 +30,20 @@ type Props = $ReadOnly<{|
   onShowUnderlay?: ?() => void,
   style?: ViewStyle,
   testOnly_pressed?: ?boolean,
-  underlayColor?: ?ColorValue
+  underlayColor?: ?ColorValue,
 |}>;
 
 type ExtraStyles = $ReadOnly<{|
   child: ViewStyle,
-  underlay: ViewStyle
+  underlay: ViewStyle,
 |}>;
 
 function createExtraStyles(activeOpacity, underlayColor): ExtraStyles {
   return {
     child: { opacity: activeOpacity ?? 0.85 },
     underlay: {
-      backgroundColor: underlayColor === undefined ? 'black' : underlayColor
-    }
+      backgroundColor: underlayColor === undefined ? 'black' : underlayColor,
+    },
   };
 }
 
@@ -141,7 +141,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
         if (onPressOut != null) {
           onPressOut(event);
         }
-      }
+      },
     }),
     [
       delayLongPress,
@@ -154,7 +154,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       onPressOut,
       rejectResponderTermination,
       showUnderlay,
-      hideUnderlay
+      hideUnderlay,
     ]
   );
 
@@ -168,7 +168,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       {...pressEventHandlers}
       accessibilityState={{
         disabled,
-        ...props.accessibilityState
+        ...props.accessibilityState,
       }}
       accessible={accessible !== false}
       focusable={focusable !== false && onPress !== undefined}
@@ -177,14 +177,11 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
         styles.root,
         style,
         !disabled && styles.actionable,
-        extraStyles && extraStyles.underlay
+        extraStyles && extraStyles.underlay,
       ]}
     >
       {React.cloneElement(child, {
-        style: StyleSheet.compose(
-          child.props.style,
-          extraStyles && extraStyles.child
-        )
+        style: StyleSheet.compose(child.props.style, extraStyles && extraStyles.child),
       })}
     </View>
   );
@@ -192,12 +189,12 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
 
 const styles = StyleSheet.create({
   root: {
-    userSelect: 'none'
+    userSelect: 'none',
   },
   actionable: {
     cursor: 'pointer',
-    touchAction: 'manipulation'
-  }
+    touchAction: 'manipulation',
+  },
 });
 
 const MemoedTouchableHighlight = React.memo(React.forwardRef(TouchableHighlight));

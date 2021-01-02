@@ -9,15 +9,15 @@ export default class LocationXY extends Component {
       onStartShouldSetPanResponder: () => true,
       onStartShouldSetPanResponderCapture: () => true,
       onPanResponderMove: this._handlePanResponderMove,
-      onPanResponderTerminationRequest: () => true
+      onPanResponderTerminationRequest: () => true,
     });
   }
 
   _handlePanResponderMove = (e, gestureState) => {
     console.log(e.nativeEvent.locationX, e.nativeEvent.locationY);
-    this.setState(state => ({
+    this.setState((state) => ({
       ...state,
-      translateX: gestureState.dx
+      translateX: gestureState.dx,
     }));
   };
 
@@ -36,16 +36,16 @@ export default class LocationXY extends Component {
 const styles = StyleSheet.create({
   app: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   outer: {
     width: 250,
     height: 50,
-    backgroundColor: 'skyblue'
+    backgroundColor: 'skyblue',
   },
   inner: {
     width: 30,
     height: 30,
-    backgroundColor: 'lightblue'
-  }
+    backgroundColor: 'lightblue',
+  },
 });

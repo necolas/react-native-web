@@ -20,7 +20,7 @@ type TouchRecord = {|
   currentTimeStamp: number,
   previousPageX: number,
   previousPageY: number,
-  previousTimeStamp: number
+  previousTimeStamp: number,
 |};
 
 /**
@@ -39,7 +39,7 @@ const touchHistory = {
   // us having to loop through all of the touches all the time in the most
   // common case.
   indexOfSingleActiveTouch: -1,
-  mostRecentTimeStamp: 0
+  mostRecentTimeStamp: 0,
 };
 
 function timestampForTouch(touch: Touch): number {
@@ -63,7 +63,7 @@ function createTouchRecord(touch: Touch): TouchRecord {
     currentTimeStamp: timestampForTouch(touch),
     previousPageX: touch.pageX,
     previousPageY: touch.pageY,
-    previousTimeStamp: timestampForTouch(touch)
+    previousTimeStamp: timestampForTouch(touch),
   };
 }
 
@@ -153,7 +153,7 @@ function printTouch(touch: Touch): string {
     identifier: touch.identifier,
     pageX: touch.pageX,
     pageY: touch.pageY,
-    timestamp: timestampForTouch(touch)
+    timestamp: timestampForTouch(touch),
   });
 }
 
@@ -196,7 +196,7 @@ const ResponderTouchHistoryStore = {
     }
   },
 
-  touchHistory
+  touchHistory,
 };
 
 export default ResponderTouchHistoryStore;

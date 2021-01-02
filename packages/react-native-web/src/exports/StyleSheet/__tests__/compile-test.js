@@ -11,7 +11,7 @@ describe('StyleSheet/compile', () => {
         animationDirection: ['alternate', 'alternate-reverse'],
         animationKeyframes: [
           { '0%': { top: 0 }, '50%': { top: 5 }, '100%': { top: 10 } },
-          { from: { left: 0 }, to: { left: 10 } }
+          { from: { left: 0 }, to: { left: 10 } },
         ],
         fontFamily: 'System',
         marginHorizontal: 10,
@@ -21,9 +21,9 @@ describe('StyleSheet/compile', () => {
         transform: [
           {
             translateX: 50,
-            scale: -1
-          }
-        ]
+            scale: -1,
+          },
+        ],
       });
 
       expect(result).toMatchSnapshot();
@@ -37,16 +37,16 @@ describe('StyleSheet/compile', () => {
           animationDirection: ['alternate', 'alternate-reverse'],
           animationKeyframes: [
             { '0%': { top: 0 }, '50%': { top: 5 }, '100%': { top: 10 } },
-            { from: { left: 0 }, to: { left: 10 } }
+            { from: { left: 0 }, to: { left: 10 } },
           ],
           marginHorizontal: 10,
           font: '14px System',
           transform: [
             {
               translateX: 50,
-              scale: -1
-            }
-          ]
+              scale: -1,
+            },
+          ],
         },
         'text'
       );
@@ -59,7 +59,7 @@ describe('StyleSheet/compile', () => {
       const result = inline({
         marginHorizontal: 10,
         display: 'flex',
-        flexShrink: 1
+        flexShrink: 1,
       });
 
       expect(result).toMatchSnapshot();

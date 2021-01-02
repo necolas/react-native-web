@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     backgroundColor: '#cccccc',
-    borderRadius: 3
+    borderRadius: 3,
   },
   item: {
     margin: 5,
     padding: 5,
     backgroundColor: '#cccccc',
     borderRadius: 3,
-    minWidth: 96
-  }
+    minWidth: 96,
+  },
 });

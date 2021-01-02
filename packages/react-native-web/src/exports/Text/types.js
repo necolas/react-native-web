@@ -58,7 +58,7 @@ export type TextStyle = {
   writingDirection?: 'auto' | 'ltr' | 'rtl',
   /* @platform web */
   MozOsxFontSmoothing?: ?string,
-  WebkitFontSmoothing?: ?string
+  WebkitFontSmoothing?: ?string,
 };
 
 export type TextProps = {
@@ -83,12 +83,12 @@ export type TextProps = {
     pressed?: ?boolean,
     readonly?: ?boolean,
     required?: ?boolean,
-    selected?: ?boolean
+    selected?: ?boolean,
   },
   dir?: 'auto' | 'ltr' | 'rtl',
   numberOfLines?: ?number,
   onPress?: (e: any) => void,
   selectable?: boolean,
   style?: GenericStyleProp<TextStyle>,
-  testID?: ?string
+  testID?: ?string,
 };

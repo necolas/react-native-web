@@ -20,7 +20,7 @@ const DeviceInfo = {
         width: width * scale,
         height: height * scale,
         scale,
-        fontScale
+        fontScale,
       };
     },
     get screenPhysicalPixels(): DisplayMetrics {
@@ -29,9 +29,9 @@ const DeviceInfo = {
         width: width * scale,
         height: height * scale,
         scale,
-        fontScale
+        fontScale,
       };
-    }
+    },
   },
 
   get locale() {
@@ -50,7 +50,7 @@ const DeviceInfo = {
 
   get userAgent() {
     return canUseDOM ? window.navigator.userAgent : '';
-  }
+  },
 };
 
 export default DeviceInfo;

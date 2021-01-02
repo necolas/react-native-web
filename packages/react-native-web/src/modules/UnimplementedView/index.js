@@ -28,7 +28,7 @@ const unimplementedViewStyles =
     ? {
         alignSelf: 'flex-start',
         borderColor: 'red',
-        borderWidth: 1
+        borderWidth: 1,
       }
     : {};
 

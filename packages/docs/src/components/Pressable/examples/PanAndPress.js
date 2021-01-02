@@ -9,11 +9,11 @@ const App = () => {
   if (panResponder.current == null) {
     panResponder.current = PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: e => {
+      onPanResponderGrant: (e) => {
         console.log('pan grant');
         pan.setOffset({
           x: pan.x._value,
-          y: pan.y._value
+          y: pan.y._value,
         });
       },
       onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
@@ -24,7 +24,7 @@ const App = () => {
       onPanResponderTerminate() {
         console.log('pan terminate');
         pan.flattenOffset();
-      }
+      },
     });
   }
 
@@ -33,7 +33,7 @@ const App = () => {
       <Text style={styles.titleText}>Pressed: {x}</Text>
       <Animated.View
         style={{
-          transform: [{ translateX: pan.x }, { translateY: pan.y }]
+          transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
         {...panResponder.current.panHandlers}
       >
@@ -63,18 +63,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    userSelect: 'none'
+    userSelect: 'none',
   },
   titleText: {
     fontSize: 14,
     lineHeight: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   box: {
     height: 200,
     width: 150,
     backgroundColor: 'lightblue',
-    borderRadius: 5
+    borderRadius: 5,
   },
   outerTouchable: {
     height: 150,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     margin: 25,
     backgroundColor: 'blue',
     borderRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   innerTouchable: {
     height: 20,
@@ -90,11 +90,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     backgroundColor: 'green',
-    borderRadius: 5
+    borderRadius: 5,
   },
   disabledButton: {
-    backgroundColor: 'red'
-  }
+    backgroundColor: 'red',
+  },
 });
 
 export default App;

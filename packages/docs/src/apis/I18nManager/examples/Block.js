@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     margin: 10,
     marginVertical: 5,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   titleContainer: {
     borderBottomWidth: 0.5,
@@ -42,26 +42,26 @@ const styles = StyleSheet.create({
     borderBottomColor: '#d6d7da',
     backgroundColor: '#f6f7f8',
     paddingHorizontal: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   titleText: {
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   descriptionText: {
-    fontSize: 14
+    fontSize: 14,
   },
   disclosure: {
     position: 'absolute',
     top: 0,
     right: 0,
-    padding: 10
+    padding: 10,
   },
   disclosureIcon: {
     width: 12,
-    height: 8
+    height: 8,
   },
   children: {
-    margin: 10
-  }
+    margin: 10,
+  },
 });

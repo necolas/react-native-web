@@ -9,7 +9,7 @@
 
 import processColor from '..';
 
-const platformSpecific = x => x;
+const platformSpecific = (x) => x;
 
 describe('processColor', () => {
   describe('predefined color names', () => {

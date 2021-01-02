@@ -12,7 +12,7 @@ const reactNativeStyle = {
   opacity: 0,
   shadowColor: 'red',
   shadowOffset: { width: 1, height: 2 },
-  resizeMode: 'contain'
+  resizeMode: 'contain',
 };
 
 describe('StyleSheet/createReactDOMStyle', () => {
@@ -33,7 +33,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
       marginVertical: 25,
       margin: 10,
       overflow: 'hidden',
-      overscrollBehavior: 'contain'
+      overscrollBehavior: 'contain',
     };
 
     expect(createReactDOMStyle(style)).toMatchSnapshot();
@@ -44,51 +44,51 @@ describe('StyleSheet/createReactDOMStyle', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({
         flexGrow: 0,
         flexShrink: 1,
-        flexBasis: 'auto'
+        flexBasis: 'auto',
       });
     });
 
     test('flex: 0', () => {
       expect(createReactDOMStyle({ flex: 0 })).toEqual({
-        flex: 0
+        flex: 0,
       });
     });
 
     test('flex: 1', () => {
       expect(createReactDOMStyle({ flex: 1 })).toEqual({
-        flex: 1
+        flex: 1,
       });
     });
 
     test('flex: 10', () => {
       expect(createReactDOMStyle({ flex: 10 })).toEqual({
-        flex: 10
+        flex: 10,
       });
     });
 
     test('flexBasis overrides', () => {
       // is flex-basis applied?
       expect(createReactDOMStyle({ flexBasis: '25%' })).toEqual({
-        flexBasis: '25%'
+        flexBasis: '25%',
       });
 
       // can flex-basis override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexBasis: '25%' })).toEqual({
         flex: 1,
-        flexBasis: '25%'
+        flexBasis: '25%',
       });
     });
 
     test('flexShrink overrides', () => {
       // is flex-shrink applied?
       expect(createReactDOMStyle({ flexShrink: 1 })).toEqual({
-        flexShrink: 1
+        flexShrink: 1,
       });
 
       // can flex-shrink override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexShrink: 2 })).toEqual({
         flex: 1,
-        flexShrink: 2
+        flexShrink: 2,
       });
     });
   });
@@ -119,17 +119,17 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
   test('fontVariant', () => {
     expect(createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })).toEqual({
-      fontVariant: 'common-ligatures small-caps'
+      fontVariant: 'common-ligatures small-caps',
     });
   });
 
   test('textAlignVertical', () => {
     expect(
       createReactDOMStyle({
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
       })
     ).toEqual({
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
     });
   });
 
@@ -151,14 +151,14 @@ describe('StyleSheet/createReactDOMStyle', () => {
           { translateX: 20 },
           { rotate: '20deg' },
           { matrix: [1, 2, 3, 4, 5, 6] },
-          { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
-        ]
+          { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] },
+        ],
       };
       const resolved = createReactDOMStyle(style);
 
       expect(resolved).toEqual({
         transform:
-          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
+          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)',
       });
     });
   });

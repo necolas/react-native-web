@@ -10,7 +10,7 @@ import {
   buttonsType,
   clearPointers,
   createEventTarget,
-  testWithPointerType
+  testWithPointerType,
 } from 'dom-event-testing-library';
 
 describe('useResponderEvents', () => {
@@ -35,11 +35,11 @@ describe('useResponderEvents', () => {
     clearPointers();
   });
 
-  testWithPointerType('does nothing when no elements want to respond', pointerType => {
+  testWithPointerType('does nothing when no elements want to respond', (pointerType) => {
     const targetRef = createRef();
     const Component = () => {
       useResponderEvents(targetRef, {
-        onStartShouldSetResponder: jest.fn()
+        onStartShouldSetResponder: jest.fn(),
       });
       return <div ref={targetRef} />;
     };
@@ -62,7 +62,7 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: jest.fn(() => true),
       });
       return <div ref={targetRef} />;
     };
@@ -75,11 +75,11 @@ describe('useResponderEvents', () => {
     const buttons = [1, 2, 3, 4];
     // gesture
     act(() => {
-      buttons.forEach(button => {
+      buttons.forEach((button) => {
         target.pointerdown({
           pointerType: 'mouse',
           button: buttonType.auxiliary,
-          buttons: buttonsType.auxiliary
+          buttons: buttonsType.auxiliary,
         });
       });
     });
@@ -91,7 +91,7 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: jest.fn(() => true),
       });
       return <div ref={targetRef} />;
     };
@@ -105,14 +105,14 @@ describe('useResponderEvents', () => {
     const ignoredModifierKeys = ['altKey', 'ctrlKey'];
     // gesture
     act(() => {
-      ignoredModifierKeys.forEach(modifierKey => {
+      ignoredModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
     expect(getResponderNode()).toBe(null);
     // gesture
     act(() => {
-      acceptedModifierKeys.forEach(modifierKey => {
+      acceptedModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
@@ -123,7 +123,7 @@ describe('useResponderEvents', () => {
     const targetRef = createRef();
     const targetCallbacks = {
       onStartShouldSetResponder: jest.fn(() => true),
-      onResponderGrant: jest.fn()
+      onResponderGrant: jest.fn(),
     };
     const Component = () => {
       useResponderEvents(targetRef, targetCallbacks);
@@ -170,9 +170,9 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponder: () => true,
-        onResponderStart: jest.fn(e => {
+        onResponderStart: jest.fn((e) => {
           identifier = e.nativeEvent.identifier;
-        })
+        }),
       });
       return <div ref={targetRef} />;
     };
@@ -204,21 +204,21 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('start grants responder to grandParent', pointerType => {
+    testWithPointerType('start grants responder to grandParent', (pointerType) => {
       let grantCurrentTarget;
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(e => {
+        onStartShouldSetResponderCapture: jest.fn((e) => {
           return true;
         }),
-        onResponderGrant: jest.fn(e => {
+        onResponderGrant: jest.fn((e) => {
           grantCurrentTarget = e.currentTarget;
-        })
+        }),
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true)
+        onStartShouldSetResponderCapture: jest.fn(() => true),
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true)
+        onStartShouldSetResponderCapture: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -259,16 +259,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to parent', pointerType => {
+    testWithPointerType('start grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: jest.fn(() => false),
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true)
+        onStartShouldSetResponderCapture: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -308,16 +308,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to child', pointerType => {
+    testWithPointerType('start grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: jest.fn(() => false),
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: jest.fn(() => false),
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
 
       const Component = () => {
@@ -373,16 +373,16 @@ describe('useResponderEvents', () => {
       grandParentRef = createRef();
     });
 
-    testWithPointerType('start grants responder to child', pointerType => {
+    testWithPointerType('start grants responder to child', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: jest.fn(() => true),
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -422,16 +422,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to parent', pointerType => {
+    testWithPointerType('start grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => false)
+        onStartShouldSetResponder: jest.fn(() => false),
       };
       const parentCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -471,16 +471,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to grandParent', pointerType => {
+    testWithPointerType('start grants responder to grandParent', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => false)
+        onStartShouldSetResponder: jest.fn(() => false),
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => false)
+        onStartShouldSetResponder: jest.fn(() => false),
       };
       const grandParentCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
 
       const Component = () => {
@@ -536,16 +536,16 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('move grants responder to grandParent', pointerType => {
+    testWithPointerType('move grants responder to grandParent', (pointerType) => {
       const grandParentCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true)
+        onMoveShouldSetResponderCapture: jest.fn(() => true),
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true)
+        onMoveShouldSetResponderCapture: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -586,16 +586,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to parent', pointerType => {
+    testWithPointerType('move grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: jest.fn(() => false),
       };
       const parentCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true)
+        onMoveShouldSetResponderCapture: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -636,16 +636,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to child', pointerType => {
+    testWithPointerType('move grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: jest.fn(() => false),
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: jest.fn(() => false),
       };
       const targetCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
 
       const Component = () => {
@@ -702,16 +702,16 @@ describe('useResponderEvents', () => {
       grandParentRef = createRef();
     });
 
-    testWithPointerType('move grants responder to child', pointerType => {
+    testWithPointerType('move grants responder to child', (pointerType) => {
       const targetCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: jest.fn(() => true),
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -752,16 +752,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to parent', pointerType => {
+    testWithPointerType('move grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => false)
+        onMoveShouldSetResponder: jest.fn(() => false),
       };
       const parentCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -803,16 +803,16 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to grandParent', pointerType => {
+    testWithPointerType('move grants responder to grandParent', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => false)
+        onMoveShouldSetResponder: jest.fn(() => false),
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => false)
+        onMoveShouldSetResponder: jest.fn(() => false),
       };
       const grandParentCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
 
       const Component = () => {
@@ -867,13 +867,13 @@ describe('useResponderEvents', () => {
       parentRef = createRef();
     });
 
-    testWithPointerType('scroll grants responder to parent if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to parent if a pointer is down', (pointerType) => {
       const parentCallbacks = {
         onScrollShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
       const targetCallbacks = {
-        onScrollShouldSetResponderCapture: jest.fn(() => false)
+        onScrollShouldSetResponderCapture: jest.fn(() => false),
       };
 
       const Component = () => {
@@ -904,13 +904,13 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
     });
 
-    testWithPointerType('scroll grants responder to target if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to target if a pointer is down', (pointerType) => {
       const parentCallbacks = {
-        onScrollShouldSetResponderCapture: jest.fn(() => false)
+        onScrollShouldSetResponderCapture: jest.fn(() => false),
       };
       const targetCallbacks = {
         onScrollShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onResponderGrant: jest.fn(),
       };
 
       const Component = () => {
@@ -957,7 +957,7 @@ describe('useResponderEvents', () => {
 
     test('scroll does not bubble to parent', () => {
       const parentCallbacks = {
-        onScrollShouldSetResponder: jest.fn(() => true)
+        onScrollShouldSetResponder: jest.fn(() => true),
       };
 
       const Component = () => {
@@ -984,11 +984,11 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('scroll grants responder to target if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to target if a pointer is down', (pointerType) => {
       const targetCallbacks = {
         onScrollShouldSetResponder: jest.fn(() => true),
         onResponderGrant: jest.fn(),
-        onResponderRelease: jest.fn()
+        onResponderRelease: jest.fn(),
       };
 
       const Component = () => {
@@ -1051,10 +1051,10 @@ describe('useResponderEvents', () => {
 
     testWithPointerType(
       'is called after "start" event on the view that became the responder',
-      pointerType => {
+      (pointerType) => {
         const targetCallbacks = {
           onStartShouldSetResponder: jest.fn(() => true),
-          onResponderStart: jest.fn()
+          onResponderStart: jest.fn(),
         };
 
         const Component = () => {
@@ -1075,7 +1075,7 @@ describe('useResponderEvents', () => {
         expect(targetCallbacks.onResponderStart).toBeCalledTimes(1);
         expect(targetCallbacks.onResponderStart).toBeCalledWith(
           expect.objectContaining({
-            currentTarget: targetRef.current
+            currentTarget: targetRef.current,
           })
         );
       }
@@ -1094,13 +1094,13 @@ describe('useResponderEvents', () => {
     });
 
     // Assert that 'onResponderMove' after a move event, is called however the responder became active
-    ['onStartShouldSetResponder', 'onMoveShouldSetResponder'].forEach(shouldSetResponder => {
+    ['onStartShouldSetResponder', 'onMoveShouldSetResponder'].forEach((shouldSetResponder) => {
       testWithPointerType(
         `is called after "move" event on responder (${shouldSetResponder})`,
-        pointerType => {
+        (pointerType) => {
           const targetCallbacks = {
             [shouldSetResponder]: jest.fn(() => true),
-            onResponderMove: jest.fn()
+            onResponderMove: jest.fn(),
           };
 
           const Component = () => {
@@ -1122,7 +1122,7 @@ describe('useResponderEvents', () => {
           expect(targetCallbacks.onResponderMove).toBeCalledTimes(1);
           expect(targetCallbacks.onResponderMove).toBeCalledWith(
             expect.objectContaining({
-              currentTarget: targetRef.current
+              currentTarget: targetRef.current,
             })
           );
         }
@@ -1141,10 +1141,10 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called after "end" event on responder', pointerType => {
+    testWithPointerType('is called after "end" event on responder', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderEnd: jest.fn()
+        onResponderEnd: jest.fn(),
       };
 
       const Component = () => {
@@ -1166,7 +1166,7 @@ describe('useResponderEvents', () => {
       expect(targetCallbacks.onResponderEnd).toBeCalledTimes(1);
       expect(targetCallbacks.onResponderEnd).toBeCalledWith(
         expect.objectContaining({
-          currentTarget: targetRef.current
+          currentTarget: targetRef.current,
         })
       );
     });
@@ -1183,10 +1183,10 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called after all touches with responder end', pointerType => {
+    testWithPointerType('is called after all touches with responder end', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderRelease: jest.fn()
+        onResponderRelease: jest.fn(),
       };
 
       const Component = () => {
@@ -1210,7 +1210,7 @@ describe('useResponderEvents', () => {
       expect(targetCallbacks.onResponderRelease).toBeCalledTimes(1);
       expect(targetCallbacks.onResponderRelease).toBeCalledWith(
         expect.objectContaining({
-          currentTarget: targetRef.current
+          currentTarget: targetRef.current,
         })
       );
     });
@@ -1227,12 +1227,12 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called if pointer cancels', pointerType => {
+    testWithPointerType('is called if pointer cancels', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderEnd: jest.fn(),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onResponderTerminationRequest: jest.fn(() => false),
       };
 
       const Component = () => {
@@ -1255,16 +1255,16 @@ describe('useResponderEvents', () => {
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       expect(targetCallbacks.onResponderTerminate).toBeCalledWith(
         expect.objectContaining({
-          currentTarget: targetRef.current
+          currentTarget: targetRef.current,
         })
       );
     });
 
-    testWithPointerType('is called if input "select" occurs', pointerType => {
+    testWithPointerType('is called if input "select" occurs', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onResponderTerminationRequest: jest.fn(() => false),
       };
 
       const inputRef = createRef();
@@ -1296,10 +1296,10 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('is called if "selectionchange" occurs', pointerType => {
+    testWithPointerType('is called if "selectionchange" occurs', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onResponderTerminate: jest.fn(),
       };
 
       const Component = () => {
@@ -1321,7 +1321,7 @@ describe('useResponderEvents', () => {
           anchorNode,
           toString() {
             return 'text';
-          }
+          },
         };
       });
       act(() => {
@@ -1341,7 +1341,7 @@ describe('useResponderEvents', () => {
 
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onResponderTerminate: jest.fn(),
       };
 
       const Component = () => {
@@ -1377,7 +1377,7 @@ describe('useResponderEvents', () => {
 
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onResponderTerminate: jest.fn(),
       };
 
       const Component = () => {
@@ -1413,7 +1413,7 @@ describe('useResponderEvents', () => {
 
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onResponderTerminate: jest.fn(),
       };
 
       const Component = () => {
@@ -1449,7 +1449,7 @@ describe('useResponderEvents', () => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onResponderTerminationRequest: jest.fn(() => false),
       };
 
       const Component = () => {
@@ -1479,7 +1479,7 @@ describe('useResponderEvents', () => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onResponderTerminationRequest: jest.fn(() => false),
       };
 
       const Component = () => {
@@ -1510,7 +1510,7 @@ describe('useResponderEvents', () => {
 
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onResponderTerminate: jest.fn(),
       };
 
       const Component = () => {
@@ -1548,7 +1548,7 @@ describe('useResponderEvents', () => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn()
+        onResponderTerminationRequest: jest.fn(),
       };
 
       const Component = () => {
@@ -1575,7 +1575,7 @@ describe('useResponderEvents', () => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onResponderTerminationRequest: jest.fn(() => false),
       };
 
       const Component = () => {
@@ -1680,7 +1680,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('grandParent: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -1720,7 +1720,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('parent: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -1760,7 +1760,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('target: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
 
       const Component = () => {
@@ -1804,7 +1804,7 @@ describe('useResponderEvents', () => {
         'grandParent: onResponderGrant',
         'grandParent: onResponderMove',
         // Continues calling 'move' rather than entering into negotiation again
-        'grandParent: onResponderMove'
+        'grandParent: onResponderMove',
       ]);
     });
 
@@ -1854,7 +1854,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('grandParent: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -1894,7 +1894,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('parent: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -1934,7 +1934,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('target: onResponderTerminationRequest');
           return true;
-        }
+        },
       };
 
       const Component = () => {
@@ -1968,7 +1968,7 @@ describe('useResponderEvents', () => {
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
         'target: onResponderGrant',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // second gesture start
@@ -1982,7 +1982,7 @@ describe('useResponderEvents', () => {
         'parent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponder',
         'grandParent: onStartShouldSetResponder',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // first move gesture
@@ -1998,7 +1998,7 @@ describe('useResponderEvents', () => {
         'target: onResponderTerminationRequest',
         'target: onResponderTerminate',
         'parent: onResponderGrant',
-        'parent: onResponderMove'
+        'parent: onResponderMove',
       ]);
       eventLog = [];
       // second move gesture
@@ -2015,7 +2015,7 @@ describe('useResponderEvents', () => {
         'parent: onResponderTerminate',
         'grandParent: onResponderGrant',
         'grandParent: onResponderMove',
-        'grandParent: onResponderMove'
+        'grandParent: onResponderMove',
       ]);
       eventLog = [];
       // end gestures
@@ -2027,7 +2027,7 @@ describe('useResponderEvents', () => {
       expect(eventLog).toEqual([
         'grandParent: onResponderEnd',
         'grandParent: onResponderEnd',
-        'grandParent: onResponderRelease'
+        'grandParent: onResponderRelease',
       ]);
     });
 
@@ -2056,7 +2056,7 @@ describe('useResponderEvents', () => {
         onMoveShouldSetResponder() {
           eventLog.push('grandParent: onMoveShouldSetResponder');
           return false;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2074,7 +2074,7 @@ describe('useResponderEvents', () => {
         onMoveShouldSetResponder() {
           eventLog.push('parent: onMoveShouldSetResponder');
           return false;
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2099,7 +2099,7 @@ describe('useResponderEvents', () => {
         },
         onResponderRelease() {
           eventLog.push('target: onResponderRelease');
-        }
+        },
       };
 
       const Component = () => {
@@ -2132,7 +2132,7 @@ describe('useResponderEvents', () => {
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponder',
-        'grandParent: onStartShouldSetResponder'
+        'grandParent: onStartShouldSetResponder',
       ]);
       eventLog = [];
       // second gesture start on target
@@ -2147,7 +2147,7 @@ describe('useResponderEvents', () => {
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
         'target: onResponderGrant',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // remove first touch, keep second touch that
@@ -2170,7 +2170,7 @@ describe('useResponderEvents', () => {
         'parent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponder',
         'grandParent: onStartShouldSetResponder',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // move touch on parent
@@ -2184,7 +2184,7 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponder',
         'grandParent: onMoveShouldSetResponder',
-        'target: onResponderMove'
+        'target: onResponderMove',
       ]);
       eventLog = [];
       // remove touch that started within current responder
@@ -2219,7 +2219,7 @@ describe('useResponderEvents', () => {
         onMoveShouldSetResponder() {
           eventLog.push('grandParent: onMoveShouldSetResponder');
           return false;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2243,7 +2243,7 @@ describe('useResponderEvents', () => {
         },
         onResponderStart() {
           eventLog.push('parent: onResponderStart');
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2270,7 +2270,7 @@ describe('useResponderEvents', () => {
         },
         onResponderMove() {
           eventLog.push('target: onResponderMove');
-        }
+        },
       };
       const siblingCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2282,7 +2282,7 @@ describe('useResponderEvents', () => {
         },
         onResponderStart() {
           eventLog.push('sibling: onResponderStart');
-        }
+        },
       };
 
       const Component = () => {
@@ -2317,7 +2317,7 @@ describe('useResponderEvents', () => {
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
         'target: onResponderGrant',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // second gesture start on sibling
@@ -2332,7 +2332,7 @@ describe('useResponderEvents', () => {
         'parent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponder',
         'grandParent: onStartShouldSetResponder',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // gesture move on target
@@ -2347,7 +2347,7 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponder',
         'grandParent: onMoveShouldSetResponder',
-        'target: onResponderMove'
+        'target: onResponderMove',
       ]);
       eventLog = [];
       // gesture move on sibling
@@ -2362,7 +2362,7 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponder',
         'grandParent: onMoveShouldSetResponder',
-        'target: onResponderMove'
+        'target: onResponderMove',
       ]);
     });
 
@@ -2400,7 +2400,7 @@ describe('useResponderEvents', () => {
         },
         onResponderMove(e) {
           eventLog.push('target: onResponderMove');
-        }
+        },
       };
       const siblingConfig = {
         onStartShouldSetResponderCapture(e) {
@@ -2427,7 +2427,7 @@ describe('useResponderEvents', () => {
         },
         onResponderMove(e) {
           eventLog.push('sibling: onResponderMove');
-        }
+        },
       };
 
       const Component = () => {
@@ -2462,7 +2462,7 @@ describe('useResponderEvents', () => {
         'target: onResponderGrant',
         'target: onResponderStart',
         'target: onResponderMove',
-        'target: onResponderMove'
+        'target: onResponderMove',
       ]);
     });
 
@@ -2489,7 +2489,7 @@ describe('useResponderEvents', () => {
         onMoveShouldSetResponder() {
           eventLog.push('grandParent: onMoveShouldSetResponder');
           return false;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2510,7 +2510,7 @@ describe('useResponderEvents', () => {
         },
         onResponderReject() {
           eventLog.push('parent: onResponderReject');
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2533,7 +2533,7 @@ describe('useResponderEvents', () => {
         onResponderTerminationRequest() {
           eventLog.push('target: onResponderTerminationRequest');
           return false;
-        }
+        },
       };
 
       const Component = () => {
@@ -2566,7 +2566,7 @@ describe('useResponderEvents', () => {
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
         'target: onResponderGrant',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // move first touch
@@ -2581,7 +2581,7 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponder',
         'target: onResponderTerminationRequest',
         'parent: onResponderReject',
-        'target: onResponderMove'
+        'target: onResponderMove',
       ]);
       eventLog = [];
       // add second touch
@@ -2596,7 +2596,7 @@ describe('useResponderEvents', () => {
         'parent: onStartShouldSetResponder',
         'target: onResponderTerminationRequest',
         'parent: onResponderReject',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
     });
 
@@ -2619,7 +2619,7 @@ describe('useResponderEvents', () => {
         onScrollShouldSetResponder() {
           eventLog.push('grandParent: onScrollShouldSetResponder');
           return false;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2643,7 +2643,7 @@ describe('useResponderEvents', () => {
         },
         onResponderReject() {
           eventLog.push('parent: onResponderReject');
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2670,7 +2670,7 @@ describe('useResponderEvents', () => {
           eventLog.push('target: onResponderTerminationRequest');
           // responders can avoid termination only for scroll events
           return false;
-        }
+        },
       };
 
       const Component = () => {
@@ -2704,7 +2704,7 @@ describe('useResponderEvents', () => {
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
         'target: onResponderGrant',
-        'target: onResponderStart'
+        'target: onResponderStart',
       ]);
       eventLog = [];
       // then scroll
@@ -2718,11 +2718,11 @@ describe('useResponderEvents', () => {
         'parent: onScrollShouldSetResponderCapture',
         'parent: onScrollShouldSetResponder',
         'target: onResponderTerminationRequest',
-        'parent: onResponderReject'
+        'parent: onResponderReject',
       ]);
       eventLog = [];
       // now let the parent scroll take over
-      targetCallbacks.onResponderTerminationRequest = function() {
+      targetCallbacks.onResponderTerminationRequest = function () {
         eventLog.push('target: onResponderTerminationRequest');
         return true;
       };
@@ -2737,7 +2737,7 @@ describe('useResponderEvents', () => {
         'parent: onScrollShouldSetResponder',
         'target: onResponderTerminationRequest',
         'target: onResponderTerminate',
-        'parent: onResponderGrant'
+        'parent: onResponderGrant',
       ]);
     });
 
@@ -2752,7 +2752,7 @@ describe('useResponderEvents', () => {
         onStartShouldSetResponder() {
           eventLog.push('grandParent: onStartShouldSetResponder');
           return false;
-        }
+        },
       };
       const parentCallbacks = {
         onStartShouldSetResponderCapture(e) {
@@ -2763,7 +2763,7 @@ describe('useResponderEvents', () => {
         onStartShouldSetResponder() {
           eventLog.push('parent: onStartShouldSetResponder');
           return false;
-        }
+        },
       };
       const targetCallbacks = {
         onStartShouldSetResponderCapture() {
@@ -2773,7 +2773,7 @@ describe('useResponderEvents', () => {
         onStartShouldSetResponder() {
           eventLog.push('target: onStartShouldSetResponder');
           return true;
-        }
+        },
       };
 
       const Component = () => {
@@ -2799,7 +2799,7 @@ describe('useResponderEvents', () => {
       });
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
-        'parent: onStartShouldSetResponderCapture'
+        'parent: onStartShouldSetResponderCapture',
       ]);
       expect(getResponderNode()).toBe(null);
     });

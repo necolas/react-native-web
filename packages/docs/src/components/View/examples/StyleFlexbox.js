@@ -19,7 +19,7 @@ function Circle(props) {
         backgroundColor: backgroundColor,
         width: size,
         height: size,
-        margin: 1
+        margin: 1,
       }}
     />
   );
@@ -48,7 +48,7 @@ export default function StyleFlexbox() {
     <Circle bgColor="#D443E3" key="violet" />,
     <Circle bgColor="#FF9049" key="orange" />,
     <Circle bgColor="#FFE649" key="yellow" />,
-    <Circle bgColor="#7FE040" key="green" />
+    <Circle bgColor="#7FE040" key="green" />,
   ];
 
   return (
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f6f7f8',
     borderWidth: 0.5,
     borderColor: '#d6d7da',
-    marginBottom: 2
+    marginBottom: 2,
   },
   heading: {
     fontWeight: 'bold',
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   spacer: {
-    height: '1.5rem'
-  }
+    height: '1.5rem',
+  },
 });

@@ -9,9 +9,9 @@ import { Text, TextInput, View } from 'react-native';
 type SelectionExampleState = {
   selection: {
     start: number,
-    end?: number
+    end?: number,
   },
-  value: string
+  value: string,
 };
 
 class OnSelectionChangeExample extends React.Component {
@@ -23,7 +23,7 @@ class OnSelectionChangeExample extends React.Component {
     super(props);
     this.state = {
       selection: { start: 0, end: 0 },
-      value: props.value
+      value: props.value,
     };
   }
 
@@ -31,7 +31,7 @@ class OnSelectionChangeExample extends React.Component {
     this.setState({ selection });
   };
 
-  onChangeText = value => {
+  onChangeText = (value) => {
     this.setState({ value });
   };
 
@@ -50,7 +50,7 @@ class OnSelectionChangeExample extends React.Component {
     this.select(...positions)();
   };
 
-  placeAt = position => () => {
+  placeAt = (position) => () => {
     this.select(position, position)();
   };
 
@@ -58,7 +58,7 @@ class OnSelectionChangeExample extends React.Component {
     this.placeAt(this.getRandomPosition())();
   };
 
-  setRef = textInput => {
+  setRef = (textInput) => {
     this._textInput = textInput;
   };
 

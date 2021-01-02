@@ -58,7 +58,7 @@ describe('components/Image', () => {
       const defaultSource = {
         uri: 'https://google.com/favicon.ico',
         height: 10,
-        width: 20
+        width: 20,
       };
       const { container } = render(<Image defaultSource={defaultSource} />);
       expect(container.firstChild).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('components/Image', () => {
       const defaultSource = {
         uri: 'https://google.com/favicon.ico',
         height: 10,
-        width: 20
+        width: 20,
       };
       const { container } = render(
         <Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />
@@ -212,7 +212,7 @@ describe('components/Image', () => {
   });
 
   describe('prop "resizeMode"', () => {
-    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach(resizeMode => {
+    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach((resizeMode) => {
       test(`value "${resizeMode}"`, () => {
         const { container } = render(<Image resizeMode={resizeMode} />);
         expect(container.firstChild).toMatchSnapshot();
@@ -223,7 +223,7 @@ describe('components/Image', () => {
   describe('prop "source"', () => {
     test('does not throw', () => {
       const sources = [null, '', {}, { uri: '' }, { uri: 'https://google.com' }];
-      sources.forEach(source => {
+      sources.forEach((source) => {
         expect(() => render(<Image source={source} />)).not.toThrow();
       });
     });
@@ -295,7 +295,7 @@ describe('components/Image', () => {
         httpServerLocation: 'static',
         name: 'img',
         scales: [1, 2, 3],
-        type: 'png'
+        type: 'png',
       }));
 
       PixelRatio.get = jest.fn(() => 1.0);
@@ -347,10 +347,10 @@ describe('components/Image', () => {
     const uriTwo = 'https://twitter.com/favicon.ico';
     ImageUriCache.add(uriOne);
     ImageUriCache.add(uriTwo);
-    return Image.queryCache([uriOne, uriTwo, 'oops']).then(res => {
+    return Image.queryCache([uriOne, uriTwo, 'oops']).then((res) => {
       expect(res).toEqual({
         [uriOne]: 'disk/memory',
-        [uriTwo]: 'disk/memory'
+        [uriTwo]: 'disk/memory',
       });
     });
   });

@@ -4,7 +4,7 @@ import UIManager from '..';
 
 const createStyledNode = (name = 'div', style = {}) => {
   const root = document.createElement(name);
-  Object.keys(style).forEach(prop => {
+  Object.keys(style).forEach((prop) => {
     root.style[prop] = style[prop];
   });
   return root;
@@ -13,8 +13,8 @@ const createStyledNode = (name = 'div', style = {}) => {
 const componentStub = {
   _reactInternalInstance: {
     _currentElement: { _owner: {} },
-    _debugID: 1
-  }
+    _debugID: 1,
+  },
 };
 
 describe('apis/UIManager', () => {
@@ -33,7 +33,7 @@ describe('apis/UIManager', () => {
     });
 
     test('doesn\'t set tabIndex="-1" on elements focusable by default', () => {
-      ['a', 'input', 'select', 'textarea'].forEach(name => {
+      ['a', 'input', 'select', 'textarea'].forEach((name) => {
         const node = createStyledNode(name);
         UIManager.focus(node);
         expect(node.getAttribute('tabIndex')).toBeNull();

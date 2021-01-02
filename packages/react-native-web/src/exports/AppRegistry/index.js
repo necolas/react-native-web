@@ -21,7 +21,7 @@ export type ComponentProvider = () => ComponentType<any>;
 export type ComponentProviderInstrumentationHook = (
   component: ComponentProvider
 ) => ComponentType<any>;
-export type WrapperComponentProvider = any => ComponentType<*>;
+export type WrapperComponentProvider = (any) => ComponentType<*>;
 
 let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook = (
   component: ComponentProvider
@@ -32,7 +32,7 @@ export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
   run?: Function,
-  section?: boolean
+  section?: boolean,
 };
 
 /**
@@ -55,13 +55,13 @@ export default class AppRegistry {
 
   static registerComponent(appKey: string, componentProvider: ComponentProvider): string {
     runnables[appKey] = {
-      getApplication: appParameters =>
+      getApplication: (appParameters) =>
         getApplication(
           componentProviderInstrumentationHook(componentProvider),
           appParameters ? appParameters.initialProps : emptyObject,
           wrapperComponentProvider && wrapperComponentProvider(appParameters)
         ),
-      run: appParameters =>
+      run: (appParameters) =>
         renderApplication(
           componentProviderInstrumentationHook(componentProvider),
           wrapperComponentProvider && wrapperComponentProvider(appParameters),
@@ -69,9 +69,9 @@ export default class AppRegistry {
           {
             hydrate: appParameters.hydrate || false,
             initialProps: appParameters.initialProps || emptyObject,
-            rootTag: appParameters.rootTag
+            rootTag: appParameters.rootTag,
           }
-        )
+        ),
     };
     return appKey;
   }

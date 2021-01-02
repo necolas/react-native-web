@@ -5,14 +5,14 @@ export default function StateChanges() {
   const [state, updateState] = React.useState({
     active: 0,
     background: 0,
-    currentState: AppState.currentState
+    currentState: AppState.currentState,
   });
 
   React.useEffect(() => {
-    const handleChange = nextState => {
-      updateState(previousState => ({
+    const handleChange = (nextState) => {
+      updateState((previousState) => ({
         ...previousState,
-        [nextState]: previousState[nextState] + 1
+        [nextState]: previousState[nextState] + 1,
       }));
     };
 

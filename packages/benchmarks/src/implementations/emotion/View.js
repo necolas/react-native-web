@@ -22,7 +22,7 @@ const viewStyle = {
   position: 'relative',
   // fix flexbox bugs
   minHeight: 0,
-  minWidth: 0
+  minWidth: 0,
 };
 
 export default View;

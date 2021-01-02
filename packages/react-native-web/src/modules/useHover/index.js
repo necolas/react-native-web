@@ -21,7 +21,7 @@ type HoverEventsConfig = {
   onHoverStart?: ?(e: any) => void,
   onHoverChange?: ?(bool: boolean) => void,
   onHoverUpdate?: ?(e: any) => void,
-  onHoverEnd?: ?(e: any) => void
+  onHoverEnd?: ?(e: any) => void,
 };
 
 /**
@@ -40,7 +40,7 @@ function dispatchCustomEvent(
   payload?: {
     bubbles?: boolean,
     cancelable?: boolean,
-    detail?: { [key: string]: mixed }
+    detail?: { [key: string]: mixed },
   }
 ) {
   const event = document.createEvent('CustomEvent');
@@ -73,7 +73,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
       /**
        * End the hover gesture
        */
-      const hoverEnd = function(e) {
+      const hoverEnd = function (e) {
         if (onHoverEnd != null) {
           onHoverEnd(e);
         }
@@ -88,7 +88,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
       /**
        * Leave element
        */
-      const leaveListener = function(e) {
+      const leaveListener = function (e) {
         const target = targetRef.current;
         if (target != null && getPointerType(e) !== 'touch') {
           if (contain) {
@@ -101,7 +101,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
       /**
        * Move within element
        */
-      const moveListener = function(e) {
+      const moveListener = function (e) {
         if (getPointerType(e) !== 'touch') {
           if (onHoverUpdate != null) {
             // Not all browsers have these properties
@@ -119,7 +119,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
       /**
        * Start the hover gesture
        */
-      const hoverStart = function(e) {
+      const hoverStart = function (e) {
         if (onHoverStart != null) {
           onHoverStart(e);
         }
@@ -136,19 +136,19 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
       /**
        * Enter element
        */
-      const enterListener = function(e) {
+      const enterListener = function (e) {
         const target = targetRef.current;
         if (target != null && getPointerType(e) !== 'touch') {
           if (contain) {
             dispatchCustomEvent(target, lockEventType);
           }
           hoverStart(e);
-          const lockListener = function(lockEvent) {
+          const lockListener = function (lockEvent) {
             if (lockEvent.target !== target) {
               hoverEnd(e);
             }
           };
-          const unlockListener = function(lockEvent) {
+          const unlockListener = function (lockEvent) {
             if (lockEvent.target !== target) {
               hoverStart(e);
             }
@@ -172,6 +172,6 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
     onHoverChange,
     onHoverUpdate,
     onHoverEnd,
-    targetRef
+    targetRef,
   ]);
 }

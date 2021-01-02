@@ -28,10 +28,10 @@ export default class TouchableFeedbackEvents extends PureComponent {
     );
   }
 
-  _createPressHandler = eventName => {
+  _createPressHandler = (eventName) => {
     return () => {
       const limit = 6;
-      this.setState(state => {
+      this.setState((state) => {
         const eventLog = state.eventLog.slice(0, limit - 1);
         eventLog.unshift(eventName);
         return { eventLog };
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     color: '#007AFF',
     borderStyle: 'solid',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   eventLogBox: {
     padding: 10,
@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#f0f0f0',
-    backgroundColor: '#f9f9f9'
-  }
+    backgroundColor: '#f9f9f9',
+  },
 });

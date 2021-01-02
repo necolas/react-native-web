@@ -11,7 +11,7 @@ class SierpinskiTriangle extends React.Component {
 
   static defaultProps = {
     depth: 0,
-    renderCount: 0
+    renderCount: 0,
   };
 
   render() {

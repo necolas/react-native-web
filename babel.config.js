@@ -1,7 +1,7 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
 
   return {
-    presets: ['./scripts/babel/preset']
+    presets: ['./scripts/babel/preset'],
   };
 };

@@ -14,13 +14,13 @@ const keyboardTypes = [
   //'decimal-pad',
   //'twitter',
   'web-search',
-  'numeric'
+  'numeric',
 ];
 
 export default function KeyboardType() {
   return (
     <View>
-      {keyboardTypes.map(type => (
+      {keyboardTypes.map((type) => (
         <WithLabel key={type} label={type}>
           <TextInput keyboardType={type} style={styles.textinput} />
         </WithLabel>

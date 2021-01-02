@@ -33,10 +33,10 @@ const Linking = {
   _validateURL(url: string) {
     invariant(typeof url === 'string', 'Invalid URL: should be a string. Was: ' + url);
     invariant(url, 'Invalid URL: cannot be empty');
-  }
+  },
 };
 
-const open = url => {
+const open = (url) => {
   if (canUseDOM) {
     window.location = new URL(url, window.location).toString();
   }

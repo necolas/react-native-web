@@ -15,9 +15,9 @@ const browserList = {
   opera: 16,
   op_mini: 12,
   and_uc: 9,
-  and_chr: 38
+  and_chr: 38,
 };
 
 generator(browserList, {
-  path: path.join(__dirname, '../../packages/react-native-web/src/modules/prefixStyles/static.js')
+  path: path.join(__dirname, '../../packages/react-native-web/src/modules/prefixStyles/static.js'),
 });

@@ -18,7 +18,7 @@ type Props = {
   WrapperComponent?: ?ComponentType<*>,
   // $FlowFixMe
   children?: React.Children,
-  rootTag: any
+  rootTag: any,
 };
 
 const RootTagContext: Context<any> = createContext(null);
@@ -45,6 +45,6 @@ export default function AppContainer(props: Props) {
 
 const styles = StyleSheet.create({
   appContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });

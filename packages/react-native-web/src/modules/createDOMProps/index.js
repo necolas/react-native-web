@@ -26,28 +26,28 @@ const classes = css.create(
       listStyle: 'none',
       margin: 0,
       textAlign: 'inherit',
-      textDecoration: 'none'
+      textDecoration: 'none',
     },
     cursor: {
-      cursor: 'pointer'
-    }
+      cursor: 'pointer',
+    },
   },
   STYLE_GROUPS.classicReset
 );
 
 const pointerEventsStyles = StyleSheet.create({
   auto: {
-    pointerEvents: 'auto'
+    pointerEvents: 'auto',
   },
   'box-none': {
-    pointerEvents: 'box-none'
+    pointerEvents: 'box-none',
   },
   'box-only': {
-    pointerEvents: 'box-only'
+    pointerEvents: 'box-only',
   },
   none: {
-    pointerEvents: 'none'
-  }
+    pointerEvents: 'none',
+  },
 });
 
 const createDOMProps = (component, props) => {
@@ -235,14 +235,14 @@ const createDOMProps = (component, props) => {
     if (onClick != null) {
       if (disabled) {
         // Prevent click propagating if the element is disabled. See #1757
-        domProps.onClick = function(e) {
+        domProps.onClick = function (e) {
           e.stopPropagation();
         };
       } else if (!isNativeInteractiveElement) {
         // For native elements that are focusable but don't dispatch 'click' events
         // for keyboards.
         const onKeyDown = domProps.onKeyDown;
-        domProps.onKeyDown = function(e) {
+        domProps.onKeyDown = function (e) {
           const { key, repeat } = e;
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
           const isButtonRole = role === 'button' || role === 'menuitem';

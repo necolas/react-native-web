@@ -19,7 +19,7 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
     expect(
       propsToAccessibilityComponent({
         accessibilityRole: 'heading',
-        'aria-level': 3
+        'aria-level': 3,
       })
     ).toEqual('h3');
   });

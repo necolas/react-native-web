@@ -17,7 +17,7 @@ export type ModalContentProps = {|
   active?: ?(boolean | (() => boolean)),
   children?: any,
   onRequestClose?: ?() => void,
-  transparent?: ?boolean
+  transparent?: ?boolean,
 |};
 
 const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
@@ -55,18 +55,18 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
+    left: 0,
   },
   modalTransparent: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   modalOpaque: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   container: {
     top: 0,
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export default ModalContent;

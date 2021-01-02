@@ -13,6 +13,6 @@ export default function Animating() {
 const styles = StyleSheet.create({
   horizontal: {
     alignItems: 'center',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });

@@ -33,7 +33,7 @@ export type AnimationStyles = {|
   transitionDelay?: ?(string | Array<string>),
   transitionDuration?: ?(string | Array<string>),
   transitionProperty?: ?(string | Array<string>),
-  transitionTimingFunction?: ?(string | Array<string>)
+  transitionTimingFunction?: ?(string | Array<string>),
 |};
 
 /**
@@ -66,7 +66,7 @@ export type BorderStyles = {|
   borderLeftStyle?: ?BorderStyleValue,
   borderRightStyle?: ?BorderStyleValue,
   borderStartStyle?: ?BorderStyleValue,
-  borderTopStyle?: ?BorderStyleValue
+  borderTopStyle?: ?BorderStyleValue,
 |};
 
 /**
@@ -134,7 +134,7 @@ export type InteractionStyles = {|
   touchAction?: ?TouchActionValue,
   // https://developer.mozilla.org/en-US/docs/Web/CSS/user-select#Formal_syntax_2
   userSelect?: ?UserSelect,
-  willChange?: ?string
+  willChange?: ?string,
 |};
 
 /**
@@ -234,7 +234,7 @@ export type LayoutStyles = {|
   gridRowStart?: ?string,
   gridTemplateColumns?: ?string,
   gridTemplateRows?: ?string,
-  gridTemplateAreas?: ?string
+  gridTemplateAreas?: ?string,
 |};
 
 /**
@@ -245,10 +245,10 @@ export type ShadowStyles = {|
   shadowColor?: ?ColorValue,
   shadowOffset?: {|
     width?: DimensionValue,
-    height?: DimensionValue
+    height?: DimensionValue,
   |},
   shadowOpacity?: ?number,
-  shadowRadius?: ?DimensionValue
+  shadowRadius?: ?DimensionValue,
 |};
 
 /**
@@ -277,5 +277,5 @@ export type TransformStyles = {|
     | {| +translate3d: string |}
   >,
   transformOrigin?: ?string,
-  transformStyle?: ?('flat' | 'preserve-3d')
+  transformStyle?: ?('flat' | 'preserve-3d'),
 |};

@@ -25,7 +25,7 @@ type SwitchProps = {
   onValueChange?: (e: any) => void,
   thumbColor?: ColorValue,
   trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
-  value?: boolean
+  value?: boolean,
 };
 
 const emptyObject = {};
@@ -67,7 +67,7 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
   const minWidth = multiplyStyleLengthValue(height, 2);
   const width = styleWidth > minWidth ? styleWidth : minWidth;
   const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-  const trackCurrentColor = (function() {
+  const trackCurrentColor = (function () {
     if (value === true) {
       if (trackColor != null && typeof trackColor === 'object') {
         return trackColor.true;
@@ -92,8 +92,8 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     styles.track,
     {
       backgroundColor: disabled ? '#D5D5D5' : trackCurrentColor,
-      borderRadius: trackBorderRadius
-    }
+      borderRadius: trackBorderRadius,
+    },
   ];
 
   const thumbStyle = [
@@ -103,8 +103,8 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
       backgroundColor: disabled ? '#BDBDBD' : thumbCurrentColor,
       height: thumbHeight,
       marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0,
-      width: thumbWidth
-    }
+      width: thumbWidth,
+    },
   ];
 
   const nativeControl = createElement('input', {
@@ -116,7 +116,7 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     onFocus: handleFocusState,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox'
+    type: 'checkbox',
   });
 
   return (
@@ -133,20 +133,20 @@ Switch.displayName = 'Switch';
 const styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
-    userSelect: 'none'
+    userSelect: 'none',
   },
   cursorDefault: {
-    cursor: 'default'
+    cursor: 'default',
   },
   cursorInherit: {
-    cursor: 'inherit'
+    cursor: 'inherit',
   },
   track: {
     ...StyleSheet.absoluteFillObject,
     height: '70%',
     margin: 'auto',
     transitionDuration: '0.1s',
-    width: '100%'
+    width: '100%',
   },
   thumb: {
     alignSelf: 'flex-start',
@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
     boxShadow: thumbDefaultBoxShadow,
     start: '0%',
     transform: [{ translateZ: 0 }],
-    transitionDuration: '0.1s'
+    transitionDuration: '0.1s',
   },
   thumbActive: {
-    start: '100%'
+    start: '100%',
   },
   nativeControl: {
     ...StyleSheet.absoluteFillObject,
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
     margin: 0,
     opacity: 0,
     padding: 0,
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 export default Switch;

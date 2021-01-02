@@ -20,7 +20,7 @@ export default class App extends Component {
       currentBenchmarkName,
       currentLibraryName: 'react-native-web',
       status: 'idle',
-      results: []
+      results: [],
     };
   }
 
@@ -45,7 +45,7 @@ export default class App extends Component {
                   selectedValue={currentLibraryName}
                   style={styles.picker}
                 >
-                  {Object.keys(tests[currentBenchmarkName]).map(libraryName => (
+                  {Object.keys(tests[currentBenchmarkName]).map((libraryName) => (
                     <Picker.Item key={libraryName} label={libraryName} value={libraryName} />
                   ))}
                 </Picker>
@@ -60,7 +60,7 @@ export default class App extends Component {
                   selectedValue={currentBenchmarkName}
                   style={styles.picker}
                 >
-                  {Object.keys(tests).map(test => (
+                  {Object.keys(tests).map((test) => (
                     <Picker.Item key={test} label={test} value={test} />
                   ))}
                 </Picker>
@@ -135,7 +135,7 @@ export default class App extends Component {
                       onComplete={this._createHandleComplete({
                         sampleCount,
                         benchmarkName: currentBenchmarkName,
-                        libraryName: currentLibraryName
+                        libraryName: currentLibraryName,
                       })}
                       ref={this._setBenchRef}
                       sampleCount={sampleCount}
@@ -156,11 +156,11 @@ export default class App extends Component {
     );
   }
 
-  _handleChangeBenchmark = value => {
+  _handleChangeBenchmark = (value) => {
     this.setState(() => ({ currentBenchmarkName: value }));
   };
 
-  _handleChangeLibrary = value => {
+  _handleChangeLibrary = (value) => {
     this.setState(() => ({ currentLibraryName: value }));
   };
 
@@ -182,23 +182,23 @@ export default class App extends Component {
     this._shouldHideBenchmark = !this._shouldHideBenchmark;
     if (this._benchWrapperRef) {
       this._benchWrapperRef.setNativeProps({
-        style: { opacity: this._shouldHideBenchmark ? 0 : 1 }
+        style: { opacity: this._shouldHideBenchmark ? 0 : 1 },
       });
     }
   };
 
-  _createHandleComplete = ({ benchmarkName, libraryName, sampleCount }) => results => {
+  _createHandleComplete = ({ benchmarkName, libraryName, sampleCount }) => (results) => {
     this.setState(
-      state => ({
+      (state) => ({
         results: state.results.concat([
           {
             ...results,
             benchmarkName,
             libraryName,
-            libraryVersion: this.props.tests[benchmarkName][libraryName].version
-          }
+            libraryVersion: this.props.tests[benchmarkName][libraryName].version,
+          },
         ]),
-        status: 'complete'
+        status: 'complete',
       }),
       this._scrollToEnd
     );
@@ -210,15 +210,15 @@ export default class App extends Component {
     this.setState(() => ({ results: [] }));
   };
 
-  _setBenchRef = ref => {
+  _setBenchRef = (ref) => {
     this._benchmarkRef = ref;
   };
 
-  _setBenchWrapperRef = ref => {
+  _setBenchWrapperRef = (ref) => {
     this._benchWrapperRef = ref;
   };
 
-  _setScrollRef = ref => {
+  _setScrollRef = (ref) => {
     this._scrollRef = ref;
   };
 
@@ -238,29 +238,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   iconEye: {
     color: 'white',
-    height: 32
+    height: 32,
   },
   iconEyeContainer: {
     position: 'absolute',
     top: 10,
     right: 10,
-    zIndex: 1
+    zIndex: 1,
   },
   iconClearContainer: {
     height: '100%',
-    marginLeft: 5
+    marginLeft: 5,
   },
   grow: {
-    flex: 1
+    flex: 1,
   },
   listPanel: {
     flex: 1,
     width: '100%',
-    marginHorizontal: 'auto'
+    marginHorizontal: 'auto',
   },
   listBar: {
     padding: 5,
@@ -269,27 +269,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.fadedGray,
     borderBottomWidth: 1,
     borderBottomColor: colors.mediumGray,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   pickers: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   pickerContainer: {
     flex: 1,
-    padding: 5
+    padding: 5,
   },
   pickerTitle: {
     fontSize: 12,
-    color: colors.deepGray
+    color: colors.deepGray,
   },
   picker: {
     ...StyleSheet.absoluteFillObject,
     appearance: 'none',
     opacity: 0,
-    width: '100%'
+    width: '100%',
   },
   button: {
     borderRadius: 0,
-    flex: 1
-  }
+    flex: 1,
+  },
 });

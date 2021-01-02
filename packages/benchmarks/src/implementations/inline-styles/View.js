@@ -11,15 +11,7 @@ const compose = (s1, s2) => {
 class View extends React.Component {
   render() {
     const { style, ...other } = this.props;
-    return (
-      <div
-        {...other}
-        style={compose(
-          viewStyle,
-          style
-        )}
-      />
-    );
+    return <div {...other} style={compose(viewStyle, style)} />;
   }
 }
 
@@ -37,7 +29,7 @@ const viewStyle = {
   position: 'relative',
   // fix flexbox bugs
   minHeight: 0,
-  minWidth: 0
+  minWidth: 0,
 };
 
 export default View;

@@ -20,6 +20,6 @@ export default function OnPress() {
 
 const styles = StyleSheet.create({
   horizontal: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });

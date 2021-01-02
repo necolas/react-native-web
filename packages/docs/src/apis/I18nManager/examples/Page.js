@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
     flex: 1,
     maxWidth: 600,
     margin: 'auto',
-    width: '100%'
+    width: '100%',
   },
   spacer: {
-    height: 270
+    height: 270,
   },
   wrapper: {
     flex: 1,
-    paddingTop: 10
-  }
+    paddingTop: 10,
+  },
 });

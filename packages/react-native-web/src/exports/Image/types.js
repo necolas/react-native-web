@@ -17,7 +17,7 @@ import type {
   InteractionStyles,
   LayoutStyles,
   ShadowStyles,
-  TransformStyles
+  TransformStyles,
 } from '../../types/styles';
 
 type SourceObject = {
@@ -74,7 +74,7 @@ type SourceObject = {
    * these will be used to set the default `<Image/>` component dimensions.
    */
   height?: number,
-  width?: number
+  width?: number,
 };
 
 export type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch';
@@ -93,7 +93,7 @@ export type ImageStyle = {
   filter?: string,
   opacity?: number,
   resizeMode?: ResizeMode,
-  tintColor?: ColorValue
+  tintColor?: ColorValue,
 };
 
 export type ImageProps = {
@@ -109,5 +109,5 @@ export type ImageProps = {
   onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
   source: Source,
-  style?: GenericStyleProp<ImageStyle>
+  style?: GenericStyleProp<ImageStyle>,
 };

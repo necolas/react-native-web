@@ -77,7 +77,7 @@ export type GestureState = {|
   velocityY: number,
   // Number of touches currently on screen
   numberActiveTouches: number,
-  _accountsForMovesUpTo: number
+  _accountsForMovesUpTo: number,
 |};
 
 type ActiveCallback = (event: PressEvent, gestureState: GestureState) => boolean;
@@ -103,7 +103,7 @@ type PanResponderConfig = $ReadOnly<{|
   // All pointers removed, gesture successful
   onPanRelease?: ?PassiveCallback,
   // Gesture cancelled
-  onPanTerminate?: ?PassiveCallback
+  onPanTerminate?: ?PassiveCallback,
 |}>;
 
 const {
@@ -112,7 +112,7 @@ const {
   currentCentroidXOfTouchesChangedAfter,
   currentCentroidYOfTouchesChangedAfter,
   previousCentroidXOfTouchesChangedAfter,
-  previousCentroidYOfTouchesChangedAfter
+  previousCentroidYOfTouchesChangedAfter,
 } = TouchHistoryMath;
 
 const PanResponder = {
@@ -203,7 +203,7 @@ const PanResponder = {
    */
   create(config: PanResponderConfig) {
     const interactionState = {
-      handle: (null: ?number)
+      handle: (null: ?number),
     };
     const gestureState: GestureState = {
       // Useful for debugging
@@ -217,7 +217,7 @@ const PanResponder = {
       velocityX: 0,
       velocityY: 0,
       numberActiveTouches: 0,
-      _accountsForMovesUpTo: 0
+      _accountsForMovesUpTo: 0,
     };
 
     const {
@@ -232,7 +232,7 @@ const PanResponder = {
       onPanRelease,
       onPanReject,
       onPanTerminate,
-      onPanTerminationRequest
+      onPanTerminationRequest,
     } = config;
 
     const panHandlers = {
@@ -333,15 +333,15 @@ const PanResponder = {
         return onPanTerminationRequest != null
           ? onPanTerminationRequest(event, gestureState)
           : true;
-      }
+      },
     };
     return {
       panHandlers,
       getInteractionHandle(): ?number {
         return interactionState.handle;
-      }
+      },
     };
-  }
+  },
 };
 
 function clearInteractionHandle(

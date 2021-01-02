@@ -11,7 +11,7 @@ const LogBox = {
   ignoreLogs() {},
   ignoreAllLogs() {},
   uninstall() {},
-  install() {}
+  install() {},
 };
 
 export default LogBox;

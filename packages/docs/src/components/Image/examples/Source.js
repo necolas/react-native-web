@@ -41,20 +41,20 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   column: {
     alignItems: 'flex-start',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   text: {
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   image: {
     borderColor: 'black',
     borderWidth: 0.5,
     height: 120,
     width: 120,
-    resizeMode: 'cover'
-  }
+    resizeMode: 'cover',
+  },
 });

@@ -20,7 +20,7 @@ import {
   genItemData,
   getItemLayout,
   pressItem,
-  renderSmallSwitchOption
+  renderSmallSwitchOption,
 } from './shared';
 
 class MultiColumnExample extends React.PureComponent {
@@ -33,17 +33,17 @@ class MultiColumnExample extends React.PureComponent {
     fixedHeight: true,
     logViewable: false,
     numColumns: 2,
-    virtualized: true
+    virtualized: true,
   };
-  _onChangeFilterText = filterText => {
+  _onChangeFilterText = (filterText) => {
     this.setState(() => ({ filterText }));
   };
-  _onChangeNumColumns = numColumns => {
+  _onChangeNumColumns = (numColumns) => {
     this.setState(() => ({ numColumns: Number(numColumns) }));
   };
   render() {
     const filterRegex = new RegExp(String(this.state.filterText), 'i');
-    const filter = item => filterRegex.test(item.text) || filterRegex.test(item.title);
+    const filter = (item) => filterRegex.test(item.text) || filterRegex.test(item.title);
     const filteredData = this.state.data.filter(filter);
     return (
       <View style={styles.container}>
@@ -102,12 +102,15 @@ class MultiColumnExample extends React.PureComponent {
       isViewable: boolean,
       item: { columns: Array<*> },
       index: ?number,
-      section?: any
-    }>
+      section?: any,
+    }>,
   }) => {
     // Impressions can be logged here
     if (this.state.logViewable) {
-      console.log('onViewableItemsChanged: ', info.changed.map(v => ({ ...v, item: '...' })));
+      console.log(
+        'onViewableItemsChanged: ',
+        info.changed.map((v) => ({ ...v, item: '...' }))
+      );
     }
   };
   _pressItem = (key: string) => {
@@ -121,7 +124,7 @@ const BORDER_WIDTH = 1;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgb(239, 239, 244)',
-    flex: 1
+    flex: 1,
   },
   card: {
     margin: CARD_MARGIN,
@@ -129,18 +132,18 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: 'hidden',
     borderColor: 'lightgray',
-    borderWidth: BORDER_WIDTH
+    borderWidth: BORDER_WIDTH,
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   searchRow: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
-export default function() {
+export default function () {
   return (
     <View style={{ height: 300 }}>
       <MultiColumnExample />

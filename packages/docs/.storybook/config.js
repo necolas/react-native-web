@@ -15,7 +15,7 @@ addParameters({
     theme: create({
       base: 'light',
       brandTitle: 'React Native for Web',
-      brandUrl: 'https://necolas.github.io/react-native-web'
+      brandUrl: 'https://necolas.github.io/react-native-web',
       // To control appearance:
       // brandImage: 'http://url.of/some.svg',
     }),
@@ -37,8 +37,8 @@ addParameters({
      * @type {Regex}
      */
     hierarchyRootSeparator: /\|/,
-    panelPosition: 'bottom'
-  }
+    panelPosition: 'bottom',
+  },
 });
 
 // addDecorator(centered);

@@ -12,12 +12,12 @@ export default function Draggable() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   image: {
     width: 300,
     height: 200,
     backgroundColor: 'transparent',
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });

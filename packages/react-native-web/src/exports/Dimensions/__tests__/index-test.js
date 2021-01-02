@@ -19,7 +19,7 @@ describe('apis/Dimensions', () => {
     expect(handler).toHaveBeenCalledTimes(1);
     expect(handler).toHaveBeenLastCalledWith({
       window: Dimensions.get('window'),
-      screen: Dimensions.get('screen')
+      screen: Dimensions.get('screen'),
     });
   });
 

@@ -18,7 +18,7 @@ type KeyboardAvoidingViewProps = {
   ...ViewProps,
   behavior?: 'height' | 'padding' | 'position',
   contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
-  keyboardVerticalOffset: number
+  keyboardVerticalOffset: number,
 };
 
 class KeyboardAvoidingView extends React.Component<KeyboardAvoidingViewProps> {

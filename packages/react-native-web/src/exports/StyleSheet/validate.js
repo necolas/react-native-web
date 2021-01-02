@@ -18,7 +18,7 @@ const invalidShortforms = {
   font: true,
   grid: true,
   outline: true,
-  textDecoration: true
+  textDecoration: true,
 };
 
 function error(message) {

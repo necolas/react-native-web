@@ -6,5 +6,5 @@ export default {
   check: promiseMock,
   requestPermission: promiseMock,
   request: promiseMock,
-  requestMultiple: promiseMock
+  requestMultiple: promiseMock,
 };

@@ -22,7 +22,7 @@ const Vibration = {
   },
   vibrate(pattern: VibratePattern = 400) {
     vibrate(pattern);
-  }
+  },
 };
 
 export default Vibration;

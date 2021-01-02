@@ -11,7 +11,7 @@ import UIManager from '../UIManager';
 
 // NativeModules shim
 const NativeModules = {
-  UIManager
+  UIManager,
 };
 
 export default NativeModules;

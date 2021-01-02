@@ -18,7 +18,7 @@ import {
   Switch,
   Text,
   TextInput,
-  View
+  View,
 } from 'react-native';
 
 type Item = { title: string, text: string, key: string, pressed: boolean, noImage?: ?boolean };
@@ -31,7 +31,7 @@ function genItemData(count: number, start: number = 0): Array<Item> {
       title: 'Item ' + ii,
       text: LOREM_IPSUM.substr(0, (itemHash % 301) + 20),
       key: String(ii),
-      pressed: false
+      pressed: false,
     });
   }
   return dataBlob;
@@ -46,7 +46,7 @@ class ItemComponent extends React.PureComponent<{
   item: Item,
   onPress: (key: string) => void,
   onShowUnderlay?: () => void,
-  onHideUnderlay?: () => void
+  onHideUnderlay?: () => void,
 }> {
   _onPress = () => {
     this.props.onPress(this.props.item.key);
@@ -62,14 +62,14 @@ class ItemComponent extends React.PureComponent<{
         onShowUnderlay={this.props.onShowUnderlay}
         style={horizontal ? styles.horizItem : styles.item}
         tvParallaxProperties={{
-          pressMagnification: 1.1
+          pressMagnification: 1.1,
         }}
       >
         <View
           style={[
             styles.row,
             horizontal && { width: HORIZ_WIDTH },
-            fixedHeight && { height: ITEM_HEIGHT }
+            fixedHeight && { height: ITEM_HEIGHT },
           ]}
         >
           {!item.noImage && <Image source={imgSource} style={styles.thumb} />}
@@ -148,11 +148,11 @@ class Spindicator extends React.PureComponent<{}> {
                 rotate: this.props.value.interpolate({
                   inputRange: [0, 5000],
                   outputRange: ['0deg', '360deg'],
-                  extrapolate: 'extend'
-                })
-              }
-            ]
-          }
+                  extrapolate: 'extend',
+                }),
+              },
+            ],
+          },
         ]}
       />
     );
@@ -171,7 +171,7 @@ const THUMB_URLS = [
   require('./Thumbnails/party.png'),
   require('./Thumbnails/poke.png'),
   require('./Thumbnails/superlike.png'),
-  require('./Thumbnails/victory.png')
+  require('./Thumbnails/victory.png'),
 ];
 
 const LOREM_IPSUM =
@@ -203,12 +203,12 @@ function getItemLayout(data: any, index: number, horizontal?: boolean) {
 function pressItem(context: Object, key: string) {
   const index = Number(key);
   const pressed = !context.state.data[index].pressed;
-  context.setState(state => {
+  context.setState((state) => {
     const newData = [...state.data];
     newData[index] = {
       ...state.data[index],
       pressed,
-      title: 'Item ' + key + (pressed ? ' (pressed)' : '')
+      title: 'Item ' + key + (pressed ? ' (pressed)' : ''),
     };
     return { data: newData };
   });
@@ -222,7 +222,7 @@ function renderSmallSwitchOption(context: Object, key: string) {
     <View style={styles.option}>
       <Text>{key}:</Text>
       <Switch
-        onValueChange={value => context.setState({ [key]: value })}
+        onValueChange={(value) => context.setState({ [key]: value })}
         style={styles.smallSwitch}
         value={context.state[key]}
       />
@@ -248,31 +248,31 @@ const styles = StyleSheet.create({
     ...HEADER,
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   headerFooterContainer: {
-    backgroundColor: 'rgb(239, 239, 244)'
+    backgroundColor: 'rgb(239, 239, 244)',
   },
   horizItem: {
-    alignSelf: 'flex-start' // Necessary for touch highlight
+    alignSelf: 'flex-start', // Necessary for touch highlight
   },
   item: {
-    flex: 1
+    flex: 1,
   },
   itemSeparator: {
     height: SEPARATOR_HEIGHT,
     backgroundColor: 'rgb(200, 199, 204)',
-    marginLeft: 60
+    marginLeft: 60,
   },
   option: {
     flexDirection: 'row',
     padding: 8,
-    paddingRight: 0
+    paddingRight: 0,
   },
   row: {
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   searchTextInput: {
     backgroundColor: 'white',
@@ -283,48 +283,48 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     height: 26,
     fontSize: 14,
-    flexGrow: 1
+    flexGrow: 1,
   },
   separator: {
     height: SEPARATOR_HEIGHT,
-    backgroundColor: 'rgb(200, 199, 204)'
+    backgroundColor: 'rgb(200, 199, 204)',
   },
   smallSwitch: Platform.select({
     android: {
       top: 1,
       margin: -6,
-      transform: [{ scale: 0.7 }]
+      transform: [{ scale: 0.7 }],
     },
     ios: {
       top: 4,
       margin: -10,
-      transform: [{ scale: 0.5 }]
-    }
+      transform: [{ scale: 0.5 }],
+    },
   }),
   stacked: {
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 10
+    padding: 10,
   },
   thumb: {
     width: 50,
     height: 50,
-    left: -5
+    left: -5,
   },
   spindicator: {
     marginLeft: 'auto',
     marginTop: 8,
     width: 2,
     height: 16,
-    backgroundColor: 'darkgray'
+    backgroundColor: 'darkgray',
   },
   stackedText: {
     padding: 4,
-    fontSize: 18
+    fontSize: 18,
   },
   text: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export {
@@ -339,5 +339,5 @@ export {
   getItemLayout,
   pressItem,
   renderSmallSwitchOption,
-  renderStackedItem
+  renderStackedItem,
 };

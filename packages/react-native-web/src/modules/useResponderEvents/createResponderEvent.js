@@ -21,8 +21,8 @@ export type ResponderEvent = {|
     registrationName?: string,
     phasedRegistrationNames?: {
       bubbled: string,
-      captured: string
-    }
+      captured: string,
+    },
   },
   eventPhase: ?number,
   isDefaultPrevented: () => boolean,
@@ -48,9 +48,9 @@ export type ResponderEvent = {|
       startPageX: number,
       startPageY: number,
       startTimeStamp: number,
-      touchActive: boolean
-    |}>
-  |}>
+      touchActive: boolean,
+    |}>,
+  |}>,
 |};
 
 const emptyFunction = () => {};
@@ -96,7 +96,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
   const timestamp = domEvent.timeStamp;
 
   function normalizeTouches(touches) {
-    return Array.prototype.slice.call(touches).map(touch => {
+    return Array.prototype.slice.call(touches).map((touch) => {
       return {
         force: touch.force,
         identifier: normalizeIdentifier(touch.identifier),
@@ -109,7 +109,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
         pageX: touch.pageX,
         pageY: touch.pageY,
         target: touch.target,
-        timestamp
+        timestamp,
       };
     });
   }
@@ -131,8 +131,8 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
         pageX,
         pageY,
         target: domEvent.target,
-        timestamp
-      }
+        timestamp,
+      },
     ];
     changedTouches = emulatedTouches;
     touches =
@@ -173,7 +173,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
       target: domEvent.target,
       timestamp,
       touches,
-      type: domEventType
+      type: domEventType,
     },
     persist: emptyFunction,
     preventDefault,
@@ -182,7 +182,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
     },
     target: domEvent.target,
     timeStamp: timestamp,
-    touchHistory: ResponderTouchHistoryStore.touchHistory
+    touchHistory: ResponderTouchHistoryStore.touchHistory,
   };
 
   // Using getters and functions serves two purposes:

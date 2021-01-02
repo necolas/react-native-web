@@ -16,7 +16,7 @@ type I18nManagerStatus = {
   forceRTL: (forceRTL: boolean) => void,
   isRTL: boolean,
   setPreferredLanguageRTL: (setRTL: boolean) => void,
-  swapLeftAndRightInRTL: (flipStyles: boolean) => void
+  swapLeftAndRightInRTL: (flipStyles: boolean) => void,
 };
 
 let doLeftAndRightSwapInRTL = true;
@@ -60,7 +60,7 @@ const I18nManager: I18nManagerStatus = {
   },
   get isRTL() {
     return isRTL();
-  }
+  },
 };
 
 export default I18nManager;

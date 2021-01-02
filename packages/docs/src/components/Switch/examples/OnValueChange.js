@@ -6,11 +6,11 @@ export default function OnValueChange() {
   const [switchState, updateSwitch] = React.useState(false);
   const [otherSwitchState, updateOtherSwitch] = React.useState(false);
 
-  const switchValueChange = value => {
+  const switchValueChange = (value) => {
     updateSwitch(value);
   };
 
-  const otherSwitchValueChange = value => {
+  const otherSwitchValueChange = (value) => {
     updateOtherSwitch(value);
   };
 

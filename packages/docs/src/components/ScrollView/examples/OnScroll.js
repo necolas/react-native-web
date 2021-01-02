@@ -45,18 +45,18 @@ export default function OnScroll() {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#eeeeee',
-    height: 300
+    height: 300,
   },
   horizontalScrollView: {
-    height: 106
+    height: 106,
   },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    margin: 5
+    margin: 5,
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
-  }
+    justifyContent: 'space-around',
+  },
 });

@@ -55,7 +55,7 @@ function createKeyboardEvent(
     key = '',
     metaKey = false,
     preventDefault = emptyFunction,
-    shiftKey = false
+    shiftKey = false,
   } = {}
 ) {
   const modifierState = { altKey, ctrlKey, metaKey, shiftKey };
@@ -70,7 +70,7 @@ function createKeyboardEvent(
     key,
     metaKey,
     preventDefault,
-    shiftKey
+    shiftKey,
   };
 
   if (isComposing) {
@@ -106,7 +106,7 @@ function createMouseEvent(
     shiftKey = false,
     timeStamp,
     x = 0,
-    y = 0
+    y = 0,
   } = {}
 ) {
   const modifierState = { altKey, ctrlKey, metaKey, shiftKey };
@@ -134,7 +134,7 @@ function createMouseEvent(
     screenX: screenX === 0 ? screenX : x,
     screenY: screenY === 0 ? screenY : y + defaultBrowserChromeSize,
     shiftKey,
-    timeStamp
+    timeStamp,
   });
 }
 
@@ -173,7 +173,7 @@ function createPointerEvent(
     twist = 0,
     width,
     x = 0,
-    y = 0
+    y = 0,
   } = {}
 ) {
   const modifierState = { altKey, ctrlKey, metaKey, shiftKey };
@@ -213,7 +213,7 @@ function createPointerEvent(
     tiltY,
     timeStamp,
     twist,
-    width: isMouse ? 1 : width != null ? width : defaultPointerSize
+    width: isMouse ? 1 : width != null ? width : defaultPointerSize,
   });
 }
 
@@ -226,8 +226,8 @@ function createTouchEvent(type, payload) {
     ...payload,
     detail: 0,
     sourceCapabilities: {
-      firesTouchEvents: true
-    }
+      firesTouchEvents: true,
+    },
   });
 }
 
@@ -242,21 +242,21 @@ export function blur({ relatedTarget } = {}) {
 export function click(payload) {
   return createMouseEvent('click', {
     button: buttonType.primary,
-    ...payload
+    ...payload,
   });
 }
 
 export function contextmenu(payload) {
   return createMouseEvent('contextmenu', {
     ...payload,
-    detail: 0
+    detail: 0,
   });
 }
 
 export function dragstart(payload) {
   return createMouseEvent('dragstart', {
     ...payload,
-    detail: 0
+    detail: 0,
   });
 }
 
@@ -306,7 +306,7 @@ export function mousedown(payload) {
   return createMouseEvent('mousedown', {
     ...payload,
     button,
-    buttons
+    buttons,
   });
 }
 
@@ -323,7 +323,7 @@ export function mousemove(payload) {
     // 0 is also the uninitialized value (i.e., don't assume it means primary button down)
     button: 0,
     buttons: 0,
-    ...payload
+    ...payload,
   });
 }
 
@@ -339,7 +339,7 @@ export function mouseup(payload) {
   return createMouseEvent('mouseup', {
     button: buttonType.primary,
     ...payload,
-    buttons: buttonsType.none
+    buttons: buttonsType.none,
   });
 }
 export function pointercancel(payload) {
@@ -355,7 +355,7 @@ export function pointercancel(payload) {
     screenY: 0,
     width: 1,
     x: 0,
-    y: 0
+    y: 0,
   });
 }
 
@@ -365,7 +365,7 @@ export function pointerdown(payload) {
     button: buttonType.primary,
     buttons: buttonsType.primary,
     pressure: isTouch ? 1 : 0.5,
-    ...payload
+    ...payload,
   });
 }
 
@@ -381,7 +381,7 @@ export function pointermove(payload) {
   return createPointerEvent('pointermove', {
     ...payload,
     button: buttonType.none,
-    buttons: buttonsType.none
+    buttons: buttonsType.none,
   });
 }
 
@@ -398,7 +398,7 @@ export function pointerup(payload) {
     button: buttonType.primary,
     ...payload,
     buttons: buttonsType.none,
-    pressure: 0
+    pressure: 0,
   });
 }
 
@@ -444,6 +444,6 @@ export function virtualclick(payload) {
     screenY: 0,
     width: 1,
     x: 0,
-    y: 0
+    y: 0,
   });
 }

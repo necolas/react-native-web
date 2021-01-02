@@ -23,13 +23,13 @@ export default function SetString() {
 
 const styles = StyleSheet.create({
   buttonBox: {
-    maxWidth: 300
+    maxWidth: 300,
   },
   textInput: {
     borderColor: '#AAB8C2',
     borderWidth: 1,
     height: 50,
     marginTop: 20,
-    padding: 5
-  }
+    padding: 5,
+  },
 });

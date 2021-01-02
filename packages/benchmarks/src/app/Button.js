@@ -13,7 +13,7 @@ export default class Button extends Component<*> {
       style,
       textStyle,
       testID,
-      title
+      title,
     } = this.props;
 
     return (
@@ -26,7 +26,7 @@ export default class Button extends Component<*> {
           styles.button,
           style,
           color && { backgroundColor: color },
-          disabled && styles.buttonDisabled
+          disabled && styles.buttonDisabled,
         ]}
         testID={testID}
       >
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#2196F3',
     borderRadius: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
     color: '#fff',
@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     padding: 8,
     textAlign: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   buttonDisabled: {
-    backgroundColor: '#dfdfdf'
+    backgroundColor: '#dfdfdf',
   },
   textDisabled: {
-    color: '#a1a1a1'
-  }
+    color: '#a1a1a1',
+  },
 });

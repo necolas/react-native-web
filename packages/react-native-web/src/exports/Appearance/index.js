@@ -13,7 +13,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 export type ColorSchemeName = 'light' | 'dark';
 
 export type AppearancePreferences = {|
-  colorScheme: ColorSchemeName
+  colorScheme: ColorSchemeName,
 |};
 
 type AppearanceListener = (preferences: AppearancePreferences) => void;
@@ -54,7 +54,7 @@ const Appearance = {
       }
       listenerMapping.delete(listener);
     }
-  }
+  },
 };
 
 export default Appearance;

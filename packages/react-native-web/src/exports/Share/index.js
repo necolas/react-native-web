@@ -34,7 +34,7 @@ class Share {
       return window.navigator.share({
         title: content.title,
         text: content.message,
-        url: content.url
+        url: content.url,
       });
     } else {
       return Promise.reject(new Error('Share is not supported in this browser'));

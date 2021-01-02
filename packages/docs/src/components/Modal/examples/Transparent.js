@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     height: 300,
     margin: 'auto',
     padding: 30,
-    width: 300
+    width: 300,
   },
   gap: {
-    height: 10
-  }
+    height: 10,
+  },
 });

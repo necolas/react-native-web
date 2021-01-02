@@ -4,7 +4,7 @@ import { Switch, View } from 'react-native';
 class CustomSizeExample extends PureComponent {
   state = {
     firstIsOn: true,
-    secondIsOn: false
+    secondIsOn: false,
   };
 
   render() {
@@ -26,11 +26,11 @@ class CustomSizeExample extends PureComponent {
     );
   }
 
-  _handleFirst = value => {
+  _handleFirst = (value) => {
     this.setState({ firstIsOn: value });
   };
 
-  _handleSecond = value => {
+  _handleSecond = (value) => {
     this.setState({ secondIsOn: value });
   };
 }

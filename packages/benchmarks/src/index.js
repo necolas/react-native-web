@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 const implementations = impl;
 const packageNames = Object.keys(implementations);
 
-const createTestBlock = fn => {
+const createTestBlock = (fn) => {
   return packageNames.reduce((testSetups, packageName) => {
     const { name, components, version } = implementations[packageName];
     const { Component, getComponentProps, sampleCount, Provider, benchmarkType } = fn(components);
@@ -22,43 +22,43 @@ const createTestBlock = fn => {
       Provider,
       benchmarkType,
       version,
-      name
+      name,
     };
     return testSetups;
   }, {});
 };
 
 const tests = {
-  'Mount deep tree': createTestBlock(components => ({
+  'Mount deep tree': createTestBlock((components) => ({
     benchmarkType: 'mount',
     Component: Tree,
     getComponentProps: () => ({ breadth: 2, components, depth: 7, id: 0, wrap: 1 }),
     Provider: components.Provider,
-    sampleCount: 50
+    sampleCount: 50,
   })),
-  'Mount wide tree': createTestBlock(components => ({
+  'Mount wide tree': createTestBlock((components) => ({
     benchmarkType: 'mount',
     Component: Tree,
     getComponentProps: () => ({ breadth: 6, components, depth: 3, id: 0, wrap: 2 }),
     Provider: components.Provider,
-    sampleCount: 50
+    sampleCount: 50,
   })),
-  'Update dynamic styles': createTestBlock(components => ({
+  'Update dynamic styles': createTestBlock((components) => ({
     benchmarkType: 'update',
     Component: SierpinskiTriangle,
     getComponentProps: ({ cycle }) => {
       return { components, s: 200, renderCount: cycle, x: 0, y: 0 };
     },
     Provider: components.Provider,
-    sampleCount: 100
+    sampleCount: 100,
   })),
-  'Mount text tree': createTestBlock(components => ({
+  'Mount text tree': createTestBlock((components) => ({
     benchmarkType: 'mount',
     Component: TextTree,
     getComponentProps: () => ({ breadth: 6, components, depth: 3, id: 0, wrap: 2 }),
     Provider: components.Provider,
-    sampleCount: 50
-  }))
+    sampleCount: 50,
+  })),
 };
 
 ReactDOM.render(<App tests={tests} />, document.querySelector('.root'));

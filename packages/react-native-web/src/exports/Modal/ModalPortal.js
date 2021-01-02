@@ -13,7 +13,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
 
 export type ModalPortalProps = {|
-  children: any
+  children: any,
 |};
 
 function ModalPortal(props: ModalPortalProps) {

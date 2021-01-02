@@ -8,16 +8,16 @@ export default class TextEventsExample extends React.Component {
     curText: '<No Event>',
     prevText: '<No Event>',
     prev2Text: '<No Event>',
-    prev3Text: '<No Event>'
+    prev3Text: '<No Event>',
   };
 
-  updateText = text => {
-    this.setState(state => {
+  updateText = (text) => {
+    this.setState((state) => {
       return {
         curText: text,
         prevText: state.curText,
         prev2Text: state.prevText,
-        prev3Text: state.prev2Text
+        prev3Text: state.prev2Text,
       };
     });
   };
@@ -29,13 +29,13 @@ export default class TextEventsExample extends React.Component {
           autoCapitalize="none"
           autoCorrect={false}
           onBlur={() => this.updateText('onBlur')}
-          onChange={event => this.updateText('onChange text: ' + event.nativeEvent.text)}
-          onEndEditing={event => this.updateText('onEndEditing text: ' + event.nativeEvent.text)}
+          onChange={(event) => this.updateText('onChange text: ' + event.nativeEvent.text)}
+          onEndEditing={(event) => this.updateText('onEndEditing text: ' + event.nativeEvent.text)}
           onFocus={() => this.updateText('onFocus')}
-          onKeyPress={event => {
+          onKeyPress={(event) => {
             this.updateText('onKeyPress key: ' + event.nativeEvent.key);
           }}
-          onSelectionChange={event =>
+          onSelectionChange={(event) =>
             this.updateText(
               'onSelectionChange range: ' +
                 event.nativeEvent.selection.start +
@@ -43,7 +43,7 @@ export default class TextEventsExample extends React.Component {
                 event.nativeEvent.selection.end
             )
           }
-          onSubmitEditing={event =>
+          onSubmitEditing={(event) =>
             this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)
           }
           placeholder="Enter text to see events"
@@ -64,6 +64,6 @@ export default class TextEventsExample extends React.Component {
 const styles = StyleSheet.create({
   eventLabel: {
     margin: 3,
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });

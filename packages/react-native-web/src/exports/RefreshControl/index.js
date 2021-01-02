@@ -25,7 +25,7 @@ type RefreshControlProps = {
   size?: 0 | 1,
   tintColor?: ColorValue,
   title?: string,
-  titleColor?: ColorValue
+  titleColor?: ColorValue,
 };
 
 function RefreshControl(props: RefreshControlProps) {

@@ -6,14 +6,14 @@ module.exports = async ({ config, mode }) => {
     test: /\.(gif|jpe?g|png|svg)$/,
     use: {
       loader: 'url-loader',
-      options: { name: '[name].[ext]' }
-    }
+      options: { name: '[name].[ext]' },
+    },
   });
 
   config.resolve.extensions = ['.web.js', '.js', '.json', '.web.jsx', '.jsx'];
 
   config.resolve.alias = {
-    'react-native': 'react-native-web'
+    'react-native': 'react-native-web',
   };
 
   return config;

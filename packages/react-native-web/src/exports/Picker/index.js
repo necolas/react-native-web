@@ -27,7 +27,7 @@ type PickerProps = {
   /* compat */
   itemStyle?: StyleObj,
   mode?: string,
-  prompt?: string
+  prompt?: string,
 };
 
 const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
@@ -62,7 +62,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     style: [styles.initial, style],
     testID,
     value: selectedValue,
-    ...other
+    ...other,
   };
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   initial: {
     fontFamily: 'System',
     fontSize: 'inherit',
-    margin: 0
-  }
+    margin: 0,
+  },
 });
 
 export default Picker;

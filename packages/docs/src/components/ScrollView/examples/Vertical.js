@@ -47,11 +47,11 @@ export default function Vertical() {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#eeeeee',
-    height: 300
+    height: 300,
   },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    margin: 5
-  }
+    margin: 5,
+  },
 });

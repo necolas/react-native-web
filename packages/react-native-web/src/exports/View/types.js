@@ -16,7 +16,7 @@ import type {
   InteractionStyles,
   LayoutStyles,
   ShadowStyles,
-  TransformStyles
+  TransformStyles,
 } from '../../types/styles';
 
 type NumberOrString = number | string;
@@ -55,7 +55,7 @@ export type ViewStyle = {
   scrollSnapAlign?: ?string,
   scrollSnapType?: ?string,
   WebkitMaskImage?: ?string,
-  WebkitOverflowScrolling?: 'auto' | 'touch'
+  WebkitOverflowScrolling?: 'auto' | 'touch',
 };
 
 export type ViewProps = {
@@ -74,13 +74,13 @@ export type ViewProps = {
     pressed?: ?boolean,
     readonly?: ?boolean,
     required?: ?boolean,
-    selected?: ?boolean
+    selected?: ?boolean,
   },
   accessibilityValue?: {
     max?: ?number,
     min?: ?number,
     now?: ?number,
-    text?: ?string
+    text?: ?string,
   },
   accessible?: boolean,
   children?: ?any,
@@ -134,5 +134,5 @@ export type ViewProps = {
   onWheel?: (e: any) => void,
   href?: ?string,
   rel?: ?string,
-  target?: ?string
+  target?: ?string,
 };

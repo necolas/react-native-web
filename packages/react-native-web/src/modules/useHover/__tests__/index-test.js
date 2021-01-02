@@ -12,7 +12,7 @@ import {
   describeWithPointerEvent,
   clearPointers,
   createEventTarget,
-  setPointerEvent
+  setPointerEvent,
 } from 'dom-event-testing-library';
 import useHover from '..';
 import { testOnly_resetActiveModality } from '../../modality';
@@ -21,11 +21,11 @@ function createRoot(rootNode) {
   return {
     render(element) {
       ReactDOM.render(element, rootNode);
-    }
+    },
   };
 }
 
-describeWithPointerEvent('useHover', hasPointerEvents => {
+describeWithPointerEvent('useHover', (hasPointerEvents) => {
   let root;
   let rootNode;
 
@@ -61,7 +61,7 @@ describeWithPointerEvent('useHover', hasPointerEvents => {
           onHoverChange,
           onHoverStart,
           onHoverUpdate,
-          onHoverEnd
+          onHoverEnd,
         });
         useHover(childRef, { contain: true });
         return (
@@ -107,7 +107,7 @@ describeWithPointerEvent('useHover', hasPointerEvents => {
           onHoverChange,
           onHoverStart,
           onHoverUpdate,
-          onHoverEnd
+          onHoverEnd,
         });
         return <div ref={ref} />;
       };
@@ -306,7 +306,7 @@ describeWithPointerEvent('useHover', hasPointerEvents => {
           onHoverChange,
           onHoverStart,
           onHoverUpdate,
-          onHoverEnd
+          onHoverEnd,
         });
         return <div ref={ref} />;
       };

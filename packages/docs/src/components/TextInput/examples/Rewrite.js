@@ -5,7 +5,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 export default class TextInputRewrite extends React.Component {
   state = { text: '' };
 
-  handleChangeText = text => {
+  handleChangeText = (text) => {
     text = text.replace(/ /g, '_');
     this.setState({ text });
   };
@@ -32,7 +32,7 @@ export default class TextInputRewrite extends React.Component {
 export class TextInputRewriteInvalidCharacters extends React.Component {
   state = { text: '' };
 
-  handleChangeText = text => {
+  handleChangeText = (text) => {
     text = text.replace(/\s/g, '_');
     this.setState({ text });
   };
@@ -54,10 +54,10 @@ export class TextInputRewriteInvalidCharacters extends React.Component {
 const styles = StyleSheet.create({
   rewriteContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   remainder: {
     textAlign: 'right',
-    width: 24
-  }
+    width: 24,
+  },
 });

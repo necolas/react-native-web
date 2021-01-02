@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class StateChangeExample extends Component {
   state = {
     listened: false,
-    logs: []
+    logs: [],
   };
 
   componentWillUnmount() {
@@ -46,9 +46,9 @@ class StateChangeExample extends Component {
     this._log(`Changed\nwindow = ${window}\nscreen = ${screen}`);
   };
 
-  _log = msg => {
-    this.setState(state => ({
-      logs: [`${new Date().toTimeString()} - ${msg}`, ...state.logs]
+  _log = (msg) => {
+    this.setState((state) => ({
+      logs: [`${new Date().toTimeString()} - ${msg}`, ...state.logs],
     }));
   };
 }
@@ -59,11 +59,11 @@ export default function StateChange() {
 
 const styles = StyleSheet.create({
   logs: {
-    maxHeight: 256
+    maxHeight: 256,
   },
   log: {
     fontFamily: 'monospace, monospace',
     marginTop: 8,
-    marginBottom: 8
-  }
+    marginBottom: 8,
+  },
 });

@@ -16,7 +16,7 @@ const Platform = {
       return true;
     }
     return false;
-  }
+  },
 };
 
 export default Platform;

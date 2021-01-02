@@ -4,7 +4,7 @@ import { Dimensions, Platform } from 'react-native';
 const baseFontSize = 14;
 const baseUnit = 1.3125;
 
-const createPlatformLength = multiplier =>
+const createPlatformLength = (multiplier) =>
   Platform.select({ web: `${multiplier}rem`, default: multiplier * baseFontSize });
 
 /**
@@ -13,14 +13,14 @@ const createPlatformLength = multiplier =>
 
 export const borderRadii = {
   normal: Platform.select({ web: '0.35rem', default: 5 }),
-  infinite: '9999px'
+  infinite: '9999px',
 };
 
 export const breakpoints = {
   small: 360,
   medium: 600,
   large: 800,
-  xLarge: 1100
+  xLarge: 1100,
 };
 
 /**
@@ -45,7 +45,7 @@ export const colors = {
   fadedGray: '#E6ECF0',
   faintGray: '#F5F8FA',
   white: '#FFF',
-  textBlue: '#1B95E0'
+  textBlue: '#1B95E0',
 };
 
 export const fontFamilies = {
@@ -53,9 +53,9 @@ export const fontFamilies = {
   japan: Platform.select({
     web:
       'Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif',
-    default: 'System'
+    default: 'System',
   }),
-  rtl: Platform.select({ web: 'Tahoma, Arial, sans-serif', default: 'System' })
+  rtl: Platform.select({ web: 'Tahoma, Arial, sans-serif', default: 'System' }),
 };
 
 export const fontSizes = {
@@ -64,7 +64,7 @@ export const fontSizes = {
   normal: createPlatformLength(1),
   large: createPlatformLength(1.25),
   xLarge: createPlatformLength(1.5),
-  jumbo: createPlatformLength(2)
+  jumbo: createPlatformLength(2),
 };
 
 export const lineHeight = Platform.select({ web: `${baseUnit}` });
@@ -79,7 +79,7 @@ export const spaces = {
   large: createPlatformLength(baseUnit * 1.5),
   xLarge: createPlatformLength(baseUnit * 2),
   xxLarge: createPlatformLength(baseUnit * 2.5),
-  jumbo: createPlatformLength(baseUnit * 3)
+  jumbo: createPlatformLength(baseUnit * 3),
 };
 
 // On web, change the root font-size at specific breakpoints to scale the UI
@@ -87,7 +87,7 @@ export const spaces = {
 if (Platform.OS === 'web' && canUseDOM) {
   const { medium, large } = breakpoints;
   const htmlElement = document.documentElement;
-  const setFontSize = width => {
+  const setFontSize = (width) => {
     const fontSize = width > medium ? (width > large ? '18px' : '17px') : '16px';
     if (htmlElement) {
       htmlElement.style.fontSize = fontSize;
@@ -95,7 +95,7 @@ if (Platform.OS === 'web' && canUseDOM) {
   };
 
   setFontSize(Dimensions.get('window').width);
-  Dimensions.addEventListener('change', dimensions => {
+  Dimensions.addEventListener('change', (dimensions) => {
     setFontSize(dimensions.window.width);
   });
 }

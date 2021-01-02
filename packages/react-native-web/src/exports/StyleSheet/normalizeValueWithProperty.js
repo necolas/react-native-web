@@ -20,7 +20,7 @@ const colorProps = {
   color: true,
   shadowColor: true,
   textDecorationColor: true,
-  textShadowColor: true
+  textShadowColor: true,
 };
 
 export default function normalizeValueWithProperty(value: any, property?: ?string) {

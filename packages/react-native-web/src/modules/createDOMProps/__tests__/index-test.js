@@ -2,7 +2,7 @@
 
 import createDOMProps from '..';
 
-const createProps = props => createDOMProps(null, props);
+const createProps = (props) => createDOMProps(null, props);
 
 describe('modules/createDOMProps', () => {
   describe('focus-related accessibility attributes', () => {
@@ -53,13 +53,13 @@ describe('modules/createDOMProps', () => {
         expect(
           createProps({
             accessibilityRole,
-            importantForAccessibility: 'no-hide-descendants'
+            importantForAccessibility: 'no-hide-descendants',
           })
         ).toEqual(expect.objectContaining({ tabIndex: '-1' }));
       });
     });
 
-    const testFocusableRole = accessibilityRole => {
+    const testFocusableRole = (accessibilityRole) => {
       test('default case', () => {
         expect(createProps({ accessibilityRole })).toEqual(
           expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
@@ -100,7 +100,7 @@ describe('modules/createDOMProps', () => {
         expect(
           createProps({
             accessibilityRole,
-            importantForAccessibility: 'no-hide-descendants'
+            importantForAccessibility: 'no-hide-descendants',
           })
         ).not.toEqual(expect.objectContaining({ 'data-focusable': true, tabIndex: '0' }));
       });
@@ -180,7 +180,7 @@ describe('modules/createDOMProps', () => {
   });
 
   describe('prop "onKeyDown"', () => {
-    const callsOnClick = key => (component, accessibilityRole, disabled = false) => {
+    const callsOnClick = (key) => (component, accessibilityRole, disabled = false) => {
       const onClick = jest.fn();
       const onKeyDown = jest.fn();
       const event = { key, preventDefault: jest.fn() };
@@ -188,7 +188,7 @@ describe('modules/createDOMProps', () => {
         accessibilityRole,
         disabled,
         onClick,
-        onKeyDown
+        onKeyDown,
       });
       finalProps.onKeyDown(event);
       // The original onKeyDown should always be called
@@ -238,7 +238,7 @@ describe('modules/createDOMProps', () => {
       const finalProps = createDOMProps('div', {
         accessible: true,
         accessibilityRole: 'article',
-        onClick
+        onClick,
       });
       finalProps.onKeyDown(event);
       expect(onClick).toHaveBeenCalled();
@@ -284,7 +284,7 @@ describe('modules/createDOMProps', () => {
         pressed: value,
         readonly: value,
         required: value,
-        selected: value
+        selected: value,
       };
     }
 

@@ -1,6 +1,6 @@
 export default {
   title: 'APIs|Dimensions',
-  includeStories: []
+  includeStories: [],
 };
 
 export { default as stateChanges } from './examples/StateChanges';

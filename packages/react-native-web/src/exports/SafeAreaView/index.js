@@ -16,7 +16,7 @@ import StyleSheet from '../StyleSheet';
 import View from '../View';
 import React, { forwardRef } from 'react';
 
-const cssFunction: 'constant' | 'env' = (function() {
+const cssFunction: 'constant' | 'env' = (function () {
   if (
     canUseDOM &&
     window.CSS &&
@@ -31,16 +31,7 @@ const cssFunction: 'constant' | 'env' = (function() {
 const SafeAreaView = forwardRef<ViewProps, Node>((props, ref) => {
   const { style, ...rest } = props;
 
-  return (
-    <View
-      {...rest}
-      ref={ref}
-      style={StyleSheet.compose(
-        styles.root,
-        style
-      )}
-    />
-  );
+  return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
 });
 
 SafeAreaView.displayName = 'SafeAreaView';
@@ -50,8 +41,8 @@ const styles = StyleSheet.create({
     paddingTop: `${cssFunction}(safe-area-inset-top)`,
     paddingRight: `${cssFunction}(safe-area-inset-right)`,
     paddingBottom: `${cssFunction}(safe-area-inset-bottom)`,
-    paddingLeft: `${cssFunction}(safe-area-inset-left)`
-  }
+    paddingLeft: `${cssFunction}(safe-area-inset-left)`,
+  },
 });
 
 export default SafeAreaView;

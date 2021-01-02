@@ -15,7 +15,7 @@ export type EdgeInsetsValue = {|
   top: number,
   left: number,
   right: number,
-  bottom: number
+  bottom: number,
 |};
 
 export type GenericStyleProp<+T> =
@@ -30,18 +30,18 @@ export type LayoutValue = {
   x: number,
   y: number,
   width: number,
-  height: number
+  height: number,
 };
 
 export type LayoutEvent = {
   nativeEvent: {
     layout: LayoutValue,
-    target: any
+    target: any,
   },
-  timeStamp: number
+  timeStamp: number,
 };
 
 export type PointValue = {|
   x: number,
-  y: number
+  y: number,
 |};

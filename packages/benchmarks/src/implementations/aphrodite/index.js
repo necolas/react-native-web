@@ -5,5 +5,5 @@ import View from './View';
 export default {
   Box,
   Provider,
-  View
+  View,
 };

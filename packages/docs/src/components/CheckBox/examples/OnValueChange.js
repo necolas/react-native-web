@@ -5,7 +5,7 @@ import { CheckBox, Text, View } from 'react-native';
 class OnValueChangeExample extends PureComponent {
   state = {
     eventSwitchIsOn: false,
-    eventSwitchRegressionIsOn: true
+    eventSwitchRegressionIsOn: true,
   };
 
   render() {
@@ -43,11 +43,11 @@ class OnValueChangeExample extends PureComponent {
     );
   }
 
-  _handleEventSwitch = value => {
+  _handleEventSwitch = (value) => {
     this.setState({ eventSwitchIsOn: value });
   };
 
-  _handleEventSwitchRegression = value => {
+  _handleEventSwitchRegression = (value) => {
     this.setState({ eventSwitchRegressionIsOn: value });
   };
 }

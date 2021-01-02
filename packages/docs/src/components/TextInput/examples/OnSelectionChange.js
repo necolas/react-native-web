@@ -14,7 +14,7 @@ function OnSelectionChange() {
     <View>
       <TextInput
         onChangeText={setText}
-        onSelectionChange={event => {
+        onSelectionChange={(event) => {
           setSelection(event.nativeEvent.selection);
         }}
         style={styles.textinput}

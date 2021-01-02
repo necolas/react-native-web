@@ -14,7 +14,7 @@ import requestIdleCallback, { cancelIdleCallback } from '../../modules/requestId
 const InteractionManager = {
   Events: {
     interactionStart: 'interactionStart',
-    interactionComplete: 'interactionComplete'
+    interactionComplete: 'interactionComplete',
   },
 
   /**
@@ -23,7 +23,7 @@ const InteractionManager = {
   runAfterInteractions(task: ?Function): { then: Function, done: Function, cancel: Function } {
     let handle;
 
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve) => {
       handle = requestIdleCallback(() => {
         if (task) {
           resolve(task());
@@ -37,7 +37,7 @@ const InteractionManager = {
       done: promise.then.bind(promise),
       cancel: () => {
         cancelIdleCallback(handle);
-      }
+      },
     };
   },
 
@@ -55,7 +55,7 @@ const InteractionManager = {
     invariant(!!handle, 'Must provide a handle to clear.');
   },
 
-  addListener: () => {}
+  addListener: () => {},
 };
 
 export default InteractionManager;

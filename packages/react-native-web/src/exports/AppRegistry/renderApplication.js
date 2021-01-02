@@ -23,7 +23,7 @@ export default function renderApplication<Props: Object>(
   options: {
     hydrate: boolean,
     initialProps: Props,
-    rootTag: any
+    rootTag: any,
   }
 ) {
   const { hydrate: shouldHydrate, initialProps, rootTag } = options;
@@ -51,7 +51,7 @@ export function getApplication(
     </AppContainer>
   );
   // Don't escape CSS text
-  const getStyleElement = props => {
+  const getStyleElement = (props) => {
     const sheet = styleResolver.getStyleSheet();
     return (
       <style {...props} dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />

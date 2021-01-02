@@ -41,18 +41,18 @@ const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   resizeMode: {
     borderColor: 'black',
     borderWidth: 0.5,
     height: 120,
-    width: 120
+    width: 120,
   },
   resizeModeText: {
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
   },
   leftMargin: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });

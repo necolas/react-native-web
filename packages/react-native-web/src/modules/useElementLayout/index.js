@@ -22,8 +22,8 @@ let resizeObserver = null;
 function getResizeObserver(): ?ResizeObserver {
   if (canUseDOM && typeof window.ResizeObserver !== 'undefined') {
     if (resizeObserver == null) {
-      resizeObserver = new window.ResizeObserver(function(entries) {
-        entries.forEach(entry => {
+      resizeObserver = new window.ResizeObserver(function (entries) {
+        entries.forEach((entry) => {
           const node = entry.target;
           const onLayout = node[DOM_LAYOUT_HANDLER_NAME];
           if (typeof onLayout === 'function') {
@@ -33,13 +33,13 @@ function getResizeObserver(): ?ResizeObserver {
               const event: LayoutEvent = {
                 // $FlowFixMe
                 nativeEvent: {
-                  layout: { x, y, width, height, left, top }
+                  layout: { x, y, width, height, left, top },
                 },
-                timeStamp: Date.now()
+                timeStamp: Date.now(),
               };
               Object.defineProperty(event.nativeEvent, 'target', {
                 enumerable: true,
-                get: () => entry.target
+                get: () => entry.target,
               });
               onLayout(event);
             });

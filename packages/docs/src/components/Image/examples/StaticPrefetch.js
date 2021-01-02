@@ -7,7 +7,7 @@ class ImagePrefetchExample extends PureComponent {
   state = {
     events: [],
     showButton: true,
-    startLoad: false
+    startLoad: false,
   };
 
   render() {
@@ -59,28 +59,28 @@ class ImagePrefetchExample extends PureComponent {
         this._loadEventFired('✔ Prefetch OK');
         this.setState(() => ({ startLoad: true }));
       },
-      error => {
+      (error) => {
         this._loadEventFired(`✘ Prefetch failed (+${Date.now() - this._startTime}ms)`);
         console.log(error);
       }
     );
   };
 
-  _loadEventFired = event => {
-    this.setState(state => ({ events: [...state.events, event], showButton: false }));
+  _loadEventFired = (event) => {
+    this.setState((state) => ({ events: [...state.events, event], showButton: false }));
   };
 }
 
 const styles = StyleSheet.create({
   button: {
-    maxWidth: 300
+    maxWidth: 300,
   },
   image: {
     backgroundColor: '#eee',
     height: 150,
     marginTop: 10,
-    width: 150
-  }
+    width: 150,
+  },
 });
 
 const StaticPrefetchExample = () => <ImagePrefetchExample source={sources.prefetchable} />;

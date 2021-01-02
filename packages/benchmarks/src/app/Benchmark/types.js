@@ -11,14 +11,14 @@ export type BenchResultsType = {
   min: number,
   median: number,
   mean: number,
-  stdDev: number
+  stdDev: number,
 };
 
 export type SampleTimingType = {
   scriptingStart: number,
   scriptingEnd?: number,
   layoutStart?: number,
-  layoutEnd?: number
+  layoutEnd?: number,
 };
 
 export type FullSampleTimingType = {
@@ -27,5 +27,5 @@ export type FullSampleTimingType = {
   scriptingStart: number,
   scriptingEnd: number,
   layoutStart?: number,
-  layoutEnd?: number
+  layoutEnd?: number,
 };

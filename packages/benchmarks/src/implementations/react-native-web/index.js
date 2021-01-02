@@ -9,5 +9,5 @@ export default {
   Dot,
   Provider,
   TextBox,
-  View
+  View,
 };

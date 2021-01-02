@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 class ZIndex extends React.Component {
   state = {
-    flipped: false
+    flipped: false,
   };
 
   render() {
@@ -15,7 +15,7 @@ class ZIndex extends React.Component {
           <View
             style={[
               styles.zIndex,
-              { marginTop: 0, backgroundColor: '#E57373', zIndex: indices[0] }
+              { marginTop: 0, backgroundColor: '#E57373', zIndex: indices[0] },
             ]}
           >
             <Text>ZIndex {indices[0]}</Text>
@@ -23,7 +23,7 @@ class ZIndex extends React.Component {
           <View
             style={[
               styles.zIndex,
-              { marginLeft: 50, backgroundColor: '#FFF176', zIndex: indices[1] }
+              { marginLeft: 50, backgroundColor: '#FFF176', zIndex: indices[1] },
             ]}
           >
             <Text>ZIndex {indices[1]}</Text>
@@ -31,7 +31,7 @@ class ZIndex extends React.Component {
           <View
             style={[
               styles.zIndex,
-              { marginLeft: 100, backgroundColor: '#81C784', zIndex: indices[2] }
+              { marginLeft: 100, backgroundColor: '#81C784', zIndex: indices[2] },
             ]}
           >
             <Text>ZIndex {indices[2]}</Text>
@@ -39,7 +39,7 @@ class ZIndex extends React.Component {
           <View
             style={[
               styles.zIndex,
-              { marginLeft: 150, backgroundColor: '#64B5F6', zIndex: indices[3] }
+              { marginLeft: 150, backgroundColor: '#64B5F6', zIndex: indices[3] },
             ]}
           >
             <Text>ZIndex {indices[3]}</Text>
@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: 100,
     height: 50,
-    marginTop: -10
-  }
+    marginTop: -10,
+  },
 });

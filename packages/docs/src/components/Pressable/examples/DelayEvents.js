@@ -4,10 +4,10 @@ import { StyleSheet, Text, Pressable, View } from 'react-native';
 export default function DelayEvents() {
   const [eventLog, updateEventLog] = React.useState([]);
 
-  const handlePress = eventName => {
+  const handlePress = (eventName) => {
     return () => {
       const limit = 6;
-      updateEventLog(state => {
+      updateEventLog((state) => {
         const nextState = state.slice(0, limit - 1);
         nextState.unshift(eventName);
         return nextState;
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     color: '#007AFF',
     borderStyle: 'solid',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   eventLogBox: {
     padding: 10,
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#f0f0f0',
-    backgroundColor: '#f9f9f9'
-  }
+    backgroundColor: '#f9f9f9',
+  },
 });

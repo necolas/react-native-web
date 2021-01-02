@@ -29,7 +29,7 @@ export type ModalAnimationProps = {|
   children?: any,
   onDismiss?: ?() => void,
   onShow?: ?() => void,
-  visible?: ?boolean
+  visible?: ?boolean,
 |};
 
 function ModalAnimation(props: ModalAnimationProps) {
@@ -68,7 +68,7 @@ function ModalAnimation(props: ModalAnimationProps) {
     ? createElement('div', {
         style: isRendering ? getAnimationStyle(animationType, visible) : styles.hidden,
         onAnimationEnd: animationEndCallback,
-        children
+        children,
       })
     : null;
 }
@@ -80,48 +80,48 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    zIndex: 9999
+    zIndex: 9999,
   },
   animatedIn: {
     animationDuration: `${ANIMATION_DURATION}ms`,
-    animationTimingFunction: 'ease-in'
+    animationTimingFunction: 'ease-in',
   },
   animatedOut: {
     pointerEvents: 'none',
     animationDuration: `${ANIMATION_DURATION}ms`,
-    animationTimingFunction: 'ease-out'
+    animationTimingFunction: 'ease-out',
   },
   fadeIn: {
     opacity: 1,
     animationKeyframes: {
       '0%': { opacity: 0 },
-      '100%': { opacity: 1 }
-    }
+      '100%': { opacity: 1 },
+    },
   },
   fadeOut: {
     opacity: 0,
     animationKeyframes: {
       '0%': { opacity: 1 },
-      '100%': { opacity: 0 }
-    }
+      '100%': { opacity: 0 },
+    },
   },
   slideIn: {
     transform: [{ translateY: '0%' }],
     animationKeyframes: {
       '0%': { transform: [{ translateY: '100%' }] },
-      '100%': { transform: [{ translateY: '0%' }] }
-    }
+      '100%': { transform: [{ translateY: '0%' }] },
+    },
   },
   slideOut: {
     transform: [{ translateY: '100%' }],
     animationKeyframes: {
       '0%': { transform: [{ translateY: '0%' }] },
-      '100%': { transform: [{ translateY: '100%' }] }
-    }
+      '100%': { transform: [{ translateY: '100%' }] },
+    },
   },
   hidden: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 const animatedSlideInStyles = [styles.container, styles.animatedIn, styles.slideIn];

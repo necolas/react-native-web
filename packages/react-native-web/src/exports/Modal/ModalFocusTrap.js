@@ -27,7 +27,7 @@ const FocusBracket = () => {
   return createElement('div', {
     accessibilityRole: 'none',
     tabIndex: 0,
-    style: styles.focusBracket
+    style: styles.focusBracket,
   });
 };
 
@@ -67,14 +67,14 @@ function focusLastDescendant(element: any) {
 
 export type ModalFocusTrapProps = {|
   active?: boolean | (() => boolean),
-  children?: any
+  children?: any,
 |};
 
 const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
   const trapElementRef = useRef<?HTMLElement>();
   const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
     trapFocusInProgress: false,
-    lastFocusedElement: null
+    lastFocusedElement: null,
   });
 
   useEffect(() => {
@@ -136,6 +136,6 @@ export default ModalFocusTrap;
 
 const styles = StyleSheet.create({
   focusBracket: {
-    outlineStyle: 'none'
-  }
+    outlineStyle: 'none',
+  },
 });

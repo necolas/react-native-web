@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     overflow: 'visible',
     shadowOpacity: 0.5,
     shadowRadius: 3,
-    shadowOffset: { width: 2, height: 2 }
-  }
+    shadowOffset: { width: 2, height: 2 },
+  },
 });

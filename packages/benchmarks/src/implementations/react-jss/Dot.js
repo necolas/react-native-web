@@ -18,8 +18,8 @@ const styles = {
     borderBottomWidth: ({ size }) => size / 2,
     borderLeftWidth: ({ size }) => size / 2,
     marginLeft: ({ x }) => x,
-    marginTop: ({ y }) => y
-  }
+    marginTop: ({ y }) => y,
+  },
 };
 
 export default injectSheet(styles)(Dot);

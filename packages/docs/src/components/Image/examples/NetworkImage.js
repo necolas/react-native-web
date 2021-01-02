@@ -6,11 +6,11 @@ import { ActivityIndicator, Image, Text, View } from 'react-native';
 class NetworkImageExample extends PureComponent {
   state = {
     error: false,
-    loading: false
+    loading: false,
   };
 
   static defaultProps = {
-    logList: []
+    logList: [],
   };
 
   render() {
@@ -37,7 +37,7 @@ class NetworkImageExample extends PureComponent {
     );
   }
 
-  _handleError = e => {
+  _handleError = (e) => {
     const nextState = { loading: false };
     if (this.props.logMethod === 'onError') {
       nextState.message = `✘ onError ${JSON.stringify(e.nativeEvent)}`;

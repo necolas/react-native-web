@@ -15,10 +15,10 @@ export default function CustomSize() {
 const styles = StyleSheet.create({
   one: {
     borderRadius: 10,
-    height: 10
+    height: 10,
   },
   two: {
     borderRadius: 10,
-    height: 20
-  }
+    height: 20,
+  },
 });

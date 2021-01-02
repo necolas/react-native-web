@@ -16,7 +16,7 @@ describe('StyleSheet/createStyleResolver', () => {
     const styleB = {
       position: 'absolute',
       left: 50,
-      opacity: 0.5
+      opacity: 0.5,
     };
     const styleC = { width: 200 };
 

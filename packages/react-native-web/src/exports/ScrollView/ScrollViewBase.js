@@ -27,7 +27,7 @@ type Props = {
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   showsHorizontalScrollIndicator?: boolean,
-  showsVerticalScrollIndicator?: boolean
+  showsVerticalScrollIndicator?: boolean,
 };
 
 function normalizeScrollEvent(e) {
@@ -39,7 +39,7 @@ function normalizeScrollEvent(e) {
         },
         get y() {
           return e.target.scrollTop;
-        }
+        },
       },
       contentSize: {
         get height() {
@@ -47,7 +47,7 @@ function normalizeScrollEvent(e) {
         },
         get width() {
           return e.target.scrollWidth;
-        }
+        },
       },
       layoutMeasurement: {
         get height() {
@@ -55,10 +55,10 @@ function normalizeScrollEvent(e) {
         },
         get width() {
           return e.target.offsetWidth;
-        }
-      }
+        },
+      },
     },
-    timeStamp: Date.now()
+    timeStamp: Date.now(),
   };
 }
 
@@ -89,7 +89,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
     showsVerticalScrollIndicator,
     style,
     dataSet,
-    testID
+    testID,
   } = props;
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
@@ -169,7 +169,7 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
-        hideScrollbar && styles.hideScrollbar
+        hideScrollbar && styles.hideScrollbar,
       ]}
       testID={testID}
     />
@@ -183,11 +183,11 @@ const styles = StyleSheet.create({
   scrollDisabled: {
     overflowX: 'hidden',
     overflowY: 'hidden',
-    touchAction: 'none'
+    touchAction: 'none',
   },
   hideScrollbar: {
-    scrollbarWidth: 'none'
-  }
+    scrollbarWidth: 'none',
+  },
 });
 
 export default ScrollViewBase;

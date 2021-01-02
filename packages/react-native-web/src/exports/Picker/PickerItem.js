@@ -16,7 +16,7 @@ type Props = {
   color?: ColorValue,
   label: string,
   testID?: string,
-  value?: number | string
+  value?: number | string,
 };
 
 export default function PickerItem(props: Props) {

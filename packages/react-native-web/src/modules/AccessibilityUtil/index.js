@@ -16,7 +16,7 @@ const AccessibilityUtil = {
   buttonLikeRoles,
   isDisabled,
   propsToAccessibilityComponent,
-  propsToAriaRole
+  propsToAriaRole,
 };
 
 export default AccessibilityUtil;

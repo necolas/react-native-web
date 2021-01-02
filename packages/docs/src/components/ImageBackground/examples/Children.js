@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
     backgroundColor: 'transparent',
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     position: 'relative',
-    top: 50
-  }
+    top: 50,
+  },
 });

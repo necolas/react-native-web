@@ -19,7 +19,7 @@ const accessibilityRoleToWebRole = {
   none: 'presentation',
   search: 'search',
   summary: 'region',
-  text: null
+  text: null,
 };
 
 const propsToAriaRole = ({ accessibilityRole }: Object) => {

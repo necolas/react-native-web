@@ -20,7 +20,7 @@ type ImageBackgroundProps = {
   ...ImageProps,
   imageRef?: any,
   imageStyle?: $PropertyType<ImageProps, 'style'>,
-  style?: $PropertyType<ViewProps, 'style'>
+  style?: $PropertyType<ViewProps, 'style'>,
 };
 
 const emptyObject = {};
@@ -49,9 +49,9 @@ const ImageBackground = forwardRef<ImageBackgroundProps, *>((props, forwardedRef
             // intrinsic content size of the <Image>.
             width,
             height,
-            zIndex: -1
+            zIndex: -1,
           },
-          imageStyle
+          imageStyle,
         ]}
       />
       {children}

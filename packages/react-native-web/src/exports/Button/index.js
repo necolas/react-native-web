@@ -19,7 +19,7 @@ type ButtonProps = {|
   disabled?: boolean,
   onPress?: ?(e: any) => void,
   testID?: ?string,
-  title: string
+  title: string,
 |};
 
 const Button = React.forwardRef<ButtonProps, *>((props, forwardedRef) => {
@@ -35,7 +35,7 @@ const Button = React.forwardRef<ButtonProps, *>((props, forwardedRef) => {
       style={[
         styles.button,
         color && { backgroundColor: color },
-        disabled && styles.buttonDisabled
+        disabled && styles.buttonDisabled,
       ]}
       testID={testID}
     >
@@ -49,21 +49,21 @@ Button.displayName = 'Button';
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#2196F3',
-    borderRadius: 2
+    borderRadius: 2,
   },
   text: {
     color: '#fff',
     fontWeight: '500',
     padding: 8,
     textAlign: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   buttonDisabled: {
-    backgroundColor: '#dfdfdf'
+    backgroundColor: '#dfdfdf',
   },
   textDisabled: {
-    color: '#a1a1a1'
-  }
+    color: '#a1a1a1',
+  },
 });
 
 export type { ButtonProps };

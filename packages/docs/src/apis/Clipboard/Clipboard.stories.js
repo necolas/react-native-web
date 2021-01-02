@@ -1,6 +1,6 @@
 export default {
   title: 'APIs|Clipboard',
-  includeStories: []
+  includeStories: [],
 };
 
 export { default as setString } from './examples/SetString';

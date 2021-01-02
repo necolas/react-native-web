@@ -9,20 +9,20 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const _requestIdleCallback = function(cb: Function, options?: Object) {
+const _requestIdleCallback = function (cb: Function, options?: Object) {
   return setTimeout(() => {
     const start = Date.now();
     cb({
       didTimeout: false,
       timeRemaining() {
         return Math.max(0, 50 - (Date.now() - start));
-      }
+      },
     });
   }, 1);
 };
 
 // $FlowFixMe (TimeoutID type is not recognized by eslint)
-const _cancelIdleCallback = function(id) {
+const _cancelIdleCallback = function (id) {
   clearTimeout(id);
 };
 

@@ -25,7 +25,7 @@ type ViewStyle = $PropertyType<ViewProps, 'style'>;
 type Props = $ReadOnly<{|
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
-  style?: ?ViewStyle
+  style?: ?ViewStyle,
 |}>;
 
 /**
@@ -102,7 +102,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
         if (onPressOut != null) {
           onPressOut(event);
         }
-      }
+      },
     }),
     [
       delayLongPress,
@@ -115,7 +115,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       onPressOut,
       rejectResponderTermination,
       setOpacityActive,
-      setOpacityInactive
+      setOpacityInactive,
     ]
   );
 
@@ -127,7 +127,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       {...pressEventHandlers}
       accessibilityState={{
         disabled,
-        ...props.accessibilityState
+        ...props.accessibilityState,
       }}
       accessible={accessible !== false}
       focusable={focusable !== false && onPress !== undefined}
@@ -137,7 +137,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
         !disabled && styles.actionable,
         style,
         opacityOverride != null && { opacity: opacityOverride },
-        { transitionDuration: duration }
+        { transitionDuration: duration },
       ]}
     />
   );
@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
   root: {
     transitionProperty: 'opacity',
     transitionDuration: '0.15s',
-    userSelect: 'none'
+    userSelect: 'none',
   },
   actionable: {
     cursor: 'pointer',
-    touchAction: 'manipulation'
-  }
+    touchAction: 'manipulation',
+  },
 });
 
 const MemoedTouchableOpacity = React.memo(React.forwardRef(TouchableOpacity));

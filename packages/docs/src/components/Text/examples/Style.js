@@ -29,7 +29,7 @@ function FontFamily() {
       <Text
         style={{
           fontFamily: 'Cochin',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         }}
       >
         Cochin bold
@@ -40,7 +40,7 @@ function FontFamily() {
       <Text
         style={{
           fontFamily: 'Verdana',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         }}
       >
         Verdana bold
@@ -76,14 +76,14 @@ function FontVariant() {
       <Text style={{ fontVariant: ['small-caps'] }}>Small Caps{'\n'}</Text>
       <Text
         style={{
-          fontVariant: ['oldstyle-nums']
+          fontVariant: ['oldstyle-nums'],
         }}
       >
         Old Style nums 0123456789{'\n'}
       </Text>
       <Text
         style={{
-          fontVariant: ['lining-nums']
+          fontVariant: ['lining-nums'],
         }}
       >
         Lining nums 0123456789{'\n'}
@@ -189,7 +189,7 @@ function TextDecoration() {
       <Text
         style={{
           textDecorationLine: 'underline',
-          textDecorationStyle: 'solid'
+          textDecorationStyle: 'solid',
         }}
       >
         Solid underline
@@ -198,7 +198,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'underline',
           textDecorationStyle: 'double',
-          textDecorationColor: '#ff0000'
+          textDecorationColor: '#ff0000',
         }}
       >
         Double underline with custom color
@@ -207,7 +207,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'underline',
           textDecorationStyle: 'dashed',
-          textDecorationColor: '#9CDC40'
+          textDecorationColor: '#9CDC40',
         }}
       >
         Dashed underline with custom color
@@ -216,7 +216,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'underline',
           textDecorationStyle: 'dotted',
-          textDecorationColor: 'blue'
+          textDecorationColor: 'blue',
         }}
       >
         Dotted underline with custom color
@@ -225,7 +225,7 @@ function TextDecoration() {
       <Text
         style={{
           textDecorationLine: 'line-through',
-          textDecorationStyle: 'solid'
+          textDecorationStyle: 'solid',
         }}
       >
         Solid line-through
@@ -234,7 +234,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'line-through',
           textDecorationStyle: 'double',
-          textDecorationColor: '#ff0000'
+          textDecorationColor: '#ff0000',
         }}
       >
         Double line-through with custom color
@@ -243,7 +243,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'line-through',
           textDecorationStyle: 'dashed',
-          textDecorationColor: '#9CDC40'
+          textDecorationColor: '#9CDC40',
         }}
       >
         Dashed line-through with custom color
@@ -252,7 +252,7 @@ function TextDecoration() {
         style={{
           textDecorationLine: 'line-through',
           textDecorationStyle: 'dotted',
-          textDecorationColor: 'blue'
+          textDecorationColor: 'blue',
         }}
       >
         Dotted line-through with custom color
@@ -273,7 +273,7 @@ function TextShadow() {
           fontSize: 20,
           textShadowOffset: { width: 2, height: 2 },
           textShadowRadius: 1,
-          textShadowColor: '#00cccc'
+          textShadowColor: '#00cccc',
         }}
       >
         Text shadow example

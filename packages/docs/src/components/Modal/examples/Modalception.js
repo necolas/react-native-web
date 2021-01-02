@@ -13,7 +13,7 @@ export default function Modalception({ depth = 1 }) {
   const offset = useMemo(() => {
     return {
       top: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2,
-      left: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2
+      left: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2,
     };
   }, []);
 
@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
     height: 300,
     margin: 'auto',
     padding: 30,
-    width: 300
+    width: 300,
   },
   gap: {
-    height: 10
-  }
+    height: 10,
+  },
 });

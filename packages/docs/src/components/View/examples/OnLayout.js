@@ -6,7 +6,7 @@ const l2 = { width: '75%', paddingLeft: 10, paddingTop: 10 };
 
 class OnLayoutExample extends React.Component {
   state = {
-    layoutInfo: {}
+    layoutInfo: {},
   };
 
   componentDidMount() {
@@ -47,7 +47,7 @@ class OnLayoutExample extends React.Component {
     this.setState(() => ({ layoutInfo: nativeEvent.layout }));
   };
 
-  _setRef = component => {
+  _setRef = (component) => {
     this._ref = component;
   };
 }
@@ -58,19 +58,19 @@ export default function OnLayout() {
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   container: {
-    height: 50
+    height: 50,
   },
   left: {
-    width: 100
+    width: 100,
   },
   right: {
-    flex: 1
+    flex: 1,
   },
   box: {
     backgroundColor: '#eee',
-    flex: 1
-  }
+    flex: 1,
+  },
 });

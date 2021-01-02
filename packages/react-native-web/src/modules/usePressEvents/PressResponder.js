@@ -38,7 +38,7 @@ export type PressResponderConfig = $ReadOnly<{|
   // Called when the press location moves. (This should rarely be used.)
   onPressMove?: ?(event: ResponderEvent) => void,
   // Called when the press is deactivated to undo visual feedback.
-  onPressEnd?: ?(event: ResponderEvent) => void
+  onPressEnd?: ?(event: ResponderEvent) => void,
 |}>;
 
 export type EventHandlers = $ReadOnly<{|
@@ -50,7 +50,7 @@ export type EventHandlers = $ReadOnly<{|
   onResponderRelease: (event: ResponderEvent) => void,
   onResponderTerminate: (event: ResponderEvent) => void,
   onResponderTerminationRequest: (event: ResponderEvent) => boolean,
-  onStartShouldSetResponder: (event: ResponderEvent) => boolean
+  onStartShouldSetResponder: (event: ResponderEvent) => boolean,
 |}>;
 
 type TouchState =
@@ -84,51 +84,52 @@ const Transitions = Object.freeze({
     RESPONDER_GRANT: RESPONDER_INACTIVE_PRESS_START,
     RESPONDER_RELEASE: ERROR,
     RESPONDER_TERMINATED: ERROR,
-    LONG_PRESS_DETECTED: ERROR
+    LONG_PRESS_DETECTED: ERROR,
   },
   RESPONDER_INACTIVE_PRESS_START: {
     DELAY: RESPONDER_ACTIVE_PRESS_START,
     RESPONDER_GRANT: ERROR,
     RESPONDER_RELEASE: NOT_RESPONDER,
     RESPONDER_TERMINATED: NOT_RESPONDER,
-    LONG_PRESS_DETECTED: ERROR
+    LONG_PRESS_DETECTED: ERROR,
   },
   RESPONDER_ACTIVE_PRESS_START: {
     DELAY: ERROR,
     RESPONDER_GRANT: ERROR,
     RESPONDER_RELEASE: NOT_RESPONDER,
     RESPONDER_TERMINATED: NOT_RESPONDER,
-    LONG_PRESS_DETECTED: RESPONDER_ACTIVE_LONG_PRESS_START
+    LONG_PRESS_DETECTED: RESPONDER_ACTIVE_LONG_PRESS_START,
   },
   RESPONDER_ACTIVE_LONG_PRESS_START: {
     DELAY: ERROR,
     RESPONDER_GRANT: ERROR,
     RESPONDER_RELEASE: NOT_RESPONDER,
     RESPONDER_TERMINATED: NOT_RESPONDER,
-    LONG_PRESS_DETECTED: RESPONDER_ACTIVE_LONG_PRESS_START
+    LONG_PRESS_DETECTED: RESPONDER_ACTIVE_LONG_PRESS_START,
   },
   ERROR: {
     DELAY: NOT_RESPONDER,
     RESPONDER_GRANT: RESPONDER_INACTIVE_PRESS_START,
     RESPONDER_RELEASE: NOT_RESPONDER,
     RESPONDER_TERMINATED: NOT_RESPONDER,
-    LONG_PRESS_DETECTED: NOT_RESPONDER
-  }
+    LONG_PRESS_DETECTED: NOT_RESPONDER,
+  },
 });
 
-const isActiveSignal = signal =>
+const isActiveSignal = (signal) =>
   signal === RESPONDER_ACTIVE_PRESS_START || signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isButtonRole = element => element.getAttribute('role') === 'button';
+const isButtonRole = (element) => element.getAttribute('role') === 'button';
 
-const isPressStartSignal = signal =>
+const isPressStartSignal = (signal) =>
   signal === RESPONDER_INACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isTerminalSignal = signal => signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
+const isTerminalSignal = (signal) =>
+  signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
-const isValidKeyPress = event => {
+const isValidKeyPress = (event) => {
   const key = event.key;
   const target = event.currentTarget;
   const role = target.getAttribute('role');
@@ -227,7 +228,7 @@ export default class PressResponder {
   _selectionTerminated: ?boolean;
   _touchActivatePosition: ?$ReadOnly<{|
     pageX: number,
-    pageY: number
+    pageY: number,
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
 
@@ -319,7 +320,7 @@ export default class PressResponder {
         return !disabled;
       },
 
-      onKeyDown: event => {
+      onKeyDown: (event) => {
         if (isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
@@ -331,9 +332,9 @@ export default class PressResponder {
         }
       },
 
-      onResponderGrant: event => start(event),
+      onResponderGrant: (event) => start(event),
 
-      onResponderMove: event => {
+      onResponderMove: (event) => {
         if (this._config.onPressMove != null) {
           this._config.onPressMove(event);
         }
@@ -347,9 +348,9 @@ export default class PressResponder {
         }
       },
 
-      onResponderRelease: event => end(event),
+      onResponderRelease: (event) => end(event),
 
-      onResponderTerminate: event => {
+      onResponderTerminate: (event) => {
         if (event.nativeEvent.type === 'selectionchange') {
           this._selectionTerminated = true;
         }
@@ -415,7 +416,7 @@ export default class PressResponder {
             event.stopPropagation();
           }
         }
-      }
+      },
     };
   }
 
@@ -498,7 +499,7 @@ export default class PressResponder {
     const touch = getTouchFromResponderEvent(event);
     this._touchActivatePosition = {
       pageX: touch.pageX,
-      pageY: touch.pageY
+      pageY: touch.pageY,
     };
     if (onPressStart != null) {
       onPressStart(event);

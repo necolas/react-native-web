@@ -20,7 +20,7 @@ const css = {
    */
   create(rules, group) {
     return styleResolver.createCSS(rules, group);
-  }
+  },
 };
 
 export default css;

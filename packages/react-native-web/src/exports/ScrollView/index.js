@@ -30,7 +30,7 @@ type ScrollViewProps = {
   refreshControl?: any,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
-  stickyHeaderIndices?: Array<number>
+  stickyHeaderIndices?: Array<number>,
 };
 
 const emptyObject = {};
@@ -97,7 +97,7 @@ const ScrollView = ((createReactClass({
     this.getScrollResponder().scrollResponderScrollTo({
       x: x || 0,
       y: y || 0,
-      animated: animated !== false
+      animated: animated !== false,
     });
   },
 
@@ -138,7 +138,7 @@ const ScrollView = ((createReactClass({
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style);
       const childLayoutProps = ['alignItems', 'justifyContent'].filter(
-        prop => style && style[prop] !== undefined
+        (prop) => style && style[prop] !== undefined
       );
       invariant(
         childLayoutProps.length === 0,
@@ -150,7 +150,7 @@ const ScrollView = ((createReactClass({
     let contentSizeChangeProps = {};
     if (onContentSizeChange) {
       contentSizeChangeProps = {
-        onLayout: this._handleContentOnLayout
+        onLayout: this._handleContentOnLayout,
       };
     }
 
@@ -212,7 +212,7 @@ const ScrollView = ((createReactClass({
       onResponderTerminationRequest: this.scrollResponderHandleTerminationRequest,
       onResponderTerminate: this.scrollResponderHandleTerminate,
       onResponderRelease: this.scrollResponderHandleResponderRelease,
-      onResponderReject: this.scrollResponderHandleResponderReject
+      onResponderReject: this.scrollResponderHandleResponderReject,
     };
 
     const ScrollViewClass = ScrollViewBase;
@@ -267,7 +267,7 @@ const ScrollView = ((createReactClass({
 
   _setScrollNodeRef(component) {
     this._scrollNodeRef = component;
-  }
+  },
 }): any): React.ComponentType<ScrollViewProps>);
 
 const commonStyle = {
@@ -278,7 +278,7 @@ const commonStyle = {
   // improve scroll performance.
   transform: [{ translateZ: 0 }],
   // iOS native scrolling
-  WebkitOverflowScrolling: 'touch'
+  WebkitOverflowScrolling: 'touch',
 };
 
 const styles = StyleSheet.create({
@@ -286,31 +286,31 @@ const styles = StyleSheet.create({
     ...commonStyle,
     flexDirection: 'column',
     overflowX: 'hidden',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   baseHorizontal: {
     ...commonStyle,
     flexDirection: 'row',
     overflowX: 'auto',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
   },
   contentContainerHorizontal: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   stickyHeader: {
     position: 'sticky',
     top: 0,
-    zIndex: 10
+    zIndex: 10,
   },
   pagingEnabledHorizontal: {
-    scrollSnapType: 'x mandatory'
+    scrollSnapType: 'x mandatory',
   },
   pagingEnabledVertical: {
-    scrollSnapType: 'y mandatory'
+    scrollSnapType: 'y mandatory',
   },
   pagingEnabledChild: {
-    scrollSnapAlign: 'start'
-  }
+    scrollSnapAlign: 'start',
+  },
 });
 
 export default ScrollView;

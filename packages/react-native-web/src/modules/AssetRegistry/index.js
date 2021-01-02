@@ -16,7 +16,7 @@ export type PackagerAsset = {
   scales: Array<number>,
   hash: string,
   name: string,
-  type: string
+  type: string,
 };
 
 const assets: Array<PackagerAsset> = [];

@@ -12,7 +12,7 @@ import {
   buttonsType,
   defaultPointerId,
   defaultPointerSize,
-  defaultBrowserChromeSize
+  defaultBrowserChromeSize,
 } from './constants';
 import * as domEvents from './domEvents';
 import { hasPointerEvent, platform } from './domEnvironment';
@@ -31,7 +31,7 @@ function createTouch(target, payload) {
     twist = 0,
     width = defaultPointerSize,
     x = 0,
-    y = 0
+    y = 0,
   } = payload;
 
   return {
@@ -46,7 +46,7 @@ function createTouch(target, payload) {
     rotationAngle: twist,
     target,
     screenX: x,
-    screenY: y + defaultBrowserChromeSize
+    screenY: y + defaultBrowserChromeSize,
   };
 }
 
@@ -60,7 +60,7 @@ function createTouchEventPayload(target, touch, payload) {
     metaKey = false,
     preventDefault,
     shiftKey = false,
-    timeStamp
+    timeStamp,
   } = payload;
 
   return {
@@ -72,7 +72,7 @@ function createTouchEventPayload(target, touch, payload) {
     shiftKey,
     targetTouches: touchStore.getTargetTouches(target),
     timeStamp,
-    touches: touchStore.getTouches()
+    touches: touchStore.getTouches(),
   };
 }
 
@@ -106,7 +106,7 @@ function getPointerType(payload) {
  */
 
 export function contextmenu(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const {
@@ -121,7 +121,7 @@ export function contextmenu(target, defaultPayload) {
     ...restPayload,
     button: buttonType.primary,
     buttons: buttonsType.primary,
-    pointerType
+    pointerType,
   };
 
   const preventDefault = payload.preventDefault;
@@ -138,7 +138,7 @@ export function contextmenu(target, defaultPayload) {
       domEvents.mousemove({
         ...payload,
         button: buttonType.primary,
-        buttons: buttonsType.none
+        buttons: buttonsType.none,
       })
     );
     dispatch(
@@ -146,7 +146,7 @@ export function contextmenu(target, defaultPayload) {
         ...payload,
         button: buttonType.primary,
         buttons: buttonsType.none,
-        preventDefault
+        preventDefault,
       })
     );
     touchStore.removeTouch(touch);
@@ -173,7 +173,7 @@ export function contextmenu(target, defaultPayload) {
 }
 
 export function focus(target, defaultPayload = {}) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const { relatedTarget, ...payload } = defaultPayload;
   const blurPayload = { ...payload, relatedTarget: target };
   const focusPayload = { ...payload, relatedTarget };
@@ -188,13 +188,13 @@ export function focus(target, defaultPayload = {}) {
 }
 
 export function pointercancel(target, defaultPayload) {
-  const dispatchEvent = arg => target.dispatchEvent(arg);
+  const dispatchEvent = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
     pointerId: defaultPointerId,
     pointerType,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   if (hasPointerEvent()) {
@@ -211,7 +211,7 @@ export function pointercancel(target, defaultPayload) {
 }
 
 export function pointerdown(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
@@ -219,7 +219,7 @@ export function pointerdown(target, defaultPayload) {
     buttons: buttonsType.primary,
     pointerId: defaultPointerId,
     pointerType,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   if (pointerType === 'mouse') {
@@ -251,11 +251,11 @@ export function pointerdown(target, defaultPayload) {
 }
 
 export function pointerover(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   if (hasPointerEvent()) {
@@ -270,11 +270,11 @@ export function pointerover(target, defaultPayload) {
 }
 
 export function pointerout(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   const { relatedTarget } = payload;
@@ -295,11 +295,11 @@ export function pointerout(target, defaultPayload) {
 
 // pointer is not down while moving
 export function pointerhover(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   if (hasPointerEvent()) {
@@ -310,7 +310,7 @@ export function pointerhover(target, defaultPayload) {
 
 // pointer is down while moving
 export function pointermove(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
@@ -318,7 +318,7 @@ export function pointermove(target, defaultPayload) {
     buttons: buttonsType.primary,
     pointerId: defaultPointerId,
     pointerType,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   if (pointerType === 'mouse') {
@@ -332,7 +332,7 @@ export function pointermove(target, defaultPayload) {
         domEvents.pointermove({
           pressure: 1,
           button: -1,
-          ...payload
+          ...payload,
         })
       );
     }
@@ -344,13 +344,13 @@ export function pointermove(target, defaultPayload) {
 }
 
 export function pointerup(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
     pointerId: defaultPointerId,
     pointerType,
-    ...defaultPayload
+    ...defaultPayload,
   };
 
   const isPrimaryButton = payload.button === buttonType.primary;

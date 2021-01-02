@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-const action = msg => () => {
+const action = (msg) => () => {
   console.log(msg);
 };
 
@@ -33,9 +33,9 @@ export default class TouchableOpacityDisabled extends React.Component {
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   block: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });

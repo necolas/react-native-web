@@ -7,7 +7,7 @@ class AppText extends React.Component {
   static displayName = '@app/Text';
 
   static contextTypes = {
-    isInAParentText: bool
+    isInAParentText: bool,
   };
 
   render() {
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   baseText: {
     color: colors.textBlack,
     fontSize: '1rem',
-    lineHeight: '1.3125em'
-  }
+    lineHeight: '1.3125em',
+  },
 });
 
 export default AppText;

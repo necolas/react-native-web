@@ -11,17 +11,17 @@ type ComponentsType = {
   Dot: Component,
   Provider: Component,
   TextBox: Component,
-  View: Component
+  View: Component,
 };
 
 type ImplementationType = {
   components: ComponentsType,
   name: string,
-  version: string
+  version: string,
 };
 
 const toImplementations = (context: Object): Array<ImplementationType> =>
-  context.keys().map(path => {
+  context.keys().map((path) => {
     const components = context(path).default;
     const name = path.split('/')[1];
     const version = dependencies[name] || '';

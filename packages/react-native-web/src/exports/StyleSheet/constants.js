@@ -30,8 +30,8 @@ export const STYLE_GROUPS = {
     marginHorizontal: 2.1,
     marginVertical: 2.1,
     paddingHorizontal: 2.1,
-    paddingVertical: 2.1
-  }
+    paddingVertical: 2.1,
+  },
 };
 
 export const STYLE_SHORT_FORM_EXPANSIONS = {
@@ -40,7 +40,7 @@ export const STYLE_SHORT_FORM_EXPANSIONS = {
     'borderTopLeftRadius',
     'borderTopRightRadius',
     'borderBottomRightRadius',
-    'borderBottomLeftRadius'
+    'borderBottomLeftRadius',
   ],
   borderStyle: ['borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle'],
   borderWidth: ['borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'],
@@ -51,7 +51,7 @@ export const STYLE_SHORT_FORM_EXPANSIONS = {
   overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
   padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
   paddingHorizontal: ['paddingRight', 'paddingLeft'],
-  paddingVertical: ['paddingTop', 'paddingBottom']
+  paddingVertical: ['paddingTop', 'paddingBottom'],
 };
 
 export const MONOSPACE_FONT_STACK = 'monospace,monospace';

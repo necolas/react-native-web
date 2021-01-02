@@ -1,6 +1,6 @@
 export default {
   title: 'APIs|AppState',
-  includeStories: []
+  includeStories: [],
 };
 
 export { default as stateChanges } from './examples/StateChanges';

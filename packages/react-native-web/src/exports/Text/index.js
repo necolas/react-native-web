@@ -67,10 +67,10 @@ const forwardPropsList = {
   onWheel: true,
   href: true,
   rel: true,
-  target: true
+  target: true,
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const {
@@ -95,7 +95,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
-    selectable
+    selectable,
   } = props;
 
   const hasTextAncestor = useContext(TextAncestorContext);
@@ -105,14 +105,14 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     classes.text,
     hasTextAncestor === true && classes.textHasAncestor,
     numberOfLines === 1 && classes.textOneLine,
-    numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
+    numberOfLines != null && numberOfLines > 1 && classes.textMultiLine,
   ];
   const style = [
     props.style,
     numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
     selectable === true && styles.selectable,
     selectable === false && styles.notSelectable,
-    onPress && styles.pressable
+    onPress && styles.pressable,
   ];
 
   useElementLayout(hostRef, onLayout);
@@ -132,7 +132,7 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     onSelectionChangeShouldSetResponder,
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
+    onStartShouldSetResponderCapture,
   });
 
   function handleClick(e) {
@@ -182,18 +182,18 @@ const classes = css.create({
     margin: 0,
     padding: 0,
     whiteSpace: 'pre-wrap',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
   },
   textHasAncestor: {
     color: 'inherit',
     font: 'inherit',
-    whiteSpace: 'inherit'
+    whiteSpace: 'inherit',
   },
   textOneLine: {
     maxWidth: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
   },
   // See #13
   textMultiLine: {
@@ -201,20 +201,20 @@ const classes = css.create({
     maxWidth: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    WebkitBoxOrient: 'vertical'
-  }
+    WebkitBoxOrient: 'vertical',
+  },
 });
 
 const styles = StyleSheet.create({
   notSelectable: {
-    userSelect: 'none'
+    userSelect: 'none',
   },
   selectable: {
-    userSelect: 'text'
+    userSelect: 'text',
   },
   pressable: {
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 });
 
 export default Text;

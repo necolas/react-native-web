@@ -18,7 +18,7 @@ const Keyboard = {
     dismissKeyboard();
   },
   removeAllListeners() {},
-  removeListener() {}
+  removeListener() {},
 };
 
 export default Keyboard;

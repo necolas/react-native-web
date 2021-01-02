@@ -22,7 +22,7 @@ export default class DraggableCircle extends PureComponent {
       onPanResponderGrant: this._handlePanResponderGrant,
       onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderEnd,
-      onPanResponderTerminate: this._handlePanResponderEnd
+      onPanResponderTerminate: this._handlePanResponderEnd,
     });
     this._previousLeft = 20;
     this._previousTop = 84;
@@ -30,8 +30,8 @@ export default class DraggableCircle extends PureComponent {
       style: {
         left: this._previousLeft,
         top: this._previousTop,
-        backgroundColor: 'green'
-      }
+        backgroundColor: 'green',
+      },
     };
   }
 
@@ -47,7 +47,7 @@ export default class DraggableCircle extends PureComponent {
     );
   }
 
-  _setCircleRef = circle => {
+  _setCircleRef = (circle) => {
     this.circle = circle;
   };
 
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    touchAction: 'none'
+    touchAction: 'none',
   },
   container: {
     flex: 1,
     minHeight: 400,
-    paddingTop: 64
-  }
+    paddingTop: 64,
+  },
 });

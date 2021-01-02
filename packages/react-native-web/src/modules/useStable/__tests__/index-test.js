@@ -16,7 +16,7 @@ function createRoot(rootNode) {
   return {
     render(element) {
       ReactDOM.render(element, rootNode);
-    }
+    },
   };
 }
 

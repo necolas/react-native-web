@@ -34,7 +34,7 @@ export default {
     logical,
     position,
     sizing,
-    transition
+    transition,
   ],
   prefixMap: {
     animation: w,
@@ -143,6 +143,6 @@ export default {
     transitionDelay: w,
     transitionDuration: w,
     transitionProperty: w,
-    transitionTimingFunction: w
-  }
+    transitionTimingFunction: w,
+  },
 };

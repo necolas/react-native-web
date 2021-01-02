@@ -15,12 +15,12 @@ export type DisplayMetrics = {|
   fontScale: number,
   height: number,
   scale: number,
-  width: number
+  width: number,
 |};
 
 type DimensionsValue = {|
   window?: DisplayMetrics,
-  screen?: DisplayMetrics
+  screen?: DisplayMetrics,
 |};
 
 type DimensionKey = 'window' | 'screen';
@@ -35,8 +35,8 @@ const win = canUseDOM
       innerWidth: (undefined: any),
       screen: {
         height: (undefined: any),
-        width: (undefined: any)
-      }
+        width: (undefined: any),
+      },
     };
 
 const dimensions = {};
@@ -64,24 +64,24 @@ export default class Dimensions {
       fontScale: 1,
       height: win.innerHeight,
       scale: win.devicePixelRatio || 1,
-      width: win.innerWidth
+      width: win.innerWidth,
     };
 
     dimensions.screen = {
       fontScale: 1,
       height: win.screen.height,
       scale: win.devicePixelRatio || 1,
-      width: win.screen.width
+      width: win.screen.width,
     };
 
     if (Array.isArray(listeners['change'])) {
-      listeners['change'].forEach(handler => handler(dimensions));
+      listeners['change'].forEach((handler) => handler(dimensions));
     }
   }
 
   static addEventListener(
     type: DimensionEventListenerType,
-    handler: DimensionsValue => void
+    handler: (DimensionsValue) => void
   ): void {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
@@ -89,10 +89,10 @@ export default class Dimensions {
 
   static removeEventListener(
     type: DimensionEventListenerType,
-    handler: DimensionsValue => void
+    handler: (DimensionsValue) => void
   ): void {
     if (Array.isArray(listeners[type])) {
-      listeners[type] = listeners[type].filter(_handler => _handler !== handler);
+      listeners[type] = listeners[type].filter((_handler) => _handler !== handler);
     }
   }
 }

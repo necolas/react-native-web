@@ -23,7 +23,7 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
       pointerEvents,
       ...nativeProps,
       classList: [classList, nativeProps.className],
-      style: [style, nativeProps.style]
+      style: [style, nativeProps.style],
     });
 
     const nextDomStyle = domProps.style;
@@ -52,11 +52,11 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
 export default function usePlatformMethods({
   classList,
   pointerEvents,
-  style
+  style,
 }: {
   classList?: Array<string | boolean>,
   style?: GenericStyleProp<*>,
-  pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
+  pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>,
 }) {
   const previousStyleRef = useRef(null);
   const setNativePropsArgsRef = useRef(null);
@@ -66,11 +66,11 @@ export default function usePlatformMethods({
   // available to 'setNativeProps' when it is called.
   const ref = useStable(() => (hostNode: any) => {
     if (hostNode != null) {
-      hostNode.measure = callback => UIManager.measure(hostNode, callback);
+      hostNode.measure = (callback) => UIManager.measure(hostNode, callback);
       hostNode.measureLayout = (relativeToNode, success, failure) =>
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-      hostNode.setNativeProps = nativeProps => {
+      hostNode.measureInWindow = (callback) => UIManager.measureInWindow(hostNode, callback);
+      hostNode.setNativeProps = (nativeProps) => {
         const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
         setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
       };

@@ -3,17 +3,17 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   marginRight: {
-    marginRight: 10
+    marginRight: 10,
   },
   marginBottom: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   alignCenter: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default styles;

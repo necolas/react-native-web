@@ -6,7 +6,7 @@ import { TextInput, View } from 'react-native';
 export default function BlurOnSubmit() {
   const refs = React.useRef({});
 
-  const focusNextField = id => {
+  const focusNextField = (id) => {
     if (refs.current[id] != null) {
       refs.current[id].focus();
     }
@@ -17,7 +17,7 @@ export default function BlurOnSubmit() {
       <TextInput
         blurOnSubmit={false}
         placeholder="blurOnSubmit = false"
-        ref={c => {
+        ref={(c) => {
           refs.current['1'] = c;
         }}
         style={styles.textinput}
@@ -26,7 +26,7 @@ export default function BlurOnSubmit() {
         blurOnSubmit={true}
         onSubmitEditing={() => focusNextField('3')}
         placeholder="blurOnSubmit = true"
-        ref={c => {
+        ref={(c) => {
           refs.current['2'] = c;
         }}
         style={styles.textinput}
@@ -34,11 +34,11 @@ export default function BlurOnSubmit() {
       <TextInput
         blurOnSubmit={true}
         multiline={true}
-        onSubmitEditing={e => {
+        onSubmitEditing={(e) => {
           console.log(e.nativeEvent);
         }}
         placeholder="blurOnSubmit = true"
-        ref={c => {
+        ref={(c) => {
           refs.current['3'] = c;
         }}
         style={styles.multiline}

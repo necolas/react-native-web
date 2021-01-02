@@ -28,7 +28,7 @@ export type ModalProps = {|
     'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
   >,
   transparent?: ?boolean,
-  visible?: ?boolean
+  visible?: ?boolean,
 |};
 
 let uniqueModalIdentifier = 0;
@@ -41,7 +41,7 @@ function notifyActiveModalListeners() {
     return;
   }
   const activeModalId = activeModalStack[activeModalStack.length - 1];
-  activeModalStack.forEach(modalId => {
+  activeModalStack.forEach((modalId) => {
     if (modalId in activeModalListeners) {
       activeModalListeners[modalId](modalId === activeModalId);
     }
@@ -77,7 +77,7 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
     onRequestClose,
     onShow,
     transparent,
-    visible = true
+    visible = true,
   } = props;
 
   // Set a unique model identifier so we can correctly route

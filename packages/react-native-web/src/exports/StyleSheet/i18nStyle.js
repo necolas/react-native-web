@@ -46,7 +46,7 @@ const PROPERTIES_FLIP = {
   marginRight: marginLeft,
   paddingLeft: paddingRight,
   paddingRight: paddingLeft,
-  right: left
+  right: left,
 };
 
 // Map of I18N property names to their LTR equivalent.
@@ -66,19 +66,19 @@ const PROPERTIES_I18N = {
   marginEnd: marginRight,
   paddingStart: paddingLeft,
   paddingEnd: paddingRight,
-  start: left
+  start: left,
 };
 
 const PROPERTIES_VALUE = {
   clear: true,
   float: true,
-  textAlign: true
+  textAlign: true,
 };
 
 // Invert the sign of a numeric-like value
 const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
 
-const i18nStyle = originalStyle => {
+const i18nStyle = (originalStyle) => {
   const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
   const style = originalStyle || emptyObject;
   const frozenProps = {};

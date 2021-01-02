@@ -1,7 +1,7 @@
 import React from 'react';
 import { Picker, StyleSheet, View } from 'react-native';
 
-const PickerExample = props => (
+const PickerExample = (props) => (
   <View style={styles.root}>
     <Picker {...props}>
       <Picker.Item label="Sorcerer's Stone" value="book-1" />
@@ -17,8 +17,8 @@ const PickerExample = props => (
 
 const styles = StyleSheet.create({
   root: {
-    alignItems: 'flex-start'
-  }
+    alignItems: 'flex-start',
+  },
 });
 
 export default PickerExample;

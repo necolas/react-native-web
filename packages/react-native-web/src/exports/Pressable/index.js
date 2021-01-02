@@ -24,7 +24,7 @@ import View from '../View';
 export type StateCallbackType = $ReadOnly<{|
   focused: boolean,
   hovered: boolean,
-  pressed: boolean
+  pressed: boolean,
 |}>;
 
 type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
@@ -68,7 +68,7 @@ type Props = $ReadOnly<{|
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
    */
-  testOnly_pressed?: ?boolean
+  testOnly_pressed?: ?boolean,
 |}>;
 
 /**
@@ -114,7 +114,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onPressChange: setPressed,
       onPressStart: onPressIn,
       onPressMove,
-      onPressEnd: onPressOut
+      onPressEnd: onPressOut,
     }),
     [
       delayLongPress,
@@ -126,7 +126,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed
+      setPressed,
     ]
   );
 
@@ -138,7 +138,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const interactionState = { hovered, focused, pressed };
 
   function createFocusHandler(callback, value) {
-    return function(event) {
+    return function (event) {
       if (event.nativeEvent.target === hostRef.current) {
         setFocused(value);
         if (callback != null) {
@@ -160,7 +160,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       ref={setRef}
       style={[
         !disabled && styles.root,
-        typeof style === 'function' ? style(interactionState) : style
+        typeof style === 'function' ? style(interactionState) : style,
       ]}
     >
       {typeof children === 'function' ? children(interactionState) : children}
@@ -176,8 +176,8 @@ function useForceableState(forced: boolean): [boolean, (boolean) => void] {
 const styles = StyleSheet.create({
   root: {
     cursor: 'pointer',
-    touchAction: 'manipulation'
-  }
+    touchAction: 'manipulation',
+  },
 });
 
 const MemoedPressable = memo(forwardRef(Pressable));

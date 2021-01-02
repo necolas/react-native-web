@@ -97,10 +97,10 @@ const forwardPropsList = {
   onMouseMove: true,
   onMouseOver: true,
   onMouseOut: true,
-  onMouseUp: true
+  onMouseUp: true,
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
@@ -151,7 +151,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     secureTextEntry = false,
     selection,
     selectTextOnFocus,
-    spellCheck
+    spellCheck,
   } = props;
 
   let type;
@@ -201,26 +201,26 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
           nativeEvent: {
             contentSize: {
               height: dimensions.current.height,
-              width: dimensions.current.width
-            }
-          }
+              width: dimensions.current.width,
+            },
+          },
         });
       }
     }
   }, [hostRef, multiline, onContentSizeChange]);
 
   const imperativeRef = useMemo(
-    () => hostNode => {
+    () => (hostNode) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `usePlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
       if (hostNode != null) {
-        hostNode.clear = function() {
+        hostNode.clear = function () {
           if (hostNode != null) {
             hostNode.value = '';
           }
         };
-        hostNode.isFocused = function() {
+        hostNode.isFocused = function () {
           return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
         };
         handleContentSizeChange();
@@ -309,7 +309,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
         const { selectionStart, selectionEnd } = node;
         e.nativeEvent.selection = {
           start: selectionStart,
-          end: selectionEnd
+          end: selectionEnd,
         };
         e.nativeEvent.text = e.target.value;
         onSelectionChange(e);
@@ -329,10 +329,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
 
   const component = multiline ? 'textarea' : 'input';
   const classList = [classes.textinput];
-  const style = StyleSheet.compose(
-    props.style,
-    placeholderTextColor && { placeholderTextColor }
-  );
+  const style = StyleSheet.compose(props.style, placeholderTextColor && { placeholderTextColor });
 
   useElementLayout(hostRef, onLayout);
   useResponderEvents(hostRef, {
@@ -351,7 +348,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     onSelectionChangeShouldSetResponder,
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
+    onStartShouldSetResponderCapture,
   });
 
   const supportedProps = pickProps(props);
@@ -398,8 +395,8 @@ const classes = css.create({
     font: '14px System',
     margin: 0,
     padding: 0,
-    resize: 'none'
-  }
+    resize: 'none',
+  },
 });
 
 export default TextInput;

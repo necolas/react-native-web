@@ -4,10 +4,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 export default function FeedbackEvents() {
   const [eventLog, updateEventLog] = React.useState([]);
 
-  const handlePress = eventName => {
+  const handlePress = (eventName) => {
     return () => {
       const limit = 6;
-      updateEventLog(state => {
+      updateEventLog((state) => {
         const nextState = state.slice(0, limit - 1);
         nextState.unshift(eventName);
         return nextState;
@@ -51,7 +51,7 @@ export default function FeedbackEvents() {
               borderWidth: 1,
               borderColor: focused ? 'red' : null,
               backgroundColor,
-              outlineWidth: 0
+              outlineWidth: 0,
             };
           }}
         >
@@ -75,7 +75,7 @@ export default function FeedbackEvents() {
                 borderWidth: 1,
                 borderColor: focused ? 'red' : null,
                 backgroundColor,
-                outlineWidth: 0
+                outlineWidth: 0,
               };
             }}
           >
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     color: '#007AFF',
     borderStyle: 'solid',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   eventLogBox: {
     padding: 10,
@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#f0f0f0',
-    backgroundColor: '#f9f9f9'
-  }
+    backgroundColor: '#f9f9f9',
+  },
 });

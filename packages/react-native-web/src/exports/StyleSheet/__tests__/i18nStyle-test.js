@@ -18,13 +18,13 @@ describe('StyleSheet/i18nStyle', () => {
         borderStartColor: 'red',
         start: 1,
         marginStart: 5,
-        paddingEnd: 10
+        paddingEnd: 10,
       };
       const expected = {
         borderLeftColor: 'red',
         left: 1,
         marginLeft: 5,
-        paddingRight: 10
+        paddingRight: 10,
       };
       expect(i18nStyle(initial)).toEqual(expected);
     });
@@ -33,12 +33,12 @@ describe('StyleSheet/i18nStyle', () => {
       const initial = {
         float: 'start',
         textAlign: 'end',
-        transitionProperty: 'marginStart'
+        transitionProperty: 'marginStart',
       };
       const expected = {
         float: 'left',
         textAlign: 'right',
-        transitionProperty: 'marginLeft'
+        transitionProperty: 'marginLeft',
       };
       expect(i18nStyle(initial)).toEqual(expected);
     });
@@ -48,7 +48,7 @@ describe('StyleSheet/i18nStyle', () => {
         paddingLeft: 0,
         left: 0,
         marginRight: 0,
-        paddingRight: 10
+        paddingRight: 10,
       };
       expect(i18nStyle(initial)).toEqual(initial);
     });
@@ -59,7 +59,7 @@ describe('StyleSheet/i18nStyle', () => {
         float: 'left',
         textAlign: 'right',
         textShadowOffset: { width: '1rem', height: 10 },
-        transitionProperty: 'marginLeft'
+        transitionProperty: 'marginLeft',
       };
       expect(i18nStyle(initial)).toEqual(initial);
     });
@@ -71,12 +71,12 @@ describe('StyleSheet/i18nStyle', () => {
         end: 10,
         right: 0,
         marginStart: 10,
-        marginLeft: 0
+        marginLeft: 0,
       };
       const expected = {
         borderLeftWidth: 10,
         marginLeft: 10,
-        right: 10
+        right: 10,
       };
       expect(i18nStyle(initial)).toEqual(expected);
     });
@@ -105,13 +105,13 @@ describe('StyleSheet/i18nStyle', () => {
           borderStartColor: 'red',
           start: 1,
           marginStart: 5,
-          paddingEnd: 10
+          paddingEnd: 10,
         };
         const expected = {
           borderRightColor: 'red',
           right: 1,
           marginRight: 5,
-          paddingLeft: 10
+          paddingLeft: 10,
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -120,12 +120,12 @@ describe('StyleSheet/i18nStyle', () => {
         const initial = {
           float: 'start',
           textAlign: 'end',
-          transitionProperty: 'marginStart'
+          transitionProperty: 'marginStart',
         };
         const expected = {
           float: 'right',
           textAlign: 'left',
-          transitionProperty: 'marginRight'
+          transitionProperty: 'marginRight',
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -135,7 +135,7 @@ describe('StyleSheet/i18nStyle', () => {
           paddingLeft: 0,
           left: 0,
           marginRight: 0,
-          paddingRight: 10
+          paddingRight: 10,
         };
         expect(i18nStyle(initial)).toEqual(initial);
       });
@@ -146,7 +146,7 @@ describe('StyleSheet/i18nStyle', () => {
           float: 'left',
           textAlign: 'right',
           textShadowOffset: { width: '1rem', height: 10 },
-          transitionProperty: 'marginLeft'
+          transitionProperty: 'marginLeft',
         };
         expect(i18nStyle(initial)).toEqual(initial);
       });
@@ -158,12 +158,12 @@ describe('StyleSheet/i18nStyle', () => {
           end: 10,
           left: 0,
           marginStart: 10,
-          marginRight: 0
+          marginRight: 0,
         };
         const expected = {
           borderRightWidth: 10,
           marginRight: 10,
-          left: 10
+          left: 10,
         };
         expect(i18nStyle(style)).toEqual(expected);
       });
@@ -175,13 +175,13 @@ describe('StyleSheet/i18nStyle', () => {
           borderStartColor: 'red',
           start: 1,
           marginStart: 5,
-          paddingEnd: 10
+          paddingEnd: 10,
         };
         const expected = {
           borderRightColor: 'red',
           right: 1,
           marginRight: 5,
-          paddingLeft: 10
+          paddingLeft: 10,
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -190,12 +190,12 @@ describe('StyleSheet/i18nStyle', () => {
         const initial = {
           float: 'start',
           textAlign: 'end',
-          transitionProperty: 'marginStart'
+          transitionProperty: 'marginStart',
         };
         const expected = {
           float: 'right',
           textAlign: 'left',
-          transitionProperty: 'marginRight'
+          transitionProperty: 'marginRight',
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -205,13 +205,13 @@ describe('StyleSheet/i18nStyle', () => {
           borderLeftColor: 'red',
           left: 1,
           marginLeft: 5,
-          paddingRight: 10
+          paddingRight: 10,
         };
         const expected = {
           borderRightColor: 'red',
           right: 1,
           marginRight: 5,
-          paddingLeft: 10
+          paddingLeft: 10,
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -221,13 +221,13 @@ describe('StyleSheet/i18nStyle', () => {
           float: 'left',
           textAlign: 'right',
           textShadowOffset: { width: '1rem', height: 10 },
-          transitionProperty: 'marginLeft'
+          transitionProperty: 'marginLeft',
         };
         const expected = {
           float: 'right',
           textAlign: 'left',
           textShadowOffset: { width: '-1rem', height: 10 },
-          transitionProperty: 'marginRight'
+          transitionProperty: 'marginRight',
         };
         expect(i18nStyle(initial)).toEqual(expected);
       });
@@ -239,12 +239,12 @@ describe('StyleSheet/i18nStyle', () => {
           end: 10,
           right: 0,
           marginStart: 10,
-          marginLeft: 0
+          marginLeft: 0,
         };
         const expected = {
           borderRightWidth: 10,
           marginRight: 10,
-          left: 10
+          left: 10,
         };
         expect(i18nStyle(style)).toEqual(expected);
       });

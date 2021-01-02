@@ -58,7 +58,7 @@ const TextInputState = {
         UIManager.blur(textFieldNode);
       }
     }
-  }
+  },
 };
 
 export default TextInputState;

@@ -27,7 +27,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Switch,
-  View
+  View,
 } from 'react-native';
 
 const SCALE = PixelRatio.get();
@@ -93,13 +93,13 @@ function withRTLState(Component) {
     constructor(...args) {
       super(...args);
       this.state = {
-        isRTL: false
+        isRTL: false,
       };
     }
 
     render() {
       const isRTL = Platform === 'ios' ? this.state.isRTL : I18nManager.isRTL;
-      const setRTL = isRTL => this.setState({ isRTL: isRTL });
+      const setRTL = (isRTL) => this.setState({ isRTL: isRTL });
       return <Component isRTL={isRTL} setRTL={setRTL} />;
     }
   };
@@ -139,7 +139,7 @@ const PaddingExample = withRTLState(({ isRTL, setRTL }) => {
           paddingEnd: 10,
           borderWidth: 1,
           borderColor: color,
-          direction: isRTL ? 'rtl' : 'ltr'
+          direction: isRTL ? 'rtl' : 'ltr',
         }}
       >
         <View
@@ -149,7 +149,7 @@ const PaddingExample = withRTLState(({ isRTL, setRTL }) => {
             paddingBottom: 5,
             borderLeftWidth: 1,
             borderRightWidth: 1,
-            borderColor: 'gray'
+            borderColor: 'gray',
           }}
         >
           <RTLToggler isRTL={isRTL} setRTL={setRTL} />
@@ -173,7 +173,7 @@ const MarginExample = withRTLState(({ isRTL, setRTL }) => {
           backgroundColor: 'green',
           borderWidth: 1,
           borderColor: 'green',
-          direction: isRTL ? 'rtl' : 'ltr'
+          direction: isRTL ? 'rtl' : 'ltr',
         }}
       >
         <View
@@ -185,7 +185,7 @@ const MarginExample = withRTLState(({ isRTL, setRTL }) => {
             marginEnd: 10,
             borderLeftWidth: 1,
             borderRightWidth: 1,
-            borderColor: 'gray'
+            borderColor: 'gray',
           }}
         >
           <RTLToggler isRTL={isRTL} setRTL={setRTL} />
@@ -208,14 +208,14 @@ const PositionExample = withRTLState(({ isRTL, setRTL }) => {
           backgroundColor: 'orange',
           borderWidth: 1,
           borderColor: 'orange',
-          direction: isRTL ? 'rtl' : 'ltr'
+          direction: isRTL ? 'rtl' : 'ltr',
         }}
       >
         <View
           style={{
             backgroundColor: 'white',
             start: 50,
-            borderColor: 'gray'
+            borderColor: 'gray',
           }}
         >
           <RTLToggler isRTL={isRTL} setRTL={setRTL} />
@@ -232,14 +232,14 @@ const PositionExample = withRTLState(({ isRTL, setRTL }) => {
           backgroundColor: 'orange',
           borderWidth: 1,
           borderColor: 'orange',
-          direction: isRTL ? 'rtl' : 'ltr'
+          direction: isRTL ? 'rtl' : 'ltr',
         }}
       >
         <View
           style={{
             backgroundColor: 'white',
             end: 50,
-            borderColor: 'gray'
+            borderColor: 'gray',
           }}
         >
           <RTLToggler isRTL={isRTL} setRTL={setRTL} />
@@ -261,7 +261,7 @@ const BorderWidthExample = withRTLState(({ isRTL, setRTL }) => {
         <View
           style={{
             borderStartWidth: 10,
-            borderEndWidth: 50
+            borderEndWidth: 50,
           }}
         >
           <View>
@@ -288,7 +288,7 @@ const BorderColorExample = withRTLState(({ isRTL, setRTL }) => {
             borderEndColor: 'green',
             borderLeftWidth: 20,
             borderRightWidth: 20,
-            padding: 10
+            padding: 10,
           }}
         >
           <View>
@@ -318,7 +318,7 @@ const BorderRadiiExample = withRTLState(({ isRTL, setRTL }) => {
             borderTopEndRadius: 20,
             borderBottomStartRadius: 30,
             borderBottomEndRadius: 40,
-            padding: 10
+            padding: 10,
           }}
         >
           <View>
@@ -340,7 +340,7 @@ class LayoutRTLExample extends React.Component {
       onPanResponderGrant: this._onPanResponderGrant,
       onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
       onPanResponderRelease: this._onPanResponderEnd,
-      onPanResponderTerminate: this._onPanResponderEnd
+      onPanResponderTerminate: this._onPanResponderEnd,
     });
 
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
@@ -351,7 +351,7 @@ class LayoutRTLExample extends React.Component {
       linear: new Animated.Value(0),
       isRTL,
       doLeftAndRightSwapInRTL,
-      containerWidth: 0
+      containerWidth: 0,
     };
 
     this._linearTap = this._linearTap.bind(this);
@@ -368,7 +368,7 @@ class LayoutRTLExample extends React.Component {
         style={[
           styles.container,
           // `direction` property is not supported on Android.
-          Platform.OS !== 'android' ? { direction: this.state.isRTL ? 'rtl' : 'ltr' } : null
+          Platform.OS !== 'android' ? { direction: this.state.isRTL ? 'rtl' : 'ltr' } : null,
         ]}
       >
         <Page title={'React Native: Right-to-Left (RTL) UI Layout'}>
@@ -456,8 +456,8 @@ class LayoutRTLExample extends React.Component {
                 imgStyle={{
                   transform: [
                     { translateX: this.state.linear },
-                    { scaleX: this.state.isRTL ? -1 : 1 }
-                  ]
+                    { scaleX: this.state.isRTL ? -1 : 1 },
+                  ],
                 }}
                 onPress={this._linearTap}
               />
@@ -480,7 +480,7 @@ class LayoutRTLExample extends React.Component {
   _onSwapChange() {
     I18nManager.swapLeftAndRightInRTL(!this.state.doLeftAndRightSwapInRTL);
     this.setState({
-      doLeftAndRightSwapInRTL: !this.state.doLeftAndRightSwapInRTL
+      doLeftAndRightSwapInRTL: !this.state.doLeftAndRightSwapInRTL,
     });
   }
 
@@ -488,20 +488,20 @@ class LayoutRTLExample extends React.Component {
     this.setState({
       toggleStatus: {
         ...this.state.toggleStatus,
-        [refName]: !this.state.toggleStatus[refName]
-      }
+        [refName]: !this.state.toggleStatus[refName],
+      },
     });
     const offset = IMAGE_SIZE[0] / SCALE / 2 + 10;
     const toMaxDistance = (this.state.isRTL ? -1 : 1) * (this.state.containerWidth / 2 - offset);
     Animated.timing(this.state.linear, {
       toValue: this.state.toggleStatus[refName] ? toMaxDistance : 0,
       duration: 2000,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   }
 
   _onPanResponderGrant(e, gestureState) {
-    this.state.pan.stopAnimation(value => {
+    this.state.pan.stopAnimation((value) => {
       this.state.pan.setOffset(value);
     });
   }
@@ -511,9 +511,9 @@ class LayoutRTLExample extends React.Component {
     Animated.sequence([
       Animated.decay(this.state.pan, {
         velocity: { x: gestureState.vx, y: gestureState.vy },
-        deceleration: 0.995
+        deceleration: 0.995,
       }),
-      Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } })
+      Animated.spring(this.state.pan, { toValue: { x: 0, y: 0 } }),
     ]).start();
   }
 }
@@ -524,24 +524,24 @@ export default function LayoutRTL() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#e9eaed'
+    backgroundColor: '#e9eaed',
   },
   directionBox: {
     flex: 1,
     backgroundColor: '#f8f8f8',
     borderWidth: 0.5,
-    borderColor: 'black'
+    borderColor: 'black',
   },
   directionText: {
     padding: 10,
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   switchRow: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   list: {
     height: 120,
@@ -549,79 +549,79 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
-    borderColor: '#e5e5e5'
+    borderColor: '#e5e5e5',
   },
   row: {
     height: 60,
     flexDirection: 'row',
     borderBottomWidth: 0.5,
-    borderColor: '#e5e5e5'
+    borderColor: '#e5e5e5',
   },
   column1: {
     width: 60,
-    padding: 6
+    padding: 6,
   },
   column2: {
     flex: 1,
-    padding: 6
+    padding: 6,
   },
   column3: {
     justifyContent: 'center',
-    padding: 6
+    padding: 6,
   },
   icon: {
     width: 48,
     height: 48,
     borderWidth: 0.5,
-    borderColor: '#e5e5e5'
+    borderColor: '#e5e5e5',
   },
   image: {
     width: 48,
-    height: 48
+    height: 48,
   },
   img: {
     width: IMAGE_SIZE[0] / SCALE,
-    height: IMAGE_SIZE[1] / SCALE
+    height: IMAGE_SIZE[1] / SCALE,
   },
   view: {
-    flex: 1
+    flex: 1,
   },
   block: {
     padding: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   smallButton: {
     height: 24,
-    width: 64
+    width: 64,
   },
   fontSizeSmall: {
-    fontSize: 14
+    fontSize: 14,
   },
   fontSizeExtraSmall: {
-    fontSize: 12
+    fontSize: 12,
   },
   textAlignLeft: {
-    textAlign: 'left'
+    textAlign: 'left',
   },
   textAlignRight: {
-    textAlign: 'right'
+    textAlign: 'right',
   },
   textAlignStart: {
-    textAlign: 'start'
+    textAlign: 'start',
   },
   textAlignEnd: {
-    textAlign: 'end'
+    textAlign: 'end',
   },
   flexDirectionRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rtlToggler: {
     color: 'gray',
     padding: 8,
     textAlign: 'center',
-    fontWeight: '500'
-  }
+    fontWeight: '500',
+  },
 });

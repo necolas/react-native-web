@@ -8,7 +8,7 @@ class ImageGetSizeExample extends PureComponent {
     showButton: true,
     startLoad: false,
     width: 0,
-    height: 0
+    height: 0,
   };
 
   render() {
@@ -43,14 +43,14 @@ class ImageGetSizeExample extends PureComponent {
 
 const styles = StyleSheet.create({
   button: {
-    maxWidth: 300
+    maxWidth: 300,
   },
   image: {
     backgroundColor: '#eee',
     height: 230,
     marginTop: 10,
-    width: 320
-  }
+    width: 320,
+  },
 });
 
 const StaticGetSizeExample = () => <ImageGetSizeExample source={sources.pjpeg} />;

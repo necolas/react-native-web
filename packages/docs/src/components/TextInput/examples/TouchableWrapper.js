@@ -21,7 +21,7 @@ export default class TouchableWrapper extends React.Component {
     }
   };
 
-  _setRef = c => {
+  _setRef = (c) => {
     this._input = c;
   };
 }
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 50
-  }
+    padding: 50,
+  },
 });

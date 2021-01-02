@@ -15,7 +15,7 @@ export default function OnPress() {
     <View>
       <Text
         onPress={() => {
-          updateCount(count => count + 1);
+          updateCount((count) => count + 1);
         }}
         style={styles.textBlock}
       >
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#f0f0f0',
-    backgroundColor: '#f9f9f9'
+    backgroundColor: '#f9f9f9',
   },
   textBlock: {
     fontWeight: '500',
-    color: 'blue'
-  }
+    color: 'blue',
+  },
 });

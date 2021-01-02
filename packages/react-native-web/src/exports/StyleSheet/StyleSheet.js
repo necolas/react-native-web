@@ -15,7 +15,7 @@ const absoluteFillObject = {
   left: 0,
   right: 0,
   top: 0,
-  bottom: 0
+  bottom: 0,
 };
 const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
 
@@ -27,7 +27,7 @@ const StyleSheet = {
       /* eslint-disable prefer-rest-params */
       const len = arguments.length;
       if (len > 2) {
-        const readableStyles = [...arguments].map(a => flattenStyle(a));
+        const readableStyles = [...arguments].map((a) => flattenStyle(a));
         throw new Error(
           `StyleSheet.compose() only accepts 2 arguments, received ${len}: ${JSON.stringify(
             readableStyles
@@ -45,7 +45,7 @@ const StyleSheet = {
   },
   create(styles: Object) {
     const result = {};
-    Object.keys(styles).forEach(key => {
+    Object.keys(styles).forEach((key) => {
       if (process.env.NODE_ENV !== 'production') {
         const validate = require('./validate');
         const interopValidate = validate.default ? validate.default : validate;
@@ -60,7 +60,7 @@ const StyleSheet = {
 
   // `hairlineWidth` is not implemented using screen density as browsers may
   // round sub-pixel values down to `0`, causing the line not to be rendered.
-  hairlineWidth: 1
+  hairlineWidth: 1,
 };
 
 export default StyleSheet;

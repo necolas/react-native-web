@@ -18,6 +18,6 @@ export default function Progress() {
 
 const styles = StyleSheet.create({
   progress: {
-    minWidth: 200
-  }
+    minWidth: 200,
+  },
 });

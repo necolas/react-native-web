@@ -18,7 +18,7 @@ describe('StyleSheet/flattenStyle', () => {
   test('should override style properties', () => {
     const style = flattenStyle([
       { backgroundColor: '#000', order: 1 },
-      { backgroundColor: '#023c69', order: null }
+      { backgroundColor: '#023c69', order: null },
     ]);
     expect(style).toMatchSnapshot();
   });

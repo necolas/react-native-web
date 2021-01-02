@@ -16,7 +16,7 @@ import type { BenchResultsType, FullSampleTimingType, SampleTimingType } from '.
 export const BenchmarkType = {
   MOUNT: 'mount',
   UPDATE: 'update',
-  UNMOUNT: 'unmount'
+  UNMOUNT: 'unmount',
 };
 
 const shouldRender = (cycle: number, type: $Values<typeof BenchmarkType>): boolean => {
@@ -76,13 +76,13 @@ type BenchmarkPropsType = {
   onComplete: (x: BenchResultsType) => void,
   sampleCount: number,
   timeout: number,
-  type: $Values<typeof BenchmarkType>
+  type: $Values<typeof BenchmarkType>,
 };
 
 type BenchmarkStateType = {
   componentProps: Object,
   cycle: number,
-  running: boolean
+  running: boolean,
 };
 
 /**
@@ -99,7 +99,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
   static defaultProps = {
     sampleCount: 50,
     timeout: 10000, // 10 seconds
-    type: BenchmarkType.MOUNT
+    type: BenchmarkType.MOUNT,
   };
 
   static Type = BenchmarkType;
@@ -111,7 +111,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     this.state = {
       componentProps,
       cycle,
-      running: false
+      running: false,
     };
     this._startTime = 0;
     this._samples = [];
@@ -119,7 +119,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
   componentWillReceiveProps(nextProps: BenchmarkPropsType) {
     if (nextProps) {
-      this.setState(state => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
+      this.setState((state) => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
     }
   }
 
@@ -194,7 +194,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     this._raf = window.requestAnimationFrame(() => {
       this.setState((state: BenchmarkStateType) => ({
         cycle: state.cycle + 1,
-        componentProps
+        componentProps,
       }));
     });
   }
@@ -211,7 +211,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
           scriptingStart,
           scriptingEnd: scriptingEnd || 0,
           layoutStart,
-          layoutEnd
+          layoutEnd,
         });
         return memo;
       },
@@ -246,7 +246,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
       mean: getMean(sortedElapsedTimes),
       stdDev: getStdDev(sortedElapsedTimes),
       meanLayout: getMean(sortedLayoutElapsedTimes),
-      meanScripting: getMean(sortedScriptingElapsedTimes)
+      meanScripting: getMean(sortedScriptingElapsedTimes),
     });
   }
 }

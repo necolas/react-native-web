@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 export default class Layout extends Component {
   state = {
-    widescreen: false
+    widescreen: false,
   };
 
   render() {
@@ -37,25 +37,25 @@ export default class Layout extends Component {
 
 const styles = StyleSheet.create({
   root: {
-    height: '100%'
+    height: '100%',
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   divider: {
     height: 10,
     backgroundColor: colors.fadedGray,
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: colors.mediumGray
+    borderColor: colors.mediumGray,
   },
   grow: {
-    flex: 1
+    flex: 1,
   },
   stackPanel: {
-    height: '33.33%'
+    height: '33.33%',
   },
   layer: {
-    transform: [{ translateZ: '0' }]
-  }
+    transform: [{ translateZ: '0' }],
+  },
 });

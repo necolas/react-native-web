@@ -17,7 +17,7 @@ export type Touch = {
   pageY: number,
   target: any,
   // Touches in a list have a timestamp property
-  timestamp: number
+  timestamp: number,
 };
 
 export type TouchEvent = {
@@ -38,7 +38,7 @@ export type TouchEvent = {
   // The timestamp has a lowercase "s" in the Responder system
   timestamp: number,
   // TouchList is an array in the Responder system
-  touches: Array<Touch>
+  touches: Array<Touch>,
 };
 
 export const BLUR = 'blur';

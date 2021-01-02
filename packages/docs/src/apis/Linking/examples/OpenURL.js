@@ -5,7 +5,7 @@ const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
 class OpenURLExample extends PureComponent {
   handlePress() {
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       return Linking.openURL(url);
     });
   }
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     marginVertical: 10,
-    padding: 10
-  }
+    padding: 10,
+  },
 });
