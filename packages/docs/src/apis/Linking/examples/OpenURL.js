@@ -1,13 +1,29 @@
+/**
+ * @flow
+ */
+
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import React, { PureComponent } from 'react';
 
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
 class OpenURLExample extends PureComponent {
+  componentDidMount() {
+    Linking.addEventListener('onOpen', this.onOpenURL);
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener('onOpen', this.onOpenURL);
+  }
+
   handlePress() {
     Linking.canOpenURL(url).then(supported => {
       return Linking.openURL(url);
     });
+  }
+
+  onOpenURL(url: string) {
+    console.log(`%c    opened the url: ${url}    `, 'background: #D32F2F; color: #FFFFFF');
   }
 
   render() {

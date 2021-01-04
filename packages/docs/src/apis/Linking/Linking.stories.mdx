@@ -9,6 +9,14 @@ Linking gives you a general interface for securely opening external URLs from Ja
 
 ## Methods
 
+### addEventListener(event, callback)
+
+Adds a event listener for the specified event. The callback will be called when the said event is dispatched.
+
+### removeEventListener(event, callback)
+
+Removes a previously added event listener for the specified event. The callback must be the same object as the one passed to `addEventListener`.
+
 ### canOpenURL(url)
 
 Returns a `Promise` that resolves to a boolean indicating whether the app can open the URL.
@@ -23,9 +31,23 @@ Try to open the given url in a secure fashion. The method returns a `Promise`
 object. If the url opens, the promise is resolved. If not, the promise is
 rejected.
 
+> On opening URL successfully, dispatches the `onOpen` event.
+
+## Events
+
+### `onOpen`
+
+Dispatched when a call to `Linking.openURL` succeeds. Type signature of the callback is:
+
+```js
+(url: string) => void
+```
+
 ## Example
 
-<Preview withSource='none'>
+> Listener added to the`onOpen` event. Check the console for the event log after a URL is opened.
+
+<Preview withSource="none">
   <Story name="openURL">
     <Stories.openURL />
   </Story>
