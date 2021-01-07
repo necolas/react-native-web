@@ -1,6 +1,4 @@
-/**
- * @flow
- */
+/** @flow */
 export type BenchResultsType = {
   startTime: number,
   endTime: number,

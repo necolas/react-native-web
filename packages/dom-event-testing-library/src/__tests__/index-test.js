@@ -3,8 +3,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  */
 
 'use strict';
@@ -18,9 +18,7 @@ import {
   testWithPointerType,
 } from '../index';
 
-/**
- * Unit test helpers
- */
+/** Unit test helpers */
 describeWithPointerEvent('describeWithPointerEvent', (pointerEvent) => {
   test('provides boolean to tests', () => {
     expect(pointerEvent).toMatchSnapshot();
@@ -31,9 +29,7 @@ describeWithPointerEvent('describeWithPointerEvent', (pointerEvent) => {
   });
 });
 
-/**
- * createEventTarget
- */
+/** The createEventTarget */
 describe('createEventTarget', () => {
   let node;
   beforeEach(() => {
@@ -76,9 +72,7 @@ describe('createEventTarget', () => {
     `);
   });
 
-  /**
-   * Simple events
-   */
+  /** Simple events */
 
   describe('.blur()', () => {
     test('default', () => {
@@ -336,9 +330,7 @@ describe('createEventTarget', () => {
    * ...coming soon
    */
 
-  /**
-   * Other APIs
-   */
+  /** Other APIs */
 
   test('.setBoundingClientRect()', () => {
     const target = createEventTarget(node);

@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -145,43 +145,48 @@ const DEFAULT_PRESS_DELAY_MS = 50;
 /**
  * =========================== PressResponder Tutorial ===========================
  *
- * The `PressResponder` class helps you create press interactions by analyzing the
- * geometry of elements and observing when another responder (e.g. ScrollView)
- * has stolen the touch lock. It offers hooks for your component to provide
- * interaction feedback to the user:
+ * The `PressResponder` class helps you create press interactions by analyzing the geometry of
+ * elements and observing when another responder (e.g. ScrollView) has stolen the touch lock. It
+ * offers hooks for your component to provide interaction feedback to the user:
  *
  * - When a press has activated (e.g. highlight an element)
  * - When a press has deactivated (e.g. un-highlight an element)
- * - When a press sould trigger an action, meaning it activated and deactivated
- *   while within the geometry of the element without the lock being stolen.
+ * - When a press sould trigger an action, meaning it activated and deactivated while within the
+ *   geometry of the element without the lock being stolen.
  *
- * A high quality interaction isn't as simple as you might think. There should
- * be a slight delay before activation. Moving your finger beyond an element's
- * bounds should trigger deactivation, but moving the same finger back within an
- * element's bounds should trigger reactivation.
+ * A high quality interaction isn't as simple as you might think. There should be a slight delay
+ * before activation. Moving your finger beyond an element's bounds should trigger deactivation,
+ * but moving the same finger back within an element's bounds should trigger reactivation.
  *
- * In order to use `PressResponder`, do the following:
+ * 1. In order to use `PressResponder`, do the following:
  *
- *     const pressResponder = new PressResponder(config);
+ * ```js
+ * const pressResponder = new PressResponder(config);
+ * ```
  *
  * 2. Choose the rendered component who should collect the press events. On that
  *    element, spread `pressability.getEventHandlers()` into its props.
  *
- *    return (
- *      <View {...this.state.pressResponder.getEventHandlers()} />
- *    );
+ * ```js
+ * return <View {...this.state.pressResponder.getEventHandlers()} />;
+ * ```
  *
  * 3. Reset `PressResponder` when your component unmounts.
  *
- *    componentWillUnmount() {
- *      this.state.pressResponder.reset();
- *    }
+ * ```js
+ * class Comp extends React.Component {
+ *   componentWillUnmount() {
+ *     this.state.pressResponder.reset();
+ *   }
+ * }
+ * ```
  *
  * ==================== Implementation Details ====================
  *
- * `PressResponder` only assumes that there exists a `HitRect` node. The `PressRect`
- * is an abstract box that is extended beyond the `HitRect`.
- *
+ * `PressResponder` only assumes that there exists a `HitRect` node. The `PressRect` is an abstract
+ * box that is extended beyond the `HitRect`.
+ */
+/*
  * # Geometry
  *
  *  ┌────────────────────────┐
@@ -214,8 +219,7 @@ const DEFAULT_PRESS_DELAY_MS = 50;
  *
  * Not drawn are the side effects of each transition. The most important side
  * effect is the invocation of `onLongPress`. Only when the browser produces a
- * `click` event is `onPress` invoked.
- */
+ * `click` event is `onPress` invoked. */
 export default class PressResponder {
   _config: PressResponderConfig;
   _eventHandlers: ?EventHandlers = null;
@@ -240,18 +244,14 @@ export default class PressResponder {
     this._config = config;
   }
 
-  /**
-   * Resets any pending timers. This should be called on unmount.
-   */
+  /** Resets any pending timers. This should be called on unmount. */
   reset(): void {
     this._cancelLongPressDelayTimeout();
     this._cancelPressDelayTimeout();
     this._cancelPressOutDelayTimeout();
   }
 
-  /**
-   * Returns a set of props to spread into the interactive element.
-   */
+  /** Returns a set of props to spread into the interactive element. */
   getEventHandlers(): EventHandlers {
     if (this._eventHandlers == null) {
       this._eventHandlers = this._createEventHandlers();
@@ -421,8 +421,8 @@ export default class PressResponder {
   }
 
   /**
-   * Receives a state machine signal, performs side effects of the transition
-   * and stores the new state. Validates the transition as well.
+   * Receives a state machine signal, performs side effects of the transition and stores the new
+   * state. Validates the transition as well.
    */
   _receiveSignal(signal: TouchSignal, event: ResponderEvent): void {
     const prevState = this._touchState;
@@ -442,8 +442,8 @@ export default class PressResponder {
   }
 
   /**
-   * Performs a transition between touchable states and identify any activations
-   * or deactivations (and callback invocations).
+   * Performs a transition between touchable states and identify any activations or deactivations
+   * (and callback invocations).
    */
   _performTransitionSideEffects(
     prevState: TouchState,

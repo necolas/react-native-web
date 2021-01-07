@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -65,15 +65,13 @@ type Props = $ReadOnly<{|
   onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp),
   testID?: $PropertyType<ViewProps, 'testID'>,
-  /**
-   * Used only for documentation or testing (e.g. snapshot testing).
-   */
+  /** Used only for documentation or testing (e.g. snapshot testing). */
   testOnly_pressed?: ?boolean,
 |}>;
 
 /**
- * Component used to build display components that should respond to whether the
- * component is currently pressed or not.
+ * Component used to build display components that should respond to whether the component is
+ * currently pressed or not.
  */
 function Pressable(props: Props, forwardedRef): React.Node {
   const {

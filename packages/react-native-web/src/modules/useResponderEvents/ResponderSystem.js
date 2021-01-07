@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -10,46 +10,46 @@
 /**
  * RESPONDER EVENT SYSTEM
  *
- * A single, global "interaction lock" on views. For a view to be the "responder" means
- * that pointer interactions are exclusive to that view and none other. The "interaction
- * lock" can be transferred (only) to ancestors of the current "responder" as long as
- * pointers continue to be active.
+ * A single, global "interaction lock" on views. For a view to be the "responder" means that pointer
+ * interactions are exclusive to that view and none other. The "interaction lock" can be
+ * transferred (only) to ancestors of the current "responder" as long as pointers continue to be active.
  *
  * Responder being granted:
  *
  * A view can become the "responder" after the following events:
- *  * "pointerdown" (implemented using "touchstart", "mousedown")
- *  * "pointermove" (implemented using "touchmove", "mousemove")
- *  * "scroll" (while a pointer is down)
- *  * "selectionchange" (while a pointer is down)
  *
- * If nothing is already the "responder", the event propagates to (capture) and from
- * (bubble) the event target until a view returns `true` for
- * `on*ShouldSetResponder(Capture)`.
+ * - "pointerdown" (implemented using "touchstart", "mousedown")
+ * - "pointermove" (implemented using "touchmove", "mousemove")
+ * - "scroll" (while a pointer is down)
+ * - "selectionchange" (while a pointer is down)
  *
- * If something is already the responder, the event propagates to (capture) and from
- * (bubble) the lowest common ancestor of the event target and the current "responder".
- * Then negotiation happens between the current "responder" and a view that wants to
- * become the "responder": see the timing diagram below.
+ * If nothing is already the "responder", the event propagates to (capture) and from (bubble) the
+ * event target until a view returns `true` for `on*ShouldSetResponder(Capture)`.
  *
- * (NOTE: Scrolled views either automatically become the "responder" or release the
- * "interaction lock". A native scroll view that isn't built on top of the responder
- * system must result in the current "responder" being notified that it no longer has
- * the "interaction lock" - the native system has taken over.
+ * If something is already the responder, the event propagates to (capture) and from (bubble) the
+ * lowest common ancestor of the event target and the current "responder". Then negotiation happens
+ * between the current "responder" and a view that wants to become the "responder": see the timing
+ * diagram below.
+ *
+ * (NOTE: Scrolled views either automatically become the "responder" or release the "interaction
+ * lock". A native scroll view that isn't built on top of the responder system must result in the
+ * current "responder" being notified that it no longer has the "interaction lock" - the native
+ * system has taken over.
  *
  * Responder being released:
  *
- * As soon as there are no more active pointers that *started* inside descendants
- * of the *current* "responder", an `onResponderRelease` event is dispatched to the
- * current "responder", and the responder lock is released.
+ * As soon as there are no more active pointers that _started_ inside descendants of the _current_
+ * "responder", an `onResponderRelease` event is dispatched to the current "responder", and the
+ * responder lock is released.
  *
  * Typical sequence of events:
- *  * startShouldSetResponder
- *  * responderGrant/Reject
- *  * responderStart
- *  * responderMove
- *  * responderEnd
- *  * responderRelease
+ *
+ * - StartShouldSetResponder
+ * - ResponderGrant/Reject
+ * - ResponderStart
+ * - ResponderMove
+ * - ResponderEnd
+ * - ResponderRelease
  */
 
 /*                                             Negotiation Performed
@@ -245,21 +245,18 @@ function getResponderConfig(id: ResponderId): ResponderConfig | Object {
 /**
  * Process native events
  *
- * A single event listener is used to manage the responder system.
- * All pointers are tracked in the ResponderTouchHistoryStore. Native events
- * are interpreted in terms of the Responder System and checked to see if
- * the responder should be transferred. Each host node that is attached to
- * the Responder System has an ID, which is used to look up its associated
- * callbacks.
+ * A single event listener is used to manage the responder system. All pointers are tracked in the
+ * ResponderTouchHistoryStore. Native events are interpreted in terms of the Responder System and
+ * checked to see if the responder should be transferred. Each host node that is attached to the
+ * Responder System has an ID, which is used to look up its associated callbacks.
  */
 function eventListener(domEvent: any) {
   const eventType = domEvent.type;
   const eventTarget = domEvent.target;
 
   /**
-   * Manage emulated events and early bailout.
-   * Since PointerEvent is not used yet (lack of support in older Safari), it's
-   * necessary to manually manage the mess of browser touch/mouse events.
+   * Manage emulated events and early bailout. Since PointerEvent is not used yet (lack of support
+   * in older Safari), it's necessary to manually manage the mess of browser touch/mouse events.
    * And bailout early for termination events when there is no active responder.
    */
 
@@ -296,9 +293,7 @@ function eventListener(domEvent: any) {
   const isSelectionChangeEvent = isSelectionChange(eventType);
   const responderEvent = createResponderEvent(domEvent);
 
-  /**
-   * Record the state of active pointers
-   */
+  /** Record the state of active pointers */
 
   if (isStartEvent || isMoveEvent || isEndEvent) {
     if (domEvent.touches) {
@@ -313,9 +308,7 @@ function eventListener(domEvent: any) {
     ResponderTouchHistoryStore.recordTouchTrack(eventType, responderEvent.nativeEvent);
   }
 
-  /**
-   * Responder System logic
-   */
+  /** Responder System logic */
 
   let eventPaths = getResponderPaths(domEvent);
   let wasNegotiated = false;
@@ -454,9 +447,9 @@ function eventListener(domEvent: any) {
 }
 
 /**
- * Walk the event path to/from the target node. At each node, stop and call the
- * relevant "shouldSet" functions for the given event type. If any of those functions
- * call "stopPropagation" on the event, stop searching for a responder.
+ * Walk the event path to/from the target node. At each node, stop and call the relevant
+ * "shouldSet" functions for the given event type. If any of those functions call "stopPropagation"
+ * on the event, stop searching for a responder.
  */
 function findWantsResponder(eventPaths, domEvent, responderEvent) {
   const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
@@ -518,9 +511,7 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
   }
 }
 
-/**
- * Attempt to transfer the responder.
- */
+/** Attempt to transfer the responder. */
 function attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveResponderInstance) {
   const { id: currentId, node: currentNode } = currentResponder;
   const { id, node } = wantsResponder;
@@ -583,8 +574,7 @@ function attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveR
 /**
  * Attach Listeners
  *
- * Use native events as ReactDOM doesn't have a non-plugin API to implement
- * this system.
+ * Use native events as ReactDOM doesn't have a non-plugin API to implement this system.
  */
 const documentEventsCapturePhase = ['blur', 'scroll'];
 const documentEventsBubblePhase = [
@@ -616,17 +606,13 @@ export function attachListeners() {
   }
 }
 
-/**
- * Register a node with the ResponderSystem.
- */
+/** Register a node with the ResponderSystem. */
 export function addNode(id: ResponderId, node: any, config: ResponderConfig) {
   setResponderId(node, id);
   responderListenersMap.set(id, config);
 }
 
-/**
- * Unregister a node with the ResponderSystem.
- */
+/** Unregister a node with the ResponderSystem. */
 export function removeNode(id: ResponderId) {
   if (currentResponder.id === id) {
     terminateResponder();
@@ -637,9 +623,8 @@ export function removeNode(id: ResponderId) {
 }
 
 /**
- * Allow the current responder to be terminated from within components to support
- * more complex requirements, such as use with other React libraries for working
- * with scroll views, input views, etc.
+ * Allow the current responder to be terminated from within components to support more complex
+ * requirements, such as use with other React libraries for working with scroll views, input views, etc.
  */
 export function terminateResponder() {
   const { id, node } = currentResponder;
@@ -656,10 +641,7 @@ export function terminateResponder() {
   trackedTouchCount = 0;
 }
 
-/**
- * Allow unit tests to inspect the current responder in the system.
- * FOR TESTING ONLY.
- */
+/** Allow unit tests to inspect the current responder in the system. FOR TESTING ONLY. */
 export function getResponderNode(): any {
   return currentResponder.node;
 }

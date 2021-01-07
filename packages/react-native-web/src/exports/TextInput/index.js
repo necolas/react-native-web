@@ -1,9 +1,10 @@
 /**
  * Copyright (c) Nicolas Gallagher.
+ *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -22,20 +23,14 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
-/**
- * Determines whether a 'selection' prop differs from a node's existing
- * selection state.
- */
+/** Determines whether a 'selection' prop differs from a node's existing selection state. */
 const isSelectionStale = (node, selection) => {
   const { selectionEnd, selectionStart } = node;
   const { start, end } = selection;
   return start !== selectionStart || end !== selectionEnd;
 };
 
-/**
- * Certain input types do no support 'selectSelectionRange' and will throw an
- * error.
- */
+/** Certain input types do no support 'selectSelectionRange' and will throw an error. */
 const setSelection = (node, selection) => {
   if (isSelectionStale(node, selection)) {
     const { start, end } = selection;

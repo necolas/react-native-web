@@ -1,15 +1,15 @@
 /**
  * Copyright (c) Nicolas Gallagher.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @noflow
  */
 
 /**
- * WARNING: changes to this file in particular can cause significant changes to
- * the results of render performance benchmarks.
+ * WARNING: changes to this file in particular can cause significant changes to the results of
+ * render performance benchmarks.
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
@@ -71,9 +71,7 @@ export default function createStyleResolver() {
     }
   }
 
-  /**
-   * Resolves a React Native style object to DOM attributes
-   */
+  /** Resolves a React Native style object to DOM attributes */
   function resolve(style, classList) {
     const nextClassList = [];
     let props = {};
@@ -141,9 +139,7 @@ export default function createStyleResolver() {
     return finalProps;
   }
 
-  /**
-   * Resolves a React Native style object
-   */
+  /** Resolves a React Native style object */
   function _resolveStyle(style, key) {
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
@@ -241,9 +237,7 @@ export default function createStyleResolver() {
   };
 }
 
-/**
- * Misc helpers
- */
+/** Misc helpers */
 const createCacheKey = (id) => {
   const prefix = 'rn';
   return `${prefix}-${id}`;

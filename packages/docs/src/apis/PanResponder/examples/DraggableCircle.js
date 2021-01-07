@@ -1,6 +1,4 @@
-/**
- * @flow
- */
+/** @flow */
 
 import React, { PureComponent } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';

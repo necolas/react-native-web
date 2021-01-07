@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  */
 
 'use strict';
@@ -13,15 +13,12 @@ import { buttonType, buttonsType, defaultPointerSize, defaultBrowserChromeSize }
 /**
  * Native event object mocks for higher-level events.
  *
- * 1. Each event type defines the exact object that it accepts. This ensures
- * that no arbitrary properties can be assigned to events, and the properties
- * that don't exist on specific event types (e.g., 'pointerType') are not added
- * to the respective native event.
- *
- * 2. Properties that cannot be relied on due to inconsistent browser support (e.g., 'x' and 'y') are not
- * added to the native event. Others that shouldn't be arbitrarily customized (e.g., 'screenX')
- * are automatically inferred from associated values.
- *
+ * 1. Each event type defines the exact object that it accepts. This ensures that no arbitrary
+ *    properties can be assigned to events, and the properties that don't exist on specific event
+ *    types (e.g., 'pointerType') are not added to the respective native event.
+ * 2. Properties that cannot be relied on due to inconsistent browser support (e.g., 'x' and 'y')
+ *    are not added to the native event. Others that shouldn't be arbitrarily customized (e.g.,
+ *    'screenX') are automatically inferred from associated values.
  * 3. PointerEvent and TouchEvent fields are normalized (e.g., 'rotationAngle' -> 'twist')
  */
 
@@ -42,9 +39,7 @@ function createGetModifierState(keyArg, data) {
   }
 }
 
-/**
- * KeyboardEvent
- */
+/** KeyboardEvent */
 
 function createKeyboardEvent(
   type,
@@ -80,9 +75,7 @@ function createKeyboardEvent(
   return createEvent(type, eventPayload);
 }
 
-/**
- * MouseEvent
- */
+/** MouseEvent */
 
 function createMouseEvent(
   type,
@@ -138,9 +131,7 @@ function createMouseEvent(
   });
 }
 
-/**
- * PointerEvent
- */
+/** PointerEvent */
 
 function createPointerEvent(
   type,
@@ -217,9 +208,7 @@ function createPointerEvent(
   });
 }
 
-/**
- * TouchEvent
- */
+/** TouchEvent */
 
 function createTouchEvent(type, payload) {
   return createEvent(type, {
@@ -231,9 +220,7 @@ function createTouchEvent(type, payload) {
   });
 }
 
-/**
- * DOM events
- */
+/** DOM events */
 
 export function blur({ relatedTarget } = {}) {
   return createEvent('blur', { relatedTarget });

@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  * @format
@@ -39,68 +39,66 @@ const extractSingleTouch = (nativeEvent) => {
 /**
  * `Touchable`: Taps done right.
  *
- * You hook your `ResponderEventPlugin` events into `Touchable`. `Touchable`
- * will measure time/geometry and tells you when to give feedback to the user.
+ * You hook your `ResponderEventPlugin` events into `Touchable`. `Touchable` will measure
+ * time/geometry and tells you when to give feedback to the user.
  *
- * ====================== Touchable Tutorial ===============================
- * The `Touchable` mixin helps you handle the "press" interaction. It analyzes
- * the geometry of elements, and observes when another responder (scroll view
- * etc) has stolen the touch lock. It notifies your component when it should
- * give feedback to the user. (bouncing/highlighting/unhighlighting).
+ * ====================== Touchable Tutorial =============================== The `Touchable` mixin
+ * helps you handle the "press" interaction. It analyzes the geometry of elements, and observes
+ * when another responder (scroll view etc) has stolen the touch lock. It notifies your component
+ * when it should give feedback to the user. (bouncing/highlighting/unhighlighting).
  *
  * - When a touch was activated (typically you highlight)
  * - When a touch was deactivated (typically you unhighlight)
- * - When a touch was "pressed" - a touch ended while still within the geometry
- *   of the element, and no other element (like scroller) has "stolen" touch
- *   lock ("responder") (Typically you bounce the element).
+ * - When a touch was "pressed" - a touch ended while still within the geometry of the element, and no
+ *   other element (like scroller) has "stolen" touch lock ("responder") (Typically you bounce the element).
  *
- * A good tap interaction isn't as simple as you might think. There should be a
- * slight delay before showing a highlight when starting a touch. If a
- * subsequent touch move exceeds the boundary of the element, it should
- * unhighlight, but if that same touch is brought back within the boundary, it
- * should rehighlight again. A touch can move in and out of that boundary
- * several times, each time toggling highlighting, but a "press" is only
- * triggered if that touch ends while within the element's boundary and no
- * scroller (or anything else) has stolen the lock on touches.
+ * A good tap interaction isn't as simple as you might think. There should be a slight delay before
+ * showing a highlight when starting a touch. If a subsequent touch move exceeds the boundary of
+ * the element, it should unhighlight, but if that same touch is brought back within the boundary,
+ * it should rehighlight again. A touch can move in and out of that boundary several times, each
+ * time toggling highlighting, but a "press" is only triggered if that touch ends while within the
+ * element's boundary and no scroller (or anything else) has stolen the lock on touches.
  *
- * To create a new type of component that handles interaction using the
- * `Touchable` mixin, do the following:
+ * To create a new type of component that handles interaction using the `Touchable` mixin, do the following:
  *
  * - Initialize the `Touchable` state.
  *
+ * ```js
  *   getInitialState: function() {
  *     return merge(this.touchableGetInitialState(), yourComponentState);
  *   }
+ * ```
  *
- * - Choose the rendered component who's touches should start the interactive
- *   sequence. On that rendered node, forward all `Touchable` responder
- *   handlers. You can choose any rendered node you like. Choose a node whose
- *   hit target you'd like to instigate the interaction sequence:
+ * - Choose the rendered component who's touches should start the interactive sequence. On that
+ *   rendered node, forward all `Touchable` responder handlers. You can choose any rendered node you
+ *   like. Choose a node whose hit target you'd like to instigate the interaction sequence:
  *
- *   // In render function:
- *   return (
- *     <View
- *       onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
- *       onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
- *       onResponderGrant={this.touchableHandleResponderGrant}
- *       onResponderMove={this.touchableHandleResponderMove}
- *       onResponderRelease={this.touchableHandleResponderRelease}
- *       onResponderTerminate={this.touchableHandleResponderTerminate}>
- *       <View>
- *         Even though the hit detection/interactions are triggered by the
- *         wrapping (typically larger) node, we usually end up implementing
- *         custom logic that highlights this inner one.
- *       </View>
+ * ```js
+ * // In render function:
+ * return (
+ *   <View
+ *     onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
+ *     onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
+ *     onResponderGrant={this.touchableHandleResponderGrant}
+ *     onResponderMove={this.touchableHandleResponderMove}
+ *     onResponderRelease={this.touchableHandleResponderRelease}
+ *     onResponderTerminate={this.touchableHandleResponderTerminate}
+ *   >
+ *     <View>
+ *       Even though the hit detection/interactions are triggered by the wrapping (typically larger)
+ *       node, we usually end up implementing custom logic that highlights this inner one.
  *     </View>
- *   );
+ *   </View>
+ * );
+ * ```
  *
- * - You may set up your own handlers for each of these events, so long as you
- *   also invoke the `touchable*` handlers inside of your custom handler.
+ * - You may set up your own handlers for each of these events, so long as you also invoke the
+ *   `touchable*` handlers inside of your custom handler.
  *
- * - Implement the handlers on your component class in order to provide
- *   feedback to the user. See documentation for each of these class methods
- *   that you should implement.
+ * - Implement the handlers on your component class in order to provide feedback to the user. See
+ *   documentation for each of these class methods that you should implement.
  *
+ * ```js
  *   touchableHandlePress: function() {
  *      this.performBounceAnimation();  // or whatever you want to do.
  *   },
@@ -110,8 +108,11 @@ const extractSingleTouch = (nativeEvent) => {
  *   touchableHandleActivePressOut: function() {
  *     this.endHighlighting(...);  // Whatever you like to convey deactivation
  *   },
+ * ```
  *
  * - There are more advanced methods you can implement (see documentation below):
+ *
+ * ```js
  *   touchableGetHighlightDelayMS: function() {
  *     return 20;
  *   }
@@ -119,11 +120,10 @@ const extractSingleTouch = (nativeEvent) => {
  *   touchableGetPressRectOffset: function() {
  *     return {top: 20, left: 20, right: 20, bottom: 100};
  *   }
+ * ```
  */
 
-/**
- * Touchable states.
- */
+/** Touchable states. */
 
 const States = {
   NOT_RESPONDER: 'NOT_RESPONDER', // Not the responder
@@ -168,8 +168,8 @@ const IsActive = {
 };
 
 /**
- * Quick lookup for states that are considered to be "pressing" and are
- * therefore eligible to result in a "selection" if the press stops.
+ * Quick lookup for states that are considered to be "pressing" and are therefore eligible to
+ * result in a "selection" if the press stops.
  */
 const IsPressingIn = {
   ...baseStatesConditions,
@@ -183,9 +183,7 @@ const IsLongPressingIn = {
   RESPONDER_ACTIVE_LONG_PRESS_IN: true,
 };
 
-/**
- * Inputs to the state machine.
- */
+/** Inputs to the state machine. */
 const Signals = {
   DELAY: 'DELAY',
   RESPONDER_GRANT: 'RESPONDER_GRANT',
@@ -205,9 +203,7 @@ type Signal =
   | typeof Signals.LEAVE_PRESS_RECT
   | typeof Signals.LONG_PRESS_DETECTED;
 
-/**
- * Mapping from States x Signals => States
- */
+/** Mapping from States x Signals => States */
 const Transitions = {
   NOT_RESPONDER: {
     DELAY: States.ERROR,
@@ -298,15 +294,12 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
 
 // Default amount "active" region protrudes beyond box
 
-/**
- * By convention, methods prefixed with underscores are meant to be @private,
- * and not @protected. Mixers shouldn't access them - not even to provide them
- * as callback handlers.
+/*
+ * By convention, methods prefixed with underscores are meant to be @private, and not @protected.
+ * Mixers shouldn't access them - not even to provide them as callback handlers.
  *
- *
- * ========== Geometry =========
- * `Touchable` only assumes that there exists a `HitRect` node. The `PressRect`
- * is an abstract box that is extended beyond the `HitRect`.
+ * ========== Geometry ========= `Touchable` only assumes that there exists a `HitRect` node. The
+ * `PressRect` is an abstract box that is extended beyond the `HitRect`.
  *
  *  +--------------------------+
  *  |                          | - "Start" events in `HitRect` cause `HitRect`
@@ -352,13 +345,12 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  *
  * T + DELAY => LONG_PRESS_DELAY_MS + DELAY
  *
- * Not drawn are the side effects of each transition. The most important side
- * effect is the `touchableHandlePress` abstract method invocation that occurs
- * when a responder is released while in either of the "Press" states.
+ * Not drawn are the side effects of each transition. The most important side effect is the
+ * `touchableHandlePress` abstract method invocation that occurs when a responder is released while
+ * in either of the "Press" states.
  *
- * The other important side effects are the highlight abstract method
- * invocations (internal callbacks) to be implemented by the mixer.
- *
+ * The other important side effects are the highlight abstract method invocations (internal
+ * callbacks) to be implemented by the mixer.
  *
  * @lends Touchable.prototype
  */
@@ -382,9 +374,7 @@ const TouchableMixin = {
     }
   },
 
-  /**
-   * Clear all timeouts on unmount
-   */
+  /** Clear all timeouts on unmount */
   componentWillUnmount: function () {
     if (this._touchableNode && this._touchableNode.addEventListener) {
       this._touchableNode.removeEventListener('blur', this._touchableBlurListener);
@@ -395,11 +385,10 @@ const TouchableMixin = {
   },
 
   /**
-   * It's prefer that mixins determine state in this way, having the class
-   * explicitly mix the state in the one and only `getInitialState` method.
+   * It's prefer that mixins determine state in this way, having the class explicitly mix the state
+   * in the one and only `getInitialState` method.
    *
-   * @return {object} State object to be placed inside of
-   * `this.state.touchable`.
+   * @returns {object} State object to be placed inside of `this.state.touchable`.
    */
   touchableGetInitialState: function () {
     return {
@@ -408,31 +397,25 @@ const TouchableMixin = {
   },
 
   // ==== Hooks to Gesture Responder system ====
-  /**
-   * Must return true if embedded in a native platform scroll view.
-   */
+  /** Must return true if embedded in a native platform scroll view. */
   touchableHandleResponderTerminationRequest: function () {
     return !this.props.rejectResponderTermination;
   },
 
-  /**
-   * Must return true to start the process of `Touchable`.
-   */
+  /** Must return true to start the process of `Touchable`. */
   touchableHandleStartShouldSetResponder: function () {
     return !this.props.disabled;
   },
 
-  /**
-   * Return true to cancel press on long press.
-   */
+  /** Return true to cancel press on long press. */
   touchableLongPressCancelsPress: function () {
     return true;
   },
 
   /**
    * Place as callback for a DOM element's `onResponderGrant` event.
-   * @param {SyntheticEvent} e Synthetic event from event system.
    *
+   * @param {SyntheticEvent} e Synthetic event from event system.
    */
   touchableHandleResponderGrant: function (e: PressEvent) {
     const dispatchID = e.currentTarget;
@@ -469,25 +452,19 @@ const TouchableMixin = {
     );
   },
 
-  /**
-   * Place as callback for a DOM element's `onResponderRelease` event.
-   */
+  /** Place as callback for a DOM element's `onResponderRelease` event. */
   touchableHandleResponderRelease: function (e: PressEvent) {
     this.pressInLocation = null;
     this._receiveSignal(Signals.RESPONDER_RELEASE, e);
   },
 
-  /**
-   * Place as callback for a DOM element's `onResponderTerminate` event.
-   */
+  /** Place as callback for a DOM element's `onResponderTerminate` event. */
   touchableHandleResponderTerminate: function (e: PressEvent) {
     this.pressInLocation = null;
     this._receiveSignal(Signals.RESPONDER_TERMINATED, e);
   },
 
-  /**
-   * Place as callback for a DOM element's `onResponderMove` event.
-   */
+  /** Place as callback for a DOM element's `onResponderMove` event. */
   touchableHandleResponderMove: function (e: PressEvent) {
     // Measurement may not have returned yet.
     if (!this.state.touchable.positionOnActivate) {
@@ -558,11 +535,10 @@ const TouchableMixin = {
   },
 
   /**
-   * Invoked when the item receives focus. Mixers might override this to
-   * visually distinguish the `VisualRect` so that the user knows that it
-   * currently has the focus. Most platforms only support a single element being
-   * focused at a time, in which case there may have been a previously focused
-   * element that was blurred just prior to this. This can be overridden when
+   * Invoked when the item receives focus. Mixers might override this to visually distinguish the
+   * `VisualRect` so that the user knows that it currently has the focus. Most platforms only
+   * support a single element being focused at a time, in which case there may have been a
+   * previously focused element that was blurred just prior to this. This can be overridden when
    * using `Touchable.Mixin.withoutDefaultFocusAndBlur`.
    */
   touchableHandleFocus: function (e: Event) {
@@ -570,12 +546,10 @@ const TouchableMixin = {
   },
 
   /**
-   * Invoked when the item loses focus. Mixers might override this to
-   * visually distinguish the `VisualRect` so that the user knows that it
-   * no longer has focus. Most platforms only support a single element being
-   * focused at a time, in which case the focus may have moved to another.
-   * This can be overridden when using
-   * `Touchable.Mixin.withoutDefaultFocusAndBlur`.
+   * Invoked when the item loses focus. Mixers might override this to visually distinguish the
+   * `VisualRect` so that the user knows that it no longer has focus. Most platforms only support a
+   * single element being focused at a time, in which case the focus may have moved to another.
+   * This can be overridden when using `Touchable.Mixin.withoutDefaultFocusAndBlur`.
    */
   touchableHandleBlur: function (e: Event) {
     this.props.onBlur && this.props.onBlur(e);
@@ -584,45 +558,42 @@ const TouchableMixin = {
   // ==== Abstract Application Callbacks ====
 
   /**
-   * Invoked when the item should be highlighted. Mixers should implement this
-   * to visually distinguish the `VisualRect` so that the user knows that
-   * releasing a touch will result in a "selection" (analog to click).
+   * Invoked when the item should be highlighted. Mixers should implement this to visually
+   * distinguish the `VisualRect` so that the user knows that releasing a touch will result in a
+   * "selection" (analog to click).
    *
    * @abstract
    * touchableHandleActivePressIn: function,
    */
 
   /**
-   * Invoked when the item is "active" (in that it is still eligible to become
-   * a "select") but the touch has left the `PressRect`. Usually the mixer will
-   * want to unhighlight the `VisualRect`. If the user (while pressing) moves
-   * back into the `PressRect` `touchableHandleActivePressIn` will be invoked
-   * again and the mixer should probably highlight the `VisualRect` again. This
-   * event will not fire on an `touchEnd/mouseUp` event, only move events while
-   * the user is depressing the mouse/touch.
+   * Invoked when the item is "active" (in that it is still eligible to become a "select") but the
+   * touch has left the `PressRect`. Usually the mixer will want to unhighlight the `VisualRect`.
+   * If the user (while pressing) moves back into the `PressRect` `touchableHandleActivePressIn`
+   * will be invoked again and the mixer should probably highlight the `VisualRect` again. This
+   * event will not fire on an `touchEnd/mouseUp` event, only move events while the user is
+   * depressing the mouse/touch.
    *
    * @abstract
    * touchableHandleActivePressOut: function
    */
 
   /**
-   * Invoked when the item is "selected" - meaning the interaction ended by
-   * letting up while the item was either in the state
-   * `RESPONDER_ACTIVE_PRESS_IN` or `RESPONDER_INACTIVE_PRESS_IN`.
+   * Invoked when the item is "selected" - meaning the interaction ended by letting up while the
+   * item was either in the state `RESPONDER_ACTIVE_PRESS_IN` or `RESPONDER_INACTIVE_PRESS_IN`.
    *
    * @abstract
    * touchableHandlePress: function
    */
 
   /**
-   * Invoked when the item is long pressed - meaning the interaction ended by
-   * letting up while the item was in `RESPONDER_ACTIVE_LONG_PRESS_IN`. If
-   * `touchableHandleLongPress` is *not* provided, `touchableHandlePress` will
-   * be called as it normally is. If `touchableHandleLongPress` is provided, by
-   * default any `touchableHandlePress` callback will not be invoked. To
-   * override this default behavior, override `touchableLongPressCancelsPress`
-   * to return false. As a result, `touchableHandlePress` will be called when
-   * lifting up, even if `touchableHandleLongPress` has also been called.
+   * Invoked when the item is long pressed - meaning the interaction ended by letting up while the
+   * item was in `RESPONDER_ACTIVE_LONG_PRESS_IN`. If `touchableHandleLongPress` is _not_ provided,
+   * `touchableHandlePress` will be called as it normally is. If `touchableHandleLongPress` is
+   * provided, by default any `touchableHandlePress` callback will not be invoked. To override this
+   * default behavior, override `touchableLongPressCancelsPress` to return false. As a result,
+   * `touchableHandlePress` will be called when lifting up, even if `touchableHandleLongPress` has
+   * also been called.
    *
    * @abstract
    * touchableHandleLongPress: function
@@ -636,8 +607,8 @@ const TouchableMixin = {
    */
 
   /**
-   * Returns the amount to extend the `HitRect` into the `PressRect`. Positive
-   * numbers mean the size expands outwards.
+   * Returns the amount to extend the `HitRect` into the `PressRect`. Positive numbers mean the
+   * size expands outwards.
    *
    * @abstract
    * touchableGetPressRectOffset: function
@@ -646,16 +617,17 @@ const TouchableMixin = {
   // ==== Internal Logic ====
 
   /**
-   * Measures the `HitRect` node on activation. The Bounding rectangle is with
-   * respect to viewport - not page, so adding the `pageXOffset/pageYOffset`
-   * should result in points that are in the same coordinate system as an
-   * event's `globalX/globalY` data values.
+   * Measures the `HitRect` node on activation. The Bounding rectangle is with respect to viewport
    *
-   * - Consider caching this for the lifetime of the component, or possibly
-   *   being able to share this cache between any `ScrollMap` view.
+   * - Not page, so adding the `pageXOffset/pageYOffset` should result in points that are in the same
+   *   coordinate system as an event's `globalX/globalY` data values.
+   *
+   * - Consider caching this for the lifetime of the component, or possibly being able to share this
+   *   cache between any `ScrollMap` view.
+   *
+   * @private
    *
    * @sideeffects
-   * @private
    */
   _remeasureMetricsOnActivation: function () {
     const tag = this.state.touchable.responderID;
@@ -714,12 +686,13 @@ const TouchableMixin = {
   },
 
   /**
-   * Receives a state machine signal, performs side effects of the transition
-   * and stores the new state. Validates the transition as well.
+   * Receives a state machine signal, performs side effects of the transition and stores the new
+   * state. Validates the transition as well.
    *
    * @param {Signals} signal State machine signal.
-   * @throws Error if invalid state transition or unrecognized signal.
    * @sideeffects
+   *
+   * @throws Error if invalid state transition or unrecognized signal.
    */
   _receiveSignal: function (signal: Signal, e: PressEvent) {
     const responderID = this.state.touchable.responderID;
@@ -783,9 +756,8 @@ const TouchableMixin = {
   },
 
   /**
-   * Will perform a transition between touchable states, and identify any
-   * highlighting or unhighlighting that must be performed for this particular
-   * transition.
+   * Will perform a transition between touchable states, and identify any highlighting or
+   * unhighlighting that must be performed for this particular transition.
    *
    * @param {States} curState Current Touchable state.
    * @param {States} nextState Next Touchable state.
@@ -908,10 +880,9 @@ const TouchableMixin = {
 };
 
 /**
- * Provide an optional version of the mixin where `touchableHandleFocus` and
- * `touchableHandleBlur` can be overridden. This allows appropriate defaults to
- * be set on TV platforms, without breaking existing implementations of
- * `Touchable`.
+ * Provide an optional version of the mixin where `touchableHandleFocus` and `touchableHandleBlur`
+ * can be overridden. This allows appropriate defaults to be set on TV platforms, without breaking
+ * existing implementations of `Touchable`.
  */
 const {
   // eslint-disable-next-line no-unused-vars
@@ -925,9 +896,7 @@ TouchableMixin.withoutDefaultFocusAndBlur = TouchableMixinWithoutDefaultFocusAnd
 const Touchable = {
   Mixin: TouchableMixin,
   TOUCH_TARGET_DEBUG: false, // Highlights all touchable targets. Toggle with Inspector.
-  /**
-   * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
-   */
+  /** Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android). */
   renderDebugView: ({ color, hitSlop }: { color: string | number, hitSlop: EdgeInsetsProp }) => {
     if (!Touchable.TOUCH_TARGET_DEBUG) {
       return null;

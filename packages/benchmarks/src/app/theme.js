@@ -7,9 +7,7 @@ const baseUnit = 1.3125;
 const createPlatformLength = (multiplier) =>
   Platform.select({ web: `${multiplier}rem`, default: multiplier * baseFontSize });
 
-/**
- * Exported variables
- */
+/** Exported variables */
 
 export const borderRadii = {
   normal: Platform.select({ web: '0.35rem', default: 5 }),
@@ -25,9 +23,12 @@ export const breakpoints = {
 
 /**
  * Color palette
+ *
  * DO NOT add new colors unless they are part of @design's color palette.
+ *
  * DO NOT use colors that are not specified here.
- * source: go/uicolors
+ *
+ * Source: go/uicolors
  */
 export const colors = {
   // Primary

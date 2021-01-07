@@ -1,6 +1,4 @@
-/**
- * @flow
- */
+/** @flow */
 
 /*
 const styles = StyleSheet.create({

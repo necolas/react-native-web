@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -67,9 +67,7 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
   return eventThrottle > 0 && timeSinceLastTick >= eventThrottle;
 }
 
-/**
- * Encapsulates the Web-specific scroll throttling and disabling logic
- */
+/** Encapsulates the Web-specific scroll throttling and disabling logic */
 const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   const {
     accessibilityLabel,

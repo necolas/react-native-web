@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -36,9 +36,7 @@ function composedPathFallback(target: any): Array<any> {
   return path;
 }
 
-/**
- * Retrieve the responderId from a host node
- */
+/** Retrieve the responderId from a host node */
 function getResponderId(node: any): ?number {
   if (node != null) {
     return node[keyName];
@@ -46,18 +44,14 @@ function getResponderId(node: any): ?number {
   return null;
 }
 
-/**
- * Store the responderId on a host node
- */
+/** Store the responderId on a host node */
 export function setResponderId(node: any, id: number) {
   if (node != null) {
     node[keyName] = id;
   }
 }
 
-/**
- * Filter the event path to contain only the nodes attached to the responder system
- */
+/** Filter the event path to contain only the nodes attached to the responder system */
 export function getResponderPaths(
   domEvent: any
 ): {| idPath: Array<number>, nodePath: Array<any> |} {
@@ -75,9 +69,7 @@ export function getResponderPaths(
   return { idPath, nodePath };
 }
 
-/**
- * Walk the paths and find the first common ancestor
- */
+/** Walk the paths and find the first common ancestor */
 export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>) {
   let pathALength = pathA.length;
   let pathBLength = pathB.length;
@@ -124,8 +116,8 @@ export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>) {
 }
 
 /**
- * Determine whether any of the active touches are within the current responder.
- * This cannot rely on W3C `targetTouches`, as neither IE11 nor Safari implement it.
+ * Determine whether any of the active touches are within the current responder. This cannot rely
+ * on W3C `targetTouches`, as neither IE11 nor Safari implement it.
  */
 export function hasTargetTouches(target: any, touches: any): boolean {
   if (!touches || touches.length === 0) {
@@ -142,10 +134,7 @@ export function hasTargetTouches(target: any, touches: any): boolean {
   return false;
 }
 
-/**
- * Ignore 'selectionchange' events that don't correspond with a person's intent to
- * select text.
- */
+/** Ignore 'selectionchange' events that don't correspond with a person's intent to select text. */
 export function hasValidSelection(domEvent: any) {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
@@ -153,9 +142,7 @@ export function hasValidSelection(domEvent: any) {
   return domEvent.type === 'select';
 }
 
-/**
- * Events are only valid if the primary button was used without specific modifier keys.
- */
+/** Events are only valid if the primary button was used without specific modifier keys. */
 export function isPrimaryPointerDown(domEvent: any): boolean {
   const { altKey, button, buttons, ctrlKey, type } = domEvent;
   const isTouch = type === 'touchstart' || type === 'touchmove';

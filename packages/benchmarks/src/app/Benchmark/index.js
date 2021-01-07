@@ -1,7 +1,7 @@
 /**
- * The MIT License (MIT)
- * Copyright (c) 2017 Paul Armstrong
+ * The MIT License (MIT) Copyright (c) 2017 Paul Armstrong
  * https://github.com/paularmstrong/react-component-benchmark
+ *
  * @flow
  */
 
@@ -87,7 +87,8 @@ type BenchmarkStateType = {
 
 /**
  * Benchmark
- * TODO: documentation
+ *
+ * @todo Documentation
  */
 export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkStateType> {
   _raf: ?Function;

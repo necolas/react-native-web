@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @noflow
  */
@@ -12,14 +12,12 @@ import { MONOSPACE_FONT_STACK, SYSTEM_FONT_STACK, STYLE_SHORT_FORM_EXPANSIONS } 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
 /**
- * The browser implements the CSS cascade, where the order of properties is a
- * factor in determining which styles to paint. React Native is different. It
- * gives giving precedence to the more specific style property. For example,
- * the value of `paddingTop` takes precedence over that of `padding`.
+ * The browser implements the CSS cascade, where the order of properties is a factor in determining
+ * which styles to paint. React Native is different. It gives giving precedence to the more
+ * specific style property. For example, the value of `paddingTop` takes precedence over that of `padding`.
  *
- * This module creates mutally exclusive style declarations by expanding all of
- * React Native's supported shortform properties (e.g. `padding`) to their
- * longfrom equivalents.
+ * This module creates mutally exclusive style declarations by expanding all of React Native's
+ * supported shortform properties (e.g. `padding`) to their longfrom equivalents.
  */
 
 const emptyObject = {};
@@ -31,9 +29,7 @@ const supportsCSS3TextDecoration =
     (window.CSS.supports('text-decoration-line', 'none') ||
       window.CSS.supports('-webkit-text-decoration-line', 'none')));
 
-/**
- * Transform
- */
+/** Transform */
 
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
@@ -57,9 +53,7 @@ const resolveTransform = (resolvedStyle, style) => {
   resolvedStyle.transform = transform;
 };
 
-/**
- * Reducer
- */
+/** Reducer */
 
 const createReactDOMStyle = (style) => {
   if (!style) {

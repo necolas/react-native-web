@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -17,11 +17,12 @@ type AddListener = (target: EventTarget, listener: null | ((any) => void)) => ()
 /**
  * This can be used with any event type include custom events.
  *
- * const click = useEvent('click', options);
- * useEffect(() => {
- *   click.setListener(target, onClick);
- *   return () => click.clear();
- * }).
+ * @example
+ *   const click = useEvent('click', options);
+ *   useEffect(() => {
+ *     click.setListener(target, onClick);
+ *     return () => click.clear();
+ *   });
  */
 export default function useEvent(
   event: string,

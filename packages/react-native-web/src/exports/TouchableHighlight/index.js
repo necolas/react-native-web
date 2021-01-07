@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -57,17 +57,15 @@ function hasPressHandler(props): boolean {
 }
 
 /**
- * A wrapper for making views respond properly to touches.
- * On press down, the opacity of the wrapped view is decreased, which allows
- * the underlay color to show through, darkening or tinting the view.
+ * A wrapper for making views respond properly to touches. On press down, the opacity of the
+ * wrapped view is decreased, which allows the underlay color to show through, darkening or tinting the view.
  *
- * The underlay comes from wrapping the child in a new View, which can affect
- * layout, and sometimes cause unwanted visual artifacts if not used correctly,
- * for example if the backgroundColor of the wrapped view isn't explicitly set
- * to an opaque color.
+ * The underlay comes from wrapping the child in a new View, which can affect layout, and sometimes
+ * cause unwanted visual artifacts if not used correctly, for example if the backgroundColor of the
+ * wrapped view isn't explicitly set to an opaque color.
  *
- * TouchableHighlight must have one child (not zero or more than one).
- * If you wish to have several child components, wrap them in a View.
+ * TouchableHighlight must have one child (not zero or more than one). If you wish to have several
+ * child components, wrap them in a View.
  */
 function TouchableHighlight(props: Props, forwardedRef): React.Node {
   const {

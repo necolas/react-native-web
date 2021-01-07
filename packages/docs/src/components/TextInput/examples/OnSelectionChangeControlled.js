@@ -1,6 +1,4 @@
-/**
- * @noflow
- */
+/** @noflow */
 
 import React from 'react';
 import { styles } from '../helpers';

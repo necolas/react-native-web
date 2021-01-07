@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -29,8 +29,8 @@ type Props = $ReadOnly<{|
 |}>;
 
 /**
- * A wrapper for making views respond properly to touches.
- * On press down, the opacity of the wrapped view is decreased, dimming it.
+ * A wrapper for making views respond properly to touches. On press down, the opacity of the
+ * wrapped view is decreased, dimming it.
  */
 function TouchableOpacity(props: Props, forwardedRef): React.Node {
   const {

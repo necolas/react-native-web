@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -24,9 +24,8 @@ type TouchRecord = {|
 |};
 
 /**
- * Tracks the position and time of each active touch by `touch.identifier`. We
- * should typically only see IDs in the range of 1-20 because IDs get recycled
- * when touches end and start again.
+ * Tracks the position and time of each active touch by `touch.identifier`. We should typically
+ * only see IDs in the range of 1-20 because IDs get recycled when touches end and start again.
  */
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
@@ -49,8 +48,8 @@ function timestampForTouch(touch: Touch): number {
 }
 
 /**
- * TODO: Instead of making gestures recompute filtered velocity, we could
- * include a built in velocity computation that can be reused globally.
+ * TODO: Instead of making gestures recompute filtered velocity, we could include a built in
+ * velocity computation that can be reused globally.
  */
 function createTouchRecord(touch: Touch): TouchRecord {
   return {

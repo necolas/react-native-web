@@ -20,20 +20,24 @@ addParameters({
       // brandImage: 'http://url.of/some.svg',
     }),
     /**
-     * regex for finding the hierarchy separator
-     * @example:
-     *   null - turn off hierarchy
-     *   /\// - split by `/`
-     *   /\./ - split by `.`
-     *   /\/|\./ - split by `/` or `.`
+     * Regex for finding the hierarchy separator
+     *
+     * @example
+     *   null; // turn off hierarchy
+     *   /\//; // split by `/`
+     *   /\./; // split by `.`
+     *   /\/|\./; // split by `/` or `.`
+     *
      * @type {Regex}
      */
     hierarchySeparator: /\/|\./,
     /**
-     * regex for finding the hierarchy root separator
-     * @example:
-     *   null - turn off multiple hierarchy roots
-     *   /\|/ - split by `|`
+     * Regex for finding the hierarchy root separator
+     *
+     * @example
+     *   null; // turn off multiple hierarchy roots
+     *   /\|/; // split by `|`
+     *
      * @type {Regex}
      */
     hierarchyRootSeparator: /\|/,

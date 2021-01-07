@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -10,11 +10,13 @@
 /**
  * Hook for integrating the Responder System into React
  *
- *   function SomeComponent({ onStartShouldSetResponder }) {
- *     const ref = useRef(null);
- *     useResponderEvents(ref, { onStartShouldSetResponder });
- *     return <div ref={ref} />
- *   }
+ * ```js
+ * function SomeComponent({ onStartShouldSetResponder }) {
+ *   const ref = useRef(null);
+ *   useResponderEvents(ref, { onStartShouldSetResponder });
+ *   return <div ref={ref} />;
+ * }
+ * ```
  */
 
 import type { ResponderConfig } from './ResponderSystem';

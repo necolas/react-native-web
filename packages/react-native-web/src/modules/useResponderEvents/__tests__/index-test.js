@@ -189,9 +189,7 @@ describe('useResponderEvents', () => {
     expect(identifier <= 20).toBe(true);
   });
 
-  /**
-   * SET: onStartShouldSetResponderCapture
-   */
+  /** SET: onStartShouldSetResponderCapture */
 
   describe('onStartShouldSetResponderCapture', () => {
     let grandParentRef;
@@ -358,9 +356,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * SET: onStartShouldSetResponder
-   */
+  /** SET: onStartShouldSetResponder */
 
   describe('onStartShouldSetResponder', () => {
     let targetRef;
@@ -521,9 +517,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * SET: onMoveShouldSetResponderCapture
-   */
+  /** SET: onMoveShouldSetResponderCapture */
 
   describe('onMoveShouldSetResponderCapture', () => {
     let grandParentRef;
@@ -687,9 +681,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * SET: onMoveShouldSetResponder
-   */
+  /** SET: onMoveShouldSetResponder */
 
   describe('onMoveShouldSetResponder', () => {
     let targetRef;
@@ -854,9 +846,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * SET: onScrollShouldSetResponderCapture
-   */
+  /** SET: onScrollShouldSetResponderCapture */
 
   describe('onScrollShouldSetResponderCapture', () => {
     let targetRef;
@@ -942,9 +932,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * SET: onScrollShouldSetResponder
-   */
+  /** SET: onScrollShouldSetResponder */
 
   describe('onScrollShouldSetResponder', () => {
     let targetRef;
@@ -1023,24 +1011,20 @@ describe('useResponderEvents', () => {
   });
 
   /**
-   * SET: onSelectionChangeShouldSetResponderCapture
-   * Not implemented. Expected behevior is not clear. Always terminate the responder
-   * and let the native system take over.
+   * SET: onSelectionChangeShouldSetResponderCapture Not implemented. Expected behevior is not
+   * clear. Always terminate the responder and let the native system take over.
    */
 
   describe.skip('onSelectionChangeShouldSetResponderCapture', () => {});
 
   /**
-   * SET: onSelectionChangeShouldSetResponder
-   * Not implemented. Expected behevior is not clear. Always terminate the responder
-   * and let the native system take over.
+   * SET: onSelectionChangeShouldSetResponder Not implemented. Expected behevior is not clear.
+   * Always terminate the responder and let the native system take over.
    */
 
   describe.skip('onSelectionChangeShouldSetResponder', () => {});
 
-  /**
-   * onResponderStart
-   */
+  /** `onResponderStart` */
 
   describe('onResponderStart', () => {
     let targetRef;
@@ -1082,9 +1066,7 @@ describe('useResponderEvents', () => {
     );
   });
 
-  /**
-   * onResponderMove
-   */
+  /** `onResponderMove` */
 
   describe('onResponderMove', () => {
     let targetRef;
@@ -1130,9 +1112,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * onResponderEnd
-   */
+  /** `onResponderEnd` */
 
   describe('onResponderEnd', () => {
     let targetRef;
@@ -1172,9 +1152,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * onResponderRelease
-   */
+  /** `onResponderRelease` */
 
   describe('onResponderRelease', () => {
     let targetRef;
@@ -1216,9 +1194,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * onResponderTerminate
-   */
+  /** `onResponderTerminate` */
 
   describe('onResponderTerminate', () => {
     let targetRef;
@@ -1617,9 +1593,7 @@ describe('useResponderEvents', () => {
     });
   });
 
-  /**
-   * Negotiation of responder from common ancestor
-   */
+  /** Negotiation of responder from common ancestor */
 
   describe('Negotiation', () => {
     let grandParentRef;
@@ -1635,9 +1609,9 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * When there is an active responder, negotiation of the active pointer captures to
-     * and bubbles from the closest common ancestor registered with the system. The
-     * responder is transferred and maintained for subsequent events of the same type.
+     * When there is an active responder, negotiation of the active pointer captures to and bubbles
+     * from the closest common ancestor registered with the system. The responder is transferred
+     * and maintained for subsequent events of the same type.
      */
     test('negotiates single-touch from first registered ancestor of responder and transfers', () => {
       const pointerType = 'touch';
@@ -1809,9 +1783,9 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * When there is an active responder, negotiation of a second pointer captures to
-     * and bubbles from the closest common ancestor registered with the system. The
-     * responder is transferred andvthe relevant termination events are called.
+     * When there is an active responder, negotiation of a second pointer captures to and bubbles
+     * from the closest common ancestor registered with the system. The responder is transferred
+     * andvthe relevant termination events are called.
      */
     test('negotiates multi-touch from first registered ancestor of responder and transfers', () => {
       const pointerType = 'touch';
@@ -2032,10 +2006,9 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * If nothing is responder, then the negotiation should propagate directly to
-     * the deepest target in the second touch. Once there are no more pointers
-     * that started within the responder, it should be released (even if there are
-     * active pointers elsewhere on the screen)
+     * If nothing is responder, then the negotiation should propagate directly to the deepest
+     * target in the second touch. Once there are no more pointers that started within the
+     * responder, it should be released (even if there are active pointers elsewhere on the screen)
      */
     test('negotiates with deepest target on second touch if nothing is responder', () => {
       const pointerType = 'touch';
@@ -2197,8 +2170,8 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * If a node is responder, then the negotiation with a sibling should
-     * capture to and bubble from the first common ancestor.
+     * If a node is responder, then the negotiation with a sibling should capture to and bubble
+     * from the first common ancestor.
      */
     test('negotiate from first common ancestor when there are siblings', () => {
       const pointerType = 'touch';
@@ -2367,9 +2340,8 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * If siblings are connected to the responder system but have no ancestors
-     * connected, there should be no negotiation between siblings after one
-     * becomes the active responder.
+     * If siblings are connected to the responder system but have no ancestors connected, there
+     * should be no negotiation between siblings after one becomes the active responder.
      */
     test('no negotation between siblings with no responder ancestors', () => {
       const pointerType = 'mouse';
@@ -2467,8 +2439,8 @@ describe('useResponderEvents', () => {
     });
 
     /**
-     * If a node is responder and it rejects a termination request, it
-     * should continue to receive responder events.
+     * If a node is responder and it rejects a termination request, it should continue to receive
+     * responder events.
      */
     test('negotiation rejects and current responder receives events', () => {
       const pointerType = 'touch';

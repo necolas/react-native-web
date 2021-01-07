@@ -3,23 +3,23 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * From React 16.0.0
+ *
  * @noflow
  */
 
 import isUnitlessNumber from '../unitlessNumbers';
 
 /**
- * Convert a value into the proper css writable value. The style name `name`
- * should be logical (no hyphens), as specified
- * in `CSSProperty.isUnitlessNumber`.
+ * Convert a value into the proper css writable value. The style name `name` should be logical (no
+ * hyphens), as specified in `CSSProperty.isUnitlessNumber`.
  *
  * @param {string} name CSS property name such as `topMargin`.
- * @param {*} value CSS property value such as `10px`.
- * @return {string} Normalized style value with dimensions applied.
+ * @param {any} value CSS property value such as `10px`.
+ * @returns {string} Normalized style value with dimensions applied.
  */
 function dangerousStyleValue(name, value, isCustomProperty) {
   // Note that we've removed escapeTextForBrowser() calls here since the

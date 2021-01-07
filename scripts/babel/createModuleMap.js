@@ -1,6 +1,6 @@
 /**
- * Creates a map of exported modules, allowing the RNW babel plugin to rewrite
- * paths only for modules it knows are exported by RNW.
+ * Creates a map of exported modules, allowing the RNW babel plugin to rewrite paths only for
+ * modules it knows are exported by RNW.
  */
 const fs = require('fs');
 const path = require('path');

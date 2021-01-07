@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -11,9 +11,7 @@ import type { ColorValue, DimensionValue } from './index';
 
 type NumberOrString = number | string;
 
-/**
- * Animations and transitions
- */
+/** Animations and transitions */
 
 type AnimationDirection = 'alternate' | 'alternate-reverse' | 'normal' | 'reverse';
 type AnimationFillMode = 'none' | 'forwards' | 'backwards' | 'both';
@@ -36,9 +34,7 @@ export type AnimationStyles = {|
   transitionTimingFunction?: ?(string | Array<string>),
 |};
 
-/**
- * Border
- */
+/** Border */
 
 type BorderRadiusValue = number | string;
 type BorderStyleValue = 'solid' | 'dotted' | 'dashed';
@@ -69,9 +65,7 @@ export type BorderStyles = {|
   borderTopStyle?: ?BorderStyleValue,
 |};
 
-/**
- * Interactions
- */
+/** Interactions */
 
 type CursorValue =
   | 'alias'
@@ -137,9 +131,7 @@ export type InteractionStyles = {|
   willChange?: ?string,
 |};
 
-/**
- * Layout
- */
+/** Layout */
 
 type OverflowValue = 'auto' | 'hidden' | 'scroll' | 'visible';
 type VisiblilityValue = 'hidden' | 'visible';
@@ -216,13 +208,9 @@ export type LayoutStyles = {|
   visibility?: ?VisiblilityValue,
   width?: ?DimensionValue,
   zIndex?: ?number,
-  /**
-   * @platform unsupported
-   */
+  /** @platform unsupported */
   aspectRatio?: ?number,
-  /**
-   * @platform web
-   */
+  /** @platform web */
   gridAutoColumns?: ?string,
   gridAutoFlow?: ?string,
   gridAutoRows?: ?string,
@@ -237,9 +225,7 @@ export type LayoutStyles = {|
   gridTemplateAreas?: ?string,
 |};
 
-/**
- * Shadows
- */
+/** Shadows */
 
 export type ShadowStyles = {|
   shadowColor?: ?ColorValue,
@@ -251,9 +237,7 @@ export type ShadowStyles = {|
   shadowRadius?: ?DimensionValue,
 |};
 
-/**
- * Transforms
- */
+/** Transforms */
 
 export type TransformStyles = {|
   perspective?: ?NumberOrString,

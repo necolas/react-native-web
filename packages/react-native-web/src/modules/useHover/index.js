@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -11,9 +11,7 @@ import { getModality } from '../modality';
 import useEvent from '../useEvent';
 import useLayoutEffect from '../useLayoutEffect';
 
-/**
- * Types
- */
+/** Types */
 
 type HoverEventsConfig = {
   contain?: ?boolean,
@@ -24,9 +22,7 @@ type HoverEventsConfig = {
   onHoverEnd?: ?(e: any) => void,
 };
 
-/**
- * Implementation
- */
+/** Implementation */
 
 const emptyObject = {};
 const opts = { passive: true };
@@ -70,9 +66,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
   useLayoutEffect(() => {
     const target = targetRef.current;
     if (target !== null) {
-      /**
-       * End the hover gesture
-       */
+      /** End the hover gesture */
       const hoverEnd = function (e) {
         if (onHoverEnd != null) {
           onHoverEnd(e);
@@ -85,9 +79,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
         addLeaveListener(target, null);
       };
 
-      /**
-       * Leave element
-       */
+      /** Leave element */
       const leaveListener = function (e) {
         const target = targetRef.current;
         if (target != null && getPointerType(e) !== 'touch') {
@@ -98,9 +90,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
         }
       };
 
-      /**
-       * Move within element
-       */
+      /** Move within element */
       const moveListener = function (e) {
         if (getPointerType(e) !== 'touch') {
           if (onHoverUpdate != null) {
@@ -116,9 +106,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
         }
       };
 
-      /**
-       * Start the hover gesture
-       */
+      /** Start the hover gesture */
       const hoverStart = function (e) {
         if (onHoverStart != null) {
           onHoverStart(e);
@@ -133,9 +121,7 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
         addLeaveListener(target, !disabled ? leaveListener : null);
       };
 
-      /**
-       * Enter element
-       */
+      /** Enter element */
       const enterListener = function (e) {
         const target = targetRef.current;
         if (target != null && getPointerType(e) !== 'touch') {

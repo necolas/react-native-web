@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow strict-local
  */
@@ -43,9 +43,7 @@ const cache = {
   },
 };
 
-/**
- * Compile style to atomic CSS rules.
- */
+/** Compile style to atomic CSS rules. */
 export function atomic(style: Style): CompilerOutput {
   return Object.keys(style)
     .sort()
@@ -75,6 +73,7 @@ export function atomic(style: Style): CompilerOutput {
 
 /**
  * Compile simple style object to classic CSS rules.
+ *
  * No support for 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function classic(style: Style, name: string): CompilerOutput {
@@ -97,16 +96,14 @@ export function classic(style: Style, name: string): CompilerOutput {
 
 /**
  * Compile simple style object to inline DOM styles.
+ *
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function inline(style: Style) {
   return prefixInlineStyles(createReactDOMStyle(style));
 }
 
-/**
- * Create a value string that normalizes different input values with a common
- * output.
- */
+/** Create a value string that normalizes different input values with a common output. */
 export function stringifyValueWithProperty(value: Value, property: ?string) {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
@@ -117,6 +114,7 @@ export function stringifyValueWithProperty(value: Value, property: ?string) {
 
 /**
  * Create the Atomic CSS rules needed for a given StyleSheet rule.
+ *
  * Translates StyleSheet declarations to CSS.
  */
 function createAtomicRules(identifier: string, property, value): Rules {
@@ -188,9 +186,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
   return rules;
 }
 
-/**
- * Creates a CSS declaration block from a StyleSheet object.
- */
+/** Creates a CSS declaration block from a StyleSheet object. */
 function createDeclarationBlock(style: Style) {
   const domStyle = prefixStyles(createReactDOMStyle(style));
   const declarationsString = Object.keys(domStyle)
@@ -215,9 +211,7 @@ function createDeclarationBlock(style: Style) {
   return `{${declarationsString};}`;
 }
 
-/**
- * An identifier is associated with a unique set of styles.
- */
+/** An identifier is associated with a unique set of styles. */
 function createIdentifier(prefix, name, value) {
   const hashedString = hash(name + stringifyValueWithProperty(value, name));
   return process.env.NODE_ENV !== 'production'
@@ -225,9 +219,7 @@ function createIdentifier(prefix, name, value) {
     : `${prefix}-${hashedString}`;
 }
 
-/**
- * Create individual CSS keyframes rules.
- */
+/** Create individual CSS keyframes rules. */
 function createKeyframes(keyframes) {
   const prefixes = ['-webkit-', ''];
   const identifier = createIdentifier('r', 'animation', keyframes);
@@ -249,9 +241,7 @@ function createKeyframes(keyframes) {
   return { identifier, rules };
 }
 
-/**
- * Create CSS keyframes rules and names from a StyleSheet keyframes object.
- */
+/** Create CSS keyframes rules and names from a StyleSheet keyframes object. */
 function processKeyframesValue(keyframesValue) {
   if (typeof keyframesValue === 'number') {
     throw new Error(`Invalid CSS keyframes type: ${typeof keyframesValue}`);

@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Nicolas Gallagher
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -58,18 +58,15 @@ const emptyObject = {};
 const emptyArray = [];
 
 /**
- * Safari produces very large identifiers that would cause the `touchBank` array
- * length to be so large as to crash the browser, if not normalized like this.
- * In the future the `touchBank` should use an object/map instead.
+ * Safari produces very large identifiers that would cause the `touchBank` array length to be so
+ * large as to crash the browser, if not normalized like this. In the future the `touchBank` should
+ * use an object/map instead.
  */
 function normalizeIdentifier(identifier) {
   return identifier > 20 ? identifier % 20 : identifier;
 }
 
-/**
- * Converts a native DOM event to a ResponderEvent.
- * Mouse events are transformed into fake touch events.
- */
+/** Converts a native DOM event to a ResponderEvent. Mouse events are transformed into fake touch events. */
 export default function createResponderEvent(domEvent: any): ResponderEvent {
   let rect;
   let propagationWasStopped = false;

@@ -1,19 +1,18 @@
 /**
- * Adapts focus styles based on the user's active input modality (i.e., how
- * they are interacting with the UI right now).
+ * Adapts focus styles based on the user's active input modality (i.e., how they are interacting
+ * with the UI right now).
  *
- * Focus styles are only relevant when using the keyboard to interact with the
- * page. If we only show the focus ring when relevant, we can avoid user
- * confusion without compromising accessibility.
+ * Focus styles are only relevant when using the keyboard to interact with the page. If we only show
+ * the focus ring when relevant, we can avoid user confusion without compromising accessibility.
  *
  * The script uses two heuristics to determine whether the keyboard is being used:
  *
  * 1. a keydown event occurred immediately before a focus event;
  * 2. a focus event happened on an element which requires keyboard interaction (e.g., a text field);
  *
- * This software or document includes material copied from or derived from https://github.com/WICG/focus-visible.
- * Copyright © 2018 W3C® (MIT, ERCIM, Keio, Beihang).
- * W3C Software Notice and License: https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ * This software or document includes material copied from or derived from
+ * https://github.com/WICG/focus-visible. Copyright © 2018 W3C® (MIT, ERCIM, Keio, Beihang). W3C
+ * Software Notice and License: https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
  *
  * @noflow
  */
@@ -52,8 +51,8 @@ const modality = (insertRule) => {
   };
 
   /**
-   * Helper function for legacy browsers and iframes which sometimes focus
-   * elements like document, body, and non-interactive SVG.
+   * Helper function for legacy browsers and iframes which sometimes focus elements like document,
+   * body, and non-interactive SVG.
    */
   function isValidFocusTarget(el) {
     if (
@@ -70,9 +69,8 @@ const modality = (insertRule) => {
   }
 
   /**
-   * Computes whether the given element should automatically trigger the
-   * `focus-visible` attribute being added, i.e. whether it should always match
-   * `:focus-visible` when focused.
+   * Computes whether the given element should automatically trigger the `focus-visible` attribute
+   * being added, i.e. whether it should always match `:focus-visible` when focused.
    */
   function focusTriggersKeyboardModality(el) {
     const type = el.type;
@@ -94,10 +92,7 @@ const modality = (insertRule) => {
     return false;
   }
 
-  /**
-   * Add the `focus-visible` attribute to the given element if it was not added by
-   * the author.
-   */
+  /** Add the `focus-visible` attribute to the given element if it was not added by the author. */
   function addFocusVisibleAttribute(el) {
     if (el.hasAttribute(focusVisibleAttributeName)) {
       return;
@@ -106,16 +101,14 @@ const modality = (insertRule) => {
   }
 
   /**
-   * Remove the `focus-visible` attribute from the given element if it was not
-   * originally added by the author.
+   * Remove the `focus-visible` attribute from the given element if it was not originally added by
+   * the author.
    */
   function removeFocusVisibleAttribute(el) {
     el.removeAttribute(focusVisibleAttributeName);
   }
 
-  /**
-   * Remove the `focus-visible` attribute from all elements in the document.
-   */
+  /** Remove the `focus-visible` attribute from all elements in the document. */
   function removeAllFocusVisibleAttributes() {
     const list = document.querySelectorAll(`[${focusVisibleAttributeName}]`);
     for (let i = 0; i < list.length; i += 1) {
@@ -124,9 +117,8 @@ const modality = (insertRule) => {
   }
 
   /**
-   * Treat `keydown` as a signal that the user is in keyboard modality.
-   * Apply `focus-visible` to any current active element and keep track
-   * of our keyboard modality state with `hadKeyboardEvent`.
+   * Treat `keydown` as a signal that the user is in keyboard modality. Apply `focus-visible` to
+   * any current active element and keep track of our keyboard modality state with `hadKeyboardEvent`.
    */
   function onKeyDown(e) {
     if (e.key !== 'Tab' && (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey)) {
@@ -141,15 +133,14 @@ const modality = (insertRule) => {
   }
 
   /**
-   * If at any point a user clicks with a pointing device, ensure that we change
-   * the modality away from keyboard.
-   * This avoids the situation where a user presses a key on an already focused
-   * element, and then clicks on a different element, focusing it with a
-   * pointing device, while we still think we're in keyboard modality.
-   * It also avoids the situation where a user presses on an element within a
-   * previously keyboard-focused element (i.e., `e.target` is not the previously
-   * focused element, but one of its descendants) and we need to remove the
-   * focus ring because a `blur` event doesn't occur.
+   * If at any point a user clicks with a pointing device, ensure that we change the modality away
+   * from keyboard.
+   *
+   * This avoids the situation where a user presses a key on an already focused element, and then
+   * clicks on a different element, focusing it with a pointing device, while we still think we're
+   * in keyboard modality. It also avoids the situation where a user presses on an element within a
+   * previously keyboard-focused element (i.e., `e.target` is not the previously focused element,
+   * but one of its descendants) and we need to remove the focus ring because a `blur` event doesn't occur.
    */
   function onPointerDown(e) {
     if (hadKeyboardEvent === true) {
@@ -160,9 +151,9 @@ const modality = (insertRule) => {
 
   /**
    * On `focus`, add the `focus-visible` attribute to the target if:
-   * - the target received focus as a result of keyboard navigation, or
-   * - the event target is an element that will likely require interaction
-   *   via the keyboard (e.g. a text box)
+   *
+   * - The target received focus as a result of keyboard navigation, or
+   * - The event target is an element that will likely require interaction via the keyboard (e.g. a text box)
    */
   function onFocus(e) {
     // Prevent IE from focusing the document or HTML element.
@@ -175,9 +166,7 @@ const modality = (insertRule) => {
     }
   }
 
-  /**
-   * On `blur`, remove the `focus-visible` attribute from the target.
-   */
+  /** On `blur`, remove the `focus-visible` attribute from the target. */
   function onBlur(e) {
     if (!isValidFocusTarget(e.target)) {
       return;
@@ -199,8 +188,8 @@ const modality = (insertRule) => {
   }
 
   /**
-   * If the user changes tabs, keep track of whether or not the previously
-   * focused element had the focus-visible attribute.
+   * If the user changes tabs, keep track of whether or not the previously focused element had the
+   * focus-visible attribute.
    */
   function onVisibilityChange(e) {
     if (document.visibilityState === 'hidden') {
@@ -216,10 +205,9 @@ const modality = (insertRule) => {
   }
 
   /**
-   * Add a group of listeners to detect usage of any pointing devices.
-   * These listeners will be added when the polyfill first loads, and anytime
-   * the window is blurred, so that they are active when the window regains
-   * focus.
+   * Add a group of listeners to detect usage of any pointing devices. These listeners will be
+   * added when the polyfill first loads, and anytime the window is blurred, so that they are
+   * active when the window regains focus.
    */
   function addInitialPointerMoveListeners() {
     document.addEventListener('mousemove', onInitialPointerMove);
@@ -246,10 +234,9 @@ const modality = (insertRule) => {
   }
 
   /**
-   * When the polfyill first loads, assume the user is in keyboard modality.
-   * If any event is received from a pointing device (e.g. mouse, pointer,
-   * touch), turn off keyboard modality.
-   * This accounts for situations where focus enters the page from the URL bar.
+   * When the polfyill first loads, assume the user is in keyboard modality. If any event is
+   * received from a pointing device (e.g. mouse, pointer, touch), turn off keyboard modality. This
+   * accounts for situations where focus enters the page from the URL bar.
    */
   function onInitialPointerMove(e) {
     // Work around a Safari quirk that fires a mousemove on <html> whenever the

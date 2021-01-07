@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -10,9 +10,7 @@
 import View from '../../exports/View';
 import React from 'react';
 
-/**
- * Common implementation for a simple stubbed view.
- */
+/** Common implementation for a simple stubbed view. */
 class UnimplementedView extends React.Component<*, *> {
   setNativeProps() {
     // Do nothing.

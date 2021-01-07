@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  */
 
 'use strict';
@@ -13,10 +13,11 @@ export const defaultBrowserChromeSize = 50;
 
 /**
  * Button property
- * This property only guarantees to indicate which buttons are pressed during events caused by pressing or
- * releasing one or multiple buttons. As such, it is not reliable for events such as 'mouseenter', 'mouseleave',
- * 'mouseover', 'mouseout' or 'mousemove'. Furthermore, the semantics differ for PointerEvent, where the value
- * for 'pointermove' will always be -1.
+ *
+ * This property only guarantees to indicate which buttons are pressed during events caused by
+ * pressing or releasing one or multiple buttons. As such, it is not reliable for events such as
+ * 'mouseenter', 'mouseleave', 'mouseover', 'mouseout' or 'mousemove'. Furthermore, the semantics
+ * differ for PointerEvent, where the value for 'pointermove' will always be -1.
  */
 
 export const buttonType = {
@@ -39,9 +40,7 @@ export const buttonType = {
   eraser: 5,
 };
 
-/**
- * Buttons bitmask
- */
+/** Buttons bitmask */
 
 export const buttonsType = {
   none: 0,

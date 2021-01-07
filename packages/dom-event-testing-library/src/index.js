@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  */
 
 'use strict';
@@ -15,9 +15,7 @@ import { describeWithPointerEvent, testWithPointerType } from './testHelpers';
 
 const createEventTarget = (node) => ({
   node,
-  /**
-   * Simple events abstraction.
-   */
+  /** Simple events abstraction. */
   blur(payload) {
     node.dispatchEvent(domEvents.blur(payload));
   },
@@ -47,8 +45,8 @@ const createEventTarget = (node) => ({
   },
   /**
    * PointerEvent abstraction.
-   * Dispatches the expected sequence of PointerEvents, MouseEvents, and
-   * TouchEvents for a given environment.
+   *
+   * Dispatches the expected sequence of PointerEvents, MouseEvents, and TouchEvents for a given environment.
    */
   // node no longer receives events for the pointer
   pointercancel(payload) {
@@ -90,8 +88,11 @@ const createEventTarget = (node) => ({
   },
   /**
    * Gesture abstractions.
+   *
    * Helpers for event sequences expected in a gesture.
-   * target.tap({ pointerType: 'touch' })
+   *
+   * @example
+   *   target.tap({ pointerType: 'touch' });
    */
   tap(payload) {
     domEventSequences.pointerdown(payload);
@@ -100,9 +101,7 @@ const createEventTarget = (node) => ({
   virtualclick(payload) {
     node.dispatchEvent(domEvents.virtualclick(payload));
   },
-  /**
-   * Utilities
-   */
+  /** Utilities */
   setBoundingClientRect({ x, y, width, height }) {
     node.getBoundingClientRect = function () {
       return {

@@ -1,9 +1,10 @@
 /**
  * Copyright (c) Nicolas Gallagher.
+ *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -58,10 +59,7 @@ const unitlessNumbers = {
   shadowOpacity: true,
 };
 
-/**
- * Support style names that may come passed in prefixed by adding permutations
- * of vendor prefixes.
- */
+/** Support style names that may come passed in prefixed by adding permutations of vendor prefixes. */
 const prefixes = ['ms', 'Moz', 'O', 'Webkit'];
 const prefixKey = (prefix: string, key: string) => {
   return prefix + key.charAt(0).toUpperCase() + key.substring(1);

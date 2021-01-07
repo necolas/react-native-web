@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -52,9 +52,8 @@ function getOptions(options: ?EventOptions): EventOptions | boolean {
 }
 
 /**
- * Shim generic API compatibility with ReactDOM's synthetic events, without needing the
- * large amount of code ReactDOM uses to do this. Ideally we wouldn't use a synthetic
- * event wrapper at all.
+ * Shim generic API compatibility with ReactDOM's synthetic events, without needing the large
+ * amount of code ReactDOM uses to do this. Ideally we wouldn't use a synthetic event wrapper at all.
  */
 function isPropagationStopped() {
   return this.cancelBubble;
@@ -70,9 +69,6 @@ function normalizeEvent(event: any) {
   return event;
 }
 
-/**
- *
- */
 export default function createEventHandle(type: string, options: ?EventOptions): EventHandle {
   const opts = getOptions(options);
 

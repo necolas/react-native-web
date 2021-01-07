@@ -1,9 +1,10 @@
 /**
  * Copyright (c) Nicolas Gallagher.
+ *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @noflow
  */
@@ -54,10 +55,9 @@ const ScrollView = ((createReactClass({
   },
 
   /**
-   * Returns a reference to the underlying scroll responder, which supports
-   * operations like `scrollTo`. All ScrollView-like components should
-   * implement this method so that they can be composed while providing access
-   * to the underlying scroll responder's methods.
+   * Returns a reference to the underlying scroll responder, which supports operations like
+   * `scrollTo`. All ScrollView-like components should implement this method so that they can be
+   * composed while providing access to the underlying scroll responder's methods.
    */
   getScrollResponder(): ScrollView {
     return this;
@@ -73,13 +73,13 @@ const ScrollView = ((createReactClass({
 
   /**
    * Scrolls to a given x, y offset, either immediately or with a smooth animation.
-   * Syntax:
    *
-   * scrollTo(options: {x: number = 0; y: number = 0; animated: boolean = true})
+   * Note: The weird argument signature is due to the fact that, for historical reasons, the
+   * function also accepts separate arguments as as alternative to the options object. This is
+   * deprecated due to ambiguity (y before x), and SHOULD NOT BE USED.
    *
-   * Note: The weird argument signature is due to the fact that, for historical reasons,
-   * the function also accepts separate arguments as as alternative to the options object.
-   * This is deprecated due to ambiguity (y before x), and SHOULD NOT BE USED.
+   * @example
+   *   scrollTo(options: {x: number = 0; y: number = 0; animated: boolean = true})
    */
   scrollTo(
     y?: number | { x?: number, y?: number, animated?: boolean },
@@ -102,12 +102,13 @@ const ScrollView = ((createReactClass({
   },
 
   /**
-   * If this is a vertical ScrollView scrolls to the bottom.
-   * If this is a horizontal ScrollView scrolls to the right.
+   * If this is a vertical ScrollView scrolls to the bottom. If this is a horizontal ScrollView
+   * scrolls to the right.
    *
-   * Use `scrollToEnd({ animated: true })` for smooth animated scrolling,
-   * `scrollToEnd({ animated: false })` for immediate scrolling.
-   * If no options are passed, `animated` defaults to true.
+   * @example
+   *   scrollToEnd({ animated: true }); //for smooth animated scrolling
+   *
+   *   scrollToEnd({ animated: false }); // for immediate scrolling. If no options are passed `animated` defaults to true.
    */
   scrollToEnd(options?: { animated?: boolean }) {
     // Default to true

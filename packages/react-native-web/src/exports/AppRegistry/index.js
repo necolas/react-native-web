@@ -1,9 +1,10 @@
 /**
  * Copyright (c) Nicolas Gallagher.
+ *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  *
  * @flow
  */
@@ -35,9 +36,7 @@ export type AppConfig = {
   section?: boolean,
 };
 
-/**
- * `AppRegistry` is the JS entry point to running all React Native apps.
- */
+/** `AppRegistry` is the JS entry point to running all React Native apps. */
 export default class AppRegistry {
   static getAppKeys(): Array<string> {
     return Object.keys(runnables);

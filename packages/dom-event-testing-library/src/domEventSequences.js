@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE file in the root
+ * directory of this source tree.
  */
 
 'use strict';
@@ -18,9 +18,7 @@ import * as domEvents from './domEvents';
 import { hasPointerEvent, platform } from './domEnvironment';
 import * as touchStore from './touchStore';
 
-/**
- * Converts a PointerEvent payload to a Touch
- */
+/** Converts a PointerEvent payload to a Touch */
 function createTouch(target, payload) {
   const {
     height = defaultPointerSize,
@@ -50,9 +48,7 @@ function createTouch(target, payload) {
   };
 }
 
-/**
- * Converts a PointerEvent to a TouchEvent
- */
+/** Converts a PointerEvent to a TouchEvent */
 function createTouchEventPayload(target, touch, payload) {
   const {
     altKey = false,
@@ -87,20 +83,23 @@ function getPointerType(payload) {
 /**
  * Pointer events sequences.
  *
- * Creates representative browser event sequences for high-level gestures based on pointers.
- * This allows unit tests to be written in terms of simple pointer interactions while testing
- * that the responses to those interactions account for the complex sequence of events that
- * browsers produce as a result.
+ * Creates representative browser event sequences for high-level gestures based on pointers. This
+ * allows unit tests to be written in terms of simple pointer interactions while testing that the
+ * responses to those interactions account for the complex sequence of events that browsers produce
+ * as a result.
  *
  * Every time a new pointer touches the surface a 'touchstart' event should be dispatched.
+ *
  * - 'changedTouches' contains the new touch.
  * - 'targetTouches' contains all the active pointers for the target.
  * - 'touches' contains all the active pointers on the surface.
  *
  * Every time an existing pointer moves a 'touchmove' event should be dispatched.
+ *
  * - 'changedTouches' contains the updated touch.
  *
  * Every time an existing pointer leaves the surface a 'touchend' event should be dispatched.
+ *
  * - 'changedTouches' contains the released touch.
  * - 'targetTouches' contains any of the remaining active pointers for the target.
  */
@@ -392,9 +391,9 @@ export function pointerup(target, defaultPayload) {
 }
 
 /**
- * This function should be called after each test to ensure the touchStore is cleared
- * in cases where the mock pointers weren't released before the test completed
- * (e.g., a test failed or ran a partial gesture).
+ * This function should be called after each test to ensure the touchStore is cleared in cases
+ * where the mock pointers weren't released before the test completed (e.g., a test failed or ran a
+ * partial gesture).
  */
 export function clearPointers() {
   touchStore.clear();
