@@ -57,7 +57,7 @@ The `accessibilityRole` prop is used to infer an [analogous HTML
 element][html-aria-url] and ARIA `role`, where possible. In most cases, both
 the element and ARIA `role` are rendered. While this may contradict some ARIA
 recommendations, it also helps avoid certain browser bugs, HTML5 conformance
-errors, and accessibility anti-patterns (e.g., giving a `heading` role to a
+errors, and accessibility anti-patterns (e.g., giving a `header` role to a
 `button` element).
 
 Straight-forward examples:
@@ -68,10 +68,10 @@ Straight-forward examples:
 * `<Text accessibilityRole="link" />` => `<a role="link" />`.
 * `<View accessibilityRole="main" />` => `<main role="main" />`.
 
-The `heading` role can be combined with `aria-level`:
+The `header` role can be combined with `aria-level`:
 
-* `<Text accessibilityRole="heading" />` => `<h1 />`.
-* `<Text accessibilityRole="heading" aria-level="3" />` => `<h3 />`.
+* `<Text accessibilityRole="header" />` => `<h1 />`.
+* `<Text accessibilityRole="header" aria-level="3" />` => `<h3 />`.
 
 The `button` role renders an accessible button but is not implemented using the
 native `button` element due to some browsers limiting the use of flexbox layout
