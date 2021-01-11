@@ -1,6 +1,6 @@
 # React Native for Web
 
-[![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+[![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request) [![Meercode CI Score](https://meercode.io/badge/necolas/react-native-web?type=ci-score&branch=master)](https://meercode.io/necolas/react-native-web)
 
 **Compatibility: React Native >= 0.63**.
 
