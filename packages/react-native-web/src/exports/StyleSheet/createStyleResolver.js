@@ -237,7 +237,9 @@ export default function createStyleResolver() {
       return result;
     },
     resolve,
-    sheet
+    get sheet() {
+      return sheet;
+    }
   };
 }
 
