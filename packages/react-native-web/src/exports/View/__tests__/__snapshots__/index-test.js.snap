@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/View allows "dir" to be overridden 1`] = `
+<div
+  class="css-view-1dbjc4n"
+/>
+`;
+
 exports[`components/View default 1`] = `
 <div
   class="css-view-1dbjc4n"
@@ -17,30 +23,67 @@ exports[`components/View non-text is rendered 1`] = `
 </div>
 `;
 
-exports[`components/View prop "hitSlop" handles partial offsets 1`] = `
+exports[`components/View prop "accessibilityLabel" value is set 1`] = `
 <div
+  aria-label="accessibility label"
   class="css-view-1dbjc4n"
->
-  <span
-    class="css-hitSlop-mjp8i1"
-    style="top: -10px;"
-  />
-</div>
+/>
 `;
 
-exports[`components/View prop "hitSlop" renders a span with negative position offsets 1`] = `
+exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
+<div
+  aria-live="polite"
+  class="css-view-1dbjc4n"
+/>
+`;
+
+exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
+<a
+  class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n"
+  data-focusable="true"
+  role="link"
+/>
+`;
+
+exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
+<div
+  class="css-cursor-18t94o4 css-view-1dbjc4n"
+  data-focusable="true"
+  role="button"
+  tabindex="0"
+/>
+`;
+
+exports[`components/View prop "accessibilityRole" value is set 1`] = `
 <div
   class="css-view-1dbjc4n"
->
-  <span
-    class="css-hitSlop-mjp8i1"
-    style="bottom: -10px; left: -5px; right: -5px; top: -10px;"
-  />
-</div>
+  role="presentation"
+/>
+`;
+
+exports[`components/View prop "nativeID" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n"
+  id="nativeID"
+/>
 `;
 
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
   class="css-view-1dbjc4n r-pointerEvents-ah5dr5"
+/>
+`;
+
+exports[`components/View prop "style" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n"
+  style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
+/>
+`;
+
+exports[`components/View prop "testID" value is set 1`] = `
+<div
+  class="css-view-1dbjc4n"
+  data-testid="123"
 />
 `;

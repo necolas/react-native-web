@@ -1,8 +1,12 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Picker from '..';
+
+function findSelect(container) {
+  return container.querySelector('select');
+}
 
 describe('components/Picker', () => {
   describe('prop "children"', () => {
@@ -13,14 +17,14 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const component = shallow(picker);
-      expect(component.children()).toMatchSnapshot();
+      const { container } = render(picker);
+      expect(container.firstChild.firstChild).toMatchSnapshot();
     });
 
     test('items', () => {
       const pickerItem = <Picker.Item label="label-1" value="value-1" />;
-      const component = shallow(pickerItem);
-      expect(component).toMatchSnapshot();
+      const { container } = render(pickerItem);
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 
@@ -32,8 +36,8 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const component = shallow(picker);
-      expect(component.find('select').prop('disabled')).toBe(true);
+      const { container } = render(picker);
+      expect(findSelect(container).disabled).toBe(true);
     });
   });
 
@@ -46,11 +50,14 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const component = shallow(picker);
-      component.find('select').simulate('change', {
-        target: { selectedIndex: '1', value: 'value-2' }
-      });
-      expect(onValueChange).toHaveBeenCalledWith('value-2', '1');
+      const { container } = render(picker);
+      const select = findSelect(container);
+      // mock change event
+      select.selectedIndex = '1';
+      select.value = 'value-2';
+      select.dispatchEvent(new window.Event('change', { bubbles: true }));
+
+      expect(onValueChange).toHaveBeenCalledWith('value-2', 1);
     });
   });
 
@@ -62,8 +69,8 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const component = shallow(picker);
-      expect(component.find('select').prop('value')).toBe('value-2');
+      const { container } = render(picker);
+      expect(findSelect(container).value).toBe('value-2');
     });
 
     test('selects the correct item (number)', () => {
@@ -73,8 +80,8 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value={22} />
         </Picker>
       );
-      const component = shallow(picker);
-      expect(component.find('select').prop('value')).toBe(22);
+      const { container } = render(picker);
+      expect(findSelect(container).value).toBe('22');
     });
   });
 });

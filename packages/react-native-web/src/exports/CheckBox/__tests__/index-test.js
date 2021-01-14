@@ -2,59 +2,145 @@
 
 import CheckBox from '../';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { act } from 'react-dom/test-utils';
+import { createEventTarget } from 'dom-event-testing-library';
+import { render } from '@testing-library/react';
 
-const checkboxSelector = 'input[type="checkbox"]';
+function findCheckbox(container) {
+  return container.firstChild.querySelector('input');
+}
 
 describe('CheckBox', () => {
-  describe('disabled', () => {
+  describe('prop "accessibilityLabel"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox accessibilityLabel="accessibility label" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "color"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox color="lightblue" value={true} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "dataSet"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox dataSet={{ one: 'one', two: 'two' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "disabled"', () => {
     test('when "false" a default checkbox is rendered', () => {
-      const component = shallow(<CheckBox />);
-      expect(component.find(checkboxSelector).prop('disabled')).toBe(undefined);
+      const { container } = render(<CheckBox />);
+      expect(findCheckbox(container).disabled).toBe(false);
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
-      const component = shallow(<CheckBox disabled />);
-      expect(component.find(checkboxSelector).prop('disabled')).toBe(true);
+      const { container } = render(<CheckBox disabled />);
+      expect(findCheckbox(container).disabled).toBe(true);
     });
   });
 
-  describe('onChange', () => {
+  describe('prop "nativeID"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox nativeID="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "onBlur"', () => {
+    test('is called', () => {
+      const onBlur = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<CheckBox onBlur={onBlur} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+        target.blur();
+      });
+      expect(onBlur).toBeCalled();
+    });
+  });
+
+  describe('prop "onChange"', () => {
     test('is called with the event object', () => {
       const onChange = jest.fn();
-      const component = shallow(<CheckBox onChange={onChange} value={false} />);
-      component.find('input').simulate('change', { nativeEvent: { target: { checked: true } } });
-      expect(onChange).toHaveBeenCalledWith({
-        nativeEvent: { target: { checked: true }, value: true }
-      });
+      const { container } = render(<CheckBox onChange={onChange} value={false} />);
+      const checkbox = findCheckbox(container);
+      checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
+      expect(onChange).toHaveBeenCalled();
     });
   });
 
-  describe('onValueChange', () => {
+  describe('prop "onFocus"', () => {
+    test('is called', () => {
+      const onFocus = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<CheckBox onFocus={onFocus} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+      });
+      expect(onFocus).toBeCalled();
+    });
+  });
+
+  describe('prop "onValueChange"', () => {
     test('when value is "false" it receives "true"', () => {
       const onValueChange = jest.fn();
-      const component = shallow(<CheckBox onValueChange={onValueChange} value={false} />);
-      component.find('input').simulate('change', { nativeEvent: { target: { checked: true } } });
+      const { container } = render(<CheckBox onValueChange={onValueChange} value={false} />);
+      const checkbox = findCheckbox(container);
+      checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(true);
     });
 
     test('when value is "true" it receives "false"', () => {
       const onValueChange = jest.fn();
-      const component = shallow(<CheckBox onValueChange={onValueChange} value />);
-      component.find('input').simulate('change', { nativeEvent: { target: { checked: false } } });
+      const { container } = render(<CheckBox onValueChange={onValueChange} value />);
+      const checkbox = findCheckbox(container);
+      checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(false);
     });
   });
 
-  describe('value', () => {
+  describe('prop "ref"', () => {
+    test('value is set', () => {
+      const ref = jest.fn();
+      render(<CheckBox ref={ref} />);
+      expect(ref).toBeCalled();
+    });
+  });
+
+  describe('prop "style"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox style={{ borderWidth: 5 }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "testID"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox testID="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "value"', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
-      const component = shallow(<CheckBox value={false} />);
-      expect(component.find(checkboxSelector).prop('checked')).toBe(false);
+      const { container } = render(<CheckBox value={false} />);
+      expect(findCheckbox(container).checked).toBe(false);
     });
 
     test('when "true" a checked checkbox is rendered', () => {
-      const component = shallow(<CheckBox value />);
-      expect(component.find(checkboxSelector).prop('checked')).toBe(true);
+      const { container } = render(<CheckBox value />);
+      expect(findCheckbox(container).checked).toBe(true);
     });
   });
 });

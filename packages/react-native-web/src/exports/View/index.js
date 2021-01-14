@@ -10,72 +10,137 @@
 
 import type { ViewProps } from './types';
 
-import applyLayout from '../../modules/applyLayout';
-import applyNativeMethods from '../../modules/applyNativeMethods';
+import * as React from 'react';
+import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import filterSupportedProps from './filterSupportedProps';
+import pick from '../../modules/pick';
+import useElementLayout from '../../modules/useElementLayout';
+import useMergeRefs from '../../modules/useMergeRefs';
+import usePlatformMethods from '../../modules/usePlatformMethods';
+import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import React from 'react';
 
-export type { ViewProps };
-
-const calculateHitSlopStyle = hitSlop => {
-  const hitStyle = {};
-  for (const prop in hitSlop) {
-    if (hitSlop.hasOwnProperty(prop)) {
-      const value = hitSlop[prop];
-      hitStyle[prop] = value > 0 ? -1 * value : 0;
-    }
-  }
-  return hitStyle;
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  children: true,
+  classList: true,
+  disabled: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  onBlur: true,
+  onClick: true,
+  onClickCapture: true,
+  onContextMenu: true,
+  onFocus: true,
+  onKeyDown: true,
+  onKeyUp: true,
+  onTouchCancel: true,
+  onTouchCancelCapture: true,
+  onTouchEnd: true,
+  onTouchEndCapture: true,
+  onTouchMove: true,
+  onTouchMoveCapture: true,
+  onTouchStart: true,
+  onTouchStartCapture: true,
+  pointerEvents: true,
+  ref: true,
+  style: true,
+  testID: true,
+  // unstable
+  dataSet: true,
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true,
+  onScroll: true,
+  onWheel: true,
+  href: true,
+  rel: true,
+  target: true
 };
 
-class View extends React.Component<ViewProps> {
-  static displayName = 'View';
+const pickProps = props => pick(props, forwardPropsList);
 
-  renderView(hasTextAncestor) {
-    const hitSlop = this.props.hitSlop;
-    const supportedProps = filterSupportedProps(this.props);
+const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
+  const {
+    onLayout,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  } = props;
 
-    if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(this.props.children).forEach(item => {
-        if (typeof item === 'string') {
-          console.error(
-            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
-          );
-        }
-      });
-    }
-
-    supportedProps.classList = [classes.view];
-    supportedProps.ref = this.props.forwardedRef;
-    supportedProps.style = StyleSheet.compose(
-      hasTextAncestor && styles.inline,
-      this.props.style
-    );
-
-    if (hitSlop) {
-      const hitSlopStyle = calculateHitSlopStyle(hitSlop);
-      const hitSlopChild = createElement('span', {
-        classList: [classes.hitSlop],
-        style: hitSlopStyle
-      });
-      supportedProps.children = React.Children.toArray([hitSlopChild, supportedProps.children]);
-    }
-
-    return createElement('div', supportedProps);
+  if (process.env.NODE_ENV !== 'production') {
+    React.Children.toArray(props.children).forEach(item => {
+      if (typeof item === 'string') {
+        console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
+      }
+    });
   }
 
-  render() {
-    return (
-      <TextAncestorContext.Consumer>
-        {hasTextAncestor => this.renderView(hasTextAncestor)}
-      </TextAncestorContext.Consumer>
-    );
-  }
-}
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const hostRef = useRef(null);
+
+  useElementLayout(hostRef, onLayout);
+  useResponderEvents(hostRef, {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  });
+
+  const style = StyleSheet.compose(
+    hasTextAncestor && styles.inline,
+    props.style
+  );
+
+  const supportedProps = pickProps(props);
+  supportedProps.classList = classList;
+  supportedProps.style = style;
+
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+  supportedProps.ref = setRef;
+
+  return createElement('div', supportedProps);
+});
+
+View.displayName = 'View';
 
 const classes = css.create({
   view: {
@@ -92,18 +157,10 @@ const classes = css.create({
     padding: 0,
     position: 'relative',
     zIndex: 0
-  },
-  // this zIndex-ordering positions the hitSlop above the View but behind
-  // its children
-  hitSlop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: -1
   }
 });
+
+const classList = [classes.view];
 
 const styles = StyleSheet.create({
   inline: {
@@ -111,4 +168,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyLayout(applyNativeMethods(View));
+export type { ViewProps };
+
+export default View;

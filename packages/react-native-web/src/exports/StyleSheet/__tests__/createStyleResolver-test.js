@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import I18nManager from '../../I18nManager';
-import ReactNativePropRegistry from '../../../modules/ReactNativePropRegistry';
+import ReactNativePropRegistry from '../ReactNativePropRegistry';
 import createStyleResolver from '../createStyleResolver';
 
 let styleResolver;
@@ -73,75 +73,6 @@ describe('StyleSheet/createStyleResolver', () => {
 
     test('resolves inline-style pointerEvents to classname', () => {
       expect(styleResolver.resolve({ pointerEvents: 'box-none' })).toMatchSnapshot();
-    });
-  });
-
-  describe('resolveWithNode', () => {
-    let node;
-
-    beforeEach(() => {
-      node = document.createElement('div');
-    });
-
-    test('preserves unrelated class names', () => {
-      node.classList.add('unknown-class-1', 'unknown-class-2');
-      const resolved = styleResolver.resolveWithNode({}, node);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('preserves unrelated inline styles', () => {
-      node.style.cssText = 'font-size: 20px;';
-      const resolved = styleResolver.resolveWithNode({ opacity: 1 }, node);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('next class names have priority over current inline styles', () => {
-      node.style.cssText = 'opacity: 0.5;';
-      const nextStyle = ReactNativePropRegistry.register({ opacity: 1 });
-      const resolved = styleResolver.resolveWithNode(nextStyle, node);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('next inline styles have priority over current inline styles', () => {
-      // note: this also checks for correctly uppercasing the first letter of DOM vendor prefixes
-      node.style.cssText = 'opacity: 0.5; transform: scale(1);';
-      const style = { opacity: 1, transform: [{ scale: 2 }] };
-      const resolved = styleResolver.resolveWithNode(style, node);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('when isRTL=true, resolves to flipped inline styles', () => {
-      // note: DOM state resolved from { marginLeft: 5, left: 5 } in RTL mode
-      node.style.cssText = 'margin-right: 5px; right: 5px;';
-      I18nManager.forceRTL(true);
-      const resolved = styleResolver.resolveWithNode({ marginLeft: 10, right: 10 }, node);
-      I18nManager.forceRTL(false);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('when isRTL=true, resolves to flipped classNames', () => {
-      // note: DOM state resolved from { marginLeft: 5, left: 5 }
-      node.style.cssText = 'margin-right: 5px; right: 5px;';
-      const nextStyle = ReactNativePropRegistry.register({ marginLeft: 10, right: 1 });
-
-      I18nManager.forceRTL(true);
-      const resolved = styleResolver.resolveWithNode(nextStyle, node);
-      I18nManager.forceRTL(false);
-      expect(resolved).toMatchSnapshot();
-    });
-
-    test('when isRTL=true & doLeftAndRightSwapInRTL=false, resolves to non-flipped inline styles', () => {
-      // note: DOM state resolved from { marginRight 5, right: 5, paddingEnd: 5 }
-      node.style.cssText = 'margin-right: 5px; right: 5px; padding-left: 5px';
-      I18nManager.forceRTL(true);
-      I18nManager.swapLeftAndRightInRTL(false);
-      const resolved = styleResolver.resolveWithNode(
-        { marginRight: 10, right: 10, paddingEnd: 10 },
-        node
-      );
-      I18nManager.forceRTL(false);
-      I18nManager.swapLeftAndRightInRTL(true);
-      expect(resolved).toMatchSnapshot();
     });
   });
 });

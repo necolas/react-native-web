@@ -1,16 +1,19 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 const Dot = ({ size, x, y, children, color }) => (
   <div
-    className={css(styles.root, {
-      borderBottomColor: color,
-      borderRightWidth: `${size / 2}px`,
-      borderBottomWidth: `${size / 2}px`,
-      borderLeftWidth: `${size / 2}px`,
-      marginLeft: `${x}px`,
-      marginTop: `${y}px`
-    })}
+    className={css([
+      styles.root,
+      {
+        borderBottomColor: color,
+        borderRightWidth: `${size / 2}px`,
+        borderBottomWidth: `${size / 2}px`,
+        borderLeftWidth: `${size / 2}px`,
+        marginLeft: `${x}px`,
+        marginTop: `${y}px`
+      }
+    ])}
   >
     {children}
   </div>

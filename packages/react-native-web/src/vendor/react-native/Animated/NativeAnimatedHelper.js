@@ -262,20 +262,8 @@ function assertNativeAnimatedModule(): void {
   invariant(NativeAnimatedModule, 'Native animated module is not available');
 }
 
-let _warnedMissingNativeAnimated = false;
-
 function shouldUseNativeDriver(config: AnimationConfig | EventConfig): boolean {
   if (config.useNativeDriver === true && !NativeAnimatedModule) {
-    if (!_warnedMissingNativeAnimated) {
-      console.warn(
-        'Animated: `useNativeDriver` is not supported because the native ' +
-          'animated module is missing. Falling back to JS-based animation. To ' +
-          'resolve this, add `RCTAnimation` module to this app, or remove ' +
-          '`useNativeDriver`. ' +
-          'More info: https://github.com/facebook/react-native/issues/11094#issuecomment-263240420',
-      );
-      _warnedMissingNativeAnimated = true;
-    }
     return false;
   }
 

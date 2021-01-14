@@ -7,7 +7,42 @@
  * @flow
  */
 
-function emptyFunction() {}
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
+function isScreenReaderEnabled(): Promise<*> {
+  return new Promise((resolve, reject) => {
+    resolve(true);
+  });
+}
+
+const prefersReducedMotionMedia =
+  canUseDOM && typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
+
+function isReduceMotionEnabled(): Promise<*> {
+  return new Promise((resolve, reject) => {
+    resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
+  });
+}
+
+function addChangeListener(fn) {
+  if (prefersReducedMotionMedia != null) {
+    prefersReducedMotionMedia.addEventListener != null
+      ? prefersReducedMotionMedia.addEventListener('change', fn)
+      : prefersReducedMotionMedia.addListener(fn);
+  }
+}
+
+function removeChangeListener(fn) {
+  if (prefersReducedMotionMedia != null) {
+    prefersReducedMotionMedia.removeEventListener != null
+      ? prefersReducedMotionMedia.removeEventListener('change', fn)
+      : prefersReducedMotionMedia.removeListener(fn);
+  }
+}
+
+const handlers = {};
 
 const AccessibilityInfo = {
   /**
@@ -16,18 +51,38 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when a screen reader is enabled and `false` otherwise.
    */
-  fetch: function(): Promise<*> {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  },
+  isScreenReaderEnabled,
 
   /**
-   * Add an event handler. Supported events:
+   * Query whether the user prefers reduced motion.
+   *
+   * Returns a promise which resolves to a boolean.
+   * The result is `true` when a screen reader is enabled and `false` otherwise.
+   */
+  isReduceMotionEnabled,
+
+  /**
+   * Deprecated
+   */
+  fetch: isScreenReaderEnabled,
+
+  /**
+   * Add an event handler. Supported events: reduceMotionChanged
    */
   addEventListener: function(eventName: string, handler: Function): Object {
+    if (eventName === 'reduceMotionChanged') {
+      if (!prefersReducedMotionMedia) {
+        return;
+      }
+      const listener = event => {
+        handler(event.matches);
+      };
+      addChangeListener(listener);
+      handlers[handler] = listener;
+    }
+
     return {
-      remove: emptyFunction
+      remove: () => AccessibilityInfo.removeEventListener(eventName, handler)
     };
   },
 
@@ -45,6 +100,13 @@ const AccessibilityInfo = {
    * Remove an event handler.
    */
   removeEventListener: function(eventName: string, handler: Function): void {
+    if (eventName === 'reduceMotionChanged') {
+      const listener = handlers[handler];
+      if (!listener || !prefersReducedMotionMedia) {
+        return;
+      }
+      removeChangeListener(listener);
+    }
     return;
   }
 };

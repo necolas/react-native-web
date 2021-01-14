@@ -14,20 +14,6 @@ exports[`modules/createDOMProps includes cursor style for pressable roles 1`] = 
 
 exports[`modules/createDOMProps includes cursor style for pressable roles 2`] = `"css-cursor-18t94o4"`;
 
-exports[`modules/createDOMProps prop "accessibilityRelationship" values are "id" string 1`] = `
-Object {
-  "aria-activedescendant": "id",
-  "aria-controls": "id",
-  "aria-describedby": "id",
-  "aria-details": "id",
-  "aria-haspopup": "id",
-  "aria-labelledby": "id",
-  "aria-owns": "id",
-}
-`;
-
-exports[`modules/createDOMProps prop "accessibilityRelationship" values are "undefined" 1`] = `Object {}`;
-
 exports[`modules/createDOMProps prop "accessibilityState" values are "false" 1`] = `
 Object {
   "aria-busy": false,

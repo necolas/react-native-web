@@ -10,9 +10,8 @@ module.exports = {
   // resetMocks: true,
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages'],
-  setupFiles: ['jest-canvas-mock'],
+  setupFiles: ['jest-canvas-mock', require.resolve('./setupFiles.js')],
   setupFilesAfterEnv: [require.resolve('./setupFramework.js')],
-  snapshotSerializers: ['enzyme-to-json/serializer'],
   testEnvironment: 'jsdom',
   timers: 'fake'
 };

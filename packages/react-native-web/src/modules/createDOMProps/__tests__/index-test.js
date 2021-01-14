@@ -140,6 +140,118 @@ describe('modules/createDOMProps', () => {
     });
   });
 
+  describe('prop "onClick"', () => {
+    const callsOnClick = (component, accessibilityRole, disabled = false) => {
+      const onClick = jest.fn();
+      const event = { stopPropagation: jest.fn() };
+      const finalProps = createDOMProps(component, { accessibilityRole, disabled, onClick });
+      finalProps.onClick(event);
+      return onClick.mock.calls.length === 1;
+    };
+
+    test('is called for various roles', () => {
+      expect(callsOnClick('div', 'link')).toBe(true);
+      expect(callsOnClick('div', 'button')).toBe(true);
+      expect(callsOnClick('div', 'textbox')).toBe(true);
+      expect(callsOnClick('div', 'menuitem')).toBe(true);
+      expect(callsOnClick('div', 'bogus')).toBe(true);
+      expect(callsOnClick('a')).toBe(true);
+      expect(callsOnClick('button')).toBe(true);
+      expect(callsOnClick('input')).toBe(true);
+      expect(callsOnClick('select')).toBe(true);
+      expect(callsOnClick('textarea')).toBe(true);
+      expect(callsOnClick('h1')).toBe(true);
+    });
+
+    test('is not called when disabled is true', () => {
+      expect(callsOnClick('div', 'link', true)).toBe(false);
+      expect(callsOnClick('div', 'button', true)).toBe(false);
+      expect(callsOnClick('div', 'menuitem', true)).toBe(false);
+      expect(callsOnClick('a', undefined, true)).toBe(false);
+      expect(callsOnClick('button', undefined, true)).toBe(false);
+      expect(callsOnClick('input', undefined, true)).toBe(false);
+      expect(callsOnClick('select', undefined, true)).toBe(false);
+      expect(callsOnClick('textarea', undefined, true)).toBe(false);
+
+      expect(callsOnClick('div', 'textbox', true)).toBe(true);
+      expect(callsOnClick('div', 'bogus', true)).toBe(true);
+      expect(callsOnClick('h1', undefined, true)).toBe(true);
+    });
+  });
+
+  describe('prop "onKeyDown"', () => {
+    const callsOnClick = key => (component, accessibilityRole, disabled = false) => {
+      const onClick = jest.fn();
+      const onKeyDown = jest.fn();
+      const event = { key, preventDefault: jest.fn() };
+      const finalProps = createDOMProps(component, {
+        accessibilityRole,
+        disabled,
+        onClick,
+        onKeyDown
+      });
+      finalProps.onKeyDown(event);
+      // The original onKeyDown should always be called
+      expect(onKeyDown).toHaveBeenCalled();
+      return onClick.mock.calls.length === 1;
+    };
+
+    const respondsToEnter = callsOnClick('Enter');
+    const respondsToSpace = callsOnClick(' ');
+
+    test('does not emulate "onClick" when disabled', () => {
+      expect(respondsToEnter('div', 'link', true)).toBe(false);
+      expect(respondsToEnter('div', 'button', true)).toBe(false);
+      expect(respondsToEnter('div', 'textbox', true)).toBe(false);
+      expect(respondsToEnter('div', 'menuitem', true)).toBe(false);
+      expect(respondsToEnter('div', 'bogus', true)).toBe(false);
+    });
+
+    test('does not emulate "onClick" for native elements', () => {
+      expect(respondsToEnter('a')).toBe(false);
+      expect(respondsToEnter('button')).toBe(false);
+      expect(respondsToEnter('input')).toBe(false);
+      expect(respondsToEnter('select')).toBe(false);
+      expect(respondsToEnter('textarea')).toBe(false);
+      expect(respondsToEnter('h1')).toBe(false);
+      expect(respondsToEnter('div', 'link')).toBe(false);
+
+      expect(respondsToSpace('a')).toBe(false);
+      expect(respondsToSpace('button')).toBe(false);
+      expect(respondsToSpace('input')).toBe(false);
+      expect(respondsToSpace('select')).toBe(false);
+      expect(respondsToSpace('textarea')).toBe(false);
+      expect(respondsToSpace('h1')).toBe(false);
+      expect(respondsToSpace('div', 'link')).toBe(false);
+    });
+
+    test('emulates "onClick" for "Enter" for certain roles', () => {
+      expect(respondsToEnter('div', 'button')).toBe(true);
+      expect(respondsToEnter('div', 'menuitem')).toBe(true);
+      expect(respondsToEnter('div', 'textbox')).toBe(false);
+      expect(respondsToEnter('div', 'bogus')).toBe(false);
+    });
+
+    test('emulates "onClick" for "Enter" for items marked accessible', () => {
+      const onClick = jest.fn();
+      const event = { key: 'Enter', preventDefault: jest.fn() };
+      const finalProps = createDOMProps('div', {
+        accessible: true,
+        accessibilityRole: 'article',
+        onClick
+      });
+      finalProps.onKeyDown(event);
+      expect(onClick).toHaveBeenCalled();
+    });
+
+    test('emulates "onClick" for "Space" for certain roles', () => {
+      expect(respondsToSpace('div', 'button')).toBe(true);
+      expect(respondsToSpace('div', 'menuitem')).toBe(true);
+      expect(respondsToSpace('div', 'textbox')).toBe(false);
+      expect(respondsToSpace('div', 'bogus')).toBe(false);
+    });
+  });
+
   test('prop "accessibilityLabel" becomes "aria-label"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const props = createProps({ accessibilityLabel });
@@ -191,32 +303,6 @@ describe('modules/createDOMProps', () => {
     test('values are "true"', () => {
       const accessibilityState = createAccessibilityState(true);
       const props = createProps({ accessibilityState });
-      expect(props).toMatchSnapshot();
-    });
-  });
-
-  describe('prop "accessibilityRelationship"', () => {
-    function createAccessibilityRelationship(value) {
-      return {
-        activedescendant: value,
-        controls: value,
-        describedby: value,
-        details: value,
-        haspopup: value,
-        labelledby: value,
-        owns: value
-      };
-    }
-
-    test('values are "undefined"', () => {
-      const accessibilityRelationship = createAccessibilityRelationship(undefined);
-      const props = createProps({ accessibilityRelationship });
-      expect(props).toMatchSnapshot();
-    });
-
-    test('values are "id" string', () => {
-      const accessibilityRelationship = createAccessibilityRelationship('id');
-      const props = createProps({ accessibilityRelationship });
       expect(props).toMatchSnapshot();
     });
   });

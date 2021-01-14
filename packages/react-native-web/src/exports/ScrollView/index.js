@@ -12,7 +12,6 @@ import type { ViewProps, ViewStyle } from '../View/types';
 
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
-import findNodeHandle from '../findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
@@ -49,8 +48,8 @@ const ScrollView = ((createReactClass({
   },
 
   setNativeProps(props: Object) {
-    if (this._scrollViewRef) {
-      this._scrollViewRef.setNativeProps(props);
+    if (this._scrollNodeRef) {
+      this._scrollNodeRef.setNativeProps(props);
     }
   },
 
@@ -65,11 +64,11 @@ const ScrollView = ((createReactClass({
   },
 
   getScrollableNode(): any {
-    return findNodeHandle(this._scrollViewRef);
+    return this._scrollNodeRef;
   },
 
   getInnerViewNode(): any {
-    return findNodeHandle(this._innerViewRef);
+    return this._innerViewRef;
   },
 
   /**
@@ -119,14 +118,6 @@ const ScrollView = ((createReactClass({
     const x = horizontal ? scrollResponderNode.scrollWidth : 0;
     const y = horizontal ? 0 : scrollResponderNode.scrollHeight;
     scrollResponder.scrollResponderScrollTo({ x, y, animated });
-  },
-
-  /**
-   * Deprecated, do not use.
-   */
-  scrollWithoutAnimationTo(y: number = 0, x: number = 0) {
-    console.warn('`scrollWithoutAnimationTo` is deprecated. Use `scrollTo` instead');
-    this.scrollTo({ x, y, animated: false });
   },
 
   render() {
@@ -232,14 +223,14 @@ const ScrollView = ((createReactClass({
       return React.cloneElement(
         refreshControl,
         { style: props.style },
-        <ScrollViewClass {...props} ref={this._setScrollViewRef} style={baseStyle}>
+        <ScrollViewClass {...props} ref={this._setScrollNodeRef} style={baseStyle}>
           {contentContainer}
         </ScrollViewClass>
       );
     }
 
     return (
-      <ScrollViewClass {...props} ref={this._setScrollViewRef}>
+      <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
         {contentContainer}
       </ScrollViewClass>
     );
@@ -274,8 +265,8 @@ const ScrollView = ((createReactClass({
     this._innerViewRef = component;
   },
 
-  _setScrollViewRef(component) {
-    this._scrollViewRef = component;
+  _setScrollNodeRef(component) {
+    this._scrollNodeRef = component;
   }
 }): any): React.ComponentType<ScrollViewProps>);
 

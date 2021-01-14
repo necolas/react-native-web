@@ -1,0 +1,15 @@
+name: performance
+
+on: [pull_request]
+
+jobs:
+  compressed-size:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: necolas/compressed-size-action@master
+      with:
+        build-script: "compile"
+        exclude: "./packages/react-native-web/dist/cjs/{index.js,**/*.js}"
+        pattern: "./packages/react-native-web/dist/{index.js,**/*.js}"
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"

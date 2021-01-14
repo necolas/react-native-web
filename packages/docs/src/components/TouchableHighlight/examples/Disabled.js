@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
 const action = msg => () => {
   console.log(msg);
 };
 
-class TouchableHighlightDisabled extends React.Component {
+export default class TouchableHighlightDisabled extends React.Component {
   render() {
     return (
       <View>
@@ -38,52 +31,6 @@ class TouchableHighlightDisabled extends React.Component {
     );
   }
 }
-
-class TouchableOpacityDisabled extends React.Component {
-  render() {
-    return (
-      <View>
-        <TouchableOpacity
-          disabled={true}
-          onPress={action('TouchableOpacity')}
-          style={[styles.row, styles.block]}
-        >
-          <Text style={styles.disabledButton}>Disabled TouchableOpacity</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          disabled={false}
-          onPress={action('TouchableOpacity')}
-          style={[styles.row, styles.block]}
-        >
-          <Text style={styles.button}>Enabled TouchableOpacity</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
-
-class TouchableWithoutFeedbackDisabled extends React.Component {
-  render() {
-    return (
-      <View>
-        <TouchableWithoutFeedback disabled={true} onPress={action('TouchableWithoutFeedback')}>
-          <View style={[styles.row, styles.block]}>
-            <Text style={styles.disabledButton}>Disabled TouchableWithoutFeedback</Text>
-          </View>
-        </TouchableWithoutFeedback>
-
-        <TouchableWithoutFeedback disabled={false} onPress={action('TouchableWithoutFeedback')}>
-          <View style={[styles.row, styles.block]}>
-            <Text style={styles.button}>Enabled TouchableWithoutFeedback</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-    );
-  }
-}
-
-export { TouchableHighlightDisabled, TouchableOpacityDisabled, TouchableWithoutFeedbackDisabled };
 
 const styles = StyleSheet.create({
   row: {

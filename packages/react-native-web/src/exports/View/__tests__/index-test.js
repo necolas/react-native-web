@@ -1,8 +1,10 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import View from '../';
+import { act } from 'react-dom/test-utils';
+import { createEventTarget } from 'dom-event-testing-library';
+import { render } from '@testing-library/react';
 
 describe('components/View', () => {
   test('default', () => {
@@ -43,20 +45,130 @@ describe('components/View', () => {
     });
   });
 
-  describe('prop "hitSlop"', () => {
-    it('renders a span with negative position offsets', () => {
-      const { container } = render(<View hitSlop={{ top: 10, bottom: 10, right: 5, left: 5 }} />);
+  describe('prop "accessibilityLabel"', () => {
+    test('value is set', () => {
+      const { container } = render(<View accessibilityLabel="accessibility label" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "accessibilityLiveRegion"', () => {
+    test('value is set', () => {
+      const { container } = render(<View accessibilityLiveRegion="polite" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "accessibilityRole"', () => {
+    test('value is set', () => {
+      const { container } = render(<View accessibilityRole="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    it('handles partial offsets', () => {
-      const { container } = render(<View hitSlop={{ top: 10 }} />);
+    test('value is "button"', () => {
+      const { container } = render(<View accessibilityRole="button" />);
       expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value alters HTML element', () => {
+      const { container } = render(<View accessibilityRole="link" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  test('allows "dir" to be overridden', () => {
+    const { container } = render(<View dir="rtl" />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  describe('prop "nativeID"', () => {
+    test('value is set', () => {
+      const { container } = render(<View nativeID="nativeID" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "onBlur"', () => {
+    test('is called', () => {
+      const onBlur = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<View onBlur={onBlur} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+        target.blur();
+      });
+      expect(onBlur).toBeCalled();
+    });
+  });
+
+  describe('prop "onFocus"', () => {
+    test('is called', () => {
+      const onFocus = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<View onFocus={onFocus} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.focus();
+        target.blur();
+      });
+      expect(onFocus).toBeCalled();
+    });
+  });
+
+  describe('prop "ref"', () => {
+    test('value is set', () => {
+      const ref = jest.fn();
+      render(<View ref={ref} />);
+      expect(ref).toBeCalled();
+    });
+
+    test('is not called for prop changes', () => {
+      const ref = jest.fn();
+      let rerender;
+      act(() => {
+        ({ rerender } = render(<View nativeID="123" ref={ref} style={{ borderWidth: 5 }} />));
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+      act(() => {
+        rerender(<View nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+    });
+
+    test('node has imperative methods', () => {
+      const ref = React.createRef();
+      act(() => {
+        render(<View ref={ref} />);
+      });
+      const node = ref.current;
+      expect(typeof node.measure === 'function');
+      expect(typeof node.measureLayout === 'function');
+      expect(typeof node.measureInWindow === 'function');
+      expect(typeof node.setNativeProps === 'function');
     });
   });
 
   test('prop "pointerEvents"', () => {
     const { container } = render(<View pointerEvents="box-only" />);
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  describe('prop "style"', () => {
+    test('value is set', () => {
+      const { container } = render(<View style={{ borderWidth: 5 }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "testID"', () => {
+    test('value is set', () => {
+      const { container } = render(<View testID="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
   });
 });

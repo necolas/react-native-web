@@ -42,33 +42,27 @@ describe('StyleSheet/createReactDOMStyle', () => {
   describe('flexbox styles', () => {
     test('flex: -1', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({
-        flexBasis: 'auto',
         flexGrow: 0,
-        flexShrink: 1
+        flexShrink: 1,
+        flexBasis: 'auto'
       });
     });
 
     test('flex: 0', () => {
       expect(createReactDOMStyle({ flex: 0 })).toEqual({
-        flexGrow: 0,
-        flexShrink: 0,
-        flexBasis: '0%'
+        flex: 0
       });
     });
 
     test('flex: 1', () => {
       expect(createReactDOMStyle({ flex: 1 })).toEqual({
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: '0%'
+        flex: 1
       });
     });
 
     test('flex: 10', () => {
       expect(createReactDOMStyle({ flex: 10 })).toEqual({
-        flexGrow: 10,
-        flexShrink: 1,
-        flexBasis: '0%'
+        flex: 10
       });
     });
 
@@ -80,8 +74,7 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
       // can flex-basis override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexBasis: '25%' })).toEqual({
-        flexGrow: 1,
-        flexShrink: 1,
+        flex: 1,
         flexBasis: '25%'
       });
     });
@@ -94,9 +87,8 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
       // can flex-shrink override the 'flex' expansion?
       expect(createReactDOMStyle({ flex: 1, flexShrink: 2 })).toEqual({
-        flexGrow: 1,
-        flexShrink: 2,
-        flexBasis: '0%'
+        flex: 1,
+        flexShrink: 2
       });
     });
   });
@@ -153,21 +145,20 @@ describe('StyleSheet/createReactDOMStyle', () => {
 
     test('array', () => {
       const style = {
-        transform: [{ perspective: 50 }, { scaleX: 20 }, { translateX: 20 }, { rotate: '20deg' }]
+        transform: [
+          { perspective: 50 },
+          { scaleX: 20 },
+          { translateX: 20 },
+          { rotate: '20deg' },
+          { matrix: [1, 2, 3, 4, 5, 6] },
+          { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
+        ]
       };
       const resolved = createReactDOMStyle(style);
 
       expect(resolved).toEqual({
-        transform: 'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)'
-      });
-    });
-
-    test('transformMatrix', () => {
-      const style = { transformMatrix: [1, 2, 3, 4, 5, 6] };
-      const resolved = createReactDOMStyle(style);
-
-      expect(resolved).toEqual({
-        transform: 'matrix3d(1,2,3,4,5,6)'
+        transform:
+          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
       });
     });
   });

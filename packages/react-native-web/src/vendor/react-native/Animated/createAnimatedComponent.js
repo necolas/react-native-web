@@ -13,6 +13,7 @@ import { AnimatedEvent } from './AnimatedEvent';
 import AnimatedProps from './nodes/AnimatedProps';
 import React from 'react';
 import invariant from 'fbjs/lib/invariant';
+import mergeRefs from '../../../modules/mergeRefs';
 
 function createAnimatedComponent(Component: any, defaultProps: any): any {
   invariant(
@@ -40,10 +41,6 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
       this._detachNativeEvents();
     }
 
-    setNativeProps(props) {
-      this._component.setNativeProps(props);
-    }
-
     UNSAFE_componentWillMount() {
       this._attachProps(this.props);
     }
@@ -61,7 +58,7 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
     _attachNativeEvents() {
       // Make sure to get the scrollable node for components that implement
       // `ScrollResponder.Mixin`.
-      const scrollableNode = this._component.getScrollableNode
+      const scrollableNode = this._component && this._component.getScrollableNode
         ? this._component.getScrollableNode()
         : this._component;
 
@@ -143,6 +140,24 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
       }
     }
 
+    _setComponentRef = mergeRefs(this.props.forwardedRef, (ref) => {
+      this._prevComponent = this._component;
+      this._component = ref;
+
+      // TODO: Delete this in a future release.
+      if (ref != null && ref.getNode == null) {
+        ref.getNode = () => {
+          console.warn(
+            '%s: Calling `getNode()` on the ref of an Animated component ' +
+              'is no longer necessary. You can now directly use the ref ' +
+              'instead. This method will be removed in a future release.',
+            ref.constructor.name ?? '<<anonymous>>',
+          );
+          return ref;
+        };
+      }
+    })
+
     render() {
       const props = this._propsAnimated.__getValue();
       return (
@@ -150,30 +165,21 @@ function createAnimatedComponent(Component: any, defaultProps: any): any {
           {...defaultProps}
           {...props}
           ref={this._setComponentRef}
-          // The native driver updates views directly through the UI thread so we
-          // have to make sure the view doesn't get optimized away because it cannot
-          // go through the NativeViewHierarchyManager since it operates on the shadow
-          // thread.
-          collapsable={false}
         />
       );
-    }
-
-    _setComponentRef = c => {
-      this._prevComponent = this._component;
-      this._component = c;
-    };
-
-    // A third party library can use getNode()
-    // to get the node reference of the decorated component
-    getNode() {
-      return this._component;
     }
   }
 
   const propTypes = Component.propTypes;
 
-  return AnimatedComponent;
+  return React.forwardRef(function AnimatedComponentWrapper(props, ref) {
+    return (
+      <AnimatedComponent
+        {...props}
+        {...(ref == null ? null : {forwardedRef: ref})}
+      />
+    );
+  });
 }
 
 export default createAnimatedComponent;

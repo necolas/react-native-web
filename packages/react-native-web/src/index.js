@@ -9,6 +9,7 @@ export { default as NativeModules } from './exports/NativeModules';
 export { default as AccessibilityInfo } from './exports/AccessibilityInfo';
 export { default as Alert } from './exports/Alert';
 export { default as Animated } from './exports/Animated';
+export { default as Appearance } from './exports/Appearance';
 export { default as AppRegistry } from './exports/AppRegistry';
 export { default as AppState } from './exports/AppState';
 export { default as BackHandler } from './exports/BackHandler';
@@ -40,6 +41,7 @@ export { default as ImageBackground } from './exports/ImageBackground';
 export { default as KeyboardAvoidingView } from './exports/KeyboardAvoidingView';
 export { default as Modal } from './exports/Modal';
 export { default as Picker } from './exports/Picker';
+export { default as Pressable } from './exports/Pressable';
 export { default as ProgressBar } from './exports/ProgressBar';
 export { default as RefreshControl } from './exports/RefreshControl';
 export { default as SafeAreaView } from './exports/SafeAreaView';
@@ -57,21 +59,21 @@ export { default as TouchableWithoutFeedback } from './exports/TouchableWithoutF
 export { default as View } from './exports/View';
 export { default as VirtualizedList } from './exports/VirtualizedList';
 export { default as YellowBox } from './exports/YellowBox';
+export { default as LogBox } from './exports/LogBox';
 
 // compat (components)
 export { default as DrawerLayoutAndroid } from './exports/DrawerLayoutAndroid';
 export { default as InputAccessoryView } from './exports/InputAccessoryView';
-export { default as TabBarIOS } from './exports/TabBarIOS';
 export { default as ToastAndroid } from './exports/ToastAndroid';
 // compat (apis)
 export { default as PermissionsAndroid } from './exports/PermissionsAndroid';
 export { default as Settings } from './exports/Settings';
 export { default as Systrace } from './exports/Systrace';
-export { default as TimePickerAndroid } from './exports/TimePickerAndroid';
 export { default as TVEventHandler } from './exports/TVEventHandler';
 
 // plugins
 export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 
 // hooks
+export { default as useColorScheme } from './exports/useColorScheme';
 export { default as useWindowDimensions } from './exports/useWindowDimensions';

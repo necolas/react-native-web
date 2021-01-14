@@ -5,6 +5,7 @@
 <PROJECT_ROOT>/.*/__tests__/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
 <PROJECT_ROOT>/packages/docs/.*
+.*/node_modules/@emotion/css/*
 .*/node_modules/babel-plugin-transform-react-remove-prop-types/*
 
 [include]

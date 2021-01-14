@@ -14,6 +14,7 @@ import styleResolver from '../../exports/StyleSheet/styleResolver';
 import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
+const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 // Reset styles for heading, link, and list DOM elements
 const classes = css.create(
@@ -49,13 +50,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const defaultStyleResolver = (style, classList) => styleResolver.resolve(style, classList);
-
-const createDOMProps = (component, props, styleResolver) => {
-  if (!styleResolver) {
-    styleResolver = defaultStyleResolver;
-  }
-
+const createDOMProps = (component, props) => {
   if (!props) {
     props = emptyObject;
   }
@@ -63,10 +58,11 @@ const createDOMProps = (component, props, styleResolver) => {
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessibilityRelationship,
     accessibilityState,
+    accessibilityValue,
+    accessible,
     classList,
-    className: deprecatedClassName,
+    dataSet,
     disabled: providedDisabled,
     importantForAccessibility,
     nativeID,
@@ -74,7 +70,6 @@ const createDOMProps = (component, props, styleResolver) => {
     style: providedStyle,
     testID,
     /* eslint-disable */
-    accessible,
     accessibilityRole,
     /* eslint-enable */
     ...domProps
@@ -83,6 +78,26 @@ const createDOMProps = (component, props, styleResolver) => {
   const disabled =
     (accessibilityState != null && accessibilityState.disabled === true) || providedDisabled;
   const role = AccessibilityUtil.propsToAriaRole(props);
+  const isNativeInteractiveElement =
+    role === 'link' ||
+    component === 'a' ||
+    component === 'button' ||
+    component === 'input' ||
+    component === 'select' ||
+    component === 'textarea' ||
+    domProps.contentEditable != null;
+
+  // dataSet
+  if (dataSet != null) {
+    for (const prop in dataSet) {
+      if (hasOwnProperty.call(dataSet, prop)) {
+        const value = dataSet[prop];
+        if (value != null) {
+          domProps[`data-${prop}`] = value;
+        }
+      }
+    }
+  }
 
   // accessibilityLabel
   if (accessibilityLabel != null) {
@@ -92,16 +107,6 @@ const createDOMProps = (component, props, styleResolver) => {
   // accessibilityLiveRegion
   if (accessibilityLiveRegion != null) {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
-  }
-
-  // accessibilityRelationship
-  if (accessibilityRelationship != null) {
-    for (const prop in accessibilityRelationship) {
-      const value = accessibilityRelationship[prop];
-      if (value != null) {
-        domProps[`aria-${prop}`] = value;
-      }
-    }
   }
 
   // accessibilityRole
@@ -126,6 +131,17 @@ const createDOMProps = (component, props, styleResolver) => {
       }
     }
   }
+
+  // accessibilityValue
+  if (accessibilityValue != null) {
+    for (const prop in accessibilityValue) {
+      const value = accessibilityValue[prop];
+      if (value != null) {
+        domProps[`aria-value${prop}`] = value;
+      }
+    }
+  }
+
   // legacy fallbacks
   if (importantForAccessibility === 'no-hide-descendants') {
     domProps['aria-hidden'] = true;
@@ -142,20 +158,13 @@ const createDOMProps = (component, props, styleResolver) => {
     !disabled &&
     importantForAccessibility !== 'no' &&
     importantForAccessibility !== 'no-hide-descendants';
-  if (
-    role === 'link' ||
-    component === 'a' ||
-    component === 'button' ||
-    component === 'input' ||
-    component === 'select' ||
-    component === 'textarea'
-  ) {
+  if (isNativeInteractiveElement) {
     if (accessible === false || !focusable) {
       domProps.tabIndex = '-1';
     } else {
       domProps['data-focusable'] = true;
     }
-  } else if (AccessibilityUtil.buttonLikeRoles[role] || role === 'textbox') {
+  } else if (role === 'button' || role === 'menuitem' || role === 'textbox') {
     if (accessible !== false && focusable) {
       domProps['data-focusable'] = true;
       domProps.tabIndex = '0';
@@ -182,15 +191,10 @@ const createDOMProps = (component, props, styleResolver) => {
     component === 'ul' ||
     role === 'heading';
   // Classic CSS styles
-  const finalClassList = [
-    deprecatedClassName,
-    needsReset && classes.reset,
-    needsCursor && classes.cursor,
-    classList
-  ];
+  const finalClassList = [needsReset && classes.reset, needsCursor && classes.cursor, classList];
 
   // Resolve styles
-  const { className, style } = styleResolver(reactNativeStyle, finalClassList);
+  const { className, style } = styleResolver.resolve(reactNativeStyle, finalClassList);
 
   if (className != null && className !== '') {
     domProps.className = className;
@@ -202,7 +206,7 @@ const createDOMProps = (component, props, styleResolver) => {
 
   // OTHER
   // Native element ID
-  if (nativeID && nativeID.constructor === String) {
+  if (nativeID != null) {
     domProps.id = nativeID;
   }
 
@@ -214,8 +218,49 @@ const createDOMProps = (component, props, styleResolver) => {
     domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
   }
   // Automated test IDs
-  if (testID && testID.constructor === String) {
+  if (testID != null) {
     domProps['data-testid'] = testID;
+  }
+
+  // Keyboard accessibility
+  // Button-like roles should trigger 'onClick' if SPACE key is pressed.
+  // Button-like roles should not trigger 'onClick' if they are disabled.
+  if (
+    isNativeInteractiveElement ||
+    role === 'button' ||
+    role === 'menuitem' ||
+    (accessible === true && focusable)
+  ) {
+    const onClick = domProps.onClick;
+    if (onClick != null) {
+      if (disabled) {
+        // Prevent click propagating if the element is disabled. See #1757
+        domProps.onClick = function(e) {
+          e.stopPropagation();
+        };
+      } else if (!isNativeInteractiveElement) {
+        // For native elements that are focusable but don't dispatch 'click' events
+        // for keyboards.
+        const onKeyDown = domProps.onKeyDown;
+        domProps.onKeyDown = function(e) {
+          const { key, repeat } = e;
+          const isSpacebarKey = key === ' ' || key === 'Spacebar';
+          const isButtonRole = role === 'button' || role === 'menuitem';
+          if (onKeyDown != null) {
+            onKeyDown(e);
+          }
+          if (!repeat && key === 'Enter') {
+            onClick(e);
+          } else if (isSpacebarKey && isButtonRole) {
+            if (!repeat) {
+              onClick(e);
+            }
+            // Prevent spacebar scrolling the window
+            e.preventDefault();
+          }
+        };
+      }
+    }
   }
 
   return domProps;

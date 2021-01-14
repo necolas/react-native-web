@@ -25,19 +25,14 @@ import initialRules from './initialRules';
 import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
-const emptyObject = {};
-
 export default function createStyleResolver() {
-  let inserted, sheet, lookup;
+  let inserted, sheet, cache;
   const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
 
   const init = () => {
     inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
     sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
-    lookup = {
-      byClassName: {},
-      byProp: {}
-    };
+    cache = {};
     modality(rule => sheet.insert(rule, STYLE_GROUPS.modality));
     initialRules.forEach(rule => {
       sheet.insert(rule, STYLE_GROUPS.reset);
@@ -46,17 +41,15 @@ export default function createStyleResolver() {
 
   init();
 
-  function addToLookup(className, prop, value) {
-    if (!lookup.byProp[prop]) {
-      lookup.byProp[prop] = {};
+  function addToCache(className, prop, value) {
+    if (!cache[prop]) {
+      cache[prop] = {};
     }
-    lookup.byProp[prop][value] = className;
-    lookup.byClassName[className] = { prop, value };
+    cache[prop][value] = className;
   }
 
   function getClassName(prop, value) {
     const val = stringifyValueWithProperty(value, prop);
-    const cache = lookup.byProp;
     return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
   }
 
@@ -68,7 +61,7 @@ export default function createStyleResolver() {
       const results = atomic(style);
       Object.keys(results).forEach(key => {
         const { identifier, property, rules, value } = results[key];
-        addToLookup(identifier, property, value);
+        addToCache(identifier, property, value);
         rules.forEach(rule => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
           sheet.insert(rule, group);
@@ -146,59 +139,6 @@ export default function createStyleResolver() {
     }
 
     return finalProps;
-  }
-
-  /**
-   * Resolves a React Native style object to DOM attributes, accounting for
-   * the existing styles applied to the DOM node.
-   *
-   * To determine the next style, some of the existing DOM state must be
-   * converted back into React Native styles.
-   */
-  function resolveWithNode(rnStyleNext, node) {
-    function getDeclaration(className) {
-      return lookup.byClassName[className] || emptyObject;
-    }
-
-    const { classList: rdomClassList, style: rdomStyle } = getDOMStyleInfo(node);
-    // Convert the DOM classList back into a React Native form
-    // Preserves unrecognized class names.
-    const { classList: rnClassList, style: rnStyle } = rdomClassList.reduce(
-      (styleProps, className) => {
-        const { prop, value } = getDeclaration(className);
-        if (prop) {
-          styleProps.style[prop] = value;
-        } else {
-          styleProps.classList.push(className);
-        }
-        return styleProps;
-      },
-      { classList: [], style: {} }
-    );
-
-    // Create next DOM style props from current and next RN styles
-    const { classList: rdomClassListNext, style: rdomStyleNext } = resolve([
-      i18nStyle(rnStyle),
-      rnStyleNext
-    ]);
-
-    // Final className
-    // Add the current class names not managed by React Native
-    const className = classListToString(rdomClassListNext.concat(rnClassList));
-
-    // Final style
-    // Next class names take priority over current inline styles
-    const style = { ...rdomStyle };
-    rdomClassListNext.forEach(className => {
-      const { prop } = getDeclaration(className);
-      if (style[prop]) {
-        style[prop] = '';
-      }
-    });
-    // Next inline styles take priority over current inline styles
-    Object.assign(style, rdomStyleNext);
-
-    return { className, style };
   }
 
   /**
@@ -297,8 +237,7 @@ export default function createStyleResolver() {
       return result;
     },
     resolve,
-    sheet,
-    resolveWithNode
+    sheet
   };
 }
 
@@ -311,26 +250,3 @@ const createCacheKey = id => {
 };
 
 const classListToString = list => list.join(' ').trim();
-
-/**
- * Copies classList and style data from a DOM node
- */
-const hyphenPattern = /-([a-z])/g;
-const toCamelCase = str => str.replace(hyphenPattern, m => m[1].toUpperCase());
-
-const getDOMStyleInfo = node => {
-  const nodeStyle = node.style;
-  const classList = Array.prototype.slice.call(node.classList);
-  const style = {};
-  // DOM style is a CSSStyleDeclaration
-  // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
-  for (let i = 0; i < nodeStyle.length; i += 1) {
-    const property = nodeStyle.item(i);
-    if (property) {
-      // DOM style uses hyphenated prop names and may include vendor prefixes
-      // Transform back into React DOM style.
-      style[toCamelCase(property)] = nodeStyle.getPropertyValue(property);
-    }
-  }
-  return { classList, style };
-};

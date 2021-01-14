@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/createElement normalizes event.nativeEvent 1`] = `
-Object {
-  "_normalized": true,
-  "bubbles": undefined,
-  "cancelable": undefined,
-  "changedTouches": Array [],
-  "defaultPrevented": undefined,
-  "identifier": undefined,
-  "locationX": undefined,
-  "locationY": undefined,
-  "pageX": undefined,
-  "pageY": undefined,
-  "preventDefault": [Function],
-  "stopImmediatePropagation": [Function],
-  "stopPropagation": [Function],
-  "target": undefined,
-  "timestamp": 1496876171255,
-  "touches": Array [],
-  "type": undefined,
-  "which": undefined,
-}
-`;
+exports[`exports/createElement renders different DOM elements 1`] = `<span />`;
 
-exports[`modules/createElement renders different DOM elements 1`] = `<span />`;
-
-exports[`modules/createElement renders different DOM elements 2`] = `<main />`;
+exports[`exports/createElement renders different DOM elements 2`] = `<main />`;

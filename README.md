@@ -2,7 +2,7 @@
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
-**Compatibility: React Native >= 0.60**.
+**Compatibility: React Native >= 0.63**.
 
 "React Native for Web" makes it possible to run [React
 Native][react-native-url] components and APIs on the web using React DOM.
@@ -20,8 +20,9 @@ develop new components for native and web without rewriting existing code.
 React Native for Web can also render to HTML and critical CSS on the server
 using Node.js.
 
-Who is using React Native in production web apps?
+Who is using React Native for Web in production?
 [Twitter](https://mobile.twitter.com),
+[Expo](https://docs.expo.io/workflow/web/),
 [Major League Soccer](https://matchcenter.mlssoccer.com),
 [Flipkart](https://twitter.com/naqvitalha/status/969577892991549440),
 [Uber](https://www.youtube.com/watch?v=RV9rxrNIxnY),
@@ -49,7 +50,11 @@ system](https://facebook.github.io/react-native/docs/gesture-responder-system.ht
 [animations](https://facebook.github.io/react-native/docs/animations.html), and
 other design details.
 
-## Integrations
+## Libraries and integrations
+
+List of React Native packages with known web compatibility:
+
+* [React Native Directory](https://reactnative.directory/?web=true)
 
 Examples of using React Native for Web with other web tools:
 
@@ -64,7 +69,7 @@ Examples of using React Native for Web with other web tools:
 
 ## Examples
 
-And here is a simple example to get you started. The documentation include
+And here is a simple example to get you started. The documentation includes
 interactive examples and the [source
 code](https://github.com/necolas/react-native-web/blob/master/packages/docs) is
 also available.
@@ -113,8 +118,9 @@ React Native v0.60
 | Image                    | ✓      | Missing multiple sources ([#515](https://github.com/necolas/react-native-web/issues/515)) and HTTP headers ([#1019](https://github.com/necolas/react-native-web/issues/1019)). |
 | ImageBackground          | ✓      |  |
 | KeyboardAvoidingView     | (✓)    | Mock. No equivalent web APIs. |
-| Modal                    | ✘      | Not started ([#1020](https://github.com/necolas/react-native-web/issues/1020)). |
+| Modal                    | ✓      |  |
 | Picker                   | ✓      |  |
+| Pressable                | ✓      |  |
 | RefreshControl           | ✘      | Not started ([#1027](https://github.com/necolas/react-native-web/issues/1027)). |
 | SafeAreaView             | ✓      |  |
 | ScrollView               | ✓      | Missing momentum scroll events ([#1021](https://github.com/necolas/react-native-web/issues/1021)). |
@@ -139,6 +145,7 @@ React Native v0.60
 | AccessibilityInfo        | (✓)    | Mock. No equivalent web APIs. |
 | Alert                    | ✘      | Not started ([#1026](https://github.com/necolas/react-native-web/issues/1026)). |
 | Animated                 | ✓      | Missing `useNativeDriver` support. |
+| Appearance               | ✓      |  |
 | AppRegistry              | ✓      | Includes additional support for server rendering with `getApplication`. |
 | AppState                 | ✓      |  |
 | BackHandler              | (✓)    | Mock. No equivalent web APIs. |
@@ -163,6 +170,8 @@ React Native v0.60
 | StyleSheet               | ✓      |  |
 | UIManager                | ✓      |  |
 | Vibration                | ✓      |  |
+| useColorScheme           | ✓      |  |
+| useWindowDimensions      | ✓      |  |
 
 ## Contributing
 
@@ -199,8 +208,8 @@ MIT license.
 
 [package-badge]: https://img.shields.io/npm/v/react-native-web.svg?style=flat
 [package-url]: https://yarnpkg.com/en/package/react-native-web
-[ci-badge]: https://travis-ci.org/necolas/react-native-web.svg?branch=master
-[ci-url]: https://travis-ci.org/necolas/react-native-web
+[ci-badge]: https://github.com/necolas/react-native-web/workflows/test/badge.svg
+[ci-url]: https://github.com/necolas/react-native-web/actions
 [react-native-url]: https://facebook.github.io/react-native/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/.github/CONTRIBUTING.md
 [good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue

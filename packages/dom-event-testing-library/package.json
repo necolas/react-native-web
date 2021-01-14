@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "dom-event-testing-library",
+  "version": "0.14.10",
+  "main": "index.js",
+  "description": "Browser event sequences for unit tests",
+  "author": "Nicolas Gallagher",
+  "license": "MIT",
+  "homepage": "https://github.com/necolas/react-native-web/tree/master/packages/dom-event-testing-library"
+}

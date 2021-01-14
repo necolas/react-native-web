@@ -11,7 +11,7 @@ input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit
 [stylesheet-group=\\"1\\"]{}
 .css-view-1dbjc4n{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;border:0 solid black;box-sizing:border-box;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;min-height:0px;min-width:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;position:relative;z-index:0;}
 [stylesheet-group=\\"2\\"]{}
-.r-flex-13awgt0{-ms-flex-negative:1;-ms-flex-positive:1;-ms-flex-preferred-size:0%;-webkit-box-flex:1;-webkit-flex-basis:0%;-webkit-flex-grow:1;-webkit-flex-shrink:1;flex-basis:0%;flex-grow:1;flex-shrink:1;}
+.r-flex-13awgt0{-ms-flex:1 1 0%;-webkit-flex:1;flex:1;}
 [stylesheet-group=\\"2.2\\"]{}
 .r-pointerEvents-12vffkv>*{pointer-events:auto;}
 .r-pointerEvents-12vffkv{pointer-events:none!important;}"

@@ -35,8 +35,10 @@ export type LayoutValue = {
 
 export type LayoutEvent = {
   nativeEvent: {
-    layout: LayoutValue
-  }
+    layout: LayoutValue,
+    target: any
+  },
+  timeStamp: number
 };
 
 export type PointValue = {|

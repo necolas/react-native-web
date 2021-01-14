@@ -1,5 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './TouchableWithoutFeedback.stories.js';
+import * as Stories from './examples';
 
 <Meta title="Components|TouchableWithoutFeedback" />
 
@@ -14,7 +14,18 @@ several child components, wrap them in a `View`.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              |           | |
+| delayLongPress            | ?number   | 500 |
+| delayPressIn              | ?number   | 0 |
+| delayPressOut             | ?number   | 0 |
+| disabled                  | ?boolean  | false |
+| onLongPress               | ?Function | |
+| onPress                   | ?Function | |
+| onPressIn                 | ?Function | |
+| onPressOut                | ?Function | |
+| pressRetentionOffset      | ?Object   | |
 
 ### delayLongPress
 

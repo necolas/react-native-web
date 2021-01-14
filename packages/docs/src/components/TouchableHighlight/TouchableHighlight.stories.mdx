@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './TouchableHighlight.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|TouchableHighlight" />
 
@@ -19,7 +19,13 @@ to have several child components, wrap them in a View.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...TouchableWithoutFeedbackProps      | |
+| activeOpacity             | ?number   | 0.85 |
+| onHideUnderlay            | ?Function | |
+| onShowUnderlay            | ?Function | |
+| underlayColor             | ?Color    | 'black' |
 
 ### activeOpacity
 
@@ -36,3 +42,30 @@ Called immediately after the underlay is shown
 ### underlayColor
 
 The color of the underlay that will show through when the touch is active.
+
+## Examples
+
+<Preview withSource='none'>
+  <Story name="disabled">
+    <Stories.disabled />
+  </Story>
+</Preview>
+
+<Preview withSource='none'>
+  <Story name="delayEvents">
+    <Stories.delayEvents />
+  </Story>
+</Preview>
+
+<Preview withSource='none'>
+  <Story name="feedbackEvents">
+    <Stories.feedbackEvents />
+  </Story>
+</Preview>
+
+
+<Preview withSource='none'>
+  <Story name="styleOverrides">
+    <Stories.styleOverrides />
+  </Story>
+</Preview>

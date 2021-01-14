@@ -10,42 +10,27 @@
 
 import type { TextInputProps } from './types';
 
-import applyLayout from '../../modules/applyLayout';
-import applyNativeMethods from '../../modules/applyNativeMethods';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import filterSupportedProps from '../View/filterSupportedProps';
-import findNodeHandle from '../findNodeHandle';
-import React from 'react';
+import pick from '../../modules/pick';
+import useElementLayout from '../../modules/useElementLayout';
+import useLayoutEffect from '../../modules/useLayoutEffect';
+import useMergeRefs from '../../modules/useMergeRefs';
+import usePlatformMethods from '../../modules/usePlatformMethods';
+import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 import Platform from '../Platform';
-
-const isAndroid = canUseDOM && /Android/i.test(navigator && navigator.userAgent);
-const emptyObject = {};
-
-/**
- * React Native events differ from W3C events.
- */
-const normalizeEventHandler = handler => e => {
-  if (handler) {
-    e.nativeEvent.text = e.target.value;
-    return handler(e);
-  }
-};
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
  * selection state.
  */
 const isSelectionStale = (node, selection) => {
-  if (node != null && selection != null) {
-    const { selectionEnd, selectionStart } = node;
-    const { start, end } = selection;
-    return start !== selectionStart || end !== selectionEnd;
-  }
-  return false;
+  const { selectionEnd, selectionStart } = node;
+  const { start, end } = selection;
+  return start !== selectionStart || end !== selectionEnd;
 };
 
 /**
@@ -53,275 +38,357 @@ const isSelectionStale = (node, selection) => {
  * error.
  */
 const setSelection = (node, selection) => {
-  try {
-    if (node != null && selection != null && isSelectionStale(node, selection)) {
-      const { start, end } = selection;
-      // workaround for Blink on Android: see https://github.com/text-mask/text-mask/issues/300
-      if (isAndroid) {
-        setTimeout(() => node.setSelectionRange(start, end || start), 10);
-      } else {
-        node.setSelectionRange(start, end || start);
-      }
-    }
-  } catch (e) {}
+  if (isSelectionStale(node, selection)) {
+    const { start, end } = selection;
+    try {
+      node.setSelectionRange(start, end || start);
+    } catch (e) {}
+  }
 };
 
-class TextInput extends React.Component<TextInputProps> {
-  _node: HTMLInputElement;
-  _nodeHeight: number;
-  _nodeWidth: number;
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  autoCapitalize: true,
+  autoComplete: true,
+  autoCorrect: true,
+  autoFocus: true,
+  children: true,
+  classList: true,
+  defaultValue: true,
+  dir: true,
+  disabled: true,
+  importantForAccessibility: true,
+  maxLength: true,
+  nativeID: true,
+  onBlur: true,
+  onChange: true,
+  onClick: true,
+  onClickCapture: true,
+  onContextMenu: true,
+  onFocus: true,
+  onScroll: true,
+  onTouchCancel: true,
+  onTouchCancelCapture: true,
+  onTouchEnd: true,
+  onTouchEndCapture: true,
+  onTouchMove: true,
+  onTouchMoveCapture: true,
+  onTouchStart: true,
+  onTouchStartCapture: true,
+  placeholder: true,
+  pointerEvents: true,
+  readOnly: true,
+  ref: true,
+  rows: true,
+  spellCheck: true,
+  style: true,
+  value: true,
+  testID: true,
+  type: true,
+  // unstable
+  dataSet: true,
+  onMouseDown: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  onMouseMove: true,
+  onMouseOver: true,
+  onMouseOut: true,
+  onMouseUp: true
+};
 
-  static displayName = 'TextInput';
+const pickProps = props => pick(props, forwardPropsList);
 
-  static State = TextInputState;
+// If an Input Method Editor is processing key input, the 'keyCode' is 229.
+// https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
+function isEventComposing(nativeEvent) {
+  return nativeEvent.isComposing || nativeEvent.keyCode === 229;
+}
 
-  clear() {
-    this._node.value = '';
+const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
+  const {
+    autoCapitalize = 'sentences',
+    autoComplete,
+    autoCompleteType,
+    autoCorrect = true,
+    blurOnSubmit,
+    clearTextOnFocus,
+    dir,
+    editable = true,
+    keyboardType = 'default',
+    multiline = false,
+    numberOfLines = 1,
+    onBlur,
+    onChange,
+    onChangeText,
+    onContentSizeChange,
+    onFocus,
+    onKeyPress,
+    onLayout,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChange,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    onSubmitEditing,
+    placeholderTextColor,
+    returnKeyType,
+    secureTextEntry = false,
+    selection,
+    selectTextOnFocus,
+    spellCheck
+  } = props;
+
+  let type;
+  let inputMode;
+
+  switch (keyboardType) {
+    case 'email-address':
+      type = 'email';
+      break;
+    case 'number-pad':
+    case 'numeric':
+      inputMode = 'numeric';
+      break;
+    case 'decimal-pad':
+      inputMode = 'decimal';
+      break;
+    case 'phone-pad':
+      type = 'tel';
+      break;
+    case 'search':
+    case 'web-search':
+      type = 'search';
+      break;
+    case 'url':
+      type = 'url';
+      break;
+    default:
+      type = 'text';
   }
 
-  isFocused() {
-    return TextInputState.currentlyFocusedField() === this._node;
+  if (secureTextEntry) {
+    type = 'password';
   }
 
-  componentDidMount() {
-    setSelection(this._node, this.props.selection);
-    if (document.activeElement === this._node) {
-      TextInputState._currentlyFocusedNode = this._node;
-    }
-  }
+  const dimensions = useRef({ height: null, width: null });
+  const hostRef = useRef(null);
 
-  componentDidUpdate() {
-    setSelection(this._node, this.props.selection);
-  }
-
-  render() {
-    const {
-      autoCapitalize = 'sentences',
-      autoComplete,
-      autoCompleteType,
-      autoCorrect = true,
-      autoFocus,
-      defaultValue,
-      disabled,
-      editable = true,
-      keyboardType = 'default',
-      maxLength,
-      multiline = false,
-      numberOfLines = 1,
-      placeholder,
-      placeholderTextColor,
-      returnKeyType,
-      secureTextEntry = false,
-      spellCheck,
-      style,
-      value
-    } = this.props;
-
-    let type;
-
-    switch (keyboardType) {
-      case 'email-address':
-        type = 'email';
-        break;
-      case 'number-pad':
-      case 'numeric':
-        type = 'number';
-        break;
-      case 'phone-pad':
-        type = 'tel';
-        break;
-      case 'search':
-      case 'web-search':
-        type = 'search';
-        break;
-      case 'url':
-        type = 'url';
-        break;
-      default:
-        type = 'text';
-    }
-
-    if (secureTextEntry) {
-      type = 'password';
-    }
-
-    const component = multiline ? 'textarea' : 'input';
-    const supportedProps = filterSupportedProps(this.props);
-
-    Object.assign(supportedProps, {
-      autoCapitalize,
-      autoComplete: autoComplete || autoCompleteType || 'on',
-      autoCorrect: autoCorrect ? 'on' : 'off',
-      autoFocus,
-      classList: [classes.textinput],
-      defaultValue,
-      dir: 'auto',
-      disabled,
-      enterkeyhint: returnKeyType,
-      maxLength,
-      onBlur: normalizeEventHandler(this._handleBlur),
-      onChange: normalizeEventHandler(this._handleChange),
-      onFocus: normalizeEventHandler(this._handleFocus),
-      onKeyDown: this._handleKeyDown,
-      onKeyPress: this._handleKeyPress,
-      onSelect: normalizeEventHandler(this._handleSelectionChange),
-      placeholder,
-      readOnly: !editable,
-      ref: this._setNode,
-      spellCheck: spellCheck != null ? spellCheck : autoCorrect,
-      style: StyleSheet.compose(
-        style,
-        placeholderTextColor && { placeholderTextColor }
-      ),
-      value
-    });
-
-    if (multiline) {
-      supportedProps.rows = numberOfLines;
-    } else {
-      supportedProps.type = type;
-    }
-
-    return createElement(component, supportedProps);
-  }
-
-  _handleBlur = e => {
-    const { onBlur } = this.props;
-    TextInputState._currentlyFocusedNode = null;
-    if (onBlur) {
-      onBlur(e);
-    }
-  };
-
-  _handleContentSizeChange = () => {
-    const { onContentSizeChange, multiline } = this.props;
-    if (multiline && onContentSizeChange) {
-      const newHeight = this._node.scrollHeight;
-      const newWidth = this._node.scrollWidth;
-      if (newHeight !== this._nodeHeight || newWidth !== this._nodeWidth) {
-        this._nodeHeight = newHeight;
-        this._nodeWidth = newWidth;
+  const handleContentSizeChange = useCallback(() => {
+    const node = hostRef.current;
+    if (multiline && onContentSizeChange && node != null) {
+      const newHeight = node.scrollHeight;
+      const newWidth = node.scrollWidth;
+      if (newHeight !== dimensions.current.height || newWidth !== dimensions.current.width) {
+        dimensions.current.height = newHeight;
+        dimensions.current.width = newWidth;
         onContentSizeChange({
           nativeEvent: {
             contentSize: {
-              height: this._nodeHeight,
-              width: this._nodeWidth
+              height: dimensions.current.height,
+              width: dimensions.current.width
             }
           }
         });
       }
     }
-  };
+  }, [hostRef, multiline, onContentSizeChange]);
 
-  _handleChange = e => {
-    const { onChange, onChangeText } = this.props;
-    const { text } = e.nativeEvent;
-    this._handleContentSizeChange();
+  const imperativeRef = useMemo(
+    () => hostNode => {
+      // TextInput needs to add more methods to the hostNode in addition to those
+      // added by `usePlatformMethods`. This is temporarily until an API like
+      // `TextInput.clear(hostRef)` is added to React Native.
+      if (hostNode != null) {
+        hostNode.clear = function() {
+          if (hostNode != null) {
+            hostNode.value = '';
+          }
+        };
+        hostNode.isFocused = function() {
+          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
+        };
+        handleContentSizeChange();
+      }
+    },
+    [handleContentSizeChange]
+  );
+
+  function handleBlur(e) {
+    TextInputState._currentlyFocusedNode = null;
+    if (onBlur) {
+      e.nativeEvent.text = e.target.value;
+      onBlur(e);
+    }
+  }
+
+  function handleChange(e) {
+    const text = e.target.value;
+    e.nativeEvent.text = text;
+    handleContentSizeChange();
     if (onChange) {
       onChange(e);
     }
     if (onChangeText) {
       onChangeText(text);
     }
-    this._handleSelectionChange(e);
-  };
+  }
 
-  _handleFocus = e => {
-    const { clearTextOnFocus, onFocus, selectTextOnFocus } = this.props;
-    const node = this._node;
-    TextInputState._currentlyFocusedNode = this._node;
-    if (onFocus) {
-      onFocus(e);
+  function handleFocus(e) {
+    const node = hostRef.current;
+    if (node != null) {
+      TextInputState._currentlyFocusedNode = node;
+      if (onFocus) {
+        e.nativeEvent.text = e.target.value;
+        onFocus(e);
+      }
+      if (clearTextOnFocus) {
+        node.value = '';
+      }
+      if (selectTextOnFocus) {
+        // Safari requires selection to occur in a setTimeout
+        setTimeout(() => {
+          node.select();
+        }, 0);
+      }
     }
-    if (clearTextOnFocus) {
-      this.clear();
-    }
-    if (selectTextOnFocus) {
-      node && node.select();
-    }
-  };
+  }
 
-  _handleKeyDown = e => {
+  function handleKeyDown(e) {
     if(!Platform.isTV) {
       // Prevent key events bubbling (see #612)
       e.stopPropagation();
     }
 
-    // Backspace, Escape, Tab, Cmd+Enter, and Arrow keys only fire 'keydown'
-    // DOM events
-    if (
-      e.key === 'ArrowLeft' ||
-      e.key === 'ArrowUp' ||
-      e.key === 'ArrowRight' ||
-      e.key === 'ArrowDown' ||
-      e.key === 'Backspace' ||
-      e.key === 'Escape' ||
-      (e.key === 'Enter' && e.metaKey) ||
-      e.key === 'Tab'
-    ) {
-      this._handleKeyPress(e);
-    }
-  };
-
-  _handleKeyPress = e => {
-    const { blurOnSubmit, multiline, onKeyPress, onSubmitEditing } = this.props;
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
 
-    if (onKeyPress) {
-      const keyValue = e.key;
+    const nativeEvent = e.nativeEvent;
+    const isComposing = isEventComposing(nativeEvent);
 
-      if (keyValue) {
-        e.nativeEvent = {
-          altKey: e.altKey,
-          ctrlKey: e.ctrlKey,
-          key: keyValue,
-          metaKey: e.metaKey,
-          shiftKey: e.shiftKey,
-          target: e.target
-        };
-        onKeyPress(e);
-      }
+    if (onKeyPress) {
+      onKeyPress(e);
     }
 
-    if (!e.isDefaultPrevented() && e.key === 'Enter' && !e.shiftKey) {
+    if (
+      e.key === 'Enter' &&
+      !e.shiftKey &&
+      // Do not call submit if composition is occuring.
+      !isComposing &&
+      !e.isDefaultPrevented()
+    ) {
       if ((blurOnSubmit || !multiline) && onSubmitEditing) {
-        // prevent "Enter" from inserting a newline
+        // prevent "Enter" from inserting a newline or submitting a form
         e.preventDefault();
-        e.nativeEvent = { target: e.target, text: e.target.value };
+        nativeEvent.text = e.target.value;
         onSubmitEditing(e);
       }
-      if (shouldBlurOnSubmit) {
-        // $FlowFixMe
-        this.blur();
+      if (shouldBlurOnSubmit && hostRef.current != null) {
+        hostRef.current.blur();
       }
     }
-  };
+  }
 
-  _handleSelectionChange = e => {
-    const { onSelectionChange, selection = emptyObject } = this.props;
+  function handleSelectionChange(e) {
     if (onSelectionChange) {
       try {
         const node = e.target;
-        if (isSelectionStale(node, selection)) {
-          const { selectionStart, selectionEnd } = node;
-          e.nativeEvent.selection = {
-            start: selectionStart,
-            end: selectionEnd
-          };
-          onSelectionChange(e);
-        }
+        const { selectionStart, selectionEnd } = node;
+        e.nativeEvent.selection = {
+          start: selectionStart,
+          end: selectionEnd
+        };
+        e.nativeEvent.text = e.target.value;
+        onSelectionChange(e);
       } catch (e) {}
     }
-  };
+  }
 
-  _setNode = component => {
-    this._node = findNodeHandle(component);
-    if (this._node) {
-      this._handleContentSizeChange();
+  useLayoutEffect(() => {
+    const node = hostRef.current;
+    if (node != null && selection != null) {
+      setSelection(node, selection);
     }
-  };
-}
+    if (document.activeElement === node) {
+      TextInputState._currentlyFocusedNode = node;
+    }
+  }, [hostRef, selection]);
+
+  const component = multiline ? 'textarea' : 'input';
+  const classList = [classes.textinput];
+  const style = StyleSheet.compose(
+    props.style,
+    placeholderTextColor && { placeholderTextColor }
+  );
+
+  useElementLayout(hostRef, onLayout);
+  useResponderEvents(hostRef, {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  });
+
+  const supportedProps = pickProps(props);
+  supportedProps.autoCapitalize = autoCapitalize;
+  supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
+  supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
+  supportedProps.classList = classList;
+  // 'auto' by default allows browsers to infer writing direction
+  supportedProps.dir = dir !== undefined ? dir : 'auto';
+  supportedProps.enterkeyhint = returnKeyType;
+  supportedProps.onBlur = handleBlur;
+  supportedProps.onChange = handleChange;
+  supportedProps.onFocus = handleFocus;
+  supportedProps.onKeyDown = handleKeyDown;
+  supportedProps.onSelect = handleSelectionChange;
+  supportedProps.readOnly = !editable;
+  supportedProps.rows = multiline ? numberOfLines : undefined;
+  supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
+  supportedProps.style = style;
+  supportedProps.type = multiline ? undefined : type;
+  supportedProps.inputMode = inputMode;
+
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, forwardedRef);
+
+  supportedProps.ref = setRef;
+
+  return createElement(component, supportedProps);
+});
+
+TextInput.displayName = 'TextInput';
+// $FlowFixMe
+TextInput.State = TextInputState;
 
 const classes = css.create({
   textinput: {
@@ -338,4 +405,4 @@ const classes = css.create({
   }
 });
 
-export default applyLayout(applyNativeMethods(TextInput));
+export default TextInput;

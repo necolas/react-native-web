@@ -10,11 +10,12 @@
 
 import type { ViewProps } from '../View';
 
-import applyNativeMethods from '../../modules/applyNativeMethods';
-import { Component } from 'react';
 import createElement from '../createElement';
+import useMergeRefs from '../../modules/useMergeRefs';
+import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet, { type StyleObj } from '../StyleSheet';
+import { forwardRef, useRef } from 'react';
 
 type PickerProps = {
   ...ViewProps,
@@ -29,44 +30,52 @@ type PickerProps = {
   prompt?: string
 };
 
-class Picker extends Component<PickerProps> {
-  static Item = PickerItem;
+const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
+  const {
+    children,
+    enabled,
+    onValueChange,
+    selectedValue,
+    style,
+    testID,
+    /* eslint-disable */
+    itemStyle,
+    mode,
+    prompt,
+    /* eslint-enable */
+    ...other
+  } = props;
 
-  render() {
-    const {
-      children,
-      enabled,
-      selectedValue,
-      style,
-      testID,
-      /* eslint-disable */
-      itemStyle,
-      mode,
-      prompt,
-      onValueChange,
-      /* eslint-enable */
-      ...otherProps
-    } = this.props;
+  const hostRef = useRef(null);
 
-    return createElement('select', {
-      children,
-      disabled: enabled === false ? true : undefined,
-      onChange: this._handleChange,
-      style: [styles.initial, style],
-      testID,
-      value: selectedValue,
-      ...otherProps
-    });
-  }
-
-  _handleChange = (e: Object) => {
-    const { onValueChange } = this.props;
+  function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
     if (onValueChange) {
       onValueChange(value, selectedIndex);
     }
+  }
+
+  const supportedProps: any = {
+    children,
+    disabled: enabled === false ? true : undefined,
+    onChange: handleChange,
+    style: [styles.initial, style],
+    testID,
+    value: selectedValue,
+    ...other
   };
-}
+
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+  supportedProps.ref = setRef;
+
+  return createElement('select', supportedProps);
+});
+
+// $FlowFixMe
+Picker.Item = PickerItem;
 
 const styles = StyleSheet.create({
   initial: {
@@ -76,4 +85,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default applyNativeMethods(Picker);
+export default Picker;

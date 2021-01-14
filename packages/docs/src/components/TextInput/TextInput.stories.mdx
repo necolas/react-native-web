@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './TextInput.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|TextInput" />
 
@@ -11,7 +11,46 @@ some props are exclusive to or excluded from `multiline`.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| accessibilityLabel        | ?string   | |
+| accessibilityState        | ?Object   | |
+| autoCapitalize            | ?string   | 'sentences' |
+| autoComplete              | ?string   | 'on' |
+| autoCorrect               | ?boolean  | true |
+| autoFocus                 | ?boolean  | false |
+| blurOnSubmit              | ?boolean  | false |
+| clearTextOnFocus          | ?boolean  | false |
+| defaultValue              | ?string   | |
+| disabled                  | ?boolean  | false |
+| editable                  | ?boolean  | true |
+| forwardedRef              | ?Ref      | |
+| importantForAccessibility | ?boolean  | true |
+| keyboardType              | ?string   | 'default' |
+| maxLength                 | ?number   | |
+| multiline                 | ?boolean  | false |
+| nativeID                  | ?string   | |
+| numberOfLines             | ?number   | 1 |
+| onBlur                    | ?Function | |
+| onChange                  | ?Function | |
+| onChangeText              | ?Function | |
+| onContentSizeChange       | ?Function | |
+| onContextMenu             | ?Function | |
+| onFocus                   | ?Function | |
+| onKeyPress                | ?Function | |
+| onLayout                  | ?Function | |
+| onScroll                  | ?Function | |
+| onSubmitEditing           | ?Function | |
+| placeholder               | ?string   | |
+| placeholderTextColor      | ?Color    | |
+| pointerEvents             | ?string   | |
+| returnKeyType             | ?string   | |
+| secureTextEntry           | ?boolean  | false |
+| selection                 | ?Object   | |
+| selectTextOnFocus         | ?boolean  | false |
+| spellCheck                | ?boolean  | |
+| testID                    | ?string   | |
+| value                     | ?string   | |
 
 ### autoCapitalize
 
@@ -169,6 +208,12 @@ called with `{ nativeEvent: { selection: { start, end } } }`.
   </Story>
 </Preview>
 
+<Preview withSource='none'>
+  <Story name="onSelectionChangeControlled">
+    <Stories.onSelectionChangeControlled />
+  </Story>
+</Preview>
+
 ### onSubmitEditing
 
 Callback that is called when the keyboard's submit button is pressed. When
@@ -246,8 +291,6 @@ is inherited from `autoCorrect`. (Only available in supporting browsers).
 The value to show for the text input. TextInput is a controlled component, which means the native value will be forced to match this prop if provided. Read about how [React form components](https://reactjs.org/docs/forms.html) work. To prevent user edits to the value set `editable={false}`.
 
 ## Instance methods
-
-<Props of={Stories.ofMethods} />
 
 ### blur()
 

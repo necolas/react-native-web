@@ -1,5 +1,5 @@
-import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './ActivityIndicator.stories.js';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import * as Stories from './examples';
 
 <Meta title="Components|ActivityIndicator" />
 
@@ -9,7 +9,13 @@ Displays a customizable activity indicator.
 
 ## Props
 
-<Props of={Stories.ofProps} />
+| Name                      | Type      | Default |
+| ------------------------- | --------- | ------- |
+| ...ViewProps              | | |
+| animating                 | ?boolean  | true |
+| color                     | ?string   | '#1976D2' |
+| hidesWhenStopped          | ?boolean  | true |
+| size                      | 'small' \| 'large' \| number | 'small' |
 
 ### animating
 

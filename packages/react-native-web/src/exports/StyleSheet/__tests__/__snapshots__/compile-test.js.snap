@@ -26,7 +26,7 @@ Object {
     "identifier": "r-fontFamily-1qd0xha",
     "property": "fontFamily",
     "rules": Array [
-      ".r-fontFamily-1qd0xha{font-family:system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;}",
+      ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;}",
     ],
     "value": "System",
   },
@@ -63,7 +63,7 @@ Object {
     "property": "scrollbarWidth",
     "rules": Array [
       ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
-      ".r-scrollbarWidth-2eszeu{overflow:-moz-scrollbars-none;-ms-overflow-style:none;scrollbar-width:none;}",
+      ".r-scrollbarWidth-2eszeu{scrollbar-width:none;}",
     ],
     "value": "none",
   },
@@ -87,7 +87,7 @@ Object {
       "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
       "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
       "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-      ".css-text-1jr0ypv{-webkit-animation-direction:alternate,alternate-reverse;-webkit-animation-name:r-animation-8jhqzh,r-animation-5azpl5;-webkit-transform:translateX(50px);animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px system-ui,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Ubuntu,\\"Helvetica Neue\\",sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px);}",
+      ".css-text-1jr0ypv{-webkit-animation-direction:alternate,alternate-reverse;-webkit-animation-name:r-animation-8jhqzh,r-animation-5azpl5;-webkit-transform:translateX(50px);animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px);}",
     ],
   },
 }

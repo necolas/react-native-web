@@ -4,167 +4,128 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow strict-local
  * @format
- * @flow
  */
 
 'use strict';
 
-import createReactClass from 'create-react-class';
-import ensurePositiveDelayProps from '../Touchable/ensurePositiveDelayProps';
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { ViewProps } from '../View';
+
 import * as React from 'react';
-import Touchable from '../Touchable';
-import View from '../View';
-
-type BlurEvent = Object;
-type FocusEvent = Object;
-type PressEvent = Object;
-type LayoutEvent = Object;
-type EdgeInsetsProp = Object;
-
-const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
-
-const OVERRIDE_PROPS = [
-  'accessibilityLabel',
-  'accessibilityHint',
-  'accessibilityIgnoresInvertColors',
-  'accessibilityRole',
-  'accessibilityState',
-  'hitSlop',
-  'nativeID',
-  'onBlur',
-  'onFocus',
-  'onLayout',
-  'testID'
-];
+import { useMemo, useRef } from 'react';
+import pick from '../../modules/pick';
+import useMergeRefs from '../../modules/useMergeRefs';
+import usePressEvents from '../../modules/usePressEvents';
 
 export type Props = $ReadOnly<{|
-  accessible?: ?boolean,
-  accessibilityLabel?: ?string,
-  accessibilityHint?: ?string,
-  accessibilityIgnoresInvertColors?: ?boolean,
-  accessibilityRole?: ?string,
-  accessibilityState?: ?Object,
+  accessibilityLabel?: $PropertyType<ViewProps, 'accessibilityLabel'>,
+  accessibilityLiveRegion?: $PropertyType<ViewProps, 'accessibilityLiveRegion'>,
+  accessibilityRole?: $PropertyType<ViewProps, 'accessibilityRole'>,
+  accessibilityState?: $PropertyType<ViewProps, 'accessibilityState'>,
+  accessibilityValue?: $PropertyType<ViewProps, 'accessibilityValue'>,
+  accessible?: $PropertyType<ViewProps, 'accessible'>,
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,
   delayPressOut?: ?number,
   disabled?: ?boolean,
-  hitSlop?: ?EdgeInsetsProp,
-  nativeID?: ?string,
-  touchSoundDisabled?: ?boolean,
-  onBlur?: ?(e: BlurEvent) => void,
-  onFocus?: ?(e: FocusEvent) => void,
-  onLayout?: ?(event: LayoutEvent) => mixed,
-  onLongPress?: ?(event: PressEvent) => mixed,
-  onPress?: ?(event: PressEvent) => mixed,
-  onPressIn?: ?(event: PressEvent) => mixed,
-  onPressOut?: ?(event: PressEvent) => mixed,
-  pressRetentionOffset?: ?EdgeInsetsProp,
+  focusable?: ?boolean,
+  importantForAccessibility?: $PropertyType<ViewProps, 'importantForAccessibility'>,
+  nativeID?: $PropertyType<ViewProps, 'nativeID'>,
+  onBlur?: $PropertyType<ViewProps, 'onBlur'>,
+  onFocus?: $PropertyType<ViewProps, 'onFocus'>,
+  onLayout?: $PropertyType<ViewProps, 'onLayout'>,
+  onLongPress?: $PropertyType<PressResponderConfig, 'onLongPress'>,
+  onPress?: $PropertyType<PressResponderConfig, 'onPress'>,
+  onPressIn?: $PropertyType<PressResponderConfig, 'onPressStart'>,
+  onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
   rejectResponderTermination?: ?boolean,
-  testID?: ?string
+  testID?: $PropertyType<ViewProps, 'testID'>
 |}>;
 
-/**
- * Do not use unless you have a very good reason. All elements that
- * respond to press should have a visual feedback when touched.
- *
- * TouchableWithoutFeedback supports only one child.
- * If you wish to have several child components, wrap them in a View.
- */
-// eslint-disable-next-line react/prefer-es6-class
-const TouchableWithoutFeedback = ((createReactClass({
-  displayName: 'TouchableWithoutFeedback',
-  mixins: [Touchable.Mixin],
+const forwardPropsList = {
+  accessibilityLabel: true,
+  accessibilityLiveRegion: true,
+  accessibilityRole: true,
+  accessibilityState: true,
+  accessibilityValue: true,
+  accessible: true,
+  children: true,
+  disabled: true,
+  focusable: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  onBlur: true,
+  onFocus: true,
+  onLayout: true,
+  testID: true
+};
 
-  getInitialState: function() {
-    return this.touchableGetInitialState();
-  },
+const pickProps = props => pick(props, forwardPropsList);
 
-  componentDidMount: function() {
-    ensurePositiveDelayProps(this.props);
-  },
+function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
+  const {
+    accessible,
+    delayPressIn,
+    delayPressOut,
+    delayLongPress,
+    disabled,
+    focusable,
+    onLongPress,
+    onPress,
+    onPressIn,
+    onPressOut,
+    rejectResponderTermination
+  } = props;
 
-  UNSAFE_componentWillReceiveProps: function(nextProps: Object) {
-    ensurePositiveDelayProps(nextProps);
-  },
+  const hostRef = useRef(null);
 
-  /**
-   * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
-   * defined on your component.
-   */
-  touchableHandlePress: function(e: PressEvent) {
-    this.props.onPress && this.props.onPress(e);
-  },
+  const pressConfig = useMemo(
+    () => ({
+      cancelable: !rejectResponderTermination,
+      disabled,
+      delayLongPress,
+      delayPressStart: delayPressIn,
+      delayPressEnd: delayPressOut,
+      onLongPress,
+      onPress,
+      onPressStart: onPressIn,
+      onPressEnd: onPressOut
+    }),
+    [
+      disabled,
+      delayPressIn,
+      delayPressOut,
+      delayLongPress,
+      onLongPress,
+      onPress,
+      onPressIn,
+      onPressOut,
+      rejectResponderTermination
+    ]
+  );
 
-  touchableHandleActivePressIn: function(e: PressEvent) {
-    this.props.onPressIn && this.props.onPressIn(e);
-  },
+  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
-  touchableHandleActivePressOut: function(e: PressEvent) {
-    this.props.onPressOut && this.props.onPressOut(e);
-  },
+  const element = React.Children.only(props.children);
+  const children = [element.props.children];
+  const supportedProps = pickProps(props);
+  supportedProps.accessible = accessible !== false;
+  supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
+  supportedProps.focusable = focusable !== false && onPress !== undefined;
+  supportedProps.ref = useMergeRefs(forwardedRef, hostRef, element.ref);
 
-  touchableHandleLongPress: function(e: PressEvent) {
-    this.props.onLongPress && this.props.onLongPress(e);
-  },
+  const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
-  touchableGetPressRectOffset: function(): typeof PRESS_RETENTION_OFFSET {
-    // $FlowFixMe Invalid prop usage
-    return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET;
-  },
+  return React.cloneElement(element, elementProps, ...children);
+}
 
-  touchableGetHitSlop: function(): ?Object {
-    return this.props.hitSlop;
-  },
+const MemoedTouchableWithoutFeedback = React.memo(React.forwardRef(TouchableWithoutFeedback));
+MemoedTouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
-  touchableGetHighlightDelayMS: function(): number {
-    return this.props.delayPressIn || 0;
-  },
-
-  touchableGetLongPressDelayMS: function(): number {
-    return this.props.delayLongPress === 0 ? 0 : this.props.delayLongPress || 500;
-  },
-
-  touchableGetPressOutDelayMS: function(): number {
-    return this.props.delayPressOut || 0;
-  },
-
-  render: function(): React.Element<any> {
-    // Note(avik): remove dynamic typecast once Flow has been upgraded
-    // $FlowFixMe(>=0.41.0)
-    // eslint-disable-next-line
-    const child = React.Children.only(this.props.children);
-    let children = child.props.children;
-    if (Touchable.TOUCH_TARGET_DEBUG && child.type === View) {
-      children = React.Children.toArray(children);
-      children.push(Touchable.renderDebugView({ color: 'red', hitSlop: this.props.hitSlop }));
-    }
-
-    const overrides = {};
-    for (const prop of OVERRIDE_PROPS) {
-      if (this.props[prop] !== undefined) {
-        overrides[prop] = this.props[prop];
-      }
-    }
-
-    return (React: any).cloneElement(child, {
-      ...overrides,
-      accessible: this.props.accessible !== false,
-      //clickable:
-      //  this.props.clickable !== false && this.props.onPress !== undefined,
-      //onClick: this.touchableHandlePress,
-      onKeyDown: this.touchableHandleKeyEvent,
-      onKeyUp: this.touchableHandleKeyEvent,
-      onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
-      onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
-      onResponderGrant: this.touchableHandleResponderGrant,
-      onResponderMove: this.touchableHandleResponderMove,
-      onResponderRelease: this.touchableHandleResponderRelease,
-      onResponderTerminate: this.touchableHandleResponderTerminate,
-      children
-    });
-  }
-}): any): React.ComponentType<Props>);
-
-export default TouchableWithoutFeedback;
+export default (MemoedTouchableWithoutFeedback: React.AbstractComponent<
+  Props,
+  React.ElementRef<any>
+>);

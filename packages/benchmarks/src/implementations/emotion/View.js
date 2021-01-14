@@ -1,10 +1,10 @@
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import React from 'react';
 
 class View extends React.Component {
   render() {
     const { style, ...other } = this.props;
-    return <div {...other} className={css(viewStyle, ...style)} />;
+    return <div {...other} className={css([viewStyle, ...style])} />;
   }
 }
 

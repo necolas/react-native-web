@@ -3,7 +3,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "react-native-web",
-  "version": "0.12.2",
+  "version": "0.14.10",
   "description": "React Native for Web",
   "module": "dist/index.js",
   "main": "dist/cjs/index.js",
@@ -18,7 +18,6 @@
   "dependencies": {
     "array-find-index": "^1.0.2",
     "create-react-class": "^15.6.2",
-    "debounce": "^1.2.0",
     "deep-assign": "^3.0.0",
     "fbjs": "^1.0.0",
     "hyphenate-style-name": "^1.0.3",
