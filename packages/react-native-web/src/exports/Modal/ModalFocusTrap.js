@@ -71,7 +71,6 @@ export type ModalFocusTrapProps = {|
 |};
 
 const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
-  const lastFocusedElementOutsideTrap = useRef<?HTMLElement>();
   const trapElementRef = useRef<?HTMLElement>();
   const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
     trapFocusInProgress: false,
@@ -126,12 +125,12 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
 
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
-  useEffect(() => {
+  useEffect(function() {
     if (canUseDOM) {
-      lastFocusedElementOutsideTrap.current = document.activeElement;
-      return () => {
-        if (lastFocusedElementOutsideTrap.current) {
-          UIManager.focus(lastFocusedElementOutsideTrap.current);
+      const lastFocusedElementOutsideTrap = document.activeElement;
+      return function() {
+        if (lastFocusedElementOutsideTrap) {
+          UIManager.focus(lastFocusedElementOutsideTrap);
         }
       };
     }
