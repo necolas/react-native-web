@@ -358,7 +358,9 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
-  supportedProps.classList = classList;
+  supportedProps.classList = supportedProps.classList
+    ? supportedProps.classList.concat(classList)
+    : classList;
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
   supportedProps.enterkeyhint = returnKeyType;

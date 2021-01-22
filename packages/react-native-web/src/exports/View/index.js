@@ -129,7 +129,9 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   );
 
   const supportedProps = pickProps(props);
-  supportedProps.classList = classList;
+  supportedProps.classList = supportedProps.classList
+    ? supportedProps.classList.concat(classList)
+    : classList;
   supportedProps.style = style;
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
