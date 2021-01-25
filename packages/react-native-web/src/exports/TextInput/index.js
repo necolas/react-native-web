@@ -271,7 +271,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   }
 
   function handleKeyDown(e) {
-    if(!Platform.isTV) {
+    if (!Platform.isTV) {
       // Prevent key events bubbling (see #612)
       e.stopPropagation();
     }

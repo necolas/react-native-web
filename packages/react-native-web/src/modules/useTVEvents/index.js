@@ -28,7 +28,7 @@ export type TVResponderConfig = $ReadOnly<{|
   nextFocusUp?: ?any,
   onPress?: ?(event: Event) => void,
   onFocus?: ?(event: Event) => void,
-  onBlur?: ?(event: Event) => void,
+  onBlur?: ?(event: Event) => void
 |}>;
 
 export default function useTVEvents(
@@ -130,7 +130,7 @@ export default function useTVEvents(
           TVEventHandler.dispatchEvent(tvEvent);
         },
         onKeyDown: onKeyEvent,
-        onKeyUp: onKeyEvent,
+        onKeyUp: onKeyEvent
       }
     : {};
 
