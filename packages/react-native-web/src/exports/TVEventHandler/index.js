@@ -2,16 +2,19 @@ class TVEventHandler {
   constructor() {
     this.component = null;
     this.callback = null;
+    this.onHWKeyEvent = this.onHWKeyEvent.bind(this);
   }
 
   enable(component, callback) {
     this.component = component;
     this.callback = callback;
-    document.addEventListener('onHWKeyEvent', this.onHWKeyEvent.bind(this));
+    document.addEventListener('onHWKeyEvent', this.onHWKeyEvent);
   }
 
   disable() {
     document.removeEventListener('onHWKeyEvent', this.onHWKeyEvent);
+    this.component = null;
+    this.callback = null;
   }
 
   onHWKeyEvent(event) {

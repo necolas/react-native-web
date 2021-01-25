@@ -18,8 +18,6 @@ import Position from './Position';
 import React from 'react';
 import UIManager from '../UIManager';
 import View from '../View';
-import Platform from '../Platform';
-import TVEventHandler from '../TVEventHandler';
 
 type Event = Object;
 type PressEvent = Object;
@@ -878,46 +876,6 @@ const TouchableMixin = {
   // delays and longPress)
   touchableHandleKeyEvent: function(e: Event) {
     const { type, key } = e;
-    if (Platform.isTV) {
-      // Get tvEvent
-      const tvEvent = TVEventHandler.getTVEvent(e);
-      // Dispatch 'select' tvEvent to component
-      if (tvEvent.eventType === 'select') {
-        this.touchableHandlePress(tvEvent);
-      }
-      // Dispatch tvEvent to all listeners
-      TVEventHandler.dispatchEvent(tvEvent);
-      // Handle next focus
-      if (this._touchableNode) {
-        let nextFocusID = '';
-        // Check nextFocus* properties
-        if (this._touchableNode.hasAttribute('nextFocusUp') && key === 'ArrowUp') {
-          nextFocusID = this._touchableNode.getAttribute('nextFocusUp');
-        } else if (this._touchableNode.hasAttribute('nextFocusRight') && key === 'ArrowRight') {
-          nextFocusID = this._touchableNode.getAttribute('nextFocusRight');
-        } else if (this._touchableNode.hasAttribute('nextFocusDown') && key === 'ArrowDown') {
-          nextFocusID = this._touchableNode.getAttribute('nextFocusDown');
-        } else if (this._touchableNode.hasAttribute('nextFocusLeft') && key === 'ArrowLeft') {
-          nextFocusID = this._touchableNode.getAttribute('nextFocusLeft');
-        }
-        if (nextFocusID && nextFocusID !== '') {
-          // Get DOM element
-          const element = document.getElementById(nextFocusID);
-          if (element && element.tabIndex >= 0) {
-            // Force focus
-            element.focus();
-            // Stop event propagation
-            e.stopPropagation();
-          }
-        }
-      }
-      // Trigger Hardware Back Press for Back/Escape event keys
-      if (type === 'keydown' && (key === 'Back' || key === 'Escape')) {
-        // eslint-disable-next-line no-undef
-        const hwKeyEvent = new CustomEvent('hardwareBackPress', {});
-        document.dispatchEvent(hwKeyEvent);
-      }
-    }
     if (key === 'Enter' || key === ' ') {
       if (type === 'keydown') {
         if (!this._isTouchableKeyboardActive) {

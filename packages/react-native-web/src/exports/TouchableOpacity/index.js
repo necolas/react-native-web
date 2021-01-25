@@ -19,9 +19,6 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import UIManager from '../UIManager';
-import Platform from '../Platform';
-import TVEventHandler from '../TVEventHandler';
 
 type ViewStyle = $PropertyType<ViewProps, 'style'>;
 
