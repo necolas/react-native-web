@@ -1,0 +1,11 @@
+---
+layout: layouts/shell.html
+section: page
+---
+
+<article class="view items-center p-6 w-full">
+  <h1 class="text-3xl">{{ title }}</h1>
+  <div style="width:75%">
+    {{ '/src/includes/assets/svg/404.svg' | svgContents("w-full") | safe }}
+  </div>
+</article>

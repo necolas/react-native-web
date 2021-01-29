@@ -1,6 +1,5 @@
-# react-native-web
+# React Native for Web
 
-"React Native for Web" brings the platform-agnostic Components and APIs of
-React Native to the Web. It is used in production by Twitter Lite.
+React Native Components and APIs for the Web.
 
-Read more: https://github.com/necolas/react-native-web
+[Find out more](https://github.com/necolas/react-native-web)

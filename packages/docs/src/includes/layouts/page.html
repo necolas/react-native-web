@@ -1,0 +1,37 @@
+---
+layout: layouts/shell.html
+section: page
+---
+
+<div class="view fixed wide:hidden z-20" style="right:30px; bottom:30px;">
+  <button id="show-nav" aria-label="Show navigation" class="view appearance-none rounded-full items-center justify-center text-white cursor-pointer" style="background-color:var(--docs-theme-color); width:4rem; height:4rem; padding:5px;">
+    {{ '/src/includes/assets/svg/logo.svg' | svgContents("w-full fill-current") | safe }}
+  </button>
+  <button id="close-nav" aria-label="Close navigation" class="view appearance-none hidden rounded-full items-center justify-center text-white cursor-pointer" style="background-color:var(--docs-theme-color); width:4rem; height:4rem; padding:10px;">
+    {{ '/src/includes/assets/svg/close.svg' | svgContents("w-full") | safe }}
+  </button>
+</div>
+
+<div class="view flex-row flex-nowrap relative">
+  <div id="navigation" class="navigation view fixed wide:sticky wide:left-0 z-10 opacity-0 wide:opacity-1 h-screen inset-y-0 w-72 border-right border-color-faint bg-theme">
+    {% include "fragments/nav.html" %}
+  </div>
+
+  <main id="main" class="view flex-1">
+    <div class="view w-full mt-12 px-4 wide:px-20">
+      <article class="markdown">
+        <h1>{{ title }}</h1>
+        {{ layoutContent | safe }}
+      </article>
+
+      <div class="flex mt-4">
+        <div class="inline-block w-auto text-sm pt-1 pb-1 mr-2 rounded text-color-faint">Updated <time datetime="{{ page.date | machineDate }}">{{ page.date | readableDate }}</time></div>
+        {% if site.enableEditButton == true %}
+          <a class="no-underline inline-block w-auto text-sm hover:bg-gray-200 py-1 px-3 rounded text-color-faint" href="{{ site.githubUrl }}/edit/{{ site.githubBranch }}/packages/www/{{ page.inputPath }}" target="_blank">Edit</a>
+        {% endif %}
+        </div>
+        {% include "fragments/footer.html" %} 
+      </div>
+    </div>
+  </main>
+</div>

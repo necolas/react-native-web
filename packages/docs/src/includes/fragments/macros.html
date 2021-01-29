@@ -1,0 +1,38 @@
+{% macro button(text, href) %}
+  <a href="{{ href }}" class="view inline-flex flex-row items-center py-3 px-6 border rounded text-xl text-white font-bold" style="background-color:var(--docs-theme-color); border-color:var(--docs-theme-color); color:white; text-decoration:none;">
+    {{ text }}
+  </a>
+{% endmacro %}
+
+{% macro docbutton(text, href) %}
+  <a href="{{ href | url }}" class="view inline-flex flex-row items-center py-3 px-6 border rounded text-xl text-white font-bold no-underline" style="background-color:var(--docs-theme-color); border-color:var(--docs-theme-color); color:white; text-decoration:">
+    <span class="view mr-2" style="width:20px;">
+      {{ '/src/includes/assets/svg/documents.svg' | svgContents("w-full fill-current") | safe }}
+    </span>
+    <span>{{ text }}</span>
+  </a>
+{% endmacro %}
+
+{% macro codebutton(text, href) %}
+  <a href="{{ href }}" class="view inline-flex flex-row items-center py-3 px-6 border rounded text-xl no-underline font-mono text-color" style="border-color:currentColor;">
+    <span aria-hidden="true" class="mr-2">$ </span>
+    <span class="inline-block whitespace-nowrap overflow-ellipsis">{{ text }}</span>
+  </a>
+{% endmacro %}
+
+{% macro prop(name, type) %}
+  <div class="prop border-left border-left-3 border-theme-faint pl-5 overflow-ellipsis">
+    <span class="font-bold">{{ name }}</span>
+    {%- if type != null -%}<span aria-hidden="true">:</span> <span class="whitespace-nowrap text-color-faint">{{ type }}</span>{%- endif %}
+    {{ caller() }}
+  </div>
+{% endmacro %}
+
+{% macro codesandbox(path = '/') %}
+  <iframe
+  src="https://codesandbox.io/embed/github/necolas/react-native-web/tree/{{ site.packageVersion }}}}/packages/examples?codemirror=1&fontsize=12&hidedevtools=1&hidenavigation=1&initialpath=/{{ path }}&module=%2Fpages%2F{{ path }}%2Findex.js&theme=light"
+  style="width:100%; height:500px; border:1px solid var(--docs-border-color); border-radius:4px; overflow:hidden;"
+  title="React Native for Web: {{ path}} examples"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+  ></iframe>
+{% endmacro %}

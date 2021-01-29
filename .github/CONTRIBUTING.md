@@ -70,16 +70,23 @@ yarn compile
 yarn compile --watch
 ```
 
-## Documentation and visual tests
+## Documentation
 
-To run the interactive storybook:
+To run the documentation website:
 
 ```
-yarn docs
+yarn docs:dev
 ```
 
-When you're also making changes to the 'react-native-web' source files, run this
-command in another process:
+## Examples
+
+To run the examples app:
+
+```
+yarn examples:dev
+```
+
+When you're also making changes to the 'react-native-web' source files, run this command in another process:
 
 ```
 yarn compile --watch
@@ -90,7 +97,7 @@ yarn compile --watch
 To run the benchmarks locally:
 
 ```
-yarn benchmarks
+yarn benchmarks:dev
 open ./packages/benchmarks/dist/index.html
 ```
 
