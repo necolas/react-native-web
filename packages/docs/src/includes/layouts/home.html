@@ -1,0 +1,61 @@
+---
+layout: layouts/shell.html
+section: page
+---
+
+{% import "fragments/macros.html" as macro with context %}
+
+<main id="main" class="view flex-1">         
+  <div class="view w-full mt-12 px-6 wide:px-20">
+    <div class="view w-full">
+      <div class="view flex-1">
+        <h1 class="view flex-row items-center font-bold">
+          <span aria-hidden="true" rclass="block mr-2" style="width:50px;height:50px;margin-left:-6px;color:var(--docs-theme-color)">
+            {{ '/src/includes/assets/svg/logo.svg' | svgContents("w-full") | safe }}
+          </span>
+          <span class="text" style="color:var(--docs-theme-color); font-size:1.75rem;">{{ site.name }}</span>
+        </h1>
+        <h2 class="text my-8 text-3xl">React Native Components and APIs on the Web</h2>
+        <p class="text mb-8 text-2xl">{{ site.name }} is an accessible implementation of React Native's Components and APIs that is interoperable with React DOM.</p>
+      </div>
+    </div>
+    <div class="view flex-row flex-wrap">
+      <div class="view my-2 mr-4">
+        {{ macro.docbutton('Documentation', '/docs') }}
+      </div>
+      <div class="view flex-shrink my-2">
+        {{ macro.codebutton('npm install react-native-web', site.packageUrl) }}
+      </div>
+    </div>
+
+    <div class="markdown mt-6">
+      <ul style="font-size:1.25rem;">
+        <li><strong>Accessible HTML</strong>. Support different devices and input modes, render semantic tags.</li>
+        <li><strong>High-quality interactions</strong>. Support gestures and multiple input modes (touch, mouse, keyboard).</li>
+        <li><strong>Reliable styles</strong>. Rely on scoped styles and automatic vendor-prefixing. Support RTL layouts.</li>
+        <li><strong>Responsive containers</strong>. Respond to element resize events.</li>
+        <li><strong>Incremental adoption</strong>. Interoperates with existing React DOM components. Bundle only what you use.</li>
+      </ul>
+
+      <h2>Try it out!</h2>
+
+      <p>You can try {{ site.name }} from your browser using the <a href="https://codesandbox.io/s/react-native-q4qymyp2l6">official template on CodeSandbox</a>.</p>
+      
+      <p>Fork the template and create your own app without leaving the browser.</p>
+      
+      <iframe
+        src="https://codesandbox.io/embed/react-native-q4qymyp2l6?codemirror=1&fontsize=12&hidedevtools=1&hidenavigation=1&theme=light"
+        style="width:100%; height:500px; border:1px solid var(--docs-border-color); border-radius: 4px; overflow:hidden;"
+        title="React Native for Web preview"
+        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+      ></iframe>
+
+      <div class="callout">
+        <p><strong>Did you know?</strong> React Native for Web is used in production web apps by <a href="https://twitter.com">Twitter</a>, <a href="https://twitter.com/naqvitalha/status/969577892991549440">Flipkart</a>, <a href="https://www.youtube.com/watch?v=RV9rxrNIxnY">Uber</a>, <a href="https://matchcenter.mlssoccer.com">Major League Soccer</a>, and many others. It also powers web support in multi-platform React projects such as <a href="https://expo.io">Expo</a>, <a href="https://reactnativeelements.com/">React Native Elements</a>, <a href="https://callstack.github.io/react-native-paper/using-on-the-web.html">React Native Paper</a>, and <a href="https://docs.nativebase.io/docs/GetStarted.html#Setup_with_Web">React Native Base</a>.
+      </div>
+
+      <div style="height:2rem"><!-- spacer --></div>
+    </div>
+    {% include "fragments/footer.html" %} 
+  </div>
+</main>

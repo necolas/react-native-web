@@ -1,0 +1,60 @@
+{% set navPages = collections.nav | eleventyNavigation %}
+
+<nav id="navigation-scroller" class="view overflow-x-hidden overflow-y-auto h-full p-6 pt-12">
+  <h1 class="m-0 mb-4" style="font-size:1rem;">
+    <a class="view no-underline group font-semibold" href="{{ '/' | url }}" style="color:var(--docs-theme-color)">
+      <span class="view flex-row items-center overflow-x-hidden mb-1 text-xl">
+        {{ site.name }}
+      </span>
+      <span>{{ site.packageName }}@{{ site.packageVersion }}</span>
+    </a>
+  </h1>
+
+  {% macro renderNavListItem(entry) -%}
+    {% set itemClassName %}
+      {% if entry.url == page.url %}
+      font-semibold text-color-inherit
+      {% else %}
+      text-color-faint hover:text-color-inherit
+      {% endif %}
+    {% endset %}
+
+    {% set itemStyle %}
+      {% if entry.url == page.url %}
+      background-color:var(--docs-theme-color-faded); border-left:3px solid var(--docs-theme-color); margin-left:-13px; border-radius:0 0.25rem 0.25rem 0;
+      {% endif %}
+    {% endset %}
+
+    <li class="view item mb-2">
+      {%- if entry.url != false -%}
+    <a class="text block {{ itemClassName }}" href="{{ entry.url | url }}" style="padding:2px 10px; margin:-2px -10px;{{itemStyle}}">
+          {{ entry.title }}
+          {% if entry.label != null %}
+            {% set labelColor -%}
+              {%- if entry.label == 'Change' -%}
+                #ff8300
+              {%- else -%}
+                #86b300
+              {%- endif -%}
+            {%- endset %}
+          <span class="px-1 ml-2 inline-block border rounded text-uppercase text-sm" style="border-color:{{labelColor}}; color:{{labelColor}}; font-weight:normal">{{ entry.label }}</span>
+          {% endif %}
+        </a>
+      {% else %}
+        <span class="text block font-semibold text-uppercase text-sm">{{ entry.title }}</span>
+      {% endif %}
+
+      {%- if entry.children.length -%}
+      <ul class="view list-none mt-2 mb-4">
+        {%- for child in entry.children %}{{ renderNavListItem(child) }}{% endfor -%}
+      </ul>
+      {%- endif -%}
+    </li>
+  {%- endmacro %}
+
+  <ul class="view list-none mt-6">
+    {%- for entry in navPages %}
+      {{ renderNavListItem(entry) }}
+    {%- endfor -%}
+  </ul>
+</nav>

@@ -63,7 +63,7 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
   }
 
   const { height: styleHeight, width: styleWidth } = StyleSheet.flatten(style);
-  const height = styleHeight || 20;
+  const height = styleHeight || '20px';
   const minWidth = multiplyStyleLengthValue(height, 2);
   const width = styleWidth > minWidth ? styleWidth : minWidth;
   const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);

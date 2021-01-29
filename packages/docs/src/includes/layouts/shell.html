@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ renderData.title or title }} // {{ site.name }}</title>
+    <meta name="description" content="{{ metaDescription or renderData.metaDescription or site.description }}">
+    <link rel="icon" href="{{ '/static/logo.svg' | url }}">
+    {% set cssinline %}
+      {% include "assets/inline.css" %}
+    {% endset %}
+    <style>{{ cssinline | cssmin | safe }}</style>
+    <link rel="stylesheet" media="(prefers-color-scheme:light)" href="https://unpkg.com/prismjs@1.20.0/themes/prism.css">
+    <link rel="stylesheet" media="(prefers-color-scheme:dark)" href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css">
+    {% set jsinline %}
+      {% include "assets/inline.js" %}
+    {% endset %}
+    <script defer>{{ jsinline | jsmin | safe }}</script>
+  </head>
+<body>
+
+<div id="app" class="container mx-auto">
+  <div class="view">
+    {{ layoutContent | safe }}
+  </div>
+</div>
