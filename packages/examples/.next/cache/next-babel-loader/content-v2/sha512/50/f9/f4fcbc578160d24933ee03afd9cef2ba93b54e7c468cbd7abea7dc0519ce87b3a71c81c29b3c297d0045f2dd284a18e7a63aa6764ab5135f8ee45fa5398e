@@ -1,0 +1,1 @@
+{"ast":null,"code":"\"use strict\";\n\nvar _interopRequireWildcard = require(\"@babel/runtime/helpers/interopRequireWildcard\");\n\nvar next = _interopRequireWildcard(require(\"./\"));\n\nwindow.next = next;\n(0, next[\"default\"])()[\"catch\"](console.error);","map":null,"metadata":{},"sourceType":"script"}

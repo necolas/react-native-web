@@ -1,0 +1,1 @@
+{"ast":null,"code":"/*\nimport React from 'react';\nimport { TextInput, View } from 'react-native';\n\nconst TextInputOnSubmitEditingExample = () => null;\n\nexport default TextInputOnSubmitEditingExample;\n*/","map":null,"metadata":{},"sourceType":"script"}

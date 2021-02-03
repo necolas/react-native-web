@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport React from 'react';\nimport ProgressBar from \"react-native-web/dist/cjs/exports/ProgressBar\";\nexport default function Indeterminate() {\n  return /*#__PURE__*/_jsx(ProgressBar, {\n    indeterminate: true,\n    trackColor: \"#D1E3F6\"\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

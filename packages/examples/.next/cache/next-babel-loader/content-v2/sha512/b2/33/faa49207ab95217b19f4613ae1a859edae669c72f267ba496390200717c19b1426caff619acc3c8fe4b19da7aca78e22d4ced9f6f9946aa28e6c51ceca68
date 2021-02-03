@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport NetworkImage from './NetworkImage';\nimport React from 'react';\nimport sources from '../sources';\nexport default function OnError() {\n  return /*#__PURE__*/_jsx(NetworkImage, {\n    logMethod: \"onError\",\n    source: sources.broken\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"/*\nimport React from 'react';\nimport { TextInput, View } from 'react-native';\n\nconst TextInputOnChangeExample = () => null;\n\nexport default TextInputOnChangeExample;\n*/","map":null,"metadata":{},"sourceType":"script"}

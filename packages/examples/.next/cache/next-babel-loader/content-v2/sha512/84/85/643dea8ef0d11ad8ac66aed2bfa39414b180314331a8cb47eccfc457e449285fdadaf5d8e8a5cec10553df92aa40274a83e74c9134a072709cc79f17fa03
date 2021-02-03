@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport LayoutRTL from './LayoutRTL';\nimport React from 'react';\nexport default function I18nManagerPage() {\n  return /*#__PURE__*/_jsx(LayoutRTL, {});\n}","map":null,"metadata":{},"sourceType":"module"}
