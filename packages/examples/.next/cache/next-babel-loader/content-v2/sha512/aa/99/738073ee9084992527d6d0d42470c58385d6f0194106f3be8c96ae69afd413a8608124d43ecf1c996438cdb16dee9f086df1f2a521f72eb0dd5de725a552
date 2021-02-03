@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport Example from '../../shared/PanResponderExample';\nimport React from 'react';\nexport default function PanResponderPage() {\n  return /*#__PURE__*/_jsx(Example, {});\n}","map":null,"metadata":{},"sourceType":"module"}

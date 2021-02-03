@@ -1,1 +1,0 @@
-{"ast":null,"code":"\"use strict\";\n\nrequire(\"next/dist/build/polyfills/polyfill-nomodule\");","map":{"version":3,"sources":["../../client/polyfills.js"],"names":[],"mappings":";;AAAA,OAAA,CAAA,6CAAA,CAAA","sourcesContent":["import 'next/dist/build/polyfills/polyfill-nomodule'\n"]},"metadata":{},"sourceType":"script"}
