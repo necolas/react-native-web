@@ -330,11 +330,6 @@ describe('modules/createDOMProps', () => {
     expect(props['data-testid']).toEqual(testID);
   });
 
-  test('includes "rel" values for "a" elements (to securely open external links)', () => {
-    const props = createDOMProps('a', { target: '_blank' });
-    expect(props.rel).toMatchSnapshot();
-  });
-
   test('includes cursor style for pressable roles', () => {
     expect(createDOMProps('span', { accessibilityRole: 'link' }).className).toMatchSnapshot();
     expect(createDOMProps('span', { accessibilityRole: 'button' }).className).toMatchSnapshot();
