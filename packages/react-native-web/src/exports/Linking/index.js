@@ -87,7 +87,8 @@ class Linking {
 
 const open = url => {
   if (canUseDOM) {
-    window.location = new URL(url, window.location).toString();
+    const urlToOpen = new URL(url, window.location).toString();
+    window.open(urlToOpen, '_blank', 'noopener');
   }
 };
 
