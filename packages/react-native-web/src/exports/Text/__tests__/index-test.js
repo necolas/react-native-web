@@ -76,9 +76,10 @@ describe('components/Text', () => {
         render(<Text onBlur={onBlur} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
+      const body = createEventTarget(document.body);
       act(() => {
         target.focus();
-        target.blur();
+        body.focus({ relatedTarget: target.node });
       });
       expect(onBlur).toBeCalled();
     });
@@ -94,7 +95,6 @@ describe('components/Text', () => {
       const target = createEventTarget(ref.current);
       act(() => {
         target.focus();
-        target.blur();
       });
       expect(onFocus).toBeCalled();
     });

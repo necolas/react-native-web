@@ -72,6 +72,7 @@ describe('components/Pressable', () => {
       ));
     });
     const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.focus();
@@ -79,7 +80,7 @@ describe('components/Pressable', () => {
     expect(onFocus).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
-      target.blur();
+      body.focus({ relatedTarget: target.node });
     });
     expect(onBlur).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();

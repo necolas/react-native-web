@@ -96,9 +96,10 @@ describe('components/View', () => {
         render(<View onBlur={onBlur} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
+      const body = createEventTarget(document.body);
       act(() => {
         target.focus();
-        target.blur();
+        body.focus({ relatedTarget: target.node });
       });
       expect(onBlur).toBeCalled();
     });
