@@ -12,15 +12,22 @@ import propsToAriaRole from './propsToAriaRole';
 const roleComponents = {
   article: 'article',
   banner: 'header',
+  blockquote: 'blockquote',
+  code: 'code',
   complementary: 'aside',
   contentinfo: 'footer',
+  deletion: 'del',
+  emphasis: 'em',
+  figure: 'figure',
+  insertion: 'ins',
   form: 'form',
   link: 'a',
   list: 'ul',
   listitem: 'li',
   main: 'main',
   navigation: 'nav',
-  region: 'section'
+  region: 'section',
+  strong: 'strong'
 };
 
 const emptyObject = {};
