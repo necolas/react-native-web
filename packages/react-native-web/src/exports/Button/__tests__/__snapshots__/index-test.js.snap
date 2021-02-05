@@ -33,7 +33,6 @@ exports[`components/Button prop "disabled" 1`] = `
 <div
   aria-disabled="true"
   class="css-view-1dbjc4n r-backgroundColor-11mpjr4 r-borderRadius-1jkafct r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
-  disabled=""
   role="button"
   style="transition-duration: 0s;"
 >

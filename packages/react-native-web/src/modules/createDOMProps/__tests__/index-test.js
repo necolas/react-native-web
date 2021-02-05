@@ -65,7 +65,7 @@ describe('modules/createDOMProps', () => {
 
       test('when "accessibilityDisabled" is true', () => {
         expect(createProps({ accessibilityRole, accessibilityDisabled: true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true })
+          expect.objectContaining({ 'aria-disabled': true })
         );
       });
 

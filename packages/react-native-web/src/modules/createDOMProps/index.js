@@ -16,6 +16,14 @@ import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 const emptyObject = {};
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
+const uppercasePattern = /[A-Z]/g;
+function toHyphenLower(match) {
+  return '-' + match.toLowerCase();
+}
+function hyphenateString(str: string): string {
+  return str.replace(uppercasePattern, toHyphenLower);
+}
+
 // Reset styles for heading, link, and list DOM elements
 const classes = css.create(
   {
@@ -50,17 +58,59 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const createDOMProps = (component, props) => {
+const createDOMProps = (elementType, props) => {
   if (!props) {
     props = emptyObject;
   }
 
   const {
+    accessibilityActiveDescendant,
+    accessibilityAtomic,
+    accessibilityAutoComplete,
+    accessibilityBusy,
+    accessibilityChecked,
+    accessibilityColumnCount,
+    accessibilityColumnIndex,
+    accessibilityColumnSpan,
+    accessibilityControls,
+    accessibilityDescribedBy,
+    accessibilityDetails,
     accessibilityDisabled,
+    accessibilityErrorMessage,
+    accessibilityExpanded,
+    accessibilityFlowTo,
+    accessibilityHasPopup,
+    accessibilityHidden,
+    accessibilityInvalid,
+    accessibilityKeyShortcuts,
     accessibilityLabel,
+    accessibilityLabelledBy,
+    accessibilityLevel,
     accessibilityLiveRegion,
-    accessibilityState,
-    accessibilityValue,
+    accessibilityModal,
+    accessibilityMultiline,
+    accessibilityMultiSelectable,
+    accessibilityOrientation,
+    accessibilityOwns,
+    accessibilityPlaceholder,
+    accessibilityPosInSet,
+    accessibilityPressed,
+    accessibilityReadOnly,
+    accessibilityRequired,
+    /* eslint-disable */
+    accessibilityRole,
+    /* eslint-enable */
+    accessibilityRoleDescription,
+    accessibilityRowCount,
+    accessibilityRowIndex,
+    accessibilityRowSpan,
+    accessibilitySelected,
+    accessibilitySetSize,
+    accessibilitySort,
+    accessibilityValueMax,
+    accessibilityValueMin,
+    accessibilityValueNow,
+    accessibilityValueText,
     classList,
     dataSet,
     focusable,
@@ -68,52 +118,28 @@ const createDOMProps = (component, props) => {
     pointerEvents,
     style: providedStyle,
     testID,
-    /* eslint-disable */
-    accessibilityRole,
-    /* eslint-enable */
+    // Deprecated
+    accessibilityState,
+    accessibilityValue,
+    // Rest
     ...domProps
   } = props;
 
   const disabled =
     (accessibilityState != null && accessibilityState.disabled === true) || accessibilityDisabled;
+
   const role = AccessibilityUtil.propsToAriaRole(props);
+
   const isNativeInteractiveElement =
     role === 'link' ||
-    component === 'a' ||
-    component === 'button' ||
-    component === 'input' ||
-    component === 'select' ||
-    component === 'textarea' ||
+    elementType === 'a' ||
+    elementType === 'button' ||
+    elementType === 'input' ||
+    elementType === 'select' ||
+    elementType === 'textarea' ||
     domProps.contentEditable != null;
 
-  // dataSet
-  if (dataSet != null) {
-    for (const prop in dataSet) {
-      if (hasOwnProperty.call(dataSet, prop)) {
-        const value = dataSet[prop];
-        if (value != null) {
-          domProps[`data-${prop}`] = value;
-        }
-      }
-    }
-  }
-
-  // accessibilityLabel
-  if (accessibilityLabel != null) {
-    domProps['aria-label'] = accessibilityLabel;
-  }
-
-  // accessibilityLiveRegion
-  if (accessibilityLiveRegion != null) {
-    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
-  }
-
-  // accessibilityRole
-  if (role != null) {
-    domProps.role = role;
-  }
-
-  // accessibilityState
+  // DEPRECATED
   if (accessibilityState != null) {
     for (const prop in accessibilityState) {
       const value = accessibilityState[prop];
@@ -121,7 +147,7 @@ const createDOMProps = (component, props) => {
         if (prop === 'disabled' || prop === 'hidden') {
           if (value === true) {
             domProps[`aria-${prop}`] = value;
-            // also set prop directly to pick up host component behaviour
+            // also set prop directly to pick up host elementType behaviour
             domProps[prop] = value;
           }
         } else {
@@ -130,8 +156,6 @@ const createDOMProps = (component, props) => {
       }
     }
   }
-
-  // accessibilityValue
   if (accessibilityValue != null) {
     for (const prop in accessibilityValue) {
       const value = accessibilityValue[prop];
@@ -141,20 +165,184 @@ const createDOMProps = (component, props) => {
     }
   }
 
+  // ACCESSIBILITY
+  if (accessibilityActiveDescendant != null) {
+    domProps['aria-activedescendant'] = accessibilityActiveDescendant;
+  }
+  if (accessibilityAtomic != null) {
+    domProps['aria-atomic'] = accessibilityAtomic;
+  }
+  if (accessibilityAutoComplete != null) {
+    domProps['aria-autocomplete'] = accessibilityAutoComplete;
+  }
+  if (accessibilityBusy != null) {
+    domProps['aria-busy'] = accessibilityBusy;
+  }
+  if (accessibilityChecked != null) {
+    domProps['aria-checked'] = accessibilityChecked;
+  }
+  if (accessibilityColumnCount != null) {
+    domProps['aria-colcount'] = accessibilityColumnCount;
+  }
+  if (accessibilityColumnIndex != null) {
+    domProps['aria-colindex'] = accessibilityColumnIndex;
+  }
+  if (accessibilityColumnSpan != null) {
+    domProps['aria-colspan'] = accessibilityColumnSpan;
+  }
+  if (accessibilityControls != null) {
+    domProps['aria-controls'] = accessibilityControls;
+  }
+  if (accessibilityDescribedBy != null) {
+    domProps['aria-describedby'] = accessibilityDescribedBy;
+  }
+  if (accessibilityDetails != null) {
+    domProps['aria-details'] = accessibilityDetails;
+  }
   if (disabled === true) {
     domProps['aria-disabled'] = true;
-    domProps.disabled = true;
+    // Enhance with native semantics
+    if (
+      elementType === 'button' ||
+      elementType === 'form' ||
+      elementType === 'input' ||
+      elementType === 'select' ||
+      elementType === 'textarea'
+    ) {
+      domProps.disabled = true;
+    }
+  }
+  if (accessibilityErrorMessage != null) {
+    domProps['aria-errormessage'] = accessibilityErrorMessage;
+  }
+  if (accessibilityExpanded != null) {
+    domProps['aria-expanded'] = accessibilityExpanded;
+  }
+  if (accessibilityFlowTo != null) {
+    domProps['aria-flowto'] = accessibilityFlowTo;
+  }
+  if (accessibilityHasPopup != null) {
+    domProps['aria-haspopup'] = accessibilityHasPopup;
+  }
+  if (accessibilityHidden === true) {
+    domProps['aria-hidden'] = accessibilityHidden;
+  }
+  if (accessibilityInvalid != null) {
+    domProps['aria-invalid'] = accessibilityInvalid;
+  }
+  if (accessibilityKeyShortcuts != null && Array.isArray(accessibilityKeyShortcuts)) {
+    domProps['aria-keyshortcuts'] = accessibilityKeyShortcuts.join(' ');
+  }
+  if (accessibilityLabel != null) {
+    domProps['aria-label'] = accessibilityLabel;
+  }
+  if (accessibilityLabelledBy != null) {
+    domProps['aria-labelledby'] = accessibilityLabelledBy;
+  }
+  if (accessibilityLevel != null) {
+    domProps['aria-level'] = accessibilityLevel;
+  }
+  if (accessibilityLiveRegion != null) {
+    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
+  }
+  if (accessibilityModal != null) {
+    domProps['aria-modal'] = accessibilityModal;
+  }
+  if (accessibilityMultiline != null) {
+    domProps['aria-multiline'] = accessibilityMultiline;
+  }
+  if (accessibilityMultiSelectable != null) {
+    domProps['aria-multiselectable'] = accessibilityMultiSelectable;
+  }
+  if (accessibilityOrientation != null) {
+    domProps['aria-orientation'] = accessibilityOrientation;
+  }
+  if (accessibilityOwns != null) {
+    domProps['aria-owns'] = accessibilityOwns;
+  }
+  if (accessibilityPlaceholder != null) {
+    domProps['aria-placeholder'] = accessibilityPlaceholder;
+  }
+  if (accessibilityPosInSet != null) {
+    domProps['aria-posinset'] = accessibilityPosInSet;
+  }
+  if (accessibilityPressed != null) {
+    domProps['aria-pressed'] = accessibilityPressed;
+  }
+  if (accessibilityReadOnly != null) {
+    domProps['aria-readonly'] = accessibilityReadOnly;
+    // Enhance with native semantics
+    if (elementType === 'input' || elementType === 'select' || elementType === 'textarea') {
+      domProps.readOnly = true;
+    }
+  }
+  if (accessibilityRequired != null) {
+    domProps['aria-required'] = accessibilityRequired;
+    // Enhance with native semantics
+    if (elementType === 'input' || elementType === 'select' || elementType === 'textarea') {
+      domProps.required = true;
+    }
+  }
+  if (role != null) {
+    // 'presentation' synonym has wider browser support
+    domProps['role'] = role === 'none' ? 'presentation' : role;
+  }
+  if (accessibilityRoleDescription != null) {
+    domProps['aria-roledescription'] = accessibilityRoleDescription;
+  }
+  if (accessibilityRowCount != null) {
+    domProps['aria-rowcount'] = accessibilityRowCount;
+  }
+  if (accessibilityRowIndex != null) {
+    domProps['aria-rowindex'] = accessibilityRowIndex;
+  }
+  if (accessibilityRowSpan != null) {
+    domProps['aria-rowspan'] = accessibilityRowSpan;
+  }
+  if (accessibilitySelected != null) {
+    domProps['aria-selected'] = accessibilitySelected;
+  }
+  if (accessibilitySetSize != null) {
+    domProps['aria-setsize'] = accessibilitySetSize;
+  }
+  if (accessibilitySort != null) {
+    domProps['aria-sort'] = accessibilitySort;
+  }
+  if (accessibilityValueMax != null) {
+    domProps['aria-valuemax'] = accessibilityValueMax;
+  }
+  if (accessibilityValueMin != null) {
+    domProps['aria-valuemin'] = accessibilityValueMin;
+  }
+  if (accessibilityValueNow != null) {
+    domProps['aria-valuenow'] = accessibilityValueNow;
+  }
+  if (accessibilityValueText != null) {
+    domProps['aria-valuetext'] = accessibilityValueText;
+  }
+
+  // "dataSet" replaced with "data-*"
+  if (dataSet != null) {
+    for (const dataProp in dataSet) {
+      if (hasOwnProperty.call(dataSet, dataProp)) {
+        const dataName = hyphenateString(dataProp);
+        const dataValue = dataSet[dataProp];
+        if (dataValue != null) {
+          domProps[`data-${dataName}`] = dataValue;
+        }
+      }
+    }
   }
 
   // FOCUS
   // "focusable" indicates that an element may be a keyboard tab-stop.
   if (
     // These native elements are focusable by default
-    component === 'a' ||
-    component === 'button' ||
-    component === 'input' ||
-    component === 'select' ||
-    component === 'textarea'
+    elementType === 'a' ||
+    elementType === 'button' ||
+    elementType === 'input' ||
+    elementType === 'select' ||
+    elementType === 'textarea'
   ) {
     if (focusable === false || accessibilityDisabled === true) {
       domProps.tabIndex = '-1';
@@ -188,10 +376,10 @@ const createDOMProps = (component, props) => {
   // Additional style resets for interactive elements
   const needsCursor = (role === 'button' || role === 'link') && !disabled;
   const needsReset =
-    component === 'a' ||
-    component === 'button' ||
-    component === 'li' ||
-    component === 'ul' ||
+    elementType === 'a' ||
+    elementType === 'button' ||
+    elementType === 'li' ||
+    elementType === 'ul' ||
     role === 'heading';
   // Classic CSS styles
   const finalClassList = [needsReset && classes.reset, needsCursor && classes.cursor, classList];
@@ -212,7 +400,6 @@ const createDOMProps = (component, props) => {
   if (nativeID != null) {
     domProps.id = nativeID;
   }
-
   // Automated test IDs
   if (testID != null) {
     domProps['data-testid'] = testID;
@@ -225,11 +412,11 @@ const createDOMProps = (component, props) => {
     isNativeInteractiveElement ||
     role === 'button' ||
     role === 'menuitem' ||
-    (focusable === true && !accessibilityDisabled)
+    (focusable === true && !disabled)
   ) {
     const onClick = domProps.onClick;
     if (onClick != null) {
-      if (accessibilityDisabled) {
+      if (disabled) {
         // Prevent click propagating if the element is disabled. See #1757
         domProps.onClick = function(e) {
           e.stopPropagation();
