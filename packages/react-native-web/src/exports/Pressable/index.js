@@ -10,6 +10,7 @@
 
 'use strict';
 
+import type { HoverEventsConfig } from '../../modules/useHover';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { ViewProps } from '../View';
 
@@ -51,6 +52,10 @@ type Props = $ReadOnly<{|
   onBlur?: $PropertyType<ViewProps, 'onBlur'>,
   // Called when the view is focused
   onFocus?: $PropertyType<ViewProps, 'onFocus'>,
+  // Called when the view is hovered
+  onHoverIn?: $PropertyType<HoverEventsConfig, 'onHoverStart'>,
+  // Called when the view is no longer hovered
+  onHoverOut?: $PropertyType<HoverEventsConfig, 'onHoverEnd'>,
   // Called when this view's layout changes
   onLayout?: $PropertyType<ViewProps, 'onLayout'>,
   // Called when a long-tap gesture is detected.
@@ -68,6 +73,7 @@ type Props = $ReadOnly<{|
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
    */
+  testOnly_hovered?: ?boolean,
   testOnly_pressed?: ?boolean
 |}>;
 
@@ -85,17 +91,20 @@ function Pressable(props: Props, forwardedRef): React.Node {
     focusable,
     onBlur,
     onFocus,
+    onHoverIn,
+    onHoverOut,
     onLongPress,
     onPress,
     onPressMove,
     onPressIn,
     onPressOut,
     style,
+    testOnly_hovered,
     testOnly_pressed,
     ...rest
   } = props;
 
-  const [hovered, setHovered] = useForceableState(false);
+  const [hovered, setHovered] = useForceableState(testOnly_hovered === true);
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
@@ -131,7 +140,13 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
-  useHover(hostRef, { contain: true, disabled, onHoverChange: setHovered });
+  useHover(hostRef, {
+    contain: true,
+    disabled,
+    onHoverChange: setHovered,
+    onHoverStart: onHoverIn,
+    onHoverEnd: onHoverOut
+  });
 
   const interactionState = { hovered, focused, pressed };
 

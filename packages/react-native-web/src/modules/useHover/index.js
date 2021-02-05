@@ -15,7 +15,7 @@ import useLayoutEffect from '../useLayoutEffect';
  * Types
  */
 
-type HoverEventsConfig = {
+export type HoverEventsConfig = {
   contain?: ?boolean,
   disabled?: ?boolean,
   onHoverStart?: ?(e: any) => void,
