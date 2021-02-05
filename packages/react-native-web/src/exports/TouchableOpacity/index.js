@@ -34,7 +34,6 @@ type Props = $ReadOnly<{|
  */
 function TouchableOpacity(props: Props, forwardedRef): React.Node {
   const {
-    accessible,
     activeOpacity,
     delayPressIn,
     delayPressOut,
@@ -125,12 +124,8 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      accessibilityState={{
-        disabled,
-        ...props.accessibilityState
-      }}
-      accessible={accessible !== false}
-      focusable={focusable !== false && onPress !== undefined}
+      accessibilityDisabled={disabled}
+      focusable={!disabled && focusable !== false}
       ref={setRef}
       style={[
         styles.root,

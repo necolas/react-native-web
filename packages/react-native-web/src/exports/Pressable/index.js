@@ -77,7 +77,6 @@ type Props = $ReadOnly<{|
  */
 function Pressable(props: Props, forwardedRef): React.Node {
   const {
-    accessible,
     children,
     delayLongPress,
     delayPressIn,
@@ -134,7 +133,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   useHover(hostRef, { contain: true, disabled, onHoverChange: setHovered });
 
-  const accessibilityState = { disabled, ...props.accessibilityState };
   const interactionState = { hovered, focused, pressed };
 
   function createFocusHandler(callback, value) {
@@ -152,9 +150,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      accessibilityState={accessibilityState}
-      accessible={accessible !== false}
-      focusable={focusable !== false}
+      accessibilityDisabled={disabled}
+      focusable={!disabled && focusable !== false}
       onBlur={createFocusHandler(onBlur, false)}
       onFocus={createFocusHandler(onFocus, true)}
       ref={setRef}

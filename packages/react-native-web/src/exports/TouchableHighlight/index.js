@@ -71,7 +71,6 @@ function hasPressHandler(props): boolean {
  */
 function TouchableHighlight(props: Props, forwardedRef): React.Node {
   const {
-    accessible,
     activeOpacity,
     children,
     delayPressIn,
@@ -166,12 +165,8 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      accessibilityState={{
-        disabled,
-        ...props.accessibilityState
-      }}
-      accessible={accessible !== false}
-      focusable={focusable !== false && onPress !== undefined}
+      accessibilityDisabled={disabled}
+      focusable={!disabled && focusable !== false}
       ref={setRef}
       style={[
         styles.root,

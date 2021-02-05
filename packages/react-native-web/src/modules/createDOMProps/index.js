@@ -56,15 +56,14 @@ const createDOMProps = (component, props) => {
   }
 
   const {
+    accessibilityDisabled,
     accessibilityLabel,
     accessibilityLiveRegion,
     accessibilityState,
     accessibilityValue,
-    accessible,
     classList,
     dataSet,
-    disabled: providedDisabled,
-    importantForAccessibility,
+    focusable,
     nativeID,
     pointerEvents,
     style: providedStyle,
@@ -76,7 +75,7 @@ const createDOMProps = (component, props) => {
   } = props;
 
   const disabled =
-    (accessibilityState != null && accessibilityState.disabled === true) || providedDisabled;
+    (accessibilityState != null && accessibilityState.disabled === true) || accessibilityDisabled;
   const role = AccessibilityUtil.propsToAriaRole(props);
   const isNativeInteractiveElement =
     role === 'link' ||
@@ -142,36 +141,40 @@ const createDOMProps = (component, props) => {
     }
   }
 
-  // legacy fallbacks
-  if (importantForAccessibility === 'no-hide-descendants') {
-    domProps['aria-hidden'] = true;
-  }
   if (disabled === true) {
     domProps['aria-disabled'] = true;
     domProps.disabled = true;
   }
 
   // FOCUS
-  // Assume that 'link' is focusable by default (uses <a>).
-  // Assume that 'button' is not (uses <div role='button'>) but must be treated as such.
-  const focusable =
-    !disabled &&
-    importantForAccessibility !== 'no' &&
-    importantForAccessibility !== 'no-hide-descendants';
-  if (isNativeInteractiveElement) {
-    if (accessible === false || !focusable) {
+  // "focusable" indicates that an element may be a keyboard tab-stop.
+  if (
+    // These native elements are focusable by default
+    component === 'a' ||
+    component === 'button' ||
+    component === 'input' ||
+    component === 'select' ||
+    component === 'textarea'
+  ) {
+    if (focusable === false || accessibilityDisabled === true) {
       domProps.tabIndex = '-1';
-    } else {
-      domProps['data-focusable'] = true;
     }
-  } else if (role === 'button' || role === 'menuitem' || role === 'textbox') {
-    if (accessible !== false && focusable) {
-      domProps['data-focusable'] = true;
+  } else if (
+    // These roles are made focusable by default
+    role === 'button' ||
+    role === 'checkbox' ||
+    role === 'link' ||
+    role === 'menuitem' ||
+    role === 'radio' ||
+    role === 'textbox' ||
+    role === 'switch'
+  ) {
+    if (focusable !== false) {
       domProps.tabIndex = '0';
     }
   } else {
-    if (accessible === true && focusable) {
-      domProps['data-focusable'] = true;
+    // Everything else must explicitly set the prop
+    if (focusable === true) {
       domProps.tabIndex = '0';
     }
   }
@@ -222,11 +225,11 @@ const createDOMProps = (component, props) => {
     isNativeInteractiveElement ||
     role === 'button' ||
     role === 'menuitem' ||
-    (accessible === true && focusable)
+    (focusable === true && !accessibilityDisabled)
   ) {
     const onClick = domProps.onClick;
     if (onClick != null) {
-      if (disabled) {
+      if (accessibilityDisabled) {
         // Prevent click propagating if the element is disabled. See #1757
         domProps.onClick = function(e) {
           e.stopPropagation();

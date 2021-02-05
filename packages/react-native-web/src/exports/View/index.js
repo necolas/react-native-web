@@ -23,16 +23,15 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 
 const forwardPropsList = {
+  accessibilityDisabled: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityValue: true,
-  accessible: true,
   children: true,
   classList: true,
-  disabled: true,
-  importantForAccessibility: true,
+  focusable: true,
   nativeID: true,
   onBlur: true,
   onClick: true,

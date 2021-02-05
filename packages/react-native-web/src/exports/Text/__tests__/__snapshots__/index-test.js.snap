@@ -45,7 +45,6 @@ exports[`components/Text prop "accessibilityLiveRegion" value is set 1`] = `
 exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] = `
 <a
   class="css-reset-4rbku5 css-cursor-18t94o4 css-text-901oao"
-  data-focusable="true"
   dir="auto"
   role="link"
 />
@@ -54,7 +53,6 @@ exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] 
 exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
 <div
   class="css-cursor-18t94o4 css-text-901oao"
-  data-focusable="true"
   dir="auto"
   role="button"
   tabindex="0"

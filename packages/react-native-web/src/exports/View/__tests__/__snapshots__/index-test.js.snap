@@ -40,7 +40,6 @@ exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
 exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
 <a
   class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n"
-  data-focusable="true"
   role="link"
 />
 `;
@@ -48,7 +47,6 @@ exports[`components/View prop "accessibilityRole" value alters HTML element 1`] 
 exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
 <div
   class="css-cursor-18t94o4 css-view-1dbjc4n"
-  data-focusable="true"
   role="button"
   tabindex="0"
 />
