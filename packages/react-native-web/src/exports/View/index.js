@@ -63,15 +63,14 @@ const forwardPropsList = {
   onMouseUp: true,
   onScroll: true,
   onWheel: true,
-  href: true,
-  rel: true,
-  target: true
+  href: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);
 
 const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const {
+    hrefAttrs,
     onLayout,
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -130,6 +129,18 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const supportedProps = pickProps(props);
   supportedProps.classList = classList;
   supportedProps.style = style;
+  if (props.href != null && hrefAttrs != null) {
+    const { download, rel, target } = hrefAttrs;
+    if (download != null) {
+      supportedProps.download = download;
+    }
+    if (rel != null) {
+      supportedProps.rel = rel;
+    }
+    if (typeof target === 'string' && target.charAt(0) !== '_') {
+      supportedProps.target = '_' + target;
+    }
+  }
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
   const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);

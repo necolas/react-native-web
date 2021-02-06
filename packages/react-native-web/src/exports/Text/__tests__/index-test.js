@@ -54,6 +54,15 @@ describe('components/Text', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "hrefAttrs"', () => {
+    test('values are set', () => {
+      const { container } = render(
+        <Text href="#" hrefAttrs={{ download: true, target: 'blank', rel: 'noopener' }} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "nativeID"', () => {
     test('value is set', () => {
       const { container } = render(<Text nativeID="nativeID" />);

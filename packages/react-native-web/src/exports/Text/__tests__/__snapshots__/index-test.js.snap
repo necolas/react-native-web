@@ -67,6 +67,17 @@ exports[`components/Text prop "accessibilityRole" value is set 1`] = `
 />
 `;
 
+exports[`components/Text prop "hrefAttrs" values are set 1`] = `
+<div
+  class="css-text-901oao"
+  dir="auto"
+  download=""
+  href="#"
+  rel="noopener"
+  target="_blank"
+/>
+`;
+
 exports[`components/Text prop "nativeID" value is set 1`] = `
 <div
   class="css-text-901oao"
