@@ -12,11 +12,15 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => void,
-  doLeftAndRightSwapInRTL: boolean,
   forceRTL: (forceRTL: boolean) => void,
-  isRTL: boolean,
+  getConstants: () => Constants,
   setPreferredLanguageRTL: (setRTL: boolean) => void,
   swapLeftAndRightInRTL: (flipStyles: boolean) => void
+};
+
+type Constants = {
+  doLeftAndRightSwapInRTL: boolean,
+  isRTL: boolean
 };
 
 let doLeftAndRightSwapInRTL = true;
@@ -48,18 +52,15 @@ const I18nManager: I18nManagerStatus = {
     isRTLForced = bool;
     onDirectionChange();
   },
+  getConstants(): Constants {
+    return { doLeftAndRightSwapInRTL, isRTL: isRTL() };
+  },
   setPreferredLanguageRTL(bool) {
     isPreferredLanguageRTL = bool;
     onDirectionChange();
   },
   swapLeftAndRightInRTL(bool) {
     doLeftAndRightSwapInRTL = bool;
-  },
-  get doLeftAndRightSwapInRTL() {
-    return doLeftAndRightSwapInRTL;
-  },
-  get isRTL() {
-    return isRTL();
   }
 };
 
