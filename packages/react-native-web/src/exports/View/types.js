@@ -20,8 +20,60 @@ import type {
 } from '../../types/styles';
 
 type NumberOrString = number | string;
-
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
+type idRef = string;
+type idRefList = idRef | Array<idRef>;
+
+export type AccessibilityProps = {|
+  accessibilityActiveDescendant?: ?idRef,
+  accessibilityAtomic?: ?boolean,
+  accessibilityAutoComplete?: ?('none' | 'list' | 'inline' | 'both'),
+  accessibilityBusy?: ?boolean,
+  accessibilityChecked?: ?(boolean | 'mixed'),
+  accessibilityColumnCount?: ?number,
+  accessibilityColumnIndex?: ?number,
+  accessibilityColumnSpan?: ?number,
+  accessibilityControls?: ?idRefList,
+  accessibilityDescribedBy?: ?idRef,
+  accessibilityDetails?: ?idRef,
+  accessibilityDisabled?: ?boolean,
+  accessibilityErrorMessage?: ?idRef,
+  accessibilityExpanded?: ?boolean,
+  accessibilityFlowTo?: ?idRefList,
+  accessibilityHasPopup?: ?('dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false),
+  accessibilityHidden?: ?boolean,
+  accessibilityInvalid?: ?boolean,
+  accessibilityKeyShortcuts?: ?Array<string>,
+  accessibilityLabel?: ?string,
+  accessibilityLabelledBy?: ?idRefList,
+  accessibilityLevel?: ?number,
+  accessibilityLiveRegion?: ?('assertive' | 'none' | 'polite'),
+  accessibilityModal?: ?boolean,
+  accessibilityMultiline?: ?boolean,
+  accessibilityMultiSelectable?: ?boolean,
+  accessibilityOrientation?: ?('horizontal' | 'vertical'),
+  accessibilityOwns?: ?idRefList,
+  accessibilityPlaceholder?: ?string,
+  accessibilityPosInSet?: ?number,
+  accessibilityPressed?: ?(boolean | 'mixed'),
+  accessibilityReadOnly?: ?boolean,
+  accessibilityRequired?: ?boolean,
+  accessibilityRole?: ?string,
+  accessibilityRoleDescription?: ?string,
+  accessibilityRowCount?: ?number,
+  accessibilityRowIndex?: ?number,
+  accessibilityRowSpan?: ?number,
+  accessibilitySelected?: ?boolean,
+  accessibilitySetSize?: ?number,
+  accessibilitySort?: ?('ascending' | 'descending' | 'none' | 'other'),
+  accessibilityValueMax?: ?number,
+  accessibilityValueMin?: ?number,
+  accessibilityValueNow?: ?number,
+  accessibilityValueText?: ?string,
+  dataSet?: { ... },
+  focusable?: ?boolean,
+  nativeID?: ?string
+|};
 
 export type ViewStyle = {
   ...AnimationStyles,
@@ -59,9 +111,7 @@ export type ViewStyle = {
 };
 
 export type ViewProps = {
-  accessibilityLabel?: ?string,
-  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
-  accessibilityRole?: ?string,
+  ...AccessibilityProps,
   accessibilityState?: {
     busy?: ?boolean,
     checked?: ?boolean | 'mixed',
@@ -82,9 +132,8 @@ export type ViewProps = {
     now?: ?number,
     text?: ?string
   },
-  accessible?: boolean,
   children?: ?any,
-  importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants',
+  focusable?: ?boolean,
   nativeID?: ?string,
   onBlur?: (e: any) => void,
   onClick?: (e: any) => void,
@@ -133,6 +182,5 @@ export type ViewProps = {
   onTouchStartCapture?: (e: any) => void,
   onWheel?: (e: any) => void,
   href?: ?string,
-  rel?: ?string,
-  target?: ?string
+  hrefAttrs?: ?{ download?: ?boolean, rel?: ?string, target?: ?string }
 };

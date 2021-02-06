@@ -30,15 +30,8 @@ export type StateCallbackType = $ReadOnly<{|
 
 type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 
-type Props = $ReadOnly<{|
-  accessibilityLabel?: $PropertyType<ViewProps, 'accessibilityLabel'>,
-  accessibilityLiveRegion?: $PropertyType<ViewProps, 'accessibilityLiveRegion'>,
-  accessibilityRole?: $PropertyType<ViewProps, 'accessibilityRole'>,
-  accessibilityState?: $PropertyType<ViewProps, 'accessibilityState'>,
-  accessibilityValue?: $PropertyType<ViewProps, 'accessibilityValue'>,
-  accessible?: $PropertyType<ViewProps, 'accessible'>,
-  focusable?: ?boolean,
-  importantForAccessibility?: $PropertyType<ViewProps, 'importantForAccessibility'>,
+type Props = {
+  ...ViewProps,
   children: React.Node | ((state: StateCallbackType) => React.Node),
   // Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
   delayLongPress?: ?number,
@@ -48,10 +41,6 @@ type Props = $ReadOnly<{|
   delayPressOut?: ?number,
   // Whether the press behavior is disabled.
   disabled?: ?boolean,
-  // Called when the view blurs
-  onBlur?: $PropertyType<ViewProps, 'onBlur'>,
-  // Called when the view is focused
-  onFocus?: $PropertyType<ViewProps, 'onFocus'>,
   // Called when the view is hovered
   onHoverIn?: $PropertyType<HoverEventsConfig, 'onHoverStart'>,
   // Called when the view is no longer hovered
@@ -69,13 +58,12 @@ type Props = $ReadOnly<{|
   // Called when a touch is released, before `onPress`.
   onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp),
-  testID?: $PropertyType<ViewProps, 'testID'>,
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
    */
   testOnly_hovered?: ?boolean,
   testOnly_pressed?: ?boolean
-|}>;
+};
 
 /**
  * Component used to build display components that should respond to whether the

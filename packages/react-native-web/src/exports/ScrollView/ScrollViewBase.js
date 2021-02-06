@@ -72,24 +72,15 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
  */
 const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
   const {
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    children,
-    importantForAccessibility,
-    nativeID,
-    onLayout,
     onScroll,
     onTouchMove,
     onWheel,
-    pointerEvents,
     scrollEnabled = true,
     scrollEventThrottle = 0,
     showsHorizontalScrollIndicator,
     showsVerticalScrollIndicator,
     style,
-    dataSet,
-    testID
+    ...rest
   } = props;
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
@@ -153,25 +144,16 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
 
   return (
     <View
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole={accessibilityRole}
-      accessibilityState={accessibilityState}
-      children={children}
-      dataSet={dataSet}
-      importantForAccessibility={importantForAccessibility}
-      nativeID={nativeID}
-      onLayout={onLayout}
+      {...rest}
       onScroll={handleScroll}
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
-      pointerEvents={pointerEvents}
       ref={useMergeRefs(scrollRef, forwardedRef)}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
         hideScrollbar && styles.hideScrollbar
       ]}
-      testID={testID}
     />
   );
 });
