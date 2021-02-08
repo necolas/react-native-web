@@ -7,13 +7,13 @@ const ITEMS = [...Array(12)].map((_, i) => `Item ${i}`);
 function createItemRow(msg, index) {
   return (
     <TouchableOpacity key={index} style={[styles.item]}>
-      <Text style={styles.text} >{msg}</Text>
+      <Text style={styles.text}>{msg}</Text>
     </TouchableOpacity>
   );
 }
 
 function Divider() {
-  return <View style={styles.divider} />
+  return <View style={styles.divider} />;
 }
 
 export default function ScrollViewPage() {
@@ -31,7 +31,7 @@ export default function ScrollViewPage() {
           ref={scrollRef}
           scrollEnabled={scrollEnabled}
           scrollEventThrottle={throttle}
-          style={[styles.scrollView, !scrollEnabled && styles.disabled ]}
+          style={[styles.scrollView, !scrollEnabled && styles.disabled]}
         >
           {ITEMS.map(createItemRow)}
         </ScrollView>
@@ -80,7 +80,7 @@ export default function ScrollViewPage() {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'stretch',
+    alignSelf: 'stretch'
   },
   scrollView: {
     backgroundColor: '#eeeeee',

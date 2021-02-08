@@ -11,15 +11,7 @@ const compose = (s1, s2) => {
 class View extends React.Component {
   render() {
     const { style, ...other } = this.props;
-    return (
-      <div
-        {...other}
-        style={compose(
-          viewStyle,
-          style
-        )}
-      />
-    );
+    return <div {...other} style={compose(viewStyle, style)} />;
   }
 }
 

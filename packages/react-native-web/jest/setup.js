@@ -8,11 +8,11 @@ const mockEmptyObject = {};
 
 // Make sure snapshots contain the original style objects
 jest.mock('../dist/cjs/exports/StyleSheet/ReactNativePropRegistry', () => ({
-  register: id => id,
+  register: (id) => id,
   getByID: () => mockEmptyObject
 }));
 
 jest.mock('../dist/exports/StyleSheet/ReactNativePropRegistry', () => ({
-  register: id => id,
+  register: (id) => id,
   getByID: () => mockEmptyObject
 }));

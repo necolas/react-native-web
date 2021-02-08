@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import View from './View';
 
-const getColor = color => {
+const getColor = (color) => {
   switch (color) {
     case 0:
       return '#14171A';
@@ -21,7 +21,7 @@ const getColor = color => {
   }
 };
 
-const Box = props => {
+const Box = (props) => {
   const { className, children: styles } = (
     <scope className={classnames('Box', props.fixed && 'fixed')}>
       <style jsx>{`

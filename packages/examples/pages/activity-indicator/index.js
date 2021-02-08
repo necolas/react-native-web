@@ -3,8 +3,8 @@ import React from 'react';
 import Example from '../../shared/example';
 
 export default function ActivityIndicatorPage() {
-  const [animating,setAnimating] = React.useState(true);
-  
+  const [animating, setAnimating] = React.useState(true);
+
   React.useEffect(() => {
     const interval = setInterval(() => {
       setAnimating(!animating);

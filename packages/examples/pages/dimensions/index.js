@@ -8,14 +8,14 @@ export default function DimensionsPage() {
 
   React.useEffect(() => {
     const handleChange = ({ screen, window: win }) => {
-      setScreen(screen)
+      setScreen(screen);
       setWindow(win);
-    }
+    };
 
     Dimensions.addEventListener('change', handleChange);
     return () => {
       Dimensions.removeEventListener('change', handleChange);
-    }
+    };
   }, [setScreen, setWindow]);
 
   return (

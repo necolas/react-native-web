@@ -176,10 +176,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       ]}
     >
       {React.cloneElement(child, {
-        style: StyleSheet.compose(
-          child.props.style,
-          extraStyles && extraStyles.child
-        )
+        style: StyleSheet.compose(child.props.style, extraStyles && extraStyles.child)
       })}
     </View>
   );

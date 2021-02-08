@@ -9,7 +9,7 @@ export default function ClipboardPage() {
   };
 
   return (
-    <Example title="Clipboard"w>
+    <Example title="Clipboard" w>
       <View style={styles.buttonBox}>
         <Button onPress={setString} title="Copy to clipboard" />
       </View>

@@ -82,7 +82,7 @@ function withRTLState(Component) {
 
     render() {
       const isRTL = Platform === 'ios' ? this.state.isRTL : I18nManager.isRTL;
-      const setRTL = isRTL => this.setState({ isRTL: isRTL });
+      const setRTL = (isRTL) => this.setState({ isRTL: isRTL });
       return <Component isRTL={isRTL} setRTL={setRTL} />;
     }
   };
@@ -397,82 +397,80 @@ class LayoutRTLExample extends React.Component {
           Platform.OS !== 'android' ? { direction: this.state.isRTL ? 'rtl' : 'ltr' } : null
         ]}
       >
+        <Block title={'Current layout direction'}>
+          <View style={styles.directionBox}>
+            <Text style={styles.directionText}>
+              {this.state.isRTL ? 'Right-to-Left' : 'Left-to-Right'}
+            </Text>
+          </View>
+        </Block>
+        <Block title={'Quickly test RTL layout'}>
+          <View style={[styles.flexDirectionRow, styles.switchRow]}>
+            <Text style={{ fontWeight: 'bold' }}>forceRTL</Text>
+            <View>
+              <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
+            </View>
+          </View>
+          <View style={[styles.flexDirectionRow, styles.switchRow]}>
+            <Text style={{ fontWeight: 'bold' }}>swapLeftAndRightInRTL</Text>
+            <View>
+              <Switch
+                onValueChange={this._onSwapChange}
+                value={this.state.doLeftAndRightSwapInRTL}
+              />
+            </View>
+          </View>
+        </Block>
+        <TextAlignmentExample
+          description={'Depends on the text content.'}
+          style={styles.fontSizeSmall}
+          title={'Default text alignment'}
+        />
+        <TextAlignmentExample
+          style={[styles.fontSizeSmall, styles.textAlignLeft]}
+          title={'textAlign: "left"'}
+        />
+        <TextAlignmentExample
+          style={[styles.fontSizeSmall, styles.textAlignRight]}
+          title={'textAlign: "right"'}
+        />
+        <TextAlignmentExample
+          style={[styles.fontSizeSmall, styles.textAlignStart]}
+          title={'textAlign: "start"'}
+        />
+        <TextAlignmentExample
+          style={[styles.fontSizeSmall, styles.textAlignEnd]}
+          title={'textAlign: "end"'}
+        />
+        <PaddingExample />
+        <MarginExample />
+        <PositionExample />
+        <BorderColorExample />
+        <BorderWidthExample />
+        <BorderRadiiExample />
 
-          <Block title={'Current layout direction'}>
-            <View style={styles.directionBox}>
-              <Text style={styles.directionText}>
-                {this.state.isRTL ? 'Right-to-Left' : 'Left-to-Right'}
-              </Text>
-            </View>
-          </Block>
-          <Block title={'Quickly test RTL layout'}>
-            <View style={[styles.flexDirectionRow, styles.switchRow]}>
-              <Text style={{ fontWeight: 'bold' }}>forceRTL</Text>
-              <View>
-                <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
-              </View>
-            </View>
-            <View style={[styles.flexDirectionRow, styles.switchRow]}>
-              <Text style={{ fontWeight: 'bold' }}>swapLeftAndRightInRTL</Text>
-              <View>
-                <Switch
-                  onValueChange={this._onSwapChange}
-                  value={this.state.doLeftAndRightSwapInRTL}
-                />
-              </View>
-            </View>
-          </Block>
-          <TextAlignmentExample
-            description={'Depends on the text content.'}
-            style={styles.fontSizeSmall}
-            title={'Default text alignment'}
-          />
-          <TextAlignmentExample
-            style={[styles.fontSizeSmall, styles.textAlignLeft]}
-            title={'textAlign: "left"'}
-          />
-          <TextAlignmentExample
-            style={[styles.fontSizeSmall, styles.textAlignRight]}
-            title={'textAlign: "right"'}
-          />
-          <TextAlignmentExample
-            style={[styles.fontSizeSmall, styles.textAlignStart]}
-            title={'textAlign: "start"'}
-          />
-          <TextAlignmentExample
-            style={[styles.fontSizeSmall, styles.textAlignEnd]}
-            title={'textAlign: "end"'}
-          />
-          <PaddingExample />
-          <MarginExample />
-          <PositionExample />
-          <BorderColorExample />
-          <BorderWidthExample />
-          <BorderRadiiExample />
+        <Block title={'A simple list-item layout'}>
+          <View style={styles.list}>
+            <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=222' }} />
+            <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=250' }} />
+          </View>
+        </Block>
 
-          <Block title={'A simple list-item layout'}>
-            <View style={styles.list}>
-              <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=222' }} />
-              <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=250' }} />
+        <Block title={'Working with icons'}>
+          <View style={[styles.flexDirectionRow, { justifyContent: 'space-around' }]}>
+            <View style={{ alignItems: 'center' }}>
+              <Image source={iconSource} style={styles.image} />
+              <Text style={styles.fontSizeSmall}>No RTL flip</Text>
             </View>
-          </Block>
-
-          <Block title={'Working with icons'}>
-            <View style={[styles.flexDirectionRow, { justifyContent: 'space-around' }]}>
-              <View style={{ alignItems: 'center' }}>
-                <Image source={iconSource} style={styles.image} />
-                <Text style={styles.fontSizeSmall}>No RTL flip</Text>
-              </View>
-              <View style={{ alignItems: 'center' }}>
-                <Image
-                  source={iconSource}
-                  style={[styles.image, { transform: [{ scaleX: this.state.isRTL ? -1 : 1 }] }]}
-                />
-                <Text style={styles.fontSizeSmall}>RTL flip</Text>
-              </View>
+            <View style={{ alignItems: 'center' }}>
+              <Image
+                source={iconSource}
+                style={[styles.image, { transform: [{ scaleX: this.state.isRTL ? -1 : 1 }] }]}
+              />
+              <Text style={styles.fontSizeSmall}>RTL flip</Text>
             </View>
-          </Block>
-
+          </View>
+        </Block>
       </ScrollView>
     );
   }

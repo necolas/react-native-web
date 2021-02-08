@@ -3,12 +3,12 @@ import React from 'react';
 import Example from '../../shared/example';
 
 function Divider() {
-  return <View style={styles.divider} />
+  return <View style={styles.divider} />;
 }
 
 export default function CheckboxPage() {
-  const [checked,setChecked] = React.useState(true);
-  
+  const [checked, setChecked] = React.useState(true);
+
   React.useEffect(() => {
     const interval = setInterval(() => {
       setChecked(!checked);

@@ -68,7 +68,7 @@ const forwardPropsList = {
   href: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const {

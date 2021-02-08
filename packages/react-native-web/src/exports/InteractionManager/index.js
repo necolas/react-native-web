@@ -23,7 +23,7 @@ const InteractionManager = {
   runAfterInteractions(task: ?Function): { then: Function, done: Function, cancel: Function } {
     let handle;
 
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve) => {
       handle = requestIdleCallback(() => {
         if (task) {
           resolve(task());

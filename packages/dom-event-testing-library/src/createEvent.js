@@ -230,12 +230,12 @@ export default function createEvent(type, init) {
   event.initEvent(type, bubbles, cancelable);
 
   if (data != null) {
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       const value = data[key];
       // Ensure the value of 'defaultPrevented' is updated if 'preventDefault' is mocked.
       // The property is marked as 'configurable' to allow mocking.
       if (key === 'preventDefault' && typeof value === 'function') {
-        const preventDefault = function() {
+        const preventDefault = function () {
           value();
           Object.defineProperty(this, 'defaultPrevented', { value: true });
         };

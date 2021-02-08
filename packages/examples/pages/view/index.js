@@ -30,7 +30,7 @@ export default function ViewPage() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setLayoutStyle(l => l.width === '100%' ? l2 : l1);
+      setLayoutStyle((l) => (l.width === '100%' ? l2 : l1));
     }, 2500);
     return () => {
       clearInterval(interval);
@@ -44,7 +44,9 @@ export default function ViewPage() {
   return (
     <Example title="View">
       <View style={styles.container}>
-        <Text accessibilityRole="heading" style={styles.heading}>onLayout</Text>
+        <Text accessibilityRole="heading" style={styles.heading}>
+          onLayout
+        </Text>
         <View>
           <View style={[styles.layoutContainer, layoutStyle]}>
             <View onLayout={handleLayout} style={styles.layoutBox} />
@@ -52,7 +54,9 @@ export default function ViewPage() {
           <Text>{JSON.stringify(layoutInfo, null, 2)}</Text>
         </View>
 
-        <Text accessibilityRole="heading" style={styles.heading}>pointerEvents</Text>
+        <Text accessibilityRole="heading" style={styles.heading}>
+          pointerEvents
+        </Text>
         <View pointerEvents="box-none">
           <View pointerEvents="box-none" style={styles.boxContainer}>
             <Box pointerEvents="none" />

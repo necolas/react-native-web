@@ -139,7 +139,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const interactionState = { hovered, focused, pressed };
 
   function createFocusHandler(callback, value) {
-    return function(event) {
+    return function (event) {
       if (event.nativeEvent.target === hostRef.current) {
         setFocused(value);
         if (callback != null) {

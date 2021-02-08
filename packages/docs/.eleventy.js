@@ -20,11 +20,11 @@ const UglifyJS = require('uglify-es');
  * Add classes to markdown elements by default
  */
 function markdownitTagToClass(md, mapping = {}) {
-  const toArray = a => (Array.isArray(a) ? a : [a]);
-  const splitWithSpace = s => (s ? s.split(' ') : []);
+  const toArray = (a) => (Array.isArray(a) ? a : [a]);
+  const splitWithSpace = (s) => (s ? s.split(' ') : []);
 
   function parseTokens(tokens) {
-    tokens.forEach(token => {
+    tokens.forEach((token) => {
       if (/(_open$|hr|image)/.test(token.type) && mapping[token.tag]) {
         const orig = splitWithSpace(token.attrGet('class'));
         const addition = toArray(mapping[token.tag]);
@@ -35,10 +35,10 @@ function markdownitTagToClass(md, mapping = {}) {
       }
     });
   }
-  md.core.ruler.push('markdownit-tag-to-class', state => parseTokens(state.tokens));
+  md.core.ruler.push('markdownit-tag-to-class', (state) => parseTokens(state.tokens));
 }
 
-module.exports = function(eleventyConfig) {
+module.exports = function (eleventyConfig) {
   // Merge data instead of overriding
   // https://www.11ty.dev/docs/data-deep-merge/
   eleventyConfig.setDataDeepMerge(true);
@@ -55,7 +55,7 @@ module.exports = function(eleventyConfig) {
   // TRANSFORMS -----
 
   // Minify HTML output
-  eleventyConfig.addTransform('htmlmin', function(content, outputPath) {
+  eleventyConfig.addTransform('htmlmin', function (content, outputPath) {
     if (typeof outputPath === 'string' && outputPath.includes('.html')) {
       return htmlmin.minify(content, {
         useShortDoctype: true,
@@ -69,20 +69,20 @@ module.exports = function(eleventyConfig) {
   // FILTERS -----
 
   // Date formatting (human readable)
-  eleventyConfig.addFilter('readableDate', dateObj => {
+  eleventyConfig.addFilter('readableDate', (dateObj) => {
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     return new Intl.DateTimeFormat('en-US', options).format(dateObj);
   });
   // Date formatting (machine readable)
-  eleventyConfig.addFilter('machineDate', dateObj => {
+  eleventyConfig.addFilter('machineDate', (dateObj) => {
     return dateObj.toISOString();
   });
   // Minify CSS
-  eleventyConfig.addFilter('cssmin', function(code) {
+  eleventyConfig.addFilter('cssmin', function (code) {
     return csso.minify(code).css;
   });
   // Minify JS
-  eleventyConfig.addFilter('jsmin', function(code) {
+  eleventyConfig.addFilter('jsmin', function (code) {
     const minified = UglifyJS.minify(code);
     if (minified.error) {
       console.log('UglifyJS error: ', minified.error);
@@ -93,7 +93,7 @@ module.exports = function(eleventyConfig) {
 
   // SHORTCODES -----
 
-  eleventyConfig.addShortcode('version', function() {
+  eleventyConfig.addShortcode('version', function () {
     return String(Date.now());
   });
 
@@ -104,10 +104,10 @@ module.exports = function(eleventyConfig) {
   // COLLECTIONS -----
 
   // Collection of items for navigation
-  eleventyConfig.addCollection('nav', function(collection) {
+  eleventyConfig.addCollection('nav', function (collection) {
     return collection
       .getAll()
-      .filter(function(item) {
+      .filter(function (item) {
         return 'eleventyNavigation' in item.data;
       })
       .sort((a, b) => {
@@ -165,7 +165,7 @@ module.exports = function(eleventyConfig) {
     .use(markdownTasks);
 
   // Custom emoji renderer
-  markdownLib.renderer.rules.emoji = function(token, idx) {
+  markdownLib.renderer.rules.emoji = function (token, idx) {
     return twemoji.parse(token[idx].content);
   };
 

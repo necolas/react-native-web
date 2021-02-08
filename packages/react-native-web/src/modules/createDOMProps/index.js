@@ -418,14 +418,14 @@ const createDOMProps = (elementType, props) => {
     if (onClick != null) {
       if (disabled) {
         // Prevent click propagating if the element is disabled. See #1757
-        domProps.onClick = function(e) {
+        domProps.onClick = function (e) {
           e.stopPropagation();
         };
       } else if (!isNativeInteractiveElement) {
         // For native elements that are focusable but don't dispatch 'click' events
         // for keyboards.
         const onKeyDown = domProps.onKeyDown;
-        domProps.onKeyDown = function(e) {
+        domProps.onKeyDown = function (e) {
           const { key, repeat } = e;
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
           const isButtonRole = role === 'button' || role === 'menuitem';

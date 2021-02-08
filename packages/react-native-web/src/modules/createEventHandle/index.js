@@ -76,14 +76,14 @@ function normalizeEvent(event: any) {
 export default function createEventHandle(type: string, options: ?EventOptions): EventHandle {
   const opts = getOptions(options);
 
-  return function(target: EventTarget, listener: ?Listener) {
+  return function (target: EventTarget, listener: ?Listener) {
     if (target == null || typeof target.addEventListener !== 'function') {
       throw new Error('createEventHandle: called on an invalid target.');
     }
 
     const element = (target: any);
     if (listener != null) {
-      const compatListener = e => listener(normalizeEvent(e));
+      const compatListener = (e) => listener(normalizeEvent(e));
       element.addEventListener(type, compatListener, opts);
       return function removeListener() {
         if (element != null) {

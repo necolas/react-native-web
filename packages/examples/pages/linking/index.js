@@ -6,7 +6,7 @@ const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
 export default class LinkingPage extends PureComponent {
   handlePress() {
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       return Linking.openURL(url);
     });
   }

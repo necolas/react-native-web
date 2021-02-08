@@ -30,13 +30,16 @@ export default function IndexPage() {
         <Text style={styles.title}>React Native for Web</Text>
       </View>
       <Text style={styles.text}>
-        <Link href="https://github.com/necolas/react-native-web">React Native for Web</Link> example app built with Next.js
+        <Link href="https://github.com/necolas/react-native-web">React Native for Web</Link> example
+        app built on Next.js
       </Text>
 
       <View accessibilityRole="list">
         {process.env.pages.map((name) => (
           <View accessibilityRole="listitem" key={name} style={styles.listitem}>
-            <Link href={'/' + name} style={styles.pageLink}>{name}</Link>
+            <Link href={'/' + name} style={styles.pageLink}>
+              {name}
+            </Link>
           </View>
         ))}
       </View>

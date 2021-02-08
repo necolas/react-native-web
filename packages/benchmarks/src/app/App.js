@@ -45,7 +45,7 @@ export default class App extends Component {
                   selectedValue={currentLibraryName}
                   style={styles.picker}
                 >
-                  {Object.keys(tests[currentBenchmarkName]).map(libraryName => (
+                  {Object.keys(tests[currentBenchmarkName]).map((libraryName) => (
                     <Picker.Item key={libraryName} label={libraryName} value={libraryName} />
                   ))}
                 </Picker>
@@ -60,7 +60,7 @@ export default class App extends Component {
                   selectedValue={currentBenchmarkName}
                   style={styles.picker}
                 >
-                  {Object.keys(tests).map(test => (
+                  {Object.keys(tests).map((test) => (
                     <Picker.Item key={test} label={test} value={test} />
                   ))}
                 </Picker>
@@ -156,11 +156,11 @@ export default class App extends Component {
     );
   }
 
-  _handleChangeBenchmark = value => {
+  _handleChangeBenchmark = (value) => {
     this.setState(() => ({ currentBenchmarkName: value }));
   };
 
-  _handleChangeLibrary = value => {
+  _handleChangeLibrary = (value) => {
     this.setState(() => ({ currentLibraryName: value }));
   };
 
@@ -187,9 +187,9 @@ export default class App extends Component {
     }
   };
 
-  _createHandleComplete = ({ benchmarkName, libraryName, sampleCount }) => results => {
+  _createHandleComplete = ({ benchmarkName, libraryName, sampleCount }) => (results) => {
     this.setState(
-      state => ({
+      (state) => ({
         results: state.results.concat([
           {
             ...results,
@@ -210,15 +210,15 @@ export default class App extends Component {
     this.setState(() => ({ results: [] }));
   };
 
-  _setBenchRef = ref => {
+  _setBenchRef = (ref) => {
     this._benchmarkRef = ref;
   };
 
-  _setBenchWrapperRef = ref => {
+  _setBenchWrapperRef = (ref) => {
     this._benchWrapperRef = ref;
   };
 
-  _setScrollRef = ref => {
+  _setScrollRef = (ref) => {
     this._scrollRef = ref;
   };
 

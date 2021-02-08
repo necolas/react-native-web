@@ -138,7 +138,7 @@ const ScrollView = ((createReactClass({
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style);
       const childLayoutProps = ['alignItems', 'justifyContent'].filter(
-        prop => style && style[prop] !== undefined
+        (prop) => style && style[prop] !== undefined
       );
       invariant(
         childLayoutProps.length === 0,

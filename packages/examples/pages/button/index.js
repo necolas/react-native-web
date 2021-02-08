@@ -5,7 +5,7 @@ import Example from '../../shared/example';
 const emptyFunction = () => {};
 
 function Divider() {
-  return <View style={styles.divider} />
+  return <View style={styles.divider} />;
 }
 
 export default function ButtonPage() {

@@ -309,10 +309,10 @@ describe('use-event', () => {
       const parentRef = React.createRef();
       const childRef = React.createRef();
 
-      const listener = jest.fn(e => {
+      const listener = jest.fn((e) => {
         log.push(['bubble', e.currentTarget.id]);
       });
-      const listenerCapture = jest.fn(e => {
+      const listenerCapture = jest.fn((e) => {
         log.push(['capture', e.currentTarget.id]);
       });
 
@@ -360,16 +360,16 @@ describe('use-event', () => {
       const targetRef = React.createRef();
       const childRef = React.createRef();
 
-      const listener = jest.fn(e => {
+      const listener = jest.fn((e) => {
         log.push(['bubble', 'target']);
       });
-      const listenerAlt = jest.fn(e => {
+      const listenerAlt = jest.fn((e) => {
         log.push(['bubble', 'target-alt']);
       });
-      const listenerCapture = jest.fn(e => {
+      const listenerCapture = jest.fn((e) => {
         log.push(['capture', 'target']);
       });
-      const listenerCaptureAlt = jest.fn(e => {
+      const listenerCaptureAlt = jest.fn((e) => {
         log.push(['capture', 'target-alt']);
       });
 
@@ -442,7 +442,7 @@ describe('use-event', () => {
 
   describe('stopPropagation and stopImmediatePropagation', () => {
     test('stopPropagation works as expected', () => {
-      const childListener = jest.fn(e => {
+      const childListener = jest.fn((e) => {
         e.stopPropagation();
       });
       const targetListener = jest.fn();
@@ -477,7 +477,7 @@ describe('use-event', () => {
     });
 
     test('stopImmediatePropagation works as expected', () => {
-      const firstListener = jest.fn(e => {
+      const firstListener = jest.fn((e) => {
         e.stopImmediatePropagation();
       });
       const secondListener = jest.fn();

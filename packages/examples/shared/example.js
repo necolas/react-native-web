@@ -17,21 +17,19 @@ export default function Example(props) {
           {props.title}
         </Text>
       </View>
-      <View style={styles.container}>
-        {props.children}
-      </View>
+      <View style={styles.container}>{props.children}</View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
-    height: '100vh',
+    height: '100vh'
   },
   header: {
     paddingVertical: '1em',
     borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   title: {
     fontSize: 18,
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     width: 40,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   container: {
     alignItems: 'center',

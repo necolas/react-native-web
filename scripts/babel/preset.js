@@ -36,7 +36,7 @@ const createConfig = ({ modules }) => ({
   ].concat(modules ? ['babel-plugin-add-module-exports'] : [])
 });
 
-module.exports = function() {
+module.exports = function () {
   return process.env.BABEL_ENV === 'commonjs' || process.env.NODE_ENV === 'test'
     ? createConfig({ modules: 'commonjs' })
     : createConfig({ modules: false });

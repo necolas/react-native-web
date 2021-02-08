@@ -286,140 +286,141 @@ function TextShadow() {
 export default function TextPage() {
   return (
     <Example title="Text">
-    <View>
-      <Text>
-        Text wraps across multiple lines by default. Text wraps across multiple lines by default.
-        Text wraps across multiple lines by default. Text wraps across multiple lines by default.
-      </Text>
-
-      <Spacer />
-
-      <Text>
-        (Text inherits styles from parent Text elements,
-        <Text style={{ fontWeight: 'bold' }}>
-          {'\n  '}
-          (for example this text is bold
-          <Text style={{ fontSize: 11, color: '#527fe4' }}>
-            {'\n    '}
-            (and this text inherits the bold while setting size and color)
-          </Text>
-          {'\n  '})
-        </Text>
-        {'\n'})
-      </Text>
-
-      <Spacer />
-
-      <Text style={{ opacity: 0.7 }}>
-        (Text opacity
+      <View>
         <Text>
-          {'\n  '}
-          (is inherited
-          <Text style={{ opacity: 0.7 }}>
-            {'\n    '}
-            (and accumulated
-            <Text style={{ backgroundColor: '#ffaaaa' }}>
-              {'\n      '}
-              (and also applies to the background)
-            </Text>
-            {'\n    '})
-          </Text>
-          {'\n  '})
+          Text wraps across multiple lines by default. Text wraps across multiple lines by default.
+          Text wraps across multiple lines by default. Text wraps across multiple lines by default.
         </Text>
-        {'\n'})
-      </Text>
 
-      <Spacer />
+        <Spacer />
 
-      <Text>
-        This text contains an inline blue view{' '}
-        <View style={{ width: 25, height: 25, backgroundColor: 'steelblue' }} /> and an inline image{' '}
-        <Image
-          source={{ uri: 'http://lorempixel.com/30/11' }}
-          style={{ width: 30, height: 11, resizeMode: 'cover' }}
-        />
-        .
-      </Text>
-
-      <Spacer />
-
-      <Text>
-        This text contains a view{' '}
-        <View style={{ borderColor: 'red', borderWidth: 1 }}>
-          <Text style={{ borderColor: 'blue', borderWidth: 1 }}>which contains</Text>
-          <Text style={{ borderColor: 'green', borderWidth: 1 }}>another text.</Text>
-          <Text style={{ borderColor: 'yellow', borderWidth: 1 }}>
-            And contains another view
-            <View style={{ borderColor: 'red', borderWidth: 1 }}>
-              <Text style={{ borderColor: 'blue', borderWidth: 1 }}>
-                which contains another text!
-              </Text>
-            </View>
+        <Text>
+          (Text inherits styles from parent Text elements,
+          <Text style={{ fontWeight: 'bold' }}>
+            {'\n  '}
+            (for example this text is bold
+            <Text style={{ fontSize: 11, color: '#527fe4' }}>
+              {'\n    '}
+              (and this text inherits the bold while setting size and color)
+            </Text>
+            {'\n  '})
           </Text>
-        </View>{' '}
-        And then continues as text.
-      </Text>
+          {'\n'})
+        </Text>
 
-      <Text selectable={true}>
-        This text is <Text style={{ fontWeight: 'bold' }}>selectable</Text> if you click-and-hold.
-      </Text>
-      <Text selectable={false}>
-        This text is <Text style={{ fontWeight: 'bold' }}>not selectable</Text> if you
-        click-and-hold.
-      </Text>
+        <Spacer />
 
-          <View style={{ maxWidth: 320 }}>
-      <Text numberOfLines={1}>
-        Maximum of one line, no matter how much I write here. If I keep writing, it
-        {"'"}
-        ll just truncate after one line.
-      </Text>
-      <Text numberOfLines={2} style={{ marginTop: 20 }}>
-        Maximum of two lines, no matter how much I write here. If I keep writing, it
-        {"'"}
-        ll just truncate after two lines.
-      </Text>
-      <Text style={{ marginTop: 20 }}>
-        No maximum lines specified, no matter how much I write here. If I keep writing, it
-        {"'"}
-        ll just keep going and going.
-      </Text>
-    </View>
+        <Text style={{ opacity: 0.7 }}>
+          (Text opacity
+          <Text>
+            {'\n  '}
+            (is inherited
+            <Text style={{ opacity: 0.7 }}>
+              {'\n    '}
+              (and accumulated
+              <Text style={{ backgroundColor: '#ffaaaa' }}>
+                {'\n      '}
+                (and also applies to the background)
+              </Text>
+              {'\n    '})
+            </Text>
+            {'\n  '})
+          </Text>
+          {'\n'})
+        </Text>
+
+        <Spacer />
+
+        <Text>
+          This text contains an inline blue view{' '}
+          <View style={{ width: 25, height: 25, backgroundColor: 'steelblue' }} /> and an inline
+          image{' '}
+          <Image
+            source={{ uri: 'http://lorempixel.com/30/11' }}
+            style={{ width: 30, height: 11, resizeMode: 'cover' }}
+          />
+          .
+        </Text>
+
+        <Spacer />
+
+        <Text>
+          This text contains a view{' '}
+          <View style={{ borderColor: 'red', borderWidth: 1 }}>
+            <Text style={{ borderColor: 'blue', borderWidth: 1 }}>which contains</Text>
+            <Text style={{ borderColor: 'green', borderWidth: 1 }}>another text.</Text>
+            <Text style={{ borderColor: 'yellow', borderWidth: 1 }}>
+              And contains another view
+              <View style={{ borderColor: 'red', borderWidth: 1 }}>
+                <Text style={{ borderColor: 'blue', borderWidth: 1 }}>
+                  which contains another text!
+                </Text>
+              </View>
+            </Text>
+          </View>{' '}
+          And then continues as text.
+        </Text>
+
+        <Text selectable={true}>
+          This text is <Text style={{ fontWeight: 'bold' }}>selectable</Text> if you click-and-hold.
+        </Text>
+        <Text selectable={false}>
+          This text is <Text style={{ fontWeight: 'bold' }}>not selectable</Text> if you
+          click-and-hold.
+        </Text>
+
+        <View style={{ maxWidth: 320 }}>
+          <Text numberOfLines={1}>
+            Maximum of one line, no matter how much I write here. If I keep writing, it
+            {"'"}
+            ll just truncate after one line.
+          </Text>
+          <Text numberOfLines={2} style={{ marginTop: 20 }}>
+            Maximum of two lines, no matter how much I write here. If I keep writing, it
+            {"'"}
+            ll just truncate after two lines.
+          </Text>
+          <Text style={{ marginTop: 20 }}>
+            No maximum lines specified, no matter how much I write here. If I keep writing, it
+            {"'"}
+            ll just keep going and going.
+          </Text>
+        </View>
 
         <View>
-      <Color />
-      <Spacer />
+          <Color />
+          <Spacer />
 
-      <FontFamily />
-      <Spacer />
+          <FontFamily />
+          <Spacer />
 
-      <FontSize />
-      <Spacer />
+          <FontSize />
+          <Spacer />
 
-      <FontStyle />
-      <Spacer />
+          <FontStyle />
+          <Spacer />
 
-      <FontVariant />
-      <Spacer />
+          <FontVariant />
+          <Spacer />
 
-      <FontWeight />
-      <Spacer />
+          <FontWeight />
+          <Spacer />
 
-      <LetterSpacing />
-      <Spacer />
+          <LetterSpacing />
+          <Spacer />
 
-      <LineHeight />
-      <Spacer />
+          <LineHeight />
+          <Spacer />
 
-      <TextAlign />
-      <Spacer />
+          <TextAlign />
+          <Spacer />
 
-      <TextDecoration />
-      <Spacer />
+          <TextDecoration />
+          <Spacer />
 
-      <TextShadow />
-    </View>
-    </View>
+          <TextShadow />
+        </View>
+      </View>
     </Example>
   );
 }

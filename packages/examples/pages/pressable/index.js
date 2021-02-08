@@ -7,10 +7,10 @@ export default function PressablePage() {
   const [disabled, setDisabled] = React.useState(false);
   const [delay, setDelay] = React.useState(0);
 
-  const handleEvent = eventName => {
+  const handleEvent = (eventName) => {
     return () => {
       const limit = 10;
-      updateEventLog(state => {
+      updateEventLog((state) => {
         const nextState = state.slice(0, limit - 1);
         nextState.unshift(eventName);
         return nextState;
@@ -33,21 +33,27 @@ export default function PressablePage() {
           onPress={handleEvent(`onPress - ${delay}ms delay`)}
           onPressIn={handleEvent(`onPressIn - ${delay}ms delay`)}
           onPressOut={handleEvent(`oPressOut - ${delay}ms delay`)}
-          style={(state) => ([
+          style={(state) => [
             styles.pressable,
             !disabled && state.focused && styles.focused,
             !disabled && state.hovered && styles.hovered,
             !disabled && state.pressed && styles.pressed,
             disabled && styles.disabled
-          ])}
+          ]}
         >
           <Text>Pressable</Text>
-       </Pressable>
+        </Pressable>
 
         <View style={styles.buttons}>
-          <Button onPress={() => setDisabled(state => !state)} title={disabled ? 'Enable' : 'Disable'} />
+          <Button
+            onPress={() => setDisabled((state) => !state)}
+            title={disabled ? 'Enable' : 'Disable'}
+          />
           <View style={{ width: '1rem' }} />
-          <Button onPress={() => setDelay(state => state === 0 ? 350 : 0)} title={delay === 0 ? 'Add delay' : 'Remove delay'} />
+          <Button
+            onPress={() => setDelay((state) => (state === 0 ? 350 : 0))}
+            title={delay === 0 ? 'Add delay' : 'Remove delay'}
+          />
         </View>
 
         <ScrollView style={styles.eventLogBox}>
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     maxWidth: 500,
     padding: '1rem',
-    width: '100%',
+    width: '100%'
   },
   pressable: {
     borderRadius: 5,

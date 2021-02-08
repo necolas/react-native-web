@@ -10,7 +10,7 @@
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import setValueForStyles from '../../modules/setValueForStyles';
 
-const getRect = node => {
+const getRect = (node) => {
   // Unlike the DOM's getBoundingClientRect, React Native layout measurements
   // for "height" and "width" ignore scale transforms.
   // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements

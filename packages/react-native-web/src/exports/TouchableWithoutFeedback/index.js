@@ -60,7 +60,7 @@ const forwardPropsList = {
   testID: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const {

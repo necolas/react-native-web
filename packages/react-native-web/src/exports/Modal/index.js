@@ -41,7 +41,7 @@ function notifyActiveModalListeners() {
     return;
   }
   const activeModalId = activeModalStack[activeModalStack.length - 1];
-  activeModalStack.forEach(modalId => {
+  activeModalStack.forEach((modalId) => {
     if (modalId in activeModalListeners) {
       activeModalListeners[modalId](modalId === activeModalId);
     }

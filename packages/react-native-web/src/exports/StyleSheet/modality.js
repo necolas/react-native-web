@@ -24,7 +24,7 @@ const focusVisibleAttributeName = 'data-focusvisible-polyfill';
 
 const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 
-const modality = insertRule => {
+const modality = (insertRule) => {
   insertRule(rule);
 
   if (!canUseDOM) {
@@ -190,7 +190,7 @@ const modality = insertRule => {
       // regular focus change.
       hadFocusVisibleRecently = true;
       window.clearTimeout(hadFocusVisibleRecentlyTimeout);
-      hadFocusVisibleRecentlyTimeout = window.setTimeout(function() {
+      hadFocusVisibleRecentlyTimeout = window.setTimeout(function () {
         hadFocusVisibleRecently = false;
         window.clearTimeout(hadFocusVisibleRecentlyTimeout);
       }, 100);

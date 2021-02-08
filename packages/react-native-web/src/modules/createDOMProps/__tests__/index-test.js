@@ -2,7 +2,7 @@
 
 import createDOMProps from '..';
 
-const createProps = props => createDOMProps(null, props);
+const createProps = (props) => createDOMProps(null, props);
 
 describe('modules/createDOMProps', () => {
   describe('focus-related accessibility attributes', () => {
@@ -44,7 +44,7 @@ describe('modules/createDOMProps', () => {
       });
     });
 
-    const testFocusableRole = accessibilityRole => {
+    const testFocusableRole = (accessibilityRole) => {
       test('default case', () => {
         expect(createProps({ accessibilityRole })).toEqual(
           expect.objectContaining({ tabIndex: '0' })
@@ -141,7 +141,7 @@ describe('modules/createDOMProps', () => {
   });
 
   describe('prop "onKeyDown"', () => {
-    const callsOnClick = key => (component, accessibilityRole, accessibilityDisabled = false) => {
+    const callsOnClick = (key) => (component, accessibilityRole, accessibilityDisabled = false) => {
       const onClick = jest.fn();
       const onKeyDown = jest.fn();
       const event = { key, preventDefault: jest.fn() };

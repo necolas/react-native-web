@@ -17,7 +17,7 @@ console.log(`Publishing ${version}`);
 const workspacePaths = require('../../package.json').workspaces.concat(['./']);
 const workspaces = workspacePaths.reduce((acc, curr) => {
   const packageDirectories = glob.sync(path.resolve(curr));
-  packageDirectories.forEach(directory => {
+  packageDirectories.forEach((directory) => {
     const packageJsonPath = path.join(directory, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
     acc.push({ directory, packageJson, packageJsonPath });
@@ -29,7 +29,7 @@ const workspaces = workspacePaths.reduce((acc, curr) => {
 const workspaceNames = workspaces.map(({ packageJson }) => packageJson.name);
 workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
   packageJson.version = version;
-  workspaceNames.forEach(name => {
+  workspaceNames.forEach((name) => {
     if (packageJson.dependencies && packageJson.dependencies[name]) {
       packageJson.dependencies[name] = version;
     }

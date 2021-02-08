@@ -1,7 +1,7 @@
 import React from 'react';
 import View from './View';
 
-const Dot = props => {
+const Dot = (props) => {
   const { className, children: styles } = (
     <scope className="Dot">
       <style jsx>{`

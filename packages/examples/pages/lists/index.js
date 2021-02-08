@@ -9,7 +9,17 @@
 'use strict';
 
 import * as React from 'react';
-import { Animated, FlatList, Image, StyleSheet, Switch, TouchableHighlight, Text, TextInput, View } from 'react-native';
+import {
+  Animated,
+  FlatList,
+  Image,
+  StyleSheet,
+  Switch,
+  TouchableHighlight,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
 import Example from '../../shared/example';
 
 type Item = { title: string, text: string, key: string, pressed: boolean, noImage?: ?boolean };
@@ -184,7 +194,7 @@ function getItemLayout(data: any, index: number, horizontal?: boolean) {
 function pressItem(context: Object, key: string) {
   const index = Number(key);
   const pressed = !context.state.data[index].pressed;
-  context.setState(state => {
+  context.setState((state) => {
     const newData = [...state.data];
     newData[index] = {
       ...state.data[index],
@@ -200,7 +210,7 @@ function renderSmallSwitchOption(context: Object, key: string) {
     <View style={styles.option}>
       <Text>{key}:</Text>
       <Switch
-        onValueChange={value => context.setState({ [key]: value })}
+        onValueChange={(value) => context.setState({ [key]: value })}
         style={styles.smallSwitch}
         value={context.state[key]}
       />
@@ -236,11 +246,11 @@ class SingleColumnExample extends React.PureComponent {
     virtualized: true
   };
 
-  _onChangeFilterText = filterText => {
+  _onChangeFilterText = (filterText) => {
     this.setState({ filterText });
   };
 
-  _onChangeScrollToIndex = text => {
+  _onChangeScrollToIndex = (text) => {
     this._listRef.getNode().scrollToIndex({ viewPosition: 0.5, index: Number(text) });
   };
 
@@ -258,7 +268,7 @@ class SingleColumnExample extends React.PureComponent {
 
   render() {
     const filterRegex = new RegExp(String(this.state.filterText), 'i');
-    const filter = item => filterRegex.test(item.text) || filterRegex.test(item.title);
+    const filter = (item) => filterRegex.test(item.text) || filterRegex.test(item.title);
     const filteredData = this.state.data.filter(filter);
     return (
       <View style={styles.container}>
@@ -310,7 +320,7 @@ class SingleColumnExample extends React.PureComponent {
       </View>
     );
   }
-  _captureRef = ref => {
+  _captureRef = (ref) => {
     this._listRef = ref;
   };
   _getItemLayout = (data: any, index: number) => {
@@ -320,7 +330,7 @@ class SingleColumnExample extends React.PureComponent {
     if (this.state.data.length >= 1000) {
       return;
     }
-    this.setState(state => ({
+    this.setState((state) => ({
       data: state.data.concat(genItemData(100, state.data.length))
     }));
   };
@@ -350,7 +360,10 @@ class SingleColumnExample extends React.PureComponent {
   }) => {
     // Impressions can be logged here
     if (this.state.logViewable) {
-      console.log('onViewableItemsChanged: ', info.changed.map(v => ({ ...v, item: '...' })));
+      console.log(
+        'onViewableItemsChanged: ',
+        info.changed.map((v) => ({ ...v, item: '...' }))
+      );
     }
   };
   _pressItem = (key: string) => {
