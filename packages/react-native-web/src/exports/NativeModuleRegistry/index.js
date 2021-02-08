@@ -20,7 +20,7 @@ class NativeModulesRegistry {
    * instances of modules and not just the class
    */
   registerNativeModules(nativeModulesToRegister) {
-    nativeModulesToRegister.map((module) => {
+    nativeModulesToRegister.map(module => {
       const nativeModuleName = module.getName();
       if (!this.nativeModules[nativeModuleName]) {
         throw new Error(`Native Module with name ${nativeModuleName} is duplicated`);
@@ -28,7 +28,7 @@ class NativeModulesRegistry {
       Object.defineProperty(this.nativeModules, nativeModuleName, {
         get: () => {
           return module;
-        },
+        }
       });
     });
   }

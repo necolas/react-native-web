@@ -11,7 +11,7 @@ import UIManager from '../UIManager';
 import { nativeModulesRegistry } from './../NativeModuleRegistry';
 const NativeModules = {
   ...nativeModulesRegistry.nativeModules,
-  UIManager,
+  UIManager
 };
 
 export default NativeModules;
