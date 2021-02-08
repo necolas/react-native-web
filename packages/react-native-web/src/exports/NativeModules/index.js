@@ -8,10 +8,10 @@
  */
 
 import UIManager from '../UIManager';
-
-// NativeModules shim
+import { nativeModulesRegistry } from './../NativeModuleRegistry';
 const NativeModules = {
-  UIManager
+  ...nativeModulesRegistry.nativeModules,
+  UIManager,
 };
 
 export default NativeModules;

@@ -23,6 +23,7 @@ export { default as InteractionManager } from './exports/InteractionManager';
 export { default as LayoutAnimation } from './exports/LayoutAnimation';
 export { default as Linking } from './exports/Linking';
 export { default as NativeEventEmitter } from './exports/NativeEventEmitter';
+export { default as NativeModuleRegistry } from './exports/NativeModuleRegistry';
 export { default as PanResponder } from './exports/PanResponder';
 export { default as PixelRatio } from './exports/PixelRatio';
 export { default as Platform } from './exports/Platform';
