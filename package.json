@@ -17,10 +17,7 @@
     "jest": "jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:report --fix",
     "lint:report": "eslint packages scripts",
-    "precommit": "lint-staged",
-    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn benchmarks:release && yarn docs:release",
     "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
   },
   "devDependencies": {
@@ -50,7 +47,7 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "flow-bin": "^0.109.0",
     "glob": "^7.1.4",
-    "husky": "^3.0.8",
+    "husky": "^4.3.8",
     "inline-style-prefixer": "^5.1.0",
     "jest": "^25.1.0",
     "jest-canvas-mock": "^2.2.0",
@@ -61,6 +58,13 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-test-renderer": "^16.10.2"
+  },
+  "husky": {
+    "hooks": {
+      "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
+      "precommit": "lint-staged",
+      "postrelease": "yarn benchmarks:release && yarn docs:release"
+    }
   },
   "workspaces": [
     "packages/*"
