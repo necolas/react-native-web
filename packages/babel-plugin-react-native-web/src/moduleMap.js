@@ -37,6 +37,7 @@ module.exports = {
   Platform: true,
   Pressable: true,
   ProgressBar: true,
+  ReactPackage: true,
   RefreshControl: true,
   SafeAreaView: true,
   ScrollView: true,

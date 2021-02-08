@@ -8,9 +8,9 @@
  */
 
 import UIManager from '../UIManager';
-import { nativeModulesRegistry } from './../NativeModuleRegistry';
+import { ReactPackageRegistry } from '../ReactPackage';
 const NativeModules = {
-  ...nativeModulesRegistry.nativeModules,
+  ...ReactPackageRegistry.nativeModules,
   UIManager
 };
 

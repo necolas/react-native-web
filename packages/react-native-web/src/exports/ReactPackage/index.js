@@ -6,7 +6,7 @@
  * but if we don't, we can support dynamic registration of native modules, which goes in line with the new
  * JSI/Fabric/Turbo Modules architecture decisions
  */
-class NativeModulesRegistry {
+class ReactPackage {
   constructor() {
     this.nativeModules = {};
   }
@@ -34,5 +34,5 @@ class NativeModulesRegistry {
   }
 }
 
-export const nativeModulesRegistry = new NativeModulesRegistry();
-export default nativeModulesRegistry.registerNativeModules.bind(nativeModulesRegistry);
+export const ReactPackageRegistry = new ReactPackage();
+export default ReactPackageRegistry.registerNativeModules.bind(ReactPackageRegistry);
