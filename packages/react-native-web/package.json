@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "array-find-index": "^1.0.2",
-    "create-react-class": "^15.6.2",
+    "create-react-class": "^15.7.0",
     "deep-assign": "^3.0.0",
     "fbjs": "^3.0.0",
     "hyphenate-style-name": "^1.0.4",
