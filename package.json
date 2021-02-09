@@ -18,7 +18,9 @@
     "lint": "yarn lint:report --fix",
     "lint:report": "eslint packages scripts",
     "release": "node ./scripts/release/publish.js",
-    "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
+    "test": "yarn flow && yarn lint:report && yarn jest --runInBand",
+    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
+    "postrelease": "yarn benchmarks:release && yarn docs:release"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -61,9 +63,7 @@
   },
   "husky": {
     "hooks": {
-      "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
-      "precommit": "lint-staged",
-      "postrelease": "yarn benchmarks:release && yarn docs:release"
+      "precommit": "lint-staged"
     }
   },
   "workspaces": [
