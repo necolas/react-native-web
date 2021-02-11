@@ -52,6 +52,13 @@ describe('components/View', () => {
     });
   });
 
+  describe('prop "accessibilityLabelledBy"', () => {
+    test('value is set', () => {
+      const { container } = render(<View accessibilityLabelledBy="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
       const { container } = render(<View accessibilityLiveRegion="polite" />);
@@ -79,6 +86,45 @@ describe('components/View', () => {
   test('allows "dir" to be overridden', () => {
     const { container } = render(<View dir="rtl" />);
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  describe('prop "href"', () => {
+    test('value is set', () => {
+      const { container } = render(<View href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('href with accessibilityRole', () => {
+      const { container } = render(<View accessibilityRole="none" href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "hrefAttrs"', () => {
+    test('requires "href"', () => {
+      const { container } = render(<View hrefAttrs={{ download: 'filename.jpg' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set', () => {
+      const hrefAttrs = {
+        download: 'filename.jpg',
+        rel: 'nofollow',
+        target: 'blank'
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('null values are excluded', () => {
+      const hrefAttrs = {
+        download: null,
+        rel: null,
+        target: null
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
   });
 
   describe('prop "nativeID"', () => {

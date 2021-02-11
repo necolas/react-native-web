@@ -25,7 +25,7 @@ export default function AppStatePage() {
 
   return (
     <Example title="AppState">
-      <Text>
+      <Text style={{ marginTop: '1rem' }}>
         AppState.currentState: <Text style={{ fontWeight: 'bold' }}>{state.currentState}</Text>
       </Text>
       <Text>Active count: {state.active}</Text>

@@ -9,7 +9,7 @@ export default function ClipboardPage() {
   };
 
   return (
-    <Example title="Clipboard" w>
+    <Example title="Clipboard">
       <View style={styles.buttonBox}>
         <Button onPress={setString} title="Copy to clipboard" />
       </View>
@@ -24,7 +24,8 @@ export default function ClipboardPage() {
 
 const styles = StyleSheet.create({
   buttonBox: {
-    maxWidth: 300
+    maxWidth: 300,
+    marginTop: '1rem'
   },
   textInput: {
     borderColor: '#AAB8C2',

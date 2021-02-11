@@ -14,6 +14,7 @@ import * as React from 'react';
 import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -23,48 +24,19 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 
 const forwardPropsList = {
-  accessibilityDisabled: true,
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  children: true,
-  classList: true,
-  focusable: true,
-  nativeID: true,
-  onBlur: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
-  onKeyDown: true,
-  onKeyUp: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
-  pointerEvents: true,
-  ref: true,
-  style: true,
-  suppressHydrationWarning: true,
-  testID: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  href: true,
+  lang: true,
   onScroll: true,
   onWheel: true,
-  href: true
+  pointerEvents: true
 };
 
 const pickProps = (props) => pick(props, forwardPropsList);

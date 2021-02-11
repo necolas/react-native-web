@@ -25,6 +25,13 @@ describe('components/Text', () => {
     });
   });
 
+  describe('prop "accessibilityLabelledBy"', () => {
+    test('value is set', () => {
+      const { container } = render(<Text accessibilityLabelledBy="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
       const { container } = render(<Text accessibilityLiveRegion="polite" />);
@@ -54,11 +61,53 @@ describe('components/Text', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "href"', () => {
+    test('value is set', () => {
+      const { container } = render(<Text href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('href with accessibilityRole', () => {
+      const { container } = render(<Text accessibilityRole="none" href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "hrefAttrs"', () => {
-    test('values are set', () => {
-      const { container } = render(
-        <Text href="#" hrefAttrs={{ download: true, target: 'blank', rel: 'noopener' }} />
-      );
+    test('requires "href"', () => {
+      const { container } = render(<Text hrefAttrs={{ download: 'filename.jpg' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set', () => {
+      const hrefAttrs = {
+        download: 'filename.jpg',
+        rel: 'nofollow',
+        target: 'blank'
+      };
+      const { container } = render(<Text href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('null values are excluded', () => {
+      const hrefAttrs = {
+        download: null,
+        rel: null,
+        target: null
+      };
+      const { container } = render(<Text href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "lang"', () => {
+    test('undefined', () => {
+      const { container } = render(<Text />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('fr', () => {
+      const { container } = render(<Text lang="fr" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

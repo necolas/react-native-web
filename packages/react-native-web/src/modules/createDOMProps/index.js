@@ -119,6 +119,7 @@ const createDOMProps = (elementType, props) => {
     style: providedStyle,
     testID,
     // Deprecated
+    accessible,
     accessibilityState,
     accessibilityValue,
     // Rest
@@ -336,6 +337,7 @@ const createDOMProps = (elementType, props) => {
 
   // FOCUS
   // "focusable" indicates that an element may be a keyboard tab-stop.
+  const _focusable = focusable != null ? focusable : accessible;
   if (
     // These native elements are focusable by default
     elementType === 'a' ||
@@ -344,7 +346,7 @@ const createDOMProps = (elementType, props) => {
     elementType === 'select' ||
     elementType === 'textarea'
   ) {
-    if (focusable === false || accessibilityDisabled === true) {
+    if (_focusable === false || accessibilityDisabled === true) {
       domProps.tabIndex = '-1';
     }
   } else if (
@@ -357,12 +359,12 @@ const createDOMProps = (elementType, props) => {
     role === 'textbox' ||
     role === 'switch'
   ) {
-    if (focusable !== false) {
+    if (_focusable !== false) {
       domProps.tabIndex = '0';
     }
   } else {
     // Everything else must explicitly set the prop
-    if (focusable === true) {
+    if (_focusable === true) {
       domProps.tabIndex = '0';
     }
   }
@@ -412,7 +414,7 @@ const createDOMProps = (elementType, props) => {
     isNativeInteractiveElement ||
     role === 'button' ||
     role === 'menuitem' ||
-    (focusable === true && !disabled)
+    (_focusable === true && !disabled)
   ) {
     const onClick = domProps.onClick;
     if (onClick != null) {

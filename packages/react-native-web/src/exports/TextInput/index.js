@@ -13,6 +13,7 @@ import type { TextInputProps } from './types';
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useLayoutEffect from '../../modules/useLayoutEffect';
@@ -46,58 +47,31 @@ const setSelection = (node, selection) => {
 };
 
 const forwardPropsList = {
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  accessible: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
   autoCapitalize: true,
   autoComplete: true,
   autoCorrect: true,
   autoFocus: true,
-  children: true,
-  classList: true,
   defaultValue: true,
-  dir: true,
   disabled: true,
-  importantForAccessibility: true,
+  lang: true,
   maxLength: true,
-  nativeID: true,
-  onBlur: true,
   onChange: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
   onScroll: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
   placeholder: true,
   pointerEvents: true,
   readOnly: true,
-  ref: true,
   rows: true,
   spellCheck: true,
-  style: true,
   value: true,
-  testID: true,
-  type: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true
+  type: true
 };
 
 const pickProps = (props) => pick(props, forwardPropsList);

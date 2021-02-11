@@ -20,7 +20,7 @@ export default function DimensionsPage() {
 
   return (
     <Example title="Dimensions">
-      <Text style={{ marginBottom: '1em' }} suppressHydrationWarnings={true}>
+      <Text style={{ marginVertical: '1em' }} suppressHydrationWarnings={true}>
         window: {JSON.stringify(windowDims, null, 2)}
       </Text>
       <Text suppressHydrationWarnings={true}>screen: {JSON.stringify(screenDims, null, 2)}</Text>

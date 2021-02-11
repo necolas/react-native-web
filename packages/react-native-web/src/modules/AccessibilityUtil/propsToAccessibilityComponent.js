@@ -38,6 +38,11 @@ const propsToAccessibilityComponent = (props: Object = emptyObject) => {
     return 'label';
   }
 
+  // special-case for "href" which becomes a link
+  if (props.href != null) {
+    return 'a';
+  }
+
   const role = propsToAriaRole(props);
   if (role) {
     if (role === 'heading') {
