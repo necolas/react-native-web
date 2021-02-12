@@ -23,7 +23,7 @@
     "lint:report": "eslint packages scripts",
     "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
     "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn docs:release && yarn benchmarks:release && ",
+    "postrelease": "yarn docs:release && yarn benchmarks:release",
     "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
   },
   "devDependencies": {
