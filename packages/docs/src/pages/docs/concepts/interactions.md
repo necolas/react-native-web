@@ -85,7 +85,7 @@ NOTE: For historical reasons (originating from React Native), mouse interactions
 
 A view can become the responder by using the negotiation callbacks. During the capture phase the deepest node is called last. During the bubble phase the deepest node is called first. The capture phase should be used when a view wants to prevent a descendant from becoming the responder. The first view to return `true` from any of the `on*ShouldSetResponderCapture` / `on*ShouldSetResponder` callbacks will either become the responder or enter into negotiation with the existing responder.
 
-N.B. If `stopPropagation` is called on the event for any of the negotiation callbakcs, it only stops further negotiation within the Responder System. It will not stop the propagation of the native event (which has already bubbled to the `document` by this time.)
+N.B. If `stopPropagation` is called on the event for any of the negotiation callbacks, it only stops further negotiation within the Responder System. It will not stop the propagation of the native event (which has already bubbled to the `document` by this time.)
 
 {% call macro.prop('onStartShouldSetResponder', '?(event: ResponderEvent) => boolean') %}
 On `pointerdown`, should this view attempt to become the responder? If the view is not the responder, this callback may be called for every pointer start on the view.
