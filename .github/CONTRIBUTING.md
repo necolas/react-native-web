@@ -71,7 +71,7 @@ yarn compile --watch
 To run the documentation website:
 
 ```
-yarn docs:dev
+yarn docs
 ```
 
 ## Examples
@@ -79,7 +79,7 @@ yarn docs:dev
 To run the examples app:
 
 ```
-yarn examples:dev
+yarn examples
 ```
 
 When you're also making changes to the 'react-native-web' source files, run this command in another process:
@@ -93,7 +93,7 @@ yarn compile --watch
 To run the benchmarks locally:
 
 ```
-yarn benchmarks:dev
+yarn benchmarks
 open ./packages/benchmarks/dist/index.html
 ```
 
