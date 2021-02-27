@@ -6,7 +6,7 @@
   {% endif %}
 
   <div class="text text-sm text-color-faint">
-    <a class="no-underline" href="/">{{ site.name }}</a> –
+    <a class="no-underline" href="{{ "/" | url }}">{{ site.name }}</a> –
     {% if site.footer %}
       <span>{{ site.footer | safe }}</span>
     {% endif %}
