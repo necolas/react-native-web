@@ -14,6 +14,7 @@ import * as React from 'react';
 import ScrollView from '../../../exports/ScrollView';
 import VirtualizedSectionList from '../VirtualizedSectionList';
 
+import type { ScrollToLocationParamsType } from '../VirtualizedSectionList';
 import type {ViewToken} from '../ViewabilityHelper';
 import type {
   SectionBase as _SectionBase,
@@ -245,13 +246,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
    * Note: cannot scroll to locations outside the render window without specifying the
    * `getItemLayout` prop.
    */
-  scrollToLocation(params: {
-    animated?: ?boolean,
-    itemIndex: number,
-    sectionIndex: number,
-    viewOffset?: number,
-    viewPosition?: number,
-  }) {
+  scrollToLocation(params: ScrollToLocationParamsType) {
     if (this._wrapperListRef != null) {
       this._wrapperListRef.scrollToLocation(params);
     }

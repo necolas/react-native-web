@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,9 +9,6 @@
  */
 
 'use strict';
-
-import performanceNow from 'fbjs/lib/performanceNow';
-import warning from 'fbjs/lib/warning';
 
 export type FillRateInfo = Info;
 
@@ -28,7 +25,12 @@ class Info {
   sample_count: number = 0;
 }
 
-type FrameMetrics = {inLayout?: boolean, length: number, offset: number};
+type FrameMetrics = {
+  inLayout?: boolean,
+  length: number,
+  offset: number,
+  ...
+};
 
 const DEBUG = false;
 
@@ -45,18 +47,19 @@ let _sampleRate = DEBUG ? 1 : null;
  * `SceneTracker.getActiveScene` to determine the context of the events.
  */
 class FillRateHelper {
-  _anyBlankStartTime: ?(any | number) = (null: ?number);
-  _enabled: boolean = false;
+  _anyBlankStartTime = (null: ?number);
+  _enabled = false;
   _getFrameMetrics: (index: number) => ?FrameMetrics;
-  _info: Info = new Info();
-  _mostlyBlankStartTime: ?(any | number) = (null: ?number);
-  _samplesStartTime: ?(any | number) = (null: ?number);
+  _info = new Info();
+  _mostlyBlankStartTime = (null: ?number);
+  _samplesStartTime = (null: ?number);
 
-  static addListener(callback: FillRateInfo => void): {remove: () => void} {
-    warning(
-      _sampleRate !== null,
-      'Call `FillRateHelper.setSampleRate` before `addListener`.',
-    );
+  static addListener(
+    callback: FillRateInfo => void,
+  ): {remove: () => void, ...} {
+    if (_sampleRate === null) {
+      console.warn('Call `FillRateHelper.setSampleRate` before `addListener`.');
+    }
     _listeners.push(callback);
     return {
       remove: () => {
@@ -82,7 +85,7 @@ class FillRateHelper {
   activate() {
     if (this._enabled && this._samplesStartTime == null) {
       DEBUG && console.debug('FillRateHelper: activate');
-      this._samplesStartTime = performanceNow();
+      this._samplesStartTime = global.performance.now();
     }
   }
 
@@ -101,7 +104,7 @@ class FillRateHelper {
       this._resetData();
       return;
     }
-    const total_time_spent = performanceNow() - start;
+    const total_time_spent = global.performance.now() - start;
     const info: any = {
       ...this._info,
       total_time_spent,
@@ -130,19 +133,22 @@ class FillRateHelper {
 
   computeBlankness(
     props: {
-      data: Array<any>,
-      getItemCount: (data: Array<any>) => number,
+      data: any,
+      getItemCount: (data: any) => number,
       initialNumToRender: number,
+      ...
     },
     state: {
       first: number,
       last: number,
+      ...
     },
     scrollMetrics: {
       dOffset: number,
       offset: number,
       velocity: number,
       visibleLength: number,
+      ...
     },
   ): number {
     if (
@@ -162,7 +168,7 @@ class FillRateHelper {
     const scrollSpeed = Math.round(Math.abs(velocity) * 1000); // px / sec
 
     // Whether blank now or not, record the elapsed time blank if we were blank last time.
-    const now = performanceNow();
+    const now = global.performance.now();
     if (this._anyBlankStartTime != null) {
       this._info.any_blank_ms += now - this._anyBlankStartTime;
     }
@@ -232,4 +238,4 @@ class FillRateHelper {
   }
 }
 
-export default FillRateHelper;
+module.exports = FillRateHelper;

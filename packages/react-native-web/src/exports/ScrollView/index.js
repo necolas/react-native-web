@@ -5,10 +5,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
-import type { ViewProps, ViewStyle } from '../View/types';
+import type { ViewStyle } from '../View/types';
 
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
@@ -17,21 +17,21 @@ import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React from 'react';
+import * as React from 'react';
 
-type ScrollViewProps = {
-  ...ViewProps,
+type ScrollViewProps = {|
+  ...React.ElementConfig<typeof ScrollViewBase>,
   contentContainerStyle?: ViewStyle,
   horizontal?: boolean,
   keyboardDismissMode?: 'none' | 'interactive' | 'on-drag',
-  onContentSizeChange?: (e: any) => void,
+  onContentSizeChange?: (width: number, height: number) => void,
   onScroll?: (e: any) => void,
   pagingEnabled?: boolean,
   refreshControl?: any,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   stickyHeaderIndices?: Array<number>
-};
+|};
 
 const emptyObject = {};
 
@@ -59,6 +59,7 @@ const ScrollView = ((createReactClass({
    * implement this method so that they can be composed while providing access
    * to the underlying scroll responder's methods.
    */
+  // $FlowFixMe
   getScrollResponder(): ScrollView {
     return this;
   },

@@ -16,6 +16,7 @@
 <PROJECT_ROOT>/types
 
 [options]
+munge_underscores=true
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps
