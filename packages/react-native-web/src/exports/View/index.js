@@ -107,8 +107,8 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
     if (rel != null) {
       supportedProps.rel = rel;
     }
-    if (typeof target === 'string' && target.charAt(0) !== '_') {
-      supportedProps.target = '_' + target;
+    if (target != null) {
+      supportedProps.target = target;
     }
   }
 
