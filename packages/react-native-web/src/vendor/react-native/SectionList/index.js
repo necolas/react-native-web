@@ -287,7 +287,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
     }
   }
 
-  getScrollableNode() {
+  getScrollableNode(): any | void {
     const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
     if (listRef) {
       return listRef.getScrollableNode();
@@ -301,7 +301,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
     }
   }
 
-  render() {
+  render(): React.Node {
     return (
       /* $FlowFixMe(>=0.66.0 site=react_native_fb) This comment suppresses an
        * error found when Flow v0.66 was deployed. To see the error delete this
@@ -317,7 +317,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
 
   _wrapperListRef: ?React.ElementRef<typeof VirtualizedSectionList>;
   // $FlowFixMe
-  _captureRef = ref => {
+  _captureRef: ((ref: any) => void) = ref => {
     // $FlowFixMe
     this._wrapperListRef = ref;
   };

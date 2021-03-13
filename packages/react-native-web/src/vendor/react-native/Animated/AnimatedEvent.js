@@ -26,7 +26,7 @@ function attachNativeEvent(
   viewRef: any,
   eventName: string,
   argMapping: Array<?Mapping>,
-) {
+): {|detach: () => void|} {
   // Find animated values in `argMapping` and create an array representing their
   // key path inside the `nativeEvent` object. Ex.: ['contentOffset', 'x'].
   const eventMappings = [];
@@ -130,7 +130,7 @@ class AnimatedEvent {
     this._attachedEvent && this._attachedEvent.detach();
   }
 
-  __getHandler() {
+  __getHandler(): any | ((...args: any) => void) {
     if (this.__isNative) {
       return this._callListeners;
     }

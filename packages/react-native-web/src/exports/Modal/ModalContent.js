@@ -8,7 +8,13 @@
  * @flow
  */
 
-import React, { forwardRef, useMemo, useEffect } from 'react';
+import React, {
+  forwardRef,
+  useMemo,
+  useEffect,
+  type AbstractComponent,
+  type ElementRef
+} from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
@@ -20,7 +26,10 @@ export type ModalContentProps = {|
   transparent?: ?boolean
 |};
 
-const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
+const ModalContent: AbstractComponent<ModalContentProps, ElementRef<typeof View>> = forwardRef<
+  ModalContentProps,
+  ElementRef<typeof View>
+>((props, forwardedRef) => {
   const { active, children, onRequestClose, transparent } = props;
 
   useEffect(() => {

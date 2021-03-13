@@ -19,7 +19,15 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
-import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type AbstractComponent,
+  type ElementRef
+} from 'react';
 
 export type { ImageProps };
 
@@ -132,7 +140,10 @@ function resolveAssetUri(source): ?string {
   return uri;
 }
 
-const Image = forwardRef<ImageProps, *>((props, ref) => {
+const Image: AbstractComponent<ImageProps, ElementRef<typeof View>> = forwardRef<
+  ImageProps,
+  ElementRef<typeof View>
+>((props, forwardRef) => {
   const {
     accessibilityLabel,
     blurRadius,
@@ -272,7 +283,7 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
       accessibilityLabel={accessibilityLabel}
       onLayout={handleLayout}
       pointerEvents={pointerEvents}
-      ref={ref}
+      ref={forwardRef}
       style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
     >
       <View

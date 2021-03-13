@@ -8,7 +8,15 @@
  * @flow
  */
 
-import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useMemo,
+  useEffect,
+  useState,
+  type ElementRef,
+  type AbstractComponent
+} from 'react';
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
@@ -69,7 +77,10 @@ function addActiveModal(modalId, listener) {
   notifyActiveModalListeners();
 }
 
-const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
+const Modal: AbstractComponent<ModalProps, ElementRef<typeof ModalContent>> = forwardRef<
+  ModalProps,
+  ElementRef<typeof ModalContent>
+>((props, forwardedRef) => {
   const {
     animationType,
     children,

@@ -69,7 +69,10 @@ declare class RNW$NativeMethodsMixin {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View = forwardRef<ViewProps, HTMLElement & RNW$NativeMethodsMixin>((props, forwardedRef) => {
+const View: React$AbstractComponent<ViewProps, HTMLElement & RNW$NativeMethodsMixin> = forwardRef<
+  ViewProps,
+  HTMLElement & RNW$NativeMethodsMixin
+>((props, forwardedRef) => {
   const {
     hrefAttrs,
     onLayout,

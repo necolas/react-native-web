@@ -17,18 +17,18 @@ import View from '../View';
 
 const Animated = {
   ...AnimatedImplementation,
-  FlatList: AnimatedImplementation.createAnimatedComponent(FlatList, {
+  FlatList: (AnimatedImplementation.createAnimatedComponent(FlatList, {
     scrollEventThrottle: 0.0001
-  }),
-  Image: AnimatedImplementation.createAnimatedComponent(Image),
-  ScrollView: AnimatedImplementation.createAnimatedComponent(ScrollView, {
+  }): any),
+  Image: (AnimatedImplementation.createAnimatedComponent(Image): any),
+  ScrollView: (AnimatedImplementation.createAnimatedComponent(ScrollView, {
     scrollEventThrottle: 0.0001
-  }),
-  SectionList: AnimatedImplementation.createAnimatedComponent(SectionList, {
+  }): any),
+  SectionList: (AnimatedImplementation.createAnimatedComponent(SectionList, {
     scrollEventThrottle: 0.0001
-  }),
-  View: AnimatedImplementation.createAnimatedComponent(View),
-  Text: AnimatedImplementation.createAnimatedComponent(Text)
+  }): any),
+  View: (AnimatedImplementation.createAnimatedComponent(View): any),
+  Text: (AnimatedImplementation.createAnimatedComponent(Text): any)
 };
 
 export default Animated;

@@ -16,7 +16,7 @@ export type ModalPortalProps = {|
   children: any
 |};
 
-function ModalPortal(props: ModalPortalProps) {
+function ModalPortal(props: ModalPortalProps): any | null {
   const { children } = props;
   const elementRef = useRef(null);
 

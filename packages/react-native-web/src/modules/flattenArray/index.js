@@ -7,7 +7,7 @@
  * @flow
  */
 
-function flattenArray(array: Array<any>) {
+function flattenArray(array: Array<any>): Array<any> {
   function flattenDown(array, result) {
     for (let i = 0; i < array.length; i++) {
       const value = array[i];

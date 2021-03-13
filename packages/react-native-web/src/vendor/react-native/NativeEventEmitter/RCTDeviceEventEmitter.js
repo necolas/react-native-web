@@ -83,4 +83,4 @@ class RCTDeviceEventEmitter extends EventEmitter {
   }
 }
 
-export default new RCTDeviceEventEmitter();
+export default (new RCTDeviceEventEmitter(): RCTDeviceEventEmitter);

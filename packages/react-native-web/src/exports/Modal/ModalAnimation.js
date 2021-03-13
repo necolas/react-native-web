@@ -32,7 +32,7 @@ export type ModalAnimationProps = {|
   visible?: ?boolean
 |};
 
-function ModalAnimation(props: ModalAnimationProps) {
+function ModalAnimation(props: ModalAnimationProps): any | null {
   const { animationType, children, onDismiss, onShow, visible } = props;
 
   const [isRendering, setIsRendering] = useState(false);

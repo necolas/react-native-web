@@ -34,7 +34,7 @@ const DeviceInfo = {
     }
   },
 
-  get locale() {
+  get locale(): any | void {
     if (canUseDOM) {
       if (window.navigator.languages) {
         return window.navigator.languages[0];
@@ -44,11 +44,11 @@ const DeviceInfo = {
     }
   },
 
-  get totalMemory() {
+  get totalMemory(): any | void {
     return canUseDOM ? window.navigator.deviceMemory : undefined;
   },
 
-  get userAgent() {
+  get userAgent(): any | string {
     return canUseDOM ? window.navigator.userAgent : '';
   }
 };

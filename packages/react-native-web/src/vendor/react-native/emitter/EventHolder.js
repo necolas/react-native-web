@@ -42,7 +42,7 @@ class EventHolder {
    *   }); //logs 'abc'
    *
    */
-  holdEvent(eventType: string, ...args: any) {
+  holdEvent(eventType: string, ...args: any): {|eventType: string, index: any|} {
     this._heldEvents[eventType] = this._heldEvents[eventType] || [];
     const eventsOfType = this._heldEvents[eventType];
     const key = {

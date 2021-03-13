@@ -422,7 +422,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   /**
    * Provides a handle to the underlying scroll responder.
    */
-  getScrollResponder() {
+  getScrollResponder(): any | void {
     if (this._listRef) {
       return this._listRef.getScrollResponder();
     }
@@ -431,13 +431,13 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   /**
    * Provides a reference to the underlying host component
    */
-  getNativeScrollRef() {
+  getNativeScrollRef(): ?any {
     if (this._listRef) {
       return this._listRef.getScrollRef();
     }
   }
 
-  getScrollableNode() {
+  getScrollableNode(): any | void {
     if (this._listRef) {
       return this._listRef.getScrollableNode();
     }
@@ -498,7 +498,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   _virtualizedListPairs: Array<ViewabilityConfigCallbackPair> = [];
 
   // $FlowFixMe
-  _captureRef = ref => {
+  _captureRef: ((ref: any) => void) = ref => {
     this._listRef = ref;
   };
 
@@ -531,7 +531,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     );
   }
 
-  _getItem = (data: Array<ItemT>, index: number) => {
+  _getItem: (data: Array<ItemT>, index: number) => (Array<ItemT> | ItemT) = (data: Array<ItemT>, index: number) => {
     const {numColumns} = this.props;
     if (numColumns > 1) {
       const ret = [];
@@ -547,11 +547,11 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   };
 
-  _getItemCount = (data: ?Array<ItemT>): number => {
+  _getItemCount: ((data: ?Array<ItemT>) => number) = (data: ?Array<ItemT>): number => {
     return data ? Math.ceil(data.length / this.props.numColumns) : 0;
   };
 
-  _keyExtractor = (items: ItemT | Array<ItemT>, index: number) => {
+  _keyExtractor: ((items: ItemT | Array<ItemT>, index: number) => string) = (items: ItemT | Array<ItemT>, index: number) => {
     const {keyExtractor, numColumns} = this.props;
     if (numColumns > 1) {
       invariant(
@@ -585,7 +585,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       viewableItems: Array<ViewToken>,
       changed: Array<ViewToken>,
     }) => void,
-  ) {
+  ): ((
+  info: {changed: Array<ViewToken>, viewableItems: Array<ViewToken>,...}
+) => void) {
     return (info: {
       viewableItems: Array<ViewToken>,
       changed: Array<ViewToken>,
@@ -607,7 +609,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     };
   }
 
-  _renderItem = (info: Object): ?React.Node => {
+  _renderItem: ((info: any) => ?React.Node) = (info: Object): ?React.Node => {
     const {renderItem, numColumns, columnWrapperStyle} = this.props;
     if (numColumns > 1) {
       const {item, index} = info;
@@ -638,7 +640,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   };
 
-  render() {
+  render(): React.Node {
     return (
       <VirtualizedList
         {...this.props}

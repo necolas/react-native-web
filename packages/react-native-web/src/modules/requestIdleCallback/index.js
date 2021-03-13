@@ -28,8 +28,12 @@ const _cancelIdleCallback = function (id) {
 
 const isSupported = canUseDOM && typeof window.requestIdleCallback !== 'undefined';
 
-const requestIdleCallback = isSupported ? window.requestIdleCallback : _requestIdleCallback;
-const cancelIdleCallback = isSupported ? window.cancelIdleCallback : _cancelIdleCallback;
+const requestIdleCallback: any | ((cb: any, options?: any) => TimeoutID) = isSupported
+  ? window.requestIdleCallback
+  : _requestIdleCallback;
+const cancelIdleCallback: any | ((id: any) => void) = isSupported
+  ? window.cancelIdleCallback
+  : _cancelIdleCallback;
 
 export default requestIdleCallback;
 export { cancelIdleCallback };

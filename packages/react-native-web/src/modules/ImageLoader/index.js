@@ -11,9 +11,9 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries = {};
+  static _entries: { ... } = {};
 
-  static has(uri: string) {
+  static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
     const isDataUri = dataUriPattern.test(uri);
     return isDataUri || Boolean(entries[uri]);
@@ -110,7 +110,7 @@ const ImageLoader = {
       clearInterval(interval);
     }
   },
-  has(uri: string) {
+  has(uri: string): boolean {
     return ImageUriCache.has(uri);
   },
   load(uri: string, onLoad: Function, onError: Function): number {

@@ -209,13 +209,13 @@ class VirtualizedSectionList<
     };
   }
 
-  render() {
+  render(): React.Node {
     return (
       <VirtualizedList {...this.state.childProps} ref={this._captureRef} />
     );
   }
 
-  _keyExtractor = (item: Item, index: number) => {
+  _keyExtractor: ((item: Item, index: number) => string) = (item: Item, index: number) => {
     const info = this._subExtractor(index);
     return (info && info.key) || String(index);
   };
@@ -273,7 +273,7 @@ class VirtualizedSectionList<
     }
   }
 
-  _convertViewable = (viewable: ViewToken): ?ViewToken => {
+  _convertViewable: ((viewable: ViewToken) => ?ViewToken) = (viewable: ViewToken): ?ViewToken => {
     invariant(viewable.index != null, 'Received a broken ViewToken');
     const info = this._subExtractor(viewable.index);
     if (!info) {
@@ -291,7 +291,7 @@ class VirtualizedSectionList<
     };
   };
 
-  _onViewableItemsChanged = ({
+  _onViewableItemsChanged: (({changed: Array<ViewToken>, viewableItems: Array<ViewToken>,...}) => void) = ({
     viewableItems,
     changed,
   }: {
@@ -309,7 +309,7 @@ class VirtualizedSectionList<
     }
   };
 
-  _renderItem = ({item, index}: {item: Item, index: number}) => {
+  _renderItem: (({index: number, item: Item,...}) => ?(React.Node | React.Element<any>)) = ({item, index}: {item: Item, index: number}) => {
     const info = this._subExtractor(index);
     if (!info) {
       return null;
@@ -353,7 +353,7 @@ class VirtualizedSectionList<
     }
   };
 
-  _onUpdateSeparator = (key: string, newProps: Object) => {
+  _onUpdateSeparator: ((key: string, newProps: any) => void) = (key: string, newProps: Object) => {
     const ref = this._cellRefs[key];
     ref && ref.updateSeparatorProps(newProps);
   };
@@ -381,10 +381,10 @@ class VirtualizedSectionList<
     return null;
   }
 
-  _cellRefs = {};
+  _cellRefs: {...} = {};
   _listRef: VirtualizedList;
   // $FlowFixMe
-  _captureRef = ref => {
+  _captureRef: ((ref: any) => void) = ref => {
     /* $FlowFixMe(>=0.53.0 site=react_native_fb,react_native_oss) This comment
      * suppresses an error when upgrading Flow's support for React. To see the
      * error delete this comment and run Flow. */

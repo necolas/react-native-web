@@ -12,7 +12,7 @@ function emptyFunction() {}
 
 const BackHandler = {
   exitApp: emptyFunction,
-  addEventListener() {
+  addEventListener(): {| remove: () => void |} {
     return {
       remove: emptyFunction
     };

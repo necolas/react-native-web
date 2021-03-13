@@ -30,50 +30,52 @@ type PickerProps = {
   prompt?: string
 };
 
-const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
-  const {
-    children,
-    enabled,
-    onValueChange,
-    selectedValue,
-    style,
-    testID,
-    /* eslint-disable */
-    itemStyle,
-    mode,
-    prompt,
-    /* eslint-enable */
-    ...other
-  } = props;
+const Picker: React$AbstractComponent<PickerProps, mixed> = forwardRef<PickerProps, *>(
+  (props, forwardedRef) => {
+    const {
+      children,
+      enabled,
+      onValueChange,
+      selectedValue,
+      style,
+      testID,
+      /* eslint-disable */
+      itemStyle,
+      mode,
+      prompt,
+      /* eslint-enable */
+      ...other
+    } = props;
 
-  const hostRef = useRef(null);
+    const hostRef = useRef(null);
 
-  function handleChange(e: Object) {
-    const { selectedIndex, value } = e.target;
-    if (onValueChange) {
-      onValueChange(value, selectedIndex);
+    function handleChange(e: Object) {
+      const { selectedIndex, value } = e.target;
+      if (onValueChange) {
+        onValueChange(value, selectedIndex);
+      }
     }
+
+    // $FlowIgnore Using type any anyways
+    const supportedProps: any = {
+      children,
+      disabled: enabled === false ? true : undefined,
+      onChange: handleChange,
+      style: [styles.initial, style],
+      testID,
+      value: selectedValue,
+      ...other
+    };
+
+    const platformMethodsRef = usePlatformMethods(supportedProps);
+
+    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+    supportedProps.ref = setRef;
+
+    return createElement('select', supportedProps);
   }
-
-  // $FlowIgnore Using type any anyways
-  const supportedProps: any = {
-    children,
-    disabled: enabled === false ? true : undefined,
-    onChange: handleChange,
-    style: [styles.initial, style],
-    testID,
-    value: selectedValue,
-    ...other
-  };
-
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
-
-  supportedProps.ref = setRef;
-
-  return createElement('select', supportedProps);
-});
+);
 
 // $FlowFixMe
 Picker.Item = PickerItem;

@@ -27,7 +27,10 @@ const cssFunction: 'constant' | 'env' = (function () {
   return 'env';
 })();
 
-const SafeAreaView = forwardRef<ViewProps, HTMLElement>((props, ref) => {
+const SafeAreaView: React$AbstractComponent<ViewProps, HTMLElement> = forwardRef<
+  ViewProps,
+  HTMLElement
+>((props, ref) => {
   const { style, ...rest } = props;
 
   return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;

@@ -99,7 +99,7 @@ export function classic(style: Style, name: string): CompilerOutput {
  * Compile simple style object to inline DOM styles.
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
-export function inline(style: Style) {
+export function inline(style: Style): any {
   return prefixInlineStyles(createReactDOMStyle(style));
 }
 
@@ -107,7 +107,7 @@ export function inline(style: Style) {
  * Create a value string that normalizes different input values with a common
  * output.
  */
-export function stringifyValueWithProperty(value: Value, property: ?string) {
+export function stringifyValueWithProperty(value: Value, property: ?string): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'

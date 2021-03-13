@@ -25,7 +25,7 @@ BoundingDimensions.prototype.destructor = function () {
   this.height = null;
 };
 
-BoundingDimensions.getPooledFromElement = function (element) {
+BoundingDimensions.getPooledFromElement = function (element: HTMLElement): any {
   return BoundingDimensions.getPooled(element.offsetWidth, element.offsetHeight);
 };
 

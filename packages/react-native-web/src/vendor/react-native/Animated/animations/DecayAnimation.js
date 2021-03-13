@@ -45,7 +45,7 @@ class DecayAnimation extends Animation {
     this.__iterations = config.iterations ?? 1;
   }
 
-  __getNativeAnimationConfig() {
+  __getNativeAnimationConfig(): {|deceleration: number, iterations: number, type: string, velocity: number|} {
     return {
       type: 'decay',
       deceleration: this._deceleration,

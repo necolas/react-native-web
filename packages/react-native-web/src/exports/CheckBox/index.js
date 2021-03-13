@@ -26,49 +26,51 @@ type CheckBoxProps = {
   value?: boolean
 };
 
-const CheckBox = forwardRef<CheckBoxProps, *>((props, forwardedRef) => {
-  const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
+const CheckBox: React$AbstractComponent<CheckBoxProps, mixed> = forwardRef<CheckBoxProps, *>(
+  (props, forwardedRef) => {
+    const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
 
-  function handleChange(event: Object) {
-    const value = event.nativeEvent.target.checked;
-    event.nativeEvent.value = value;
-    onChange && onChange(event);
-    onValueChange && onValueChange(value);
+    function handleChange(event: Object) {
+      const value = event.nativeEvent.target.checked;
+      event.nativeEvent.value = value;
+      onChange && onChange(event);
+      onValueChange && onValueChange(value);
+    }
+
+    const fakeControl = (
+      <View
+        style={[
+          styles.fakeControl,
+          value && styles.fakeControlChecked,
+          // custom color
+          value && color && { backgroundColor: color, borderColor: color },
+          disabled && styles.fakeControlDisabled,
+          value && disabled && styles.fakeControlCheckedAndDisabled
+        ]}
+      />
+    );
+
+    const nativeControl = createElement('input', {
+      checked: value,
+      disabled: disabled,
+      onChange: handleChange,
+      ref: forwardedRef,
+      style: [styles.nativeControl, styles.cursorInherit],
+      type: 'checkbox'
+    });
+
+    return (
+      <View
+        {...other}
+        accessibilityDisabled={disabled}
+        style={[styles.root, style, disabled && styles.cursorDefault]}
+      >
+        {fakeControl}
+        {nativeControl}
+      </View>
+    );
   }
-
-  const fakeControl = (
-    <View
-      style={[
-        styles.fakeControl,
-        value && styles.fakeControlChecked,
-        // custom color
-        value && color && { backgroundColor: color, borderColor: color },
-        disabled && styles.fakeControlDisabled,
-        value && disabled && styles.fakeControlCheckedAndDisabled
-      ]}
-    />
-  );
-
-  const nativeControl = createElement('input', {
-    checked: value,
-    disabled: disabled,
-    onChange: handleChange,
-    ref: forwardedRef,
-    style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox'
-  });
-
-  return (
-    <View
-      {...other}
-      accessibilityDisabled={disabled}
-      style={[styles.root, style, disabled && styles.cursorDefault]}
-    >
-      {fakeControl}
-      {nativeControl}
-    </View>
-  );
-});
+);
 
 CheckBox.displayName = 'CheckBox';
 

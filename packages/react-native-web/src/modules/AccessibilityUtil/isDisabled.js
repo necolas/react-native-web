@@ -7,7 +7,7 @@
  * @flow
  */
 
-const isDisabled = (props: Object) =>
+const isDisabled = (props: Object): any =>
   props.disabled ||
   (Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf('disabled') > -1);
 
