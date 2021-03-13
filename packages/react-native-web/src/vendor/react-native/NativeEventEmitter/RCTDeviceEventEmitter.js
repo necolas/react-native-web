@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,9 +11,8 @@
 'use strict';
 
 import EventEmitter from '../emitter/EventEmitter';
-import EventSubscriptionVendor from '../emitter/EventSubscriptionVendor';
-
-import type EmitterSubscription from '../emitter/EmitterSubscription';
+import type EmitterSubscription from '../emitter/_EmitterSubscription';
+import EventSubscriptionVendor from '../emitter/_EventSubscriptionVendor';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -47,34 +46,38 @@ function checkNativeEventModule(eventType: ?string) {
  * Deprecated - subclass NativeEventEmitter to create granular event modules instead of
  * adding all event listeners directly to RCTDeviceEventEmitter.
  */
-class RCTDeviceEventEmitter extends EventEmitter {
-  sharedSubscriber: EventSubscriptionVendor;
+class RCTDeviceEventEmitter<
+  EventDefinitions: {...},
+> extends EventEmitter<EventDefinitions> {
+  sharedSubscriber: EventSubscriptionVendor<EventDefinitions>;
 
   constructor() {
-    const sharedSubscriber = new EventSubscriptionVendor();
+    const sharedSubscriber = new EventSubscriptionVendor<EventDefinitions>();
     super(sharedSubscriber);
     this.sharedSubscriber = sharedSubscriber;
   }
 
-  addListener(
-    eventType: string,
-    listener: Function,
-    context: ?Object,
-  ): EmitterSubscription {
+  addListener<K: $Keys<EventDefinitions>>(
+    eventType: K,
+    listener: (...$ElementType<EventDefinitions, K>) => mixed,
+    context: $FlowFixMe,
+  ): EmitterSubscription<EventDefinitions, K> {
     if (__DEV__) {
       checkNativeEventModule(eventType);
     }
     return super.addListener(eventType, listener, context);
   }
 
-  removeAllListeners(eventType: ?string) {
+  removeAllListeners<K: $Keys<EventDefinitions>>(eventType: ?K): void {
     if (__DEV__) {
       checkNativeEventModule(eventType);
     }
     super.removeAllListeners(eventType);
   }
 
-  removeSubscription(subscription: EmitterSubscription) {
+  removeSubscription<K: $Keys<EventDefinitions>>(
+    subscription: EmitterSubscription<EventDefinitions, K>,
+  ): void {
     if (subscription.emitter !== this) {
       subscription.emitter.removeSubscription(subscription);
     } else {
@@ -83,4 +86,7 @@ class RCTDeviceEventEmitter extends EventEmitter {
   }
 }
 
-export default (new RCTDeviceEventEmitter(): RCTDeviceEventEmitter);
+// FIXME: use typed events
+type RCTDeviceEventDefinitions = $FlowFixMe;
+
+export default (new RCTDeviceEventEmitter(): RCTDeviceEventEmitter<RCTDeviceEventDefinitions>);
