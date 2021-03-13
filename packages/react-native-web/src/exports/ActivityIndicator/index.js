@@ -12,7 +12,7 @@ import type { ViewProps } from '../View';
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef } from 'react';
+import * as React from 'react';
 
 const accessibilityValue = { max: 1, min: 0 };
 
@@ -28,7 +28,7 @@ type ActivityIndicatorProps = {
   size?: 'small' | 'large' | number
 };
 
-const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwardedRef) => {
+const ActivityIndicator = React.forwardRef<ActivityIndicatorProps, *>((props, forwardedRef) => {
   const {
     animating = true,
     color = '#1976D2',

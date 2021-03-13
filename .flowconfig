@@ -1,9 +1,10 @@
 [version]
-^0.109.0
+^0.133.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
+<PROJECT_ROOT>/packages/benchmarks/.*
 <PROJECT_ROOT>/packages/docs/.*
 <PROJECT_ROOT>/packages/examples/.*
 .*/node_modules/@emotion/css/*
@@ -15,7 +16,7 @@
 <PROJECT_ROOT>/types
 
 [options]
-
+types_first=false
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps

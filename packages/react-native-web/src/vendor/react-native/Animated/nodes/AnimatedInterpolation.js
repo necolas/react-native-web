@@ -220,11 +220,11 @@ function createInterpolationFromStringOutputRange(
     });
   });
 
-  /* $FlowFixMe(>=0.18.0): `outputRange[0].match()` can return `null`. Need to
-   * guard against this possibility.
-   */
   const interpolations = outputRange[0]
     .match(stringShapeRegex)
+    /* $FlowFixMe(>=0.18.0): `outputRange[0].match()` can return `null`. Need to
+    * guard against this possibility.
+    */
     .map((value, i) => {
       return createInterpolation({
         ...config,

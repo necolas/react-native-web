@@ -152,17 +152,17 @@ function createAtomicRules(identifier: string, property, value): Rules {
       if (value === 'auto' || value === 'box-only') {
         finalValue = 'auto!important';
         if (value === 'box-only') {
-          const block = createDeclarationBlock({ [property]: 'none' });
+          const block = createDeclarationBlock({ pointerEvents: 'none' });
           rules.push(`${selector}>*${block}`);
         }
       } else if (value === 'none' || value === 'box-none') {
         finalValue = 'none!important';
         if (value === 'box-none') {
-          const block = createDeclarationBlock({ [property]: 'auto' });
+          const block = createDeclarationBlock({ pointerEvents: 'auto' });
           rules.push(`${selector}>*${block}`);
         }
       }
-      const block = createDeclarationBlock({ [property]: finalValue });
+      const block = createDeclarationBlock({ pointerEvents: finalValue });
       rules.push(`${selector}${block}`);
       break;
     }
@@ -218,7 +218,7 @@ function createDeclarationBlock(style: Style) {
 /**
  * An identifier is associated with a unique set of styles.
  */
-function createIdentifier(prefix, name, value) {
+function createIdentifier(prefix: string, name: string, value): string {
   const hashedString = hash(name + stringifyValueWithProperty(value, name));
   return process.env.NODE_ENV !== 'production'
     ? `${prefix}-${name}-${hashedString}`

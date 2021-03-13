@@ -14,18 +14,18 @@ import createElement from '../createElement';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
-import StyleSheet, { type StyleObj } from '../StyleSheet';
+import StyleSheet from '../StyleSheet';
 import { forwardRef, useRef } from 'react';
 
 type PickerProps = {
   ...ViewProps,
-  children?: PickerItem | Array<typeof PickerItem>,
+  children?: typeof PickerItem | Array<typeof PickerItem>,
   enabled?: boolean,
   onValueChange?: (number | string, number) => void,
   selectedValue?: number | string,
-  style?: StyleObj,
+  style?: any,
   /* compat */
-  itemStyle?: StyleObj,
+  itemStyle?: any,
   mode?: string,
   prompt?: string
 };
@@ -55,6 +55,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   }
 
+  // $FlowIgnore Using type any anyways
   const supportedProps: any = {
     children,
     disabled: enabled === false ? true : undefined,

@@ -20,6 +20,7 @@ class EventSubscription {
   eventType: string;
   key: number;
   subscriber: EventSubscriptionVendor;
+  listener: Function;
 
   /**
    * @param {EventSubscriptionVendor} subscriber the subscriber that controls

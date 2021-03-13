@@ -280,7 +280,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
   /**
    * Provides a handle to the underlying scroll responder.
    */
-  getScrollResponder(): ?ScrollView {
+  getScrollResponder(): ?typeof ScrollView {
     const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
     if (listRef) {
       return listRef.getScrollResponder();

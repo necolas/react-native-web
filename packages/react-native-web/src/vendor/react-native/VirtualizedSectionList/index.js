@@ -114,6 +114,9 @@ type OptionalProps<SectionT: SectionBase<any>> = {
    * Set this true while waiting for new data from a refresh.
    */
   refreshing?: ?boolean,
+
+  // Makes section headers stick to the top of the screen until the next one pushes it off.
+  stickySectionHeadersEnabled?: boolean
 };
 
 export type Props<SectionT> = RequiredProps<SectionT> &
@@ -296,12 +299,13 @@ class VirtualizedSectionList<
     changed: Array<ViewToken>,
   }) => {
     if (this.props.onViewableItemsChanged) {
-      this.props.onViewableItemsChanged({
+      const data = {
         viewableItems: viewableItems
           .map(this._convertViewable, this)
           .filter(Boolean),
         changed: changed.map(this._convertViewable, this).filter(Boolean),
-      });
+      }
+      this.props.onViewableItemsChanged && this.props.onViewableItemsChanged(data);
     }
   };
 

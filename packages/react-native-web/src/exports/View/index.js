@@ -39,9 +39,37 @@ const forwardPropsList = {
   pointerEvents: true
 };
 
+type RNW$MeasureLayoutCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  left: number,
+  top: number
+) => void;
+
+type RNW$MeasureInWindowCallback = (
+  left: number,
+  top: number,
+  width: number,
+  height: number
+) => void;
+declare class RNW$NativeMethodsMixin {
+  blur: () => void;
+  focus: () => void;
+  measure: (callback: RNW$MeasureLayoutCallback) => void;
+  measureInWindow: (callback: RNW$MeasureInWindowCallback) => void;
+  measureLayout: (
+    relativeToNativeNode: {},
+    onSuccess: RNW$MeasureLayoutCallback,
+    onFail: () => void
+  ) => void;
+  setNativeProps: (nativeProps: {}) => void;
+}
+
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
+const View = forwardRef<ViewProps, HTMLElement & RNW$NativeMethodsMixin>((props, forwardedRef) => {
   const {
     hrefAttrs,
     onLayout,
@@ -148,6 +176,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export type { ViewProps };
+export type { ViewProps, RNW$NativeMethodsMixin };
 
 export default View;
