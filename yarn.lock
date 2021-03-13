@@ -5321,10 +5321,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.1.1.tgz#c4b489e80096d9df1dfc97c79871aea7c617c469"
   integrity sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==
 
-flow-bin@^0.133.0:
-  version "0.133.0"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/flow-bin/-/flow-bin-0.133.0.tgz#2ee44e3f5d0c0256cfe8e99d9a85e9801c281c50"
-  integrity sha1-LuROP10MAlbP6OmdmoXpgBwoHFA=
+flow-bin@^0.146.0:
+  version "0.146.0"
+  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/flow-bin/-/flow-bin-0.146.0.tgz#fafa002663a0e13bf3c08c3972dd93d68289ccc6"
+  integrity sha1-+voAJmOg4TvzwIw5ct2T1oKJzMY=
 
 flow-copy-source@^2.0.9:
   version "2.0.9"

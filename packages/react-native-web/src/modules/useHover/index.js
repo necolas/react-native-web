@@ -81,8 +81,8 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
           onHoverChange(false);
         }
         // Remove the listeners once finished.
-        addMoveListener(target, null);
-        addLeaveListener(target, null);
+        addMoveListener && addMoveListener(target, null);
+        addLeaveListener && addLeaveListener(target, null);
       };
 
       /**
@@ -128,9 +128,9 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
         }
         // Set the listeners needed for the rest of the hover gesture.
         if (onHoverUpdate != null) {
-          addMoveListener(target, !disabled ? moveListener : null);
+          addMoveListener && addMoveListener(target, !disabled ? moveListener : null);
         }
-        addLeaveListener(target, !disabled ? leaveListener : null);
+        addLeaveListener && addLeaveListener(target, !disabled ? leaveListener : null);
       };
 
       /**
@@ -153,12 +153,12 @@ export default function useHover(targetRef: any, config: HoverEventsConfig): voi
               hoverStart(e);
             }
           };
-          addLockListener(target, !disabled ? lockListener : null);
-          addUnlockListener(target, !disabled ? unlockListener : null);
+          addLockListener && addLockListener(target, !disabled ? lockListener : null);
+          addUnlockListener && addUnlockListener(target, !disabled ? unlockListener : null);
         }
       };
 
-      addEnterListener(target, !disabled ? enterListener : null);
+      addEnterListener && addEnterListener(target, !disabled ? enterListener : null);
     }
   }, [
     addEnterListener,
