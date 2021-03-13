@@ -110,7 +110,7 @@ describe('components/View', () => {
       const hrefAttrs = {
         download: 'filename.jpg',
         rel: 'nofollow',
-        target: 'blank'
+        target: '_blank'
       };
       const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
       expect(container.firstChild).toMatchSnapshot();
