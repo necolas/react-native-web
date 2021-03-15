@@ -70,7 +70,7 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase: React$AbstractComponent<Props, mixed> = forwardRef<Props, *>(
+const ScrollViewBase: React.AbstractComponent<Props, React.ElementRef<typeof View>> = forwardRef(
   (props, forwardedRef) => {
     const {
       onScroll,

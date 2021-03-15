@@ -26,37 +26,41 @@ export type ModalContentProps = {|
   transparent?: ?boolean
 |};
 
-const ModalContent: AbstractComponent<ModalContentProps, ElementRef<typeof View>> = forwardRef<
-  ModalContentProps,
-  ElementRef<typeof View>
->((props, forwardedRef) => {
-  const { active, children, onRequestClose, transparent } = props;
+const ModalContent: AbstractComponent<ModalContentProps, ElementRef<typeof View>> = forwardRef(
+  (props, forwardedRef) => {
+    const { active, children, onRequestClose, transparent } = props;
 
-  useEffect(() => {
-    if (canUseDOM) {
-      const closeOnEscape = (e: KeyboardEvent) => {
-        if (active && e.key === 'Escape') {
-          e.stopPropagation();
-          if (onRequestClose) {
-            onRequestClose();
+    useEffect(() => {
+      if (canUseDOM) {
+        const closeOnEscape = (e: KeyboardEvent) => {
+          if (active && e.key === 'Escape') {
+            e.stopPropagation();
+            if (onRequestClose) {
+              onRequestClose();
+            }
           }
-        }
-      };
-      document.addEventListener('keyup', closeOnEscape, false);
-      return () => document.removeEventListener('keyup', closeOnEscape, false);
-    }
-  }, [active, onRequestClose]);
+        };
+        document.addEventListener('keyup', closeOnEscape, false);
+        return () => document.removeEventListener('keyup', closeOnEscape, false);
+      }
+    }, [active, onRequestClose]);
 
-  const style = useMemo(() => {
-    return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
-  }, [transparent]);
+    const style = useMemo(() => {
+      return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
+    }, [transparent]);
 
-  return (
-    <View accessibilityRole={active ? 'dialog' : null} aria-modal ref={forwardedRef} style={style}>
-      <View style={styles.container}>{children}</View>
-    </View>
-  );
-});
+    return (
+      <View
+        accessibilityRole={active ? 'dialog' : null}
+        aria-modal
+        ref={forwardedRef}
+        style={style}
+      >
+        <View style={styles.container}>{children}</View>
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   modal: {

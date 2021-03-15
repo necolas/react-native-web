@@ -25,30 +25,28 @@ type ButtonProps = {|
 const Button: React.AbstractComponent<
   ButtonProps,
   React.ElementRef<typeof TouchableOpacity>
-> = React.forwardRef<ButtonProps, React.ElementRef<typeof TouchableOpacity>>(
-  (props, forwardedRef) => {
-    const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
+> = React.forwardRef((props, forwardedRef) => {
+  const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
 
-    return (
-      <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
-        disabled={disabled}
-        focusable={!disabled}
-        onPress={onPress}
-        ref={forwardedRef}
-        style={[
-          styles.button,
-          color && { backgroundColor: color },
-          disabled && styles.buttonDisabled
-        ]}
-        testID={testID}
-      >
-        <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
-      </TouchableOpacity>
-    );
-  }
-);
+  return (
+    <TouchableOpacity
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      disabled={disabled}
+      focusable={!disabled}
+      onPress={onPress}
+      ref={forwardedRef}
+      style={[
+        styles.button,
+        color && { backgroundColor: color },
+        disabled && styles.buttonDisabled
+      ]}
+      testID={testID}
+    >
+      <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
+    </TouchableOpacity>
+  );
+});
 
 Button.displayName = 'Button';
 

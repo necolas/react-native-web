@@ -77,65 +77,64 @@ function addActiveModal(modalId, listener) {
   notifyActiveModalListeners();
 }
 
-const Modal: AbstractComponent<ModalProps, ElementRef<typeof ModalContent>> = forwardRef<
-  ModalProps,
-  ElementRef<typeof ModalContent>
->((props, forwardedRef) => {
-  const {
-    animationType,
-    children,
-    onDismiss,
-    onRequestClose,
-    onShow,
-    transparent,
-    visible = true
-  } = props;
+const Modal: AbstractComponent<ModalProps, ElementRef<typeof ModalContent>> = forwardRef(
+  (props, forwardedRef) => {
+    const {
+      animationType,
+      children,
+      onDismiss,
+      onRequestClose,
+      onShow,
+      transparent,
+      visible = true
+    } = props;
 
-  // Set a unique model identifier so we can correctly route
-  // dismissals and check the layering of modals.
-  const modalId = useMemo(() => uniqueModalIdentifier++, []);
+    // Set a unique model identifier so we can correctly route
+    // dismissals and check the layering of modals.
+    const modalId = useMemo(() => uniqueModalIdentifier++, []);
 
-  const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
-  const onDismissCallback = useCallback(() => {
-    removeActiveModal(modalId);
-    if (onDismiss) {
-      onDismiss();
-    }
-  }, [modalId, onDismiss]);
+    const onDismissCallback = useCallback(() => {
+      removeActiveModal(modalId);
+      if (onDismiss) {
+        onDismiss();
+      }
+    }, [modalId, onDismiss]);
 
-  const onShowCallback = useCallback(() => {
-    addActiveModal(modalId, setIsActive);
-    if (onShow) {
-      onShow();
-    }
-  }, [modalId, onShow]);
+    const onShowCallback = useCallback(() => {
+      addActiveModal(modalId, setIsActive);
+      if (onShow) {
+        onShow();
+      }
+    }, [modalId, onShow]);
 
-  useEffect(() => {
-    return () => removeActiveModal(modalId);
-  }, [modalId]);
+    useEffect(() => {
+      return () => removeActiveModal(modalId);
+    }, [modalId]);
 
-  return (
-    <ModalPortal>
-      <ModalAnimation
-        animationType={animationType}
-        onDismiss={onDismissCallback}
-        onShow={onShowCallback}
-        visible={visible}
-      >
-        <ModalFocusTrap active={isActive}>
-          <ModalContent
-            active={isActive}
-            onRequestClose={onRequestClose}
-            ref={forwardedRef}
-            transparent={transparent}
-          >
-            {children}
-          </ModalContent>
-        </ModalFocusTrap>
-      </ModalAnimation>
-    </ModalPortal>
-  );
-});
+    return (
+      <ModalPortal>
+        <ModalAnimation
+          animationType={animationType}
+          onDismiss={onDismissCallback}
+          onShow={onShowCallback}
+          visible={visible}
+        >
+          <ModalFocusTrap active={isActive}>
+            <ModalContent
+              active={isActive}
+              onRequestClose={onRequestClose}
+              ref={forwardedRef}
+              transparent={transparent}
+            >
+              {children}
+            </ModalContent>
+          </ModalFocusTrap>
+        </ModalAnimation>
+      </ModalPortal>
+    );
+  }
+);
 
 export default Modal;

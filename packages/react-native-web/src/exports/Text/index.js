@@ -9,6 +9,7 @@
  */
 
 import type { TextProps } from './types';
+import type { NativeMethodsMixin } from '../../types';
 
 import * as React from 'react';
 import { forwardRef, useContext, useRef } from 'react';
@@ -39,7 +40,7 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const Text: React$AbstractComponent<TextProps, mixed> = forwardRef<TextProps, *>(
+const Text: React$AbstractComponent<TextProps, HTMLElement & NativeMethodsMixin> = forwardRef(
   (props, forwardedRef) => {
     const {
       dir,

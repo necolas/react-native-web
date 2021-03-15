@@ -31,7 +31,7 @@ const emptyObject = {};
 const ImageBackground: React.AbstractComponent<
   ImageBackgroundProps,
   React.ElementRef<typeof Image>
-> = forwardRef<ImageBackgroundProps, React.ElementRef<typeof Image>>((props, forwardedRef) => {
+> = forwardRef((props, forwardedRef) => {
   const { children, style = emptyObject, imageStyle, imageRef, ...rest } = props;
   const { height, width } = StyleSheet.flatten(style);
 

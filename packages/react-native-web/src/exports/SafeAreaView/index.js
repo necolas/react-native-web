@@ -13,7 +13,7 @@ import type { ViewProps } from '../View';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, type ElementRef } from 'react';
 
 const cssFunction: 'constant' | 'env' = (function () {
   if (
@@ -27,14 +27,13 @@ const cssFunction: 'constant' | 'env' = (function () {
   return 'env';
 })();
 
-const SafeAreaView: React$AbstractComponent<ViewProps, HTMLElement> = forwardRef<
-  ViewProps,
-  HTMLElement
->((props, ref) => {
-  const { style, ...rest } = props;
+const SafeAreaView: React$AbstractComponent<ViewProps, ElementRef<typeof View>> = forwardRef(
+  (props, ref) => {
+    const { style, ...rest } = props;
 
-  return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
-});
+    return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
+  }
+);
 
 SafeAreaView.displayName = 'SafeAreaView';
 

@@ -26,7 +26,7 @@ type CheckBoxProps = {
   value?: boolean
 };
 
-const CheckBox: React$AbstractComponent<CheckBoxProps, mixed> = forwardRef<CheckBoxProps, *>(
+const CheckBox: React$AbstractComponent<CheckBoxProps, mixed> = forwardRef(
   (props, forwardedRef) => {
     const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
 
