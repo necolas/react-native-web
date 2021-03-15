@@ -3506,7 +3506,7 @@ cheerio@^1.0.0-rc.2, cheerio@^1.0.0-rc.3:
     parse5 "^6.0.0"
     parse5-htmlparser2-tree-adapter "^6.0.0"
 
-chokidar@3.5.1, chokidar@^3.0.0, chokidar@^3.3.0, chokidar@^3.4.0, chokidar@^3.4.1:
+chokidar@3.5.1, chokidar@^3.3.0, chokidar@^3.4.0, chokidar@^3.4.1:
   version "3.5.1"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.5.1.tgz"
   integrity sha512-9+s+Od+W0VJJzawDma/gvBNQqkTiqYTWLuZoyAsivsI4AaWTCzHG06/TMjsf1cYe9Cb97UCEhjz7HvnPk2p/tw==
@@ -5325,17 +5325,6 @@ flow-bin@^0.146.0:
   version "0.146.0"
   resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/flow-bin/-/flow-bin-0.146.0.tgz#fafa002663a0e13bf3c08c3972dd93d68289ccc6"
   integrity sha1-+voAJmOg4TvzwIw5ct2T1oKJzMY=
-
-flow-copy-source@^2.0.9:
-  version "2.0.9"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/flow-copy-source/-/flow-copy-source-2.0.9.tgz#0c94ad842f2ae544d5a6b8ae720cee0b8678d742"
-  integrity sha1-DJSthC8q5UTVpriucgzuC4Z410I=
-  dependencies:
-    chokidar "^3.0.0"
-    fs-extra "^8.1.0"
-    glob "^7.0.0"
-    kefir "^3.7.3"
-    yargs "^15.0.1"
 
 follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.13.1"
@@ -7256,11 +7245,6 @@ junk@^1.0.1:
   version "1.0.3"
   resolved "https://registry.npmjs.org/junk/-/junk-1.0.3.tgz"
   integrity sha1-h75jSIZJy9ym9Tqzm+yczSNH9ZI=
-
-kefir@^3.7.3:
-  version "3.8.8"
-  resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/kefir/-/kefir-3.8.8.tgz#235932ddfbed422acebf5d7cba503035e9ea05c5"
-  integrity sha1-I1ky3fvtQirOv118ulAwNenqBcU=
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -11508,7 +11492,7 @@ yargs@16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^15.0.1, yargs@^15.3.1, yargs@^15.4.1:
+yargs@^15.3.1, yargs@^15.4.1:
   version "15.4.1"
   resolved "https://artifactory.twitter.biz:443/api/npm/js-virtual/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
   integrity sha1-DYehbeAa7p2L7Cv7909nhRcw9Pg=
