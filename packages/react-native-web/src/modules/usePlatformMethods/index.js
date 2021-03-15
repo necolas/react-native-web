@@ -23,7 +23,7 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
       pointerEvents,
       ...nativeProps,
       classList: [classList, nativeProps.className],
-      style: [style, nativeProps.style]
+      style: [style, previousStyleRef?.current, nativeProps.style]
     });
 
     const nextDomStyle = domProps.style;
