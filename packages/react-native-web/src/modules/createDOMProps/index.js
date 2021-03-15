@@ -73,6 +73,7 @@ const createDOMProps = (elementType, props) => {
     accessibilityColumnIndex,
     accessibilityColumnSpan,
     accessibilityControls,
+    accessibilityCurrent,
     accessibilityDescribedBy,
     accessibilityDetails,
     accessibilityDisabled,
@@ -193,6 +194,9 @@ const createDOMProps = (elementType, props) => {
   }
   if (accessibilityControls != null) {
     domProps['aria-controls'] = accessibilityControls;
+  }
+  if (accessibilityCurrent != null) {
+    domProps['aria-current'] = accessibilityCurrent;
   }
   if (accessibilityDescribedBy != null) {
     domProps['aria-describedby'] = accessibilityDescribedBy;

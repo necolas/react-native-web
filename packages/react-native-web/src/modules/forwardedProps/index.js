@@ -26,6 +26,7 @@ export const accessibilityProps = {
   accessibilityColumnIndex: true,
   accessibilityColumnSpan: true,
   accessibilityControls: true,
+  accessibilityCurrent: true,
   accessibilityDescribedBy: true,
   accessibilityDetails: true,
   accessibilityDisabled: true,

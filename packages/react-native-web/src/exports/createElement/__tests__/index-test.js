@@ -113,6 +113,15 @@ describe('exports/createElement', () => {
       expect(getAttribute(hasValue, 'aria-controls')).toBe('abc');
     });
 
+    test('accessibilityCurrent', () => {
+      const { container: isEmpty } = render(createElement('div', { accessibilityCurrent: null }));
+      expect(getAttribute(isEmpty, 'aria-current')).toBeNull();
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityCurrent: 'page' })
+      );
+      expect(getAttribute(hasValue, 'aria-current')).toBe('page');
+    });
+
     test('accessibilityDescribedBy', () => {
       const { container: isEmpty } = render(
         createElement('div', { accessibilityDescribedBy: null })

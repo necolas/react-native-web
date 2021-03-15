@@ -34,6 +34,7 @@ export type AccessibilityProps = {|
   accessibilityColumnIndex?: ?number,
   accessibilityColumnSpan?: ?number,
   accessibilityControls?: ?idRefList,
+  accessibilityCurrent?: ?(boolean | 'page' | 'step' | 'location' | 'date' | 'time'),
   accessibilityDescribedBy?: ?idRef,
   accessibilityDetails?: ?idRef,
   accessibilityDisabled?: ?boolean,

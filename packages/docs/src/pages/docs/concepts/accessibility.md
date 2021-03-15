@@ -58,6 +58,10 @@ Equivalent to [aria-colspan](https://www.w3.org/TR/wai-aria-1.2/#aria-colspan).
 Equivalent to [aria-controls](https://www.w3.org/TR/wai-aria-1.2/#aria-controls).
 {% endcall %}
 
+{% call macro.prop('accessibilityCurrent', '?number') %}
+Equivalent to [aria-current](https://www.w3.org/TR/wai-aria-1.2/#aria-current).
+{% endcall %}
+
 {% call macro.prop('accessibilityDescribedBy', '?string') %}
 Equivalent to [aria-describedby](https://www.w3.org/TR/wai-aria-1.2/#aria-describedby).
 {% endcall %}
