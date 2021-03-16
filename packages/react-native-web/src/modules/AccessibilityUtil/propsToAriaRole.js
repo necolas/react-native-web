@@ -7,7 +7,7 @@
  * @flow
  */
 
-const accessibilityRoleToWebRole = {
+const accessibilityRoleToWebRole: { [string]: ?string } = {
   adjustable: 'slider',
   button: 'button',
   header: 'heading',
@@ -22,7 +22,7 @@ const accessibilityRoleToWebRole = {
   text: null
 };
 
-const propsToAriaRole = ({ accessibilityRole }: Object): any | void => {
+const propsToAriaRole = ({ accessibilityRole }: { accessibilityRole?: string }): string | void => {
   if (accessibilityRole) {
     const inferredRole = accessibilityRoleToWebRole[accessibilityRole];
     if (inferredRole !== null) {

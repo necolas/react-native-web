@@ -304,6 +304,7 @@ type OptionalProps = {|
 |};
 
 type Props = {|
+  // $FlowFixMe: View should be changed to an exact type in the future
   ...React.ElementConfig<typeof ScrollView>,
   ...RequiredProps,
   ...OptionalProps,

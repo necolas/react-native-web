@@ -7,7 +7,7 @@
  * @flow
  */
 
-import type { Node } from 'React';
+import type { Node } from 'react';
 import View from '../../exports/View';
 import React from 'react';
 

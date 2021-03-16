@@ -9,6 +9,7 @@
  */
 
 import type { ImageProps } from './types';
+import type { AbstractComponent, ElementRef } from 'react';
 
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
@@ -19,15 +20,7 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
-import React, {
-  forwardRef,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type AbstractComponent,
-  type ElementRef
-} from 'react';
+import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 
 export type { ImageProps };
 

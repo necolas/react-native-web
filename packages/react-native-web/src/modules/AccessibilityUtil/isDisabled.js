@@ -7,8 +7,6 @@
  * @flow
  */
 
-const isDisabled = (props: Object): any =>
-  props.disabled ||
-  (Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf('disabled') > -1);
+const isDisabled = (props: { disabled?: boolean }): boolean => !!props.disabled;
 
 export default isDisabled;

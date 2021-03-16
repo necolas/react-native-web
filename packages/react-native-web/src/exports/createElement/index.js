@@ -4,14 +4,18 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
-import React from 'react';
+import * as React from 'react';
 
-const createElement = (component, props, ...children) => {
+const createElement = (
+  component: any,
+  props: any,
+  ...children: React.Node[]
+): React.Element<any> => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
   if (component && component.constructor === String) {

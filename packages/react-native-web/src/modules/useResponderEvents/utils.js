@@ -78,7 +78,7 @@ export function getResponderPaths(
 /**
  * Walk the paths and find the first common ancestor
  */
-export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>): any | null {
+export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>): any {
   let pathALength = pathA.length;
   let pathBLength = pathB.length;
   if (

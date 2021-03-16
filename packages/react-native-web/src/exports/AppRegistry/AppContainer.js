@@ -8,8 +8,7 @@
  * @flow
  */
 
-import type { ComponentType, Context } from 'react';
-import type { Node } from 'React';
+import type { ComponentType, Context, Node } from 'react';
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';

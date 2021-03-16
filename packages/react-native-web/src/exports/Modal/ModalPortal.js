@@ -8,6 +8,8 @@
  * @flow
  */
 
+import type { Portal } from 'react';
+
 import { useEffect, useRef } from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
@@ -16,7 +18,7 @@ export type ModalPortalProps = {|
   children: any
 |};
 
-function ModalPortal(props: ModalPortalProps): any | null {
+function ModalPortal(props: ModalPortalProps): Portal | null {
   const { children } = props;
   const elementRef = useRef(null);
 

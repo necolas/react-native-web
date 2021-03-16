@@ -8,13 +8,9 @@
  * @flow
  */
 
-import React, {
-  forwardRef,
-  useMemo,
-  useEffect,
-  type AbstractComponent,
-  type ElementRef
-} from 'react';
+import type { AbstractComponent, ElementRef } from 'react';
+
+import React, { forwardRef, useMemo, useEffect } from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';

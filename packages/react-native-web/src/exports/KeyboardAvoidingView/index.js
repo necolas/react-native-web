@@ -10,7 +10,7 @@
 
 import type { LayoutEvent, LayoutValue } from '../../types';
 import type { ViewProps } from '../View';
-import type { Node } from 'React';
+import type { Node } from 'react';
 
 import View from '../View';
 import React from 'react';

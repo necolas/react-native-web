@@ -13,7 +13,6 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/types
 
 [options]
 munge_underscores=true

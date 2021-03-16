@@ -9,16 +9,11 @@
 
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
+import type { AbstractComponent, ElementRef } from 'react';
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, {
-  forwardRef,
-  useEffect,
-  useRef,
-  type AbstractComponent,
-  type ElementRef
-} from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
 type ProgressBarProps = {
   ...ViewProps,

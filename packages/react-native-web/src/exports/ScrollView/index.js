@@ -9,6 +9,7 @@
  */
 
 import type { ViewStyle } from '../View/types';
+import type { ComponentType, ElementConfig } from 'react';
 
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
@@ -17,10 +18,10 @@ import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import * as React from 'react';
+import React from 'react';
 
-type ScrollViewProps = {|
-  ...React.ElementConfig<typeof ScrollViewBase>,
+type ScrollViewProps = {
+  ...ElementConfig<typeof ScrollViewBase>,
   contentContainerStyle?: ViewStyle,
   horizontal?: boolean,
   keyboardDismissMode?: 'none' | 'interactive' | 'on-drag',
@@ -31,12 +32,12 @@ type ScrollViewProps = {|
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   stickyHeaderIndices?: Array<number>
-|};
+};
 
 const emptyObject = {};
 
 /* eslint-disable react/prefer-es6-class */
-const ScrollView = ((createReactClass({
+const ScrollView = (createReactClass({
   mixins: [ScrollResponder.Mixin],
 
   getInitialState() {
@@ -269,7 +270,7 @@ const ScrollView = ((createReactClass({
   _setScrollNodeRef(component) {
     this._scrollNodeRef = component;
   }
-}): any): React.ComponentType<ScrollViewProps>);
+}): ComponentType<ScrollViewProps>);
 
 const commonStyle = {
   flexGrow: 1,

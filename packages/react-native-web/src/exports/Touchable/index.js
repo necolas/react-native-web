@@ -9,7 +9,7 @@
  */
 
 'use strict';
-import type { Node } from 'React';
+import type { Node } from 'react';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import BoundingDimensions from './BoundingDimensions';

@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { Node } from 'React';
+import type { Node } from 'react';
 import React from 'react';
 import UnimplementedView from '../../modules/UnimplementedView';
 

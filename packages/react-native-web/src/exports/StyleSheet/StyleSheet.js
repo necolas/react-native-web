@@ -23,7 +23,7 @@ const absoluteFill: number = ReactNativePropRegistry.register(absoluteFillObject
 const StyleSheet = {
   absoluteFill,
   absoluteFillObject,
-  compose(style1: any, style2: any): any | Array<any> {
+  compose(style1: any, style2: any): any {
     if (process.env.NODE_ENV !== 'production') {
       /* eslint-disable prefer-rest-params */
       const len = arguments.length;

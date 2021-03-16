@@ -8,15 +8,9 @@
  * @flow
  */
 
-import React, {
-  forwardRef,
-  useCallback,
-  useMemo,
-  useEffect,
-  useState,
-  type ElementRef,
-  type AbstractComponent
-} from 'react';
+import type { ElementRef, AbstractComponent } from 'react';
+
+import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
