@@ -84,6 +84,14 @@ describe('modules/createDOMProps', () => {
       testFocusableRole('menuitem');
     });
 
+    describe('"accessibilityRole" of "menuitemcheckbox"', () => {
+      testFocusableRole('menuitemcheckbox');
+    });
+
+    describe('"accessibilityRole" of "menuitemradio"', () => {
+      testFocusableRole('menuitemradio');
+    });
+
     describe('with unfocusable accessibilityRole', () => {
       test('when "focusable" is true', () => {
         expect(createProps({ focusable: true })).toEqual(
@@ -115,6 +123,8 @@ describe('modules/createDOMProps', () => {
       expect(callsOnClick('div', 'button')).toBe(true);
       expect(callsOnClick('div', 'textbox')).toBe(true);
       expect(callsOnClick('div', 'menuitem')).toBe(true);
+      expect(callsOnClick('div', 'menuitemcheckbox')).toBe(true);
+      expect(callsOnClick('div', 'menuitemradio')).toBe(true);
       expect(callsOnClick('div', 'bogus')).toBe(true);
       expect(callsOnClick('a')).toBe(true);
       expect(callsOnClick('button')).toBe(true);
@@ -128,6 +138,8 @@ describe('modules/createDOMProps', () => {
       expect(callsOnClick('div', 'link', true)).toBe(false);
       expect(callsOnClick('div', 'button', true)).toBe(false);
       expect(callsOnClick('div', 'menuitem', true)).toBe(false);
+      expect(callsOnClick('div', 'menuitemcheckbox', true)).toBe(false);
+      expect(callsOnClick('div', 'menuitemradio', true)).toBe(false);
       expect(callsOnClick('a', undefined, true)).toBe(false);
       expect(callsOnClick('button', undefined, true)).toBe(false);
       expect(callsOnClick('input', undefined, true)).toBe(false);
@@ -165,6 +177,8 @@ describe('modules/createDOMProps', () => {
       expect(respondsToEnter('div', 'button', true)).toBe(false);
       expect(respondsToEnter('div', 'textbox', true)).toBe(false);
       expect(respondsToEnter('div', 'menuitem', true)).toBe(false);
+      expect(respondsToEnter('div', 'menuitemcheckbox', true)).toBe(false);
+      expect(respondsToEnter('div', 'menuitemradio', true)).toBe(false);
       expect(respondsToEnter('div', 'bogus', true)).toBe(false);
     });
 
@@ -189,6 +203,8 @@ describe('modules/createDOMProps', () => {
     test('emulates "onClick" for "Enter" for certain roles', () => {
       expect(respondsToEnter('div', 'button')).toBe(true);
       expect(respondsToEnter('div', 'menuitem')).toBe(true);
+      expect(respondsToEnter('div', 'menuitemcheckbox')).toBe(true);
+      expect(respondsToEnter('div', 'menuitemradio')).toBe(true);
       expect(respondsToEnter('div', 'textbox')).toBe(false);
       expect(respondsToEnter('div', 'bogus')).toBe(false);
     });

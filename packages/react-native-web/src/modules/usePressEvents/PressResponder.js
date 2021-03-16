@@ -10,6 +10,8 @@
 
 'use strict';
 
+import AccessibilityUtil from '../AccessibilityUtil';
+
 type ClickEvent = any;
 type KeyboardEvent = any;
 type ResponderEvent = any;
@@ -135,7 +137,7 @@ const isValidKeyPress = (event) => {
   const role = target.getAttribute('role');
   const isSpacebar = key === ' ' || key === 'Spacebar';
   return (
-    !event.repeat && (key === 'Enter' || (isSpacebar && (role === 'button' || role === 'menuitem')))
+    !event.repeat && (key === 'Enter' || (isSpacebar && AccessibilityUtil.isButtonLikeRole(role)))
   );
 };
 

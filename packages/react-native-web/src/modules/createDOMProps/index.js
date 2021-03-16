@@ -355,6 +355,8 @@ const createDOMProps = (elementType, props) => {
     role === 'checkbox' ||
     role === 'link' ||
     role === 'menuitem' ||
+    role === 'menuitemcheckbox' ||
+    role === 'menuitemradio' ||
     role === 'radio' ||
     role === 'textbox' ||
     role === 'switch'
@@ -412,8 +414,7 @@ const createDOMProps = (elementType, props) => {
   // Button-like roles should not trigger 'onClick' if they are disabled.
   if (
     isNativeInteractiveElement ||
-    role === 'button' ||
-    role === 'menuitem' ||
+    AccessibilityUtil.isButtonLikeRole(role) ||
     (_focusable === true && !disabled)
   ) {
     const onClick = domProps.onClick;
@@ -430,7 +431,7 @@ const createDOMProps = (elementType, props) => {
         domProps.onKeyDown = function (e) {
           const { key, repeat } = e;
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
-          const isButtonRole = role === 'button' || role === 'menuitem';
+          const isButtonRole = AccessibilityUtil.isButtonLikeRole(role);
           if (onKeyDown != null) {
             onKeyDown(e);
           }

@@ -7,13 +7,14 @@
  * @flow
  */
 
-import buttonLikeRoles from './buttonLikeRoles';
+import buttonLikeRoles, { isButtonLikeRole } from './buttonLikeRoles';
 import isDisabled from './isDisabled';
 import propsToAccessibilityComponent from './propsToAccessibilityComponent';
 import propsToAriaRole from './propsToAriaRole';
 
 const AccessibilityUtil = {
   buttonLikeRoles,
+  isButtonLikeRole,
   isDisabled,
   propsToAccessibilityComponent,
   propsToAriaRole
