@@ -27,7 +27,8 @@ const roleComponents = {
   main: 'main',
   navigation: 'nav',
   region: 'section',
-  strong: 'strong'
+  strong: 'strong',
+  button: 'button'
 };
 
 const emptyObject = {};

@@ -341,8 +341,9 @@ describe('exports/createElement', () => {
       const { container: isEmpty } = render(createElement('div', { accessibilityRole: null }));
       expect(getAttribute(isEmpty, 'role')).toBeNull();
       const { container: hasValue } = render(createElement('div', { accessibilityRole: 'button' }));
+      expect(hasValue.firstChild.nodeName).toBe('BUTTON');
       expect(getAttribute(hasValue, 'role')).toBe('button');
-      expect(getAttribute(hasValue, 'tabIndex')).toBe('0');
+      expect(getAttribute(hasValue, 'tabIndex')).toBeNull();
       const { container: roleIsNone } = render(createElement('div', { accessibilityRole: 'none' }));
       expect(getAttribute(roleIsNone, 'role')).toBe('presentation');
     });
@@ -481,12 +482,12 @@ describe('exports/createElement', () => {
       const { container: isFocusableRole } = render(
         createElement('div', { accessibilityRole: 'button', focusable: true })
       );
-      expect(getAttribute(isFocusableRole, 'tabindex')).toBe('0');
+      expect(getAttribute(isFocusableRole, 'tabindex')).toBeNull();
 
       const { container: isFalseFocusableRole } = render(
         createElement('div', { accessibilityRole: 'button', focusable: false })
       );
-      expect(getAttribute(isFalseFocusableRole, 'tabindex')).toBeNull();
+      expect(getAttribute(isFalseFocusableRole, 'tabindex')).toBe('-1');
     });
   });
 });

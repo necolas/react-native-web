@@ -113,10 +113,9 @@ exports[`components/Pressable prop "accessibilityRole" value alters HTML element
 `;
 
 exports[`components/Pressable prop "accessibilityRole" value is "button" 1`] = `
-<div
-  class="css-cursor-18t94o4 css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+<button
+  class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
   role="button"
-  tabindex="0"
 />
 `;
 
