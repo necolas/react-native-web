@@ -10,7 +10,7 @@
 
 'use strict';
 
-const EventEmitter = require('./_EventEmitter');
+import EventEmitter from './_EventEmitter';
 
 import type {EventSubscription} from './EventSubscription';
 
