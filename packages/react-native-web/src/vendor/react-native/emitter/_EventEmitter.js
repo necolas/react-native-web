@@ -194,4 +194,4 @@ class EventEmitter<EventDefinitions: {...}>
   }
 }
 
-module.exports = EventEmitter;
+export default EventEmitter;

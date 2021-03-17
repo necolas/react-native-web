@@ -58,4 +58,4 @@ class EmitterSubscription<EventDefinitions: {...}, K: $Keys<EventDefinitions>>
   }
 }
 
-module.exports = EmitterSubscription;
+export default EmitterSubscription;

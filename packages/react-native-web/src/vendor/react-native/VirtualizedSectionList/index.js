@@ -581,4 +581,4 @@ class ItemWithSeparator extends React.Component<
   }
 }
 
-module.exports = VirtualizedSectionList;
+export default VirtualizedSectionList;

@@ -41,4 +41,4 @@ class _EventSubscription<EventDefinitions: {...}, K: $Keys<EventDefinitions>>
   }
 }
 
-module.exports = _EventSubscription;
+export default _EventSubscription;

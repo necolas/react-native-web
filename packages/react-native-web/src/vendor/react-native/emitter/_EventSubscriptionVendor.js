@@ -105,4 +105,4 @@ class EventSubscriptionVendor<EventDefinitions: {...}> {
   }
 }
 
-module.exports = EventSubscriptionVendor;
+export default EventSubscriptionVendor;
