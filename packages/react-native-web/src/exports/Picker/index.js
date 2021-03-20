@@ -55,7 +55,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   }
 
-  // $FlowFixMe ViewProps should be exact in the future
+  // $FlowFixMe
   const supportedProps: any = {
     children,
     disabled: enabled === false ? true : undefined,

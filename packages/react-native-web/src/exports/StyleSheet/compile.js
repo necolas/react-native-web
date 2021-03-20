@@ -99,7 +99,7 @@ export function classic(style: Style, name: string): CompilerOutput {
  * Compile simple style object to inline DOM styles.
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
-export function inline(style: Style): any {
+export function inline(style: Style): Object {
   return prefixInlineStyles(createReactDOMStyle(style));
 }
 
