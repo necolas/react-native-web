@@ -3,7 +3,7 @@
     "react": {
       "pragma": "React",
       "version": "16.6",
-      "flowVersion": "0.109.0" // Flow version
+      "flowVersion": "0.142.0" // Flow version
     }
   },
   // babel parser to support ES6/7 features

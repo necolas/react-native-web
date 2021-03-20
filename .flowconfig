@@ -1,5 +1,5 @@
 [version]
-^0.109.0
+^0.142.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
@@ -15,7 +15,9 @@
 <PROJECT_ROOT>/types
 
 [options]
-
+munge_underscores=true
+types_first=false
+well_formed_exports=false
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps

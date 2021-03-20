@@ -9,9 +9,7 @@
 
 import * as React from 'react';
 
-opaque type UninitializedMarker = Symbol | {||};
-
-const UNINITIALIZED: UninitializedMarker =
+const UNINITIALIZED =
   typeof Symbol === 'function' && typeof Symbol() === 'symbol' ? Symbol() : Object.freeze({});
 
 export default function useStable<T>(getInitialValue: () => T): T {
