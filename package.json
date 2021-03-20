@@ -21,7 +21,7 @@
     "jest": "jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:report --fix",
     "lint:report": "eslint packages scripts",
-    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
+    "prerelease": "yarn test && yarn compile",
     "release": "node ./scripts/release/publish.js",
     "postrelease": "yarn docs:release && yarn benchmarks:release",
     "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
@@ -47,7 +47,7 @@
     "del-cli": "^3.0.1",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-flowtype": "^5.4.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
