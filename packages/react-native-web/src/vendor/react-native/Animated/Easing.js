@@ -123,7 +123,7 @@ class Easing {
    * n = 4: http://easings.net/#easeInQuart
    * n = 5: http://easings.net/#easeInQuint
    */
-  static poly(n: number): ((t: number) => number) {
+  static poly(n: number): (t: number) => number {
     return (t: number) => Math.pow(t, n);
   }
 
