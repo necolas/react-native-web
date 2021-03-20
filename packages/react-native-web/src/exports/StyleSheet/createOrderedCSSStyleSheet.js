@@ -72,7 +72,7 @@ export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
       // Increment the starting index of all subsequent groups
       for (let i = nextGroupIndex; i < orderedGroups.length; i += 1) {
         const groupNumber = orderedGroups[i];
-        const previousStart = groups[groupNumber].start;
+        const previousStart = groups[groupNumber].start || 0;
         groups[groupNumber].start = previousStart + 1;
       }
     }
