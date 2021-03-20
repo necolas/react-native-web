@@ -137,7 +137,18 @@ class SpringAnimation extends Animation {
     invariant(this._mass > 0, 'Mass value must be greater than 0');
   }
 
-  __getNativeAnimationConfig() {
+  __getNativeAnimationConfig(): {|
+  damping: number,
+  initialVelocity: number,
+  iterations: number,
+  mass: number,
+  overshootClamping: boolean,
+  restDisplacementThreshold: number,
+  restSpeedThreshold: number,
+  stiffness: number,
+  toValue: any,
+  type: string,
+|} {
     return {
       type: 'spring',
       overshootClamping: this._overshootClamping,
