@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,22 +7,22 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
+const NativeAnimatedAPI = NativeAnimatedHelper.API;
 import invariant from 'fbjs/lib/invariant';
 
-const NativeAnimatedAPI = NativeAnimatedHelper.API;
-
-type ValueListenerCallback = (state: {value: number}) => mixed;
+type ValueListenerCallback = (state: {value: number, ...}) => mixed;
 
 let _uniqueId = 1;
 
 // Note(vjeux): this would be better as an interface but flow doesn't
 // support them yet
 class AnimatedNode {
-  _listeners: {[key: string]: ValueListenerCallback};
+  _listeners: {[key: string]: ValueListenerCallback, ...};
   __nativeAnimatedValueListener: ?any;
   __attach(): void {}
   __detach(): void {
@@ -65,7 +65,7 @@ class AnimatedNode {
    * animations.  This is useful because there is no way to
    * synchronously read the value because it might be driven natively.
    *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#addlistener
+   * See https://reactnative.dev/docs/animatedvalue.html#addlistener
    */
   addListener(callback: (value: any) => mixed): string {
     const id = String(_uniqueId++);
@@ -80,7 +80,7 @@ class AnimatedNode {
    * Unregister a listener. The `id` param shall match the identifier
    * previously returned by `addListener()`.
    *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#removelistener
+   * See https://reactnative.dev/docs/animatedvalue.html#removelistener
    */
   removeListener(id: string): void {
     delete this._listeners[id];
@@ -92,7 +92,7 @@ class AnimatedNode {
   /**
    * Remove all registered listeners.
    *
-   * See http://facebook.github.io/react-native/docs/animatedvalue.html#removealllisteners
+   * See https://reactnative.dev/docs/animatedvalue.html#removealllisteners
    */
   removeAllListeners(): void {
     this._listeners = {};
@@ -120,7 +120,6 @@ class AnimatedNode {
 
     NativeAnimatedAPI.startListeningToAnimatedNodeValue(this.__getNativeTag());
     this.__nativeAnimatedValueListener = NativeAnimatedHelper.nativeEventEmitter.addListener(
-      // $FlowFixMe (< 0.127.0) Maybe fixed in a later flow upgrade
       'onAnimatedValueUpdate',
       data => {
         if (data.tag !== this.__getNativeTag()) {
@@ -151,14 +150,17 @@ class AnimatedNode {
     NativeAnimatedAPI.stopListeningToAnimatedNodeValue(this.__getNativeTag());
   }
 
-  __getNativeTag(): ?number {
+  __getNativeTag(): number {
     NativeAnimatedHelper.assertNativeAnimatedModule();
     invariant(
       this.__isNative,
       'Attempt to get native tag from node not marked as "native"',
     );
+
+    const nativeTag =
+      this.__nativeTag ?? NativeAnimatedHelper.generateNewNodeTag();
+
     if (this.__nativeTag == null) {
-      const nativeTag: ?number = NativeAnimatedHelper.generateNewNodeTag();
       this.__nativeTag = nativeTag;
       NativeAnimatedHelper.API.createAnimatedNode(
         nativeTag,
@@ -166,7 +168,8 @@ class AnimatedNode {
       );
       this.__shouldUpdateListenersForNewNativeTag = true;
     }
-    return this.__nativeTag;
+
+    return nativeTag;
   }
   __getNativeConfig(): Object {
     throw new Error(

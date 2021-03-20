@@ -7,28 +7,5 @@
  * @flow
  */
 
-import AnimatedImplementation from '../../vendor/react-native/Animated/AnimatedImplementation';
-import FlatList from '../FlatList';
-import Image from '../Image';
-import SectionList from '../SectionList';
-import ScrollView from '../ScrollView';
-import Text from '../Text';
-import View from '../View';
-
-const Animated = {
-  ...AnimatedImplementation,
-  FlatList: AnimatedImplementation.createAnimatedComponent(FlatList, {
-    scrollEventThrottle: 0.0001
-  }),
-  Image: AnimatedImplementation.createAnimatedComponent(Image),
-  ScrollView: AnimatedImplementation.createAnimatedComponent(ScrollView, {
-    scrollEventThrottle: 0.0001
-  }),
-  SectionList: AnimatedImplementation.createAnimatedComponent(SectionList, {
-    scrollEventThrottle: 0.0001
-  }),
-  View: AnimatedImplementation.createAnimatedComponent(View),
-  Text: AnimatedImplementation.createAnimatedComponent(Text)
-};
-
+import Animated from '../../vendor/react-native/Animated/Animated';
 export default Animated;
