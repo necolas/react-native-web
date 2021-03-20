@@ -12,7 +12,6 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/types
 
 [options]
 
