@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,26 +7,40 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 import AnimatedValue from '../nodes/AnimatedValue';
 import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
 import Animation from './Animation';
-import Easing from '../Easing';
 
-import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
+
+import Easing from '../../../../exports/Easing';
 
 import type {AnimationConfig, EndCallback} from './Animation';
 
-export type TimingAnimationConfig = AnimationConfig & {
-  toValue: number | AnimatedValue | {x: number, y: number} | AnimatedValueXY,
+export type TimingAnimationConfig = {
+  ...AnimationConfig,
+  toValue:
+    | number
+    | AnimatedValue
+    | {
+        x: number,
+        y: number,
+        ...
+      }
+    | AnimatedValueXY
+    | AnimatedInterpolation,
   easing?: (value: number) => number,
   duration?: number,
   delay?: number,
 };
 
-export type TimingAnimationConfigSingle = AnimationConfig & {
-  toValue: number | AnimatedValue,
+export type TimingAnimationConfigSingle = {
+  ...AnimationConfig,
+  toValue: number | AnimatedValue | AnimatedInterpolation,
   easing?: (value: number) => number,
   duration?: number,
   delay?: number,
@@ -66,8 +80,9 @@ class TimingAnimation extends Animation {
   __getNativeAnimationConfig(): any {
     const frameDuration = 1000.0 / 60.0;
     const frames = [];
-    for (let dt = 0.0; dt < this._duration; dt += frameDuration) {
-      frames.push(this._easing(dt / this._duration));
+    const numFrames = Math.round(this._duration / frameDuration);
+    for (let frame = 0; frame < numFrames; frame++) {
+      frames.push(this._easing(frame / numFrames));
     }
     frames.push(this._easing(1));
     return {

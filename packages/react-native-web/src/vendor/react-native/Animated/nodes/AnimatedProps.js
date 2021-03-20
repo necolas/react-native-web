@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,9 +7,10 @@
  * @flow
  * @format
  */
+
 'use strict';
 
-import { AnimatedEvent } from '../AnimatedEvent';
+import {AnimatedEvent} from '../AnimatedEvent';
 import AnimatedNode from './AnimatedNode';
 import AnimatedStyle from './AnimatedStyle';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
@@ -144,6 +145,16 @@ class AnimatedProps extends AnimatedNode {
       this.__getNativeTag(),
       nativeViewTag,
     );
+  }
+
+  __restoreDefaultValues(): void {
+    // When using the native driver, view properties need to be restored to
+    // their default values manually since react no longer tracks them. This
+    // is needed to handle cases where a prop driven by native animated is removed
+    // after having been changed natively by an animation.
+    if (this.__isNative) {
+      NativeAnimatedHelper.API.restoreDefaultValues(this.__getNativeTag());
+    }
   }
 
   __getNativeConfig(): Object {
