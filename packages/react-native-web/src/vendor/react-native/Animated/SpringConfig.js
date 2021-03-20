@@ -13,6 +13,7 @@
 type SpringConfigType = {
   stiffness: number,
   damping: number,
+  ...
 };
 
 function stiffnessFromOrigamiValue(oValue) {
@@ -96,5 +97,7 @@ function fromBouncinessAndSpeed(
   };
 }
 
-export { fromOrigamiTensionAndFriction, fromBouncinessAndSpeed };
-export default { fromOrigamiTensionAndFriction, fromBouncinessAndSpeed };
+export default {
+  fromOrigamiTensionAndFriction,
+  fromBouncinessAndSpeed,
+};

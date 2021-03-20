@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,21 +7,30 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 import Animation from './Animation';
 
-import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
 
-import type { AnimationConfig, EndCallback } from './Animation';
 import type AnimatedValue from '../nodes/AnimatedValue';
+import type {AnimationConfig, EndCallback} from './Animation';
 
-export type DecayAnimationConfig = AnimationConfig & {
-  velocity: number | {x: number, y: number},
+export type DecayAnimationConfig = {
+  ...AnimationConfig,
+  velocity:
+    | number
+    | {
+        x: number,
+        y: number,
+        ...
+      },
   deceleration?: number,
 };
 
-export type DecayAnimationConfigSingle = AnimationConfig & {
+export type DecayAnimationConfigSingle = {
+  ...AnimationConfig,
   velocity: number,
   deceleration?: number,
 };
@@ -45,7 +54,12 @@ class DecayAnimation extends Animation {
     this.__iterations = config.iterations ?? 1;
   }
 
-  __getNativeAnimationConfig(): {|deceleration: number, iterations: number, type: string, velocity: number|} {
+  __getNativeAnimationConfig(): {|
+    deceleration: number,
+    iterations: number,
+    type: $TEMPORARY$string<'decay'>,
+    velocity: number,
+  |} {
     return {
       type: 'decay',
       deceleration: this._deceleration,

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +7,7 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 import AnimatedNode from './AnimatedNode';
@@ -22,7 +23,6 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __makeNative() {
-    super.__makeNative();
     this._transforms.forEach(transform => {
       for (const key in transform) {
         const value = transform[key];
@@ -31,6 +31,7 @@ class AnimatedTransform extends AnimatedWithChildren {
         }
       }
     });
+    super.__makeNative();
   }
 
   __getValue(): $ReadOnlyArray<Object> {
@@ -103,7 +104,7 @@ class AnimatedTransform extends AnimatedWithChildren {
           transConfigs.push({
             type: 'static',
             property: key,
-            value,
+            value: NativeAnimatedHelper.transformDataType(value),
           });
         }
       }
