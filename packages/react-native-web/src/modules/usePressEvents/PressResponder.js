@@ -38,7 +38,9 @@ export type PressResponderConfig = $ReadOnly<{|
   // Called when the press location moves. (This should rarely be used.)
   onPressMove?: ?(event: ResponderEvent) => void,
   // Called when the press is deactivated to undo visual feedback.
-  onPressEnd?: ?(event: ResponderEvent) => void
+  onPressEnd?: ?(event: ResponderEvent) => void,
+  // Called when a key is pressed.
+  onKeyDown?: ?(event: KeyboardEvent) => void
 |}>;
 
 export type EventHandlers = $ReadOnly<{|
@@ -321,6 +323,9 @@ export default class PressResponder {
       },
 
       onKeyDown: (event) => {
+        if (this._config.onKeyDown != null) {
+          this._config.onKeyDown(event);
+        }
         if (isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);

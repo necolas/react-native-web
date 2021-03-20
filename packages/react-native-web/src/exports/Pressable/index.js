@@ -86,6 +86,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     onPressMove,
     onPressIn,
     onPressOut,
+    onKeyDown,
     style,
     testOnly_hovered,
     testOnly_pressed,
@@ -110,7 +111,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onPressChange: setPressed,
       onPressStart: onPressIn,
       onPressMove,
-      onPressEnd: onPressOut
+      onPressEnd: onPressOut,
+      onKeyDown
     }),
     [
       delayLongPress,
@@ -122,6 +124,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
+      onKeyDown,
       setPressed
     ]
   );
