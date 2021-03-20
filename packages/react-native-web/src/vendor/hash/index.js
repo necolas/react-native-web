@@ -11,6 +11,8 @@
  * @param {string} str ASCII only
  * @param {number} seed Positive integer only
  * @return {number} 32-bit positive integer hash
+ *
+ * @flow
  */
 
 function murmurhash2_32_gc(str, seed) {
@@ -53,6 +55,6 @@ function murmurhash2_32_gc(str, seed) {
   return h >>> 0;
 }
 
-const hash = str => murmurhash2_32_gc(str, 1).toString(36);
+const hash = (str: string): string => murmurhash2_32_gc(str, 1).toString(36);
 
 export default hash;

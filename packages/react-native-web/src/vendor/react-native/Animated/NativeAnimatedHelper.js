@@ -298,7 +298,7 @@ const NativeAnimatedHelper = {
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
   transformDataType,
-  get nativeEventEmitter() {
+  get nativeEventEmitter(): NativeEventEmitter<*> {
     if (!nativeEventEmitter) {
       nativeEventEmitter = new NativeEventEmitter(NativeAnimatedModule);
     }

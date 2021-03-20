@@ -14,6 +14,7 @@ import * as React from 'react';
 import ScrollView from '../../../exports/ScrollView';
 import VirtualizedSectionList from '../VirtualizedSectionList';
 
+import type { ScrollToLocationParamsType } from '../VirtualizedSectionList';
 import type {ViewToken} from '../ViewabilityHelper';
 import type {
   SectionBase as _SectionBase,
@@ -245,13 +246,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
    * Note: cannot scroll to locations outside the render window without specifying the
    * `getItemLayout` prop.
    */
-  scrollToLocation(params: {
-    animated?: ?boolean,
-    itemIndex: number,
-    sectionIndex: number,
-    viewOffset?: number,
-    viewPosition?: number,
-  }) {
+  scrollToLocation(params: ScrollToLocationParamsType) {
     if (this._wrapperListRef != null) {
       this._wrapperListRef.scrollToLocation(params);
     }
@@ -280,14 +275,14 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
   /**
    * Provides a handle to the underlying scroll responder.
    */
-  getScrollResponder(): ?ScrollView {
+  getScrollResponder(): ?typeof ScrollView {
     const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
     if (listRef) {
       return listRef.getScrollResponder();
     }
   }
 
-  getScrollableNode() {
+  getScrollableNode(): any | void {
     const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
     if (listRef) {
       return listRef.getScrollableNode();
@@ -301,7 +296,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
     }
   }
 
-  render() {
+  render(): React.Node {
     return (
       /* $FlowFixMe(>=0.66.0 site=react_native_fb) This comment suppresses an
        * error found when Flow v0.66 was deployed. To see the error delete this
@@ -317,7 +312,7 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<
 
   _wrapperListRef: ?React.ElementRef<typeof VirtualizedSectionList>;
   // $FlowFixMe
-  _captureRef = ref => {
+  _captureRef: ((ref: any) => void) = ref => {
     // $FlowFixMe
     this._wrapperListRef = ref;
   };
