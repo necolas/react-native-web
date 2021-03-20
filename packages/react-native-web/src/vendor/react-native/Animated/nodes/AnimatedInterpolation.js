@@ -220,11 +220,11 @@ function createInterpolationFromStringOutputRange(
     });
   });
 
-  /* $FlowFixMe(>=0.18.0): `outputRange[0].match()` can return `null`. Need to
-   * guard against this possibility.
-   */
   const interpolations = outputRange[0]
     .match(stringShapeRegex)
+    /* $FlowFixMe(>=0.18.0): `outputRange[0].match()` can return `null`. Need to
+    * guard against this possibility.
+    */
     .map((value, i) => {
       return createInterpolation({
         ...config,
@@ -307,7 +307,7 @@ function checkInfiniteRange(name: string, arr: Array<number>) {
 
 class AnimatedInterpolation extends AnimatedWithChildren {
   // Export for testing.
-  static __createInterpolation = createInterpolation;
+  static __createInterpolation: (InterpolationConfigType) => (input: number) => number | string = createInterpolation;
 
   _parent: AnimatedNode;
   _config: InterpolationConfigType;
@@ -347,7 +347,7 @@ class AnimatedInterpolation extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __transformDataType(range: Array<any>) {
+  __transformDataType(range: Array<any>): Array<number | string> {
     // $FlowFixMe
     return range.map(NativeAnimatedHelper.transformDataType);
   }

@@ -68,8 +68,8 @@ function create(
 }
 
 const Presets = {
-  easeInEaseOut: create(300, 'easeInEaseOut', 'opacity'),
-  linear: create(500, 'linear', 'opacity'),
+  easeInEaseOut: (create(300, 'easeInEaseOut', 'opacity'): LayoutAnimationConfig),
+  linear: (create(500, 'linear', 'opacity'): LayoutAnimationConfig),
   spring: {
     duration: 700,
     create: {
@@ -134,9 +134,9 @@ const LayoutAnimation = {
     console.error('LayoutAnimation.checkConfig(...) has been disabled.');
   },
   Presets,
-  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut),
-  linear: configureNext.bind(null, Presets.linear),
-  spring: configureNext.bind(null, Presets.spring),
+  easeInEaseOut: (configureNext.bind(null, Presets.easeInEaseOut): (onAnimationDidEnd?: any) => void),
+  linear: (configureNext.bind(null, Presets.linear): (onAnimationDidEnd?: any) => void),
+  spring: (configureNext.bind(null, Presets.spring): (onAnimationDidEnd?: any) => void),
 };
 
 export default LayoutAnimation;

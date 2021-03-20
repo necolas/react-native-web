@@ -120,6 +120,7 @@ class AnimatedNode {
 
     NativeAnimatedAPI.startListeningToAnimatedNodeValue(this.__getNativeTag());
     this.__nativeAnimatedValueListener = NativeAnimatedHelper.nativeEventEmitter.addListener(
+      // $FlowFixMe (< 0.127.0) Maybe fixed in a later flow upgrade
       'onAnimatedValueUpdate',
       data => {
         if (data.tag !== this.__getNativeTag()) {

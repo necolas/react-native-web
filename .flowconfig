@@ -18,6 +18,7 @@
 munge_underscores=true
 types_first=false
 well_formed_exports=false
+esproposal.optional_chaining=enable
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps
