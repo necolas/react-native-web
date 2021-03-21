@@ -21,5 +21,5 @@ Please refer to the React Native documentation below:
 * [TouchableWithoutFeedback](https://reactnative.dev/docs/touchablewithoutfeedback)
 
 :::callout
-**Did you know?** The [Pressable]({{ '/docs/pressable' }}) component is a more accessible, flexible, and future-proof way to handle tap and click interactions with React Native.
+**Did you know?** The [Pressable]({{ '/docs/pressable' | url }}) component is a more accessible, flexible, and future-proof way to handle tap and click interactions with React Native.
 :::
