@@ -723,7 +723,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   }
 
   _isNestedWithSameOrientation(): boolean {
-    const nestedContext = this.context.virtualizedList;
+    const nestedContext = this.context && this.context.virtualizedList;
     return !!(
       nestedContext && !!nestedContext.horizontal === !!this.props.horizontal
     );
