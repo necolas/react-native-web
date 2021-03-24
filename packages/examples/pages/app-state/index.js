@@ -3,10 +3,11 @@ import { AppState, Text } from 'react-native';
 import Example from '../../shared/example';
 
 export default function AppStatePage() {
+  const appState = React.useRef(AppState.currentState);
   const [state, setState] = React.useState({
     active: 0,
     background: 0,
-    currentState: AppState.currentState
+    currentState: appState.current
   });
 
   React.useEffect(() => {

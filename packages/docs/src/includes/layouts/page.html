@@ -27,7 +27,7 @@ section: page
       <div class="flex mt-4">
         <div class="inline-block w-auto text-sm pt-1 pb-1 mr-2 rounded text-color-faint">Updated <time datetime="{{ page.date | machineDate }}">{{ page.date | readableDate }}</time></div>
         {% if site.enableEditButton == true %}
-          <a class="no-underline inline-block w-auto text-sm hover:bg-gray-200 py-1 px-3 rounded text-color-faint" href="{{ site.githubUrl }}/edit/{{ site.githubBranch }}/packages/www/{{ page.inputPath }}" target="_blank">Edit</a>
+          <a class="no-underline inline-block w-auto text-sm hover:bg-gray-200 py-1 px-3 rounded text-color-faint" href="{{ site.githubUrl }}/edit/{{ site.githubBranch }}/packages/docs/{{ page.inputPath }}" target="_blank">Edit</a>
         {% endif %}
         </div>
         {% include "fragments/footer.html" %} 

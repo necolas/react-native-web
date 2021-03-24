@@ -60,7 +60,7 @@ Called when the image loading starts.
 {% endcall %}
 
 {% call macro.prop('resizeMode', '?("center" | "cover" | "contain" | "none" | "stretch") = "cover"') %}
-The image source. The string can be a path to an external resource or a base64 encoded resource.
+Determines how the image source is resized to fit the layout of the image element.
 {% endcall %}
 
 {% call macro.prop('source', '?(string | Source)') %}
