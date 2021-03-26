@@ -110,6 +110,10 @@ Equivalent to [aria-label](https://www.w3.org/TR/wai-aria-1.2/#aria-label).
 Equivalent to [aria-labelledby](https://www.w3.org/TR/wai-aria-1.2/#aria-labelledby).
 {% endcall %}
 
+{% call macro.prop('accessibilityLevel', '?number') %}
+Equivalent to [aria-level](https://www.w3.org/TR/wai-aria-1.2/#aria-level).
+{% endcall %}
+
 {% call macro.prop('accessibilityLiveRegion', '?("assertive" | "off" | "polite")') %}
 Equivalent to [aria-live](https://www.w3.org/TR/wai-aria-1.2/#aria-live).
 {% endcall %}
@@ -281,11 +285,11 @@ The value of the `accessibilityRole` prop is used to infer an [analogous HTML el
 
 The `"paragraph"` role isn't mapped to a `<p>` tag because it's an HTML conformance error to include block-level children within the element; both `Text` and `View` support block-level children.
 
-If the `"heading"` role is combined with an `accessibilityLevel`, the equivalent HTML heading element is rendered. Otherwise, it is rendered as `<h2>`.
+If the `"heading"` role is combined with an `accessibilityLevel`, the equivalent HTML heading element is rendered. Otherwise, it is rendered as `<h1>`.
 
 ```jsx
-<Text accessibilityRole="heading" /> /* <h2> */
-<Text accessibilityRole="heading" accessibilityLevel={1} /> /* <h1> */
+<Text accessibilityRole="heading" /> /* <h1> */
+<Text accessibilityRole="heading" accessibilityLevel={2} /> /* <h2> */
 ```
 
 Note: Avoid changing `accessibilityRole` values over time or after user actions. Generally, accessibility APIs do not provide a means of notifying assistive technologies if a `role` changes.
