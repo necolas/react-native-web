@@ -58,7 +58,7 @@ Equivalent to [aria-colspan](https://www.w3.org/TR/wai-aria-1.2/#aria-colspan).
 Equivalent to [aria-controls](https://www.w3.org/TR/wai-aria-1.2/#aria-controls).
 {% endcall %}
 
-{% call macro.prop('accessibilityCurrent', '?(boolean | 'page' | 'step' | 'location' | 'date' | 'time')') %}
+{% call macro.prop('accessibilityCurrent', '?(boolean | "page" | "step" | "location" | "date" | "time")') %}
 Equivalent to [aria-current](https://www.w3.org/TR/wai-aria-1.2/#aria-current).
 {% endcall %}
 
