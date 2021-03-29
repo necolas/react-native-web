@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "dom-event-testing-library",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "main": "index.js",
   "description": "Browser event sequences for unit tests",
   "author": "Nicolas Gallagher",
