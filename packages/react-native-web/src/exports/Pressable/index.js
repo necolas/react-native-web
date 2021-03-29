@@ -81,6 +81,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     onFocus,
     onHoverIn,
     onHoverOut,
+    onKeyDown,
     onLongPress,
     onPress,
     onPressMove,
@@ -127,6 +128,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   );
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
+  const { onKeyDown: onKeyDownPress } = pressEventHandlers;
 
   useHover(hostRef, {
     contain: true,
@@ -138,16 +140,41 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const interactionState = { hovered, focused, pressed };
 
-  function createFocusHandler(callback, value) {
-    return function (event) {
-      if (event.nativeEvent.target === hostRef.current) {
-        setFocused(value);
-        if (callback != null) {
-          callback(event);
+  const blurHandler = React.useCallback(
+    (e) => {
+      if (e.nativeEvent.target === hostRef.current) {
+        setFocused(false);
+        if (onBlur != null) {
+          onBlur(e);
         }
       }
-    };
-  }
+    },
+    [hostRef, setFocused, onBlur]
+  );
+
+  const focusHandler = React.useCallback(
+    (e) => {
+      if (e.nativeEvent.target === hostRef.current) {
+        setFocused(true);
+        if (onFocus != null) {
+          onFocus(e);
+        }
+      }
+    },
+    [hostRef, setFocused, onFocus]
+  );
+
+  const keyDownHandler = React.useCallback(
+    (e) => {
+      if (onKeyDownPress != null) {
+        onKeyDownPress(e);
+      }
+      if (onKeyDown != null) {
+        onKeyDown(e);
+      }
+    },
+    [onKeyDown, onKeyDownPress]
+  );
 
   return (
     <View
@@ -155,8 +182,9 @@ function Pressable(props: Props, forwardedRef): React.Node {
       {...pressEventHandlers}
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
-      onBlur={createFocusHandler(onBlur, false)}
-      onFocus={createFocusHandler(onFocus, true)}
+      onBlur={blurHandler}
+      onFocus={focusHandler}
+      onKeyDown={keyDownHandler}
       ref={setRef}
       style={[
         !disabled && styles.root,

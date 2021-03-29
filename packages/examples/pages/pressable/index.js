@@ -29,6 +29,9 @@ export default function PressablePage() {
           disabled={disabled}
           onHoverIn={handleEvent('onHoverIn')}
           onHoverOut={handleEvent('onHoverOut')}
+          onKeyDown={(e) => {
+            console.log(e.key);
+          }}
           onLongPress={handleEvent('onLongPress - 750ms delay')}
           onPress={handleEvent(`onPress - ${delay}ms delay`)}
           onPressIn={handleEvent(`onPressIn - ${delay}ms delay`)}
