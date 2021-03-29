@@ -83,6 +83,14 @@ describe('components/Text', () => {
       const hrefAttrs = {
         download: 'filename.jpg',
         rel: 'nofollow',
+        target: '_blank'
+      };
+      const { container } = render(<Text href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('target variant is set', () => {
+      const hrefAttrs = {
         target: 'blank'
       };
       const { container } = render(<Text href="https://example.com" hrefAttrs={hrefAttrs} />);

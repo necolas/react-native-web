@@ -131,8 +131,8 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
     if (rel != null) {
       supportedProps.rel = rel;
     }
-    if (typeof target === 'string' && target.charAt(0) !== '_') {
-      supportedProps.target = '_' + target;
+    if (typeof target === 'string') {
+      supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
     }
   }
 

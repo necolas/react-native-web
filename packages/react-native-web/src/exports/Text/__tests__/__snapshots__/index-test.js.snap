@@ -107,6 +107,15 @@ exports[`components/Text prop "hrefAttrs" requires "href" 1`] = `
 />
 `;
 
+exports[`components/Text prop "hrefAttrs" target variant is set 1`] = `
+<a
+  class="css-reset-4rbku5 css-text-901oao"
+  dir="auto"
+  href="https://example.com"
+  target="_blank"
+/>
+`;
+
 exports[`components/Text prop "hrefAttrs" value is set 1`] = `
 <a
   class="css-reset-4rbku5 css-text-901oao"

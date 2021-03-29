@@ -116,6 +116,14 @@ describe('components/View', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
+    test('target variant is set', () => {
+      const hrefAttrs = {
+        target: 'blank'
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
     test('null values are excluded', () => {
       const hrefAttrs = {
         download: null,

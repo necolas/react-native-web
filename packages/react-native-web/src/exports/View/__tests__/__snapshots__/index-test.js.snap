@@ -95,6 +95,14 @@ exports[`components/View prop "hrefAttrs" requires "href" 1`] = `
 />
 `;
 
+exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  href="https://example.com"
+  target="_blank"
+/>
+`;
+
 exports[`components/View prop "hrefAttrs" value is set 1`] = `
 <a
   class="css-reset-4rbku5 css-view-1dbjc4n"
