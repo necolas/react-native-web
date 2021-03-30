@@ -118,7 +118,7 @@ describe('components/View', () => {
 
     test('target variant is set', () => {
       const hrefAttrs = {
-        target: 'blank'
+        target: '_blank'
       };
       const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
       expect(container.firstChild).toMatchSnapshot();
