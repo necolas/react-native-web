@@ -7,7 +7,7 @@
  * @flow
  */
 
-export default function isSelectionValid() {
+export default function isSelectionValid(): boolean {
   const selection = window.getSelection();
   const string = selection.toString();
   const anchorNode = selection.anchorNode;

@@ -40,7 +40,7 @@ function textShadowReducer(resolvedStyle, style) {
   }
 }
 
-const createCompileableStyle = (styles: Object) => {
+const createCompileableStyle = (styles: Object): Object => {
   const {
     shadowColor,
     shadowOffset,

@@ -9,6 +9,7 @@
  */
 
 import type { ComponentType, Context } from 'react';
+import type { Node } from 'React';
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -23,7 +24,7 @@ type Props = {
 
 const RootTagContext: Context<any> = createContext(null);
 
-export default function AppContainer(props: Props) {
+export default function AppContainer(props: Props): Node {
   const { children, WrapperComponent } = props;
 
   let innerView = (

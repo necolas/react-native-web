@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { Node as ReactNode } from 'React';
 import React, { useRef, useEffect } from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
@@ -70,7 +71,7 @@ export type ModalFocusTrapProps = {|
   children?: any
 |};
 
-const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
+const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): ReactNode => {
   const trapElementRef = useRef<?HTMLElement>();
   const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
     trapFocusInProgress: false,

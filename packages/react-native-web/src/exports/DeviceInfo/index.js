@@ -34,22 +34,23 @@ const DeviceInfo = {
     }
   },
 
-  get locale() {
+  get locale(): string | void {
     if (canUseDOM) {
-      if (window.navigator.languages) {
-        return window.navigator.languages[0];
+      if (navigator.languages) {
+        return navigator.languages[0];
       } else {
-        return window.navigator.language;
+        return navigator.language;
       }
     }
   },
 
-  get totalMemory() {
-    return canUseDOM ? window.navigator.deviceMemory : undefined;
+  get totalMemory(): number | void {
+    // $FlowIssue deviceMemory not defined in navigator
+    return canUseDOM ? navigator.deviceMemory : undefined;
   },
 
-  get userAgent() {
-    return canUseDOM ? window.navigator.userAgent : '';
+  get userAgent(): string {
+    return canUseDOM ? navigator.userAgent : '';
   }
 };
 

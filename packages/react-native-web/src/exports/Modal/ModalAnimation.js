@@ -7,6 +7,7 @@
  *
  * @flow
  */
+import type { Node } from 'react';
 
 import { useEffect, useCallback, useState, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
@@ -32,7 +33,7 @@ export type ModalAnimationProps = {|
   visible?: ?boolean
 |};
 
-function ModalAnimation(props: ModalAnimationProps) {
+function ModalAnimation(props: ModalAnimationProps): Node {
   const { animationType, children, onDismiss, onShow, visible } = props;
 
   const [isRendering, setIsRendering] = useState(false);
