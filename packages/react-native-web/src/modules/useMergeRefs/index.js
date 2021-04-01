@@ -10,7 +10,9 @@
 import * as React from 'react';
 import mergeRefs from '../mergeRefs';
 
-export default function useMergeRefs(...args: $ReadOnlyArray<React.ElementRef<any>>) {
+export default function useMergeRefs(
+  ...args: $ReadOnlyArray<React.ElementRef<any>>
+): (node: HTMLElement | null) => void {
   return React.useMemo(
     () => mergeRefs(...args),
     // eslint-disable-next-line

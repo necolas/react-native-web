@@ -8,5 +8,5 @@
  */
 
 import createStyleResolver from './createStyleResolver';
-const styleResolver = createStyleResolver();
+const styleResolver: any = createStyleResolver();
 export default styleResolver;

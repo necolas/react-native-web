@@ -21,15 +21,18 @@ const _requestIdleCallback = function (cb: Function, options?: Object) {
   }, 1);
 };
 
-// $FlowFixMe (TimeoutID type is not recognized by eslint)
 const _cancelIdleCallback = function (id) {
   clearTimeout(id);
 };
 
 const isSupported = canUseDOM && typeof window.requestIdleCallback !== 'undefined';
 
-const requestIdleCallback = isSupported ? window.requestIdleCallback : _requestIdleCallback;
-const cancelIdleCallback = isSupported ? window.cancelIdleCallback : _cancelIdleCallback;
+const requestIdleCallback: (cb: any, options?: any) => TimeoutID = isSupported
+  ? window.requestIdleCallback
+  : _requestIdleCallback;
+const cancelIdleCallback: (TimeoutID) => void = isSupported
+  ? window.cancelIdleCallback
+  : _cancelIdleCallback;
 
 export default requestIdleCallback;
 export { cancelIdleCallback };

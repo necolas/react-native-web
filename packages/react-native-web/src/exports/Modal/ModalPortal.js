@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { useEffect, useRef } from 'react';
+import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
 
@@ -16,9 +16,9 @@ export type ModalPortalProps = {|
   children: any
 |};
 
-function ModalPortal(props: ModalPortalProps) {
+function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
-  const elementRef = useRef(null);
+  const elementRef = React.useRef(null);
 
   if (canUseDOM && !elementRef.current) {
     const element = document.createElement('div');
@@ -29,7 +29,7 @@ function ModalPortal(props: ModalPortalProps) {
     }
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (canUseDOM) {
       return () => {
         if (document.body && elementRef.current) {

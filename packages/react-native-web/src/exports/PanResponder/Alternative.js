@@ -201,7 +201,25 @@ const PanResponder = {
    * gestureState once in the capture phase and can use it in the bubble phase
    * as well.
    */
-  create(config: PanResponderConfig) {
+  create(
+    config: PanResponderConfig
+  ): {|
+    getInteractionHandle: () => ?number,
+    panHandlers: {|
+      onMoveShouldSetResponder: (event: PressEvent) => boolean,
+      onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
+      onResponderEnd: (event: PressEvent) => void,
+      onResponderGrant: (event: PressEvent) => void,
+      onResponderMove: (event: PressEvent) => void,
+      onResponderReject: (event: PressEvent) => void,
+      onResponderRelease: (event: PressEvent) => void,
+      onResponderStart: (event: PressEvent) => void,
+      onResponderTerminate: (event: PressEvent) => void,
+      onResponderTerminationRequest: (event: PressEvent) => boolean,
+      onStartShouldSetResponder: (event: PressEvent) => boolean,
+      onStartShouldSetResponderCapture: (event: PressEvent) => boolean
+    |}
+  |} {
     const interactionState = {
       handle: (null: ?number)
     };

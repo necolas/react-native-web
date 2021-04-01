@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { useEffect, useCallback, useState, useRef } from 'react';
+import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
 
@@ -32,15 +32,15 @@ export type ModalAnimationProps = {|
   visible?: ?boolean
 |};
 
-function ModalAnimation(props: ModalAnimationProps) {
+function ModalAnimation(props: ModalAnimationProps): React.Node {
   const { animationType, children, onDismiss, onShow, visible } = props;
 
-  const [isRendering, setIsRendering] = useState(false);
-  const wasVisible = useRef(false);
+  const [isRendering, setIsRendering] = React.useState(false);
+  const wasVisible = React.useRef(false);
 
   const isAnimated = animationType && animationType !== 'none';
 
-  const animationEndCallback = useCallback(
+  const animationEndCallback = React.useCallback(
     (e: any) => {
       if (e && e.currentTarget !== e.target) {
         // If the event was generated for something NOT this element we
@@ -62,7 +62,7 @@ function ModalAnimation(props: ModalAnimationProps) {
     [onDismiss, onShow, visible]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (visible) {
       setIsRendering(true);
     }
