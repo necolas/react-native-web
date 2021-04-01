@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import createElement from '../createElement';
@@ -70,14 +70,16 @@ export type ModalFocusTrapProps = {|
   children?: any
 |};
 
-const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
-  const trapElementRef = useRef<?HTMLElement>();
-  const focusRef = useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>({
-    trapFocusInProgress: false,
-    lastFocusedElement: null
-  });
+const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node => {
+  const trapElementRef = React.useRef<?HTMLElement>();
+  const focusRef = React.useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>(
+    {
+      trapFocusInProgress: false,
+      lastFocusedElement: null
+    }
+  );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (canUseDOM) {
       const trapFocus = () => {
         // We should not trap focus if:
@@ -125,7 +127,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps) => {
 
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
-  useEffect(function () {
+  React.useEffect(function () {
     if (canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {

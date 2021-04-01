@@ -76,9 +76,9 @@ const PROPERTIES_VALUE = {
 };
 
 // Invert the sign of a numeric-like value
-const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
+const additiveInverse = (value: string | number) => multiplyStyleLengthValue(value, -1);
 
-const i18nStyle = (originalStyle: Object) => {
+const i18nStyle = <T: {| [key: string]: any |}>(originalStyle: T): T => {
   const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
   const style = originalStyle || emptyObject;
   const frozenProps = {};
@@ -145,6 +145,7 @@ const i18nStyle = (originalStyle: Object) => {
     }
   }
 
+  // $FlowIgnore
   return nextStyle;
 };
 

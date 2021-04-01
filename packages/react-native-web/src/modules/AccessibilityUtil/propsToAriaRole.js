@@ -22,7 +22,7 @@ const accessibilityRoleToWebRole = {
   text: null
 };
 
-const propsToAriaRole = ({ accessibilityRole }: Object) => {
+const propsToAriaRole = ({ accessibilityRole }: { accessibilityRole?: string }): string | void => {
   if (accessibilityRole) {
     const inferredRole = accessibilityRoleToWebRole[accessibilityRole];
     if (inferredRole !== null) {
