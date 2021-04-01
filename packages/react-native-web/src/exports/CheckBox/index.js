@@ -12,7 +12,6 @@ import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef } from 'react';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -26,7 +25,10 @@ type CheckBoxProps = {
   value?: boolean
 };
 
-const CheckBox = forwardRef<CheckBoxProps, *>((props, forwardedRef) => {
+const CheckBox: React.AbstractComponent<
+  CheckBoxProps,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, forwardedRef) => {
   const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
 
   function handleChange(event: Object) {

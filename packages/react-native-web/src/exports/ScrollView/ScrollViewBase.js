@@ -10,7 +10,6 @@
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -70,7 +69,10 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
+const ScrollViewBase: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, forwardedRef) => {
   const {
     onScroll,
     onTouchMove,
@@ -83,9 +85,9 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
     ...rest
   } = props;
 
-  const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = useRef(null);
-  const scrollRef = useRef(null);
+  const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
+  const scrollTimeout = React.useRef(null);
+  const scrollRef = React.useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {

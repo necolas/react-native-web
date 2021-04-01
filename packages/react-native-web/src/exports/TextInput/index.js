@@ -8,9 +8,10 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
 import type { TextInputProps } from './types';
 
-import { forwardRef, useCallback, useMemo, useRef } from 'react';
+import * as React from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import * as forwardedProps from '../../modules/forwardedProps';
@@ -82,7 +83,10 @@ function isEventComposing(nativeEvent) {
   return nativeEvent.isComposing || nativeEvent.keyCode === 229;
 }
 
-const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
+const TextInput: React.AbstractComponent<
+  TextInputProps,
+  HTMLElement & PlatformMethods
+> = React.forwardRef((props, forwardedRef) => {
   const {
     autoCapitalize = 'sentences',
     autoComplete,
@@ -160,10 +164,10 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     type = 'password';
   }
 
-  const dimensions = useRef({ height: null, width: null });
-  const hostRef = useRef(null);
+  const dimensions = React.useRef({ height: null, width: null });
+  const hostRef = React.useRef(null);
 
-  const handleContentSizeChange = useCallback(() => {
+  const handleContentSizeChange = React.useCallback(() => {
     const node = hostRef.current;
     if (multiline && onContentSizeChange && node != null) {
       const newHeight = node.scrollHeight;
@@ -183,7 +187,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
     }
   }, [hostRef, multiline, onContentSizeChange]);
 
-  const imperativeRef = useMemo(
+  const imperativeRef = React.useMemo(
     () => (hostNode) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `usePlatformMethods`. This is temporarily until an API like
