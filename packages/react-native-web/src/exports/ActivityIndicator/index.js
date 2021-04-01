@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { ElementRef, AbstractComponent } from 'react';
 import type { ViewProps } from '../View';
 
 import StyleSheet from '../StyleSheet';
@@ -28,7 +29,10 @@ type ActivityIndicatorProps = {
   size?: 'small' | 'large' | number
 };
 
-const ActivityIndicator = forwardRef<ActivityIndicatorProps, *>((props, forwardedRef) => {
+const ActivityIndicator: AbstractComponent<
+  ActivityIndicatorProps,
+  ElementRef<typeof View>
+> = forwardRef((props, forwardedRef) => {
   const {
     animating = true,
     color = '#1976D2',

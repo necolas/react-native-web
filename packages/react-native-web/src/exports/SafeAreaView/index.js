@@ -9,7 +9,7 @@
  */
 
 import type { ViewProps } from '../View';
-import type { Node } from 'react';
+import type { AbstractComponent, ElementRef } from 'react';
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
@@ -28,11 +28,13 @@ const cssFunction: 'constant' | 'env' = (function () {
   return 'env';
 })();
 
-const SafeAreaView = forwardRef<ViewProps, Node>((props, ref) => {
-  const { style, ...rest } = props;
+const SafeAreaView: AbstractComponent<ViewProps, ElementRef<typeof View>> = forwardRef(
+  (props, ref) => {
+    const { style, ...rest } = props;
 
-  return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
-});
+    return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
+  }
+);
 
 SafeAreaView.displayName = 'SafeAreaView';
 

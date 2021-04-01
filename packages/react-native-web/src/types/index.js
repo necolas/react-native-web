@@ -45,3 +45,21 @@ export type PointValue = {|
   x: number,
   y: number
 |};
+
+type LayoutCallback = ({
+  ...LayoutValue,
+  left: number,
+  top: number
+}) => void;
+
+type MeasureInWindowCallback = (EdgeInsetsValue) => void;
+
+// Mixin to HTMLElement that represents additions from the `usePlatformMethods` hook
+export class NativeMethodsMixin {
+  blur: () => void;
+  focus: () => void;
+  measure: (callback: LayoutCallback) => void;
+  measureInWindow: (callback: MeasureInWindowCallback) => void;
+  measureLayout: (relativeToNativeNode: {}, onSuccess: LayoutCallback, onFail: () => void) => void;
+  setNativeProps: (nativeProps: {}) => void;
+}

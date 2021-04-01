@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { AbstractComponent, ElementRef } from 'react';
 import type { ImageProps } from './types';
 
 import createElement from '../createElement';
@@ -132,7 +133,7 @@ function resolveAssetUri(source): ?string {
   return uri;
 }
 
-const Image = forwardRef<ImageProps, *>((props, ref) => {
+const Image: AbstractComponent<ImageProps, ElementRef<typeof View>> = forwardRef((props, ref) => {
   const {
     accessibilityLabel,
     blurRadius,

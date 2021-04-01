@@ -9,6 +9,7 @@
 
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
+import type { AbstractComponent, ElementRef } from 'react';
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -22,47 +23,49 @@ type ProgressBarProps = {
   trackColor?: ColorValue
 };
 
-const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
-  const {
-    color = '#1976D2',
-    indeterminate = false,
-    progress = 0,
-    trackColor = 'transparent',
-    style,
-    ...other
-  } = props;
+const ProgressBar: AbstractComponent<ProgressBarProps, ElementRef<typeof View>> = forwardRef(
+  (props, ref) => {
+    const {
+      color = '#1976D2',
+      indeterminate = false,
+      progress = 0,
+      trackColor = 'transparent',
+      style,
+      ...other
+    } = props;
 
-  const percentageProgress = progress * 100;
+    const percentageProgress = progress * 100;
 
-  const progressRef = useRef(null);
-  useEffect(() => {
-    const width = indeterminate ? '25%' : `${percentageProgress}%`;
-    if (progressRef.current != null) {
-      progressRef.current.setNativeProps({
-        style: { width }
-      });
-    }
-  }, [indeterminate, percentageProgress, progressRef]);
+    const progressRef = useRef(null);
+    useEffect(() => {
+      const width = indeterminate ? '25%' : `${percentageProgress}%`;
+      if (progressRef.current != null) {
+        progressRef.current.setNativeProps({
+          style: { width }
+        });
+      }
+    }, [indeterminate, percentageProgress, progressRef]);
 
-  return (
-    <View
-      {...other}
-      accessibilityRole="progressbar"
-      accessibilityValue={{
-        max: 100,
-        min: 0,
-        now: indeterminate ? null : percentageProgress
-      }}
-      ref={ref}
-      style={[styles.track, style, { backgroundColor: trackColor }]}
-    >
+    return (
       <View
-        ref={progressRef}
-        style={[styles.progress, indeterminate && styles.animation, { backgroundColor: color }]}
-      />
-    </View>
-  );
-});
+        {...other}
+        accessibilityRole="progressbar"
+        accessibilityValue={{
+          max: 100,
+          min: 0,
+          now: indeterminate ? null : percentageProgress
+        }}
+        ref={ref}
+        style={[styles.track, style, { backgroundColor: trackColor }]}
+      >
+        <View
+          ref={progressRef}
+          style={[styles.progress, indeterminate && styles.animation, { backgroundColor: color }]}
+        />
+      </View>
+    );
+  }
+);
 
 ProgressBar.displayName = 'ProgressBar';
 

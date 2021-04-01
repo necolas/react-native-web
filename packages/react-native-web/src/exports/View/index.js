@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { NativeMethodsMixin } from '../../types';
 import type { ViewProps } from './types';
 
 import * as React from 'react';
@@ -41,84 +42,88 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
-  const {
-    hrefAttrs,
-    onLayout,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  } = props;
+const View: React$AbstractComponent<ViewProps, HTMLElement & NativeMethodsMixin> = forwardRef(
+  (props, forwardedRef) => {
+    const {
+      hrefAttrs,
+      onLayout,
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
+    } = props;
 
-  if (process.env.NODE_ENV !== 'production') {
-    React.Children.toArray(props.children).forEach((item) => {
-      if (typeof item === 'string') {
-        console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
-      }
+    if (process.env.NODE_ENV !== 'production') {
+      React.Children.toArray(props.children).forEach((item) => {
+        if (typeof item === 'string') {
+          console.error(
+            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+          );
+        }
+      });
+    }
+
+    const hasTextAncestor = useContext(TextAncestorContext);
+    const hostRef = useRef(null);
+
+    useElementLayout(hostRef, onLayout);
+    useResponderEvents(hostRef, {
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
     });
+
+    const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
+
+    const supportedProps = pickProps(props);
+    supportedProps.classList = classList;
+    supportedProps.style = style;
+    if (props.href != null && hrefAttrs != null) {
+      const { download, rel, target } = hrefAttrs;
+      if (download != null) {
+        supportedProps.download = download;
+      }
+      if (rel != null) {
+        supportedProps.rel = rel;
+      }
+      if (typeof target === 'string') {
+        supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+      }
+    }
+
+    const platformMethodsRef = usePlatformMethods(supportedProps);
+    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+    supportedProps.ref = setRef;
+
+    return createElement('div', supportedProps);
   }
-
-  const hasTextAncestor = useContext(TextAncestorContext);
-  const hostRef = useRef(null);
-
-  useElementLayout(hostRef, onLayout);
-  useResponderEvents(hostRef, {
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  });
-
-  const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
-
-  const supportedProps = pickProps(props);
-  supportedProps.classList = classList;
-  supportedProps.style = style;
-  if (props.href != null && hrefAttrs != null) {
-    const { download, rel, target } = hrefAttrs;
-    if (download != null) {
-      supportedProps.download = download;
-    }
-    if (rel != null) {
-      supportedProps.rel = rel;
-    }
-    if (typeof target === 'string') {
-      supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
-    }
-  }
-
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
-
-  supportedProps.ref = setRef;
-
-  return createElement('div', supportedProps);
-});
+);
 
 View.displayName = 'View';
 

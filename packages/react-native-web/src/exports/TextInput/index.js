@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { NativeMethodsMixin } from '../../types';
 import type { TextInputProps } from './types';
 
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
@@ -82,7 +83,10 @@ function isEventComposing(nativeEvent) {
   return nativeEvent.isComposing || nativeEvent.keyCode === 229;
 }
 
-const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
+const TextInput: React$AbstractComponent<
+  TextInputProps,
+  HTMLElement & NativeMethodsMixin
+> = forwardRef((props, forwardedRef) => {
   const {
     autoCapitalize = 'sentences',
     autoComplete,
