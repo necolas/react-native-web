@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React, { forwardRef, useMemo, useEffect } from 'react';
+import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
@@ -20,10 +20,13 @@ export type ModalContentProps = {|
   transparent?: ?boolean
 |};
 
-const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
+const ModalContent: React.AbstractComponent<
+  ModalContentProps,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, forwardedRef) => {
   const { active, children, onRequestClose, transparent } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (canUseDOM) {
       const closeOnEscape = (e: KeyboardEvent) => {
         if (active && e.key === 'Escape') {
@@ -38,7 +41,7 @@ const ModalContent = forwardRef<ModalContentProps, *>((props, forwardedRef) => {
     }
   }, [active, onRequestClose]);
 
-  const style = useMemo(() => {
+  const style = React.useMemo(() => {
     return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
   }, [transparent]);
 
