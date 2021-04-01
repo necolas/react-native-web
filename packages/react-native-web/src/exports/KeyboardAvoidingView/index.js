@@ -11,8 +11,8 @@
 import type { LayoutEvent, LayoutValue } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
 import View from '../View';
-import React from 'react';
 
 type KeyboardAvoidingViewProps = {
   ...ViewProps,
@@ -35,11 +35,11 @@ class KeyboardAvoidingView extends React.Component<KeyboardAvoidingViewProps> {
 
   onKeyboardChange(event: Object) {}
 
-  onLayout = (event: LayoutEvent) => {
+  onLayout: (event: LayoutEvent) => void = (event: LayoutEvent) => {
     this.frame = event.nativeEvent.layout;
   };
 
-  render() {
+  render(): React.Node {
     const {
       /* eslint-disable */
       behavior,

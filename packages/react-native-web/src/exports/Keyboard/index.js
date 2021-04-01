@@ -11,7 +11,7 @@
 import dismissKeyboard from '../../modules/dismissKeyboard';
 
 const Keyboard = {
-  addListener() {
+  addListener(): {| remove: () => void |} {
     return { remove: () => {} };
   },
   dismiss() {

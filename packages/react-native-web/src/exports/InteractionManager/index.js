@@ -44,7 +44,7 @@ const InteractionManager = {
   /**
    * Notify manager that an interaction has started.
    */
-  createInteractionHandle() {
+  createInteractionHandle(): number {
     return 1;
   },
 

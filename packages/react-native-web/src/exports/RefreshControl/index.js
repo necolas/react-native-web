@@ -10,6 +10,7 @@
 
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
+import type { Node } from 'React';
 
 import View from '../View';
 import React from 'react';
@@ -28,7 +29,7 @@ type RefreshControlProps = {
   titleColor?: ColorValue
 };
 
-function RefreshControl(props: RefreshControlProps) {
+function RefreshControl(props: RefreshControlProps): Node {
   const {
     /* eslint-disable */
     colors,
