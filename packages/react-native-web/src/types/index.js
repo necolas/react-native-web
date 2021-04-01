@@ -55,7 +55,7 @@ type LayoutCallback = ({
 type MeasureInWindowCallback = (EdgeInsetsValue) => void;
 
 // Mixin to HTMLElement that represents additions from the `usePlatformMethods` hook
-declare class NativeMethodsMixin {
+export interface NativeMethodsMixin {
   blur: () => void;
   focus: () => void;
   measure: (callback: LayoutCallback) => void;
