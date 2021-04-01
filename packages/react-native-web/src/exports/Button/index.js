@@ -22,7 +22,10 @@ type ButtonProps = {|
   title: string
 |};
 
-const Button = React.forwardRef<ButtonProps, *>((props, forwardedRef) => {
+const Button: React.AbstractComponent<
+  ButtonProps,
+  React.ElementRef<typeof TouchableOpacity>
+> = React.forwardRef((props, forwardedRef) => {
   const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
 
   return (

@@ -8,14 +8,15 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
 import createElement from '../createElement';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet from '../StyleSheet';
-import { forwardRef, useRef } from 'react';
 
 type PickerProps = {
   ...ViewProps,
@@ -30,7 +31,10 @@ type PickerProps = {
   prompt?: string
 };
 
-const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
+const Picker: React.AbstractComponent<
+  PickerProps,
+  HTMLElement & PlatformMethods
+> = React.forwardRef((props, forwardedRef) => {
   const {
     children,
     enabled,
@@ -46,7 +50,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     ...other
   } = props;
 
-  const hostRef = useRef(null);
+  const hostRef = React.useRef(null);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;

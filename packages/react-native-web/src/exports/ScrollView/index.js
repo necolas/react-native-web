@@ -334,7 +334,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const ForwardedScrollView = React.forwardRef((props, forwardedRef) => {
+const ForwardedScrollView: React.AbstractComponent<
+  React.ElementConfig<typeof ScrollView>,
+  React.ElementRef<typeof ScrollView>
+> = React.forwardRef((props, forwardedRef) => {
   return <ScrollView {...props} forwardedRef={forwardedRef} />;
 });
 

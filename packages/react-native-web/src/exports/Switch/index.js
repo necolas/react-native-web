@@ -11,7 +11,6 @@ import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef, useRef } from 'react';
 import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
@@ -32,7 +31,10 @@ const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
-const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
+const Switch: React.AbstractComponent<
+  SwitchProps,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, forwardedRef) => {
   const {
     accessibilityLabel,
     activeThumbColor = '#009688',
@@ -46,7 +48,7 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     ...other
   } = props;
 
-  const thumbRef = useRef(null);
+  const thumbRef = React.useRef(null);
 
   function handleChange(event: Object) {
     if (onValueChange != null) {

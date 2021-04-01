@@ -8,10 +8,10 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
 import type { TextProps } from './types';
 
 import * as React from 'react';
-import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import * as forwardedProps from '../../modules/forwardedProps';
@@ -39,116 +39,118 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
-  const {
-    dir,
-    hrefAttrs,
-    numberOfLines,
-    onClick,
-    onLayout,
-    onPress,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture,
-    selectable
-  } = props;
+const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = React.forwardRef(
+  (props, forwardedRef) => {
+    const {
+      dir,
+      hrefAttrs,
+      numberOfLines,
+      onClick,
+      onLayout,
+      onPress,
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture,
+      selectable
+    } = props;
 
-  const hasTextAncestor = useContext(TextAncestorContext);
-  const hostRef = useRef(null);
+    const hasTextAncestor = React.useContext(TextAncestorContext);
+    const hostRef = React.useRef(null);
 
-  const classList = [
-    classes.text,
-    hasTextAncestor === true && classes.textHasAncestor,
-    numberOfLines === 1 && classes.textOneLine,
-    numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
-  ];
-  const style = [
-    props.style,
-    numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-    selectable === true && styles.selectable,
-    selectable === false && styles.notSelectable,
-    onPress && styles.pressable
-  ];
+    const classList = [
+      classes.text,
+      hasTextAncestor === true && classes.textHasAncestor,
+      numberOfLines === 1 && classes.textOneLine,
+      numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
+    ];
+    const style = [
+      props.style,
+      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+      selectable === true && styles.selectable,
+      selectable === false && styles.notSelectable,
+      onPress && styles.pressable
+    ];
 
-  useElementLayout(hostRef, onLayout);
-  useResponderEvents(hostRef, {
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  });
+    useElementLayout(hostRef, onLayout);
+    useResponderEvents(hostRef, {
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
+    });
 
-  function handleClick(e) {
-    if (onClick != null) {
-      onClick(e);
+    function handleClick(e) {
+      if (onClick != null) {
+        onClick(e);
+      }
+      if (onClick == null && onPress != null) {
+        e.stopPropagation();
+        onPress(e);
+      }
     }
-    if (onClick == null && onPress != null) {
-      e.stopPropagation();
-      onPress(e);
+
+    const component = hasTextAncestor ? 'span' : 'div';
+    const supportedProps = pickProps(props);
+    supportedProps.classList = classList;
+    supportedProps.dir = dir;
+    // 'auto' by default allows browsers to infer writing direction (root elements only)
+    if (!hasTextAncestor) {
+      supportedProps.dir = dir != null ? dir : 'auto';
     }
+    supportedProps.onClick = handleClick;
+    supportedProps.style = style;
+    if (props.href != null && hrefAttrs != null) {
+      const { download, rel, target } = hrefAttrs;
+      if (download != null) {
+        supportedProps.download = download;
+      }
+      if (rel != null) {
+        supportedProps.rel = rel;
+      }
+      if (typeof target === 'string') {
+        supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+      }
+    }
+
+    const platformMethodsRef = usePlatformMethods(supportedProps);
+    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+    supportedProps.ref = setRef;
+
+    const element = createElement(component, supportedProps);
+
+    return hasTextAncestor ? (
+      element
+    ) : (
+      <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
+    );
   }
-
-  const component = hasTextAncestor ? 'span' : 'div';
-  const supportedProps = pickProps(props);
-  supportedProps.classList = classList;
-  supportedProps.dir = dir;
-  // 'auto' by default allows browsers to infer writing direction (root elements only)
-  if (!hasTextAncestor) {
-    supportedProps.dir = dir != null ? dir : 'auto';
-  }
-  supportedProps.onClick = handleClick;
-  supportedProps.style = style;
-  if (props.href != null && hrefAttrs != null) {
-    const { download, rel, target } = hrefAttrs;
-    if (download != null) {
-      supportedProps.download = download;
-    }
-    if (rel != null) {
-      supportedProps.rel = rel;
-    }
-    if (typeof target === 'string') {
-      supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
-    }
-  }
-
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
-
-  supportedProps.ref = setRef;
-
-  const element = createElement(component, supportedProps);
-
-  return hasTextAncestor ? (
-    element
-  ) : (
-    <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
-  );
-});
+);
 
 Text.displayName = 'Text';
 
