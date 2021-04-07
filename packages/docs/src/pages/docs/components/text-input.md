@@ -71,7 +71,7 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 The initial value of the input. Useful for simple use-cases where you don't want to deal with listening to events and updating the value prop to keep the controlled state in sync.
 {% endcall %}
 
-{% call macro.prop('direction', '?("auto" | "ltr" | "rtl") = "auto"') %}
+{% call macro.prop('dir', '?("auto" | "ltr" | "rtl") = "auto"') %}
 Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir)
 {% endcall %}
 
@@ -140,17 +140,12 @@ Callback that is called when the keyboard's submit button is pressed. When `mult
 {% endcall %}
 
 
-
 {% call macro.prop('placeholder', '?boolean') %}
 Text that appears in the form control when it has no value set.
 {% endcall %}
 
 {% call macro.prop('placeholderTextColor', '?string') %}
 Equivalent to defining `::placeholder { color }` via a CSS property.
-{% endcall %}
-
-{% call macro.prop('required', '?boolean') %}
-Equivalent to [HTMLElement.required](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required)
 {% endcall %}
 
 {% call macro.prop('returnKeyType', '?string') %}
