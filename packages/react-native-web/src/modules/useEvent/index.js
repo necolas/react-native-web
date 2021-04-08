@@ -60,5 +60,6 @@ export default function useEvent(
     };
   }, [addListener]);
 
+  // $FlowFixMe: this hook has some funk where addListener can be nulled via cleanup, but flow and eslint don't like that
   return addListener;
 }

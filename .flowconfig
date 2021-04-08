@@ -1,5 +1,5 @@
 [version]
-^0.142.0
+^0.148.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
@@ -15,10 +15,3 @@
 
 [options]
 munge_underscores=true
-types_first=false
-well_formed_exports=false
-esproposal.optional_chaining=enable
-suppress_type=$FlowIssue
-suppress_type=$FlowFixMe
-suppress_type=$FlowFixMeProps
-suppress_type=$FlowFixMeState
