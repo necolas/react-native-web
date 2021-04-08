@@ -7,6 +7,8 @@
 
 /* global $Values */
 
+import type { Node } from 'react';
+
 import * as Timing from './timing';
 import React, { Component } from 'react';
 import { getMean, getMedian, getStdDev } from './math';
@@ -94,15 +96,19 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
   _startTime: number;
   _samples: Array<SampleTimingType>;
 
-  static displayName = 'Benchmark';
+  static displayName: ?string = 'Benchmark';
 
-  static defaultProps = {
+  static defaultProps: {|
+    sampleCount: number,
+    timeout: number,
+    type: $PropertyType<BenchmarkPropsType, 'type'>
+  |} = {
     sampleCount: 50,
     timeout: 10000, // 10 seconds
     type: BenchmarkType.MOUNT
   };
 
-  static Type = BenchmarkType;
+  static Type: typeof BenchmarkType = BenchmarkType;
 
   constructor(props: BenchmarkPropsType, context?: {}) {
     super(props, context);
@@ -162,7 +168,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     }
   }
 
-  render() {
+  render(): Node {
     const { component: Component, type } = this.props;
     const { componentProps, cycle, running } = this.state;
     if (running && shouldRecord(cycle, type)) {

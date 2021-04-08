@@ -60,5 +60,6 @@ export default function useEvent(
     };
   }, [addListener]);
 
+  // $FlowFixMe
   return addListener;
 }
