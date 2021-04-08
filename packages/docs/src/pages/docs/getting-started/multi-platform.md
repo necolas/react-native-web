@@ -65,10 +65,12 @@ module.exports = {
 
 ### Flow
 
-[Flow](https://flow.org) can be configured to understand the aliased module. You may also need to include a custom libdef ([example](https://gist.github.com/paularmstrong/f60b40d16fc83e1e8e532d483336f9bb)) in your config.
+[Flow](https://flow.org) can be configured to understand the aliased module and pull types from Reac Native Web's source code. To do this, you can alias the name as below. You will also need to tell flow to use the `module` field of RNW's `package.json` or it may not find the flow types.
 
 ```yml
 [options]
+module.system.node.main_field=module
+module.system.node.main_field=main
 module.name_mapper='^react-native$' -> 'react-native-web'
 ```
 
