@@ -8,14 +8,16 @@
  * @flow
  */
 
-import type { ComponentType } from 'react';
+import type { ComponentType, Node } from 'react';
 
 import invariant from 'fbjs/lib/invariant';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
 
 const emptyObject = {};
-const runnables = {};
+type AppParams = Object;
+type Runnable = {| getApplication?: (AppParams) => Node, run: Function |};
+const runnables: {| [appKey: string]: Runnable |} = {};
 
 export type ComponentProvider = () => ComponentType<any>;
 export type ComponentProviderInstrumentationHook = (
@@ -43,7 +45,7 @@ export default class AppRegistry {
     return Object.keys(runnables);
   }
 
-  static getApplication(appKey: string, appParameters?: Object): string {
+  static getApplication(appKey: string, appParameters?: Object): Node {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +

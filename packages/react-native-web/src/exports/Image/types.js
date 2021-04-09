@@ -108,6 +108,6 @@ export type ImageProps = {
   onLoadStart?: (e: any) => void,
   onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
-  source: Source,
+  source?: Source,
   style?: GenericStyleProp<ImageStyle>
 };
