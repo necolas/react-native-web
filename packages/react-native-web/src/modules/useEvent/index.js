@@ -32,7 +32,7 @@ export default function useEvent(
 ): AddListener {
   const targetListeners = useStable(() => new Map());
 
-  let addListener = useStable(() => {
+  const addListener = useStable(() => {
     const addEventListener = createEventHandle(event, options);
     return (target: EventTarget, callback: Callback) => {
       const removeTargetListener = targetListeners.get(target);
@@ -50,16 +50,12 @@ export default function useEvent(
 
   useLayoutEffect(() => {
     return () => {
-      if (addListener != null) {
-        targetListeners.forEach((removeListener) => {
-          removeListener();
-        });
-        targetListeners.clear();
-      }
-      addListener = null;
+      targetListeners.forEach((removeListener) => {
+        removeListener();
+      });
+      targetListeners.clear();
     };
-  }, [addListener]);
+  }, []);
 
-  // $FlowFixMe
   return addListener;
 }
