@@ -46,13 +46,16 @@ export type PointValue = {|
   y: number
 |};
 
-type LayoutCallback = ({
-  ...LayoutValue,
+type LayoutCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
   left: number,
   top: number
-}) => void;
+) => void;
 
-type MeasureInWindowCallback = (EdgeInsetsValue) => void;
+type MeasureInWindowCallback = (left: number, top: number, width: number, height: number) => void;
 
 // Mixin to HTMLElement that represents additions from the `usePlatformMethods` hook
 export interface PlatformMethods {
