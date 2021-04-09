@@ -5,7 +5,7 @@ permalink: /docs/browser-compatibility/index.html
 eleventyNavigation:
   key: Browser compatibility
   parent: Start
-  order: 3
+  order: 4
 ---
 
 :::lead

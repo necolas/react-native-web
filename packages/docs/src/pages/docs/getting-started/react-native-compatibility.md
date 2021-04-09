@@ -5,7 +5,7 @@ permalink: /docs/react-native-compatibility/index.html
 eleventyNavigation:
   key: React Native compatibility
   parent: Start
-  order: 4
+  order: 5
 ---
 
 :::lead

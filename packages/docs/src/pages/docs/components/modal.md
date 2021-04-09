@@ -5,7 +5,6 @@ permalink: /docs/modal/index.html
 eleventyNavigation:
   key: Modal
   parent: Components
-  label: "New"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

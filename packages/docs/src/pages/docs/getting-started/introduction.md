@@ -22,7 +22,7 @@ React Native for Web is a compatibility layer between React DOM and React Native
 
 ## Modern Web
 
-{{ site.name }} makes direct use of native DOM APIs to implement specific features. As the Web platform improves, so does {{ site.name }}. Although certains APIs in the project have remained unchanged since inception, the implementations have become smaller and faster by migrating to new DOM APIs as they became broadly available in browsers.
+{{ site.name }} makes direct use of native DOM APIs to implement specific features. As the Web platform improves, so does {{ site.name }}. Although certain APIs in the project have remained unchanged since inception, the implementations have become smaller and faster by migrating to new DOM APIs as they became broadly available in browsers.
 
 ## Components
 

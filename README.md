@@ -6,7 +6,7 @@
 
 ## Documentation
 
-The [documentation site](https://necolas.github.com/react-native-web/) covers installation, guides, and APIs.
+The [documentation site](https://necolas.github.io/react-native-web/) covers installation, guides, and APIs.
 
 ## Example
 

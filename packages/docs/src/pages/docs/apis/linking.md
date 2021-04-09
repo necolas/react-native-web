@@ -5,7 +5,6 @@ permalink: /docs/linking/index.html
 eleventyNavigation:
   key: Linking
   parent: APIs
-  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

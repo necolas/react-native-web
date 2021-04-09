@@ -5,7 +5,6 @@ permalink: /docs/accessibility/index.html
 eleventyNavigation:
   key: Accessibility
   parent: Concepts
-  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

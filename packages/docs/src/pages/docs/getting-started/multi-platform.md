@@ -3,104 +3,18 @@ title: Multi-platform setup
 date: Last Modified
 permalink: /docs/multi-platform/index.html
 eleventyNavigation:
-  key: Multi-platform
+  key: Multi-platform setup
   parent: Start
-  order: 2
+  order: 3
 ---
 
 :::lead
-An overview of how to integrate React Native for Web into an existing React Native codebase.
+How to integrate React Native for Web into an existing React Native codebase.
 :::
 
-If you are interested in making a multi-platform app it is strongly recommended that you use Expo (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.io/versions/v35.0.0/guides/running-in-the-browser/) and takes care of all the configuration work required.
+Please read the [setup]({{ '/docs/setup' | url }}) guide first. If you have an existing React Native application, there are more areas that require attention and customization before most web bundlers can consume the non-standard JavaScript in packages produced by the React Native ecosystem. Additionally, 3rd party React Native packages with web support are listed in the [React Native Directory](https://reactnative.directory/?web=true).
 
-If you have an existing application, this guide will surface the areas that require attention and customization before most web bundlers can consume the non-standard JavaScript in packages produced by the React Native ecosystem. Additionally, 3rd party React Native packages with web support are listed in the [React Native Directory](https://reactnative.directory/?web=true).
-
----
-
-## Package aliasing
-
-### Bundler
-
-Configure your module bundler to alias the package to `react-native`. For example, modify your [webpack](https://github.com/webpack/webpack) configuration as follows:
-
-```js
-// webpack.config.js
-module.exports = {
-  // ...the rest of your config
-
-  resolve: {
-    alias: {
-      'react-native$': 'react-native-web'
-    }
-  }
-}
-```
-
-### Compiler
-
-[Babel](https://babeljs.io/) supports module aliasing using [babel-plugin-module-resolver](https://www.npmjs.com/package/babel-plugin-module-resolver)
-
-```js
-{
-  "plugins": [
-    ["module-resolver", {
-      "alias": {
-        "^react-native$": "react-native-web"
-      }
-    }]
-  ]
-}
-```
-
-### Jest
-
-[Jest](https://facebook.github.io/jest/) can be configured using the provided preset. This will map `react-native` to `react-native-web` and provide appropriate mocks. Please refer to the Jest documentation for more information.
-
-```js
-{
-  "preset": "react-native-web"
-}
-```
-
-### Flow
-
-[Flow](https://flow.org) can be configured to understand the aliased module and pull types from Reac Native Web's source code. To do this, you can alias the name as below. You will also need to tell flow to use the `module` field of RNW's `package.json` or it may not find the flow types.
-
-```yml
-[options]
-module.system.node.main_field=module
-module.system.node.main_field=main
-module.name_mapper='^react-native$' -> 'react-native-web'
-```
-
-### Node.js
-
-Node.js can alias `react-native` to `react-native-web` using [`module-alias`](https://www.npmjs.com/package/module-alias). This is useful if you want to pre-render the app (e.g., server-side rendering or build-time rendering).
-
-```js
-// Install the `module-alias` package as a dependency first
-const moduleAlias = require("module-alias");
-moduleAlias.addAliases({
-  "react-native": require.resolve("react-native-web"),
-});
-moduleAlias();
-```
-
----
-
-## Root element
-
-Full-screen React Native apps may require the following styles inlined in the HTML document shell. ([Example](https://codesandbox.io/s/52x1871vjl?file=/public/index.html:352-644).)
-
-```css
-/* These styles make the body full-height */
-html, body { height: 100%; }
-/* These styles disable body scrolling if you are using <ScrollView> */
-body { overflow: hidden; }
-/* These styles make the root element full-height */
-#root { display:flex; height:100%; }
-```
+If you are interested in making a multi-platform app it is *strongly recommended* that you use [Expo](https://expo.io) (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.io/versions/v35.0.0/guides/running-in-the-browser/) and takes care of all the configuration work required.
 
 ---
 

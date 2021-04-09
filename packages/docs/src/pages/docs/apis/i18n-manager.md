@@ -5,7 +5,6 @@ permalink: /docs/i18n-manager/index.html
 eleventyNavigation:
   key: I18nManager
   parent: APIs
-  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

@@ -5,7 +5,6 @@ permalink: /docs/pressable/index.html
 eleventyNavigation:
   key: Pressable
   parent: Components
-  label: "New"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
