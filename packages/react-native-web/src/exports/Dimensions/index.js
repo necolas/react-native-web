@@ -27,19 +27,20 @@ type DimensionKey = 'window' | 'screen';
 
 type DimensionEventListenerType = 'change';
 
-const win = canUseDOM
-  ? window
-  : {
-      devicePixelRatio: undefined,
-      innerHeight: (undefined: any),
-      innerWidth: (undefined: any),
-      screen: {
-        height: (undefined: any),
-        width: (undefined: any)
-      }
-    };
-
-const dimensions = {};
+const dimensions = {
+  window: {
+    fontScale: 1,
+    height: 0,
+    scale: 1,
+    width: 0
+  },
+  screen: {
+    fontScale: 1,
+    height: 0,
+    scale: 1,
+    width: 0
+  }
+};
 const listeners = {};
 
 export default class Dimensions {
@@ -53,18 +54,29 @@ export default class Dimensions {
       if (canUseDOM) {
         invariant(false, 'Dimensions cannot be set in the browser');
       } else {
-        dimensions.screen = initialDimensions.screen;
-        dimensions.window = initialDimensions.window;
+        if (initialDimensions.screen != null) {
+          dimensions.screen = initialDimensions.screen;
+        }
+        if (initialDimensions.window != null) {
+          dimensions.window = initialDimensions.window;
+        }
       }
     }
   }
 
   static _update() {
+    if (!canUseDOM) {
+      return;
+    }
+
+    const win = window;
+    const docEl = win.document.documentElement;
+
     dimensions.window = {
       fontScale: 1,
-      height: win.innerHeight,
+      height: docEl.clientHeight,
       scale: win.devicePixelRatio || 1,
-      width: win.innerWidth
+      width: docEl.clientWidth
     };
 
     dimensions.screen = {
@@ -97,8 +109,7 @@ export default class Dimensions {
   }
 }
 
-Dimensions._update();
-
 if (canUseDOM) {
+  Dimensions._update();
   window.addEventListener('resize', Dimensions._update, false);
 }
