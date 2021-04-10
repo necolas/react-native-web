@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ComponentType } from 'react';
+import type { ComponentType, Node } from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
@@ -44,7 +44,7 @@ export function getApplication(
   RootComponent: ComponentType<Object>,
   initialProps: Object,
   WrapperComponent?: ?ComponentType<*>
-): Object {
+): {| element: Node, getStyleElement: (Object) => Node |} {
   const element = (
     <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
       <RootComponent {...initialProps} />

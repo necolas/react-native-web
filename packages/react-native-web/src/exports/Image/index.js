@@ -132,6 +132,16 @@ function resolveAssetUri(source): ?string {
   return uri;
 }
 
+interface ImageStatics {
+  getSize: (
+    uri: string,
+    success: (width: number, height: number) => void,
+    failure: () => void
+  ) => void;
+  prefetch: (uri: string) => Promise<void>;
+  queryCache: (uris: Array<string>) => Promise<{| [uri: string]: 'disk/memory' |}>;
+}
+
 const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> = React.forwardRef(
   (props, ref) => {
     const {
@@ -294,18 +304,22 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
 
 Image.displayName = 'Image';
 
-// $FlowFixMe
-Image.getSize = function (uri, success, failure) {
+// $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
+const ImageWithStatics = (Image: React.AbstractComponent<
+  ImageProps,
+  React.ElementRef<typeof View>
+> &
+  ImageStatics);
+
+ImageWithStatics.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
 };
 
-// $FlowFixMe
-Image.prefetch = function (uri) {
+ImageWithStatics.prefetch = function (uri) {
   return ImageLoader.prefetch(uri);
 };
 
-// $FlowFixMe
-Image.queryCache = function (uris) {
+ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
@@ -364,4 +378,4 @@ const resizeModeStyles = StyleSheet.create({
   }
 });
 
-export default Image;
+export default ImageWithStatics;

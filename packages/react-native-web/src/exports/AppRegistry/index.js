@@ -16,7 +16,10 @@ import renderApplication, { getApplication } from './renderApplication';
 
 const emptyObject = {};
 type AppParams = Object;
-type Runnable = {| getApplication?: (AppParams) => Node, run: Function |};
+type Runnable = {|
+  getApplication?: (AppParams) => {| element: Node, getStyleElement: (any) => Node |},
+  run: (AppParams) => any
+|};
 const runnables: {| [appKey: string]: Runnable |} = {};
 
 export type ComponentProvider = () => ComponentType<any>;
@@ -45,7 +48,10 @@ export default class AppRegistry {
     return Object.keys(runnables);
   }
 
-  static getApplication(appKey: string, appParameters?: Object): Node {
+  static getApplication(
+    appKey: string,
+    appParameters?: AppParams
+  ): {| element: Node, getStyleElement: (any) => Node |} {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +

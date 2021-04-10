@@ -82,7 +82,7 @@ const ImageLoader = {
       delete requests[`${requestId}`];
     }
   },
-  getSize(uri: string, success: Function, failure: Function) {
+  getSize(uri: string, success: (width: number, height: number) => void, failure: () => void) {
     let complete = false;
     const interval = setInterval(callback, 16);
     const requestId = ImageLoader.load(uri, callback, errorCallback);
@@ -133,7 +133,7 @@ const ImageLoader = {
     requests[`${id}`] = image;
     return id;
   },
-  prefetch(uri: string): Promise<*> {
+  prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
       ImageLoader.load(
         uri,
@@ -148,7 +148,7 @@ const ImageLoader = {
       );
     });
   },
-  queryCache(uris: Array<string>): Object {
+  queryCache(uris: Array<string>): Promise<{| [uri: string]: 'disk/memory' |}> {
     const result = {};
     uris.forEach((u) => {
       if (ImageUriCache.has(u)) {

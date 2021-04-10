@@ -19,8 +19,8 @@ export type DisplayMetrics = {|
 |};
 
 type DimensionsValue = {|
-  window?: DisplayMetrics,
-  screen?: DisplayMetrics
+  window: DisplayMetrics,
+  screen: DisplayMetrics
 |};
 
 type DimensionKey = 'window' | 'screen';
