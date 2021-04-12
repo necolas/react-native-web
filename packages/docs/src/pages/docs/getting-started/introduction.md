@@ -14,7 +14,7 @@ eleventyNavigation:
 React Native for Web is a compatibility layer between React DOM and React Native. It can be used in new and existing apps, web-only and multi-platform apps.
 :::
 
-{{ site.name }} uses React DOM to accurately render React Native compatible JavaScript code in a web browser. This brings several powerful abstractions to web developers include a simple [styles in JavaScript API]({{ '/docs/stylesheet' | url }}), built-in [layout localization]({{ '/docs/localization' | url }}), and a [high-level gesture system]({{ '/docs/interactions/#responder-props-api' | url}}).
+{{ site.name }} uses React DOM to accurately render React Native compatible JavaScript code in a web browser. This brings several powerful abstractions to web developers include a simple [styles in JavaScript API]({{ '/docs/styling' | url }}), built-in [layout localization]({{ '/docs/localization' | url }}), and a [high-level gesture system]({{ '/docs/interactions/#responder-props-api' | url}}).
 
 ## Modern React
 
