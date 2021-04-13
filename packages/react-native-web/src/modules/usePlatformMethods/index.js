@@ -19,12 +19,11 @@ const emptyObject = {};
 
 function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
-    const previousStyle = previousStyleRef ? previousStyleRef.current : {};
     const domProps = createDOMProps(null, {
       pointerEvents,
       ...nativeProps,
       classList: [classList, nativeProps.className],
-      style: [style, previousStyle, nativeProps.style]
+      style: [style, nativeProps.style]
     });
 
     const nextDomStyle = domProps.style;
