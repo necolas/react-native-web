@@ -126,6 +126,49 @@ exports[`components/View prop "pointerEvents" 1`] = `
 />
 `;
 
+exports[`components/View prop "ref" setNativeProps method style updates as expected 1`] = `
+<div
+  class="css-view-1dbjc4n r-color-howw7u"
+  style="width: 10px;"
+/>
+`;
+
+exports[`components/View prop "ref" setNativeProps method style updates as expected 2`] = `
+<div
+  class="css-view-1dbjc4n"
+  style="width: 20px; color: rgb(255, 165, 0); height: 20px;"
+/>
+`;
+
+exports[`components/View prop "ref" setNativeProps method style updates as expected 3`] = `
+<div
+  class="css-view-1dbjc4n r-color-howw7u"
+  style="width: 30px;"
+/>
+`;
+
+exports[`components/View prop "ref" setNativeProps method style updates as expected 4`] = `
+<div
+  class="css-view-1dbjc4n r-color-howw7u"
+  style="width: 30px;"
+/>
+`;
+
+exports[`components/View prop "ref" setNativeProps method style updates as expected 5`] = `
+<div
+  class="css-view-1dbjc4n r-color-howw7u"
+  style="width: 40px;"
+/>
+`;
+
+exports[`components/View prop "ref" setNativeProps method works with react-native props 1`] = `
+<div
+  aria-label="label"
+  class="css-view-1dbjc4n r-pointerEvents-ah5dr5"
+  style="box-shadow: 0px 0px 0px rgba(0,0,0,1.00); margin-right: 10px; margin-left: 10px; vertical-align: top;"
+/>
+`;
+
 exports[`components/View prop "style" value is set 1`] = `
 <div
   class="css-view-1dbjc4n"

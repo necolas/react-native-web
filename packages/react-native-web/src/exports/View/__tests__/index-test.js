@@ -2,6 +2,7 @@
 
 import React from 'react';
 import View from '../';
+import StyleSheet from '../../StyleSheet';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
 import { render } from '@testing-library/react';
@@ -205,6 +206,49 @@ describe('components/View', () => {
       expect(typeof node.measureLayout === 'function');
       expect(typeof node.measureInWindow === 'function');
       expect(typeof node.setNativeProps === 'function');
+    });
+
+    describe('setNativeProps method', () => {
+      test('works with react-native props', () => {
+        const ref = React.createRef();
+        const { container } = render(<View ref={ref} />);
+        const node = ref.current;
+        node.setNativeProps({
+          accessibilityLabel: 'label',
+          pointerEvents: 'box-only',
+          style: {
+            marginHorizontal: 10,
+            shadowColor: 'black',
+            shadowWidth: 2,
+            textAlignVertical: 'top'
+          }
+        });
+        expect(container.firstChild).toMatchSnapshot();
+      });
+
+      test('style updates as expected', () => {
+        const ref = React.createRef();
+        const styles = StyleSheet.create({ root: { color: 'red' } });
+        // initial render
+        const { container, rerender } = render(
+          <View ref={ref} style={[styles.root, { width: 10 }]} />
+        );
+        const node = ref.current;
+        expect(container.firstChild).toMatchSnapshot();
+        // set native props
+        node.setNativeProps({ style: { color: 'orange', height: 20, width: 20 } });
+        expect(container.firstChild).toMatchSnapshot();
+        // set native props again
+        node.setNativeProps({ style: { width: 30 } });
+        expect(container.firstChild).toMatchSnapshot();
+        node.setNativeProps({ style: { width: 30 } });
+        node.setNativeProps({ style: { width: 30 } });
+        node.setNativeProps({ style: { width: 30 } });
+        expect(container.firstChild).toMatchSnapshot();
+        // update render
+        rerender(<View ref={ref} style={[styles.root, { width: 40 }]} />);
+        expect(container.firstChild).toMatchSnapshot();
+      });
     });
   });
 
