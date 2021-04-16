@@ -22,6 +22,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
+import Platform from '../Platform';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -244,8 +245,10 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   }
 
   function handleKeyDown(e) {
-    // Prevent key events bubbling (see #612)
-    e.stopPropagation();
+    if (!Platform.isTV) {
+      // Prevent key events bubbling (see #612)
+      e.stopPropagation();
+    }
 
     const blurOnSubmitDefault = !multiline;
     const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;

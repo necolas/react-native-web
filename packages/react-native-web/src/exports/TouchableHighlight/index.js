@@ -18,6 +18,7 @@ import * as React from 'react';
 import { useCallback, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
+import useTVEvents from '../../modules/useTVEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
@@ -30,7 +31,13 @@ type Props = $ReadOnly<{|
   onShowUnderlay?: ?() => void,
   style?: ViewStyle,
   testOnly_pressed?: ?boolean,
-  underlayColor?: ?ColorValue
+  underlayColor?: ?ColorValue,
+  hasTVPreferredFocus?: ?boolean,
+  nextFocusDown?: ?any,
+  nextFocusForward?: ?any,
+  nextFocusLeft?: ?any,
+  nextFocusRight?: ?any,
+  nextFocusUp?: ?any
 |}>;
 
 type ExtraStyles = $ReadOnly<{|
@@ -78,6 +85,14 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
     delayLongPress,
     disabled,
     focusable,
+    hasTVPreferredFocus,
+    nextFocusDown,
+    nextFocusForward,
+    nextFocusLeft,
+    nextFocusRight,
+    nextFocusUp,
+    onFocus,
+    onBlur,
     onHideUnderlay,
     onLongPress,
     onPress,
@@ -159,12 +174,40 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
+  const tvConfig = useMemo(
+    () => ({
+      hasTVPreferredFocus,
+      nextFocusDown,
+      nextFocusForward,
+      nextFocusLeft,
+      nextFocusRight,
+      nextFocusUp,
+      onPress,
+      onFocus,
+      onBlur
+    }),
+    [
+      hasTVPreferredFocus,
+      nextFocusDown,
+      nextFocusForward,
+      nextFocusLeft,
+      nextFocusRight,
+      nextFocusUp,
+      onPress,
+      onFocus,
+      onBlur
+    ]
+  );
+
+  const tvEventHandlers = useTVEvents(hostRef, tvConfig);
+
   const child = React.Children.only(children);
 
   return (
     <View
       {...rest}
       {...pressEventHandlers}
+      {...tvEventHandlers}
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
       ref={setRef}
