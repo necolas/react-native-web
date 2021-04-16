@@ -10,7 +10,7 @@
 
 import { findDOMNode } from 'react-dom';
 
-const findNodeHandle = component => {
+const findNodeHandle = (component) => {
   let node;
 
   try {

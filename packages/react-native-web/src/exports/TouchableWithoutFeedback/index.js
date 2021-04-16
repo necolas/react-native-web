@@ -25,14 +25,12 @@ export type Props = $ReadOnly<{|
   accessibilityRole?: $PropertyType<ViewProps, 'accessibilityRole'>,
   accessibilityState?: $PropertyType<ViewProps, 'accessibilityState'>,
   accessibilityValue?: $PropertyType<ViewProps, 'accessibilityValue'>,
-  accessible?: $PropertyType<ViewProps, 'accessible'>,
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,
   delayPressOut?: ?number,
   disabled?: ?boolean,
   focusable?: ?boolean,
-  importantForAccessibility?: $PropertyType<ViewProps, 'importantForAccessibility'>,
   nativeID?: $PropertyType<ViewProps, 'nativeID'>,
   onBlur?: $PropertyType<ViewProps, 'onBlur'>,
   onFocus?: $PropertyType<ViewProps, 'onFocus'>,
@@ -46,16 +44,15 @@ export type Props = $ReadOnly<{|
 |}>;
 
 const forwardPropsList = {
+  accessibilityDisabled: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityValue: true,
-  accessible: true,
   children: true,
   disabled: true,
   focusable: true,
-  importantForAccessibility: true,
   nativeID: true,
   onBlur: true,
   onFocus: true,
@@ -63,11 +60,10 @@ const forwardPropsList = {
   testID: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const {
-    accessible,
     delayPressIn,
     delayPressOut,
     delayLongPress,
@@ -112,9 +108,8 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const element = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
-  supportedProps.accessible = accessible !== false;
-  supportedProps.accessibilityState = { disabled, ...props.accessibilityState };
-  supportedProps.focusable = focusable !== false && onPress !== undefined;
+  supportedProps.accessibilityDisabled = disabled;
+  supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(forwardedRef, hostRef, element.ref);
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);

@@ -32,7 +32,7 @@ export default function renderApplication<Props: Object>(
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer rootTag={rootTag} WrapperComponent={WrapperComponent}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
     rootTag,
@@ -46,12 +46,12 @@ export function getApplication(
   WrapperComponent?: ?ComponentType<*>
 ): Object {
   const element = (
-    <AppContainer rootTag={{}} WrapperComponent={WrapperComponent}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );
   // Don't escape CSS text
-  const getStyleElement = props => {
+  const getStyleElement = (props) => {
     const sheet = styleResolver.getStyleSheet();
     return (
       <style {...props} dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />

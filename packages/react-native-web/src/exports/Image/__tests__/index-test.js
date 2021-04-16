@@ -212,7 +212,7 @@ describe('components/Image', () => {
   });
 
   describe('prop "resizeMode"', () => {
-    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach(resizeMode => {
+    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach((resizeMode) => {
       test(`value "${resizeMode}"`, () => {
         const { container } = render(<Image resizeMode={resizeMode} />);
         expect(container.firstChild).toMatchSnapshot();
@@ -223,7 +223,7 @@ describe('components/Image', () => {
   describe('prop "source"', () => {
     test('does not throw', () => {
       const sources = [null, '', {}, { uri: '' }, { uri: 'https://google.com' }];
-      sources.forEach(source => {
+      sources.forEach((source) => {
         expect(() => render(<Image source={source} />)).not.toThrow();
       });
     });
@@ -347,7 +347,7 @@ describe('components/Image', () => {
     const uriTwo = 'https://twitter.com/favicon.ico';
     ImageUriCache.add(uriOne);
     ImageUriCache.add(uriTwo);
-    return Image.queryCache([uriOne, uriTwo, 'oops']).then(res => {
+    return Image.queryCache([uriOne, uriTwo, 'oops']).then((res) => {
       expect(res).toEqual({
         [uriOne]: 'disk/memory',
         [uriTwo]: 'disk/memory'

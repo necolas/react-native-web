@@ -2,7 +2,7 @@
 
 import Modal from '..';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 describe('components/Modal', () => {
   test('visible by default', () => {
@@ -280,6 +280,121 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(insideElement);
   });
 
+  test('focus is brought back to the element that triggered modal after closing', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    expect(document.activeElement).toBe(modalTrigger);
+  });
+
+  test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid={'inside'} href={'#hello'}>
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    expect(document.activeElement).toBe(document.body);
+  });
+
   test('focus is trapped when active', () => {
     render(
       <>
@@ -420,7 +535,7 @@ describe('components/Modal', () => {
       React.useEffect(() => spy('mount'), []);
       return (
         <Modal visible={true}>
-          <a ref={ref => (ref ? spy('ref') : spy('noref'))} />
+          <a ref={(ref) => (ref ? spy('ref') : spy('noref'))} />
         </Modal>
       );
     }
@@ -429,5 +544,75 @@ describe('components/Modal', () => {
 
     expect(spy).toHaveBeenNthCalledWith(1, 'ref');
     expect(spy).toHaveBeenNthCalledWith(2, 'mount');
+  });
+
+  test('escape key fires onRequestClose', () => {
+    const spy = jest.fn();
+
+    render(<Modal onRequestClose={spy} visible={true} />);
+
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose for top modal only', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    render(
+      <>
+        <Modal onRequestClose={spyA} visible={true} />
+        <Modal onRequestClose={spyB} visible={true} />
+      </>
+    );
+
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose for top modal only with animation', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    const { getByTestId, rerender } = render(
+      <>
+        <Modal animationType={'slide'} onRequestClose={spyA} visible={false}>
+          <a data-testid={'a'} />
+
+          <Modal animationType={'slide'} onRequestClose={spyB} visible={false}>
+            <a data-testid={'b'} />
+          </Modal>
+        </Modal>
+      </>
+    );
+
+    rerender(
+      <>
+        <Modal animationType={'slide'} onRequestClose={spyA} visible={true}>
+          <a data-testid={'a'} />
+
+          <Modal animationType={'slide'} onRequestClose={spyB} visible={true}>
+            <a data-testid={'b'} />
+          </Modal>
+        </Modal>
+      </>
+    );
+
+    // This is kind of ugly but I can't find a better way to target just the animation div
+    const animationAElement = getByTestId('a').parentElement.parentElement.parentElement
+      .parentElement;
+    const animationBElement = getByTestId('b').parentElement.parentElement.parentElement
+      .parentElement;
+
+    fireEvent.animationEnd(animationAElement);
+    fireEvent.animationEnd(animationBElement);
+
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
   });
 });

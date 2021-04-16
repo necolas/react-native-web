@@ -432,6 +432,15 @@ const PanResponder = {
 
       onMoveShouldSetResponderCapture(event: PressEvent): boolean {
         const touchHistory = event.touchHistory;
+        // Responder system incorrectly dispatches should* to current responder
+        // Filter out any touch moves past the first one - we would have
+        // already processed multi-touch geometry during the first event.
+        if (
+          gestureState._accountsForMovesUpTo ===
+          touchHistory.mostRecentTimeStamp
+        ) {
+          return false;
+        }
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
         return config.onMoveShouldSetPanResponderCapture
           ? config.onMoveShouldSetPanResponderCapture(event, gestureState)
@@ -489,6 +498,14 @@ const PanResponder = {
 
       onResponderMove(event: PressEvent): void {
         const touchHistory = event.touchHistory;
+        // Guard against the dispatch of two touch moves when there are two
+        // simultaneously changed touches.
+        if (
+          gestureState._accountsForMovesUpTo ===
+          touchHistory.mostRecentTimeStamp
+        ) {
+          return;
+        }
         // Filter out any touch moves past the first one - we would have
         // already processed multi-touch geometry during the first event.
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);

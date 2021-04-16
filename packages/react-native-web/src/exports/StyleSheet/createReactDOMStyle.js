@@ -38,7 +38,7 @@ const supportsCSS3TextDecoration =
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
-const mapTransform = transform => {
+const mapTransform = (transform) => {
   const type = Object.keys(transform)[0];
   const value = transform[type];
   if (type === 'matrix' || type === 'matrix3d') {
@@ -61,7 +61,7 @@ const resolveTransform = (resolvedStyle, style) => {
  * Reducer
  */
 
-const createReactDOMStyle = style => {
+const createReactDOMStyle = (style) => {
   if (!style) {
     return emptyObject;
   }
@@ -70,7 +70,7 @@ const createReactDOMStyle = style => {
 
   Object.keys(style)
     .sort()
-    .forEach(prop => {
+    .forEach((prop) => {
       const value = normalizeValueWithProperty(style[prop], prop);
 
       // Ignore everything else with a null value
@@ -80,7 +80,6 @@ const createReactDOMStyle = style => {
 
       switch (prop) {
         // Ignore some React Native styles
-        case 'aspectRatio':
         case 'elevation':
         case 'overlayColor':
         case 'resizeMode':

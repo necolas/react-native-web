@@ -14,6 +14,7 @@ import * as React from 'react';
 import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -23,56 +24,26 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 
 const forwardPropsList = {
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  accessible: true,
-  children: true,
-  classList: true,
-  disabled: true,
-  importantForAccessibility: true,
-  nativeID: true,
-  onBlur: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
-  onKeyDown: true,
-  onKeyUp: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
-  pointerEvents: true,
-  ref: true,
-  style: true,
-  testID: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  href: true,
+  lang: true,
   onScroll: true,
   onWheel: true,
-  href: true,
-  rel: true,
-  target: true
+  pointerEvents: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   const {
+    hrefAttrs,
     onLayout,
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -93,7 +64,7 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
-    React.Children.toArray(props.children).forEach(item => {
+    React.Children.toArray(props.children).forEach((item) => {
       if (typeof item === 'string') {
         console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
       }
@@ -123,14 +94,23 @@ const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
     onStartShouldSetResponderCapture
   });
 
-  const style = StyleSheet.compose(
-    hasTextAncestor && styles.inline,
-    props.style
-  );
+  const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
 
   const supportedProps = pickProps(props);
   supportedProps.classList = classList;
   supportedProps.style = style;
+  if (props.href != null && hrefAttrs != null) {
+    const { download, rel, target } = hrefAttrs;
+    if (download != null) {
+      supportedProps.download = download;
+    }
+    if (rel != null) {
+      supportedProps.rel = rel;
+    }
+    if (typeof target === 'string') {
+      supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+    }
+  }
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
   const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);

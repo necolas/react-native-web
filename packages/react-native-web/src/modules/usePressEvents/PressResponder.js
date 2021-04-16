@@ -116,19 +116,20 @@ const Transitions = Object.freeze({
   }
 });
 
-const isActiveSignal = signal =>
+const isActiveSignal = (signal) =>
   signal === RESPONDER_ACTIVE_PRESS_START || signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isButtonRole = element => element.getAttribute('role') === 'button';
+const isButtonRole = (element) => element.getAttribute('role') === 'button';
 
-const isPressStartSignal = signal =>
+const isPressStartSignal = (signal) =>
   signal === RESPONDER_INACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isTerminalSignal = signal => signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
+const isTerminalSignal = (signal) =>
+  signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
-const isValidKeyPress = event => {
+const isValidKeyPress = (event) => {
   const key = event.key;
   const target = event.currentTarget;
   const role = target.getAttribute('role');
@@ -319,7 +320,7 @@ export default class PressResponder {
         return !disabled;
       },
 
-      onKeyDown: event => {
+      onKeyDown: (event) => {
         if (isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
@@ -331,9 +332,9 @@ export default class PressResponder {
         }
       },
 
-      onResponderGrant: event => start(event),
+      onResponderGrant: (event) => start(event),
 
-      onResponderMove: event => {
+      onResponderMove: (event) => {
         if (this._config.onPressMove != null) {
           this._config.onPressMove(event);
         }
@@ -347,9 +348,9 @@ export default class PressResponder {
         }
       },
 
-      onResponderRelease: event => end(event),
+      onResponderRelease: (event) => end(event),
 
-      onResponderTerminate: event => {
+      onResponderTerminate: (event) => {
         if (event.nativeEvent.type === 'selectionchange') {
           this._selectionTerminated = true;
         }

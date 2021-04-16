@@ -24,6 +24,15 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
     ).toEqual('h3');
   });
 
+  test('when "accessibilityRole" is "heading" and "accessibilityLevel" is set', () => {
+    expect(
+      propsToAccessibilityComponent({
+        accessibilityRole: 'heading',
+        accessibilityLevel: 3
+      })
+    ).toEqual('h3');
+  });
+
   test('when "accessibilityRole" is "label"', () => {
     expect(propsToAccessibilityComponent({ accessibilityRole: 'label' })).toEqual('label');
   });

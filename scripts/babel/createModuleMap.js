@@ -5,9 +5,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const isDirectory = source => fs.lstatSync(source).isDirectory();
-const getDirectories = source =>
-  fs.readdirSync(source).filter(name => isDirectory(path.join(source, name)));
+const isDirectory = (source) => fs.lstatSync(source).isDirectory();
+const getDirectories = (source) =>
+  fs.readdirSync(source).filter((name) => isDirectory(path.join(source, name)));
 
 const packagesDir = path.join(__dirname, '../../packages/');
 const exportsDir = path.join(packagesDir, 'react-native-web/src/exports');

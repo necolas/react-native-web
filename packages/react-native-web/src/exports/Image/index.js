@@ -293,17 +293,17 @@ const Image = forwardRef<ImageProps, *>((props, ref) => {
 Image.displayName = 'Image';
 
 // $FlowFixMe
-Image.getSize = function(uri, success, failure) {
+Image.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
 };
 
 // $FlowFixMe
-Image.prefetch = function(uri) {
+Image.prefetch = function (uri) {
   return ImageLoader.prefetch(uri);
 };
 
 // $FlowFixMe
-Image.queryCache = function(uris) {
+Image.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 

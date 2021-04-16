@@ -1,0 +1,10 @@
+# Configuration for Label Actions - https://github.com/marketplace/actions/label-actions
+
+"needs: issue template":
+  comment: >
+    <strong>:warning: This issue is missing required fields</strong>. To avoid this issue being closed, please provide the required information as described in the <a href="https://github.com/necolas/react-native-web/blob/master/.github/ISSUE_TEMPLATE/bug.md">ISSUE TEMPLATE</a>.
+
+"resolution: no response":
+  comment: >
+    This issue is being closed because the requested information has not been provided.
+  close: true

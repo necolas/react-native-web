@@ -9,6 +9,7 @@
 
 import ReactNativePropRegistry from './ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
+import validate from './validate';
 
 const absoluteFillObject = {
   position: 'absolute',
@@ -27,7 +28,7 @@ const StyleSheet = {
       /* eslint-disable prefer-rest-params */
       const len = arguments.length;
       if (len > 2) {
-        const readableStyles = [...arguments].map(a => flattenStyle(a));
+        const readableStyles = [...arguments].map((a) => flattenStyle(a));
         throw new Error(
           `StyleSheet.compose() only accepts 2 arguments, received ${len}: ${JSON.stringify(
             readableStyles
@@ -45,11 +46,9 @@ const StyleSheet = {
   },
   create(styles: Object) {
     const result = {};
-    Object.keys(styles).forEach(key => {
+    Object.keys(styles).forEach((key) => {
       if (process.env.NODE_ENV !== 'production') {
-        const validate = require('./validate');
-        const interopValidate = validate.default ? validate.default : validate;
-        interopValidate(key, styles);
+        validate(key, styles);
       }
       const id = styles[key] && ReactNativePropRegistry.register(styles[key]);
       result[key] = id;

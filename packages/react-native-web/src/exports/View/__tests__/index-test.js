@@ -52,6 +52,13 @@ describe('components/View', () => {
     });
   });
 
+  describe('prop "accessibilityLabelledBy"', () => {
+    test('value is set', () => {
+      const { container } = render(<View accessibilityLabelledBy="123" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
       const { container } = render(<View accessibilityLiveRegion="polite" />);
@@ -81,6 +88,53 @@ describe('components/View', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "href"', () => {
+    test('value is set', () => {
+      const { container } = render(<View href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('href with accessibilityRole', () => {
+      const { container } = render(<View accessibilityRole="none" href="https://example.com" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "hrefAttrs"', () => {
+    test('requires "href"', () => {
+      const { container } = render(<View hrefAttrs={{ download: 'filename.jpg' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set', () => {
+      const hrefAttrs = {
+        download: 'filename.jpg',
+        rel: 'nofollow',
+        target: '_blank'
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('target variant is set', () => {
+      const hrefAttrs = {
+        target: 'blank'
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('null values are excluded', () => {
+      const hrefAttrs = {
+        download: null,
+        rel: null,
+        target: null
+      };
+      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "nativeID"', () => {
     test('value is set', () => {
       const { container } = render(<View nativeID="nativeID" />);
@@ -96,9 +150,10 @@ describe('components/View', () => {
         render(<View onBlur={onBlur} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
+      const body = createEventTarget(document.body);
       act(() => {
         target.focus();
-        target.blur();
+        body.focus({ relatedTarget: target.node });
       });
       expect(onBlur).toBeCalled();
     });

@@ -45,7 +45,7 @@ describe('AppRegistry', () => {
     });
 
     test('"getStyleElement" produces styles that are a function of rendering "element"', () => {
-      const getApplicationStyles = appName => {
+      const getApplicationStyles = (appName) => {
         const { element, getStyleElement } = AppRegistry.getApplication(appName, {});
         render(element);
         return getStyleElement().props.dangerouslySetInnerHTML.__html;

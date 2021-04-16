@@ -11,8 +11,8 @@ import createEventHandle from '../createEventHandle';
 import useLayoutEffect from '../useLayoutEffect';
 import useStable from '../useStable';
 
-type Callback = null | (any => void);
-type AddListener = (target: EventTarget, listener: null | (any => void)) => () => void;
+type Callback = null | ((any) => void);
+type AddListener = (target: EventTarget, listener: null | ((any) => void)) => () => void;
 
 /**
  * This can be used with any event type include custom events.
@@ -51,7 +51,7 @@ export default function useEvent(
   useLayoutEffect(() => {
     return () => {
       if (addListener != null) {
-        targetListeners.forEach(removeListener => {
+        targetListeners.forEach((removeListener) => {
           removeListener();
         });
         targetListeners.clear();

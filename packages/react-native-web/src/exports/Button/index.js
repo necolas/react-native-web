@@ -30,6 +30,7 @@ const Button = React.forwardRef<ButtonProps, *>((props, forwardedRef) => {
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
       disabled={disabled}
+      focusable={!disabled}
       onPress={onPress}
       ref={forwardedRef}
       style={[

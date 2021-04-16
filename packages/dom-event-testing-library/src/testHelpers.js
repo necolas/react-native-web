@@ -18,7 +18,7 @@ export function describeWithPointerEvent(message, describeFn) {
     value    | name
     ${true}  | ${pointerEvent}
     ${false} | ${fallback}
-  `(`${message}: $name`, entry => {
+  `(`${message}: $name`, (entry) => {
     const hasPointerEvents = entry.value;
     setPointerEvent(hasPointerEvents);
     describeFn(hasPointerEvents);
@@ -27,7 +27,7 @@ export function describeWithPointerEvent(message, describeFn) {
 
 export function testWithPointerType(message, testFn) {
   const table = hasPointerEvent() ? ['mouse', 'touch', 'pen'] : ['mouse', 'touch'];
-  test.each(table)(`${message}: %s`, pointerType => {
+  test.each(table)(`${message}: %s`, (pointerType) => {
     testFn(pointerType);
   });
 }

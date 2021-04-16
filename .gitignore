@@ -1,4 +1,5 @@
+.next
+build
 coverage
-node_modules
 dist
-.idea
+node_modules

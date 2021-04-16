@@ -1,9 +1,11 @@
 /* eslint-env jasmine, jest */
 
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import I18nManager from '../../I18nManager';
 import ReactNativePropRegistry from '../ReactNativePropRegistry';
 import createStyleResolver from '../createStyleResolver';
 
+const canUseDOM = ExecutionEnvironment.canUseDOM;
 let styleResolver;
 
 describe('StyleSheet/createStyleResolver', () => {
@@ -73,6 +75,25 @@ describe('StyleSheet/createStyleResolver', () => {
 
     test('resolves inline-style pointerEvents to classname', () => {
       expect(styleResolver.resolve({ pointerEvents: 'box-none' })).toMatchSnapshot();
+    });
+
+    describe('sheet', () => {
+      beforeEach(() => {
+        ExecutionEnvironment.canUseDOM = false;
+      });
+
+      afterEach(() => {
+        ExecutionEnvironment.canUseDOM = canUseDOM;
+      });
+
+      test('returns the new sheet once re-initialized', () => {
+        const sheet = styleResolver.sheet;
+
+        // re-initialize the sheet
+        styleResolver.getStyleSheet();
+
+        expect(styleResolver.sheet).not.toBe(sheet);
+      });
     });
   });
 });

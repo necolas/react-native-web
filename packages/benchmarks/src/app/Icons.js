@@ -13,15 +13,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const createIcon = children => {
-  const Icon = props =>
+const createIcon = (children) => {
+  const Icon = (props) =>
     createElement(
       'svg',
       {
-        style: StyleSheet.compose(
-          styles.root,
-          props.style
-        ),
+        style: StyleSheet.compose(styles.root, props.style),
         width: 24,
         height: 24,
         viewBox: '0 0 24 24'

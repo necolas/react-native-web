@@ -13,7 +13,7 @@ import * as domEventSequences from './domEventSequences';
 import { hasPointerEvent, setPointerEvent, platform } from './domEnvironment';
 import { describeWithPointerEvent, testWithPointerType } from './testHelpers';
 
-const createEventTarget = node => ({
+const createEventTarget = (node) => ({
   node,
   /**
    * Simple events abstraction.
@@ -104,7 +104,7 @@ const createEventTarget = node => ({
    * Utilities
    */
   setBoundingClientRect({ x, y, width, height }) {
-    node.getBoundingClientRect = function() {
+    node.getBoundingClientRect = function () {
       return {
         width,
         height,

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import View from './View';
 
-const Dot = styled(View).attrs(props => ({
+const Dot = styled(View).attrs((props) => ({
   style: {
     marginLeft: `${props.x}px`,
     marginTop: `${props.y}px`,

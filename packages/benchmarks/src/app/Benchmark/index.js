@@ -119,7 +119,7 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
   componentWillReceiveProps(nextProps: BenchmarkPropsType) {
     if (nextProps) {
-      this.setState(state => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
+      this.setState((state) => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
     }
   }
 

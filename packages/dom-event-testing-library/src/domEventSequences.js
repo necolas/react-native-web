@@ -106,7 +106,7 @@ function getPointerType(payload) {
  */
 
 export function contextmenu(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const {
@@ -173,7 +173,7 @@ export function contextmenu(target, defaultPayload) {
 }
 
 export function focus(target, defaultPayload = {}) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const { relatedTarget, ...payload } = defaultPayload;
   const blurPayload = { ...payload, relatedTarget: target };
   const focusPayload = { ...payload, relatedTarget };
@@ -188,7 +188,7 @@ export function focus(target, defaultPayload = {}) {
 }
 
 export function pointercancel(target, defaultPayload) {
-  const dispatchEvent = arg => target.dispatchEvent(arg);
+  const dispatchEvent = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
@@ -211,7 +211,7 @@ export function pointercancel(target, defaultPayload) {
 }
 
 export function pointerdown(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
@@ -251,7 +251,7 @@ export function pointerdown(target, defaultPayload) {
 }
 
 export function pointerover(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
@@ -270,7 +270,7 @@ export function pointerover(target, defaultPayload) {
 }
 
 export function pointerout(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
@@ -295,7 +295,7 @@ export function pointerout(target, defaultPayload) {
 
 // pointer is not down while moving
 export function pointerhover(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
 
   const payload = {
     pointerId: defaultPointerId,
@@ -310,7 +310,7 @@ export function pointerhover(target, defaultPayload) {
 
 // pointer is down while moving
 export function pointermove(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {
@@ -344,7 +344,7 @@ export function pointermove(target, defaultPayload) {
 }
 
 export function pointerup(target, defaultPayload) {
-  const dispatch = arg => target.dispatchEvent(arg);
+  const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 
   const payload = {

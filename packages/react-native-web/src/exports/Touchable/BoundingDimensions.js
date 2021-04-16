@@ -20,12 +20,12 @@ function BoundingDimensions(width: number, height: number) {
   this.height = height;
 }
 
-BoundingDimensions.prototype.destructor = function() {
+BoundingDimensions.prototype.destructor = function () {
   this.width = null;
   this.height = null;
 };
 
-BoundingDimensions.getPooledFromElement = function(element) {
+BoundingDimensions.getPooledFromElement = function (element) {
   return BoundingDimensions.getPooled(element.offsetWidth, element.offsetHeight);
 };
 

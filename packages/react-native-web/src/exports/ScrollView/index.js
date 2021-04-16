@@ -13,6 +13,7 @@ import type { ViewProps, ViewStyle } from '../View/types';
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
 import invariant from 'fbjs/lib/invariant';
+import mergeRefs from '../../modules/mergeRefs';
 import ScrollResponder from '../../modules/ScrollResponder';
 import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
@@ -47,12 +48,6 @@ const ScrollView = ((createReactClass({
     this.scrollResponderFlashScrollIndicators();
   },
 
-  setNativeProps(props: Object) {
-    if (this._scrollNodeRef) {
-      this._scrollNodeRef.setNativeProps(props);
-    }
-  },
-
   /**
    * Returns a reference to the underlying scroll responder, which supports
    * operations like `scrollTo`. All ScrollView-like components should
@@ -67,8 +62,16 @@ const ScrollView = ((createReactClass({
     return this._scrollNodeRef;
   },
 
+  getInnerViewRef(): any {
+    return this._innerViewRef;
+  },
+
   getInnerViewNode(): any {
     return this._innerViewRef;
+  },
+
+  getNativeScrollRef(): any {
+    return this._scrollNodeRef;
   },
 
   /**
@@ -129,6 +132,7 @@ const ScrollView = ((createReactClass({
       stickyHeaderIndices,
       pagingEnabled,
       /* eslint-disable */
+      forwardedRef,
       keyboardDismissMode,
       onScroll,
       /* eslint-enable */
@@ -138,7 +142,7 @@ const ScrollView = ((createReactClass({
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style);
       const childLayoutProps = ['alignItems', 'justifyContent'].filter(
-        prop => style && style[prop] !== undefined
+        (prop) => style && style[prop] !== undefined
       );
       invariant(
         childLayoutProps.length === 0,
@@ -261,12 +265,29 @@ const ScrollView = ((createReactClass({
     this.scrollResponderHandleScroll(e);
   },
 
-  _setInnerViewRef(component) {
-    this._innerViewRef = component;
+  _setInnerViewRef(node) {
+    this._innerViewRef = node;
   },
 
-  _setScrollNodeRef(component) {
-    this._scrollNodeRef = component;
+  _setScrollNodeRef(node) {
+    this._scrollNodeRef = node;
+    // ScrollView needs to add more methods to the hostNode in addition to those
+    // added by `usePlatformMethods`. This is temporarily until an API like
+    // `ScrollView.scrollTo(hostNode, { x, y })` is added to React Native.
+    if (node != null) {
+      node.getScrollResponder = this.getScrollResponder;
+      node.getInnerViewNode = this.getInnerViewNode;
+      node.getInnerViewRef = this.getInnerViewRef;
+      node.getNativeScrollRef = this.getNativeScrollRef;
+      node.getScrollableNode = this.getScrollableNode;
+      node.scrollTo = this.scrollTo;
+      node.scrollToEnd = this.scrollToEnd;
+      node.flashScrollIndicators = this.flashScrollIndicators;
+      node.scrollResponderZoomTo = this.scrollResponderZoomTo;
+      node.scrollResponderScrollNativeHandleToKeyboard = this.scrollResponderScrollNativeHandleToKeyboard;
+    }
+    const ref = mergeRefs(this.props.forwardedRef);
+    ref(node);
   }
 }): any): React.ComponentType<ScrollViewProps>);
 
@@ -313,4 +334,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ScrollView;
+const ForwardedScrollView = React.forwardRef((props, forwardedRef) => {
+  return <ScrollView {...props} forwardedRef={forwardedRef} />;
+});
+
+ForwardedScrollView.displayName = 'ScrollView';
+
+export default ForwardedScrollView;

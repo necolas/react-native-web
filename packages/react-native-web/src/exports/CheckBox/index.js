@@ -59,7 +59,11 @@ const CheckBox = forwardRef<CheckBoxProps, *>((props, forwardedRef) => {
   });
 
   return (
-    <View {...other} style={[styles.root, style, disabled && styles.cursorDefault]}>
+    <View
+      {...other}
+      accessibilityDisabled={disabled}
+      style={[styles.root, style, disabled && styles.cursorDefault]}
+    >
       {fakeControl}
       {nativeControl}
     </View>

@@ -66,8 +66,8 @@ const prefixes = ['ms', 'Moz', 'O', 'Webkit'];
 const prefixKey = (prefix: string, key: string) => {
   return prefix + key.charAt(0).toUpperCase() + key.substring(1);
 };
-Object.keys(unitlessNumbers).forEach(prop => {
-  prefixes.forEach(prefix => {
+Object.keys(unitlessNumbers).forEach((prop) => {
+  prefixes.forEach((prefix) => {
     unitlessNumbers[prefixKey(prefix, prop)] = unitlessNumbers[prop];
   });
 });

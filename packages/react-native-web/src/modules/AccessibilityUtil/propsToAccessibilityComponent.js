@@ -12,15 +12,22 @@ import propsToAriaRole from './propsToAriaRole';
 const roleComponents = {
   article: 'article',
   banner: 'header',
+  blockquote: 'blockquote',
+  code: 'code',
   complementary: 'aside',
   contentinfo: 'footer',
+  deletion: 'del',
+  emphasis: 'em',
+  figure: 'figure',
+  insertion: 'ins',
   form: 'form',
   link: 'a',
   list: 'ul',
   listitem: 'li',
   main: 'main',
   navigation: 'nav',
-  region: 'section'
+  region: 'section',
+  strong: 'strong'
 };
 
 const emptyObject = {};
@@ -31,10 +38,15 @@ const propsToAccessibilityComponent = (props: Object = emptyObject) => {
     return 'label';
   }
 
+  // special-case for "href" which becomes a link
+  if (props.href != null) {
+    return 'a';
+  }
+
   const role = propsToAriaRole(props);
   if (role) {
     if (role === 'heading') {
-      const level = props['aria-level'];
+      const level = props.accessibilityLevel || props['aria-level'];
       if (level != null) {
         return `h${level}`;
       }

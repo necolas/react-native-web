@@ -2,4 +2,4 @@ coverage
 dist
 node_modules
 packages/**/vendor/*
-packages/examples
+packages/examples/.next

@@ -13,6 +13,7 @@ import type { TextInputProps } from './types';
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useLayoutEffect from '../../modules/useLayoutEffect';
@@ -47,61 +48,34 @@ const setSelection = (node, selection) => {
 };
 
 const forwardPropsList = {
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  accessible: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
   autoCapitalize: true,
   autoComplete: true,
   autoCorrect: true,
   autoFocus: true,
-  children: true,
-  classList: true,
   defaultValue: true,
-  dir: true,
   disabled: true,
-  importantForAccessibility: true,
+  lang: true,
   maxLength: true,
-  nativeID: true,
-  onBlur: true,
   onChange: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
   onScroll: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
   placeholder: true,
   pointerEvents: true,
   readOnly: true,
-  ref: true,
   rows: true,
   spellCheck: true,
-  style: true,
   value: true,
-  testID: true,
-  type: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true
+  type: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
@@ -211,17 +185,17 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   }, [hostRef, multiline, onContentSizeChange]);
 
   const imperativeRef = useMemo(
-    () => hostNode => {
+    () => (hostNode) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `usePlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
       if (hostNode != null) {
-        hostNode.clear = function() {
+        hostNode.clear = function () {
           if (hostNode != null) {
             hostNode.value = '';
           }
         };
-        hostNode.isFocused = function() {
+        hostNode.isFocused = function () {
           return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
         };
         handleContentSizeChange();
@@ -332,10 +306,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
 
   const component = multiline ? 'textarea' : 'input';
   const classList = [classes.textinput];
-  const style = StyleSheet.compose(
-    props.style,
-    placeholderTextColor && { placeholderTextColor }
-  );
+  const style = StyleSheet.compose(props.style, placeholderTextColor && { placeholderTextColor });
 
   useElementLayout(hostRef, onLayout);
   useResponderEvents(hostRef, {
@@ -364,7 +335,7 @@ const TextInput = forwardRef<TextInputProps, *>((props, forwardedRef) => {
   supportedProps.classList = classList;
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
-  supportedProps.enterkeyhint = returnKeyType;
+  supportedProps.enterKeyHint = returnKeyType;
   supportedProps.onBlur = handleBlur;
   supportedProps.onChange = handleChange;
   supportedProps.onFocus = handleFocus;

@@ -33,8 +33,8 @@ export default function createStyleResolver() {
     inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
     sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
     cache = {};
-    modality(rule => sheet.insert(rule, STYLE_GROUPS.modality));
-    initialRules.forEach(rule => {
+    modality((rule) => sheet.insert(rule, STYLE_GROUPS.modality));
+    initialRules.forEach((rule) => {
       sheet.insert(rule, STYLE_GROUPS.reset);
     });
   };
@@ -54,15 +54,15 @@ export default function createStyleResolver() {
   }
 
   function _injectRegisteredStyle(id) {
-    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
     if (!inserted[dir][id]) {
       const style = createCompileableStyle(i18nStyle(flattenStyle(id)));
       const results = atomic(style);
-      Object.keys(results).forEach(key => {
+      Object.keys(results).forEach((key) => {
         const { identifier, property, rules, value } = results[key];
         addToCache(identifier, property, value);
-        rules.forEach(rule => {
+        rules.forEach((rule) => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
           sheet.insert(rule, group);
         });
@@ -83,11 +83,11 @@ export default function createStyleResolver() {
     }
 
     if (Array.isArray(classList)) {
-      flattenArray(classList).forEach(identifier => {
+      flattenArray(classList).forEach((identifier) => {
         if (identifier) {
           if (inserted.css[identifier] == null && resolved.css[identifier] != null) {
             const item = resolved.css[identifier];
-            item.rules.forEach(rule => {
+            item.rules.forEach((rule) => {
               sheet.insert(rule, item.group);
             });
             inserted.css[identifier] = true;
@@ -145,7 +145,7 @@ export default function createStyleResolver() {
    * Resolves a React Native style object
    */
   function _resolveStyle(style, key) {
-    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
 
     // faster: memoized
@@ -177,10 +177,10 @@ export default function createStyleResolver() {
                 styleProp === 'scrollbarWidth'
               ) {
                 const a = atomic({ [styleProp]: value });
-                Object.keys(a).forEach(key => {
+                Object.keys(a).forEach((key) => {
                   const { identifier, rules } = a[key];
                   props.classList.push(identifier);
-                  rules.forEach(rule => {
+                  rules.forEach((rule) => {
                     sheet.insert(rule, STYLE_GROUPS.atomic);
                   });
                 });
@@ -224,11 +224,11 @@ export default function createStyleResolver() {
     },
     createCSS(rules, group) {
       const result = {};
-      Object.keys(rules).forEach(name => {
+      Object.keys(rules).forEach((name) => {
         const style = rules[name];
         const compiled = classic(style, name);
 
-        Object.keys(compiled).forEach(key => {
+        Object.keys(compiled).forEach((key) => {
           const { identifier, rules } = compiled[key];
           resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
           result[name] = identifier;
@@ -237,16 +237,18 @@ export default function createStyleResolver() {
       return result;
     },
     resolve,
-    sheet
+    get sheet() {
+      return sheet;
+    }
   };
 }
 
 /**
  * Misc helpers
  */
-const createCacheKey = id => {
+const createCacheKey = (id) => {
   const prefix = 'rn';
   return `${prefix}-${id}`;
 };
 
-const classListToString = list => list.join(' ').trim();
+const classListToString = (list) => list.join(' ').trim();

@@ -78,7 +78,6 @@ function hasPressHandler(props): boolean {
  */
 function TouchableHighlight(props: Props, forwardedRef): React.Node {
   const {
-    accessible,
     activeOpacity,
     children,
     delayPressIn,
@@ -209,12 +208,8 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       {...rest}
       {...pressEventHandlers}
       {...tvEventHandlers}
-      accessibilityState={{
-        disabled,
-        ...props.accessibilityState
-      }}
-      accessible={accessible !== false}
-      focusable={focusable !== false && onPress !== undefined}
+      accessibilityDisabled={disabled}
+      focusable={!disabled && focusable !== false}
       ref={setRef}
       style={[
         styles.root,
@@ -224,10 +219,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       ]}
     >
       {React.cloneElement(child, {
-        style: StyleSheet.compose(
-          child.props.style,
-          extraStyles && extraStyles.child
-        )
+        style: StyleSheet.compose(child.props.style, extraStyles && extraStyles.child)
       })}
     </View>
   );

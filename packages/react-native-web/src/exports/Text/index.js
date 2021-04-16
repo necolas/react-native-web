@@ -14,6 +14,7 @@ import * as React from 'react';
 import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -23,58 +24,25 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 
 const forwardPropsList = {
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  accessible: true,
-  children: true,
-  classList: true,
-  dir: true,
-  importantForAccessibility: true,
-  lang: true,
-  nativeID: true,
-  onBlur: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
-  onKeyDown: true,
-  onKeyUp: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
-  pointerEvents: true,
-  ref: true,
-  style: true,
-  testID: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true,
-  onScroll: true,
-  onWheel: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
   href: true,
-  rel: true,
-  target: true
+  lang: true,
+  pointerEvents: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   const {
     dir,
+    hrefAttrs,
     numberOfLines,
     onClick,
     onLayout,
@@ -155,6 +123,18 @@ const Text = forwardRef<TextProps, *>((props, forwardedRef) => {
   }
   supportedProps.onClick = handleClick;
   supportedProps.style = style;
+  if (props.href != null && hrefAttrs != null) {
+    const { download, rel, target } = hrefAttrs;
+    if (download != null) {
+      supportedProps.download = download;
+    }
+    if (rel != null) {
+      supportedProps.rel = rel;
+    }
+    if (typeof target === 'string') {
+      supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+    }
+  }
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
   const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);

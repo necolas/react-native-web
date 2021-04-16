@@ -2,6 +2,8 @@
 
 import React from 'react';
 import TextInput from '..';
+import { act } from 'react-dom/test-utils';
+import { createEventTarget } from 'dom-event-testing-library';
 import { render } from '@testing-library/react';
 
 function findInput(container) {
@@ -24,7 +26,7 @@ function createEvent(type, data = {}) {
   const event = document.createEvent('CustomEvent');
   event.initCustomEvent(type, true, true);
   if (data != null) {
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       const value = data[key];
       if (key === 'timeStamp' && !value) {
         return;
@@ -238,9 +240,16 @@ describe('components/TextInput', () => {
 
   test('prop "onBlur"', () => {
     const onBlur = jest.fn();
-    const { container } = render(<TextInput onBlur={onBlur} />);
-    const input = findInput(container);
-    input.dispatchEvent(new window.FocusEvent('blur', {}));
+    const ref = React.createRef();
+    act(() => {
+      render(<TextInput onBlur={onBlur} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
+    act(() => {
+      target.focus();
+      body.focus({ relatedTarget: target.node });
+    });
     expect(onBlur).toHaveBeenCalledTimes(1);
     expect(TextInput.State.currentlyFocusedField()).toBe(null);
   });
@@ -267,16 +276,21 @@ describe('components/TextInput', () => {
 
   test('prop "onFocus"', () => {
     const onFocus = jest.fn();
-    const { container } = render(<TextInput onFocus={onFocus} />);
-    const input = findInput(container);
-    input.focus();
+    const ref = React.createRef();
+    act(() => {
+      render(<TextInput onFocus={onFocus} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    act(() => {
+      target.focus();
+    });
     expect(onFocus).toHaveBeenCalledTimes(1);
-    expect(TextInput.State.currentlyFocusedField()).toBe(input);
+    expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
   });
 
   describe('prop "onKeyPress"', () => {
     test('arrow key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -298,7 +312,7 @@ describe('components/TextInput', () => {
     });
 
     test('backspace key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -320,7 +334,7 @@ describe('components/TextInput', () => {
     });
 
     test('enter key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -342,7 +356,7 @@ describe('components/TextInput', () => {
     });
 
     test('escape key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -364,7 +378,7 @@ describe('components/TextInput', () => {
     });
 
     test('space key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -386,7 +400,7 @@ describe('components/TextInput', () => {
     });
 
     test('tab key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -408,7 +422,7 @@ describe('components/TextInput', () => {
     });
 
     test('text key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -430,7 +444,7 @@ describe('components/TextInput', () => {
     });
 
     test('modifier keys are included', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -460,7 +474,7 @@ describe('components/TextInput', () => {
     });
 
     test('meta key + Enter calls "onKeyPress"', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -501,7 +515,7 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', done => {
+    test('single-line input', (done) => {
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );

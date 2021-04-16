@@ -3,6 +3,7 @@
 exports[`components/View allows "dir" to be overridden 1`] = `
 <div
   class="css-view-1dbjc4n"
+  dir="rtl"
 />
 `;
 
@@ -30,6 +31,13 @@ exports[`components/View prop "accessibilityLabel" value is set 1`] = `
 />
 `;
 
+exports[`components/View prop "accessibilityLabelledBy" value is set 1`] = `
+<div
+  aria-labelledby="123"
+  class="css-view-1dbjc4n"
+/>
+`;
+
 exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
 <div
   aria-live="polite"
@@ -40,7 +48,6 @@ exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
 exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
 <a
   class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n"
-  data-focusable="true"
   role="link"
 />
 `;
@@ -48,7 +55,6 @@ exports[`components/View prop "accessibilityRole" value alters HTML element 1`] 
 exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
 <div
   class="css-cursor-18t94o4 css-view-1dbjc4n"
-  data-focusable="true"
   role="button"
   tabindex="0"
 />
@@ -58,6 +64,52 @@ exports[`components/View prop "accessibilityRole" value is set 1`] = `
 <div
   class="css-view-1dbjc4n"
   role="presentation"
+/>
+`;
+
+exports[`components/View prop "href" href with accessibilityRole 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  href="https://example.com"
+  role="presentation"
+/>
+`;
+
+exports[`components/View prop "href" value is set 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  href="https://example.com"
+/>
+`;
+
+exports[`components/View prop "hrefAttrs" null values are excluded 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  href="https://example.com"
+/>
+`;
+
+exports[`components/View prop "hrefAttrs" requires "href" 1`] = `
+<div
+  class="css-view-1dbjc4n"
+/>
+`;
+
+exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  href="https://example.com"
+  target="_blank"
+/>
+`;
+
+exports[`components/View prop "hrefAttrs" value is set 1`] = `
+<a
+  class="css-reset-4rbku5 css-view-1dbjc4n"
+  download="filename.jpg"
+  href="https://example.com"
+  rel="nofollow"
+  target="_blank"
 />
 `;
 

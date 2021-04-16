@@ -63,11 +63,11 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
   }
 
   const { height: styleHeight, width: styleWidth } = StyleSheet.flatten(style);
-  const height = styleHeight || 20;
+  const height = styleHeight || '20px';
   const minWidth = multiplyStyleLengthValue(height, 2);
   const width = styleWidth > minWidth ? styleWidth : minWidth;
   const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-  const trackCurrentColor = (function() {
+  const trackCurrentColor = (function () {
     if (value === true) {
       if (trackColor != null && typeof trackColor === 'object') {
         return trackColor.true;
@@ -116,7 +116,8 @@ const Switch = forwardRef<SwitchProps, *>((props, forwardedRef) => {
     onFocus: handleFocusState,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox'
+    type: 'checkbox',
+    role: 'switch'
   });
 
   return (

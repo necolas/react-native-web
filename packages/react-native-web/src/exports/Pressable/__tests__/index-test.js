@@ -72,6 +72,7 @@ describe('components/Pressable', () => {
       ));
     });
     const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.focus();
@@ -79,7 +80,7 @@ describe('components/Pressable', () => {
     expect(onFocus).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
-      target.blur();
+      body.focus({ relatedTarget: target.node });
     });
     expect(onBlur).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
@@ -87,11 +88,15 @@ describe('components/Pressable', () => {
 
   test('hover interaction', () => {
     let container;
+    const onHoverIn = jest.fn();
+    const onHoverOut = jest.fn();
     const ref = React.createRef();
     act(() => {
       ({ container } = render(
         <Pressable
           children={({ hovered }) => (hovered ? <div data-testid="hover-content" /> : null)}
+          onHoverIn={onHoverIn}
+          onHoverOut={onHoverOut}
           ref={ref}
           style={({ hovered }) => [hovered && { outline: 'hover-ring' }]}
         />
@@ -102,10 +107,12 @@ describe('components/Pressable', () => {
     act(() => {
       target.pointerover();
     });
+    expect(onHoverIn).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerout();
     });
+    expect(onHoverOut).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
   });
 

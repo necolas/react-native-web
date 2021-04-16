@@ -21,7 +21,7 @@ type ImplementationType = {
 };
 
 const toImplementations = (context: Object): Array<ImplementationType> =>
-  context.keys().map(path => {
+  context.keys().map((path) => {
     const components = context(path).default;
     const name = path.split('/')[1];
     const version = dependencies[name] || '';

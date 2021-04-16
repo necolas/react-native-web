@@ -1,0 +1,14 @@
+<div class="view flex-row items-center mt-12 py-4 border-top border-color-faint">
+  {% if site.enableGithubLink == 1 %}
+  <a aria-label="Link to {{ site.name }} GitHub repository" class="inline-block mr-2 opacity-50 hover:opacity-100 text-color" style="width:20px;height:20px;vertical-align:middle;" rel="noopener noreferrer" href="{{ site.githubUrl}}" target="_blank">
+    {{ '/src/includes/assets/svg/github.svg' | svgContents("w-full") | safe }}
+  </a>
+  {% endif %}
+
+  <div class="text text-sm text-color-faint">
+    <a class="no-underline" href="{{ "/" | url }}">{{ site.name }}</a> –
+    {% if site.footer %}
+      <span>{{ site.footer | safe }}</span>
+    {% endif %}
+  </div>
+</div>
