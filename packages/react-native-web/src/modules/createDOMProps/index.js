@@ -365,7 +365,6 @@ const createDOMProps = (elementType, props) => {
     role === 'button' ||
     role === 'checkbox' ||
     role === 'link' ||
-    role === 'menuitem' ||
     role === 'radio' ||
     role === 'textbox' ||
     role === 'switch'
@@ -421,12 +420,7 @@ const createDOMProps = (elementType, props) => {
   // Keyboard accessibility
   // Button-like roles should trigger 'onClick' if SPACE key is pressed.
   // Button-like roles should not trigger 'onClick' if they are disabled.
-  if (
-    isNativeInteractiveElement ||
-    role === 'button' ||
-    role === 'menuitem' ||
-    (_focusable === true && !disabled)
-  ) {
+  if (isNativeInteractiveElement || role === 'button' || (_focusable === true && !disabled)) {
     const onClick = domProps.onClick;
     if (onClick != null) {
       if (disabled) {
@@ -441,7 +435,7 @@ const createDOMProps = (elementType, props) => {
         domProps.onKeyDown = function (e) {
           const { key, repeat } = e;
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
-          const isButtonRole = role === 'button' || role === 'menuitem';
+          const isButtonRole = role === 'button';
           if (onKeyDown != null) {
             onKeyDown(e);
           }

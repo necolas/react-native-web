@@ -80,10 +80,6 @@ describe('modules/createDOMProps', () => {
       testFocusableRole('button');
     });
 
-    describe('"accessibilityRole" of "menuitem"', () => {
-      testFocusableRole('menuitem');
-    });
-
     describe('with unfocusable accessibilityRole', () => {
       test('when "focusable" is true', () => {
         expect(createProps({ focusable: true })).toEqual(
@@ -116,7 +112,6 @@ describe('modules/createDOMProps', () => {
       expect(callsOnClick('div', 'link')).toBe(true);
       expect(callsOnClick('div', 'button')).toBe(true);
       expect(callsOnClick('div', 'textbox')).toBe(true);
-      expect(callsOnClick('div', 'menuitem')).toBe(true);
       expect(callsOnClick('div', 'bogus')).toBe(true);
       expect(callsOnClick('a')).toBe(true);
       expect(callsOnClick('button')).toBe(true);
@@ -129,7 +124,6 @@ describe('modules/createDOMProps', () => {
     test('is not called when disabled is true', () => {
       expect(callsOnClick('div', 'link', true)).toBe(false);
       expect(callsOnClick('div', 'button', true)).toBe(false);
-      expect(callsOnClick('div', 'menuitem', true)).toBe(false);
       expect(callsOnClick('a', undefined, true)).toBe(false);
       expect(callsOnClick('button', undefined, true)).toBe(false);
       expect(callsOnClick('input', undefined, true)).toBe(false);
@@ -166,7 +160,6 @@ describe('modules/createDOMProps', () => {
       expect(respondsToEnter('div', 'link', true)).toBe(false);
       expect(respondsToEnter('div', 'button', true)).toBe(false);
       expect(respondsToEnter('div', 'textbox', true)).toBe(false);
-      expect(respondsToEnter('div', 'menuitem', true)).toBe(false);
       expect(respondsToEnter('div', 'bogus', true)).toBe(false);
     });
 
@@ -190,7 +183,6 @@ describe('modules/createDOMProps', () => {
 
     test('emulates "onClick" for "Enter" for certain roles', () => {
       expect(respondsToEnter('div', 'button')).toBe(true);
-      expect(respondsToEnter('div', 'menuitem')).toBe(true);
       expect(respondsToEnter('div', 'textbox')).toBe(false);
       expect(respondsToEnter('div', 'bogus')).toBe(false);
     });
@@ -209,7 +201,6 @@ describe('modules/createDOMProps', () => {
 
     test('emulates "onClick" for "Space" for certain roles', () => {
       expect(respondsToSpace('div', 'button')).toBe(true);
-      expect(respondsToSpace('div', 'menuitem')).toBe(true);
       expect(respondsToSpace('div', 'textbox')).toBe(false);
       expect(respondsToSpace('div', 'bogus')).toBe(false);
     });

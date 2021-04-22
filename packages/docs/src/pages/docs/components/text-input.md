@@ -84,7 +84,7 @@ Equivalent to [HTMLElement.readonly](https://developer.mozilla.org/en-US/docs/We
 {% endcall %}
 
 {% call macro.prop('keyboardType', '?string') %}
-Hints at the type of data that might be entered by the user while editing the element or its contents. Equivalent to [HTMLElement.inputMode](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode). Safari iOS requires an ancestral <form action> element to display the search keyboard. (Not available when multiline is true.)
+Hints at the type of data that might be entered by the user while editing the element or its contents. Equivalent to [HTMLElement.inputMode](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode). Safari iOS requires an ancestral `<form action>` element to display the search keyboard. (Not available when multiline is true.)
 {% endcall %}
 
 {% call macro.prop('lang', '?string') %}

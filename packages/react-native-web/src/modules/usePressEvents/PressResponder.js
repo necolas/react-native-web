@@ -134,9 +134,7 @@ const isValidKeyPress = (event) => {
   const target = event.currentTarget;
   const role = target.getAttribute('role');
   const isSpacebar = key === ' ' || key === 'Spacebar';
-  return (
-    !event.repeat && (key === 'Enter' || (isSpacebar && (role === 'button' || role === 'menuitem')))
-  );
+  return !event.repeat && (key === 'Enter' || (isSpacebar && role === 'button'));
 };
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
