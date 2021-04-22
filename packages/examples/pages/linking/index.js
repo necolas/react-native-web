@@ -21,7 +21,7 @@ export default class LinkingPage extends PureComponent {
           accessibilityRole="link"
           href="https://mathiasbynens.github.io/rel-noopener/malicious.html"
           hrefAttrs={{
-              target: '_blank'
+            target: '_blank'
           }}
           style={styles.text}
         >
