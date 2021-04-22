@@ -21,7 +21,7 @@ export type EdgeInsetsValue = {|
 export type GenericStyleProp<+T> =
   | null
   | void
-  | T
+  | $ReadOnly<T>
   | false
   | ''
   | $ReadOnlyArray<GenericStyleProp<T>>;

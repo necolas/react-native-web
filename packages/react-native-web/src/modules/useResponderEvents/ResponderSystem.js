@@ -174,7 +174,7 @@ type ResponderInstance = ActiveResponderInstance | EmptyResponderInstance;
 export type ResponderConfig = {
   // Direct responder events dispatched directly to responder. Do not bubble.
   onResponderEnd?: ?(e: ResponderEvent) => void,
-  onResponderGrant?: ?(e: ResponderEvent) => void,
+  onResponderGrant?: ?(e: ResponderEvent) => void | boolean,
   onResponderMove?: ?(e: ResponderEvent) => void,
   onResponderRelease?: ?(e: ResponderEvent) => void,
   onResponderReject?: ?(e: ResponderEvent) => void,
