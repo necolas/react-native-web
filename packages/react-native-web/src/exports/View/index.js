@@ -97,21 +97,25 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
       onStartShouldSetResponderCapture
     });
 
+    let component = 'div';
     const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
 
     const supportedProps = pickProps(props);
     supportedProps.classList = classList;
     supportedProps.style = style;
-    if (props.href != null && hrefAttrs != null) {
-      const { download, rel, target } = hrefAttrs;
-      if (download != null) {
-        supportedProps.download = download;
-      }
-      if (rel != null) {
-        supportedProps.rel = rel;
-      }
-      if (typeof target === 'string') {
-        supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+    if (props.href != null) {
+      component = 'a';
+      if (hrefAttrs != null) {
+        const { download, rel, target } = hrefAttrs;
+        if (download != null) {
+          supportedProps.download = download;
+        }
+        if (rel != null) {
+          supportedProps.rel = rel;
+        }
+        if (typeof target === 'string') {
+          supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+        }
       }
     }
 
@@ -120,7 +124,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    return createElement('div', supportedProps);
+    return createElement(component, supportedProps);
   }
 );
 

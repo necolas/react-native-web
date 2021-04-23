@@ -18,12 +18,16 @@ describe('exports/createElement', () => {
     expect(container.firstChild).toMatchSnapshot();
     ({ container } = render(createElement('main')));
     expect(container.firstChild).toMatchSnapshot();
+    ({ container } = render(
+      createElement('svg', { children: createElement('image', { href: '#href' }) })
+    ));
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "accessibilityRole"', () => {
     test('string component type', () => {
       const { container } = render(createElement('span', { accessibilityRole: 'link' }));
-      expect(container.firstChild.nodeName).toBe('A');
+      expect(container.firstChild.nodeName).toBe('SPAN');
     });
 
     test('function component type', () => {

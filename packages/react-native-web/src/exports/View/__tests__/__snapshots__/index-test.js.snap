@@ -46,9 +46,9 @@ exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
 `;
 
 exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
-<a
-  class="css-reset-4rbku5 css-cursor-18t94o4 css-view-1dbjc4n"
-  role="link"
+<article
+  class="css-view-1dbjc4n"
+  role="article"
 />
 `;
 

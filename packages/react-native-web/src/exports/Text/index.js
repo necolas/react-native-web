@@ -114,7 +114,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       }
     }
 
-    const component = hasTextAncestor ? 'span' : 'div';
+    let component = hasTextAncestor ? 'span' : 'div';
     const supportedProps = pickProps(props);
     supportedProps.classList = classList;
     supportedProps.dir = dir;
@@ -124,16 +124,19 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     }
     supportedProps.onClick = handleClick;
     supportedProps.style = style;
-    if (props.href != null && hrefAttrs != null) {
-      const { download, rel, target } = hrefAttrs;
-      if (download != null) {
-        supportedProps.download = download;
-      }
-      if (rel != null) {
-        supportedProps.rel = rel;
-      }
-      if (typeof target === 'string') {
-        supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+    if (props.href != null) {
+      component = 'a';
+      if (hrefAttrs != null) {
+        const { download, rel, target } = hrefAttrs;
+        if (download != null) {
+          supportedProps.download = download;
+        }
+        if (rel != null) {
+          supportedProps.rel = rel;
+        }
+        if (typeof target === 'string') {
+          supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+        }
       }
     }
 

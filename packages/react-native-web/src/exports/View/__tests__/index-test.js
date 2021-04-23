@@ -79,7 +79,7 @@ describe('components/View', () => {
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<View accessibilityRole="link" />);
+      const { container } = render(<View accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

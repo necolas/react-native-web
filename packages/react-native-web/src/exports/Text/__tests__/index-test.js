@@ -51,7 +51,7 @@ describe('components/Text', () => {
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Text accessibilityRole="link" />);
+      const { container } = render(<Text accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

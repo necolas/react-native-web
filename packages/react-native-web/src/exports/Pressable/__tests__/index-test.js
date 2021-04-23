@@ -38,13 +38,18 @@ describe('components/Pressable', () => {
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Pressable accessibilityRole="link" />);
+      const { container } = render(<Pressable accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('prop "disabled"', () => {
     const { container } = render(<Pressable disabled={true} />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('prop "href"', () => {
+    const { container } = render(<Pressable href="#href" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 

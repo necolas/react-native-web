@@ -21,7 +21,6 @@ const roleComponents = {
   figure: 'figure',
   insertion: 'ins',
   form: 'form',
-  link: 'a',
   list: 'ul',
   listitem: 'li',
   main: 'main',
@@ -36,11 +35,6 @@ const propsToAccessibilityComponent = (props: Object = emptyObject): void | stri
   // special-case for "label" role which doesn't map to an ARIA role
   if (props.accessibilityRole === 'label') {
     return 'label';
-  }
-
-  // special-case for "href" which becomes a link
-  if (props.href != null) {
-    return 'a';
   }
 
   const role = propsToAriaRole(props);
