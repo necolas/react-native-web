@@ -17,7 +17,7 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import invariant from 'fbjs/lib/invariant';
-import normalizeColor from '../../../../modules/normalizeColor';
+import normalizeColor from 'normalize-css-color';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -177,7 +177,7 @@ function colorToRgba(input: string): string {
   const g = (normalizedColor & 0x00ff0000) >>> 16;
   const b = (normalizedColor & 0x0000ff00) >>> 8;
   const a = (normalizedColor & 0x000000ff) / 255;
-
+  
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
