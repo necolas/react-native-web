@@ -167,8 +167,11 @@ function interpolate(
 
 function colorToRgba(input: string): string {
   let normalizedColor = normalizeColor(input);
-  if (normalizedColor === null || typeof normalizedColor !== 'number') {
+  if (normalizedColor === null)
     return input;
+  }
+  if(typeof normalizedColor !== 'number') {
+    return normalizedColor;
   }
 
   normalizedColor = normalizedColor || 0;
