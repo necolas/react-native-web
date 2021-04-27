@@ -8,7 +8,7 @@ describe('AnimatedInterpolation', () => {
     test.each([
       [["#1E1E1E", "#1E1E1F"]],
       [[0x1E1E1E, 0x1E1E1F]]
-    ])('can interpolate %s: %s', (outputRange) => {
+    ])('can interpolate %s', (outputRange) => {
         const config = {
           inputRange: [0, 1],
           outputRange
