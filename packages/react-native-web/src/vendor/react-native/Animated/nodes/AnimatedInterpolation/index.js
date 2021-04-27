@@ -170,7 +170,7 @@ function colorToRgba(input: string): string {
   if (normalizedColor == null) {
     return input;
   }
-  if(typeof normalizedColor !== 'number') {
+  if (typeof normalizedColor !== 'number') {
     return normalizedColor;
   }
 
