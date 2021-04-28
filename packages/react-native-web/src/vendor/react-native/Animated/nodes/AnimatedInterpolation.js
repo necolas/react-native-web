@@ -12,12 +12,12 @@
 
 'use strict';
 
-import AnimatedNode from '../AnimatedNode';
-import AnimatedWithChildren from '../AnimatedWithChildren';
-import NativeAnimatedHelper from '../../NativeAnimatedHelper';
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import invariant from 'fbjs/lib/invariant';
-import normalizeColor from '../../../../../modules/normalizeColor';
+import normalizeColor from '../../../../modules/normalizeColor';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
