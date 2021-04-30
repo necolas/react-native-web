@@ -22,7 +22,7 @@ export function hasPointerEvent() {
 export function setPointerEvent(bool) {
   const pointerCaptureFn = (name) => (id) => {
     if (typeof id !== 'number') {
-      if (process.env.NODE_DEV !== 'production') {
+      if (process.env.NODE_ENV !== 'production') {
         console.error('A pointerId must be passed to "%s"', name);
       }
     }
