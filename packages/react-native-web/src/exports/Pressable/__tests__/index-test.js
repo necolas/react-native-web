@@ -118,6 +118,7 @@ describe('components/Pressable', () => {
 
   test('press interaction', () => {
     let container;
+    const onContextMenu = jest.fn();
     const onPress = jest.fn();
     const onPressIn = jest.fn();
     const onPressOut = jest.fn();
@@ -126,6 +127,7 @@ describe('components/Pressable', () => {
       ({ container } = render(
         <Pressable
           children={({ pressed }) => (pressed ? <div data-testid="press-content" /> : null)}
+          onContextMenu={onContextMenu}
           onPress={onPress}
           onPressIn={onPressIn}
           onPressOut={onPressOut}
@@ -149,6 +151,10 @@ describe('components/Pressable', () => {
     expect(onPressOut).toBeCalled();
     expect(onPress).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
+    act(() => {
+      target.contextmenu({});
+    });
+    expect(onContextMenu).toBeCalled();
   });
 
   describe('prop "ref"', () => {
