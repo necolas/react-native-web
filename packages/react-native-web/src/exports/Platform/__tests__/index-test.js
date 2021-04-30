@@ -14,4 +14,22 @@ describe('apis/Platform', () => {
       ).toEqual('web');
     });
   });
+
+  describe('isTesting', () => {
+    const NODE_ENV_BACKUP = process.env.NODE_ENV;
+
+    afterEach(() => {
+      process.env.NODE_ENV = NODE_ENV_BACKUP;
+    });
+
+    test('true when NODE_ENV is "test"', () => {
+      process.env.NODE_ENV = 'test';
+      expect(Platform.isTesting).toEqual(true);
+    });
+
+    test('false when NODE_ENV is not "test"', () => {
+      process.env.NODE_ENV = 'development';
+      expect(Platform.isTesting).toEqual(false);
+    });
+  });
 });

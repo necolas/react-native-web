@@ -12,7 +12,7 @@ const Platform = {
   OS: 'web',
   select: (obj: Object): any => ('web' in obj ? obj.web : obj.default),
   get isTesting(): boolean {
-    if (process.env.NODE_DEV === 'test') {
+    if (process.env.NODE_ENV === 'test') {
       return true;
     }
     return false;
