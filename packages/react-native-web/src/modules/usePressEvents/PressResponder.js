@@ -392,7 +392,7 @@ export default class PressResponder {
           event.stopPropagation();
           if (this._longPressDispatched || this._selectionTerminated) {
             event.preventDefault();
-          } else if (onPress != null && event.ctrlKey === false && event.altKey === false) {
+          } else if (onPress != null && event.altKey === false) {
             onPress(event);
           }
         } else {
