@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "docs",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "Documentation website for React Native for Web",
   "scripts": {
     "dev": "eleventy --serve",
