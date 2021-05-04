@@ -77,6 +77,16 @@ describe('StyleSheet/createStyleResolver', () => {
       expect(styleResolver.resolve({ pointerEvents: 'box-none' })).toMatchSnapshot();
     });
 
+    test.skip('long form style properties take precedence over shorthand properties', () => {
+      const registeredStyle1 = ReactNativePropRegistry.register({ paddingHorizontal: '40px' });
+      const inlineStyle1 = { padding: '8px', paddingHorizontal: '40px' };
+      expect(styleResolver.resolve([registeredStyle1, inlineStyle1])).toMatchSnapshot();
+
+      const registeredStyle2 = ReactNativePropRegistry.register({ marginVertical: '40px' });
+      const inlineStyle2 = { margin: '8px', marginVertical: '40px' };
+      expect(styleResolver.resolve([registeredStyle2, inlineStyle2])).toMatchSnapshot();
+    });
+
     describe('sheet', () => {
       beforeEach(() => {
         ExecutionEnvironment.canUseDOM = false;
