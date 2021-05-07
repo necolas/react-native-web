@@ -1,0 +1,28 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedInterpolation from './AnimatedInterpolation';
+import AnimatedNode from './AnimatedNode';
+import AnimatedValue from './AnimatedValue';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
+declare class AnimatedMultiplication extends AnimatedWithChildren {
+  _a: AnimatedNode,
+  _b: AnimatedNode,
+  constructor(a: AnimatedNode | number, b: AnimatedNode | number): any,
+  __makeNative(): any,
+  __getValue(): number,
+  interpolate(config: InterpolationConfigType): AnimatedInterpolation,
+  __attach(): void,
+  __detach(): void,
+  __getNativeConfig(): any,
+}
+export default AnimatedMultiplication;

@@ -1,0 +1,48 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict-local
+ */
+'use strict';
+
+import InteractionManager from '../../../exports/InteractionManager';
+/**
+ * A simple class for batching up invocations of a low-pri callback. A timeout is set to run the
+ * callback once after a delay, no matter how many times it's scheduled. Once the delay is reached,
+ * InteractionManager.runAfterInteractions is used to invoke the callback after any hi-pri
+ * interactions are done running.
+ *
+ * Make sure to cleanup with dispose().  Example:
+ *
+ *   class Widget extends React.Component {
+ *     _batchedSave: new Batchinator(() => this._saveState, 1000);
+ *     _saveSate() {
+ *       // save this.state to disk
+ *     }
+ *     componentDidUpdate() {
+ *       this._batchedSave.schedule();
+ *     }
+ *     componentWillUnmount() {
+ *       this._batchedSave.dispose();
+ *     }
+ *     ...
+ *   }
+ */
+
+declare class Batchinator {
+  _callback: () => void,
+  _delay: number,
+  _taskHandle: ?{
+    cancel: () => void
+  },
+  constructor(callback: () => void, delayMS: number): any,
+  dispose(options: {
+    abort: boolean
+  }): any,
+  schedule(): any,
+}
+export default Batchinator;

@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict
+ */
+'use strict';
+
+import _bezier from './bezier';
+let ease;
+/**
+ * The `Easing` module implements common easing functions. This module is used
+ * by [Animate.timing()](docs/animate.html#timing) to convey physically
+ * believable motion in animations.
+ *
+ * You can find a visualization of some common easing functions at
+ * http://easings.net/
+ *
+ * ### Predefined animations
+ *
+ * The `Easing` module provides several predefined animations through the
+ * following methods:
+ *
+ * - [`back`](docs/easing.html#back) provides a simple animation where the
+ *   object goes slightly back before moving forward
+ * - [`bounce`](docs/easing.html#bounce) provides a bouncing animation
+ * - [`ease`](docs/easing.html#ease) provides a simple inertial animation
+ * - [`elastic`](docs/easing.html#elastic) provides a simple spring interaction
+ *
+ * ### Standard functions
+ *
+ * Three standard easing functions are provided:
+ *
+ * - [`linear`](docs/easing.html#linear)
+ * - [`quad`](docs/easing.html#quad)
+ * - [`cubic`](docs/easing.html#cubic)
+ *
+ * The [`poly`](docs/easing.html#poly) function can be used to implement
+ * quartic, quintic, and other higher power functions.
+ *
+ * ### Additional functions
+ *
+ * Additional mathematical functions are provided by the following methods:
+ *
+ * - [`bezier`](docs/easing.html#bezier) provides a cubic bezier curve
+ * - [`circle`](docs/easing.html#circle) provides a circular function
+ * - [`sin`](docs/easing.html#sin) provides a sinusoidal function
+ * - [`exp`](docs/easing.html#exp) provides an exponential function
+ *
+ * The following helpers are used to modify other easing functions.
+ *
+ * - [`in`](docs/easing.html#in) runs an easing function forwards
+ * - [`inOut`](docs/easing.html#inout) makes any easing function symmetrical
+ * - [`out`](docs/easing.html#out) runs an easing function backwards
+ */
+
+declare class Easing {
+  static step0(n: number): number,
+  static step1(n: number): number,
+  static linear(t: number): number,
+  static ease(t: number): number,
+  static quad(t: number): number,
+  static cubic(t: number): number,
+  static poly(n: number): (t: number) => number,
+  static sin(t: number): number,
+  static circle(t: number): number,
+  static exp(t: number): number,
+  static elastic(bounciness: number): (t: number) => number,
+  static back(s: number): (t: number) => number,
+  static bounce(t: number): number,
+  static bezier(x1: number, y1: number, x2: number, y2: number): (t: number) => number,
+  static in(easing: (t: number) => number): (t: number) => number,
+  static out(easing: (t: number) => number): (t: number) => number,
+  static inOut(easing: (t: number) => number): (t: number) => number,
+}
+export default Easing;

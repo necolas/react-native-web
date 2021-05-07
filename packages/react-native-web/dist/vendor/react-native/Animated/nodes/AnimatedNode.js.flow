@@ -1,0 +1,52 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+const NativeAnimatedAPI = NativeAnimatedHelper.API;
+import invariant from 'fbjs/lib/invariant';
+type ValueListenerCallback = (state: {
+  value: number,
+  ...
+}) => mixed;
+let _uniqueId = 1; // Note(vjeux): this would be better as an interface but flow doesn't
+// support them yet
+
+declare class AnimatedNode {
+  _listeners: {
+    [key: string]: ValueListenerCallback,
+    ...
+  },
+  __nativeAnimatedValueListener: ?any,
+  __attach(): void,
+  __detach(): void,
+  __getValue(): any,
+  __getAnimatedValue(): any,
+  __addChild(child: AnimatedNode): any,
+  __removeChild(child: AnimatedNode): any,
+  __getChildren(): Array<AnimatedNode>,
+  __isNative: boolean,
+  __nativeTag: ?number,
+  __shouldUpdateListenersForNewNativeTag: boolean,
+  constructor(): any,
+  __makeNative(): any,
+  addListener(callback: (value: any) => mixed): string,
+  removeListener(id: string): void,
+  removeAllListeners(): void,
+  hasListeners(): boolean,
+  _startListeningToNativeValueUpdates(): any,
+  _onAnimatedValueUpdateReceived(value: number): any,
+  __callListeners(value: number): void,
+  _stopListeningForNativeValueUpdates(): any,
+  __getNativeTag(): number,
+  __getNativeConfig(): Object,
+  toJSON(): any,
+}
+export default AnimatedNode;

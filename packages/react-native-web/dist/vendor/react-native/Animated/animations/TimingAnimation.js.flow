@@ -1,0 +1,56 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedValue from '../nodes/AnimatedValue';
+import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
+import Animation from './Animation';
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import Easing from '../../../../exports/Easing';
+import type { AnimationConfig, EndCallback } from './Animation';
+export type TimingAnimationConfig = { ...AnimationConfig,
+  toValue: number | AnimatedValue | {
+    x: number,
+    y: number,
+    ...
+  } | AnimatedValueXY | AnimatedInterpolation,
+  easing?: (value: number) => number,
+  duration?: number,
+  delay?: number,
+};
+export type TimingAnimationConfigSingle = { ...AnimationConfig,
+  toValue: number | AnimatedValue | AnimatedInterpolation,
+  easing?: (value: number) => number,
+  duration?: number,
+  delay?: number,
+};
+
+let _easeInOut;
+
+declare function easeInOut(): any;
+declare class TimingAnimation extends Animation {
+  _startTime: number,
+  _fromValue: number,
+  _toValue: any,
+  _duration: number,
+  _delay: number,
+  _easing: (value: number) => number,
+  _onUpdate: (value: number) => void,
+  _animationFrame: any,
+  _timeout: any,
+  _useNativeDriver: boolean,
+  constructor(config: TimingAnimationConfigSingle): any,
+  __getNativeAnimationConfig(): any,
+  start(fromValue: number, onUpdate: (value: number) => void, onEnd: ?EndCallback, previousAnimation: ?Animation, animatedValue: AnimatedValue): void,
+  onUpdate(): void,
+  stop(): void,
+}
+export default TimingAnimation;

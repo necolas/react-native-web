@@ -1,0 +1,70 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+
+/* eslint no-bitwise: 0 */
+'use strict';
+
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import invariant from 'fbjs/lib/invariant';
+import normalizeColor from 'normalize-css-color';
+
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
+type ExtrapolateType = 'extend' | 'identity' | 'clamp';
+export type InterpolationConfigType = {
+  inputRange: $ReadOnlyArray<number>,
+  outputRange: $ReadOnlyArray<number> | $ReadOnlyArray<string>,
+  easing?: (input: number) => number,
+  extrapolate?: ExtrapolateType,
+  extrapolateLeft?: ExtrapolateType,
+  extrapolateRight?: ExtrapolateType,
+};
+declare var linear: (t: any) => any;
+/**
+ * Very handy helper to map input ranges to output ranges with an easing
+ * function and custom behavior outside of the ranges.
+ */
+
+declare function createInterpolation(config: InterpolationConfigType): (input: number) => number | string;
+declare function interpolate(input: number, inputMin: number, inputMax: number, outputMin: number, outputMax: number, easing: (input: number) => number, extrapolateLeft: ExtrapolateType, extrapolateRight: ExtrapolateType): any;
+declare function colorToRgba(input: string): string;
+const stringShapeRegex = /[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g;
+/**
+ * Supports string shapes by extracting numbers so new values can be computed,
+ * and recombines those values into new strings of the same shape.  Supports
+ * things like:
+ *
+ *   rgba(123, 42, 99, 0.36) // colors
+ *   -45deg                  // values with units
+ */
+
+declare function createInterpolationFromStringOutputRange(config: InterpolationConfigType): (input: number) => string;
+declare function isRgbOrRgba(range: any): any;
+declare function checkPattern(arr: $ReadOnlyArray<string>): any;
+declare function findRange(input: number, inputRange: $ReadOnlyArray<number>): any;
+declare function checkValidInputRange(arr: $ReadOnlyArray<number>): any;
+declare function checkInfiniteRange(name: string, arr: $ReadOnlyArray<number>): any;
+declare class AnimatedInterpolation extends AnimatedWithChildren {
+  static __createInterpolation: (config: InterpolationConfigType) => (input: number) => number | string,
+  _parent: AnimatedNode,
+  _config: InterpolationConfigType,
+  _interpolation: (input: number) => number | string,
+  constructor(parent: AnimatedNode, config: InterpolationConfigType): any,
+  __makeNative(): any,
+  __getValue(): number | string,
+  interpolate(config: InterpolationConfigType): AnimatedInterpolation,
+  __attach(): void,
+  __detach(): void,
+  __transformDataType(range: Array<any>): Array<any>,
+  __getNativeConfig(): any,
+}
+export default AnimatedInterpolation;

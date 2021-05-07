@@ -1,0 +1,35 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+'use strict';
+
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+type Listener = (e: any) => void;
+type EventHandle = (target: EventTarget, callback: ?Listener) => () => void;
+export type EventOptions = {
+  capture?: boolean,
+  passive?: boolean,
+};
+declare var emptyFunction: () => any;
+declare function supportsPassiveEvents(): boolean;
+const canUsePassiveEvents = supportsPassiveEvents();
+declare function getOptions(options: ?EventOptions): EventOptions | boolean;
+/**
+ * Shim generic API compatibility with ReactDOM's synthetic events, without needing the
+ * large amount of code ReactDOM uses to do this. Ideally we wouldn't use a synthetic
+ * event wrapper at all.
+ */
+
+declare function isPropagationStopped(): any;
+declare function isDefaultPrevented(): any;
+declare function normalizeEvent(event: any): any;
+/**
+ *
+ */
+
+declare export default function createEventHandle(type: string, options: ?EventOptions): EventHandle;

@@ -1,0 +1,33 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import View from '../../../exports/View';
+import { AnimatedEvent } from './AnimatedEvent';
+import AnimatedProps from './nodes/AnimatedProps';
+import * as React from 'react';
+import NativeAnimatedHelper from './NativeAnimatedHelper';
+import invariant from 'fbjs/lib/invariant';
+import setAndForwardRef from '../Utilities/setAndForwardRef';
+let animatedComponentNextId = 1;
+export type AnimatedComponentType<Props: {
+  +[string]: mixed,
+  ...
+}, Instance> = React.AbstractComponent<$ObjMap<Props & $ReadOnly<{
+  passthroughAnimatedPropExplicitValues?: React.ElementConfig<typeof View>
+}>, () => any>, Instance>;
+type AnimatedComponentOptions = {
+  collapsable?: boolean
+};
+declare function createAnimatedComponent<Props: {
+  +[string]: mixed,
+  ...
+}, Instance>(Component: React.AbstractComponent<Props, Instance>, options?: AnimatedComponentOptions): AnimatedComponentType<Props, Instance>;
+export default createAnimatedComponent;

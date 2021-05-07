@@ -1,0 +1,30 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict
+ */
+'use strict';
+
+import invariant from 'fbjs/lib/invariant';
+import type EventSubscription from './_EventSubscription';
+/**
+ * EventSubscriptionVendor stores a set of EventSubscriptions that are
+ * subscribed to a particular event type.
+ */
+
+declare class EventSubscriptionVendor<EventDefinitions: {...}> {
+  _subscriptionsForType: {
+    [type: $Keys<EventDefinitions>]: Array<EventSubscription<EventDefinitions, $FlowFixMe>>,
+    ...
+  },
+  constructor(): any,
+  addSubscription<K: $Keys<EventDefinitions>>(eventType: K, subscription: EventSubscription<EventDefinitions, K>): EventSubscription<EventDefinitions, K>,
+  removeAllSubscriptions<K: $Keys<EventDefinitions>>(eventType: ?K): void,
+  removeSubscription<K: $Keys<EventDefinitions>>(subscription: EventSubscription<EventDefinitions, K>): void,
+  getSubscriptionsForType<K: $Keys<EventDefinitions>>(eventType: K): ?Array<EventSubscription<EventDefinitions, K>>,
+}
+export default EventSubscriptionVendor;

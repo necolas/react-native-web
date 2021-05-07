@@ -1,0 +1,31 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedValue from './AnimatedValue';
+import AnimatedNode from './AnimatedNode';
+import { generateNewAnimationId, shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import type { EndCallback } from '../animations/Animation';
+declare class AnimatedTracking extends AnimatedNode {
+  _value: AnimatedValue,
+  _parent: AnimatedNode,
+  _callback: ?EndCallback,
+  _animationConfig: Object,
+  _animationClass: any,
+  _useNativeDriver: boolean,
+  constructor(value: AnimatedValue, parent: AnimatedNode, animationClass: any, animationConfig: Object, callback?: ?EndCallback): any,
+  __makeNative(): any,
+  __getValue(): Object,
+  __attach(): void,
+  __detach(): void,
+  update(): void,
+  __getNativeConfig(): any,
+}
+export default AnimatedTracking;

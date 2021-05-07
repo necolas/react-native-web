@@ -1,0 +1,24 @@
+/**
+ * Adapts focus styles based on the user's active input modality (i.e., how
+ * they are interacting with the UI right now).
+ *
+ * Focus styles are only relevant when using the keyboard to interact with the
+ * page. If we only show the focus ring when relevant, we can avoid user
+ * confusion without compromising accessibility.
+ *
+ * The script uses two heuristics to determine whether the keyboard is being used:
+ *
+ * 1. a keydown event occurred immediately before a focus event;
+ * 2. a focus event happened on an element which requires keyboard interaction (e.g., a text field);
+ *
+ * This software or document includes material copied from or derived from https://github.com/WICG/focus-visible.
+ * Copyright © 2018 W3C® (MIT, ERCIM, Keio, Beihang).
+ * W3C Software Notice and License: https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ *
+ * @noflow
+ */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+const focusVisibleAttributeName = 'data-focusvisible-polyfill';
+const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
+declare var modality: (insertRule: any) => any;
+export default modality;

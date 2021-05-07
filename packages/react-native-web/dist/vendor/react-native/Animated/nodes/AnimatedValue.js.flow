@@ -1,0 +1,76 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedInterpolation from './AnimatedInterpolation';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import InteractionManager from '../../../../exports/InteractionManager';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import type Animation, { EndCallback } from '../animations/Animation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type AnimatedTracking from './AnimatedTracking';
+const NativeAnimatedAPI = NativeAnimatedHelper.API;
+/**
+ * Animated works by building a directed acyclic graph of dependencies
+ * transparently when you render your Animated components.
+ *
+ *               new Animated.Value(0)
+ *     .interpolate()        .interpolate()    new Animated.Value(1)
+ *         opacity               translateY      scale
+ *          style                         transform
+ *         View#234                         style
+ *                                         View#123
+ *
+ * A) Top Down phase
+ * When an Animated.Value is updated, we recursively go down through this
+ * graph in order to find leaf nodes: the views that we flag as needing
+ * an update.
+ *
+ * B) Bottom Up phase
+ * When a view is flagged as needing an update, we recursively go back up
+ * in order to build the new value that it needs. The reason why we need
+ * this two-phases process is to deal with composite props such as
+ * transform which can receive values from multiple parents.
+ */
+
+declare function _flush(rootNode: AnimatedValue): void;
+/**
+ * Standard value for driving animations.  One `Animated.Value` can drive
+ * multiple properties in a synchronized fashion, but can only be driven by one
+ * mechanism at a time.  Using a new mechanism (e.g. starting a new animation,
+ * or calling `setValue`) will stop any previous ones.
+ *
+ * See https://reactnative.dev/docs/animatedvalue.html
+ */
+
+declare class AnimatedValue extends AnimatedWithChildren {
+  _value: number,
+  _startingValue: number,
+  _offset: number,
+  _animation: ?Animation,
+  _tracking: ?AnimatedTracking,
+  constructor(value: number): any,
+  __detach(): any,
+  __getValue(): number,
+  setValue(value: number): void,
+  setOffset(offset: number): void,
+  flattenOffset(): void,
+  extractOffset(): void,
+  stopAnimation(callback?: ?(value: number) => void): void,
+  resetAnimation(callback?: ?(value: number) => void): void,
+  _onAnimatedValueUpdateReceived(value: number): void,
+  interpolate(config: InterpolationConfigType): AnimatedInterpolation,
+  animate(animation: Animation, callback: ?EndCallback): void,
+  stopTracking(): void,
+  track(tracking: AnimatedTracking): void,
+  _updateValue(value: number, flush: boolean): void,
+  __getNativeConfig(): Object,
+}
+export default AnimatedValue;

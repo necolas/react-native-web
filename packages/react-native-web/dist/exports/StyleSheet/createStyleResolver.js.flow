@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
+/**
+ * WARNING: changes to this file in particular can cause significant changes to
+ * the results of render performance benchmarks.
+ */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import createCSSStyleSheet from './createCSSStyleSheet';
+import createCompileableStyle from './createCompileableStyle';
+import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
+import flattenArray from '../../modules/flattenArray';
+import flattenStyle from './flattenStyle';
+import I18nManager from '../I18nManager';
+import i18nStyle from './i18nStyle';
+import { atomic, classic, inline, stringifyValueWithProperty } from './compile';
+import initialRules from './initialRules';
+import modality from './modality';
+import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
+declare export default function createStyleResolver(): any;
+/**
+ * Misc helpers
+ */
+
+declare var createCacheKey: (id: any) => any;
+declare var classListToString: (list: any) => any;

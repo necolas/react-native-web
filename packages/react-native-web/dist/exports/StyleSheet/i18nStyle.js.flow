@@ -1,0 +1,76 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import I18nManager from '../I18nManager';
+import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
+const emptyObject = {};
+const borderTopLeftRadius = 'borderTopLeftRadius';
+const borderTopRightRadius = 'borderTopRightRadius';
+const borderBottomLeftRadius = 'borderBottomLeftRadius';
+const borderBottomRightRadius = 'borderBottomRightRadius';
+const borderLeftColor = 'borderLeftColor';
+const borderLeftStyle = 'borderLeftStyle';
+const borderLeftWidth = 'borderLeftWidth';
+const borderRightColor = 'borderRightColor';
+const borderRightStyle = 'borderRightStyle';
+const borderRightWidth = 'borderRightWidth';
+const right = 'right';
+const marginLeft = 'marginLeft';
+const marginRight = 'marginRight';
+const paddingLeft = 'paddingLeft';
+const paddingRight = 'paddingRight';
+const left = 'left'; // Map of LTR property names to their BiDi equivalent.
+
+const PROPERTIES_FLIP = {
+  borderTopLeftRadius: borderTopRightRadius,
+  borderTopRightRadius: borderTopLeftRadius,
+  borderBottomLeftRadius: borderBottomRightRadius,
+  borderBottomRightRadius: borderBottomLeftRadius,
+  borderLeftColor: borderRightColor,
+  borderLeftStyle: borderRightStyle,
+  borderLeftWidth: borderRightWidth,
+  borderRightColor: borderLeftColor,
+  borderRightStyle: borderLeftStyle,
+  borderRightWidth: borderLeftWidth,
+  left: right,
+  marginLeft: marginRight,
+  marginRight: marginLeft,
+  paddingLeft: paddingRight,
+  paddingRight: paddingLeft,
+  right: left
+}; // Map of I18N property names to their LTR equivalent.
+
+const PROPERTIES_I18N = {
+  borderTopStartRadius: borderTopLeftRadius,
+  borderTopEndRadius: borderTopRightRadius,
+  borderBottomStartRadius: borderBottomLeftRadius,
+  borderBottomEndRadius: borderBottomRightRadius,
+  borderStartColor: borderLeftColor,
+  borderStartStyle: borderLeftStyle,
+  borderStartWidth: borderLeftWidth,
+  borderEndColor: borderRightColor,
+  borderEndStyle: borderRightStyle,
+  borderEndWidth: borderRightWidth,
+  end: right,
+  marginStart: marginLeft,
+  marginEnd: marginRight,
+  paddingStart: paddingLeft,
+  paddingEnd: paddingRight,
+  start: left
+};
+const PROPERTIES_VALUE = {
+  clear: true,
+  float: true,
+  textAlign: true
+}; // Invert the sign of a numeric-like value
+
+declare var additiveInverse: (value: string | number) => any;
+declare var i18nStyle: <T: {|
+  [key: string]: any
+|}>(originalStyle: T) => T;
+export default i18nStyle;

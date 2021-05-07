@@ -1,0 +1,41 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict-local
+ * @format
+ */
+'use strict';
+
+import { type EventSubscription, type IEventEmitter } from '../emitter/EventEmitter';
+import Platform from '../../../exports/Platform';
+import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
+import invariant from 'fbjs/lib/invariant';
+type NativeModule = $ReadOnly<{
+  addListener: (eventType: string) => void,
+  removeListeners: (count: number) => void,
+  ...
+}>;
+export type { EventSubscription };
+/**
+ * `NativeEventEmitter` is intended for use by Native Modules to emit events to
+ * JavaScript listeners. If a `NativeModule` is supplied to the constructor, it
+ * will be notified (via `addListener` and `removeListeners`) when the listener
+ * count changes to manage "native memory".
+ *
+ * Currently, all native events are fired via a global `RCTDeviceEventEmitter`.
+ * This means event names must be globally unique, and it means that call sites
+ * can theoretically listen to `RCTDeviceEventEmitter` (although discouraged).
+ */
+
+declare export default class NativeEventEmitter<TEventToArgsMap: {...}> implements IEventEmitter<TEventToArgsMap> {
+  _nativeModule: ?NativeModule,
+  constructor(nativeModule: ?NativeModule): any,
+  addListener<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent, listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed, context?: mixed): EventSubscription,
+  removeListener<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent, listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed): void,
+  emit<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent, ...args: $ElementType<TEventToArgsMap, TEvent>): void,
+  removeAllListeners<TEvent: $Keys<TEventToArgsMap>>(eventType?: ?TEvent): void,
+  listenerCount<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent): number,
+}

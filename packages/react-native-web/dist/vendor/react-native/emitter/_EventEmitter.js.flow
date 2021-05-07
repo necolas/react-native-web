@@ -1,0 +1,44 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict
+ * @typecheck
+ */
+import invariant from 'fbjs/lib/invariant';
+import EmitterSubscription from './_EmitterSubscription';
+import EventSubscriptionVendor from './_EventSubscriptionVendor';
+declare var sparseFilterPredicate: () => any;
+export interface IEventEmitter<EventDefinitions: {...}> {
+  addListener<K: $Keys<EventDefinitions>>(eventType: K, listener: (...$ElementType<EventDefinitions, K>) => mixed, context: $FlowFixMe): EmitterSubscription<EventDefinitions, K>,
+  removeAllListeners<K: $Keys<EventDefinitions>>(eventType: ?K): void,
+  emit<K: $Keys<EventDefinitions>>(eventType: K, ...args: $ElementType<EventDefinitions, K>): void,
+}
+/**
+ * @class EventEmitter
+ * @description
+ * An EventEmitter is responsible for managing a set of listeners and publishing
+ * events to them when it is told that such events happened. In addition to the
+ * data for the given event it also sends a event control object which allows
+ * the listeners/handlers to prevent the default behavior of the given event.
+ *
+ * The emitter is designed to be generic enough to support all the different
+ * contexts in which one might want to emit events. It is a simple multicast
+ * mechanism on top of which extra functionality can be composed. For example, a
+ * more advanced emitter may use an EventHolder and EventFactory.
+ */
+
+declare class EventEmitter<EventDefinitions: {...}> implements IEventEmitter<EventDefinitions> {
+  _subscriber: EventSubscriptionVendor<EventDefinitions>,
+  constructor(subscriber: ?EventSubscriptionVendor<EventDefinitions>): any,
+  addListener<K: $Keys<EventDefinitions>>(eventType: K, listener: (...$ElementType<EventDefinitions, K>) => mixed, context: $FlowFixMe): EmitterSubscription<EventDefinitions, K>,
+  removeAllListeners<K: $Keys<EventDefinitions>>(eventType: ?K): void,
+  removeSubscription<K: $Keys<EventDefinitions>>(subscription: EmitterSubscription<EventDefinitions, K>): void,
+  listenerCount<K: $Keys<EventDefinitions>>(eventType: K): number,
+  emit<K: $Keys<EventDefinitions>>(eventType: K, ...args: $ElementType<EventDefinitions, K>): void,
+  removeListener<K: $Keys<EventDefinitions>>(eventType: K, listener: (...$ElementType<EventDefinitions, K>) => mixed): void,
+}
+export default EventEmitter;

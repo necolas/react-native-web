@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import invariant from 'fbjs/lib/invariant';
+export type DisplayMetrics = {|
+  fontScale: number,
+  height: number,
+  scale: number,
+  width: number,
+|};
+type DimensionsValue = {|
+  window: DisplayMetrics,
+  screen: DisplayMetrics,
+|};
+type DimensionKey = 'window' | 'screen';
+type DimensionEventListenerType = 'change';
+const dimensions = {
+  window: {
+    fontScale: 1,
+    height: 0,
+    scale: 1,
+    width: 0
+  },
+  screen: {
+    fontScale: 1,
+    height: 0,
+    scale: 1,
+    width: 0
+  }
+};
+const listeners = {};
+declare export default class Dimensions {
+  static get(dimension: DimensionKey): DisplayMetrics,
+  static set(initialDimensions: ?DimensionsValue): void,
+  static _update(): any,
+  static addEventListener(type: DimensionEventListenerType, handler: (DimensionsValue) => void): void,
+  static removeEventListener(type: DimensionEventListenerType, handler: (DimensionsValue) => void): void,
+}
+
+if (canUseDOM) {
+  Dimensions._update();
+
+  window.addEventListener('resize', Dimensions._update, false);
+}

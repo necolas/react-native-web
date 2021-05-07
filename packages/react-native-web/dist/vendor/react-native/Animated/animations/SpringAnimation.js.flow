@@ -1,0 +1,97 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedValue from '../nodes/AnimatedValue';
+import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
+import Animation from './Animation';
+import SpringConfig from '../SpringConfig';
+import invariant from 'fbjs/lib/invariant';
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import type { AnimationConfig, EndCallback } from './Animation';
+export type SpringAnimationConfig = { ...AnimationConfig,
+  toValue: number | AnimatedValue | {
+    x: number,
+    y: number,
+    ...
+  } | AnimatedValueXY | AnimatedInterpolation,
+  overshootClamping?: boolean,
+  restDisplacementThreshold?: number,
+  restSpeedThreshold?: number,
+  velocity?: number | {
+    x: number,
+    y: number,
+    ...
+  },
+  bounciness?: number,
+  speed?: number,
+  tension?: number,
+  friction?: number,
+  stiffness?: number,
+  damping?: number,
+  mass?: number,
+  delay?: number,
+};
+export type SpringAnimationConfigSingle = { ...AnimationConfig,
+  toValue: number | AnimatedValue | AnimatedInterpolation,
+  overshootClamping?: boolean,
+  restDisplacementThreshold?: number,
+  restSpeedThreshold?: number,
+  velocity?: number,
+  bounciness?: number,
+  speed?: number,
+  tension?: number,
+  friction?: number,
+  stiffness?: number,
+  damping?: number,
+  mass?: number,
+  delay?: number,
+};
+declare class SpringAnimation extends Animation {
+  _overshootClamping: boolean,
+  _restDisplacementThreshold: number,
+  _restSpeedThreshold: number,
+  _lastVelocity: number,
+  _startPosition: number,
+  _lastPosition: number,
+  _fromValue: number,
+  _toValue: any,
+  _stiffness: number,
+  _damping: number,
+  _mass: number,
+  _initialVelocity: number,
+  _delay: number,
+  _timeout: any,
+  _startTime: number,
+  _lastTime: number,
+  _frameTime: number,
+  _onUpdate: (value: number) => void,
+  _animationFrame: any,
+  _useNativeDriver: boolean,
+  constructor(config: SpringAnimationConfigSingle): any,
+  __getNativeAnimationConfig(): {|
+    damping: number,
+    initialVelocity: number,
+    iterations: number,
+    mass: number,
+    overshootClamping: boolean,
+    restDisplacementThreshold: number,
+    restSpeedThreshold: number,
+    stiffness: number,
+    toValue: any,
+    type: $TEMPORARY$string<'spring'>,
+  |},
+  start(fromValue: number, onUpdate: (value: number) => void, onEnd: ?EndCallback, previousAnimation: ?Animation, animatedValue: AnimatedValue): void,
+  getInternalState(): Object,
+  onUpdate(): void,
+  stop(): void,
+}
+export default SpringAnimation;

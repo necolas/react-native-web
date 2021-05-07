@@ -1,0 +1,48 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedValue from './nodes/AnimatedValue';
+import NativeAnimatedHelper from './NativeAnimatedHelper';
+import findNodeHandle from '../../../exports/findNodeHandle';
+import invariant from 'fbjs/lib/invariant';
+import { shouldUseNativeDriver } from './NativeAnimatedHelper';
+export type Mapping = {
+  [key: string]: Mapping,
+  ...
+} | AnimatedValue;
+export type EventConfig = {
+  listener?: ?Function,
+  useNativeDriver: boolean,
+};
+
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
+declare export function attachNativeEvent(viewRef: any, eventName: string, argMapping: $ReadOnlyArray<?Mapping>): {
+  detach: () => void
+};
+declare function validateMapping(argMapping: any, args: any): any;
+declare export class AnimatedEvent {
+  _argMapping: $ReadOnlyArray<?Mapping>,
+  _listeners: Array<Function>,
+  _callListeners: Function,
+  _attachedEvent: ?{
+    detach: () => void,
+    ...
+  },
+  __isNative: boolean,
+  constructor(argMapping: $ReadOnlyArray<?Mapping>, config: EventConfig): any,
+  __addListener(callback: Function): void,
+  __removeListener(callback: Function): void,
+  __attach(viewRef: any, eventName: string): any,
+  __detach(viewTag: any, eventName: string): any,
+  __getHandler(): (...args: any) => void,
+  _callListeners(...args: any): any,
+}

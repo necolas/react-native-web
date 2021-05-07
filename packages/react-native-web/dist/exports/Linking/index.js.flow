@@ -1,0 +1,29 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import invariant from 'fbjs/lib/invariant';
+const initialURL = canUseDOM ? window.location.href : '';
+type Callback = (...args: any) => void;
+type OnOpenCallback = (event: 'onOpen', callback: (url: string) => void) => void;
+type GenericCallback = (event: string, callback: Callback) => void;
+declare class Linking {
+  _eventCallbacks: {
+    [key: string]: Array<Callback>
+  },
+  _dispatchEvent(event: string, ...data: any): any,
+  addEventListener: OnOpenCallback | GenericCallback,
+  removeEventListener: OnOpenCallback | GenericCallback,
+  canOpenURL(): Promise<boolean>,
+  getInitialURL(): Promise<string>,
+  openURL(url: string): Promise<Object | void>,
+  _validateURL(url: string): any,
+}
+declare var open: (url: any) => any;
+export default (new Linking(): Linking);

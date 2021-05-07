@@ -1,0 +1,35 @@
+/**
+ * Portions Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict
+ * @format
+ */
+
+/**
+ * BezierEasing - use bezier curve for transition easing function
+ * https://github.com/gre/bezier-easing
+ * @copyright 2014-2015 Gaëtan Renaudeau. MIT License.
+ */
+'use strict'; // These values are established by empiricism with tests (tradeoff: performance VS precision)
+
+const NEWTON_ITERATIONS = 4;
+const NEWTON_MIN_SLOPE = 0.001;
+const SUBDIVISION_PRECISION = 0.0000001;
+const SUBDIVISION_MAX_ITERATIONS = 10;
+const kSplineTableSize = 11;
+const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
+const float32ArraySupported = typeof Float32Array === 'function';
+declare function A(aA1: any, aA2: any): any;
+declare function B(aA1: any, aA2: any): any;
+declare function C(aA1: any): any; // Returns x(t) given t, x1, and x2, or y(t) given t, y1, and y2.
+
+declare function calcBezier(aT: any, aA1: any, aA2: any): any; // Returns dx/dt given t, x1, and x2, or dy/dt given t, y1, and y2.
+
+declare function getSlope(aT: any, aA1: any, aA2: any): any;
+declare function binarySubdivide(aX: any, _aA: any, _aB: any, mX1: any, mX2: any): any;
+declare function newtonRaphsonIterate(aX: any, _aGuessT: any, mX1: any, mX2: any): any;
+declare export default function bezier(mX1: number, mY1: number, mX2: number, mY2: number): (x: number) => number;
+;

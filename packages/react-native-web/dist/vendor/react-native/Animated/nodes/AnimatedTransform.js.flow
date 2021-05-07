@@ -1,0 +1,25 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+'use strict';
+
+import AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+declare class AnimatedTransform extends AnimatedWithChildren {
+  _transforms: $ReadOnlyArray<Object>,
+  constructor(transforms: $ReadOnlyArray<Object>): any,
+  __makeNative(): any,
+  __getValue(): $ReadOnlyArray<Object>,
+  __getAnimatedValue(): $ReadOnlyArray<Object>,
+  __attach(): void,
+  __detach(): void,
+  __getNativeConfig(): any,
+}
+export default AnimatedTransform;

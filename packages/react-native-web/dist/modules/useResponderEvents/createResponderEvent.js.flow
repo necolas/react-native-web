@@ -1,0 +1,67 @@
+/**
+ * Copyright (c) Nicolas Gallagher
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import type { TouchEvent } from './ResponderEventTypes';
+import getBoundingClientRect from '../../modules/getBoundingClientRect';
+import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
+export type ResponderEvent = {|
+  bubbles: boolean,
+  cancelable: boolean,
+  currentTarget: any,
+  defaultPrevented: ?boolean,
+  dispatchConfig: {
+    registrationName?: string,
+    phasedRegistrationNames?: {
+      bubbled: string,
+      captured: string,
+    },
+  },
+  eventPhase: ?number,
+  isDefaultPrevented: () => boolean,
+  isPropagationStopped: () => boolean,
+  isTrusted: ?boolean,
+  preventDefault: () => void,
+  stopPropagation: () => void,
+  nativeEvent: TouchEvent,
+  persist: () => void,
+  target: ?any,
+  timeStamp: number,
+  touchHistory: $ReadOnly<{|
+    indexOfSingleActiveTouch: number,
+    mostRecentTimeStamp: number,
+    numberActiveTouches: number,
+    touchBank: Array<{|
+      currentPageX: number,
+      currentPageY: number,
+      currentTimeStamp: number,
+      previousPageX: number,
+      previousPageY: number,
+      previousTimeStamp: number,
+      startPageX: number,
+      startPageY: number,
+      startTimeStamp: number,
+      touchActive: boolean,
+    |}>,
+  |}>,
+|};
+declare var emptyFunction: () => any;
+const emptyObject = {};
+const emptyArray = [];
+/**
+ * Safari produces very large identifiers that would cause the `touchBank` array
+ * length to be so large as to crash the browser, if not normalized like this.
+ * In the future the `touchBank` should use an object/map instead.
+ */
+
+declare function normalizeIdentifier(identifier: any): any;
+/**
+ * Converts a native DOM event to a ResponderEvent.
+ * Mouse events are transformed into fake touch events.
+ */
+
+declare export default function createResponderEvent(domEvent: any): ResponderEvent;

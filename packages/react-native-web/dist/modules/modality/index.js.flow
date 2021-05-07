@@ -1,0 +1,96 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import createEventHandle from '../createEventHandle';
+export type Modality = 'keyboard' | 'mouse' | 'touch' | 'pen';
+declare var supportsPointerEvent: () => any;
+let activeModality = 'keyboard';
+let modality = 'keyboard';
+let previousModality;
+let previousActiveModality;
+let isEmulatingMouseEvents = false;
+const listeners = new Set();
+const KEYBOARD = 'keyboard';
+const MOUSE = 'mouse';
+const TOUCH = 'touch';
+const BLUR = 'blur';
+const CONTEXTMENU = 'contextmenu';
+const FOCUS = 'focus';
+const KEYDOWN = 'keydown';
+const MOUSEDOWN = 'mousedown';
+const MOUSEMOVE = 'mousemove';
+const MOUSEUP = 'mouseup';
+const POINTERDOWN = 'pointerdown';
+const POINTERMOVE = 'pointermove';
+const SCROLL = 'scroll';
+const SELECTIONCHANGE = 'selectionchange';
+const TOUCHCANCEL = 'touchcancel';
+const TOUCHMOVE = 'touchmove';
+const TOUCHSTART = 'touchstart';
+const VISIBILITYCHANGE = 'visibilitychange';
+const bubbleOptions = {
+  passive: true
+};
+const captureOptions = {
+  capture: true,
+  passive: true
+}; // Window events
+
+const addBlurListener = createEventHandle(BLUR, bubbleOptions);
+const addFocusListener = createEventHandle(FOCUS, bubbleOptions); // Must be capture phase because 'stopPropagation' might prevent these
+// events bubbling to the document.
+
+const addVisibilityChangeListener = createEventHandle(VISIBILITYCHANGE, captureOptions);
+const addKeyDownListener = createEventHandle(KEYDOWN, captureOptions);
+const addPointerDownListener = createEventHandle(POINTERDOWN, captureOptions);
+const addPointerMoveListener = createEventHandle(POINTERMOVE, captureOptions); // Fallback events
+
+const addContextMenuListener = createEventHandle(CONTEXTMENU, captureOptions);
+const addMouseDownListener = createEventHandle(MOUSEDOWN, captureOptions);
+const addMouseMoveListener = createEventHandle(MOUSEMOVE, captureOptions);
+const addMouseUpListener = createEventHandle(MOUSEUP, captureOptions);
+const addScrollListener = createEventHandle(SCROLL, captureOptions);
+const addSelectiomChangeListener = createEventHandle(SELECTIONCHANGE, captureOptions);
+const addTouchCancelListener = createEventHandle(TOUCHCANCEL, captureOptions);
+const addTouchMoveListener = createEventHandle(TOUCHMOVE, captureOptions);
+const addTouchStartListener = createEventHandle(TOUCHSTART, captureOptions);
+declare function restoreModality(): any;
+declare function onBlurWindow(): any;
+declare function onFocusWindow(): any;
+declare function onKeyDown(event: any): any;
+declare function onVisibilityChange(): any;
+declare function onPointerish(event: any): any;
+
+if (canUseDOM) {
+  addBlurListener(window, onBlurWindow);
+  addFocusListener(window, onFocusWindow);
+  addKeyDownListener(document, onKeyDown);
+  addPointerDownListener(document, onPointerish);
+  addPointerMoveListener(document, onPointerish);
+  addVisibilityChangeListener(document, onVisibilityChange); // fallbacks
+
+  addContextMenuListener(document, onPointerish);
+  addMouseDownListener(document, onPointerish);
+  addMouseMoveListener(document, onPointerish);
+  addMouseUpListener(document, onPointerish);
+  addTouchCancelListener(document, onPointerish);
+  addTouchMoveListener(document, onPointerish);
+  addTouchStartListener(document, onPointerish);
+  addSelectiomChangeListener(document, onPointerish);
+  addScrollListener(document, onPointerish);
+}
+
+declare function callListeners(): any;
+declare export function getActiveModality(): Modality;
+declare export function getModality(): Modality;
+declare export function addModalityListener(listener: ({
+  activeModality: Modality,
+  modality: Modality,
+}) => void): () => void;
+declare export function testOnly_resetActiveModality(): any;

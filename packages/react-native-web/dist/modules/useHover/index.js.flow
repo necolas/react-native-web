@@ -1,0 +1,44 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import { getModality } from '../modality';
+import useEvent from '../useEvent';
+import useLayoutEffect from '../useLayoutEffect';
+/**
+ * Types
+ */
+
+export type HoverEventsConfig = {
+  contain?: ?boolean,
+  disabled?: ?boolean,
+  onHoverStart?: ?(e: any) => void,
+  onHoverChange?: ?(bool: boolean) => void,
+  onHoverUpdate?: ?(e: any) => void,
+  onHoverEnd?: ?(e: any) => void,
+};
+/**
+ * Implementation
+ */
+
+const emptyObject = {};
+const opts = {
+  passive: true
+};
+const lockEventType = 'react-gui:hover:lock';
+const unlockEventType = 'react-gui:hover:unlock';
+declare var supportsPointerEvent: () => any;
+declare function dispatchCustomEvent(target: EventTarget, type: string, payload?: {
+  bubbles?: boolean,
+  cancelable?: boolean,
+  detail?: {
+    [key: string]: mixed
+  },
+}): any; // This accounts for the non-PointerEvent fallback events.
+
+declare function getPointerType(event: any): any;
+declare export default function useHover(targetRef: any, config: HoverEventsConfig): void;

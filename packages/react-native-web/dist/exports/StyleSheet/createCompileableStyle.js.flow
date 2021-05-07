@@ -1,0 +1,18 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict-local
+ */
+import normalizeValueWithProperty from './normalizeValueWithProperty';
+import resolveShadowValue from './resolveShadowValue';
+const defaultOffset = {
+  height: 0,
+  width: 0
+};
+declare function boxShadowReducer(resolvedStyle: any, style: any): any;
+declare function textShadowReducer(resolvedStyle: any, style: any): any;
+declare var createCompileableStyle: (styles: Object) => Object;
+export default createCompileableStyle;

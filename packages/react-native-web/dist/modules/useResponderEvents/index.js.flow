@@ -1,0 +1,25 @@
+/**
+ * Copyright (c) Nicolas Gallagher
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+
+/**
+ * Hook for integrating the Responder System into React
+ *
+ *   function SomeComponent({ onStartShouldSetResponder }) {
+ *     const ref = useRef(null);
+ *     useResponderEvents(ref, { onStartShouldSetResponder });
+ *     return <div ref={ref} />
+ *   }
+ */
+import type { ResponderConfig } from './ResponderSystem';
+import * as React from 'react';
+import * as ResponderSystem from './ResponderSystem';
+const emptyObject = {};
+let idCounter = 0;
+declare function useStable<T>(getInitialValue: () => T): T;
+declare export default function useResponderEvents(hostRef: any, config: ResponderConfig): any;

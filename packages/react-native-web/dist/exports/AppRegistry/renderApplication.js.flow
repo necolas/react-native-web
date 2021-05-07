@@ -1,0 +1,24 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import type { ComponentType, Node } from 'react';
+import AppContainer from './AppContainer';
+import invariant from 'fbjs/lib/invariant';
+import render, { hydrate } from '../render';
+import styleResolver from '../StyleSheet/styleResolver';
+import React from 'react';
+declare export default function renderApplication<Props: Object>(RootComponent: ComponentType<Props>, WrapperComponent?: ?ComponentType<*>, callback?: () => void, options: {
+  hydrate: boolean,
+  initialProps: Props,
+  rootTag: any,
+}): any;
+declare export function getApplication(RootComponent: ComponentType<Object>, initialProps: Object, WrapperComponent?: ?ComponentType<*>): {|
+  element: Node,
+  getStyleElement: (Object) => Node,
+|};

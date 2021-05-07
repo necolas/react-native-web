@@ -1,0 +1,26 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
+import type { LayoutEvent, LayoutValue } from '../../types';
+import type { ViewProps } from '../View';
+import * as React from 'react';
+import View from '../View';
+type KeyboardAvoidingViewProps = { ...ViewProps,
+  behavior?: 'height' | 'padding' | 'position',
+  contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
+  keyboardVerticalOffset: number,
+};
+declare class KeyboardAvoidingView extends React.Component<KeyboardAvoidingViewProps> {
+  frame: ?LayoutValue,
+  relativeKeyboardHeight(keyboardFrame: Object): number,
+  onKeyboardChange(event: Object): any,
+  onLayout: (event: LayoutEvent) => void,
+  render(): React.Node,
+}
+export default KeyboardAvoidingView;

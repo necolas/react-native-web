@@ -1,0 +1,19 @@
+/* eslint-disable */
+
+/**
+ * JS Implementation of MurmurHash2
+ *
+ * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
+ * @see http://github.com/garycourt/murmurhash-js
+ * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
+ * @see http://sites.google.com/site/murmurhash/
+ *
+ * @param {string} str ASCII only
+ * @param {number} seed Positive integer only
+ * @return {number} 32-bit positive integer hash
+ *
+ * @flow
+ */
+declare function murmurhash2_32_gc(str: any, seed: any): any;
+declare var hash: (str: string) => string;
+export default hash;

@@ -1,0 +1,27 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict
+ */
+'use strict';
+
+import type EventEmitter from './EventEmitter';
+import _EventSubscription from './_EventSubscription';
+import type EventSubscriptionVendor from './_EventSubscriptionVendor';
+import { type EventSubscription } from './EventSubscription';
+/**
+ * EmitterSubscription represents a subscription with listener and context data.
+ */
+
+declare class EmitterSubscription<EventDefinitions: {...}, K: $Keys<EventDefinitions>> extends _EventSubscription<EventDefinitions, K> implements EventSubscription {
+  emitter: EventEmitter<EventDefinitions>,
+  listener: ?(...$ElementType<EventDefinitions, K>) => mixed,
+  context: ?$FlowFixMe,
+  constructor(emitter: EventEmitter<EventDefinitions>, subscriber: EventSubscriptionVendor<EventDefinitions>, listener: (...$ElementType<EventDefinitions, K>) => mixed, context: ?$FlowFixMe): any,
+  remove(): void,
+}
+export default EmitterSubscription;

@@ -1,0 +1,24 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow strict
+ */
+'use strict';
+
+type SpringConfigType = {
+  stiffness: number,
+  damping: number,
+  ...
+};
+declare function stiffnessFromOrigamiValue(oValue: any): any;
+declare function dampingFromOrigamiValue(oValue: any): any;
+declare function fromOrigamiTensionAndFriction(tension: number, friction: number): SpringConfigType;
+declare function fromBouncinessAndSpeed(bounciness: number, speed: number): SpringConfigType;
+export default {
+  fromOrigamiTensionAndFriction,
+  fromBouncinessAndSpeed
+};

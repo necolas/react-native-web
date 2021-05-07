@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict-local
+ */
+import createReactDOMStyle from './createReactDOMStyle';
+import hash from '../../vendor/hash';
+import hyphenateStyleName from 'hyphenate-style-name';
+import normalizeValueWithProperty from './normalizeValueWithProperty';
+import prefixStyles, { prefixInlineStyles } from '../../modules/prefixStyles';
+type Value = Object | Array<any> | string | number;
+type Style = {
+  [key: string]: Value
+};
+type Rule = string;
+type Rules = Array<Rule>;
+type RulesData = {|
+  property?: string,
+  value?: string,
+  identifier: string,
+  rules: Rules,
+|};
+type CompilerOutput = {
+  [key: string]: RulesData
+};
+const cache = {
+  get(property, value) {
+    if (cache[property] != null && cache[property].hasOwnProperty(value) && cache[property][value] != null) {
+      return cache[property][value];
+    }
+  },
+
+  set(property, value, object) {
+    if (cache[property] == null) {
+      cache[property] = {};
+    }
+
+    return cache[property][value] = object;
+  }
+
+};
+/**
+ * Compile style to atomic CSS rules.
+ */
+
+declare export function atomic(style: Style): CompilerOutput;
+/**
+ * Compile simple style object to classic CSS rules.
+ * No support for 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
+ */
+
+declare export function classic(style: Style, name: string): CompilerOutput;
+/**
+ * Compile simple style object to inline DOM styles.
+ * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
+ */
+
+declare export function inline(style: Style): Object;
+/**
+ * Create a value string that normalizes different input values with a common
+ * output.
+ */
+
+declare export function stringifyValueWithProperty(value: Value, property: ?string): string;
+/**
+ * Create the Atomic CSS rules needed for a given StyleSheet rule.
+ * Translates StyleSheet declarations to CSS.
+ */
+
+declare function createAtomicRules(identifier: string, property: any, value: any): Rules;
+/**
+ * Creates a CSS declaration block from a StyleSheet object.
+ */
+
+declare function createDeclarationBlock(style: Style): any;
+/**
+ * An identifier is associated with a unique set of styles.
+ */
+
+declare function createIdentifier(prefix: string, name: string, value: any): string;
+/**
+ * Create individual CSS keyframes rules.
+ */
+
+declare function createKeyframes(keyframes: any): any;
+/**
+ * Create CSS keyframes rules and names from a StyleSheet keyframes object.
+ */
+
+declare function processKeyframesValue(keyframesValue: any): any;
