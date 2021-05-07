@@ -9,11 +9,11 @@
  */
 
 import type { ComponentType, Node } from 'react';
-
+import ReactDOM from 'react-dom';
 import invariant from 'fbjs/lib/invariant';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
-
+import AppContainer from './AppContainer';
 type AppParams = Object;
 type Runnable = {|
   getApplication?: (AppParams) => {| element: Node, getStyleElement: (any) => Node |},
@@ -80,7 +80,16 @@ export default class AppRegistry {
             initialProps: appParameters.initialProps || emptyObject,
             rootTag: appParameters.rootTag
           }
-        )
+        ),
+      createPortal: (appParameters) => {
+        const RootComponent = componentProviderInstrumentationHook(componentProvider);
+        return ReactDOM.createPortal(
+          <AppContainer rootTag={appParameters.rootTag}>
+            <RootComponent {...appParameters.initialProps} />
+          </AppContainer>,
+          appParameters.rootTag
+        );
+      }
     };
     return appKey;
   }
@@ -123,6 +132,10 @@ export default class AppRegistry {
     );
 
     runnables[appKey].run(appParameters);
+  }
+
+  static createPortal(appKey: string, appParameters: Object) {
+    return runnables[appKey].createPortal(appParameters);
   }
 
   static setComponentProviderInstrumentationHook(hook: ComponentProviderInstrumentationHook) {
