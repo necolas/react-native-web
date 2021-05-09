@@ -14,12 +14,12 @@ type StyleModifier = (style: Object) => Object;
 
 const prefixAll: StyleModifier = createPrefixer(staticData);
 
-export const prefixInlineStyles: StyleModifier = style => {
+export const prefixInlineStyles: StyleModifier = (style) => {
   const prefixedStyles = prefixAll(style);
 
   // React@15 removed undocumented support for fallback values in
   // inline-styles. Revert array values to the standard CSS value
-  Object.keys(prefixedStyles).forEach(prop => {
+  Object.keys(prefixedStyles).forEach((prop) => {
     const value = prefixedStyles[prop];
     if (Array.isArray(value)) {
       prefixedStyles[prop] = value[value.length - 1];

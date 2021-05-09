@@ -66,11 +66,11 @@ export default function usePlatformMethods({
   // available to 'setNativeProps' when it is called.
   const ref = useStable(() => (hostNode: any) => {
     if (hostNode != null) {
-      hostNode.measure = callback => UIManager.measure(hostNode, callback);
+      hostNode.measure = (callback) => UIManager.measure(hostNode, callback);
       hostNode.measureLayout = (relativeToNode, success, failure) =>
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-      hostNode.measureInWindow = callback => UIManager.measureInWindow(hostNode, callback);
-      hostNode.setNativeProps = nativeProps => {
+      hostNode.measureInWindow = (callback) => UIManager.measureInWindow(hostNode, callback);
+      hostNode.setNativeProps = (nativeProps) => {
         const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
         setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
       };

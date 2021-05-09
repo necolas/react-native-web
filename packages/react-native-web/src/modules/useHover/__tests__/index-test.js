@@ -25,7 +25,7 @@ function createRoot(rootNode) {
   };
 }
 
-describeWithPointerEvent('useHover', hasPointerEvents => {
+describeWithPointerEvent('useHover', (hasPointerEvents) => {
   let root;
   let rootNode;
 

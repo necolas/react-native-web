@@ -197,7 +197,7 @@ if (canUseDOM) {
 
 function callListeners() {
   const value = { activeModality, modality };
-  listeners.forEach(listener => {
+  listeners.forEach((listener) => {
     listener(value);
   });
 }

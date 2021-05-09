@@ -16,7 +16,7 @@ import View from '../View';
 
 const accessibilityValue = { max: 1, min: 0 };
 
-const createSvgCircle = style => (
+const createSvgCircle = (style) => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
 

@@ -82,7 +82,7 @@ function withRTLState(Component) {
 
     render() {
       const isRTL = Platform === 'ios' ? this.state.isRTL : I18nManager.isRTL;
-      const setRTL = isRTL => this.setState({ isRTL: isRTL });
+      const setRTL = (isRTL) => this.setState({ isRTL: isRTL });
       return <Component isRTL={isRTL} setRTL={setRTL} />;
     }
   };

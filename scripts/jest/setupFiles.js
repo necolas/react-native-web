@@ -10,12 +10,12 @@ window.ResizeObserver = ResizeObserver;
 
 // JSDOM doesn't provide values for 'clientWidth' etc
 Object.defineProperty(window.document.documentElement, 'clientHeight', {
-  get: function() {
+  get: function () {
     return this._jsdomClientWidth || window.innerHeight;
   }
 });
 Object.defineProperty(window.document.documentElement, 'clientWidth', {
-  get: function() {
+  get: function () {
     return this._jsdomClientWidth || window.innerWidth;
   }
 });

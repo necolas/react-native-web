@@ -39,14 +39,14 @@ export default function ScrollViewPage() {
         <View style={styles.buttons}>
           <Button
             onPress={() => {
-              setEnabled(val => !val);
+              setEnabled((val) => !val);
             }}
             title={scrollEnabled ? 'Disable' : 'Enable'}
           />
           <Divider />
           <Button
             onPress={() => {
-              setThrottle(val => (val !== 16 ? 16 : 1000));
+              setThrottle((val) => (val !== 16 ? 16 : 1000));
             }}
             title="Throttle"
           />

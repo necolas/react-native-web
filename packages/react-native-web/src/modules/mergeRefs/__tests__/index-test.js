@@ -15,7 +15,7 @@ describe('modules/mergeRefs', () => {
     let functionRefValue = null;
     let hookRef;
     function Component() {
-      const functionRef = x => {
+      const functionRef = (x) => {
         functionRefValue = x;
       };
       hookRef = React.useRef(null);

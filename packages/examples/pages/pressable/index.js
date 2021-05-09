@@ -7,10 +7,10 @@ export default function PressablePage() {
   const [disabled, setDisabled] = React.useState(false);
   const [delay, setDelay] = React.useState(0);
 
-  const handleEvent = eventName => {
+  const handleEvent = (eventName) => {
     return () => {
       const limit = 10;
-      updateEventLog(state => {
+      updateEventLog((state) => {
         const nextState = state.slice(0, limit - 1);
         nextState.unshift(eventName);
         return nextState;
@@ -29,14 +29,14 @@ export default function PressablePage() {
           disabled={disabled}
           onHoverIn={handleEvent('onHoverIn')}
           onHoverOut={handleEvent('onHoverOut')}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             console.log(e.key);
           }}
           onLongPress={handleEvent('onLongPress - 750ms delay')}
           onPress={handleEvent(`onPress - ${delay}ms delay`)}
           onPressIn={handleEvent(`onPressIn - ${delay}ms delay`)}
           onPressOut={handleEvent(`oPressOut - ${delay}ms delay`)}
-          style={state => [
+          style={(state) => [
             styles.pressable,
             !disabled && state.focused && styles.focused,
             !disabled && state.hovered && styles.hovered,
@@ -49,12 +49,12 @@ export default function PressablePage() {
 
         <View style={styles.buttons}>
           <Button
-            onPress={() => setDisabled(state => !state)}
+            onPress={() => setDisabled((state) => !state)}
             title={disabled ? 'Enable' : 'Disable'}
           />
           <View style={{ width: '1rem' }} />
           <Button
-            onPress={() => setDelay(state => (state === 0 ? 350 : 0))}
+            onPress={() => setDelay((state) => (state === 0 ? 350 : 0))}
             title={delay === 0 ? 'Add delay' : 'Remove delay'}
           />
         </View>

@@ -69,7 +69,7 @@ const Switch: React.AbstractComponent<
   const minWidth = multiplyStyleLengthValue(height, 2);
   const width = styleWidth > minWidth ? styleWidth : minWidth;
   const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
-  const trackCurrentColor = (function() {
+  const trackCurrentColor = (function () {
     if (value === true) {
       if (trackColor != null && typeof trackColor === 'object') {
         return trackColor.true;

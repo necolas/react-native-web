@@ -47,7 +47,7 @@ class DraggableCircle extends React.PureComponent {
     );
   }
 
-  _setCircleRef = circle => {
+  _setCircleRef = (circle) => {
     this.circle = circle;
   };
 
@@ -106,7 +106,7 @@ class LocationXY extends React.Component {
 
   _handlePanResponderMove = (e, gestureState) => {
     console.log(e.nativeEvent.locationX, e.nativeEvent.locationY);
-    this.setState(state => ({
+    this.setState((state) => ({
       ...state,
       translateX: gestureState.dx
     }));

@@ -9,7 +9,7 @@
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-const _requestIdleCallback = function(cb: Function, options?: Object) {
+const _requestIdleCallback = function (cb: Function, options?: Object) {
   return setTimeout(() => {
     const start = Date.now();
     cb({
@@ -21,7 +21,7 @@ const _requestIdleCallback = function(cb: Function, options?: Object) {
   }, 1);
 };
 
-const _cancelIdleCallback = function(id) {
+const _cancelIdleCallback = function (id) {
   clearTimeout(id);
 };
 
@@ -30,7 +30,7 @@ const isSupported = canUseDOM && typeof window.requestIdleCallback !== 'undefine
 const requestIdleCallback: (cb: any, options?: any) => TimeoutID = isSupported
   ? window.requestIdleCallback
   : _requestIdleCallback;
-const cancelIdleCallback: TimeoutID => void = isSupported
+const cancelIdleCallback: (TimeoutID) => void = isSupported
   ? window.cancelIdleCallback
   : _cancelIdleCallback;
 

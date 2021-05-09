@@ -535,7 +535,7 @@ describe('components/Modal', () => {
       React.useEffect(() => spy('mount'), []);
       return (
         <Modal visible={true}>
-          <a ref={ref => (ref ? spy('ref') : spy('noref'))} />
+          <a ref={(ref) => (ref ? spy('ref') : spy('noref'))} />
         </Modal>
       );
     }

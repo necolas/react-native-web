@@ -311,15 +311,15 @@ const ImageWithStatics = (Image: React.AbstractComponent<
 > &
   ImageStatics);
 
-ImageWithStatics.getSize = function(uri, success, failure) {
+ImageWithStatics.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
 };
 
-ImageWithStatics.prefetch = function(uri) {
+ImageWithStatics.prefetch = function (uri) {
   return ImageLoader.prefetch(uri);
 };
 
-ImageWithStatics.queryCache = function(uris) {
+ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 

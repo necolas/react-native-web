@@ -11,10 +11,7 @@ function Link(props) {
       <Text
         {...props}
         accessibilityRole="link"
-        style={StyleSheet.compose(
-          styles.link,
-          props.style
-        )}
+        style={StyleSheet.compose(styles.link, props.style)}
       />
     </NextLink>
   );
@@ -38,7 +35,7 @@ export default function IndexPage() {
       </Text>
 
       <View accessibilityRole="list">
-        {process.env.pages.map(name => (
+        {process.env.pages.map((name) => (
           <View accessibilityRole="listitem" key={name} style={styles.listitem}>
             <Link href={'/' + name} style={styles.pageLink}>
               {name}

@@ -20,7 +20,7 @@ describe('Animated', () => {
     describe('color value', () => {
       test.each([[['#1E1E1E', '#1E1E1F']], [[0x1e1e1e, 0x1e1e1f]]])(
         'can interpolate %s',
-        outputRange => {
+        (outputRange) => {
           const config = {
             inputRange: [0, 1],
             outputRange

@@ -37,7 +37,7 @@ const forwardPropsList = {
   pointerEvents: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = React.forwardRef(
   (props, forwardedRef) => {

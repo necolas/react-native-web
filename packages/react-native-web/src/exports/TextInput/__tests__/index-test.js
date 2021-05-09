@@ -26,7 +26,7 @@ function createEvent(type, data = {}) {
   const event = document.createEvent('CustomEvent');
   event.initCustomEvent(type, true, true);
   if (data != null) {
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       const value = data[key];
       if (key === 'timeStamp' && !value) {
         return;
@@ -290,7 +290,7 @@ describe('components/TextInput', () => {
 
   describe('prop "onKeyPress"', () => {
     test('arrow key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -312,7 +312,7 @@ describe('components/TextInput', () => {
     });
 
     test('backspace key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -334,7 +334,7 @@ describe('components/TextInput', () => {
     });
 
     test('enter key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -356,7 +356,7 @@ describe('components/TextInput', () => {
     });
 
     test('escape key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -378,7 +378,7 @@ describe('components/TextInput', () => {
     });
 
     test('space key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -400,7 +400,7 @@ describe('components/TextInput', () => {
     });
 
     test('tab key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -422,7 +422,7 @@ describe('components/TextInput', () => {
     });
 
     test('text key', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -444,7 +444,7 @@ describe('components/TextInput', () => {
     });
 
     test('modifier keys are included', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -474,7 +474,7 @@ describe('components/TextInput', () => {
     });
 
     test('meta key + Enter calls "onKeyPress"', () => {
-      const onKeyPress = jest.fn(e => {
+      const onKeyPress = jest.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -515,7 +515,7 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', done => {
+    test('single-line input', (done) => {
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );

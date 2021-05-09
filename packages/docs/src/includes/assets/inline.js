@@ -28,12 +28,12 @@ function setupNavigationDrawer() {
     showbtn.classList.remove('hidden');
     navopen = false;
   }
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     if (navopen && !navigation.contains(e.target) && !showbtn.contains(e.target)) {
       closeNavigation();
     }
   });
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', (e) => {
     if (navopen && e.key === 'Escape') {
       closeNavigation();
     }
@@ -51,7 +51,7 @@ function setupNavigationScroll() {
     return;
   }
 
-  window.addEventListener('unload', function() {
+  window.addEventListener('unload', function () {
     const navScrollPosition = scroller.scrollTop;
     localStorage.setItem(navScrollPositionKey, navScrollPosition);
   });
@@ -61,7 +61,7 @@ function setupNavigationScroll() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   setupNavigationDrawer();
   setupNavigationScroll();
 });

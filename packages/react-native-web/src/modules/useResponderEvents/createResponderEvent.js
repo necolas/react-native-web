@@ -96,7 +96,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
   const timestamp = domEvent.timeStamp;
 
   function normalizeTouches(touches) {
-    return Array.prototype.slice.call(touches).map(touch => {
+    return Array.prototype.slice.call(touches).map((touch) => {
       return {
         force: touch.force,
         identifier: normalizeIdentifier(touch.identifier),

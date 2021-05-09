@@ -91,7 +91,7 @@ export default function createOrderedCSSStyleSheet(
      */
     getTextContent(): string {
       return getOrderedGroups(groups)
-        .map(group => {
+        .map((group) => {
           const rules = groups[group].rules;
           return rules.join('\n');
         })

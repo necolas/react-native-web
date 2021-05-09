@@ -16,15 +16,15 @@ import renderApplication, { getApplication } from './renderApplication';
 
 type AppParams = Object;
 type Runnable = {|
-  getApplication?: AppParams => {| element: Node, getStyleElement: any => Node |},
-  run: AppParams => any
+  getApplication?: (AppParams) => {| element: Node, getStyleElement: (any) => Node |},
+  run: (AppParams) => any
 |};
 
 export type ComponentProvider = () => ComponentType<any>;
 export type ComponentProviderInstrumentationHook = (
   component: ComponentProvider
 ) => ComponentType<any>;
-export type WrapperComponentProvider = any => ComponentType<*>;
+export type WrapperComponentProvider = (any) => ComponentType<*>;
 
 export type AppConfig = {
   appKey: string,
@@ -52,7 +52,7 @@ export default class AppRegistry {
   static getApplication(
     appKey: string,
     appParameters?: AppParams
-  ): {| element: Node, getStyleElement: any => Node |} {
+  ): {| element: Node, getStyleElement: (any) => Node |} {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +
@@ -64,13 +64,13 @@ export default class AppRegistry {
 
   static registerComponent(appKey: string, componentProvider: ComponentProvider): string {
     runnables[appKey] = {
-      getApplication: appParameters =>
+      getApplication: (appParameters) =>
         getApplication(
           componentProviderInstrumentationHook(componentProvider),
           appParameters ? appParameters.initialProps : emptyObject,
           wrapperComponentProvider && wrapperComponentProvider(appParameters)
         ),
-      run: appParameters =>
+      run: (appParameters) =>
         renderApplication(
           componentProviderInstrumentationHook(componentProvider),
           wrapperComponentProvider && wrapperComponentProvider(appParameters),

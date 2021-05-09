@@ -11,7 +11,7 @@ const insertStyleElement = () => {
   return element;
 };
 
-const removeStyleElement = element => {
+const removeStyleElement = (element) => {
   document.head.removeChild(element);
 };
 

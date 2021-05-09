@@ -468,7 +468,7 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
     const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
     const { bubbles } = shouldSetCallbacks[2];
 
-    const check = function(id, node, callbackName) {
+    const check = function (id, node, callbackName) {
       const config = getResponderConfig(id);
       const shouldSetCallback = config[callbackName];
       if (shouldSetCallback != null) {
@@ -606,10 +606,10 @@ const documentEventsBubblePhase = [
 export function attachListeners() {
   if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
-    documentEventsBubblePhase.forEach(eventType => {
+    documentEventsBubblePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener);
     });
-    documentEventsCapturePhase.forEach(eventType => {
+    documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
     window.__reactResponderSystemActive = true;

@@ -87,13 +87,13 @@ export default class Dimensions {
     };
 
     if (Array.isArray(listeners['change'])) {
-      listeners['change'].forEach(handler => handler(dimensions));
+      listeners['change'].forEach((handler) => handler(dimensions));
     }
   }
 
   static addEventListener(
     type: DimensionEventListenerType,
-    handler: DimensionsValue => void
+    handler: (DimensionsValue) => void
   ): void {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
@@ -101,10 +101,10 @@ export default class Dimensions {
 
   static removeEventListener(
     type: DimensionEventListenerType,
-    handler: DimensionsValue => void
+    handler: (DimensionsValue) => void
   ): void {
     if (Array.isArray(listeners[type])) {
-      listeners[type] = listeners[type].filter(_handler => _handler !== handler);
+      listeners[type] = listeners[type].filter((_handler) => _handler !== handler);
     }
   }
 }

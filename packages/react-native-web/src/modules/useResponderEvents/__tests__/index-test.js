@@ -35,7 +35,7 @@ describe('useResponderEvents', () => {
     clearPointers();
   });
 
-  testWithPointerType('does nothing when no elements want to respond', pointerType => {
+  testWithPointerType('does nothing when no elements want to respond', (pointerType) => {
     const targetRef = createRef();
     const Component = () => {
       useResponderEvents(targetRef, {
@@ -75,7 +75,7 @@ describe('useResponderEvents', () => {
     const buttons = [1, 2, 3, 4];
     // gesture
     act(() => {
-      buttons.forEach(button => {
+      buttons.forEach((button) => {
         target.pointerdown({
           pointerType: 'mouse',
           button: buttonType.auxiliary,
@@ -105,14 +105,14 @@ describe('useResponderEvents', () => {
     const ignoredModifierKeys = ['altKey', 'ctrlKey'];
     // gesture
     act(() => {
-      ignoredModifierKeys.forEach(modifierKey => {
+      ignoredModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
     expect(getResponderNode()).toBe(null);
     // gesture
     act(() => {
-      acceptedModifierKeys.forEach(modifierKey => {
+      acceptedModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
@@ -170,7 +170,7 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponder: () => true,
-        onResponderStart: jest.fn(e => {
+        onResponderStart: jest.fn((e) => {
           identifier = e.nativeEvent.identifier;
         })
       });
@@ -204,13 +204,13 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('start grants responder to grandParent', pointerType => {
+    testWithPointerType('start grants responder to grandParent', (pointerType) => {
       let grantCurrentTarget;
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(e => {
+        onStartShouldSetResponderCapture: jest.fn((e) => {
           return true;
         }),
-        onResponderGrant: jest.fn(e => {
+        onResponderGrant: jest.fn((e) => {
           grantCurrentTarget = e.currentTarget;
         })
       };
@@ -259,7 +259,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to parent', pointerType => {
+    testWithPointerType('start grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
         onStartShouldSetResponderCapture: jest.fn(() => false)
       };
@@ -308,7 +308,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to child', pointerType => {
+    testWithPointerType('start grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
         onStartShouldSetResponderCapture: jest.fn(() => false)
       };
@@ -373,7 +373,7 @@ describe('useResponderEvents', () => {
       grandParentRef = createRef();
     });
 
-    testWithPointerType('start grants responder to child', pointerType => {
+    testWithPointerType('start grants responder to child', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderGrant: jest.fn()
@@ -422,7 +422,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to parent', pointerType => {
+    testWithPointerType('start grants responder to parent', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => false)
       };
@@ -471,7 +471,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('start grants responder to grandParent', pointerType => {
+    testWithPointerType('start grants responder to grandParent', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => false)
       };
@@ -536,7 +536,7 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('move grants responder to grandParent', pointerType => {
+    testWithPointerType('move grants responder to grandParent', (pointerType) => {
       const grandParentCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => true),
         onResponderGrant: jest.fn()
@@ -586,7 +586,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to parent', pointerType => {
+    testWithPointerType('move grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => false)
       };
@@ -636,7 +636,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to child', pointerType => {
+    testWithPointerType('move grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
         onMoveShouldSetResponderCapture: jest.fn(() => false)
       };
@@ -702,7 +702,7 @@ describe('useResponderEvents', () => {
       grandParentRef = createRef();
     });
 
-    testWithPointerType('move grants responder to child', pointerType => {
+    testWithPointerType('move grants responder to child', (pointerType) => {
       const targetCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => true),
         onResponderGrant: jest.fn()
@@ -752,7 +752,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to parent', pointerType => {
+    testWithPointerType('move grants responder to parent', (pointerType) => {
       const targetCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => false)
       };
@@ -803,7 +803,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('move grants responder to grandParent', pointerType => {
+    testWithPointerType('move grants responder to grandParent', (pointerType) => {
       const targetCallbacks = {
         onMoveShouldSetResponder: jest.fn(() => false)
       };
@@ -867,7 +867,7 @@ describe('useResponderEvents', () => {
       parentRef = createRef();
     });
 
-    testWithPointerType('scroll grants responder to parent if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to parent if a pointer is down', (pointerType) => {
       const parentCallbacks = {
         onScrollShouldSetResponderCapture: jest.fn(() => true),
         onResponderGrant: jest.fn()
@@ -904,7 +904,7 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
     });
 
-    testWithPointerType('scroll grants responder to target if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to target if a pointer is down', (pointerType) => {
       const parentCallbacks = {
         onScrollShouldSetResponderCapture: jest.fn(() => false)
       };
@@ -984,7 +984,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('scroll grants responder to target if a pointer is down', pointerType => {
+    testWithPointerType('scroll grants responder to target if a pointer is down', (pointerType) => {
       const targetCallbacks = {
         onScrollShouldSetResponder: jest.fn(() => true),
         onResponderGrant: jest.fn(),
@@ -1051,7 +1051,7 @@ describe('useResponderEvents', () => {
 
     testWithPointerType(
       'is called after "start" event on the view that became the responder',
-      pointerType => {
+      (pointerType) => {
         const targetCallbacks = {
           onStartShouldSetResponder: jest.fn(() => true),
           onResponderStart: jest.fn()
@@ -1094,10 +1094,10 @@ describe('useResponderEvents', () => {
     });
 
     // Assert that 'onResponderMove' after a move event, is called however the responder became active
-    ['onStartShouldSetResponder', 'onMoveShouldSetResponder'].forEach(shouldSetResponder => {
+    ['onStartShouldSetResponder', 'onMoveShouldSetResponder'].forEach((shouldSetResponder) => {
       testWithPointerType(
         `is called after "move" event on responder (${shouldSetResponder})`,
-        pointerType => {
+        (pointerType) => {
           const targetCallbacks = {
             [shouldSetResponder]: jest.fn(() => true),
             onResponderMove: jest.fn()
@@ -1141,7 +1141,7 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called after "end" event on responder', pointerType => {
+    testWithPointerType('is called after "end" event on responder', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderEnd: jest.fn()
@@ -1183,7 +1183,7 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called after all touches with responder end', pointerType => {
+    testWithPointerType('is called after all touches with responder end', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderRelease: jest.fn()
@@ -1227,7 +1227,7 @@ describe('useResponderEvents', () => {
       targetRef = createRef();
     });
 
-    testWithPointerType('is called if pointer cancels', pointerType => {
+    testWithPointerType('is called if pointer cancels', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderEnd: jest.fn(),
@@ -1260,7 +1260,7 @@ describe('useResponderEvents', () => {
       );
     });
 
-    testWithPointerType('is called if input "select" occurs', pointerType => {
+    testWithPointerType('is called if input "select" occurs', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn(),
@@ -1296,7 +1296,7 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(null);
     });
 
-    testWithPointerType('is called if "selectionchange" occurs', pointerType => {
+    testWithPointerType('is called if "selectionchange" occurs', (pointerType) => {
       const targetCallbacks = {
         onStartShouldSetResponder: jest.fn(() => true),
         onResponderTerminate: jest.fn()
@@ -2722,7 +2722,7 @@ describe('useResponderEvents', () => {
       ]);
       eventLog = [];
       // now let the parent scroll take over
-      targetCallbacks.onResponderTerminationRequest = function() {
+      targetCallbacks.onResponderTerminationRequest = function () {
         eventLog.push('target: onResponderTerminationRequest');
         return true;
       };

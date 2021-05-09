@@ -28,7 +28,7 @@ class Linking {
   _dispatchEvent(event: string, ...data: any) {
     const listeners = this._eventCallbacks[event];
     if (listeners != null && Array.isArray(listeners)) {
-      listeners.map(listener => {
+      listeners.map((listener) => {
         listener(...data);
       });
     }
@@ -52,7 +52,7 @@ class Linking {
    */
   removeEventListener: OnOpenCallback | GenericCallback = (event: string, callback: Callback) => {
     const callbacks = this._eventCallbacks[event];
-    const filteredCallbacks = callbacks.filter(c => c.toString() !== callback.toString());
+    const filteredCallbacks = callbacks.filter((c) => c.toString() !== callback.toString());
     this._eventCallbacks[event] = filteredCallbacks;
   };
 
@@ -85,7 +85,7 @@ class Linking {
   }
 }
 
-const open = url => {
+const open = (url) => {
   if (canUseDOM) {
     const urlToOpen = new URL(url, window.location).toString();
     window.open(urlToOpen, '_blank', 'noopener');

@@ -30,7 +30,7 @@ export default function ViewPage() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setLayoutStyle(l => (l.width === '100%' ? l2 : l1));
+      setLayoutStyle((l) => (l.width === '100%' ? l2 : l1));
     }, 2500);
     return () => {
       clearInterval(interval);

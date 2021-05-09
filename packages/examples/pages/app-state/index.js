@@ -11,8 +11,8 @@ export default function AppStatePage() {
   });
 
   React.useEffect(() => {
-    const handleChange = nextState => {
-      setState(previousState => ({
+    const handleChange = (nextState) => {
+      setState((previousState) => ({
         ...previousState,
         [nextState]: previousState[nextState] + 1
       }));

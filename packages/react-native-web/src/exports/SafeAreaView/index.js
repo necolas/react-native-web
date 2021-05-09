@@ -15,7 +15,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-const cssFunction: 'constant' | 'env' = (function() {
+const cssFunction: 'constant' | 'env' = (function () {
   if (
     canUseDOM &&
     window.CSS &&
@@ -32,16 +32,7 @@ const SafeAreaView: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, ref) => {
   const { style, ...rest } = props;
-  return (
-    <View
-      {...rest}
-      ref={ref}
-      style={StyleSheet.compose(
-        styles.root,
-        style
-      )}
-    />
-  );
+  return <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />;
 });
 
 SafeAreaView.displayName = 'SafeAreaView';
