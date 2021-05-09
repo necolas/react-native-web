@@ -9,6 +9,7 @@
  */
 
 import type { ViewProps, ViewStyle } from '../View/types';
+import type { RefreshControlProps } from '../RefreshControl/';
 
 import createReactClass from 'create-react-class';
 import dismissKeyboard from '../../modules/dismissKeyboard';
@@ -28,7 +29,7 @@ type ScrollViewProps = {
   onContentSizeChange?: (e: any) => void,
   onScroll?: (e: any) => void,
   pagingEnabled?: boolean,
-  refreshControl?: any,
+  refreshControl?: React.Component<RefreshControlProps>,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   stickyHeaderIndices?: Array<number>
@@ -142,7 +143,7 @@ const ScrollView = ((createReactClass({
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
       const style = StyleSheet.flatten(this.props.style);
       const childLayoutProps = ['alignItems', 'justifyContent'].filter(
-        prop => style && style[prop] !== undefined
+        (prop) => style && style[prop] !== undefined
       );
       invariant(
         childLayoutProps.length === 0,
@@ -226,8 +227,8 @@ const ScrollView = ((createReactClass({
     if (refreshControl && !horizontal) {
       return React.cloneElement(
         refreshControl,
-        { style: props.style },
-        <ScrollViewClass {...props} ref={this._setScrollNodeRef} style={baseStyle}>
+        {},
+        <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
           {contentContainer}
         </ScrollViewClass>
       );

@@ -1,105 +1,31 @@
-<!-- import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
-import * as Stories from './examples';
-
-<Meta title="Components|RefreshControl" />
-
-# RefreshControl
-
-This component is used inside a ScrollView or ListView to add pull to refresh functionality. When the ScrollView is at scrollY: 0, swiping down triggers an onRefresh event.
-
-## Props
-
-| Name                    | Type      | Default   |
-| ----------------------- | --------- | --------- |
-| enabled                 | ?boolean  | true      |
-| onRefresh               | ?Function |           |
-| progressBackgroundColor | ?Color    | '#ffffff' |
-| progressViewOffset      | ?number   | 100       |
-| refreshing              | ?boolean  | false     |
-| size                    | ?0 \| 1   | 0         |
-| tintColor               | ?Color    | '#333333' |
-
-### default
-
-With all the default props. (pull to refresh works only on mobile)
-
-<Preview withSource="none">
-  <Story name="defaultprops">
-    <Stories.DefaultProps />
-  </Story>
-</Preview>
-
-### refreshing
-
-When `refreshing` is set to `true`
-
-<Preview withSource="none">
-  <Story name="refreshing">
-    <Stories.Refreshing />
-  </Story>
-</Preview>
-
-### progressBackgroundColor
-
-When `progressBackgroundColor` is set to `red`
-
-<Preview withSource="none">
-  <Story name="progressBackgroundColor">
-    <Stories.BackgroundColor />
-  </Story>
-</Preview>
-
-### progressViewOffset
-
-When `progressViewOffset` is set to `50`. (pull to refresh works only on mobile)
-
-<Preview withSource="none">
-  <Story name="progressViewOffset">
-    <Stories.CustomOffset />
-  </Story>
-</Preview>
-
-### size
-
-When `size` is set to `1`.
-
-<Preview withSource="none">
-  <Story name="size">
-    <Stories.Size />
-  </Story>
-</Preview>
-
-### tintColor
-
-When `tintColor` is set to `green`.
-
-<Preview withSource="none">
-  <Story name="tintColor">
-    <Stories.TintColor />
-  </Story>
-</Preview> -->
-
 ---
-title: ScrollView
+title: RefreshControl
 date: Last Modified
-permalink: /docs/scroll-view/index.html
+permalink: /docs/refresh-control/index.html
 eleventyNavigation:
-  key: ScrollView
+  key: RefreshControl
   parent: Components
 ---
 
 {% import "fragments/macros.html" as macro with context %}
 
 :::lead
-A scrollable view that provides integration with the pointer-locking responder system.
+This component is used inside a ScrollView or ListView to add pull to refresh functionality.
 :::
 
-ScrollView must have a bounded height: either set the height of the view directly (discouraged) or make sure all parent views have bounded height (e.g., apply `{ flex: 1}` down the view stack).
+When the ScrollView is at `scrollY: 0`, swiping down triggers an onRefresh event.
 
 ```jsx
-import { ScrollView } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 
-<ScrollView {...props}>{children}</ScrollView>;
+<ScrollView
+  refreshControl={
+    <RefreshControl onRefresh={handleOnRefresh} />
+  }
+  {...props}
+>
+  {children}
+</ScrollView>;
 ```
 
 ---
@@ -108,92 +34,38 @@ import { ScrollView } from 'react-native';
 
 ### Props
 
-{% call macro.prop('...ViewProps', '?ViewProps') %}
-All the props supported by [View]({{ '/docs/view' | url }}).
+{% call macro.prop('refreshing', 'boolean') %}
+Whether the view should be indicating an active refresh.
 {% endcall %}
 
-{% call macro.prop('contentContainerStyle', '?Style') %}
-These styles will be applied to the scroll view content container which wraps all of the child views.
+{% call macro.prop('enabled', '?boolean = true') %}
+Whether the pull to refresh functionality is enabled.
 {% endcall %}
 
-
-{% call macro.prop('disableScrollViewPanResponder', '?boolean = false') %}
-When `true`, the default `PanResponder` on the `ScrollView` is disabled, and full control over pointers inside the `ScrollView` is left to its child components. This is meant to be used when native "snap-to" scrolling behavior is needed.
+{% call macro.prop('onRefresh', '?() => void') %}
+Called when the view starts refreshing.
 {% endcall %}
 
-{% call macro.prop('horizontal', '?boolean = false') %}
-When `true`, the scroll view's children are arranged horizontally in a row instead of vertically in a column.
+{% call macro.prop('progressBackgroundColor', '?ColorValue') %}
+The background color of the refresh indicator.
 {% endcall %}
 
-{% call macro.prop('keyboardDismissMode', '?("none" | "on-drag")') %}
-Determines whether the keyboard gets dismissed in response to a scroll drag.
+{% call macro.prop('progressViewOffset', '?number = 50') %}
+Progress view top offset.
 {% endcall %}
 
-{% call macro.prop('onContentSizeChange', '?(width: number, height: number) => void') %}
-Called when scrollable content view of the ScrollView changes.
+{% call macro.prop('size', '?RefreshControl.SIZE = RefreshLayoutConsts.SIZE.DEFAULT') %}
+Refer [RefreshControl.SIZE]({{ 'https://reactnative.dev/docs/refreshcontrol#size' | url}})
+Size of the refresh indicator.
 {% endcall %}
 
-{% call macro.prop('onScroll', '?(e: ScrollEvent) => void') %}
-Called during scrolling. The frequency of the events can be controlled using the `scrollEventThrottle` prop.
-{% endcall %}
-
-{% call macro.prop('pagingEnabled', '?boolean = false') %}
-When `true`, the scroll view snaps to individual items in the list when scrolling.
-{% endcall %}
-
-{% call macro.prop('scrollEnabled', '?boolean = true') %}
-When `false`, the content does not scroll.
-{% endcall %}
-
-{% call macro.prop('scrollEventThrottle', '?number = 0') %}
-This controls how often the scroll event will be fired while scrolling (as a time interval in ms). A lower number yields better accuracy for code that is tracking the scroll position, but can lead to scroll performance problems. The default value is `0`, which means the scroll event will be sent only once each time the view is scrolled.
-{% endcall %}
-
-{% call macro.prop('stickyHeaderIndices', '?Array<number>') %}
-An array of child indices determining which children get docked to the top of the screen when scrolling. For example, passing `stickyHeaderIndices={0}` will cause the first child to be fixed to the top of the scroll view. This property is not supported in conjunction with the `horizontal` prop.
-{% endcall %}
-
-### ScrollEvent
-
-The `nativeEvent` on the event passed to `onScroll` is a custom object of information related to the layout of the ScrollView.
-
-{% call macro.prop('contentOffset', '{ x: number, y: number}') %}
-How far the scroll view is scrolled along each axis.
-{% endcall %}
-
-{% call macro.prop('contentSize', '{ height: number, width: number}') %}
-The size of the scrollable content area.
-{% endcall %}
-
-{% call macro.prop('layoutMeasurement', '{ height: number, width: number}') %}
-The `border-box` height and width of the scroll view.
-{% endcall %}
-
-### Instant methods
-
-{% call macro.prop('getInnerViewNode', '() => void') %}
-Returns a reference to the underlying content container DOM node within the `ScrollView`.
-{% endcall %}
-
-{% call macro.prop('getScrollableNode', '() => void') %}
-Returns a reference to the underlying scrollable DOM node.
-{% endcall %}
-
-{% call macro.prop('getScrollResponder', '() => void') %}
-Returns a reference to the underlying scroll responder, which supports operations like `scrollTo()`. All `ScrollView`-like components should implement this method so that they can be composed while providing access to the underlying scroll responder's methods.
-{% endcall %}
-
-{% call macro.prop('scrollTo', '(options?: { x: number, y: number, animated: boolean }) => void') %}
-Scrolls to a given `x`, `y` offset (animation depends on browser support for scroll-behavior).
-{% endcall %}
-
-{% call macro.prop('scrollToEnd', '(options?: { animated: boolean }) => void') %}
-Scrolls to the end of the scroll view.
+{% call macro.prop('tintColor', '?ColorValue') %}
+The color of the refresh indicator.
 {% endcall %}
 
 ---
 
 ## Examples
 
-{{ macro.codesandbox('scroll-view') }}
+{{ macro.codesandbox('refresh-control') }}
 

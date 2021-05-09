@@ -14,5 +14,4 @@
 [libs]
 
 [options]
-esproposal.optional_chaining=enable
 munge_underscores=true

@@ -39,9 +39,9 @@ const forwardPropsList = {
   pointerEvents: true
 };
 
-const pickProps = props => pick(props, forwardPropsList);
+const pickProps = (props) => pick(props, forwardPropsList);
 
-const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = React.forwardRef(
+const View: React.AbstractComponent<ViewProps, HTMLDivElement & PlatformMethods> = React.forwardRef(
   (props, forwardedRef) => {
     const {
       hrefAttrs,
@@ -65,7 +65,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
     } = props;
 
     if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(props.children).forEach(item => {
+      React.Children.toArray(props.children).forEach((item) => {
         if (typeof item === 'string') {
           console.error(
             `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
@@ -97,10 +97,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
       onStartShouldSetResponderCapture
     });
 
-    const style = StyleSheet.compose(
-      hasTextAncestor && styles.inline,
-      props.style
-    );
+    const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
 
     const supportedProps = pickProps(props);
     supportedProps.classList = classList;
