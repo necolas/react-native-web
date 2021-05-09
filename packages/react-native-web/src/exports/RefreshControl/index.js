@@ -9,13 +9,12 @@ import type { RefreshControlProps, RefreshControlIndicatorProps } from './types'
 
 import View from '../View';
 import RefreshControlIndicator from './RefreshControlIndicator';
-import React from 'React';
-import { forwardRef } from 'react';
+import * as React from 'react';
 
 const RefreshControl: React.AbstractComponent<
   RefreshControlProps,
   RefreshControlIndicatorProps
-> = forwardRef(
+> = React.forwardRef(
   (
     {
       enabled,

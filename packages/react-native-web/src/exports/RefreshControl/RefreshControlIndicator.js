@@ -9,7 +9,7 @@ import type { RefreshControlIndicatorProps } from './types';
 
 import View from '../View';
 import StyleSheet from '../StyleSheet';
-import React from 'React';
+import * as React from 'react';
 import { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
 
 const shouldEmitMouseMoveEvent = (lastTick: number) => {
