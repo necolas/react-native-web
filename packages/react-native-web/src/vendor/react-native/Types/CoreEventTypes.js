@@ -13,7 +13,7 @@
 export type SyntheticEvent<T> = $ReadOnly<{|
   bubbles: ?boolean,
   cancelable: ?boolean,
-  currentTarget: number,
+  currentTarget: HTMLElement,
   defaultPrevented: ?boolean,
   dispatchConfig: $ReadOnly<{|
     registrationName: string,
@@ -26,7 +26,7 @@ export type SyntheticEvent<T> = $ReadOnly<{|
   isTrusted: ?boolean,
   nativeEvent: T,
   persist: () => void,
-  target: ?number,
+  target: ?HTMLElement,
   timeStamp: number,
   type: ?string,
 |}>;
@@ -91,7 +91,7 @@ export type PressEvent = ResponderSyntheticEvent<
     locationY: number,
     pageX: number,
     pageY: number,
-    target: ?number,
+    target: ?HTMLElement,
     timestamp: number,
     touches: $ReadOnlyArray<$PropertyType<PressEvent, 'nativeEvent'>>,
   |}>,

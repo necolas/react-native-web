@@ -1,4 +1,4 @@
-# benchmarks
+# Benchmarks
 
 Try the [benchmarks app](https://necolas.github.io/react-native-web/benchmarks) online.
 

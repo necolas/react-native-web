@@ -99,7 +99,7 @@ export function classic(style: Style, name: string): CompilerOutput {
  * Compile simple style object to inline DOM styles.
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
-export function inline(style: Style) {
+export function inline(style: Style): Object {
   return prefixInlineStyles(createReactDOMStyle(style));
 }
 
@@ -107,7 +107,7 @@ export function inline(style: Style) {
  * Create a value string that normalizes different input values with a common
  * output.
  */
-export function stringifyValueWithProperty(value: Value, property: ?string) {
+export function stringifyValueWithProperty(value: Value, property: ?string): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'
@@ -152,17 +152,17 @@ function createAtomicRules(identifier: string, property, value): Rules {
       if (value === 'auto' || value === 'box-only') {
         finalValue = 'auto!important';
         if (value === 'box-only') {
-          const block = createDeclarationBlock({ [property]: 'none' });
+          const block = createDeclarationBlock({ pointerEvents: 'none' });
           rules.push(`${selector}>*${block}`);
         }
       } else if (value === 'none' || value === 'box-none') {
         finalValue = 'none!important';
         if (value === 'box-none') {
-          const block = createDeclarationBlock({ [property]: 'auto' });
+          const block = createDeclarationBlock({ pointerEvents: 'auto' });
           rules.push(`${selector}>*${block}`);
         }
       }
-      const block = createDeclarationBlock({ [property]: finalValue });
+      const block = createDeclarationBlock({ pointerEvents: finalValue });
       rules.push(`${selector}${block}`);
       break;
     }
@@ -173,7 +173,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
       if (value === 'none') {
         rules.push(`${selector}::-webkit-scrollbar{display:none}`);
       }
-      const block = createDeclarationBlock({ [property]: value });
+      const block = createDeclarationBlock({ scrollbarWidth: value });
       rules.push(`${selector}${block}`);
       break;
     }
@@ -218,7 +218,7 @@ function createDeclarationBlock(style: Style) {
 /**
  * An identifier is associated with a unique set of styles.
  */
-function createIdentifier(prefix, name, value) {
+function createIdentifier(prefix: string, name: string, value): string {
   const hashedString = hash(name + stringifyValueWithProperty(value, name));
   return process.env.NODE_ENV !== 'production'
     ? `${prefix}-${name}-${hashedString}`

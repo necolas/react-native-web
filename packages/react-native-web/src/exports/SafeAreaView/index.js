@@ -9,12 +9,11 @@
  */
 
 import type { ViewProps } from '../View';
-import type { Node } from 'react';
 
+import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef } from 'react';
 
 const cssFunction: 'constant' | 'env' = (function() {
   if (
@@ -28,9 +27,11 @@ const cssFunction: 'constant' | 'env' = (function() {
   return 'env';
 })();
 
-const SafeAreaView = forwardRef<ViewProps, Node>((props, ref) => {
+const SafeAreaView: React.AbstractComponent<
+  ViewProps,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, ref) => {
   const { style, ...rest } = props;
-
   return (
     <View
       {...rest}

@@ -8,14 +8,17 @@
  * @flow
  */
 
-import type { ComponentType } from 'react';
+import type { ComponentType, Node } from 'react';
 
 import invariant from 'fbjs/lib/invariant';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
 
-const emptyObject = {};
-const runnables = {};
+type AppParams = Object;
+type Runnable = {|
+  getApplication?: AppParams => {| element: Node, getStyleElement: any => Node |},
+  run: AppParams => any
+|};
 
 export type ComponentProvider = () => ComponentType<any>;
 export type ComponentProviderInstrumentationHook = (
@@ -23,17 +26,20 @@ export type ComponentProviderInstrumentationHook = (
 ) => ComponentType<any>;
 export type WrapperComponentProvider = any => ComponentType<*>;
 
-let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook = (
-  component: ComponentProvider
-) => component();
-let wrapperComponentProvider: ?WrapperComponentProvider;
-
 export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
   run?: Function,
   section?: boolean
 };
+
+const emptyObject = {};
+const runnables: {| [appKey: string]: Runnable |} = {};
+
+let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook = (
+  component: ComponentProvider
+) => component();
+let wrapperComponentProvider: ?WrapperComponentProvider;
 
 /**
  * `AppRegistry` is the JS entry point to running all React Native apps.
@@ -43,7 +49,10 @@ export default class AppRegistry {
     return Object.keys(runnables);
   }
 
-  static getApplication(appKey: string, appParameters?: Object): string {
+  static getApplication(
+    appKey: string,
+    appParameters?: AppParams
+  ): {| element: Node, getStyleElement: any => Node |} {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +

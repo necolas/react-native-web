@@ -3,7 +3,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "react-native-web",
-  "version": "0.14.10",
+  "version": "0.16.2",
   "description": "React Native for Web",
   "module": "dist/index.js",
   "main": "dist/cjs/index.js",
@@ -17,18 +17,18 @@
   ],
   "dependencies": {
     "array-find-index": "^1.0.2",
-    "create-react-class": "^15.6.2",
+    "create-react-class": "^15.7.0",
     "deep-assign": "^3.0.0",
-    "fbjs": "^1.0.0",
-    "hyphenate-style-name": "^1.0.3",
-    "inline-style-prefixer": "^5.1.0",
+    "fbjs": "^3.0.0",
+    "hyphenate-style-name": "^1.0.4",
+    "inline-style-prefixer": "^6.0.0",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
     "react-timer-mixin": "^0.13.4"
   },
   "peerDependencies": {
-    "react": ">=16.5.1",
-    "react-dom": ">=16.5.1"
+    "react": ">=17.0.1",
+    "react-dom": ">=17.0.1"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",

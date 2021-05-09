@@ -32,13 +32,15 @@ function textShadowReducer(resolvedStyle, style) {
   if (
     color &&
     (height !== 0 || width !== 0 || radius !== 0) &&
-    (offsetX != null && offsetY != null && blurRadius != null)
+    offsetX != null &&
+    offsetY != null &&
+    blurRadius != null
   ) {
     resolvedStyle.textShadow = `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 }
 
-const createCompileableStyle = (styles: Object) => {
+const createCompileableStyle = (styles: Object): Object => {
   const {
     shadowColor,
     shadowOffset,

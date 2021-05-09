@@ -8,12 +8,13 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from './types';
 
 import * as React from 'react';
-import { forwardRef, useContext, useRef } from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -23,122 +24,108 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 
 const forwardPropsList = {
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  accessible: true,
-  children: true,
-  classList: true,
-  disabled: true,
-  importantForAccessibility: true,
-  nativeID: true,
-  onBlur: true,
-  onClick: true,
-  onClickCapture: true,
-  onContextMenu: true,
-  onFocus: true,
-  onKeyDown: true,
-  onKeyUp: true,
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true,
-  pointerEvents: true,
-  ref: true,
-  style: true,
-  testID: true,
-  // unstable
-  dataSet: true,
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true,
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  href: true,
+  lang: true,
   onScroll: true,
   onWheel: true,
-  href: true,
-  rel: true,
-  target: true
+  pointerEvents: true
 };
 
 const pickProps = props => pick(props, forwardPropsList);
 
-const View = forwardRef<ViewProps, *>((props, forwardedRef) => {
-  const {
-    onLayout,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  } = props;
+const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = React.forwardRef(
+  (props, forwardedRef) => {
+    const {
+      hrefAttrs,
+      onLayout,
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
+    } = props;
 
-  if (process.env.NODE_ENV !== 'production') {
-    React.Children.toArray(props.children).forEach(item => {
-      if (typeof item === 'string') {
-        console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
-      }
+    if (process.env.NODE_ENV !== 'production') {
+      React.Children.toArray(props.children).forEach(item => {
+        if (typeof item === 'string') {
+          console.error(
+            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+          );
+        }
+      });
+    }
+
+    const hasTextAncestor = React.useContext(TextAncestorContext);
+    const hostRef = React.useRef(null);
+
+    useElementLayout(hostRef, onLayout);
+    useResponderEvents(hostRef, {
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
     });
+
+    const style = StyleSheet.compose(
+      hasTextAncestor && styles.inline,
+      props.style
+    );
+
+    const supportedProps = pickProps(props);
+    supportedProps.classList = classList;
+    supportedProps.style = style;
+    if (props.href != null && hrefAttrs != null) {
+      const { download, rel, target } = hrefAttrs;
+      if (download != null) {
+        supportedProps.download = download;
+      }
+      if (rel != null) {
+        supportedProps.rel = rel;
+      }
+      if (typeof target === 'string') {
+        supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+      }
+    }
+
+    const platformMethodsRef = usePlatformMethods(supportedProps);
+    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+
+    supportedProps.ref = setRef;
+
+    return createElement('div', supportedProps);
   }
-
-  const hasTextAncestor = useContext(TextAncestorContext);
-  const hostRef = useRef(null);
-
-  useElementLayout(hostRef, onLayout);
-  useResponderEvents(hostRef, {
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  });
-
-  const style = StyleSheet.compose(
-    hasTextAncestor && styles.inline,
-    props.style
-  );
-
-  const supportedProps = pickProps(props);
-  supportedProps.classList = classList;
-  supportedProps.style = style;
-
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
-
-  supportedProps.ref = setRef;
-
-  return createElement('div', supportedProps);
-});
+);
 
 View.displayName = 'View';
 

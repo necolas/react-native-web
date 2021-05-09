@@ -11,7 +11,7 @@
 let clipboardAvailable;
 
 export default class Clipboard {
-  static isAvailable() {
+  static isAvailable(): boolean {
     if (clipboardAvailable === undefined) {
       clipboardAvailable =
         typeof document.queryCommandSupported === 'function' &&
@@ -24,7 +24,7 @@ export default class Clipboard {
     return Promise.resolve('');
   }
 
-  static setString(text: string) {
+  static setString(text: string): boolean {
     let success = false;
     const body = document.body;
 

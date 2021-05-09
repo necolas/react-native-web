@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,24 +7,43 @@
  * @flow
  * @format
  */
+
 'use strict';
 
 import AnimatedValue from '../nodes/AnimatedValue';
 import AnimatedValueXY from '../nodes/AnimatedValueXY';
+import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
 import Animation from './Animation';
 import SpringConfig from '../SpringConfig';
 
 import invariant from 'fbjs/lib/invariant';
-import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+
+import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
 
 import type {AnimationConfig, EndCallback} from './Animation';
 
-export type SpringAnimationConfig = AnimationConfig & {
-  toValue: number | AnimatedValue | {x: number, y: number} | AnimatedValueXY,
+export type SpringAnimationConfig = {
+  ...AnimationConfig,
+  toValue:
+    | number
+    | AnimatedValue
+    | {
+        x: number,
+        y: number,
+        ...
+      }
+    | AnimatedValueXY
+    | AnimatedInterpolation,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
-  velocity?: number | {x: number, y: number},
+  velocity?:
+    | number
+    | {
+        x: number,
+        y: number,
+        ...
+      },
   bounciness?: number,
   speed?: number,
   tension?: number,
@@ -35,8 +54,9 @@ export type SpringAnimationConfig = AnimationConfig & {
   delay?: number,
 };
 
-export type SpringAnimationConfigSingle = AnimationConfig & {
-  toValue: number | AnimatedValue,
+export type SpringAnimationConfigSingle = {
+  ...AnimationConfig,
+  toValue: number | AnimatedValue | AnimatedInterpolation,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
@@ -137,7 +157,18 @@ class SpringAnimation extends Animation {
     invariant(this._mass > 0, 'Mass value must be greater than 0');
   }
 
-  __getNativeAnimationConfig() {
+  __getNativeAnimationConfig(): {|
+    damping: number,
+    initialVelocity: number,
+    iterations: number,
+    mass: number,
+    overshootClamping: boolean,
+    restDisplacementThreshold: number,
+    restSpeedThreshold: number,
+    stiffness: number,
+    toValue: any,
+    type: $TEMPORARY$string<'spring'>,
+  |} {
     return {
       type: 'spring',
       overshootClamping: this._overshootClamping,

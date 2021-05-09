@@ -1,23 +1,31 @@
 {
   "private": true,
   "name": "docs",
-  "version": "0.14.10",
+  "version": "0.16.2",
+  "description": "Documentation website for React Native for Web",
   "scripts": {
-    "build": "build-storybook --docs -o ./dist -c ./.storybook",
-    "start": "start-storybook --docs -p 9001 -c ./.storybook",
-    "release": "yarn build && git checkout gh-pages && rm -rf ../../docs && mv dist ../../docs && git add -A && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -"
+    "dev": "eleventy --serve",
+    "build": "ELEVENTY_PRODUCTION=true eleventy",
+    "debug": "DEBUG=* eleventy"
   },
-  "dependencies": {
-    "@storybook/addon-docs": "^5.3.9",
-    "@storybook/addon-options": "^5.3.9",
-    "@storybook/cli": "^5.3.9",
-    "@storybook/react": "^5.3.9",
-    "@storybook/theming": "^5.3.9",
-    "react-native-web": "0.14.10"
-  },
+  "homepage": "https://github.com/necolas/react-native-web",
   "devDependencies": {
-    "babel-plugin-react-native-web": "0.14.10",
-    "url-loader": "^3.0.0",
-    "webpack": "^4.41.5"
+    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy-navigation": "^0.1.6",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.5",
+    "csso": "^4.2.0",
+    "eleventy-plugin-svg-contents": "^0.7.0",
+    "eleventy-plugin-toc": "^1.1.0",
+    "html-minifier": "^4.0.0",
+    "markdown-it": "^12.0.4",
+    "markdown-it-anchor": "^7.0.0",
+    "markdown-it-attrs": "^4.0.0",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.0",
+    "markdown-it-footnote": "^3.0.2",
+    "markdown-it-for-inline": "^0.1.1",
+    "markdown-it-task-lists": "^2.1.1",
+    "twemoji": "*",
+    "uglify-es": "^3.3.9"
   }
 }

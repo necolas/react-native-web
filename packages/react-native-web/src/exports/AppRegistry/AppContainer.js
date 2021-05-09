@@ -8,22 +8,20 @@
  * @flow
  */
 
-import type { ComponentType, Context } from 'react';
-
+import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { createContext } from 'react';
 
 type Props = {
-  WrapperComponent?: ?ComponentType<*>,
+  WrapperComponent?: ?React.ComponentType<*>,
   // $FlowFixMe
   children?: React.Children,
   rootTag: any
 };
 
-const RootTagContext: Context<any> = createContext(null);
+const RootTagContext: React.Context<any> = React.createContext(null);
 
-export default function AppContainer(props: Props) {
+export default function AppContainer(props: Props): React.Node {
   const { children, WrapperComponent } = props;
 
   let innerView = (

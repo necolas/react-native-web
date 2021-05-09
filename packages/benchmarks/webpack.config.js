@@ -38,8 +38,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: false,
-            presets: [babelPreset],
-            plugins: ['styled-jsx/babel']
+            presets: [babelPreset]
           }
         }
       }

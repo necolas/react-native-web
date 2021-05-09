@@ -78,7 +78,7 @@ export function getResponderPaths(
 /**
  * Walk the paths and find the first common ancestor
  */
-export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>) {
+export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>): any {
   let pathALength = pathA.length;
   let pathBLength = pathB.length;
   if (
@@ -146,7 +146,7 @@ export function hasTargetTouches(target: any, touches: any): boolean {
  * Ignore 'selectionchange' events that don't correspond with a person's intent to
  * select text.
  */
-export function hasValidSelection(domEvent: any) {
+export function hasValidSelection(domEvent: any): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }

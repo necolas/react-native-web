@@ -12,7 +12,7 @@ describe('apis/I18nManager', () => {
 
     describe('isRTL', () => {
       test('is false', () => {
-        expect(I18nManager.isRTL).toBe(false);
+        expect(I18nManager.getConstants().isRTL).toBe(false);
         expect(getDocumentDir()).toEqual('ltr');
       });
     });
@@ -24,12 +24,12 @@ describe('apis/I18nManager', () => {
 
       test('when set to false, "isRTL" is false', () => {
         I18nManager.forceRTL(false);
-        expect(I18nManager.isRTL).toBe(false);
+        expect(I18nManager.getConstants().isRTL).toBe(false);
         expect(getDocumentDir()).toEqual('ltr');
       });
       test('when set to true, "isRTL" is true', () => {
         I18nManager.forceRTL(true);
-        expect(I18nManager.isRTL).toBe(true);
+        expect(I18nManager.getConstants().isRTL).toBe(true);
         expect(getDocumentDir()).toEqual('rtl');
       });
     });
@@ -41,11 +41,11 @@ describe('apis/I18nManager', () => {
 
       test('when set to false, "doLeftAndRightSwapInRTL" is false', () => {
         I18nManager.swapLeftAndRightInRTL(false);
-        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(false);
+        expect(I18nManager.getConstants().doLeftAndRightSwapInRTL).toBe(false);
       });
       test('when set to true, "doLeftAndRightSwapInRTL" is true', () => {
         I18nManager.swapLeftAndRightInRTL(true);
-        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(true);
+        expect(I18nManager.getConstants().doLeftAndRightSwapInRTL).toBe(true);
       });
     });
   });
@@ -61,7 +61,7 @@ describe('apis/I18nManager', () => {
 
     describe('isRTL', () => {
       test('is true', () => {
-        expect(I18nManager.isRTL).toBe(true);
+        expect(I18nManager.getConstants().isRTL).toBe(true);
         expect(getDocumentDir()).toEqual('rtl');
       });
     });
@@ -73,12 +73,12 @@ describe('apis/I18nManager', () => {
 
       test('when set to false, "isRTL" is false', () => {
         I18nManager.allowRTL(false);
-        expect(I18nManager.isRTL).toBe(false);
+        expect(I18nManager.getConstants().isRTL).toBe(false);
         expect(getDocumentDir()).toEqual('ltr');
       });
       test('when set to true, "isRTL" is true', () => {
         I18nManager.allowRTL(true);
-        expect(I18nManager.isRTL).toBe(true);
+        expect(I18nManager.getConstants().isRTL).toBe(true);
         expect(getDocumentDir()).toEqual('rtl');
       });
     });
@@ -90,12 +90,12 @@ describe('apis/I18nManager', () => {
 
       test('when set to false, "isRTL" is true', () => {
         I18nManager.forceRTL(false);
-        expect(I18nManager.isRTL).toBe(true);
+        expect(I18nManager.getConstants().isRTL).toBe(true);
         expect(getDocumentDir()).toEqual('rtl');
       });
       test('when set to true, "isRTL" is true', () => {
         I18nManager.forceRTL(true);
-        expect(I18nManager.isRTL).toBe(true);
+        expect(I18nManager.getConstants().isRTL).toBe(true);
         expect(getDocumentDir()).toEqual('rtl');
       });
     });
@@ -107,11 +107,11 @@ describe('apis/I18nManager', () => {
 
       test('when set to false, "doLeftAndRightSwapInRTL" is false', () => {
         I18nManager.swapLeftAndRightInRTL(false);
-        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(false);
+        expect(I18nManager.getConstants().doLeftAndRightSwapInRTL).toBe(false);
       });
       test('when set to true, "doLeftAndRightSwapInRTL" is true', () => {
         I18nManager.swapLeftAndRightInRTL(true);
-        expect(I18nManager.doLeftAndRightSwapInRTL).toBe(true);
+        expect(I18nManager.getConstants().doLeftAndRightSwapInRTL).toBe(true);
       });
     });
   });

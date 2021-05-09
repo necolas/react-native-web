@@ -385,7 +385,24 @@ const PanResponder = {
    *  accordingly. (numberActiveTouches) may not be totally accurate unless you
    *  are the responder.
    */
-  create(config: PanResponderConfig) {
+  create(config: PanResponderConfig): {|
+  getInteractionHandle: () => ?number,
+  panHandlers: {|
+    onClickCapture: (event: any) => void,
+    onMoveShouldSetResponder: (event: PressEvent) => boolean,
+    onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
+    onResponderEnd: (event: PressEvent) => void,
+    onResponderGrant: (event: PressEvent) => boolean,
+    onResponderMove: (event: PressEvent) => void,
+    onResponderReject: (event: PressEvent) => void,
+    onResponderRelease: (event: PressEvent) => void,
+    onResponderStart: (event: PressEvent) => void,
+    onResponderTerminate: (event: PressEvent) => void,
+    onResponderTerminationRequest: (event: PressEvent) => boolean,
+    onStartShouldSetResponder: (event: PressEvent) => boolean,
+    onStartShouldSetResponderCapture: (event: PressEvent) => boolean,
+  |},
+|} {
     const interactionState: InteractionState = {
       handle: null,
       shouldCancelClick: false,
@@ -432,6 +449,15 @@ const PanResponder = {
 
       onMoveShouldSetResponderCapture(event: PressEvent): boolean {
         const touchHistory = event.touchHistory;
+        // Responder system incorrectly dispatches should* to current responder
+        // Filter out any touch moves past the first one - we would have
+        // already processed multi-touch geometry during the first event.
+        if (
+          gestureState._accountsForMovesUpTo ===
+          touchHistory.mostRecentTimeStamp
+        ) {
+          return false;
+        }
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);
         return config.onMoveShouldSetPanResponderCapture
           ? config.onMoveShouldSetPanResponderCapture(event, gestureState)
@@ -489,6 +515,14 @@ const PanResponder = {
 
       onResponderMove(event: PressEvent): void {
         const touchHistory = event.touchHistory;
+        // Guard against the dispatch of two touch moves when there are two
+        // simultaneously changed touches.
+        if (
+          gestureState._accountsForMovesUpTo ===
+          touchHistory.mostRecentTimeStamp
+        ) {
+          return;
+        }
         // Filter out any touch moves past the first one - we would have
         // already processed multi-touch geometry during the first event.
         PanResponder._updateGestureStateOnMove(gestureState, touchHistory);

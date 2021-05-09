@@ -72,6 +72,7 @@ describe('components/Pressable', () => {
       ));
     });
     const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.focus();
@@ -79,7 +80,7 @@ describe('components/Pressable', () => {
     expect(onFocus).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
-      target.blur();
+      body.focus({ relatedTarget: target.node });
     });
     expect(onBlur).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
@@ -87,11 +88,15 @@ describe('components/Pressable', () => {
 
   test('hover interaction', () => {
     let container;
+    const onHoverIn = jest.fn();
+    const onHoverOut = jest.fn();
     const ref = React.createRef();
     act(() => {
       ({ container } = render(
         <Pressable
           children={({ hovered }) => (hovered ? <div data-testid="hover-content" /> : null)}
+          onHoverIn={onHoverIn}
+          onHoverOut={onHoverOut}
           ref={ref}
           style={({ hovered }) => [hovered && { outline: 'hover-ring' }]}
         />
@@ -102,15 +107,18 @@ describe('components/Pressable', () => {
     act(() => {
       target.pointerover();
     });
+    expect(onHoverIn).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerout();
     });
+    expect(onHoverOut).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('press interaction', () => {
     let container;
+    const onContextMenu = jest.fn();
     const onPress = jest.fn();
     const onPressIn = jest.fn();
     const onPressOut = jest.fn();
@@ -119,6 +127,7 @@ describe('components/Pressable', () => {
       ({ container } = render(
         <Pressable
           children={({ pressed }) => (pressed ? <div data-testid="press-content" /> : null)}
+          onContextMenu={onContextMenu}
           onPress={onPress}
           onPressIn={onPressIn}
           onPressOut={onPressOut}
@@ -142,6 +151,10 @@ describe('components/Pressable', () => {
     expect(onPressOut).toBeCalled();
     expect(onPress).toBeCalled();
     expect(container.firstChild).toMatchSnapshot();
+    act(() => {
+      target.contextmenu({});
+    });
+    expect(onContextMenu).toBeCalled();
   });
 
   describe('prop "ref"', () => {

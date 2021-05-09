@@ -3,12 +3,12 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "babel-plugin-react-native-web",
-  "version": "0.14.10",
+  "version": "0.16.2",
   "description": "Babel plugin for React Native for Web",
   "main": "index.js",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-tester": "^7.0.4"
+    "@babel/core": "^7.12.13",
+    "babel-plugin-tester": "^10.0.0"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",

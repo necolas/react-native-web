@@ -174,7 +174,7 @@ type ResponderInstance = ActiveResponderInstance | EmptyResponderInstance;
 export type ResponderConfig = {
   // Direct responder events dispatched directly to responder. Do not bubble.
   onResponderEnd?: ?(e: ResponderEvent) => void,
-  onResponderGrant?: ?(e: ResponderEvent) => void,
+  onResponderGrant?: ?(e: ResponderEvent) => void | boolean,
   onResponderMove?: ?(e: ResponderEvent) => void,
   onResponderRelease?: ?(e: ResponderEvent) => void,
   onResponderReject?: ?(e: ResponderEvent) => void,
@@ -392,7 +392,7 @@ function eventListener(domEvent: any) {
         // window blur
         (eventType === 'blur' && eventTarget === window) ||
         // responder (or ancestors) blur
-        (eventType === 'blur' && (eventTarget.contains(node) && domEvent.relatedTarget !== node)) ||
+        (eventType === 'blur' && eventTarget.contains(node) && domEvent.relatedTarget !== node) ||
         // native scroll without using a pointer
         (isScrollEvent && trackedTouchCount === 0) ||
         // native scroll on node that is parent of the responder (allow siblings to scroll)

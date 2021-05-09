@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import I18nManager from '../I18nManager';
@@ -76,10 +76,10 @@ const PROPERTIES_VALUE = {
 };
 
 // Invert the sign of a numeric-like value
-const additiveInverse = (value: String | Number) => multiplyStyleLengthValue(value, -1);
+const additiveInverse = (value: string | number) => multiplyStyleLengthValue(value, -1);
 
-const i18nStyle = originalStyle => {
-  const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+const i18nStyle = <T: {| [key: string]: any |}>(originalStyle: T): T => {
+  const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
   const style = originalStyle || emptyObject;
   const frozenProps = {};
   const nextStyle = {};
@@ -97,7 +97,7 @@ const i18nStyle = originalStyle => {
       // convert start/end
       const convertedProp = PROPERTIES_I18N[originalProp];
       prop = isRTL ? PROPERTIES_FLIP[convertedProp] : convertedProp;
-    } else if (isRTL && doLeftAndRightSwapInRTL && PROPERTIES_FLIP[originalProp]) {
+    } else if (isRTL && doLeftAndRightSwapInRTL && (PROPERTIES_FLIP[originalProp]: any)) {
       prop = PROPERTIES_FLIP[originalProp];
     }
 
@@ -123,15 +123,19 @@ const i18nStyle = originalStyle => {
         // convert start/end
         const convertedValue = PROPERTIES_I18N[originalValue];
         value = isRTL ? PROPERTIES_FLIP[convertedValue] : convertedValue;
-      } else if (isRTL && doLeftAndRightSwapInRTL && PROPERTIES_FLIP[originalValue]) {
-        value = PROPERTIES_FLIP[originalValue];
+      } else if (isRTL && doLeftAndRightSwapInRTL) {
+        const flippedValue = PROPERTIES_FLIP[(originalValue: any)];
+        if (flippedValue != null) {
+          value = flippedValue;
+        }
       }
     }
 
     // Create finalized style
     if (isRTL && prop === 'textShadowOffset') {
+      const invertedValue = additiveInverse((value: any).width);
+      (value: any).width = invertedValue;
       nextStyle[prop] = value;
-      nextStyle[prop].width = additiveInverse(value.width);
     } else if (!frozenProps[prop]) {
       nextStyle[prop] = value;
     }
@@ -141,6 +145,7 @@ const i18nStyle = originalStyle => {
     }
   }
 
+  // $FlowIgnore
   return nextStyle;
 };
 

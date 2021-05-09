@@ -10,7 +10,6 @@
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef, useRef } from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 import useMergeRefs from '../../modules/useMergeRefs';
@@ -70,31 +69,25 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
+const ScrollViewBase: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, forwardedRef) => {
   const {
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    children,
-    importantForAccessibility,
-    nativeID,
-    onLayout,
     onScroll,
     onTouchMove,
     onWheel,
-    pointerEvents,
     scrollEnabled = true,
     scrollEventThrottle = 0,
     showsHorizontalScrollIndicator,
     showsVerticalScrollIndicator,
     style,
-    dataSet,
-    testID
+    ...rest
   } = props;
 
-  const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = useRef(null);
-  const scrollRef = useRef(null);
+  const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
+  const scrollTimeout = React.useRef(null);
+  const scrollRef = React.useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
     return (e: Object) => {
@@ -153,25 +146,16 @@ const ScrollViewBase = forwardRef<Props, *>((props, forwardedRef) => {
 
   return (
     <View
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole={accessibilityRole}
-      accessibilityState={accessibilityState}
-      children={children}
-      dataSet={dataSet}
-      importantForAccessibility={importantForAccessibility}
-      nativeID={nativeID}
-      onLayout={onLayout}
+      {...rest}
       onScroll={handleScroll}
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
-      pointerEvents={pointerEvents}
       ref={useMergeRefs(scrollRef, forwardedRef)}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
         hideScrollbar && styles.hideScrollbar
       ]}
-      testID={testID}
     />
   );
 });

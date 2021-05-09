@@ -80,7 +80,6 @@ const createReactDOMStyle = style => {
 
       switch (prop) {
         // Ignore some React Native styles
-        case 'aspectRatio':
         case 'elevation':
         case 'overlayColor':
         case 'resizeMode':

@@ -8,7 +8,7 @@
  * @flow
  */
 
-import React, { forwardRef, useCallback, useMemo, useEffect, useState } from 'react';
+import * as React from 'react';
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
@@ -69,7 +69,10 @@ function addActiveModal(modalId, listener) {
   notifyActiveModalListeners();
 }
 
-const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
+const Modal: React.AbstractComponent<
+  ModalProps,
+  React.ElementRef<typeof ModalContent>
+> = React.forwardRef((props, forwardedRef) => {
   const {
     animationType,
     children,
@@ -82,25 +85,25 @@ const Modal = forwardRef<ModalProps, *>((props, forwardedRef) => {
 
   // Set a unique model identifier so we can correctly route
   // dismissals and check the layering of modals.
-  const modalId = useMemo(() => uniqueModalIdentifier++, []);
+  const modalId = React.useMemo(() => uniqueModalIdentifier++, []);
 
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = React.useState(false);
 
-  const onDismissCallback = useCallback(() => {
+  const onDismissCallback = React.useCallback(() => {
     removeActiveModal(modalId);
     if (onDismiss) {
       onDismiss();
     }
   }, [modalId, onDismiss]);
 
-  const onShowCallback = useCallback(() => {
+  const onShowCallback = React.useCallback(() => {
     addActiveModal(modalId, setIsActive);
     if (onShow) {
       onShow();
     }
   }, [modalId, onShow]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => removeActiveModal(modalId);
   }, [modalId]);
 

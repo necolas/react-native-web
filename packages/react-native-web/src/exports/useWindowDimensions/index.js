@@ -19,8 +19,9 @@ export default function useWindowDimensions(): DisplayMetrics {
   const [dims, setDims] = useState(() => Dimensions.get('window'));
   useEffect(() => {
     function handleChange({ window }) {
-      // $FlowFixMe
-      setDims(window);
+      if (window != null) {
+        setDims(window);
+      }
     }
     Dimensions.addEventListener('change', handleChange);
     // We might have missed an update between calling `get` in render and

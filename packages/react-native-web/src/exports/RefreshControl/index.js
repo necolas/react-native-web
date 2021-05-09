@@ -10,6 +10,7 @@
 
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
+import type { Node } from 'React';
 
 import View from '../View';
 import RefreshControlIndicator from './RefreshControlIndicator';
@@ -30,7 +31,7 @@ export type RefreshControlIndicatorProps = {
 
 type RefreshControlProps = ViewProps & RefreshControlIndicatorProps;
 
-function RefreshControl(props: RefreshControlProps) {
+function RefreshControl(props: RefreshControlProps): Node {
   const {
     enabled,
     onRefresh,

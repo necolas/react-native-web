@@ -8,29 +8,33 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
 import createElement from '../createElement';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
-import StyleSheet, { type StyleObj } from '../StyleSheet';
-import { forwardRef, useRef } from 'react';
+import StyleSheet from '../StyleSheet';
 
 type PickerProps = {
   ...ViewProps,
-  children?: PickerItem | Array<typeof PickerItem>,
+  children?: typeof PickerItem | Array<typeof PickerItem>,
   enabled?: boolean,
   onValueChange?: (number | string, number) => void,
   selectedValue?: number | string,
-  style?: StyleObj,
+  style?: any,
   /* compat */
-  itemStyle?: StyleObj,
+  itemStyle?: any,
   mode?: string,
   prompt?: string
 };
 
-const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
+const Picker: React.AbstractComponent<
+  PickerProps,
+  HTMLElement & PlatformMethods
+> = React.forwardRef((props, forwardedRef) => {
   const {
     children,
     enabled,
@@ -46,7 +50,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     ...other
   } = props;
 
-  const hostRef = useRef(null);
+  const hostRef = React.useRef(null);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
@@ -55,6 +59,7 @@ const Picker = forwardRef<PickerProps, *>((props, forwardedRef) => {
     }
   }
 
+  // $FlowFixMe
   const supportedProps: any = {
     children,
     disabled: enabled === false ? true : undefined,

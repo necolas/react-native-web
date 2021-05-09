@@ -1,5 +1,5 @@
 const plugin = require('..');
-const pluginTester = require('babel-plugin-tester');
+const pluginTester = require('babel-plugin-tester').default;
 
 const tests = [
   // import react-native
@@ -72,5 +72,6 @@ pluginTester({
     }
   },
   plugin,
+  pluginName: 'Rewrite react-native to react-native-web',
   tests
 });

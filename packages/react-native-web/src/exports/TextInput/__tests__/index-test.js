@@ -2,6 +2,8 @@
 
 import React from 'react';
 import TextInput from '..';
+import { act } from 'react-dom/test-utils';
+import { createEventTarget } from 'dom-event-testing-library';
 import { render } from '@testing-library/react';
 
 function findInput(container) {
@@ -238,9 +240,16 @@ describe('components/TextInput', () => {
 
   test('prop "onBlur"', () => {
     const onBlur = jest.fn();
-    const { container } = render(<TextInput onBlur={onBlur} />);
-    const input = findInput(container);
-    input.dispatchEvent(new window.FocusEvent('blur', {}));
+    const ref = React.createRef();
+    act(() => {
+      render(<TextInput onBlur={onBlur} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
+    act(() => {
+      target.focus();
+      body.focus({ relatedTarget: target.node });
+    });
     expect(onBlur).toHaveBeenCalledTimes(1);
     expect(TextInput.State.currentlyFocusedField()).toBe(null);
   });
@@ -267,11 +276,16 @@ describe('components/TextInput', () => {
 
   test('prop "onFocus"', () => {
     const onFocus = jest.fn();
-    const { container } = render(<TextInput onFocus={onFocus} />);
-    const input = findInput(container);
-    input.focus();
+    const ref = React.createRef();
+    act(() => {
+      render(<TextInput onFocus={onFocus} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    act(() => {
+      target.focus();
+    });
     expect(onFocus).toHaveBeenCalledTimes(1);
-    expect(TextInput.State.currentlyFocusedField()).toBe(input);
+    expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
   });
 
   describe('prop "onKeyPress"', () => {

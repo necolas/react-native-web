@@ -10,9 +10,9 @@
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
 
+import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import React, { forwardRef, useEffect, useRef } from 'react';
 
 type ProgressBarProps = {
   ...ViewProps,
@@ -22,7 +22,10 @@ type ProgressBarProps = {
   trackColor?: ColorValue
 };
 
-const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
+const ProgressBar: React.AbstractComponent<
+  ProgressBarProps,
+  React.ElementRef<typeof View>
+> = React.forwardRef((props, ref) => {
   const {
     color = '#1976D2',
     indeterminate = false,
@@ -34,8 +37,8 @@ const ProgressBar = forwardRef<ProgressBarProps, *>((props, ref) => {
 
   const percentageProgress = progress * 100;
 
-  const progressRef = useRef(null);
-  useEffect(() => {
+  const progressRef = React.useRef(null);
+  React.useEffect(() => {
     const width = indeterminate ? '25%' : `${percentageProgress}%`;
     if (progressRef.current != null) {
       progressRef.current.setNativeProps({

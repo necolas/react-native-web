@@ -63,14 +63,14 @@ class Easing {
   /**
    * A stepping function, returns 1 for any positive value of `n`.
    */
-  static step0(n: number) {
+  static step0(n: number): number {
     return n > 0 ? 1 : 0;
   }
 
   /**
    * A stepping function, returns 1 if `n` is greater than or equal to 1.
    */
-  static step1(n: number) {
+  static step1(n: number): number {
     return n >= 1 ? 1 : 0;
   }
 
@@ -80,7 +80,7 @@ class Easing {
    *
    * http://cubic-bezier.com/#0,0,1,1
    */
-  static linear(t: number) {
+  static linear(t: number): number {
     return t;
   }
 
@@ -103,7 +103,7 @@ class Easing {
    *
    * http://easings.net/#easeInQuad
    */
-  static quad(t: number) {
+  static quad(t: number): number {
     return t * t;
   }
 
@@ -113,7 +113,7 @@ class Easing {
    *
    * http://easings.net/#easeInCubic
    */
-  static cubic(t: number) {
+  static cubic(t: number): number {
     return t * t * t;
   }
 
@@ -123,7 +123,7 @@ class Easing {
    * n = 4: http://easings.net/#easeInQuart
    * n = 5: http://easings.net/#easeInQuint
    */
-  static poly(n: number) {
+  static poly(n: number): (t: number) => number {
     return (t: number) => Math.pow(t, n);
   }
 
@@ -132,7 +132,7 @@ class Easing {
    *
    * http://easings.net/#easeInSine
    */
-  static sin(t: number) {
+  static sin(t: number): number {
     return 1 - Math.cos((t * Math.PI) / 2);
   }
 
@@ -141,7 +141,7 @@ class Easing {
    *
    * http://easings.net/#easeInCirc
    */
-  static circle(t: number) {
+  static circle(t: number): number {
     return 1 - Math.sqrt(1 - t * t);
   }
 
@@ -150,7 +150,7 @@ class Easing {
    *
    * http://easings.net/#easeInExpo
    */
-  static exp(t: number) {
+  static exp(t: number): number {
     return Math.pow(2, 10 * (t - 1));
   }
 

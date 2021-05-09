@@ -212,7 +212,7 @@ export function getModality(): Modality {
 
 export function addModalityListener(
   listener: ({ activeModality: Modality, modality: Modality }) => void
-) {
+): () => void {
   listeners.add(listener);
   return () => {
     listeners.delete(listener);

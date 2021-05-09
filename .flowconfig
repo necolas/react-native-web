@@ -1,23 +1,18 @@
 [version]
-^0.109.0
+^0.148.0
 
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
 <PROJECT_ROOT>/packages/docs/.*
+<PROJECT_ROOT>/packages/examples/.*
 .*/node_modules/@emotion/css/*
 .*/node_modules/babel-plugin-transform-react-remove-prop-types/*
 
 [include]
 
 [libs]
-<PROJECT_ROOT>/types
 
 [options]
-
 esproposal.optional_chaining=enable
-
-suppress_type=$FlowIssue
-suppress_type=$FlowFixMe
-suppress_type=$FlowFixMeProps
-suppress_type=$FlowFixMeState
+munge_underscores=true

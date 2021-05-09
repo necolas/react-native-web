@@ -2,15 +2,11 @@
 
 ## Reporting Issues and Asking Questions
 
-Before opening an issue, please search the [issue
-tracker](https://github.com/necolas/react-native-web/issues) to make sure your
-issue hasn't already been reported. Please note that your issue may be closed
-if it doesn't include the information requested in the issue template.
+Before opening an issue, please search the [issue tracker](https://github.com/necolas/react-native-web/issues) to make sure your issue hasn't already been reported. Please note that your issue may be closed if it doesn't include the information requested in the issue template.
 
 ## Getting started
 
-Visit the [Issue tracker](https://github.com/necolas/react-native-web/issues)
-to find a list of open issues that need attention.
+Visit the [Issue tracker](https://github.com/necolas/react-native-web/issues) to find a list of open issues that need attention.
 
 Fork, then clone the repo:
 
@@ -70,16 +66,23 @@ yarn compile
 yarn compile --watch
 ```
 
-## Documentation and visual tests
+## Documentation
 
-To run the interactive storybook:
+To run the documentation website:
 
 ```
 yarn docs
 ```
 
-When you're also making changes to the 'react-native-web' source files, run this
-command in another process:
+## Examples
+
+To run the examples app:
+
+```
+yarn examples
+```
+
+When you're also making changes to the 'react-native-web' source files, run this command in another process:
 
 ```
 yarn compile --watch
@@ -103,9 +106,7 @@ yarn benchmarks --watch
 
 ### New Features
 
-Please open an issue with a proposal for a new feature or refactoring before
-starting on the work. We don't want you to waste your efforts on a pull request
-that we won't want to accept.
+Please open an issue with a proposal for a new feature or refactoring before starting on the work. We don't want you to waste your efforts on a pull request that we won't want to accept.
 
 ## Pull requests
 
@@ -116,13 +117,17 @@ that we won't want to accept.
 3. If you've changed APIs, update the documentation.
 4. Ensure the tests pass (`yarn test`).
 
+You should see a pre-commit hook run before each commit. If it does not, you may need to reset you Git hookspath:
+
+```
+git config --unset core.hookspath
+```
+
 You can now submit a pull request, referencing any issues it addresses.
 
-Please try to keep your pull request focused in scope and avoid including
-unrelated commits.
+Please try to keep your pull request focused in scope and avoid including unrelated commits.
 
-After you have submitted your pull request, we'll try to get back to you as
-soon as possible. We may suggest some changes or improvements.
+After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
 
 Thank you for contributing!
 
@@ -134,8 +139,7 @@ To commit, publish, and push a final version:
 yarn release <version>
 ```
 
-Release candidates or versions that you'd like to publish to npm, but do not
-want to produce a commit and push it to GitHub:
+Release candidates or versions that you'd like to publish to npm, but do not want to produce a commit and push it to GitHub:
 
 ```
 yarn release <version> --skip-git

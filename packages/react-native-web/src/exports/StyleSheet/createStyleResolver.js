@@ -54,7 +54,7 @@ export default function createStyleResolver() {
   }
 
   function _injectRegisteredStyle(id) {
-    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
     if (!inserted[dir][id]) {
       const style = createCompileableStyle(i18nStyle(flattenStyle(id)));
@@ -145,7 +145,7 @@ export default function createStyleResolver() {
    * Resolves a React Native style object
    */
   function _resolveStyle(style, key) {
-    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
+    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
 
     // faster: memoized
@@ -237,7 +237,9 @@ export default function createStyleResolver() {
       return result;
     },
     resolve,
-    sheet
+    get sheet() {
+      return sheet;
+    }
   };
 }
 

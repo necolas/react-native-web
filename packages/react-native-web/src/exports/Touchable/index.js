@@ -9,6 +9,7 @@
  */
 
 'use strict';
+import type { Node } from 'React';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import BoundingDimensions from './BoundingDimensions';
@@ -401,7 +402,9 @@ const TouchableMixin = {
    * @return {object} State object to be placed inside of
    * `this.state.touchable`.
    */
-  touchableGetInitialState: function() {
+  touchableGetInitialState: function(): {|
+    touchable: {| responderID: null, touchState: void |}
+  |} {
     return {
       touchable: { touchState: undefined, responderID: null }
     };
@@ -411,21 +414,21 @@ const TouchableMixin = {
   /**
    * Must return true if embedded in a native platform scroll view.
    */
-  touchableHandleResponderTerminationRequest: function() {
+  touchableHandleResponderTerminationRequest: function(): boolean {
     return !this.props.rejectResponderTermination;
   },
 
   /**
    * Must return true to start the process of `Touchable`.
    */
-  touchableHandleStartShouldSetResponder: function() {
+  touchableHandleStartShouldSetResponder: function(): boolean {
     return !this.props.disabled;
   },
 
   /**
    * Return true to cancel press on long press.
    */
-  touchableLongPressCancelsPress: function() {
+  touchableLongPressCancelsPress: function(): boolean {
     return true;
   },
 
@@ -761,7 +764,7 @@ const TouchableMixin = {
     this.longPressDelayTimeout = null;
   },
 
-  _isHighlight: function(state: State) {
+  _isHighlight: function(state: State): boolean {
     return (
       state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN
     );
@@ -776,7 +779,7 @@ const TouchableMixin = {
     this.pressInLocation = { pageX, pageY, locationX, locationY };
   },
 
-  _getDistanceBetweenPoints: function(aX: number, aY: number, bX: number, bY: number) {
+  _getDistanceBetweenPoints: function(aX: number, aY: number, bX: number, bY: number): number {
     const deltaX = aX - bX;
     const deltaY = aY - bY;
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -904,7 +907,7 @@ const TouchableMixin = {
     }
   },
 
-  withoutDefaultFocusAndBlur: {}
+  withoutDefaultFocusAndBlur: ({}: { ... })
 };
 
 /**
@@ -928,7 +931,13 @@ const Touchable = {
   /**
    * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
    */
-  renderDebugView: ({ color, hitSlop }: { color: string | number, hitSlop: EdgeInsetsProp }) => {
+  renderDebugView: ({
+    color,
+    hitSlop
+  }: {
+    color: string | number,
+    hitSlop: EdgeInsetsProp
+  }): Node => {
     if (!Touchable.TOUCH_TARGET_DEBUG) {
       return null;
     }

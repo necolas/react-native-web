@@ -27,7 +27,12 @@ const slice = Array.prototype.slice;
  * https://developer.mozilla.org/en-US/docs/Web/API/CSSMediaRule
  * https://gist.github.com/necolas/aa0c37846ad6bd3b05b727b959e82674
  */
-export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
+export default function createOrderedCSSStyleSheet(
+  sheet: ?CSSStyleSheet
+): {|
+  getTextContent: () => string,
+  insert: (cssText: string, groupValue: number) => void
+|} {
   const groups: Groups = {};
   const selectors: Selectors = {};
 
@@ -72,7 +77,7 @@ export default function createOrderedCSSStyleSheet(sheet: ?CSSStyleSheet) {
       // Increment the starting index of all subsequent groups
       for (let i = nextGroupIndex; i < orderedGroups.length; i += 1) {
         const groupNumber = orderedGroups[i];
-        const previousStart = groups[groupNumber].start;
+        const previousStart = groups[groupNumber].start || 0;
         groups[groupNumber].start = previousStart + 1;
       }
     }

@@ -10,11 +10,11 @@
 import createPrefixer from 'inline-style-prefixer/lib/createPrefixer';
 import staticData from './static';
 
-const prefixAll = createPrefixer(staticData);
+type StyleModifier = (style: Object) => Object;
 
-export default prefixAll;
+const prefixAll: StyleModifier = createPrefixer(staticData);
 
-export const prefixInlineStyles = (style: Object) => {
+export const prefixInlineStyles: StyleModifier = style => {
   const prefixedStyles = prefixAll(style);
 
   // React@15 removed undocumented support for fallback values in
@@ -28,3 +28,5 @@ export const prefixInlineStyles = (style: Object) => {
 
   return prefixedStyles;
 };
+
+export default prefixAll;

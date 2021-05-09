@@ -9,6 +9,7 @@
 
 import ReactNativePropRegistry from './ReactNativePropRegistry';
 import flattenStyle from './flattenStyle';
+import validate from './validate';
 
 const absoluteFillObject = {
   position: 'absolute',
@@ -17,12 +18,12 @@ const absoluteFillObject = {
   top: 0,
   bottom: 0
 };
-const absoluteFill = ReactNativePropRegistry.register(absoluteFillObject);
+const absoluteFill: number = ReactNativePropRegistry.register(absoluteFillObject);
 
 const StyleSheet = {
   absoluteFill,
   absoluteFillObject,
-  compose(style1: any, style2: any) {
+  compose(style1: any, style2: any): any {
     if (process.env.NODE_ENV !== 'production') {
       /* eslint-disable prefer-rest-params */
       const len = arguments.length;
@@ -43,13 +44,11 @@ const StyleSheet = {
       return style1 || style2;
     }
   },
-  create(styles: Object) {
+  create(styles: Object): {| [key: string]: number |} {
     const result = {};
     Object.keys(styles).forEach(key => {
       if (process.env.NODE_ENV !== 'production') {
-        const validate = require('./validate');
-        const interopValidate = validate.default ? validate.default : validate;
-        interopValidate(key, styles);
+        validate(key, styles);
       }
       const id = styles[key] && ReactNativePropRegistry.register(styles[key]);
       result[key] = id;

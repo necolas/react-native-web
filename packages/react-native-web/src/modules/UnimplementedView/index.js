@@ -7,6 +7,8 @@
  * @flow
  */
 
+import type { Node } from 'React';
+
 import View from '../../exports/View';
 import React from 'react';
 
@@ -18,7 +20,7 @@ class UnimplementedView extends React.Component<*, *> {
     // Do nothing.
   }
 
-  render() {
+  render(): Node {
     return <View style={[unimplementedViewStyles, this.props.style]}>{this.props.children}</View>;
   }
 }

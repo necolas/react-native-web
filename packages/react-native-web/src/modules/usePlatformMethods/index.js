@@ -57,7 +57,7 @@ export default function usePlatformMethods({
   classList?: Array<string | boolean>,
   style?: GenericStyleProp<*>,
   pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
-}) {
+}): (hostNode: any) => void {
   const previousStyleRef = useRef(null);
   const setNativePropsArgsRef = useRef(null);
   setNativePropsArgsRef.current = { classList, pointerEvents, style };
