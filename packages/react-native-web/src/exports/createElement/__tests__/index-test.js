@@ -111,6 +111,10 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityControls: 'abc' })
       );
       expect(getAttribute(hasValue, 'aria-controls')).toBe('abc');
+      const { container: hasMultipleValues } = render(
+        createElement('div', { accessibilityControls: ['abc', 'def'] })
+      );
+      expect(getAttribute(hasMultipleValues, 'aria-controls')).toBe('abc def');
     });
 
     test('accessibilityCurrent', () => {
@@ -131,6 +135,10 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityDescribedBy: 'abc' })
       );
       expect(getAttribute(hasValue, 'aria-describedby')).toBe('abc');
+      const { container: hasMultipleValues } = render(
+        createElement('div', { accessibilityDescribedBy: ['abc', 'def'] })
+      );
+      expect(getAttribute(hasMultipleValues, 'aria-describedby')).toBe('abc def');
     });
 
     test('accessibilityDetails', () => {
@@ -176,6 +184,10 @@ describe('exports/createElement', () => {
       expect(getAttribute(isEmpty, 'aria-flowto')).toBeNull();
       const { container: hasValue } = render(createElement('div', { accessibilityFlowTo: 'abc' }));
       expect(getAttribute(hasValue, 'aria-flowto')).toBe('abc');
+      const { container: hasMultipleValues } = render(
+        createElement('div', { accessibilityFlowTo: ['abc', 'def'] })
+      );
+      expect(getAttribute(hasMultipleValues, 'aria-flowto')).toBe('abc def');
     });
 
     test('accessibilityHasPopup', () => {
@@ -230,6 +242,10 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityLabelledBy: 'abc' })
       );
       expect(getAttribute(hasValue, 'aria-labelledby')).toBe('abc');
+      const { container: hasMultipleValues } = render(
+        createElement('div', { accessibilityLabelledBy: ['abc', 'def'] })
+      );
+      expect(getAttribute(hasMultipleValues, 'aria-labelledby')).toBe('abc def');
     });
 
     test('accessibilityLevel', () => {
@@ -293,6 +309,10 @@ describe('exports/createElement', () => {
       expect(getAttribute(isEmpty, 'aria-owns')).toBeNull();
       const { container: hasValue } = render(createElement('div', { accessibilityOwns: 'abc' }));
       expect(getAttribute(hasValue, 'aria-owns')).toBe('abc');
+      const { container: hasMultipleValues } = render(
+        createElement('div', { accessibilityOwns: ['abc', 'def'] })
+      );
+      expect(getAttribute(hasMultipleValues, 'aria-owns')).toBe('abc def');
     });
 
     test('accessibilityPlaceholder', () => {
