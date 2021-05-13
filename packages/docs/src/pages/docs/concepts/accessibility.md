@@ -53,7 +53,7 @@ Equivalent to [aria-colindex](https://www.w3.org/TR/wai-aria-1.2/#aria-colindex)
 Equivalent to [aria-colspan](https://www.w3.org/TR/wai-aria-1.2/#aria-colspan).
 {% endcall %}
 
-{% call macro.prop('accessibilityControls', '?string') %}
+{% call macro.prop('accessibilityControls', '?(string | Array<string>)') %}
 Equivalent to [aria-controls](https://www.w3.org/TR/wai-aria-1.2/#aria-controls).
 {% endcall %}
 
@@ -61,7 +61,7 @@ Equivalent to [aria-controls](https://www.w3.org/TR/wai-aria-1.2/#aria-controls)
 Equivalent to [aria-current](https://www.w3.org/TR/wai-aria-1.2/#aria-current).
 {% endcall %}
 
-{% call macro.prop('accessibilityDescribedBy', '?string') %}
+{% call macro.prop('accessibilityDescribedBy', '?(string | Array<string>)') %}
 Equivalent to [aria-describedby](https://www.w3.org/TR/wai-aria-1.2/#aria-describedby).
 {% endcall %}
 
@@ -81,7 +81,7 @@ Equivalent to [aria-errormessage](https://www.w3.org/TR/wai-aria-1.2/#aria-error
 Equivalent to [aria-expanded](https://www.w3.org/TR/wai-aria-1.2/#aria-expanded).
 {% endcall %}
 
-{% call macro.prop('accessibilityFlowTo', '?string') %}
+{% call macro.prop('accessibilityFlowTo', '?(string | Array<string>)') %}
 Equivalent to [aria-flowto](https://www.w3.org/TR/wai-aria-1.2/#aria-flowto).
 {% endcall %}
 
@@ -105,7 +105,7 @@ Equivalent to [aria-keyshortcuts](https://www.w3.org/TR/wai-aria-1.2/#aria-keysh
 Equivalent to [aria-label](https://www.w3.org/TR/wai-aria-1.2/#aria-label).
 {% endcall %}
 
-{% call macro.prop('accessibilityLabelledBy', '?string') %}
+{% call macro.prop('accessibilityLabelledBy', '?(string | Array<string>)') %}
 Equivalent to [aria-labelledby](https://www.w3.org/TR/wai-aria-1.2/#aria-labelledby).
 {% endcall %}
 
@@ -133,7 +133,7 @@ Equivalent to [aria-multiselectable](https://www.w3.org/TR/wai-aria-1.2/#aria-mu
 Equivalent to [aria-orientation](https://www.w3.org/TR/wai-aria-1.2/#aria-orientation).
 {% endcall %}
 
-{% call macro.prop('accessibilityOwns', '?string') %}
+{% call macro.prop('accessibilityOwns', '?(string | Array<string>)') %}
 Equivalent to [aria-owns](https://www.w3.org/TR/wai-aria-1.2/#aria-owns).
 {% endcall %}
 

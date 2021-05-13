@@ -15,6 +15,7 @@ import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
 const hasOwnProperty = Object.prototype.hasOwnProperty;
+const isArray = Array.isArray;
 
 const uppercasePattern = /[A-Z]/g;
 function toHyphenLower(match) {
@@ -22,6 +23,9 @@ function toHyphenLower(match) {
 }
 function hyphenateString(str: string): string {
   return str.replace(uppercasePattern, toHyphenLower);
+}
+function processIDRefList(idRefList: string | Array<string>): string {
+  return isArray(idRefList) ? idRefList.join(' ') : idRefList;
 }
 
 // Reset styles for heading, link, and list DOM elements
@@ -193,13 +197,13 @@ const createDOMProps = (elementType, props) => {
     domProps['aria-colspan'] = accessibilityColumnSpan;
   }
   if (accessibilityControls != null) {
-    domProps['aria-controls'] = accessibilityControls;
+    domProps['aria-controls'] = processIDRefList(accessibilityControls);
   }
   if (accessibilityCurrent != null) {
     domProps['aria-current'] = accessibilityCurrent;
   }
   if (accessibilityDescribedBy != null) {
-    domProps['aria-describedby'] = accessibilityDescribedBy;
+    domProps['aria-describedby'] = processIDRefList(accessibilityDescribedBy);
   }
   if (accessibilityDetails != null) {
     domProps['aria-details'] = accessibilityDetails;
@@ -224,7 +228,7 @@ const createDOMProps = (elementType, props) => {
     domProps['aria-expanded'] = accessibilityExpanded;
   }
   if (accessibilityFlowTo != null) {
-    domProps['aria-flowto'] = accessibilityFlowTo;
+    domProps['aria-flowto'] = processIDRefList(accessibilityFlowTo);
   }
   if (accessibilityHasPopup != null) {
     domProps['aria-haspopup'] = accessibilityHasPopup;
@@ -242,7 +246,7 @@ const createDOMProps = (elementType, props) => {
     domProps['aria-label'] = accessibilityLabel;
   }
   if (accessibilityLabelledBy != null) {
-    domProps['aria-labelledby'] = accessibilityLabelledBy;
+    domProps['aria-labelledby'] = processIDRefList(accessibilityLabelledBy);
   }
   if (accessibilityLevel != null) {
     domProps['aria-level'] = accessibilityLevel;
@@ -263,7 +267,7 @@ const createDOMProps = (elementType, props) => {
     domProps['aria-orientation'] = accessibilityOrientation;
   }
   if (accessibilityOwns != null) {
-    domProps['aria-owns'] = accessibilityOwns;
+    domProps['aria-owns'] = processIDRefList(accessibilityOwns);
   }
   if (accessibilityPlaceholder != null) {
     domProps['aria-placeholder'] = accessibilityPlaceholder;
