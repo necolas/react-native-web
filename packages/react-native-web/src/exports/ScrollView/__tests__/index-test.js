@@ -86,4 +86,21 @@ describe('components/ScrollView', () => {
       expect(typeof node.scrollResponderScrollNativeHandleToKeyboard === 'function').toBe(true);
     });
   });
+
+  describe('prop "refreshControl"', () => {
+    test('without', () => {
+      const { container } = render(<ScrollView style={{ backgroundColor: 'red' }} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('with', () => {
+      const { container } = render(
+        <ScrollView
+          refreshControl={<div id="refresh-control" />}
+          style={{ backgroundColor: 'red' }}
+        />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
 });
