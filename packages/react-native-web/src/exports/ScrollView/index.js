@@ -223,21 +223,17 @@ const ScrollView = ((createReactClass({
 
     invariant(ScrollViewClass !== undefined, 'ScrollViewClass must not be undefined');
 
-    if (refreshControl) {
-      return React.cloneElement(
-        refreshControl,
-        { style: props.style },
-        <ScrollViewClass {...props} ref={this._setScrollNodeRef} style={baseStyle}>
-          {contentContainer}
-        </ScrollViewClass>
-      );
-    }
-
-    return (
+    const scrollView = (
       <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
         {contentContainer}
       </ScrollViewClass>
     );
+
+    if (refreshControl) {
+      return React.cloneElement(refreshControl, { style: props.style }, scrollView);
+    }
+
+    return scrollView;
   },
 
   _handleContentOnLayout(e: Object) {
@@ -284,7 +280,8 @@ const ScrollView = ((createReactClass({
       node.scrollToEnd = this.scrollToEnd;
       node.flashScrollIndicators = this.flashScrollIndicators;
       node.scrollResponderZoomTo = this.scrollResponderZoomTo;
-      node.scrollResponderScrollNativeHandleToKeyboard = this.scrollResponderScrollNativeHandleToKeyboard;
+      node.scrollResponderScrollNativeHandleToKeyboard =
+        this.scrollResponderScrollNativeHandleToKeyboard;
     }
     const ref = mergeRefs(this.props.forwardedRef);
     ref(node);
