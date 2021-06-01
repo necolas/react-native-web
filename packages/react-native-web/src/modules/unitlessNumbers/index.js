@@ -10,6 +10,7 @@
 
 const unitlessNumbers = {
   animationIterationCount: true,
+  aspectRatio: true,
   borderImageOutset: true,
   borderImageSlice: true,
   borderImageWidth: true,

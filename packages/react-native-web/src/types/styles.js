@@ -154,6 +154,7 @@ export type LayoutStyles = {|
     | 'stretch',
   alignItems?: ?('baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
   alignSelf?: ?('auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
+  aspectRatio?: ?number,
   backfaceVisibility?: ?VisiblilityValue,
   borderWidth?: ?DimensionValue,
   borderBottomWidth?: ?DimensionValue,
@@ -216,10 +217,6 @@ export type LayoutStyles = {|
   visibility?: ?VisiblilityValue,
   width?: ?DimensionValue,
   zIndex?: ?number,
-  /**
-   * @platform unsupported
-   */
-  aspectRatio?: ?number,
   /**
    * @platform web
    */

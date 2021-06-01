@@ -39,6 +39,12 @@ describe('StyleSheet/createReactDOMStyle', () => {
     expect(createReactDOMStyle(style)).toMatchSnapshot();
   });
 
+  test('aspectRatio', () => {
+    expect(createReactDOMStyle({ aspectRatio: 9 / 16 })).toEqual({
+      aspectRatio: '0.5625'
+    });
+  });
+
   describe('flexbox styles', () => {
     test('flex: -1', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({

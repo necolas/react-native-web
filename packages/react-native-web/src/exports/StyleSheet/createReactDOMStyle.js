@@ -87,6 +87,11 @@ const createReactDOMStyle = (style) => {
           break;
         }
 
+        case 'aspectRatio': {
+          resolvedStyle[prop] = value.toString();
+          break;
+        }
+
         // TODO: remove once this issue is fixed
         // https://github.com/rofrischmann/inline-style-prefixer/issues/159
         case 'backgroundClip': {
