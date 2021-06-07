@@ -393,6 +393,12 @@ const TouchableMixin = {
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
     this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);
+    // this will clear the target location node
+    this.pressInLocation = null;
+    // this will clear the responderID node
+    this.state.touchable.responderID = null;
+    // this will clear the _touchableNode node
+    this._touchableNode = null
   },
 
   /**
