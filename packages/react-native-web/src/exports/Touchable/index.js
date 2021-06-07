@@ -393,6 +393,10 @@ const TouchableMixin = {
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
     this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);
+    // Clear DOM nodes
+    this.pressInLocation = null;
+    this.state.touchable.responderID = null;
+    this._touchableNode = null;
   },
 
   /**
