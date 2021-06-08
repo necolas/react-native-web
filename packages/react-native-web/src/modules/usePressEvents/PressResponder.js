@@ -224,7 +224,6 @@ export default class PressResponder {
   _longPressDispatched: ?boolean = false;
   _pressDelayTimeout: ?TimeoutID = null;
   _pressOutDelayTimeout: ?TimeoutID = null;
-  _responder: ?any;
   _selectionTerminated: ?boolean;
   _touchActivatePosition: ?$ReadOnly<{|
     pageX: number,
@@ -266,7 +265,6 @@ export default class PressResponder {
       this._cancelPressOutDelayTimeout();
 
       this._longPressDispatched = false;
-      this._responder = event.currentTarget;
       this._selectionTerminated = false;
       this._touchState = NOT_RESPONDER;
       this._isPointerTouch = event.nativeEvent.type === 'touchstart';
@@ -430,7 +428,7 @@ export default class PressResponder {
     if (Transitions[prevState] != null) {
       nextState = Transitions[prevState][signal];
     }
-    if (this._responder == null && signal === RESPONDER_RELEASE) {
+    if (this._touchState === NOT_RESPONDER && signal === RESPONDER_RELEASE) {
       return;
     }
     if (nextState == null || nextState === ERROR) {
