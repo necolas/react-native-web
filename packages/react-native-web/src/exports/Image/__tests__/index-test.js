@@ -29,11 +29,6 @@ describe('components/Image', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  test('prop "accessible"', () => {
-    const { container } = render(<Image accessible={false} />);
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
   test('prop "blurRadius"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const { container } = render(<Image blurRadius={5} defaultSource={defaultSource} />);
@@ -80,6 +75,11 @@ describe('components/Image', () => {
   test('prop "draggable"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const { container } = render(<Image defaultSource={defaultSource} draggable={true} />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('prop "focusable"', () => {
+    const { container } = render(<Image focusable={true} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 

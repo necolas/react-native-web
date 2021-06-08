@@ -515,7 +515,7 @@ describe('exports/createElement', () => {
       const { container: isFalseFocusableRole } = render(
         createElement('div', { accessibilityRole: 'button', focusable: false })
       );
-      expect(getAttribute(isFalseFocusableRole, 'tabindex')).toBeNull();
+      expect(getAttribute(isFalseFocusableRole, 'tabindex')).toBe('-1');
     });
   });
 });

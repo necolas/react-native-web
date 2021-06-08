@@ -346,6 +346,9 @@ const createDOMProps = (elementType, props) => {
   // FOCUS
   // "focusable" indicates that an element may be a keyboard tab-stop.
   const _focusable = focusable != null ? focusable : accessible;
+  if (_focusable === false) {
+    domProps.tabIndex = '-1';
+  }
   if (
     // These native elements are focusable by default
     elementType === 'a' ||

@@ -27,7 +27,7 @@ describe('modules/createDOMProps', () => {
 
       test('when "focusable" is false', () => {
         expect(createProps({ accessibilityRole, focusable: false })).toEqual(
-          expect.not.objectContaining({ tabIndex: '-1' })
+          expect.objectContaining({ tabIndex: '-1' })
         );
       });
 
@@ -58,8 +58,8 @@ describe('modules/createDOMProps', () => {
       });
 
       test('when "focusable" is false', () => {
-        expect(createProps({ accessibilityRole, focusable: false })).not.toEqual(
-          expect.objectContaining({ tabIndex: '0' })
+        expect(createProps({ accessibilityRole, focusable: false })).toEqual(
+          expect.objectContaining({ tabIndex: '-1' })
         );
       });
 
@@ -92,7 +92,9 @@ describe('modules/createDOMProps', () => {
       });
 
       test('when "focusable" is false', () => {
-        expect(createProps({ focusable: false })).toEqual({});
+        expect(createProps({ focusable: false })).toEqual(
+          expect.objectContaining({ tabIndex: '-1' })
+        );
       });
     });
   });

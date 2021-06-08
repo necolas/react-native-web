@@ -35,6 +35,7 @@ exports[`components/Button prop "disabled" 1`] = `
   class="css-view-1dbjc4n r-backgroundColor-11mpjr4 r-borderRadius-1jkafct r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
   role="button"
   style="transition-duration: 0s;"
+  tabindex="-1"
 >
   <div
     class="css-text-901oao r-color-c68hjy r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"

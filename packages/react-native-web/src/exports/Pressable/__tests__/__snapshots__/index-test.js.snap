@@ -132,6 +132,7 @@ exports[`components/Pressable prop "disabled" 1`] = `
 <div
   aria-disabled="true"
   class="css-view-1dbjc4n"
+  tabindex="-1"
 />
 `;
 
