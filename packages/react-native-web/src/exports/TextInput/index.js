@@ -167,25 +167,27 @@ const TextInput: React.AbstractComponent<
   const dimensions = React.useRef({ height: null, width: null });
   const hostRef = React.useRef(null);
 
-  const handleContentSizeChange = React.useCallback(() => {
-    const node = hostRef.current;
-    if (multiline && onContentSizeChange && node != null) {
-      const newHeight = node.scrollHeight;
-      const newWidth = node.scrollWidth;
-      if (newHeight !== dimensions.current.height || newWidth !== dimensions.current.width) {
-        dimensions.current.height = newHeight;
-        dimensions.current.width = newWidth;
-        onContentSizeChange({
-          nativeEvent: {
-            contentSize: {
-              height: dimensions.current.height,
-              width: dimensions.current.width
+  const handleContentSizeChange = React.useCallback(
+    (hostNode) => {
+      if (multiline && onContentSizeChange && hostNode != null) {
+        const newHeight = hostNode.scrollHeight;
+        const newWidth = hostNode.scrollWidth;
+        if (newHeight !== dimensions.current.height || newWidth !== dimensions.current.width) {
+          dimensions.current.height = newHeight;
+          dimensions.current.width = newWidth;
+          onContentSizeChange({
+            nativeEvent: {
+              contentSize: {
+                height: dimensions.current.height,
+                width: dimensions.current.width
+              }
             }
-          }
-        });
+          });
+        }
       }
-    }
-  }, [hostRef, multiline, onContentSizeChange]);
+    },
+    [multiline, onContentSizeChange]
+  );
 
   const imperativeRef = React.useMemo(
     () => (hostNode) => {
@@ -201,7 +203,7 @@ const TextInput: React.AbstractComponent<
         hostNode.isFocused = function () {
           return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
         };
-        handleContentSizeChange();
+        handleContentSizeChange(hostNode);
       }
     },
     [handleContentSizeChange]
@@ -216,9 +218,10 @@ const TextInput: React.AbstractComponent<
   }
 
   function handleChange(e) {
-    const text = e.target.value;
+    const hostNode = e.target;
+    const text = hostNode.value;
     e.nativeEvent.text = text;
-    handleContentSizeChange();
+    handleContentSizeChange(hostNode);
     if (onChange) {
       onChange(e);
     }
@@ -228,26 +231,27 @@ const TextInput: React.AbstractComponent<
   }
 
   function handleFocus(e) {
-    const node = hostRef.current;
+    const hostNode = e.target;
     if (onFocus) {
-      e.nativeEvent.text = e.target.value;
+      e.nativeEvent.text = hostNode.value;
       onFocus(e);
     }
-    if (node != null) {
-      TextInputState._currentlyFocusedNode = node;
+    if (hostNode != null) {
+      TextInputState._currentlyFocusedNode = hostNode;
       if (clearTextOnFocus) {
-        node.value = '';
+        hostNode.value = '';
       }
       if (selectTextOnFocus) {
         // Safari requires selection to occur in a setTimeout
         setTimeout(() => {
-          node.select();
+          hostNode.select();
         }, 0);
       }
     }
   }
 
   function handleKeyDown(e) {
+    const hostNode = e.target;
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
 
@@ -274,8 +278,8 @@ const TextInput: React.AbstractComponent<
         nativeEvent.text = e.target.value;
         onSubmitEditing(e);
       }
-      if (shouldBlurOnSubmit && hostRef.current != null) {
-        hostRef.current.blur();
+      if (shouldBlurOnSubmit && hostNode != null) {
+        hostNode.blur();
       }
     }
   }
