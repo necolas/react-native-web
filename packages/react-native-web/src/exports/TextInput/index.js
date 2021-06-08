@@ -229,12 +229,12 @@ const TextInput: React.AbstractComponent<
 
   function handleFocus(e) {
     const node = hostRef.current;
+    if (onFocus) {
+      e.nativeEvent.text = e.target.value;
+      onFocus(e);
+    }
     if (node != null) {
       TextInputState._currentlyFocusedNode = node;
-      if (onFocus) {
-        e.nativeEvent.text = e.target.value;
-        onFocus(e);
-      }
       if (clearTextOnFocus) {
         node.value = '';
       }

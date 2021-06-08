@@ -95,7 +95,7 @@ describe('components/TextInput', () => {
     });
 
     test('value "true"', () => {
-      const { container } = render(<input autoFocus />);
+      const { container } = render(<TextInput autoFocus />);
       const input = findInput(container);
       expect(document.activeElement).toBe(input);
     });

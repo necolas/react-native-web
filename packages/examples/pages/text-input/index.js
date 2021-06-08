@@ -15,6 +15,13 @@ export default function TextInputPage() {
     <Example title="TextInput">
       <View style={styles.container}>
         <TextInput
+          autoFocus
+          onFocus={() => {
+            console.log('focused');
+          }}
+          style={styles.textinput}
+        />
+        <TextInput
           blurOnSubmit={true}
           onSubmitEditing={() => focusNextField()}
           placeholder="blurOnSubmit"
