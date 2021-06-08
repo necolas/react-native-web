@@ -41,7 +41,7 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = React.forwardRef(
+const View: React.AbstractComponent<ViewProps, HTMLDivElement & PlatformMethods> = React.forwardRef(
   (props, forwardedRef) => {
     const {
       hrefAttrs,
