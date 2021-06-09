@@ -15,6 +15,7 @@ import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import { useCallback, useMemo, useState, useRef } from 'react';
+import useIsMounted from '../../modules/useIsMounted';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
@@ -51,16 +52,21 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
 
   const hostRef = useRef(null);
   const setRef = useMergeRefs(forwardedRef, hostRef);
+  const isMounted = useIsMounted();
 
   const [duration, setDuration] = useState('0s');
   const [opacityOverride, setOpacityOverride] = useState(null);
 
   const setOpacityTo = useCallback(
     (value: ?number, duration: number) => {
+      if (!isMounted()) {
+        return;
+      }
+
       setOpacityOverride(value);
       setDuration(duration ? `${duration / 1000}s` : '0s');
     },
-    [setOpacityOverride, setDuration]
+    [setOpacityOverride, setDuration, isMounted]
   );
 
   const setOpacityActive = useCallback(
