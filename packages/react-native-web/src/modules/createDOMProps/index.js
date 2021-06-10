@@ -136,15 +136,6 @@ const createDOMProps = (elementType, props) => {
 
   const role = AccessibilityUtil.propsToAriaRole(props);
 
-  const isNativeInteractiveElement =
-    role === 'link' ||
-    elementType === 'a' ||
-    elementType === 'button' ||
-    elementType === 'input' ||
-    elementType === 'select' ||
-    elementType === 'textarea' ||
-    domProps.contentEditable != null;
-
   // DEPRECATED
   if (accessibilityState != null) {
     for (const prop in accessibilityState) {
@@ -415,42 +406,6 @@ const createDOMProps = (elementType, props) => {
   // Automated test IDs
   if (testID != null) {
     domProps['data-testid'] = testID;
-  }
-
-  // Keyboard accessibility
-  // Button-like roles should trigger 'onClick' if SPACE key is pressed.
-  // Button-like roles should not trigger 'onClick' if they are disabled.
-  if (isNativeInteractiveElement || role === 'button' || (_focusable === true && !disabled)) {
-    const onClick = domProps.onClick;
-    if (onClick != null) {
-      if (disabled) {
-        // Prevent click propagating if the element is disabled. See #1757
-        domProps.onClick = function (e) {
-          e.stopPropagation();
-        };
-      } else if (!isNativeInteractiveElement) {
-        // For native elements that are focusable but don't dispatch 'click' events
-        // for keyboards.
-        const onKeyDown = domProps.onKeyDown;
-        domProps.onKeyDown = function (e) {
-          const { key, repeat } = e;
-          const isSpacebarKey = key === ' ' || key === 'Spacebar';
-          const isButtonRole = role === 'button';
-          if (onKeyDown != null) {
-            onKeyDown(e);
-          }
-          if (!repeat && key === 'Enter') {
-            onClick(e);
-          } else if (isSpacebarKey && isButtonRole) {
-            if (!repeat) {
-              onClick(e);
-            }
-            // Prevent spacebar scrolling the window
-            e.preventDefault();
-          }
-        };
-      }
-    }
   }
 
   return domProps;

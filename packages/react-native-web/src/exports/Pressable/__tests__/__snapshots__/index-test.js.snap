@@ -62,14 +62,14 @@ exports[`components/Pressable hover interaction 3`] = `
 />
 `;
 
-exports[`components/Pressable press interaction 1`] = `
+exports[`components/Pressable press interaction (keyboard) 1`] = `
 <div
   class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable press interaction 2`] = `
+exports[`components/Pressable press interaction (keyboard) 2`] = `
 <div
   class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
   style="outline: press-ring;"
@@ -81,7 +81,28 @@ exports[`components/Pressable press interaction 2`] = `
 </div>
 `;
 
-exports[`components/Pressable press interaction 3`] = `
+exports[`components/Pressable press interaction (keyboard) 3`] = `null`;
+
+exports[`components/Pressable press interaction (pointer) 1`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  tabindex="0"
+/>
+`;
+
+exports[`components/Pressable press interaction (pointer) 2`] = `
+<div
+  class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
+  style="outline: press-ring;"
+  tabindex="0"
+>
+  <div
+    data-testid="press-content"
+  />
+</div>
+`;
+
+exports[`components/Pressable press interaction (pointer) 3`] = `
 <div
   class="css-view-1dbjc4n r-cursor-1loqt21 r-touchAction-1otgn73"
   style=""
