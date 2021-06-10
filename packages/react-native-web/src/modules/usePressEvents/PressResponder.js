@@ -130,11 +130,11 @@ const isTerminalSignal = (signal) =>
   signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
 const isValidKeyPress = (event) => {
-  const key = event.key;
-  const target = event.currentTarget;
+  const { key, target } = event;
   const role = target.getAttribute('role');
   const isSpacebar = key === ' ' || key === 'Spacebar';
-  return !event.repeat && (key === 'Enter' || (isSpacebar && role === 'button'));
+
+  return key === 'Enter' || (isSpacebar && role === 'button');
 };
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
@@ -298,9 +298,27 @@ export default class PressResponder {
     };
 
     const keyupHandler = (event: KeyboardEvent) => {
-      if (this._touchState !== NOT_RESPONDER) {
+      const { onPress } = this._config;
+      const { target } = event;
+
+      if (this._touchState !== NOT_RESPONDER && isValidKeyPress(event)) {
         end(event);
         document.removeEventListener('keyup', keyupHandler);
+
+        const role = target.getAttribute('role');
+        const elementType = target.tagName.toLowerCase();
+
+        const isNativeInteractiveElement =
+          role === 'link' ||
+          elementType === 'a' ||
+          elementType === 'button' ||
+          elementType === 'input' ||
+          elementType === 'select' ||
+          elementType === 'textarea';
+
+        if (onPress != null && !isNativeInteractiveElement) {
+          onPress(event);
+        }
       }
     };
 
@@ -317,12 +335,21 @@ export default class PressResponder {
       },
 
       onKeyDown: (event) => {
-        if (isValidKeyPress(event)) {
+        const { disabled } = this._config;
+        const { key, target } = event;
+        if (!disabled && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
             // Listen to 'keyup' on document to account for situations where
             // focus is moved to another element during 'keydown'.
             document.addEventListener('keyup', keyupHandler);
+          }
+          const role = target.getAttribute('role');
+          const isSpacebarKey = key === ' ' || key === 'Spacebar';
+          const isButtonRole = role === 'button' || role === 'menuitem';
+          if (isSpacebarKey && isButtonRole) {
+            // Prevent spacebar scrolling the window
+            event.preventDefault();
           }
           event.stopPropagation();
         }
