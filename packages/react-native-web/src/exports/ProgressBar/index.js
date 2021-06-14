@@ -71,12 +71,14 @@ ProgressBar.displayName = 'ProgressBar';
 
 const styles = StyleSheet.create({
   track: {
+    forcedColorAdjust: 'none',
     height: 5,
     overflow: 'hidden',
     userSelect: 'none',
     zIndex: 0
   },
   progress: {
+    forcedColorAdjust: 'none',
     height: '100%',
     zIndex: -1
   },

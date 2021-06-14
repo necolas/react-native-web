@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     cursor: 'inherit'
   },
   track: {
+    forcedColorAdjust: 'none',
     ...StyleSheet.absoluteFillObject,
     height: '70%',
     margin: 'auto',
@@ -152,6 +153,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   thumb: {
+    forcedColorAdjust: 'none',
     alignSelf: 'flex-start',
     borderRadius: '100%',
     boxShadow: thumbDefaultBoxShadow,
