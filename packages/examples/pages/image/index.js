@@ -98,6 +98,17 @@ export default function ImagePage() {
           <Image resizeMode="stretch" source={resizesource} style={styles.resizeMode} />
         </View>
       </View>
+      <Divider />
+      <View style={styles.row}>
+        <View style={styles.column}>
+          <Text style={styles.text}>Tint color</Text>
+          <Image source={dataBase64Svg} style={[styles.image, { tintColor: 'red' }]} />
+        </View>
+        <View style={styles.column}>
+          <Text style={styles.text}>Tint color</Text>
+          <Image source={dataSvg} style={[styles.image, { tintColor: 'blue' }]} />
+        </View>
+      </View>
     </Example>
   );
 }

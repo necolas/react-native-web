@@ -20,6 +20,7 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
+import processColor from '../processColor';
 
 export type { ImageProps };
 
@@ -28,23 +29,9 @@ const LOADED = 'LOADED';
 const LOADING = 'LOADING';
 const IDLE = 'IDLE';
 
-let _filterId = 0;
 const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 
-function createTintColorSVG(tintColor, id) {
-  return tintColor && id != null ? (
-    <svg style={{ position: 'absolute', height: 0, visibility: 'hidden', width: 0 }}>
-      <defs>
-        <filter id={`tint-${id}`} suppressHydrationWarning={true}>
-          <feFlood floodColor={`${tintColor}`} key={tintColor} />
-          <feComposite in2="SourceAlpha" operator="atop" />
-        </filter>
-      </defs>
-    </svg>
-  ) : null;
-}
-
-function getFlatStyle(style, blurRadius, filterId) {
+function getFlatStyle(style, blurRadius) {
   const flatStyle = { ...StyleSheet.flatten(style) };
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
 
@@ -65,8 +52,26 @@ function getFlatStyle(style, blurRadius, filterId) {
       filters.push(`drop-shadow(${shadowString})`);
     }
   }
-  if (tintColor && filterId != null) {
-    filters.push(`url(#tint-${filterId})`);
+  if (tintColor) {
+    const colorInt = processColor(tintColor);
+    if (colorInt != null) {
+      const r = (colorInt >> 16) & 255;
+      const g = (colorInt >> 8) & 255;
+      const b = colorInt & 255;
+      const a = ((colorInt >> 24) & 255) / 255;
+      const alpha = a.toFixed(2);
+      const matrix = `0 0 0 0 ${r / 255} 0 0 0 0 ${g / 255} 0 0 0 0 ${b / 255} 0 0 0 ${alpha} 0`;
+      // NOTE: Safari doesn't support inline SVG filters (reported 2012)
+      // https://bugs.webkit.org/show_bug.cgi?id=104169
+      const svgFilter =
+        "url('data:image/svg+xml," +
+        '<svg xmlns="http://www.w3.org/2000/svg">' +
+        '<filter id="tint">' +
+        `<feColorMatrix type="matrix" values="${matrix}" />` +
+        '</filter>' +
+        "</svg>#tint')";
+      filters.push(svgFilter);
+    }
   }
 
   if (filters.length > 0) {
@@ -85,7 +90,7 @@ function getFlatStyle(style, blurRadius, filterId) {
   delete flatStyle.overlayColor;
   delete flatStyle.resizeMode;
 
-  return [flatStyle, resizeMode, _filter, tintColor];
+  return [flatStyle, resizeMode, _filter];
 }
 
 function resolveAssetDimensions(source) {
@@ -182,14 +187,9 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const [layout, updateLayout] = React.useState({});
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hiddenImageRef = React.useRef(null);
-    const filterRef = React.useRef(_filterId++);
     const requestRef = React.useRef(null);
     const shouldDisplaySource = state === LOADED || (state === LOADING && defaultSource == null);
-    const [flatStyle, _resizeMode, filter, tintColor] = getFlatStyle(
-      style,
-      blurRadius,
-      filterRef.current
-    );
+    const [flatStyle, _resizeMode, filter] = getFlatStyle(style, blurRadius);
     const resizeMode = props.resizeMode || _resizeMode || 'cover';
     const selectedSource = shouldDisplaySource ? source : defaultSource;
     const displayImageUri = resolveAssetUri(selectedSource);
@@ -293,10 +293,8 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
             { backgroundImage, filter },
             backgroundSize != null && { backgroundSize }
           ]}
-          suppressHydrationWarning={true}
         />
         {hiddenImage}
-        {createTintColorSVG(tintColor, filterRef.current)}
       </View>
     );
   }
