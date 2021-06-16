@@ -178,7 +178,7 @@ const classes = css.create({
     maxWidth: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'pre'
   },
   // See #13
   textMultiLine: {

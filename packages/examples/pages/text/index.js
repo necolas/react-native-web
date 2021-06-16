@@ -370,17 +370,30 @@ export default function TextPage() {
         </Text>
 
         <View style={{ maxWidth: 320 }}>
-          <Text numberOfLines={1}>
+          <View style={{ borderColor: '#cecece', borderWidth: 1, marginVertical: 20 }}>
+            <Text style={{ fontWeight: 700 }}>The next two lines should look identical:</Text>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Text numberOfLines={1}>Spaces </Text>
+              <Text numberOfLines={1}>between</Text>
+              <Text numberOfLines={1}> words</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Text>Spaces </Text>
+              <Text>between</Text>
+              <Text> words</Text>
+            </View>
+          </View>
+          <Text numberOfLines={1} style={{ marginBottom: 20 }}>
             Maximum of one line, no matter how much I write here. If I keep writing, it
             {"'"}
             ll just truncate after one line.
           </Text>
-          <Text numberOfLines={2} style={{ marginTop: 20 }}>
+          <Text numberOfLines={2} style={{ marginBottom: 20 }}>
             Maximum of two lines, no matter how much I write here. If I keep writing, it
             {"'"}
             ll just truncate after two lines.
           </Text>
-          <Text style={{ marginTop: 20 }}>
+          <Text style={{ marginBottom: 20 }}>
             No maximum lines specified, no matter how much I write here. If I keep writing, it
             {"'"}
             ll just keep going and going.
