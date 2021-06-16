@@ -375,6 +375,19 @@ export default function TextPage() {
             {"'"}
             ll just truncate after one line.
           </Text>
+          <View style={{ border: '1px solid #cecece' }}>
+            <Text style={{ fontWeight: 700 }}>The next two lines should look identical:</Text>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Text numberOfLines={1}>Spaces </Text>
+              <Text numberOfLines={1}>between</Text>
+              <Text numberOfLines={1}> words</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Text>Spaces </Text>
+              <Text>between</Text>
+              <Text> words</Text>
+            </View>
+          </View>
           <Text numberOfLines={2} style={{ marginTop: 20 }}>
             Maximum of two lines, no matter how much I write here. If I keep writing, it
             {"'"}

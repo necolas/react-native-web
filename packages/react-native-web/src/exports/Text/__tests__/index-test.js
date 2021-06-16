@@ -129,7 +129,11 @@ describe('components/Text', () => {
 
   describe('prop "numberOfLines"', () => {
     test('value is set', () => {
-      const { container } = render(<Text numberOfLines="3" />);
+      const { container } = render(<Text numberOfLines={3} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+    test('value is set to one', () => {
+      const { container } = render(<Text numberOfLines={1} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
