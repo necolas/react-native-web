@@ -104,15 +104,22 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       onStartShouldSetResponderCapture
     });
 
-    function handleClick(e) {
-      if (onClick != null) {
-        onClick(e);
+    const handleClick = React.useMemo(() => {
+      if (onClick) {
+        return (e) => {
+          // This is redundant, but Flow doesn't like it otherwise
+          onClick && onClick(e);
+        };
+      } else if (onPress) {
+        return (e) => {
+          e.stopPropagation();
+          // This is redundant, but Flow doesn't like it otherwise
+          onPress && onPress(e);
+        };
+      } else {
+        return undefined;
       }
-      if (onClick == null && onPress != null) {
-        e.stopPropagation();
-        onPress(e);
-      }
-    }
+    }, [onClick, onPress]);
 
     let component = hasTextAncestor ? 'span' : 'div';
     const supportedProps = pickProps(props);

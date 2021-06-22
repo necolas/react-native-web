@@ -155,6 +155,22 @@ describe('components/Text', () => {
     });
   });
 
+  describe('prop "onClick"', () => {
+    test('is called', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={onClick} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.pointerdown({ button: 0 });
+        target.pointerup({ button: 0 });
+      });
+      expect(onClick).toBeCalled();
+    });
+  });
+
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = jest.fn();
