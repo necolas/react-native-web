@@ -155,6 +155,34 @@ describe('components/Text', () => {
     });
   });
 
+  describe('prop "onClick"', () => {
+    test('is called', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={onClick} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onClick).toBeCalled();
+    });
+
+    test('is still called if "onPress" is provided', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onClick).toBeCalled();
+    });
+  });
+
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = jest.fn();
@@ -183,6 +211,19 @@ describe('components/Text', () => {
         target.pointerup({ button: 0 });
       });
       expect(onPress).toBeCalled();
+    });
+
+    test('is not called if "onClick" is provided', () => {
+      const onPress = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onPress).not.toBeCalled();
     });
   });
 

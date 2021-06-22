@@ -104,15 +104,17 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       onStartShouldSetResponderCapture
     });
 
-    function handleClick(e) {
-      if (onClick != null) {
-        onClick(e);
-      }
-      if (onClick == null && onPress != null) {
-        e.stopPropagation();
-        onPress(e);
-      }
-    }
+    const handleClick = React.useCallback(
+      (e) => {
+        if (onClick != null) {
+          onClick(e);
+        } else if (onPress != null) {
+          e.stopPropagation();
+          onPress(e);
+        }
+      },
+      [onClick, onPress]
+    );
 
     let component = hasTextAncestor ? 'span' : 'div';
     const supportedProps = pickProps(props);
@@ -122,7 +124,11 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     if (!hasTextAncestor) {
       supportedProps.dir = dir != null ? dir : 'auto';
     }
-    supportedProps.onClick = handleClick;
+
+    if (onClick || onPress) {
+      supportedProps.onClick = handleClick;
+    }
+
     supportedProps.style = style;
     if (props.href != null) {
       component = 'a';
