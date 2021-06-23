@@ -7,16 +7,16 @@
  * @flow strict-local
  */
 
-import * as React from 'react';
+import { useRef } from 'react';
 
 const UNINITIALIZED =
   typeof Symbol === 'function' && typeof Symbol() === 'symbol' ? Symbol() : Object.freeze({});
 
 export default function useStable<T>(getInitialValue: () => T): T {
-  const ref = React.useRef(UNINITIALIZED);
+  const ref = useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = getInitialValue();
   }
-  // $FlowFixMe (#64650789) Trouble refining types where `Symbol` is concerned.
+  // $FlowFixMe: Trouble refining types where `Symbol` is concerned.
   return ref.current;
 }

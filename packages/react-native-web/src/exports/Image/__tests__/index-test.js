@@ -89,11 +89,34 @@ describe('components/Image', () => {
   });
 
   describe('prop "onLoad"', () => {
-    test('is called after image is loaded from network', () => {
-      jest.useFakeTimers();
+    const originalLoad = ImageLoader.load;
+
+    beforeEach(() => {
       ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
         onLoad();
       });
+    });
+
+    afterEach(() => {
+      ImageLoader.load = originalLoad;
+    });
+
+    test('is not called again if callback changes', () => {
+      const onLoadStub = jest.fn();
+      const onLoadReplacementStub = jest.fn();
+
+      const { rerender } = render(
+        <Image onLoad={onLoadStub} source={'https://test.com/img.jpg'} />
+      );
+      act(() => {
+        rerender(<Image onLoad={onLoadReplacementStub} source={'https://test.com/img.jpg'} />);
+      });
+      expect(onLoadStub.mock.calls.length).toBe(1);
+      expect(onLoadReplacementStub.mock.calls.length).toBe(0);
+    });
+
+    test('is called after image is loaded from network', () => {
+      jest.useFakeTimers();
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
@@ -111,9 +134,6 @@ describe('components/Image', () => {
 
     test('is called after image is loaded from cache', () => {
       jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
