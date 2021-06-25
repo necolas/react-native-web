@@ -170,6 +170,7 @@ const ScrollView = ((createReactClass({
                     isSticky && styles.stickyHeader,
                     pagingEnabled && styles.pagingEnabledChild
                   )}
+                  onLayout={child.props.onLayout}
                 >
                   {child}
                 </View>
