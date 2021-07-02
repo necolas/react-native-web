@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`StyleSheet/createStyleResolver resolve long form style properties take precedence over shorthand properties 1`] = `
+Object {
+  "classList": Array [
+    "r-paddingHorizontal-5wp0in",
+  ],
+  "className": "r-paddingHorizontal-5wp0in",
+  "style": Object {
+    "paddingBottom": "8px",
+    "paddingLeft": "40px",
+    "paddingRight": "40px",
+    "paddingTop": "8px",
+  },
+}
+`;
+
+exports[`StyleSheet/createStyleResolver resolve long form style properties take precedence over shorthand properties 2`] = `
+Object {
+  "classList": Array [
+    "r-marginVertical-1unineu",
+  ],
+  "className": "r-marginVertical-1unineu",
+  "style": Object {
+    "marginBottom": "40px",
+    "marginLeft": "8px",
+    "marginRight": "8px",
+    "marginTop": "40px",
+  },
+}
+`;
+
 exports[`StyleSheet/createStyleResolver resolve resolves inline-style pointerEvents to classname 1`] = `
 Object {
   "classList": Array [
