@@ -8,7 +8,7 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
   });
 
   test('when "accessibilityRole" is "button"', () => {
-    expect(propsToAccessibilityComponent({ accessibilityRole: 'button' })).toBeUndefined();
+    expect(propsToAccessibilityComponent({ accessibilityRole: 'button' })).toEqual('button');
   });
 
   test('when "accessibilityRole" is "heading"', () => {
