@@ -10,7 +10,7 @@ The [documentation site](https://necolas.github.io/react-native-web/) covers ins
 
 ## Example
 
-And here is a simple example to get you started. The example app includes interactive examples and the [source code](https://github.com/necolas/react-native-web/blob/master/packages/docs) is also available.
+And here is a simple example to get you started. The example app includes interactive examples and the [source code](https://github.com/necolas/react-native-web/blob/master/packages/examples) is also available.
 
 ```js
 import React from 'react';
