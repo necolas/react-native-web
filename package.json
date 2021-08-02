@@ -3,6 +3,7 @@
   "version": "0.17.5",
   "name": "monorepo",
   "scripts": {
+    "build:www": "cd packages/react-native-web && webpack-cli --config ./webpack.config.js",
     "clean": "del-cli ./packages/*/dist",
     "compile": "npm-run-all clean -p \"compile:* {@}\" --",
     "compile:commonjs": "cd packages/react-native-web && cross-env BABEL_ENV=commonjs babel --root-mode upward src --out-dir dist/cjs --ignore \"**/__tests__\"",
@@ -64,7 +65,9 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-test-renderer": "^17.0.1"
+    "react-test-renderer": "^17.0.1",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2"
   },
   "workspaces": [
     "packages/*"
