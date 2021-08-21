@@ -142,9 +142,11 @@ const TextInput: React.AbstractComponent<
     case 'number-pad':
     case 'numeric':
       inputMode = 'numeric';
+      type = 'number';
       break;
     case 'decimal-pad':
       inputMode = 'decimal';
+      type = 'number';
       break;
     case 'phone-pad':
       type = 'tel';

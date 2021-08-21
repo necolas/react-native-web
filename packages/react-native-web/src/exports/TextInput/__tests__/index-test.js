@@ -171,18 +171,21 @@ describe('components/TextInput', () => {
       const { container } = render(<TextInput keyboardType="decimal-pad" />);
       const input = findInput(container);
       expect(input.inputMode).toEqual('decimal');
+      expect(input.type).toEqual('number');
     });
 
     test('value "number-pad"', () => {
       const { container } = render(<TextInput keyboardType="number-pad" />);
       const input = findInput(container);
       expect(input.inputMode).toEqual('numeric');
+      expect(input.type).toEqual('number');
     });
 
     test('value "numeric"', () => {
       const { container } = render(<TextInput keyboardType="numeric" />);
       const input = findInput(container);
       expect(input.inputMode).toEqual('numeric');
+      expect(input.type).toEqual('number');
     });
 
     test('value "phone-pad"', () => {
