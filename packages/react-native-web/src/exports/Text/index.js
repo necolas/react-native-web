@@ -73,12 +73,11 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     const classList = [
       classes.text,
       hasTextAncestor === true && classes.textHasAncestor,
-      numberOfLines === 1 && classes.textOneLine,
-      numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
+      numberOfLines != null && classes.textMultiLine
     ];
     const style = [
       props.style,
-      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+      numberOfLines != null && { WebkitLineClamp: numberOfLines },
       selectable === true && styles.selectable,
       selectable === false && styles.notSelectable,
       onPress && styles.pressable
@@ -179,12 +178,6 @@ const classes = css.create({
     color: 'inherit',
     font: 'inherit',
     whiteSpace: 'inherit'
-  },
-  textOneLine: {
-    maxWidth: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'pre'
   },
   // See #13
   textMultiLine: {
