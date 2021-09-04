@@ -346,7 +346,7 @@ Output:
   .rn-11wrixw { margin-left: 0px; }
 </style>
 
-<div class="r-156q2ks r-61z16t r-p1pxzi r-11wrixw"></div>
+<div class="rn-156q2ks rn-61z16t rn-p1pxzi rn-11wrixw"></div>
 ```
 
 This ensures that CSS order doesn't impact rendering and CSS rules are efficiently deduplicated. Rather than the total CSS growing in proportion to the number of *rules*, it grows in proportion to the number of *unique declarations*. As a result, the DOM style sheet is only written to when new unique declarations are defined and it is usually small enough to be pre-rendered and inlined.
