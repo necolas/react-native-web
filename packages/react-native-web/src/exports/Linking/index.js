@@ -88,7 +88,11 @@ class Linking {
 const open = (url) => {
   if (canUseDOM) {
     const urlToOpen = new URL(url, window.location).toString();
-    window.open(urlToOpen, '_blank', 'noopener');
+    if (urlToOpen.indexOf('tel:') === 0) {
+      window.location = urlToOpen;
+    } else {
+      window.open(urlToOpen, '_blank', 'noopener');
+    }
   }
 };
 
