@@ -25,12 +25,7 @@ const AppStates = {
   ACTIVE: 'active'
 };
 
-const changeEmitter = new EventEmitter();
-document.addEventListener(
-  VISIBILITY_CHANGE_EVENT,
-  () => changeEmitter.emit('change', AppState.currentState),
-  false
-);
+let changeEmitter = null;
 
 export default class AppState {
   static isAvailable = canUseDOM && document[VISIBILITY_STATE_PROPERTY];
@@ -58,6 +53,18 @@ export default class AppState {
         type
       );
       if (type === 'change') {
+        if (!changeEmitter) {
+          changeEmitter = new EventEmitter();
+          document.addEventListener(
+            VISIBILITY_CHANGE_EVENT,
+            () => {
+              if (changeEmitter) {
+                changeEmitter.emit('change', AppState.currentState);
+              }
+            },
+            false
+          );
+        }
         return changeEmitter.addListener(type, handler);
       }
     }
@@ -70,7 +77,7 @@ export default class AppState {
         'Trying to remove listener for unknown event: "%s"',
         type
       );
-      if (type === 'change') {
+      if (type === 'change' && changeEmitter) {
         return changeEmitter.removeListener(handler);
       }
     }
