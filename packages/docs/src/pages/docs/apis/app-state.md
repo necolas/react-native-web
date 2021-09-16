@@ -36,7 +36,7 @@ Returns the current state of the app.
 
 ### Static methods
 
-{% call macro.prop('addEventListener', '(type: ?string, listener: (boolean) => void) => void') %}
+{% call macro.prop('addEventListener', '(type: ?string, listener: (boolean) => void) => ?EmitterSubscription') %}
 Add a listener to `AppState` changes. Listen to the `"change"` event type. The handler is called with the app state value.
 {% endcall %}
 
