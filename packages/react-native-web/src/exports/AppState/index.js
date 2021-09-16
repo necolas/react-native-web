@@ -9,8 +9,8 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
+import EventEmitter from '../../vendor/react-native/emitter/_EventEmitter';
 
 // Android 4.4 browser
 const isPrefixed =
@@ -25,7 +25,12 @@ const AppStates = {
   ACTIVE: 'active'
 };
 
-const listeners = [];
+const changeEmitter = new EventEmitter();
+document.addEventListener(
+  VISIBILITY_CHANGE_EVENT,
+  () => changeEmitter.emit('change', AppState.currentState),
+  false
+);
 
 export default class AppState {
   static isAvailable = canUseDOM && document[VISIBILITY_STATE_PROPERTY];
@@ -53,9 +58,7 @@ export default class AppState {
         type
       );
       if (type === 'change') {
-        const callback = () => handler(AppState.currentState);
-        listeners.push([handler, callback]);
-        document.addEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
+        return changeEmitter.addListener(type, handler);
       }
     }
   }
@@ -68,14 +71,7 @@ export default class AppState {
         type
       );
       if (type === 'change') {
-        const listenerIndex = findIndex(listeners, (pair) => pair[0] === handler);
-        invariant(
-          listenerIndex !== -1,
-          'Trying to remove AppState listener for unregistered handler'
-        );
-        const callback = listeners[listenerIndex][1];
-        document.removeEventListener(VISIBILITY_CHANGE_EVENT, callback, false);
-        listeners.splice(listenerIndex, 1);
+        return changeEmitter.removeListener(handler);
       }
     }
   }
