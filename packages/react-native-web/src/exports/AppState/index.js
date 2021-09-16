@@ -78,7 +78,7 @@ export default class AppState {
         type
       );
       if (type === 'change' && changeEmitter) {
-        return changeEmitter.removeListener(handler);
+        changeEmitter.removeListener(handler);
       }
     }
   }
