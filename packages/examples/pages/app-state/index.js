@@ -18,9 +18,9 @@ export default function AppStatePage() {
       }));
     };
 
-    AppState.addEventListener('change', handleChange);
+    const subscription = AppState.addEventListener('change', handleChange);
     return () => {
-      AppState.removeEventListener('change', handleChange);
+      subscription.remove();
     };
   }, []);
 
