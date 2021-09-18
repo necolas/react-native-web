@@ -12,9 +12,9 @@ export default function DimensionsPage() {
       setWindow(win);
     };
 
-    Dimensions.addEventListener('change', handleChange);
+    const subscription = Dimensions.addEventListener('change', handleChange);
     return () => {
-      Dimensions.removeEventListener('change', handleChange);
+      subscription.remove();
     };
   }, [setScreen, setWindow]);
 

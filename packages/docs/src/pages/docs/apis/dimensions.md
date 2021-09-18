@@ -33,7 +33,7 @@ Get a dimension (e.g., window or screen).
 This should only be called server-side with an estimate for initial dimensions to be used when pre-rendering pages on the server.
 {% endcall %}
 
-{% call macro.prop('addEventListener', '(type: ?string, listener: (dimensions) => void) => void') %}
+{% call macro.prop('addEventListener', '(type: ?string, listener: (dimensions) => void) => ?EmitterSubscription') %}
 Add a listener to `Dimensions` changes. Listen to the `"change"` event type. The handler is called with the dimensions state.
 {% endcall %}
 

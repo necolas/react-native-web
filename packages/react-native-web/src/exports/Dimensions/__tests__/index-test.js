@@ -14,13 +14,16 @@ describe('apis/Dimensions', () => {
 
   test('addEventListener', () => {
     const handler = jest.fn();
-    Dimensions.addEventListener('change', handler);
+    const subscription = Dimensions.addEventListener('change', handler);
     Dimensions._update();
     expect(handler).toHaveBeenCalledTimes(1);
     expect(handler).toHaveBeenLastCalledWith({
       window: Dimensions.get('window'),
       screen: Dimensions.get('screen')
     });
+    subscription.remove();
+    Dimensions._update();
+    expect(handler).toHaveBeenCalledTimes(1);
   });
 
   test('removeEventListener', () => {

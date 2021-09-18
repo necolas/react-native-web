@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { EventSubscription } from '../../vendor/react-native/emitter/EventEmitter';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 
@@ -94,9 +95,15 @@ export default class Dimensions {
   static addEventListener(
     type: DimensionEventListenerType,
     handler: (DimensionsValue) => void
-  ): void {
+  ): EventSubscription {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
+
+    return {
+      remove: () => {
+        this.removeEventListener(type, handler);
+      }
+    };
   }
 
   static removeEventListener(
