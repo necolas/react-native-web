@@ -273,6 +273,14 @@ type State = {first: number, last: number};
 class VirtualizedList extends React.PureComponent<Props, State> {
   props: Props;
 
+  pushOrUnshift(input: Array<any>, item: any) {
+    if (this.props.inverted) {
+      input.unshift(item)
+    } else {
+      input.push(item)
+    }
+  }
+
   // scrollToEnd may be janky without getItemLayout prop
   scrollToEnd(params?: ?{animated?: ?boolean}) {
     const animated = params ? params.animated : true;
@@ -587,7 +595,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         }),
       );
     } else if (this.props.onViewableItemsChanged) {
-      this._viewabilityTuples.push({
+      this.pushOrUnshift(this._viewabilityTuples, {
         viewabilityHelper: new ViewabilityHelper(this.props.viewabilityConfig),
         onViewableItemsChanged: this.props.onViewableItemsChanged,
       });
@@ -684,9 +692,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       const key = keyExtractor(item, ii);
       this._indicesToKeys.set(ii, key);
       if (stickyIndicesFromProps.has(ii + stickyOffset)) {
-        stickyHeaderIndices.push(cells.length);
+        this.pushOrUnshift(stickyHeaderIndices, cells.length);
       }
-      cells.push(
+      this.pushOrUnshift(cells,
         <CellRenderer
           CellRendererComponent={CellRendererComponent}
           ItemSeparatorComponent={ii < end ? ItemSeparatorComponent : undefined}
@@ -755,7 +763,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const stickyHeaderIndices = [];
     if (ListHeaderComponent) {
       if (stickyIndicesFromProps.has(0)) {
-        stickyHeaderIndices.push(0);
+        this.pushOrUnshift(stickyHeaderIndices, 0);
       }
       const element = React.isValidElement(ListHeaderComponent) ? (
         ListHeaderComponent
@@ -763,7 +771,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListHeaderComponent />
       );
-      cells.push(
+      this.pushOrUnshift(cells,
         <VirtualizedCellWrapper
           cellKey={this._getCellKey() + '-header'}
           key="$header">
@@ -812,7 +820,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
                 stickyBlock.offset -
                 initBlock.offset -
                 (this.props.initialScrollIndex ? 0 : initBlock.length);
-              cells.push(
+              this.pushOrUnshift(cells,
                 <View key="$sticky_lead" style={{[spacerKey]: leadSpace}} />,
               );
               this._pushCells(
@@ -826,7 +834,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               const trailSpace =
                 this._getFrameMetricsApprox(first).offset -
                 (stickyBlock.offset + stickyBlock.length);
-              cells.push(
+              this.pushOrUnshift(cells,
                 <View key="$sticky_trail" style={{[spacerKey]: trailSpace}} />,
               );
               insertedStickySpacer = true;
@@ -839,7 +847,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           const firstSpace =
             this._getFrameMetricsApprox(first).offset -
             (initBlock.offset + initBlock.length);
-          cells.push(
+          this.pushOrUnshift(cells,
             <View key="$lead_spacer" style={{[spacerKey]: firstSpace}} />,
           );
         }
@@ -873,7 +881,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           endFrame.offset +
           endFrame.length -
           (lastFrame.offset + lastFrame.length);
-        cells.push(
+        this.pushOrUnshift(cells,
           <View key="$tail_spacer" style={{[spacerKey]: tailSpacerLength}} />,
         );
       }
@@ -886,7 +894,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListEmptyComponent />
       )): any);
-      cells.push(
+      this.pushOrUnshift(cells,
         React.cloneElement(element, {
           key: '$empty',
           onLayout: event => {
@@ -909,7 +917,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListFooterComponent />
       );
-      cells.push(
+      this.pushOrUnshift(cells,
         <VirtualizedCellWrapper
           cellKey={this._getCellKey() + '-footer'}
           key="$footer">
@@ -1220,7 +1228,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
        * error found when Flow v0.68 was deployed. To see the error delete this
        * comment and run Flow. */
       if (frame.inLayout) {
-        framesInLayout.push(frame);
+        this.pushOrUnshift(framesInLayout, frame);
       }
     }
     const windowTop = this._getFrameMetricsApprox(this.state.first).offset;
@@ -1347,6 +1355,11 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   };
 
   _onScroll = (e: Object) => {
+    if (this.props.inverted) {
+      e.nativeEvent.contentOffset.x *= -1
+      e.nativeEvent.contentOffset.y *= -1
+    }
+
     this._nestedChildLists.forEach(childList => {
       childList.ref && childList.ref._onScroll(e);
     });
@@ -1821,10 +1834,10 @@ class VirtualizedCellWrapper extends React.Component<{
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    transform: [{scaleY: -1}],
+    flexDirection: 'column-reverse',
   },
   horizontallyInverted: {
-    transform: [{scaleX: -1}],
+    flexDirection: 'row-reverse',
   },
   row: {
     flexDirection: 'row'
