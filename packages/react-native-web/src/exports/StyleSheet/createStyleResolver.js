@@ -26,17 +26,19 @@ import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
 export default function createStyleResolver() {
-  let inserted, sheet, cache;
+  let inserted, cache;
+  const sheets = [];
   const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
 
-  const init = () => {
+  const init = (rootTag) => {
     inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-    sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
+    const sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID, rootTag));
     cache = {};
     modality((rule) => sheet.insert(rule, STYLE_GROUPS.modality));
     initialRules.forEach((rule) => {
       sheet.insert(rule, STYLE_GROUPS.reset);
     });
+    sheets.push(sheet);
   };
 
   init();
@@ -64,7 +66,7 @@ export default function createStyleResolver() {
         addToCache(identifier, property, value);
         rules.forEach((rule) => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
-          sheet.insert(rule, group);
+          insert(rule, group);
         });
       });
       inserted[dir][id] = true;
@@ -88,7 +90,7 @@ export default function createStyleResolver() {
           if (inserted.css[identifier] == null && resolved.css[identifier] != null) {
             const item = resolved.css[identifier];
             item.rules.forEach((rule) => {
-              sheet.insert(rule, item.group);
+              insert(rule, item.group);
             });
             inserted.css[identifier] = true;
           }
@@ -181,7 +183,7 @@ export default function createStyleResolver() {
                   const { identifier, rules } = a[key];
                   props.classList.push(identifier);
                   rules.forEach((rule) => {
-                    sheet.insert(rule, STYLE_GROUPS.atomic);
+                    insert(rule, STYLE_GROUPS.atomic);
                   });
                 });
               } else {
@@ -209,9 +211,15 @@ export default function createStyleResolver() {
     return props;
   }
 
+  function insert(style, group) {
+    sheets.forEach(function(sheet) {
+      sheet.insert(style,group);
+    });
+  }
+
   return {
     getStyleSheet() {
-      const textContent = sheet.getTextContent();
+      const textContent = sheets[0]?.getTextContent();
       // Reset state on the server so critical css is always the result
       if (!canUseDOM) {
         init();
@@ -238,7 +246,10 @@ export default function createStyleResolver() {
     },
     resolve,
     get sheet() {
-      return sheet;
+      return sheets.length ? sheets[0] : undefined;
+    },
+    addShadowSheet(rootTag) {
+      init(rootTag);
     }
   };
 }

@@ -31,6 +31,10 @@ export default function renderApplication<Props: Object>(
 
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
+  if (rootTag.getRootNode() instanceof ShadowRoot) {
+    styleResolver.addShadowSheet(rootTag);
+  }
+
   renderFn(
     <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
       <RootComponent {...initialProps} />

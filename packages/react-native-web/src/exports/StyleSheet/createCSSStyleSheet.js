@@ -10,18 +10,27 @@
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 // $FlowFixMe: HTMLStyleElement is incorrectly typed - https://github.com/facebook/flow/issues/2696
-export default function createCSSStyleSheet(id: string): ?CSSStyleSheet {
+export default function createCSSStyleSheet(id: string, rootTag?: HTMLElement): ?CSSStyleSheet {
   if (canUseDOM) {
-    const element = document.getElementById(id);
+    let root = document;
+    if (rootTag && rootTag.getRootNode() instanceof ShadowRoot) {
+      root = rootTag.getRootNode().host.shadowRoot;
+    }
+    const element = root.getElementById(id);
     if (element != null) {
       // $FlowFixMe: HTMLElement is incorrectly typed
       return element.sheet;
     } else {
       const element = document.createElement('style');
       element.setAttribute('id', id);
-      const head = document.head;
-      if (head) {
-        head.insertBefore(element, head.firstChild);
+
+      if (root instanceof ShadowRoot) {
+        root.insertBefore(element, root.firstChild);
+      } else {
+        const head = document.head;
+        if (head) {
+          head.insertBefore(element, head.firstChild);
+        }
       }
       return element.sheet;
     }
