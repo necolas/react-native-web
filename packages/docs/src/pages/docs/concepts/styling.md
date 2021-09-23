@@ -340,10 +340,10 @@ Output:
 
 ```html
 <style>
-  .rn-1mnahxq { margin-top: 0px; }
-  .rn-61z16t { margin-right: 0px; }
-  .rn-p1pxzi { margin-bottom: 0px; }
-  .rn-11wrixw { margin-left: 0px; }
+  .r-156q2ks { margin-top: 0px; }
+  .r-61z16t { margin-right: 0px; }
+  .r-p1pxzi { margin-bottom: 0px; }
+  .r-11wrixw { margin-left: 0px; }
 </style>
 
 <div class="r-156q2ks r-61z16t r-p1pxzi r-11wrixw"></div>
