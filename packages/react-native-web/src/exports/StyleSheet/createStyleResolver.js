@@ -252,6 +252,9 @@ export default function createStyleResolver() {
     get sheet() {
       return sheets.length ? sheets[0] : undefined;
     },
+    get sheets() {
+      return sheets;
+    },
     addShadowSheet(rootTag) {
       init(rootTag);
     }

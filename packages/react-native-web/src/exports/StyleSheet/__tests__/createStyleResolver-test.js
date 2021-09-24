@@ -4,6 +4,7 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import I18nManager from '../../I18nManager';
 import ReactNativePropRegistry from '../ReactNativePropRegistry';
 import createStyleResolver from '../createStyleResolver';
+import { STYLE_ELEMENT_ID } from '../constants';
 
 const canUseDOM = ExecutionEnvironment.canUseDOM;
 let styleResolver;
@@ -93,6 +94,28 @@ describe('StyleSheet/createStyleResolver', () => {
         styleResolver.getStyleSheet();
 
         expect(styleResolver.sheet).not.toBe(sheet);
+      });
+    });
+
+    describe('addShadowSheet', () => {
+      test('creates a new sheet', () => {
+        const divElement = document.createElement('div');
+        const shadowRoot = divElement.attachShadow({ mode: 'open'});
+        const rootTag = document.createElement('div');
+        shadowRoot.appendChild(rootTag);
+        styleResolver.addShadowSheet(rootTag);
+
+        expect(styleResolver.sheets.length).toBe(2);
+      });
+
+      test('creates a new sheet within Shadow DOM root', () => {
+        const divElement = document.createElement('div');
+        const shadowRoot = divElement.attachShadow({ mode: 'open'});
+        const rootTag = document.createElement('div');
+        shadowRoot.appendChild(rootTag);
+        styleResolver.addShadowSheet(rootTag);
+
+        expect(shadowRoot.getElementById(STYLE_ELEMENT_ID)).not.toBe(null);
       });
     });
   });
