@@ -14,8 +14,9 @@ export default function createCSSStyleSheet(id: string, rootTag?: HTMLElement): 
   if (canUseDOM) {
     let root = document;
     if (rootTag && rootTag.getRootNode() instanceof ShadowRoot) {
-      root = rootTag.getRootNode().host.shadowRoot;
+      root = rootTag.getRootNode();
     }
+    // $FlowFixMe: both document and ShadowRoot have getElementById
     const element = root.getElementById(id);
     if (element != null) {
       // $FlowFixMe: HTMLElement is incorrectly typed

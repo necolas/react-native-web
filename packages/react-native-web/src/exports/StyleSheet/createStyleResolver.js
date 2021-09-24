@@ -27,7 +27,7 @@ import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
 export default function createStyleResolver() {
   let inserted, cache;
-  const sheets = [];
+  let sheets = [];
   const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
 
   const init = (rootTag) => {
@@ -38,7 +38,11 @@ export default function createStyleResolver() {
     initialRules.forEach((rule) => {
       sheet.insert(rule, STYLE_GROUPS.reset);
     });
-    sheets.push(sheet);
+    if (rootTag) {
+      sheets.push(sheet);
+    } else {
+      sheets = [sheet];
+    }
   };
 
   init();
