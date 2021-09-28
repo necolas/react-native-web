@@ -1355,10 +1355,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   };
 
   _onScroll = (e: Object) => {
-    if (this.props.inverted) {
-      e.nativeEvent.contentOffset.x *= -1
-      e.nativeEvent.contentOffset.y *= -1
-    }
+    var contentOffset = (_this.props.inverted) ? {
+      x: - e.nativeEvent.contentOffset.x,
+      y: - e.nativeEvent.contentOffset.y,
+    } : e.nativeEvent.contentOffset
 
     this._nestedChildLists.forEach(childList => {
       childList.ref && childList.ref._onScroll(e);
@@ -1369,7 +1369,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const timestamp = e.timeStamp;
     let visibleLength = this._selectLength(e.nativeEvent.layoutMeasurement);
     let contentLength = this._selectLength(e.nativeEvent.contentSize);
-    let offset = this._selectOffset(e.nativeEvent.contentOffset);
+    let offset = this._selectOffset(contentOffset);
     let dOffset = offset - this._scrollMetrics.offset;
 
     if (this._isNestedWithSameOrientation()) {
