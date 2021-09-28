@@ -98,16 +98,36 @@ export type ImageStyle = {
 
 export type ImageProps = {
   ...ViewProps,
+  alternativeText?: ?string,
   blurRadius?: number,
+  crossOrigin?: 'anonymous' | 'use-credentials',
+  decoding?: 'auto' | 'async' | 'sync',
   defaultSource?: Source,
   draggable?: boolean,
+  loading?: 'eager' | 'lazy',
   onError?: (e: any) => void,
   onLayout?: (e: any) => void,
   onLoad?: (e: any) => void,
   onLoadEnd?: (e: any) => void,
   onLoadStart?: (e: any) => void,
   onProgress?: (e: any) => void,
+  referrerPolicy?:
+    | 'no-referrer'
+    | 'no-referrer-when-downgrade'
+    | 'origin'
+    | 'origin-when-cross-origin'
+    | 'unsafe-url',
   resizeMode?: ResizeMode,
   source?: Source,
   style?: GenericStyleProp<ImageStyle>
 };
+
+export interface ImageStatics {
+  getSize: (
+    uri: string,
+    success: (width: number, height: number) => void,
+    failure: () => void
+  ) => void;
+  prefetch: (uri: string) => Promise<void>;
+  queryCache: (uris: Array<string>) => Promise<{| [uri: string]: 'disk/memory' |}>;
+}

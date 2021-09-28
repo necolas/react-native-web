@@ -7,6 +7,8 @@
  * @flow
  */
 
+import PixelRatio from '../../exports/PixelRatio';
+
 export type PackagerAsset = {
   __packager_asset: boolean,
   fileSystemLocation: string,
@@ -29,4 +31,19 @@ export function registerAsset(asset: PackagerAsset): number {
 
 export function getAssetByID(assetId: number): PackagerAsset {
   return assets[assetId - 1];
+}
+
+export function getAssetUriByID(assetId: number): string {
+  // get the URI from the packager
+  const asset = getAssetByID(assetId);
+  let scale = asset.scales[0];
+  if (asset.scales.length > 1) {
+    const preferredScale = PixelRatio.get();
+    // Get the scale which is closest to the preferred scale
+    scale = asset.scales.reduce((prev, curr) =>
+      Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
+    );
+  }
+  const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
+  return asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
 }

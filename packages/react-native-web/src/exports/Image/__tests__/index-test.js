@@ -4,10 +4,11 @@
 import { act } from 'react-dom/test-utils';
 import * as AssetRegistry from '../../../modules/AssetRegistry';
 import Image from '../';
-import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
+import { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
 import React from 'react';
 import { render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
 
 const originalImage = window.Image;
 
@@ -29,20 +30,48 @@ describe('components/Image', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "alternativeText"', () => {
+    test('set to empty string', () => {
+      const { container } = render(<Image alternativeText="" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('set to value', () => {
+      const { container } = render(
+        <Image alternativeText="alternative text" />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   test('prop "blurRadius"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const { container } = render(<Image blurRadius={5} defaultSource={defaultSource} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "crossOrigin"', () => {
+    test('sets value', () => {
+      const { container } = render(<Image crossOrigin="use-credentials" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "decoding"', () => {
+    test('sets value', () => {
+      const { container } = render(<Image decoding="async" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "defaultSource"', () => {
-    test('sets background image when value is an object', () => {
+    test('sets image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
       const { container } = render(<Image defaultSource={defaultSource} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    test('sets background image when value is a string', () => {
+    test('sets image when value is a string', () => {
       // emulate require-ed asset
       const defaultSource = 'https://google.com/favicon.ico';
       const { container } = render(<Image defaultSource={defaultSource} />);
@@ -83,151 +112,173 @@ describe('components/Image', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  describe('prop "loading"', () => {
+    test('sets value', () => {
+      const { container } = render(<Image loading="lazy" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   test('prop "nativeID"', () => {
     const { container } = render(<Image nativeID="nativeID" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  describe('prop "onLoad"', () => {
-    const originalLoad = ImageLoader.load;
-
-    beforeEach(() => {
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
-    });
-
-    afterEach(() => {
-      ImageLoader.load = originalLoad;
-    });
-
-    test('is not called again if callback changes', () => {
-      const onLoadStub = jest.fn();
-      const onLoadReplacementStub = jest.fn();
-
-      const { rerender } = render(
-        <Image onLoad={onLoadStub} source={'https://test.com/img.jpg'} />
-      );
+  describe('prop "onError"', () => {
+    test('is called when image fails to load and replaces src with placeholder', () => {
+      const onError = jest.fn();
+      const ref = React.createRef();
+      let container;
       act(() => {
-        rerender(<Image onLoad={onLoadReplacementStub} source={'https://test.com/img.jpg'} />);
+        ({ container } = render(
+          <Image onError={onError} ref={ref} source="" />
+        ));
       });
-      expect(onLoadStub.mock.calls.length).toBe(1);
-      expect(onLoadReplacementStub.mock.calls.length).toBe(0);
+      const image = createEventTarget(ref.current);
+      act(() => {
+        image.error();
+      });
+      expect(onError).toBeCalledTimes(1);
+      expect(container.firstChild).toMatchSnapshot();
     });
+  });
 
-    test('is called after image is loaded from network', () => {
-      jest.useFakeTimers();
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source="https://test.com/img.jpg"
-        />
+  describe('prop "onLoad"', () => {
+    test('is called once when image loads', () => {
+      const onLoad = jest.fn();
+      const onLoadEnd = jest.fn();
+      const onLoadStart = jest.fn();
+      const ref = React.createRef();
+      let container;
+      act(() => {
+        ({ container } = render(
+          <Image
+            onLoad={onLoad}
+            onLoadEnd={onLoadEnd}
+            onLoadStart={onLoadStart}
+            ref={ref}
+            source="https://google.com/favicon.ico"
+          />
+        ));
+      });
+      const image = createEventTarget(ref.current);
+      act(() => {
+        image.load({
+          target: {
+            width: 100,
+            height: 100,
+            naturalWidth: 200,
+            naturalHeight: 200,
+            currentSrc: 'https://google.com/favicon.ico',
+            src: 'https://google.com/favicon.ico'
+          }
+        });
+      });
+      expect(onLoad).toBeCalledTimes(1);
+      expect(onLoadEnd).toBeCalledTimes(1);
+      expect(onLoadStart).toBeCalledTimes(1);
+      expect(onLoad).toBeCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            source: expect.objectContaining({
+              width: expect.any(Number),
+              height: expect.any(Number),
+              url: 'https://google.com/favicon.ico'
+            })
+          })
+        })
       );
-      jest.runOnlyPendingTimers();
-      expect(onLoadStub).toBeCalled();
-    });
-
-    test('is called after image is loaded from cache', () => {
-      jest.useFakeTimers();
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      const uri = 'https://test.com/img.jpg';
-      ImageUriCache.add(uri);
-      render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={uri}
-        />
-      );
-      jest.runOnlyPendingTimers();
-      expect(onLoadStub).toBeCalled();
-      ImageUriCache.remove(uri);
+      expect(container.firstChild).toMatchSnapshot();
     });
 
     test('is called on update if "uri" is different', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
-      const { rerender } = render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={'https://test.com/img.jpg'}
-        />
-      );
+      const ref = React.createRef();
       act(() => {
-        rerender(
+        render(
           <Image
             onLoad={onLoadStub}
             onLoadEnd={onLoadEndStub}
             onLoadStart={onLoadStartStub}
-            source={'https://blah.com/img.png'}
-          />
-        );
-      });
-      expect(onLoadStub.mock.calls.length).toBe(2);
-      expect(onLoadEndStub.mock.calls.length).toBe(2);
-    });
-
-    test('is not called on update if "uri" is the same', () => {
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      const { rerender } = render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={'https://test.com/img.jpg'}
-        />
-      );
-      act(() => {
-        rerender(
-          <Image
-            onLoad={onLoadStub}
-            onLoadEnd={onLoadEndStub}
-            onLoadStart={onLoadStartStub}
+            ref={ref}
             source={'https://test.com/img.jpg'}
           />
         );
       });
+      const image = createEventTarget(ref.current);
+      act(() => {
+        image.load({
+          target: {
+            width: 100,
+            height: 100,
+            naturalWidth: 200,
+            naturalHeight: 200,
+            currentSrc: 'https://test.com/img.jpg',
+            src: 'https://test.com/img.jpg'
+          }
+        });
+      });
+
       expect(onLoadStub.mock.calls.length).toBe(1);
       expect(onLoadEndStub.mock.calls.length).toBe(1);
-    });
+      expect(onLoadStartStub.mock.calls.length).toBe(1);
 
-    test('is not called on update if "uri" is the same and given as an object', () => {
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      const { rerender } = render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
-        />
-      );
       act(() => {
-        rerender(
+        render(
           <Image
             onLoad={onLoadStub}
             onLoadEnd={onLoadEndStub}
             onLoadStart={onLoadStartStub}
-            source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
+            ref={ref}
+            source={'https://blah.com/img.png'}
           />
         );
       });
-      expect(onLoadStub.mock.calls.length).toBe(1);
-      expect(onLoadEndStub.mock.calls.length).toBe(1);
+      act(() => {
+        image.load({
+          target: {
+            width: 100,
+            height: 100,
+            naturalWidth: 200,
+            naturalHeight: 200,
+            currentSrc: 'https://blah.com/img.png',
+            src: 'https://blah.com/img.png'
+          }
+        });
+      });
+
+      expect(onLoadStub.mock.calls.length).toBe(2);
+      expect(onLoadEndStub.mock.calls.length).toBe(2);
+      expect(onLoadStartStub.mock.calls.length).toBe(2);
+    });
+
+    test('is not called when placeholder src is used after error', () => {
+      const onError = jest.fn();
+      const onLoad = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(
+          <Image
+            onError={onError}
+            onLoad={onLoad}
+            ref={ref}
+            source="https://google.com"
+          />
+        );
+      });
+      const image = createEventTarget(ref.current);
+      act(() => {
+        // Results in placeholder being "loaded"
+        image.error();
+      });
+      expect(onError).toBeCalledTimes(1);
+      act(() => {
+        // Emulate the native "load" event for the placeholder
+        image.load();
+      });
+      expect(onLoad).toBeCalledTimes(0);
     });
   });
 
@@ -257,9 +308,9 @@ describe('components/Image', () => {
 
     test('is set immediately if the image was preloaded', () => {
       const uri = 'https://yahoo.com/favicon.ico';
-      ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        onLoad();
-      });
+      //ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
+       // onLoad();
+      //});
       return Image.prefetch(uri).then(() => {
         const source = { uri };
         const { container } = render(<Image source={source} />, { disableLifecycleMethods: true });
@@ -298,25 +349,21 @@ describe('components/Image', () => {
     test('is correctly updated only when loaded if defaultSource provided', () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uri = 'https://testing.com/fullSize.jpg';
-      let loadCallback;
-      ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        loadCallback = onLoad;
-      });
       const { container } = render(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
-        loadCallback();
+      //  loadCallback();
       });
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('it correctly selects the source scale', () => {
-      AssetRegistry.getAssetByID = jest.fn(() => ({
+      AssetRegistry.getAssetByID = () => ({
         httpServerLocation: 'static',
         name: 'img',
         scales: [1, 2, 3],
         type: 'png'
-      }));
+      });
 
       PixelRatio.get = jest.fn(() => 1.0);
       let { container } = render(<Image source={1} />);

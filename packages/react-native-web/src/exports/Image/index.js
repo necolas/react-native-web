@@ -8,38 +8,58 @@
  * @flow
  */
 
-import type { ImageProps } from './types';
+import type { ImageProps, ImageStatics } from './types';
+import type { PlatformMethods } from '../../types';
 
 import * as React from 'react';
 import createElement from '../createElement';
 import css from '../StyleSheet/css';
-import { getAssetByID } from '../../modules/AssetRegistry';
+import * as forwardedProps from '../../modules/forwardedProps';
+import pick from '../../modules/pick';
+import processColor from '../processColor';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
+import useElementLayout from '../../modules/useElementLayout';
+import useMergeRefs from '../../modules/useMergeRefs';
+import usePlatformMethods from '../../modules/usePlatformMethods';
+import useResponderEvents from '../../modules/useResponderEvents';
 import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
-import processColor from '../processColor';
 
-export type { ImageProps };
+import { getAssetByID, getAssetUriByID } from '../../modules/AssetRegistry';
 
-const ERRORED = 'ERRORED';
-const LOADED = 'LOADED';
-const LOADING = 'LOADING';
-const IDLE = 'IDLE';
+const emptyObject = {};
+const forwardPropsList = {
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  crossOrigin: true,
+  decoding: true,
+  draggable: true,
+  loading: true,
+  referrerPolicy: true
+};
+
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 
-function getFlatStyle(style, blurRadius) {
-  const flatStyle = { ...StyleSheet.flatten(style) };
+function getFlatStyle(style, blurRadius, resizeModeProp) {
+  const initialStyle = StyleSheet.flatten(style) || emptyObject;
+  const objectFitStyle = resizeModeStyles[initialStyle.resizeMode || resizeModeProp || 'cover'];
+  const flatStyle = { ...initialStyle, ...objectFitStyle };
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
 
   // Add CSS filters
   // React Native exposes these features as props and proprietary styles
   const filters = [];
-  let _filter = null;
-
   if (filter) {
     filters.push(filter);
   }
@@ -74,10 +94,6 @@ function getFlatStyle(style, blurRadius) {
     }
   }
 
-  if (filters.length > 0) {
-    _filter = filters.join(' ');
-  }
-
   // These styles are converted to CSS filters applied to the
   // element displaying the background image.
   delete flatStyle.blurRadius;
@@ -90,40 +106,32 @@ function getFlatStyle(style, blurRadius) {
   delete flatStyle.overlayColor;
   delete flatStyle.resizeMode;
 
-  return [flatStyle, resizeMode, _filter];
+  if (filters.length > 0) {
+    flatStyle.filter = filters.join(' ');
+  }
+
+  return flatStyle;
 }
 
-function resolveAssetDimensions(source) {
-  if (typeof source === 'number') {
-    const { height, width } = getAssetByID(source);
-    return { height, width };
-  } else if (source != null && !Array.isArray(source) && typeof source === 'object') {
-    const { height, width } = source;
-    return { height, width };
+function getImageData(image: HTMLImageElement) {
+  const { width, height, currentSrc } = image;
+  return {
+    source: { height, width, url: currentSrc },
+    target: image
   }
 }
 
 function resolveAssetUri(source): ?string {
   let uri = null;
   if (typeof source === 'number') {
-    // get the URI from the packager
-    const asset = getAssetByID(source);
-    let scale = asset.scales[0];
-    if (asset.scales.length > 1) {
-      const preferredScale = PixelRatio.get();
-      // Get the scale which is closest to the preferred scale
-      scale = asset.scales.reduce((prev, curr) =>
-        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
-      );
-    }
-    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
+    uri = getAssetUriByID(source);
   } else if (typeof source === 'string') {
     uri = source;
+  } else if (Array.isArray(source)) {
+    uri = source[0].uri;
   } else if (source && typeof source.uri === 'string') {
     uri = source.uri;
   }
-
   if (uri) {
     const match = uri.match(svgDataUriPattern);
     // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
@@ -133,36 +141,42 @@ function resolveAssetUri(source): ?string {
       return `${prefix}${encodedSvg}`;
     }
   }
-
   return uri;
 }
 
-interface ImageStatics {
-  getSize: (
-    uri: string,
-    success: (width: number, height: number) => void,
-    failure: () => void
-  ) => void;
-  prefetch: (uri: string) => Promise<void>;
-  queryCache: (uris: Array<string>) => Promise<{| [uri: string]: 'disk/memory' |}>;
-}
+const ERROR_PLACEHOLDER =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
-const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> = React.forwardRef(
-  (props, ref) => {
+const Image: React.AbstractComponent<ImageProps, HTMLImageElement & PlatformMethods> = React.forwardRef(
+  (props, forwardedRef) => {
     const {
-      accessibilityLabel,
       blurRadius,
       defaultSource,
-      draggable,
       onError,
       onLayout,
       onLoad,
       onLoadEnd,
       onLoadStart,
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture,
       pointerEvents,
+      resizeMode,
       source,
-      style,
-      ...rest
+      style
     } = props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -173,134 +187,170 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
       }
     }
 
-    const [state, updateState] = React.useState(() => {
-      const uri = resolveAssetUri(source);
-      if (uri != null) {
-        const isLoaded = ImageLoader.has(uri);
-        if (isLoaded) {
-          return LOADED;
-        }
-      }
-      return IDLE;
+    const supportedProps = pickProps(props);
+    
+    const src = resolveAssetUri(source) || resolveAssetUri(defaultSource);
+    let srcSet;
+    if (Array.isArray(source)) {
+      srcSet = source.map(({ uri, scale }) => `${uri} ${scale || 1}x`);
+    }
+
+    const [managedSrc, setManagedSrc] = React.useState(src);
+    const flatStyle = getFlatStyle(style, blurRadius, resizeMode);
+
+    const hostRef = React.useRef(null);
+    const hasTextAncestor = React.useContext(TextAncestorContext);
+    useElementLayout(hostRef, onLayout);
+    useResponderEvents(hostRef, {
+      onMoveShouldSetResponder,
+      onMoveShouldSetResponderCapture,
+      onResponderEnd,
+      onResponderGrant,
+      onResponderMove,
+      onResponderReject,
+      onResponderRelease,
+      onResponderStart,
+      onResponderTerminate,
+      onResponderTerminationRequest,
+      onScrollShouldSetResponder,
+      onScrollShouldSetResponderCapture,
+      onSelectionChangeShouldSetResponder,
+      onSelectionChangeShouldSetResponderCapture,
+      onStartShouldSetResponder,
+      onStartShouldSetResponderCapture
     });
 
-    const [layout, updateLayout] = React.useState({});
-    const hasTextAncestor = React.useContext(TextAncestorContext);
-    const hiddenImageRef = React.useRef(null);
-    const requestRef = React.useRef(null);
-    const shouldDisplaySource = state === LOADED || (state === LOADING && defaultSource == null);
-    const [flatStyle, _resizeMode, filter] = getFlatStyle(style, blurRadius);
-    const resizeMode = props.resizeMode || _resizeMode || 'cover';
-    const selectedSource = shouldDisplaySource ? source : defaultSource;
-    const displayImageUri = resolveAssetUri(selectedSource);
-    const imageSizeStyle = resolveAssetDimensions(selectedSource);
-    const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
-    const backgroundSize = getBackgroundSize();
-
-    // Accessibility image allows users to trigger the browser's image context menu
-    const hiddenImage = displayImageUri
-      ? createElement('img', {
-          alt: accessibilityLabel || '',
-          classList: [classes.accessibilityImage],
-          draggable: draggable || false,
-          ref: hiddenImageRef,
-          src: displayImageUri
-        })
-      : null;
-
-    function getBackgroundSize(): ?string {
-      if (hiddenImageRef.current != null && (resizeMode === 'center' || resizeMode === 'repeat')) {
-        const { naturalHeight, naturalWidth } = hiddenImageRef.current;
-        const { height, width } = layout;
-        if (naturalHeight && naturalWidth && height && width) {
-          const scaleFactor = Math.min(1, width / naturalWidth, height / naturalHeight);
-          const x = Math.ceil(scaleFactor * naturalWidth);
-          const y = Math.ceil(scaleFactor * naturalHeight);
-          return `${x}px ${y}px`;
+    const internalImageRef = React.useCallback((target) => {
+      const errorListener = function (e) {
+        // If the image fails to load, browsers will display a "broken" icon.
+        // To avoid this we replace the image with a transparent gif.
+        setManagedSrc(ERROR_PLACEHOLDER);
+        if (onError != null) {
+          onError({
+            nativeEvent: {
+              error: `Failed to load resource ${e.target.src} (404)`
+            }
+          });
         }
-      }
-    }
-
-    function handleLayout(e) {
-      if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
-        const { layout } = e.nativeEvent;
-        onLayout && onLayout(e);
-        updateLayout(layout);
-      }
-    }
-
-    // Image loading
-    const uri = resolveAssetUri(source);
-    React.useEffect(() => {
-      abortPendingRequest();
-
-      if (uri != null) {
-        updateState(LOADING);
-        if (onLoadStart) {
-          onLoadStart();
+        if (onLoadEnd != null) {
+          onLoadEnd({ nativeEvent: { target }});
         }
+      };
 
-        requestRef.current = ImageLoader.load(
-          uri,
-          function load(e) {
-            updateState(LOADED);
-            if (onLoad) {
-              onLoad(e);
-            }
-            if (onLoadEnd) {
-              onLoadEnd();
-            }
-          },
-          function error() {
-            updateState(ERRORED);
-            if (onError) {
-              onError({
-                nativeEvent: {
-                  error: `Failed to load resource ${uri} (404)`
-                }
-              });
-            }
-            if (onLoadEnd) {
-              onLoadEnd();
-            }
+      const loadListener = function (e) {
+        const { target: image } = e;
+        if (image.src === ERROR_PLACEHOLDER) {
+          // Prevent the placeholder from triggering a 'load' event that event
+          // listeners would otherwise receive.
+          e.stopImmediatePropagation();
+        } else {
+          if (onLoad != null) {
+            onLoad({
+              nativeEvent: getImageData(image)
+            });
           }
-        );
-      }
-
-      function abortPendingRequest() {
-        if (requestRef.current != null) {
-          ImageLoader.abort(requestRef.current);
-          requestRef.current = null;
+          if (onLoadEnd != null) {
+            onLoadEnd({ nativeEvent: { target }});
+          }
         }
+      };
+
+      if (target !== null) {
+        // If the image is loaded before JS loads (e.g., SSR), then we manually
+        // call onLoad
+//        console.log(target.complete)
+        if (onLoad != null && target.complete) {
+          onLoad({
+            nativeEvent: getImageData(target)
+          });
+          return;
+        }
+
+        hostRef.current = target;
+        if (onLoadStart != null) {
+          onLoadStart({ nativeEvent: { target }});
+        }
+        target.addEventListener('error', errorListener);
+        target.addEventListener('load', loadListener);
+      } else if (hostRef.current != null) {
+        const node = hostRef.current;
+        node.removeEventListener('error', errorListener);
+        node.removeEventListener('load', loadListener);
+        hostRef.current = null;
       }
+    },
+    [onError, onLoad, onLoadEnd]
+  );
 
-      return abortPendingRequest;
-    }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+    const platformMethodsRef = usePlatformMethods(supportedProps);
 
-    return (
-      <View
-        {...rest}
-        accessibilityLabel={accessibilityLabel}
-        onLayout={handleLayout}
-        pointerEvents={pointerEvents}
-        ref={ref}
-        style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
-      >
-        <View
-          style={[
-            styles.image,
-            resizeModeStyles[resizeMode],
-            { backgroundImage, filter },
-            backgroundSize != null && { backgroundSize }
-          ]}
-        />
-        {hiddenImage}
-      </View>
+    const ref = useMergeRefs(
+      hostRef,
+      internalImageRef,
+      platformMethodsRef,
+      forwardedRef
     );
+
+    supportedProps.alt = props.alternativeText;
+    supportedProps.classList = hasTextAncestor ? inlineClassList : defaultClassList;
+    supportedProps.decoding = props.decoding || 'async';
+    supportedProps.draggable = props.draggable || false;
+    supportedProps.loading = props.loading || 'lazy';
+    supportedProps.ref = ref;
+    supportedProps.src = managedSrc;
+    supportedProps.srcSet = 
+        srcSet != null && managedSrc !== ERROR_PLACEHOLDER
+          ? srcSet.join(',')
+          : null;
+    supportedProps.style = flatStyle;
+
+    return createElement('img', supportedProps);
   }
 );
 
 Image.displayName = 'Image';
+
+const classes = css.create({
+  image: {
+    backgroundColor: 'transparent',
+    border: '0 solid black',
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    flexShrink: 0,
+    margin: 0,
+    minHeight: 0,
+    minWidth: 0,
+    objectFit: 'cover',
+    padding: 0,
+    position: 'relative',
+    zIndex: 0
+  },
+  inlineImage: {
+    display: 'inline-flex'
+  }
+});
+
+const defaultClassList = [classes.image];
+const inlineClassList = [classes.image, classes.inlineImage];
+
+const resizeModeStyles = {
+  center: {
+    objectFit: 'scale-down'
+  },
+  contain: {
+    objectFit: 'contain'
+  },
+  cover: {
+    objectFit: 'cover'
+  },
+  none: {
+    objectFit: 'none'
+  },
+  stretch: {
+    objectFit: 'fill'
+  }
+};
 
 // $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
 const ImageWithStatics = (Image: React.AbstractComponent<
@@ -310,7 +360,7 @@ const ImageWithStatics = (Image: React.AbstractComponent<
   ImageStatics);
 
 ImageWithStatics.getSize = function (uri, success, failure) {
-  ImageLoader.getSize(uri, success, failure);
+  return ImageLoader.getSize(uri, success, failure);
 };
 
 ImageWithStatics.prefetch = function (uri) {
@@ -321,59 +371,6 @@ ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
-const classes = css.create({
-  accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
-    height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
-  }
-});
-
-const styles = StyleSheet.create({
-  root: {
-    flexBasis: 'auto',
-    overflow: 'hidden',
-    zIndex: 0
-  },
-  inline: {
-    display: 'inline-flex'
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    height: '100%',
-    width: '100%',
-    zIndex: -1
-  }
-});
-
-const resizeModeStyles = StyleSheet.create({
-  center: {
-    backgroundSize: 'auto'
-  },
-  contain: {
-    backgroundSize: 'contain'
-  },
-  cover: {
-    backgroundSize: 'cover'
-  },
-  none: {
-    backgroundPosition: '0 0',
-    backgroundSize: 'auto'
-  },
-  repeat: {
-    backgroundPosition: '0 0',
-    backgroundRepeat: 'repeat',
-    backgroundSize: 'auto'
-  },
-  stretch: {
-    backgroundSize: '100% 100%'
-  }
-});
+export type { ImageProps };
 
 export default ImageWithStatics;
