@@ -1355,7 +1355,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   };
 
   _onScroll = (e: Object) => {
-    var contentOffset = (_this.props.inverted) ? {
+    var contentOffset = (this.props.inverted) ? {
       x: - e.nativeEvent.contentOffset.x,
       y: - e.nativeEvent.contentOffset.y,
     } : e.nativeEvent.contentOffset
