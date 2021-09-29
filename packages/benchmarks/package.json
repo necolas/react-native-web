@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "benchmarks",
-  "version": "0.17.2",
+  "version": "0.17.3",
   "scripts": {
     "dev": "mkdir -p dist && cp -f index.html dist/index.html && ./node_modules/.bin/webpack-cli --config ./webpack.config.js",
     "build": "NODE_ENV=production yarn dev"
@@ -12,11 +12,11 @@
     "d3-scale-chromatic": "^2.0.0",
     "@emotion/css": "^11.1.3",
     "react-jss": "^10.5.1",
-    "react-native-web": "0.17.2",
+    "react-native-web": "0.17.3",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
-    "babel-plugin-react-native-web": "0.17.2",
+    "babel-plugin-react-native-web": "0.17.3",
     "css-loader": "^5.0.2",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
