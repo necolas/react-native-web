@@ -91,6 +91,25 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('focus interaction (disabled)', () => {
+    const onBlur = jest.fn();
+    const onFocus = jest.fn();
+    const ref = React.createRef();
+    act(() => {
+      render(<Pressable disabled={true} onBlur={onBlur} onFocus={onFocus} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
+    act(() => {
+      target.focus();
+    });
+    expect(onFocus).not.toBeCalled();
+    act(() => {
+      body.focus({ relatedTarget: target.node });
+    });
+    expect(onBlur).not.toBeCalled();
+  });
+
   test('hover interaction', () => {
     let container;
     const onHoverIn = jest.fn();

@@ -144,6 +144,9 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const blurHandler = React.useCallback(
     (e) => {
+      if (disabled) {
+        return;
+      }
       if (e.nativeEvent.target === hostRef.current) {
         setFocused(false);
         if (onBlur != null) {
@@ -151,11 +154,14 @@ function Pressable(props: Props, forwardedRef): React.Node {
         }
       }
     },
-    [hostRef, setFocused, onBlur]
+    [disabled, hostRef, setFocused, onBlur]
   );
 
   const focusHandler = React.useCallback(
     (e) => {
+      if (disabled) {
+        return;
+      }
       if (e.nativeEvent.target === hostRef.current) {
         setFocused(true);
         if (onFocus != null) {
@@ -163,7 +169,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
         }
       }
     },
-    [hostRef, setFocused, onFocus]
+    [disabled, hostRef, setFocused, onFocus]
   );
 
   const contextMenuHandler = React.useCallback(
