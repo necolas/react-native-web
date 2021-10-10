@@ -15,6 +15,7 @@ const markdownFootnote = require('markdown-it-footnote');
 const markdownTasks = require('markdown-it-task-lists');
 const twemoji = require('twemoji');
 const UglifyJS = require('uglify-es');
+const path = require('path');
 
 /**
  * Markdown plugin
@@ -114,6 +115,29 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection('nav', function (collection) {
     return collection
       .getAll()
+      .filter(function (item) {
+        return 'eleventyNavigation' in item.data;
+      })
+      .sort((a, b) => {
+        const keyA = a.data.eleventyNavigation.key;
+        const keyB = b.data.eleventyNavigation.key;
+        if (keyA > keyB) {
+          return 1;
+        } else if (keyA < keyB) {
+          return -1;
+        }
+        return 0;
+      });
+  });
+
+  eleventyConfig.addCollection('sitemap', function (collection) {
+    return collection
+      .getAll()
+      .map(function (item) {
+        return Object.assign(item, {
+          url: typeof item.url === 'string' ? path.join('/react-native-web', item.url) : item.url
+        });
+      })
       .filter(function (item) {
         return 'eleventyNavigation' in item.data;
       })
