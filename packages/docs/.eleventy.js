@@ -4,6 +4,7 @@ const csso = require('csso');
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
 const eleventySvgContentsPlugin = require('eleventy-plugin-svg-contents');
 const eleventySyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
+const eleventySitemapPlugin = require('@quasibit/eleventy-plugin-sitemap');
 const htmlmin = require('html-minifier');
 const markdown = require('markdown-it');
 const markdownAnchor = require('markdown-it-anchor');
@@ -51,6 +52,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventySvgContentsPlugin);
   // Syntax Highlighting https://www.11ty.dev/docs/plugins/syntaxhighlight/
   eleventyConfig.addPlugin(eleventySyntaxHighlightPlugin);
+
+  eleventyConfig.addPlugin(eleventySitemapPlugin, {
+    sitemap: {
+      hostname: 'https://necolas.github.io'
+    }
+  });
 
   // TRANSFORMS -----
 

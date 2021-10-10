@@ -13,6 +13,7 @@
     "@11ty/eleventy": "^0.11.1",
     "@11ty/eleventy-navigation": "^0.1.6",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.5",
+    "@quasibit/eleventy-plugin-sitemap": "^2.1.4",
     "csso": "^4.2.0",
     "eleventy-plugin-svg-contents": "^0.7.0",
     "eleventy-plugin-toc": "^1.1.0",
