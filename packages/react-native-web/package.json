@@ -25,11 +25,10 @@
     "inline-style-prefixer": "^5.0.3",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
-    "react-timer-mixin": "^0.13.4"
-  },
-  "peerDependencies": {
-    "react": ">=16.5.1",
-    "react-dom": ">=16.5.1"
+    "react-timer-mixin": "^0.13.4",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-test-renderer": "16.8.3"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",
