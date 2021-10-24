@@ -10,9 +10,11 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { useEffect, useLayoutEffect } from 'react';
 
-const useLayoutEffectImpl: typeof useLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
+const useLayoutEffectImpl: typeof useLayoutEffect = ExecutionEnvironment.canUseDOM
+  ? useLayoutEffect
+  : useEffect;
 
 export default useLayoutEffectImpl;

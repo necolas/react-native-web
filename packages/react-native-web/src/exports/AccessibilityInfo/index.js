@@ -7,7 +7,7 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 function isScreenReaderEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ function isScreenReaderEnabled(): Promise<*> {
 }
 
 const prefersReducedMotionMedia =
-  canUseDOM && typeof window.matchMedia === 'function'
+  ExecutionEnvironment.canUseDOM && typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
 

@@ -8,7 +8,7 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 export type ColorSchemeName = 'light' | 'dark';
 
@@ -20,7 +20,7 @@ type AppearanceListener = (preferences: AppearancePreferences) => void;
 type DOMAppearanceListener = (ev: MediaQueryListEvent) => any;
 
 function getQuery(): MediaQueryList | null {
-  return canUseDOM && window.matchMedia != null
+  return ExecutionEnvironment.canUseDOM && window.matchMedia != null
     ? window.matchMedia('(prefers-color-scheme: dark)')
     : null;
 }

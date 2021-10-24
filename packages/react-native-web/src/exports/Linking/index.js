@@ -8,10 +8,10 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 
-const initialURL = canUseDOM ? window.location.href : '';
+const initialURL = ExecutionEnvironment.canUseDOM ? window.location.href : '';
 
 type Callback = (...args: any) => void;
 
@@ -86,7 +86,7 @@ class Linking {
 }
 
 const open = (url) => {
-  if (canUseDOM) {
+  if (ExecutionEnvironment.canUseDOM) {
     const urlToOpen = new URL(url, window.location).toString();
     window.open(urlToOpen, '_blank', 'noopener');
   }

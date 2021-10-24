@@ -8,13 +8,15 @@
  * @noflow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 import EventEmitter from '../../vendor/react-native/emitter/_EventEmitter';
 
 // Android 4.4 browser
 const isPrefixed =
-  canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
+  ExecutionEnvironment.canUseDOM &&
+  !document.hasOwnProperty('hidden') &&
+  document.hasOwnProperty('webkitHidden');
 
 const EVENT_TYPES = ['change', 'memoryWarning'];
 const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';
@@ -28,7 +30,7 @@ const AppStates = {
 let changeEmitter = null;
 
 export default class AppState {
-  static isAvailable = canUseDOM && document[VISIBILITY_STATE_PROPERTY];
+  static isAvailable = ExecutionEnvironment.canUseDOM && document[VISIBILITY_STATE_PROPERTY];
 
   static get currentState() {
     if (!AppState.isAvailable) {

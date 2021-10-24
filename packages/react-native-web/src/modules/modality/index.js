@@ -7,7 +7,7 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import createEventHandle from '../createEventHandle';
 
 export type Modality = 'keyboard' | 'mouse' | 'touch' | 'pen';
@@ -176,7 +176,7 @@ function onPointerish(event: any) {
   }
 }
 
-if (canUseDOM) {
+if (ExecutionEnvironment.canUseDOM) {
   addBlurListener(window, onBlurWindow);
   addFocusListener(window, onFocusWindow);
   addKeyDownListener(document, onKeyDown);

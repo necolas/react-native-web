@@ -9,7 +9,7 @@
  */
 
 import type { EventSubscription } from '../../vendor/react-native/emitter/EventEmitter';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
 
 export type DisplayMetrics = {|
@@ -52,7 +52,7 @@ export default class Dimensions {
 
   static set(initialDimensions: ?DimensionsValue): void {
     if (initialDimensions) {
-      if (canUseDOM) {
+      if (ExecutionEnvironment.canUseDOM) {
         invariant(false, 'Dimensions cannot be set in the browser');
       } else {
         if (initialDimensions.screen != null) {
@@ -66,7 +66,7 @@ export default class Dimensions {
   }
 
   static _update() {
-    if (!canUseDOM) {
+    if (!ExecutionEnvironment.canUseDOM) {
       return;
     }
 
@@ -116,7 +116,7 @@ export default class Dimensions {
   }
 }
 
-if (canUseDOM) {
+if (ExecutionEnvironment.canUseDOM) {
   Dimensions._update();
   window.addEventListener('resize', Dimensions._update, false);
 }

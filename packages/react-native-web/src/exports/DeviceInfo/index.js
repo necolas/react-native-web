@@ -9,7 +9,7 @@
 
 import type { DisplayMetrics } from '../Dimensions';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import Dimensions from '../Dimensions';
 
 const DeviceInfo = {
@@ -35,7 +35,7 @@ const DeviceInfo = {
   },
 
   get locale(): string | void {
-    if (canUseDOM) {
+    if (ExecutionEnvironment.canUseDOM) {
       if (navigator.languages) {
         return navigator.languages[0];
       } else {
@@ -46,11 +46,11 @@ const DeviceInfo = {
 
   get totalMemory(): number | void {
     // $FlowIssue deviceMemory not defined in navigator
-    return canUseDOM ? navigator.deviceMemory : undefined;
+    return ExecutionEnvironment.canUseDOM ? navigator.deviceMemory : undefined;
   },
 
   get userAgent(): string {
-    return canUseDOM ? navigator.userAgent : '';
+    return ExecutionEnvironment.canUseDOM ? navigator.userAgent : '';
   }
 };
 

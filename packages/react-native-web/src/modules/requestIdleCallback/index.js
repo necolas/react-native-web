@@ -7,7 +7,7 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 const _requestIdleCallback = function (cb: Function, options?: Object) {
   return setTimeout(() => {
@@ -25,7 +25,8 @@ const _cancelIdleCallback = function (id) {
   clearTimeout(id);
 };
 
-const isSupported = canUseDOM && typeof window.requestIdleCallback !== 'undefined';
+const isSupported =
+  ExecutionEnvironment.canUseDOM && typeof window.requestIdleCallback !== 'undefined';
 
 const requestIdleCallback: (cb: any, options?: any) => TimeoutID = isSupported
   ? window.requestIdleCallback

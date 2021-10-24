@@ -12,7 +12,7 @@
  * the results of render performance benchmarks.
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createCompileableStyle from './createCompileableStyle';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
@@ -213,7 +213,7 @@ export default function createStyleResolver() {
     getStyleSheet() {
       const textContent = sheet.getTextContent();
       // Reset state on the server so critical css is always the result
-      if (!canUseDOM) {
+      if (!ExecutionEnvironment.canUseDOM) {
         init();
       }
 

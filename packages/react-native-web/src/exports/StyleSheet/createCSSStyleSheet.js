@@ -7,11 +7,11 @@
  * @flow strict-local
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 // $FlowFixMe: HTMLStyleElement is incorrectly typed - https://github.com/facebook/flow/issues/2696
 export default function createCSSStyleSheet(id: string): ?CSSStyleSheet {
-  if (canUseDOM) {
+  if (ExecutionEnvironment.canUseDOM) {
     const element = document.getElementById(id);
     if (element != null) {
       // $FlowFixMe: HTMLElement is incorrectly typed

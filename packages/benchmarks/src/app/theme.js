@@ -1,4 +1,4 @@
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { Dimensions, Platform } from 'react-native';
 
 const baseFontSize = 14;
@@ -84,7 +84,7 @@ export const spaces = {
 
 // On web, change the root font-size at specific breakpoints to scale the UI
 // for larger viewports.
-if (Platform.OS === 'web' && canUseDOM) {
+if (Platform.OS === 'web' && ExecutionEnvironment.canUseDOM) {
   const { medium, large } = breakpoints;
   const htmlElement = document.documentElement;
   const setFontSize = (width) => {

@@ -11,13 +11,13 @@
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
 const cssFunction: 'constant' | 'env' = (function () {
   if (
-    canUseDOM &&
+    ExecutionEnvironment.canUseDOM &&
     window.CSS &&
     window.CSS.supports &&
     window.CSS.supports('top: constant(safe-area-inset-top)')

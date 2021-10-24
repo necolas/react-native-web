@@ -9,7 +9,7 @@
 
 'use strict';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 type Listener = (e: any) => void;
 
@@ -26,7 +26,7 @@ function supportsPassiveEvents(): boolean {
   let supported = false;
   // Check if browser supports event with passive listeners
   // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
-  if (canUseDOM) {
+  if (ExecutionEnvironment.canUseDOM) {
     try {
       const options = {};
       Object.defineProperty(options, 'passive', {

@@ -7,7 +7,7 @@
  * @noflow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { MONOSPACE_FONT_STACK, SYSTEM_FONT_STACK, STYLE_SHORT_FORM_EXPANSIONS } from './constants';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
@@ -25,7 +25,7 @@ import normalizeValueWithProperty from './normalizeValueWithProperty';
 const emptyObject = {};
 
 const supportsCSS3TextDecoration =
-  !canUseDOM ||
+  !ExecutionEnvironment.canUseDOM ||
   (window.CSS != null &&
     window.CSS.supports != null &&
     (window.CSS.supports('text-decoration-line', 'none') ||

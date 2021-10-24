@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
@@ -32,7 +32,7 @@ const FocusBracket = () => {
 };
 
 function attemptFocus(element: any) {
-  if (!canUseDOM) {
+  if (!ExecutionEnvironment.canUseDOM) {
     return false;
   }
 
@@ -80,7 +80,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
   );
 
   React.useEffect(() => {
-    if (canUseDOM) {
+    if (ExecutionEnvironment.canUseDOM) {
       const trapFocus = () => {
         // We should not trap focus if:
         // - The modal hasn't fully initialized with an HTMLElement ref
@@ -128,7 +128,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
   React.useEffect(function () {
-    if (canUseDOM) {
+    if (ExecutionEnvironment.canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {
         if (lastFocusedElementOutsideTrap && document.contains(lastFocusedElementOutsideTrap)) {

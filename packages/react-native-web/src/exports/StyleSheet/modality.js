@@ -18,7 +18,7 @@
  * @noflow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 
 const focusVisibleAttributeName = 'data-focusvisible-polyfill';
 
@@ -27,7 +27,7 @@ const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 const modality = (insertRule) => {
   insertRule(rule);
 
-  if (!canUseDOM) {
+  if (!ExecutionEnvironment.canUseDOM) {
     return;
   }
 

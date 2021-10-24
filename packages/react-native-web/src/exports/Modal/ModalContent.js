@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 
@@ -27,7 +27,7 @@ const ModalContent: React.AbstractComponent<
   const { active, children, onRequestClose, transparent } = props;
 
   React.useEffect(() => {
-    if (canUseDOM) {
+    if (ExecutionEnvironment.canUseDOM) {
       const closeOnEscape = (e: KeyboardEvent) => {
         if (active && e.key === 'Escape') {
           e.stopPropagation();

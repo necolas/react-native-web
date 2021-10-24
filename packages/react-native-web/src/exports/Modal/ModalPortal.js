@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
 
 export type ModalPortalProps = {|
@@ -20,7 +20,7 @@ function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
   const elementRef = React.useRef(null);
 
-  if (canUseDOM && !elementRef.current) {
+  if (ExecutionEnvironment.canUseDOM && !elementRef.current) {
     const element = document.createElement('div');
 
     if (element && document.body) {
@@ -30,7 +30,7 @@ function ModalPortal(props: ModalPortalProps): React.Node {
   }
 
   React.useEffect(() => {
-    if (canUseDOM) {
+    if (ExecutionEnvironment.canUseDOM) {
       return () => {
         if (document.body && elementRef.current) {
           document.body.removeChild(elementRef.current);
@@ -40,7 +40,7 @@ function ModalPortal(props: ModalPortalProps): React.Node {
     }
   }, []);
 
-  return elementRef.current && canUseDOM
+  return elementRef.current && ExecutionEnvironment.canUseDOM
     ? ReactDOM.createPortal(children, elementRef.current)
     : null;
 }

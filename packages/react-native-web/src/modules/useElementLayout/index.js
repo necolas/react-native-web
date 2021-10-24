@@ -10,17 +10,17 @@
 import type { ElementRef } from 'react';
 import type { LayoutEvent } from '../../types';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import useLayoutEffect from '../useLayoutEffect';
 import UIManager from '../../exports/UIManager';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
-let didWarn = !canUseDOM;
+let didWarn = !ExecutionEnvironment.canUseDOM;
 let resizeObserver = null;
 
 function getResizeObserver(): ?ResizeObserver {
-  if (canUseDOM && typeof window.ResizeObserver !== 'undefined') {
+  if (ExecutionEnvironment.canUseDOM && typeof window.ResizeObserver !== 'undefined') {
     if (resizeObserver == null) {
       resizeObserver = new window.ResizeObserver(function (entries) {
         entries.forEach((entry) => {
