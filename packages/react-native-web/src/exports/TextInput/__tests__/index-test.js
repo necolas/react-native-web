@@ -285,6 +285,7 @@ describe('components/TextInput', () => {
       target.focus();
     });
     expect(onFocus).toHaveBeenCalledTimes(1);
+    target.node.focus();
     expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
   });
 
@@ -509,7 +510,7 @@ describe('components/TextInput', () => {
       const { container } = render(<TextInput onSelectionChange={onSelectionChange} />);
       const input = findInput(container);
       // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
-      input.dispatchEvent(new window.Event('change', { bubbles: true }));
+      input.dispatchEvent(new window.Event('input', { bubbles: true }));
       expect(onSelectionChange).toHaveBeenCalledTimes(1);
     });
   });
@@ -607,9 +608,9 @@ describe('components/TextInput', () => {
       const cursorLocation = { start: 3, end: 3 };
       const { container: defaultContainer } = render(<TextInput defaultValue="12345" />);
       const inputDefaultSelection = findInput(defaultContainer);
-      // default selection is 0
-      expect(inputDefaultSelection.selectionStart).toEqual(0);
-      expect(inputDefaultSelection.selectionEnd).toEqual(0);
+      // default selection is at the end
+      expect(inputDefaultSelection.selectionStart).toEqual(5);
+      expect(inputDefaultSelection.selectionEnd).toEqual(5);
 
       const { container: customContainer } = render(
         <TextInput defaultValue="12345" selection={cursorLocation} />

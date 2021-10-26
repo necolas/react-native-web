@@ -12,6 +12,9 @@ module.exports = {
   roots: ['<rootDir>/packages'],
   setupFiles: ['jest-canvas-mock', require.resolve('./setupFiles.js')],
   setupFilesAfterEnv: [require.resolve('./setupFramework.js')],
+  snapshotFormat: {
+    printBasicPrototype: false
+  },
   testEnvironment: 'jsdom',
   timers: 'fake'
 };

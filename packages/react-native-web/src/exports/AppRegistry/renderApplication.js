@@ -13,7 +13,7 @@ import type { ComponentType, Node } from 'react';
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import render, { hydrate } from '../render';
-import styleResolver from '../StyleSheet/styleResolver';
+import StyleSheet from '../StyleSheet';
 import React from 'react';
 
 export default function renderApplication<Props: Object>(
@@ -52,7 +52,7 @@ export function getApplication(
   );
   // Don't escape CSS text
   const getStyleElement = (props) => {
-    const sheet = styleResolver.getStyleSheet();
+    const sheet = StyleSheet.getSheet();
     return (
       <style {...props} dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
     );

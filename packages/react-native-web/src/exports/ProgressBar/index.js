@@ -51,11 +51,9 @@ const ProgressBar: React.AbstractComponent<
     <View
       {...other}
       accessibilityRole="progressbar"
-      accessibilityValue={{
-        max: 100,
-        min: 0,
-        now: indeterminate ? null : percentageProgress
-      }}
+      accessibilityValueMax={100}
+      accessibilityValueMin={0}
+      accessibilityValueNow={indeterminate ? null : percentageProgress}
       ref={ref}
       style={[styles.track, style, { backgroundColor: trackColor }]}
     >

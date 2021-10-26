@@ -1,6 +1,5 @@
 import App from './app/App';
 import impl from './impl';
-import TextTree from './cases/TextTree';
 import Tree from './cases/Tree';
 import SierpinskiTriangle from './cases/SierpinskiTriangle';
 
@@ -51,13 +50,6 @@ const tests = {
     },
     Provider: components.Provider,
     sampleCount: 100
-  })),
-  'Mount text tree': createTestBlock((components) => ({
-    benchmarkType: 'mount',
-    Component: TextTree,
-    getComponentProps: () => ({ breadth: 6, components, depth: 3, id: 0, wrap: 2 }),
-    Provider: components.Provider,
-    sampleCount: 50
   }))
 };
 

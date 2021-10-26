@@ -14,8 +14,6 @@ import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-const accessibilityValue = { max: 1, min: 0 };
-
 const createSvgCircle = (style) => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
@@ -59,7 +57,8 @@ const ActivityIndicator: React.AbstractComponent<
     <View
       {...other}
       accessibilityRole="progressbar"
-      accessibilityValue={accessibilityValue}
+      accessibilityValueMax={1}
+      accessibilityValueMin={0}
       ref={forwardedRef}
       style={[styles.container, style]}
     >

@@ -2,25 +2,25 @@
 
 exports[`components/Text allows "dir" to be overridden 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="rtl"
 />
 `;
 
 exports[`components/Text default 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
 
 exports[`components/Text nested 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 >
   <span
-    class="css-text-901oao css-textHasAncestor-16my406"
+    class="css-textHasAncestor-1qaijid"
     data-testid="child"
   />
 </div>
@@ -29,7 +29,7 @@ exports[`components/Text nested 1`] = `
 exports[`components/Text prop "accessibilityLabel" value is set 1`] = `
 <div
   aria-label="accessibility label"
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
@@ -37,7 +37,7 @@ exports[`components/Text prop "accessibilityLabel" value is set 1`] = `
 exports[`components/Text prop "accessibilityLabelledBy" value is set 1`] = `
 <div
   aria-labelledby="123"
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
@@ -45,14 +45,14 @@ exports[`components/Text prop "accessibilityLabelledBy" value is set 1`] = `
 exports[`components/Text prop "accessibilityLiveRegion" value is set 1`] = `
 <div
   aria-live="polite"
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] = `
 <article
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   role="article"
 />
@@ -60,7 +60,7 @@ exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] 
 
 exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
 <div
-  class="css-cursor-18t94o4 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   role="button"
   tabindex="0"
@@ -69,7 +69,7 @@ exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
 
 exports[`components/Text prop "accessibilityRole" value is set 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   role="presentation"
 />
@@ -77,7 +77,7 @@ exports[`components/Text prop "accessibilityRole" value is set 1`] = `
 
 exports[`components/Text prop "href" href with accessibilityRole 1`] = `
 <a
-  class="css-reset-4rbku5 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   href="https://example.com"
   role="presentation"
@@ -86,7 +86,7 @@ exports[`components/Text prop "href" href with accessibilityRole 1`] = `
 
 exports[`components/Text prop "href" value is set 1`] = `
 <a
-  class="css-reset-4rbku5 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   href="https://example.com"
 />
@@ -94,7 +94,7 @@ exports[`components/Text prop "href" value is set 1`] = `
 
 exports[`components/Text prop "hrefAttrs" null values are excluded 1`] = `
 <a
-  class="css-reset-4rbku5 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   href="https://example.com"
 />
@@ -102,14 +102,14 @@ exports[`components/Text prop "hrefAttrs" null values are excluded 1`] = `
 
 exports[`components/Text prop "hrefAttrs" requires "href" 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "hrefAttrs" target variant is set 1`] = `
 <a
-  class="css-reset-4rbku5 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   href="https://example.com"
   target="_blank"
@@ -118,7 +118,7 @@ exports[`components/Text prop "hrefAttrs" target variant is set 1`] = `
 
 exports[`components/Text prop "hrefAttrs" value is set 1`] = `
 <a
-  class="css-reset-4rbku5 css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   download="filename.jpg"
   href="https://example.com"
@@ -129,7 +129,7 @@ exports[`components/Text prop "hrefAttrs" value is set 1`] = `
 
 exports[`components/Text prop "lang" fr 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   lang="fr"
 />
@@ -137,14 +137,14 @@ exports[`components/Text prop "lang" fr 1`] = `
 
 exports[`components/Text prop "lang" undefined 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "nativeID" value is set 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   id="nativeID"
 />
@@ -152,35 +152,35 @@ exports[`components/Text prop "nativeID" value is set 1`] = `
 
 exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
-  class="css-text-901oao css-textMultiLine-cens5h"
+  class="css-text-1rynq56 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
-  class="css-text-901oao css-textMultiLine-cens5h"
+  class="css-text-1rynq56 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "selectable" value of false 1`] = `
 <div
-  class="css-text-901oao r-userSelect-lrvibr"
+  class="css-text-1rynq56 r-userSelect-lrvibr"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "selectable" value of true 1`] = `
 <div
-  class="css-text-901oao r-userSelect-1xnzce8"
+  class="css-text-1rynq56 r-userSelect-1xnzce8"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "style" value is set 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   dir="auto"
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
 />
@@ -188,7 +188,7 @@ exports[`components/Text prop "style" value is set 1`] = `
 
 exports[`components/Text prop "testID" value is set 1`] = `
 <div
-  class="css-text-901oao"
+  class="css-text-1rynq56"
   data-testid="123"
   dir="auto"
 />

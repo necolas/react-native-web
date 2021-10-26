@@ -105,7 +105,7 @@ function getPointerType(payload) {
  * - 'targetTouches' contains any of the remaining active pointers for the target.
  */
 
-export function contextmenu(target, defaultPayload) {
+export function contextmenu(target, defaultPayload = {}) {
   const dispatch = (arg) => target.dispatchEvent(arg);
   const pointerType = getPointerType(defaultPayload);
 

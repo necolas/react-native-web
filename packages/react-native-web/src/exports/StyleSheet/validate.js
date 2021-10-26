@@ -21,11 +21,27 @@ const invalidShortforms = {
   textDecoration: true
 };
 
+const invalidMultiValueShortforms = {
+  margin: true,
+  padding: true,
+  borderColor: true,
+  borderRadius: true,
+  borderStyle: true,
+  borderWidth: true,
+  marginHorizontal: true,
+  marginVertical: true,
+  paddingHorizontal: true,
+  paddingVertical: true,
+  overflow: true,
+  overscrollBehavior: true,
+  backgroundPosition: true
+};
+
 function error(message) {
   warning(false, message);
 }
 
-export default function validate(key: string, styles: Object) {
+export function validate(key: string, styles: Object) {
   const obj = styles[key];
   for (const k in obj) {
     const prop = k.trim();
@@ -55,6 +71,11 @@ export default function validate(key: string, styles: Object) {
       } else if (invalidShortforms[prop]) {
         suggestion = 'Please use long-form properties.';
         isInvalid = true;
+      } else if (invalidMultiValueShortforms[prop]) {
+        if (typeof value === 'string' && value.indexOf(' ') !== -1) {
+          suggestion = 'Only single values are supported.';
+          isInvalid = true;
+        }
       }
       if (suggestion !== '') {
         error(`Invalid style property of "${prop}". ${suggestion}`);

@@ -17,19 +17,20 @@ class View extends React.Component {
 
 const viewStyle = {
   alignItems: 'stretch',
-  borderWidth: 0,
-  borderStyle: 'solid',
+  backgroundColor: 'transparent',
+  border: '0 solid black',
   boxSizing: 'border-box',
   display: 'flex',
   flexBasis: 'auto',
   flexDirection: 'column',
   flexShrink: 0,
+  listStyle: 'none',
   margin: 0,
+  minHeight: 0,
+  minWidth: 0,
   padding: 0,
   position: 'relative',
-  // fix flexbox bugs
-  minHeight: 0,
-  minWidth: 0
+  zIndex: 0
 };
 
 export default View;

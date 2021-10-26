@@ -41,7 +41,6 @@ const ImageBackground: React.AbstractComponent<
         {...rest}
         ref={imageRef}
         style={[
-          StyleSheet.absoluteFill,
           {
             // Temporary Workaround:
             // Current (imperfect yet) implementation of <Image> overwrites width and height styles
@@ -54,6 +53,7 @@ const ImageBackground: React.AbstractComponent<
             height,
             zIndex: -1
           },
+          StyleSheet.absoluteFill,
           imageStyle
         ]}
       />

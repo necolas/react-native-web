@@ -2,17 +2,14 @@ import React from 'react';
 
 const Dot = ({ size, x, y, children, color }) => (
   <div
-    style={{
-      ...styles.root,
-      ...{
-        borderBottomColor: color,
-        borderRightWidth: `${size / 2}px`,
-        borderBottomWidth: `${size / 2}px`,
-        borderLeftWidth: `${size / 2}px`,
-        marginLeft: `${x}px`,
-        marginTop: `${y}px`
-      }
-    }}
+    style={Object.assign({}, styles.root, {
+      borderBottomColor: color,
+      borderRightWidth: `${size / 2}px`,
+      borderBottomWidth: `${size / 2}px`,
+      borderLeftWidth: `${size / 2}px`,
+      marginLeft: `${x}px`,
+      marginTop: `${y}px`
+    })}
   >
     {children}
   </div>

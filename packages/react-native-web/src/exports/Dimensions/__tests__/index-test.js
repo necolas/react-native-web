@@ -4,8 +4,22 @@ import Dimensions from '..';
 
 describe('apis/Dimensions', () => {
   test('get', () => {
-    expect(Dimensions.get('screen')).toMatchSnapshot();
-    expect(Dimensions.get('window')).toMatchSnapshot();
+    expect(Dimensions.get('screen')).toMatchInlineSnapshot(`
+      {
+        "fontScale": 1,
+        "height": 0,
+        "scale": 1,
+        "width": 0,
+      }
+    `);
+    expect(Dimensions.get('window')).toMatchInlineSnapshot(`
+      {
+        "fontScale": 1,
+        "height": 768,
+        "scale": 1,
+        "width": 1024,
+      }
+    `);
   });
 
   test('set', () => {

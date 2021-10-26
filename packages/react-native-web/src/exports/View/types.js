@@ -113,27 +113,8 @@ export type ViewStyle = {
 
 export type ViewProps = {
   ...AccessibilityProps,
-  accessibilityState?: {
-    busy?: ?boolean,
-    checked?: ?boolean | 'mixed',
-    disabled?: ?boolean,
-    expanded?: ?boolean,
-    grabbed?: ?boolean,
-    hidden?: ?boolean,
-    invalid?: ?boolean,
-    modal?: ?boolean,
-    pressed?: ?boolean,
-    readonly?: ?boolean,
-    required?: ?boolean,
-    selected?: ?boolean
-  },
-  accessibilityValue?: {
-    max?: ?number,
-    min?: ?number,
-    now?: ?number,
-    text?: ?string
-  },
   children?: ?any,
+  dir?: 'ltr' | 'rtl',
   focusable?: ?boolean,
   nativeID?: ?string,
   onBlur?: (e: any) => void,

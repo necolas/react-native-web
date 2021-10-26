@@ -17,12 +17,11 @@ import { useRef } from 'react';
 
 const emptyObject = {};
 
-function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
+function setNativeProps(node, nativeProps, pointerEvents, style, previousStyleRef) {
   if (node != null && nativeProps) {
     const domProps = createDOMProps(null, {
       pointerEvents,
       ...nativeProps,
-      classList: [classList, nativeProps.className],
       style: [style, nativeProps.style]
     });
 
@@ -50,17 +49,15 @@ function setNativeProps(node, nativeProps, classList, pointerEvents, style, prev
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
 export default function usePlatformMethods({
-  classList,
   pointerEvents,
   style
 }: {
-  classList?: Array<string | boolean>,
   style?: GenericStyleProp<*>,
   pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
 }): (hostNode: any) => void {
   const previousStyleRef = useRef(null);
   const setNativePropsArgsRef = useRef(null);
-  setNativePropsArgsRef.current = { classList, pointerEvents, style };
+  setNativePropsArgsRef.current = { pointerEvents, style };
 
   // Avoid creating a new ref on every render. The props only need to be
   // available to 'setNativeProps' when it is called.
@@ -71,8 +68,8 @@ export default function usePlatformMethods({
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
       hostNode.measureInWindow = (callback) => UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = (nativeProps) => {
-        const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
-        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+        const { style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
+        setNativeProps(hostNode, nativeProps, pointerEvents, style, previousStyleRef);
       };
     }
   });

@@ -6,7 +6,6 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from '@testing-library/react';
 import StyleSheet from '../../StyleSheet';
-import Text from '../../Text';
 import View from '../../View';
 
 const canUseDOM = ExecutionEnvironment.canUseDOM;
@@ -44,30 +43,29 @@ describe('AppRegistry', () => {
       expect(styleElement.props.nonce).toBe(nonce);
     });
 
-    test('"getStyleElement" produces styles that are a function of rendering "element"', () => {
+    test('"getStyleElement" contains style updates', () => {
       const getApplicationStyles = (appName) => {
         const { element, getStyleElement } = AppRegistry.getApplication(appName, {});
         render(element);
         return getStyleElement().props.dangerouslySetInnerHTML.__html;
       };
 
-      const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
-      const RootComponent = () => <View />;
-      const AlternativeComponent = () => <Text style={styles.root} />;
-
       // First render "RootComponent"
+      const RootComponent = () => <View />;
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
       expect(first).toMatchSnapshot();
 
       // Second render "AlternativeComponent"
+      const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
+      const AlternativeComponent = () => <View style={styles.root} />;
       AppRegistry.registerComponent('AlternativeApp', () => AlternativeComponent);
       const second = getApplicationStyles('AlternativeApp');
-      expect(first).not.toEqual(second);
+      expect(second).toMatchSnapshot();
 
       // Third render "RootComponent" again
       const third = getApplicationStyles('App');
-      expect(third).toEqual(first);
+      expect(third).toEqual(second);
     });
   });
 

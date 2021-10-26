@@ -15,7 +15,9 @@ import AnimatedTransform from './AnimatedTransform';
 import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-import flattenStyle from '../../../../exports/StyleSheet/flattenStyle';
+import StyleSheet from '../../../../exports/StyleSheet';
+
+const flattenStyle = StyleSheet.flatten;
 
 class AnimatedStyle extends AnimatedWithChildren {
   _style: Object;
