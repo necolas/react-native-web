@@ -361,6 +361,14 @@ type State = {
 class VirtualizedList extends React.PureComponent<Props, State> {
   static contextType: typeof VirtualizedListContext = VirtualizedListContext;
 
+  pushOrUnshift(input: Array<any>, item: Item) {
+    if (this.props.inverted) {
+      input.unshift(item)
+    } else {
+      input.push(item)
+    }
+  }
+
   // scrollToEnd may be janky without getItemLayout prop
   scrollToEnd(params?: ?{animated?: ?boolean, ...}) {
     const animated = params ? params.animated : true;
@@ -707,7 +715,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       );
     } else if (this.props.onViewableItemsChanged) {
       const onViewableItemsChanged = this.props.onViewableItemsChanged
-      this._viewabilityTuples.push({
+      this.pushOrUnshift(this._viewabilityTuples, {
         viewabilityHelper: new ViewabilityHelper(this.props.viewabilityConfig),
         onViewableItemsChanged,
       });
@@ -807,9 +815,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       const key = keyExtractor(item, ii);
       this._indicesToKeys.set(ii, key);
       if (stickyIndicesFromProps.has(ii + stickyOffset)) {
-        stickyHeaderIndices.push(cells.length);
+        this.pushOrUnshift(stickyHeaderIndices, cells.length);
       }
-      cells.push(
+      this.pushOrUnshift(cells, 
         <CellRenderer
           CellRendererComponent={CellRendererComponent}
           ItemSeparatorComponent={ii < end ? ItemSeparatorComponent : undefined}
@@ -879,7 +887,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const stickyHeaderIndices = [];
     if (ListHeaderComponent) {
       if (stickyIndicesFromProps.has(0)) {
-        stickyHeaderIndices.push(0);
+        this.pushOrUnshift(stickyHeaderIndices, 0);
       }
       const element = React.isValidElement(ListHeaderComponent) ? (
         ListHeaderComponent
@@ -887,7 +895,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListHeaderComponent />
       );
-      cells.push(
+      this.pushOrUnshift(cells,
         <VirtualizedListCellContextProvider
           cellKey={this._getCellKey() + '-header'}
           key="$header">
@@ -936,7 +944,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
                 stickyBlock.offset -
                 initBlock.offset -
                 (this.props.initialScrollIndex ? 0 : initBlock.length);
-              cells.push(
+              this.pushOrUnshift(cells,
                 /* $FlowFixMe(>=0.111.0 site=react_native_fb) This comment
                  * suppresses an error found when Flow v0.111 was deployed. To
                  * see the error, delete this comment and run Flow. */
@@ -953,7 +961,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               const trailSpace =
                 this._getFrameMetricsApprox(first).offset -
                 (stickyBlock.offset + stickyBlock.length);
-              cells.push(
+              this.pushOrUnshift(cells,
                 /* $FlowFixMe(>=0.111.0 site=react_native_fb) This comment
                  * suppresses an error found when Flow v0.111 was deployed. To
                  * see the error, delete this comment and run Flow. */
@@ -969,7 +977,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           const firstSpace =
             this._getFrameMetricsApprox(first).offset -
             (initBlock.offset + initBlock.length);
-          cells.push(
+          this.pushOrUnshift(cells,
             /* $FlowFixMe(>=0.111.0 site=react_native_fb) This comment
              * suppresses an error found when Flow v0.111 was deployed. To see
              * the error, delete this comment and run Flow. */
@@ -1006,7 +1014,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           endFrame.offset +
           endFrame.length -
           (lastFrame.offset + lastFrame.length);
-        cells.push(
+        this.pushOrUnshift(cells,
           /* $FlowFixMe(>=0.111.0 site=react_native_fb) This comment suppresses
            * an error found when Flow v0.111 was deployed. To see the error,
            * delete this comment and run Flow. */
@@ -1022,7 +1030,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListEmptyComponent />
       )): any);
-      cells.push(
+      this.pushOrUnshift(cells,
         React.cloneElement(element, {
           key: '$empty',
           onLayout: event => {
@@ -1042,7 +1050,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListFooterComponent />
       );
-      cells.push(
+      this.pushOrUnshift(cells,
         <VirtualizedListCellContextProvider
           cellKey={this._getFooterCellKey()}
           key="$footer">
@@ -1367,7 +1375,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
        * error found when Flow v0.68 was deployed. To see the error delete this
        * comment and run Flow. */
       if (frame.inLayout) {
-        framesInLayout.push(frame);
+        this.pushOrUnshift(framesInLayout, frame);
       }
     }
     const windowTop = this._getFrameMetricsApprox(this.state.first).offset;
@@ -1505,6 +1513,11 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   };
 
   _onScroll = (e: Object) => {
+    var contentOffset = (this.props.inverted) ? {
+      x: - e.nativeEvent.contentOffset.x,
+      y: - e.nativeEvent.contentOffset.y,
+    } : e.nativeEvent.contentOffset
+
     this._nestedChildLists.forEach(childList => {
       childList.ref && childList.ref._onScroll(e);
     });
@@ -1514,7 +1527,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const timestamp = e.timeStamp;
     let visibleLength = this._selectLength(e.nativeEvent.layoutMeasurement);
     let contentLength = this._selectLength(e.nativeEvent.contentSize);
-    let offset = this._selectOffset(e.nativeEvent.contentOffset);
+    let offset = this._selectOffset(contentOffset);
     let dOffset = offset - this._scrollMetrics.offset;
 
     if (this._isNestedWithSameOrientation()) {
@@ -2048,10 +2061,10 @@ function describeNestedLists(childList: {
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    transform: [{scaleY: -1}],
+    flexDirection: 'column-reverse',
   },
   horizontallyInverted: {
-    transform: [{scaleX: -1}],
+    flexDirection: 'row-reverse',
   },
   row: {
     flexDirection: 'row',
