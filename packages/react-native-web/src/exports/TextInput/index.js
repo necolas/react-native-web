@@ -83,6 +83,8 @@ function isEventComposing(nativeEvent) {
   return nativeEvent.isComposing || nativeEvent.keyCode === 229;
 }
 
+let focusTimeout: ?TimeoutID = null;
+
 const TextInput: React.AbstractComponent<
   TextInputProps,
   HTMLElement & PlatformMethods
@@ -243,8 +245,13 @@ const TextInput: React.AbstractComponent<
       }
       if (selectTextOnFocus) {
         // Safari requires selection to occur in a setTimeout
-        setTimeout(() => {
-          hostNode.select();
+        if (focusTimeout != null) {
+          clearTimeout(focusTimeout);
+        }
+        focusTimeout = setTimeout(() => {
+          if (hostNode != null) {
+            hostNode.select();
+          }
         }, 0);
       }
     }
