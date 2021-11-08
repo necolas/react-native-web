@@ -243,7 +243,8 @@ const TextInput: React.AbstractComponent<
       }
       if (selectTextOnFocus) {
         // Safari requires selection to occur in a setTimeout
-        setTimeout(() => {
+        clearTimeout(TextInput.focusTimeout);
+        TextInput.focusTimeout = setTimeout(() => {
           hostNode.select();
         }, 0);
       }
@@ -380,5 +381,7 @@ const classes = css.create({
     resize: 'none'
   }
 });
+
+TextInput.focusTimeout = 0;
 
 export default TextInput;
