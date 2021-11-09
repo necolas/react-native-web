@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Switch disabled when "true" and value="false", a disabled checkbox is rendered with provided false value of trackColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-bottom-1p0dtai r-forcedColorAdjust-1c6unfx r-height-1dernwh r-left-1d2f490 r-margin-ywje51 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-transitionDuration-13tjlyg r-width-13qz1uu"
+  style="background-color: rgb(29, 161, 242); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;"
+/>
+`;
+
+exports[`components/Switch disabled when "true" and value="false", a disabled checkbox is rendered with provided thumbColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-left-1fe0xdi r-transform-1sncvnh r-transitionDuration-13tjlyg"
+  style="background-color: rgb(255, 255, 255); height: 20px; margin-left: 0px; width: 20px;"
+/>
+`;
+
+exports[`components/Switch disabled when "true" and value="false", a disabled checkbox is rendered with provided trackColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-bottom-1p0dtai r-forcedColorAdjust-1c6unfx r-height-1dernwh r-left-1d2f490 r-margin-ywje51 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-transitionDuration-13tjlyg r-width-13qz1uu"
+  style="background-color: rgb(224, 36, 94); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;"
+/>
+`;
+
+exports[`components/Switch disabled when "true" and value="true", a disabled checkbox is rendered with provided activeThumbColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-left-7b7h2f r-transform-1sncvnh r-transitionDuration-13tjlyg"
+  style="background-color: rgb(255, 255, 255); height: 20px; margin-left: -20px; width: 20px;"
+/>
+`;
+
+exports[`components/Switch disabled when "true" and value="true", a disabled checkbox is rendered with provided activeTrackColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-bottom-1p0dtai r-forcedColorAdjust-1c6unfx r-height-1dernwh r-left-1d2f490 r-margin-ywje51 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-transitionDuration-13tjlyg r-width-13qz1uu"
+  style="background-color: rgb(224, 36, 94); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;"
+/>
+`;
+
+exports[`components/Switch disabled when "true" and value="true", a disabled checkbox is rendered with provided true value of trackColor 1`] = `
+<div
+  class="css-view-1dbjc4n r-bottom-1p0dtai r-forcedColorAdjust-1c6unfx r-height-1dernwh r-left-1d2f490 r-margin-ywje51 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-transitionDuration-13tjlyg r-width-13qz1uu"
+  style="background-color: rgb(224, 36, 94); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;"
+/>
+`;

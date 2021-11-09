@@ -8,6 +8,14 @@ function findCheckbox(container) {
   return container.firstChild.querySelector('input');
 }
 
+function findSwitchTrack(container) {
+  return container.firstChild.querySelector('div');
+}
+
+function findSwitchThumb(container) {
+  return container.firstChild.childNodes[1];
+}
+
 describe('components/Switch', () => {
   test('accessibilityLabel is applied to native checkbox', () => {
     const { container } = render(<Switch accessibilityLabel="switch" />);
@@ -23,6 +31,40 @@ describe('components/Switch', () => {
     test('when "true" a disabled checkbox is rendered', () => {
       const { container } = render(<Switch disabled />);
       expect(findCheckbox(container).disabled).toBe(true);
+    });
+
+    test('when "true" and value="true", a disabled checkbox is rendered with provided activeTrackColor', () => {
+      const { container } = render(<Switch activeTrackColor="#E0245E" disabled value={true} />);
+      expect(findSwitchTrack(container)).toMatchSnapshot();
+    });
+
+    test('when "true" and value="true", a disabled checkbox is rendered with provided activeThumbColor', () => {
+      const { container } = render(<Switch activeThumbColor="#fff" disabled value={true} />);
+      expect(findSwitchThumb(container)).toMatchSnapshot();
+    });
+
+    test('when "true" and value="false", a disabled checkbox is rendered with provided trackColor', () => {
+      const { container } = render(<Switch disabled trackColor="#E0245E" value={false} />);
+      expect(findSwitchTrack(container)).toMatchSnapshot();
+    });
+
+    test('when "true" and value="false", a disabled checkbox is rendered with provided thumbColor', () => {
+      const { container } = render(<Switch disabled thumbColor="#fff" value={false} />);
+      expect(findSwitchThumb(container)).toMatchSnapshot();
+    });
+
+    test('when "true" and value="true", a disabled checkbox is rendered with provided true value of trackColor', () => {
+      const { container } = render(
+        <Switch disabled={true} trackColor={{ true: '#E0245E', false: '#1DA1F2' }} value={true} />
+      );
+      expect(findSwitchTrack(container)).toMatchSnapshot();
+    });
+
+    test('when "true" and value="false", a disabled checkbox is rendered with provided false value of trackColor', () => {
+      const { container } = render(
+        <Switch disabled={true} trackColor={{ true: '#E0245E', false: '#1DA1F2' }} value={false} />
+      );
+      expect(findSwitchTrack(container)).toMatchSnapshot();
     });
   });
 
