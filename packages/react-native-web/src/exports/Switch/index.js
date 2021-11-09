@@ -93,6 +93,7 @@ const Switch: React.AbstractComponent<
       }
     }
   })();
+
   const thumbCurrentColor = value
     ? activeThumbColor ?? defaultActiveThumbColor
     : thumbColor ?? defaultThumbColor;
@@ -102,16 +103,43 @@ const Switch: React.AbstractComponent<
 
   const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
 
-  const disabledTrackColor =
-    (value === true && !activeTrackColor && !trackColor?.true) ||
-    (value === false && !trackColor && !trackColor?.false)
-      ? defaultDisabledTrackColor
-      : trackCurrentColor;
+  const disabledTrackColor = (function () {
+    if (value === true) {
+      if (
+        (typeof activeTrackColor === 'string' && activeTrackColor != null) ||
+        (typeof trackColor === 'object' && trackColor?.true)
+      ) {
+        return trackCurrentColor;
+      } else {
+        return defaultDisabledTrackColor;
+      }
+    } else {
+      if (
+        (typeof trackColor === 'string' && trackColor != null) ||
+        (typeof trackColor === 'object' && trackColor?.false)
+      ) {
+        return trackCurrentColor;
+      } else {
+        return defaultDisabledTrackColor;
+      }
+    }
+  })();
 
-  const disabledThumbColor =
-    (value === true && !activeThumbColor) || (value === false && !thumbColor)
-      ? defaultDisabledThumbColor
-      : thumbCurrentColor;
+  const disabledThumbColor = (function () {
+    if (value === true) {
+      if (activeThumbColor == null) {
+        return defaultDisabledThumbColor;
+      } else {
+        return thumbCurrentColor;
+      }
+    } else {
+      if (thumbColor == null) {
+        return defaultDisabledThumbColor;
+      } else {
+        return thumbCurrentColor;
+      }
+    }
+  })();
 
   const trackStyle = [
     styles.track,
