@@ -31,19 +31,27 @@ const emptyObject = {};
 const thumbDefaultBoxShadow = '0px 1px 3px rgba(0,0,0,0.5)';
 const thumbFocusedBoxShadow = `${thumbDefaultBoxShadow}, 0 0 0 10px rgba(0,0,0,0.1)`;
 
+const defaultActiveTrackColor = '#A3D3CF';
+const defaultTrackColor = '#939393';
+const defaultDisabledTrackColor = '#D5D5D5';
+
+const defaultActiveThumbColor = '#009688';
+const defaultThumbColor = '#FAFAFA';
+const defaultDisabledThumbColor = '#BDBDBD';
+
 const Switch: React.AbstractComponent<
   SwitchProps,
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
   const {
     accessibilityLabel,
-    activeThumbColor = '#009688',
-    activeTrackColor = '#A3D3CF',
+    activeThumbColor,
+    activeTrackColor,
     disabled = false,
     onValueChange,
     style = emptyObject,
-    thumbColor = '#FAFAFA',
-    trackColor = '#939393',
+    thumbColor,
+    trackColor,
     value = false,
     ...other
   } = props;
@@ -69,31 +77,46 @@ const Switch: React.AbstractComponent<
   const minWidth = multiplyStyleLengthValue(height, 2);
   const width = styleWidth > minWidth ? styleWidth : minWidth;
   const trackBorderRadius = multiplyStyleLengthValue(height, 0.5);
+
   const trackCurrentColor = (function () {
     if (value === true) {
       if (trackColor != null && typeof trackColor === 'object') {
         return trackColor.true;
       } else {
-        return activeTrackColor;
+        return activeTrackColor ?? defaultActiveTrackColor;
       }
     } else {
       if (trackColor != null && typeof trackColor === 'object') {
         return trackColor.false;
       } else {
-        return trackColor;
+        return trackColor ?? defaultTrackColor;
       }
     }
   })();
-  const thumbCurrentColor = value ? activeThumbColor : thumbColor;
+  const thumbCurrentColor = value
+    ? activeThumbColor ?? defaultActiveThumbColor
+    : thumbColor ?? defaultThumbColor;
+
   const thumbHeight = height;
   const thumbWidth = thumbHeight;
 
   const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
 
+  const disabledTrackColor =
+    (value === true && !activeTrackColor && !trackColor?.true) ||
+    (value === false && !trackColor && !trackColor?.false)
+      ? defaultDisabledTrackColor
+      : trackCurrentColor;
+
+  const disabledThumbColor =
+    (value === true && !activeThumbColor) || (value === false && !thumbColor)
+      ? defaultDisabledThumbColor
+      : thumbCurrentColor;
+
   const trackStyle = [
     styles.track,
     {
-      backgroundColor: disabled ? '#D5D5D5' : trackCurrentColor,
+      backgroundColor: disabled ? disabledTrackColor : trackCurrentColor,
       borderRadius: trackBorderRadius
     }
   ];
@@ -102,7 +125,7 @@ const Switch: React.AbstractComponent<
     styles.thumb,
     value && styles.thumbActive,
     {
-      backgroundColor: disabled ? '#BDBDBD' : thumbCurrentColor,
+      backgroundColor: disabled ? disabledThumbColor : thumbCurrentColor,
       height: thumbHeight,
       marginStart: value ? multiplyStyleLengthValue(thumbWidth, -1) : 0,
       width: thumbWidth
