@@ -24,6 +24,14 @@ export default function SwitchPage() {
         <Switch disabled={true} value={false} />
         <Divider />
         <Switch disabled={true} value={true} />
+        <Divider />
+        <Switch activeThumbColor="#fff" activeTrackColor="#E0245E" disabled={true} value={true} />
+        <Divider />
+        <Switch disabled={true} thumbColor="#fff" trackColor="#E0245E" value={false} />
+        <Divider />
+        <Switch disabled={true} trackColor={{ true: '#E0245E', false: '#1DA1F2' }} value={false} />
+        <Divider />
+        <Switch disabled={true} trackColor={{ true: '#E0245E', false: '#1DA1F2' }} value={true} />
       </View>
       <View style={styles.row}>
         <Switch value={false} />
