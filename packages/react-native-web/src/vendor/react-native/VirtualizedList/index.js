@@ -1203,6 +1203,12 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _defaultRenderScrollComponent = props => {
     const onRefresh = props.onRefresh;
+    const inversionStyle = this.props.inverted
+    ? this.props.horizontal
+      ? styles.rowReverse
+      : styles.columnReverse
+    : null;
+
     if (this._isNestedWithSameOrientation()) {
       // $FlowFixMe - Typing ReactNativeComponent revealed errors
       return <View {...props} />;
@@ -1231,11 +1237,23 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               props.refreshControl
             )
           }
+          contentContainerStyle={StyleSheet.compose(
+            inversionStyle,
+            this.props.contentContainerStyle,
+          )}
         />
       );
     } else {
       // $FlowFixMe Invalid prop usage
-      return <ScrollView {...props} />;
+      return (
+        <ScrollView
+          {...props}
+          contentContainerStyle={StyleSheet.compose(
+            inversionStyle,
+            this.props.contentContainerStyle,
+          )}
+        />
+      );
     }
   };
 
@@ -1513,11 +1531,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   };
 
   _onScroll = (e: Object) => {
-    var contentOffset = (this.props.inverted) ? {
-      x: - e.nativeEvent.contentOffset.x,
-      y: - e.nativeEvent.contentOffset.y,
-    } : e.nativeEvent.contentOffset
-
     this._nestedChildLists.forEach(childList => {
       childList.ref && childList.ref._onScroll(e);
     });
@@ -1527,7 +1540,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const timestamp = e.timeStamp;
     let visibleLength = this._selectLength(e.nativeEvent.layoutMeasurement);
     let contentLength = this._selectLength(e.nativeEvent.contentSize);
-    let offset = this._selectOffset(contentOffset);
+    let offset = this._selectOffset(e.nativeEvent.contentOffset);
     let dOffset = offset - this._scrollMetrics.offset;
 
     if (this._isNestedWithSameOrientation()) {
@@ -1703,6 +1716,13 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               this._getFrameMetricsApprox,
               this._scrollMetrics,
             );
+
+            // revert the state if calculations are off
+            // this would only happen on the inverted flatlist (probably a bug with overscroll-behavior)
+            // when scrolled from bottom all the way up until onEndReached is triggered
+            if (newState.first === newState.last) {
+              newState = state
+            }
           }
         }
       } else {
@@ -2061,10 +2081,10 @@ function describeNestedLists(childList: {
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    flexDirection: 'column-reverse',
+    transform: [{scaleY: -1}],
   },
   horizontallyInverted: {
-    flexDirection: 'row-reverse',
+    transform: [{scaleX: -1}],
   },
   row: {
     flexDirection: 'row',
