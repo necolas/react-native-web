@@ -1718,6 +1718,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
             );
 
             // revert the state if calculations are off
+            // this would only happen on the inverted flatlist (probably a bug with overscroll-behavior)
+            // when scrolled from bottom all the way up until onEndReached is triggered
             if (newState.first === newState.last) {
               newState = state
             }
