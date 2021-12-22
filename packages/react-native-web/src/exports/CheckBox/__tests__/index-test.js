@@ -4,7 +4,7 @@ import CheckBox from '../';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
-import { render } from '@testing-library/react';
+import renderRootContext from '../../../vendor/renderRootContext';
 
 function findCheckbox(container) {
   return container.firstChild.querySelector('input');
@@ -13,40 +13,42 @@ function findCheckbox(container) {
 describe('CheckBox', () => {
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox accessibilityLabel="accessibility label" />);
+      const { container } = renderRootContext(
+        <CheckBox accessibilityLabel="accessibility label" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "color"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox color="lightblue" value={true} />);
+      const { container } = renderRootContext(<CheckBox color="lightblue" value={true} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "dataSet"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox dataSet={{ one: 'one', two: 'two' }} />);
+      const { container } = renderRootContext(<CheckBox dataSet={{ one: 'one', two: 'two' }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "disabled"', () => {
     test('when "false" a default checkbox is rendered', () => {
-      const { container } = render(<CheckBox />);
+      const { container } = renderRootContext(<CheckBox />);
       expect(findCheckbox(container).disabled).toBe(false);
     });
 
     test('when "true" a disabled checkbox is rendered', () => {
-      const { container } = render(<CheckBox disabled />);
+      const { container } = renderRootContext(<CheckBox disabled />);
       expect(findCheckbox(container).disabled).toBe(true);
     });
   });
 
   describe('prop "nativeID"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox nativeID="123" />);
+      const { container } = renderRootContext(<CheckBox nativeID="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -56,7 +58,7 @@ describe('CheckBox', () => {
       const onBlur = jest.fn();
       const ref = React.createRef();
       act(() => {
-        render(<CheckBox onBlur={onBlur} ref={ref} />);
+        renderRootContext(<CheckBox onBlur={onBlur} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       const body = createEventTarget(document.body);
@@ -71,7 +73,7 @@ describe('CheckBox', () => {
   describe('prop "onChange"', () => {
     test('is called with the event object', () => {
       const onChange = jest.fn();
-      const { container } = render(<CheckBox onChange={onChange} value={false} />);
+      const { container } = renderRootContext(<CheckBox onChange={onChange} value={false} />);
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onChange).toHaveBeenCalled();
@@ -83,7 +85,7 @@ describe('CheckBox', () => {
       const onFocus = jest.fn();
       const ref = React.createRef();
       act(() => {
-        render(<CheckBox onFocus={onFocus} ref={ref} />);
+        renderRootContext(<CheckBox onFocus={onFocus} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -96,7 +98,9 @@ describe('CheckBox', () => {
   describe('prop "onValueChange"', () => {
     test('when value is "false" it receives "true"', () => {
       const onValueChange = jest.fn();
-      const { container } = render(<CheckBox onValueChange={onValueChange} value={false} />);
+      const { container } = renderRootContext(
+        <CheckBox onValueChange={onValueChange} value={false} />
+      );
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(true);
@@ -104,7 +108,7 @@ describe('CheckBox', () => {
 
     test('when value is "true" it receives "false"', () => {
       const onValueChange = jest.fn();
-      const { container } = render(<CheckBox onValueChange={onValueChange} value />);
+      const { container } = renderRootContext(<CheckBox onValueChange={onValueChange} value />);
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(false);
@@ -114,33 +118,33 @@ describe('CheckBox', () => {
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
-      render(<CheckBox ref={ref} />);
+      renderRootContext(<CheckBox ref={ref} />);
       expect(ref).toBeCalled();
     });
   });
 
   describe('prop "style"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox style={{ borderWidth: 5 }} />);
+      const { container } = renderRootContext(<CheckBox style={{ borderWidth: 5 }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "testID"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox testID="123" />);
+      const { container } = renderRootContext(<CheckBox testID="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "value"', () => {
     test('when "false" an unchecked checkbox is rendered', () => {
-      const { container } = render(<CheckBox value={false} />);
+      const { container } = renderRootContext(<CheckBox value={false} />);
       expect(findCheckbox(container).checked).toBe(false);
     });
 
     test('when "true" a checked checkbox is rendered', () => {
-      const { container } = render(<CheckBox value />);
+      const { container } = renderRootContext(<CheckBox value />);
       expect(findCheckbox(container).checked).toBe(true);
     });
   });

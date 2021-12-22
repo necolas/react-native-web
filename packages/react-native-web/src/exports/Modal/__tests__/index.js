@@ -2,11 +2,12 @@
 
 import Modal from '..';
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import renderRootContext from '../../../vendor/renderRootContext';
 
 describe('components/Modal', () => {
   test('visible by default', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderRootContext(
       <Modal>
         <a data-testid={'inside'} href={'#hello'}>
           Hello
@@ -19,7 +20,7 @@ describe('components/Modal', () => {
   });
 
   test('render children when visible', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderRootContext(
       <Modal visible={true}>
         <a data-testid={'inside'} href={'#hello'}>
           Hello
@@ -32,7 +33,7 @@ describe('components/Modal', () => {
   });
 
   test('does not render children when not visible', () => {
-    const { container } = render(
+    const { container } = renderRootContext(
       <Modal visible={false}>
         <a data-testid={'inside'} href={'#hello'}>
           Hello
@@ -43,7 +44,7 @@ describe('components/Modal', () => {
   });
 
   test('invisible modals will not be the active modal', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderRootContext(
       <>
         <Modal key={'modal-a'} visible={true}>
           <a data-testid={'inside-a'} href={'#hello'}>
@@ -64,7 +65,7 @@ describe('components/Modal', () => {
   });
 
   test('multiple modals will only mark one as active', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderRootContext(
       <>
         <Modal key={'modal-a'} visible={true}>
           <a data-testid={'inside-a'} href={'#hello'}>
@@ -85,7 +86,7 @@ describe('components/Modal', () => {
   });
 
   test('modal active state changes propogate', () => {
-    const { rerender, getByTestId } = render(
+    const { rerender, getByTestId } = renderRootContext(
       <>
         <Modal key={'modal-a'} visible={true}>
           <a data-testid={'inside-a'} href={'#hello'}>
@@ -122,7 +123,7 @@ describe('components/Modal', () => {
   });
 
   test('removed modal sets others active state', () => {
-    const { rerender, getByTestId } = render(
+    const { rerender, getByTestId } = renderRootContext(
       <>
         <Modal key={'modal-a'} visible={true}>
           <a data-testid={'inside-a'} href={'#hello'}>
@@ -153,31 +154,31 @@ describe('components/Modal', () => {
 
   test('executes onShow callback when initially showing', () => {
     const onShowCallback = jest.fn();
-    render(<Modal onShow={onShowCallback} visible={true} />);
+    renderRootContext(<Modal onShow={onShowCallback} visible={true} />);
     expect(onShowCallback).toBeCalledTimes(1);
   });
 
   test('does not execute onShow callback when initially hidden', () => {
     const onShowCallback = jest.fn();
-    render(<Modal onShow={onShowCallback} visible={false} />);
+    renderRootContext(<Modal onShow={onShowCallback} visible={false} />);
     expect(onShowCallback).toBeCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially hidden', () => {
     const onDismissCallback = jest.fn();
-    render(<Modal onDismiss={onDismissCallback} visible={false} />);
+    renderRootContext(<Modal onDismiss={onDismissCallback} visible={false} />);
     expect(onDismissCallback).toBeCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially showing', () => {
     const onDismissCallback = jest.fn();
-    render(<Modal onDismiss={onDismissCallback} visible={true} />);
+    renderRootContext(<Modal onDismiss={onDismissCallback} visible={true} />);
     expect(onDismissCallback).toBeCalledTimes(0);
   });
 
   test('executes onShow callback when visibility changes', () => {
     const onShowCallback = jest.fn();
-    const { rerender } = render(<Modal onShow={onShowCallback} visible={false} />);
+    const { rerender } = renderRootContext(<Modal onShow={onShowCallback} visible={false} />);
     expect(onShowCallback).toBeCalledTimes(0);
     rerender(<Modal onShow={onShowCallback} visible={true} />);
     expect(onShowCallback).toBeCalledTimes(1);
@@ -185,14 +186,16 @@ describe('components/Modal', () => {
 
   test('executes onDismiss callback when visibility changes', () => {
     const onDismissCallback = jest.fn();
-    const { rerender } = render(<Modal onDismiss={onDismissCallback} visible={true} />);
+    const { rerender } = renderRootContext(<Modal onDismiss={onDismissCallback} visible={true} />);
     expect(onDismissCallback).toBeCalledTimes(0);
     rerender(<Modal onDismiss={onDismissCallback} visible={false} />);
     expect(onDismissCallback).toBeCalledTimes(1);
   });
 
   test('animationTypes none is the same as omitting', () => {
-    const { rerender, baseElement } = render(<Modal animationType={'none'} visible={true} />);
+    const { rerender, baseElement } = renderRootContext(
+      <Modal animationType={'none'} visible={true} />
+    );
     const animationNoneElement = baseElement.lastChild.lastChild;
     const animationNoneStyle = window.getComputedStyle(animationNoneElement, null);
     rerender(<Modal visible={true} />);
@@ -214,7 +217,7 @@ describe('components/Modal', () => {
   });
 
   test('creates view with role="modal" when active', () => {
-    const { baseElement } = render(
+    const { baseElement } = renderRootContext(
       <Modal visible={true}>
         <a href={'#hello'}>Hello</a>
       </Modal>
@@ -226,7 +229,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is trapped by default', () => {
-    render(
+    renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -246,7 +249,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is trapped when active flag changes', () => {
-    const { rerender } = render(
+    const { rerender } = renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -281,7 +284,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is brought back to the element that triggered modal after closing', () => {
-    const { rerender } = render(
+    const { rerender } = renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -340,7 +343,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
-    const { rerender } = render(
+    const { rerender } = renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -396,7 +399,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is trapped when active', () => {
-    render(
+    renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -416,7 +419,7 @@ describe('components/Modal', () => {
   });
 
   test('focus wraps forwards', () => {
-    render(
+    renderRootContext(
       <>
         <Modal visible={true}>
           <a data-testid={'inside-a'} href={'#'}>
@@ -442,7 +445,7 @@ describe('components/Modal', () => {
   });
 
   test('focus wraps backwards', () => {
-    render(
+    renderRootContext(
       <>
         <Modal visible={true}>
           <a data-testid={'inside-a'} href={'#'}>
@@ -468,7 +471,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is trapped without contents', () => {
-    render(
+    renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -485,7 +488,7 @@ describe('components/Modal', () => {
   });
 
   test('focus is not trapped when inactive', () => {
-    render(
+    renderRootContext(
       <>
         <a data-testid={'outside'} href={'#outside'}>
           Outside
@@ -503,7 +506,7 @@ describe('components/Modal', () => {
   });
 
   test('creates portal outside of the react container', () => {
-    const { container, baseElement } = render(
+    const { container, baseElement } = renderRootContext(
       <Modal visible={true}>
         <a data-testid={'hello'} href={'#hello'}>
           Hello World
@@ -518,7 +521,7 @@ describe('components/Modal', () => {
   });
 
   test('portal created is a div', () => {
-    const { baseElement } = render(
+    const { baseElement } = renderRootContext(
       <Modal visible={true}>
         <a data-testid={'hello'} href={'#hello'}>
           Hello World
@@ -540,7 +543,7 @@ describe('components/Modal', () => {
       );
     }
 
-    render(<TestComponent />);
+    renderRootContext(<TestComponent />);
 
     expect(spy).toHaveBeenNthCalledWith(1, 'ref');
     expect(spy).toHaveBeenNthCalledWith(2, 'mount');
@@ -549,7 +552,7 @@ describe('components/Modal', () => {
   test('escape key fires onRequestClose', () => {
     const spy = jest.fn();
 
-    render(<Modal onRequestClose={spy} visible={true} />);
+    renderRootContext(<Modal onRequestClose={spy} visible={true} />);
 
     fireEvent.keyUp(document, { key: 'Escape' });
 
@@ -560,7 +563,7 @@ describe('components/Modal', () => {
     const spyA = jest.fn();
     const spyB = jest.fn();
 
-    render(
+    renderRootContext(
       <>
         <Modal onRequestClose={spyA} visible={true} />
         <Modal onRequestClose={spyB} visible={true} />
@@ -577,7 +580,7 @@ describe('components/Modal', () => {
     const spyA = jest.fn();
     const spyB = jest.fn();
 
-    const { getByTestId, rerender } = render(
+    const { getByTestId, rerender } = renderRootContext(
       <>
         <Modal animationType={'slide'} onRequestClose={spyA} visible={false}>
           <a data-testid={'a'} />
@@ -602,10 +605,10 @@ describe('components/Modal', () => {
     );
 
     // This is kind of ugly but I can't find a better way to target just the animation div
-    const animationAElement = getByTestId('a').parentElement.parentElement.parentElement
-      .parentElement;
-    const animationBElement = getByTestId('b').parentElement.parentElement.parentElement
-      .parentElement;
+    const animationAElement =
+      getByTestId('a').parentElement.parentElement.parentElement.parentElement;
+    const animationBElement =
+      getByTestId('b').parentElement.parentElement.parentElement.parentElement;
 
     fireEvent.animationEnd(animationAElement);
     fireEvent.animationEnd(animationBElement);

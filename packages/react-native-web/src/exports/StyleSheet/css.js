@@ -7,7 +7,7 @@
  * @noflow
  */
 
-import styleResolver from './styleResolver';
+import StyleResolver from './StyleResolver';
 
 /**
  * A simple (and dangerous) CSS system.
@@ -19,7 +19,7 @@ const css = {
    * const classes = css.create({ base: {}, extra: {} })
    */
   create(rules, group) {
-    return styleResolver.createCSS(rules, group);
+    return StyleResolver.createCSS(rules, group);
   }
 };
 

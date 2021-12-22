@@ -1,12 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import renderRootContext from '../../../vendor/renderRootContext';
 import TouchableWithoutFeedback from '../';
 import View from '../../View';
 
 describe('components/TouchableWithoutFeedback', () => {
   test('forwards ref', () => {
     const ref = jest.fn();
-    render(
+    renderRootContext(
       <TouchableWithoutFeedback ref={ref}>
         <View />
       </TouchableWithoutFeedback>
@@ -16,7 +16,7 @@ describe('components/TouchableWithoutFeedback', () => {
 
   test('forwards ref of child', () => {
     const ref = jest.fn();
-    render(
+    renderRootContext(
       <TouchableWithoutFeedback>
         <View ref={ref} />
       </TouchableWithoutFeedback>

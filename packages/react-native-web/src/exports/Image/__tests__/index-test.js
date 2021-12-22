@@ -7,7 +7,7 @@ import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
 import React from 'react';
-import { render } from '@testing-library/react';
+import renderRootContext from '../../../vendor/renderRootContext';
 
 const originalImage = window.Image;
 
@@ -23,7 +23,7 @@ describe('components/Image', () => {
 
   test('prop "accessibilityLabel"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
-    const { container } = render(
+    const { container } = renderRootContext(
       <Image accessibilityLabel="accessibilityLabel" defaultSource={defaultSource} />
     );
     expect(container.firstChild).toMatchSnapshot();
@@ -31,21 +31,21 @@ describe('components/Image', () => {
 
   test('prop "blurRadius"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
-    const { container } = render(<Image blurRadius={5} defaultSource={defaultSource} />);
+    const { container } = renderRootContext(<Image blurRadius={5} defaultSource={defaultSource} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "defaultSource"', () => {
     test('sets background image when value is an object', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
-      const { container } = render(<Image defaultSource={defaultSource} />);
+      const { container } = renderRootContext(<Image defaultSource={defaultSource} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('sets background image when value is a string', () => {
       // emulate require-ed asset
       const defaultSource = 'https://google.com/favicon.ico';
-      const { container } = render(<Image defaultSource={defaultSource} />);
+      const { container } = renderRootContext(<Image defaultSource={defaultSource} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -55,7 +55,7 @@ describe('components/Image', () => {
         height: 10,
         width: 20
       };
-      const { container } = render(<Image defaultSource={defaultSource} />);
+      const { container } = renderRootContext(<Image defaultSource={defaultSource} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -65,7 +65,7 @@ describe('components/Image', () => {
         height: 10,
         width: 20
       };
-      const { container } = render(
+      const { container } = renderRootContext(
         <Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -74,17 +74,19 @@ describe('components/Image', () => {
 
   test('prop "draggable"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
-    const { container } = render(<Image defaultSource={defaultSource} draggable={true} />);
+    const { container } = renderRootContext(
+      <Image defaultSource={defaultSource} draggable={true} />
+    );
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('prop "focusable"', () => {
-    const { container } = render(<Image focusable={true} />);
+    const { container } = renderRootContext(<Image focusable={true} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('prop "nativeID"', () => {
-    const { container } = render(<Image nativeID="nativeID" />);
+    const { container } = renderRootContext(<Image nativeID="nativeID" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -97,7 +99,7 @@ describe('components/Image', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
-      render(
+      renderRootContext(
         <Image
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
@@ -119,7 +121,7 @@ describe('components/Image', () => {
       const onLoadEndStub = jest.fn();
       const uri = 'https://test.com/img.jpg';
       ImageUriCache.add(uri);
-      render(
+      renderRootContext(
         <Image
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
@@ -136,7 +138,7 @@ describe('components/Image', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
-      const { rerender } = render(
+      const { rerender } = renderRootContext(
         <Image
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
@@ -162,7 +164,7 @@ describe('components/Image', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
-      const { rerender } = render(
+      const { rerender } = renderRootContext(
         <Image
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
@@ -188,7 +190,7 @@ describe('components/Image', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
-      const { rerender } = render(
+      const { rerender } = renderRootContext(
         <Image
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
@@ -214,7 +216,7 @@ describe('components/Image', () => {
   describe('prop "resizeMode"', () => {
     ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach((resizeMode) => {
       test(`value "${resizeMode}"`, () => {
-        const { container } = render(<Image resizeMode={resizeMode} />);
+        const { container } = renderRootContext(<Image resizeMode={resizeMode} />);
         expect(container.firstChild).toMatchSnapshot();
       });
     });
@@ -224,14 +226,14 @@ describe('components/Image', () => {
     test('does not throw', () => {
       const sources = [null, '', {}, { uri: '' }, { uri: 'https://google.com' }];
       sources.forEach((source) => {
-        expect(() => render(<Image source={source} />)).not.toThrow();
+        expect(() => renderRootContext(<Image source={source} />)).not.toThrow();
       });
     });
 
     test('is not set immediately if the image has not already been loaded', () => {
       const uri = 'https://google.com/favicon.ico';
       const source = { uri };
-      const { container } = render(<Image source={source} />);
+      const { container } = renderRootContext(<Image source={source} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -242,7 +244,9 @@ describe('components/Image', () => {
       });
       return Image.prefetch(uri).then(() => {
         const source = { uri };
-        const { container } = render(<Image source={source} />, { disableLifecycleMethods: true });
+        const { container } = renderRootContext(<Image source={source} />, {
+          disableLifecycleMethods: true
+        });
         expect(container.firstChild).toMatchSnapshot();
         ImageUriCache.remove(uri);
       });
@@ -255,7 +259,7 @@ describe('components/Image', () => {
       ImageUriCache.add(uriTwo);
 
       // initial render
-      const { container, rerender } = render(<Image source={{ uri: uriOne }} />);
+      const { container, rerender } = renderRootContext(<Image source={{ uri: uriOne }} />);
       ImageUriCache.remove(uriOne);
       expect(container.firstChild).toMatchSnapshot();
       // props update
@@ -268,7 +272,7 @@ describe('components/Image', () => {
 
     test('is correctly updated when missing in initial render', () => {
       const uri = 'https://testing.com/img.jpg';
-      const { container, rerender } = render(<Image />);
+      const { container, rerender } = renderRootContext(<Image />);
       act(() => {
         rerender(<Image source={{ uri }} />);
       });
@@ -282,7 +286,9 @@ describe('components/Image', () => {
       ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
         loadCallback = onLoad;
       });
-      const { container } = render(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
+      const { container } = renderRootContext(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
         loadCallback();
@@ -299,12 +305,12 @@ describe('components/Image', () => {
       }));
 
       PixelRatio.get = jest.fn(() => 1.0);
-      let { container } = render(<Image source={1} />);
+      let { container } = renderRootContext(<Image source={1} />);
       expect(container.querySelector('img').src).toBe('http://localhost/static/img.png');
 
       act(() => {
         PixelRatio.get = jest.fn(() => 2.2);
-        ({ container } = render(<Image source={1} />));
+        ({ container } = renderRootContext(<Image source={1} />));
       });
       expect(container.querySelector('img').src).toBe('http://localhost/static/img@2x.png');
     });
@@ -312,12 +318,12 @@ describe('components/Image', () => {
 
   describe('prop "style"', () => {
     test('supports "resizeMode" property', () => {
-      const { container } = render(<Image style={{ resizeMode: 'contain' }} />);
+      const { container } = renderRootContext(<Image style={{ resizeMode: 'contain' }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('supports "shadow" properties (convert to filter)', () => {
-      const { container } = render(
+      const { container } = renderRootContext(
         <Image style={{ shadowColor: 'red', shadowOffset: { width: 1, height: 1 } }} />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -325,20 +331,22 @@ describe('components/Image', () => {
 
     test('supports "tintcolor" property (convert to filter)', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
-      const { container } = render(
+      const { container } = renderRootContext(
         <Image defaultSource={defaultSource} style={{ tintColor: 'red' }} />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('removes other unsupported View styles', () => {
-      const { container } = render(<Image style={{ overlayColor: 'red', tintColor: 'blue' }} />);
+      const { container } = renderRootContext(
+        <Image style={{ overlayColor: 'red', tintColor: 'blue' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('prop "testID"', () => {
-    const { container } = render(<Image testID="testID" />);
+    const { container } = renderRootContext(<Image testID="testID" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 

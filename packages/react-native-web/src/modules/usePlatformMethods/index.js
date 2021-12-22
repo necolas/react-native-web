@@ -13,13 +13,23 @@ import type { ViewProps } from '../../exports/View';
 import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
 import useStable from '../useStable';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+import RootContext from '../../exports/AppRegistry/rootContext';
+import StyleResolver from '../../exports/StyleSheet/StyleResolver';
 
 const emptyObject = {};
 
-function setNativeProps(node, nativeProps, classList, pointerEvents, style, previousStyleRef) {
+function setNativeProps(
+  node,
+  styleResolver,
+  nativeProps,
+  classList,
+  pointerEvents,
+  style,
+  previousStyleRef
+) {
   if (node != null && nativeProps) {
-    const domProps = createDOMProps(null, {
+    const domProps = createDOMProps(null, styleResolver, {
       pointerEvents,
       ...nativeProps,
       classList: [classList, nativeProps.className],
@@ -60,7 +70,15 @@ export default function usePlatformMethods({
 }): (hostNode: any) => void {
   const previousStyleRef = useRef(null);
   const setNativePropsArgsRef = useRef(null);
+  const rootContext = useContext(RootContext);
   setNativePropsArgsRef.current = { classList, pointerEvents, style };
+
+  let resolver;
+  if (rootContext?.styleResolver) {
+    resolver = rootContext.styleResolver;
+  } else {
+    resolver = new StyleResolver();
+  }
 
   // Avoid creating a new ref on every render. The props only need to be
   // available to 'setNativeProps' when it is called.
@@ -72,7 +90,15 @@ export default function usePlatformMethods({
       hostNode.measureInWindow = (callback) => UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = (nativeProps) => {
         const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
-        setNativeProps(hostNode, nativeProps, classList, pointerEvents, style, previousStyleRef);
+        setNativeProps(
+          hostNode,
+          resolver,
+          nativeProps,
+          classList,
+          pointerEvents,
+          style,
+          previousStyleRef
+        );
       };
     }
   });

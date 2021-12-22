@@ -14,6 +14,7 @@ import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
+import RootContext from '../AppRegistry/rootContext';
 
 /**
  * This Component is used to "wrap" the modal we're opening
@@ -24,11 +25,16 @@ import UIManager from '../UIManager';
  */
 
 const FocusBracket = () => {
-  return createElement('div', {
-    accessibilityRole: 'none',
-    tabIndex: 0,
-    style: styles.focusBracket
-  });
+  const rootContext = React.useContext(RootContext);
+  return createElement(
+    'div',
+    {
+      accessibilityRole: 'none',
+      tabIndex: 0,
+      style: styles.focusBracket
+    },
+    rootContext.styleResolver
+  );
 };
 
 function attemptFocus(element: any) {

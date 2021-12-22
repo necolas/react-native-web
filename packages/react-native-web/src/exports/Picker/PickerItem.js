@@ -8,7 +8,9 @@
  * @noflow
  */
 
+import { useContext } from 'react';
 import type { ColorValue } from '../../types';
+import RootContext from '../AppRegistry/rootContext';
 
 import createElement from '../createElement';
 
@@ -22,5 +24,7 @@ type Props = {
 export default function PickerItem(props: Props) {
   const { color, label, testID, value } = props;
   const style = { color };
-  return createElement('option', { style, testID, value }, label);
+  const rootContext = useContext(RootContext);
+
+  return createElement('option', { style, testID, value }, rootContext.styleResolver, label);
 }

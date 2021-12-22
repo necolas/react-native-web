@@ -13,7 +13,7 @@ import type { ComponentType, Node } from 'react';
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import render, { hydrate } from '../render';
-import styleResolver from '../StyleSheet/styleResolver';
+import StyleResolver from '../StyleSheet/StyleResolver';
 import React from 'react';
 
 export default function renderApplication<Props: Object>(
@@ -29,10 +29,15 @@ export default function renderApplication<Props: Object>(
   const { hydrate: shouldHydrate, initialProps, rootTag } = options;
   const renderFn = shouldHydrate ? hydrate : render;
 
+  const styleResolver = new StyleResolver(options.rootTag);
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
+    <AppContainer
+      WrapperComponent={WrapperComponent}
+      rootTag={rootTag}
+      styleResolver={styleResolver}
+    >
       <RootComponent {...initialProps} />
     </AppContainer>,
     rootTag,
@@ -45,8 +50,9 @@ export function getApplication(
   initialProps: Object,
   WrapperComponent?: ?ComponentType<*>
 ): {| element: Node, getStyleElement: (Object) => Node |} {
+  const styleResolver = new StyleResolver();
   const element = (
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}} styleResolver={styleResolver}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );

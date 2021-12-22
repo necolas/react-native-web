@@ -10,7 +10,6 @@
 import AccessibilityUtil from '../AccessibilityUtil';
 import css from '../../exports/StyleSheet/css';
 import StyleSheet from '../../exports/StyleSheet';
-import styleResolver from '../../exports/StyleSheet/styleResolver';
 import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
@@ -62,7 +61,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const createDOMProps = (elementType, props) => {
+const createDOMProps = (elementType, styleResolver, props) => {
   if (!props) {
     props = emptyObject;
   }

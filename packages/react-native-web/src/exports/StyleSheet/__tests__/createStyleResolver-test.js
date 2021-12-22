@@ -3,14 +3,14 @@
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import I18nManager from '../../I18nManager';
 import ReactNativePropRegistry from '../ReactNativePropRegistry';
-import createStyleResolver from '../createStyleResolver';
+import StyleResolver from '../StyleResolver';
 
 const canUseDOM = ExecutionEnvironment.canUseDOM;
 let styleResolver;
 
 describe('StyleSheet/createStyleResolver', () => {
   beforeEach(() => {
-    styleResolver = createStyleResolver({ insert() {} });
+    styleResolver = new StyleResolver();
   });
 
   describe('resolve', () => {

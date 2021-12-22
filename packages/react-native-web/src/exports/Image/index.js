@@ -20,6 +20,7 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
+import RootContext from '../AppRegistry/rootContext';
 
 export type { ImageProps };
 
@@ -184,6 +185,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const hiddenImageRef = React.useRef(null);
     const filterRef = React.useRef(_filterId++);
     const requestRef = React.useRef(null);
+    const rootContext = React.useContext(RootContext);
     const shouldDisplaySource = state === LOADED || (state === LOADING && defaultSource == null);
     const [flatStyle, _resizeMode, filter, tintColor] = getFlatStyle(
       style,
@@ -199,13 +201,17 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
 
     // Accessibility image allows users to trigger the browser's image context menu
     const hiddenImage = displayImageUri
-      ? createElement('img', {
-          alt: accessibilityLabel || '',
-          classList: [classes.accessibilityImage],
-          draggable: draggable || false,
-          ref: hiddenImageRef,
-          src: displayImageUri
-        })
+      ? createElement(
+          'img',
+          {
+            alt: accessibilityLabel || '',
+            classList: [classes.accessibilityImage],
+            draggable: draggable || false,
+            ref: hiddenImageRef,
+            src: displayImageUri
+          },
+          rootContext.styleResolver
+        )
       : null;
 
     function getBackgroundSize(): ?string {
