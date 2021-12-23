@@ -29,15 +29,10 @@ export default function renderApplication<Props: Object>(
   const { hydrate: shouldHydrate, initialProps, rootTag } = options;
   const renderFn = shouldHydrate ? hydrate : render;
 
-  const styleResolver = new StyleResolver(options.rootTag);
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer
-      WrapperComponent={WrapperComponent}
-      rootTag={rootTag}
-      styleResolver={styleResolver}
-    >
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
       <RootComponent {...initialProps} />
     </AppContainer>,
     rootTag,
@@ -52,7 +47,7 @@ export function getApplication(
 ): {| element: Node, getStyleElement: (Object) => Node |} {
   const styleResolver = new StyleResolver();
   const element = (
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}} styleResolver={styleResolver}>
+    <AppContainer WrapperComponent={WrapperComponent} rootTag={null} styleResolver={styleResolver}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );

@@ -20,7 +20,7 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
-import RootContext from '../AppRegistry/rootContext';
+import RootContext from '../AppRegistry/RootContext';
 
 export type { ImageProps };
 

@@ -14,8 +14,7 @@ import UIManager from '../../exports/UIManager';
 import createDOMProps from '../createDOMProps';
 import useStable from '../useStable';
 import { useContext, useRef } from 'react';
-import RootContext from '../../exports/AppRegistry/rootContext';
-import StyleResolver from '../../exports/StyleSheet/StyleResolver';
+import RootContext from '../../exports/AppRegistry/RootContext';
 
 const emptyObject = {};
 
@@ -73,13 +72,6 @@ export default function usePlatformMethods({
   const rootContext = useContext(RootContext);
   setNativePropsArgsRef.current = { classList, pointerEvents, style };
 
-  let resolver;
-  if (rootContext?.styleResolver) {
-    resolver = rootContext.styleResolver;
-  } else {
-    resolver = new StyleResolver();
-  }
-
   // Avoid creating a new ref on every render. The props only need to be
   // available to 'setNativeProps' when it is called.
   const ref = useStable(() => (hostNode: any) => {
@@ -92,7 +84,7 @@ export default function usePlatformMethods({
         const { classList, style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
         setNativeProps(
           hostNode,
-          resolver,
+          rootContext.styleResolver,
           nativeProps,
           classList,
           pointerEvents,

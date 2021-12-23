@@ -22,7 +22,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
-import RootContext from '../AppRegistry/rootContext';
+import RootContext from '../AppRegistry/RootContext';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,

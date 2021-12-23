@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import RootContext from './rootContext';
+import RootContext from './RootContext';
 import StyleResolver from '../StyleSheet/StyleResolver';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -18,12 +18,17 @@ type Props = {
   WrapperComponent?: ?React.ComponentType<*>,
   // $FlowFixMe
   children?: React.Children,
-  rootTag: any,
-  styleResolver: typeof StyleResolver
+  rootTag: HTMLElement,
+  styleResolver?: StyleResolver
 };
 
 export default function AppContainer(props: Props): React.Node {
   const { children, WrapperComponent } = props;
+
+  const styleResolver = React.useRef(props.styleResolver ?? new StyleResolver(props.rootTag), [
+    props.rootTag,
+    props.styleResolver
+  ]);
 
   let innerView = (
     <View children={children} key={1} pointerEvents="box-none" style={styles.appContainer} />
@@ -32,7 +37,7 @@ export default function AppContainer(props: Props): React.Node {
   if (WrapperComponent) {
     innerView = <WrapperComponent>{innerView}</WrapperComponent>;
   }
-  const rootContext = { rootTag: props.rootTag, styleResolver: props.styleResolver };
+  const rootContext = { rootTag: props.rootTag, styleResolver: styleResolver.current };
   return (
     <RootContext.Provider value={rootContext}>
       <View pointerEvents="box-none" style={styles.appContainer}>

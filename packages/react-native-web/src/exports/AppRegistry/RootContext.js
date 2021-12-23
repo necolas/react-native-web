@@ -8,7 +8,7 @@
  */
 
 import * as React from 'react';
-import StyleResolver from '../../exports/StyleSheet/StyleResolver';
+import StyleResolver from '../StyleSheet/StyleResolver';
 
-const RootContext: { styleResoler: StyleResolver, rootTag: Node } = React.createContext(null);
+const RootContext = React.createContext<{ styleResoler: StyleResolver, rootTag?: Node }>(null);
 export default RootContext;
