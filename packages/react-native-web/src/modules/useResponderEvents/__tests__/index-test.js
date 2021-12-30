@@ -5,6 +5,7 @@ import React, { createRef } from 'react';
 import ReactDOM from 'react-dom';
 import useResponderEvents from '..';
 import ResponderSystem from '../ResponderSystem';
+import ReactRootView from '../../../exports/AppRegistry/ReactRootView';
 import {
   buttonType,
   buttonsType,
@@ -12,17 +13,16 @@ import {
   createEventTarget,
   testWithPointerType
 } from 'dom-event-testing-library';
-import StyleSheetManager from '../../../exports/StyleSheet/StyleSheetManager';
 
 describe('useResponderEvents', () => {
   let container;
-  let responderSystem;
+  const responderSystem = new ResponderSystem(window);
 
   function render(element) {
     ReactDOM.render(
-      <StyleSheetManager _responderSystem={responderSystem} rootTag={container}>
+      <ReactRootView _responderSystem={responderSystem} rootTag={container}>
         {element}
-      </StyleSheetManager>,
+      </ReactRootView>,
       container
     );
   }
@@ -30,7 +30,6 @@ describe('useResponderEvents', () => {
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
-    responderSystem = new ResponderSystem(window);
   });
 
   afterEach(() => {
@@ -2804,7 +2803,7 @@ describe('useResponderEvents', () => {
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.pointerdown({ pointerType });
-      }); //
+      });
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture'

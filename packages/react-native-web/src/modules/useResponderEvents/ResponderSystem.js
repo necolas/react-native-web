@@ -222,33 +222,7 @@ const shouldSetResponderEvents = {
   scroll: scrollRegistration
 };
 
-const emptyResponder: ResponderInstance = { id: null, idPath: null, node: null };
-
-/* ------------ PUBLIC API ------------ */
-
-/**
- * Attach Listeners
- *
- * Use native events as ReactDOM doesn't have a non-plugin API to implement
- * this system.
- */
-const documentEventsCapturePhase = ['blur', 'scroll'];
-const documentEventsBubblePhase = [
-  // mouse
-  'mousedown',
-  'mousemove',
-  'mouseup',
-  'dragstart',
-  // touch
-  'touchstart',
-  'touchmove',
-  'touchend',
-  'touchcancel',
-  // other
-  'contextmenu',
-  'select',
-  'selectionchange'
-];
+const emptyResponder = { id: null, idPath: null, node: null };
 
 export default class ResponderSystem {
   _window: Window;
@@ -262,71 +236,10 @@ export default class ResponderSystem {
   };
   _responderTouchHistoryStore = new ResponderTouchHistoryStore();
 
-  constructor(win?: Window) {
+  constructor(win: ?Window) {
     if (canUseDOM) {
       this._window = win ?? window;
     }
-  }
-
-  attachListeners() {
-    if (canUseDOM && this._window.__reactResponderSystemActive == null) {
-      this._window.addEventListener('blur', this._eventListener);
-      documentEventsBubblePhase.forEach((eventType) => {
-        this._window.document.addEventListener(eventType, this._eventListener);
-      });
-      documentEventsCapturePhase.forEach((eventType) => {
-        this._window.document.addEventListener(eventType, this._eventListener, true);
-      });
-      this._window.__reactResponderSystemActive = true;
-    }
-  }
-
-  /**
-   * Register a node with the ResponderSystem.
-   */
-  addNode(id: ResponderId, node: any, config: ResponderConfig) {
-    setResponderId(node, id);
-    this._responderListenersMap.set(id, config);
-  }
-
-  /**
-   * Unregister a node with the ResponderSystem.
-   */
-  removeNode(id: ResponderId) {
-    if (this._currentResponder.id === id) {
-      this.terminateResponder();
-    }
-    if (this._responderListenersMap.has(id)) {
-      this._responderListenersMap.delete(id);
-    }
-  }
-
-  /**
-   * Allow the current responder to be terminated from within components to support
-   * more complex requirements, such as use with other React libraries for working
-   * with scroll views, input views, etc.
-   */
-  terminateResponder() {
-    const { id, node } = this._currentResponder;
-    if (id != null && node != null) {
-      const { onResponderTerminate } = this._getResponderConfig(id);
-      if (onResponderTerminate != null) {
-        const event = createResponderEvent({}, this._responderTouchHistoryStore);
-        event.currentTarget = node;
-        onResponderTerminate(event);
-      }
-      this._changeCurrentResponder(emptyResponder);
-    }
-    this._isEmulatingMouseEvents = false;
-    this._trackedTouchCount = 0;
-  }
-
-  /**
-   * Allow unit tests to inspect the current responder in the system.
-   * FOR TESTING ONLY.
-   */
-  getResponderNode(): any {
-    return this._currentResponder.node;
   }
 
   _changeCurrentResponder(responder: ResponderInstance) {
@@ -336,71 +249,6 @@ export default class ResponderSystem {
   _getResponderConfig(id: ResponderId): ResponderConfig | Object {
     const config = this._responderListenersMap.get(id);
     return config != null ? config : emptyObject;
-  }
-
-  /**
-   * Walk the event path to/from the target node. At each node, stop and call the
-   * relevant "shouldSet" functions for the given event type. If any of those functions
-   * call "stopPropagation" on the event, stop searching for a responder.
-   */
-  _findWantsResponder(eventPaths, domEvent, responderEvent) {
-    const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
-
-    if (shouldSetCallbacks != null) {
-      const { idPath, nodePath } = eventPaths;
-
-      const shouldSetCallbackCaptureName = shouldSetCallbacks[0];
-      const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
-      const { bubbles } = shouldSetCallbacks[2];
-
-      const check = (id, node, callbackName) => {
-        const config = this._getResponderConfig(id);
-        const shouldSetCallback = config[callbackName];
-        if (shouldSetCallback != null) {
-          responderEvent.currentTarget = node;
-          if (shouldSetCallback(responderEvent) === true) {
-            // Start the path from the potential responder
-            const prunedIdPath = idPath.slice(idPath.indexOf(id));
-            return { id, node, idPath: prunedIdPath };
-          }
-        }
-      };
-
-      // capture
-      for (let i = idPath.length - 1; i >= 0; i--) {
-        const id = idPath[i];
-        const node = nodePath[i];
-        const result = check(id, node, shouldSetCallbackCaptureName);
-        if (result != null) {
-          return result;
-        }
-        if (responderEvent.isPropagationStopped() === true) {
-          return;
-        }
-      }
-
-      // bubble
-      if (bubbles) {
-        for (let i = 0; i < idPath.length; i++) {
-          const id = idPath[i];
-          const node = nodePath[i];
-          const result = check(id, node, shouldSetCallbackBubbleName);
-          if (result != null) {
-            return result;
-          }
-          if (responderEvent.isPropagationStopped() === true) {
-            return;
-          }
-        }
-      } else {
-        const id = idPath[0];
-        const node = nodePath[0];
-        const target = domEvent.target;
-        if (target === node) {
-          return check(id, node, shouldSetCallbackBubbleName);
-        }
-      }
-    }
   }
 
   /**
@@ -552,7 +400,7 @@ export default class ResponderSystem {
           // native context menu
           eventType === 'contextmenu' ||
           // window blur
-          (eventType === 'blur' && eventTarget === window) ||
+          (eventType === 'blur' && eventTarget === this._window) ||
           // responder (or ancestors) blur
           (eventType === 'blur' && eventTarget.contains(node) && domEvent.relatedTarget !== node) ||
           // native scroll without using a pointer
@@ -616,6 +464,71 @@ export default class ResponderSystem {
   };
 
   /**
+   * Walk the event path to/from the target node. At each node, stop and call the
+   * relevant "shouldSet" functions for the given event type. If any of those functions
+   * call "stopPropagation" on the event, stop searching for a responder.
+   */
+  _findWantsResponder(eventPaths, domEvent, responderEvent) {
+    const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
+
+    if (shouldSetCallbacks != null) {
+      const { idPath, nodePath } = eventPaths;
+
+      const shouldSetCallbackCaptureName = shouldSetCallbacks[0];
+      const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
+      const { bubbles } = shouldSetCallbacks[2];
+
+      const check = (id, node, callbackName) => {
+        const config = this._getResponderConfig(id);
+        const shouldSetCallback = config[callbackName];
+        if (shouldSetCallback != null) {
+          responderEvent.currentTarget = node;
+          if (shouldSetCallback(responderEvent) === true) {
+            // Start the path from the potential responder
+            const prunedIdPath = idPath.slice(idPath.indexOf(id));
+            return { id, node, idPath: prunedIdPath };
+          }
+        }
+      };
+
+      // capture
+      for (let i = idPath.length - 1; i >= 0; i--) {
+        const id = idPath[i];
+        const node = nodePath[i];
+        const result = check(id, node, shouldSetCallbackCaptureName);
+        if (result != null) {
+          return result;
+        }
+        if (responderEvent.isPropagationStopped() === true) {
+          return;
+        }
+      }
+
+      // bubble
+      if (bubbles) {
+        for (let i = 0; i < idPath.length; i++) {
+          const id = idPath[i];
+          const node = nodePath[i];
+          const result = check(id, node, shouldSetCallbackBubbleName);
+          if (result != null) {
+            return result;
+          }
+          if (responderEvent.isPropagationStopped() === true) {
+            return;
+          }
+        }
+      } else {
+        const id = idPath[0];
+        const node = nodePath[0];
+        const target = domEvent.target;
+        if (target === node) {
+          return check(id, node, shouldSetCallbackBubbleName);
+        }
+      }
+    }
+  }
+
+  /**
    * Attempt to transfer the responder.
    */
   _attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveResponderInstance) {
@@ -675,5 +588,92 @@ export default class ResponderSystem {
         }
       }
     }
+  }
+
+  /* ------------ PUBLIC API ------------ */
+
+  /**
+   * Attach Listeners
+   *
+   * Use native events as ReactDOM doesn't have a non-plugin API to implement
+   * this system.
+   */
+  static documentEventsCapturePhase = ['blur', 'scroll'];
+  static documentEventsBubblePhase = [
+    // mouse
+    'mousedown',
+    'mousemove',
+    'mouseup',
+    'dragstart',
+    // touch
+    'touchstart',
+    'touchmove',
+    'touchend',
+    'touchcancel',
+    // other
+    'contextmenu',
+    'select',
+    'selectionchange'
+  ];
+
+  attachListeners() {
+    if (canUseDOM && this._window.__reactResponderSystemActive == null) {
+      this._window.addEventListener('blur', this._eventListener);
+      ResponderSystem.documentEventsBubblePhase.forEach((eventType) => {
+        this._window.document.addEventListener(eventType, this._eventListener);
+      });
+      ResponderSystem.documentEventsCapturePhase.forEach((eventType) => {
+        this._window.document.addEventListener(eventType, this._eventListener, true);
+      });
+      this._window.__reactResponderSystemActive = true;
+    }
+  }
+
+  /**
+   * Register a node with the ResponderSystem.
+   */
+  addNode(id: ResponderId, node: any, config: ResponderConfig) {
+    setResponderId(node, id);
+    this._responderListenersMap.set(id, config);
+  }
+
+  /**
+   * Unregister a node with the ResponderSystem.
+   */
+  removeNode(id: ResponderId) {
+    if (this._currentResponder.id === id) {
+      this.terminateResponder();
+    }
+    if (this._responderListenersMap.has(id)) {
+      this._responderListenersMap.delete(id);
+    }
+  }
+
+  /**
+   * Allow the current responder to be terminated from within components to support
+   * more complex requirements, such as use with other React libraries for working
+   * with scroll views, input views, etc.
+   */
+  terminateResponder() {
+    const { id, node } = this._currentResponder;
+    if (id != null && node != null) {
+      const { onResponderTerminate } = this._getResponderConfig(id);
+      if (onResponderTerminate != null) {
+        const event = createResponderEvent({}, this._responderTouchHistoryStore);
+        event.currentTarget = node;
+        onResponderTerminate(event);
+      }
+      this._changeCurrentResponder(emptyResponder);
+    }
+    this._isEmulatingMouseEvents = false;
+    this._trackedTouchCount = 0;
+  }
+
+  /**
+   * Allow unit tests to inspect the current responder in the system.
+   * FOR TESTING ONLY.
+   */
+  getResponderNode(): any {
+    return this._currentResponder.node;
   }
 }

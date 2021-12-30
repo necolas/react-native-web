@@ -87,15 +87,6 @@ function getTouchIdentifier({ identifier }: Touch): number {
   return identifier;
 }
 
-function printTouch(touch: Touch): string {
-  return JSON.stringify({
-    identifier: touch.identifier,
-    pageX: touch.pageX,
-    pageY: touch.pageY,
-    timestamp: timestampForTouch(touch)
-  });
-}
-
 export default class ResponderTouchHistoryStore {
   _touchBank: Array<TouchRecord> = [];
   _touchHistory = {
@@ -138,12 +129,8 @@ export default class ResponderTouchHistoryStore {
     }
   }
 
-  _printTouchBank(): string {
-    let printed = JSON.stringify(this._touchBank.slice(0, MAX_TOUCH_BANK));
-    if (this._touchBank.length > MAX_TOUCH_BANK) {
-      printed += ' (original size: ' + this._touchBank.length + ')';
-    }
-    return printed;
+  get touchHistory() {
+    return this._touchHistory;
   }
 
   _recordTouchStart = (touch: Touch): void => {
@@ -171,7 +158,7 @@ export default class ResponderTouchHistoryStore {
     } else {
       console.warn(
         'Cannot record touch move without a touch start.\n',
-        `Touch Move: ${printTouch(touch)}\n`,
+        `Touch Move: ${this._printTouch(touch)}\n`,
         `Touch Bank: ${this._printTouchBank()}`
       );
     }
@@ -191,9 +178,26 @@ export default class ResponderTouchHistoryStore {
     } else {
       console.warn(
         'Cannot record touch end without a touch start.\n',
-        `Touch End: ${printTouch(touch)}\n`,
+        `Touch End: ${this._printTouch(touch)}\n`,
         `Touch Bank: ${this._printTouchBank()}`
       );
     }
   };
+
+  _printTouch(touch: Touch): string {
+    return JSON.stringify({
+      identifier: touch.identifier,
+      pageX: touch.pageX,
+      pageY: touch.pageY,
+      timestamp: timestampForTouch(touch)
+    });
+  }
+
+  _printTouchBank(): string {
+    let printed = JSON.stringify(this._touchBank.slice(0, MAX_TOUCH_BANK));
+    if (this._touchBank.length > MAX_TOUCH_BANK) {
+      printed += ' (original size: ' + this._touchBank.length + ')';
+    }
+    return printed;
+  }
 }

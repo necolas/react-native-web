@@ -1,7 +1,7 @@
 /* eslint-env jasmine, jest */
 
 import React from 'react';
-import renderRootContext from '../../../vendor/renderRootContext';
+import renderRootView from '../../../exports/AppRegistry/renderRootView';
 import Picker from '..';
 
 function findSelect(container) {
@@ -17,13 +17,13 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const { container } = renderRootContext(picker);
+      const { container } = renderRootView(picker);
       expect(container.firstChild.firstChild).toMatchSnapshot();
     });
 
     test('items', () => {
       const pickerItem = <Picker.Item label="label-1" value="value-1" />;
-      const { container } = renderRootContext(pickerItem);
+      const { container } = renderRootView(pickerItem);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -36,7 +36,7 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const { container } = renderRootContext(picker);
+      const { container } = renderRootView(picker);
       expect(findSelect(container).disabled).toBe(true);
     });
   });
@@ -50,7 +50,7 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const { container } = renderRootContext(picker);
+      const { container } = renderRootView(picker);
       const select = findSelect(container);
       // mock change event
       select.selectedIndex = '1';
@@ -69,7 +69,7 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value="value-2" />
         </Picker>
       );
-      const { container } = renderRootContext(picker);
+      const { container } = renderRootView(picker);
       expect(findSelect(container).value).toBe('value-2');
     });
 
@@ -80,7 +80,7 @@ describe('components/Picker', () => {
           <Picker.Item label="label-2" value={22} />
         </Picker>
       );
-      const { container } = renderRootContext(picker);
+      const { container } = renderRootView(picker);
       expect(findSelect(container).value).toBe('22');
     });
   });

@@ -14,7 +14,7 @@ import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
-import StyleSheetContext from '../StyleSheet/StyleSheetContext';
+import RootContext from '../AppRegistry/RootContext';
 
 /**
  * This Component is used to "wrap" the modal we're opening
@@ -25,7 +25,7 @@ import StyleSheetContext from '../StyleSheet/StyleSheetContext';
  */
 
 const FocusBracket = () => {
-  const styleContext = React.useContext(StyleSheetContext);
+  const rootContext = React.useContext(RootContext);
   return createElement(
     'div',
     {
@@ -33,7 +33,7 @@ const FocusBracket = () => {
       tabIndex: 0,
       style: styles.focusBracket
     },
-    styleContext.styleResolver
+    rootContext.styleResolver
   );
 };
 
@@ -78,7 +78,7 @@ export type ModalFocusTrapProps = {|
 
 const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node => {
   const trapElementRef = React.useRef<?HTMLElement>();
-  const styleContext = React.useContext(StyleSheetContext);
+  const rootContext = React.useContext(RootContext);
   const focusRef = React.useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>(
     {
       trapFocusInProgress: false,
@@ -88,7 +88,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
 
   React.useEffect(() => {
     if (canUseDOM) {
-      const document = styleContext.rootTag?.ownerDocument ?? window.document;
+      const document = rootContext.rootTag?.ownerDocument ?? window.document;
       const trapFocus = () => {
         // We should not trap focus if:
         // - The modal hasn't fully initialized with an HTMLElement ref
@@ -131,14 +131,14 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
       document.addEventListener('focus', trapFocus, true);
       return () => document.removeEventListener('focus', trapFocus, true);
     }
-  }, [active, styleContext.rootTag]);
+  }, [active, rootContext.rootTag]);
 
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
   React.useEffect(
     function () {
       if (canUseDOM) {
-        const document = styleContext.rootTag?.ownerDocument ?? window.document;
+        const document = rootContext.rootTag?.ownerDocument ?? window.document;
         const lastFocusedElementOutsideTrap = document.activeElement;
         return function () {
           if (lastFocusedElementOutsideTrap && document.contains(lastFocusedElementOutsideTrap)) {
@@ -147,7 +147,7 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
         };
       }
     },
-    [styleContext.rootTag]
+    [rootContext.rootTag]
   );
 
   return (

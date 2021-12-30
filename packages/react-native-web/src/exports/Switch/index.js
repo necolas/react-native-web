@@ -15,7 +15,7 @@ import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import StyleSheetContext from '../StyleSheet/StyleSheetContext';
+import RootContext from '../AppRegistry/RootContext';
 
 type SwitchProps = {
   ...ViewProps,
@@ -50,7 +50,7 @@ const Switch: React.AbstractComponent<
   } = props;
 
   const thumbRef = React.useRef(null);
-  const styleContext = React.useContext(StyleSheetContext);
+  const rootContext = React.useContext(RootContext);
 
   function handleChange(event: Object) {
     if (onValueChange != null) {
@@ -125,7 +125,7 @@ const Switch: React.AbstractComponent<
       type: 'checkbox',
       role: 'switch'
     },
-    styleContext.styleResolver
+    rootContext.styleResolver
   );
 
   return (

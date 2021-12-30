@@ -10,7 +10,7 @@
 import type { TouchEvent } from './ResponderEventTypes';
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
-import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
+import type ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
 
 export type ResponderEvent = {|
   bubbles: boolean,
@@ -185,7 +185,7 @@ export default function createResponderEvent(
     },
     target: domEvent.target,
     timeStamp: timestamp,
-    touchHistory: responderTouchHistoryStore._touchHistory
+    touchHistory: responderTouchHistoryStore.touchHistory
   };
 
   // Using getters and functions serves two purposes:

@@ -1,7 +1,6 @@
 import * as React from 'react';
-
-import StyleSheetManager from 'react-native-web/dist/cjs/exports/StyleSheet/StyleSheetManager';
+import { ReactRootView } from 'react-native-web';
 
 export default function Application({ Component, pageProps }) {
-  return <StyleSheetManager>{<Component {...pageProps} />}</StyleSheetManager>;
+  return <ReactRootView>{<Component {...pageProps} />}</ReactRootView>;
 }

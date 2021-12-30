@@ -4,58 +4,58 @@ import React from 'react';
 import Pressable from '../';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
-import renderRootContext from '../../../vendor/renderRootContext';
+import renderRootView from '../../../exports/AppRegistry/renderRootView';
 
 describe('components/Pressable', () => {
   test('default', () => {
-    const { container } = renderRootContext(<Pressable />);
+    const { container } = renderRootView(<Pressable />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable accessibilityLabel="label" />);
+      const { container } = renderRootView(<Pressable accessibilityLabel="label" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable accessibilityLiveRegion="polite" />);
+      const { container } = renderRootView(<Pressable accessibilityLiveRegion="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityRole"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable accessibilityRole="none" />);
+      const { container } = renderRootView(<Pressable accessibilityRole="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value is "button"', () => {
-      const { container } = renderRootContext(<Pressable accessibilityRole="button" />);
+      const { container } = renderRootView(<Pressable accessibilityRole="button" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value alters HTML element', () => {
-      const { container } = renderRootContext(<Pressable accessibilityRole="article" />);
+      const { container } = renderRootView(<Pressable accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('prop "disabled"', () => {
-    const { container } = renderRootContext(<Pressable disabled={true} />);
+    const { container } = renderRootView(<Pressable disabled={true} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('prop "href"', () => {
-    const { container } = renderRootContext(<Pressable href="#href" />);
+    const { container } = renderRootView(<Pressable href="#href" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "nativeID"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable nativeID="nativeID" />);
+      const { container } = renderRootView(<Pressable nativeID="nativeID" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -66,7 +66,7 @@ describe('components/Pressable', () => {
     const onFocus = jest.fn();
     const ref = React.createRef();
     act(() => {
-      ({ container } = renderRootContext(
+      ({ container } = renderRootView(
         <Pressable
           children={({ focused }) => (focused ? <div data-testid="focus-content" /> : null)}
           onBlur={onBlur}
@@ -96,7 +96,7 @@ describe('components/Pressable', () => {
     const onFocus = jest.fn();
     const ref = React.createRef();
     act(() => {
-      renderRootContext(<Pressable disabled={true} onBlur={onBlur} onFocus={onFocus} ref={ref} />);
+      renderRootView(<Pressable disabled={true} onBlur={onBlur} onFocus={onFocus} ref={ref} />);
     });
     const target = createEventTarget(ref.current);
     const body = createEventTarget(document.body);
@@ -116,7 +116,7 @@ describe('components/Pressable', () => {
     const onHoverOut = jest.fn();
     const ref = React.createRef();
     act(() => {
-      ({ container } = renderRootContext(
+      ({ container } = renderRootView(
         <Pressable
           children={({ hovered }) => (hovered ? <div data-testid="hover-content" /> : null)}
           onHoverIn={onHoverIn}
@@ -148,7 +148,7 @@ describe('components/Pressable', () => {
     const onPressOut = jest.fn();
     const ref = React.createRef();
     act(() => {
-      ({ container } = renderRootContext(
+      ({ container } = renderRootView(
         <Pressable
           children={({ pressed }) => (pressed ? <div data-testid="press-content" /> : null)}
           onContextMenu={onContextMenu}
@@ -206,7 +206,7 @@ describe('components/Pressable', () => {
     }
 
     act(() => {
-      ({ container } = renderRootContext(<TestCase />));
+      ({ container } = renderRootView(<TestCase />));
     });
     const target = createEventTarget(ref.current);
     expect(container.firstChild).toMatchSnapshot();
@@ -228,14 +228,14 @@ describe('components/Pressable', () => {
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
-      renderRootContext(<Pressable ref={ref} />);
+      renderRootView(<Pressable ref={ref} />);
       expect(ref).toBeCalled();
     });
 
     test('node has imperative methods', () => {
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Pressable ref={ref} />);
+        renderRootView(<Pressable ref={ref} />);
       });
       const node = ref.current;
       expect(typeof node.measure === 'function');
@@ -246,20 +246,20 @@ describe('components/Pressable', () => {
   });
 
   test('prop "pointerEvents"', () => {
-    const { container } = renderRootContext(<Pressable pointerEvents="box-only" />);
+    const { container } = renderRootView(<Pressable pointerEvents="box-only" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "style"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable style={{ borderWidth: 5 }} />);
+      const { container } = renderRootView(<Pressable style={{ borderWidth: 5 }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "testID"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Pressable testID="123" />);
+      const { container } = renderRootView(<Pressable testID="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

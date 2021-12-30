@@ -1,5 +1,6 @@
 /**
  * Copyright (c) Ondrej Zaruba.
+ * Copyright (c) Microsoft Corporation.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,18 +9,18 @@
  */
 
 import * as React from 'react';
-import StyleContext from './StyleSheetContext';
-import StyleResolver from './StyleResolver';
+import RootContext from './RootContext';
+import StyleResolver from '../StyleSheet/StyleResolver';
 import ResponderSystem from '../../modules/useResponderEvents/ResponderSystem';
 
-type Props = {
+export type ReactRootViewProps = {
   rootTag?: HTMLElement,
   children?: React.Children,
   _styleResolver?: StyleResolver,
   _responderSystem?: ResponderSystem
 };
 
-export default function StyleSheetManager(props: Props): React.Node {
+export default function ReactRootView(props: ReactRootView): React.Node {
   const styleResolver = React.useRef<StyleResolver>();
   if (!styleResolver.current) {
     styleResolver.current = props._styleResolver ?? new StyleResolver(props.rootTag);
@@ -44,5 +45,5 @@ export default function StyleSheetManager(props: Props): React.Node {
     responderSystem: responderSystem.current
   };
 
-  return <StyleContext.Provider value={styleContext}>{props.children}</StyleContext.Provider>;
+  return <RootContext.Provider value={styleContext}>{props.children}</RootContext.Provider>;
 }

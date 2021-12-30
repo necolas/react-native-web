@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import StyleSheetManager from 'react-native-web/dist/cjs/exports/StyleSheet/StyleSheetManager';
+import { Button, StyleSheet, Text, View, ReactRootView } from 'react-native';
 
 import Example from '../../shared/example';
 
@@ -15,16 +14,15 @@ export function ChildWindowPage() {
   return (
     <View style={styles.childItems}>
       <Button onPress={onClick} title="Click" />
-      <Button onPress={onClick} title="Click" />
       <Text>{clicked ? 'Clicked!' : 'Click this button!'}</Text>
     </View>
   );
 }
 
-export default function MultiRootPage() {
+export default function MultiWindowPage() {
   const [rootTagContainer, setRootTagContainer] = React.useState(undefined);
 
-  function openWindow() {
+  const openWindow = () => {
     const childWindow = window.open('', 'Child window', 'left=100,top=100,width=640,height=480');
 
     const title = childWindow.document.createElement('title');
@@ -39,26 +37,30 @@ export default function MultiRootPage() {
     rootTag.style.padding = '0';
     childWindow.document.body.appendChild(rootTag);
 
-    setRootTagContainer(rootTag);
-  }
+    childWindow.addEventListener('beforeunload', () => {
+      setRootTagContainer(undefined);
+    });
 
-  function closeWindow() {
+    setRootTagContainer(rootTag);
+  };
+
+  const closeWindow = () => {
     setRootTagContainer(undefined);
-  }
+  };
 
   return (
     <Example title="Multi root">
       <View>
         <Text>Child Window example</Text>
         <View style={styles.buttons}>
-          <Button onPress={openWindow} title="Open window" />
-          <Button onPress={closeWindow} title="Close window" />
+          <Button disabled={!!rootTagContainer} onPress={openWindow} title="Open window" />
+          <Button disabled={!rootTagContainer} onPress={closeWindow} title="Close window" />
         </View>
         {rootTagContainer
           ? ReactDOM.createPortal(
-              <StyleSheetManager rootTag={rootTagContainer}>
+              <ReactRootView rootTag={rootTagContainer}>
                 <ChildWindowPage />
-              </StyleSheetManager>,
+              </ReactRootView>,
               rootTagContainer
             )
           : undefined}

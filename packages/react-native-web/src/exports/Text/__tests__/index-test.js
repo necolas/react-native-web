@@ -5,70 +5,70 @@ import React from 'react';
 import Text from '../';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
-import renderRootContext from '../../../vendor/renderRootContext';
+import renderRootView from '../../../exports/AppRegistry/renderRootView';
 
 describe('components/Text', () => {
   test('default', () => {
-    const { container } = renderRootContext(<Text />);
+    const { container } = renderRootView(<Text />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('nested', () => {
-    const { container } = renderRootContext(<Text children={<Text testID="child" />} />);
+    const { container } = renderRootView(<Text children={<Text testID="child" />} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text accessibilityLabel="accessibility label" />);
+      const { container } = renderRootView(<Text accessibilityLabel="accessibility label" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityLabelledBy"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text accessibilityLabelledBy="123" />);
+      const { container } = renderRootView(<Text accessibilityLabelledBy="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text accessibilityLiveRegion="polite" />);
+      const { container } = renderRootView(<Text accessibilityLiveRegion="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityRole"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text accessibilityRole="none" />);
+      const { container } = renderRootView(<Text accessibilityRole="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value is "button"', () => {
-      const { container } = renderRootContext(<Text accessibilityRole="button" />);
+      const { container } = renderRootView(<Text accessibilityRole="button" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value alters HTML element', () => {
-      const { container } = renderRootContext(<Text accessibilityRole="article" />);
+      const { container } = renderRootView(<Text accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   test('allows "dir" to be overridden', () => {
-    const { container } = renderRootContext(<Text dir="rtl" />);
+    const { container } = renderRootView(<Text dir="rtl" />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "href"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text href="https://example.com" />);
+      const { container } = renderRootView(<Text href="https://example.com" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('href with accessibilityRole', () => {
-      const { container } = renderRootContext(
+      const { container } = renderRootView(
         <Text accessibilityRole="none" href="https://example.com" />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -77,7 +77,7 @@ describe('components/Text', () => {
 
   describe('prop "hrefAttrs"', () => {
     test('requires "href"', () => {
-      const { container } = renderRootContext(<Text hrefAttrs={{ download: 'filename.jpg' }} />);
+      const { container } = renderRootView(<Text hrefAttrs={{ download: 'filename.jpg' }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -87,7 +87,7 @@ describe('components/Text', () => {
         rel: 'nofollow',
         target: '_blank'
       };
-      const { container } = renderRootContext(
+      const { container } = renderRootView(
         <Text href="https://example.com" hrefAttrs={hrefAttrs} />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -97,7 +97,7 @@ describe('components/Text', () => {
       const hrefAttrs = {
         target: 'blank'
       };
-      const { container } = renderRootContext(
+      const { container } = renderRootView(
         <Text href="https://example.com" hrefAttrs={hrefAttrs} />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -109,7 +109,7 @@ describe('components/Text', () => {
         rel: null,
         target: null
       };
-      const { container } = renderRootContext(
+      const { container } = renderRootView(
         <Text href="https://example.com" hrefAttrs={hrefAttrs} />
       );
       expect(container.firstChild).toMatchSnapshot();
@@ -118,30 +118,30 @@ describe('components/Text', () => {
 
   describe('prop "lang"', () => {
     test('undefined', () => {
-      const { container } = renderRootContext(<Text />);
+      const { container } = renderRootView(<Text />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('fr', () => {
-      const { container } = renderRootContext(<Text lang="fr" />);
+      const { container } = renderRootView(<Text lang="fr" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "nativeID"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text nativeID="nativeID" />);
+      const { container } = renderRootView(<Text nativeID="nativeID" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "numberOfLines"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text numberOfLines={3} />);
+      const { container } = renderRootView(<Text numberOfLines={3} />);
       expect(container.firstChild).toMatchSnapshot();
     });
     test('value is set to one', () => {
-      const { container } = renderRootContext(<Text numberOfLines={1} />);
+      const { container } = renderRootView(<Text numberOfLines={1} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -151,7 +151,7 @@ describe('components/Text', () => {
       const onBlur = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onBlur={onBlur} ref={ref} />);
+        renderRootView(<Text onBlur={onBlur} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       const body = createEventTarget(document.body);
@@ -168,7 +168,7 @@ describe('components/Text', () => {
       const onClick = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onClick={onClick} ref={ref} />);
+        renderRootView(<Text onClick={onClick} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -181,7 +181,7 @@ describe('components/Text', () => {
       const onClick = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
+        renderRootView(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -196,7 +196,7 @@ describe('components/Text', () => {
       const onFocus = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onFocus={onFocus} ref={ref} />);
+        renderRootView(<Text onFocus={onFocus} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -211,7 +211,7 @@ describe('components/Text', () => {
       const onPress = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onPress={onPress} ref={ref} />);
+        renderRootView(<Text onPress={onPress} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -225,7 +225,7 @@ describe('components/Text', () => {
       const onPress = jest.fn();
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
+        renderRootView(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
       });
       const target = createEventTarget(ref.current);
       act(() => {
@@ -238,7 +238,7 @@ describe('components/Text', () => {
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
-      renderRootContext(<Text ref={ref} />);
+      renderRootView(<Text ref={ref} />);
       expect(ref).toBeCalled();
     });
 
@@ -246,7 +246,7 @@ describe('components/Text', () => {
       const ref = jest.fn();
       let rerender;
       act(() => {
-        ({ rerender } = renderRootContext(
+        ({ rerender } = renderRootView(
           <Text nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
@@ -260,7 +260,7 @@ describe('components/Text', () => {
     test('node has imperative methods', () => {
       const ref = React.createRef();
       act(() => {
-        renderRootContext(<Text ref={ref} />);
+        renderRootView(<Text ref={ref} />);
       });
       const node = ref.current;
       expect(typeof node.measure === 'function');
@@ -272,26 +272,26 @@ describe('components/Text', () => {
 
   describe('prop "selectable"', () => {
     test('value of false', () => {
-      const { container } = renderRootContext(<Text selectable={false} />);
+      const { container } = renderRootView(<Text selectable={false} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value of true', () => {
-      const { container } = renderRootContext(<Text selectable={true} />);
+      const { container } = renderRootView(<Text selectable={true} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "style"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text style={{ borderWidth: 5 }} />);
+      const { container } = renderRootView(<Text style={{ borderWidth: 5 }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "testID"', () => {
     test('value is set', () => {
-      const { container } = renderRootContext(<Text testID="123" />);
+      const { container } = renderRootView(<Text testID="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

@@ -11,7 +11,7 @@
 import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
-import StyleSheetContext from '../StyleSheet/StyleSheetContext';
+import RootContext from '../AppRegistry/RootContext';
 
 export type ModalPortalProps = {|
   children: any
@@ -20,10 +20,10 @@ export type ModalPortalProps = {|
 function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
   const elementRef = React.useRef(null);
-  const styleContext = React.useContext(StyleSheetContext);
+  const rootContext = React.useContext(RootContext);
 
   if (canUseDOM && !elementRef.current) {
-    const document = styleContext.rootTag?.ownerDocument ?? window.document;
+    const document = rootContext.rootTag?.ownerDocument ?? window.document;
     const element = document.createElement('div');
 
     if (element && document.body) {
@@ -35,14 +35,14 @@ function ModalPortal(props: ModalPortalProps): React.Node {
   React.useEffect(() => {
     if (canUseDOM) {
       return () => {
-        const document = styleContext.rootTag?.ownerDocument ?? window.document;
+        const document = rootContext.rootTag?.ownerDocument ?? window.document;
         if (document.body && elementRef.current) {
           document.body.removeChild(elementRef.current);
           elementRef.current = null;
         }
       };
     }
-  }, [styleContext.rootTag]);
+  }, [rootContext.rootTag]);
 
   return elementRef.current && canUseDOM
     ? ReactDOM.createPortal(children, elementRef.current)

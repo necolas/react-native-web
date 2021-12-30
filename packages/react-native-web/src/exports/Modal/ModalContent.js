@@ -12,7 +12,7 @@ import * as React from 'react';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
-import StyleSheetContext from '../StyleSheet/StyleSheetContext';
+import RootContext from '../AppRegistry/RootContext';
 
 export type ModalContentProps = {|
   active?: ?(boolean | (() => boolean)),
@@ -26,11 +26,11 @@ const ModalContent: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
   const { active, children, onRequestClose, transparent } = props;
-  const styleContext = React.useContext(StyleSheetContext);
+  const rootContext = React.useContext(RootContext);
 
   React.useEffect(() => {
     if (canUseDOM) {
-      const document = styleContext.rootTag?.ownerDocument ?? window.document;
+      const document = rootContext.rootTag?.ownerDocument ?? window.document;
       const closeOnEscape = (e: KeyboardEvent) => {
         if (active && e.key === 'Escape') {
           e.stopPropagation();
@@ -42,7 +42,7 @@ const ModalContent: React.AbstractComponent<
       document.addEventListener('keyup', closeOnEscape, false);
       return () => document.removeEventListener('keyup', closeOnEscape, false);
     }
-  }, [active, onRequestClose, styleContext.rootTag]);
+  }, [active, onRequestClose, rootContext.rootTag]);
 
   const style = React.useMemo(() => {
     return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
