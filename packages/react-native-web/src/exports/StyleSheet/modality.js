@@ -24,12 +24,14 @@ const focusVisibleAttributeName = 'data-focusvisible-polyfill';
 
 const rule = `:focus:not([${focusVisibleAttributeName}]){outline: none;}`;
 
-const modality = (insertRule) => {
+const modality = (insertRule, doc: ?Document) => {
   insertRule(rule);
 
   if (!canUseDOM) {
     return;
   }
+
+  const document = doc ?? window.document;
 
   let hadKeyboardEvent = true;
   let hadFocusVisibleRecently = false;

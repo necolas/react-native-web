@@ -10,7 +10,7 @@
 /**
  * RESPONDER EVENT SYSTEM
  *
- * A single, global "interaction lock" on views. For a view to be the "responder" means
+ * A single, global window "interaction lock" on views. For a view to be the "responder" means
  * that pointer interactions are exclusive to that view and none other. The "interaction
  * lock" can be transferred (only) to ancestors of the current "responder" as long as
  * pointers continue to be active.
@@ -222,361 +222,7 @@ const shouldSetResponderEvents = {
   scroll: scrollRegistration
 };
 
-const emptyResponder = { id: null, idPath: null, node: null };
-const responderListenersMap = new Map();
-
-let isEmulatingMouseEvents = false;
-let trackedTouchCount = 0;
-let currentResponder: ResponderInstance = {
-  id: null,
-  node: null,
-  idPath: null
-};
-
-function changeCurrentResponder(responder: ResponderInstance) {
-  currentResponder = responder;
-}
-
-function getResponderConfig(id: ResponderId): ResponderConfig | Object {
-  const config = responderListenersMap.get(id);
-  return config != null ? config : emptyObject;
-}
-
-/**
- * Process native events
- *
- * A single event listener is used to manage the responder system.
- * All pointers are tracked in the ResponderTouchHistoryStore. Native events
- * are interpreted in terms of the Responder System and checked to see if
- * the responder should be transferred. Each host node that is attached to
- * the Responder System has an ID, which is used to look up its associated
- * callbacks.
- */
-function eventListener(domEvent: any) {
-  const eventType = domEvent.type;
-  const eventTarget = domEvent.target;
-
-  /**
-   * Manage emulated events and early bailout.
-   * Since PointerEvent is not used yet (lack of support in older Safari), it's
-   * necessary to manually manage the mess of browser touch/mouse events.
-   * And bailout early for termination events when there is no active responder.
-   */
-
-  // Flag when browser may produce emulated events
-  if (eventType === 'touchstart') {
-    isEmulatingMouseEvents = true;
-  }
-  // Remove flag when browser will not produce emulated events
-  if (eventType === 'touchmove' || trackedTouchCount > 1) {
-    isEmulatingMouseEvents = false;
-  }
-  // Ignore various events in particular circumstances
-  if (
-    // Ignore browser emulated mouse events
-    (eventType === 'mousedown' && isEmulatingMouseEvents) ||
-    (eventType === 'mousemove' && isEmulatingMouseEvents) ||
-    // Ignore mousemove if a mousedown didn't occur first
-    (eventType === 'mousemove' && trackedTouchCount < 1)
-  ) {
-    return;
-  }
-  // Remove flag after emulated events are finished
-  if (isEmulatingMouseEvents && eventType === 'mouseup') {
-    if (trackedTouchCount === 0) {
-      isEmulatingMouseEvents = false;
-    }
-    return;
-  }
-
-  const isStartEvent = isStartish(eventType) && isPrimaryPointerDown(domEvent);
-  const isMoveEvent = isMoveish(eventType);
-  const isEndEvent = isEndish(eventType);
-  const isScrollEvent = isScroll(eventType);
-  const isSelectionChangeEvent = isSelectionChange(eventType);
-  const responderEvent = createResponderEvent(domEvent);
-
-  /**
-   * Record the state of active pointers
-   */
-
-  if (isStartEvent || isMoveEvent || isEndEvent) {
-    if (domEvent.touches) {
-      trackedTouchCount = domEvent.touches.length;
-    } else {
-      if (isStartEvent) {
-        trackedTouchCount = 1;
-      } else if (isEndEvent) {
-        trackedTouchCount = 0;
-      }
-    }
-    ResponderTouchHistoryStore.recordTouchTrack(eventType, responderEvent.nativeEvent);
-  }
-
-  /**
-   * Responder System logic
-   */
-
-  let eventPaths = getResponderPaths(domEvent);
-  let wasNegotiated = false;
-  let wantsResponder;
-
-  // If an event occured that might change the current responder...
-  if (isStartEvent || isMoveEvent || (isScrollEvent && trackedTouchCount > 0)) {
-    // If there is already a responder, prune the event paths to the lowest common ancestor
-    // of the existing responder and deepest target of the event.
-    const currentResponderIdPath = currentResponder.idPath;
-    const eventIdPath = eventPaths.idPath;
-
-    if (currentResponderIdPath != null && eventIdPath != null) {
-      const lowestCommonAncestor = getLowestCommonAncestor(currentResponderIdPath, eventIdPath);
-      if (lowestCommonAncestor != null) {
-        const indexOfLowestCommonAncestor = eventIdPath.indexOf(lowestCommonAncestor);
-        // Skip the current responder so it doesn't receive unexpected "shouldSet" events.
-        const index =
-          indexOfLowestCommonAncestor + (lowestCommonAncestor === currentResponder.id ? 1 : 0);
-        eventPaths = {
-          idPath: eventIdPath.slice(index),
-          nodePath: eventPaths.nodePath.slice(index)
-        };
-      } else {
-        eventPaths = null;
-      }
-    }
-
-    if (eventPaths != null) {
-      // If a node wants to become the responder, attempt to transfer.
-      wantsResponder = findWantsResponder(eventPaths, domEvent, responderEvent);
-      if (wantsResponder != null) {
-        // Sets responder if none exists, or negotates with existing responder.
-        attemptTransfer(responderEvent, wantsResponder);
-        wasNegotiated = true;
-      }
-    }
-  }
-
-  // If there is now a responder, invoke its callbacks for the lifecycle of the gesture.
-  if (currentResponder.id != null && currentResponder.node != null) {
-    const { id, node } = currentResponder;
-    const {
-      onResponderStart,
-      onResponderMove,
-      onResponderEnd,
-      onResponderRelease,
-      onResponderTerminate,
-      onResponderTerminationRequest
-    } = getResponderConfig(id);
-
-    responderEvent.bubbles = false;
-    responderEvent.cancelable = false;
-    responderEvent.currentTarget = node;
-
-    // Start
-    if (isStartEvent) {
-      if (onResponderStart != null) {
-        responderEvent.dispatchConfig.registrationName = 'onResponderStart';
-        onResponderStart(responderEvent);
-      }
-    }
-    // Move
-    else if (isMoveEvent) {
-      if (onResponderMove != null) {
-        responderEvent.dispatchConfig.registrationName = 'onResponderMove';
-        onResponderMove(responderEvent);
-      }
-    } else {
-      const isTerminateEvent =
-        isCancelish(eventType) ||
-        // native context menu
-        eventType === 'contextmenu' ||
-        // window blur
-        (eventType === 'blur' && eventTarget === window) ||
-        // responder (or ancestors) blur
-        (eventType === 'blur' && eventTarget.contains(node) && domEvent.relatedTarget !== node) ||
-        // native scroll without using a pointer
-        (isScrollEvent && trackedTouchCount === 0) ||
-        // native scroll on node that is parent of the responder (allow siblings to scroll)
-        (isScrollEvent && eventTarget.contains(node) && eventTarget !== node) ||
-        // native select/selectionchange on node
-        (isSelectionChangeEvent && hasValidSelection(domEvent));
-
-      const isReleaseEvent =
-        isEndEvent && !isTerminateEvent && !hasTargetTouches(node, domEvent.touches);
-
-      // End
-      if (isEndEvent) {
-        if (onResponderEnd != null) {
-          responderEvent.dispatchConfig.registrationName = 'onResponderEnd';
-          onResponderEnd(responderEvent);
-        }
-      }
-      // Release
-      if (isReleaseEvent) {
-        if (onResponderRelease != null) {
-          responderEvent.dispatchConfig.registrationName = 'onResponderRelease';
-          onResponderRelease(responderEvent);
-        }
-        changeCurrentResponder(emptyResponder);
-      }
-      // Terminate
-      if (isTerminateEvent) {
-        let shouldTerminate = true;
-
-        // Responders can still avoid termination but only for these events.
-        if (
-          eventType === 'contextmenu' ||
-          eventType === 'scroll' ||
-          eventType === 'selectionchange'
-        ) {
-          // Only call this function is it wasn't already called during negotiation.
-          if (wasNegotiated) {
-            shouldTerminate = false;
-          } else if (onResponderTerminationRequest != null) {
-            responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
-            if (onResponderTerminationRequest(responderEvent) === false) {
-              shouldTerminate = false;
-            }
-          }
-        }
-
-        if (shouldTerminate) {
-          if (onResponderTerminate != null) {
-            responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
-            onResponderTerminate(responderEvent);
-          }
-          changeCurrentResponder(emptyResponder);
-          isEmulatingMouseEvents = false;
-          trackedTouchCount = 0;
-        }
-      }
-    }
-  }
-}
-
-/**
- * Walk the event path to/from the target node. At each node, stop and call the
- * relevant "shouldSet" functions for the given event type. If any of those functions
- * call "stopPropagation" on the event, stop searching for a responder.
- */
-function findWantsResponder(eventPaths, domEvent, responderEvent) {
-  const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
-
-  if (shouldSetCallbacks != null) {
-    const { idPath, nodePath } = eventPaths;
-
-    const shouldSetCallbackCaptureName = shouldSetCallbacks[0];
-    const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
-    const { bubbles } = shouldSetCallbacks[2];
-
-    const check = function (id, node, callbackName) {
-      const config = getResponderConfig(id);
-      const shouldSetCallback = config[callbackName];
-      if (shouldSetCallback != null) {
-        responderEvent.currentTarget = node;
-        if (shouldSetCallback(responderEvent) === true) {
-          // Start the path from the potential responder
-          const prunedIdPath = idPath.slice(idPath.indexOf(id));
-          return { id, node, idPath: prunedIdPath };
-        }
-      }
-    };
-
-    // capture
-    for (let i = idPath.length - 1; i >= 0; i--) {
-      const id = idPath[i];
-      const node = nodePath[i];
-      const result = check(id, node, shouldSetCallbackCaptureName);
-      if (result != null) {
-        return result;
-      }
-      if (responderEvent.isPropagationStopped() === true) {
-        return;
-      }
-    }
-
-    // bubble
-    if (bubbles) {
-      for (let i = 0; i < idPath.length; i++) {
-        const id = idPath[i];
-        const node = nodePath[i];
-        const result = check(id, node, shouldSetCallbackBubbleName);
-        if (result != null) {
-          return result;
-        }
-        if (responderEvent.isPropagationStopped() === true) {
-          return;
-        }
-      }
-    } else {
-      const id = idPath[0];
-      const node = nodePath[0];
-      const target = domEvent.target;
-      if (target === node) {
-        return check(id, node, shouldSetCallbackBubbleName);
-      }
-    }
-  }
-}
-
-/**
- * Attempt to transfer the responder.
- */
-function attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveResponderInstance) {
-  const { id: currentId, node: currentNode } = currentResponder;
-  const { id, node } = wantsResponder;
-
-  const { onResponderGrant, onResponderReject } = getResponderConfig(id);
-
-  responderEvent.bubbles = false;
-  responderEvent.cancelable = false;
-  responderEvent.currentTarget = node;
-
-  // Set responder
-  if (currentId == null) {
-    if (onResponderGrant != null) {
-      responderEvent.currentTarget = node;
-      responderEvent.dispatchConfig.registrationName = 'onResponderGrant';
-      onResponderGrant(responderEvent);
-    }
-    changeCurrentResponder(wantsResponder);
-  }
-  // Negotiate with current responder
-  else {
-    const { onResponderTerminate, onResponderTerminationRequest } = getResponderConfig(currentId);
-
-    let allowTransfer = true;
-    if (onResponderTerminationRequest != null) {
-      responderEvent.currentTarget = currentNode;
-      responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
-      if (onResponderTerminationRequest(responderEvent) === false) {
-        allowTransfer = false;
-      }
-    }
-
-    if (allowTransfer) {
-      // Terminate existing responder
-      if (onResponderTerminate != null) {
-        responderEvent.currentTarget = currentNode;
-        responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
-        onResponderTerminate(responderEvent);
-      }
-      // Grant next responder
-      if (onResponderGrant != null) {
-        responderEvent.currentTarget = node;
-        responderEvent.dispatchConfig.registrationName = 'onResponderGrant';
-        onResponderGrant(responderEvent);
-      }
-      changeCurrentResponder(wantsResponder);
-    } else {
-      // Reject responder request
-      if (onResponderReject != null) {
-        responderEvent.currentTarget = node;
-        responderEvent.dispatchConfig.registrationName = 'onResponderReject';
-        onResponderReject(responderEvent);
-      }
-    }
-  }
-}
+const emptyResponder: ResponderInstance = { id: null, idPath: null, node: null };
 
 /* ------------ PUBLIC API ------------ */
 
@@ -603,63 +249,431 @@ const documentEventsBubblePhase = [
   'select',
   'selectionchange'
 ];
-export function attachListeners() {
-  if (canUseDOM && window.__reactResponderSystemActive == null) {
-    window.addEventListener('blur', eventListener);
-    documentEventsBubblePhase.forEach((eventType) => {
-      document.addEventListener(eventType, eventListener);
-    });
-    documentEventsCapturePhase.forEach((eventType) => {
-      document.addEventListener(eventType, eventListener, true);
-    });
-    window.__reactResponderSystemActive = true;
-  }
-}
 
-/**
- * Register a node with the ResponderSystem.
- */
-export function addNode(id: ResponderId, node: any, config: ResponderConfig) {
-  setResponderId(node, id);
-  responderListenersMap.set(id, config);
-}
+export default class ResponderSystem {
+  _window: Window;
+  _responderListenersMap = new Map();
+  _isEmulatingMouseEvents = false;
+  _trackedTouchCount = 0;
+  _currentResponder: ResponderInstance = {
+    id: null,
+    node: null,
+    idPath: null
+  };
+  _responderTouchHistoryStore = new ResponderTouchHistoryStore();
 
-/**
- * Unregister a node with the ResponderSystem.
- */
-export function removeNode(id: ResponderId) {
-  if (currentResponder.id === id) {
-    terminateResponder();
-  }
-  if (responderListenersMap.has(id)) {
-    responderListenersMap.delete(id);
-  }
-}
-
-/**
- * Allow the current responder to be terminated from within components to support
- * more complex requirements, such as use with other React libraries for working
- * with scroll views, input views, etc.
- */
-export function terminateResponder() {
-  const { id, node } = currentResponder;
-  if (id != null && node != null) {
-    const { onResponderTerminate } = getResponderConfig(id);
-    if (onResponderTerminate != null) {
-      const event = createResponderEvent({});
-      event.currentTarget = node;
-      onResponderTerminate(event);
+  constructor(win?: Window) {
+    if (canUseDOM) {
+      this._window = win ?? window;
     }
-    changeCurrentResponder(emptyResponder);
   }
-  isEmulatingMouseEvents = false;
-  trackedTouchCount = 0;
-}
 
-/**
- * Allow unit tests to inspect the current responder in the system.
- * FOR TESTING ONLY.
- */
-export function getResponderNode(): any {
-  return currentResponder.node;
+  attachListeners() {
+    if (canUseDOM && this._window.__reactResponderSystemActive == null) {
+      this._window.addEventListener('blur', this._eventListener);
+      documentEventsBubblePhase.forEach((eventType) => {
+        this._window.document.addEventListener(eventType, this._eventListener);
+      });
+      documentEventsCapturePhase.forEach((eventType) => {
+        this._window.document.addEventListener(eventType, this._eventListener, true);
+      });
+      this._window.__reactResponderSystemActive = true;
+    }
+  }
+
+  /**
+   * Register a node with the ResponderSystem.
+   */
+  addNode(id: ResponderId, node: any, config: ResponderConfig) {
+    setResponderId(node, id);
+    this._responderListenersMap.set(id, config);
+  }
+
+  /**
+   * Unregister a node with the ResponderSystem.
+   */
+  removeNode(id: ResponderId) {
+    if (this._currentResponder.id === id) {
+      this.terminateResponder();
+    }
+    if (this._responderListenersMap.has(id)) {
+      this._responderListenersMap.delete(id);
+    }
+  }
+
+  /**
+   * Allow the current responder to be terminated from within components to support
+   * more complex requirements, such as use with other React libraries for working
+   * with scroll views, input views, etc.
+   */
+  terminateResponder() {
+    const { id, node } = this._currentResponder;
+    if (id != null && node != null) {
+      const { onResponderTerminate } = this._getResponderConfig(id);
+      if (onResponderTerminate != null) {
+        const event = createResponderEvent({}, this._responderTouchHistoryStore);
+        event.currentTarget = node;
+        onResponderTerminate(event);
+      }
+      this._changeCurrentResponder(emptyResponder);
+    }
+    this._isEmulatingMouseEvents = false;
+    this._trackedTouchCount = 0;
+  }
+
+  /**
+   * Allow unit tests to inspect the current responder in the system.
+   * FOR TESTING ONLY.
+   */
+  getResponderNode(): any {
+    return this._currentResponder.node;
+  }
+
+  _changeCurrentResponder(responder: ResponderInstance) {
+    this._currentResponder = responder;
+  }
+
+  _getResponderConfig(id: ResponderId): ResponderConfig | Object {
+    const config = this._responderListenersMap.get(id);
+    return config != null ? config : emptyObject;
+  }
+
+  /**
+   * Walk the event path to/from the target node. At each node, stop and call the
+   * relevant "shouldSet" functions for the given event type. If any of those functions
+   * call "stopPropagation" on the event, stop searching for a responder.
+   */
+  _findWantsResponder(eventPaths, domEvent, responderEvent) {
+    const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
+
+    if (shouldSetCallbacks != null) {
+      const { idPath, nodePath } = eventPaths;
+
+      const shouldSetCallbackCaptureName = shouldSetCallbacks[0];
+      const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
+      const { bubbles } = shouldSetCallbacks[2];
+
+      const check = (id, node, callbackName) => {
+        const config = this._getResponderConfig(id);
+        const shouldSetCallback = config[callbackName];
+        if (shouldSetCallback != null) {
+          responderEvent.currentTarget = node;
+          if (shouldSetCallback(responderEvent) === true) {
+            // Start the path from the potential responder
+            const prunedIdPath = idPath.slice(idPath.indexOf(id));
+            return { id, node, idPath: prunedIdPath };
+          }
+        }
+      };
+
+      // capture
+      for (let i = idPath.length - 1; i >= 0; i--) {
+        const id = idPath[i];
+        const node = nodePath[i];
+        const result = check(id, node, shouldSetCallbackCaptureName);
+        if (result != null) {
+          return result;
+        }
+        if (responderEvent.isPropagationStopped() === true) {
+          return;
+        }
+      }
+
+      // bubble
+      if (bubbles) {
+        for (let i = 0; i < idPath.length; i++) {
+          const id = idPath[i];
+          const node = nodePath[i];
+          const result = check(id, node, shouldSetCallbackBubbleName);
+          if (result != null) {
+            return result;
+          }
+          if (responderEvent.isPropagationStopped() === true) {
+            return;
+          }
+        }
+      } else {
+        const id = idPath[0];
+        const node = nodePath[0];
+        const target = domEvent.target;
+        if (target === node) {
+          return check(id, node, shouldSetCallbackBubbleName);
+        }
+      }
+    }
+  }
+
+  /**
+   * Process native events
+   *
+   * A single event listener is used to manage the responder system.
+   * All pointers are tracked in the ResponderTouchHistoryStore. Native events
+   * are interpreted in terms of the Responder System and checked to see if
+   * the responder should be transferred. Each host node that is attached to
+   * the Responder System has an ID, which is used to look up its associated
+   * callbacks.
+   */
+  _eventListener = (domEvent: any) => {
+    const eventType = domEvent.type;
+    const eventTarget = domEvent.target;
+
+    /**
+     * Manage emulated events and early bailout.
+     * Since PointerEvent is not used yet (lack of support in older Safari), it's
+     * necessary to manually manage the mess of browser touch/mouse events.
+     * And bailout early for termination events when there is no active responder.
+     */
+
+    // Flag when browser may produce emulated events
+    if (eventType === 'touchstart') {
+      this._isEmulatingMouseEvents = true;
+    }
+    // Remove flag when browser will not produce emulated events
+    if (eventType === 'touchmove' || this._trackedTouchCount > 1) {
+      this._isEmulatingMouseEvents = false;
+    }
+    // Ignore various events in particular circumstances
+    if (
+      // Ignore browser emulated mouse events
+      (eventType === 'mousedown' && this._isEmulatingMouseEvents) ||
+      (eventType === 'mousemove' && this._isEmulatingMouseEvents) ||
+      // Ignore mousemove if a mousedown didn't occur first
+      (eventType === 'mousemove' && this._trackedTouchCount < 1)
+    ) {
+      return;
+    }
+    // Remove flag after emulated events are finished
+    if (this._isEmulatingMouseEvents && eventType === 'mouseup') {
+      if (this._trackedTouchCount === 0) {
+        this._isEmulatingMouseEvents = false;
+      }
+      return;
+    }
+
+    const isStartEvent = isStartish(eventType) && isPrimaryPointerDown(domEvent);
+    const isMoveEvent = isMoveish(eventType);
+    const isEndEvent = isEndish(eventType);
+    const isScrollEvent = isScroll(eventType);
+    const isSelectionChangeEvent = isSelectionChange(eventType);
+    const responderEvent = createResponderEvent(domEvent, this._responderTouchHistoryStore);
+
+    /**
+     * Record the state of active pointers
+     */
+
+    if (isStartEvent || isMoveEvent || isEndEvent) {
+      if (domEvent.touches) {
+        this._trackedTouchCount = domEvent.touches.length;
+      } else {
+        if (isStartEvent) {
+          this._trackedTouchCount = 1;
+        } else if (isEndEvent) {
+          this._trackedTouchCount = 0;
+        }
+      }
+      this._responderTouchHistoryStore.recordTouchTrack(eventType, responderEvent.nativeEvent);
+    }
+
+    /**
+     * Responder System logic
+     */
+
+    let eventPaths = getResponderPaths(domEvent);
+    let wasNegotiated = false;
+    let wantsResponder;
+
+    // If an event occured that might change the current responder...
+    if (isStartEvent || isMoveEvent || (isScrollEvent && this._trackedTouchCount > 0)) {
+      // If there is already a responder, prune the event paths to the lowest common ancestor
+      // of the existing responder and deepest target of the event.
+      const currentResponderIdPath = this._currentResponder.idPath;
+      const eventIdPath = eventPaths.idPath;
+
+      if (currentResponderIdPath != null && eventIdPath != null) {
+        const lowestCommonAncestor = getLowestCommonAncestor(currentResponderIdPath, eventIdPath);
+        if (lowestCommonAncestor != null) {
+          const indexOfLowestCommonAncestor = eventIdPath.indexOf(lowestCommonAncestor);
+          // Skip the current responder so it doesn't receive unexpected "shouldSet" events.
+          const index =
+            indexOfLowestCommonAncestor +
+            (lowestCommonAncestor === this._currentResponder.id ? 1 : 0);
+          eventPaths = {
+            idPath: eventIdPath.slice(index),
+            nodePath: eventPaths.nodePath.slice(index)
+          };
+        } else {
+          eventPaths = null;
+        }
+      }
+
+      if (eventPaths != null) {
+        // If a node wants to become the responder, attempt to transfer.
+        wantsResponder = this._findWantsResponder(eventPaths, domEvent, responderEvent);
+        if (wantsResponder != null) {
+          // Sets responder if none exists, or negotates with existing responder.
+          this._attemptTransfer(responderEvent, wantsResponder);
+          wasNegotiated = true;
+        }
+      }
+    }
+
+    // If there is now a responder, invoke its callbacks for the lifecycle of the gesture.
+    if (this._currentResponder.id != null && this._currentResponder.node != null) {
+      const { id, node } = this._currentResponder;
+      const {
+        onResponderStart,
+        onResponderMove,
+        onResponderEnd,
+        onResponderRelease,
+        onResponderTerminate,
+        onResponderTerminationRequest
+      } = this._getResponderConfig(id);
+
+      responderEvent.bubbles = false;
+      responderEvent.cancelable = false;
+      responderEvent.currentTarget = node;
+
+      // Start
+      if (isStartEvent) {
+        if (onResponderStart != null) {
+          responderEvent.dispatchConfig.registrationName = 'onResponderStart';
+          onResponderStart(responderEvent);
+        }
+      }
+      // Move
+      else if (isMoveEvent) {
+        if (onResponderMove != null) {
+          responderEvent.dispatchConfig.registrationName = 'onResponderMove';
+          onResponderMove(responderEvent);
+        }
+      } else {
+        const isTerminateEvent =
+          isCancelish(eventType) ||
+          // native context menu
+          eventType === 'contextmenu' ||
+          // window blur
+          (eventType === 'blur' && eventTarget === window) ||
+          // responder (or ancestors) blur
+          (eventType === 'blur' && eventTarget.contains(node) && domEvent.relatedTarget !== node) ||
+          // native scroll without using a pointer
+          (isScrollEvent && this._trackedTouchCount === 0) ||
+          // native scroll on node that is parent of the responder (allow siblings to scroll)
+          (isScrollEvent && eventTarget.contains(node) && eventTarget !== node) ||
+          // native select/selectionchange on node
+          (isSelectionChangeEvent && hasValidSelection(domEvent));
+
+        const isReleaseEvent =
+          isEndEvent && !isTerminateEvent && !hasTargetTouches(node, domEvent.touches);
+
+        // End
+        if (isEndEvent) {
+          if (onResponderEnd != null) {
+            responderEvent.dispatchConfig.registrationName = 'onResponderEnd';
+            onResponderEnd(responderEvent);
+          }
+        }
+        // Release
+        if (isReleaseEvent) {
+          if (onResponderRelease != null) {
+            responderEvent.dispatchConfig.registrationName = 'onResponderRelease';
+            onResponderRelease(responderEvent);
+          }
+          this._changeCurrentResponder(emptyResponder);
+        }
+        // Terminate
+        if (isTerminateEvent) {
+          let shouldTerminate = true;
+
+          // Responders can still avoid termination but only for these events.
+          if (
+            eventType === 'contextmenu' ||
+            eventType === 'scroll' ||
+            eventType === 'selectionchange'
+          ) {
+            // Only call this function is it wasn't already called during negotiation.
+            if (wasNegotiated) {
+              shouldTerminate = false;
+            } else if (onResponderTerminationRequest != null) {
+              responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
+              if (onResponderTerminationRequest(responderEvent) === false) {
+                shouldTerminate = false;
+              }
+            }
+          }
+
+          if (shouldTerminate) {
+            if (onResponderTerminate != null) {
+              responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
+              onResponderTerminate(responderEvent);
+            }
+            this._changeCurrentResponder(emptyResponder);
+            this._isEmulatingMouseEvents = false;
+            this._trackedTouchCount = 0;
+          }
+        }
+      }
+    }
+  };
+
+  /**
+   * Attempt to transfer the responder.
+   */
+  _attemptTransfer(responderEvent: ResponderEvent, wantsResponder: ActiveResponderInstance) {
+    const { id: currentId, node: currentNode } = this._currentResponder;
+    const { id, node } = wantsResponder;
+
+    const { onResponderGrant, onResponderReject } = this._getResponderConfig(id);
+
+    responderEvent.bubbles = false;
+    responderEvent.cancelable = false;
+    responderEvent.currentTarget = node;
+
+    // Set responder
+    if (currentId == null) {
+      if (onResponderGrant != null) {
+        responderEvent.currentTarget = node;
+        responderEvent.dispatchConfig.registrationName = 'onResponderGrant';
+        onResponderGrant(responderEvent);
+      }
+      this._changeCurrentResponder(wantsResponder);
+    }
+    // Negotiate with current responder
+    else {
+      const { onResponderTerminate, onResponderTerminationRequest } = this._getResponderConfig(
+        currentId
+      );
+
+      let allowTransfer = true;
+      if (onResponderTerminationRequest != null) {
+        responderEvent.currentTarget = currentNode;
+        responderEvent.dispatchConfig.registrationName = 'onResponderTerminationRequest';
+        if (onResponderTerminationRequest(responderEvent) === false) {
+          allowTransfer = false;
+        }
+      }
+
+      if (allowTransfer) {
+        // Terminate existing responder
+        if (onResponderTerminate != null) {
+          responderEvent.currentTarget = currentNode;
+          responderEvent.dispatchConfig.registrationName = 'onResponderTerminate';
+          onResponderTerminate(responderEvent);
+        }
+        // Grant next responder
+        if (onResponderGrant != null) {
+          responderEvent.currentTarget = node;
+          responderEvent.dispatchConfig.registrationName = 'onResponderGrant';
+          onResponderGrant(responderEvent);
+        }
+        this._changeCurrentResponder(wantsResponder);
+      } else {
+        // Reject responder request
+        if (onResponderReject != null) {
+          responderEvent.currentTarget = node;
+          responderEvent.dispatchConfig.registrationName = 'onResponderReject';
+          onResponderReject(responderEvent);
+        }
+      }
+    }
+  }
 }

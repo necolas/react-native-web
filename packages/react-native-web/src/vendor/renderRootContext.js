@@ -10,26 +10,16 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import RootContext from '../exports/AppRegistry/rootContext';
-import StyleResolver from '../exports/StyleSheet/StyleResolver';
+import StyleSheetManager from '../exports/StyleSheet/StyleSheetManager';
 
-function RootContextProvider({ children }) {
-    const resolver = new StyleResolver();
-    const rootContext = { rootTag: undefined, styleResolver: resolver };
-
-    React.useEffect(() => {
-        return function cleanup() {
-            resolver.clear();
-        }
-    })
-
+function StyleSheetContextProvider({ children }) {
     return (
-        <RootContext.Provider value={rootContext}>
+        <StyleSheetManager>
             {children}
-        </RootContext.Provider>
+        </StyleSheetManager>
     );
 }
 
 export default function renderRootContext(element: React.ReactElement, options) {
-    return render(element, { wrapper: RootContextProvider, ...options });
+    return render(element, { wrapper: StyleSheetContextProvider, ...options });
 }

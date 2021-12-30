@@ -10,7 +10,7 @@
 
 import { useContext } from 'react';
 import type { ColorValue } from '../../types';
-import RootContext from '../AppRegistry/rootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 import createElement from '../createElement';
 
@@ -24,7 +24,7 @@ type Props = {
 export default function PickerItem(props: Props) {
   const { color, label, testID, value } = props;
   const style = { color };
-  const rootContext = useContext(RootContext);
+  const styleContext = useContext(StyleSheetContext);
 
-  return createElement('option', { style, testID, value }, rootContext.styleResolver, label);
+  return createElement('option', { style, testID, value }, styleContext.styleResolver, label);
 }

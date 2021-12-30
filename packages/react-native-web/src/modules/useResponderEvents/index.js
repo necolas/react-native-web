@@ -20,7 +20,7 @@
 import type { ResponderConfig } from './ResponderSystem';
 
 import * as React from 'react';
-import * as ResponderSystem from './ResponderSystem';
+import StyleSheetContext from '../../exports/StyleSheet/StyleSheetContext';
 
 const emptyObject = {};
 let idCounter = 0;
@@ -36,16 +36,17 @@ function useStable<T>(getInitialValue: () => T): T {
 export default function useResponderEvents(hostRef: any, config: ResponderConfig = emptyObject) {
   const id = useStable(() => idCounter++);
   const isAttachedRef = React.useRef(false);
+  const styleContext = React.useContext(StyleSheetContext);
 
   // This is a separate effects so it doesn't run when the config changes.
   // On initial mount, attach global listeners if needed.
   // On unmount, remove node potentially attached to the Responder System.
   React.useEffect(() => {
-    ResponderSystem.attachListeners();
+    styleContext.responderSystem.attachListeners();
     return () => {
-      ResponderSystem.removeNode(id);
+      styleContext.responderSystem.removeNode(id);
     };
-  }, [id]);
+  }, [id, styleContext.responderSystem]);
 
   // Register and unregister with the Responder System as necessary
   React.useEffect(() => {
@@ -73,14 +74,16 @@ export default function useResponderEvents(hostRef: any, config: ResponderConfig
     const node = hostRef.current;
 
     if (requiresResponderSystem) {
-      ResponderSystem.addNode(id, node, config);
+      styleContext.responderSystem.addNode(id, node, config);
       isAttachedRef.current = true;
     } else if (isAttachedRef.current) {
-      ResponderSystem.removeNode(id);
+      styleContext.responderSystem.removeNode(id);
       isAttachedRef.current = false;
     }
-  }, [config, hostRef, id]);
+  }, [config, hostRef, id, styleContext.responderSystem]);
 
-  React.useDebugValue({ isResponder: hostRef.current === ResponderSystem.getResponderNode() });
+  React.useDebugValue({
+    isResponder: hostRef.current === styleContext.responderSystem.getResponderNode()
+  });
   React.useDebugValue(config);
 }

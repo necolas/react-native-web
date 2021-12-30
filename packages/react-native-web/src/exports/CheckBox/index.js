@@ -15,7 +15,7 @@ import * as React from 'react';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import RootContext from '../AppRegistry/rootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 type CheckBoxProps = {
   ...ViewProps,
@@ -32,7 +32,7 @@ const CheckBox: React.AbstractComponent<
 > = React.forwardRef((props, forwardedRef) => {
   const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
 
-  const rootContext = React.useContext(RootContext);
+  const styleContext = React.useContext(StyleSheetContext);
 
   function handleChange(event: Object) {
     const value = event.nativeEvent.target.checked;
@@ -64,7 +64,7 @@ const CheckBox: React.AbstractComponent<
       style: [styles.nativeControl, styles.cursorInherit],
       type: 'checkbox'
     },
-    rootContext.styleResolver
+    styleContext.styleResolver
   );
 
   return (

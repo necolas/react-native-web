@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 
-import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
+import StyleSheetManager from 'react-native-web/dist/cjs/exports/StyleSheet/StyleSheetManager';
 
 export default function Application({ Component, pageProps }) {
-  return <AppContainer WrapperComponent={Component} WrapperComponentProps={pageProps} />;
+  return <StyleSheetManager>{<Component {...pageProps} />}</StyleSheetManager>;
 }

@@ -17,7 +17,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet from '../StyleSheet';
-import RootContext from '../AppRegistry/rootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 type PickerProps = {
   ...ViewProps,
@@ -32,52 +32,54 @@ type PickerProps = {
   prompt?: string
 };
 
-const Picker: React.AbstractComponent<PickerProps, HTMLElement & PlatformMethods> =
-  React.forwardRef((props, forwardedRef) => {
-    const {
-      children,
-      enabled,
-      onValueChange,
-      selectedValue,
-      style,
-      testID,
-      /* eslint-disable */
-      itemStyle,
-      mode,
-      prompt,
-      /* eslint-enable */
-      ...other
-    } = props;
+const Picker: React.AbstractComponent<
+  PickerProps,
+  HTMLElement & PlatformMethods
+> = React.forwardRef((props, forwardedRef) => {
+  const {
+    children,
+    enabled,
+    onValueChange,
+    selectedValue,
+    style,
+    testID,
+    /* eslint-disable */
+    itemStyle,
+    mode,
+    prompt,
+    /* eslint-enable */
+    ...other
+  } = props;
 
-    const hostRef = React.useRef(null);
-    const rootContext = React.useContext(RootContext);
+  const hostRef = React.useRef(null);
+  const styleContext = React.useContext(StyleSheetContext);
 
-    function handleChange(e: Object) {
-      const { selectedIndex, value } = e.target;
-      if (onValueChange) {
-        onValueChange(value, selectedIndex);
-      }
+  function handleChange(e: Object) {
+    const { selectedIndex, value } = e.target;
+    if (onValueChange) {
+      onValueChange(value, selectedIndex);
     }
+  }
 
-    // $FlowFixMe
-    const supportedProps: any = {
-      children,
-      disabled: enabled === false ? true : undefined,
-      onChange: handleChange,
-      style: [styles.initial, style],
-      testID,
-      value: selectedValue,
-      ...other
-    };
+  // $FlowFixMe
+  const supportedProps: any = {
+    children,
+    disabled: enabled === false ? true : undefined,
+    onChange: handleChange,
+    style: [styles.initial, style],
+    testID,
+    value: selectedValue,
+    ...other
+  };
 
-    const platformMethodsRef = usePlatformMethods(supportedProps);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
 
-    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
 
-    supportedProps.ref = setRef;
+  supportedProps.ref = setRef;
 
-    return createElement('select', supportedProps, rootContext.styleResolver);
-  });
+  return createElement('select', supportedProps, styleContext.styleResolver);
+});
 
 // $FlowFixMe
 Picker.Item = PickerItem;

@@ -10,6 +10,8 @@
 
 'use strict';
 
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 type ClickEvent = any;
 type KeyboardEvent = any;
 type ResponderEvent = any;
@@ -205,7 +207,7 @@ const DEFAULT_PRESS_DELAY_MS = 50;
  *     ▼
  * ┌─────────────────────┐          ┌───────────────────┐              ┌───────────────────┐
  * │ RESPONDER_INACTIVE_ │  DELAY   │ RESPONDER_ACTIVE_ │  T + DELAY   │ RESPONDER_ACTIVE_ │
- * │ PRESS_START         ├────────▶ │ PRESS_START       ├────────────▶ │ LONG_PRESS_START  │
+ * │ PRESS_START         ├────────▶│ PRESS_START       ├────────────▶│ LONG_PRESS_START  │
  * └─────────────────────┘          └───────────────────┘              └───────────────────┘
  *
  * T + DELAY => LONG_PRESS_DELAY + DELAY
@@ -228,13 +230,17 @@ export default class PressResponder {
     pageY: number
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
+  _document: ?Document;
 
-  constructor(config: PressResponderConfig) {
-    this.configure(config);
+  constructor(config: PressResponderConfig, doc?: Document) {
+    this.configure(config, doc);
   }
 
-  configure(config: PressResponderConfig): void {
+  configure(config: PressResponderConfig, doc?: Document): void {
     this._config = config;
+    if (canUseDOM) {
+      this._document = doc ?? document;
+    }
   }
 
   /**
@@ -303,7 +309,7 @@ export default class PressResponder {
 
       if (this._touchState !== NOT_RESPONDER && isValidKeyPress(event)) {
         end(event);
-        document.removeEventListener('keyup', keyupHandler);
+        this._document.removeEventListener('keyup', keyupHandler);
 
         const role = target.getAttribute('role');
         const elementType = target.tagName.toLowerCase();
@@ -342,7 +348,7 @@ export default class PressResponder {
             start(event, false);
             // Listen to 'keyup' on document to account for situations where
             // focus is moved to another element during 'keydown'.
-            document.addEventListener('keyup', keyupHandler);
+            this._document.addEventListener('keyup', keyupHandler);
           }
           const role = target.getAttribute('role');
           const isSpacebarKey = key === ' ' || key === 'Spacebar';

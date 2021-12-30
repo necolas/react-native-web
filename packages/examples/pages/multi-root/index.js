@@ -1,8 +1,9 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import Example from '../../shared/example';
+import StyleSheetManager from 'react-native-web/dist/cjs/exports/StyleSheet/StyleSheetManager';
 
-import { PortalContainer } from '../../../react-native-web/dist/cjs/exports/AppRegistry/PortalContainer';
+import Example from '../../shared/example';
 
 export function ChildWindowPage() {
   const [clicked, setClicked] = React.useState(false);
@@ -13,6 +14,7 @@ export function ChildWindowPage() {
 
   return (
     <View style={styles.childItems}>
+      <Button onPress={onClick} title="Click" />
       <Button onPress={onClick} title="Click" />
       <Text>{clicked ? 'Clicked!' : 'Click this button!'}</Text>
     </View>
@@ -52,11 +54,14 @@ export default function MultiRootPage() {
           <Button onPress={openWindow} title="Open window" />
           <Button onPress={closeWindow} title="Close window" />
         </View>
-        {rootTagContainer ? (
-          <PortalContainer rootTag={rootTagContainer}>
-            <ChildWindowPage />
-          </PortalContainer>
-        ) : undefined}
+        {rootTagContainer
+          ? ReactDOM.createPortal(
+              <StyleSheetManager rootTag={rootTagContainer}>
+                <ChildWindowPage />
+              </StyleSheetManager>,
+              rootTagContainer
+            )
+          : undefined}
       </View>
     </Example>
   );
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
     gap: '5px'
   },
   childItems: {
-    gap: '100px'
+    gap: '100px',
+    flexGrow: 1
   }
 });

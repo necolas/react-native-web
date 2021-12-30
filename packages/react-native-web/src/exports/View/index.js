@@ -22,7 +22,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import RootContext from '../AppRegistry/RootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,
@@ -76,7 +76,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
     }
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
-    const rootContext = React.useContext(RootContext);
+    const styleContext = React.useContext(StyleSheetContext);
     const hostRef = React.useRef(null);
 
     useElementLayout(hostRef, onLayout);
@@ -126,7 +126,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    return createElement(component, supportedProps, rootContext.styleResolver);
+    return createElement(component, supportedProps, styleContext.styleResolver);
   }
 );
 

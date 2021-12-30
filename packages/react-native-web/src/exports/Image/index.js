@@ -20,7 +20,7 @@ import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
-import RootContext from '../AppRegistry/RootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 export type { ImageProps };
 
@@ -185,7 +185,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const hiddenImageRef = React.useRef(null);
     const filterRef = React.useRef(_filterId++);
     const requestRef = React.useRef(null);
-    const rootContext = React.useContext(RootContext);
+    const styleContext = React.useContext(StyleSheetContext);
     const shouldDisplaySource = state === LOADED || (state === LOADING && defaultSource == null);
     const [flatStyle, _resizeMode, filter, tintColor] = getFlatStyle(
       style,
@@ -210,7 +210,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
             ref: hiddenImageRef,
             src: displayImageUri
           },
-          rootContext.styleResolver
+          styleContext.styleResolver
         )
       : null;
 

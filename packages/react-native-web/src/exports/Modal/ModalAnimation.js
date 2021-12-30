@@ -11,7 +11,7 @@
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
-import RootContext from '../AppRegistry/rootContext';
+import StyleSheetContext from '../StyleSheet/StyleSheetContext';
 
 const ANIMATION_DURATION = 300;
 
@@ -38,7 +38,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
 
   const [isRendering, setIsRendering] = React.useState(false);
   const wasVisible = React.useRef(false);
-  const rootContext = React.useContext(RootContext);
+  const styleContext = React.useContext(StyleSheetContext);
 
   const isAnimated = animationType && animationType !== 'none';
 
@@ -83,7 +83,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
           onAnimationEnd: animationEndCallback,
           children
         },
-        rootContext.styleResolver
+        styleContext.styleResolver
       )
     : null;
 }

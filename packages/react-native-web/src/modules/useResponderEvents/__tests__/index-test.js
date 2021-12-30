@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import React, { createRef } from 'react';
 import ReactDOM from 'react-dom';
 import useResponderEvents from '..';
-import { getResponderNode, terminateResponder } from '../ResponderSystem';
+import ResponderSystem from '../ResponderSystem';
 import {
   buttonType,
   buttonsType,
@@ -12,17 +12,25 @@ import {
   createEventTarget,
   testWithPointerType
 } from 'dom-event-testing-library';
+import StyleSheetManager from '../../../exports/StyleSheet/StyleSheetManager';
 
 describe('useResponderEvents', () => {
   let container;
+  let responderSystem;
 
   function render(element) {
-    ReactDOM.render(element, container);
+    ReactDOM.render(
+      <StyleSheetManager _responderSystem={responderSystem} rootTag={container}>
+        {element}
+      </StyleSheetManager>,
+      container
+    );
   }
 
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
+    responderSystem = new ResponderSystem(window);
   });
 
   afterEach(() => {
@@ -30,7 +38,7 @@ describe('useResponderEvents', () => {
     document.body.removeChild(container);
     container = null;
     // make sure all tests end with the current responder being reset
-    terminateResponder();
+    responderSystem.terminateResponder();
     // make sure all tests reset state machine tracking pointers on the mock surface
     clearPointers();
   });
@@ -54,7 +62,7 @@ describe('useResponderEvents', () => {
       target.pointerdown({ pointerType });
     });
     // no responder should be active
-    expect(getResponderNode()).toBe(null);
+    expect(responderSystem.getResponderNode()).toBe(null);
   });
 
   test('does nothing for "mousedown" with non-primary buttons', () => {
@@ -83,7 +91,7 @@ describe('useResponderEvents', () => {
         });
       });
     });
-    expect(getResponderNode()).toBe(null);
+    expect(responderSystem.getResponderNode()).toBe(null);
   });
 
   test('does nothing for "mousedown" with ignored modifier keys', () => {
@@ -109,14 +117,14 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
-    expect(getResponderNode()).toBe(null);
+    expect(responderSystem.getResponderNode()).toBe(null);
     // gesture
     act(() => {
       acceptedModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
-    expect(getResponderNode()).not.toBe(null);
+    expect(responderSystem.getResponderNode()).not.toBe(null);
   });
 
   test('recognizes mouse interactions after touch interactions', () => {
@@ -248,7 +256,7 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponderCapture).not.toBeCalled();
       expect(targetCallbacks.onStartShouldSetResponderCapture).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(grandParentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(grandParentRef.current);
       expect(grandParentCallbacks.onResponderGrant).toBeCalledTimes(1);
       expect(grantCurrentTarget).toBe(grandParentRef.current);
       // gesture end
@@ -256,7 +264,7 @@ describe('useResponderEvents', () => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
@@ -298,14 +306,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onStartShouldSetResponderCapture).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('start grants responder to child', (pointerType) => {
@@ -347,14 +355,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onStartShouldSetResponderCapture).toBeCalledTimes(1);
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
   });
 
@@ -412,14 +420,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponder).not.toBeCalled();
       expect(grandParentCallbacks.onStartShouldSetResponder).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
@@ -461,14 +469,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponder).toBeCalledTimes(1);
       expect(grandParentCallbacks.onStartShouldSetResponder).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('start grants responder to grandParent', (pointerType) => {
@@ -510,14 +518,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onStartShouldSetResponder).toBeCalledTimes(1);
       expect(grandParentCallbacks.onStartShouldSetResponder).toBeCalledTimes(1);
       // responder grant
-      expect(getResponderNode()).toBe(grandParentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(grandParentRef.current);
       expect(grandParentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
   });
 
@@ -576,14 +584,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponderCapture).not.toBeCalled();
       expect(targetCallbacks.onMoveShouldSetResponderCapture).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(grandParentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(grandParentRef.current);
       expect(grandParentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
@@ -626,14 +634,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onMoveShouldSetResponderCapture).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('move grants responder to child', (pointerType) => {
@@ -676,14 +684,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onMoveShouldSetResponderCapture).toBeCalledTimes(1);
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
   });
 
@@ -742,14 +750,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponder).not.toBeCalled();
       expect(grandParentCallbacks.onMoveShouldSetResponder).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
@@ -793,14 +801,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponder).toBeCalledTimes(1);
       expect(grandParentCallbacks.onMoveShouldSetResponder).not.toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('move grants responder to grandParent', (pointerType) => {
@@ -843,14 +851,14 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onMoveShouldSetResponder).toBeCalled();
       expect(grandParentCallbacks.onMoveShouldSetResponder).toBeCalled();
       // responder grant
-      expect(getResponderNode()).toBe(grandParentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(grandParentRef.current);
       expect(grandParentCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
   });
 
@@ -900,7 +908,7 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onScrollShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onScrollShouldSetResponderCapture).toBeCalledTimes(0);
       // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(parentCallbacks.onResponderGrant).toBeCalledTimes(1);
     });
 
@@ -937,7 +945,7 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onScrollShouldSetResponderCapture).toBeCalledTimes(1);
       expect(targetCallbacks.onScrollShouldSetResponderCapture).toBeCalledTimes(1);
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
     });
   });
@@ -981,7 +989,7 @@ describe('useResponderEvents', () => {
       });
       // no bubble
       expect(parentCallbacks.onScrollShouldSetResponder).toBeCalledTimes(0);
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('scroll grants responder to target if a pointer is down', (pointerType) => {
@@ -1010,14 +1018,14 @@ describe('useResponderEvents', () => {
       // responder set (bubble phase)
       expect(targetCallbacks.onScrollShouldSetResponder).toBeCalledTimes(1);
       // responder grant
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(targetCallbacks.onResponderGrant).toBeCalledTimes(1);
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // make sure release is called
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
       expect(targetCallbacks.onResponderRelease).toBeCalledTimes(1);
     });
   });
@@ -1293,7 +1301,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     testWithPointerType('is called if "selectionchange" occurs', (pointerType) => {
@@ -1332,7 +1340,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('is called if ancestor scrolls', () => {
@@ -1368,7 +1376,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('is called if document scrolls', () => {
@@ -1404,7 +1412,7 @@ describe('useResponderEvents', () => {
       // responder end
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('is not called if sibling scrolls', () => {
@@ -1441,7 +1449,7 @@ describe('useResponderEvents', () => {
       // responder doesn't terminate
       expect(targetCallbacks.onResponderTerminate).not.toBeCalled();
       // responder should still be set
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
     });
 
     test('is called if responder blurs', () => {
@@ -1471,7 +1479,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // responder should still be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('is called if window blurs', () => {
@@ -1501,7 +1509,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('is not called if sibling blurs', () => {
@@ -1538,7 +1546,7 @@ describe('useResponderEvents', () => {
       // responder doesn't terminate
       expect(targetCallbacks.onResponderTerminate).not.toBeCalled();
       // responder should still be set
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
     });
 
     test('is called if contextmenu opens', () => {
@@ -1568,7 +1576,7 @@ describe('useResponderEvents', () => {
       // responder terminates
       expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(1);
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
 
     test('can be denied for "contextmenu", "scroll", and "selectionchange" events', () => {
@@ -1585,8 +1593,8 @@ describe('useResponderEvents', () => {
 
       function assertAndCleanUp() {
         expect(targetCallbacks.onResponderTerminate).toBeCalledTimes(0);
-        expect(getResponderNode()).toBe(targetRef.current);
-        terminateResponder();
+        expect(responderSystem.getResponderNode()).toBe(targetRef.current);
+        responderSystem.terminateResponder();
         clearPointers();
         targetCallbacks.onResponderTerminate.mockClear();
       }
@@ -1961,7 +1969,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType, pointerId: 1 });
       });
       // target becomes responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -1976,7 +1984,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType, pointerId: 2 });
       });
       // target remains responder for start event
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -1990,7 +1998,7 @@ describe('useResponderEvents', () => {
         target.pointermove({ pointerType, pointerId: 1 });
       });
       // parent becomes responder, target terminates
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponderCapture',
@@ -2007,7 +2015,7 @@ describe('useResponderEvents', () => {
         target.pointermove({ pointerType, pointerId: 2 });
       });
       // grand parent becomes responder, parent terminates
-      expect(getResponderNode()).toBe(grandParentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(grandParentRef.current);
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
         'grandParent: onMoveShouldSetResponder',
@@ -2023,7 +2031,7 @@ describe('useResponderEvents', () => {
         target.pointerup({ pointerType, pointerId: 2 });
         target.pointerup({ pointerType, pointerId: 1 });
       });
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
       expect(eventLog).toEqual([
         'grandParent: onResponderEnd',
         'grandParent: onResponderEnd',
@@ -2127,7 +2135,7 @@ describe('useResponderEvents', () => {
         parent.pointerdown({ pointerType, pointerId: 1 });
       });
       // initially nothing wants to become the responder
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2140,7 +2148,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType, pointerId: 2 });
       });
       // target should become responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2156,7 +2164,7 @@ describe('useResponderEvents', () => {
         parent.pointerup({ pointerType, pointerId: 1 });
       });
       // responder doesn't change, "end" event called on responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual(['target: onResponderEnd']);
       eventLog = [];
       // add touch back on parent
@@ -2164,7 +2172,7 @@ describe('useResponderEvents', () => {
         parent.pointerdown({ pointerType, pointerId: 1 });
       });
       // responder doesn't change, "start" event called on responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2178,7 +2186,7 @@ describe('useResponderEvents', () => {
         parent.pointermove({ pointerType, pointerId: 1 });
       });
       // responder doesn't change, "move" event dispatched on responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponderCapture',
@@ -2192,7 +2200,7 @@ describe('useResponderEvents', () => {
         target.pointerup({ pointerType, pointerId: 2 });
       });
       // responder is released
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
       expect(eventLog).toEqual(['target: onResponderEnd', 'target: onResponderRelease']);
     });
 
@@ -2310,7 +2318,7 @@ describe('useResponderEvents', () => {
       act(() => {
         target.pointerdown({ pointerType, pointerId: 1 });
       });
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2325,7 +2333,7 @@ describe('useResponderEvents', () => {
         sibling.pointerdown({ pointerType, pointerId: 2 });
       });
       // target remains responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor of current responder and sibling (i.e., parent)
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
@@ -2340,7 +2348,7 @@ describe('useResponderEvents', () => {
         target.pointermove({ pointerType, pointerId: 1 });
       });
       // target remains responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
@@ -2355,7 +2363,7 @@ describe('useResponderEvents', () => {
         sibling.pointermove({ pointerType, pointerId: 2 });
       });
       // target remains responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
@@ -2559,7 +2567,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType });
       });
       // target becomes responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2574,7 +2582,7 @@ describe('useResponderEvents', () => {
         target.pointermove({ pointerType });
       });
       // target remains responder, parent was rejected
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponderCapture',
@@ -2589,7 +2597,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType, pointerId: 2 });
       });
       // target remains responder, parent was rejected
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2697,7 +2705,7 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType });
       });
       // target becomes responder
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2712,7 +2720,7 @@ describe('useResponderEvents', () => {
         parent.scroll();
       });
       // target remains responder, parent rejected
-      expect(getResponderNode()).toBe(targetRef.current);
+      expect(responderSystem.getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
         'grandParent: onScrollShouldSetResponderCapture',
         'parent: onScrollShouldSetResponderCapture',
@@ -2730,7 +2738,7 @@ describe('useResponderEvents', () => {
       act(() => {
         parent.scroll();
       });
-      expect(getResponderNode()).toBe(parentRef.current);
+      expect(responderSystem.getResponderNode()).toBe(parentRef.current);
       expect(eventLog).toEqual([
         'grandParent: onScrollShouldSetResponderCapture',
         'parent: onScrollShouldSetResponderCapture',
@@ -2796,12 +2804,12 @@ describe('useResponderEvents', () => {
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.pointerdown({ pointerType });
-      });
+      }); //
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture'
       ]);
-      expect(getResponderNode()).toBe(null);
+      expect(responderSystem.getResponderNode()).toBe(null);
     });
   });
 });

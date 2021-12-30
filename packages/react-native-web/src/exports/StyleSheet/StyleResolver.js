@@ -38,7 +38,7 @@ export default class StyleResolver {
     this._sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID, rootTag));
     this.cache = {};
 
-    modality((rule) => this.sheet.insert(rule, STYLE_GROUPS.modality));
+    modality((rule) => this.sheet.insert(rule, STYLE_GROUPS.modality), rootTag?.ownerDocument);
     initialRules.forEach((rule) => {
       this.sheet.insert(rule, STYLE_GROUPS.reset);
     });

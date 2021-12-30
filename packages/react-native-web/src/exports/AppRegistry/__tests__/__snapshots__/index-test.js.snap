@@ -18,11 +18,29 @@ input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-web
 `;
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 1`] = `
-<AppContainer
-  rootTag={Object {}}
+<StyleSheetManager
+  _styleResolver={
+    StyleResolver {
+      "_sheet": Object {
+        "clear": [Function],
+        "getTextContent": [Function],
+        "insert": [Function],
+      },
+      "cache": Object {},
+      "inserted": Object {
+        "css": Object {},
+        "ltr": Object {},
+        "rtl": Object {},
+        "rtlNoSwap": Object {},
+      },
+    }
+  }
+  rootTag={<body />}
 >
-  <NoopComponent />
-</AppContainer>
+  <AppContainer>
+    <NoopComponent />
+  </AppContainer>
+</StyleSheetManager>
 `;
 
 exports[`AppRegistry getApplication returns "element" and "getStyleElement" 2`] = `

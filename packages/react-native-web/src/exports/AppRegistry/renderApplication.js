@@ -8,17 +8,17 @@
  * @flow
  */
 
-import type { ComponentType, Node } from 'react';
+import * as React from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import render, { hydrate } from '../render';
 import StyleResolver from '../StyleSheet/StyleResolver';
-import React from 'react';
+import StyleSheetManager from '../StyleSheet/StyleSheetManager';
 
 export default function renderApplication<Props: Object>(
-  RootComponent: ComponentType<Props>,
-  WrapperComponent?: ?ComponentType<*>,
+  RootComponent: React.ComponentType<Props>,
+  WrapperComponent?: ?React.ComponentType<*>,
   callback?: () => void,
   options: {
     hydrate: boolean,
@@ -32,24 +32,28 @@ export default function renderApplication<Props: Object>(
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
-      <RootComponent {...initialProps} />
-    </AppContainer>,
+    <StyleSheetManager rootTag={rootTag}>
+      <AppContainer WrapperComponent={WrapperComponent}>
+        <RootComponent {...initialProps} />
+      </AppContainer>
+    </StyleSheetManager>,
     rootTag,
     callback
   );
 }
 
 export function getApplication(
-  RootComponent: ComponentType<Object>,
+  RootComponent: React.ComponentType<Object>,
   initialProps: Object,
-  WrapperComponent?: ?ComponentType<*>
-): {| element: Node, getStyleElement: (Object) => Node |} {
+  WrapperComponent?: ?React.ComponentType<*>
+): {| element: React.Node, getStyleElement: (Object) => React.Node |} {
   const styleResolver = new StyleResolver();
   const element = (
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={null} styleResolver={styleResolver}>
-      <RootComponent {...initialProps} />
-    </AppContainer>
+    <StyleSheetManager _styleResolver={styleResolver} rootTag={document.body}>
+      <AppContainer WrapperComponent={WrapperComponent}>
+        <RootComponent {...initialProps} />
+      </AppContainer>
+    </StyleSheetManager>
   );
   // Don't escape CSS text
   const getStyleElement = (props) => {
