@@ -150,7 +150,7 @@ import {
   isPrimaryPointerDown,
   setResponderId
 } from './utils';
-import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
+import { ResponderTouchHistoryStore } from './ResponderTouchHistoryStore';
 import canUseDOM from '../canUseDom';
 
 /* ------------ TYPES ------------ */
@@ -232,6 +232,7 @@ let currentResponder: ResponderInstance = {
   node: null,
   idPath: null
 };
+const responderTouchHistoryStore = new ResponderTouchHistoryStore();
 
 function changeCurrentResponder(responder: ResponderInstance) {
   currentResponder = responder;
@@ -294,7 +295,10 @@ function eventListener(domEvent: any) {
   const isEndEvent = isEndish(eventType);
   const isScrollEvent = isScroll(eventType);
   const isSelectionChangeEvent = isSelectionChange(eventType);
-  const responderEvent = createResponderEvent(domEvent);
+  const responderEvent = createResponderEvent(
+    domEvent,
+    responderTouchHistoryStore
+  );
 
   /**
    * Record the state of active pointers
@@ -310,7 +314,7 @@ function eventListener(domEvent: any) {
         trackedTouchCount = 0;
       }
     }
-    ResponderTouchHistoryStore.recordTouchTrack(
+    responderTouchHistoryStore.recordTouchTrack(
       eventType,
       responderEvent.nativeEvent
     );
@@ -665,7 +669,7 @@ export function terminateResponder() {
   if (id != null && node != null) {
     const { onResponderTerminate } = getResponderConfig(id);
     if (onResponderTerminate != null) {
-      const event = createResponderEvent({});
+      const event = createResponderEvent({}, responderTouchHistoryStore);
       event.currentTarget = node;
       onResponderTerminate(event);
     }
