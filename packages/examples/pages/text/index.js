@@ -383,21 +383,37 @@ export default function TextPage() {
               <Text> words</Text>
             </View>
           </View>
-          <Text numberOfLines={1} style={{ marginBottom: 20 }}>
-            Maximum of one line, no matter how much I write here. If I keep writing, it
-            {"'"}
-            ll just truncate after one line.
-          </Text>
+          <View style={{ marginBottom: 20 }}>
+            <Text numberOfLines={1}>
+              Maximum of one line, no matter how much I write here. If I keep writing, it
+              {"'"}
+              ll just truncate after one line.
+            </Text>
+            <Text ellipsizeMode="clip" numberOfLines={1}>
+              Maximum of one line, no matter how much I write here. If I keep writing, it
+              {"'"}
+              ll just truncate after one line.
+            </Text>
+          </View>
+
           <Text numberOfLines={2} style={{ marginBottom: 20 }}>
             Maximum of two lines, no matter how much I write here. If I keep writing, it
             {"'"}
             ll just truncate after two lines.
           </Text>
-          <Text style={{ marginBottom: 20 }}>
-            No maximum lines specified, no matter how much I write here. If I keep writing, it
-            {"'"}
-            ll just keep going and going.
-          </Text>
+
+          <View style={{ marginBottom: 20 }}>
+            <Text>
+              No maximum lines specified, no matter how much I write here. If I keep writing, it
+              {"'"}
+              ll just keep going and going.
+            </Text>
+            <Text numberOfLines={0}>
+              No maximum lines specified, no matter how much I write here. If I keep writing, it
+              {"'"}
+              ll just keep going and going.
+            </Text>
+          </View>
         </View>
 
         <View>

@@ -43,6 +43,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
   (props, forwardedRef) => {
     const {
       dir,
+      ellipsizeMode,
       hrefAttrs,
       numberOfLines,
       onClick,
@@ -73,11 +74,19 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     const classList = [
       classes.text,
       hasTextAncestor === true && classes.textHasAncestor,
-      numberOfLines != null && classes.textMultiLine
+      numberOfLines && classes.textMultiLine,
+      // The browser only supports the "clip" text-overflow property for single
+      // lines of text. This isn't perfect, but it's the best that we can do
+      // until the browsers catch up.
+      numberOfLines === 1 &&
+        // Browsers only support "clip" and "tail", so that's all that we can
+        // support at the moment.
+        ellipsizeMode === 'clip' &&
+        classes.textEllipsizeClip
     ];
     const style = [
       props.style,
-      numberOfLines != null && { WebkitLineClamp: numberOfLines },
+      numberOfLines && { WebkitLineClamp: numberOfLines },
       selectable === true && styles.selectable,
       selectable === false && styles.notSelectable,
       onPress && styles.pressable
@@ -184,8 +193,13 @@ const classes = css.create({
     display: '-webkit-box',
     maxWidth: '100%',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    WebkitBoxOrient: 'vertical'
+    WebkitBoxOrient: 'vertical',
+    textOverflow: 'ellipsis'
+  },
+  textEllipsizeClip: {
+    // Note: this only works for one line (numberOfLines={1}), unfortunately.
+    whiteSpace: 'nowrap',
+    textOverflow: 'clip'
   }
 });
 
