@@ -150,16 +150,51 @@ exports[`components/Text prop "nativeID" value is set 1`] = `
 />
 `;
 
+exports[`components/Text prop "numberOfLines" ellipsizeMode="clip" numberOfLines={1} 1`] = `
+<div
+  class="css-text-901oao css-textMultiLine-r38r4o css-textEllipsizeClip-5kzskm"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" ellipsizeMode="clip" numberOfLines={2} 1`] = `
+<div
+  class="css-text-901oao css-textMultiLine-r38r4o"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" ellipsizeMode="tail" numberOfLines={1} 1`] = `
+<div
+  class="css-text-901oao css-textMultiLine-r38r4o"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" ellipsizeMode="tail" numberOfLines={2} 1`] = `
+<div
+  class="css-text-901oao css-textMultiLine-r38r4o"
+  dir="auto"
+/>
+`;
+
 exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
-  class="css-text-901oao css-textMultiLine-cens5h"
+  class="css-text-901oao css-textMultiLine-r38r4o"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
-  class="css-text-901oao css-textMultiLine-cens5h"
+  class="css-text-901oao css-textMultiLine-r38r4o"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" value is set to zero 1`] = `
+<div
+  class="css-text-901oao"
   dir="auto"
 />
 `;

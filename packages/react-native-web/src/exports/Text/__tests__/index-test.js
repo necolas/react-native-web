@@ -132,8 +132,34 @@ describe('components/Text', () => {
       const { container } = render(<Text numberOfLines={3} />);
       expect(container.firstChild).toMatchSnapshot();
     });
+
     test('value is set to one', () => {
       const { container } = render(<Text numberOfLines={1} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set to zero', () => {
+      const { container } = render(<Text numberOfLines={0} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ellipsizeMode="clip" numberOfLines={1}', () => {
+      const { container } = render(<Text ellipsizeMode="clip" numberOfLines={1} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ellipsizeMode="tail" numberOfLines={1}', () => {
+      const { container } = render(<Text ellipsizeMode="tail" numberOfLines={1} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ellipsizeMode="clip" numberOfLines={2}', () => {
+      const { container } = render(<Text ellipsizeMode="clip" numberOfLines={2} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ellipsizeMode="tail" numberOfLines={2}', () => {
+      const { container } = render(<Text ellipsizeMode="tail" numberOfLines={2} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

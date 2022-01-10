@@ -86,6 +86,7 @@ export type TextProps = {
     selected?: ?boolean
   },
   dir?: 'auto' | 'ltr' | 'rtl',
+  ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip',
   numberOfLines?: ?number,
   onPress?: (e: any) => void,
   selectable?: boolean,

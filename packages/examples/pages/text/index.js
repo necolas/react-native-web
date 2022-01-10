@@ -389,6 +389,11 @@ export default function TextPage() {
               {"'"}
               ll just truncate after one line.
             </Text>
+            <Text ellipsizeMode="tail" numberOfLines={1}>
+              Maximum of one line, no matter how much I write here. If I keep writing, it
+              {"'"}
+              ll just truncate after one line.
+            </Text>
             <Text ellipsizeMode="clip" numberOfLines={1}>
               Maximum of one line, no matter how much I write here. If I keep writing, it
               {"'"}
