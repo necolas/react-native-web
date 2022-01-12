@@ -17,7 +17,7 @@
     "eleventy-plugin-svg-contents": "^0.7.0",
     "eleventy-plugin-toc": "^1.1.0",
     "html-minifier": "^4.0.0",
-    "markdown-it": "^12.0.4",
+    "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^7.0.0",
     "markdown-it-attrs": "^4.0.0",
     "markdown-it-container": "^3.0.0",
