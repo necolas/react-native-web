@@ -12,10 +12,12 @@ import * as React from 'react';
 import ResponderSystem from '../../modules/useResponderEvents/ResponderSystem';
 import StyleResolver from '../StyleSheet/StyleResolver';
 
-const RootContext = React.createContext<{
+export type RootContextType = {
   styleResoler: StyleResolver,
   responderSystem: typeof ResponderSystem,
   rootTag?: Node
-}>();
+};
+
+const RootContext = React.createContext<RootContextType>(null);
 
 export default RootContext;

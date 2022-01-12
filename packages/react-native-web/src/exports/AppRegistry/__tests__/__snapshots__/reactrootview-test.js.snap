@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactRootView render ReactRootView render ReactRootView inside ReactRootView 1`] = `null`;
+
+exports[`ReactRootView render ReactRootView render two ReactRootViews at once 1`] = `
+<div
+  class="css-view-1dbjc4n"
+>
+  <div
+    class="css-text-901oao"
+    dir="auto"
+  >
+    Some text
+  </div>
+  <div
+    class="css-text-901oao"
+    dir="auto"
+  >
+    Some text outside
+  </div>
+</div>
+`;

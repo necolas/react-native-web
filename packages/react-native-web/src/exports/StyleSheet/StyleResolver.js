@@ -13,7 +13,7 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import createCSSStyleSheet from './createCSSStyleSheet';
+import { createStyleSheet, destroyStyleSheet } from './createCSSStyleSheet';
 import createCompileableStyle from './createCompileableStyle';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
 import flattenArray from '../../modules/flattenArray';
@@ -26,47 +26,52 @@ import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
 export default class StyleResolver {
-  static resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-  inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-  _sheet: any;
+  static _resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+  _inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+  _sheet: ?CSSStyleSheet;
+  _styleElement: ?HTMLStyleElement;
+  _cache = {};
 
   constructor(rootTag?: HTMLElement) {
     this._init(rootTag);
   }
 
   _init(rootTag?: HTMLElement) {
-    this._sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID, rootTag));
-    this.cache = {};
+    this._styleElement = createStyleSheet(STYLE_ELEMENT_ID, rootTag);
+    this._sheet = createOrderedCSSStyleSheet(this._styleElement?.sheet);
 
-    modality((rule) => this.sheet.insert(rule, STYLE_GROUPS.modality), rootTag?.ownerDocument);
+    modality((rule) => this._sheet.insert(rule, STYLE_GROUPS.modality), rootTag?.ownerDocument);
     initialRules.forEach((rule) => {
-      this.sheet.insert(rule, STYLE_GROUPS.reset);
+      this._sheet.insert(rule, STYLE_GROUPS.reset);
     });
   }
 
+  // Clear all the content created by StyleSheed from the window. This call is irreversible.
   clear() {
-    StyleResolver.resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-    this.inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-    this.cache = {};
+    this._inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+    this._cache = {};
     this._sheet.clear();
+    destroyStyleSheet(this._styleElement);
+    this._sheet = undefined;
+    this._styleElement = undefined;
   }
 
   _addToCache(className, prop, value) {
-    if (!this.cache[prop]) {
-      this.cache[prop] = {};
+    if (!this._cache[prop]) {
+      this._cache[prop] = {};
     }
-    this.cache[prop][value] = className;
+    this._cache[prop][value] = className;
   }
 
   _getClassName(prop, value) {
     const val = stringifyValueWithProperty(value, prop);
-    return this.cache[prop] && this.cache[prop].hasOwnProperty(val) && this.cache[prop][val];
+    return this._cache[prop] && this._cache[prop].hasOwnProperty(val) && this._cache[prop][val];
   }
 
   _injectRegisteredStyle(id) {
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
-    if (!this.inserted[dir][id]) {
+    if (!this._inserted[dir][id]) {
       const style = createCompileableStyle(i18nStyle(flattenStyle(id)));
       const results = atomic(style);
       Object.keys(results).forEach((key) => {
@@ -74,10 +79,10 @@ export default class StyleResolver {
         this._addToCache(identifier, property, value);
         rules.forEach((rule) => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
-          this.sheet.insert(rule, group);
+          this._sheet.insert(rule, group);
         });
       });
-      this.inserted[dir][id] = true;
+      this._inserted[dir][id] = true;
     }
   }
 
@@ -96,14 +101,14 @@ export default class StyleResolver {
       flattenArray(classList).forEach((identifier) => {
         if (identifier) {
           if (
-            this.inserted.css[identifier] == null &&
-            StyleResolver.resolved.css[identifier] != null
+            this._inserted.css[identifier] == null &&
+            StyleResolver._resolved.css[identifier] != null
           ) {
-            const item = StyleResolver.resolved.css[identifier];
+            const item = StyleResolver._resolved.css[identifier];
             item.rules.forEach((rule) => {
-              this.sheet.insert(rule, item.group);
+              this._sheet.insert(rule, item.group);
             });
-            this.inserted.css[identifier] = true;
+            this._inserted.css[identifier] = true;
           }
 
           nextClassList.push(identifier);
@@ -162,8 +167,8 @@ export default class StyleResolver {
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
 
     // faster: memoized
-    if (key != null && StyleResolver.resolved[dir][key] != null) {
-      return StyleResolver.resolved[dir][key];
+    if (key != null && StyleResolver._resolved[dir][key] != null) {
+      return StyleResolver._resolved[dir][key];
     }
 
     const flatStyle = flattenStyle(style);
@@ -194,7 +199,7 @@ export default class StyleResolver {
                   const { identifier, rules } = a[key];
                   props.classList.push(identifier);
                   rules.forEach((rule) => {
-                    this.sheet.insert(rule, STYLE_GROUPS.atomic);
+                    this._sheet.insert(rule, STYLE_GROUPS.atomic);
                   });
                 });
               } else {
@@ -216,14 +221,14 @@ export default class StyleResolver {
     }
 
     if (key != null) {
-      StyleResolver.resolved[dir][key] = props;
+      StyleResolver._resolved[dir][key] = props;
     }
 
     return props;
   }
 
   getStyleSheet() {
-    const textContent = this.sheet.getTextContent();
+    const textContent = this._sheet.getTextContent();
     // Reset state on the server so critical css is always the result
     if (!canUseDOM) {
       this._init();
@@ -243,7 +248,7 @@ export default class StyleResolver {
 
       Object.keys(compiled).forEach((key) => {
         const { identifier, rules } = compiled[key];
-        StyleResolver.resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
+        StyleResolver._resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
         result[name] = identifier;
       });
     });

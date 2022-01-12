@@ -49,9 +49,8 @@ export default function MultiWindowPage() {
   };
 
   return (
-    <Example title="Multi root">
-      <View>
-        <Text>Child Window example</Text>
+    <Example title="Multi window">
+      <>
         <View style={styles.buttons}>
           <Button disabled={!!rootTagContainer} onPress={openWindow} title="Open window" />
           <Button disabled={!rootTagContainer} onPress={closeWindow} title="Close window" />
@@ -64,7 +63,7 @@ export default function MultiWindowPage() {
               rootTagContainer
             )
           : undefined}
-      </View>
+      </>
     </Example>
   );
 }

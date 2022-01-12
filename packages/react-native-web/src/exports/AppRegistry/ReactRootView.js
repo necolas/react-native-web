@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import RootContext from './RootContext';
+import RootContext, { RootContextType } from './RootContext';
 import StyleResolver from '../StyleSheet/StyleResolver';
 import ResponderSystem from '../../modules/useResponderEvents/ResponderSystem';
 
@@ -23,7 +23,13 @@ export type ReactRootViewProps = {
 export default function ReactRootView(props: ReactRootView): React.Node {
   const styleResolver = React.useRef<StyleResolver>();
   if (!styleResolver.current) {
-    styleResolver.current = props._styleResolver ?? new StyleResolver(props.rootTag);
+    styleResolver.current = props._styleResolver || new StyleResolver(props.rootTag);
+  }
+
+  const responderSystem = React.useRef<ResponderSystem>();
+  if (!responderSystem.current) {
+    responderSystem.current =
+      props._responderSystem || new ResponderSystem(props.rootTag?.ownerDocument?.defaultView);
   }
 
   React.useEffect(() => {
@@ -33,13 +39,7 @@ export default function ReactRootView(props: ReactRootView): React.Node {
     };
   }, []);
 
-  const responderSystem = React.useRef<ResponderSystem>();
-  if (!responderSystem.current) {
-    responderSystem.current =
-      props._responderSystem ?? new ResponderSystem(props.rootTag?.ownerDocument?.defaultView);
-  }
-
-  const styleContext = {
+  const styleContext: RootContextType = {
     rootTag: props.rootTag,
     styleResolver: styleResolver.current,
     responderSystem: responderSystem.current
