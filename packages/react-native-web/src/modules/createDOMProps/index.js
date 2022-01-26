@@ -393,6 +393,10 @@ const createDOMProps = (elementType, props) => {
   if (className != null && className !== '') {
     domProps.className = className;
   }
+  
+  if (props.className) {
+    domProps.className = className ? `${className} ${props.className}` : props.className
+  }
 
   if (style) {
     domProps.style = style;
