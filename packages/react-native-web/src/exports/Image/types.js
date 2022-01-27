@@ -49,6 +49,13 @@ type SourceObject = {
    */
   cache?: 'default' | 'reload' | 'force-cache' | 'only-if-cached',
   /**
+   * `crossOrigin` specifies the CORS mode to use to load the image. This replaces headers and body on web
+   * and should allow cookie-authenticated servers to serve images.
+   *
+   * @platform web
+   */
+  crossOrigin?: 'anonymous' | 'use-credentials',
+  /**
    * `headers` is an object representing the HTTP headers to send along with the
    * request for a remote image.
    */
@@ -79,7 +86,7 @@ type SourceObject = {
 
 export type ResizeMode = 'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch';
 
-export type Source = number | string | SourceObject | Array<SourceObject>;
+export type Source = number | string | SourceObject;
 
 export type ImageStyle = {
   ...AnimationStyles,
