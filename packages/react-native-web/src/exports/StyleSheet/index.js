@@ -13,10 +13,9 @@ import { createSheet } from './dom';
 import { styleq } from 'styleq';
 import { validate } from './validate';
 
-const STYLE_ELEMENT_ID = 'react-native-stylesheet';
-
-const sheet = createSheet(STYLE_ELEMENT_ID);
 const staticStyleMap: WeakMap<Object, Array<Object>> = new WeakMap();
+
+const sheet = createSheet();
 
 function customStyleq(styles, isRTL) {
   return styleq.factory({
@@ -133,13 +132,12 @@ function flatten(...styles: any): { [key: string]: any } {
 }
 
 /**
- * getStyleSheet
+ * getSheet
  */
 function getSheet(): { id: string, textContent: string } {
-  const textContent = sheet.getTextContent();
   return {
-    id: STYLE_ELEMENT_ID,
-    textContent
+    id: sheet.id,
+    textContent: sheet.getTextContent()
   };
 }
 

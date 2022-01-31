@@ -118,7 +118,7 @@
     "no-with": 2,
     "prefer-const": 2,
     "prefer-rest-params": 2,
-    "quotes": [2, "single", "avoid-escape"],
+    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
     "radix": 2,
     "use-isnan": 2,
     "valid-typeof": 2,

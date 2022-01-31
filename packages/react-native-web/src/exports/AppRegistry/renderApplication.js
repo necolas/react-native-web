@@ -13,6 +13,7 @@ import type { ComponentType, Node } from 'react';
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import render, { hydrate } from '../render';
+import { createSheet } from '../StyleSheet/dom';
 import StyleSheet from '../StyleSheet';
 import React from 'react';
 
@@ -30,6 +31,8 @@ export default function renderApplication<Props: Object>(
   const renderFn = shouldHydrate ? hydrate : render;
 
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
+
+  createSheet(rootTag);
 
   renderFn(
     <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
