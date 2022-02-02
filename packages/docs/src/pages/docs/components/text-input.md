@@ -139,7 +139,6 @@ Callback that is called when the text input's selection changes.
 Callback that is called when the keyboard's submit button is pressed. When `multiline={true}`, this is only called if `blurOnSubmit={true}`.
 {% endcall %}
 
-
 {% call macro.prop('placeholder', '?boolean') %}
 Text that appears in the form control when it has no value set.
 {% endcall %}
@@ -170,6 +169,10 @@ Set the styles of the view. `TextInput` supports typographic styles in addition 
 
 {% call macro.prop('testID', '?string') %}
 Set the test selector label (via `data-testid`).
+{% endcall %}
+
+{% call macro.prop('type', '?string') %}
+Set the type.
 {% endcall %}
 
 {% call macro.prop('value', '?string') %}

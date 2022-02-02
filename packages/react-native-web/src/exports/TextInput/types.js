@@ -64,5 +64,28 @@ export type TextInputProps = {
   selectionColor?: ?ColorValue,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
+  type?:
+    | 'button'
+    | 'checkbox'
+    | 'color'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'file'
+    | 'hidden'
+    | 'image'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'radio'
+    | 'range'
+    | 'reset'
+    | 'search'
+    | 'submit'
+    | 'tel'
+    | 'text'
+    | 'time'
+    | 'url'
+    | 'week',
   value?: ?string
 };

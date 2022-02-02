@@ -157,7 +157,7 @@ const TextInput: React.AbstractComponent<
       type = 'url';
       break;
     default:
-      type = 'text';
+      type = props.type || 'text';
   }
 
   if (secureTextEntry) {
