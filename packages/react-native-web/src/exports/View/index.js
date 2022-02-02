@@ -61,7 +61,8 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
       onSelectionChangeShouldSetResponder,
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
+      onStartShouldSetResponderCapture,
+      ...rest
     } = props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -100,7 +101,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     let component = 'div';
 
-    const supportedProps = pickProps(props);
+    const supportedProps = pickProps(rest);
     supportedProps.isRTL = props.dir ? props.dir === 'rtl' : isRTL;
     supportedProps.style = [styles.view$raw, hasTextAncestor && styles.inline, props.style];
     if (props.href != null) {
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     padding: 0,
     position: 'relative',
+    textDecoration: 'none',
     zIndex: 0
   },
   inline: {

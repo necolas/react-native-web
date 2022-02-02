@@ -11,9 +11,8 @@ import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import logicalStylePolyfill from './logicalStylePolyfill';
 import prefixStyles from '../../../modules/prefixStyles';
-import { STYLE_GROUPS } from './constants';
+import preprocess from './preprocess';
 
 type Value = Object | Array<any> | string | number;
 type Style = { [key: string]: Value };
@@ -24,6 +23,25 @@ type CompiledStyle = { $$css: boolean, [key: string]: string };
 type CompilerOutput = [CompiledStyle, Array<RulesData>];
 
 const cache = new Map();
+
+const classicGroup = 1;
+const atomicGroup = 2.2;
+const customGroup = {
+  borderColor: 2,
+  borderRadius: 2,
+  borderStyle: 2,
+  borderWidth: 2,
+  display: 2,
+  flex: 2,
+  margin: 2,
+  overflow: 2,
+  overscrollBehavior: 2,
+  padding: 2,
+  marginHorizontal: 2.1,
+  marginVertical: 2.1,
+  paddingHorizontal: 2.1,
+  paddingVertical: 2.1
+};
 
 /**
  * Compile style to atomic CSS rules.
@@ -44,7 +62,7 @@ export function atomic(style: Style): CompilerOutput {
           compiledStyle[key] = cachedResult[0];
           compiledRules.push(cachedResult[1]);
         } else {
-          const order = STYLE_GROUPS.custom[key] || STYLE_GROUPS.atomic;
+          const order = customGroup[key] || atomicGroup;
           const identifier = createIdentifier('r', key, value);
           const rules = createAtomicRules(identifier, key, value);
           const orderedRules = [rules, order];
@@ -79,7 +97,7 @@ export function classic(style: Style, name: string): CompilerOutput {
   compiledRules.push(`${selector}${block}`);
 
   compiledStyle[identifier] = identifier;
-  return [compiledStyle, [[compiledRules, STYLE_GROUPS.classic]]];
+  return [compiledStyle, [[compiledRules, classicGroup]]];
 }
 
 /**
@@ -90,7 +108,7 @@ export function inline(style: Style): { [key: string]: mixed } {
   return createReactDOMStyle(style, true);
 }
 
-export { logicalStylePolyfill };
+export { preprocess };
 
 /**
  * Create a value string that normalizes different input values with a common

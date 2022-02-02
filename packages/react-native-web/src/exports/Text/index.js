@@ -64,7 +64,8 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
       onStartShouldSetResponderCapture,
-      selectable
+      selectable,
+      ...rest
     } = props;
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
@@ -104,7 +105,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     );
 
     let component = hasTextAncestor ? 'span' : 'div';
-    const supportedProps = pickProps(props);
+    const supportedProps = pickProps(rest);
     supportedProps.dir = dir;
     // 'auto' by default allows browsers to infer writing direction (root elements only)
     if (!hasTextAncestor) {

@@ -1,30 +1,13 @@
-/* eslint-env jasmine, jest */
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-'use strict';
-
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { createSheet } from '../dom';
 
 describe('createSheet', () => {
-  describe('server', () => {
-    const canUseDOM = ExecutionEnvironment.canUseDOM;
-
-    beforeEach(() => {
-      ExecutionEnvironment.canUseDOM = false;
-    });
-
-    afterEach(() => {
-      ExecutionEnvironment.canUseDOM = canUseDOM;
-    });
-
-    test('creates a sheet on the server', () => {
-      const sheet = createSheet();
-      expect(sheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
-      expect(typeof sheet.getTextContent()).toBe('string');
-      expect(typeof sheet.insert).toBe('function');
-    });
-  });
-
   test('creates a sheet on the client', () => {
     const sheet = createSheet();
     expect(sheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);

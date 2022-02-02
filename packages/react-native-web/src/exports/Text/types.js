@@ -72,19 +72,6 @@ export type TextProps = {
     | 'listitem'
     | 'none'
     | 'text',
-  accessibilityState?: {
-    busy?: ?boolean,
-    checked?: ?boolean | 'mixed',
-    disabled?: ?boolean,
-    expanded?: ?boolean,
-    grabbed?: ?boolean,
-    hidden?: ?boolean,
-    invalid?: ?boolean,
-    pressed?: ?boolean,
-    readonly?: ?boolean,
-    required?: ?boolean,
-    selected?: ?boolean
-  },
   dir?: 'auto' | 'ltr' | 'rtl',
   numberOfLines?: ?number,
   onPress?: (e: any) => void,

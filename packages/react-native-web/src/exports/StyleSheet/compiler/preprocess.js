@@ -7,7 +7,8 @@
  * @flow
  */
 
-import multiplyStyleLengthValue from '../../../modules/multiplyStyleLengthValue';
+import normalizeColor from './normalizeColor';
+import normalizeValueWithProperty from './normalizeValueWithProperty';
 
 const emptyObject = {};
 
@@ -74,25 +75,60 @@ const PROPERTIES_VALUE = {
   textAlign: true
 };
 
-// Invert the sign of a numeric-like value
-const additiveInverse = (value: string | number) => multiplyStyleLengthValue(value, -1);
+/**
+ * Shadows
+ */
 
-const logicalStylePolyfill = <T: {| [key: string]: any |}>(
-  originalStyle: T,
-  isRTL?: boolean
-): T => {
+const defaultOffset = { height: 0, width: 0 };
+
+export const createBoxShadowValue = (style: Object): void | string => {
+  const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
+  const { height, width } = shadowOffset || defaultOffset;
+  const offsetX = normalizeValueWithProperty(width);
+  const offsetY = normalizeValueWithProperty(height);
+  const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
+  const color = normalizeColor(shadowColor || 'black', shadowOpacity);
+  if (color != null && offsetX != null && offsetY != null && blurRadius != null) {
+    return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  }
+};
+
+export const createTextShadowValue = (style: Object): void | string => {
+  const { textShadowColor, textShadowOffset, textShadowRadius } = style;
+  const { height, width } = textShadowOffset || defaultOffset;
+  const radius = textShadowRadius || 0;
+  const offsetX = normalizeValueWithProperty(width);
+  const offsetY = normalizeValueWithProperty(height);
+  const blurRadius = normalizeValueWithProperty(radius);
+  const color = normalizeValueWithProperty(textShadowColor, 'textShadowColor');
+
+  if (
+    color &&
+    (height !== 0 || width !== 0 || radius !== 0) &&
+    offsetX != null &&
+    offsetY != null &&
+    blurRadius != null
+  ) {
+    return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
+  }
+};
+
+/**
+ * Preprocess styles
+ */
+const preprocess = <T: {| [key: string]: any |}>(originalStyle: T, isRTL?: boolean): T => {
   const style = originalStyle || emptyObject;
   const frozenProps = {};
   const nextStyle = {};
 
   for (const originalProp in style) {
     const originalValue = style[originalProp];
+    let prop = originalProp;
+    let value = originalValue;
 
     if (!Object.prototype.hasOwnProperty.call(style, originalProp) || originalValue == null) {
       continue;
     }
-    let prop = originalProp;
-    let value = originalValue;
 
     // BiDi flip properties
     if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
@@ -120,12 +156,37 @@ const logicalStylePolyfill = <T: {| [key: string]: any |}>(
       }
     }
 
+    // Convert shadow styles
+    if (
+      prop === 'shadowColor' ||
+      prop === 'shadowOffset' ||
+      prop === 'shadowOpacity' ||
+      prop === 'shadowRadius'
+    ) {
+      const boxShadowValue = createBoxShadowValue(style);
+      if (boxShadowValue != null && nextStyle.boxShadow == null) {
+        const { boxShadow } = style;
+        prop = 'boxShadow';
+        value = boxShadow ? `${boxShadow}, ${boxShadowValue}` : boxShadowValue;
+      } else {
+        continue;
+      }
+    }
+
+    // Convert text shadow styles
+    if (prop === 'textShadowColor' || prop === 'textShadowOffset' || prop === 'textShadowRadius') {
+      const textShadowValue = createTextShadowValue(style);
+      if (textShadowValue != null && nextStyle.textShadow == null) {
+        const { textShadow } = style;
+        prop = 'textShadow';
+        value = textShadow ? `${textShadow}, ${textShadowValue}` : textShadowValue;
+      } else {
+        continue;
+      }
+    }
+
     // Create finalized style
-    if (isRTL && prop === 'textShadowOffset') {
-      const invertedValue = additiveInverse((value: any).width);
-      (value: any).width = invertedValue;
-      nextStyle[prop] = value;
-    } else if (!frozenProps[prop]) {
+    if (!frozenProps[prop]) {
       nextStyle[prop] = value;
     }
 
@@ -138,4 +199,4 @@ const logicalStylePolyfill = <T: {| [key: string]: any |}>(
   return nextStyle;
 };
 
-export default logicalStylePolyfill;
+export default preprocess;

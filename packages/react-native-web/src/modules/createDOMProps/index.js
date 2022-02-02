@@ -9,7 +9,6 @@
 
 import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet from '../../exports/StyleSheet';
-//import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
 const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25,27 +24,6 @@ function hyphenateString(str: string): string {
 function processIDRefList(idRefList: string | Array<string>): string {
   return isArray(idRefList) ? idRefList.join(' ') : idRefList;
 }
-
-// Reset styles for heading, link, and list DOM elements
-/*
-const classes = StyleSheet.create(
-  {
-    reset: {
-      backgroundColor: 'transparent',
-      color: 'inherit',
-      font: 'inherit',
-      listStyle: 'none',
-      margin: 0,
-      textAlign: 'inherit',
-      textDecoration: 'none'
-    },
-    cursor: {
-      cursor: 'pointer'
-    }
-  },
-  STYLE_GROUPS.classicReset
-);
-*/
 
 const pointerEventsStyles = StyleSheet.create({
   auto: {

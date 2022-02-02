@@ -8,7 +8,7 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { atomic, classic, inline, logicalStylePolyfill } from './compiler';
+import { atomic, classic, inline, preprocess } from './compiler';
 import { createSheet } from './dom';
 import { styleq } from 'styleq';
 import { validate } from './validate';
@@ -32,8 +32,8 @@ function customStyleq(styles, isRTL) {
 }
 
 function compileAndInsert(style) {
-  const [compiledStyle, compiledOrderedRules] = atomic(logicalStylePolyfill(style));
-  const [compiledRTLStyle, compiledRTLOrderedRules] = atomic(logicalStylePolyfill(style, true));
+  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
+  const [compiledRTLStyle, compiledRTLOrderedRules] = atomic(preprocess(style, true));
   [...compiledOrderedRules, ...compiledRTLOrderedRules].forEach(([rules, order]) => {
     if (sheet != null) {
       rules.forEach((rule) => {
@@ -80,7 +80,7 @@ function create(styles: Object): {| [key: string]: { [key: string]: any } |} {
         staticStyleMap.set(styleObj, compiledStyles);
       } else {
         if (process.env.NODE_ENV !== 'production') {
-          validate(key, styles);
+          validate(styleObj);
           styles[key] = Object.freeze(styleObj);
         }
         const compiledStyles = compileAndInsert(styleObj);
@@ -149,7 +149,7 @@ type StyleProps = [string, { [key: string]: mixed } | null];
 function StyleSheet(styles: any, isRTL?: boolean): StyleProps {
   const styleProps: StyleProps = customStyleq(styles, isRTL);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
-    styleProps[1] = inline(logicalStylePolyfill(styleProps[1], isRTL));
+    styleProps[1] = inline(preprocess(styleProps[1], isRTL));
   }
   return styleProps;
 }

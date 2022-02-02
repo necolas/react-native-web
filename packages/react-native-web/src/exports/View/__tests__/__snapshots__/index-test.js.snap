@@ -2,23 +2,23 @@
 
 exports[`components/View allows "dir" to be overridden 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   dir="rtl"
 />
 `;
 
 exports[`components/View default 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 />
 `;
 
 exports[`components/View non-text is rendered 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 >
   <div
-    class="css-view-13b7bgz"
+    class="css-view-175oi2r"
     data-testid="1"
   />
 </div>
@@ -27,34 +27,34 @@ exports[`components/View non-text is rendered 1`] = `
 exports[`components/View prop "accessibilityLabel" value is set 1`] = `
 <div
   aria-label="accessibility label"
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 />
 `;
 
 exports[`components/View prop "accessibilityLabelledBy" value is set 1`] = `
 <div
   aria-labelledby="123"
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 />
 `;
 
 exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
 <div
   aria-live="polite"
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 />
 `;
 
 exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
 <article
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   role="article"
 />
 `;
 
 exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   role="button"
   tabindex="0"
 />
@@ -62,14 +62,14 @@ exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
 
 exports[`components/View prop "accessibilityRole" value is set 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   role="presentation"
 />
 `;
 
 exports[`components/View prop "href" href with accessibilityRole 1`] = `
 <a
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   href="https://example.com"
   role="presentation"
 />
@@ -77,27 +77,27 @@ exports[`components/View prop "href" href with accessibilityRole 1`] = `
 
 exports[`components/View prop "href" value is set 1`] = `
 <a
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   href="https://example.com"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" null values are excluded 1`] = `
 <a
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   href="https://example.com"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" requires "href" 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
 <a
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   href="https://example.com"
   target="_blank"
 />
@@ -105,7 +105,7 @@ exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
 
 exports[`components/View prop "hrefAttrs" value is set 1`] = `
 <a
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   download="filename.jpg"
   href="https://example.com"
   rel="nofollow"
@@ -115,48 +115,48 @@ exports[`components/View prop "hrefAttrs" value is set 1`] = `
 
 exports[`components/View prop "nativeID" value is set 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   id="nativeID"
 />
 `;
 
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
-  class="css-view-13b7bgz r-pointerEvents-ah5dr5"
+  class="css-view-175oi2r r-pointerEvents-ah5dr5"
 />
 `;
 
 exports[`components/View prop "ref" setNativeProps method style updates as expected 1`] = `
 <div
-  class="css-view-13b7bgz r-color-howw7u"
+  class="css-view-175oi2r r-color-howw7u"
   style="width: 10px;"
 />
 `;
 
 exports[`components/View prop "ref" setNativeProps method style updates as expected 2`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   style="width: 20px; color: rgb(255, 165, 0); height: 20px;"
 />
 `;
 
 exports[`components/View prop "ref" setNativeProps method style updates as expected 3`] = `
 <div
-  class="css-view-13b7bgz r-color-howw7u"
+  class="css-view-175oi2r r-color-howw7u"
   style="width: 30px;"
 />
 `;
 
 exports[`components/View prop "ref" setNativeProps method style updates as expected 4`] = `
 <div
-  class="css-view-13b7bgz r-color-howw7u"
+  class="css-view-175oi2r r-color-howw7u"
   style="width: 30px;"
 />
 `;
 
 exports[`components/View prop "ref" setNativeProps method style updates as expected 5`] = `
 <div
-  class="css-view-13b7bgz r-color-howw7u"
+  class="css-view-175oi2r r-color-howw7u"
   style="width: 40px;"
 />
 `;
@@ -164,21 +164,21 @@ exports[`components/View prop "ref" setNativeProps method style updates as expec
 exports[`components/View prop "ref" setNativeProps method works with react-native props 1`] = `
 <div
   aria-label="label"
-  class="css-view-13b7bgz r-pointerEvents-ah5dr5"
-  style="box-shadow: 0px 0px 0px rgba(0,0,0,1.00); margin-right: 10px; margin-left: 10px; vertical-align: top;"
+  class="css-view-175oi2r r-pointerEvents-ah5dr5"
+  style="margin-right: 10px; margin-left: 10px; box-shadow: 0px 0px 0px rgba(0,0,0,1.00); vertical-align: top;"
 />
 `;
 
 exports[`components/View prop "style" value is set 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
 />
 `;
 
 exports[`components/View prop "testID" value is set 1`] = `
 <div
-  class="css-view-13b7bgz"
+  class="css-view-175oi2r"
   data-testid="123"
 />
 `;

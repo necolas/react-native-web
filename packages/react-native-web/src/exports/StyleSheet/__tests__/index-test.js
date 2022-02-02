@@ -1,8 +1,33 @@
-/* eslint-env jasmine, jest */
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import StyleSheet from '../index';
 
 describe('StyleSheet', () => {
+  // test this first because subsequent 'create' calls will change the snapshot
+  test('getSheet', () => {
+    expect(StyleSheet.getSheet()).toMatchInlineSnapshot(`
+      {
+        "id": "react-native-stylesheet",
+        "textContent": "[stylesheet-group=\\"0\\"]{}
+      body{margin:0;}
+      button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+      html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+      input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+      [stylesheet-group=\\"2.2\\"]{}
+      .r-bottom-1p0dtai{bottom:0px;}
+      .r-left-1d2f490{left:0px;}
+      .r-position-u8s1d{position:absolute;}
+      .r-right-zchlnj{right:0px;}
+      .r-top-ipm5af{top:0px;}",
+      }
+    `);
+  });
+
   test('absoluteFill', () => {
     expect(StyleSheet.absoluteFill).toMatchInlineSnapshot(`
       {
@@ -48,6 +73,26 @@ describe('StyleSheet', () => {
       expect(StyleSheet(style.root)).toMatchInlineSnapshot(`
         [
           "r-position-u8s1d",
+          null,
+        ]
+      `);
+    });
+
+    test('e2e flattens shadow style properties', () => {
+      const style = StyleSheet.create({
+        root: {
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          textShadowColor: 'rgba(50,60,70,0.50)',
+          textShadowOffset: { width: 5, height: 10 },
+          textShadowRadius: 15
+        }
+      });
+      expect(StyleSheet(style.root)).toMatchInlineSnapshot(`
+        [
+          "r-boxShadow-o3ayyy r-textShadow-1x2q051",
           null,
         ]
       `);
@@ -103,10 +148,6 @@ describe('StyleSheet', () => {
         }
       `);
     });
-  });
-
-  test('getSheet', () => {
-    expect(StyleSheet.getSheet()).toMatchSnapshot();
   });
 
   test('hairlineWidth', () => {

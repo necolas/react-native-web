@@ -4,10 +4,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow strict-local
+ * @noflow
  */
 
-import warning from 'fbjs/lib/warning';
+import valueParser from 'postcss-value-parser';
 
 const invalidShortforms = {
   background: true,
@@ -22,6 +22,7 @@ const invalidShortforms = {
 };
 
 const invalidMultiValueShortforms = {
+  flex: true,
   margin: true,
   padding: true,
   borderColor: true,
@@ -38,11 +39,10 @@ const invalidMultiValueShortforms = {
 };
 
 function error(message) {
-  warning(false, message);
+  console.error(message);
 }
 
-export function validate(key: string, styles: Object) {
-  const obj = styles[key];
+export function validate(obj: Object) {
   for (const k in obj) {
     const prop = k.trim();
     const value = obj[prop];
@@ -72,8 +72,8 @@ export function validate(key: string, styles: Object) {
         suggestion = 'Please use long-form properties.';
         isInvalid = true;
       } else if (invalidMultiValueShortforms[prop]) {
-        if (typeof value === 'string' && value.indexOf(' ') !== -1) {
-          suggestion = 'Only single values are supported.';
+        if (typeof value === 'string' && valueParser(value).nodes.length > 1) {
+          suggestion = `Value is "${value}" but only single values are supported.`;
           isInvalid = true;
         }
       }

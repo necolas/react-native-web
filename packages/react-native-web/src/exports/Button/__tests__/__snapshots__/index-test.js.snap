@@ -3,7 +3,7 @@
 exports[`components/Button prop "accessibilityLabel" 1`] = `
 <div
   aria-label="accessibility label"
-  class="css-view-13b7bgz r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
+  class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   role="button"
   style="transition-duration: 0s;"
   tabindex="0"
@@ -17,7 +17,7 @@ exports[`components/Button prop "accessibilityLabel" 1`] = `
 
 exports[`components/Button prop "color" 1`] = `
 <div
-  class="css-view-13b7bgz r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-borderRadius-1jkafct"
+  class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-borderRadius-1jkafct"
   role="button"
   style="transition-duration: 0s; background-color: rgb(0, 0, 255);"
   tabindex="0"
@@ -32,7 +32,7 @@ exports[`components/Button prop "color" 1`] = `
 exports[`components/Button prop "disabled" 1`] = `
 <div
   aria-disabled="true"
-  class="css-view-13b7bgz r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-borderRadius-1jkafct r-backgroundColor-11mpjr4"
+  class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-borderRadius-1jkafct r-backgroundColor-11mpjr4"
   role="button"
   style="transition-duration: 0s;"
   tabindex="-1"
@@ -46,7 +46,7 @@ exports[`components/Button prop "disabled" 1`] = `
 
 exports[`components/Button prop "testID" 1`] = `
 <div
-  class="css-view-13b7bgz r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
+  class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   data-testid="123"
   role="button"
   style="transition-duration: 0s;"
@@ -61,7 +61,7 @@ exports[`components/Button prop "testID" 1`] = `
 
 exports[`components/Button prop "title" 1`] = `
 <div
-  class="css-view-13b7bgz r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
+  class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   role="button"
   style="transition-duration: 0s;"
   tabindex="0"

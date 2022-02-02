@@ -1,5 +1,3 @@
-/* eslint-env jasmine, jest */
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

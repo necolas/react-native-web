@@ -4,13 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { MONOSPACE_FONT_STACK, SYSTEM_FONT_STACK } from './constants';
-import normalizeColor from './normalizeColor';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
+
+type Style = { [key: string]: any };
 
 /**
  * The browser implements the CSS cascade, where the order of properties is a
@@ -36,15 +36,13 @@ const ignoredProps = {
   elevation: true,
   overlayColor: true,
   resizeMode: true,
-  shadowColor: true,
-  shadowOffset: true,
-  shadowOpacity: true,
-  shadowRadius: true,
-  textShadowColor: true,
-  textShadowOffset: true,
-  textShadowRadius: true,
   tintColor: true
 };
+
+const MONOSPACE_FONT_STACK = 'monospace,monospace';
+
+const SYSTEM_FONT_STACK =
+  '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
 const STYLE_SHORT_FORM_EXPANSIONS = {
   borderColor: ['borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor'],
@@ -65,51 +63,13 @@ const STYLE_SHORT_FORM_EXPANSIONS = {
 };
 
 /**
- * Shadow
- */
-
-const defaultOffset = { height: 0, width: 0 };
-
-export const createBoxShadowValue = (style: Object): void | string => {
-  const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
-  const { height, width } = shadowOffset || defaultOffset;
-  const offsetX = normalizeValueWithProperty(width);
-  const offsetY = normalizeValueWithProperty(height);
-  const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
-  const color = normalizeColor(shadowColor || 'black', shadowOpacity);
-  if (color != null && offsetX != null && offsetY != null && blurRadius != null) {
-    return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
-  }
-};
-
-export const createTextShadowValue = (style: Object): void | string => {
-  const { textShadowColor, textShadowOffset, textShadowRadius } = style;
-  const { height, width } = textShadowOffset || defaultOffset;
-  const radius = textShadowRadius || 0;
-  const offsetX = normalizeValueWithProperty(width);
-  const offsetY = normalizeValueWithProperty(height);
-  const blurRadius = normalizeValueWithProperty(radius);
-  const color = normalizeValueWithProperty(textShadowColor, 'textShadowColor');
-
-  if (
-    color &&
-    (height !== 0 || width !== 0 || radius !== 0) &&
-    offsetX != null &&
-    offsetY != null &&
-    blurRadius != null
-  ) {
-    return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
-  }
-};
-
-/**
  * Transform
  */
 
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
-const mapTransform = (transform) => {
+const mapTransform = (transform: Object): string => {
   const type = Object.keys(transform)[0];
   const value = transform[type];
   if (type === 'matrix' || type === 'matrix3d') {
@@ -120,7 +80,7 @@ const mapTransform = (transform) => {
   }
 };
 
-export const createTransformValue = (style) => {
+export const createTransformValue = (style: Style): string => {
   let transform = style.transform;
   if (Array.isArray(style.transform)) {
     transform = style.transform.map(mapTransform).join(' ');
@@ -132,37 +92,12 @@ export const createTransformValue = (style) => {
  * Reducer
  */
 
-const createReactDOMStyle = (style, isInline) => {
+const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
   if (!style) {
     return emptyObject;
   }
 
   const resolvedStyle = {};
-
-  if (
-    style.shadowColor != null ||
-    style.shadowOffset != null ||
-    style.shadowOpacity != null ||
-    style.shadowRadius != null
-  ) {
-    const box = createBoxShadowValue(style);
-    if (box != null) {
-      const { boxShadow } = style;
-      resolvedStyle.boxShadow = boxShadow ? `${boxShadow}, ${box}` : box;
-    }
-  }
-
-  if (
-    style.textShadowColor != null ||
-    style.textShadowOffset != null ||
-    style.textShadowRadius != null
-  ) {
-    const text = createTextShadowValue(style);
-    if (text != null) {
-      const { textShadow } = style;
-      resolvedStyle.textShadow = textShadow ? `${textShadow}, ${text}` : text;
-    }
-  }
 
   for (const prop in style) {
     const value = style[prop];
