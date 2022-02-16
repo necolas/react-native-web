@@ -22,6 +22,7 @@ import * as React from 'react';
 import RefreshControl from '../../../exports/RefreshControl';
 import ScrollView from '../../../exports/ScrollView';
 import StyleSheet from '../../../exports/StyleSheet';
+import Platform from '../../../exports/Platform';
 import UIManager from '../../../exports/UIManager';
 import View from '../../../exports/View';
 import ViewabilityHelper from '../ViewabilityHelper';
@@ -678,6 +679,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   state: State;
 
+  invertedWheelEventHandler: ?(ev: any) => void;
+
   constructor(props: Props) {
     super(props);
     invariant(
@@ -731,6 +734,19 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       }
     }
 
+    // For issue https://github.com/necolas/react-native-web/issues/995
+    this.invertedWheelEventHandler = (ev: any) => {
+      if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
+        const node = (this._scrollRef: any).getScrollableNode();
+        if (this.props.horizontal) {
+          node.scrollLeft -= ev.deltaX || ev.wheelDeltaX
+        } else {
+          node.scrollTop -= ev.deltaY || ev.wheelDeltaY
+        }
+        ev.preventDefault();
+      }
+    };
+
     this.state = initialState;
   }
 
@@ -747,6 +763,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         parentDebugInfo: this.context.debugInfo,
       });
     }
+    this.setupWebWheelHandler();
   }
 
   componentWillUnmount() {
@@ -766,6 +783,26 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       tuple.viewabilityHelper.dispose();
     });
     this._fillRateHelper.deactivateAndFlush();
+    this.teardownWebWheelHandler();
+  }
+
+  setupWebWheelHandler() {
+    if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      this._scrollRef.getScrollableNode().addEventListener('wheel',
+        this.invertedWheelEventHandler
+      );
+    } else {
+      setTimeout(() => this.setupWebWheelHandler(), 50);
+      return
+    }
+  }
+
+  teardownWebWheelHandler() {
+    if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      this._scrollRef.getScrollableNode().removeEventListener('wheel',
+        this.invertedWheelEventHandler
+      );
+    }
   }
 
   static getDerivedStateFromProps(newProps: Props, prevState: State): State {
