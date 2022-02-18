@@ -72,6 +72,11 @@ export default class AppState {
 
   static removeEventListener(type: string, handler: Function) {
     if (AppState.isAvailable) {
+      console.error(
+        `AppState.removeListener('${type}', ...): Method has been ` +
+          'deprecated. Please instead use `remove()` on the subscription ' +
+          'returned by `AppState.addEventListener`.'
+      );
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
         'Trying to remove listener for unknown event: "%s"',
