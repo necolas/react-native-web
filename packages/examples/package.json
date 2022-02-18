@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "examples",
-  "version": "0.17.5",
+  "version": "0.17.6",
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -11,12 +11,12 @@
     "next": "^11.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-native-web": "0.17.5"
+    "react-native-web": "0.17.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/preset-flow": "^7.12.13",
-    "babel-plugin-react-native-web": "0.17.5"
+    "babel-plugin-react-native-web": "0.17.6"
   },
   "license": "MIT"
 }
