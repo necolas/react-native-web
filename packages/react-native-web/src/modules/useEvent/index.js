@@ -55,7 +55,7 @@ export default function useEvent(
       });
       targetListeners.clear();
     };
-  }, []);
+  }, [targetListeners]);
 
   return addListener;
 }
