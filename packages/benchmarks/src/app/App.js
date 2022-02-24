@@ -169,7 +169,7 @@ export default class App extends Component {
       () => ({ status: 'running' }),
       () => {
         if (this._shouldHideBenchmark && this._benchWrapperRef) {
-          this._benchWrapperRef.setNativeProps({ style: { opacity: 0 } });
+          this._benchWrapperRef.style.opacity = 0;
         }
         this._benchmarkRef.start();
         this._scrollToEnd();
@@ -181,9 +181,7 @@ export default class App extends Component {
   _handleVisuallyHideBenchmark = () => {
     this._shouldHideBenchmark = !this._shouldHideBenchmark;
     if (this._benchWrapperRef) {
-      this._benchWrapperRef.setNativeProps({
-        style: { opacity: this._shouldHideBenchmark ? 0 : 1 }
-      });
+      this._benchWrapperRef.style.opacity = this._shouldHideBenchmark ? 0 : 1;
     }
   };
 

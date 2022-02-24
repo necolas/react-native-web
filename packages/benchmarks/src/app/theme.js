@@ -1,8 +1,9 @@
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { Dimensions, Platform } from 'react-native';
 
 const baseFontSize = 14;
 const baseUnit = 1.3125;
+const { canUseDOM } = ExecutionEnvironment;
 
 const createPlatformLength = (multiplier) =>
   Platform.select({ web: `${multiplier}rem`, default: multiplier * baseFontSize });

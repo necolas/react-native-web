@@ -10,7 +10,6 @@ type ComponentsType = {
   Box: Component,
   Dot: Component,
   Provider: Component,
-  TextBox: Component,
   View: Component
 };
 
