@@ -9,8 +9,9 @@
  */
 
 import type { EventSubscription } from '../../vendor/react-native/emitter/EventEmitter';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 export type DisplayMetrics = {|
   fontScale: number,

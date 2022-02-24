@@ -7,8 +7,9 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createEventHandle from '../createEventHandle';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 export type Modality = 'keyboard' | 'mouse' | 'touch' | 'pen';
 

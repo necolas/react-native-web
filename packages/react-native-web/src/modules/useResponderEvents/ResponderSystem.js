@@ -133,7 +133,6 @@ to return true:wantsResponderID|                            |
 
 import type { ResponderEvent } from './createResponderEvent';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import createResponderEvent from './createResponderEvent';
 import {
   isCancelish,
@@ -152,6 +151,8 @@ import {
   setResponderId
 } from './utils';
 import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 /* ------------ TYPES ------------ */
 

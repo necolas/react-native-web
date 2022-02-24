@@ -9,9 +9,10 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 export type ModalContentProps = {|
   active?: ?(boolean | (() => boolean)),

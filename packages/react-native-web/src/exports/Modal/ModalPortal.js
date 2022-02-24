@@ -9,8 +9,9 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import ReactDOM from 'react-dom';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 export type ModalPortalProps = {|
   children: any

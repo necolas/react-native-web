@@ -8,8 +8,9 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import invariant from 'fbjs/lib/invariant';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 const initialURL = canUseDOM ? window.location.href : '';
 

@@ -11,9 +11,10 @@
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 const cssFunction: 'constant' | 'env' = (function () {
   if (

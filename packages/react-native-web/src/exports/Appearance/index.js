@@ -8,7 +8,8 @@
  * @flow
  */
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 export type ColorSchemeName = 'light' | 'dark';
 

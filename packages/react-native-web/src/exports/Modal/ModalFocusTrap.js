@@ -9,11 +9,12 @@
  */
 
 import * as React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 /**
  * This Component is used to "wrap" the modal we're opening

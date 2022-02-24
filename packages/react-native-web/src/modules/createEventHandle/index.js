@@ -9,7 +9,8 @@
 
 'use strict';
 
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+const { canUseDOM } = ExecutionEnvironment;
 
 type Listener = (e: any) => void;
 
