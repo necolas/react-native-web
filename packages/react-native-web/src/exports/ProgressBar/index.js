@@ -36,32 +36,24 @@ const ProgressBar: React.AbstractComponent<
   } = props;
 
   const percentageProgress = progress * 100;
-
-  const progressRef = React.useRef(null);
-  React.useEffect(() => {
-    const width = indeterminate ? '25%' : `${percentageProgress}%`;
-    if (progressRef.current != null) {
-      progressRef.current.setNativeProps({
-        style: { width }
-      });
-    }
-  }, [indeterminate, percentageProgress, progressRef]);
+  const width = indeterminate ? '25%' : `${percentageProgress}%`;
 
   return (
     <View
       {...other}
       accessibilityRole="progressbar"
-      accessibilityValue={{
-        max: 100,
-        min: 0,
-        now: indeterminate ? null : percentageProgress
-      }}
+      accessibilityValueMax={100}
+      accessibilityValueMin={0}
+      accessibilityValueNow={indeterminate ? null : percentageProgress}
       ref={ref}
       style={[styles.track, style, { backgroundColor: trackColor }]}
     >
       <View
-        ref={progressRef}
-        style={[styles.progress, indeterminate && styles.animation, { backgroundColor: color }]}
+        style={[
+          { backgroundColor: color, width },
+          styles.progress,
+          indeterminate && styles.animation
+        ]}
       />
     </View>
   );

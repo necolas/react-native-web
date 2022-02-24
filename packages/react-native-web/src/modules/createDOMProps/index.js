@@ -123,44 +123,14 @@ const createDOMProps = (elementType, props) => {
     pointerEvents,
     style: providedStyle,
     testID,
-    // Deprecated
-    accessible,
-    accessibilityState,
-    accessibilityValue,
+    isRTL,
     // Rest
     ...domProps
   } = props;
 
-  const disabled =
-    (accessibilityState != null && accessibilityState.disabled === true) || accessibilityDisabled;
+  const disabled = accessibilityDisabled;
 
   const role = AccessibilityUtil.propsToAriaRole(props);
-
-  // DEPRECATED
-  if (accessibilityState != null) {
-    for (const prop in accessibilityState) {
-      const value = accessibilityState[prop];
-      if (value != null) {
-        if (prop === 'disabled' || prop === 'hidden') {
-          if (value === true) {
-            domProps[`aria-${prop}`] = value;
-            // also set prop directly to pick up host elementType behaviour
-            domProps[prop] = value;
-          }
-        } else {
-          domProps[`aria-${prop}`] = value;
-        }
-      }
-    }
-  }
-  if (accessibilityValue != null) {
-    for (const prop in accessibilityValue) {
-      const value = accessibilityValue[prop];
-      if (value != null) {
-        domProps[`aria-value${prop}`] = value;
-      }
-    }
-  }
 
   // ACCESSIBILITY
   if (accessibilityActiveDescendant != null) {
@@ -336,23 +306,22 @@ const createDOMProps = (elementType, props) => {
 
   // FOCUS
   // "focusable" indicates that an element may be a keyboard tab-stop.
-  const _focusable = focusable != null ? focusable : accessible;
-  if (_focusable === false) {
+  if (focusable === false) {
     domProps.tabIndex = '-1';
   }
   if (
-    // These native elements are focusable by default
+    // These native elements are keyboard focusable by default
     elementType === 'a' ||
     elementType === 'button' ||
     elementType === 'input' ||
     elementType === 'select' ||
     elementType === 'textarea'
   ) {
-    if (_focusable === false || accessibilityDisabled === true) {
+    if (focusable === false || accessibilityDisabled === true) {
       domProps.tabIndex = '-1';
     }
   } else if (
-    // These roles are made focusable by default
+    // These roles are made keyboard focusable by default
     role === 'button' ||
     role === 'checkbox' ||
     role === 'link' ||
@@ -360,12 +329,12 @@ const createDOMProps = (elementType, props) => {
     role === 'textbox' ||
     role === 'switch'
   ) {
-    if (_focusable !== false) {
+    if (focusable !== false) {
       domProps.tabIndex = '0';
     }
   } else {
     // Everything else must explicitly set the prop
-    if (_focusable === true) {
+    if (focusable === true) {
       domProps.tabIndex = '0';
     }
   }
