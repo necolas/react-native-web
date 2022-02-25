@@ -25,6 +25,11 @@ import {keyExtractor as defaultKeyExtractor} from '../VirtualizeUtils';
 
 type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 import invariant from 'fbjs/lib/invariant';
+import type { RenderItemProps } from '../VirtualizedList';
+
+type ScrollViewNativeComponent = any;
+type ScrollResponderType = any;
+type $FlowFixMe = any;
 
 type RequiredProps<ItemT> = {|
   /**
@@ -521,7 +526,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       if (Array.isArray(items)) {
         return items
           .map((item, kk) =>
-            keyExtractor(((item): ItemT), index * numColumns + kk),
+            keyExtractor(((item: $FlowFixMe): ItemT), index * numColumns + kk),
           )
           .join(':');
       } else {

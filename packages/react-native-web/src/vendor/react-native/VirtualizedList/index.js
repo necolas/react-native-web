@@ -35,8 +35,12 @@ import {
   type ChildListState,
   type ListDebugInfo,
 } from './VirtualizedListContext.js';
+import type { ViewProps } from '../../../exports/View';
+import {keyExtractor as defaultKeyExtractor} from '../VirtualizeUtils';
 
 type Item = any;
+type ScrollResponderType = any;
+type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -1116,7 +1120,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       </VirtualizedListContextProvider>
     );
     let ret = innerRet;
-    /*https://github.com/necolas/react-native-web/issues/2239: Re-enable when ScrollView.Context.Consumer is available.
+    /* https://github.com/necolas/react-native-web/issues/2239: Re-enable when ScrollView.Context.Consumer is available.
     if (__DEV__) {
       ret = (
         <ScrollView.Context.Consumer>
@@ -1790,6 +1794,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
             }
           }
           if (someChildHasMore) {
+            // $FlowFixMe[incompatible-use] The newState definitely exists past "if (newState &&"
             newState.last = ii;
             break;
           }
