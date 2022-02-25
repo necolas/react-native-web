@@ -63,6 +63,5 @@ const styles = StyleSheet.create({
   examplesFooter: { fontSize: 22 },
   examplesHeader: { fontSize: 22, marginBottom: 20 },
   itemTitleText: { fontSize: 16 },
-  sectionHeaderText: { fontSize: 20, fontWeight: 'bold' },
-  separatorView: { height: 10 }
+  sectionHeaderText: { fontSize: 20, fontWeight: 'bold' }
 });
