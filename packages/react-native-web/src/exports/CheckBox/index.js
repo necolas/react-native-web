@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '100%',
     margin: 0,
-    opacity: 0,
+    appearance: 'none',
     padding: 0,
     width: '100%'
   }

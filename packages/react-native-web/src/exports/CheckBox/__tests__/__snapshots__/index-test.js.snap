@@ -9,7 +9,7 @@ exports[`CheckBox prop "accessibilityLabel" value is set 1`] = `
     class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -25,7 +25,7 @@ exports[`CheckBox prop "color" value is set 1`] = `
   />
   <input
     checked=""
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -41,7 +41,7 @@ exports[`CheckBox prop "dataSet" value is set 1`] = `
     class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -56,7 +56,7 @@ exports[`CheckBox prop "nativeID" value is set 1`] = `
     class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -71,7 +71,7 @@ exports[`CheckBox prop "style" value is set 1`] = `
     class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -86,7 +86,7 @@ exports[`CheckBox prop "testID" value is set 1`] = `
     class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-opacity-orgf3d r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
