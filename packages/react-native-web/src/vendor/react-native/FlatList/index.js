@@ -9,26 +9,24 @@
  */
 
 import Platform from '../../../exports/Platform';
-import type {ViewProps} from '../../../exports/View';
+import deepDiffer from '../deepDiffer';
+import * as React from 'react';
+import View, { type ViewProps } from '../../../exports/View';
+import VirtualizedList from '../VirtualizedList';
+import StyleSheet from '../../../exports/StyleSheet';
 
+import invariant from 'fbjs/lib/invariant';
+
+type ScrollViewNativeComponent = any;
+type ScrollResponderType = any;
+type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 import type {
   ViewToken,
   ViewabilityConfigCallbackPair,
 } from '../ViewabilityHelper';
-
-import deepDiffer from '../deepDiffer';
-import * as React from 'react';
-import StyleSheet from '../../../exports/StyleSheet';
-import View from '../../../exports/View';
-import VirtualizedList, { type RenderItemType } from '../VirtualizedList';
+import type {RenderItemType, RenderItemProps} from '../VirtualizedList';
 import {keyExtractor as defaultKeyExtractor} from '../VirtualizeUtils';
 
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
-import invariant from 'fbjs/lib/invariant';
-import type { RenderItemProps } from '../VirtualizedList';
-
-type ScrollViewNativeComponent = any;
-type ScrollResponderType = any;
 type $FlowFixMe = any;
 
 type RequiredProps<ItemT> = {|
