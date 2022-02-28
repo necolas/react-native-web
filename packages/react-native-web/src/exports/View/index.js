@@ -13,7 +13,6 @@ import type { ViewProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
-import css from '../StyleSheet/css';
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
@@ -22,6 +21,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
+import RTLContext from '../../modules/RTLContext';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,
@@ -61,7 +61,8 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
       onSelectionChangeShouldSetResponder,
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
+      onStartShouldSetResponderCapture,
+      ...rest
     } = props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -76,6 +77,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);
+    const isRTL = React.useContext(RTLContext);
 
     useElementLayout(hostRef, onLayout);
     useResponderEvents(hostRef, {
@@ -98,11 +100,10 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
     });
 
     let component = 'div';
-    const style = StyleSheet.compose(hasTextAncestor && styles.inline, props.style);
 
-    const supportedProps = pickProps(props);
-    supportedProps.classList = classList;
-    supportedProps.style = style;
+    const supportedProps = pickProps(rest);
+    supportedProps.isRTL = props.dir ? props.dir === 'rtl' : isRTL;
+    supportedProps.style = [styles.view$raw, hasTextAncestor && styles.inline, props.style];
     if (props.href != null) {
       component = 'a';
       if (hrefAttrs != null) {
@@ -124,33 +125,33 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    return createElement(component, supportedProps);
+    const element = createElement(component, supportedProps);
+
+    return <RTLContext.Provider value={supportedProps.isRTL}>{element}</RTLContext.Provider>;
   }
 );
 
 View.displayName = 'View';
 
-const classes = css.create({
-  view: {
+const styles = StyleSheet.create({
+  view$raw: {
     alignItems: 'stretch',
+    backgroundColor: 'transparent',
     border: '0 solid black',
     boxSizing: 'border-box',
     display: 'flex',
     flexBasis: 'auto',
     flexDirection: 'column',
     flexShrink: 0,
+    listStyle: 'none',
     margin: 0,
     minHeight: 0,
     minWidth: 0,
     padding: 0,
     position: 'relative',
+    textDecoration: 'none',
     zIndex: 0
-  }
-});
-
-const classList = [classes.view];
-
-const styles = StyleSheet.create({
+  },
   inline: {
     display: 'inline-flex'
   }

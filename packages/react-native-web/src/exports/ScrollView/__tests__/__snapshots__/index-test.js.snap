@@ -5,11 +5,11 @@ exports[`components/ScrollView prop "refreshControl" with 1`] = `
   id="refresh-control"
 >
   <div
-    class="css-view-1dbjc4n r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+    class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
     style="background-color: rgb(255, 0, 0);"
   >
     <div
-      class="css-view-1dbjc4n"
+      class="css-view-175oi2r"
     />
   </div>
 </div>
@@ -17,11 +17,11 @@ exports[`components/ScrollView prop "refreshControl" with 1`] = `
 
 exports[`components/ScrollView prop "refreshControl" without 1`] = `
 <div
-  class="css-view-1dbjc4n r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+  class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
   style="background-color: rgb(255, 0, 0);"
 >
   <div
-    class="css-view-1dbjc4n"
+    class="css-view-175oi2r"
   />
 </div>
 `;

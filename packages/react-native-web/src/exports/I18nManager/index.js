@@ -14,16 +14,13 @@ type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => void,
   forceRTL: (forceRTL: boolean) => void,
   getConstants: () => Constants,
-  setPreferredLanguageRTL: (setRTL: boolean) => void,
-  swapLeftAndRightInRTL: (flipStyles: boolean) => void
+  setPreferredLanguageRTL: (setRTL: boolean) => void
 };
 
 type Constants = {
-  doLeftAndRightSwapInRTL: boolean,
   isRTL: boolean
 };
 
-let doLeftAndRightSwapInRTL = true;
 let isPreferredLanguageRTL = false;
 let isRTLAllowed = true;
 let isRTLForced = false;
@@ -53,14 +50,11 @@ const I18nManager: I18nManagerStatus = {
     onDirectionChange();
   },
   getConstants(): Constants {
-    return { doLeftAndRightSwapInRTL, isRTL: isRTL() };
+    return { isRTL: isRTL() };
   },
   setPreferredLanguageRTL(bool) {
     isPreferredLanguageRTL = bool;
     onDirectionChange();
-  },
-  swapLeftAndRightInRTL(bool) {
-    doLeftAndRightSwapInRTL = bool;
   }
 };
 

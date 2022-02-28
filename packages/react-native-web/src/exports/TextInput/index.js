@@ -13,7 +13,6 @@ import type { TextInputProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
-import css from '../StyleSheet/css';
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
@@ -21,6 +20,7 @@ import useLayoutEffect from '../../modules/useLayoutEffect';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
+import RTLContext from '../../modules/RTLContext';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
@@ -317,8 +317,6 @@ const TextInput: React.AbstractComponent<
   }, [hostRef, selection]);
 
   const component = multiline ? 'textarea' : 'input';
-  const classList = [classes.textinput];
-  const style = StyleSheet.compose(props.style, placeholderTextColor && { placeholderTextColor });
 
   useElementLayout(hostRef, onLayout);
   useResponderEvents(hostRef, {
@@ -339,15 +337,16 @@ const TextInput: React.AbstractComponent<
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   });
+  const isRTL = React.useContext(RTLContext);
 
   const supportedProps = pickProps(props);
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
-  supportedProps.classList = classList;
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
   supportedProps.enterKeyHint = returnKeyType;
+  supportedProps.inputMode = inputMode;
   supportedProps.onBlur = handleBlur;
   supportedProps.onChange = handleChange;
   supportedProps.onFocus = handleFocus;
@@ -356,9 +355,13 @@ const TextInput: React.AbstractComponent<
   supportedProps.readOnly = !editable;
   supportedProps.rows = multiline ? numberOfLines : undefined;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
-  supportedProps.style = style;
+  supportedProps.style = [
+    { '--placeholderTextColor': placeholderTextColor },
+    styles.textinput$raw,
+    styles.placeholder,
+    props.style
+  ];
   supportedProps.type = multiline ? undefined : type;
-  supportedProps.inputMode = inputMode;
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 
@@ -366,15 +369,19 @@ const TextInput: React.AbstractComponent<
 
   supportedProps.ref = setRef;
 
-  return createElement(component, supportedProps);
+  supportedProps.isRTL = isRTL || dir === 'rtl';
+
+  const element = createElement(component, supportedProps);
+
+  return <RTLContext.Provider value={supportedProps.isRTL}>{element}</RTLContext.Provider>;
 });
 
 TextInput.displayName = 'TextInput';
 // $FlowFixMe
 TextInput.State = TextInputState;
 
-const classes = css.create({
-  textinput: {
+const styles = StyleSheet.create({
+  textinput$raw: {
     MozAppearance: 'textfield',
     WebkitAppearance: 'none',
     backgroundColor: 'transparent',
@@ -385,6 +392,9 @@ const classes = css.create({
     margin: 0,
     padding: 0,
     resize: 'none'
+  },
+  placeholder: {
+    placeholderTextColor: 'var(--placeholderTextColor)'
   }
 });
 

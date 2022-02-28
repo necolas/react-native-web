@@ -8,10 +8,7 @@
  */
 
 import AccessibilityUtil from '../AccessibilityUtil';
-import css from '../../exports/StyleSheet/css';
 import StyleSheet from '../../exports/StyleSheet';
-import styleResolver from '../../exports/StyleSheet/styleResolver';
-import { STYLE_GROUPS } from '../../exports/StyleSheet/constants';
 
 const emptyObject = {};
 const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -27,25 +24,6 @@ function hyphenateString(str: string): string {
 function processIDRefList(idRefList: string | Array<string>): string {
   return isArray(idRefList) ? idRefList.join(' ') : idRefList;
 }
-
-// Reset styles for heading, link, and list DOM elements
-const classes = css.create(
-  {
-    reset: {
-      backgroundColor: 'transparent',
-      color: 'inherit',
-      font: 'inherit',
-      listStyle: 'none',
-      margin: 0,
-      textAlign: 'inherit',
-      textDecoration: 'none'
-    },
-    cursor: {
-      cursor: 'pointer'
-    }
-  },
-  STYLE_GROUPS.classicReset
-);
 
 const pointerEventsStyles = StyleSheet.create({
   auto: {
@@ -116,12 +94,11 @@ const createDOMProps = (elementType, props) => {
     accessibilityValueMin,
     accessibilityValueNow,
     accessibilityValueText,
-    classList,
     dataSet,
     focusable,
     nativeID,
     pointerEvents,
-    style: providedStyle,
+    style,
     testID,
     isRTL,
     // Rest
@@ -339,32 +316,16 @@ const createDOMProps = (elementType, props) => {
     }
   }
 
-  // STYLE
-  const reactNativeStyle = StyleSheet.compose(
-    pointerEvents && pointerEventsStyles[pointerEvents],
-    providedStyle
-  );
-
-  // Additional style resets for interactive elements
-  const needsCursor = (role === 'button' || role === 'link') && !disabled;
-  const needsReset =
-    elementType === 'a' ||
-    elementType === 'button' ||
-    elementType === 'li' ||
-    elementType === 'ul' ||
-    role === 'heading';
-  // Classic CSS styles
-  const finalClassList = [needsReset && classes.reset, needsCursor && classes.cursor, classList];
-
   // Resolve styles
-  const { className, style } = styleResolver.resolve(reactNativeStyle, finalClassList);
-
-  if (className != null && className !== '') {
+  const [className, inlineStyle] = StyleSheet(
+    [style, pointerEvents && pointerEventsStyles[pointerEvents]],
+    isRTL
+  );
+  if (className) {
     domProps.className = className;
   }
-
-  if (style) {
-    domProps.style = style;
+  if (inlineStyle) {
+    domProps.style = inlineStyle;
   }
 
   // OTHER

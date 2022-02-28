@@ -13,13 +13,13 @@ import type { TextProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
-import css from '../StyleSheet/css';
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
+import RTLContext from '../../modules/RTLContext';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 
@@ -64,25 +64,13 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
       onStartShouldSetResponderCapture,
-      selectable
+      selectable,
+      ...rest
     } = props;
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);
-
-    const classList = [
-      classes.text,
-      hasTextAncestor === true && classes.textHasAncestor,
-      numberOfLines === 1 && classes.textOneLine,
-      numberOfLines != null && numberOfLines > 1 && classes.textMultiLine
-    ];
-    const style = [
-      props.style,
-      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
-      selectable === true && styles.selectable,
-      selectable === false && styles.notSelectable,
-      onPress && styles.pressable
-    ];
+    const isRTL = React.useContext(RTLContext);
 
     useElementLayout(hostRef, onLayout);
     useResponderEvents(hostRef, {
@@ -117,8 +105,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     );
 
     let component = hasTextAncestor ? 'span' : 'div';
-    const supportedProps = pickProps(props);
-    supportedProps.classList = classList;
+    const supportedProps = pickProps(rest);
     supportedProps.dir = dir;
     // 'auto' by default allows browsers to infer writing direction (root elements only)
     if (!hasTextAncestor) {
@@ -129,7 +116,19 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
       supportedProps.onClick = handleClick;
     }
 
-    supportedProps.style = style;
+    supportedProps.isRTL = isRTL || dir === 'rtl';
+
+    supportedProps.style = [
+      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+      hasTextAncestor === true ? styles.textHasAncestor$raw : styles.text$raw,
+      numberOfLines === 1 && styles.textOneLine,
+      numberOfLines != null && numberOfLines > 1 && styles.textMultiLine,
+      props.style,
+      selectable === true && styles.selectable,
+      selectable === false && styles.notSelectable,
+      onPress && styles.pressable
+    ];
+
     if (props.href != null) {
       component = 'a';
       if (hrefAttrs != null) {
@@ -151,7 +150,11 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    const element = createElement(component, supportedProps);
+    const element = (
+      <RTLContext.Provider value={supportedProps.isRTL}>
+        {createElement(component, supportedProps)}
+      </RTLContext.Provider>
+    );
 
     return hasTextAncestor ? (
       element
@@ -163,19 +166,26 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
 Text.displayName = 'Text';
 
-const classes = css.create({
-  text: {
-    border: '0 solid black',
-    boxSizing: 'border-box',
-    color: 'black',
-    display: 'inline',
-    font: '14px System',
-    margin: 0,
-    padding: 0,
-    whiteSpace: 'pre-wrap',
-    wordWrap: 'break-word'
-  },
-  textHasAncestor: {
+const textStyle = {
+  backgroundColor: 'transparent',
+  border: '0 solid black',
+  boxSizing: 'border-box',
+  color: 'black',
+  display: 'inline',
+  font: '14px System',
+  listStyle: 'none',
+  margin: 0,
+  padding: 0,
+  textAlign: 'inherit',
+  textDecoration: 'none',
+  whiteSpace: 'pre-wrap',
+  wordWrap: 'break-word'
+};
+
+const styles = StyleSheet.create({
+  text$raw: textStyle,
+  textHasAncestor$raw: {
+    ...textStyle,
     color: 'inherit',
     font: 'inherit',
     whiteSpace: 'inherit'
@@ -194,10 +204,7 @@ const classes = css.create({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     WebkitBoxOrient: 'vertical'
-  }
-});
-
-const styles = StyleSheet.create({
+  },
   notSelectable: {
     userSelect: 'none'
   },

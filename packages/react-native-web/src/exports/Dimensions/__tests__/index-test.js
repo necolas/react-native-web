@@ -1,11 +1,30 @@
-/* eslint-env jasmine, jest */
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import Dimensions from '..';
 
 describe('apis/Dimensions', () => {
   test('get', () => {
-    expect(Dimensions.get('screen')).toMatchSnapshot();
-    expect(Dimensions.get('window')).toMatchSnapshot();
+    expect(Dimensions.get('screen')).toMatchInlineSnapshot(`
+      {
+        "fontScale": 1,
+        "height": 0,
+        "scale": 1,
+        "width": 0,
+      }
+    `);
+    expect(Dimensions.get('window')).toMatchInlineSnapshot(`
+      {
+        "fontScale": 1,
+        "height": 768,
+        "scale": 1,
+        "width": 1024,
+      }
+    `);
   });
 
   test('set', () => {

@@ -4,18 +4,13 @@ const generator = require('inline-style-prefixer/lib/generator').default;
 const path = require('path');
 
 const browserList = {
-  chrome: 38,
-  android: 4,
-  firefox: 40,
-  ios_saf: 7,
-  safari: 7,
-  ie: 10,
-  ie_mob: 11,
-  edge: 12,
-  opera: 16,
-  op_mini: 12,
-  and_uc: 9,
-  and_chr: 38
+  and_chr: 49,
+  chrome: 49,
+  edge: 79,
+  firefox: 52,
+  ios_saf: 11,
+  opera: 50,
+  safari: 11
 };
 
 generator(browserList, {
