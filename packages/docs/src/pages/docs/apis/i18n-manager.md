@@ -35,10 +35,6 @@ Force the application to display in RTL mode.
 Determine how the application is handling bidi layout.
 {% endcall %}
 
-{% call macro.prop('swapLeftAndRightInRTL', '(boolean) => void') %}
-Control whether the application swaps `left`/`right` styles in RTL mode. It is recommended that applications rely on `start`/`end` styles and disable automatic BiDi-flipping of `left`/`right` styles.
-{% endcall %}
-
 {% call macro.prop('setPreferredLanguageRTL', '(boolean) => void') %}
 Set the application's preferred writing direction to RTL. You may need to infer the user's preferred locale on the server (from HTTP headers) and decide whether it's an RTL language. (Web-only)
 {% endcall %}
@@ -49,10 +45,6 @@ The object returned by `I18nManager.getConstants()`.
 
 {% call macro.prop('isRTL', 'boolean = false') %}
 Whether the application is currently in RTL mode.
-{% endcall %}
-
-{% call macro.prop('doLeftAndRightSwapInRTL', 'boolean = true') %}
-Whether the application swaps left/right styles in RTL mode.
 {% endcall %}
 
 ---

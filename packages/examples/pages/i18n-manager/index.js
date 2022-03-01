@@ -14,7 +14,6 @@
 import React from 'react';
 import {
   Button,
-  I18nManager,
   Image,
   PixelRatio,
   Platform,
@@ -81,7 +80,7 @@ function withRTLState(Component) {
     }
 
     render() {
-      const isRTL = Platform === 'ios' ? this.state.isRTL : I18nManager.isRTL;
+      const isRTL = this.state.isRTL;
       const setRTL = (isRTL) => this.setState({ isRTL: isRTL });
       return <Component isRTL={isRTL} setRTL={setRTL} />;
     }
@@ -375,28 +374,18 @@ class LayoutRTLExample extends React.Component {
   constructor(props) {
     super(props);
 
-    const { doLeftAndRightSwapInRTL, isRTL } = I18nManager;
-
     this.state = {
       toggleStatus: {},
-      isRTL,
-      doLeftAndRightSwapInRTL,
+      isRTL: false,
       containerWidth: 0
     };
 
     this._onDirectionChange = this._onDirectionChange.bind(this);
-    this._onSwapChange = this._onSwapChange.bind(this);
   }
 
   render() {
     return (
-      <ScrollView
-        style={[
-          styles.container,
-          // `direction` property is not supported on Android.
-          Platform.OS !== 'android' ? { direction: this.state.isRTL ? 'rtl' : 'ltr' } : null
-        ]}
-      >
+      <ScrollView dir={this.state.isRTL ? 'rtl' : 'ltr'} style={[styles.container]}>
         <Block title={'Current layout direction'}>
           <View style={styles.directionBox}>
             <Text style={styles.directionText}>
@@ -405,19 +394,10 @@ class LayoutRTLExample extends React.Component {
           </View>
         </Block>
         <Block title={'Quickly test RTL layout'}>
-          <View style={[styles.flexDirectionRow, styles.switchRow]}>
+          <View dir="ltr" style={[styles.flexDirectionRow, styles.switchRow]}>
             <Text style={{ fontWeight: 'bold' }}>forceRTL</Text>
             <View>
               <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
-            </View>
-          </View>
-          <View style={[styles.flexDirectionRow, styles.switchRow]}>
-            <Text style={{ fontWeight: 'bold' }}>swapLeftAndRightInRTL</Text>
-            <View>
-              <Switch
-                onValueChange={this._onSwapChange}
-                value={this.state.doLeftAndRightSwapInRTL}
-              />
             </View>
           </View>
         </Block>
@@ -476,15 +456,7 @@ class LayoutRTLExample extends React.Component {
   }
 
   _onDirectionChange() {
-    I18nManager.forceRTL(!this.state.isRTL);
     this.setState({ isRTL: !this.state.isRTL });
-  }
-
-  _onSwapChange() {
-    I18nManager.swapLeftAndRightInRTL(!this.state.doLeftAndRightSwapInRTL);
-    this.setState({
-      doLeftAndRightSwapInRTL: !this.state.doLeftAndRightSwapInRTL
-    });
   }
 }
 

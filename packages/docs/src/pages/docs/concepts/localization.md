@@ -30,7 +30,7 @@ return (
 );
 ```
 
-The non-standard [direction-independent style properties]({{ '/docs/styling/#non-standard-properties' | url }}) should also be used as much as possible. {{ site.name }} will automatically flip the direction of these properties when the application is re-rendered after using `I18nManager` to enable RTL mode.
+The non-standard [direction-independent style properties]({{ '/docs/styling/#non-standard-properties' | url }}) should also be used as much as possible. {{ site.name }} will automatically flip the direction of these properties within subtrees based on the value of the `dir` prop on `View` or `Text` elements in the ancestral hierarchy.
 
 ```jsx
 // "start" is "left" for LTR and "right" for RTL
