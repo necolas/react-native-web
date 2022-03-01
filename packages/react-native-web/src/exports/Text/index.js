@@ -184,7 +184,7 @@ const classes = css.create({
     maxWidth: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'pre',
+    whiteSpace: 'nowrap',
     wordWrap: 'normal'
   },
   // See #13

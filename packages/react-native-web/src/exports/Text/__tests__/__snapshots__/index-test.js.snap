@@ -159,7 +159,7 @@ exports[`components/Text prop "numberOfLines" value is set 1`] = `
 
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
-  class="css-text-901oao css-textOneLine-nfaoni"
+  class="css-text-901oao css-textOneLine-1hf3ou5"
   dir="auto"
 />
 `;

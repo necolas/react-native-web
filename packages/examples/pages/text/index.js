@@ -283,10 +283,28 @@ function TextShadow() {
   );
 }
 
+function LineExample({ description, children }) {
+  return (
+    <View style={{ marginTop: 20 }}>
+      <Text style={{ color: 'gray', marginBottom: 5 }}>{description}</Text>
+
+      <View
+        style={{
+          borderWidth: 2,
+          borderColor: 'black',
+          width: 200
+        }}
+      >
+        {children}
+      </View>
+    </View>
+  );
+}
+
 export default function TextPage() {
   return (
     <Example title="Text">
-      <View>
+      <View style={{ maxWidth: 500 }}>
         <Text>
           Text wraps across multiple lines by default. Text wraps across multiple lines by default.
           Text wraps across multiple lines by default. Text wraps across multiple lines by default.
@@ -369,35 +387,57 @@ export default function TextPage() {
           click-and-hold.
         </Text>
 
-        <View style={{ maxWidth: 320 }}>
-          <View style={{ borderColor: '#cecece', borderWidth: 1, marginVertical: 20 }}>
-            <Text style={{ fontWeight: 700 }}>The next two lines should look identical:</Text>
+        <View style={{ paddingVertical: 20 }}>
+          <LineExample description="With no line breaks, text is limited to 2 lines.">
+            <Text numberOfLines={2}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text>
+          </LineExample>
+
+          <LineExample description="With line breaks, text is limited to 2 lines.">
+            <Text numberOfLines={2}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text>
+          </LineExample>
+
+          <LineExample description="With no line breaks, text is limited to 1 line.">
+            <Text numberOfLines={1}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text>
+          </LineExample>
+
+          <LineExample description="With line breaks, text is limited to 1 line.">
+            <Text numberOfLines={1}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text>
+          </LineExample>
+
+          <LineExample description="With very long word, text is limited to 1 line and long word is truncated.">
+            <Text numberOfLines={1}>goal aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Text>
+          </LineExample>
+
+          <LineExample description="With space characters within adjacent truncated lines">
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <Text numberOfLines={1}>Spaces </Text>
-              <Text numberOfLines={1}>between</Text>
-              <Text numberOfLines={1}> words</Text>
+              <Text numberOfLines={1}>
+                <Text>Spaces </Text>
+                <Text>between</Text>
+                <Text> words</Text>
+              </Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <Text>Spaces </Text>
               <Text>between</Text>
               <Text> words</Text>
             </View>
-          </View>
-          <Text numberOfLines={1} style={{ marginBottom: 20 }}>
-            Maximum of one line, no matter how much I write here. If I keep writing, it
-            {"'"}
-            ll just truncate after one line.
-          </Text>
-          <Text numberOfLines={2} style={{ marginBottom: 20 }}>
-            Maximum of two lines, no matter how much I write here. If I keep writing, it
-            {"'"}
-            ll just truncate after two lines.
-          </Text>
-          <Text style={{ marginBottom: 20 }}>
-            No maximum lines specified, no matter how much I write here. If I keep writing, it
-            {"'"}
-            ll just keep going and going.
-          </Text>
+          </LineExample>
         </View>
 
         <View>
