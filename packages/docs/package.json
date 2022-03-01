@@ -10,9 +10,9 @@
   },
   "homepage": "https://github.com/necolas/react-native-web",
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.1",
-    "@11ty/eleventy-navigation": "^0.1.6",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.5",
+    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy-navigation": "^0.3.2",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
     "csso": "^4.2.0",
     "eleventy-plugin-svg-contents": "^0.7.0",
     "eleventy-plugin-toc": "^1.1.0",
@@ -25,7 +25,6 @@
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-for-inline": "^0.1.1",
     "markdown-it-task-lists": "^2.1.1",
-    "twemoji": "*",
     "uglify-es": "^3.3.9"
   }
 }

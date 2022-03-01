@@ -12,7 +12,6 @@ const markdownContainer = require('markdown-it-container');
 const markdownEmoji = require('markdown-it-emoji');
 const markdownFootnote = require('markdown-it-footnote');
 const markdownTasks = require('markdown-it-task-lists');
-const twemoji = require('twemoji');
 const UglifyJS = require('uglify-es');
 
 /**
@@ -163,11 +162,6 @@ module.exports = function (eleventyConfig) {
     // Render a task list
     // https://github.com/revin/markdown-it-task-lists
     .use(markdownTasks);
-
-  // Custom emoji renderer
-  markdownLib.renderer.rules.emoji = function (token, idx) {
-    return twemoji.parse(token[idx].content);
-  };
 
   eleventyConfig.setLibrary('md', markdownLib);
 

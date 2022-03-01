@@ -16,17 +16,17 @@
     "!**/__tests__"
   ],
   "dependencies": {
-    "array-find-index": "^1.0.2",
     "create-react-class": "^15.7.0",
     "fbjs": "^3.0.0",
-    "hyphenate-style-name": "^1.0.4",
     "inline-style-prefixer": "^6.0.0",
     "normalize-css-color": "^1.0.2",
-    "prop-types": "^15.6.0"
+    "postcss-value-parser": "^4.2.0",
+    "prop-types": "^15.6.0",
+    "styleq": "0.0.0-b4fc5da"
   },
   "peerDependencies": {
-    "react": ">=17.0.1",
-    "react-dom": ">=17.0.1"
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",
