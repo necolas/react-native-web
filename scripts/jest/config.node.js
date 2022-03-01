@@ -10,13 +10,10 @@ module.exports = {
   ],
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages'],
-  setupFiles: ['jest-canvas-mock', require.resolve('./setupFiles.dom.js')],
   snapshotFormat: {
     printBasicPrototype: false
   },
-  testEnvironment: 'jsdom',
-  testMatch: ['**/__tests__/**/?(*-)+(spec|test).[jt]s?(x)'],
+  testEnvironment: 'node',
+  testMatch: ['**/__tests__/**/?(*-)+(spec|test).node.[jt]s?(x)'],
   timers: 'fake'
 };
-
-('**/?(*.)+(spec|test).[jt]s?(x)');
