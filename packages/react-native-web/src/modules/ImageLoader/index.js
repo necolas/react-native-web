@@ -7,6 +7,45 @@
  * @flow
  */
 
+import { getAssetByID } from '../../modules/AssetRegistry';
+import PixelRatio from '../../exports/PixelRatio';
+import type { Source } from '../../exports/Image/types';
+
+const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
+export function resolveAssetUri(source: ?Source): ?string {
+  let uri = null;
+  if (typeof source === 'number') {
+    // get the URI from the packager
+    const asset = getAssetByID(source);
+    let scale = asset.scales[0];
+    if (asset.scales.length > 1) {
+      const preferredScale = PixelRatio.get();
+      // Get the scale which is closest to the preferred scale
+      scale = asset.scales.reduce((prev, curr) =>
+        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
+      );
+    }
+    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
+    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
+  } else if (typeof source === 'string') {
+    uri = source;
+  } else if (source && typeof source.uri === 'string') {
+    uri = source.uri;
+  }
+
+  if (uri) {
+    const match = uri.match(svgDataUriPattern);
+    // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
+    if (match) {
+      const [, prefix, svg] = match;
+      const encodedSvg = encodeURIComponent(svg);
+      return `${prefix}${encodedSvg}`;
+    }
+  }
+
+  return uri;
+}
+
 const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
@@ -113,7 +152,7 @@ const ImageLoader = {
   has(uri: string): boolean {
     return ImageUriCache.has(uri);
   },
-  load(uri: string, onLoad: Function, onError: Function): number {
+  load(source: Source, onLoad: Function, onError: Function): number {
     id += 1;
     const image = new window.Image();
     image.onerror = onError;
@@ -129,7 +168,12 @@ const ImageLoader = {
         setTimeout(onDecode, 0);
       }
     };
+
+    const uri = resolveAssetUri(source);
     image.src = uri;
+    if (typeof source === 'object' && source.crossOrigin) {
+      image.crossOrigin = source.crossOrigin;
+    }
     requests[`${id}`] = image;
     return id;
   },

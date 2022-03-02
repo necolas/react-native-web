@@ -25,7 +25,8 @@ describe('components/ImageBackground', () => {
     test('sets the style of the underlying Image', () => {
       const imageStyle = { width: 40, height: 60 };
       const { container } = render(<ImageBackground imageStyle={imageStyle} />);
-      expect(findImage(container).getAttribute('style')).toBe('height: 60px; width: 40px;');
+      expect(findImage(container).getAttribute('style')).toContain('height: 60px;');
+      expect(findImage(container).getAttribute('style')).toContain('width: 40px;');
     });
   });
 

@@ -15,8 +15,7 @@ import createElement from '../createElement';
 import css from '../StyleSheet/css';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
-import ImageLoader from '../../modules/ImageLoader';
-import PixelRatio from '../PixelRatio';
+import ImageLoader, { resolveAssetUri } from '../../modules/ImageLoader';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
@@ -29,7 +28,6 @@ const LOADING = 'LOADING';
 const IDLE = 'IDLE';
 
 let _filterId = 0;
-const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 
 function createTintColorSVG(tintColor, id) {
   return tintColor && id != null ? (
@@ -98,40 +96,6 @@ function resolveAssetDimensions(source) {
   }
 }
 
-function resolveAssetUri(source): ?string {
-  let uri = null;
-  if (typeof source === 'number') {
-    // get the URI from the packager
-    const asset = getAssetByID(source);
-    let scale = asset.scales[0];
-    if (asset.scales.length > 1) {
-      const preferredScale = PixelRatio.get();
-      // Get the scale which is closest to the preferred scale
-      scale = asset.scales.reduce((prev, curr) =>
-        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale) ? curr : prev
-      );
-    }
-    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}` : '';
-  } else if (typeof source === 'string') {
-    uri = source;
-  } else if (source && typeof source.uri === 'string') {
-    uri = source.uri;
-  }
-
-  if (uri) {
-    const match = uri.match(svgDataUriPattern);
-    // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
-    if (match) {
-      const [, prefix, svg] = match;
-      const encodedSvg = encodeURIComponent(svg);
-      return `${prefix}${encodedSvg}`;
-    }
-  }
-
-  return uri;
-}
-
 interface ImageStatics {
   getSize: (
     uri: string,
@@ -179,7 +143,6 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
       return IDLE;
     });
 
-    const [layout, updateLayout] = React.useState({});
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hiddenImageRef = React.useRef(null);
     const filterRef = React.useRef(_filterId++);
@@ -194,54 +157,36 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const selectedSource = shouldDisplaySource ? source : defaultSource;
     const displayImageUri = resolveAssetUri(selectedSource);
     const imageSizeStyle = resolveAssetDimensions(selectedSource);
-    const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
-    const backgroundSize = getBackgroundSize();
+    const crossOrigin = typeof selectedSource === 'object' ? selectedSource.crossOrigin : undefined;
 
     // Accessibility image allows users to trigger the browser's image context menu
-    const hiddenImage = displayImageUri
+    const image = displayImageUri
       ? createElement('img', {
-          alt: accessibilityLabel || '',
-          classList: [classes.accessibilityImage],
+          alt: accessibilityLabel !== null ? accessibilityLabel || '' : undefined,
+          classList: [classes.image],
+          crossOrigin: crossOrigin,
           draggable: draggable || false,
           ref: hiddenImageRef,
-          src: displayImageUri
+          src: displayImageUri,
+          style: [style, resizeModeStyles[resizeMode], { filter }]
         })
       : null;
 
-    function getBackgroundSize(): ?string {
-      if (hiddenImageRef.current != null && (resizeMode === 'center' || resizeMode === 'repeat')) {
-        const { naturalHeight, naturalWidth } = hiddenImageRef.current;
-        const { height, width } = layout;
-        if (naturalHeight && naturalWidth && height && width) {
-          const scaleFactor = Math.min(1, width / naturalWidth, height / naturalHeight);
-          const x = Math.ceil(scaleFactor * naturalWidth);
-          const y = Math.ceil(scaleFactor * naturalHeight);
-          return `${x}px ${y}px`;
-        }
-      }
-    }
-
-    function handleLayout(e) {
-      if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
-        const { layout } = e.nativeEvent;
-        onLayout && onLayout(e);
-        updateLayout(layout);
-      }
-    }
-
     // Image loading
+    // NOTE: in order to prevent costly reloads when objects aren't equal, we only check the resolved URI here
+    // however, what we really want is to deepEqual test the source var on all props that might affect loading.
     const uri = resolveAssetUri(source);
     React.useEffect(() => {
       abortPendingRequest();
 
-      if (uri != null) {
+      if (source && uri != null) {
         updateState(LOADING);
         if (onLoadStart) {
           onLoadStart();
         }
 
         requestRef.current = ImageLoader.load(
-          uri,
+          source,
           function load(e) {
             updateState(LOADED);
             if (onLoad) {
@@ -256,7 +201,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
             if (onError) {
               onError({
                 nativeEvent: {
-                  error: `Failed to load resource ${uri} (404)`
+                  error: `Failed to load resource ${source.toString()} (404)`
                 }
               });
             }
@@ -281,21 +226,12 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
       <View
         {...rest}
         accessibilityLabel={accessibilityLabel}
-        onLayout={handleLayout}
+        onLayout={onLayout}
         pointerEvents={pointerEvents}
         ref={ref}
         style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
       >
-        <View
-          style={[
-            styles.image,
-            resizeModeStyles[resizeMode],
-            { backgroundImage, filter },
-            backgroundSize != null && { backgroundSize }
-          ]}
-          suppressHydrationWarning={true}
-        />
-        {hiddenImage}
+        {image}
         {createTintColorSVG(tintColor, filterRef.current)}
       </View>
     );
@@ -324,12 +260,9 @@ ImageWithStatics.queryCache = function (uris) {
 };
 
 const classes = css.create({
-  accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
+  image: {
     height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
+    width: '100%'
   }
 });
 
@@ -341,40 +274,29 @@ const styles = StyleSheet.create({
   },
   inline: {
     display: 'inline-flex'
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    height: '100%',
-    width: '100%',
-    zIndex: -1
   }
 });
 
 const resizeModeStyles = StyleSheet.create({
   center: {
-    backgroundSize: 'auto'
+    objectFit: 'scale-down'
   },
   contain: {
-    backgroundSize: 'contain'
+    objectFit: 'contain'
   },
   cover: {
-    backgroundSize: 'cover'
+    objectFit: 'cover'
   },
   none: {
-    backgroundPosition: '0 0',
-    backgroundSize: 'auto'
+    objectPosition: '0 0',
+    objectFit: 'scale-down'
   },
+  /* Repeat is not properly supported */
   repeat: {
-    backgroundPosition: '0 0',
-    backgroundRepeat: 'repeat',
-    backgroundSize: 'auto'
+    objectFit: 'scale-down'
   },
   stretch: {
-    backgroundSize: '100% 100%'
+    objectFit: 'fill'
   }
 });
 
