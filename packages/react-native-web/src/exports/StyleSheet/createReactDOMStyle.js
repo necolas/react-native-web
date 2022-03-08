@@ -92,16 +92,6 @@ const createReactDOMStyle = (style) => {
           break;
         }
 
-        // TODO: remove once this issue is fixed
-        // https://github.com/rofrischmann/inline-style-prefixer/issues/159
-        case 'backgroundClip': {
-          if (value === 'text') {
-            resolvedStyle.backgroundClip = value;
-            resolvedStyle.WebkitBackgroundClip = value;
-          }
-          break;
-        }
-
         // The 'flex' property value in React Native must be a positive integer,
         // 0, or -1.
         case 'flex': {

@@ -10,4 +10,15 @@ describe('modules/prefixStyles', () => {
 
     expect(prefixInlineStyles(style)).toEqual({ display: 'flex' });
   });
+
+  test('correctly prefix background-clip', () => {
+    const style = {
+      backgroundClip: 'text'
+    };
+
+    expect(prefixInlineStyles(style)).toEqual({
+      WebkitBackgroundClip: 'text',
+      backgroundClip: 'text'
+    });
+  });
 });
