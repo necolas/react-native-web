@@ -11,21 +11,23 @@
 'use strict';
 
 import type { EventHandlers, PressResponderConfig } from './PressResponder';
+import RootContext from '../../exports/AppRegistry/RootContext';
 
 import PressResponder from './PressResponder';
-import { useDebugValue, useEffect, useRef } from 'react';
+import { useContext, useDebugValue, useEffect, useRef } from 'react';
 
 export default function usePressEvents(hostRef: any, config: PressResponderConfig): EventHandlers {
   const pressResponderRef = useRef<?PressResponder>(null);
+  const rootContext = useContext(RootContext);
   if (pressResponderRef.current == null) {
-    pressResponderRef.current = new PressResponder(config);
+    pressResponderRef.current = new PressResponder(config, rootContext.rootTag?.ownerDocument);
   }
   const pressResponder = pressResponderRef.current;
 
   // Re-configure to use the current node and configuration.
   useEffect(() => {
-    pressResponder.configure(config);
-  }, [config, pressResponder]);
+    pressResponder.configure(config, rootContext.rootTag?.ownerDocument);
+  }, [config, pressResponder, rootContext.rootTag]);
 
   // Reset the `pressResponder` when cleanup needs to occur. This is
   // a separate effect because we do not want to rest the responder when `config` changes.

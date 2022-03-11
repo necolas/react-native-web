@@ -15,6 +15,7 @@ import createElement from '../createElement';
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import RootContext from '../AppRegistry/RootContext';
 
 type SwitchProps = {
   ...ViewProps,
@@ -57,6 +58,7 @@ const Switch: React.AbstractComponent<
   } = props;
 
   const thumbRef = React.useRef(null);
+  const rootContext = React.useContext(RootContext);
 
   function handleChange(event: Object) {
     if (onValueChange != null) {
@@ -160,18 +162,22 @@ const Switch: React.AbstractComponent<
     }
   ];
 
-  const nativeControl = createElement('input', {
-    accessibilityLabel,
-    checked: value,
-    disabled: disabled,
-    onBlur: handleFocusState,
-    onChange: handleChange,
-    onFocus: handleFocusState,
-    ref: forwardedRef,
-    style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox',
-    role: 'switch'
-  });
+  const nativeControl = createElement(
+    'input',
+    {
+      accessibilityLabel,
+      checked: value,
+      disabled: disabled,
+      onBlur: handleFocusState,
+      onChange: handleChange,
+      onFocus: handleFocusState,
+      ref: forwardedRef,
+      style: [styles.nativeControl, styles.cursorInherit],
+      type: 'checkbox',
+      role: 'switch'
+    },
+    rootContext.styleResolver
+  );
 
   return (
     <View {...other} style={rootStyle}>

@@ -61,6 +61,7 @@ export { default as View } from './exports/View';
 export { default as VirtualizedList } from './exports/VirtualizedList';
 export { default as YellowBox } from './exports/YellowBox';
 export { default as LogBox } from './exports/LogBox';
+export { default as ReactRootView } from './exports/AppRegistry/ReactRootView';
 
 // compat (components)
 export { default as DrawerLayoutAndroid } from './exports/DrawerLayoutAndroid';

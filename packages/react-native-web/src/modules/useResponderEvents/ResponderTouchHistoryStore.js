@@ -31,16 +31,6 @@ type TouchRecord = {|
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 const MAX_TOUCH_BANK = 20;
-const touchBank: Array<TouchRecord> = [];
-const touchHistory = {
-  touchBank,
-  numberActiveTouches: 0,
-  // If there is only one active touch, we remember its location. This prevents
-  // us having to loop through all of the touches all the time in the most
-  // common case.
-  indexOfSingleActiveTouch: -1,
-  mostRecentTimeStamp: 0
-};
 
 function timestampForTouch(touch: Touch): number {
   // The legacy internal implementation provides "timeStamp", which has been
@@ -97,106 +87,117 @@ function getTouchIdentifier({ identifier }: Touch): number {
   return identifier;
 }
 
-function recordTouchStart(touch: Touch): void {
-  const identifier = getTouchIdentifier(touch);
-  const touchRecord = touchBank[identifier];
-  if (touchRecord) {
-    resetTouchRecord(touchRecord, touch);
-  } else {
-    touchBank[identifier] = createTouchRecord(touch);
-  }
-  touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
-}
+export default class ResponderTouchHistoryStore {
+  _touchBank: Array<TouchRecord> = [];
+  _touchHistory = {
+    touchBank: this._touchBank,
+    numberActiveTouches: 0,
+    // If there is only one active touch, we remember its location. This prevents
+    // us having to loop through all of the touches all the time in the most
+    // common case.
+    indexOfSingleActiveTouch: -1,
+    mostRecentTimeStamp: 0
+  };
 
-function recordTouchMove(touch: Touch): void {
-  const touchRecord = touchBank[getTouchIdentifier(touch)];
-  if (touchRecord) {
-    touchRecord.touchActive = true;
-    touchRecord.previousPageX = touchRecord.currentPageX;
-    touchRecord.previousPageY = touchRecord.currentPageY;
-    touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
-    touchRecord.currentPageX = touch.pageX;
-    touchRecord.currentPageY = touch.pageY;
-    touchRecord.currentTimeStamp = timestampForTouch(touch);
-    touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
-  } else {
-    console.warn(
-      'Cannot record touch move without a touch start.\n',
-      `Touch Move: ${printTouch(touch)}\n`,
-      `Touch Bank: ${printTouchBank()}`
-    );
-  }
-}
-
-function recordTouchEnd(touch: Touch): void {
-  const touchRecord = touchBank[getTouchIdentifier(touch)];
-  if (touchRecord) {
-    touchRecord.touchActive = false;
-    touchRecord.previousPageX = touchRecord.currentPageX;
-    touchRecord.previousPageY = touchRecord.currentPageY;
-    touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
-    touchRecord.currentPageX = touch.pageX;
-    touchRecord.currentPageY = touch.pageY;
-    touchRecord.currentTimeStamp = timestampForTouch(touch);
-    touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
-  } else {
-    console.warn(
-      'Cannot record touch end without a touch start.\n',
-      `Touch End: ${printTouch(touch)}\n`,
-      `Touch Bank: ${printTouchBank()}`
-    );
-  }
-}
-
-function printTouch(touch: Touch): string {
-  return JSON.stringify({
-    identifier: touch.identifier,
-    pageX: touch.pageX,
-    pageY: touch.pageY,
-    timestamp: timestampForTouch(touch)
-  });
-}
-
-function printTouchBank(): string {
-  let printed = JSON.stringify(touchBank.slice(0, MAX_TOUCH_BANK));
-  if (touchBank.length > MAX_TOUCH_BANK) {
-    printed += ' (original size: ' + touchBank.length + ')';
-  }
-  return printed;
-}
-
-const ResponderTouchHistoryStore = {
   recordTouchTrack(topLevelType: string, nativeEvent: TouchEvent): void {
     if (isMoveish(topLevelType)) {
-      nativeEvent.changedTouches.forEach(recordTouchMove);
+      nativeEvent.changedTouches.forEach(this._recordTouchMove);
     } else if (isStartish(topLevelType)) {
-      nativeEvent.changedTouches.forEach(recordTouchStart);
-      touchHistory.numberActiveTouches = nativeEvent.touches.length;
-      if (touchHistory.numberActiveTouches === 1) {
-        touchHistory.indexOfSingleActiveTouch = nativeEvent.touches[0].identifier;
+      nativeEvent.changedTouches.forEach(this._recordTouchStart);
+      this._touchHistory.numberActiveTouches = nativeEvent.touches.length;
+      if (this._touchHistory.numberActiveTouches === 1) {
+        this._touchHistory.indexOfSingleActiveTouch = nativeEvent.touches[0].identifier;
       }
     } else if (isEndish(topLevelType)) {
-      nativeEvent.changedTouches.forEach(recordTouchEnd);
-      touchHistory.numberActiveTouches = nativeEvent.touches.length;
-      if (touchHistory.numberActiveTouches === 1) {
-        for (let i = 0; i < touchBank.length; i++) {
-          const touchTrackToCheck = touchBank[i];
+      nativeEvent.changedTouches.forEach(this._recordTouchEnd);
+      this._touchHistory.numberActiveTouches = nativeEvent.touches.length;
+      if (this._touchHistory.numberActiveTouches === 1) {
+        for (let i = 0; i < this._touchBank.length; i++) {
+          const touchTrackToCheck = this._touchBank[i];
           if (touchTrackToCheck != null && touchTrackToCheck.touchActive) {
-            touchHistory.indexOfSingleActiveTouch = i;
+            this._touchHistory.indexOfSingleActiveTouch = i;
             break;
           }
         }
         if (__DEV__) {
-          const activeRecord = touchBank[touchHistory.indexOfSingleActiveTouch];
+          const activeRecord = this._touchBank[this._touchHistory.indexOfSingleActiveTouch];
           if (!(activeRecord != null && activeRecord.touchActive)) {
             console.error('Cannot find single active touch.');
           }
         }
       }
     }
-  },
+  }
 
-  touchHistory
-};
+  get touchHistory() {
+    return this._touchHistory;
+  }
 
-export default ResponderTouchHistoryStore;
+  _recordTouchStart = (touch: Touch): void => {
+    const identifier = getTouchIdentifier(touch);
+    const touchRecord = this._touchBank[identifier];
+    if (touchRecord) {
+      resetTouchRecord(touchRecord, touch);
+    } else {
+      this._touchBank[identifier] = createTouchRecord(touch);
+    }
+    this._touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+  };
+
+  _recordTouchMove = (touch: Touch): void => {
+    const touchRecord = this._touchBank[getTouchIdentifier(touch)];
+    if (touchRecord) {
+      touchRecord.touchActive = true;
+      touchRecord.previousPageX = touchRecord.currentPageX;
+      touchRecord.previousPageY = touchRecord.currentPageY;
+      touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
+      touchRecord.currentPageX = touch.pageX;
+      touchRecord.currentPageY = touch.pageY;
+      touchRecord.currentTimeStamp = timestampForTouch(touch);
+      this._touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+    } else {
+      console.warn(
+        'Cannot record touch move without a touch start.\n',
+        `Touch Move: ${this._printTouch(touch)}\n`,
+        `Touch Bank: ${this._printTouchBank()}`
+      );
+    }
+  };
+
+  _recordTouchEnd = (touch: Touch): void => {
+    const touchRecord = this._touchBank[getTouchIdentifier(touch)];
+    if (touchRecord) {
+      touchRecord.touchActive = false;
+      touchRecord.previousPageX = touchRecord.currentPageX;
+      touchRecord.previousPageY = touchRecord.currentPageY;
+      touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
+      touchRecord.currentPageX = touch.pageX;
+      touchRecord.currentPageY = touch.pageY;
+      touchRecord.currentTimeStamp = timestampForTouch(touch);
+      this._touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+    } else {
+      console.warn(
+        'Cannot record touch end without a touch start.\n',
+        `Touch End: ${this._printTouch(touch)}\n`,
+        `Touch Bank: ${this._printTouchBank()}`
+      );
+    }
+  };
+
+  _printTouch(touch: Touch): string {
+    return JSON.stringify({
+      identifier: touch.identifier,
+      pageX: touch.pageX,
+      pageY: touch.pageY,
+      timestamp: timestampForTouch(touch)
+    });
+  }
+
+  _printTouchBank(): string {
+    let printed = JSON.stringify(this._touchBank.slice(0, MAX_TOUCH_BANK));
+    if (this._touchBank.length > MAX_TOUCH_BANK) {
+      printed += ' (original size: ' + this._touchBank.length + ')';
+    }
+    return printed;
+  }
+}

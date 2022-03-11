@@ -11,14 +11,14 @@ import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
 import React from 'react';
 
-const createElement = (component, props, ...children) => {
+const createElement = (component, props, styleResolver, ...children) => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
   if (component && component.constructor === String) {
     accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
   }
   const Component = accessibilityComponent || component;
-  const domProps = createDOMProps(Component, props);
+  const domProps = createDOMProps(Component, styleResolver, props);
 
   return React.createElement(Component, domProps, ...children);
 };

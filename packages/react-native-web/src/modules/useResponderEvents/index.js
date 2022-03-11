@@ -20,7 +20,7 @@
 import type { ResponderConfig } from './ResponderSystem';
 
 import * as React from 'react';
-import * as ResponderSystem from './ResponderSystem';
+import RootContext from '../../exports/AppRegistry/RootContext';
 
 const emptyObject = {};
 let idCounter = 0;
@@ -36,16 +36,17 @@ function useStable<T>(getInitialValue: () => T): T {
 export default function useResponderEvents(hostRef: any, config: ResponderConfig = emptyObject) {
   const id = useStable(() => idCounter++);
   const isAttachedRef = React.useRef(false);
+  const rootContext = React.useContext(RootContext);
 
   // This is a separate effects so it doesn't run when the config changes.
   // On initial mount, attach global listeners if needed.
   // On unmount, remove node potentially attached to the Responder System.
   React.useEffect(() => {
-    ResponderSystem.attachListeners();
+    rootContext.responderSystem.attachListeners();
     return () => {
-      ResponderSystem.removeNode(id);
+      rootContext.responderSystem.removeNode(id);
     };
-  }, [id]);
+  }, [id, rootContext.responderSystem]);
 
   // Register and unregister with the Responder System as necessary
   React.useEffect(() => {
@@ -73,14 +74,16 @@ export default function useResponderEvents(hostRef: any, config: ResponderConfig
     const node = hostRef.current;
 
     if (requiresResponderSystem) {
-      ResponderSystem.addNode(id, node, config);
+      rootContext.responderSystem.addNode(id, node, config);
       isAttachedRef.current = true;
     } else if (isAttachedRef.current) {
-      ResponderSystem.removeNode(id);
+      rootContext.responderSystem.removeNode(id);
       isAttachedRef.current = false;
     }
-  }, [config, hostRef, id]);
+  }, [config, hostRef, id, rootContext.responderSystem]);
 
-  React.useDebugValue({ isResponder: hostRef.current === ResponderSystem.getResponderNode() });
+  React.useDebugValue({
+    isResponder: hostRef.current === rootContext.responderSystem.getResponderNode()
+  });
   React.useDebugValue(config);
 }

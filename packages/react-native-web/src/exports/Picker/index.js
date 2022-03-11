@@ -17,6 +17,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import PickerItem from './PickerItem';
 import StyleSheet from '../StyleSheet';
+import RootContext from '../AppRegistry/RootContext';
 
 type PickerProps = {
   ...ViewProps,
@@ -51,6 +52,7 @@ const Picker: React.AbstractComponent<
   } = props;
 
   const hostRef = React.useRef(null);
+  const rootContext = React.useContext(RootContext);
 
   function handleChange(e: Object) {
     const { selectedIndex, value } = e.target;
@@ -76,7 +78,7 @@ const Picker: React.AbstractComponent<
 
   supportedProps.ref = setRef;
 
-  return createElement('select', supportedProps);
+  return createElement('select', supportedProps, rootContext.styleResolver);
 });
 
 // $FlowFixMe

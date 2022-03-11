@@ -13,7 +13,7 @@
  */
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import createCSSStyleSheet from './createCSSStyleSheet';
+import { createStyleSheet, destroyStyleSheet } from './createCSSStyleSheet';
 import createCompileableStyle from './createCompileableStyle';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
 import flattenArray from '../../modules/flattenArray';
@@ -25,56 +25,71 @@ import initialRules from './initialRules';
 import modality from './modality';
 import { STYLE_ELEMENT_ID, STYLE_GROUPS } from './constants';
 
-export default function createStyleResolver() {
-  let inserted, sheet, cache;
-  const resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+export default class StyleResolver {
+  static _resolved = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+  _inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+  _sheet: ?CSSStyleSheet;
+  _styleElement: ?HTMLStyleElement;
+  _cache = {};
 
-  const init = () => {
-    inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
-    sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
-    cache = {};
-    modality((rule) => sheet.insert(rule, STYLE_GROUPS.modality));
+  constructor(rootTag?: HTMLElement) {
+    this._init(rootTag);
+  }
+
+  _init(rootTag?: HTMLElement) {
+    this._styleElement = createStyleSheet(STYLE_ELEMENT_ID, rootTag);
+    this._sheet = createOrderedCSSStyleSheet(this._styleElement?.sheet);
+
+    modality((rule) => this._sheet.insert(rule, STYLE_GROUPS.modality), rootTag?.ownerDocument);
     initialRules.forEach((rule) => {
-      sheet.insert(rule, STYLE_GROUPS.reset);
+      this._sheet.insert(rule, STYLE_GROUPS.reset);
     });
-  };
+  }
 
-  init();
+  // Clear all the content created by StyleSheed from the window. This call is irreversible.
+  clear() {
+    this._inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
+    this._cache = {};
+    this._sheet.clear();
+    destroyStyleSheet(this._styleElement);
+    this._sheet = undefined;
+    this._styleElement = undefined;
+  }
 
-  function addToCache(className, prop, value) {
-    if (!cache[prop]) {
-      cache[prop] = {};
+  _addToCache(className, prop, value) {
+    if (!this._cache[prop]) {
+      this._cache[prop] = {};
     }
-    cache[prop][value] = className;
+    this._cache[prop][value] = className;
   }
 
-  function getClassName(prop, value) {
+  _getClassName(prop, value) {
     const val = stringifyValueWithProperty(value, prop);
-    return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
+    return this._cache[prop] && this._cache[prop].hasOwnProperty(val) && this._cache[prop][val];
   }
 
-  function _injectRegisteredStyle(id) {
+  _injectRegisteredStyle(id) {
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
-    if (!inserted[dir][id]) {
+    if (!this._inserted[dir][id]) {
       const style = createCompileableStyle(i18nStyle(flattenStyle(id)));
       const results = atomic(style);
       Object.keys(results).forEach((key) => {
         const { identifier, property, rules, value } = results[key];
-        addToCache(identifier, property, value);
+        this._addToCache(identifier, property, value);
         rules.forEach((rule) => {
           const group = STYLE_GROUPS.custom[property] || STYLE_GROUPS.atomic;
-          sheet.insert(rule, group);
+          this._sheet.insert(rule, group);
         });
       });
-      inserted[dir][id] = true;
+      this._inserted[dir][id] = true;
     }
   }
 
   /**
    * Resolves a React Native style object to DOM attributes
    */
-  function resolve(style, classList) {
+  resolve(style, classList) {
     const nextClassList = [];
     let props = {};
 
@@ -85,12 +100,15 @@ export default function createStyleResolver() {
     if (Array.isArray(classList)) {
       flattenArray(classList).forEach((identifier) => {
         if (identifier) {
-          if (inserted.css[identifier] == null && resolved.css[identifier] != null) {
-            const item = resolved.css[identifier];
+          if (
+            this._inserted.css[identifier] == null &&
+            StyleResolver._resolved.css[identifier] != null
+          ) {
+            const item = StyleResolver._resolved.css[identifier];
             item.rules.forEach((rule) => {
-              sheet.insert(rule, item.group);
+              this._sheet.insert(rule, item.group);
             });
-            inserted.css[identifier] = true;
+            this._inserted.css[identifier] = true;
           }
 
           nextClassList.push(identifier);
@@ -100,12 +118,12 @@ export default function createStyleResolver() {
 
     if (typeof style === 'number') {
       // fast and cachable
-      _injectRegisteredStyle(style);
+      this._injectRegisteredStyle(style);
       const key = createCacheKey(style);
-      props = _resolveStyle(style, key);
+      props = this._resolveStyle(style, key);
     } else if (!Array.isArray(style)) {
       // resolve a plain RN style object
-      props = _resolveStyle(style);
+      props = this._resolveStyle(style);
     } else {
       // flatten the style array
       // cache resolved props when all styles are registered
@@ -121,11 +139,11 @@ export default function createStyleResolver() {
           if (isArrayOfNumbers) {
             cacheKey += id + '-';
           }
-          _injectRegisteredStyle(id);
+          this._injectRegisteredStyle(id);
         }
       }
       const key = isArrayOfNumbers ? createCacheKey(cacheKey) : null;
-      props = _resolveStyle(flatArray, key);
+      props = this._resolveStyle(flatArray, key);
     }
 
     nextClassList.push(...props.classList);
@@ -144,13 +162,13 @@ export default function createStyleResolver() {
   /**
    * Resolves a React Native style object
    */
-  function _resolveStyle(style, key) {
+  _resolveStyle(style, key) {
     const { doLeftAndRightSwapInRTL, isRTL } = I18nManager.getConstants();
     const dir = isRTL ? (doLeftAndRightSwapInRTL ? 'rtl' : 'rtlNoSwap') : 'ltr';
 
     // faster: memoized
-    if (key != null && resolved[dir][key] != null) {
-      return resolved[dir][key];
+    if (key != null && StyleResolver._resolved[dir][key] != null) {
+      return StyleResolver._resolved[dir][key];
     }
 
     const flatStyle = flattenStyle(style);
@@ -163,7 +181,7 @@ export default function createStyleResolver() {
         (props, styleProp) => {
           const value = localizedStyle[styleProp];
           if (value != null) {
-            const className = getClassName(styleProp, value);
+            const className = this._getClassName(styleProp, value);
             if (className) {
               props.classList.push(className);
             } else {
@@ -181,7 +199,7 @@ export default function createStyleResolver() {
                   const { identifier, rules } = a[key];
                   props.classList.push(identifier);
                   rules.forEach((rule) => {
-                    sheet.insert(rule, STYLE_GROUPS.atomic);
+                    this._sheet.insert(rule, STYLE_GROUPS.atomic);
                   });
                 });
               } else {
@@ -203,44 +221,43 @@ export default function createStyleResolver() {
     }
 
     if (key != null) {
-      resolved[dir][key] = props;
+      StyleResolver._resolved[dir][key] = props;
     }
 
     return props;
   }
 
-  return {
-    getStyleSheet() {
-      const textContent = sheet.getTextContent();
-      // Reset state on the server so critical css is always the result
-      if (!canUseDOM) {
-        init();
-      }
-
-      return {
-        id: STYLE_ELEMENT_ID,
-        textContent
-      };
-    },
-    createCSS(rules, group) {
-      const result = {};
-      Object.keys(rules).forEach((name) => {
-        const style = rules[name];
-        const compiled = classic(style, name);
-
-        Object.keys(compiled).forEach((key) => {
-          const { identifier, rules } = compiled[key];
-          resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
-          result[name] = identifier;
-        });
-      });
-      return result;
-    },
-    resolve,
-    get sheet() {
-      return sheet;
+  getStyleSheet() {
+    const textContent = this._sheet.getTextContent();
+    // Reset state on the server so critical css is always the result
+    if (!canUseDOM) {
+      this._init();
     }
-  };
+
+    return {
+      id: STYLE_ELEMENT_ID,
+      textContent
+    };
+  }
+
+  static createCSS(rules, group) {
+    const result = {};
+    Object.keys(rules).forEach((name) => {
+      const style = rules[name];
+      const compiled = classic(style, name);
+
+      Object.keys(compiled).forEach((key) => {
+        const { identifier, rules } = compiled[key];
+        StyleResolver._resolved.css[identifier] = { group: group || STYLE_GROUPS.classic, rules };
+        result[name] = identifier;
+      });
+    });
+    return result;
+  }
+
+  get sheet() {
+    return this._sheet;
+  }
 }
 
 /**

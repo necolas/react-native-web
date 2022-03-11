@@ -8,17 +8,17 @@
  * @flow
  */
 
-import type { ComponentType, Node } from 'react';
+import * as React from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
 import render, { hydrate } from '../render';
-import styleResolver from '../StyleSheet/styleResolver';
-import React from 'react';
+import StyleResolver from '../StyleSheet/StyleResolver';
+import ReactRootView from '../AppRegistry/ReactRootView';
 
 export default function renderApplication<Props: Object>(
-  RootComponent: ComponentType<Props>,
-  WrapperComponent?: ?ComponentType<*>,
+  RootComponent: React.ComponentType<Props>,
+  WrapperComponent?: ?React.ComponentType<*>,
   callback?: () => void,
   options: {
     hydrate: boolean,
@@ -32,23 +32,28 @@ export default function renderApplication<Props: Object>(
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
-      <RootComponent {...initialProps} />
-    </AppContainer>,
+    <ReactRootView rootTag={rootTag}>
+      <AppContainer WrapperComponent={WrapperComponent}>
+        <RootComponent {...initialProps} />
+      </AppContainer>
+    </ReactRootView>,
     rootTag,
     callback
   );
 }
 
 export function getApplication(
-  RootComponent: ComponentType<Object>,
+  RootComponent: React.ComponentType<Object>,
   initialProps: Object,
-  WrapperComponent?: ?ComponentType<*>
-): {| element: Node, getStyleElement: (Object) => Node |} {
+  WrapperComponent?: ?React.ComponentType<*>
+): {| element: React.Node, getStyleElement: (Object) => React.Node |} {
+  const styleResolver = new StyleResolver();
   const element = (
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
-      <RootComponent {...initialProps} />
-    </AppContainer>
+    <ReactRootView _styleResolver={styleResolver} rootTag={document.body}>
+      <AppContainer WrapperComponent={WrapperComponent}>
+        <RootComponent {...initialProps} />
+      </AppContainer>
+    </ReactRootView>
   );
   // Don't escape CSS text
   const getStyleElement = (props) => {

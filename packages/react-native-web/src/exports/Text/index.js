@@ -22,6 +22,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
+import RootContext from '../AppRegistry/RootContext';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,
@@ -69,6 +70,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);
+    const rootContext = React.useContext(RootContext);
 
     const classList = [
       classes.text,
@@ -151,7 +153,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    const element = createElement(component, supportedProps);
+    const element = createElement(component, supportedProps, rootContext.styleResolver);
 
     return hasTextAncestor ? (
       element

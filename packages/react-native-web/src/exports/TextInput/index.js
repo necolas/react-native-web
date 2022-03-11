@@ -23,6 +23,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
+import RootContext from '../AppRegistry/RootContext';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -168,6 +169,7 @@ const TextInput: React.AbstractComponent<
 
   const dimensions = React.useRef({ height: null, width: null });
   const hostRef = React.useRef(null);
+  const rootContext = React.useContext(RootContext);
 
   const handleContentSizeChange = React.useCallback(
     (hostNode) => {
@@ -366,7 +368,7 @@ const TextInput: React.AbstractComponent<
 
   supportedProps.ref = setRef;
 
-  return createElement(component, supportedProps);
+  return createElement(component, supportedProps, rootContext.styleResolver);
 });
 
 TextInput.displayName = 'TextInput';

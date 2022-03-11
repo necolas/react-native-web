@@ -10,7 +10,7 @@
 import type { TouchEvent } from './ResponderEventTypes';
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
-import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
+import type ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
 
 export type ResponderEvent = {|
   bubbles: boolean,
@@ -70,7 +70,10 @@ function normalizeIdentifier(identifier) {
  * Converts a native DOM event to a ResponderEvent.
  * Mouse events are transformed into fake touch events.
  */
-export default function createResponderEvent(domEvent: any): ResponderEvent {
+export default function createResponderEvent(
+  domEvent: any,
+  responderTouchHistoryStore: ResponderTouchHistoryStore
+): ResponderEvent {
   let rect;
   let propagationWasStopped = false;
   let changedTouches;
@@ -182,7 +185,7 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
     },
     target: domEvent.target,
     timeStamp: timestamp,
-    touchHistory: ResponderTouchHistoryStore.touchHistory
+    touchHistory: responderTouchHistoryStore.touchHistory
   };
 
   // Using getters and functions serves two purposes:

@@ -15,11 +15,8 @@ import View from '../View';
 type Props = {
   WrapperComponent?: ?React.ComponentType<*>,
   // $FlowFixMe
-  children?: React.Children,
-  rootTag: any
+  children?: React.Children
 };
-
-const RootTagContext: React.Context<any> = React.createContext(null);
 
 export default function AppContainer(props: Props): React.Node {
   const { children, WrapperComponent } = props;
@@ -33,11 +30,9 @@ export default function AppContainer(props: Props): React.Node {
   }
 
   return (
-    <RootTagContext.Provider value={props.rootTag}>
-      <View pointerEvents="box-none" style={styles.appContainer}>
-        {innerView}
-      </View>
-    </RootTagContext.Provider>
+    <View pointerEvents="box-none" style={styles.appContainer}>
+      {innerView}
+    </View>
   );
 }
 
