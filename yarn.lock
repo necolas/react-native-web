@@ -7929,10 +7929,10 @@ styled-jsx@5.0.0:
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-5.0.0.tgz#816b4b92e07b1786c6b7111821750e0ba4d26e77"
   integrity sha512-qUqsWoBquEdERe10EW8vLp3jT25s/ssG1/qX5gZ4wu15OZpmSMFI2v+fWlRhLfykA5rFtlJ1ME8A8pm/peV4WA==
 
-styleq@0.0.0-b4fc5da:
-  version "0.0.0-b4fc5da"
-  resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.0.0-b4fc5da.tgz#d8b3ccadca6c08eff84c43490db5053d63a749b0"
-  integrity sha512-w2DjdNufdrzl2pos9L+t76OJyxgyHMLXAYDrCchlBfjnB4ZHWVdix5wUD2HTVT/qSekV2084BETeGLHhZD2dSw==
+styleq@0.0.0-afc6b2c59:
+  version "0.0.0-afc6b2c59"
+  resolved "https://registry.yarnpkg.com/styleq/-/styleq-0.0.0-afc6b2c59.tgz#d83f1d462ee9be71405bae79a44416350ca216d1"
+  integrity sha512-/DoJ+Moi4+wn14JyLfWaghuub5urI//6bZHa1rCC6QtNMVI3LlpxsHLCaoPuD1POniViJaOPNRrLAesGT+nnow==
 
 supports-color@^2.0.0:
   version "2.0.0"

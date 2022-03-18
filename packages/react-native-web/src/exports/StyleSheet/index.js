@@ -7,46 +7,31 @@
  * @flow
  */
 
-import { atomic, classic, inline, preprocess } from './compiler';
+import { atomic, classic, inline } from './compiler';
 import { createSheet } from './dom';
+import { localizeStyle } from 'styleq/dist/transform-localize-style';
+import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+
 const { canUseDOM } = ExecutionEnvironment;
-
-const staticStyleMap: WeakMap<Object, Array<Object>> = new WeakMap();
-
+const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
 const sheet = createSheet();
 
 function customStyleq(styles, isRTL) {
   return styleq.factory({
     transform(style) {
       if (staticStyleMap.has(style)) {
-        const compiledStyles = staticStyleMap.get(style);
-        if (Array.isArray(compiledStyles)) {
-          return isRTL ? compiledStyles[1] : compiledStyles[0];
-        }
+        const compiledStyle = staticStyleMap.get(style);
+        return localizeStyle(compiledStyle, isRTL);
       }
       return style;
     }
   })(styles);
 }
 
-function compileAndInsert(style) {
-  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
-  const [compiledRTLStyle, compiledRTLOrderedRules] = atomic(preprocess(style, true));
-  [...compiledOrderedRules, ...compiledRTLOrderedRules].forEach(([rules, order]) => {
-    if (sheet != null) {
-      rules.forEach((rule) => {
-        sheet.insert(rule, order);
-      });
-    }
-  });
-  return [compiledStyle, compiledRTLStyle];
-}
-
-function compileAndInsertReset(style, key) {
-  const [compiledStyle, compiledOrderedRules] = classic(style, key);
+function insertRules(compiledOrderedRules) {
   compiledOrderedRules.forEach(([rules, order]) => {
     if (sheet != null) {
       rules.forEach((rule) => {
@@ -54,7 +39,18 @@ function compileAndInsertReset(style, key) {
       });
     }
   });
-  return [compiledStyle, compiledStyle];
+}
+
+function compileAndInsertAtomic(style) {
+  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
+  insertRules(compiledOrderedRules);
+  return compiledStyle;
+}
+
+function compileAndInsertReset(style, key) {
+  const [compiledStyle, compiledOrderedRules] = classic(style, key);
+  insertRules(compiledOrderedRules);
+  return compiledStyle;
 }
 
 /* ----- API ----- */
@@ -76,17 +72,17 @@ function create(styles: Object): {| [key: string]: { [key: string]: any } |} {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
     if (styleObj != null) {
+      let compiledStyles;
       if (key.indexOf('$raw') > -1) {
-        const compiledStyles = compileAndInsertReset(styleObj, key.split('$raw')[0]);
-        staticStyleMap.set(styleObj, compiledStyles);
+        compiledStyles = compileAndInsertReset(styleObj, key.split('$raw')[0]);
       } else {
         if (process.env.NODE_ENV !== 'production') {
           validate(styleObj);
           styles[key] = Object.freeze(styleObj);
         }
-        const compiledStyles = compileAndInsert(styleObj);
-        staticStyleMap.set(styleObj, compiledStyles);
+        compiledStyles = compileAndInsertAtomic(styleObj);
       }
+      staticStyleMap.set(styleObj, compiledStyles);
     }
   });
   return styles;
@@ -146,11 +142,13 @@ function getSheet(): { id: string, textContent: string } {
  * resolve
  */
 type StyleProps = [string, { [key: string]: mixed } | null];
+type Options = { writingDirection: 'ltr' | 'rtl' };
 
-function StyleSheet(styles: any, isRTL?: boolean): StyleProps {
+function StyleSheet(styles: any, options?: Options): StyleProps {
+  const isRTL = options != null && options.writingDirection === 'rtl';
   const styleProps: StyleProps = customStyleq(styles, isRTL);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
-    styleProps[1] = inline(preprocess(styleProps[1], isRTL));
+    styleProps[1] = inline(preprocess(styleProps[1]), isRTL);
   }
   return styleProps;
 }
@@ -170,7 +168,7 @@ if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
 }
 
 export type IStyleSheet = {
-  (styles: $ReadOnlyArray<any>, isRTL: boolean): StyleProps,
+  (styles: $ReadOnlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
   absoluteFillObject: Object,
   create: typeof create,

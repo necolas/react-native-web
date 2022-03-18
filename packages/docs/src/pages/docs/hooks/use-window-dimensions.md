@@ -10,7 +10,7 @@ eleventyNavigation:
 {% import "fragments/macros.html" as macro with context %}
 
 :::lead
-The `useWindowDimensions` React hook provides and subscribes to window size changes from the `Dimensions` module.
+Respond to window size changes from the `Dimensions` module.
 :::
 
 `useWindowDimensions` automatically updates `width` and `height` values when viewport size changes.

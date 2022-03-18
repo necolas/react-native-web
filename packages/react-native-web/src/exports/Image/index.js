@@ -13,7 +13,7 @@ import type { ImageProps } from './types';
 import * as React from 'react';
 import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
-import { createBoxShadowValue } from '../StyleSheet/compiler/preprocess';
+import { createBoxShadowValue } from '../StyleSheet/preprocess';
 import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';

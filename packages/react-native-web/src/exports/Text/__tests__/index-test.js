@@ -62,9 +62,16 @@ describe('components/Text', () => {
     });
   });
 
-  test('allows "dir" to be overridden', () => {
-    const { container } = render(<Text dir="rtl" />);
-    expect(container.firstChild).toMatchSnapshot();
+  describe('prop "dir"', () => {
+    test('value is "ltr"', () => {
+      const { container } = render(<Text dir="ltr" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is "rtl"', () => {
+      const { container } = render(<Text dir="rtl" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
   });
 
   describe('prop "href"', () => {
@@ -122,6 +129,16 @@ describe('components/Text', () => {
 
     test('fr', () => {
       const { container } = render(<Text lang="fr" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ar', () => {
+      const { container } = render(<Text lang="ar" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('with dir', () => {
+      const { container } = render(<Text dir="ltr" lang="ar" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

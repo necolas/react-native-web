@@ -21,7 +21,7 @@ import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import RTLContext from '../../modules/RTLContext';
+import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,
@@ -77,7 +77,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);
-    const isRTL = React.useContext(RTLContext);
+    const { direction: contextDirection } = useLocaleContext();
 
     useElementLayout(hostRef, onLayout);
     useResponderEvents(hostRef, {
@@ -101,8 +101,12 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     let component = 'div';
 
+    const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+    const componentDirection = props.dir || langDirection;
+    const writingDirection = componentDirection || contextDirection;
+
     const supportedProps = pickProps(rest);
-    supportedProps.isRTL = props.dir ? props.dir === 'rtl' : isRTL;
+    supportedProps.dir = componentDirection;
     supportedProps.style = [styles.view$raw, hasTextAncestor && styles.inline, props.style];
     if (props.href != null) {
       component = 'a';
@@ -125,9 +129,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    const element = createElement(component, supportedProps);
-
-    return <RTLContext.Provider value={supportedProps.isRTL}>{element}</RTLContext.Provider>;
+    return createElement(component, supportedProps, { writingDirection });
   }
 );
 

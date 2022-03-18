@@ -66,7 +66,7 @@ You have greater control over how styles are composed when compared to using cla
 
 ### Short-form properties
 
-The only supported short-form CSS properties accept only a *single* value.
+The supported short-form CSS properties accept only a *single* value.
 
 {% call macro.prop('borderColor', '?string') %}
 Accepts only a single value that is applied to all sides.

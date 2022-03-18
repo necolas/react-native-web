@@ -67,5 +67,6 @@ module.exports = {
   render: true,
   unmountComponentAtNode: true,
   useColorScheme: true,
+  useLocaleContext: true,
   useWindowDimensions: true
 };

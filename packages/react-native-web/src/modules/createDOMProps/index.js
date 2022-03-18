@@ -40,7 +40,7 @@ const pointerEventsStyles = StyleSheet.create({
   }
 });
 
-const createDOMProps = (elementType, props) => {
+const createDOMProps = (elementType, props, options) => {
   if (!props) {
     props = emptyObject;
   }
@@ -100,7 +100,6 @@ const createDOMProps = (elementType, props) => {
     pointerEvents,
     style,
     testID,
-    isRTL,
     // Rest
     ...domProps
   } = props;
@@ -319,7 +318,7 @@ const createDOMProps = (elementType, props) => {
   // Resolve styles
   const [className, inlineStyle] = StyleSheet(
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
-    isRTL
+    { writingDirection: options ? options.writingDirection : 'ltr' }
   );
   if (className) {
     domProps.className = className;

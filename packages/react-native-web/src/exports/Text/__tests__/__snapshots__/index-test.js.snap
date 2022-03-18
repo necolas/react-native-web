@@ -1,12 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/Text allows "dir" to be overridden 1`] = `
-<div
-  class="css-text-1rynq56"
-  dir="rtl"
-/>
-`;
-
 exports[`components/Text default 1`] = `
 <div
   class="css-text-1rynq56"
@@ -75,6 +68,20 @@ exports[`components/Text prop "accessibilityRole" value is set 1`] = `
 />
 `;
 
+exports[`components/Text prop "dir" value is "ltr" 1`] = `
+<div
+  class="css-text-1rynq56"
+  dir="ltr"
+/>
+`;
+
+exports[`components/Text prop "dir" value is "rtl" 1`] = `
+<div
+  class="css-text-1rynq56"
+  dir="rtl"
+/>
+`;
+
 exports[`components/Text prop "href" href with accessibilityRole 1`] = `
 <a
   class="css-text-1rynq56"
@@ -127,10 +134,18 @@ exports[`components/Text prop "hrefAttrs" value is set 1`] = `
 />
 `;
 
+exports[`components/Text prop "lang" ar 1`] = `
+<div
+  class="css-text-1rynq56"
+  dir="rtl"
+  lang="ar"
+/>
+`;
+
 exports[`components/Text prop "lang" fr 1`] = `
 <div
   class="css-text-1rynq56"
-  dir="auto"
+  dir="ltr"
   lang="fr"
 />
 `;
@@ -139,6 +154,14 @@ exports[`components/Text prop "lang" undefined 1`] = `
 <div
   class="css-text-1rynq56"
   dir="auto"
+/>
+`;
+
+exports[`components/Text prop "lang" with dir 1`] = `
+<div
+  class="css-text-1rynq56"
+  dir="ltr"
+  lang="ar"
 />
 `;
 

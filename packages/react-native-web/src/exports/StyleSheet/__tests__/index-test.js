@@ -280,18 +280,74 @@ describe('StyleSheet', () => {
     });
 
     test('polyfills logical styles', () => {
-      const a = StyleSheet.create({ x: { start: '12.34%' } }).x;
-      const b = StyleSheet.create({ x: { textAlign: 'start' } }).x;
-      const c = StyleSheet.create({ x: { marginEnd: 10 } }).x;
-      const isRTL = true;
+      const inlineA = { start: '12.34%' };
+      const inlineB = { textAlign: 'start' };
+      const inlineC = { marginEnd: 10 };
 
-      expect(StyleSheet([a, b, c])).toMatchInlineSnapshot(`
+      const a = StyleSheet.create({ x: { ...inlineA } }).x;
+      const b = StyleSheet.create({ x: { ...inlineB } }).x;
+      const c = StyleSheet.create({ x: { ...inlineC } }).x;
+      const writingDirection = 'rtl';
+
+      // inline styles
+      const inlineStyle = [inlineA, inlineB, inlineC];
+      expect(StyleSheet(inlineStyle)).toMatchInlineSnapshot(`
+        [
+          "",
+          {
+            "left": "12.34%",
+            "marginRight": "10px",
+            "textAlign": "left",
+          },
+        ]
+      `);
+      expect(StyleSheet(inlineStyle, { writingDirection })).toMatchInlineSnapshot(`
+        [
+          "",
+          {
+            "marginLeft": "10px",
+            "right": "12.34%",
+            "textAlign": "right",
+          },
+        ]
+      `);
+      expect(
+        StyleSheet(
+          [inlineStyle, { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }],
+          { writingDirection }
+        )
+      ).toMatchInlineSnapshot(`
+        [
+          "",
+          {
+            "marginLeft": "0px",
+            "marginRight": "0px",
+            "right": "12.34%",
+            "textAlign": "right",
+          },
+        ]
+      `);
+      expect(StyleSheet([inlineStyle, { marginEnd: null, marginLeft: 11 }], { writingDirection }))
+        .toMatchInlineSnapshot(`
+        [
+          "",
+          {
+            "marginLeft": "11px",
+            "right": "12.34%",
+            "textAlign": "right",
+          },
+        ]
+      `);
+
+      // static styles
+      const staticStyle = [a, b, c];
+      expect(StyleSheet(staticStyle)).toMatchInlineSnapshot(`
         [
           "r-left-2s0hu9 r-textAlign-fdjqy7 r-marginRight-zso239",
           null,
         ]
       `);
-      expect(StyleSheet([a, b, c], isRTL)).toMatchInlineSnapshot(`
+      expect(StyleSheet(staticStyle, { writingDirection })).toMatchInlineSnapshot(`
         [
           "r-right-1bnbe1j r-textAlign-1ff274t r-marginLeft-1n0xq6e",
           null,
@@ -300,8 +356,10 @@ describe('StyleSheet', () => {
       // logical wins
       expect(
         StyleSheet(
-          [a, b, c, { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }],
-          isRTL
+          [staticStyle, { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }],
+          {
+            writingDirection
+          }
         )
       ).toMatchInlineSnapshot(`
         [
@@ -313,7 +371,7 @@ describe('StyleSheet', () => {
         ]
       `);
       // logical can be nulled
-      expect(StyleSheet([a, b, c, { marginEnd: null, marginLeft: 11 }], isRTL))
+      expect(StyleSheet([staticStyle, { marginEnd: null, marginLeft: 11 }], { writingDirection }))
         .toMatchInlineSnapshot(`
         [
           "r-right-1bnbe1j r-textAlign-1ff274t",

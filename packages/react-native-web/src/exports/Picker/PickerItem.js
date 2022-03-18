@@ -22,5 +22,5 @@ type Props = {
 export default function PickerItem(props: Props) {
   const { color, label, testID, value } = props;
   const style = { color };
-  return createElement('option', { style, testID, value }, label);
+  return createElement('option', { children: label, style, testID, value });
 }

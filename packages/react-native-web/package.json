@@ -22,7 +22,7 @@
     "normalize-css-color": "^1.0.2",
     "postcss-value-parser": "^4.2.0",
     "prop-types": "^15.6.0",
-    "styleq": "0.0.0-b4fc5da"
+    "styleq": "0.0.0-afc6b2c59"
   },
   "peerDependencies": {
     "react": ">=17.0.2",

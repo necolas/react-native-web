@@ -20,7 +20,7 @@ import useLayoutEffect from '../../modules/useLayoutEffect';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
-import RTLContext from '../../modules/RTLContext';
+import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 
@@ -337,7 +337,7 @@ const TextInput: React.AbstractComponent<
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   });
-  const isRTL = React.useContext(RTLContext);
+  const { direction: contextDirection } = useLocaleContext();
 
   const supportedProps = pickProps(props);
   supportedProps.autoCapitalize = autoCapitalize;
@@ -369,11 +369,13 @@ const TextInput: React.AbstractComponent<
 
   supportedProps.ref = setRef;
 
-  supportedProps.isRTL = isRTL || dir === 'rtl';
+  const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+  const componentDirection = props.dir || langDirection;
+  const writingDirection = componentDirection || contextDirection;
 
-  const element = createElement(component, supportedProps);
+  const element = createElement(component, supportedProps, { writingDirection });
 
-  return <RTLContext.Provider value={supportedProps.isRTL}>{element}</RTLContext.Provider>;
+  return element;
 });
 
 TextInput.displayName = 'TextInput';

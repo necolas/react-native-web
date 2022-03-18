@@ -73,6 +73,7 @@ export type TextProps = {
     | 'none'
     | 'text',
   dir?: 'auto' | 'ltr' | 'rtl',
+  lang?: string,
   numberOfLines?: ?number,
   onPress?: (e: any) => void,
   selectable?: boolean,

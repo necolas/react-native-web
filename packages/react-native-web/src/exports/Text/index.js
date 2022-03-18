@@ -19,9 +19,9 @@ import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
-import RTLContext from '../../modules/RTLContext';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
+import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
 const forwardPropsList = {
   ...forwardedProps.defaultProps,
@@ -42,7 +42,6 @@ const pickProps = (props) => pick(props, forwardPropsList);
 const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = React.forwardRef(
   (props, forwardedRef) => {
     const {
-      dir,
       hrefAttrs,
       numberOfLines,
       onClick,
@@ -70,7 +69,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);
-    const isRTL = React.useContext(RTLContext);
+    const { direction: contextDirection } = useLocaleContext();
 
     useElementLayout(hostRef, onLayout);
     useResponderEvents(hostRef, {
@@ -105,18 +104,21 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     );
 
     let component = hasTextAncestor ? 'span' : 'div';
+
+    const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+    const componentDirection = props.dir || langDirection;
+    const writingDirection = componentDirection || contextDirection;
+
     const supportedProps = pickProps(rest);
-    supportedProps.dir = dir;
+    supportedProps.dir = componentDirection;
     // 'auto' by default allows browsers to infer writing direction (root elements only)
     if (!hasTextAncestor) {
-      supportedProps.dir = dir != null ? dir : 'auto';
+      supportedProps.dir = componentDirection != null ? componentDirection : 'auto';
     }
 
     if (onClick || onPress) {
       supportedProps.onClick = handleClick;
     }
-
-    supportedProps.isRTL = isRTL || dir === 'rtl';
 
     supportedProps.style = [
       numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
@@ -150,11 +152,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    const element = (
-      <RTLContext.Provider value={supportedProps.isRTL}>
-        {createElement(component, supportedProps)}
-      </RTLContext.Provider>
-    );
+    const element = createElement(component, supportedProps, { writingDirection });
 
     return hasTextAncestor ? (
       element

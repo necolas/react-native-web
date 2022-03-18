@@ -72,7 +72,7 @@ The initial value of the input. Useful for simple use-cases where you don't want
 {% endcall %}
 
 {% call macro.prop('dir', '?("auto" | "ltr" | "rtl") = "auto"') %}
-Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir)
+Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir).
 {% endcall %}
 
 {% call macro.prop('disabled', '?boolean = false') %}
@@ -88,7 +88,7 @@ Hints at the type of data that might be entered by the user while editing the el
 {% endcall %}
 
 {% call macro.prop('lang', '?string') %}
-Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
+Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('maxLength', '?string') %}

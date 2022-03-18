@@ -36,7 +36,7 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | SectionList              | ✓      |  |
 | StatusBar                | (✓)    | Mock. No equivalent web APIs. |
 | Switch                   | ✓      |  |
-| Text                     | ✓      | Missing `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)) support. |
+| Text                     | ✓      | No `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)). |
 | TextInput                | ✓      | Missing rich text features ([#1023](https://github.com/necolas/react-native-web/issues/1023)), and auto-expanding behaviour ([#795](https://github.com/necolas/react-native-web/issues/795)). |
 | Touchable                | ✓      | Includes additional support for mouse and keyboard interactions. |
 | TouchableHighlight       | ✓      |  |
@@ -63,7 +63,7 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | Dimensions               | ✓      |  |
 | Easing                   | ✓      |  |
 | Geolocation              | ✓      |  |
-| I18nManager              | ✓      | Includes additional support for runtime switch to RTL. |
+| I18nManager              | (✓)    | Mock. See [localization](https://necolas.github.io/react-native-web/docs/localization/) for preferred approach. |
 | InteractionManager       | (✓)    |  |
 | Keyboard                 | (✓)    | Mock. |
 | LayoutAnimation          | (✓)    | Missing translation to web animations. |

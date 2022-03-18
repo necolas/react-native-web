@@ -89,9 +89,16 @@ describe('components/View', () => {
     });
   });
 
-  test('allows "dir" to be overridden', () => {
-    const { container } = render(<View dir="rtl" />);
-    expect(container.firstChild).toMatchSnapshot();
+  describe('prop "dir"', () => {
+    test('value is "ltr"', () => {
+      const { container } = render(<View dir="ltr" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is "rtl"', () => {
+      const { container } = render(<View dir="rtl" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
   });
 
   describe('prop "href"', () => {
@@ -137,6 +144,28 @@ describe('components/View', () => {
         target: null
       };
       const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "lang"', () => {
+    test('undefined', () => {
+      const { container } = render(<View />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('fr', () => {
+      const { container } = render(<View lang="fr" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('ar', () => {
+      const { container } = render(<View lang="ar" />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('with dir', () => {
+      const { container } = render(<View dir="ltr" lang="ar" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

@@ -76,7 +76,7 @@ If `href` is defined, this prop defines related attributes to include on the anc
 {% endcall %}
 
 {% call macro.prop('lang', '?string') %}
-Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang).
+Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('nativeID', '?string') %}

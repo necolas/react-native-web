@@ -16,7 +16,6 @@ import {
   Button,
   Image,
   PixelRatio,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -88,10 +87,6 @@ function withRTLState(Component) {
 }
 
 const RTLToggler = ({ isRTL, setRTL }) => {
-  if (Platform.OS !== 'ios') {
-    return <Text style={styles.rtlToggler}>{isRTL ? 'RTL' : 'LTR'}</Text>;
-  }
-
   const toggleRTL = () => setRTL(!isRTL);
   return (
     <Button
@@ -115,13 +110,13 @@ const PaddingExample = withRTLState(({ isRTL, setRTL }) => {
       <Text style={styles.bold}>Demo: </Text>
       <Text>The {color} is padding.</Text>
       <View
+        dir={isRTL ? 'rtl' : 'ltr'}
         style={{
           backgroundColor: color,
           paddingStart: 50,
           paddingEnd: 10,
           borderWidth: 1,
-          borderColor: color,
-          direction: isRTL ? 'rtl' : 'ltr'
+          borderColor: color
         }}
       >
         <View
@@ -151,11 +146,11 @@ const MarginExample = withRTLState(({ isRTL, setRTL }) => {
       <Text style={styles.bold}>Demo: </Text>
       <Text>The green is margin.</Text>
       <View
+        dir={isRTL ? 'rtl' : 'ltr'}
         style={{
           backgroundColor: 'green',
           borderWidth: 1,
-          borderColor: 'green',
-          direction: isRTL ? 'rtl' : 'ltr'
+          borderColor: 'green'
         }}
       >
         <View
@@ -186,11 +181,11 @@ const PositionExample = withRTLState(({ isRTL, setRTL }) => {
       <Text style={styles.bold}>Demo: </Text>
       <Text>The orange is position.</Text>
       <View
+        dir={isRTL ? 'rtl' : 'ltr'}
         style={{
           backgroundColor: 'orange',
           borderWidth: 1,
-          borderColor: 'orange',
-          direction: isRTL ? 'rtl' : 'ltr'
+          borderColor: 'orange'
         }}
       >
         <View
@@ -210,11 +205,11 @@ const PositionExample = withRTLState(({ isRTL, setRTL }) => {
       <Text style={styles.bold}>Demo: </Text>
       <Text>The orange is position.</Text>
       <View
+        dir={isRTL ? 'rtl' : 'ltr'}
         style={{
           backgroundColor: 'orange',
           borderWidth: 1,
-          borderColor: 'orange',
-          direction: isRTL ? 'rtl' : 'ltr'
+          borderColor: 'orange'
         }}
       >
         <View
@@ -239,7 +234,7 @@ const BorderWidthExample = withRTLState(({ isRTL, setRTL }) => {
       <Text>borderEndWidth: 50</Text>
       <Text />
       <Text style={styles.bold}>Demo: </Text>
-      <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      <View dir={isRTL ? 'rtl' : 'ltr'}>
         <View
           style={{
             borderStartWidth: 10,
@@ -263,7 +258,7 @@ const BorderColorExample = withRTLState(({ isRTL, setRTL }) => {
       <Text>borderEndColor: 'green',</Text>
       <Text />
       <Text style={styles.bold}>Demo: </Text>
-      <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      <View dir={isRTL ? 'rtl' : 'ltr'}>
         <View
           style={{
             borderStartColor: 'red',
@@ -292,7 +287,7 @@ const BorderRadiiExample = withRTLState(({ isRTL, setRTL }) => {
       <Text>borderBottomEndRadius: 40</Text>
       <Text />
       <Text style={styles.bold}>Demo: </Text>
-      <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      <View dir={isRTL ? 'rtl' : 'ltr'}>
         <View
           style={{
             borderWidth: 10,
@@ -387,20 +382,14 @@ class LayoutRTLExample extends React.Component {
     return (
       <ScrollView dir={this.state.isRTL ? 'rtl' : 'ltr'} style={[styles.container]}>
         <Block title={'Current layout direction'}>
-          <View style={styles.directionBox}>
+          <View dir="ltr" style={styles.directionBox}>
             <Text style={styles.directionText}>
               {this.state.isRTL ? 'Right-to-Left' : 'Left-to-Right'}
             </Text>
+            <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
           </View>
         </Block>
-        <Block title={'Quickly test RTL layout'}>
-          <View dir="ltr" style={[styles.flexDirectionRow, styles.switchRow]}>
-            <Text style={{ fontWeight: 'bold' }}>forceRTL</Text>
-            <View>
-              <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
-            </View>
-          </View>
-        </Block>
+
         <TextAlignmentExample
           description={'Depends on the text content.'}
           style={styles.fontSizeSmall}
@@ -465,7 +454,9 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   directionBox: {
+    alignItems: 'center',
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#f8f8f8',
     borderWidth: 0.5,
     borderColor: 'black'
@@ -564,9 +555,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function I18nManagerPage() {
+export default function LocalizationPage() {
   return (
-    <Example title="I18nManager">
+    <Example title="Localized layout">
       <LayoutRTLExample />
     </Example>
   );

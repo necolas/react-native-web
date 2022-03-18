@@ -116,6 +116,7 @@ export type ViewProps = {
   children?: ?any,
   dir?: 'ltr' | 'rtl',
   focusable?: ?boolean,
+  lang?: string,
   nativeID?: ?string,
   onBlur?: (e: any) => void,
   onClick?: (e: any) => void,

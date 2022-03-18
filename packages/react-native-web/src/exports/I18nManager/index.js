@@ -8,53 +8,25 @@
  * @flow
  */
 
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-
 type I18nManagerStatus = {
   allowRTL: (allowRTL: boolean) => void,
   forceRTL: (forceRTL: boolean) => void,
-  getConstants: () => Constants,
-  setPreferredLanguageRTL: (setRTL: boolean) => void
+  getConstants: () => Constants
 };
 
 type Constants = {
   isRTL: boolean
 };
 
-let isPreferredLanguageRTL = false;
-let isRTLAllowed = true;
-let isRTLForced = false;
-
-const isRTL = () => {
-  if (isRTLForced) {
-    return true;
-  }
-  return isRTLAllowed && isPreferredLanguageRTL;
-};
-
-const onDirectionChange = () => {
-  if (ExecutionEnvironment.canUseDOM) {
-    if (document.documentElement && document.documentElement.setAttribute) {
-      document.documentElement.setAttribute('dir', isRTL() ? 'rtl' : 'ltr');
-    }
-  }
-};
-
 const I18nManager: I18nManagerStatus = {
-  allowRTL(bool) {
-    isRTLAllowed = bool;
-    onDirectionChange();
+  allowRTL() {
+    return;
   },
-  forceRTL(bool) {
-    isRTLForced = bool;
-    onDirectionChange();
+  forceRTL() {
+    return;
   },
   getConstants(): Constants {
-    return { isRTL: isRTL() };
-  },
-  setPreferredLanguageRTL(bool) {
-    isPreferredLanguageRTL = bool;
-    onDirectionChange();
+    return { isRTL: false };
   }
 };
 

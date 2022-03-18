@@ -62,7 +62,7 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 {% endcall %}
 
 {% call macro.prop('dir', '?("ltr" | "rtl")') %}
-Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir)
+Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir).
 {% endcall %}
 
 {% call macro.prop('focusable', '?boolean') %}
@@ -75,6 +75,10 @@ If `href` is defined, the view is rendered as an anchor tag pointing to this URL
 
 {% call macro.prop('hrefAttrs', '?Object') %}
 If `href` is defined, this prop defines related attributes to include on the anchor (e.g., `download`, `rel`, `target`) which may modify its behavior.
+{% endcall %}
+
+{% call macro.prop('lang', '?string') %}
+Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('nativeID', '?string') %}
