@@ -243,7 +243,7 @@ The `focusable` prop determines whether a component is user-focusable and appear
 ```
 
 :::callout
-**Did you know?** Any element (including elements not in the keybaord tab flow) can be programmatically focused via `UIManager.focus(viewRef.current)`.
+**Did you know?** Any element (including elements not in the keyboard tab flow) can be programmatically focused via `UIManager.focus(viewRef.current)`.
 :::
 
 ### Accessible HTML
