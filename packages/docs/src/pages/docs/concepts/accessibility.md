@@ -157,7 +157,7 @@ Equivalent to [aria-readonly](https://www.w3.org/TR/wai-aria-1.2/#aria-readonly)
 Equivalent to [aria-required](https://www.w3.org/TR/wai-aria-1.2/#aria-required).
 {% endcall %}
 
-{% call macro.prop('accessibilityRole', '?boolean') %}
+{% call macro.prop('accessibilityRole', '?string') %}
 Equivalent to [role](https://www.w3.org/TR/wai-aria-1.2/#role_definitions).
 {% endcall %}
 
