@@ -45,7 +45,7 @@ The main purpose of this repository is to help evolve React web and native devel
 
 ### Code of conduct
 
-Facebook has adopted a [Code of Conduct][code-of-conduct] that this project expects all participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
+Meta has adopted a [Code of Conduct][code-of-conduct] that this project expects all participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
 
 ### Contributing guide
 
@@ -63,7 +63,7 @@ React Native for Web is [MIT licensed](./LICENSE). By contributing to React Nati
 [package-url]: https://www.npmjs.com/package/react-native-web
 [ci-badge]: https://github.com/necolas/react-native-web/workflows/tests/badge.svg
 [ci-url]: https://github.com/necolas/react-native-web/actions
-[react-native-url]: https://facebook.github.io/react-native/
+[react-native-url]: https://reactnative.dev/
 [contributing-url]: https://github.com/necolas/react-native-web/blob/master/.github/CONTRIBUTING.md
 [good-first-issue-url]: https://github.com/necolas/react-native-web/labels/good%20first%20issue
-[code-of-conduct]: https://code.facebook.com/codeofconduct
+[code-of-conduct]: https://opensource.fb.com/code-of-conduct/
