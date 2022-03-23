@@ -10,13 +10,13 @@ type InlineStyle = {
 type EitherStyle = CompiledStyle | InlineStyle;
 
 type StylesArray<+T> = T | $ReadOnlyArray<StylesArray<T>>;
-type Styles = StylesArray<CompiledStyle | InlineStyle | false>;
+type Styles = StylesArray<EitherStyle | false | void>;
 type Style<+T = EitherStyle> = StylesArray<false | ?T>;
 
 type StyleqOptions = {
   disableCache?: boolean,
   disableMix?: boolean,
-  transform?: (CompiledStyle) => CompiledStyle,
+  transform?: (EitherStyle) => EitherStyle,
 };
 
 type StyleqResult = [string, InlineStyle | null];
@@ -30,5 +30,11 @@ type IStyleq = {
 declare module "styleq" {
   declare module.exports: {
     styleq: IStyleq
+  };
+}
+
+declare module "styleq/transform-localize-style" {
+  declare module.exports: {
+    localizeStyle: (style: EitherStyle, isRTL: boolean) => EitherStyle
   };
 }

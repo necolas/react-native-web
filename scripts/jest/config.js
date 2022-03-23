@@ -10,7 +10,7 @@ module.exports = {
   ],
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages'],
-  setupFiles: ['jest-canvas-mock', require.resolve('./setupFiles.dom.js')],
+  setupFiles: [require.resolve('./setupFiles.dom.js')],
   snapshotFormat: {
     printBasicPrototype: false
   },

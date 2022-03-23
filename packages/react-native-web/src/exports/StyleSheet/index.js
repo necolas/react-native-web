@@ -9,7 +9,7 @@
 
 import { atomic, classic, inline } from './compiler';
 import { createSheet } from './dom';
-import { localizeStyle } from 'styleq/dist/transform-localize-style';
+import { localizeStyle } from 'styleq/transform-localize-style';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
@@ -22,8 +22,8 @@ const sheet = createSheet();
 function customStyleq(styles, isRTL) {
   return styleq.factory({
     transform(style) {
-      if (staticStyleMap.has(style)) {
-        const compiledStyle = staticStyleMap.get(style);
+      const compiledStyle = staticStyleMap.get(style);
+      if (compiledStyle != null) {
         return localizeStyle(compiledStyle, isRTL);
       }
       return style;
@@ -71,7 +71,8 @@ const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
 function create(styles: Object): {| [key: string]: { [key: string]: any } |} {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
-    if (styleObj != null) {
+    // Only compile at runtime if the style is not already compiled
+    if (styleObj != null && styleObj.$$css !== true) {
       let compiledStyles;
       if (key.indexOf('$raw') > -1) {
         compiledStyles = compileAndInsertReset(styleObj, key.split('$raw')[0]);
