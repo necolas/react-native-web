@@ -10,6 +10,7 @@
 import type { ColorValue, GenericStyleProp } from '../../types';
 import type { TextStyle } from '../Text/types';
 import type { ViewProps } from '../View/types';
+import type { HTMLInputTypeAttribute } from 'react';
 
 export type TextInputStyle = {
   ...TextStyle,
@@ -64,28 +65,6 @@ export type TextInputProps = {
   selectionColor?: ?ColorValue,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
-  type?:
-    | 'button'
-    | 'checkbox'
-    | 'color'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'file'
-    | 'hidden'
-    | 'image'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
-    | 'search'
-    | 'submit'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week',
+  type?: HTMLInputTypeAttribute,
   value?: ?string
 };
