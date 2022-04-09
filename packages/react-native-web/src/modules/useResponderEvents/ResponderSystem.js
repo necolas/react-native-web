@@ -603,8 +603,11 @@ const documentEventsBubblePhase = [
   'select',
   'selectionchange'
 ];
+
+const __reactResponderSystemActiveKey = `__reactResponderSystemActiveKey${Math.random()}`;
+
 export function attachListeners() {
-  if (canUseDOM && window.__reactResponderSystemActive == null) {
+  if (canUseDOM && window[__reactResponderSystemActiveKey] == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener);
@@ -612,7 +615,7 @@ export function attachListeners() {
     documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
-    window.__reactResponderSystemActive = true;
+    window[__reactResponderSystemActiveKey] = true;
   }
 }
 
