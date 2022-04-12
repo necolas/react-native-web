@@ -66,12 +66,16 @@ class Linking {
 
   /**
    * Try to open the given url in a secure fashion. The method returns a Promise object.
+   * If a target is passed (including undefined) that target will be used, otherwise '_blank'.
    * If the url opens, the promise is resolved. If not, the promise is rejected.
-   * Dispatches the `onOpen` event if `url` is opened successfully
+   * Dispatches the `onOpen` event if `url` is opened successfully.
    */
-  openURL(url: string): Promise<Object | void> {
+  openURL(url: string, target?: string): Promise<Object | void> {
+    if (arguments.length == 1) {
+      target = '_blank';
+    }
     try {
-      open(url);
+      open(url, target);
       this._dispatchEvent('onOpen', url);
       return Promise.resolve();
     } catch (e) {
@@ -85,13 +89,13 @@ class Linking {
   }
 }
 
-const open = (url) => {
+const open = (url, string) => {
   if (canUseDOM) {
     const urlToOpen = new URL(url, window.location).toString();
     if (urlToOpen.indexOf('tel:') === 0) {
       window.location = urlToOpen;
     } else {
-      window.open(urlToOpen, '_blank', 'noopener');
+      window.open(urlToOpen, string, 'noopener');
     }
   }
 };
