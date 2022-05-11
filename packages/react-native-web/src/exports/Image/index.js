@@ -193,7 +193,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const selectedSource = shouldDisplaySource ? source : defaultSource;
     const displayImageUri = resolveAssetUri(selectedSource);
     const imageSizeStyle = resolveAssetDimensions(selectedSource);
-    const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
+    const backgroundImage = displayImageUri ? `url("${encodeURI(displayImageUri)}")` : null;
     const backgroundSize = getBackgroundSize();
 
     // Accessibility image allows users to trigger the browser's image context menu
