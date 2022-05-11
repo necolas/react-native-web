@@ -32,7 +32,7 @@ export default function createStyleResolver() {
   const init = () => {
     inserted = { css: {}, ltr: {}, rtl: {}, rtlNoSwap: {} };
     sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(STYLE_ELEMENT_ID));
-    cache = {};
+    cache = Object.create(null);
     modality((rule) => sheet.insert(rule, STYLE_GROUPS.modality));
     initialRules.forEach((rule) => {
       sheet.insert(rule, STYLE_GROUPS.reset);
@@ -43,14 +43,14 @@ export default function createStyleResolver() {
 
   function addToCache(className, prop, value) {
     if (!cache[prop]) {
-      cache[prop] = {};
+      cache[prop] = Object.create(null);
     }
     cache[prop][value] = className;
   }
 
   function getClassName(prop, value) {
     const val = stringifyValueWithProperty(value, prop);
-    return cache[prop] && cache[prop].hasOwnProperty(val) && cache[prop][val];
+    return cache[prop] && Object.hasOwnProperty.call(cache[prop], val) && cache[prop][val];
   }
 
   function _injectRegisteredStyle(id) {

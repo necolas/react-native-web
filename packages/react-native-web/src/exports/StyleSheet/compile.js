@@ -29,7 +29,7 @@ const cache = {
   get(property, value) {
     if (
       cache[property] != null &&
-      cache[property].hasOwnProperty(value) &&
+      Object.hasOwnProperty.call(cache[property], value) &&
       cache[property][value] != null
     ) {
       return cache[property][value];
@@ -37,11 +37,12 @@ const cache = {
   },
   set(property, value, object) {
     if (cache[property] == null) {
-      cache[property] = {};
+      cache[property] = Object.create(null);
     }
     return (cache[property][value] = object);
   }
 };
+Object.setPrototypeOf(cache, null);
 
 /**
  * Compile style to atomic CSS rules.
