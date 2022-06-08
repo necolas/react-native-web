@@ -32,7 +32,7 @@ exports[`components/Button prop "color" 1`] = `
 exports[`components/Button prop "disabled" 1`] = `
 <div
   aria-disabled="true"
-  class="css-view-1dbjc4n r-backgroundColor-11mpjr4 r-borderRadius-1jkafct r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
+  class="css-view-1dbjc4n r-backgroundColor-11mpjr4 r-borderRadius-1jkafct r-pointerEvents-633pao r-transitionProperty-1i6wzkk r-userSelect-lrvibr"
   role="button"
   style="transition-duration: 0s;"
   tabindex="-1"
