@@ -126,6 +126,7 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
       {...pressEventHandlers}
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
+      pointerEvents={disabled ? 'none' : undefined}
       ref={setRef}
       style={[
         styles.root,

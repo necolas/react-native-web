@@ -205,6 +205,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onContextMenu={contextMenuHandler}
       onFocus={focusHandler}
       onKeyDown={keyDownHandler}
+      pointerEvents={disabled ? 'none' : rest.pointerEvents}
       ref={setRef}
       style={[
         !disabled && styles.root,

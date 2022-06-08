@@ -152,7 +152,7 @@ exports[`components/Pressable prop "accessibilityRole" value is set 1`] = `
 exports[`components/Pressable prop "disabled" 1`] = `
 <div
   aria-disabled="true"
-  class="css-view-175oi2r"
+  class="css-view-175oi2r r-pointerEvents-633pao"
   tabindex="-1"
 />
 `;
