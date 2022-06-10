@@ -2,11 +2,12 @@
 title: Unstable APIs
 date: Last Modified
 permalink: /docs/unstable-apis/index.html
-description: 
+description:
 eleventyNavigation:
   key: Unstable APIs
   parent: Appendix
   order: 1
+  label: "Change"
 ---
 
 :::lead
@@ -28,27 +29,22 @@ This also works with composite components defined in your existing component gal
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
-import { unstable_createElement } from 'react-native-web';
-import { StyleSheet } from 'react-native';
+import { unstable_createElement, useLocaleContext } from 'react-native-web';
+import { StyleSheet, } from 'react-native';
 
-const CustomButton = (props) => unstable_createElement(RaisedButton, {
-  ...props,
-  style: [ styles.button, props.style ]
-});
+const CustomButton = (props) => {
+  const { direction } = useLocaleContext();
+  return unstable_createElement(RaisedButton, {
+    ...props,
+    style: [ styles.button, props.style ]
+  });
+}, { writingDirection: direction });
 
 const styles = StyleSheet.create({
   button: {
     padding: 20
   }
 });
-```
-
-And `unstable_createElement` can be used as drop-in replacement for `React.createElement`:
-
-```jsx
-/* @jsx unstable_createElement */
-import { unstable_createElement } from 'react-native-web';
-const Video = (props) => <video {...props} style={[ { marginVertical: 10 }, props.style ]} />
 ```
 
 Remember that React Native styles are not the same as React DOM styles, and care needs to be taken not to pass React DOM styles into your React Native wrapped components.

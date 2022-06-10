@@ -17,10 +17,9 @@ Understanding {{ site.name }} browser compatibility.
 The browsers with known support include:
 
 * Chrome 60+
-* Safari 10+ / iOS Safari 10+
+* Safari 10.1+ / iOS Safari 10.1+
 * Edge 12+
 * Firefox ESR+
-* Internet Explorer 11
 * Opera
 
 If specific exports have a different browser support expectation, it will be documented with that export.

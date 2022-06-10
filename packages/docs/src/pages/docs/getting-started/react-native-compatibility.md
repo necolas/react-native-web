@@ -12,7 +12,7 @@ eleventyNavigation:
 React Native for Web provides compatibility with the vast majority of React Native's JavaScript API. Features deprecated in React Native should be considered *unsupported* in React Native for Web.
 :::
 
-**Best used with React Native >= 0.63**.
+**Best used with React Native >= 0.68**.
 
 Visit the [React Native Directory](https://reactnative.directory/?web=true) to find React Native packages with known web support.
 

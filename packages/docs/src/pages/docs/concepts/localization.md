@@ -5,6 +5,7 @@ permalink: /docs/localization/index.html
 eleventyNavigation:
   key: Localization
   parent: Concepts
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

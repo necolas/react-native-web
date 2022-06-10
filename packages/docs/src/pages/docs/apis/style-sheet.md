@@ -5,6 +5,7 @@ permalink: /docs/style-sheet/index.html
 eleventyNavigation:
   key: StyleSheet
   parent: APIs
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -48,9 +49,9 @@ Combines two styles such that the last style overrides properties of the first s
 {% endcall %}
 
 {% call macro.prop('create', '({ [key]: ruleset }) => ({ [key]: number })') %}
-Define style objects. Each key of the object passed to `create` must define a style object. These values are opaque and should not be introspected.
+Define style objects. Each key of the object passed to `create` must define a style object. These values should not be introspected at runtime.
 {% endcall %}
 
 {% call macro.prop('flatten', '(styles: Style) => Object') %}
-Lookup a style object by ID or flatten an array of styles into a single style object.
+Flatten an array of styles into a single style object. **This is not recommended as it is not compatible with static extraction of styles to CSS.**
 {% endcall %}
