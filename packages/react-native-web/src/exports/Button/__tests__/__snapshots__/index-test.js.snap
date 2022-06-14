@@ -19,7 +19,7 @@ exports[`components/Button prop "color" 1`] = `
 <div
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-borderRadius-1jkafct"
   role="button"
-  style="transition-duration: 0s; background-color: rgb(0, 0, 255);"
+  style="background-color: rgb(0, 0, 255); transition-duration: 0s;"
   tabindex="0"
 >
   <div
