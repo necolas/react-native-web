@@ -5,11 +5,15 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const glob = require('glob');
+const minimist = require('minimist');
 const path = require('path');
 
 const args = process.argv.slice(2);
-const version = args[0];
-const skipGit = args[1] === '--skip-git';
+const argv = minimist(args);
+
+const version = argv._[0];
+const skipGit = argv['skip-git'];
+const oneTimeCode = argv.otp;
 
 console.log(`Publishing ${version}`);
 
@@ -53,7 +57,7 @@ if (!skipGit) {
 // Publish public packages
 workspaces.forEach(({ directory, packageJson }) => {
   if (!packageJson.private) {
-    execSync(`cd ${directory} && npm publish`);
+    execSync(`cd ${directory} && npm publish --otp ${oneTimeCode}`);
   }
 });
 
