@@ -4,7 +4,7 @@ export default function Example(props) {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <Text accessibilityLabel="Back" href="/" style={styles.back}>
+        <Text accessibilityLabel="Back" href="/react-native-web/examples/" style={styles.back}>
           <svg
             style={{ fill: '#555', height: '100%' }}
             viewBox="0 0 140 140"

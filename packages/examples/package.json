@@ -3,10 +3,11 @@
   "name": "examples",
   "version": "0.18.1",
   "scripts": {
-    "dev": "next",
+    "dev": "open http://localhost:3000/react-native-web/examples/ & next",
     "build": "next build",
-    "start": "next start"
-  },
+    "start": "next start",
+    "export": "next build && next export -o dist"
+  }, 
   "dependencies": {
     "next": "^12.1.0",
     "react": "^17.0.2",

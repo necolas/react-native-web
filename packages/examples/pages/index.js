@@ -37,7 +37,7 @@ export default function IndexPage() {
       <View accessibilityRole="list">
         {process.env.pages.map((name) => (
           <View accessibilityRole="listitem" key={name} style={styles.listitem}>
-            <Link href={'/' + name} style={styles.pageLink}>
+            <Link href={name} style={styles.pageLink}>
               {name}
             </Link>
           </View>

@@ -8,5 +8,7 @@ const pages = fs
 
 module.exports = {
   outDir: 'dist',
-  env: { pages }
+  basePath: '/react-native-web/examples',
+  env: { pages },
+  trailingSlash: true
 };

@@ -16,6 +16,7 @@
     "docs:release": "yarn docs:build && git checkout gh-pages && rm -rf ./docs && mv packages/docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
     "examples": "cd packages/examples && yarn dev",
     "examples:build": "cd packages/examples && yarn build",
+    "examples:release": "cd packages/examples && yarn export && cd ../../ && git checkout gh-pages && rm -rf ./docs/examples && mv packages/examples/dist ./docs/examples && git add -A && git commit -m \"Deploy examples\" && git push origin gh-pages && git checkout -",
     "flow": "flow",
     "fmt": "prettier --write \"**/*.js\"",
     "fmt:report": "prettier --check \"**/*.js\"",
@@ -26,7 +27,7 @@
     "lint:report": "eslint packages scripts",
     "prerelease": "yarn test && yarn compile",
     "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn docs:release && yarn benchmarks:release",
+    "postrelease": "yarn docs:release && yarn benchmarks:release && yarn examples:release",
     "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
   },
   "devDependencies": {
