@@ -23,6 +23,13 @@ describe('components/Modal', () => {
     expect(insideElement).not.toBe(document.body);
   });
 
+  test('forwards props', () => {
+    const { getByTestId } = render(
+      <Modal accessibilityLabel="label" accessibilityLabelledBy="labelledby" testID="root" />
+    );
+    expect(getByTestId('root')).toMatchSnapshot();
+  });
+
   test('render children when visible', () => {
     const { getByTestId } = render(
       <Modal visible={true}>
@@ -218,7 +225,7 @@ describe('components/Modal', () => {
     }
   });
 
-  test('creates view with role="modal" when active', () => {
+  test('creates view with role="dialog" when active', () => {
     const { baseElement } = render(
       <Modal visible={true}>
         <a href={'#hello'}>Hello</a>
