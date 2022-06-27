@@ -10,8 +10,6 @@
   "sideEffects": false,
   "files": [
     "dist",
-    "jest",
-    "jest-preset.js",
     "src",
     "!**/__tests__"
   ],

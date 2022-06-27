@@ -53,17 +53,19 @@ module.exports = {
 
 ### Jest
 
-[Jest](https://facebook.github.io/jest/) can be configured using the provided preset. This will map `react-native` to `react-native-web` and provide appropriate mocks. Please refer to the Jest documentation for more information.
+[Jest](https://facebook.github.io/jest/) can be configured to understand the aliased module.
 
 ```js
 {
-  "preset": "react-native-web"
+  "moduleNameMapper": {
+    "^react-native$": "react-native-web"
+  }
 }
 ```
 
 ### Flow
 
-[Flow](https://flow.org) can be configured to understand the aliased module
+[Flow](https://flow.org) can be configured to understand the aliased module.
 
 ```yml
 [options]
