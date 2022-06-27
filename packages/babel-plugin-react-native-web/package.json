@@ -3,7 +3,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "babel-plugin-react-native-web",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "description": "Babel plugin for React Native for Web",
   "main": "index.js",
   "devDependencies": {
