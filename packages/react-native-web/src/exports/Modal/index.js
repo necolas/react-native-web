@@ -8,13 +8,16 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import * as React from 'react';
 import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
 
-export type ModalProps = {|
+export type ModalProps = {
+  ...ViewProps,
   animationType?: 'none' | 'slide' | 'fade',
   children: any,
   hardwareAccelerated?: ?boolean,
@@ -29,7 +32,7 @@ export type ModalProps = {|
   >,
   transparent?: ?boolean,
   visible?: ?boolean
-|};
+};
 
 let uniqueModalIdentifier = 0;
 
@@ -80,7 +83,8 @@ const Modal: React.AbstractComponent<
     onRequestClose,
     onShow,
     transparent,
-    visible = true
+    visible = true,
+    ...rest
   } = props;
 
   // Set a unique model identifier so we can correctly route
@@ -117,6 +121,7 @@ const Modal: React.AbstractComponent<
       >
         <ModalFocusTrap active={isActive}>
           <ModalContent
+            {...rest}
             active={isActive}
             onRequestClose={onRequestClose}
             ref={forwardedRef}

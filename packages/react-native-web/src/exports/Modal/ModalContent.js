@@ -8,24 +8,27 @@
  * @flow
  */
 
+import type { ViewProps } from '../View';
+
 import * as React from 'react';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 const { canUseDOM } = ExecutionEnvironment;
 
-export type ModalContentProps = {|
+export type ModalContentProps = {
+  ...ViewProps,
   active?: ?(boolean | (() => boolean)),
   children?: any,
   onRequestClose?: ?() => void,
   transparent?: ?boolean
-|};
+};
 
 const ModalContent: React.AbstractComponent<
   ModalContentProps,
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
-  const { active, children, onRequestClose, transparent } = props;
+  const { active, children, onRequestClose, transparent, ...rest } = props;
 
   React.useEffect(() => {
     if (canUseDOM) {
@@ -48,6 +51,7 @@ const ModalContent: React.AbstractComponent<
 
   return (
     <View
+      {...rest}
       accessibilityModal={true}
       accessibilityRole={active ? 'dialog' : null}
       ref={forwardedRef}
