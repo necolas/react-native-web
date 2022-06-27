@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, Text, Pressable, View } from 'react-native';
 import Example from '../../shared/example';
 
 const log = (...msg) => {
@@ -11,16 +11,15 @@ const l2 = { width: '75%', paddingLeft: 10, paddingTop: 10 };
 
 function Box({ pointerEvents }) {
   return (
-    <TouchableHighlight
+    <Pressable
       onPress={log}
       pointerEvents={pointerEvents}
-      style={styles.box}
-      underlayColor="purple"
+      style={({ pressed }) => [styles.box, pressed && styles.purple]}
     >
-      <TouchableHighlight onPress={log} style={styles.content} underlayColor="orange">
+      <Pressable onPress={log} style={({ pressed }) => [styles.content, pressed && styles.orange]}>
         <Text>{pointerEvents}</Text>
-      </TouchableHighlight>
-    </TouchableHighlight>
+      </Pressable>
+    </Pressable>
   );
 }
 
@@ -92,13 +91,21 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: '#ececec',
     padding: 30,
-    marginVertical: 5
+    marginVertical: 5,
+    userSelect: 'none'
   },
   content: {
     backgroundColor: 'white',
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
-    borderStyle: 'solid'
+    borderStyle: 'solid',
+    userSelect: 'none'
+  },
+  orange: {
+    backgroundColor: 'orange'
+  },
+  purple: {
+    backgroundColor: 'purple'
   }
 });
