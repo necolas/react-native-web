@@ -1,0 +1,6 @@
+{
+  "packages": ["packages/react-native-web", "packages/babel-plugin-react-native-web"],
+  "buildCommand": "compile",
+  "sandboxes": ["/packages/examples/"],
+  "node": "16"
+}
