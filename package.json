@@ -27,7 +27,7 @@
     "prerelease": "yarn test && yarn compile",
     "release": "node ./scripts/release/publish.js",
     "postrelease": "yarn docs:release && yarn benchmarks:release",
-    "test": "yarn flow && yarn lint:report && yarn jest --runInBand"
+    "test": "yarn flow && yarn fmt:report && yarn lint:report && yarn jest --runInBand"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

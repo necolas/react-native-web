@@ -1,0 +1,21 @@
+name: react@next integration
+
+on:
+  schedule:
+    # Run every Monday at 12:00 (see https://crontab.guru)
+    - cron: '0 12 * * 1'
+
+jobs:
+  react-next:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - run: npm install -g yarn
+    - run: yarn install
+    # Install next-tagged versions
+    - run: yarn upgrade react@next react-dom@next -W --dev
+    # Only run the unit tests
+    - run: yarn jest
