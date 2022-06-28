@@ -482,7 +482,12 @@ export default class PressResponder {
     event: ResponderEvent
   ): void {
     if (isTerminalSignal(signal)) {
-      this._isPointerTouch = false;
+      // Pressable suppression of contextmenu on windows.
+      // On Windows, the contextmenu is displayed after pointerup.
+      // https://github.com/necolas/react-native-web/issues/2296
+      setTimeout(() => {
+        this._isPointerTouch = false;
+      }, 0);
       this._touchActivatePosition = null;
       this._cancelLongPressDelayTimeout();
     }
