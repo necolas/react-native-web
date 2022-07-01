@@ -15,13 +15,17 @@ const version = argv._[0];
 const skipGit = argv['skip-git'];
 const oneTimeCode = argv.otp;
 
-console.log(`Publishing ${version}`);
+console.log(`Publishing react-native-web@${version}`);
 
-// Collect workspaces and package manifests
-const workspacePaths = require('../package.json').workspaces.concat(['./']);
+// Collect 'react-native-web' workspaces and package manifests
+const workspacePaths = require('../package.json').workspaces;
 const workspaces = workspacePaths.reduce((acc, curr) => {
-  const packageDirectories = glob.sync(path.resolve(curr));
-  packageDirectories.forEach((directory) => {
+  const packageDirectories = glob.sync(curr);
+  const subsetOfpackageDirectories = packageDirectories.filter((dir) => {
+    return dir.includes('react-native-web');
+  });
+  subsetOfpackageDirectories.forEach((dir) => {
+    const directory = path.resolve(dir);
     const packageJsonPath = path.join(directory, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
     acc.push({ directory, packageJson, packageJsonPath });

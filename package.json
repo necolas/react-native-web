@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.18.3",
+  "version": "0.0.0",
   "name": "monorepo",
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
@@ -25,7 +25,7 @@
     "lint": "yarn lint:report --fix",
     "lint:report": "eslint configs packages scripts --config ./configs/.eslintrc",
     "prerelease": "yarn test && yarn compile",
-    "release": "node ./scripts/releasePackages.js",
+    "release": "node ./scripts/releaseReactNativeWebPackages.js",
     "postrelease": "yarn docs:release && yarn benchmarks:release",
     "test": "yarn flow && yarn fmt:report && yarn lint:report && yarn jest --runInBand"
   },
