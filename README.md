@@ -10,7 +10,7 @@ The [documentation site](https://necolas.github.io/react-native-web/) covers ins
 
 ## Example
 
-And here is a simple example to get you started. The [example app](https://pk4zn6v4o0.sse.codesandbox.io/) (fork the [codesandbox](https://codesandbox.io/s/github/necolas/react-native-web/tree/master/packages/examples)) includes interactive examples and the [source code](https://github.com/necolas/react-native-web/blob/master/packages/examples) is also available.
+And here is a simple example to get you started. The [example app](https://pk4zn6v4o0.sse.codesandbox.io/) (fork the [codesandbox](https://codesandbox.io/s/github/necolas/react-native-web/tree/master/packages/react-native-web-examples)) includes interactive examples and the [source code](https://github.com/necolas/react-native-web/blob/master/packages/react-native-web-examples) is also available.
 
 ```js
 import React from 'react';

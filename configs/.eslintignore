@@ -3,4 +3,4 @@ dist
 flow-typed
 node_modules
 packages/**/vendor/*
-packages/examples/.next
+packages/**/.next

@@ -18,7 +18,7 @@ const oneTimeCode = argv.otp;
 console.log(`Publishing ${version}`);
 
 // Collect workspaces and package manifests
-const workspacePaths = require('../../package.json').workspaces.concat(['./']);
+const workspacePaths = require('../package.json').workspaces.concat(['./']);
 const workspaces = workspacePaths.reduce((acc, curr) => {
   const packageDirectories = glob.sync(path.resolve(curr));
   packageDirectories.forEach((directory) => {

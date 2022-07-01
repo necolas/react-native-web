@@ -1,4 +1,3 @@
-const babelPreset = require('../../scripts/babel/preset');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 
@@ -38,7 +37,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: false,
-            presets: [babelPreset]
+            extends: path.resolve(appDirectory, '../../configs/babel.config')
           }
         }
       }

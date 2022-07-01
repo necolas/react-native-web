@@ -2,7 +2,7 @@
   "settings": {
     "react": {
       "pragma": "React",
-      "version": "16.6",
+      "version": "17.0",
       "flowVersion": "0.148.0" // Flow version
     }
   },
@@ -33,6 +33,14 @@
     "jest": true,
     "node": true
   },
+  "ignorePatterns": [
+    "coverage",
+    "dist",
+    "flow-typed",
+    "node_modules",
+    "packages/**/vendor/*",
+    "packages/**/.next"
+  ],
   "globals": {
 
   },

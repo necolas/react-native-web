@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "docs",
+  "name": "react-native-web-docs",
   "version": "0.18.3",
   "description": "Documentation website for React Native for Web",
   "scripts": {

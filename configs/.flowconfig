@@ -4,11 +4,9 @@
 [ignore]
 <PROJECT_ROOT>/.*/__tests__/.*
 <PROJECT_ROOT>/packages/.*/dist/.*
-<PROJECT_ROOT>/packages/docs/.*
-<PROJECT_ROOT>/packages/examples/.*
+<PROJECT_ROOT>/packages/react-native-web-docs/.*
+<PROJECT_ROOT>/packages/react-native-web-examples/.*
 .*/node_modules/.*/.*.json
-.*/node_modules/@emotion/css/*
-.*/node_modules/babel-plugin-transform-react-remove-prop-types/*
 
 [include]
 

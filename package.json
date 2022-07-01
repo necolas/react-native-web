@@ -5,27 +5,27 @@
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
     "compile": "npm-run-all clean -p \"compile:* {@}\" --",
-    "compile:commonjs": "cd packages/react-native-web && cross-env BABEL_ENV=commonjs babel --root-mode upward src --out-dir dist/cjs --ignore \"**/__tests__\"",
-    "compile:es": "cd packages/react-native-web && babel --root-mode upward src --out-dir dist --ignore \"**/__tests__\"",
+    "compile:commonjs": "cd packages/react-native-web && cross-env BABEL_ENV=commonjs babel --config-file ../../configs/babel.config.js src --out-dir dist/cjs --ignore \"**/__tests__\"",
+    "compile:es": "cd packages/react-native-web && babel --config-file ../../configs/babel.config.js src --out-dir dist --ignore \"**/__tests__\"",
     "compile:flow": "gen-flow-files packages/react-native-web/src --out-dir packages/react-native-web/dist",
     "benchmarks": "cd packages/benchmarks && yarn dev",
     "benchmarks:build": "cd packages/benchmarks && yarn build",
     "benchmarks:release": "yarn benchmarks:build && git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
-    "docs": "cd packages/docs && yarn dev",
-    "docs:build": "cd packages/docs && yarn build",
-    "docs:release": "yarn docs:build && git checkout gh-pages && rm -rf ./docs && mv packages/docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
-    "examples": "cd packages/examples && yarn dev",
-    "examples:build": "cd packages/examples && yarn build",
-    "flow": "flow",
-    "fmt": "prettier --write \"**/*.js\"",
-    "fmt:report": "prettier --check \"**/*.js\"",
+    "docs": "cd packages/react-native-web-docs && yarn dev",
+    "docs:build": "cd packages/react-native-web-docs && yarn build",
+    "docs:release": "yarn docs:build && git checkout gh-pages && rm -rf ./docs && mv packages/react-native-web-docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
+    "examples": "cd packages/react-native-web-examples && yarn dev",
+    "examples:build": "cd packages/react-native-web-examples && yarn build",
+    "flow": "flow --flowconfig-name ./configs/.flowconfig",
+    "fmt": "prettier --write \"**/*.js\" --ignore-path ./configs/.prettierignore",
+    "fmt:report": "prettier --check --ignore-path ./configs/.prettierignore \"**/*.js\"",
     "jest": "npm-run-all \"jest:* {@}\" --",
-    "jest:dom": "jest --config ./scripts/jest/config.js",
-    "jest:node": "jest --config ./scripts/jest/config.node.js",
+    "jest:dom": "jest --config ./configs/jest.config.js",
+    "jest:node": "jest --config ./configs/jest.config.node.js",
     "lint": "yarn lint:report --fix",
-    "lint:report": "eslint packages scripts",
+    "lint:report": "eslint configs packages scripts --config ./configs/.eslintrc",
     "prerelease": "yarn test && yarn compile",
-    "release": "node ./scripts/release/publish.js",
+    "release": "node ./scripts/releasePackages.js",
     "postrelease": "yarn docs:release && yarn benchmarks:release",
     "test": "yarn flow && yarn fmt:report && yarn lint:report && yarn jest --runInBand"
   },
@@ -78,14 +78,14 @@
   },
   "lint-staged": {
     "packages/react-native-web/src/index.js": [
-      "node ./scripts/babel/createModuleMap.js",
+      "node ./scripts/createBabelReactNativeWebModuleMap.js",
       "prettier --write ./packages/babel-plugin-react-native-web/src/moduleMap.js",
       "git add ./packages/babel-plugin-react-native-web/src/moduleMap.js"
     ],
     "**/*.js": [
-      "prettier --write",
+      "prettier --write --ignore-path ./configs/.prettierignore",
       "git update-index --again",
-      "eslint"
+      "yarn lint"
     ]
   },
   "prettier": {
