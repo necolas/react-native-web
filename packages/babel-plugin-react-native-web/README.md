@@ -8,7 +8,7 @@ any modules not required by your app (keeping bundle size down).
 ## Installation
 
 ```
-yarn add --dev babel-plugin-react-native-web
+npm install --save-dev babel-plugin-react-native-web
 ```
 
 ## Usage

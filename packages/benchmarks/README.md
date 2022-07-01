@@ -2,14 +2,14 @@
 
 Try the [benchmarks app](https://necolas.github.io/react-native-web/benchmarks) online.
 
-To run the benchmarks locally:
+To run the benchmarks locally from monorepo root:
 
 ```
 yarn benchmarks
 open ./packages/benchmarks/dist/index.html
 ```
 
-Develop against these benchmarks:
+Develop against these benchmarks from monorepo root:
 
 ```
 yarn compile --watch
