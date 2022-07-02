@@ -51,7 +51,7 @@ export default class Dimensions {
   static get(dimension: DimensionKey): DisplayMetrics {
     if (shouldInit) {
       shouldInit = false;
-      this._update();
+      Dimensions._update();
     }
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
