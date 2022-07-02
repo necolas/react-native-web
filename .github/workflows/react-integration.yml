@@ -13,9 +13,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - run: npm install -g yarn
-    - run: yarn install
+    - run: npm install
     # Install next-tagged versions
-    - run: yarn upgrade react@next react-dom@next -W --dev
+    - run: npm update react@next react-dom@next
     # Only run the unit tests
-    - run: yarn jest
+    - run: npm run unit

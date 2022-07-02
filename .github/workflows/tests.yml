@@ -15,9 +15,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn fmt:report
+    - run: npm install
+    - run: npm run format
 
   type-check:
     runs-on: ubuntu-latest
@@ -26,9 +25,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn flow
+    - run: npm install
+    - run: npm run flow
 
   lint:
     runs-on: ubuntu-latest
@@ -37,9 +35,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn lint:report
+    - run: npm install
+    - run: npm run lint
 
   unit-test:
     runs-on: ubuntu-latest
@@ -48,6 +45,5 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn jest
+    - run: npm install
+    - run: npm run unit

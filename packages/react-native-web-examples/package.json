@@ -3,8 +3,8 @@
   "name": "react-native-web-examples",
   "version": "0.18.3",
   "scripts": {
-    "dev": "next",
     "build": "next build",
+    "dev": "next",
     "start": "next start"
   },
   "dependencies": {

@@ -13,6 +13,18 @@
 * `scripts`
   * Contains Node.js scripts for miscellaneous tasks.
 
+## Tasks
+
+* `build`
+  * Use `npm run build` to run the build script in every package.
+  * Use `npm run build -w <package-name>` to run the build script for a specific package.
+* `dev`
+  * Use `npm run dev` to run the dev script in every package.
+  * Use `npm run dev -w <package-name>` to run the dev script for a specific package.
+* `test`
+  * Use `npm run test` to run tests for every package.
+  * Use `npm run test` to run tests for every package.
+
 ## Contributing
 
 Development happens in the open on GitHub and we are grateful for contributions including bugfixes, improvements, and ideas.

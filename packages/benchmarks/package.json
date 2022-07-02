@@ -3,8 +3,9 @@
   "name": "benchmarks",
   "version": "0.0.0",
   "scripts": {
-    "dev": "mkdir -p dist && cp -f index.html dist/index.html && ./node_modules/.bin/webpack-cli --config ./webpack.config.js",
-    "build": "NODE_ENV=production yarn dev"
+    "clean": "del-cli ./dist",
+    "build": "NODE_ENV=production npm run dev",
+    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && ./node_modules/.bin/webpack-cli --config ./webpack.config.js"
   },
   "dependencies": {
     "classnames": "^2.3.1",

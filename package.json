@@ -1,33 +1,25 @@
 {
   "private": true,
   "version": "0.0.0",
-  "name": "monorepo",
+  "name": "react-ui-monorepo",
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
-    "compile": "npm-run-all clean -p \"compile:* {@}\" --",
-    "compile:commonjs": "cd packages/react-native-web && cross-env BABEL_ENV=commonjs babel --config-file ../../configs/babel.config.js src --out-dir dist/cjs --ignore \"**/__tests__\"",
-    "compile:es": "cd packages/react-native-web && babel --config-file ../../configs/babel.config.js src --out-dir dist --ignore \"**/__tests__\"",
-    "compile:flow": "gen-flow-files packages/react-native-web/src --out-dir packages/react-native-web/dist",
-    "benchmarks": "cd packages/benchmarks && yarn dev",
-    "benchmarks:build": "cd packages/benchmarks && yarn build",
-    "benchmarks:release": "yarn benchmarks:build && git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
-    "docs": "cd packages/react-native-web-docs && yarn dev",
-    "docs:build": "cd packages/react-native-web-docs && yarn build",
-    "docs:release": "yarn docs:build && git checkout gh-pages && rm -rf ./docs && mv packages/react-native-web-docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
-    "examples": "cd packages/react-native-web-examples && yarn dev",
-    "examples:build": "cd packages/react-native-web-examples && yarn build",
+    "build": "npm run clean && npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspaces --if-present",
     "flow": "flow --flowconfig-name ./configs/.flowconfig",
-    "fmt": "prettier --write \"**/*.js\" --ignore-path ./configs/.prettierignore",
-    "fmt:report": "prettier --check --ignore-path ./configs/.prettierignore \"**/*.js\"",
-    "jest": "npm-run-all \"jest:* {@}\" --",
-    "jest:dom": "jest --config ./configs/jest.config.js",
-    "jest:node": "jest --config ./configs/jest.config.node.js",
-    "lint": "yarn lint:report --fix",
-    "lint:report": "eslint configs packages scripts --config ./configs/.eslintrc",
-    "prerelease": "yarn test && yarn compile",
+    "format": "prettier --check --ignore-path ./configs/.prettierignore \"**/*.js\"",
+    "format:fix": "prettier --write \"**/*.js\" --ignore-path ./configs/.prettierignore",
+    "lint": "eslint configs packages scripts --config ./configs/.eslintrc",
+    "lint:fix": "npm run lint --fix",
+    "prerelease": "npm run test && npm run build",
     "release": "node ./scripts/releaseReactNativeWebPackages.js",
-    "postrelease": "yarn docs:release && yarn benchmarks:release",
-    "test": "yarn flow && yarn fmt:report && yarn lint:report && yarn jest --runInBand"
+    "release:benchmarks": "git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
+    "release:react-native-web-docs": "git checkout gh-pages && rm -rf ./docs && mv packages/react-native-web-docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
+    "postrelease": "npm run release:react-native-web-docs && npm run release:benchmarks",
+    "test": "npm run flow && npm run format && npm run lint && npm run unit --runInBand",
+    "unit": "npm-run-all \"unit:* {@}\" --",
+    "unit:dom": "jest --config ./configs/jest.config.js",
+    "unit:node": "jest --config ./configs/jest.config.node.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -83,9 +75,9 @@
       "git add ./packages/babel-plugin-react-native-web/src/moduleMap.js"
     ],
     "**/*.js": [
-      "prettier --write --ignore-path ./configs/.prettierignore",
-      "git update-index --again",
-      "yarn lint"
+      "npm run format:fix",
+      "npm run lint:fix",
+      "git update-index --again"
     ]
   },
   "prettier": {
