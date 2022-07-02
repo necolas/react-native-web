@@ -45,8 +45,14 @@ const dimensions = {
 };
 const listeners = {};
 
+let shouldInit = canUseDOM;
+
 export default class Dimensions {
   static get(dimension: DimensionKey): DisplayMetrics {
+    if (shouldInit) {
+      shouldInit = false;
+      this._update();
+    }
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
   }
@@ -118,6 +124,5 @@ export default class Dimensions {
 }
 
 if (canUseDOM) {
-  Dimensions._update();
   window.addEventListener('resize', Dimensions._update, false);
 }
