@@ -14,7 +14,7 @@ Fork, then clone the repo:
 git clone https://github.com/your-username/react-native-web.git
 ```
 
-Install dependencies (requires Node.js >= 14.0):
+Install dependencies (requires Node.js >= 16.0):
 
 ```
 npm install
@@ -86,7 +86,7 @@ Run all the automated tests:
 npm run test
 ```
 
-### New Features
+## New Features
 
 Please open an issue with a proposal for a new feature or refactoring before starting on the work. We don't want you to waste your efforts on a pull request that we won't want to accept.
 

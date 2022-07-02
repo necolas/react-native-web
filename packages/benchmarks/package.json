@@ -5,11 +5,13 @@
   "scripts": {
     "clean": "del-cli ./dist",
     "build": "NODE_ENV=production npm run dev",
-    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && ./node_modules/.bin/webpack-cli --config ./webpack.config.js"
+    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && webpack --config ./webpack.config.js"
   },
   "dependencies": {
     "classnames": "^2.3.1",
     "d3-scale-chromatic": "^2.0.0",
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2",
     "react-native-web": "0.18.3"
   },
   "devDependencies": {

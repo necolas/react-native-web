@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: necolas/compressed-size-action@master
       with:
-        build-script: "build -w react-native-web"
+        build-script: "compile"
         exclude: "./packages/react-native-web/dist/cjs/{index.js,**/*.js}"
         pattern: "./packages/react-native-web/dist/{index.js,**/*.js}"
         repo-token: "${{ secrets.GITHUB_TOKEN }}"

@@ -12,9 +12,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '14.x'
+        node-version: '16.x'
     - run: npm install
-    # Install next-tagged versions
-    - run: npm update react@next react-dom@next
-    # Only run the unit tests
+    # Update react-native-web to use react@next
+    - run: npm update react@next react-dom@next -w react-native-web
+    # Run the unit tests
     - run: npm run unit

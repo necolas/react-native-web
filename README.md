@@ -1,5 +1,7 @@
 # Development monorepo
 
+This is the development monorepo for "React Native for Web" and related projects.
+
 ## Structure
 
 * `.github`
@@ -23,7 +25,8 @@
   * Use `npm run dev -w <package-name>` to run the dev script for a specific package.
 * `test`
   * Use `npm run test` to run tests for every package.
-  * Use `npm run test` to run tests for every package.
+
+More details can be found in the contributing guide below.
 
 ## Contributing
 
