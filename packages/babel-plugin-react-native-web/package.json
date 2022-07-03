@@ -7,8 +7,7 @@
   "description": "Babel plugin for React Native for Web",
   "main": "index.js",
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "babel-plugin-tester": "^10.0.0"
+    "babel-plugin-tester": "^10.1.0"
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",
