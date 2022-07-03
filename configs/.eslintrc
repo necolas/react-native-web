@@ -7,19 +7,19 @@
     }
   },
   // babel parser to support ES6/7 features
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 7,
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true
     },
+    "requireConfigFile": false,
     "sourceType": "module"
   },
   "extends": [
     "plugin:flowtype/recommended",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "plugins": [
     "flowtype",
@@ -47,7 +47,7 @@
   "rules": {
     "camelcase": 0,
     "constructor-super": 2,
-    "default-case": [2, { commentPattern: '^no default$' }],
+    "default-case": [2, { "commentPattern": "^no default$" }],
     "eqeqeq": [2, "allow-null"],
     "handle-callback-err": [2, "^(err|error)$" ],
     "new-cap": [2, { "newIsCap": true, "capIsNew": false }],
