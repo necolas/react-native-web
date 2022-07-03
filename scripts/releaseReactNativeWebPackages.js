@@ -18,20 +18,23 @@ const oneTimeCode = argv.otp;
 console.log(`Publishing react-native-web@${version}`);
 
 // Collect 'react-native-web' workspaces and package manifests
-const workspacePaths = require('../package.json').workspaces;
-const workspaces = workspacePaths.reduce((acc, curr) => {
-  const packageDirectories = glob.sync(curr);
-  const subsetOfpackageDirectories = packageDirectories.filter((dir) => {
-    return dir.includes('react-native-web');
-  });
-  subsetOfpackageDirectories.forEach((dir) => {
-    const directory = path.resolve(dir);
-    const packageJsonPath = path.join(directory, 'package.json');
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
-    acc.push({ directory, packageJson, packageJsonPath });
+const workspacePaths = require('../package.json').workspaces.reduce((acc, w) => {
+  const resolvedPaths = glob.sync(w);
+  resolvedPaths.forEach((p) => {
+    // Remove duplicates and unrelated packages
+    if (p.includes('react-native-web') && acc.indexOf(p) === -1) {
+      acc.push(p);
+    }
   });
   return acc;
 }, []);
+
+const workspaces = workspacePaths.map((dir) => {
+  const directory = path.resolve(dir);
+  const packageJsonPath = path.join(directory, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
+  return { directory, packageJson, packageJsonPath };
+});
 
 // Update each package version and its dependencies
 const workspaceNames = workspaces.map(({ packageJson }) => packageJson.name);
