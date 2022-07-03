@@ -4,6 +4,9 @@ const babelConfig = require('./babel.config.js');
 
 module.exports = {
   coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/packages/react-native-web/src/vendor/'],
+  fakeTimers: {
+    enableGlobally: true
+  },
   modulePathIgnorePatterns: [
     '<rootDir>/packages/benchmarks/',
     '<rootDir>/packages/react-native-web-docs/',
@@ -18,7 +21,6 @@ module.exports = {
   },
   testEnvironment: 'jsdom',
   testMatch: ['**/__tests__/**/?(*-)+(spec|test).[jt]s?(x)'],
-  timers: 'fake',
   transform: {
     '\\.[jt]sx?$': ['babel-jest', babelConfig()]
   }
