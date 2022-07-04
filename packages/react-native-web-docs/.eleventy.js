@@ -139,7 +139,7 @@ module.exports = function (eleventyConfig) {
     // https://github.com/valeriangalliat/markdown-it-anchor
     .use(markdownAnchor, {
       level: [2, 3],
-      permalink: true,
+      permalink: markdownAnchor.permalink.headerLink({ safariReaderFix: true }),
       // permalinkClass: "direct-link",
       permalinkSymbol: '#'
     })

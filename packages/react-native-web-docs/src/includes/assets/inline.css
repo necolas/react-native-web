@@ -31,7 +31,7 @@
 }
 
 /* Widescreen */
- 
+
  @media (min-width: 1088px) {
   :root {
     --docs-font-size: 16px;
@@ -109,7 +109,7 @@ table { border-collapse: collapse; }
 a { color: var(--docs-link-color); text-decoration: underline; }
 h1, h2, h3, h4, h5, h6 { color: var(--docs-heading-color); }
 
-/** 
+/**
  * Core components
  * --------------------------------------------------------
  */
@@ -152,7 +152,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--docs-heading-color); }
   display: inline-block;
 }
 
-/** 
+/**
  * Website components
  * --------------------------------------------------------
  */
@@ -249,7 +249,6 @@ h1, h2, h3, h4, h5, h6 { color: var(--docs-heading-color); }
 }
 
 .markdown .header-anchor {
-  opacity: 0;
   text-decoration: none;
 }
 
@@ -366,7 +365,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--docs-heading-color); }
   border-radius: 0.375rem;
   padding: 0.85em 1.15em;
 }
-  
+
 .markdown blockquote {
   font-weight: 500;
   font-style: italic;
