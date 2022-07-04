@@ -17,6 +17,7 @@
     "release:benchmarks": "git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
     "release:react-native-web-docs": "git checkout gh-pages && rm -rf ./docs && mv packages/react-native-web-docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
     "postrelease": "npm run release:react-native-web-docs && npm run release:benchmarks",
+    "prepare": "husky install configs/husky",
     "test": "npm run flow && npm run format && npm run lint && npm run unit --runInBand",
     "unit": "npm-run-all \"unit:* {@}\" --",
     "unit:dom": "jest --config ./configs/jest.config.js",
@@ -50,11 +51,11 @@
     "flow-bin": "0.148.0",
     "gen-flow-files": "^0.4.11",
     "glob": "^7.1.6",
-    "husky": "^4.3.8",
+    "husky": "^8.0.0",
     "inline-style-prefixer": "^6.0.0",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
-    "lint-staged": "^10.5.4",
+    "lint-staged": "^13.0.3",
     "minimist": "^1.2.6",
     "npm-run-all": "^4.1.3",
     "prettier": "^2.7.1"
@@ -71,13 +72,11 @@
   "lint-staged": {
     "packages/react-native-web/src/index.js": [
       "node ./scripts/createBabelReactNativeWebModuleMap.js",
-      "prettier --write ./packages/babel-plugin-react-native-web/src/moduleMap.js",
-      "git add ./packages/babel-plugin-react-native-web/src/moduleMap.js"
+      "prettier --write ./packages/babel-plugin-react-native-web/src/moduleMap.js"
     ],
     "**/*.js": [
       "npm run format:fix",
-      "npm run lint:fix",
-      "git update-index --again"
+      "npm run lint:fix"
     ]
   },
   "prettier": {
