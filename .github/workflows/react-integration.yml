@@ -15,6 +15,6 @@ jobs:
         node-version: '16.x'
     - run: npm install
     # Update react-native-web to use react@next
-    - run: npm update react@next react-dom@next -w react-native-web
+    - run: npm install react@next react-dom@next -w react-native-web
     # Run the unit tests
     - run: npm run unit
