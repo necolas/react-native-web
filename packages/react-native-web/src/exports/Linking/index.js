@@ -16,7 +16,10 @@ const initialURL = canUseDOM ? window.location.href : '';
 
 type Callback = (...args: any) => void;
 
-type OnOpenCallback = (event: 'onOpen', callback: (url: string) => void) => void;
+type OnOpenCallback = (
+  event: 'onOpen',
+  callback: (url: string) => void
+) => void;
 type GenericCallback = (event: string, callback: Callback) => void;
 
 class Linking {
@@ -39,7 +42,10 @@ class Linking {
    * Adds a event listener for the specified event. The callback will be called when the
    * said event is dispatched.
    */
-  addEventListener: OnOpenCallback | GenericCallback = (event: string, callback: Callback) => {
+  addEventListener: OnOpenCallback | GenericCallback = (
+    event: string,
+    callback: Callback
+  ) => {
     if (!this._eventCallbacks[event]) {
       this._eventCallbacks[event] = [callback];
       return;
@@ -51,9 +57,14 @@ class Linking {
    * Removes a previously added event listener for the specified event. The callback must
    * be the same object as the one passed to `addEventListener`.
    */
-  removeEventListener: OnOpenCallback | GenericCallback = (event: string, callback: Callback) => {
+  removeEventListener: OnOpenCallback | GenericCallback = (
+    event: string,
+    callback: Callback
+  ) => {
     const callbacks = this._eventCallbacks[event];
-    const filteredCallbacks = callbacks.filter((c) => c.toString() !== callback.toString());
+    const filteredCallbacks = callbacks.filter(
+      (c) => c.toString() !== callback.toString()
+    );
     this._eventCallbacks[event] = filteredCallbacks;
   };
 
@@ -85,7 +96,10 @@ class Linking {
   }
 
   _validateURL(url: string) {
-    invariant(typeof url === 'string', 'Invalid URL: should be a string. Was: ' + url);
+    invariant(
+      typeof url === 'string',
+      'Invalid URL: should be a string. Was: ' + url
+    );
     invariant(url, 'Invalid URL: cannot be empty');
   }
 }

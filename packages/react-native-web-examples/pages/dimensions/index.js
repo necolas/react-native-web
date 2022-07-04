@@ -23,7 +23,9 @@ export default function DimensionsPage() {
       <Text style={{ marginVertical: '1em' }} suppressHydrationWarnings={true}>
         window: {JSON.stringify(windowDims, null, 2)}
       </Text>
-      <Text suppressHydrationWarnings={true}>screen: {JSON.stringify(screenDims, null, 2)}</Text>
+      <Text suppressHydrationWarnings={true}>
+        screen: {JSON.stringify(screenDims, null, 2)}
+      </Text>
     </Example>
   );
 }

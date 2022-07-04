@@ -39,8 +39,8 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = React.forwardRef(
-  (props, forwardedRef) => {
+const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
+  React.forwardRef((props, forwardedRef) => {
     const {
       hrefAttrs,
       numberOfLines,
@@ -105,7 +105,8 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     let component = hasTextAncestor ? 'span' : 'div';
 
-    const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+    const langDirection =
+      props.lang != null ? getLocaleDirection(props.lang) : null;
     const componentDirection = props.dir || langDirection;
     const writingDirection = componentDirection || contextDirection;
 
@@ -113,7 +114,8 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     supportedProps.dir = componentDirection;
     // 'auto' by default allows browsers to infer writing direction (root elements only)
     if (!hasTextAncestor) {
-      supportedProps.dir = componentDirection != null ? componentDirection : 'auto';
+      supportedProps.dir =
+        componentDirection != null ? componentDirection : 'auto';
     }
 
     if (onClick || onPress) {
@@ -121,7 +123,8 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
     }
 
     supportedProps.style = [
-      numberOfLines != null && numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+      numberOfLines != null &&
+        numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
       hasTextAncestor === true ? styles.textHasAncestor$raw : styles.text$raw,
       numberOfLines === 1 && styles.textOneLine,
       numberOfLines != null && numberOfLines > 1 && styles.textMultiLine,
@@ -142,7 +145,8 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
           supportedProps.rel = rel;
         }
         if (typeof target === 'string') {
-          supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+          supportedProps.target =
+            target.charAt(0) !== '_' ? '_' + target : target;
         }
       }
     }
@@ -152,15 +156,18 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 
     supportedProps.ref = setRef;
 
-    const element = createElement(component, supportedProps, { writingDirection });
+    const element = createElement(component, supportedProps, {
+      writingDirection
+    });
 
     return hasTextAncestor ? (
       element
     ) : (
-      <TextAncestorContext.Provider value={true}>{element}</TextAncestorContext.Provider>
+      <TextAncestorContext.Provider value={true}>
+        {element}
+      </TextAncestorContext.Provider>
     );
-  }
-);
+  });
 
 Text.displayName = 'Text';
 

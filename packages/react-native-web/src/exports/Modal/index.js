@@ -22,13 +22,24 @@ export type ModalProps = {
   children: any,
   hardwareAccelerated?: ?boolean,
   onDismiss?: ?() => mixed,
-  onOrientationChange?: ?(e: {| orientation: 'portrait' | 'landscape' |}) => void,
+  onOrientationChange?: ?(e: {|
+    orientation: 'portrait' | 'landscape'
+  |}) => void,
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
-  presentationStyle?: ?('fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'),
+  presentationStyle?: ?(
+    | 'fullScreen'
+    | 'pageSheet'
+    | 'formSheet'
+    | 'overFullScreen'
+  ),
   statusBarTranslucent?: ?boolean,
   supportedOrientations?: ?Array<
-    'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right'
+    | 'portrait'
+    | 'portrait-upside-down'
+    | 'landscape'
+    | 'landscape-left'
+    | 'landscape-right'
   >,
   transparent?: ?boolean,
   visible?: ?boolean

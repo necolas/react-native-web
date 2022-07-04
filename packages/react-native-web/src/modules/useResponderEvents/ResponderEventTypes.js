@@ -65,7 +65,9 @@ export function isMoveish(eventType: mixed): boolean {
 }
 
 export function isEndish(eventType: mixed): boolean {
-  return eventType === TOUCH_END || eventType === MOUSE_UP || isCancelish(eventType);
+  return (
+    eventType === TOUCH_END || eventType === MOUSE_UP || isCancelish(eventType)
+  );
 }
 
 export function isCancelish(eventType: mixed): boolean {

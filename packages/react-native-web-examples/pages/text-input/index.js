@@ -33,14 +33,26 @@ export default function TextInputPage() {
           ref={nextFocus}
           style={styles.textinput}
         />
-        <TextInput defaultValue="disabled" disabled={true} style={styles.textinput} />
-        <TextInput defaultValue="editable (false)" editable={false} style={styles.textinput} />
+        <TextInput
+          defaultValue="disabled"
+          disabled={true}
+          style={styles.textinput}
+        />
+        <TextInput
+          defaultValue="editable (false)"
+          editable={false}
+          style={styles.textinput}
+        />
         <TextInput
           keyboardType="numeric"
           placeholder="keyboardType 'numeric'"
           style={styles.textinput}
         />
-        <TextInput maxLength={5} placeholder="maxLength" style={styles.textinput} />
+        <TextInput
+          maxLength={5}
+          placeholder="maxLength"
+          style={styles.textinput}
+        />
 
         <TextInput
           placeholder="placeholderTextColor"
@@ -52,7 +64,11 @@ export default function TextInputPage() {
           selectTextOnFocus={true}
           style={styles.textinput}
         />
-        <TextInput defaultValue="secureTextEntry" secureTextEntry={true} style={styles.textinput} />
+        <TextInput
+          defaultValue="secureTextEntry"
+          secureTextEntry={true}
+          style={styles.textinput}
+        />
         <TextInput
           multiline={true}
           numberOfLines={3}

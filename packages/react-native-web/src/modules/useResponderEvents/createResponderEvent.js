@@ -81,14 +81,23 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
 
   const metaKey = domEvent.metaKey === true;
   const shiftKey = domEvent.shiftKey === true;
-  const force = (domEventChangedTouches && domEventChangedTouches[0].force) || 0;
+  const force =
+    (domEventChangedTouches && domEventChangedTouches[0].force) || 0;
   const identifier = normalizeIdentifier(
     (domEventChangedTouches && domEventChangedTouches[0].identifier) || 0
   );
-  const clientX = (domEventChangedTouches && domEventChangedTouches[0].clientX) || domEvent.clientX;
-  const clientY = (domEventChangedTouches && domEventChangedTouches[0].clientY) || domEvent.clientY;
-  const pageX = (domEventChangedTouches && domEventChangedTouches[0].pageX) || domEvent.pageX;
-  const pageY = (domEventChangedTouches && domEventChangedTouches[0].pageY) || domEvent.pageY;
+  const clientX =
+    (domEventChangedTouches && domEventChangedTouches[0].clientX) ||
+    domEvent.clientX;
+  const clientY =
+    (domEventChangedTouches && domEventChangedTouches[0].clientY) ||
+    domEvent.clientY;
+  const pageX =
+    (domEventChangedTouches && domEventChangedTouches[0].pageX) ||
+    domEvent.pageX;
+  const pageY =
+    (domEventChangedTouches && domEventChangedTouches[0].pageY) ||
+    domEvent.pageY;
   const preventDefault =
     typeof domEvent.preventDefault === 'function'
       ? domEvent.preventDefault.bind(domEvent)
@@ -136,7 +145,9 @@ export default function createResponderEvent(domEvent: any): ResponderEvent {
     ];
     changedTouches = emulatedTouches;
     touches =
-      domEventType === 'mouseup' || domEventType === 'dragstart' ? emptyArray : emulatedTouches;
+      domEventType === 'mouseup' || domEventType === 'dragstart'
+        ? emptyArray
+        : emulatedTouches;
   }
 
   const responderEvent = {

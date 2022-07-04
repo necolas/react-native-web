@@ -46,7 +46,10 @@ const ModalContent: React.AbstractComponent<
   }, [active, onRequestClose]);
 
   const style = React.useMemo(() => {
-    return [styles.modal, transparent ? styles.modalTransparent : styles.modalOpaque];
+    return [
+      styles.modal,
+      transparent ? styles.modalTransparent : styles.modalOpaque
+    ];
   }, [transparent]);
 
   return (

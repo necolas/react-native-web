@@ -17,7 +17,9 @@ describe('components/ProgressBar', () => {
     });
 
     test('is ignored when "indeterminate" is "true"', () => {
-      const { container } = render(<ProgressBar indeterminate progress={0.5} />);
+      const { container } = render(
+        <ProgressBar indeterminate progress={0.5} />
+      );
       expect(container.firstChild.getAttribute('aria-valuenow')).toBe(null);
     });
   });

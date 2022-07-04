@@ -34,7 +34,9 @@ function markdownitTagToClass(md, mapping = {}) {
       }
     });
   }
-  md.core.ruler.push('markdownit-tag-to-class', (state) => parseTokens(state.tokens));
+  md.core.ruler.push('markdownit-tag-to-class', (state) =>
+    parseTokens(state.tokens)
+  );
 }
 
 module.exports = function (eleventyConfig) {

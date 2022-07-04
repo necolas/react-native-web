@@ -176,7 +176,10 @@ const createDOMProps = (elementType, props, options) => {
   if (accessibilityInvalid != null) {
     domProps['aria-invalid'] = accessibilityInvalid;
   }
-  if (accessibilityKeyShortcuts != null && Array.isArray(accessibilityKeyShortcuts)) {
+  if (
+    accessibilityKeyShortcuts != null &&
+    Array.isArray(accessibilityKeyShortcuts)
+  ) {
     domProps['aria-keyshortcuts'] = accessibilityKeyShortcuts.join(' ');
   }
   if (accessibilityLabel != null) {
@@ -189,7 +192,8 @@ const createDOMProps = (elementType, props, options) => {
     domProps['aria-level'] = accessibilityLevel;
   }
   if (accessibilityLiveRegion != null) {
-    domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
+    domProps['aria-live'] =
+      accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
   if (accessibilityModal != null) {
     domProps['aria-modal'] = accessibilityModal;
@@ -218,14 +222,22 @@ const createDOMProps = (elementType, props, options) => {
   if (accessibilityReadOnly != null) {
     domProps['aria-readonly'] = accessibilityReadOnly;
     // Enhance with native semantics
-    if (elementType === 'input' || elementType === 'select' || elementType === 'textarea') {
+    if (
+      elementType === 'input' ||
+      elementType === 'select' ||
+      elementType === 'textarea'
+    ) {
       domProps.readOnly = true;
     }
   }
   if (accessibilityRequired != null) {
     domProps['aria-required'] = accessibilityRequired;
     // Enhance with native semantics
-    if (elementType === 'input' || elementType === 'select' || elementType === 'textarea') {
+    if (
+      elementType === 'input' ||
+      elementType === 'select' ||
+      elementType === 'textarea'
+    ) {
       domProps.required = true;
     }
   }

@@ -174,7 +174,10 @@ const TextInput: React.AbstractComponent<
       if (multiline && onContentSizeChange && hostNode != null) {
         const newHeight = hostNode.scrollHeight;
         const newWidth = hostNode.scrollWidth;
-        if (newHeight !== dimensions.current.height || newWidth !== dimensions.current.width) {
+        if (
+          newHeight !== dimensions.current.height ||
+          newWidth !== dimensions.current.width
+        ) {
           dimensions.current.height = newHeight;
           dimensions.current.width = newWidth;
           onContentSizeChange({
@@ -203,7 +206,10 @@ const TextInput: React.AbstractComponent<
           }
         };
         hostNode.isFocused = function () {
-          return hostNode != null && TextInputState.currentlyFocusedField() === hostNode;
+          return (
+            hostNode != null &&
+            TextInputState.currentlyFocusedField() === hostNode
+          );
         };
         handleContentSizeChange(hostNode);
       }
@@ -263,7 +269,8 @@ const TextInput: React.AbstractComponent<
     e.stopPropagation();
 
     const blurOnSubmitDefault = !multiline;
-    const shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+    const shouldBlurOnSubmit =
+      blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
 
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
@@ -365,15 +372,23 @@ const TextInput: React.AbstractComponent<
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, forwardedRef);
+  const setRef = useMergeRefs(
+    hostRef,
+    platformMethodsRef,
+    imperativeRef,
+    forwardedRef
+  );
 
   supportedProps.ref = setRef;
 
-  const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+  const langDirection =
+    props.lang != null ? getLocaleDirection(props.lang) : null;
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
 
-  const element = createElement(component, supportedProps, { writingDirection });
+  const element = createElement(component, supportedProps, {
+    writingDirection
+  });
 
   return element;
 });

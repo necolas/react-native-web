@@ -53,7 +53,9 @@ describe('components/View', () => {
 
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = render(<View accessibilityLabel="accessibility label" />);
+      const { container } = render(
+        <View accessibilityLabel="accessibility label" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -108,14 +110,18 @@ describe('components/View', () => {
     });
 
     test('href with accessibilityRole', () => {
-      const { container } = render(<View accessibilityRole="none" href="https://example.com" />);
+      const { container } = render(
+        <View accessibilityRole="none" href="https://example.com" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "hrefAttrs"', () => {
     test('requires "href"', () => {
-      const { container } = render(<View hrefAttrs={{ download: 'filename.jpg' }} />);
+      const { container } = render(
+        <View hrefAttrs={{ download: 'filename.jpg' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -125,7 +131,9 @@ describe('components/View', () => {
         rel: 'nofollow',
         target: '_blank'
       };
-      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      const { container } = render(
+        <View href="https://example.com" hrefAttrs={hrefAttrs} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -133,7 +141,9 @@ describe('components/View', () => {
       const hrefAttrs = {
         target: 'blank'
       };
-      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      const { container } = render(
+        <View href="https://example.com" hrefAttrs={hrefAttrs} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -143,7 +153,9 @@ describe('components/View', () => {
         rel: null,
         target: null
       };
-      const { container } = render(<View href="https://example.com" hrefAttrs={hrefAttrs} />);
+      const { container } = render(
+        <View href="https://example.com" hrefAttrs={hrefAttrs} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -221,7 +233,9 @@ describe('components/View', () => {
       const ref = jest.fn();
       let rerender;
       act(() => {
-        ({ rerender } = render(<View nativeID="123" ref={ref} style={{ borderWidth: 5 }} />));
+        ({ rerender } = render(
+          <View nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
+        ));
       });
       expect(ref).toHaveBeenCalledTimes(1);
       act(() => {
@@ -270,7 +284,9 @@ describe('components/View', () => {
         const node = ref.current;
         expect(container.firstChild).toMatchSnapshot();
         // set native props
-        node.setNativeProps({ style: { color: 'orange', height: 20, width: 20 } });
+        node.setNativeProps({
+          style: { color: 'orange', height: 20, width: 20 }
+        });
         expect(container.firstChild).toMatchSnapshot();
         // set native props again
         node.setNativeProps({ style: { width: 30 } });

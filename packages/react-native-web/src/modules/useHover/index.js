@@ -32,7 +32,8 @@ const emptyObject = {};
 const opts = { passive: true };
 const lockEventType = 'react-gui:hover:lock';
 const unlockEventType = 'react-gui:hover:unlock';
-const supportsPointerEvent = () => !!(typeof window !== 'undefined' && window.PointerEvent != null);
+const supportsPointerEvent = () =>
+  !!(typeof window !== 'undefined' && window.PointerEvent != null);
 
 function dispatchCustomEvent(
   target: EventTarget,
@@ -55,14 +56,33 @@ function getPointerType(event) {
   return pointerType != null ? pointerType : getModality();
 }
 
-export default function useHover(targetRef: any, config: HoverEventsConfig): void {
-  const { contain, disabled, onHoverStart, onHoverChange, onHoverUpdate, onHoverEnd } = config;
+export default function useHover(
+  targetRef: any,
+  config: HoverEventsConfig
+): void {
+  const {
+    contain,
+    disabled,
+    onHoverStart,
+    onHoverChange,
+    onHoverUpdate,
+    onHoverEnd
+  } = config;
 
   const canUsePE = supportsPointerEvent();
 
-  const addMoveListener = useEvent(canUsePE ? 'pointermove' : 'mousemove', opts);
-  const addEnterListener = useEvent(canUsePE ? 'pointerenter' : 'mouseenter', opts);
-  const addLeaveListener = useEvent(canUsePE ? 'pointerleave' : 'mouseleave', opts);
+  const addMoveListener = useEvent(
+    canUsePE ? 'pointermove' : 'mousemove',
+    opts
+  );
+  const addEnterListener = useEvent(
+    canUsePE ? 'pointerenter' : 'mouseenter',
+    opts
+  );
+  const addLeaveListener = useEvent(
+    canUsePE ? 'pointerleave' : 'mouseleave',
+    opts
+  );
   // These custom events are used to implement the "contain" prop.
   const addLockListener = useEvent(lockEventType, opts);
   const addUnlockListener = useEvent(unlockEventType, opts);

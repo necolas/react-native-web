@@ -11,7 +11,9 @@ describe('components/ScrollView', () => {
       const onScroll = jest.fn();
       const ref = React.createRef();
       act(() => {
-        render(<ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />);
+        render(
+          <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
+        );
       });
       const target = createEventTarget(findDOMNode(ref.current));
       act(() => {
@@ -50,11 +52,15 @@ describe('components/ScrollView', () => {
       const ref = jest.fn();
       let rerender;
       act(() => {
-        ({ rerender } = render(<ScrollView nativeID="123" ref={ref} style={{ borderWidth: 5 }} />));
+        ({ rerender } = render(
+          <ScrollView nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
+        ));
       });
       expect(ref).toHaveBeenCalledTimes(1);
       act(() => {
-        rerender(<ScrollView nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
+        rerender(
+          <ScrollView nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />
+        );
       });
       expect(ref).toHaveBeenCalledTimes(1);
     });
@@ -83,13 +89,17 @@ describe('components/ScrollView', () => {
       expect(typeof node.scrollToEnd === 'function').toBe(true);
       expect(typeof node.flashScrollIndicators === 'function').toBe(true);
       expect(typeof node.scrollResponderZoomTo === 'function').toBe(true);
-      expect(typeof node.scrollResponderScrollNativeHandleToKeyboard === 'function').toBe(true);
+      expect(
+        typeof node.scrollResponderScrollNativeHandleToKeyboard === 'function'
+      ).toBe(true);
     });
   });
 
   describe('prop "refreshControl"', () => {
     test('without', () => {
-      const { container } = render(<ScrollView style={{ backgroundColor: 'red' }} />);
+      const { container } = render(
+        <ScrollView style={{ backgroundColor: 'red' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
 

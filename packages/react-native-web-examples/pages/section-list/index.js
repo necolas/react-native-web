@@ -29,14 +29,21 @@ function renderItem({ item }) {
 function renderSectionHeader({ section }) {
   const extraStyle = { backgroundColor: section.color };
   return (
-    <Text key={`sh_${section.key}`} style={[styles.sectionHeaderText, extraStyle]}>
+    <Text
+      key={`sh_${section.key}`}
+      style={[styles.sectionHeaderText, extraStyle]}
+    >
       {section.title}
     </Text>
   );
 }
 
 function renderSectionFooter({ section }) {
-  const footerStyle = { height: 10, backgroundColor: section.color, marginBottom: 10 };
+  const footerStyle = {
+    height: 10,
+    backgroundColor: section.color,
+    marginBottom: 10
+  };
   return <View key={`sf_${section.key}`} style={footerStyle} />;
 }
 
@@ -45,10 +52,14 @@ export default function SectionListPage() {
     <Example title="SectionList">
       <SectionList
         ListFooterComponent={
-          <Text style={styles.examplesFooter}>(Example ListFooterComponent Here)</Text>
+          <Text style={styles.examplesFooter}>
+            (Example ListFooterComponent Here)
+          </Text>
         }
         ListHeaderComponent={
-          <Text style={styles.examplesHeader}>(Example ListHeaderComponent Here)</Text>
+          <Text style={styles.examplesHeader}>
+            (Example ListHeaderComponent Here)
+          </Text>
         }
         renderItem={renderItem}
         renderSectionFooter={renderSectionFooter}

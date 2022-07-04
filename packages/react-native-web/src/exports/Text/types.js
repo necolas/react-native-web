@@ -35,23 +35,49 @@ export type TextStyle = {
   fontStyle?: 'italic' | 'normal',
   fontWeight?: ?FontWeightValue,
   fontVariant?: $ReadOnlyArray<
-    'small-caps' | 'oldstyle-nums' | 'lining-nums' | 'tabular-nums' | 'proportional-nums'
+    | 'small-caps'
+    | 'oldstyle-nums'
+    | 'lining-nums'
+    | 'tabular-nums'
+    | 'proportional-nums'
   >,
   letterSpacing?: ?NumberOrString,
   lineHeight?: ?NumberOrString,
-  textAlign?: 'center' | 'end' | 'inherit' | 'justify' | 'justify-all' | 'left' | 'right' | 'start',
+  textAlign?:
+    | 'center'
+    | 'end'
+    | 'inherit'
+    | 'justify'
+    | 'justify-all'
+    | 'left'
+    | 'right'
+    | 'start',
   textAlignVertical?: ?string,
   textDecorationColor?: ?ColorValue,
-  textDecorationLine?: 'none' | 'underline' | 'line-through' | 'underline line-through',
+  textDecorationLine?:
+    | 'none'
+    | 'underline'
+    | 'line-through'
+    | 'underline line-through',
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed',
   textIndent?: ?NumberOrString,
   textOverflow?: ?string,
-  textRendering?: 'auto' | 'geometricPrecision' | 'optimizeLegibility' | 'optimizeSpeed',
+  textRendering?:
+    | 'auto'
+    | 'geometricPrecision'
+    | 'optimizeLegibility'
+    | 'optimizeSpeed',
   textShadowColor?: ?ColorValue,
   textShadowOffset?: {| width?: number, height?: number |},
   textShadowRadius?: ?number,
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase',
-  unicodeBidi?: 'normal' | 'bidi-override' | 'embed' | 'isolate' | 'isolate-override' | 'plaintext',
+  unicodeBidi?:
+    | 'normal'
+    | 'bidi-override'
+    | 'embed'
+    | 'isolate'
+    | 'isolate-override'
+    | 'plaintext',
   whiteSpace?: ?string,
   wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all',
   wordWrap?: ?string,

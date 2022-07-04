@@ -23,5 +23,7 @@ export const getMedian = (values: ValuesType): number => {
   }
 
   const numbers = values.sort((a: number, b: number) => a - b);
-  return (numbers[(numbers.length - 1) >> 1] + numbers[numbers.length >> 1]) / 2;
+  return (
+    (numbers[(numbers.length - 1) >> 1] + numbers[numbers.length >> 1]) / 2
+  );
 };

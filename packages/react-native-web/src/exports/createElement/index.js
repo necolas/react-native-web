@@ -16,7 +16,8 @@ const createElement = (component, props, options) => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
   if (component && component.constructor === String) {
-    accessibilityComponent = AccessibilityUtil.propsToAccessibilityComponent(props);
+    accessibilityComponent =
+      AccessibilityUtil.propsToAccessibilityComponent(props);
   }
   const Component = accessibilityComponent || component;
   const domProps = createDOMProps(Component, props, options);
@@ -25,7 +26,11 @@ const createElement = (component, props, options) => {
 
   // Update locale context if element's writing direction prop changes
   const elementWithLocaleProvider = domProps.dir ? (
-    <LocaleProvider children={element} direction={domProps.dir} locale={domProps.lang} />
+    <LocaleProvider
+      children={element}
+      direction={domProps.dir}
+      locale={domProps.lang}
+    />
   ) : (
     element
   );

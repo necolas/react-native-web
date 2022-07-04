@@ -15,11 +15,17 @@ const { canUseDOM } = ExecutionEnvironment;
 
 // Android 4.4 browser
 const isPrefixed =
-  canUseDOM && !document.hasOwnProperty('hidden') && document.hasOwnProperty('webkitHidden');
+  canUseDOM &&
+  !document.hasOwnProperty('hidden') &&
+  document.hasOwnProperty('webkitHidden');
 
 const EVENT_TYPES = ['change', 'memoryWarning'];
-const VISIBILITY_CHANGE_EVENT = isPrefixed ? 'webkitvisibilitychange' : 'visibilitychange';
-const VISIBILITY_STATE_PROPERTY = isPrefixed ? 'webkitVisibilityState' : 'visibilityState';
+const VISIBILITY_CHANGE_EVENT = isPrefixed
+  ? 'webkitvisibilitychange'
+  : 'visibilitychange';
+const VISIBILITY_STATE_PROPERTY = isPrefixed
+  ? 'webkitVisibilityState'
+  : 'visibilityState';
 
 const AppStates = {
   BACKGROUND: 'background',

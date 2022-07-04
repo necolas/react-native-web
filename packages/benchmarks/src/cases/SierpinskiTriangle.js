@@ -1,6 +1,10 @@
 import { BenchmarkType } from '../app/Benchmark';
 import React from 'react';
-import { interpolatePurples, interpolateBuPu, interpolateRdPu } from 'd3-scale-chromatic';
+import {
+  interpolatePurples,
+  interpolateBuPu,
+  interpolateRdPu
+} from 'd3-scale-chromatic';
 
 const targetSize = 10;
 
@@ -37,7 +41,12 @@ class SierpinskiTriangle extends React.Component {
         // introduce randomness to ensure that repeated runs don't produce the same colors
         const color = fn((renderCount * Math.random()) / 20);
         return (
-          <Dot color={color} size={targetSize} x={x - targetSize / 2} y={y - targetSize / 2} />
+          <Dot
+            color={color}
+            size={targetSize}
+            x={x - targetSize / 2}
+            y={y - targetSize / 2}
+          />
         );
       }
 
@@ -72,7 +81,9 @@ class SierpinskiTriangle extends React.Component {
         </React.Fragment>
       );
     } else {
-      return <span style={{ color: 'white' }}>No implementation available</span>;
+      return (
+        <span style={{ color: 'white' }}>No implementation available</span>
+      );
     }
   }
 }

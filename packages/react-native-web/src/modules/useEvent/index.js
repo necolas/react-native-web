@@ -12,7 +12,10 @@ import useLayoutEffect from '../useLayoutEffect';
 import useStable from '../useStable';
 
 type Callback = null | ((any) => void);
-type AddListener = (target: EventTarget, listener: null | ((any) => void)) => () => void;
+type AddListener = (
+  target: EventTarget,
+  listener: null | ((any) => void)
+) => () => void;
 
 /**
  * This can be used with any event type include custom events.

@@ -310,7 +310,9 @@ describe('StyleSheet/compile', () => {
             marginRight: '5px',
             paddingRight: '10px'
           };
-          expect(inline(initial, isRTL)).toEqual(isRTL ? expectedRTL : expectedLTR);
+          expect(inline(initial, isRTL)).toEqual(
+            isRTL ? expectedRTL : expectedLTR
+          );
         });
 
         test(`converts "end" properties for ${dir}`, () => {
@@ -339,7 +341,9 @@ describe('StyleSheet/compile', () => {
             marginLeft: '5px',
             paddingLeft: '10px'
           };
-          expect(inline(initial, isRTL)).toEqual(isRTL ? expectedRTL : expectedLTR);
+          expect(inline(initial, isRTL)).toEqual(
+            isRTL ? expectedRTL : expectedLTR
+          );
         });
 
         test(`converts "start" values for ${dir}`, () => {
@@ -362,7 +366,9 @@ describe('StyleSheet/compile', () => {
             textAlign: 'right',
             transitionProperty: 'right'
           };
-          expect(inline(initial, isRTL)).toEqual(isRTL ? expectedRTL : expectedLTR);
+          expect(inline(initial, isRTL)).toEqual(
+            isRTL ? expectedRTL : expectedLTR
+          );
         });
 
         test(`converts "end" values for ${dir}`, () => {
@@ -385,7 +391,9 @@ describe('StyleSheet/compile', () => {
             textAlign: 'left',
             transitionProperty: 'left'
           };
-          expect(inline(initial, isRTL)).toEqual(isRTL ? expectedRTL : expectedLTR);
+          expect(inline(initial, isRTL)).toEqual(
+            isRTL ? expectedRTL : expectedLTR
+          );
         });
 
         test('end/start properties take precedence over left/right', () => {

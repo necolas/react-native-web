@@ -93,7 +93,10 @@ describe('create-event-handle', () => {
 
       function Component() {
         React.useEffect(() => {
-          const removeClickListener = addClickListener(targetRef.current, listener);
+          const removeClickListener = addClickListener(
+            targetRef.current,
+            listener
+          );
           const removeClickCaptureListener = addClickCaptureListener(
             targetRef.current,
             listenerCapture
@@ -141,7 +144,10 @@ describe('create-event-handle', () => {
 
       function Component() {
         React.useEffect(() => {
-          const removeClickListener = addClickListener(targetRef.current, listener);
+          const removeClickListener = addClickListener(
+            targetRef.current,
+            listener
+          );
           const removeClickCaptureListener = addClickCaptureListener(
             targetRef.current,
             listenerCapture

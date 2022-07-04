@@ -30,7 +30,9 @@ export default class Button extends Component<*> {
         ]}
         testID={testID}
       >
-        <Text style={[styles.text, textStyle, disabled && styles.textDisabled]}>{title}</Text>
+        <Text style={[styles.text, textStyle, disabled && styles.textDisabled]}>
+          {title}
+        </Text>
       </TouchableHighlight>
     );
   }

@@ -95,7 +95,9 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
   const setRef = useMergeRefs(forwardedRef, hostRef);
 
   const [extraStyles, setExtraStyles] = useState(
-    testOnly_pressed === true ? createExtraStyles(activeOpacity, underlayColor) : null
+    testOnly_pressed === true
+      ? createExtraStyles(activeOpacity, underlayColor)
+      : null
   );
 
   const showUnderlay = useCallback(() => {
@@ -177,7 +179,10 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       ]}
     >
       {React.cloneElement(child, {
-        style: StyleSheet.compose(child.props.style, extraStyles && extraStyles.child)
+        style: StyleSheet.compose(
+          child.props.style,
+          extraStyles && extraStyles.child
+        )
       })}
     </View>
   );
@@ -193,7 +198,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableHighlight = React.memo(React.forwardRef(TouchableHighlight));
+const MemoedTouchableHighlight = React.memo(
+  React.forwardRef(TouchableHighlight)
+);
 MemoedTouchableHighlight.displayName = 'TouchableHighlight';
 
 export default (MemoedTouchableHighlight: React.AbstractComponent<

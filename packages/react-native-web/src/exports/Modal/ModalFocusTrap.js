@@ -71,14 +71,18 @@ export type ModalFocusTrapProps = {|
   children?: any
 |};
 
-const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node => {
+const ModalFocusTrap = ({
+  active,
+  children
+}: ModalFocusTrapProps): React.Node => {
   const trapElementRef = React.useRef<?HTMLElement>();
-  const focusRef = React.useRef<{ trapFocusInProgress: boolean, lastFocusedElement: ?HTMLElement }>(
-    {
-      trapFocusInProgress: false,
-      lastFocusedElement: null
-    }
-  );
+  const focusRef = React.useRef<{
+    trapFocusInProgress: boolean,
+    lastFocusedElement: ?HTMLElement
+  }>({
+    trapFocusInProgress: false,
+    lastFocusedElement: null
+  });
 
   React.useEffect(() => {
     if (canUseDOM) {
@@ -87,7 +91,11 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
         // - The modal hasn't fully initialized with an HTMLElement ref
         // - Focus is already in the process of being trapped (e.g., we're refocusing)
         // - isTrapActive prop being falsey tells us to do nothing
-        if (trapElementRef.current == null || focusRef.current.trapFocusInProgress || !active) {
+        if (
+          trapElementRef.current == null ||
+          focusRef.current.trapFocusInProgress ||
+          !active
+        ) {
           return;
         }
 
@@ -104,11 +112,17 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
             // and we're leaving it - this means that we should be looping
             // around to the other side of the modal.
             let hasFocused = focusFirstDescendant(trapElementRef.current);
-            if (focusRef.current.lastFocusedElement === document.activeElement) {
+            if (
+              focusRef.current.lastFocusedElement === document.activeElement
+            ) {
               hasFocused = focusLastDescendant(trapElementRef.current);
             }
             // If we couldn't focus a new element then we need to focus onto the trap target
-            if (!hasFocused && trapElementRef.current != null && document.activeElement) {
+            if (
+              !hasFocused &&
+              trapElementRef.current != null &&
+              document.activeElement
+            ) {
               UIManager.focus(trapElementRef.current);
             }
           }
@@ -132,7 +146,10 @@ const ModalFocusTrap = ({ active, children }: ModalFocusTrapProps): React.Node =
     if (canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {
-        if (lastFocusedElementOutsideTrap && document.contains(lastFocusedElementOutsideTrap)) {
+        if (
+          lastFocusedElementOutsideTrap &&
+          document.contains(lastFocusedElementOutsideTrap)
+        ) {
           UIManager.focus(lastFocusedElementOutsideTrap);
         }
       };

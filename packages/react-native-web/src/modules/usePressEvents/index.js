@@ -15,7 +15,10 @@ import type { EventHandlers, PressResponderConfig } from './PressResponder';
 import PressResponder from './PressResponder';
 import { useDebugValue, useEffect, useRef } from 'react';
 
-export default function usePressEvents(hostRef: any, config: PressResponderConfig): EventHandlers {
+export default function usePressEvents(
+  hostRef: any,
+  config: PressResponderConfig
+): EventHandlers {
   const pressResponderRef = useRef<?PressResponder>(null);
   if (pressResponderRef.current == null) {
     pressResponderRef.current = new PressResponder(config);

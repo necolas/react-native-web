@@ -129,7 +129,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
-  const { onContextMenu: onContextMenuPress, onKeyDown: onKeyDownPress } = pressEventHandlers;
+  const { onContextMenu: onContextMenuPress, onKeyDown: onKeyDownPress } =
+    pressEventHandlers;
 
   useHover(hostRef, {
     contain: true,
@@ -232,4 +233,7 @@ const styles = StyleSheet.create({
 const MemoedPressable = memo(forwardRef(Pressable));
 MemoedPressable.displayName = 'Pressable';
 
-export default (MemoedPressable: React.AbstractComponent<Props, React.ElementRef<typeof View>>);
+export default (MemoedPressable: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof View>
+>);

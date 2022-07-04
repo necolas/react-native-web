@@ -101,7 +101,12 @@ const Switch: React.AbstractComponent<
   const thumbHeight = height;
   const thumbWidth = thumbHeight;
 
-  const rootStyle = [styles.root, style, disabled && styles.cursorDefault, { height, width }];
+  const rootStyle = [
+    styles.root,
+    style,
+    disabled && styles.cursorDefault,
+    { height, width }
+  ];
 
   const disabledTrackColor = (function () {
     if (value === true) {

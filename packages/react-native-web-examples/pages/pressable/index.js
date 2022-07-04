@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, View, Text, Pressable } from 'react-native';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Pressable
+} from 'react-native';
 import Example from '../../shared/example';
 
 export default function PressablePage() {

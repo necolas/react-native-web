@@ -22,8 +22,13 @@ describe('AppRegistry', () => {
 
     test('returns "element" and "getStyleElement"', () => {
       AppRegistry.registerComponent('App', () => NoopComponent);
-      const { element, getStyleElement } = AppRegistry.getApplication('App', {});
-      const styleElement = ReactDOMServer.renderToStaticMarkup(getStyleElement());
+      const { element, getStyleElement } = AppRegistry.getApplication(
+        'App',
+        {}
+      );
+      const styleElement = ReactDOMServer.renderToStaticMarkup(
+        getStyleElement()
+      );
 
       expect(element).toMatchInlineSnapshot(`
         <AppContainer
@@ -102,9 +107,15 @@ describe('AppRegistry', () => {
       `);
 
       // Second render "AlternativeComponent"
-      const styles = StyleSheet.create({ root: { borderWidth: 1234, backgroundColor: 'purple' } });
-      const AlternativeComponent = () => React.createElement(View, { style: styles.root });
-      AppRegistry.registerComponent('AlternativeApp', () => AlternativeComponent);
+      const styles = StyleSheet.create({
+        root: { borderWidth: 1234, backgroundColor: 'purple' }
+      });
+      const AlternativeComponent = () =>
+        React.createElement(View, { style: styles.root });
+      AppRegistry.registerComponent(
+        'AlternativeApp',
+        () => AlternativeComponent
+      );
       const second = getApplicationStyles('AlternativeApp');
       expect(second).toMatchInlineSnapshot(`
         "[stylesheet-group=\\"0\\"]{}

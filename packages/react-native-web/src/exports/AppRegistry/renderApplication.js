@@ -54,7 +54,11 @@ export function getApplication(
   const getStyleElement = (props) => {
     const sheet = StyleSheet.getSheet();
     return (
-      <style {...props} dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
+      <style
+        {...props}
+        dangerouslySetInnerHTML={{ __html: sheet.textContent }}
+        id={sheet.id}
+      />
     );
   };
   return { element, getStyleElement };

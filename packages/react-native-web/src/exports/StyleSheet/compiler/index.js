@@ -208,7 +208,8 @@ export function classic(style: Style, name: string): CompilerOutput {
   const selector = `.${identifier}`;
   let animationName;
   if (animationKeyframes != null) {
-    const [animationNames, keyframesRules] = processKeyframesValue(animationKeyframes);
+    const [animationNames, keyframesRules] =
+      processKeyframesValue(animationKeyframes);
     animationName = animationNames.join(',');
     compiledRules.push(...keyframesRules);
   }
@@ -223,7 +224,10 @@ export function classic(style: Style, name: string): CompilerOutput {
  * Compile simple style object to inline DOM styles.
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
-export function inline(originalStyle: Style, isRTL?: boolean): { [key: string]: mixed } {
+export function inline(
+  originalStyle: Style,
+  isRTL?: boolean
+): { [key: string]: mixed } {
   const style = originalStyle || emptyObject;
   const frozenProps = {};
   const nextStyle = {};
@@ -233,7 +237,10 @@ export function inline(originalStyle: Style, isRTL?: boolean): { [key: string]: 
     let prop = originalProp;
     let value = originalValue;
 
-    if (!Object.prototype.hasOwnProperty.call(style, originalProp) || originalValue == null) {
+    if (
+      !Object.prototype.hasOwnProperty.call(style, originalProp) ||
+      originalValue == null
+    ) {
       continue;
     }
 
@@ -253,12 +260,16 @@ export function inline(originalStyle: Style, isRTL?: boolean): { [key: string]: 
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
       // $FlowFixMe
-      const originalValues = Array.isArray(originalValue) ? originalValue : [originalValue];
+      const originalValues = Array.isArray(originalValue)
+        ? originalValue
+        : [originalValue];
       originalValues.forEach((val, i) => {
         if (typeof val === 'string') {
           const valuePolyfill = PROPERTIES_I18N[val];
           if (valuePolyfill != null) {
-            originalValues[i] = isRTL ? PROPERTIES_FLIP[valuePolyfill] : valuePolyfill;
+            originalValues[i] = isRTL
+              ? PROPERTIES_FLIP[valuePolyfill]
+              : valuePolyfill;
           }
         }
       });
@@ -281,7 +292,10 @@ export function inline(originalStyle: Style, isRTL?: boolean): { [key: string]: 
  * Create a value string that normalizes different input values with a common
  * output.
  */
-export function stringifyValueWithProperty(value: Value, property: ?string): string {
+export function stringifyValueWithProperty(
+  value: Value,
+  property: ?string
+): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'
@@ -302,7 +316,9 @@ function createAtomicRules(identifier: string, property, value): Rules {
   switch (property) {
     case 'animationKeyframes': {
       const [animationNames, keyframesRules] = processKeyframesValue(value);
-      const block = createDeclarationBlock({ animationName: animationNames.join(',') });
+      const block = createDeclarationBlock({
+        animationName: animationNames.join(',')
+      });
       rules.push(`${selector}${block}`, ...keyframesRules);
       break;
     }
@@ -433,7 +449,9 @@ function processKeyframesValue(keyframesValue) {
 
   const animationNames = [];
   const rules = [];
-  const value = Array.isArray(keyframesValue) ? keyframesValue : [keyframesValue];
+  const value = Array.isArray(keyframesValue)
+    ? keyframesValue
+    : [keyframesValue];
 
   value.forEach((keyframes) => {
     if (typeof keyframes === 'string') {

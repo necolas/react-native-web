@@ -24,20 +24,26 @@ describe('exports/createElement', () => {
     ({ container } = render(createElement('main')));
     expect(container.firstChild).toMatchSnapshot();
     ({ container } = render(
-      createElement('svg', { children: createElement('image', { href: '#href' }) })
+      createElement('svg', {
+        children: createElement('image', { href: '#href' })
+      })
     ));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   describe('prop "accessibilityRole"', () => {
     test('string component type', () => {
-      const { container } = render(createElement('span', { accessibilityRole: 'link' }));
+      const { container } = render(
+        createElement('span', { accessibilityRole: 'link' })
+      );
       expect(container.firstChild.nodeName).toBe('SPAN');
     });
 
     test('function component type', () => {
       const Custom = () => <div />;
-      const { container } = render(createElement(Custom, { accessibilityRole: 'link' }));
+      const { container } = render(
+        createElement(Custom, { accessibilityRole: 'link' })
+      );
       expect(container.firstChild.nodeName).toBe('DIV');
     });
   });
@@ -55,9 +61,13 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityAtomic', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityAtomic: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityAtomic: null })
+      );
       expect(getAttribute(isEmpty, 'aria-atomic')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityAtomic: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityAtomic: true })
+      );
       expect(getAttribute(hasValue, 'aria-atomic')).toBe('true');
     });
 
@@ -73,16 +83,24 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityBusy', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityBusy: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityBusy: null })
+      );
       expect(getAttribute(isEmpty, 'aria-busy')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityBusy: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityBusy: true })
+      );
       expect(getAttribute(hasValue, 'aria-busy')).toBe('true');
     });
 
     test('accessibilityChecked', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityChecked: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityChecked: null })
+      );
       expect(getAttribute(isEmpty, 'aria-checked')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityChecked: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityChecked: true })
+      );
       expect(getAttribute(hasValue, 'aria-checked')).toBe('true');
     });
 
@@ -91,7 +109,9 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityColumnCount: null })
       );
       expect(getAttribute(isEmpty, 'aria-colcount')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityColumnCount: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityColumnCount: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-colcount')).toBe('5');
     });
 
@@ -100,7 +120,9 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityColumnIndex: null })
       );
       expect(getAttribute(isEmpty, 'aria-colindex')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityColumnIndex: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityColumnIndex: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-colindex')).toBe('5');
     });
 
@@ -109,12 +131,16 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityColumnSpan: null })
       );
       expect(getAttribute(isEmpty, 'aria-colspan')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityColumnSpan: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityColumnSpan: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-colspan')).toBe('5');
     });
 
     test('accessibilityControls', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityControls: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityControls: null })
+      );
       expect(getAttribute(isEmpty, 'aria-controls')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', { accessibilityControls: 'abc' })
@@ -127,7 +153,9 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityCurrent', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityCurrent: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityCurrent: null })
+      );
       expect(getAttribute(isEmpty, 'aria-current')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', { accessibilityCurrent: 'page' })
@@ -147,13 +175,19 @@ describe('exports/createElement', () => {
       const { container: hasMultipleValues } = render(
         createElement('div', { accessibilityDescribedBy: ['abc', 'def'] })
       );
-      expect(getAttribute(hasMultipleValues, 'aria-describedby')).toBe('abc def');
+      expect(getAttribute(hasMultipleValues, 'aria-describedby')).toBe(
+        'abc def'
+      );
     });
 
     test('accessibilityDetails', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityDetails: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityDetails: null })
+      );
       expect(getAttribute(isEmpty, 'aria-details')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityDetails: 'abc' }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityDetails: 'abc' })
+      );
       expect(getAttribute(hasValue, 'aria-details')).toBe('abc');
     });
 
@@ -182,16 +216,24 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityExpanded', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityExpanded: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityExpanded: null })
+      );
       expect(getAttribute(isEmpty, 'aria-expanded')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityExpanded: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityExpanded: true })
+      );
       expect(getAttribute(hasValue, 'aria-expanded')).toBe('true');
     });
 
     test('accessibilityFlowTo', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityFlowTo: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityFlowTo: null })
+      );
       expect(getAttribute(isEmpty, 'aria-flowto')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityFlowTo: 'abc' }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityFlowTo: 'abc' })
+      );
       expect(getAttribute(hasValue, 'aria-flowto')).toBe('abc');
       const { container: hasMultipleValues } = render(
         createElement('div', { accessibilityFlowTo: ['abc', 'def'] })
@@ -200,21 +242,31 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityHasPopup', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityHasPopup: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityHasPopup: null })
+      );
       expect(getAttribute(isEmpty, 'aria-haspopup')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityHasPopup: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityHasPopup: true })
+      );
       expect(getAttribute(hasValue, 'aria-haspopup')).toBe('true');
     });
 
     test('accessibilityHidden', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityHidden: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityHidden: null })
+      );
       expect(getAttribute(isEmpty, 'aria-hidden')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityHidden: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityHidden: true })
+      );
       expect(getAttribute(hasValue, 'aria-hidden')).toBe('true');
     });
 
     test('accessibilityInvalid', () => {
-      const { container: isEmpty } = render(createElement('input', { accessibilityInvalid: null }));
+      const { container: isEmpty } = render(
+        createElement('input', { accessibilityInvalid: null })
+      );
       expect(getAttribute(isEmpty, 'aria-invalid')).toBeNull();
       const { container: hasValue } = render(
         createElement('input', { accessibilityInvalid: true })
@@ -229,16 +281,27 @@ describe('exports/createElement', () => {
       expect(getAttribute(isEmpty, 'aria-keyshortcuts')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', {
-          accessibilityKeyShortcuts: ['ArrowUp', 'Enter', 'Space', 'Alt+Shift+T']
+          accessibilityKeyShortcuts: [
+            'ArrowUp',
+            'Enter',
+            'Space',
+            'Alt+Shift+T'
+          ]
         })
       );
-      expect(getAttribute(hasValue, 'aria-keyshortcuts')).toBe('ArrowUp Enter Space Alt+Shift+T');
+      expect(getAttribute(hasValue, 'aria-keyshortcuts')).toBe(
+        'ArrowUp Enter Space Alt+Shift+T'
+      );
     });
 
     test('accessibilityLabel', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityLabel: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityLabel: null })
+      );
       expect(getAttribute(isEmpty, 'aria-label')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityLabel: 'abc' }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityLabel: 'abc' })
+      );
       expect(getAttribute(hasValue, 'aria-label')).toBe('abc');
     });
 
@@ -254,13 +317,19 @@ describe('exports/createElement', () => {
       const { container: hasMultipleValues } = render(
         createElement('div', { accessibilityLabelledBy: ['abc', 'def'] })
       );
-      expect(getAttribute(hasMultipleValues, 'aria-labelledby')).toBe('abc def');
+      expect(getAttribute(hasMultipleValues, 'aria-labelledby')).toBe(
+        'abc def'
+      );
     });
 
     test('accessibilityLevel', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityLevel: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityLevel: null })
+      );
       expect(getAttribute(isEmpty, 'aria-level')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityLevel: 3 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityLevel: 3 })
+      );
       expect(getAttribute(hasValue, 'aria-level')).toBe('3');
     });
 
@@ -276,14 +345,20 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityModal', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityModal: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityModal: null })
+      );
       expect(getAttribute(isEmpty, 'aria-modal')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityModal: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityModal: true })
+      );
       expect(getAttribute(hasValue, 'aria-modal')).toBe('true');
     });
 
     test('accessibilityMultiline', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityMultiline: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityMultiline: null })
+      );
       expect(getAttribute(isEmpty, 'aria-multiline')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', { accessibilityMultiline: true })
@@ -314,9 +389,13 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityOwns', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityOwns: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityOwns: null })
+      );
       expect(getAttribute(isEmpty, 'aria-owns')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityOwns: 'abc' }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityOwns: 'abc' })
+      );
       expect(getAttribute(hasValue, 'aria-owns')).toBe('abc');
       const { container: hasMultipleValues } = render(
         createElement('div', { accessibilityOwns: ['abc', 'def'] })
@@ -336,16 +415,24 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityPosInSet', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityPosInSet: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityPosInSet: null })
+      );
       expect(getAttribute(isEmpty, 'aria-posinset')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityPosInSet: 3 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityPosInSet: 3 })
+      );
       expect(getAttribute(hasValue, 'aria-posinset')).toBe('3');
     });
 
     test('accessibilityPressed', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityPressed: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityPressed: null })
+      );
       expect(getAttribute(isEmpty, 'aria-pressed')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityPressed: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityPressed: true })
+      );
       expect(getAttribute(hasValue, 'aria-pressed')).toBe('true');
     });
 
@@ -376,12 +463,18 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityRole', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityRole: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityRole: null })
+      );
       expect(getAttribute(isEmpty, 'role')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityRole: 'button' }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityRole: 'button' })
+      );
       expect(getAttribute(hasValue, 'role')).toBe('button');
       expect(getAttribute(hasValue, 'tabIndex')).toBe('0');
-      const { container: roleIsNone } = render(createElement('div', { accessibilityRole: 'none' }));
+      const { container: roleIsNone } = render(
+        createElement('div', { accessibilityRole: 'none' })
+      );
       expect(getAttribute(roleIsNone, 'role')).toBe('presentation');
     });
 
@@ -397,42 +490,64 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityRowCount', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityRowCount: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityRowCount: null })
+      );
       expect(getAttribute(isEmpty, 'aria-rowcount')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityRowCount: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityRowCount: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-rowcount')).toBe('5');
     });
 
     test('accessibilityRowIndex', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityRowIndex: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityRowIndex: null })
+      );
       expect(getAttribute(isEmpty, 'aria-rowindex')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityRowIndex: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityRowIndex: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-rowindex')).toBe('5');
     });
 
     test('accessibilityRowSpan', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityRowSpan: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityRowSpan: null })
+      );
       expect(getAttribute(isEmpty, 'aria-rowspan')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityRowSpan: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityRowSpan: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-rowspan')).toBe('5');
     });
 
     test('accessibilitySelected', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilitySelected: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilitySelected: null })
+      );
       expect(getAttribute(isEmpty, 'aria-selected')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilitySelected: true }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilitySelected: true })
+      );
       expect(getAttribute(hasValue, 'aria-selected')).toBe('true');
     });
 
     test('accessibilitySetSize', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilitySetSize: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilitySetSize: null })
+      );
       expect(getAttribute(isEmpty, 'aria-setsize')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilitySetSize: 5 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilitySetSize: 5 })
+      );
       expect(getAttribute(hasValue, 'aria-setsize')).toBe('5');
     });
 
     test('accessibilitySort', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilitySort: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilitySort: null })
+      );
       expect(getAttribute(isEmpty, 'aria-sort')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', { accessibilitySort: 'ascending' })
@@ -441,28 +556,42 @@ describe('exports/createElement', () => {
     });
 
     test('accessibilityValueMax', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityValueMax: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityValueMax: null })
+      );
       expect(getAttribute(isEmpty, 'aria-valuemax')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityValueMax: 100 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityValueMax: 100 })
+      );
       expect(getAttribute(hasValue, 'aria-valuemax')).toBe('100');
     });
 
     test('accessibilityValueMin', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityValueMin: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityValueMin: null })
+      );
       expect(getAttribute(isEmpty, 'aria-valuemin')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityValueMin: 10 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityValueMin: 10 })
+      );
       expect(getAttribute(hasValue, 'aria-valuemin')).toBe('10');
     });
 
     test('accessibilityValueNow', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityValueNow: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityValueNow: null })
+      );
       expect(getAttribute(isEmpty, 'aria-valuenow')).toBeNull();
-      const { container: hasValue } = render(createElement('div', { accessibilityValueNow: 50 }));
+      const { container: hasValue } = render(
+        createElement('div', { accessibilityValueNow: 50 })
+      );
       expect(getAttribute(hasValue, 'aria-valuenow')).toBe('50');
     });
 
     test('accessibilityValueText', () => {
-      const { container: isEmpty } = render(createElement('div', { accessibilityValueText: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { accessibilityValueText: null })
+      );
       expect(getAttribute(isEmpty, 'aria-valuetext')).toBeNull();
       const { container: hasValue } = render(
         createElement('div', { accessibilityValueText: 'fifty' })
@@ -492,10 +621,14 @@ describe('exports/createElement', () => {
     });
 
     test('focusable', () => {
-      const { container: isEmpty } = render(createElement('div', { focusable: null }));
+      const { container: isEmpty } = render(
+        createElement('div', { focusable: null })
+      );
       expect(getAttribute(isEmpty, 'tabindex')).toBeNull();
 
-      const { container: isTrue } = render(createElement('div', { focusable: true }));
+      const { container: isTrue } = render(
+        createElement('div', { focusable: true })
+      );
       expect(getAttribute(isTrue, 'tabindex')).toBe('0');
 
       const { container: isFalseNativelyFocusable } = render(

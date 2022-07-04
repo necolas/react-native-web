@@ -11,8 +11,13 @@ export default class Layout extends Component {
     const { viewPanel, actionPanel, listPanel } = this.props;
     const { widescreen } = this.state;
     return (
-      <View onLayout={this._handleLayout} style={[styles.root, widescreen && styles.row]}>
-        <View style={[widescreen ? styles.grow : styles.stackPanel, styles.layer]}>
+      <View
+        onLayout={this._handleLayout}
+        style={[styles.root, widescreen && styles.row]}
+      >
+        <View
+          style={[widescreen ? styles.grow : styles.stackPanel, styles.layer]}
+        >
           {viewPanel}
         </View>
         <View style={styles.grow}>

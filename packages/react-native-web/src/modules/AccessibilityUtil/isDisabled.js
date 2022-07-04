@@ -9,6 +9,7 @@
 
 const isDisabled = (props: Object): boolean =>
   props.disabled ||
-  (Array.isArray(props.accessibilityStates) && props.accessibilityStates.indexOf('disabled') > -1);
+  (Array.isArray(props.accessibilityStates) &&
+    props.accessibilityStates.indexOf('disabled') > -1);
 
 export default isDisabled;

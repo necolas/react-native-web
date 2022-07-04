@@ -34,14 +34,28 @@ export type AccessibilityProps = {|
   accessibilityColumnIndex?: ?number,
   accessibilityColumnSpan?: ?number,
   accessibilityControls?: ?idRefList,
-  accessibilityCurrent?: ?(boolean | 'page' | 'step' | 'location' | 'date' | 'time'),
+  accessibilityCurrent?: ?(
+    | boolean
+    | 'page'
+    | 'step'
+    | 'location'
+    | 'date'
+    | 'time'
+  ),
   accessibilityDescribedBy?: ?idRefList,
   accessibilityDetails?: ?idRef,
   accessibilityDisabled?: ?boolean,
   accessibilityErrorMessage?: ?idRef,
   accessibilityExpanded?: ?boolean,
   accessibilityFlowTo?: ?idRefList,
-  accessibilityHasPopup?: ?('dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false),
+  accessibilityHasPopup?: ?(
+    | 'dialog'
+    | 'grid'
+    | 'listbox'
+    | 'menu'
+    | 'tree'
+    | false
+  ),
   accessibilityHidden?: ?boolean,
   accessibilityInvalid?: ?boolean,
   accessibilityKeyShortcuts?: ?Array<string>,

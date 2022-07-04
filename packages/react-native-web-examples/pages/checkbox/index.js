@@ -44,7 +44,11 @@ export default function CheckboxPage() {
         <CheckBox color="#E0245E" value={true} />
       </View>
       <View style={styles.row}>
-        <CheckBox color="#1DA1F2" style={{ height: 32, width: 32 }} value={checked} />
+        <CheckBox
+          color="#1DA1F2"
+          style={{ height: 32, width: 32 }}
+          value={checked}
+        />
       </View>
     </Example>
   );

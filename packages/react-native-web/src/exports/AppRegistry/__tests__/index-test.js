@@ -27,7 +27,11 @@ describe('AppRegistry', () => {
     test('callback after render', () => {
       const callback = jest.fn();
       AppRegistry.registerComponent('App', () => NoopComponent);
-      AppRegistry.runApplication('App', { initialProps: {}, rootTag, callback });
+      AppRegistry.runApplication('App', {
+        initialProps: {},
+        rootTag,
+        callback
+      });
       expect(callback).toHaveBeenCalledTimes(1);
     });
 
@@ -45,14 +49,19 @@ describe('AppRegistry', () => {
 
       // Run in iframe
       AppRegistry.registerComponent('App', () => NoopComponent);
-      AppRegistry.runApplication('App', { initialProps: {}, rootTag: iframeRootTag });
+      AppRegistry.runApplication('App', {
+        initialProps: {},
+        rootTag: iframeRootTag
+      });
 
       const iframedoc = iframeRootTag.ownerDocument;
       expect(iframedoc).toBe(iframe.contentWindow.document);
       expect(iframedoc).not.toBe(document);
 
       const cssText = Array.prototype.slice
-        .call(iframedoc.getElementById('react-native-stylesheet').sheet.cssRules)
+        .call(
+          iframedoc.getElementById('react-native-stylesheet').sheet.cssRules
+        )
         .map((cssRule) => cssRule.cssText);
 
       expect(cssText).toMatchInlineSnapshot(`

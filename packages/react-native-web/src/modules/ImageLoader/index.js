@@ -54,7 +54,8 @@ export class ImageUriCache {
         const entry = entries[uri];
         if (
           (!leastRecentlyUsedEntry ||
-            entry.lastUsedTimestamp < leastRecentlyUsedEntry.lastUsedTimestamp) &&
+            entry.lastUsedTimestamp <
+              leastRecentlyUsedEntry.lastUsedTimestamp) &&
           entry.refCount === 0
         ) {
           leastRecentlyUsedKey = uri;
@@ -82,7 +83,11 @@ const ImageLoader = {
       delete requests[`${requestId}`];
     }
   },
-  getSize(uri: string, success: (width: number, height: number) => void, failure: () => void) {
+  getSize(
+    uri: string,
+    success: (width: number, height: number) => void,
+    failure: () => void
+  ) {
     let complete = false;
     const interval = setInterval(callback, 16);
     const requestId = ImageLoader.load(uri, callback, errorCallback);

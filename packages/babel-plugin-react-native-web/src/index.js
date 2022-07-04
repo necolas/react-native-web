@@ -4,7 +4,8 @@ const isCommonJS = (opts) => opts.commonjs === true;
 
 const getDistLocation = (importName, opts) => {
   const format = isCommonJS(opts) ? 'cjs/' : '';
-  const internalName = importName === 'unstable_createElement' ? 'createElement' : importName;
+  const internalName =
+    importName === 'unstable_createElement' ? 'createElement' : importName;
   if (internalName === 'index') {
     return `react-native-web/dist/${format}index`;
   } else if (internalName && moduleMap[internalName]) {
@@ -24,7 +25,8 @@ const isReactNativeRequire = (t, node) => {
     t.isIdentifier(init.callee) &&
     init.callee.name === 'require' &&
     init.arguments.length === 1 &&
-    (init.arguments[0].value === 'react-native' || init.arguments[0].value === 'react-native-web')
+    (init.arguments[0].value === 'react-native' ||
+      init.arguments[0].value === 'react-native-web')
   );
 };
 
@@ -48,7 +50,11 @@ module.exports = function ({ types: t }) {
 
                 if (distLocation) {
                   return t.importDeclaration(
-                    [t.importDefaultSpecifier(t.identifier(specifier.local.name))],
+                    [
+                      t.importDefaultSpecifier(
+                        t.identifier(specifier.local.name)
+                      )
+                    ],
                     t.stringLiteral(distLocation)
                   );
                 }
@@ -76,7 +82,12 @@ module.exports = function ({ types: t }) {
                 if (distLocation) {
                   return t.exportNamedDeclaration(
                     null,
-                    [t.exportSpecifier(t.identifier('default'), t.identifier(exportName))],
+                    [
+                      t.exportSpecifier(
+                        t.identifier('default'),
+                        t.identifier(exportName)
+                      )
+                    ],
                     t.stringLiteral(distLocation)
                   );
                 }
@@ -98,13 +109,18 @@ module.exports = function ({ types: t }) {
           if (t.isObjectPattern(id)) {
             const imports = id.properties
               .map((identifier) => {
-                const distLocation = getDistLocation(identifier.key.name, state.opts);
+                const distLocation = getDistLocation(
+                  identifier.key.name,
+                  state.opts
+                );
                 if (distLocation) {
                   return t.variableDeclaration(path.node.kind, [
                     t.variableDeclarator(
                       t.identifier(identifier.value.name),
                       t.memberExpression(
-                        t.callExpression(t.identifier('require'), [t.stringLiteral(distLocation)]),
+                        t.callExpression(t.identifier('require'), [
+                          t.stringLiteral(distLocation)
+                        ]),
                         t.identifier('default')
                       )
                     )

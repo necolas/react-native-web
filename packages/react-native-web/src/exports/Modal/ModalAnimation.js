@@ -75,7 +75,9 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
 
   return isRendering || visible
     ? createElement('div', {
-        style: isRendering ? getAnimationStyle(animationType, visible) : styles.hidden,
+        style: isRendering
+          ? getAnimationStyle(animationType, visible)
+          : styles.hidden,
         onAnimationEnd: animationEndCallback,
         children
       })
@@ -133,9 +135,25 @@ const styles = StyleSheet.create({
   }
 });
 
-const animatedSlideInStyles = [styles.container, styles.animatedIn, styles.slideIn];
-const animatedSlideOutStyles = [styles.container, styles.animatedOut, styles.slideOut];
-const animatedFadeInStyles = [styles.container, styles.animatedIn, styles.fadeIn];
-const animatedFadeOutStyles = [styles.container, styles.animatedOut, styles.fadeOut];
+const animatedSlideInStyles = [
+  styles.container,
+  styles.animatedIn,
+  styles.slideIn
+];
+const animatedSlideOutStyles = [
+  styles.container,
+  styles.animatedOut,
+  styles.slideOut
+];
+const animatedFadeInStyles = [
+  styles.container,
+  styles.animatedIn,
+  styles.fadeIn
+];
+const animatedFadeOutStyles = [
+  styles.container,
+  styles.animatedOut,
+  styles.fadeOut
+];
 
 export default ModalAnimation;

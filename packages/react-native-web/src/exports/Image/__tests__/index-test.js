@@ -30,14 +30,19 @@ describe('components/Image', () => {
   test('prop "accessibilityLabel"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const { container } = render(
-      <Image accessibilityLabel="accessibilityLabel" defaultSource={defaultSource} />
+      <Image
+        accessibilityLabel="accessibilityLabel"
+        defaultSource={defaultSource}
+      />
     );
     expect(container.firstChild).toMatchSnapshot();
   });
 
   test('prop "blurRadius"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
-    const { container } = render(<Image blurRadius={5} defaultSource={defaultSource} />);
+    const { container } = render(
+      <Image blurRadius={5} defaultSource={defaultSource} />
+    );
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -72,7 +77,10 @@ describe('components/Image', () => {
         width: 20
       };
       const { container } = render(
-        <Image defaultSource={defaultSource} style={{ height: 20, width: 40 }} />
+        <Image
+          defaultSource={defaultSource}
+          style={{ height: 20, width: 40 }}
+        />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
@@ -80,7 +88,9 @@ describe('components/Image', () => {
 
   test('prop "draggable"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
-    const { container } = render(<Image defaultSource={defaultSource} draggable={true} />);
+    const { container } = render(
+      <Image defaultSource={defaultSource} draggable={true} />
+    );
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -218,17 +228,25 @@ describe('components/Image', () => {
   });
 
   describe('prop "resizeMode"', () => {
-    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach((resizeMode) => {
-      test(`value "${resizeMode}"`, () => {
-        const { container } = render(<Image resizeMode={resizeMode} />);
-        expect(container.firstChild).toMatchSnapshot();
-      });
-    });
+    ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach(
+      (resizeMode) => {
+        test(`value "${resizeMode}"`, () => {
+          const { container } = render(<Image resizeMode={resizeMode} />);
+          expect(container.firstChild).toMatchSnapshot();
+        });
+      }
+    );
   });
 
   describe('prop "source"', () => {
     test('does not throw', () => {
-      const sources = [null, '', {}, { uri: '' }, { uri: 'https://google.com' }];
+      const sources = [
+        null,
+        '',
+        {},
+        { uri: '' },
+        { uri: 'https://google.com' }
+      ];
       sources.forEach((source) => {
         expect(() => render(<Image source={source} />)).not.toThrow();
       });
@@ -243,12 +261,16 @@ describe('components/Image', () => {
 
     test('is set immediately if the image was preloaded', () => {
       const uri = 'https://yahoo.com/favicon.ico';
-      ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        onLoad();
-      });
+      ImageLoader.load = jest
+        .fn()
+        .mockImplementationOnce((_, onLoad, onError) => {
+          onLoad();
+        });
       return Image.prefetch(uri).then(() => {
         const source = { uri };
-        const { container } = render(<Image source={source} />, { disableLifecycleMethods: true });
+        const { container } = render(<Image source={source} />, {
+          disableLifecycleMethods: true
+        });
         expect(container.firstChild).toMatchSnapshot();
         ImageUriCache.remove(uri);
       });
@@ -261,7 +283,9 @@ describe('components/Image', () => {
       ImageUriCache.add(uriTwo);
 
       // initial render
-      const { container, rerender } = render(<Image source={{ uri: uriOne }} />);
+      const { container, rerender } = render(
+        <Image source={{ uri: uriOne }} />
+      );
       ImageUriCache.remove(uriOne);
       expect(container.firstChild).toMatchSnapshot();
       // props update
@@ -285,10 +309,14 @@ describe('components/Image', () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uri = 'https://testing.com/fullSize.jpg';
       let loadCallback;
-      ImageLoader.load = jest.fn().mockImplementationOnce((_, onLoad, onError) => {
-        loadCallback = onLoad;
-      });
-      const { container } = render(<Image defaultSource={{ uri: defaultUri }} source={{ uri }} />);
+      ImageLoader.load = jest
+        .fn()
+        .mockImplementationOnce((_, onLoad, onError) => {
+          loadCallback = onLoad;
+        });
+      const { container } = render(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
         loadCallback();
@@ -306,13 +334,17 @@ describe('components/Image', () => {
 
       PixelRatio.get = jest.fn(() => 1.0);
       let { container } = render(<Image source={1} />);
-      expect(container.querySelector('img').src).toBe('http://localhost/static/img.png');
+      expect(container.querySelector('img').src).toBe(
+        'http://localhost/static/img.png'
+      );
 
       act(() => {
         PixelRatio.get = jest.fn(() => 2.2);
         ({ container } = render(<Image source={1} />));
       });
-      expect(container.querySelector('img').src).toBe('http://localhost/static/img@2x.png');
+      expect(container.querySelector('img').src).toBe(
+        'http://localhost/static/img@2x.png'
+      );
     });
   });
 
@@ -324,7 +356,9 @@ describe('components/Image', () => {
 
     test('supports "shadow" properties (convert to filter)', () => {
       const { container } = render(
-        <Image style={{ shadowColor: 'red', shadowOffset: { width: 1, height: 1 } }} />
+        <Image
+          style={{ shadowColor: 'red', shadowOffset: { width: 1, height: 1 } }}
+        />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
@@ -338,7 +372,9 @@ describe('components/Image', () => {
     });
 
     test('removes other unsupported View styles', () => {
-      const { container } = render(<Image style={{ overlayColor: 'red', tintColor: 'blue' }} />);
+      const { container } = render(
+        <Image style={{ overlayColor: 'red', tintColor: 'blue' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });

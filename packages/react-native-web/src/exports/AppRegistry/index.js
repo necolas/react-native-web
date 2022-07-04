@@ -16,7 +16,10 @@ import renderApplication, { getApplication } from './renderApplication';
 
 type AppParams = Object;
 type Runnable = {|
-  getApplication?: (AppParams) => {| element: Node, getStyleElement: (any) => Node |},
+  getApplication?: (AppParams) => {|
+    element: Node,
+    getStyleElement: (any) => Node
+  |},
   run: (AppParams) => any
 |};
 
@@ -36,9 +39,8 @@ export type AppConfig = {
 const emptyObject = {};
 const runnables: {| [appKey: string]: Runnable |} = {};
 
-let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook = (
-  component: ComponentProvider
-) => component();
+let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook =
+  (component: ComponentProvider) => component();
 let wrapperComponentProvider: ?WrapperComponentProvider;
 
 /**
@@ -62,7 +64,10 @@ export default class AppRegistry {
     return runnables[appKey].getApplication(appParameters);
   }
 
-  static registerComponent(appKey: string, componentProvider: ComponentProvider): string {
+  static registerComponent(
+    appKey: string,
+    componentProvider: ComponentProvider
+  ): string {
     runnables[appKey] = {
       getApplication: (appParameters) =>
         getApplication(
@@ -103,7 +108,8 @@ export default class AppRegistry {
   }
 
   static runApplication(appKey: string, appParameters: Object): void {
-    const isDevelopment = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
+    const isDevelopment =
+      process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
     if (isDevelopment) {
       const params = { ...appParameters };
       params.rootTag = `#${params.rootTag.id}`;
@@ -125,7 +131,9 @@ export default class AppRegistry {
     runnables[appKey].run(appParameters);
   }
 
-  static setComponentProviderInstrumentationHook(hook: ComponentProviderInstrumentationHook) {
+  static setComponentProviderInstrumentationHook(
+    hook: ComponentProviderInstrumentationHook
+  ) {
     componentProviderInstrumentationHook = hook;
   }
 

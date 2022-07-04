@@ -1,5 +1,11 @@
 import Benchmark from './Benchmark';
-import { Picker, StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
+import {
+  Picker,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import React, { Component } from 'react';
 import Button from './Button';
 import { IconClear, IconEye } from './Icons';
@@ -26,9 +32,12 @@ export default class App extends Component {
 
   render() {
     const { tests } = this.props;
-    const { currentBenchmarkName, status, currentLibraryName, results } = this.state;
-    const currentImplementation = tests[currentBenchmarkName][currentLibraryName];
-    const { Component, Provider, getComponentProps, sampleCount } = currentImplementation;
+    const { currentBenchmarkName, status, currentLibraryName, results } =
+      this.state;
+    const currentImplementation =
+      tests[currentBenchmarkName][currentLibraryName];
+    const { Component, Provider, getComponentProps, sampleCount } =
+      currentImplementation;
 
     return (
       <Layout
@@ -45,9 +54,15 @@ export default class App extends Component {
                   selectedValue={currentLibraryName}
                   style={styles.picker}
                 >
-                  {Object.keys(tests[currentBenchmarkName]).map((libraryName) => (
-                    <Picker.Item key={libraryName} label={libraryName} value={libraryName} />
-                  ))}
+                  {Object.keys(tests[currentBenchmarkName]).map(
+                    (libraryName) => (
+                      <Picker.Item
+                        key={libraryName}
+                        label={libraryName}
+                        value={libraryName}
+                      />
+                    )
+                  )}
                 </Picker>
               </View>
               <View style={{ width: 1, backgroundColor: colors.fadedGray }} />
@@ -185,24 +200,27 @@ export default class App extends Component {
     }
   };
 
-  _createHandleComplete = ({ benchmarkName, libraryName, sampleCount }) => (results) => {
-    this.setState(
-      (state) => ({
-        results: state.results.concat([
-          {
-            ...results,
-            benchmarkName,
-            libraryName,
-            libraryVersion: this.props.tests[benchmarkName][libraryName].version
-          }
-        ]),
-        status: 'complete'
-      }),
-      this._scrollToEnd
-    );
-    // console.log(results);
-    // console.log(results.samples.map(sample => sample.elapsed.toFixed(1)).join('\n'));
-  };
+  _createHandleComplete =
+    ({ benchmarkName, libraryName, sampleCount }) =>
+    (results) => {
+      this.setState(
+        (state) => ({
+          results: state.results.concat([
+            {
+              ...results,
+              benchmarkName,
+              libraryName,
+              libraryVersion:
+                this.props.tests[benchmarkName][libraryName].version
+            }
+          ]),
+          status: 'complete'
+        }),
+        this._scrollToEnd
+      );
+      // console.log(results);
+      // console.log(results.samples.map(sample => sample.elapsed.toFixed(1)).join('\n'));
+    };
 
   _handleClear = () => {
     this.setState(() => ({ results: [] }));

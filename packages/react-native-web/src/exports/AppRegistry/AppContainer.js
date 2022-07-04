@@ -25,7 +25,12 @@ export default function AppContainer(props: Props): React.Node {
   const { children, WrapperComponent } = props;
 
   let innerView = (
-    <View children={children} key={1} pointerEvents="box-none" style={styles.appContainer} />
+    <View
+      children={children}
+      key={1}
+      pointerEvents="box-none"
+      style={styles.appContainer}
+    />
   );
 
   if (WrapperComponent) {

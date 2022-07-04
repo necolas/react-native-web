@@ -23,9 +23,15 @@ const colorProps = {
   textShadowColor: true
 };
 
-export default function normalizeValueWithProperty(value: any, property?: ?string): any {
+export default function normalizeValueWithProperty(
+  value: any,
+  property?: ?string
+): any {
   let returnValue = value;
-  if ((property == null || !unitlessNumbers[property]) && typeof value === 'number') {
+  if (
+    (property == null || !unitlessNumbers[property]) &&
+    typeof value === 'number'
+  ) {
     returnValue = `${value}px`;
   } else if (property != null && colorProps[property]) {
     returnValue = normalizeColor(value);

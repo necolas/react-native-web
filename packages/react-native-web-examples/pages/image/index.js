@@ -80,22 +80,38 @@ export default function ImagePage() {
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={[styles.text]}>Center</Text>
-          <Image resizeMode="center" source={resizesource} style={styles.resizeMode} />
+          <Image
+            resizeMode="center"
+            source={resizesource}
+            style={styles.resizeMode}
+          />
         </View>
         <View style={styles.column}>
           <Text style={[styles.text]}>Contain</Text>
-          <Image resizeMode="contain" source={resizesource} style={styles.resizeMode} />
+          <Image
+            resizeMode="contain"
+            source={resizesource}
+            style={styles.resizeMode}
+          />
         </View>
       </View>
       <Divider />
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={[styles.text]}>Cover</Text>
-          <Image resizeMode="cover" source={resizesource} style={styles.resizeMode} />
+          <Image
+            resizeMode="cover"
+            source={resizesource}
+            style={styles.resizeMode}
+          />
         </View>
         <View style={styles.column}>
           <Text style={[styles.text]}>Stretch</Text>
-          <Image resizeMode="stretch" source={resizesource} style={styles.resizeMode} />
+          <Image
+            resizeMode="stretch"
+            source={resizesource}
+            style={styles.resizeMode}
+          />
         </View>
       </View>
     </Example>

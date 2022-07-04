@@ -18,8 +18,16 @@ export default function ActivityIndicatorPage() {
     <Example title="ActivityIndicator">
       <View style={styles.row}>
         <ActivityIndicator style={styles.item} />
-        <ActivityIndicator animating={false} hidesWhenStopped={false} style={styles.item} />
-        <ActivityIndicator animating={animating} hidesWhenStopped={false} style={styles.item} />
+        <ActivityIndicator
+          animating={false}
+          hidesWhenStopped={false}
+          style={styles.item}
+        />
+        <ActivityIndicator
+          animating={animating}
+          hidesWhenStopped={false}
+          style={styles.item}
+        />
       </View>
       <View style={styles.row}>
         <ActivityIndicator color="#1DA1F2" size="small" style={styles.item} />

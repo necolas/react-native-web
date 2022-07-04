@@ -13,7 +13,11 @@ import * as Timing from './timing';
 import React, { Component } from 'react';
 import { getMean, getMedian, getStdDev } from './math';
 
-import type { BenchResultsType, FullSampleTimingType, SampleTimingType } from './types';
+import type {
+  BenchResultsType,
+  FullSampleTimingType,
+  SampleTimingType
+} from './types';
 
 export const BenchmarkType = {
   MOUNT: 'mount',
@@ -21,7 +25,10 @@ export const BenchmarkType = {
   UNMOUNT: 'unmount'
 };
 
-const shouldRender = (cycle: number, type: $Values<typeof BenchmarkType>): boolean => {
+const shouldRender = (
+  cycle: number,
+  type: $Values<typeof BenchmarkType>
+): boolean => {
   switch (type) {
     // Render every odd iteration (first, third, etc)
     // Mounts and unmounts the component
@@ -36,7 +43,10 @@ const shouldRender = (cycle: number, type: $Values<typeof BenchmarkType>): boole
   }
 };
 
-const shouldRecord = (cycle: number, type: $Values<typeof BenchmarkType>): boolean => {
+const shouldRecord = (
+  cycle: number,
+  type: $Values<typeof BenchmarkType>
+): boolean => {
   switch (type) {
     // Record every odd iteration (when mounted: first, third, etc)
     case BenchmarkType.MOUNT:
@@ -91,7 +101,10 @@ type BenchmarkStateType = {
  * Benchmark
  * TODO: documentation
  */
-export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkStateType> {
+export default class Benchmark extends Component<
+  BenchmarkPropsType,
+  BenchmarkStateType
+> {
   _raf: ?Function;
   _startTime: number;
   _samples: Array<SampleTimingType>;
@@ -125,11 +138,16 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
   componentWillReceiveProps(nextProps: BenchmarkPropsType) {
     if (nextProps) {
-      this.setState((state) => ({ componentProps: nextProps.getComponentProps(state.cycle) }));
+      this.setState((state) => ({
+        componentProps: nextProps.getComponentProps(state.cycle)
+      }));
     }
   }
 
-  componentWillUpdate(nextProps: BenchmarkPropsType, nextState: BenchmarkStateType) {
+  componentWillUpdate(
+    nextProps: BenchmarkPropsType,
+    nextState: BenchmarkStateType
+  ) {
     if (nextState.running && !this.state.running) {
       this._startTime = Timing.now();
     }
@@ -154,7 +172,10 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
 
     if (running) {
       const now = Timing.now();
-      if (!isDone(cycle, sampleCount, type) && now - this._startTime < timeout) {
+      if (
+        !isDone(cycle, sampleCount, type) &&
+        now - this._startTime < timeout
+      ) {
         this._handleCycleComplete();
       } else {
         this._handleComplete(now);
@@ -174,7 +195,9 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     if (running && shouldRecord(cycle, type)) {
       this._samples[cycle] = { scriptingStart: Timing.now() };
     }
-    return running && shouldRender(cycle, type) ? <Component {...componentProps} /> : null;
+    return running && shouldRender(cycle, type) ? (
+      <Component {...componentProps} />
+    ) : null;
   }
 
   start() {
@@ -209,7 +232,12 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     return this._samples.reduce(
       (
         memo: Array<FullSampleTimingType>,
-        { scriptingStart, scriptingEnd, layoutStart, layoutEnd }: SampleTimingType
+        {
+          scriptingStart,
+          scriptingEnd,
+          layoutStart,
+          layoutEnd
+        }: SampleTimingType
       ): Array<FullSampleTimingType> => {
         memo.push({
           start: scriptingStart,
@@ -232,12 +260,16 @@ export default class Benchmark extends Component<BenchmarkPropsType, BenchmarkSt
     this.setState(() => ({ running: false, cycle: 0 }));
 
     const runTime = endTime - this._startTime;
-    const sortedElapsedTimes = samples.map(({ start, end }) => end - start).sort(sortNumbers);
+    const sortedElapsedTimes = samples
+      .map(({ start, end }) => end - start)
+      .sort(sortNumbers);
     const sortedScriptingElapsedTimes = samples
       .map(({ scriptingStart, scriptingEnd }) => scriptingEnd - scriptingStart)
       .sort(sortNumbers);
     const sortedLayoutElapsedTimes = samples
-      .map(({ layoutStart, layoutEnd }) => (layoutEnd || 0) - (layoutStart || 0))
+      .map(
+        ({ layoutStart, layoutEnd }) => (layoutEnd || 0) - (layoutStart || 0)
+      )
       .sort(sortNumbers);
 
     onComplete({

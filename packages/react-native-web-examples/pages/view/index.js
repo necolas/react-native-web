@@ -16,7 +16,10 @@ function Box({ pointerEvents }) {
       pointerEvents={pointerEvents}
       style={({ pressed }) => [styles.box, pressed && styles.purple]}
     >
-      <Pressable onPress={log} style={({ pressed }) => [styles.content, pressed && styles.orange]}>
+      <Pressable
+        onPress={log}
+        style={({ pressed }) => [styles.content, pressed && styles.orange]}
+      >
         <Text>{pointerEvents}</Text>
       </Pressable>
     </Pressable>

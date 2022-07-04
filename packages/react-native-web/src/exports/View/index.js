@@ -41,8 +41,8 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = React.forwardRef(
-  (props, forwardedRef) => {
+const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> =
+  React.forwardRef((props, forwardedRef) => {
     const {
       hrefAttrs,
       onLayout,
@@ -101,13 +101,18 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
 
     let component = 'div';
 
-    const langDirection = props.lang != null ? getLocaleDirection(props.lang) : null;
+    const langDirection =
+      props.lang != null ? getLocaleDirection(props.lang) : null;
     const componentDirection = props.dir || langDirection;
     const writingDirection = componentDirection || contextDirection;
 
     const supportedProps = pickProps(rest);
     supportedProps.dir = componentDirection;
-    supportedProps.style = [styles.view$raw, hasTextAncestor && styles.inline, props.style];
+    supportedProps.style = [
+      styles.view$raw,
+      hasTextAncestor && styles.inline,
+      props.style
+    ];
     if (props.href != null) {
       component = 'a';
       if (hrefAttrs != null) {
@@ -119,7 +124,8 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
           supportedProps.rel = rel;
         }
         if (typeof target === 'string') {
-          supportedProps.target = target.charAt(0) !== '_' ? '_' + target : target;
+          supportedProps.target =
+            target.charAt(0) !== '_' ? '_' + target : target;
         }
       }
     }
@@ -130,8 +136,7 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> = 
     supportedProps.ref = setRef;
 
     return createElement(component, supportedProps, { writingDirection });
-  }
-);
+  });
 
 View.displayName = 'View';
 

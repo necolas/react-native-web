@@ -134,7 +134,8 @@ describe('compiler/createReactDOMStyle', () => {
 
   describe('fontFamily', () => {
     test('general case', () => {
-      expect(createReactDOMStyle({ fontFamily: 'Georgia, Times, serif' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ fontFamily: 'Georgia, Times, serif' }))
+        .toMatchInlineSnapshot(`
         {
           "fontFamily": "Georgia, Times, serif",
         }
@@ -142,7 +143,8 @@ describe('compiler/createReactDOMStyle', () => {
     });
 
     test('"monospace"', () => {
-      expect(createReactDOMStyle({ fontFamily: 'monospace' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ fontFamily: 'monospace' }))
+        .toMatchInlineSnapshot(`
         {
           "fontFamily": "monospace,monospace",
         }
@@ -150,12 +152,14 @@ describe('compiler/createReactDOMStyle', () => {
     });
 
     test('"System"', () => {
-      expect(createReactDOMStyle({ fontFamily: 'System' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ fontFamily: 'System' }))
+        .toMatchInlineSnapshot(`
         {
           "fontFamily": "-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
-      expect(createReactDOMStyle({ font: '14px System' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ font: '14px System' }))
+        .toMatchInlineSnapshot(`
         {
           "font": "14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
         }
@@ -163,12 +167,14 @@ describe('compiler/createReactDOMStyle', () => {
     });
 
     test('"Noto, System"', () => {
-      expect(createReactDOMStyle({ fontFamily: 'Noto, System' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ fontFamily: 'Noto, System' }))
+        .toMatchInlineSnapshot(`
         {
           "fontFamily": "Noto,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
-      expect(createReactDOMStyle({ font: '14px Noto, System' })).toMatchInlineSnapshot(`
+      expect(createReactDOMStyle({ font: '14px Noto, System' }))
+        .toMatchInlineSnapshot(`
         {
           "font": "14px Noto, -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
         }
@@ -186,7 +192,9 @@ describe('compiler/createReactDOMStyle', () => {
   });
 
   test('fontVariant', () => {
-    expect(createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })).toEqual({
+    expect(
+      createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })
+    ).toEqual({
       fontVariant: 'common-ligatures small-caps'
     });
   });
@@ -204,7 +212,8 @@ describe('compiler/createReactDOMStyle', () => {
   describe('transform', () => {
     // passthrough if transform value is ever a string
     test('string', () => {
-      const transform = 'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)';
+      const transform =
+        'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)';
       const style = { transform };
       const resolved = createReactDOMStyle(style);
 

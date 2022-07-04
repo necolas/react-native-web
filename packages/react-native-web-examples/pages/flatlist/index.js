@@ -3,7 +3,10 @@ import { StyleSheet } from 'react-native';
 import Example from '../../shared/example';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native-web';
 
-const multiSelectData = ['First', 'Second', 'Third'].map((title, id) => ({ id, title }));
+const multiSelectData = ['First', 'Second', 'Third'].map((title, id) => ({
+  id,
+  title
+}));
 const minimalData = ['a', 'b', 'c', 'd', 'e'].map((key) => ({ key }));
 const pageExamplesData = ['minimal', 'multiSelect'].map((type) => ({ type }));
 
@@ -17,7 +20,9 @@ class MyListItem extends React.PureComponent {
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View>
-          <Text style={[styles.listItemText, { color: textColor }]}>{this.props.title}</Text>
+          <Text style={[styles.listItemText, { color: textColor }]}>
+            {this.props.title}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -70,7 +75,9 @@ function renderExampleItem({ item }) {
           <Text style={styles.exampleHeaderText}>Minimal FlatList:</Text>
           <FlatList
             data={minimalData}
-            renderItem={({ item }) => <Text style={styles.listItemText}>{item.key}</Text>}
+            renderItem={({ item }) => (
+              <Text style={styles.listItemText}>{item.key}</Text>
+            )}
           />
         </View>
       );
@@ -93,10 +100,14 @@ export default function FlatListPage() {
     <Example title="FlatList">
       <FlatList
         ListFooterComponent={
-          <Text style={styles.allExamplesFooter}>(Example ListFooterComponent Here)</Text>
+          <Text style={styles.allExamplesFooter}>
+            (Example ListFooterComponent Here)
+          </Text>
         }
         ListHeaderComponent={
-          <Text style={styles.allExamplesHeader}>(Example ListHeaderComponent Here)</Text>
+          <Text style={styles.allExamplesHeader}>
+            (Example ListHeaderComponent Here)
+          </Text>
         }
         data={pageExamplesData}
         renderItem={renderExampleItem}

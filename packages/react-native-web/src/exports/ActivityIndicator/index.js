@@ -65,7 +65,9 @@ const ActivityIndicator: React.AbstractComponent<
       <View
         children={svg}
         style={[
-          typeof size === 'number' ? { height: size, width: size } : indicatorSizes[size],
+          typeof size === 'number'
+            ? { height: size, width: size }
+            : indicatorSizes[size],
           styles.animation,
           !animating && styles.animationPause,
           !animating && hidesWhenStopped && styles.hidesWhenStopped

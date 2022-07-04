@@ -46,15 +46,30 @@ const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
 const STYLE_SHORT_FORM_EXPANSIONS = {
-  borderColor: ['borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor'],
+  borderColor: [
+    'borderTopColor',
+    'borderRightColor',
+    'borderBottomColor',
+    'borderLeftColor'
+  ],
   borderRadius: [
     'borderTopLeftRadius',
     'borderTopRightRadius',
     'borderBottomRightRadius',
     'borderBottomLeftRadius'
   ],
-  borderStyle: ['borderTopStyle', 'borderRightStyle', 'borderBottomStyle', 'borderLeftStyle'],
-  borderWidth: ['borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'],
+  borderStyle: [
+    'borderTopStyle',
+    'borderRightStyle',
+    'borderBottomStyle',
+    'borderLeftStyle'
+  ],
+  borderWidth: [
+    'borderTopWidth',
+    'borderRightWidth',
+    'borderBottomWidth',
+    'borderLeftWidth'
+  ],
   marginHorizontal: ['marginRight', 'marginLeft'],
   marginVertical: ['marginTop', 'marginBottom'],
   overflow: ['overflowX', 'overflowY'],

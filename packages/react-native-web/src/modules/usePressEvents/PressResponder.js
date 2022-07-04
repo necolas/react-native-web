@@ -117,7 +117,8 @@ const Transitions = Object.freeze({
 });
 
 const isActiveSignal = (signal) =>
-  signal === RESPONDER_ACTIVE_PRESS_START || signal === RESPONDER_ACTIVE_LONG_PRESS_START;
+  signal === RESPONDER_ACTIVE_PRESS_START ||
+  signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
 const isButtonRole = (element) => element.getAttribute('role') === 'button';
 
@@ -430,7 +431,11 @@ export default class PressResponder {
       onContextMenu: (event: any): void => {
         const { disabled, onLongPress } = this._config;
         if (!disabled) {
-          if (onLongPress != null && this._isPointerTouch && !event.defaultPrevented) {
+          if (
+            onLongPress != null &&
+            this._isPointerTouch &&
+            !event.defaultPrevented
+          ) {
             event.preventDefault();
             event.stopPropagation();
           }
@@ -457,7 +462,9 @@ export default class PressResponder {
       return;
     }
     if (nextState == null || nextState === ERROR) {
-      console.error(`PressResponder: Invalid signal ${signal} for state ${prevState} on responder`);
+      console.error(
+        `PressResponder: Invalid signal ${signal} for state ${prevState} on responder`
+      );
     } else if (prevState !== nextState) {
       this._performTransitionSideEffects(prevState, nextState, signal, event);
       this._touchState = nextState;
@@ -503,7 +510,8 @@ export default class PressResponder {
       const { onLongPress, onPress } = this._config;
       if (onPress != null) {
         const isPressCanceledByLongPress =
-          onLongPress != null && prevState === RESPONDER_ACTIVE_LONG_PRESS_START;
+          onLongPress != null &&
+          prevState === RESPONDER_ACTIVE_LONG_PRESS_START;
         if (!isPressCanceledByLongPress) {
           // If we never activated (due to delays), activate and deactivate now.
           if (!isNextActive && !isPrevActive) {

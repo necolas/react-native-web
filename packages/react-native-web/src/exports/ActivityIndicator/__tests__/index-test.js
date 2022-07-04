@@ -14,14 +14,18 @@ import { render } from '@testing-library/react';
 describe('components/ActivityIndicator', () => {
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = render(<ActivityIndicator accessibilityLabel="accessibility label" />);
+      const { container } = render(
+        <ActivityIndicator accessibilityLabel="accessibility label" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "accessibilityLiveRegion"', () => {
     test('value is set', () => {
-      const { container } = render(<ActivityIndicator accessibilityLiveRegion="polite" />);
+      const { container } = render(
+        <ActivityIndicator accessibilityLiveRegion="polite" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -46,14 +50,18 @@ describe('components/ActivityIndicator', () => {
 
   describe('prop "dataSet"', () => {
     test('value is set', () => {
-      const { container } = render(<ActivityIndicator dataSet={{ one: 'one', two: 'two' }} />);
+      const { container } = render(
+        <ActivityIndicator dataSet={{ one: 'one', two: 'two' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
   describe('prop "hidesWhenStopped"', () => {
     test('is "true"', () => {
-      const { container } = render(<ActivityIndicator animating={false} hidesWhenStopped={true} />);
+      const { container } = render(
+        <ActivityIndicator animating={false} hidesWhenStopped={true} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -126,7 +134,9 @@ describe('components/ActivityIndicator', () => {
 
   describe('prop "style"', () => {
     test('value is set', () => {
-      const { container } = render(<ActivityIndicator style={{ borderWidth: 5 }} />);
+      const { container } = render(
+        <ActivityIndicator style={{ borderWidth: 5 }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });

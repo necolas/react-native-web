@@ -26,7 +26,10 @@ BoundingDimensions.prototype.destructor = function () {
 };
 
 BoundingDimensions.getPooledFromElement = function (element: HTMLElement): any {
-  return BoundingDimensions.getPooled(element.offsetWidth, element.offsetHeight);
+  return BoundingDimensions.getPooled(
+    element.offsetWidth,
+    element.offsetHeight
+  );
 };
 
 PooledClass.addPoolingTo(BoundingDimensions, twoArgumentPooler);

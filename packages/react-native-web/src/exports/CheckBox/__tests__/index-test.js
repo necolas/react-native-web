@@ -18,7 +18,9 @@ function findCheckbox(container) {
 describe('CheckBox', () => {
   describe('prop "accessibilityLabel"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox accessibilityLabel="accessibility label" />);
+      const { container } = render(
+        <CheckBox accessibilityLabel="accessibility label" />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -32,7 +34,9 @@ describe('CheckBox', () => {
 
   describe('prop "dataSet"', () => {
     test('value is set', () => {
-      const { container } = render(<CheckBox dataSet={{ one: 'one', two: 'two' }} />);
+      const { container } = render(
+        <CheckBox dataSet={{ one: 'one', two: 'two' }} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -76,7 +80,9 @@ describe('CheckBox', () => {
   describe('prop "onChange"', () => {
     test('is called with the event object', () => {
       const onChange = jest.fn();
-      const { container } = render(<CheckBox onChange={onChange} value={false} />);
+      const { container } = render(
+        <CheckBox onChange={onChange} value={false} />
+      );
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onChange).toHaveBeenCalled();
@@ -101,7 +107,9 @@ describe('CheckBox', () => {
   describe('prop "onValueChange"', () => {
     test('when value is "false" it receives "true"', () => {
       const onValueChange = jest.fn();
-      const { container } = render(<CheckBox onValueChange={onValueChange} value={false} />);
+      const { container } = render(
+        <CheckBox onValueChange={onValueChange} value={false} />
+      );
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(true);
@@ -109,7 +117,9 @@ describe('CheckBox', () => {
 
     test('when value is "true" it receives "false"', () => {
       const onValueChange = jest.fn();
-      const { container } = render(<CheckBox onValueChange={onValueChange} value />);
+      const { container } = render(
+        <CheckBox onValueChange={onValueChange} value />
+      );
       const checkbox = findCheckbox(container);
       checkbox.click(); // Needed to get ReactDOM to trigger 'change' event
       expect(onValueChange).toHaveBeenCalledWith(false);

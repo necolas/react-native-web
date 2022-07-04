@@ -25,7 +25,12 @@ export const createBoxShadowValue = (style: Object): void | string => {
   const offsetY = normalizeValueWithProperty(height);
   const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
   const color = normalizeColor(shadowColor || 'black', shadowOpacity);
-  if (color != null && offsetX != null && offsetY != null && blurRadius != null) {
+  if (
+    color != null &&
+    offsetX != null &&
+    offsetY != null &&
+    blurRadius != null
+  ) {
     return `${offsetX} ${offsetY} ${blurRadius} ${color}`;
   }
 };
@@ -53,7 +58,9 @@ export const createTextShadowValue = (style: Object): void | string => {
 /**
  * Preprocess styles
  */
-export const preprocess = <T: {| [key: string]: any |}>(originalStyle: T): T => {
+export const preprocess = <T: {| [key: string]: any |}>(
+  originalStyle: T
+): T => {
   const style = originalStyle || emptyObject;
   const nextStyle = {};
 
@@ -62,7 +69,10 @@ export const preprocess = <T: {| [key: string]: any |}>(originalStyle: T): T => 
     let prop = originalProp;
     let value = originalValue;
 
-    if (!Object.prototype.hasOwnProperty.call(style, originalProp) || originalValue == null) {
+    if (
+      !Object.prototype.hasOwnProperty.call(style, originalProp) ||
+      originalValue == null
+    ) {
       continue;
     }
 
@@ -84,12 +94,18 @@ export const preprocess = <T: {| [key: string]: any |}>(originalStyle: T): T => 
     }
 
     // Convert text shadow styles
-    if (prop === 'textShadowColor' || prop === 'textShadowOffset' || prop === 'textShadowRadius') {
+    if (
+      prop === 'textShadowColor' ||
+      prop === 'textShadowOffset' ||
+      prop === 'textShadowRadius'
+    ) {
       const textShadowValue = createTextShadowValue(style);
       if (textShadowValue != null && nextStyle.textShadow == null) {
         const { textShadow } = style;
         prop = 'textShadow';
-        value = textShadow ? `${textShadow}, ${textShadowValue}` : textShadowValue;
+        value = textShadow
+          ? `${textShadow}, ${textShadowValue}`
+          : textShadowValue;
       } else {
         continue;
       }

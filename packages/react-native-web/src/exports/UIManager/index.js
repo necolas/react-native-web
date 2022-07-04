@@ -53,7 +53,10 @@ const UIManager = {
       // A tabIndex of -1 allows element to be programmatically focused but
       // prevents keyboard focus, so we don't want to set the value on elements
       // that support keyboard focus by default.
-      if (node.getAttribute('tabIndex') == null && focusableElements[name] == null) {
+      if (
+        node.getAttribute('tabIndex') == null &&
+        focusableElements[name] == null
+      ) {
         node.setAttribute('tabIndex', '-1');
       }
       node.focus();

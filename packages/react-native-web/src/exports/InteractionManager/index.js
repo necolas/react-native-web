@@ -9,7 +9,9 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import requestIdleCallback, { cancelIdleCallback } from '../../modules/requestIdleCallback';
+import requestIdleCallback, {
+  cancelIdleCallback
+} from '../../modules/requestIdleCallback';
 
 const InteractionManager = {
   Events: {
@@ -20,7 +22,11 @@ const InteractionManager = {
   /**
    * Schedule a function to run after all interactions have completed.
    */
-  runAfterInteractions(task: ?Function): { then: Function, done: Function, cancel: Function } {
+  runAfterInteractions(task: ?Function): {
+    then: Function,
+    done: Function,
+    cancel: Function
+  } {
     let handle;
 
     const promise = new Promise((resolve) => {

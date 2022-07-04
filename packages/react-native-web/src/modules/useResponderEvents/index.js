@@ -33,7 +33,10 @@ function useStable<T>(getInitialValue: () => T): T {
   return ref.current;
 }
 
-export default function useResponderEvents(hostRef: any, config: ResponderConfig = emptyObject) {
+export default function useResponderEvents(
+  hostRef: any,
+  config: ResponderConfig = emptyObject
+) {
   const id = useStable(() => idCounter++);
   const isAttachedRef = React.useRef(false);
 
@@ -81,6 +84,8 @@ export default function useResponderEvents(hostRef: any, config: ResponderConfig
     }
   }, [config, hostRef, id]);
 
-  React.useDebugValue({ isResponder: hostRef.current === ResponderSystem.getResponderNode() });
+  React.useDebugValue({
+    isResponder: hostRef.current === ResponderSystem.getResponderNode()
+  });
   React.useDebugValue(config);
 }

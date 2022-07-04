@@ -74,7 +74,10 @@ function normalizeEvent(event: any) {
 /**
  *
  */
-export default function createEventHandle(type: string, options: ?EventOptions): EventHandle {
+export default function createEventHandle(
+  type: string,
+  options: ?EventOptions
+): EventHandle {
   const opts = getOptions(options);
 
   return function (target: EventTarget, listener: ?Listener) {

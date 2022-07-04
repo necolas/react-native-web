@@ -18,21 +18,26 @@ const oneTimeCode = argv.otp;
 console.log(`Publishing react-native-web@${version}`);
 
 // Collect 'react-native-web' workspaces and package manifests
-const workspacePaths = require('../package.json').workspaces.reduce((acc, w) => {
-  const resolvedPaths = glob.sync(w);
-  resolvedPaths.forEach((p) => {
-    // Remove duplicates and unrelated packages
-    if (p.includes('react-native-web') && acc.indexOf(p) === -1) {
-      acc.push(p);
-    }
-  });
-  return acc;
-}, []);
+const workspacePaths = require('../package.json').workspaces.reduce(
+  (acc, w) => {
+    const resolvedPaths = glob.sync(w);
+    resolvedPaths.forEach((p) => {
+      // Remove duplicates and unrelated packages
+      if (p.includes('react-native-web') && acc.indexOf(p) === -1) {
+        acc.push(p);
+      }
+    });
+    return acc;
+  },
+  []
+);
 
 const workspaces = workspacePaths.map((dir) => {
   const directory = path.resolve(dir);
   const packageJsonPath = path.join(directory, 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, { encoding: 'utf-8' }));
+  const packageJson = JSON.parse(
+    fs.readFileSync(packageJsonPath, { encoding: 'utf-8' })
+  );
   return { directory, packageJson, packageJsonPath };
 });
 
@@ -48,7 +53,10 @@ workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
       packageJson.devDependencies[name] = version;
     }
   });
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2) + '\n'
+  );
 });
 
 // Commit changes

@@ -15,7 +15,11 @@ type NumberOrString = number | string;
  * Animations and transitions
  */
 
-type AnimationDirection = 'alternate' | 'alternate-reverse' | 'normal' | 'reverse';
+type AnimationDirection =
+  | 'alternate'
+  | 'alternate-reverse'
+  | 'normal'
+  | 'reverse';
 type AnimationFillMode = 'none' | 'forwards' | 'backwards' | 'both';
 type AnimationIterationCount = number | 'infinite';
 type AnimationKeyframes = string | Object;
@@ -26,7 +30,10 @@ export type AnimationStyles = {|
   animationDirection?: ?(AnimationDirection | Array<AnimationDirection>),
   animationDuration?: ?(string | Array<string>),
   animationFillMode?: ?(AnimationFillMode | Array<AnimationFillMode>),
-  animationIterationCount?: ?(AnimationIterationCount | Array<AnimationIterationCount>),
+  animationIterationCount?: ?(
+    | AnimationIterationCount
+    | Array<AnimationIterationCount>
+  ),
   animationKeyframes?: ?(AnimationKeyframes | Array<AnimationKeyframes>),
   animationPlayState?: ?(AnimationPlayState | Array<AnimationPlayState>),
   animationTimingFunction?: ?(string | Array<string>),
@@ -153,7 +160,14 @@ export type LayoutStyles = {|
     | 'space-between'
     | 'stretch',
   alignItems?: ?('baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
-  alignSelf?: ?('auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'),
+  alignSelf?: ?(
+    | 'auto'
+    | 'baseline'
+    | 'center'
+    | 'flex-end'
+    | 'flex-start'
+    | 'stretch'
+  ),
   aspectRatio?: ?number,
   backfaceVisibility?: ?VisiblilityValue,
   borderWidth?: ?DimensionValue,

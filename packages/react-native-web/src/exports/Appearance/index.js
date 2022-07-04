@@ -27,7 +27,10 @@ function getQuery(): MediaQueryList | null {
 }
 
 const query = getQuery();
-const listenerMapping = new WeakMap<AppearanceListener, DOMAppearanceListener>();
+const listenerMapping = new WeakMap<
+  AppearanceListener,
+  DOMAppearanceListener
+>();
 
 const Appearance = {
   getColorScheme(): ColorSchemeName {

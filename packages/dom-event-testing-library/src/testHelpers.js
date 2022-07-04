@@ -24,7 +24,9 @@ export function describeWithPointerEvent(message, describeFn) {
 }
 
 export function testWithPointerType(message, testFn) {
-  const table = hasPointerEvent() ? ['mouse', 'touch', 'pen'] : ['mouse', 'touch'];
+  const table = hasPointerEvent()
+    ? ['mouse', 'touch', 'pen']
+    : ['mouse', 'touch'];
   test.each(table)(`${message}: %s`, (pointerType) => {
     testFn(pointerType);
   });

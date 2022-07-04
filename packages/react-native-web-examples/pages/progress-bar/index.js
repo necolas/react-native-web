@@ -23,9 +23,17 @@ export default function ProgressBarPage() {
         <Divider />
         <ProgressBar color="#E0245E" progress={1} />
         <Divider />
-        <ProgressBar color="rgb(23, 191, 99)" progress={0.1} trackColor="rgba(23, 191, 99, 0.3)" />
+        <ProgressBar
+          color="rgb(23, 191, 99)"
+          progress={0.1}
+          trackColor="rgba(23, 191, 99, 0.3)"
+        />
         <Divider />
-        <ProgressBar color="rgb(244, 93, 34)" progress={0.2} trackColor="rgba(244, 93, 34, 0.3)" />
+        <ProgressBar
+          color="rgb(244, 93, 34)"
+          progress={0.2}
+          trackColor="rgba(244, 93, 34, 0.3)"
+        />
         <Divider />
         <ProgressBar
           color="rgb(121, 75, 196)"
@@ -33,7 +41,12 @@ export default function ProgressBarPage() {
           trackColor="rgba(121, 75, 196, 0.3)"
         />
         <Divider />
-        <ProgressBar color="#1DA1F2" progress={0.33} style={styles.custom} trackColor="#D1E3F6" />
+        <ProgressBar
+          color="#1DA1F2"
+          progress={0.33}
+          style={styles.custom}
+          trackColor="#D1E3F6"
+        />
       </View>
     </Example>
   );

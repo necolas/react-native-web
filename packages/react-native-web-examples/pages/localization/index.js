@@ -309,7 +309,9 @@ const BorderRadiiExample = withRTLState(({ isRTL, setRTL }) => {
 function Block(props) {
   let description;
   if (props.description) {
-    description = <Text style={blockStyles.descriptionText}>{props.description}</Text>;
+    description = (
+      <Text style={blockStyles.descriptionText}>{props.description}</Text>
+    );
   }
 
   return (
@@ -379,13 +381,19 @@ class LayoutRTLExample extends React.Component {
 
   render() {
     return (
-      <ScrollView dir={this.state.isRTL ? 'rtl' : 'ltr'} style={[styles.container]}>
+      <ScrollView
+        dir={this.state.isRTL ? 'rtl' : 'ltr'}
+        style={[styles.container]}
+      >
         <Block title={'Current layout direction'}>
           <View dir="ltr" style={styles.directionBox}>
             <Text style={styles.directionText}>
               {this.state.isRTL ? 'Right-to-Left' : 'Left-to-Right'}
             </Text>
-            <Switch onValueChange={this._onDirectionChange} value={this.state.isRTL} />
+            <Switch
+              onValueChange={this._onDirectionChange}
+              value={this.state.isRTL}
+            />
           </View>
         </Block>
 
@@ -419,13 +427,22 @@ class LayoutRTLExample extends React.Component {
 
         <Block title={'A simple list-item layout'}>
           <View style={styles.list}>
-            <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=222' }} />
-            <ListItem imageSource={{ uri: 'https://picsum.photos/130/130?image=250' }} />
+            <ListItem
+              imageSource={{ uri: 'https://picsum.photos/130/130?image=222' }}
+            />
+            <ListItem
+              imageSource={{ uri: 'https://picsum.photos/130/130?image=250' }}
+            />
           </View>
         </Block>
 
         <Block title={'Working with icons'}>
-          <View style={[styles.flexDirectionRow, { justifyContent: 'space-around' }]}>
+          <View
+            style={[
+              styles.flexDirectionRow,
+              { justifyContent: 'space-around' }
+            ]}
+          >
             <View style={{ alignItems: 'center' }}>
               <Image source={iconSource} style={styles.image} />
               <Text style={styles.fontSizeSmall}>No RTL flip</Text>
@@ -433,7 +450,10 @@ class LayoutRTLExample extends React.Component {
             <View style={{ alignItems: 'center' }}>
               <Image
                 source={iconSource}
-                style={[styles.image, { transform: [{ scaleX: this.state.isRTL ? -1 : 1 }] }]}
+                style={[
+                  styles.image,
+                  { transform: [{ scaleX: this.state.isRTL ? -1 : 1 }] }
+                ]}
               />
               <Text style={styles.fontSizeSmall}>RTL flip</Text>
             </View>

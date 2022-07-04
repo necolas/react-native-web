@@ -6,7 +6,9 @@ import { render } from '@testing-library/react';
 
 describe('components/Button', () => {
   test('prop "accessibilityLabel"', () => {
-    const { container } = render(<Button accessibilityLabel="accessibility label" title="" />);
+    const { container } = render(
+      <Button accessibilityLabel="accessibility label" title="" />
+    );
     expect(container.firstChild).toMatchSnapshot();
   });
 

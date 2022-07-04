@@ -31,7 +31,10 @@ const initialRules = [
   'input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
 ];
 
-export function createSheet(root?: HTMLElement, id?: string = defaultId): Sheet {
+export function createSheet(
+  root?: HTMLElement,
+  id?: string = defaultId
+): Sheet {
   let sheet;
 
   if (ExecutionEnvironment.canUseDOM) {
@@ -49,9 +52,12 @@ export function createSheet(root?: HTMLElement, id?: string = defaultId): Sheet 
       if (index == null) {
         const initialSheet = sheets[0];
         // If we're creating a new sheet, populate it with existing styles
-        const textContent = initialSheet != null ? initialSheet.getTextContent() : '';
+        const textContent =
+          initialSheet != null ? initialSheet.getTextContent() : '';
         // Cast rootNode to 'any' because Flow types for getRootNode are wrong
-        sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(id, (rootNode: any), textContent));
+        sheet = createOrderedCSSStyleSheet(
+          createCSSStyleSheet(id, (rootNode: any), textContent)
+        );
         roots.set(rootNode, sheets.length);
         sheets.push(sheet);
       } else {

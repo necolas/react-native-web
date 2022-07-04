@@ -15,7 +15,12 @@ describe('apis/Platform', () => {
 
     test('chooses "web"', () => {
       expect(
-        Platform.select({ android: 'android', ios: 'ios', web: 'web', default: 'default' })
+        Platform.select({
+          android: 'android',
+          ios: 'ios',
+          web: 'web',
+          default: 'default'
+        })
       ).toEqual('web');
     });
   });

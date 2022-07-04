@@ -117,7 +117,9 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   return React.cloneElement(element, elementProps, ...children);
 }
 
-const MemoedTouchableWithoutFeedback = React.memo(React.forwardRef(TouchableWithoutFeedback));
+const MemoedTouchableWithoutFeedback = React.memo(
+  React.forwardRef(TouchableWithoutFeedback)
+);
 MemoedTouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
 export default (MemoedTouchableWithoutFeedback: React.AbstractComponent<

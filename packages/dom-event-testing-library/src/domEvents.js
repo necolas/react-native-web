@@ -8,7 +8,12 @@
 'use strict';
 
 import createEvent from './createEvent';
-import { buttonType, buttonsType, defaultPointerSize, defaultBrowserChromeSize } from './constants';
+import {
+  buttonType,
+  buttonsType,
+  defaultPointerSize,
+  defaultBrowserChromeSize
+} from './constants';
 
 /**
  * Native event object mocks for higher-level events.
@@ -299,9 +304,13 @@ export function lostpointercapture(payload) {
 export function mousedown(payload) {
   // The value of 'button' and 'buttons' for 'mousedown' must not be none.
   const button =
-    payload != null && payload.button !== buttonType.none ? payload.button : buttonType.primary;
+    payload != null && payload.button !== buttonType.none
+      ? payload.button
+      : buttonType.primary;
   const buttons =
-    payload != null && payload.buttons !== buttonsType.none ? payload.buttons : buttonsType.primary;
+    payload != null && payload.buttons !== buttonsType.none
+      ? payload.buttons
+      : buttonsType.primary;
 
   return createMouseEvent('mousedown', {
     ...payload,

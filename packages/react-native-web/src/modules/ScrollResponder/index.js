@@ -172,7 +172,9 @@ const ScrollResponderMixin = {
    *
    * Invoke this from an `onStartShouldSetResponderCapture` event.
    */
-  scrollResponderHandleStartShouldSetResponderCapture: function (e: Event): boolean {
+  scrollResponderHandleStartShouldSetResponderCapture: function (
+    e: Event
+  ): boolean {
     // First see if we want to eat taps while the keyboard is up
     // var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
     // if (!this.props.keyboardShouldPersistTaps &&
@@ -260,7 +262,8 @@ const ScrollResponderMixin = {
   scrollResponderHandleResponderGrant: function (e: Event) {
     this.state.observedScrollSinceBecomingResponder = false;
     this.props.onResponderGrant && this.props.onResponderGrant(e);
-    this.state.becameResponderWhileAnimating = this.scrollResponderIsAnimating();
+    this.state.becameResponderWhileAnimating =
+      this.scrollResponderIsAnimating();
   },
 
   /**
@@ -335,10 +338,12 @@ const ScrollResponderMixin = {
    */
   scrollResponderIsAnimating: function (): boolean {
     const now = Date.now();
-    const timeSinceLastMomentumScrollEnd = now - this.state.lastMomentumScrollEndTime;
+    const timeSinceLastMomentumScrollEnd =
+      now - this.state.lastMomentumScrollEndTime;
     const isAnimating =
       timeSinceLastMomentumScrollEnd < IS_ANIMATING_TOUCH_START_THRESHOLD_MS ||
-      this.state.lastMomentumScrollEndTime < this.state.lastMomentumScrollBeginTime;
+      this.state.lastMomentumScrollEndTime <
+        this.state.lastMomentumScrollBeginTime;
     return isAnimating;
   },
 
@@ -348,7 +353,9 @@ const ScrollResponderMixin = {
    * function otherwise `this` is used.
    */
   scrollResponderGetScrollableNode: function (): any {
-    return this.getScrollableNode ? this.getScrollableNode() : findNodeHandle(this);
+    return this.getScrollableNode
+      ? this.getScrollableNode()
+      : findNodeHandle(this);
   },
 
   /**
@@ -456,7 +463,8 @@ const ScrollResponderMixin = {
     if (this.keyboardWillOpenTo) {
       keyboardScreenY = this.keyboardWillOpenTo.endCoordinates.screenY;
     }
-    let scrollOffsetY = top - keyboardScreenY + height + this.additionalScrollOffset;
+    let scrollOffsetY =
+      top - keyboardScreenY + height + this.additionalScrollOffset;
 
     // By default, this can scroll with negative offset, pulling the content
     // down so that the target component's bottom meets the keyboard's top.

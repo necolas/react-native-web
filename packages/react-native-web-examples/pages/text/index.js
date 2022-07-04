@@ -36,7 +36,9 @@ function FontFamily() {
         Cochin bold
       </Text>
       <Text style={{ fontFamily: 'Helvetica' }}>Helvetica</Text>
-      <Text style={{ fontFamily: 'Helvetica', fontWeight: 'bold' }}>Helvetica bold</Text>
+      <Text style={{ fontFamily: 'Helvetica', fontWeight: 'bold' }}>
+        Helvetica bold
+      </Text>
       <Text style={{ fontFamily: 'Verdana' }}>Verdana</Text>
       <Text
         style={{
@@ -107,11 +109,21 @@ function FontWeight() {
   return (
     <View>
       <Heading>fontWeight</Heading>
-      <Text style={{ fontSize: 20, fontWeight: '100' }}>Move fast and be ultralight</Text>
-      <Text style={{ fontSize: 20, fontWeight: '200' }}>Move fast and be light</Text>
-      <Text style={{ fontSize: 20, fontWeight: 'normal' }}>Move fast and be normal</Text>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Move fast and be bold</Text>
-      <Text style={{ fontSize: 20, fontWeight: '900' }}>Move fast and be ultrabold</Text>
+      <Text style={{ fontSize: 20, fontWeight: '100' }}>
+        Move fast and be ultralight
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: '200' }}>
+        Move fast and be light
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: 'normal' }}>
+        Move fast and be normal
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+        Move fast and be bold
+      </Text>
+      <Text style={{ fontSize: 20, fontWeight: '900' }}>
+        Move fast and be ultrabold
+      </Text>
     </View>
   );
 }
@@ -124,12 +136,23 @@ function LetterSpacing() {
       <Text style={{ letterSpacing: 2, marginTop: 5 }}>letterSpacing = 2</Text>
       <Text style={{ letterSpacing: 9, marginTop: 5 }}>letterSpacing = 9</Text>
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ fontSize: 12, letterSpacing: 2, backgroundColor: 'fuchsia', marginTop: 5 }}>
+        <Text
+          style={{
+            fontSize: 12,
+            letterSpacing: 2,
+            backgroundColor: 'fuchsia',
+            marginTop: 5
+          }}
+        >
           With size and background color
         </Text>
       </View>
-      <Text style={{ letterSpacing: -1, marginTop: 5 }}>letterSpacing = -1</Text>
-      <Text style={{ letterSpacing: 3, backgroundColor: '#dddddd', marginTop: 5 }}>
+      <Text style={{ letterSpacing: -1, marginTop: 5 }}>
+        letterSpacing = -1
+      </Text>
+      <Text
+        style={{ letterSpacing: 3, backgroundColor: '#dddddd', marginTop: 5 }}
+      >
         [letterSpacing = 3]
         <Text style={{ letterSpacing: 0, backgroundColor: '#bbbbbb' }}>
           [Nested letterSpacing = 0]
@@ -147,9 +170,9 @@ function LineHeight() {
     <View>
       <Heading>lineHeight</Heading>
       <Text style={{ lineHeight: 35 }}>
-        A lot of space should display between the lines of this long passage as they wrap across
-        several lines. A lot of space should display between the lines of this long passage as they
-        wrap across several lines.
+        A lot of space should display between the lines of this long passage as
+        they wrap across several lines. A lot of space should display between
+        the lines of this long passage as they wrap across several lines.
       </Text>
     </View>
   );
@@ -166,18 +189,21 @@ function TextAlign() {
           'RTL'}
       </Text>
       <Text style={{ textAlign: 'left' }}>
-        left left left left left left left left left left left left left left left
+        left left left left left left left left left left left left left left
+        left
       </Text>
       <Text style={{ textAlign: 'center' }}>
-        center center center center center center center center center center center
+        center center center center center center center center center center
+        center
       </Text>
       <Text style={{ textAlign: 'right' }}>
-        right right right right right right right right right right right right right
+        right right right right right right right right right right right right
+        right
       </Text>
       <Text style={{ textAlign: 'justify' }}>
-        justify: this text component{"'"}s contents are laid out with "textAlign: justify" and as
-        you can see all of the lines except the last one span the available width of the parent
-        container.
+        justify: this text component{"'"}s contents are laid out with
+        "textAlign: justify" and as you can see all of the lines except the last
+        one span the available width of the parent container.
       </Text>
     </View>
   );
@@ -306,8 +332,9 @@ export default function TextPage() {
     <Example title="Text">
       <View style={{ maxWidth: 500 }}>
         <Text>
-          Text wraps across multiple lines by default. Text wraps across multiple lines by default.
-          Text wraps across multiple lines by default. Text wraps across multiple lines by default.
+          Text wraps across multiple lines by default. Text wraps across
+          multiple lines by default. Text wraps across multiple lines by
+          default. Text wraps across multiple lines by default.
         </Text>
 
         <Spacer />
@@ -351,8 +378,10 @@ export default function TextPage() {
 
         <Text>
           This text contains an inline blue view{' '}
-          <View style={{ width: 25, height: 25, backgroundColor: 'steelblue' }} /> and an inline
-          image{' '}
+          <View
+            style={{ width: 25, height: 25, backgroundColor: 'steelblue' }}
+          />{' '}
+          and an inline image{' '}
           <Image
             source={{ uri: 'http://lorempixel.com/30/11' }}
             style={{ width: 30, height: 11, resizeMode: 'cover' }}
@@ -365,8 +394,12 @@ export default function TextPage() {
         <Text>
           This text contains a view{' '}
           <View style={{ borderColor: 'red', borderWidth: 1 }}>
-            <Text style={{ borderColor: 'blue', borderWidth: 1 }}>which contains</Text>
-            <Text style={{ borderColor: 'green', borderWidth: 1 }}>another text.</Text>
+            <Text style={{ borderColor: 'blue', borderWidth: 1 }}>
+              which contains
+            </Text>
+            <Text style={{ borderColor: 'green', borderWidth: 1 }}>
+              another text.
+            </Text>
             <Text style={{ borderColor: 'yellow', borderWidth: 1 }}>
               And contains another view
               <View style={{ borderColor: 'red', borderWidth: 1 }}>
@@ -380,10 +413,12 @@ export default function TextPage() {
         </Text>
 
         <Text selectable={true}>
-          This text is <Text style={{ fontWeight: 'bold' }}>selectable</Text> if you click-and-hold.
+          This text is <Text style={{ fontWeight: 'bold' }}>selectable</Text> if
+          you click-and-hold.
         </Text>
         <Text selectable={false}>
-          This text is <Text style={{ fontWeight: 'bold' }}>not selectable</Text> if you
+          This text is{' '}
+          <Text style={{ fontWeight: 'bold' }}>not selectable</Text> if you
           click-and-hold.
         </Text>
 
@@ -421,7 +456,9 @@ export default function TextPage() {
           </LineExample>
 
           <LineExample description="With very long word, text is limited to 1 line and long word is truncated.">
-            <Text numberOfLines={1}>goal aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Text>
+            <Text numberOfLines={1}>
+              goal aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </Text>
           </LineExample>
 
           <LineExample description="With space characters within adjacent truncated lines">

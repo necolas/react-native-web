@@ -1,4 +1,5 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 
 const appDirectory = path.resolve(__dirname);

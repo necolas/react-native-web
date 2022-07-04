@@ -33,7 +33,9 @@ describe('modules/useMergeRefs', () => {
 
     act(() => {
       render(
-        <TestComponent refs={[callbackRef1, callbackRef2, objectRef1, objectRef2, nullRef]} />
+        <TestComponent
+          refs={[callbackRef1, callbackRef2, objectRef1, objectRef2, nullRef]}
+        />
       );
     });
 

@@ -54,7 +54,14 @@ export type TextInputProps = {
   onSubmitEditing?: (e: any) => void,
   placeholder?: ?string,
   placeholderTextColor?: ?ColorValue,
-  returnKeyType?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send',
+  returnKeyType?:
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send',
   secureTextEntry?: ?boolean,
   selectTextOnFocus?: ?boolean,
   selection?: {|

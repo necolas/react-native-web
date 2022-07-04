@@ -21,7 +21,11 @@ class UnimplementedView extends React.Component<*, *> {
   }
 
   render(): Node {
-    return <View style={[unimplementedViewStyles, this.props.style]}>{this.props.children}</View>;
+    return (
+      <View style={[unimplementedViewStyles, this.props.style]}>
+        {this.props.children}
+      </View>
+    );
   }
 }
 

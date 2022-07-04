@@ -58,9 +58,10 @@ export function setResponderId(node: any, id: number) {
 /**
  * Filter the event path to contain only the nodes attached to the responder system
  */
-export function getResponderPaths(
-  domEvent: any
-): {| idPath: Array<number>, nodePath: Array<any> |} {
+export function getResponderPaths(domEvent: any): {|
+  idPath: Array<number>,
+  nodePath: Array<any>
+|} {
   const idPath = [];
   const nodePath = [];
   const eventPath = getEventPath(domEvent);
@@ -78,7 +79,10 @@ export function getResponderPaths(
 /**
  * Walk the paths and find the first common ancestor
  */
-export function getLowestCommonAncestor(pathA: Array<any>, pathB: Array<any>): any {
+export function getLowestCommonAncestor(
+  pathA: Array<any>,
+  pathB: Array<any>
+): any {
   let pathALength = pathA.length;
   let pathBLength = pathB.length;
   if (
@@ -159,11 +163,16 @@ export function hasValidSelection(domEvent: any): boolean {
 export function isPrimaryPointerDown(domEvent: any): boolean {
   const { altKey, button, buttons, ctrlKey, type } = domEvent;
   const isTouch = type === 'touchstart' || type === 'touchmove';
-  const isPrimaryMouseDown = type === 'mousedown' && (button === 0 || buttons === 1);
+  const isPrimaryMouseDown =
+    type === 'mousedown' && (button === 0 || buttons === 1);
   const isPrimaryMouseMove = type === 'mousemove' && buttons === 1;
   const noModifiers = altKey === false && ctrlKey === false;
 
-  if (isTouch || (isPrimaryMouseDown && noModifiers) || (isPrimaryMouseMove && noModifiers)) {
+  if (
+    isTouch ||
+    (isPrimaryMouseDown && noModifiers) ||
+    (isPrimaryMouseMove && noModifiers)
+  ) {
     return true;
   }
   return false;

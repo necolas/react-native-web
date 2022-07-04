@@ -48,7 +48,9 @@ describe('useStable', () => {
   test('correctly sets the initial value', () => {
     const initialValueCallback = () => 5;
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(spy.value).toBe(5);
   });
@@ -57,11 +59,15 @@ describe('useStable', () => {
     let counter = 0;
     const initialValueCallback = () => counter++;
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(spy.value).toBe(0);
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(spy.value).toBe(0);
   });
@@ -70,11 +76,15 @@ describe('useStable', () => {
     let counter = 0;
     const initialValueCallback = () => counter++;
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(counter).toBe(1);
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(counter).toBe(1);
   });
@@ -89,11 +99,15 @@ describe('useStable', () => {
       return counter++;
     };
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(spy.value).toBe(null);
     act(() => {
-      root.render(<TestComponent initialValueCallback={initialValueCallback} />);
+      root.render(
+        <TestComponent initialValueCallback={initialValueCallback} />
+      );
     });
     expect(spy.value).toBe(null);
   });

@@ -18,9 +18,17 @@ import { useRef } from 'react';
 let didWarn = false;
 const emptyObject = {};
 
-function setNativeProps(node, nativeProps, pointerEvents, style, previousStyleRef) {
+function setNativeProps(
+  node,
+  nativeProps,
+  pointerEvents,
+  style,
+  previousStyleRef
+) {
   if (!didWarn) {
-    console.warn('setNativeProps is deprecated. Please update props using React state instead.');
+    console.warn(
+      'setNativeProps is deprecated. Please update props using React state instead.'
+    );
     didWarn = true;
   }
 
@@ -72,10 +80,18 @@ export default function usePlatformMethods({
       hostNode.measure = (callback) => UIManager.measure(hostNode, callback);
       hostNode.measureLayout = (relativeToNode, success, failure) =>
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
-      hostNode.measureInWindow = (callback) => UIManager.measureInWindow(hostNode, callback);
+      hostNode.measureInWindow = (callback) =>
+        UIManager.measureInWindow(hostNode, callback);
       hostNode.setNativeProps = (nativeProps) => {
-        const { style, pointerEvents } = setNativePropsArgsRef.current || emptyObject;
-        setNativeProps(hostNode, nativeProps, pointerEvents, style, previousStyleRef);
+        const { style, pointerEvents } =
+          setNativePropsArgsRef.current || emptyObject;
+        setNativeProps(
+          hostNode,
+          nativeProps,
+          pointerEvents,
+          style,
+          previousStyleRef
+        );
       };
     }
   });

@@ -11,7 +11,10 @@ const getDirectories = (source) =>
 
 const packagesDir = path.join(__dirname, '../packages/');
 const exportsDir = path.join(packagesDir, 'react-native-web/src/exports');
-const moduleMapOutfile = path.join(packagesDir, 'babel-plugin-react-native-web/src/moduleMap.js');
+const moduleMapOutfile = path.join(
+  packagesDir,
+  'babel-plugin-react-native-web/src/moduleMap.js'
+);
 
 const moduleMap = getDirectories(exportsDir).reduce((acc, curr) => {
   acc[curr] = true;

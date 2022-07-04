@@ -13,7 +13,9 @@ import type { ColorSchemeName } from '../Appearance';
 import Appearance from '../Appearance';
 
 export default function useColorScheme(): ColorSchemeName {
-  const [colorScheme, setColorScheme] = React.useState(Appearance.getColorScheme());
+  const [colorScheme, setColorScheme] = React.useState(
+    Appearance.getColorScheme()
+  );
 
   React.useEffect(() => {
     function listener(appearance) {

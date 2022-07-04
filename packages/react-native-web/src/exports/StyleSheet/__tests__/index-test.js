@@ -140,7 +140,12 @@ describe('StyleSheet', () => {
     });
 
     test('should recursively flatten arrays', () => {
-      const style = StyleSheet.flatten([null, [], [{ order: 2 }, { opacity: 1 }], { order: 3 }]);
+      const style = StyleSheet.flatten([
+        null,
+        [],
+        [{ order: 2 }, { opacity: 1 }],
+        { order: 3 }
+      ]);
       expect(style).toMatchInlineSnapshot(`
         {
           "opacity": 1,
@@ -240,17 +245,29 @@ describe('StyleSheet', () => {
         color: null
       };
 
-      const [className1, inlineStyle1] = StyleSheet([styleACompiled, styleBCompiled, styleBInline]);
+      const [className1, inlineStyle1] = StyleSheet([
+        styleACompiled,
+        styleBCompiled,
+        styleBInline
+      ]);
       expect(className1).toBe('display-block');
       expect(inlineStyle1).toEqual({ backgroundColor: 'rgba(0,0,255,1.00)' });
 
-      const [className2, inlineStyle2] = StyleSheet([styleACompiled, styleBInline, styleBCompiled]);
-      expect(className2).toBe('display-block backgroundColor-green color-green');
+      const [className2, inlineStyle2] = StyleSheet([
+        styleACompiled,
+        styleBInline,
+        styleBCompiled
+      ]);
+      expect(className2).toBe(
+        'display-block backgroundColor-green color-green'
+      );
       expect(inlineStyle2).toEqual(null);
     });
 
     test('long form inline style properties take precedence over static shorthand properties', () => {
-      const styles1 = StyleSheet.create({ test: { paddingHorizontal: '40px' } });
+      const styles1 = StyleSheet.create({
+        test: { paddingHorizontal: '40px' }
+      });
       const inlineStyle1 = { padding: '8px', paddingHorizontal: '40px' };
       expect(StyleSheet([styles1.test, inlineStyle1])).toMatchInlineSnapshot(`
         [
@@ -301,7 +318,8 @@ describe('StyleSheet', () => {
           },
         ]
       `);
-      expect(StyleSheet(inlineStyle, { writingDirection })).toMatchInlineSnapshot(`
+      expect(StyleSheet(inlineStyle, { writingDirection }))
+        .toMatchInlineSnapshot(`
         [
           "",
           {
@@ -313,7 +331,10 @@ describe('StyleSheet', () => {
       `);
       expect(
         StyleSheet(
-          [inlineStyle, { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }],
+          [
+            inlineStyle,
+            { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
+          ],
           { writingDirection }
         )
       ).toMatchInlineSnapshot(`
@@ -327,8 +348,11 @@ describe('StyleSheet', () => {
           },
         ]
       `);
-      expect(StyleSheet([inlineStyle, { marginEnd: null, marginLeft: 11 }], { writingDirection }))
-        .toMatchInlineSnapshot(`
+      expect(
+        StyleSheet([inlineStyle, { marginEnd: null, marginLeft: 11 }], {
+          writingDirection
+        })
+      ).toMatchInlineSnapshot(`
         [
           "",
           {
@@ -347,7 +371,8 @@ describe('StyleSheet', () => {
           null,
         ]
       `);
-      expect(StyleSheet(staticStyle, { writingDirection })).toMatchInlineSnapshot(`
+      expect(StyleSheet(staticStyle, { writingDirection }))
+        .toMatchInlineSnapshot(`
         [
           "r-right-1bnbe1j r-textAlign-1ff274t r-marginLeft-1n0xq6e",
           null,
@@ -356,7 +381,10 @@ describe('StyleSheet', () => {
       // logical wins
       expect(
         StyleSheet(
-          [staticStyle, { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }],
+          [
+            staticStyle,
+            { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
+          ],
           {
             writingDirection
           }
@@ -371,8 +399,11 @@ describe('StyleSheet', () => {
         ]
       `);
       // logical can be nulled
-      expect(StyleSheet([staticStyle, { marginEnd: null, marginLeft: 11 }], { writingDirection }))
-        .toMatchInlineSnapshot(`
+      expect(
+        StyleSheet([staticStyle, { marginEnd: null, marginLeft: 11 }], {
+          writingDirection
+        })
+      ).toMatchInlineSnapshot(`
         [
           "r-right-1bnbe1j r-textAlign-1ff274t",
           {

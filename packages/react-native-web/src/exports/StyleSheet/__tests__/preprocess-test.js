@@ -53,7 +53,9 @@ describe('StyleSheet/preprocess', () => {
     });
 
     test('textShadowOffset only', () => {
-      expect(preprocess({ textShadowOffset: { width: 1, height: 2 } })).toEqual({});
+      expect(preprocess({ textShadowOffset: { width: 1, height: 2 } })).toEqual(
+        {}
+      );
     });
 
     test('textShadowRadius only', () => {
@@ -86,8 +88,12 @@ describe('StyleSheet/preprocess', () => {
     });
 
     test('textShadowColor and textShadowRadius only', () => {
-      expect(preprocess({ textShadowColor: 'red', textShadowRadius: 0 })).toEqual({});
-      expect(preprocess({ textShadowColor: 'red', textShadowRadius: 5 })).toEqual({
+      expect(
+        preprocess({ textShadowColor: 'red', textShadowRadius: 0 })
+      ).toEqual({});
+      expect(
+        preprocess({ textShadowColor: 'red', textShadowRadius: 5 })
+      ).toEqual({
         textShadow: '0px 0px 5px rgba(255,0,0,1.00)'
       });
     });

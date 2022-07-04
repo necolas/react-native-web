@@ -30,8 +30,10 @@ export default function IndexPage() {
         <Text style={styles.title}>React Native for Web</Text>
       </View>
       <Text style={styles.text}>
-        <Link href="https://github.com/necolas/react-native-web">React Native for Web</Link> example
-        app built on Next.js
+        <Link href="https://github.com/necolas/react-native-web">
+          React Native for Web
+        </Link>{' '}
+        example app built on Next.js
       </Text>
 
       <View accessibilityRole="list">

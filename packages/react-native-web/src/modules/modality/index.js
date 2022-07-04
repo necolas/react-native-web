@@ -13,7 +13,8 @@ const { canUseDOM } = ExecutionEnvironment;
 
 export type Modality = 'keyboard' | 'mouse' | 'touch' | 'pen';
 
-const supportsPointerEvent = () => !!(typeof window !== 'undefined' && window.PointerEvent != null);
+const supportsPointerEvent = () =>
+  !!(typeof window !== 'undefined' && window.PointerEvent != null);
 
 let activeModality = 'keyboard';
 let modality = 'keyboard';
@@ -50,7 +51,10 @@ const addBlurListener = createEventHandle(BLUR, bubbleOptions);
 const addFocusListener = createEventHandle(FOCUS, bubbleOptions);
 // Must be capture phase because 'stopPropagation' might prevent these
 // events bubbling to the document.
-const addVisibilityChangeListener = createEventHandle(VISIBILITYCHANGE, captureOptions);
+const addVisibilityChangeListener = createEventHandle(
+  VISIBILITYCHANGE,
+  captureOptions
+);
 const addKeyDownListener = createEventHandle(KEYDOWN, captureOptions);
 const addPointerDownListener = createEventHandle(POINTERDOWN, captureOptions);
 const addPointerMoveListener = createEventHandle(POINTERMOVE, captureOptions);
@@ -60,7 +64,10 @@ const addMouseDownListener = createEventHandle(MOUSEDOWN, captureOptions);
 const addMouseMoveListener = createEventHandle(MOUSEMOVE, captureOptions);
 const addMouseUpListener = createEventHandle(MOUSEUP, captureOptions);
 const addScrollListener = createEventHandle(SCROLL, captureOptions);
-const addSelectiomChangeListener = createEventHandle(SELECTIONCHANGE, captureOptions);
+const addSelectiomChangeListener = createEventHandle(
+  SELECTIONCHANGE,
+  captureOptions
+);
 const addTouchCancelListener = createEventHandle(TOUCHCANCEL, captureOptions);
 const addTouchMoveListener = createEventHandle(TOUCHMOVE, captureOptions);
 const addTouchStartListener = createEventHandle(TOUCHSTART, captureOptions);

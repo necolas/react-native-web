@@ -11,7 +11,10 @@ function AnimatedModal({ animationType }) {
 
   return (
     <>
-      <Button onPress={() => setIsVisible(true)} title={`Animation '${animationType}'`} />
+      <Button
+        onPress={() => setIsVisible(true)}
+        title={`Animation '${animationType}'`}
+      />
       <Modal
         animationType={animationType}
         onRequestClose={() => setIsVisible(false)}
@@ -54,13 +57,21 @@ function Modalception({ depth = 1 }) {
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Open modal'} />
-      <Modal onRequestClose={() => setIsVisible(false)} transparent visible={isVisible}>
+      <Modal
+        onRequestClose={() => setIsVisible(false)}
+        transparent
+        visible={isVisible}
+      >
         <View style={[styles.containeralt, offset]}>
           <Text>This is in Modal {depth}</Text>
           <Gap />
           {isVisible ? <Modalception depth={depth + 1} /> : null}
           <Gap />
-          <Button color="red" onPress={() => setIsVisible(false)} title={'Close'} />
+          <Button
+            color="red"
+            onPress={() => setIsVisible(false)}
+            title={'Close'}
+          />
         </View>
       </Modal>
     </>
@@ -90,9 +101,15 @@ function TransparentModal() {
   return (
     <>
       <Button onPress={() => setIsVisible(true)} title={'Transparent modal'} />
-      <Modal onRequestClose={() => setIsVisible(false)} transparent visible={isVisible}>
+      <Modal
+        onRequestClose={() => setIsVisible(false)}
+        transparent
+        visible={isVisible}
+      >
         <View style={styles.containeralt}>
-          <Text style={{ textAlign: 'center' }}>Modal with "transparent" value</Text>
+          <Text style={{ textAlign: 'center' }}>
+            Modal with "transparent" value
+          </Text>
           <Gap />
           <Button onPress={() => setIsVisible(false)} title={'Close'} />
         </View>

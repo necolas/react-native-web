@@ -32,7 +32,13 @@ const ImageBackground: React.AbstractComponent<
   ImageBackgroundProps,
   React.ElementRef<typeof View>
 > = forwardRef((props, forwardedRef) => {
-  const { children, style = emptyObject, imageStyle, imageRef, ...rest } = props;
+  const {
+    children,
+    style = emptyObject,
+    imageStyle,
+    imageRef,
+    ...rest
+  } = props;
   const { height, width } = StyleSheet.flatten(style);
 
   return (

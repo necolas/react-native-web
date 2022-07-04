@@ -16,7 +16,7 @@
     "react-native-web": "0.18.4"
   },
   "devDependencies": {
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.5",
     "babel-plugin-react-native-web": "0.18.4",
     "css-loader": "^6.7.1",
     "style-loader": "^3.3.1",

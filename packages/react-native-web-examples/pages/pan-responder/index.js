@@ -42,7 +42,11 @@ class DraggableCircle extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <View ref={this._setCircleRef} style={styles.circle} {...this._panResponder.panHandlers} />
+        <View
+          ref={this._setCircleRef}
+          style={styles.circle}
+          {...this._panResponder.panHandlers}
+        />
       </View>
     );
   }
@@ -65,12 +69,18 @@ class DraggableCircle extends React.PureComponent {
     this.circle && this.circle.setNativeProps(this._circleStyles);
   }
 
-  _handleStartShouldSetPanResponder = (e: Object, gestureState: Object): boolean => {
+  _handleStartShouldSetPanResponder = (
+    e: Object,
+    gestureState: Object
+  ): boolean => {
     // Should we become active when the user presses down on the circle?
     return true;
   };
 
-  _handleMoveShouldSetPanResponder = (e: Object, gestureState: Object): boolean => {
+  _handleMoveShouldSetPanResponder = (
+    e: Object,
+    gestureState: Object
+  ): boolean => {
     // Should we become active when the user moves a touch over the circle?
     return true;
   };

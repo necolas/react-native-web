@@ -388,7 +388,10 @@ const TouchableMixin = {
    */
   componentWillUnmount: function () {
     if (this._touchableNode && this._touchableNode.addEventListener) {
-      this._touchableNode.removeEventListener('blur', this._touchableBlurListener);
+      this._touchableNode.removeEventListener(
+        'blur',
+        this._touchableBlurListener
+      );
     }
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
@@ -460,7 +463,10 @@ const TouchableMixin = {
         : HIGHLIGHT_DELAY_MS;
     delayMS = isNaN(delayMS) ? HIGHLIGHT_DELAY_MS : delayMS;
     if (delayMS !== 0) {
-      this.touchableDelayTimeout = setTimeout(this._handleDelay.bind(this, e), delayMS);
+      this.touchableDelayTimeout = setTimeout(
+        this._handleDelay.bind(this, e),
+        delayMS
+      );
     } else {
       this._handleDelay(e);
     }
@@ -517,7 +523,9 @@ const TouchableMixin = {
     let pressExpandRight = pressRectOffset.right;
     let pressExpandBottom = pressRectOffset.bottom;
 
-    const hitSlop = this.touchableGetHitSlop ? this.touchableGetHitSlop() : null;
+    const hitSlop = this.touchableGetHitSlop
+      ? this.touchableGetHitSlop()
+      : null;
 
     if (hitSlop) {
       pressExpandLeft += hitSlop.left || 0;
@@ -545,8 +553,14 @@ const TouchableMixin = {
     const isTouchWithinActive =
       pageX > positionOnActivate.left - pressExpandLeft &&
       pageY > positionOnActivate.top - pressExpandTop &&
-      pageX < positionOnActivate.left + dimensionsOnActivate.width + pressExpandRight &&
-      pageY < positionOnActivate.top + dimensionsOnActivate.height + pressExpandBottom;
+      pageX <
+        positionOnActivate.left +
+          dimensionsOnActivate.width +
+          pressExpandRight &&
+      pageY <
+        positionOnActivate.top +
+          dimensionsOnActivate.height +
+          pressExpandBottom;
     if (isTouchWithinActive) {
       const prevState = this.state.touchable.touchState;
       this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
@@ -690,9 +704,15 @@ const TouchableMixin = {
     this.state.touchable.dimensionsOnActivate &&
       // $FlowFixMe
       BoundingDimensions.release(this.state.touchable.dimensionsOnActivate);
-    this.state.touchable.positionOnActivate = Position.getPooled(globalX, globalY);
+    this.state.touchable.positionOnActivate = Position.getPooled(
+      globalX,
+      globalY
+    );
     // $FlowFixMe
-    this.state.touchable.dimensionsOnActivate = BoundingDimensions.getPooled(w, h);
+    this.state.touchable.dimensionsOnActivate = BoundingDimensions.getPooled(
+      w,
+      h
+    );
   },
 
   _handleDelay: function (e: PressEvent) {
@@ -770,7 +790,8 @@ const TouchableMixin = {
 
   _isHighlight: function (state: State): boolean {
     return (
-      state === States.RESPONDER_ACTIVE_PRESS_IN || state === States.RESPONDER_ACTIVE_LONG_PRESS_IN
+      state === States.RESPONDER_ACTIVE_PRESS_IN ||
+      state === States.RESPONDER_ACTIVE_LONG_PRESS_IN
     );
   },
 
@@ -783,7 +804,12 @@ const TouchableMixin = {
     this.pressInLocation = { pageX, pageY, locationX, locationY };
   },
 
-  _getDistanceBetweenPoints: function (aX: number, aY: number, bX: number, bY: number): number {
+  _getDistanceBetweenPoints: function (
+    aX: number,
+    aY: number,
+    bX: number,
+    bY: number
+  ): number {
     const deltaX = aX - bX;
     const deltaY = aY - bY;
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -810,14 +836,16 @@ const TouchableMixin = {
     const newIsHighlight = this._isHighlight(nextState);
 
     const isFinalSignal =
-      signal === Signals.RESPONDER_TERMINATED || signal === Signals.RESPONDER_RELEASE;
+      signal === Signals.RESPONDER_TERMINATED ||
+      signal === Signals.RESPONDER_RELEASE;
 
     if (isFinalSignal) {
       this._cancelLongPressDelayTimeout();
     }
 
     const isInitialTransition =
-      curState === States.NOT_RESPONDER && nextState === States.RESPONDER_INACTIVE_PRESS_IN;
+      curState === States.NOT_RESPONDER &&
+      nextState === States.RESPONDER_INACTIVE_PRESS_IN;
 
     const isActiveTransition = !IsActive[curState] && IsActive[nextState];
     if (isInitialTransition || isActiveTransition) {
@@ -840,7 +868,8 @@ const TouchableMixin = {
         IsLongPressingIn[curState] && // We *are* long pressing.. // But either has no long handler
         (!hasLongPressHandler || !this.touchableLongPressCancelsPress()); // or we're told to ignore it.
 
-      const shouldInvokePress = !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
+      const shouldInvokePress =
+        !IsLongPressingIn[curState] || pressIsLongButStillCallOnPress;
       if (shouldInvokePress && this.touchableHandlePress) {
         if (!newIsHighlight && !curIsHighlight) {
           // we never highlighted because of delay, but we should highlight now
@@ -866,7 +895,10 @@ const TouchableMixin = {
 
   _endHighlight: function (e: PressEvent) {
     if (this.touchableHandleActivePressOut) {
-      if (this.touchableGetPressOutDelayMS && this.touchableGetPressOutDelayMS()) {
+      if (
+        this.touchableGetPressOutDelayMS &&
+        this.touchableGetPressOutDelayMS()
+      ) {
         this.pressOutDelayTimeout = setTimeout(() => {
           this.touchableHandleActivePressOut(e);
         }, this.touchableGetPressOutDelayMS());
@@ -905,7 +937,12 @@ const TouchableMixin = {
       e.stopPropagation();
       // prevent the default behaviour unless the Touchable functions as a link
       // and Enter is pressed
-      if (!(key === 'Enter' && AccessibilityUtil.propsToAriaRole(this.props) === 'link')) {
+      if (
+        !(
+          key === 'Enter' &&
+          AccessibilityUtil.propsToAriaRole(this.props) === 'link'
+        )
+      ) {
         e.preventDefault();
       }
     }
@@ -927,7 +964,8 @@ const {
   touchableHandleBlur,
   ...TouchableMixinWithoutDefaultFocusAndBlur
 } = TouchableMixin;
-TouchableMixin.withoutDefaultFocusAndBlur = TouchableMixinWithoutDefaultFocusAndBlur;
+TouchableMixin.withoutDefaultFocusAndBlur =
+  TouchableMixinWithoutDefaultFocusAndBlur;
 
 const Touchable = {
   Mixin: TouchableMixin,
@@ -946,7 +984,9 @@ const Touchable = {
       return null;
     }
     if (process.env.NODE_ENV !== 'production') {
-      throw Error('Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!');
+      throw Error(
+        'Touchable.TOUCH_TARGET_DEBUG should not be enabled in prod!'
+      );
     }
     const debugHitSlopStyle = {};
     hitSlop = hitSlop || { top: 0, bottom: 0, left: 0, right: 0 };
@@ -957,7 +997,8 @@ const Touchable = {
     if (typeof normalizedColor !== 'number') {
       return null;
     }
-    const hexColor = '#' + ('00000000' + normalizedColor.toString(16)).substr(-8);
+    const hexColor =
+      '#' + ('00000000' + normalizedColor.toString(16)).substr(-8);
     return (
       <View
         pointerEvents="none"

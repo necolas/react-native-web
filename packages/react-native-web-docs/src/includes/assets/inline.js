@@ -29,7 +29,11 @@ function setupNavigationDrawer() {
     navopen = false;
   }
   document.addEventListener('click', (e) => {
-    if (navopen && !navigation.contains(e.target) && !showbtn.contains(e.target)) {
+    if (
+      navopen &&
+      !navigation.contains(e.target) &&
+      !showbtn.contains(e.target)
+    ) {
       closeNavigation();
     }
   });

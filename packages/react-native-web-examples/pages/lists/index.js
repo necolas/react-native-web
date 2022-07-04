@@ -22,7 +22,13 @@ import {
 } from 'react-native';
 import Example from '../../shared/example';
 
-type Item = { title: string, text: string, key: string, pressed: boolean, noImage?: ?boolean };
+type Item = {
+  title: string,
+  text: string,
+  key: string,
+  pressed: boolean,
+  noImage?: ?boolean
+};
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -103,7 +109,10 @@ class ItemComponent extends React.PureComponent<{
           ]}
         >
           {!item.noImage && <Image source={imgSource} style={styles.thumb} />}
-          <Text numberOfLines={horizontal || fixedHeight ? 3 : undefined} style={styles.text}>
+          <Text
+            numberOfLines={horizontal || fixedHeight ? 3 : undefined}
+            style={styles.text}
+          >
             {item.title} - {item.text}
           </Text>
         </View>
@@ -147,7 +156,10 @@ class SeparatorComponent extends React.PureComponent<{}> {
 class ItemSeparatorComponent extends React.PureComponent<{}> {
   render() {
     const style = this.props.highlighted
-      ? [styles.itemSeparator, { marginLeft: 0, backgroundColor: 'rgb(217, 217, 217)' }]
+      ? [
+          styles.itemSeparator,
+          { marginLeft: 0, backgroundColor: 'rgb(217, 217, 217)' }
+        ]
       : styles.itemSeparator;
     return <View style={style} />;
   }
@@ -251,16 +263,24 @@ class SingleColumnExample extends React.PureComponent {
   };
 
   _onChangeScrollToIndex = (text) => {
-    this._listRef.getNode().scrollToIndex({ viewPosition: 0.5, index: Number(text) });
+    this._listRef
+      .getNode()
+      .scrollToIndex({ viewPosition: 0.5, index: Number(text) });
   };
 
   _scrollPos = new Animated.Value(0);
-  _scrollSinkX = Animated.event([{ nativeEvent: { contentOffset: { x: this._scrollPos } } }], {
-    useNativeDriver: true
-  });
-  _scrollSinkY = Animated.event([{ nativeEvent: { contentOffset: { y: this._scrollPos } } }], {
-    useNativeDriver: true
-  });
+  _scrollSinkX = Animated.event(
+    [{ nativeEvent: { contentOffset: { x: this._scrollPos } } }],
+    {
+      useNativeDriver: true
+    }
+  );
+  _scrollSinkY = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: this._scrollPos } } }],
+    {
+      useNativeDriver: true
+    }
+  );
 
   componentDidUpdate() {
     this._listRef.getNode().recordInteraction(); // e.g. flipping logViewable switch
@@ -268,7 +288,8 @@ class SingleColumnExample extends React.PureComponent {
 
   render() {
     const filterRegex = new RegExp(String(this.state.filterText), 'i');
-    const filter = (item) => filterRegex.test(item.text) || filterRegex.test(item.title);
+    const filter = (item) =>
+      filterRegex.test(item.text) || filterRegex.test(item.title);
     const filteredData = this.state.data.filter(filter);
     return (
       <View style={styles.container}>
@@ -279,7 +300,10 @@ class SingleColumnExample extends React.PureComponent {
               placeholder="Search..."
               value={this.state.filterText}
             />
-            <PlainInput onChangeText={this._onChangeScrollToIndex} placeholder="scrollToIndex..." />
+            <PlainInput
+              onChangeText={this._onChangeScrollToIndex}
+              placeholder="scrollToIndex..."
+            />
           </View>
           <View style={styles.options}>
             {renderSmallSwitchOption(this, 'virtualized')}
@@ -300,17 +324,24 @@ class SingleColumnExample extends React.PureComponent {
           data={filteredData}
           debug={this.state.debug}
           disableVirtualization={!this.state.virtualized}
-          getItemLayout={this.state.fixedHeight ? this._getItemLayout : undefined}
+          getItemLayout={
+            this.state.fixedHeight ? this._getItemLayout : undefined
+          }
           horizontal={this.state.horizontal}
           inverted={this.state.inverted}
-          key={(this.state.horizontal ? 'h' : 'v') + (this.state.fixedHeight ? 'f' : 'd')}
+          key={
+            (this.state.horizontal ? 'h' : 'v') +
+            (this.state.fixedHeight ? 'f' : 'd')
+          }
           keyboardDismissMode="on-drag"
           keyboardShouldPersistTaps="always"
           legacyImplementation={false}
           numColumns={1}
           onEndReached={this._onEndReached}
           onRefresh={this._onRefresh}
-          onScroll={this.state.horizontal ? this._scrollSinkX : this._scrollSinkY}
+          onScroll={
+            this.state.horizontal ? this._scrollSinkX : this._scrollSinkY
+          }
           onViewableItemsChanged={this._onViewableItemsChanged}
           ref={this._captureRef}
           refreshing={false}

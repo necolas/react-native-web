@@ -25,7 +25,11 @@ describe('components/Modal', () => {
 
   test('forwards props', () => {
     const { getByTestId } = render(
-      <Modal accessibilityLabel="label" accessibilityLabelledBy="labelledby" testID="root" />
+      <Modal
+        accessibilityLabel="label"
+        accessibilityLabelledBy="labelledby"
+        testID="root"
+      />
     );
     expect(getByTestId('root')).toMatchSnapshot();
   });
@@ -189,7 +193,9 @@ describe('components/Modal', () => {
 
   test('executes onShow callback when visibility changes', () => {
     const onShowCallback = jest.fn();
-    const { rerender } = render(<Modal onShow={onShowCallback} visible={false} />);
+    const { rerender } = render(
+      <Modal onShow={onShowCallback} visible={false} />
+    );
     expect(onShowCallback).toBeCalledTimes(0);
     rerender(<Modal onShow={onShowCallback} visible={true} />);
     expect(onShowCallback).toBeCalledTimes(1);
@@ -197,19 +203,29 @@ describe('components/Modal', () => {
 
   test('executes onDismiss callback when visibility changes', () => {
     const onDismissCallback = jest.fn();
-    const { rerender } = render(<Modal onDismiss={onDismissCallback} visible={true} />);
+    const { rerender } = render(
+      <Modal onDismiss={onDismissCallback} visible={true} />
+    );
     expect(onDismissCallback).toBeCalledTimes(0);
     rerender(<Modal onDismiss={onDismissCallback} visible={false} />);
     expect(onDismissCallback).toBeCalledTimes(1);
   });
 
   test('animationTypes none is the same as omitting', () => {
-    const { rerender, baseElement } = render(<Modal animationType={'none'} visible={true} />);
+    const { rerender, baseElement } = render(
+      <Modal animationType={'none'} visible={true} />
+    );
     const animationNoneElement = baseElement.lastChild.lastChild;
-    const animationNoneStyle = window.getComputedStyle(animationNoneElement, null);
+    const animationNoneStyle = window.getComputedStyle(
+      animationNoneElement,
+      null
+    );
     rerender(<Modal visible={true} />);
     const animationMissingElement = baseElement.lastChild.lastChild;
-    const animationMissingStyle = window.getComputedStyle(animationMissingElement, null);
+    const animationMissingStyle = window.getComputedStyle(
+      animationMissingElement,
+      null
+    );
     const styleProps = new Set();
 
     for (let i = 0; i < animationNoneStyle.length; i++) {
@@ -231,7 +247,8 @@ describe('components/Modal', () => {
         <a href={'#hello'}>Hello</a>
       </Modal>
     );
-    const dialogElement = baseElement.lastChild.querySelector('[role="dialog"]');
+    const dialogElement =
+      baseElement.lastChild.querySelector('[role="dialog"]');
     expect(dialogElement).not.toBeNull();
     expect(dialogElement.getAttribute('role')).toBe('dialog');
     expect(dialogElement.getAttribute('aria-modal')).toBe('true');
@@ -309,7 +326,9 @@ describe('components/Modal', () => {
       </>
     );
 
-    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    const modalTrigger = document.querySelector(
+      '[data-testid="modal-trigger"]'
+    );
     modalTrigger.focus();
     expect(document.activeElement).toBe(modalTrigger);
 
@@ -368,7 +387,9 @@ describe('components/Modal', () => {
       </>
     );
 
-    const modalTrigger = document.querySelector('[data-testid="modal-trigger"]');
+    const modalTrigger = document.querySelector(
+      '[data-testid="modal-trigger"]'
+    );
     modalTrigger.focus();
     expect(document.activeElement).toBe(modalTrigger);
 
@@ -444,10 +465,13 @@ describe('components/Modal', () => {
       </>
     );
 
-    const insideStartElement = document.querySelector('[data-testid="inside-a"]');
+    const insideStartElement = document.querySelector(
+      '[data-testid="inside-a"]'
+    );
     const insideEndElement = document.querySelector('[data-testid="inside-c"]');
     // This is ugly - perhaps there's a better way?
-    const focusBracket = insideEndElement.parentNode.parentNode.parentNode.nextSibling;
+    const focusBracket =
+      insideEndElement.parentNode.parentNode.parentNode.nextSibling;
     insideEndElement.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(insideStartElement);
@@ -470,10 +494,13 @@ describe('components/Modal', () => {
       </>
     );
 
-    const insideStartElement = document.querySelector('[data-testid="inside-a"]');
+    const insideStartElement = document.querySelector(
+      '[data-testid="inside-a"]'
+    );
     const insideEndElement = document.querySelector('[data-testid="inside-c"]');
     // This is ugly - perhaps there's a better way?
-    const focusBracket = insideEndElement.parentNode.parentNode.parentNode.previousSibling;
+    const focusBracket =
+      insideEndElement.parentNode.parentNode.parentNode.previousSibling;
     insideStartElement.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(insideEndElement);
@@ -614,10 +641,10 @@ describe('components/Modal', () => {
     );
 
     // This is kind of ugly but I can't find a better way to target just the animation div
-    const animationAElement = getByTestId('a').parentElement.parentElement.parentElement
-      .parentElement;
-    const animationBElement = getByTestId('b').parentElement.parentElement.parentElement
-      .parentElement;
+    const animationAElement =
+      getByTestId('a').parentElement.parentElement.parentElement.parentElement;
+    const animationBElement =
+      getByTestId('b').parentElement.parentElement.parentElement.parentElement;
 
     fireEvent.animationEnd(animationAElement);
     fireEvent.animationEnd(animationBElement);

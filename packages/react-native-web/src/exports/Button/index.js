@@ -43,7 +43,9 @@ const Button: React.AbstractComponent<
       ]}
       testID={testID}
     >
-      <Text style={[styles.text, disabled && styles.textDisabled]}>{title}</Text>
+      <Text style={[styles.text, disabled && styles.textDisabled]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 });

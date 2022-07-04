@@ -29,7 +29,8 @@ const CheckBox: React.AbstractComponent<
   CheckBoxProps,
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
-  const { color, disabled, onChange, onValueChange, style, value, ...other } = props;
+  const { color, disabled, onChange, onValueChange, style, value, ...other } =
+    props;
 
   function handleChange(event: Object) {
     const value = event.nativeEvent.target.checked;

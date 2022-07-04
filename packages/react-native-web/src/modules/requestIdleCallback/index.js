@@ -26,7 +26,8 @@ const _cancelIdleCallback = function (id) {
   clearTimeout(id);
 };
 
-const isSupported = canUseDOM && typeof window.requestIdleCallback !== 'undefined';
+const isSupported =
+  canUseDOM && typeof window.requestIdleCallback !== 'undefined';
 
 const requestIdleCallback: (cb: any, options?: any) => TimeoutID = isSupported
   ? window.requestIdleCallback

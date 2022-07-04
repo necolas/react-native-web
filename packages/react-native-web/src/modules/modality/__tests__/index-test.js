@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { getModality, getActiveModality, testOnly_resetActiveModality } from '..';
+import {
+  getModality,
+  getActiveModality,
+  testOnly_resetActiveModality
+} from '..';
 import {
   describeWithPointerEvent,
   testWithPointerType,
@@ -49,17 +53,20 @@ describeWithPointerEvent('modules/modality', (hasPointerEvent) => {
   });
 
   describe('getActiveModality', () => {
-    testWithPointerType('reflects last actively used modality', (pointerType) => {
-      const target = createEventTarget(rootNode);
-      expect(getActiveModality()).toBe('keyboard');
-      target.pointerdown({ pointerType });
-      expect(getActiveModality()).toBe(pointerType);
-      target.pointerup({ pointerType });
-      target.keydown();
-      if (pointerType !== 'touch') {
-        target.pointermove({ pointerType });
+    testWithPointerType(
+      'reflects last actively used modality',
+      (pointerType) => {
+        const target = createEventTarget(rootNode);
         expect(getActiveModality()).toBe('keyboard');
+        target.pointerdown({ pointerType });
+        expect(getActiveModality()).toBe(pointerType);
+        target.pointerup({ pointerType });
+        target.keydown();
+        if (pointerType !== 'touch') {
+          target.pointermove({ pointerType });
+          expect(getActiveModality()).toBe('keyboard');
+        }
       }
-    });
+    );
   });
 });

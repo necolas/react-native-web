@@ -118,7 +118,9 @@ export default class Dimensions {
     handler: (DimensionsValue) => void
   ): void {
     if (Array.isArray(listeners[type])) {
-      listeners[type] = listeners[type].filter((_handler) => _handler !== handler);
+      listeners[type] = listeners[type].filter(
+        (_handler) => _handler !== handler
+      );
     }
   }
 }

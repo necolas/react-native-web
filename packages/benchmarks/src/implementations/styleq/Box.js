@@ -1,7 +1,13 @@
 import React from 'react';
 import View from './View';
 
-const Box = ({ color, fixed = false, layout = 'column', outer = false, ...other }) => (
+const Box = ({
+  color,
+  fixed = false,
+  layout = 'column',
+  outer = false,
+  ...other
+}) => (
   <View
     {...other}
     style={[

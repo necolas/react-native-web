@@ -23,7 +23,9 @@ const prefersReducedMotionMedia =
 
 function isReduceMotionEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {
-    resolve(prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true);
+    resolve(
+      prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true
+    );
   });
 }
 

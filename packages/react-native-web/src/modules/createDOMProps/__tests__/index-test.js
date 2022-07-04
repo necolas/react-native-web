@@ -37,15 +37,15 @@ describe('modules/createDOMProps', () => {
       });
 
       test('when "accessibilityDisabled" is true', () => {
-        expect(createProps({ accessibilityRole, accessibilityDisabled: true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true })
-        );
+        expect(
+          createProps({ accessibilityRole, accessibilityDisabled: true })
+        ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
       });
 
       test('when "disabled" is false', () => {
-        expect(createProps({ accessibilityRole, accessibilityDisabled: false })).toEqual(
-          expect.not.objectContaining({ tabIndex: '-1' })
-        );
+        expect(
+          createProps({ accessibilityRole, accessibilityDisabled: false })
+        ).toEqual(expect.not.objectContaining({ tabIndex: '-1' }));
       });
     });
 
@@ -69,15 +69,15 @@ describe('modules/createDOMProps', () => {
       });
 
       test('when "accessibilityDisabled" is true', () => {
-        expect(createProps({ accessibilityRole, accessibilityDisabled: true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true })
-        );
+        expect(
+          createProps({ accessibilityRole, accessibilityDisabled: true })
+        ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
       });
 
       test('when "accessibilityDisabled" is false', () => {
-        expect(createProps({ accessibilityRole, accessibilityDisabled: false })).toEqual(
-          expect.objectContaining({ tabIndex: '0' })
-        );
+        expect(
+          createProps({ accessibilityRole, accessibilityDisabled: false })
+        ).toEqual(expect.objectContaining({ tabIndex: '0' }));
       });
     };
 
