@@ -98,7 +98,8 @@ const View = require('react-native-web/dist/exports/View').default;
 
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
 
-const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity').default;
+const TouchableOpacity =
+  require('react-native-web/dist/exports/TouchableOpacity').default;
 
 
 `;
@@ -115,9 +116,11 @@ const ReactNative = require('react-native-web/dist/cjs/index');
 
 const View = require('react-native-web/dist/cjs/exports/View').default;
 
-const StyleSheet = require('react-native-web/dist/cjs/exports/StyleSheet').default;
+const StyleSheet =
+  require('react-native-web/dist/cjs/exports/StyleSheet').default;
 
-const TouchableOpacity = require('react-native-web/dist/cjs/exports/TouchableOpacity').default;
+const TouchableOpacity =
+  require('react-native-web/dist/cjs/exports/TouchableOpacity').default;
 
 
 `;
@@ -132,15 +135,18 @@ const { StyleSheet, View, TouchableOpacity, processColor } = require('react-nati
 
 const ReactNative = require('react-native-web/dist/index');
 
-const unstable_createElement = require('react-native-web/dist/exports/createElement').default;
+const unstable_createElement =
+  require('react-native-web/dist/exports/createElement').default;
 
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
 
 const View = require('react-native-web/dist/exports/View').default;
 
-const TouchableOpacity = require('react-native-web/dist/exports/TouchableOpacity').default;
+const TouchableOpacity =
+  require('react-native-web/dist/exports/TouchableOpacity').default;
 
-const processColor = require('react-native-web/dist/exports/processColor').default;
+const processColor =
+  require('react-native-web/dist/exports/processColor').default;
 
 
 `;

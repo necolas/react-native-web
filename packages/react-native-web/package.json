@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.18.6",
     "create-react-class": "^15.7.0",
-    "fbjs": "^3.0.0",
+    "fbjs": "^3.0.4",
     "inline-style-prefixer": "^6.0.1",
     "normalize-css-color": "^1.0.2",
     "postcss-value-parser": "^4.2.0",
