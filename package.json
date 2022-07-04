@@ -36,7 +36,6 @@
     "@testing-library/react": "^12.1.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^28.1.2",
-    "babel-loader": "^8.2.2",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "caniuse-api": "^3.0.0",
