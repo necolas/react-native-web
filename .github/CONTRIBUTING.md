@@ -99,17 +99,13 @@ Please open an issue with a proposal for a new feature or refactoring before sta
 3. If you've changed APIs, update the documentation.
 4. Ensure the tests pass (`npm run test`).
 
-You should see a pre-commit hook run before each commit. If it does not, you may need to reset you Git hookspath:
-
-```
-git config --unset core.hookspath
-```
+You should see a pre-commit hook run before each commit.
 
 You can now submit a pull request, referencing any issues it addresses.
 
 Please try to keep your pull request focused in scope and avoid including unrelated commits.
 
-After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
+After you have submitted your pull request, it's recommended that **you** perform the first code review. We'll try to get back to you as soon as possible and may suggest changes.
 
 Thank you for contributing!
 
@@ -118,7 +114,7 @@ Thank you for contributing!
 To commit, publish, and push a final version:
 
 ```
-npm run release -- <version>
+npm run release -- <version> --opt=<opt-code>
 ```
 
 Release candidates or versions that you'd like to publish to npm, but do not want to produce a commit and push it to GitHub:

@@ -47,33 +47,36 @@ const setSelection = (node, selection) => {
   }
 };
 
-const forwardPropsList = {
-  ...forwardedProps.defaultProps,
-  ...forwardedProps.accessibilityProps,
-  ...forwardedProps.clickProps,
-  ...forwardedProps.focusProps,
-  ...forwardedProps.keyboardProps,
-  ...forwardedProps.mouseProps,
-  ...forwardedProps.touchProps,
-  ...forwardedProps.styleProps,
-  autoCapitalize: true,
-  autoComplete: true,
-  autoCorrect: true,
-  autoFocus: true,
-  defaultValue: true,
-  disabled: true,
-  lang: true,
-  maxLength: true,
-  onChange: true,
-  onScroll: true,
-  placeholder: true,
-  pointerEvents: true,
-  readOnly: true,
-  rows: true,
-  spellCheck: true,
-  value: true,
-  type: true
-};
+const forwardPropsList = Object.assign(
+  {},
+  forwardedProps.defaultProps,
+  forwardedProps.accessibilityProps,
+  forwardedProps.clickProps,
+  forwardedProps.focusProps,
+  forwardedProps.keyboardProps,
+  forwardedProps.mouseProps,
+  forwardedProps.touchProps,
+  forwardedProps.styleProps,
+  {
+    autoCapitalize: true,
+    autoComplete: true,
+    autoCorrect: true,
+    autoFocus: true,
+    defaultValue: true,
+    disabled: true,
+    lang: true,
+    maxLength: true,
+    onChange: true,
+    onScroll: true,
+    placeholder: true,
+    pointerEvents: true,
+    readOnly: true,
+    rows: true,
+    spellCheck: true,
+    value: true,
+    type: true
+  }
+);
 
 const pickProps = (props) => pick(props, forwardPropsList);
 

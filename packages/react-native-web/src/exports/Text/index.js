@@ -23,19 +23,22 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = {
-  ...forwardedProps.defaultProps,
-  ...forwardedProps.accessibilityProps,
-  ...forwardedProps.clickProps,
-  ...forwardedProps.focusProps,
-  ...forwardedProps.keyboardProps,
-  ...forwardedProps.mouseProps,
-  ...forwardedProps.touchProps,
-  ...forwardedProps.styleProps,
-  href: true,
-  lang: true,
-  pointerEvents: true
-};
+const forwardPropsList = Object.assign(
+  {},
+  forwardedProps.defaultProps,
+  forwardedProps.accessibilityProps,
+  forwardedProps.clickProps,
+  forwardedProps.focusProps,
+  forwardedProps.keyboardProps,
+  forwardedProps.mouseProps,
+  forwardedProps.touchProps,
+  forwardedProps.styleProps,
+  {
+    href: true,
+    lang: true,
+    pointerEvents: true
+  }
+);
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
