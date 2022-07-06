@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for reporting suggesting a feature!
+        Thank you for suggesting a feature!
   - type: checkboxes
     attributes:
       label: Is there an existing request?
@@ -16,6 +16,6 @@ body:
   - type: textarea
     attributes:
       label: Describe the feature request
-      description: A concise description of the request, potential solutions, and addtional context.
+      description: Please provide a concise description of the request, potential solutions, and addtional context.
     validations:
       required: true
