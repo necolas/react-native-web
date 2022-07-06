@@ -21,8 +21,8 @@ export default function useColorScheme(): ColorSchemeName {
     function listener(appearance) {
       setColorScheme(appearance.colorScheme);
     }
-    Appearance.addChangeListener(listener);
-    return () => Appearance.removeChangeListener(listener);
+    const { remove } = Appearance.addChangeListener(listener);
+    return remove;
   });
 
   return colorScheme;
