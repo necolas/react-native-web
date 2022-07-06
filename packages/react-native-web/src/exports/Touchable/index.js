@@ -13,7 +13,6 @@ import type { Node } from 'React';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import BoundingDimensions from './BoundingDimensions';
-import findNodeHandle from '../findNodeHandle';
 import normalizeColor from 'normalize-css-color';
 import Position from './Position';
 import React from 'react';
@@ -73,6 +72,11 @@ const extractSingleTouch = (nativeEvent) => {
  *     return merge(this.touchableGetInitialState(), yourComponentState);
  *   }
  *
+ * - Add a method to get your touchable component's node.
+ *   getTouchableNode: function() {
+ *     return this.touchableRef.current
+ *   }
+ *
  * - Choose the rendered component who's touches should start the interactive
  *   sequence. On that rendered node, forward all `Touchable` responder
  *   handlers. You can choose any rendered node you like. Choose a node whose
@@ -81,6 +85,7 @@ const extractSingleTouch = (nativeEvent) => {
  *   // In render function:
  *   return (
  *     <View
+ *       ref={this.touchableRef}
  *       onStartShouldSetResponder={this.touchableHandleStartShouldSetResponder}
  *       onResponderTerminationRequest={this.touchableHandleResponderTerminationRequest}
  *       onResponderGrant={this.touchableHandleResponderGrant}
@@ -366,8 +371,8 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
 const TouchableMixin = {
   // HACK (part 1): basic support for touchable interactions using a keyboard
   componentDidMount: function () {
-    this._touchableNode = findNodeHandle(this);
-    if (this._touchableNode && this._touchableNode.addEventListener) {
+    const touchableNode = this.getTouchableNode && this.getTouchableNode();
+    if (touchableNode && touchableNode.addEventListener) {
       this._touchableBlurListener = (e) => {
         if (this._isTouchableKeyboardActive) {
           if (
@@ -379,7 +384,7 @@ const TouchableMixin = {
           this._isTouchableKeyboardActive = false;
         }
       };
-      this._touchableNode.addEventListener('blur', this._touchableBlurListener);
+      touchableNode.addEventListener('blur', this._touchableBlurListener);
     }
   },
 
@@ -387,11 +392,9 @@ const TouchableMixin = {
    * Clear all timeouts on unmount
    */
   componentWillUnmount: function () {
-    if (this._touchableNode && this._touchableNode.addEventListener) {
-      this._touchableNode.removeEventListener(
-        'blur',
-        this._touchableBlurListener
-      );
+    const touchableNode = this.getTouchableNode && this.getTouchableNode();
+    if (touchableNode && touchableNode.addEventListener) {
+      touchableNode.removeEventListener('blur', this._touchableBlurListener);
     }
     this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
     this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
@@ -399,7 +402,6 @@ const TouchableMixin = {
     // Clear DOM nodes
     this.pressInLocation = null;
     this.state.touchable.responderID = null;
-    this._touchableNode = null;
   },
 
   /**

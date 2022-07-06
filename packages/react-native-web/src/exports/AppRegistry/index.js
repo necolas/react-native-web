@@ -83,6 +83,7 @@ export default class AppRegistry {
           {
             hydrate: appParameters.hydrate || false,
             initialProps: appParameters.initialProps || emptyObject,
+            mode: appParameters.mode || 'legacy',
             rootTag: appParameters.rootTag
           }
         )

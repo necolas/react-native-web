@@ -9,16 +9,21 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
 import useEvent from '..';
 
 function createRoot(rootNode) {
-  return {
-    render(element) {
-      ReactDOM.render(element, rootNode);
-    }
-  };
+  if (React.version.startsWith('18')) {
+    return ReactDOMClient.createRoot(rootNode);
+  } else {
+    return {
+      render(element) {
+        ReactDOM.render(element, rootNode);
+      }
+    };
+  }
 }
 
 describe('use-event', () => {

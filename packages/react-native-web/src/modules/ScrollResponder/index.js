@@ -9,7 +9,6 @@
  */
 
 import Dimensions from '../../exports/Dimensions';
-import findNodeHandle from '../../exports/findNodeHandle';
 import invariant from 'fbjs/lib/invariant';
 import Platform from '../../exports/Platform';
 import TextInputState from '../TextInputState';
@@ -348,17 +347,6 @@ const ScrollResponderMixin = {
   },
 
   /**
-   * Returns the node that represents native view that can be scrolled.
-   * Components can pass what node to use by defining a `getScrollableNode`
-   * function otherwise `this` is used.
-   */
-  scrollResponderGetScrollableNode: function (): any {
-    return this.getScrollableNode
-      ? this.getScrollableNode()
-      : findNodeHandle(this);
-  },
-
-  /**
    * A helper function to scroll to a specific point in the scrollview.
    * This is currently used to help focus on child textviews, but can also
    * be used to quickly scroll to any element we want to focus. Syntax:
@@ -381,7 +369,7 @@ const ScrollResponderMixin = {
     } else {
       ({ x, y, animated } = x || emptyObject);
     }
-    const node = this.scrollResponderGetScrollableNode();
+    const node = this.getScrollableNode();
     const left = x || 0;
     const top = y || 0;
     if (typeof node.scroll === 'function') {
@@ -437,7 +425,7 @@ const ScrollResponderMixin = {
     this.preventNegativeScrollOffset = !!preventNegativeScrollOffset;
     UIManager.measureLayout(
       nodeHandle,
-      findNodeHandle(this.getInnerViewNode()),
+      this.getInnerViewNode(),
       this.scrollResponderTextInputFocusError,
       this.scrollResponderInputMeasureAndScrollToKeyboard
     );

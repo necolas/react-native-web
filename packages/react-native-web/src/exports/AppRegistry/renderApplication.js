@@ -12,7 +12,7 @@ import type { ComponentType, Node } from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
-import render, { hydrate } from '../render';
+import renderLegacy, { hydrateLegacy, render, hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
 import React from 'react';
 
@@ -23,20 +23,30 @@ export default function renderApplication<Props: Object>(
   options: {
     hydrate: boolean,
     initialProps: Props,
+    mode: 'concurrent' | 'legacy',
     rootTag: any
   }
 ) {
-  const { hydrate: shouldHydrate, initialProps, rootTag } = options;
-  const renderFn = shouldHydrate ? hydrate : render;
+  const { hydrate: shouldHydrate, initialProps, mode, rootTag } = options;
+  const renderFn = shouldHydrate
+    ? mode === 'concurrent'
+      ? hydrate
+      : hydrateLegacy
+    : mode === 'concurrent'
+    ? render
+    : renderLegacy;
 
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
   renderFn(
-    <AppContainer WrapperComponent={WrapperComponent} rootTag={rootTag}>
+    <AppContainer
+      WrapperComponent={WrapperComponent}
+      ref={callback}
+      rootTag={rootTag}
+    >
       <RootComponent {...initialProps} />
     </AppContainer>,
-    rootTag,
-    callback
+    rootTag
   );
 }
 

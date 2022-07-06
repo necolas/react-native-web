@@ -10,7 +10,6 @@
 
 import Batchinator from '../Batchinator';
 import FillRateHelper from '../FillRateHelper';
-import findNodeHandle from '../../../exports/findNodeHandle';
 import RefreshControl from '../../../exports/RefreshControl';
 import ScrollView from '../../../exports/ScrollView';
 import StyleSheet from '../../../exports/StyleSheet';
@@ -573,7 +572,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return findNodeHandle(this._scrollRef);
+      return this._scrollRef;
     }
   }
 

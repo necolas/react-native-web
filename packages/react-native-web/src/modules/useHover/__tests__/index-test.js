@@ -8,6 +8,7 @@
 import { act } from 'react-dom/test-utils';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import {
   describeWithPointerEvent,
   clearPointers,
@@ -18,11 +19,15 @@ import useHover from '..';
 import { testOnly_resetActiveModality } from '../../modality';
 
 function createRoot(rootNode) {
-  return {
-    render(element) {
-      ReactDOM.render(element, rootNode);
-    }
-  };
+  if (React.version.startsWith('18')) {
+    return ReactDOMClient.createRoot(rootNode);
+  } else {
+    return {
+      render(element) {
+        ReactDOM.render(element, rootNode);
+      }
+    };
+  }
 }
 
 describeWithPointerEvent('useHover', (hasPointerEvents) => {

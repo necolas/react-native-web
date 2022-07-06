@@ -9,17 +9,21 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as ReactDOMServer from 'react-dom/server';
+import * as ReactDOMClient from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
 import createEventHandle from '..';
 
 function createRoot(rootNode) {
-  return {
-    render(element) {
-      ReactDOM.render(element, rootNode);
-    }
-  };
+  if (React.version.startsWith('18')) {
+    return ReactDOMClient.createRoot(rootNode);
+  } else {
+    return {
+      render(element) {
+        ReactDOM.render(element, rootNode);
+      }
+    };
+  }
 }
 
 describe('create-event-handle', () => {
@@ -37,22 +41,6 @@ describe('create-event-handle', () => {
     document.body.removeChild(rootNode);
     rootNode = null;
     root = null;
-  });
-
-  test('can render correctly using ReactDOMServer', () => {
-    const listener = jest.fn();
-    const targetRef = React.createRef();
-    const addClickListener = createEventHandle('click');
-
-    function Component() {
-      React.useEffect(() => {
-        return addClickListener(targetRef.current, listener);
-      });
-      return <div ref={targetRef} />;
-    }
-
-    const output = ReactDOMServer.renderToString(<Component />);
-    expect(output).toBe('<div data-reactroot=""></div>');
   });
 
   describe('createEventTarget()', () => {

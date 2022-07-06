@@ -8,6 +8,7 @@
 import { act } from 'react-dom/test-utils';
 import React, { createRef } from 'react';
 import ReactDOM from 'react-dom';
+import ReactDOMClient from 'react-dom/client';
 import useResponderEvents from '..';
 import { getResponderNode, terminateResponder } from '../ResponderSystem';
 import {
@@ -22,7 +23,11 @@ describe('useResponderEvents', () => {
   let container;
 
   function render(element) {
-    ReactDOM.render(element, container);
+    if (React.version.startsWith('18')) {
+      ReactDOMClient.createRoot(container).render(element);
+    } else {
+      ReactDOM.render(element, container);
+    }
   }
 
   beforeEach(() => {
