@@ -74,8 +74,4 @@ const tests = {
 const root = document.querySelector('.root');
 const element = <App tests={tests} />;
 
-if (React.version.startsWith('18')) {
-  ReactDOM.createRoot(root).render(element);
-} else {
-  ReactDOM.render(element, root);
-}
+ReactDOM.createRoot(root).render(element);
