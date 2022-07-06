@@ -20,13 +20,13 @@ import { createSheet } from '../StyleSheet/dom';
 
 export function hydrate(element, root) {
   createSheet(root);
-  return domHydrateRoot(element, root);
+  return domHydrateRoot(root, element);
 }
 
 export function render(element, root) {
   createSheet(root);
-  const reactRoot = domCreateRoot(element);
-  reactRoot.render(root);
+  const reactRoot = domCreateRoot(root);
+  reactRoot.render(element);
   return reactRoot;
 }
 

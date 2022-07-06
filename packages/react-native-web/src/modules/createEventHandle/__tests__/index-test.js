@@ -8,41 +8,11 @@
  */
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as ReactDOMClient from 'react-dom/client';
-import { act } from 'react-dom/test-utils';
+import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
 import createEventHandle from '..';
 
-function createRoot(rootNode) {
-  if (React.version.startsWith('18')) {
-    return ReactDOMClient.createRoot(rootNode);
-  } else {
-    return {
-      render(element) {
-        ReactDOM.render(element, rootNode);
-      }
-    };
-  }
-}
-
 describe('create-event-handle', () => {
-  let root;
-  let rootNode;
-
-  beforeEach(() => {
-    rootNode = document.createElement('div');
-    document.body.appendChild(rootNode);
-    root = createRoot(rootNode);
-  });
-
-  afterEach(() => {
-    root.render(null);
-    document.body.removeChild(rootNode);
-    rootNode = null;
-    root = null;
-  });
-
   describe('createEventTarget()', () => {
     test('event dispatched on target', () => {
       const listener = jest.fn();
@@ -56,9 +26,7 @@ describe('create-event-handle', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const target = createEventTarget(targetRef.current);
 
@@ -101,9 +69,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const parent = createEventTarget(parentRef.current);
 
@@ -152,9 +118,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -184,9 +148,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const text = createEventTarget(childRef.current.firstChild);
 
@@ -209,9 +171,8 @@ describe('create-event-handle', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component target={document} />);
-      });
+      render(<Component target={document} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
@@ -232,9 +193,8 @@ describe('create-event-handle', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component target={window} />);
-      });
+      render(<Component target={window} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
@@ -255,9 +215,7 @@ describe('create-event-handle', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       act(() => {
         const event = new CustomEvent('magic-event', { bubbles: true });
@@ -300,9 +258,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -359,9 +315,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -404,9 +358,7 @@ describe('create-event-handle', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -435,9 +387,7 @@ describe('create-event-handle', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const target = createEventTarget(targetRef.current);
 

@@ -8,26 +8,10 @@
  */
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as ReactDOMClient from 'react-dom/client';
-import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import useStable from '..';
 
-function createRoot(rootNode) {
-  if (React.version.startsWith('18')) {
-    return ReactDOMClient.createRoot(rootNode);
-  } else {
-    return {
-      render(element) {
-        ReactDOM.render(element, rootNode);
-      }
-    };
-  }
-}
-
 describe('useStable', () => {
-  let root;
-  let rootNode;
   let spy = {};
 
   const TestComponent = ({ initialValueCallback }): React.Node => {
@@ -38,59 +22,33 @@ describe('useStable', () => {
 
   beforeEach(() => {
     spy = {};
-    rootNode = document.createElement('div');
-    document.body.appendChild(rootNode);
-    root = createRoot(rootNode);
-  });
-
-  afterEach(() => {
-    root.render(null);
-    document.body.removeChild(rootNode);
-    rootNode = null;
-    root = null;
   });
 
   test('correctly sets the initial value', () => {
     const initialValueCallback = () => 5;
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    render(<TestComponent initialValueCallback={initialValueCallback} />);
     expect(spy.value).toBe(5);
   });
 
   test('does not change the value', () => {
     let counter = 0;
     const initialValueCallback = () => counter++;
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    const { rerender } = render(
+      <TestComponent initialValueCallback={initialValueCallback} />
+    );
     expect(spy.value).toBe(0);
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    rerender(<TestComponent initialValueCallback={initialValueCallback} />);
     expect(spy.value).toBe(0);
   });
 
   test('only calls the callback once', () => {
     let counter = 0;
     const initialValueCallback = () => counter++;
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    const { rerender } = render(
+      <TestComponent initialValueCallback={initialValueCallback} />
+    );
     expect(counter).toBe(1);
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    rerender(<TestComponent initialValueCallback={initialValueCallback} />);
     expect(counter).toBe(1);
   });
 
@@ -103,17 +61,11 @@ describe('useStable', () => {
       }
       return counter++;
     };
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    const { rerender } = render(
+      <TestComponent initialValueCallback={initialValueCallback} />
+    );
     expect(spy.value).toBe(null);
-    act(() => {
-      root.render(
-        <TestComponent initialValueCallback={initialValueCallback} />
-      );
-    });
+    rerender(<TestComponent initialValueCallback={initialValueCallback} />);
     expect(spy.value).toBe(null);
   });
 });

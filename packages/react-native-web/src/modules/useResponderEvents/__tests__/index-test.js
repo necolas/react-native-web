@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { act } from 'react-dom/test-utils';
+import { act, render } from '@testing-library/react';
 import React, { createRef } from 'react';
-import ReactDOM from 'react-dom';
-import ReactDOMClient from 'react-dom/client';
 import useResponderEvents from '..';
 import { getResponderNode, terminateResponder } from '../ResponderSystem';
 import {
@@ -20,25 +18,7 @@ import {
 } from 'dom-event-testing-library';
 
 describe('useResponderEvents', () => {
-  let container;
-
-  function render(element) {
-    if (React.version.startsWith('18')) {
-      ReactDOMClient.createRoot(container).render(element);
-    } else {
-      ReactDOM.render(element, container);
-    }
-  }
-
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
   afterEach(() => {
-    render(null);
-    document.body.removeChild(container);
-    container = null;
     // make sure all tests end with the current responder being reset
     terminateResponder();
     // make sure all tests reset state machine tracking pointers on the mock surface
@@ -57,9 +37,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture
       act(() => {
@@ -81,9 +59,7 @@ describe('useResponderEvents', () => {
     };
 
     // render
-    act(() => {
-      render(<Component />);
-    });
+    render(<Component />);
     const target = createEventTarget(targetRef.current);
     const buttons = [1, 2, 3, 4];
     // gesture
@@ -110,9 +86,7 @@ describe('useResponderEvents', () => {
     };
 
     // render
-    act(() => {
-      render(<Component />);
-    });
+    render(<Component />);
     const target = createEventTarget(targetRef.current);
     const acceptedModifierKeys = ['metaKey', 'shiftKey'];
     const ignoredModifierKeys = ['altKey', 'ctrlKey'];
@@ -144,9 +118,7 @@ describe('useResponderEvents', () => {
     };
 
     // render
-    act(() => {
-      render(<Component />);
-    });
+    render(<Component />);
     const target = createEventTarget(targetRef.current);
     // touch gesture
     act(() => {
@@ -191,9 +163,7 @@ describe('useResponderEvents', () => {
     };
 
     // render
-    act(() => {
-      render(<Component />);
-    });
+    render(<Component />);
     const target = createEventTarget(targetRef.current);
     // gesture
     act(() => {
@@ -250,9 +220,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -307,9 +275,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
@@ -360,9 +326,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
@@ -431,9 +395,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
@@ -480,9 +442,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
@@ -531,9 +491,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -601,9 +559,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
@@ -658,9 +614,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
@@ -712,9 +666,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
@@ -784,9 +736,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
@@ -835,9 +785,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
@@ -887,9 +835,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
@@ -948,9 +894,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -992,9 +936,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -1043,9 +985,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
@@ -1072,9 +1012,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -1139,9 +1077,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
@@ -1186,9 +1122,7 @@ describe('useResponderEvents', () => {
             };
 
             // render
-            act(() => {
-              render(<Component />);
-            });
+            render(<Component />);
             const target = createEventTarget(targetRef.current);
             // gesture start & move
             act(() => {
@@ -1233,9 +1167,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture start & end
         act(() => {
@@ -1278,9 +1210,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         // gesture
         act(() => {
@@ -1325,9 +1255,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // gesture start & cancel
       act(() => {
@@ -1364,9 +1292,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const input = createEventTarget(inputRef.current);
       // getSelection is not supported in jest
@@ -1394,9 +1320,7 @@ describe('useResponderEvents', () => {
         };
 
         // render
-        act(() => {
-          render(<Component />);
-        });
+        render(<Component />);
         const target = createEventTarget(targetRef.current);
         const doc = createEventTarget(document);
         // getSelection is not supported in jest
@@ -1442,9 +1366,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const parent = createEventTarget(parentRef.current);
       // gesture start & scroll
@@ -1478,9 +1400,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & scroll
@@ -1515,9 +1435,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const sibling = createEventTarget(siblingRef.current);
       // gesture start & scroll
@@ -1546,9 +1464,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & blur
@@ -1576,9 +1492,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const win = createEventTarget(window);
       // gesture start & blur
@@ -1612,9 +1526,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const sibling = createEventTarget(siblingRef.current);
       // gesture start & blur
@@ -1645,9 +1557,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // contextmenu sequence includes pointerdown "start"
       act(() => {
@@ -1680,9 +1590,7 @@ describe('useResponderEvents', () => {
       }
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // contextmenu
@@ -1865,9 +1773,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
 
       // gesture start
@@ -2039,9 +1945,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
 
       // gesture start
@@ -2204,9 +2108,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const parent = createEventTarget(parentRef.current);
       const target = createEventTarget(targetRef.current);
 
@@ -2392,9 +2294,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const sibling = createEventTarget(siblingRef.current);
       // gesture start on target
@@ -2535,9 +2435,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const sibling = createEventTarget(siblingRef.current);
       // gesture start and move on target
@@ -2641,9 +2539,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       // first touch
       act(() => {
@@ -2778,9 +2674,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       const parent = createEventTarget(parentRef.current);
       // first touch
@@ -2881,9 +2775,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      act(() => {
-        render(<Component />);
-      });
+      render(<Component />);
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.pointerdown({ pointerType });

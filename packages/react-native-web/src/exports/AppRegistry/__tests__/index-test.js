@@ -7,10 +7,10 @@
 
 import AppRegistry from '..';
 import React from 'react';
-
+import { act } from '@testing-library/react';
 const NoopComponent = () => React.createElement('div');
 
-describe('AppRegistry', () => {
+describe.each([['concurrent'], ['legacy']])('AppRegistry', (mode) => {
   describe('runApplication', () => {
     let rootTag;
 
@@ -27,18 +27,22 @@ describe('AppRegistry', () => {
     test('callback after render', () => {
       const callback = jest.fn();
       AppRegistry.registerComponent('App', () => NoopComponent);
-      AppRegistry.runApplication('App', {
-        initialProps: {},
-        rootTag,
-        callback
+      act(() => {
+        AppRegistry.runApplication('App', {
+          initialProps: {},
+          rootTag,
+          callback,
+          mode
+        });
       });
       expect(callback).toHaveBeenCalledTimes(1);
     });
 
     test('styles roots in different documents', () => {
       AppRegistry.registerComponent('App', () => NoopComponent);
-      AppRegistry.runApplication('App', { initialProps: {}, rootTag });
-
+      act(() => {
+        AppRegistry.runApplication('App', { initialProps: {}, rootTag, mode });
+      });
       // Create iframe context
       const iframe = document.createElement('iframe');
       document.body.appendChild(iframe);
@@ -49,9 +53,12 @@ describe('AppRegistry', () => {
 
       // Run in iframe
       AppRegistry.registerComponent('App', () => NoopComponent);
-      AppRegistry.runApplication('App', {
-        initialProps: {},
-        rootTag: iframeRootTag
+      act(() => {
+        AppRegistry.runApplication('App', {
+          initialProps: {},
+          rootTag: iframeRootTag,
+          mode
+        });
       });
 
       const iframedoc = iframeRootTag.ownerDocument;
