@@ -37,7 +37,7 @@ const Appearance = {
     return query && query.matches ? 'dark' : 'light';
   },
 
-  addChangeListener(listener: AppearanceListener): void {
+  addChangeListener(listener: AppearanceListener): { remove: () => void } {
     let mappedListener = listenerMapping.get(listener);
     if (!mappedListener) {
       mappedListener = ({ matches }: MediaQueryListEvent) => {
@@ -48,16 +48,16 @@ const Appearance = {
     if (query) {
       query.addListener(mappedListener);
     }
-  },
 
-  removeChangeListener(listener: AppearanceListener): void {
-    const mappedListener = listenerMapping.get(listener);
-    if (mappedListener) {
-      if (query) {
+    function remove(): void {
+      const mappedListener = listenerMapping.get(listener);
+      if (query && mappedListener) {
         query.removeListener(mappedListener);
       }
       listenerMapping.delete(listener);
     }
+
+    return { remove };
   }
 };
 
