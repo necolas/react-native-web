@@ -31,10 +31,13 @@ import { ScrollView } from 'react-native';
 All the props supported by [View]({{ '/docs/view' | url }}).
 {% endcall %}
 
+{% call macro.prop('centerContent', '?boolean') %}
+When `true`, the scroll view automatically centers the content when the content is smaller than the scroll view bounds; when the content is larger than the scroll view, this property has no effect.
+{% endcall %}
+
 {% call macro.prop('contentContainerStyle', '?Style') %}
 These styles will be applied to the scroll view content container which wraps all of the child views.
 {% endcall %}
-
 
 {% call macro.prop('disableScrollViewPanResponder', '?boolean = false') %}
 When `true`, the default `PanResponder` on the `ScrollView` is disabled, and full control over pointers inside the `ScrollView` is left to its child components. This is meant to be used when native "snap-to" scrolling behavior is needed.

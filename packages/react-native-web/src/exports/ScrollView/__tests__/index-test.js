@@ -6,6 +6,22 @@ import { findDOMNode } from 'react-dom';
 import { render } from '@testing-library/react';
 
 describe('components/ScrollView', () => {
+  describe('prop "centerContent"', () => {
+    test('without', () => {
+      const { container } = render(
+        <ScrollView style={{ backgroundColor: 'blue' }} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('with', () => {
+      const { container } = render(
+        <ScrollView centerContent style={{ backgroundColor: 'blue' }} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "onScroll"', () => {
     test('is called when element scrolls', () => {
       const onScroll = jest.fn();

@@ -22,6 +22,7 @@ import React from 'react';
 
 type ScrollViewProps = {
   ...ViewProps,
+  centerContent?: boolean,
   contentContainerStyle?: ViewStyle,
   horizontal?: boolean,
   keyboardDismissMode?: 'none' | 'interactive' | 'on-drag',
@@ -136,6 +137,7 @@ const ScrollView = ((createReactClass({
       forwardedRef,
       keyboardDismissMode,
       onScroll,
+      centerContent,
       /* eslint-enable */
       ...other
     } = this.props;
@@ -189,10 +191,11 @@ const ScrollView = ((createReactClass({
         children={children}
         collapsable={false}
         ref={this._setInnerViewRef}
-        style={StyleSheet.compose(
+        style={[
           horizontal && styles.contentContainerHorizontal,
+          centerContent && styles.contentContainerCenterContent,
           contentContainerStyle
-        )}
+        ]}
       />
     );
 
@@ -328,6 +331,10 @@ const styles = StyleSheet.create({
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
+  },
+  contentContainerCenterContent: {
+    justifyContent: 'center',
+    flexGrow: 1
   },
   stickyHeader: {
     position: 'sticky',
