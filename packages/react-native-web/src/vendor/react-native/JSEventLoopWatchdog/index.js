@@ -38,7 +38,7 @@ const JSEventLoopWatchdog = {
     totalStallTime = 0;
     stallCount = 0;
     longestStall = 0;
-    lastInterval = global.performance.now();
+    lastInterval = window.performance.now();
   },
   addHandler: function(handler: Handler) {
     handlers.push(handler);
@@ -49,9 +49,9 @@ const JSEventLoopWatchdog = {
       return;
     }
     installed = true;
-    lastInterval = global.performance.now();
+    lastInterval = window.performance.now();
     function iteration() {
-      const now = global.performance.now();
+      const now = window.performance.now();
       const busyTime = now - lastInterval;
       if (busyTime >= thresholdMS) {
         const stallTime = busyTime - thresholdMS;
