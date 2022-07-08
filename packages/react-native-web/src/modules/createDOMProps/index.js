@@ -278,10 +278,14 @@ const createDOMProps = (elementType, props, options) => {
   if (accessibilityValueText != null) {
     domProps['aria-valuetext'] = accessibilityValueText;
   }
+  
+  const externalCN = dataSet ? dataSet._className : undefined
+  const externalID = dataSet ? dataSet._id : undefined
 
   // "dataSet" replaced with "data-*"
   if (dataSet != null) {
     for (const dataProp in dataSet) {
+      if (dataProp == '_id' || dataProp == '_className') continue
       if (hasOwnProperty.call(dataSet, dataProp)) {
         const dataName = hyphenateString(dataProp);
         const dataValue = dataSet[dataProp];
@@ -332,8 +336,8 @@ const createDOMProps = (elementType, props, options) => {
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
     { writingDirection: options ? options.writingDirection : 'ltr' }
   );
-  if (className) {
-    domProps.className = className;
+  if (className || externalCN) {
+    domProps.className = externalCN || className;
   }
   if (inlineStyle) {
     domProps.style = inlineStyle;
@@ -341,8 +345,8 @@ const createDOMProps = (elementType, props, options) => {
 
   // OTHER
   // Native element ID
-  if (nativeID != null) {
-    domProps.id = nativeID;
+  if (nativeID != null || externalID != null) {
+    domProps.id = externalID || nativeID;
   }
   // Automated test IDs
   if (testID != null) {
