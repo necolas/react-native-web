@@ -11,7 +11,6 @@
 'use strict';
 
 import infoLog from '../infoLog';
-import performanceNow from 'fbjs/lib/performanceNow';
 
 type Handler = {
   onIterate?: () => void,
@@ -39,7 +38,7 @@ const JSEventLoopWatchdog = {
     totalStallTime = 0;
     stallCount = 0;
     longestStall = 0;
-    lastInterval = performanceNow();
+    lastInterval = window.performance.now();
   },
   addHandler: function(handler: Handler) {
     handlers.push(handler);
@@ -50,9 +49,9 @@ const JSEventLoopWatchdog = {
       return;
     }
     installed = true;
-    lastInterval = performanceNow();
+    lastInterval = window.performance.now();
     function iteration() {
-      const now = performanceNow();
+      const now = window.performance.now();
       const busyTime = now - lastInterval;
       if (busyTime >= thresholdMS) {
         const stallTime = busyTime - thresholdMS;
