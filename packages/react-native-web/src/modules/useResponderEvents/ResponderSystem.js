@@ -151,8 +151,7 @@ import {
   setResponderId
 } from './utils';
 import ResponderTouchHistoryStore from './ResponderTouchHistoryStore';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../canUseDom';
 
 /* ------------ TYPES ------------ */
 

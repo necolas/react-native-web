@@ -13,8 +13,7 @@ import View from '../View';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../modules/canUseDom';
 
 /**
  * This Component is used to "wrap" the modal we're opening

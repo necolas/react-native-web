@@ -13,9 +13,8 @@ import { localizeStyle } from 'styleq/transform-localize-style';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+import canUseDOM from '../../modules/canUseDom';
 
-const { canUseDOM } = ExecutionEnvironment;
 const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
 const sheet = createSheet();
 

@@ -10,8 +10,7 @@
 import type { DisplayMetrics } from '../Dimensions';
 
 import Dimensions from '../Dimensions';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../modules/canUseDom';
 
 const DeviceInfo = {
   Dimensions: {

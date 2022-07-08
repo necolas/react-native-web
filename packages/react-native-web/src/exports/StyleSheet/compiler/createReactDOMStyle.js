@@ -8,8 +8,7 @@
  */
 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../../modules/canUseDom';
 
 type Style = { [key: string]: any };
 
