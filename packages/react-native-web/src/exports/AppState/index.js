@@ -10,8 +10,7 @@
 
 import invariant from 'fbjs/lib/invariant';
 import EventEmitter from '../../vendor/react-native/emitter/_EventEmitter';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../modules/canUseDom';
 
 // Android 4.4 browser
 const isPrefixed =

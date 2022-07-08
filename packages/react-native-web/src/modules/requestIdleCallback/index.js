@@ -6,9 +6,7 @@
  *
  * @flow
  */
-
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../canUseDom';
 
 const _requestIdleCallback = function (cb: Function, options?: Object) {
   return setTimeout(() => {

@@ -6,9 +6,7 @@
  *
  * @flow strict-local
  */
-
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../../modules/canUseDom';
 
 // $FlowFixMe: HTMLStyleElement is incorrectly typed - https://github.com/facebook/flow/issues/2696
 export default function createCSSStyleSheet(

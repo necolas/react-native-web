@@ -6,9 +6,7 @@
  *
  * @flow
  */
-
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../../modules/canUseDom';
 
 function isScreenReaderEnabled(): Promise<*> {
   return new Promise((resolve, reject) => {

@@ -8,8 +8,7 @@
  */
 
 import type { OrderedCSSStyleSheet } from './createOrderedCSSStyleSheet';
-
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+import canUseDOM from '../../../modules/canUseDom';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
 
@@ -37,7 +36,7 @@ export function createSheet(
 ): Sheet {
   let sheet;
 
-  if (ExecutionEnvironment.canUseDOM) {
+  if (canUseDOM) {
     const rootNode: Node = root != null ? root.getRootNode() : document;
     // Create the initial style sheet
     if (sheets.length === 0) {

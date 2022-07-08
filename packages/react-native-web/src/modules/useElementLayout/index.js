@@ -12,8 +12,7 @@ import type { LayoutEvent } from '../../types';
 
 import useLayoutEffect from '../useLayoutEffect';
 import UIManager from '../../exports/UIManager';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-const { canUseDOM } = ExecutionEnvironment;
+import canUseDOM from '../canUseDom';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
