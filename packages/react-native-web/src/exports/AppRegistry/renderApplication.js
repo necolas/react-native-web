@@ -16,6 +16,10 @@ import renderLegacy, { hydrateLegacy, render, hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
 import React from 'react';
 
+export type Application = {
+  unmount: () => void
+};
+
 export default function renderApplication<Props: Object>(
   RootComponent: ComponentType<Props>,
   WrapperComponent?: ?ComponentType<*>,
@@ -26,7 +30,7 @@ export default function renderApplication<Props: Object>(
     mode: 'concurrent' | 'legacy',
     rootTag: any
   }
-) {
+): Application {
   const { hydrate: shouldHydrate, initialProps, mode, rootTag } = options;
   const renderFn = shouldHydrate
     ? mode === 'concurrent'
@@ -38,7 +42,7 @@ export default function renderApplication<Props: Object>(
 
   invariant(rootTag, 'Expect to have a valid rootTag, instead got ', rootTag);
 
-  renderFn(
+  return renderFn(
     <AppContainer
       WrapperComponent={WrapperComponent}
       ref={callback}

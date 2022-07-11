@@ -16,6 +16,7 @@ import {
   hydrateRoot as domHydrateRoot
 } from 'react-dom/client';
 
+import unmountComponentAtNode from '../unmountComponentAtNode';
 import { createSheet } from '../StyleSheet/dom';
 
 export function hydrate(element, root) {
@@ -32,10 +33,20 @@ export function render(element, root) {
 
 export function hydrateLegacy(element, root, callback) {
   createSheet(root);
-  return domLegacyHydrate(element, root, callback);
+  domLegacyHydrate(element, root, callback);
+  return {
+    unmount: function () {
+      return unmountComponentAtNode(root);
+    }
+  };
 }
 
 export default function renderLegacy(element, root, callback) {
   createSheet(root);
-  return domLegacyRender(element, root, callback);
+  domLegacyRender(element, root, callback);
+  return {
+    unmount: function () {
+      return unmountComponentAtNode(root);
+    }
+  };
 }

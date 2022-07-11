@@ -38,6 +38,36 @@ describe.each([['concurrent'], ['legacy']])('AppRegistry', (mode) => {
       expect(callback).toHaveBeenCalledTimes(1);
     });
 
+    test('unmount ran application', () => {
+      const setMountedState = jest.fn();
+      const MountedStateComponent = () => {
+        React.useEffect(() => {
+          setMountedState(true);
+          return () => {
+            setMountedState(false);
+          };
+        }, []);
+        return <NoopComponent />;
+      };
+
+      AppRegistry.registerComponent('App', () => MountedStateComponent);
+      let application;
+      act(() => {
+        application = AppRegistry.runApplication('App', {
+          initialProps: {},
+          rootTag,
+          mode
+        });
+      });
+      expect(setMountedState).toHaveBeenCalledTimes(1);
+      expect(setMountedState).toHaveBeenLastCalledWith(true);
+      act(() => {
+        application.unmount();
+      });
+      expect(setMountedState).toHaveBeenCalledTimes(2);
+      expect(setMountedState).toHaveBeenLastCalledWith(false);
+    });
+
     test('styles roots in different documents', () => {
       AppRegistry.registerComponent('App', () => NoopComponent);
       act(() => {
