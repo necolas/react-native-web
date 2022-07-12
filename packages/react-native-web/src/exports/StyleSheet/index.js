@@ -67,7 +67,7 @@ const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
 /**
  * create
  */
-function create<T>(styles: T): T {
+function create<T: Object>(styles: T): $ReadOnly<T> {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
     // Only compile at runtime if the style is not already compiled
