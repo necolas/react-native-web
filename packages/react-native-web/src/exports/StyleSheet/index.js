@@ -67,7 +67,7 @@ const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
 /**
  * create
  */
-function create(styles: Object): {| [key: string]: { [key: string]: any } |} {
+function create<T>(styles: T): T {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
     // Only compile at runtime if the style is not already compiled
