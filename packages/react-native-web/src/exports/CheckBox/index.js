@@ -13,6 +13,8 @@ import type { ViewProps } from '../View';
 
 import * as React from 'react';
 import createElement from '../createElement';
+import * as forwardedProps from '../../modules/forwardedProps';
+import pick from '../../modules/pick';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
@@ -24,6 +26,22 @@ type CheckBoxProps = {
   onValueChange?: ?(e: any) => void,
   value?: boolean
 };
+
+const forwardPropsList = Object.assign(
+  {},
+  forwardedProps.accessibilityProps,
+  {
+    readOnly: true,
+    checked: true,
+    disabled: true,
+    onChange: true,
+    type: true,
+    style: true,
+    ref: true
+  }
+);
+
+const pickProps = (props) => pick(props, forwardPropsList);
 
 const CheckBox: React.AbstractComponent<
   CheckBoxProps,
@@ -51,15 +69,16 @@ const CheckBox: React.AbstractComponent<
       ]}
     />
   );
+  
+  const supportedProps = pickProps(props);
+  supportedProps.checked = value;
+  supportedProps.disabled = disabled;
+  supportedProps.onChange = handleChange;
+  supportedProps.ref = forwardedRef;
+  supportedProps.style = [styles.nativeControl, styles.cursorInherit];
+  supportedProps.type = 'checkbox';
 
-  const nativeControl = createElement('input', {
-    checked: value,
-    disabled: disabled,
-    onChange: handleChange,
-    ref: forwardedRef,
-    style: [styles.nativeControl, styles.cursorInherit],
-    type: 'checkbox'
-  });
+  const nativeControl = createElement('input', supportedProps);
 
   return (
     <View
