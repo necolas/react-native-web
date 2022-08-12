@@ -296,7 +296,7 @@ const TextInput: React.AbstractComponent<
         onSubmitEditing(e);
       }
       if (shouldBlurOnSubmit && hostNode != null) {
-        hostNode.blur();
+        setTimeout(() => hostNode.blur(), 0);
       }
     }
   }
