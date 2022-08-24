@@ -15,6 +15,22 @@ exports[`CheckBox prop "accessibilityLabel" value is set 1`] = `
 </div>
 `;
 
+exports[`CheckBox prop "accessibilityReadOnly" value is set 1`] = `
+<div
+  aria-readonly="true"
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    readonly=""
+    type="checkbox"
+  />
+</div>
+`;
+
 exports[`CheckBox prop "color" value is set 1`] = `
 <div
   class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
