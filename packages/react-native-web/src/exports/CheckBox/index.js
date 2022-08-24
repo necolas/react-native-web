@@ -29,8 +29,16 @@ const CheckBox: React.AbstractComponent<
   CheckBoxProps,
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
-  const { color, disabled, onChange, onValueChange, style, value, ...other } =
-    props;
+  const {
+    accessibilityReadOnly,
+    color,
+    disabled,
+    onChange,
+    onValueChange,
+    style,
+    value,
+    ...other
+  } = props;
 
   function handleChange(event: Object) {
     const value = event.nativeEvent.target.checked;
@@ -56,6 +64,7 @@ const CheckBox: React.AbstractComponent<
     checked: value,
     disabled: disabled,
     onChange: handleChange,
+    readOnly: accessibilityReadOnly,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'
@@ -65,6 +74,7 @@ const CheckBox: React.AbstractComponent<
     <View
       {...other}
       accessibilityDisabled={disabled}
+      accessibilityReadOnly={accessibilityReadOnly}
       style={[styles.root, style, disabled && styles.cursorDefault]}
     >
       {fakeControl}

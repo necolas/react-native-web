@@ -25,6 +25,13 @@ describe('CheckBox', () => {
     });
   });
 
+  describe('prop "accessibilityReadOnly"', () => {
+    test('value is set', () => {
+      const { container } = render(<CheckBox accessibilityReadOnly={true} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
   describe('prop "color"', () => {
     test('value is set', () => {
       const { container } = render(<CheckBox color="lightblue" value={true} />);
