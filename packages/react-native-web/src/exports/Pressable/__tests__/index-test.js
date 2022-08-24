@@ -119,11 +119,11 @@ describe('components/Pressable', () => {
     act(() => {
       target.focus();
     });
-    expect(onFocus).not.toBeCalled();
+    expect(onFocus).toBeCalled();
     act(() => {
       body.focus({ relatedTarget: target.node });
     });
-    expect(onBlur).not.toBeCalled();
+    expect(onBlur).toBeCalled();
   });
 
   test('hover interaction', () => {

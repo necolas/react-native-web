@@ -34,6 +34,8 @@ export default function PressablePage() {
           delayPressIn={delay}
           delayPressOut={delay}
           disabled={disabled}
+          onBlur={handleEvent('onBlur')}
+          onFocus={handleEvent('onFocus')}
           onHoverIn={handleEvent('onHoverIn')}
           onHoverOut={handleEvent('onHoverOut')}
           onKeyDown={(e) => {
