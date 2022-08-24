@@ -113,6 +113,11 @@ function resolveAssetUri(source): ?string {
   if (typeof source === 'number') {
     // get the URI from the packager
     const asset = getAssetByID(source);
+    if (asset == null) {
+      throw new Error(
+        `Image: asset with ID "${source}" could not be found. Please check the image source or packager.`
+      );
+    }
     let scale = asset.scales[0];
     if (asset.scales.length > 1) {
       const preferredScale = PixelRatio.get();
