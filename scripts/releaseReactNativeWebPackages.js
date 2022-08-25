@@ -59,6 +59,8 @@ workspaces.forEach(({ directory, packageJson, packageJsonPath }) => {
   );
 });
 
+execSync('npm install');
+
 // Commit changes
 if (!skipGit) {
   // add changes

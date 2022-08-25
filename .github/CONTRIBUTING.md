@@ -114,7 +114,7 @@ Thank you for contributing!
 To commit, publish, and push a final version:
 
 ```
-npm run release -- <version> --opt=<opt-code>
+npm run release -- <version> --otp=<otp-code>
 ```
 
 Release candidates or versions that you'd like to publish to npm, but do not want to produce a commit and push it to GitHub:
