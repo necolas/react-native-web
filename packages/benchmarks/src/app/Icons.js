@@ -20,7 +20,7 @@ const createIcon = (children) => {
   const Icon = (props) =>
     createElement('svg', {
       children,
-      style: StyleSheet.compose(styles.root, props.style),
+      style: [styles.root, props.style],
       width: 24,
       height: 24,
       viewBox: '0 0 24 24'

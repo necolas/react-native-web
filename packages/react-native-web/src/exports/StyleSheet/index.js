@@ -104,12 +104,11 @@ function compose(style1: any, style2: any): any {
       );
     }
     /* eslint-enable prefer-rest-params */
+    console.warn(
+      'StyleSheet.compose(a, b) is deprecated; use array syntax, i.e., [a,b].'
+    );
   }
-  if (style1 && style2) {
-    return [style1, style2];
-  } else {
-    return style1 || style2;
-  }
+  return [style1, style2];
 }
 
 /**

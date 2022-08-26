@@ -32,9 +32,7 @@ const SafeAreaView: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, ref) => {
   const { style, ...rest } = props;
-  return (
-    <View {...rest} ref={ref} style={StyleSheet.compose(styles.root, style)} />
-  );
+  return <View {...rest} ref={ref} style={[styles.root, style]} />;
 });
 
 SafeAreaView.displayName = 'SafeAreaView';

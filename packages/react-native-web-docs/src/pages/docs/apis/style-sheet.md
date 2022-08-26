@@ -44,11 +44,7 @@ Equal to 1px. This is not implemented using screen density as browsers may round
 
 ### Static methods
 
-{% call macro.prop('compose', '(style1, style2) => Style') %}
-Combines two styles such that the last style overrides properties of the first style. If either style is falsy, the other one is returned without allocating an array, saving allocations and maintaining reference equality.
-{% endcall %}
-
-{% call macro.prop('create', '({ [key]: ruleset }) => ({ [key]: number })') %}
+{% call macro.prop('create', '({ [key]: ruleset }) => ({ [key]: ruleset })') %}
 Define style objects. Each key of the object passed to `create` must define a style object. These values should not be introspected at runtime.
 {% endcall %}
 

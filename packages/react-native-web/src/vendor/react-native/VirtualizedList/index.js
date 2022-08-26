@@ -957,10 +957,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           key="$header">
           <View
             onLayout={this._onLayoutHeader}
-            style={StyleSheet.compose(
+            style={[
               inversionStyle,
               this.props.ListHeaderComponentStyle,
-            )}>
+            ]}>
             {
               // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
               element
@@ -1084,7 +1084,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               element.props.onLayout(event);
             }
           },
-          style: StyleSheet.compose(inversionStyle, element.props.style),
+          style: [inversionStyle, element.props.style],
         }),
       );
     }
@@ -1102,10 +1102,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           key="$footer">
           <View
             onLayout={this._onLayoutFooter}
-            style={StyleSheet.compose(
+            style={[
               inversionStyle,
               this.props.ListFooterComponentStyle,
-            )}>
+            ]}>
             {
               // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
               element

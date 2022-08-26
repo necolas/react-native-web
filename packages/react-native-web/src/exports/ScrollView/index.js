@@ -171,10 +171,10 @@ const ScrollView = ((createReactClass({
             if (child != null && (isSticky || pagingEnabled)) {
               return (
                 <View
-                  style={StyleSheet.compose(
+                  style={[
                     isSticky && styles.stickyHeader,
                     pagingEnabled && styles.pagingEnabledChild
-                  )}
+                  ]}
                 >
                   {child}
                 </View>
