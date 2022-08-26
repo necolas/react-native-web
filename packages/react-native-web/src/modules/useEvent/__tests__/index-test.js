@@ -8,36 +8,11 @@
  */
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
 import useEvent from '..';
 
-function createRoot(rootNode) {
-  return {
-    render(element) {
-      ReactDOM.render(element, rootNode);
-    }
-  };
-}
-
 describe('use-event', () => {
-  let root;
-  let rootNode;
-
-  beforeEach(() => {
-    rootNode = document.createElement('div');
-    document.body.appendChild(rootNode);
-    root = createRoot(rootNode);
-  });
-
-  afterEach(() => {
-    root.render(null);
-    document.body.removeChild(rootNode);
-    rootNode = null;
-    root = null;
-  });
-
   describe('setListener()', () => {
     test('event dispatched on target', () => {
       const listener = jest.fn();
@@ -51,9 +26,7 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const target = createEventTarget(targetRef.current);
 
@@ -85,9 +58,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const parent = createEventTarget(parentRef.current);
 
@@ -125,9 +96,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -157,9 +126,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const text = createEventTarget(childRef.current.firstChild);
 
@@ -182,9 +149,8 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component target={document} />);
-      });
+      render(<Component target={document} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
@@ -205,9 +171,8 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component target={window} />);
-      });
+      render(<Component target={window} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
@@ -229,18 +194,16 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component onClick={listener} />);
-      });
+      const { rerender } = render(<Component onClick={listener} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
       });
       expect(listener).toBeCalledTimes(1);
-      act(() => {
-        // this should replace the listener
-        root.render(<Component onClick={listenerAlt} />);
-      });
+
+      rerender(<Component onClick={listenerAlt} />);
+
       act(() => {
         target.click();
       });
@@ -260,18 +223,17 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component off={false} />);
-      });
+      const { unmount } = render(<Component off={false} />);
+
       const target = createEventTarget(targetRef.current);
       act(() => {
         target.click();
       });
       expect(listener).toBeCalledTimes(1);
-      act(() => {
-        // this should unset the listener
-        root.render(<Component off={true} />);
-      });
+
+      // this should unset the listener
+      unmount();
+
       listener.mockClear();
       act(() => {
         target.click();
@@ -291,9 +253,7 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       act(() => {
         const event = new CustomEvent('magic-event', { bubbles: true });
@@ -335,9 +295,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -391,9 +349,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -425,10 +381,8 @@ describe('use-event', () => {
         return <div />;
       }
 
-      act(() => {
-        root.render(<Component />);
-        root.render(null);
-      });
+      const { unmount } = render(<Component />);
+      unmount();
 
       const target = createEventTarget(document);
 
@@ -462,9 +416,7 @@ describe('use-event', () => {
         );
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const child = createEventTarget(childRef.current);
 
@@ -493,9 +445,7 @@ describe('use-event', () => {
         return <div ref={targetRef} />;
       }
 
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const target = createEventTarget(targetRef.current);
 

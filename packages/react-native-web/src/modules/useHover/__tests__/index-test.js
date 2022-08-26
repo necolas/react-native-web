@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { act } from 'react-dom/test-utils';
+import { act, render } from '@testing-library/react';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {
   describeWithPointerEvent,
   clearPointers,
@@ -17,30 +16,12 @@ import {
 import useHover from '..';
 import { testOnly_resetActiveModality } from '../../modality';
 
-function createRoot(rootNode) {
-  return {
-    render(element) {
-      ReactDOM.render(element, rootNode);
-    }
-  };
-}
-
 describeWithPointerEvent('useHover', (hasPointerEvents) => {
-  let root;
-  let rootNode;
-
   beforeEach(() => {
     setPointerEvent(hasPointerEvents);
-    rootNode = document.createElement('div');
-    document.body.appendChild(rootNode);
-    root = createRoot(rootNode);
   });
 
   afterEach(() => {
-    root.render(null);
-    document.body.removeChild(rootNode);
-    rootNode = null;
-    root = null;
     testOnly_resetActiveModality();
     // make sure all tests reset state machine tracking pointers on the mock surface
     clearPointers();
@@ -70,9 +51,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
           </div>
         );
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('contains the hover gesture', () => {
@@ -111,9 +90,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         });
         return <div ref={ref} />;
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('does not call callbacks', () => {
@@ -140,9 +117,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         useHover(ref, { onHoverStart });
         return <div ref={ref} />;
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('is called for mouse pointers', () => {
@@ -186,9 +161,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         useHover(ref, { onHoverChange });
         return <div ref={ref} />;
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('is called for mouse pointers', () => {
@@ -232,9 +205,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
           </div>
         );
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('is called for mouse pointers', () => {
@@ -278,9 +249,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         useHover(ref, { onHoverUpdate });
         return <div ref={ref} />;
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
 
       const target = createEventTarget(ref.current);
       act(() => {
@@ -310,9 +279,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         });
         return <div ref={ref} />;
       };
-      act(() => {
-        root.render(<Component />);
-      });
+      render(<Component />);
     };
 
     test('callbacks are called each time', () => {

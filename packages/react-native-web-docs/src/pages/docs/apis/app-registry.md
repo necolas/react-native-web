@@ -69,6 +69,10 @@ If the client should hydrate server-rendered HTML.
 The initial props passed to the root component.
 {% endcall %}
 
+{% call macro.prop('mode', '"concurrent" | "legacy"') %}
+Default is 'concurrent'. Setting to 'legacy' will make the app will behave as if it’s running React 17.
+{% endcall %}
+
 {% call macro.prop('rootTag', 'HTMLElement') %}
 The native element into which the application is rendered.
 {% endcall %}

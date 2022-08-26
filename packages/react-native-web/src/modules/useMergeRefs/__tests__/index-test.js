@@ -6,8 +6,7 @@
  */
 
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
-import { cleanup, render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import useMergeRefs from '..';
 
 describe('modules/useMergeRefs', () => {
@@ -15,8 +14,6 @@ describe('modules/useMergeRefs', () => {
     const mergedRef = useMergeRefs(...refs);
     return <div ref={mergedRef} {...rest} />;
   }
-
-  afterEach(cleanup);
 
   test('handles no refs', () => {
     act(() => {

@@ -71,4 +71,7 @@ const tests = {
   }))
 };
 
-ReactDOM.render(<App tests={tests} />, document.querySelector('.root'));
+const root = document.querySelector('.root');
+const element = <App tests={tests} />;
+
+ReactDOM.createRoot(root).render(element);

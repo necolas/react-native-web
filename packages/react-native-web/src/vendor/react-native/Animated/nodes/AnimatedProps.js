@@ -14,7 +14,6 @@ import {AnimatedEvent} from '../AnimatedEvent';
 import AnimatedNode from './AnimatedNode';
 import AnimatedStyle from './AnimatedStyle';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
-import findNodeHandle from '../../../../exports/findNodeHandle';
 
 import invariant from 'fbjs/lib/invariant';
 
@@ -119,9 +118,7 @@ class AnimatedProps extends AnimatedNode {
 
   __connectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
-    const nativeViewTag: ?number = findNodeHandle(
-      this._animatedView,
-    );
+    const nativeViewTag: ?number = this._animatedView
     invariant(
       nativeViewTag != null,
       'Unable to locate attached view in the native tree',
@@ -134,9 +131,7 @@ class AnimatedProps extends AnimatedNode {
 
   __disconnectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
-    const nativeViewTag: ?number = findNodeHandle(
-      this._animatedView,
-    );
+    const nativeViewTag: ?number = this._animatedView
     invariant(
       nativeViewTag != null,
       'Unable to locate attached view in the native tree',

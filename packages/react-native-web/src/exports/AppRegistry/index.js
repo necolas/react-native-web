@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { Application } from './renderApplication';
 import type { ComponentType, Node } from 'react';
 
 import invariant from 'fbjs/lib/invariant';
@@ -75,7 +76,7 @@ export default class AppRegistry {
           appParameters ? appParameters.initialProps : emptyObject,
           wrapperComponentProvider && wrapperComponentProvider(appParameters)
         ),
-      run: (appParameters) =>
+      run: (appParameters): Application =>
         renderApplication(
           componentProviderInstrumentationHook(componentProvider),
           wrapperComponentProvider && wrapperComponentProvider(appParameters),
@@ -83,6 +84,7 @@ export default class AppRegistry {
           {
             hydrate: appParameters.hydrate || false,
             initialProps: appParameters.initialProps || emptyObject,
+            mode: appParameters.mode || 'concurrent',
             rootTag: appParameters.rootTag
           }
         )
@@ -107,7 +109,7 @@ export default class AppRegistry {
     return appKey;
   }
 
-  static runApplication(appKey: string, appParameters: Object): void {
+  static runApplication(appKey: string, appParameters: Object): Application {
     const isDevelopment =
       process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
     if (isDevelopment) {
@@ -128,7 +130,7 @@ export default class AppRegistry {
         'This is either due to an import error during initialization or failure to call AppRegistry.registerComponent.'
     );
 
-    runnables[appKey].run(appParameters);
+    return runnables[appKey].run(appParameters);
   }
 
   static setComponentProviderInstrumentationHook(

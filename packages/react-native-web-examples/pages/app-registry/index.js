@@ -25,18 +25,18 @@ export default function AppStatePage() {
     const iframeRootTag = document.createElement('div');
     iframeRootTag.id = 'iframe-root';
     iframeBody.appendChild(iframeRootTag);
-    AppRegistry.runApplication('App', { rootTag: iframeRootTag });
+    const app1 = AppRegistry.runApplication('App', { rootTag: iframeRootTag });
 
     const shadowElement = shadowRef.current;
     const shadowRoot = shadowElement.attachShadow({ mode: 'open' });
     const shadowRootTag = document.createElement('div');
     shadowRootTag.id = 'shadow-root';
     shadowRoot.appendChild(shadowRootTag);
-    AppRegistry.runApplication('App', { rootTag: shadowRootTag });
+    const app2 = AppRegistry.runApplication('App', { rootTag: shadowRootTag });
 
     return () => {
-      AppRegistry.unmountApplicationComponentAtRootTag(iframeRootTag);
-      AppRegistry.unmountApplicationComponentAtRootTag(shadowRootTag);
+      app1.unmount();
+      app2.unmount();
     };
   }, []);
 

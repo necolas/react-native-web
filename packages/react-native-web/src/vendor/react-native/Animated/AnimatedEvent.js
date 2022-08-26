@@ -12,7 +12,6 @@
 
 import AnimatedValue from './nodes/AnimatedValue';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
-import findNodeHandle from '../../../exports/findNodeHandle';
 
 import invariant from 'fbjs/lib/invariant';
 
@@ -58,11 +57,10 @@ export function attachNativeEvent(
   // Assume that the event containing `nativeEvent` is always the first argument.
   traverse(argMapping[0].nativeEvent, []);
 
-  const viewTag = findNodeHandle(viewRef);
-  if (viewTag != null) {
+  if (viewRef != null) {
     eventMappings.forEach(mapping => {
       NativeAnimatedHelper.API.addAnimatedEventToView(
-        viewTag,
+        viewRef,
         eventName,
         mapping,
       );
@@ -71,10 +69,10 @@ export function attachNativeEvent(
 
   return {
     detach() {
-      if (viewTag != null) {
+      if (viewRef != null) {
         eventMappings.forEach(mapping => {
           NativeAnimatedHelper.API.removeAnimatedEventFromView(
-            viewTag,
+            viewRef,
             eventName,
             // $FlowFixMe[incompatible-call]
             mapping.animatedValueTag,
