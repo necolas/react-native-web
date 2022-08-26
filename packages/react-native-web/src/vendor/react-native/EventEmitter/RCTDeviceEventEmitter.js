@@ -8,7 +8,7 @@
  * @format
  */
 
-import EventEmitter, {type IEventEmitter} from '../emitter/EventEmitter';
+import EventEmitter, {type IEventEmitter} from '../vendor/emitter/EventEmitter';
 
 // FIXME: use typed events
 type RCTDeviceEventDefinitions = $FlowFixMe;

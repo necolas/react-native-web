@@ -10,9 +10,10 @@
 
 'use strict';
 
-import AnimatedValue from '../nodes/AnimatedValue';
-import AnimatedValueXY from '../nodes/AnimatedValueXY';
-import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
+import type AnimatedValue from '../nodes/AnimatedValue';
+import type AnimatedValueXY from '../nodes/AnimatedValueXY';
+import type AnimatedInterpolation from '../nodes/AnimatedInterpolation';
+
 import Animation from './Animation';
 import SpringConfig from '../SpringConfig';
 
@@ -20,7 +21,10 @@ import invariant from 'fbjs/lib/invariant';
 
 import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
 
+import type {PlatformConfig} from '../AnimatedPlatformConfig';
 import type {AnimationConfig, EndCallback} from './Animation';
+
+import AnimatedColor from '../nodes/AnimatedColor';
 
 export type SpringAnimationConfig = {
   ...AnimationConfig,
@@ -33,7 +37,15 @@ export type SpringAnimationConfig = {
         ...
       }
     | AnimatedValueXY
-    | AnimatedInterpolation,
+    | {
+        r: number,
+        g: number,
+        b: number,
+        a: number,
+        ...
+      }
+    | AnimatedColor
+    | AnimatedInterpolation<number>,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
@@ -56,7 +68,7 @@ export type SpringAnimationConfig = {
 
 export type SpringAnimationConfigSingle = {
   ...AnimationConfig,
-  toValue: number | AnimatedValue | AnimatedInterpolation,
+  toValue: number,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
@@ -79,7 +91,7 @@ class SpringAnimation extends Animation {
   _startPosition: number;
   _lastPosition: number;
   _fromValue: number;
-  _toValue: any;
+  _toValue: number;
   _stiffness: number;
   _damping: number;
   _mass: number;
@@ -92,6 +104,7 @@ class SpringAnimation extends Animation {
   _onUpdate: (value: number) => void;
   _animationFrame: any;
   _useNativeDriver: boolean;
+  _platformConfig: ?PlatformConfig;
 
   constructor(config: SpringAnimationConfigSingle) {
     super();
@@ -104,6 +117,7 @@ class SpringAnimation extends Animation {
     this._toValue = config.toValue;
     this._delay = config.delay ?? 0;
     this._useNativeDriver = shouldUseNativeDriver(config);
+    this._platformConfig = config.platformConfig;
     this.__isInteraction = config.isInteraction ?? !this._useNativeDriver;
     this.__iterations = config.iterations ?? 1;
 
@@ -162,6 +176,7 @@ class SpringAnimation extends Animation {
     initialVelocity: number,
     iterations: number,
     mass: number,
+    platformConfig: ?PlatformConfig,
     overshootClamping: boolean,
     restDisplacementThreshold: number,
     restSpeedThreshold: number,
@@ -180,6 +195,7 @@ class SpringAnimation extends Animation {
       initialVelocity: this._initialVelocity ?? this._lastVelocity,
       toValue: this._toValue,
       iterations: this.__iterations,
+      platformConfig: this._platformConfig,
     };
   }
 
@@ -344,6 +360,7 @@ class SpringAnimation extends Animation {
       this.__debouncedOnEnd({finished: true});
       return;
     }
+    // $FlowFixMe[method-unbinding] added when improving typing for this parameters
     this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
   }
 

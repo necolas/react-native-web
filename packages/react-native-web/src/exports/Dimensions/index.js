@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { EventSubscription } from '../../vendor/react-native/emitter/EventEmitter';
+import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import invariant from 'fbjs/lib/invariant';
 import canUseDOM from '../../modules/canUseDom';
 

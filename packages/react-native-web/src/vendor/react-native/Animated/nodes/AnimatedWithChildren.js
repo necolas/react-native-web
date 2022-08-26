@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {PlatformConfig} from '../AnimatedPlatformConfig';
+
 import AnimatedNode from './AnimatedNode';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
@@ -21,18 +23,18 @@ class AnimatedWithChildren extends AnimatedNode {
     this._children = [];
   }
 
-  __makeNative() {
+  __makeNative(platformConfig: ?PlatformConfig) {
     if (!this.__isNative) {
       this.__isNative = true;
       for (const child of this._children) {
-        child.__makeNative();
+        child.__makeNative(platformConfig);
         NativeAnimatedHelper.API.connectAnimatedNodes(
           this.__getNativeTag(),
           child.__getNativeTag(),
         );
       }
     }
-    super.__makeNative();
+    super.__makeNative(platformConfig);
   }
 
   __addChild(child: AnimatedNode): void {
@@ -42,7 +44,7 @@ class AnimatedWithChildren extends AnimatedNode {
     this._children.push(child);
     if (this.__isNative) {
       // Only accept "native" animated nodes as children
-      child.__makeNative();
+      child.__makeNative(this.__getPlatformConfig());
       NativeAnimatedHelper.API.connectAnimatedNodes(
         this.__getNativeTag(),
         child.__getNativeTag(),
@@ -76,6 +78,7 @@ class AnimatedWithChildren extends AnimatedNode {
     super.__callListeners(value);
     if (!this.__isNative) {
       for (const child of this._children) {
+        // $FlowFixMe[method-unbinding] added when improving typing for this parameters
         if (child.__getValue) {
           child.__callListeners(child.__getValue());
         }
