@@ -10,6 +10,10 @@
 
 import { findDOMNode } from 'react-dom';
 
+/**
+ * @deprecated imperatively finding the DOM element of a react component has been deprecated in React 18.
+ * You should use ref properties on the component instead.
+ */
 const findNodeHandle = (component) => {
   let node;
 

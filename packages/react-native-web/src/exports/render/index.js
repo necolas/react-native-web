@@ -7,15 +7,46 @@
  * @noflow
  */
 
-import { hydrate as domHydrate, render as domRender } from 'react-dom';
+import {
+  hydrate as domLegacyHydrate,
+  render as domLegacyRender
+} from 'react-dom';
+import {
+  createRoot as domCreateRoot,
+  hydrateRoot as domHydrateRoot
+} from 'react-dom/client';
+
+import unmountComponentAtNode from '../unmountComponentAtNode';
 import { createSheet } from '../StyleSheet/dom';
 
-export function hydrate(element, root, callback) {
+export function hydrate(element, root) {
   createSheet(root);
-  return domHydrate(element, root, callback);
+  return domHydrateRoot(root, element);
 }
 
-export default function render(element, root, callback) {
+export function render(element, root) {
   createSheet(root);
-  return domRender(element, root, callback);
+  const reactRoot = domCreateRoot(root);
+  reactRoot.render(element);
+  return reactRoot;
+}
+
+export function hydrateLegacy(element, root, callback) {
+  createSheet(root);
+  domLegacyHydrate(element, root, callback);
+  return {
+    unmount: function () {
+      return unmountComponentAtNode(root);
+    }
+  };
+}
+
+export default function renderLegacy(element, root, callback) {
+  createSheet(root);
+  domLegacyRender(element, root, callback);
+  return {
+    unmount: function () {
+      return unmountComponentAtNode(root);
+    }
+  };
 }

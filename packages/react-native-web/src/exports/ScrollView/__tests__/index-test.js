@@ -1,9 +1,8 @@
 import React from 'react';
 import ScrollView from '../';
-import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
 import { findDOMNode } from 'react-dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 describe('components/ScrollView', () => {
   describe('prop "centerContent"', () => {

@@ -9,9 +9,8 @@
 
 import React from 'react';
 import Text from '../';
-import { act } from 'react-dom/test-utils';
 import { createEventTarget } from 'dom-event-testing-library';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 describe('components/Text', () => {
   test('default', () => {

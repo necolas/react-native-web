@@ -10,9 +10,9 @@
   "dependencies": {
     "babel-plugin-react-native-web": "0.18.9",
     "next": "^12.2.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-native-web": "0.18.9"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-native-web": "0.18.8"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
