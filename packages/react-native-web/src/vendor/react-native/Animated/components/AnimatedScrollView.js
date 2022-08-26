@@ -22,9 +22,9 @@ const ScrollViewWithEventThrottle = React.forwardRef((props, ref) => (
   <ScrollView scrollEventThrottle={0.0001} {...props} ref={ref} />
 ));
 
-export default (createAnimatedComponent(ScrollViewWithEventThrottle, {
-  collapsable: false,
-}): AnimatedComponentType<
+export default (createAnimatedComponent(
+  ScrollViewWithEventThrottle,
+): AnimatedComponentType<
   React.ElementConfig<typeof ScrollView>,
   React.ElementRef<typeof ScrollView>,
 >);

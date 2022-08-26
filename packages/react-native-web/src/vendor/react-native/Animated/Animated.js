@@ -23,8 +23,8 @@ import SectionList from './components/AnimatedSectionList';
 import Text from './components/AnimatedText';
 import View from './components/AnimatedView';
 
-import AnimatedMock from './AnimatedMock';
-import AnimatedImplementation from './AnimatedImplementation';
+import * as AnimatedMock from './AnimatedMock';
+import * as AnimatedImplementation from './AnimatedImplementation';
 
 const Animated = ((Platform.isTesting
   ? AnimatedMock

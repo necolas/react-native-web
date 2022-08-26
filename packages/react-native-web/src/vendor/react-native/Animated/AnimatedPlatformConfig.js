@@ -5,7 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
+ * @format
  */
 
-import NativeEventEmitter from '../../vendor/react-native/EventEmitter/NativeEventEmitter';
-export default NativeEventEmitter;
+'use strict';
+
+export type PlatformConfig = {};

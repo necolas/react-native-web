@@ -15,9 +15,7 @@ import createAnimatedComponent from '../createAnimatedComponent';
 
 import type {AnimatedComponentType} from '../createAnimatedComponent';
 
-export default (createAnimatedComponent(View, {
-  collapsable: true,
-}): AnimatedComponentType<
+export default (createAnimatedComponent(View): AnimatedComponentType<
   React.ElementConfig<typeof View>,
   React.ElementRef<typeof View>,
 >);

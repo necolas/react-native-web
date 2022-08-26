@@ -13,7 +13,7 @@
 import {
   type EventSubscription,
   type IEventEmitter,
-} from '../emitter/EventEmitter';
+} from '../vendor/emitter/EventEmitter';
 import Platform from '../../../exports/Platform';
 import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
 import invariant from 'fbjs/lib/invariant';

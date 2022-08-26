@@ -9,7 +9,7 @@
  */
 
 import invariant from 'fbjs/lib/invariant';
-import EventEmitter from '../../vendor/react-native/emitter/_EventEmitter';
+import EventEmitter from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import canUseDOM from '../../modules/canUseDom';
 
 // Android 4.4 browser
@@ -61,6 +61,7 @@ export default class AppState {
       if (type === 'change') {
         if (!changeEmitter) {
           changeEmitter = new EventEmitter();
+
           document.addEventListener(
             VISIBILITY_CHANGE_EVENT,
             () => {
@@ -72,24 +73,6 @@ export default class AppState {
           );
         }
         return changeEmitter.addListener(type, handler);
-      }
-    }
-  }
-
-  static removeEventListener(type: string, handler: Function) {
-    if (AppState.isAvailable) {
-      console.error(
-        `AppState.removeListener('${type}', ...): Method has been ` +
-          'deprecated. Please instead use `remove()` on the subscription ' +
-          'returned by `AppState.addEventListener`.'
-      );
-      invariant(
-        EVENT_TYPES.indexOf(type) !== -1,
-        'Trying to remove listener for unknown event: "%s"',
-        type
-      );
-      if (type === 'change' && changeEmitter) {
-        changeEmitter.removeListener(handler);
       }
     }
   }

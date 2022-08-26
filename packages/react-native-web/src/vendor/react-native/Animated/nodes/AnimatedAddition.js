@@ -10,11 +10,13 @@
 
 'use strict';
 
+import type AnimatedNode from './AnimatedNode';
+
 import AnimatedInterpolation from './AnimatedInterpolation';
-import AnimatedNode from './AnimatedNode';
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
+import type {PlatformConfig} from '../AnimatedPlatformConfig';
 import type {InterpolationConfigType} from './AnimatedInterpolation';
 
 class AnimatedAddition extends AnimatedWithChildren {
@@ -27,17 +29,19 @@ class AnimatedAddition extends AnimatedWithChildren {
     this._b = typeof b === 'number' ? new AnimatedValue(b) : b;
   }
 
-  __makeNative() {
-    this._a.__makeNative();
-    this._b.__makeNative();
-    super.__makeNative();
+  __makeNative(platformConfig: ?PlatformConfig) {
+    this._a.__makeNative(platformConfig);
+    this._b.__makeNative(platformConfig);
+    super.__makeNative(platformConfig);
   }
 
   __getValue(): number {
     return this._a.__getValue() + this._b.__getValue();
   }
 
-  interpolate(config: InterpolationConfigType): AnimatedInterpolation {
+  interpolate<OutputT: number | string>(
+    config: InterpolationConfigType<OutputT>,
+  ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);
   }
 
