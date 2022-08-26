@@ -11,7 +11,7 @@ function Link(props) {
       <Text
         {...props}
         accessibilityRole="link"
-        style={StyleSheet.compose(styles.link, props.style)}
+        style={[styles.link, props.style]}
       />
     </NextLink>
   );

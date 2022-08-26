@@ -52,12 +52,6 @@ describe('StyleSheet', () => {
     `);
   });
 
-  test('compose', () => {
-    expect(StyleSheet.compose(1, 2)).toEqual([1, 2]);
-    expect(StyleSheet.compose(1, null)).toBe(1);
-    expect(StyleSheet.compose(null, 2)).toBe(2);
-  });
-
   describe('create', () => {
     test('returns original style objects', () => {
       const style = StyleSheet.create({ root: { position: 'absolute' } });
