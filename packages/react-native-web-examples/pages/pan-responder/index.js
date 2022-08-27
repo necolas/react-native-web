@@ -27,11 +27,9 @@ class DraggableCircle extends React.PureComponent {
     this._previousLeft = 20;
     this._previousTop = 84;
     this._circleStyles = {
-      style: {
-        left: this._previousLeft,
-        top: this._previousTop,
-        backgroundColor: 'green'
-      }
+      left: this._previousLeft,
+      top: this._previousTop,
+      backgroundColor: 'green'
     };
   }
 
@@ -44,7 +42,7 @@ class DraggableCircle extends React.PureComponent {
       <View style={styles.container}>
         <View
           ref={this._setCircleRef}
-          style={styles.circle}
+          style={[styles.circle, this._circleStyles]}
           {...this._panResponder.panHandlers}
         />
       </View>
@@ -56,17 +54,17 @@ class DraggableCircle extends React.PureComponent {
   };
 
   _highlight() {
-    this._circleStyles.style.backgroundColor = 'blue';
+    this._circleStyles.backgroundColor = 'blue';
     this._updateNativeStyles();
   }
 
   _unHighlight() {
-    this._circleStyles.style.backgroundColor = 'green';
+    this._circleStyles.backgroundColor = 'green';
     this._updateNativeStyles();
   }
 
   _updateNativeStyles() {
-    this.circle && this.circle.setNativeProps(this._circleStyles);
+    this.forceUpdate();
   }
 
   _handleStartShouldSetPanResponder = (
@@ -90,8 +88,8 @@ class DraggableCircle extends React.PureComponent {
   };
 
   _handlePanResponderMove = (e: Object, gestureState: Object) => {
-    this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
+    this._circleStyles.left = this._previousLeft + gestureState.dx;
+    this._circleStyles.top = this._previousTop + gestureState.dy;
     this._updateNativeStyles();
   };
 

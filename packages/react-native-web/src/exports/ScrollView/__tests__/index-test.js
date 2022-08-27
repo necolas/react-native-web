@@ -93,7 +93,6 @@ describe('components/ScrollView', () => {
       expect(typeof node.measure === 'function').toBe(true);
       expect(typeof node.measureLayout === 'function').toBe(true);
       expect(typeof node.measureInWindow === 'function').toBe(true);
-      expect(typeof node.setNativeProps === 'function').toBe(true);
       // Does it have the scrollview methods?
       expect(typeof node.getScrollResponder === 'function').toBe(true);
       expect(typeof node.getScrollableNode === 'function').toBe(true);

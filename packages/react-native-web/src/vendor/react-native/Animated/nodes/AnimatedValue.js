@@ -249,8 +249,7 @@ class AnimatedValue extends AnimatedWithChildren {
     animation.start(
       this._value,
       value => {
-        // Natively driven animations will never call into that callback, therefore we can always
-        // pass flush = true to allow the updated value to propagate to native with setNativeProps
+        // Natively driven animations will never call into that callback
         this._updateValue(value, true /* flush */);
       },
       result => {
