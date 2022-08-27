@@ -67,27 +67,10 @@ export default function useAnimatedProps<TProps: {...}, TInstance>(
 
       // NOTE: This callback is only used by the JavaScript animation driver.
       onUpdateRef.current = () => {
-        //if (
-        //  process.env.NODE_ENV === 'test' ||
-        //  typeof instance !== 'object' ||
-        //  typeof instance?.setNativeProps !== 'function' ||
-        //  isFabricInstance(instance)
-        //) {
-          // Schedule an update for this component to update `reducedProps`,
-          // but do not compute it immediately. If a parent also updated, we
-          // need to merge those new props in before updating.
-          scheduleUpdate();
-        //} else if (!node.__isNative) {
-          // $FlowIgnore[not-a-function] - Assume it's still a function.
-          // $FlowFixMe[incompatible-use]
-        //  instance.setNativeProps(node.__getAnimatedValue());
-        //} else {
-        //  throw new Error(
-        //    'Attempting to run JS driven animation on animated node ' +
-        //      'that has been moved to "native" earlier by starting an ' +
-        //      'animation with `useNativeDriver: true`',
-        //  );
-        //}
+        // Schedule an update for this component to update `reducedProps`,
+        // but do not compute it immediately. If a parent also updated, we
+        // need to merge those new props in before updating.
+        scheduleUpdate();
       };
 
       const target = getEventTarget(instance);

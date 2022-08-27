@@ -400,12 +400,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   }
 
-  setNativeProps(props: {[string]: mixed, ...}) {
-    if (this._listRef) {
-      this._listRef.setNativeProps(props);
-    }
-  }
-
   constructor(props: Props<ItemT>) {
     super(props);
     this._checkProps(this.props);

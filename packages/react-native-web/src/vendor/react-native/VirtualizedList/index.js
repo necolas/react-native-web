@@ -586,12 +586,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     }
   }
 
-  setNativeProps(props: Object) {
-    if (this._scrollRef) {
-      this._scrollRef.setNativeProps(props);
-    }
-  }
-
   _getCellKey(): string {
     return this.context?.cellKey || 'rootList';
   }

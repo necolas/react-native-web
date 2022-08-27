@@ -262,7 +262,6 @@ describe('components/Pressable', () => {
       expect(typeof node.measure === 'function');
       expect(typeof node.measureLayout === 'function');
       expect(typeof node.measureInWindow === 'function');
-      expect(typeof node.setNativeProps === 'function');
     });
   });
 

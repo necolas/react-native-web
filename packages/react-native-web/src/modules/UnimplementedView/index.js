@@ -16,10 +16,6 @@ import React from 'react';
  * Common implementation for a simple stubbed view.
  */
 class UnimplementedView extends React.Component<*, *> {
-  setNativeProps() {
-    // Do nothing.
-  }
-
   render(): Node {
     return (
       <View style={[unimplementedViewStyles, this.props.style]}>

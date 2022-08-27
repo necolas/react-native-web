@@ -229,13 +229,6 @@ export default class SectionList<
     }
   }
 
-  setNativeProps(props: Object) {
-    const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
-    if (listRef) {
-      listRef.setNativeProps(props);
-    }
-  }
-
   render(): React.Node {
     const {
       stickySectionHeadersEnabled: _stickySectionHeadersEnabled,
