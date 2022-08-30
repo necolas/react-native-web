@@ -348,11 +348,6 @@ describe('components/Image', () => {
   });
 
   describe('prop "style"', () => {
-    test('supports "resizeMode" property', () => {
-      const { container } = render(<Image style={{ resizeMode: 'contain' }} />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
     test('supports "shadow" properties (convert to filter)', () => {
       const { container } = render(
         <Image
@@ -362,17 +357,19 @@ describe('components/Image', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    test('supports "tintcolor" property (convert to filter)', () => {
-      const defaultSource = { uri: 'https://google.com/favicon.ico' };
-      const { container } = render(
-        <Image defaultSource={defaultSource} style={{ tintColor: 'red' }} />
-      );
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
     test('removes other unsupported View styles', () => {
       const { container } = render(
         <Image style={{ overlayColor: 'red', tintColor: 'blue' }} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "tintColor"', () => {
+    test('convert to filter', () => {
+      const defaultSource = { uri: 'https://google.com/favicon.ico' };
+      const { container } = render(
+        <Image defaultSource={defaultSource} tintColor={'red'} />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
