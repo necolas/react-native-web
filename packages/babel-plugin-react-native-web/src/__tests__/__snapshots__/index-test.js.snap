@@ -30,11 +30,12 @@ export { default as unstable_createElement } from 'react-native-web/dist/exports
 
 `;
 
-exports[`Rewrite react-native to react-native-web import from "native-native": import from "native-native" 1`] = `
+exports[`Rewrite react-native to react-native-web import from "react-native": import from "react-native" 1`] = `
 
 import ReactNative from 'react-native';
 import { View } from 'react-native';
 import { Invalid, View as MyView } from 'react-native';
+import { useLocaleContext } from 'react-native';
 import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
@@ -43,12 +44,13 @@ import ReactNative from 'react-native-web/dist/index';
 import View from 'react-native-web/dist/exports/View';
 import { Invalid } from 'react-native-web/dist/index';
 import MyView from 'react-native-web/dist/exports/View';
+import useLocaleContext from 'react-native-web/dist/exports/useLocaleContext';
 import * as ReactNativeModules from 'react-native-web/dist/index';
 
 
 `;
 
-exports[`Rewrite react-native to react-native-web import from "native-native": import from "native-native" 2`] = `
+exports[`Rewrite react-native to react-native-web import from "react-native": import from "react-native" 2`] = `
 
 import ReactNative from 'react-native';
 import { View } from 'react-native';

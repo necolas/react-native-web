@@ -7,4 +7,5 @@
  * @flow strict
  */
 
-export { useLocaleContext } from '../../modules/useLocale';
+import { useLocaleContext } from '../../modules/useLocale';
+export default useLocaleContext;

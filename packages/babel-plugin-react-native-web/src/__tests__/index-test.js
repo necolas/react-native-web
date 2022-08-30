@@ -4,15 +4,16 @@ const pluginTester = require('babel-plugin-tester').default;
 const tests = [
   // import react-native
   {
-    title: 'import from "native-native"',
+    title: 'import from "react-native"',
     code: `import ReactNative from 'react-native';
 import { View } from 'react-native';
 import { Invalid, View as MyView } from 'react-native';
+import { useLocaleContext } from 'react-native';
 import * as ReactNativeModules from 'react-native';`,
     snapshot: true
   },
   {
-    title: 'import from "native-native"',
+    title: 'import from "react-native"',
     code: `import ReactNative from 'react-native';
 import { View } from 'react-native';
 import { Invalid, View as MyView } from 'react-native';
@@ -39,6 +40,7 @@ export { StyleSheet, Text, unstable_createElement } from 'react-native';`,
 export { StyleSheet, Text, unstable_createElement } from 'react-native-web';`,
     snapshot: true
   },
+  // require react-native
   {
     title: 'require "react-native"',
     code: `const ReactNative = require('react-native');
