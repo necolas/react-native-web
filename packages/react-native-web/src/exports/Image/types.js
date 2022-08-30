@@ -98,6 +98,7 @@ export type ImageStyle = {
   boxShadow?: string,
   filter?: string,
   opacity?: number,
+  // @deprecated
   resizeMode?: ResizeMode,
   tintColor?: ColorValue
 };
@@ -115,5 +116,6 @@ export type ImageProps = {
   onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
   source?: Source,
-  style?: GenericStyleProp<ImageStyle>
+  style?: GenericStyleProp<ImageStyle>,
+  tintColor?: ColorValue
 };
