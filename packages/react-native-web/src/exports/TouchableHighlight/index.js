@@ -20,6 +20,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import { warnOnce } from '../../modules/warnOnce';
 
 type ViewStyle = $PropertyType<ViewProps, 'style'>;
 
@@ -70,6 +71,11 @@ function hasPressHandler(props): boolean {
  * If you wish to have several child components, wrap them in a View.
  */
 function TouchableHighlight(props: Props, forwardedRef): React.Node {
+  warnOnce(
+    'TouchableHighlight',
+    'TouchableHighlight is deprecated. Please use Pressable.'
+  );
+
   const {
     activeOpacity,
     children,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Example from '../../shared/example';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native-web';
+import { FlatList, Text, Pressable, View } from 'react-native-web';
 
 const multiSelectData = ['First', 'Second', 'Third'].map((title, id) => ({
   id,
@@ -18,13 +18,13 @@ class MyListItem extends React.PureComponent {
   render() {
     const textColor = this.props.selected ? 'red' : 'black';
     return (
-      <TouchableOpacity onPress={this._onPress}>
+      <Pressable onPress={this._onPress}>
         <View>
           <Text style={[styles.listItemText, { color: textColor }]}>
             {this.props.title}
           </Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 }

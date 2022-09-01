@@ -24,7 +24,7 @@ import * as ReactNativeModules from 'react-native';`,
   {
     title: 'import from "react-native-web"',
     code: `import { unstable_createElement } from 'react-native-web';
-import { StyleSheet, View, TouchableOpacity, processColor } from 'react-native-web';
+import { StyleSheet, View, Pressable, processColor } from 'react-native-web';
 import * as ReactNativeModules from 'react-native-web';`,
     snapshot: true
   },
@@ -45,14 +45,14 @@ export { StyleSheet, Text, unstable_createElement } from 'react-native-web';`,
     title: 'require "react-native"',
     code: `const ReactNative = require('react-native');
 const { View } = require('react-native');
-const { StyleSheet, TouchableOpacity } = require('react-native');`,
+const { StyleSheet, Pressable } = require('react-native');`,
     snapshot: true
   },
   {
     title: 'require "react-native"',
     code: `const ReactNative = require('react-native');
 const { View } = require('react-native');
-const { StyleSheet, TouchableOpacity } = require('react-native');`,
+const { StyleSheet, Pressable } = require('react-native');`,
     snapshot: true,
     pluginOptions: { commonjs: true }
   },
@@ -60,7 +60,7 @@ const { StyleSheet, TouchableOpacity } = require('react-native');`,
     title: 'require "react-native-web"',
     code: `const ReactNative = require('react-native-web');
 const { unstable_createElement } = require('react-native-web');
-const { StyleSheet, View, TouchableOpacity, processColor } = require('react-native-web');`,
+const { StyleSheet, View, Pressable, processColor } = require('react-native-web');`,
     snapshot: true
   }
 ];
