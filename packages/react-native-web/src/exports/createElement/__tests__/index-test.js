@@ -471,7 +471,6 @@ describe('exports/createElement', () => {
         createElement('div', { accessibilityRole: 'button' })
       );
       expect(getAttribute(hasValue, 'role')).toBe('button');
-      expect(getAttribute(hasValue, 'tabIndex')).toBe('0');
       const { container: roleIsNone } = render(
         createElement('div', { accessibilityRole: 'none' })
       );
@@ -648,11 +647,6 @@ describe('exports/createElement', () => {
         createElement('button', { focusable: true })
       );
       expect(getAttribute(isTrueNativelyFocusable, 'tabindex')).toBeNull();
-
-      const { container: isFocusableRole } = render(
-        createElement('div', { accessibilityRole: 'button', focusable: true })
-      );
-      expect(getAttribute(isFocusableRole, 'tabindex')).toBe('0');
 
       const { container: isFalseFocusableRole } = render(
         createElement('div', { accessibilityRole: 'button', focusable: false })

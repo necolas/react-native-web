@@ -349,6 +349,9 @@ const createDOMProps = (elementType, props, options) => {
     domProps['data-testid'] = testID;
   }
 
+  if (domProps.type == null && elementType === 'button') {
+    domProps.type = 'button';
+  }
   return domProps;
 };
 
