@@ -4,7 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  Pressable,
   View
 } from 'react-native';
 import Example from '../../shared/example';
@@ -13,9 +13,9 @@ const ITEMS = [...Array(12)].map((_, i) => `Item ${i}`);
 
 function createItemRow(msg, index) {
   return (
-    <TouchableOpacity key={index} style={[styles.item]}>
+    <Pressable key={index} style={[styles.item]}>
       <Text style={styles.text}>{msg}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

@@ -71,7 +71,7 @@ import * as ReactNativeModules from 'react-native-web/dist/cjs/index';
 exports[`Rewrite react-native to react-native-web import from "react-native-web": import from "react-native-web" 1`] = `
 
 import { unstable_createElement } from 'react-native-web';
-import { StyleSheet, View, TouchableOpacity, processColor } from 'react-native-web';
+import { StyleSheet, View, Pressable, processColor } from 'react-native-web';
 import * as ReactNativeModules from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
@@ -79,7 +79,7 @@ import * as ReactNativeModules from 'react-native-web';
 import unstable_createElement from 'react-native-web/dist/exports/createElement';
 import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
 import View from 'react-native-web/dist/exports/View';
-import TouchableOpacity from 'react-native-web/dist/exports/TouchableOpacity';
+import Pressable from 'react-native-web/dist/exports/Pressable';
 import processColor from 'react-native-web/dist/exports/processColor';
 import * as ReactNativeModules from 'react-native-web/dist/index';
 
@@ -90,7 +90,7 @@ exports[`Rewrite react-native to react-native-web require "react-native": requir
 
 const ReactNative = require('react-native');
 const { View } = require('react-native');
-const { StyleSheet, TouchableOpacity } = require('react-native');
+const { StyleSheet, Pressable } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -100,8 +100,7 @@ const View = require('react-native-web/dist/exports/View').default;
 
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
 
-const TouchableOpacity =
-  require('react-native-web/dist/exports/TouchableOpacity').default;
+const Pressable = require('react-native-web/dist/exports/Pressable').default;
 
 
 `;
@@ -110,7 +109,7 @@ exports[`Rewrite react-native to react-native-web require "react-native": requir
 
 const ReactNative = require('react-native');
 const { View } = require('react-native');
-const { StyleSheet, TouchableOpacity } = require('react-native');
+const { StyleSheet, Pressable } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -121,8 +120,8 @@ const View = require('react-native-web/dist/cjs/exports/View').default;
 const StyleSheet =
   require('react-native-web/dist/cjs/exports/StyleSheet').default;
 
-const TouchableOpacity =
-  require('react-native-web/dist/cjs/exports/TouchableOpacity').default;
+const Pressable =
+  require('react-native-web/dist/cjs/exports/Pressable').default;
 
 
 `;
@@ -131,7 +130,7 @@ exports[`Rewrite react-native to react-native-web require "react-native-web": re
 
 const ReactNative = require('react-native-web');
 const { unstable_createElement } = require('react-native-web');
-const { StyleSheet, View, TouchableOpacity, processColor } = require('react-native-web');
+const { StyleSheet, View, Pressable, processColor } = require('react-native-web');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -144,8 +143,7 @@ const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
 
 const View = require('react-native-web/dist/exports/View').default;
 
-const TouchableOpacity =
-  require('react-native-web/dist/exports/TouchableOpacity').default;
+const Pressable = require('react-native-web/dist/exports/Pressable').default;
 
 const processColor =
   require('react-native-web/dist/exports/processColor').default;

@@ -1,11 +1,5 @@
 import Benchmark from './Benchmark';
-import {
-  Picker,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Picker, StyleSheet, ScrollView, Pressable, View } from 'react-native';
 import React, { Component } from 'react';
 import Button from './Button';
 import { IconClear, IconEye } from './Icons';
@@ -100,9 +94,9 @@ export default class App extends Component {
             <View style={styles.grow}>
               <View style={styles.listBar}>
                 <View style={styles.iconClearContainer}>
-                  <TouchableOpacity onPress={this._handleClear}>
+                  <Pressable onPress={this._handleClear}>
                     <IconClear />
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
               </View>
               <ScrollView ref={this._setScrollRef} style={styles.grow}>
@@ -134,9 +128,9 @@ export default class App extends Component {
         viewPanel={
           <View style={styles.viewPanel}>
             <View style={styles.iconEyeContainer}>
-              <TouchableOpacity onPress={this._handleVisuallyHideBenchmark}>
+              <Pressable onPress={this._handleVisuallyHideBenchmark}>
                 <IconEye style={styles.iconEye} />
-              </TouchableOpacity>
+              </Pressable>
             </View>
 
             <Provider>

@@ -18,6 +18,7 @@ import Position from './Position';
 import React from 'react';
 import UIManager from '../UIManager';
 import View from '../View';
+import { warnOnce } from '../../modules/warnOnce';
 
 type Event = Object;
 type PressEvent = Object;
@@ -371,6 +372,11 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
 const TouchableMixin = {
   // HACK (part 1): basic support for touchable interactions using a keyboard
   componentDidMount: function () {
+    warnOnce(
+      'TouchableMixin',
+      'TouchableMixin is deprecated. Please use Pressable.'
+    );
+
     const touchableNode = this.getTouchableNode && this.getTouchableNode();
     if (touchableNode && touchableNode.addEventListener) {
       this._touchableBlurListener = (e) => {
