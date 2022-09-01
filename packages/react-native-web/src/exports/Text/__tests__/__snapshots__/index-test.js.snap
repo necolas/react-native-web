@@ -52,11 +52,11 @@ exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] 
 `;
 
 exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
-<div
+<button
   class="css-text-1rynq56"
   dir="auto"
   role="button"
-  tabindex="0"
+  type="button"
 />
 `;
 

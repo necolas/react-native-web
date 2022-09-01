@@ -277,12 +277,10 @@ The value of the `accessibilityRole` prop is used to infer an [analogous HTML el
 </View>
 /*
 <article>
-  <div role="paragraph">This is an article</div>
+  <p>This is an article</p>
 </article>
 */
 ```
-
-The `"paragraph"` role isn't mapped to a `<p>` tag because it's an HTML conformance error to include block-level children within the element; both `Text` and `View` support block-level children.
 
 If the `"heading"` role is combined with an `accessibilityLevel`, the equivalent HTML heading element is rendered. Otherwise, it is rendered as `<h1>`.
 

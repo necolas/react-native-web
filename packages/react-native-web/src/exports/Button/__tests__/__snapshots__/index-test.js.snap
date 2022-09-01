@@ -1,70 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/Button prop "accessibilityLabel" 1`] = `
-<div
+<button
   aria-label="accessibility label"
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   role="button"
   style="transition-duration: 0s;"
-  tabindex="0"
+  type="button"
 >
   <div
     class="css-text-1rynq56 r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
     dir="auto"
   />
-</div>
+</button>
 `;
 
 exports[`components/Button prop "color" 1`] = `
-<div
+<button
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-borderRadius-1jkafct"
   role="button"
   style="background-color: rgb(0, 0, 255); transition-duration: 0s;"
-  tabindex="0"
+  type="button"
 >
   <div
     class="css-text-1rynq56 r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
     dir="auto"
   />
-</div>
+</button>
 `;
 
 exports[`components/Button prop "disabled" 1`] = `
-<div
+<button
   aria-disabled="true"
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-borderRadius-1jkafct r-backgroundColor-11mpjr4 r-pointerEvents-633pao"
+  disabled=""
   role="button"
   style="transition-duration: 0s;"
   tabindex="-1"
+  type="button"
 >
   <div
     class="css-text-1rynq56 r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw r-color-c68hjy"
     dir="auto"
   />
-</div>
+</button>
 `;
 
 exports[`components/Button prop "testID" 1`] = `
-<div
+<button
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   data-testid="123"
   role="button"
   style="transition-duration: 0s;"
-  tabindex="0"
+  type="button"
 >
   <div
     class="css-text-1rynq56 r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
     dir="auto"
   />
-</div>
+</button>
 `;
 
 exports[`components/Button prop "title" 1`] = `
-<div
+<button
   class="css-view-175oi2r r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73 r-backgroundColor-14sbq61 r-borderRadius-1jkafct"
   role="button"
   style="transition-duration: 0s;"
-  tabindex="0"
+  type="button"
 >
   <div
     class="css-text-1rynq56 r-color-jwli3a r-fontWeight-majxgm r-padding-edyy15 r-textAlign-q4m81j r-textTransform-tsynxw"
@@ -72,5 +74,5 @@ exports[`components/Button prop "title" 1`] = `
   >
     Click me
   </div>
-</div>
+</button>
 `;

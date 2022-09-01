@@ -46,10 +46,10 @@ exports[`components/View prop "accessibilityRole" value alters HTML element 1`] 
 `;
 
 exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
-<div
+<button
   class="css-view-175oi2r"
   role="button"
-  tabindex="0"
+  type="button"
 />
 `;
 

@@ -13,6 +13,7 @@ const roleComponents = {
   article: 'article',
   banner: 'header',
   blockquote: 'blockquote',
+  button: 'button',
   code: 'code',
   complementary: 'aside',
   contentinfo: 'footer',
@@ -25,6 +26,7 @@ const roleComponents = {
   listitem: 'li',
   main: 'main',
   navigation: 'nav',
+  paragraph: 'p',
   region: 'section',
   strong: 'strong'
 };
