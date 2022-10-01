@@ -59,3 +59,4 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 * [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web) (and [example recipes](https://gist.github.com/necolas/f9034091723f1b279be86c7429eb0c96))
 * [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
 * [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/master/examples/react-native)
+* [Solito](https://solito.dev)
