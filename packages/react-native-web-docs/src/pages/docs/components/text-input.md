@@ -47,7 +47,7 @@ Equivalent to [HTMLElement.autocapitalize](https://developer.mozilla.org/en-US/d
 Equivalent to [HTMLElement.autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocomplete).
 {% endcall %}
 
-{% call macro.prop('autoCorrect', '?("on" | "off")') %}
+{% call macro.prop('autoCorrect', '?boolean = true') %}
 A string indicating whether or not auto-correct behavior is on or off. Safari only.
 {% endcall %}
 
