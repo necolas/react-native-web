@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Picker prop "children" items 1`] = `
+<option
+  value="value-1"
+>
+  label-1
+</option>
+`;
+
+exports[`components/Picker prop "children" renders items 1`] = `
+<option
+  value="value-1"
+>
+  label-1
+</option>
+`;

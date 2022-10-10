@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/ScrollView prop "centerContent" with 1`] = `
+<div
+  class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+  style="background-color: rgb(0, 0, 255);"
+>
+  <div
+    class="css-view-175oi2r r-flexGrow-16y2uox r-justifyContent-1777fci"
+  />
+</div>
+`;
+
+exports[`components/ScrollView prop "centerContent" without 1`] = `
+<div
+  class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+  style="background-color: rgb(0, 0, 255);"
+>
+  <div
+    class="css-view-175oi2r"
+  />
+</div>
+`;
+
+exports[`components/ScrollView prop "refreshControl" with 1`] = `
+<div
+  id="refresh-control"
+>
+  <div
+    class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+    style="background-color: rgb(255, 0, 0);"
+  >
+    <div
+      class="css-view-175oi2r"
+    />
+  </div>
+</div>
+`;
+
+exports[`components/ScrollView prop "refreshControl" without 1`] = `
+<div
+  class="css-view-175oi2r r-WebkitOverflowScrolling-150rngu r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-1sncvnh"
+  style="background-color: rgb(255, 0, 0);"
+>
+  <div
+    class="css-view-175oi2r"
+  />
+</div>
+`;

@@ -1,0 +1,48 @@
+name: Bug report
+description: File a bug report
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Create a test case for your issue by forking this template https://codesandbox.io/s/6lx6ql1w5r
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: textarea
+    attributes:
+      label: Describe the issue
+      description: Please provide a concise description of what you're experiencing. Providing screenshots is also helpful.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: Please provide a concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Please describe the precise steps needed to reproduce the behavior.
+      placeholder: |
+        Mention package versions and environment (browser, etc)...
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Test case
+      description: Please provide a link to a reduced test case that reproduces the issue.
+      placeholder: "https://codesandbox.io/s/6lx6ql1w5r"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional comments
+      description: You're welcome to provide additional context and proposed solutions.

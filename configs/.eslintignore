@@ -1,0 +1,6 @@
+coverage
+dist
+flow-typed
+node_modules
+packages/**/vendor/*
+packages/**/.next

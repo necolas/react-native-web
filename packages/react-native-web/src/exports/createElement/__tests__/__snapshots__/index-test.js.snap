@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exports/createElement renders different DOM elements 1`] = `<span />`;
+
+exports[`exports/createElement renders different DOM elements 2`] = `<main />`;
+
+exports[`exports/createElement renders different DOM elements 3`] = `
+<svg>
+  <image
+    href="#href"
+  />
+</svg>
+`;

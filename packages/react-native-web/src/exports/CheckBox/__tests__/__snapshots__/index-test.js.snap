@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckBox prop "accessibilityLabel" value is set 1`] = `
+<div
+  aria-label="accessibility label"
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "accessibilityReadOnly" value is set 1`] = `
+<div
+  aria-readonly="true"
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    readonly=""
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "color" value is set 1`] = `
+<div
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu r-backgroundImage-rs94m5 r-backgroundRepeat-u6sd8q"
+    style="background-color: rgb(173, 216, 230); border-top-color: rgba(173,216,230,1.00); border-right-color: rgba(173,216,230,1.00); border-bottom-color: rgba(173,216,230,1.00); border-left-color: rgba(173,216,230,1.00);"
+  />
+  <input
+    checked=""
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "dataSet" value is set 1`] = `
+<div
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+  data-one="one"
+  data-two="two"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "nativeID" value is set 1`] = `
+<div
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+  id="123"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "style" value is set 1`] = `
+<div
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+  style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`CheckBox prop "testID" value is set 1`] = `
+<div
+  class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
+  data-testid="123"
+>
+  <div
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+  />
+  <input
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    type="checkbox"
+  />
+</div>
+`;

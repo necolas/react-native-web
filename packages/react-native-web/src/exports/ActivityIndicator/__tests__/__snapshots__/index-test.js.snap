@@ -1,0 +1,466 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/ActivityIndicator prop "accessibilityLabel" value is set 1`] = `
+<div
+  aria-label="accessibility label"
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "accessibilityLiveRegion" value is set 1`] = `
+<div
+  aria-live="polite"
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "color" 1`] = `
+<svg
+  height="100%"
+  viewBox="0 0 32 32"
+  width="100%"
+>
+  <circle
+    cx="16"
+    cy="16"
+    fill="none"
+    r="14"
+    stroke-width="4"
+    style="stroke: red; opacity: 0.2;"
+  />
+  <circle
+    cx="16"
+    cy="16"
+    fill="none"
+    r="14"
+    stroke-width="4"
+    style="stroke: red; stroke-dasharray: 80; stroke-dashoffset: 60;"
+  />
+</svg>
+`;
+
+exports[`components/ActivityIndicator prop "dataSet" value is set 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  data-one="one"
+  data-two="two"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "nativeID" value is set 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  id="123"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-1r8g8re r-width-1acpoxo r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "size" is a number 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    style="height: 30px; width: 30px;"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "style" value is set 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+  style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "testID" value is set 1`] = `
+<div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-175oi2r r-alignItems-1awozwy r-justifyContent-1777fci"
+  data-testid="123"
+  role="progressbar"
+>
+  <div
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;

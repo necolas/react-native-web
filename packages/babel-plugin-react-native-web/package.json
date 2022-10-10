@@ -1,0 +1,18 @@
+{
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "name": "babel-plugin-react-native-web",
+  "version": "0.18.9",
+  "description": "Babel plugin for React Native for Web",
+  "main": "index.js",
+  "devDependencies": {
+    "babel-plugin-tester": "^10.1.0"
+  },
+  "author": "Nicolas Gallagher",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/necolas/react-native-web.git"
+  }
+}
