@@ -1058,10 +1058,16 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           ? itemCount - 1
           : Math.min(itemCount - 1, this._highestMeasuredFrameIndex);
         const endFrame = this._getFrameMetricsApprox(end);
-        const tailSpacerLength =
+        // On some updates, tailSpacerLength is a negative value, which is an invalid value. 
+        // $tail-spacer’s height will ignore invalid values and  will 
+        // preserve the valid value of the previous state, instead of setting it to zero.
+        let tailSpacerLength =
           endFrame.offset +
           endFrame.length -
           (lastFrame.offset + lastFrame.length);
+        if(tailSpacerLength < 0) {
+            tailSpacerLength = 0
+        }
         cells.push(
           <View key="$tail_spacer" style={{[spacerKey]: tailSpacerLength}} />,
         );
