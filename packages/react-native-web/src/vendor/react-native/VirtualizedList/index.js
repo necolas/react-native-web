@@ -1323,6 +1323,14 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       inLayout: true,
     };
     const curr = this._frames[cellKey];
+
+    // Measures on discarded Low Priority updates will return zero for dimensions    
+    // no cell should have an offset of zero on frames, except for first cell
+    if (next.offset === 0 && index !== 0) {
+      this._scheduleCellsToRenderUpdate();
+      return;
+    }
+
     if (
       !curr ||
       next.offset !== curr.offset ||
