@@ -17,8 +17,7 @@ const getRect = (node) => {
   const { x, y, top, left } = getBoundingClientRect(node);
   const width = node.offsetWidth;
   const height = node.offsetHeight;
-  const offsetTop = node.offsetTop;
-  return { x, y, width, height, top, left, offsetTop };
+  return { x, y, width, height, top, left };
 };
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
@@ -26,10 +25,10 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
   if (node && relativeNode) {
     setTimeout(() => {
       const relativeRect = getBoundingClientRect(relativeNode);
-      const { height, left, top, width, offsetTop } = getRect(node);
+      const { height, left, top, width } = getRect(node);
       const x = left - relativeRect.left;
       const y = top - relativeRect.top;
-      callback(x, y, width, height, left, top, offsetTop);
+      callback(x, y, width, height, left, top);
     }, 0);
   }
 };
