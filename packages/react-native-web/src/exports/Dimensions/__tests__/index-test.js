@@ -9,6 +9,8 @@ import Dimensions from '..';
 
 describe('apis/Dimensions', () => {
   test('get', () => {
+    const handler = jest.fn();
+    Dimensions.addEventListener('change', handler);
     expect(Dimensions.get('screen')).toMatchInlineSnapshot(`
       {
         "fontScale": 1,
@@ -25,6 +27,7 @@ describe('apis/Dimensions', () => {
         "width": 1024,
       }
     `);
+    expect(handler).toHaveBeenCalledTimes(0);
   });
 
   test('set', () => {
@@ -34,21 +37,21 @@ describe('apis/Dimensions', () => {
   test('addEventListener', () => {
     const handler = jest.fn();
     const subscription = Dimensions.addEventListener('change', handler);
-    Dimensions._update();
+    window.dispatchEvent(new Event('resize'));
     expect(handler).toHaveBeenCalledTimes(1);
     expect(handler).toHaveBeenLastCalledWith({
       window: Dimensions.get('window'),
       screen: Dimensions.get('screen')
     });
     subscription.remove();
-    Dimensions._update();
+    window.dispatchEvent(new Event('resize'));
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
   test('removeEventListener', () => {
     const handler = jest.fn();
     Dimensions.removeEventListener('change', handler);
-    Dimensions._update();
+    window.dispatchEvent(new Event('resize'));
     expect(handler).toHaveBeenCalledTimes(0);
   });
 });

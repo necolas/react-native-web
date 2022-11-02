@@ -46,11 +46,41 @@ const listeners = {};
 
 let shouldInit = canUseDOM;
 
+function update() {
+  if (!canUseDOM) {
+    return;
+  }
+
+  const win = window;
+  const docEl = win.document.documentElement;
+
+  dimensions.window = {
+    fontScale: 1,
+    height: docEl.clientHeight,
+    scale: win.devicePixelRatio || 1,
+    width: docEl.clientWidth
+  };
+
+  dimensions.screen = {
+    fontScale: 1,
+    height: win.screen.height,
+    scale: win.devicePixelRatio || 1,
+    width: win.screen.width
+  };
+}
+
+function handleResize() {
+  update();
+  if (Array.isArray(listeners['change'])) {
+    listeners['change'].forEach((handler) => handler(dimensions));
+  }
+}
+
 export default class Dimensions {
   static get(dimension: DimensionKey): DisplayMetrics {
     if (shouldInit) {
       shouldInit = false;
-      Dimensions._update();
+      update();
     }
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
@@ -68,33 +98,6 @@ export default class Dimensions {
           dimensions.window = initialDimensions.window;
         }
       }
-    }
-  }
-
-  static _update() {
-    if (!canUseDOM) {
-      return;
-    }
-
-    const win = window;
-    const docEl = win.document.documentElement;
-
-    dimensions.window = {
-      fontScale: 1,
-      height: docEl.clientHeight,
-      scale: win.devicePixelRatio || 1,
-      width: docEl.clientWidth
-    };
-
-    dimensions.screen = {
-      fontScale: 1,
-      height: win.screen.height,
-      scale: win.devicePixelRatio || 1,
-      width: win.screen.width
-    };
-
-    if (Array.isArray(listeners['change'])) {
-      listeners['change'].forEach((handler) => handler(dimensions));
     }
   }
 
@@ -125,5 +128,5 @@ export default class Dimensions {
 }
 
 if (canUseDOM) {
-  window.addEventListener('resize', Dimensions._update, false);
+  window.addEventListener('resize', handleResize, false);
 }
