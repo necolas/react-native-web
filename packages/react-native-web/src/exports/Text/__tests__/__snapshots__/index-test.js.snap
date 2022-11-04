@@ -19,7 +19,7 @@ exports[`components/Text nested 1`] = `
 </div>
 `;
 
-exports[`components/Text prop "accessibilityLabel" value is set 1`] = `
+exports[`components/Text prop "aria-label" value is set 1`] = `
 <div
   aria-label="accessibility label"
   class="css-text-1rynq56"
@@ -27,7 +27,7 @@ exports[`components/Text prop "accessibilityLabel" value is set 1`] = `
 />
 `;
 
-exports[`components/Text prop "accessibilityLabelledBy" value is set 1`] = `
+exports[`components/Text prop "aria-labelledby" value is set 1`] = `
 <div
   aria-labelledby="123"
   class="css-text-1rynq56"
@@ -35,36 +35,11 @@ exports[`components/Text prop "accessibilityLabelledBy" value is set 1`] = `
 />
 `;
 
-exports[`components/Text prop "accessibilityLiveRegion" value is set 1`] = `
+exports[`components/Text prop "aria-live" value is set 1`] = `
 <div
   aria-live="polite"
   class="css-text-1rynq56"
   dir="auto"
-/>
-`;
-
-exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] = `
-<article
-  class="css-text-1rynq56"
-  dir="auto"
-  role="article"
-/>
-`;
-
-exports[`components/Text prop "accessibilityRole" value is "button" 1`] = `
-<button
-  class="css-text-1rynq56"
-  dir="auto"
-  role="button"
-  type="button"
-/>
-`;
-
-exports[`components/Text prop "accessibilityRole" value is set 1`] = `
-<div
-  class="css-text-1rynq56"
-  dir="auto"
-  role="presentation"
 />
 `;
 
@@ -184,6 +159,31 @@ exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
   class="css-text-1rynq56 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
   dir="auto"
+/>
+`;
+
+exports[`components/Text prop "role" value alters HTML element 1`] = `
+<article
+  class="css-text-1rynq56"
+  dir="auto"
+  role="article"
+/>
+`;
+
+exports[`components/Text prop "role" value is "button" 1`] = `
+<button
+  class="css-text-1rynq56"
+  dir="auto"
+  role="button"
+  type="button"
+/>
+`;
+
+exports[`components/Text prop "role" value is set 1`] = `
+<div
+  class="css-text-1rynq56"
+  dir="auto"
+  role="presentation"
 />
 `;
 

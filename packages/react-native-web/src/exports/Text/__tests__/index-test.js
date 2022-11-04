@@ -23,42 +23,40 @@ describe('components/Text', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  describe('prop "accessibilityLabel"', () => {
+  describe('prop "aria-label"', () => {
     test('value is set', () => {
-      const { container } = render(
-        <Text accessibilityLabel="accessibility label" />
-      );
+      const { container } = render(<Text aria-label="accessibility label" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityLabelledBy"', () => {
+  describe('prop "aria-labelledby"', () => {
     test('value is set', () => {
-      const { container } = render(<Text accessibilityLabelledBy="123" />);
+      const { container } = render(<Text aria-labelledby="123" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityLiveRegion"', () => {
+  describe('prop "aria-live"', () => {
     test('value is set', () => {
-      const { container } = render(<Text accessibilityLiveRegion="polite" />);
+      const { container } = render(<Text aria-live="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityRole"', () => {
+  describe('prop "role"', () => {
     test('value is set', () => {
-      const { container } = render(<Text accessibilityRole="none" />);
+      const { container } = render(<Text role="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value is "button"', () => {
-      const { container } = render(<Text accessibilityRole="button" />);
+      const { container } = render(<Text role="button" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Text accessibilityRole="article" />);
+      const { container } = render(<Text role="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

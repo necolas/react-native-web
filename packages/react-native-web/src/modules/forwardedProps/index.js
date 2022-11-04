@@ -10,13 +10,65 @@
 export const defaultProps = {
   children: true,
   dataSet: true,
-  nativeID: true,
+  dir: true,
+  id: true,
   ref: true,
   suppressHydrationWarning: true,
-  testID: true
+  tabIndex: true,
+  testID: true,
+  // @deprecated
+  focusable: true,
+  nativeID: true
 };
 
 export const accessibilityProps = {
+  'aria-activedescendant': true,
+  'aria-atomic': true,
+  'aria-autocomplete': true,
+  'aria-busy': true,
+  'aria-checked': true,
+  'aria-colcount': true,
+  'aria-colindex': true,
+  'aria-colspan': true,
+  'aria-controls': true,
+  'aria-current': true,
+  'aria-describedby': true,
+  'aria-details': true,
+  'aria-disabled': true,
+  'aria-errormessage': true,
+  'aria-expanded': true,
+  'aria-flowto': true,
+  'aria-haspopup': true,
+  'aria-hidden': true,
+  'aria-invalid': true,
+  'aria-keyshortcuts': true,
+  'aria-label': true,
+  'aria-labelledby': true,
+  'aria-level': true,
+  'aria-live': true,
+  'aria-modal': true,
+  'aria-multiline': true,
+  'aria-multiselectable': true,
+  'aria-orientation': true,
+  'aria-owns': true,
+  'aria-placeholder': true,
+  'aria-posinset': true,
+  'aria-pressed': true,
+  'aria-readonly': true,
+  'aria-required': true,
+  role: true,
+  'aria-roledescription': true,
+  'aria-rowcount': true,
+  'aria-rowindex': true,
+  'aria-rowspan': true,
+  'aria-selected': true,
+  'aria-setsize': true,
+  'aria-sort': true,
+  'aria-valuemax': true,
+  'aria-valuemin': true,
+  'aria-valuenow': true,
+  'aria-valuetext': true,
+  // @deprecated
   accessibilityActiveDescendant: true,
   accessibilityAtomic: true,
   accessibilityAutoComplete: true,
@@ -62,9 +114,7 @@ export const accessibilityProps = {
   accessibilityValueMax: true,
   accessibilityValueMin: true,
   accessibilityValueNow: true,
-  accessibilityValueText: true,
-  dir: true,
-  focusable: true
+  accessibilityValueText: true
 };
 
 export const clickProps = {

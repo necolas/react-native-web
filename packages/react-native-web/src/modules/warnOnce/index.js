@@ -17,11 +17,13 @@ const warnedKeys: { [string]: boolean, ... } = {};
  * @param {string} message - The message to print
  */
 export function warnOnce(key: string, message: string) {
-  if (warnedKeys[key]) {
-    return;
+  if (process.env.NODE_ENV !== 'production') {
+    if (warnedKeys[key]) {
+      return;
+    }
+
+    console.warn(message);
+
+    warnedKeys[key] = true;
   }
-
-  console.warn(message);
-
-  warnedKeys[key] = true;
 }

@@ -78,6 +78,7 @@ export type TextStyle = {
     | 'isolate'
     | 'isolate-override'
     | 'plaintext',
+  userSelect?: 'none' | 'text',
   whiteSpace?: ?string,
   wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all',
   wordWrap?: ?string,
@@ -89,6 +90,20 @@ export type TextStyle = {
 
 export type TextProps = {
   ...ViewProps,
+  dir?: 'auto' | 'ltr' | 'rtl',
+  numberOfLines?: ?number,
+  role?:
+    | 'button'
+    | 'header'
+    | 'heading'
+    | 'label'
+    | 'link'
+    | 'listitem'
+    | 'none'
+    | 'text',
+  style?: GenericStyleProp<TextStyle>,
+  testID?: ?string,
+  // @deprecated
   accessibilityRole?:
     | 'button'
     | 'header'
@@ -98,11 +113,6 @@ export type TextProps = {
     | 'listitem'
     | 'none'
     | 'text',
-  dir?: 'auto' | 'ltr' | 'rtl',
-  lang?: string,
-  numberOfLines?: ?number,
   onPress?: (e: any) => void,
-  selectable?: boolean,
-  style?: GenericStyleProp<TextStyle>,
-  testID?: ?string
+  selectable?: boolean
 };

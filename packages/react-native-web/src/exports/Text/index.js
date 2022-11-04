@@ -22,6 +22,7 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
+import { warnOnce } from '../../modules/warnOnce';
 
 const forwardPropsList = Object.assign(
   {},
@@ -69,6 +70,13 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
       selectable,
       ...rest
     } = props;
+
+    if (selectable != null) {
+      warnOnce(
+        'selectable',
+        'selectable prop is deprecated. Use styles.userSelect.'
+      );
+    }
 
     const hasTextAncestor = React.useContext(TextAncestorContext);
     const hostRef = React.useRef(null);

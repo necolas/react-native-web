@@ -24,8 +24,6 @@ export type Props = $ReadOnly<{|
   accessibilityLabel?: $PropertyType<ViewProps, 'accessibilityLabel'>,
   accessibilityLiveRegion?: $PropertyType<ViewProps, 'accessibilityLiveRegion'>,
   accessibilityRole?: $PropertyType<ViewProps, 'accessibilityRole'>,
-  accessibilityState?: $PropertyType<ViewProps, 'accessibilityState'>,
-  accessibilityValue?: $PropertyType<ViewProps, 'accessibilityValue'>,
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,

@@ -12,10 +12,27 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
     expect(propsToAriaRole({})).toBeUndefined();
   });
 
-  test('when "accessibilityRole" is defined', () => {
+  test('when "role" is defined', () => {
+    expect(propsToAriaRole({ role: 'banner' })).toEqual('banner');
+    // @deprecated
     expect(propsToAriaRole({ accessibilityRole: 'banner' })).toEqual('banner');
   });
 
+  test('when "role" is defined', () => {
+    expect(propsToAriaRole({ role: 'banner' })).toEqual('banner');
+    // @deprecated
+    expect(propsToAriaRole({ accessibilityRole: 'banner' })).toEqual('banner');
+  });
+
+  test('when "role" is "none"', () => {
+    expect(propsToAriaRole({ role: 'none' })).toEqual('presentation');
+  });
+
+  test('when "role" is "label" (non-standard)', () => {
+    expect(propsToAriaRole({ role: 'label' })).toEqual(undefined);
+  });
+
+  // @deprecated
   test('when "accessibilityRole" is a native-only value', () => {
     expect(propsToAriaRole({ accessibilityRole: 'none' })).toEqual(
       'presentation'

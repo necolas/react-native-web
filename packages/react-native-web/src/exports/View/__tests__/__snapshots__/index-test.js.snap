@@ -17,46 +17,24 @@ exports[`components/View non-text is rendered 1`] = `
 </div>
 `;
 
-exports[`components/View prop "accessibilityLabel" value is set 1`] = `
+exports[`components/View prop "aria-label" value is set 1`] = `
 <div
   aria-label="accessibility label"
   class="css-view-175oi2r"
 />
 `;
 
-exports[`components/View prop "accessibilityLabelledBy" value is set 1`] = `
+exports[`components/View prop "aria-labelledby" value is set 1`] = `
 <div
   aria-labelledby="123"
   class="css-view-175oi2r"
 />
 `;
 
-exports[`components/View prop "accessibilityLiveRegion" value is set 1`] = `
+exports[`components/View prop "aria-live" value is set 1`] = `
 <div
   aria-live="polite"
   class="css-view-175oi2r"
-/>
-`;
-
-exports[`components/View prop "accessibilityRole" value alters HTML element 1`] = `
-<article
-  class="css-view-175oi2r"
-  role="article"
-/>
-`;
-
-exports[`components/View prop "accessibilityRole" value is "button" 1`] = `
-<button
-  class="css-view-175oi2r"
-  role="button"
-  type="button"
-/>
-`;
-
-exports[`components/View prop "accessibilityRole" value is set 1`] = `
-<div
-  class="css-view-175oi2r"
-  role="presentation"
 />
 `;
 
@@ -160,6 +138,28 @@ exports[`components/View prop "nativeID" value is set 1`] = `
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
   class="css-view-175oi2r r-pointerEvents-ah5dr5"
+/>
+`;
+
+exports[`components/View prop "role" value alters HTML element 1`] = `
+<article
+  class="css-view-175oi2r"
+  role="article"
+/>
+`;
+
+exports[`components/View prop "role" value is "button" 1`] = `
+<button
+  class="css-view-175oi2r"
+  role="button"
+  type="button"
+/>
+`;
+
+exports[`components/View prop "role" value is set 1`] = `
+<div
+  class="css-view-175oi2r"
+  role="presentation"
 />
 `;
 
