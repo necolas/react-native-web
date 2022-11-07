@@ -160,6 +160,62 @@ describe('components/TextInput', () => {
     });
   });
 
+  describe('prop "inputMode"', () => {
+    test('value "decimal"', () => {
+      const { container } = render(<TextInput inputMode="decimal" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('decimal');
+    });
+
+    test('value "email"', () => {
+      const { container } = render(<TextInput inputMode="email" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('email');
+      expect(input.type).toEqual('email');
+    });
+
+    test('default value', () => {
+      const { container } = render(<TextInput inputMode="none" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('none');
+      expect(input.type).toEqual('text');
+    });
+
+    test('value "numeric"', () => {
+      const { container } = render(<TextInput inputMode="numeric" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('numeric');
+    });
+
+    test('value "search"', () => {
+      const { container } = render(<TextInput inputMode="search" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('search');
+      expect(input.type).toEqual('search');
+    });
+
+    test('value "tel"', () => {
+      const { container } = render(<TextInput inputMode="tel" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('tel');
+      expect(input.type).toEqual('tel');
+    });
+
+    test('value "text"', () => {
+      const { container } = render(<TextInput inputMode="text" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('text');
+      expect(input.type).toEqual('text');
+    });
+
+    test('value "url"', () => {
+      const { container } = render(<TextInput inputMode="url" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('url');
+      expect(input.type).toEqual('url');
+    });
+  });
+
   describe('prop "keyboardType"', () => {
     test('default value', () => {
       const { container } = render(<TextInput keyboardType="default" />);

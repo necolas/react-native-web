@@ -23,6 +23,7 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
+import { warnOnce } from '../../modules/warnOnce';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -101,6 +102,8 @@ const TextInput: React.AbstractComponent<
     clearTextOnFocus,
     dir,
     editable = true,
+    enterKeyHint,
+    inputMode,
     keyboardType = 'default',
     multiline = false,
     numberOfLines = 1,
@@ -130,7 +133,9 @@ const TextInput: React.AbstractComponent<
     onStartShouldSetResponderCapture,
     onSubmitEditing,
     placeholderTextColor,
+    readOnly,
     returnKeyType,
+    rows,
     secureTextEntry = false,
     selection,
     selectTextOnFocus,
@@ -138,31 +143,47 @@ const TextInput: React.AbstractComponent<
   } = props;
 
   let type;
-  let inputMode;
+  let _inputMode;
 
-  switch (keyboardType) {
-    case 'email-address':
+  if (inputMode != null) {
+    _inputMode = inputMode;
+    if (inputMode === 'email') {
       type = 'email';
-      break;
-    case 'number-pad':
-    case 'numeric':
-      inputMode = 'numeric';
-      break;
-    case 'decimal-pad':
-      inputMode = 'decimal';
-      break;
-    case 'phone-pad':
+    } else if (inputMode === 'tel') {
       type = 'tel';
-      break;
-    case 'search':
-    case 'web-search':
+    } else if (inputMode === 'search') {
       type = 'search';
-      break;
-    case 'url':
+    } else if (inputMode === 'url') {
       type = 'url';
-      break;
-    default:
+    } else {
       type = 'text';
+    }
+  } else if (keyboardType != null) {
+    warnOnce('keyboardType', 'keyboardType is deprecated. Use inputMode.');
+    switch (keyboardType) {
+      case 'email-address':
+        type = 'email';
+        break;
+      case 'number-pad':
+      case 'numeric':
+        _inputMode = 'numeric';
+        break;
+      case 'decimal-pad':
+        _inputMode = 'decimal';
+        break;
+      case 'phone-pad':
+        type = 'tel';
+        break;
+      case 'search':
+      case 'web-search':
+        type = 'search';
+        break;
+      case 'url':
+        type = 'url';
+        break;
+      default:
+        type = 'text';
+    }
   }
 
   if (secureTextEntry) {
@@ -355,15 +376,31 @@ const TextInput: React.AbstractComponent<
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
-  supportedProps.enterKeyHint = returnKeyType;
-  supportedProps.inputMode = inputMode;
+  if (returnKeyType != null) {
+    warnOnce('returnKeyType', 'returnKeyType is deprecated. Use enterKeyHint.');
+  }
+  supportedProps.enterKeyHint = enterKeyHint || returnKeyType;
+  supportedProps.inputMode = _inputMode;
   supportedProps.onBlur = handleBlur;
   supportedProps.onChange = handleChange;
   supportedProps.onFocus = handleFocus;
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
-  supportedProps.readOnly = !editable;
-  supportedProps.rows = multiline ? numberOfLines : undefined;
+  if (editable != null) {
+    warnOnce('editable', 'editable is deprecated. Use readOnly.');
+  }
+  supportedProps.readOnly = readOnly || !editable;
+  if (numberOfLines != null) {
+    warnOnce(
+      'numberOfLines',
+      'TextInput numberOfLines is deprecated. Use rows.'
+    );
+  }
+  supportedProps.rows = multiline
+    ? rows != null
+      ? rows
+      : numberOfLines
+    : undefined;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = [
     { '--placeholderTextColor': placeholderTextColor },

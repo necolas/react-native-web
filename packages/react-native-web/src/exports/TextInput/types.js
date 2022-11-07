@@ -29,21 +29,26 @@ export type TextInputProps = {
   defaultValue?: ?string,
   dir?: ?('auto' | 'ltr' | 'rtl'),
   disabled?: ?boolean,
-  editable?: ?boolean,
-  inputAccessoryViewID?: ?string,
-  keyboardType?:
-    | 'default'
-    | 'email-address'
-    | 'number-pad'
-    | 'numbers-and-punctuation'
-    | 'numeric'
-    | 'phone-pad'
+  enterKeyHint?:
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
     | 'search'
-    | 'url'
-    | 'web-search',
+    | 'send',
+  inputAccessoryViewID?: ?string,
+  inputMode?:
+    | 'decimal'
+    | 'email'
+    | 'none'
+    | 'numeric'
+    | 'search'
+    | 'tel'
+    | 'text'
+    | 'url',
   maxLength?: ?number,
   multiline?: ?boolean,
-  numberOfLines?: ?number,
   onChange?: (e: any) => void,
   onChangeText?: (e: string) => void,
   onContentSizeChange?: (e: any) => void,
@@ -54,14 +59,8 @@ export type TextInputProps = {
   onSubmitEditing?: (e: any) => void,
   placeholder?: ?string,
   placeholderTextColor?: ?ColorValue,
-  returnKeyType?:
-    | 'enter'
-    | 'done'
-    | 'go'
-    | 'next'
-    | 'previous'
-    | 'search'
-    | 'send',
+  readOnly?: ?boolean,
+  rows?: ?number,
   secureTextEntry?: ?boolean,
   selectTextOnFocus?: ?boolean,
   selection?: {|
@@ -71,5 +70,26 @@ export type TextInputProps = {
   selectionColor?: ?ColorValue,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
-  value?: ?string
+  value?: ?string,
+  // deprecated
+  editable?: ?boolean,
+  keyboardType?:
+    | 'default'
+    | 'email-address'
+    | 'number-pad'
+    | 'numbers-and-punctuation'
+    | 'numeric'
+    | 'phone-pad'
+    | 'search'
+    | 'url'
+    | 'web-search',
+  numberOfLines?: ?number,
+  returnKeyType?:
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send'
 };
