@@ -95,11 +95,8 @@ const { StyleSheet, Pressable } = require('react-native');
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const ReactNative = require('react-native-web/dist/index');
-
 const View = require('react-native-web/dist/exports/View').default;
-
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
-
 const Pressable = require('react-native-web/dist/exports/Pressable').default;
 
 
@@ -114,12 +111,9 @@ const { StyleSheet, Pressable } = require('react-native');
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const ReactNative = require('react-native-web/dist/cjs/index');
-
 const View = require('react-native-web/dist/cjs/exports/View').default;
-
 const StyleSheet =
   require('react-native-web/dist/cjs/exports/StyleSheet').default;
-
 const Pressable =
   require('react-native-web/dist/cjs/exports/Pressable').default;
 
@@ -135,16 +129,11 @@ const { StyleSheet, View, Pressable, processColor } = require('react-native-web'
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const ReactNative = require('react-native-web/dist/index');
-
 const unstable_createElement =
   require('react-native-web/dist/exports/createElement').default;
-
 const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
-
 const View = require('react-native-web/dist/exports/View').default;
-
 const Pressable = require('react-native-web/dist/exports/Pressable').default;
-
 const processColor =
   require('react-native-web/dist/exports/processColor').default;
 
