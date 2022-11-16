@@ -52,7 +52,7 @@
     "gen-flow-files": "^0.4.11",
     "glob": "^8.0.3",
     "husky": "^8.0.0",
-    "inline-style-prefixer": "^6.0.2",
+    "inline-style-prefixer": "^6.0.3",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "lint-staged": "^13.0.3",
