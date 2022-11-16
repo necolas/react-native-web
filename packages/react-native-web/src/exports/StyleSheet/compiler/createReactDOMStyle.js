@@ -128,13 +128,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
 
     if (prop === 'aspectRatio') {
       resolvedStyle[prop] = value.toString();
-    } else if (prop === 'backgroundClip') {
-      // TODO: remove once this issue is fixed
-      // https://github.com/rofrischmann/inline-style-prefixer/issues/159
-      if (value === 'text') {
-        resolvedStyle.backgroundClip = value;
-        resolvedStyle.WebkitBackgroundClip = value;
-      }
     } else if (prop === 'flex') {
       if (value === -1) {
         resolvedStyle.flexGrow = 0;
