@@ -74,7 +74,7 @@ let id = 0;
 const requests = {};
 
 const ImageLoader = {
-  abort(requestId: number) {
+  release(requestId: number) {
     const request = requests[requestId];
     if (request) {
       const { image, cleanup } = request;
@@ -105,7 +105,7 @@ const ImageLoader = {
         }
       }
       if (complete) {
-        ImageLoader.abort(requestId);
+        ImageLoader.release(requestId);
         clearInterval(interval);
       }
     }
@@ -114,7 +114,7 @@ const ImageLoader = {
       if (typeof failure === 'function') {
         failure();
       }
-      ImageLoader.abort(requestId);
+      ImageLoader.release(requestId);
       clearInterval(interval);
     }
   },

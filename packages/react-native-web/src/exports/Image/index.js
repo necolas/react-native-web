@@ -256,16 +256,12 @@ const Image: React.AbstractComponent<
 
   // Image loading
   React.useEffect(() => {
-    let requestId;
-
     const uri = resolveAssetUri(source);
     if (uri != null) {
       updateState(LOADING);
-      if (onLoadStart) {
-        onLoadStart();
-      }
+      if (onLoadStart) onLoadStart();
 
-      requestId = ImageLoader.load(
+      const requestId = ImageLoader.load(
         { uri, headers: source?.headers },
         function load(result) {
           updateState(LOADED);
@@ -291,13 +287,13 @@ const Image: React.AbstractComponent<
           }
         }
       );
-    }
 
-    function abortPendingRequest() {
-      if (requestId) ImageLoader.abort(requestId);
-    }
+      const effectCleanup = () => {
+        if (requestId) ImageLoader.release(requestId);
+      };
 
-    return abortPendingRequest;
+      return effectCleanup;
+    }
   }, [source, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
 
   return (
