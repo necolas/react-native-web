@@ -75,12 +75,15 @@ const requests = {};
 
 const ImageLoader = {
   abort(requestId: number) {
-    let image = requests[`${requestId}`];
-    if (image) {
+    const request = requests[requestId];
+    if (request) {
+      const { image, cleanup } = request;
+      if (cleanup) cleanup();
+
       image.onerror = null;
       image.onload = null;
-      image = null;
-      delete requests[`${requestId}`];
+      image.src = '';
+      delete requests[requestId];
     }
   },
   getSize(
@@ -93,7 +96,7 @@ const ImageLoader = {
     const requestId = ImageLoader.load(uri, callback, errorCallback);
 
     function callback() {
-      const image = requests[`${requestId}`];
+      const { image } = requests[requestId] || {};
       if (image) {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
@@ -118,24 +121,62 @@ const ImageLoader = {
   has(uri: string): boolean {
     return ImageUriCache.has(uri);
   },
-  load(uri: string, onLoad: Function, onError: Function): number {
+  load(
+    source: ImageSource,
+    onLoad: (ImageResult) => void,
+    onError: Function
+  ): number {
     id += 1;
     const image = new window.Image();
-    image.onerror = onError;
-    image.onload = (e) => {
+
+    const handleLoad = (e) => {
       // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
-      if (typeof image.decode === 'function') {
-        // Safari currently throws exceptions when decoding svgs.
-        // We want to catch that error and allow the load handler
-        // to be forwarded to the onLoad handler in this case
-        image.decode().then(onDecode, onDecode);
-      } else {
-        setTimeout(onDecode, 0);
-      }
+      const onDecode = () =>
+        onLoad({
+          nativeEvent: e,
+          uri: image.src,
+          width: image.naturalWidth,
+          height: image.naturalHeight
+        });
+
+      // Safari currently throws exceptions when decoding svgs.
+      // We want to catch that error and allow the load handler
+      // to be forwarded to the onLoad handler in this case
+      image.decode().then(onDecode, onDecode);
     };
-    image.src = uri;
-    requests[`${id}`] = image;
+
+    image.onerror = onError;
+    image.onload = handleLoad;
+    requests[id] = { image };
+
+    // When headers are supplied we can't load the image through `image.src`, but we `fetch` it as an AJAX request
+    if (source.headers) {
+      const abortCtrl = new AbortController();
+      const request = new Request(source.uri, {
+        headers: source.headers,
+        signal: abortCtrl.signal
+      });
+      request.headers.append('accept', 'image/*');
+
+      requests[id].cleanup = () => {
+        abortCtrl.abort();
+        URL.revokeObjectURL(image.src);
+      };
+
+      fetch(request)
+        .then((response) => response.blob())
+        .then((blob) => {
+          image.src = URL.createObjectURL(blob);
+        })
+        .catch((error) => {
+          if (error.name !== 'AbortError') onError(error);
+        });
+    } else {
+      // For simple request we load the image through `image.src` because it has wider support
+      // like better cross-origin support and progressive loading
+      image.src = source.uri;
+    }
+
     return id;
   },
   prefetch(uri: string): Promise<void> {
@@ -162,6 +203,15 @@ const ImageLoader = {
     });
     return Promise.resolve(result);
   }
+};
+
+type ImageSource = { uri: string, headers?: Record<string, string> };
+
+type ImageResult = {
+  uri: string,
+  width: number,
+  height: number,
+  nativeEvent: Event
 };
 
 export default ImageLoader;
