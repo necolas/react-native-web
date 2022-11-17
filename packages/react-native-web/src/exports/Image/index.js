@@ -261,8 +261,12 @@ const Image: React.AbstractComponent<
       updateState(LOADING);
       if (onLoadStart) onLoadStart();
 
+      let headers;
+      if (source && typeof source.headers === 'object')
+        headers = ((source.headers: any): { [key: string]: string });
+
       const requestId = ImageLoader.load(
-        { uri, headers: source?.headers },
+        { uri, headers },
         function load(result) {
           updateState(LOADED);
           setLoadedUri(result.uri);

@@ -93,7 +93,7 @@ const ImageLoader = {
   ) {
     let complete = false;
     const interval = setInterval(callback, 16);
-    const requestId = ImageLoader.load(uri, callback, errorCallback);
+    const requestId = ImageLoader.load({ uri }, callback, errorCallback);
 
     function callback() {
       const { image } = requests[requestId] || {};
@@ -182,7 +182,7 @@ const ImageLoader = {
   prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
       ImageLoader.load(
-        uri,
+        { uri },
         () => {
           // Add the uri to the cache so it can be immediately displayed when used
           // but also immediately remove it to correctly reflect that it has no active references
@@ -205,7 +205,7 @@ const ImageLoader = {
   }
 };
 
-type ImageSource = { uri: string, headers?: Record<string, string> };
+type ImageSource = { uri: string, headers?: { [key: string]: string } };
 
 type ImageResult = {
   uri: string,
