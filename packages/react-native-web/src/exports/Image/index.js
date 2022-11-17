@@ -255,15 +255,16 @@ const Image: React.AbstractComponent<
   }
 
   // Image loading
+  const uri = resolveAssetUri(source);
+  let headers;
+  if (source && typeof source.headers === 'object') {
+    headers = ((source.headers: any): { [key: string]: string });
+  }
+
   React.useEffect(() => {
-    const uri = resolveAssetUri(source);
     if (uri != null) {
       updateState(LOADING);
       if (onLoadStart) onLoadStart();
-
-      let headers;
-      if (source && typeof source.headers === 'object')
-        headers = ((source.headers: any): { [key: string]: string });
 
       const requestId = ImageLoader.load(
         { uri, headers },
@@ -298,7 +299,7 @@ const Image: React.AbstractComponent<
 
       return effectCleanup;
     }
-  }, [source, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+  }, [updateState, onError, onLoad, onLoadEnd, onLoadStart, uri, headers]);
 
   return (
     <View
