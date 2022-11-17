@@ -185,7 +185,7 @@ const Image: React.AbstractComponent<
       );
     }
   }
-
+  const [loadedUri, setLoadedUri] = React.useState('');
   const [state, updateState] = React.useState(() => {
     const uri = resolveAssetUri(source);
     if (uri != null) {
@@ -210,7 +210,7 @@ const Image: React.AbstractComponent<
     filterRef.current
   );
   const resizeMode = props.resizeMode || _resizeMode || 'cover';
-  const selectedSource = shouldDisplaySource ? source : defaultSource;
+  const selectedSource = shouldDisplaySource ? loadedUri : defaultSource;
   const displayImageUri = resolveAssetUri(selectedSource);
   const imageSizeStyle = resolveAssetDimensions(selectedSource);
   const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
@@ -256,10 +256,10 @@ const Image: React.AbstractComponent<
   }
 
   // Image loading
-  const uri = resolveAssetUri(source);
   React.useEffect(() => {
     abortPendingRequest();
 
+    const uri = resolveAssetUri(source);
     if (uri != null) {
       updateState(LOADING);
       if (onLoadStart) {
@@ -267,11 +267,12 @@ const Image: React.AbstractComponent<
       }
 
       requestRef.current = ImageLoader.load(
-        uri,
-        function load(e) {
+        { uri, headers: source?.headers },
+        function load(result) {
           updateState(LOADED);
+          setLoadedUri(result.uri);
           if (onLoad) {
-            onLoad(e);
+            onLoad(result);
           }
           if (onLoadEnd) {
             onLoadEnd();
@@ -301,7 +302,7 @@ const Image: React.AbstractComponent<
     }
 
     return abortPendingRequest;
-  }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+  }, [source, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
 
   return (
     <View
