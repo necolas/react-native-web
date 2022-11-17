@@ -201,7 +201,6 @@ const Image: React.AbstractComponent<
   const hasTextAncestor = React.useContext(TextAncestorContext);
   const hiddenImageRef = React.useRef(null);
   const filterRef = React.useRef(_filterId++);
-  const requestRef = React.useRef(null);
   const shouldDisplaySource =
     state === LOADED || (state === LOADING && defaultSource == null);
   const [flatStyle, _resizeMode, filter, tintColor] = getFlatStyle(
@@ -257,7 +256,7 @@ const Image: React.AbstractComponent<
 
   // Image loading
   React.useEffect(() => {
-    abortPendingRequest();
+    let requestId;
 
     const uri = resolveAssetUri(source);
     if (uri != null) {
@@ -266,7 +265,7 @@ const Image: React.AbstractComponent<
         onLoadStart();
       }
 
-      requestRef.current = ImageLoader.load(
+      requestId = ImageLoader.load(
         { uri, headers: source?.headers },
         function load(result) {
           updateState(LOADED);
@@ -295,10 +294,7 @@ const Image: React.AbstractComponent<
     }
 
     function abortPendingRequest() {
-      if (requestRef.current != null) {
-        ImageLoader.abort(requestRef.current);
-        requestRef.current = null;
-      }
+      if (requestId) ImageLoader.abort(requestId);
     }
 
     return abortPendingRequest;
