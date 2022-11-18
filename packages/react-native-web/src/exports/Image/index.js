@@ -185,18 +185,10 @@ const Image: React.AbstractComponent<
       );
     }
   }
-  const [loadedUri, setLoadedUri] = React.useState('');
-  const [state, updateState] = React.useState(() => {
-    const uri = resolveAssetUri(source);
-    if (uri != null) {
-      const isLoaded = ImageLoader.has(uri);
-      if (isLoaded) {
-        return LOADED;
-      }
-    }
-    return IDLE;
-  });
-
+  const { state, loadedUri } = useSource(
+    { onLoad, onLoadStart, onLoadEnd, onError },
+    source
+  );
   const [layout, updateLayout] = React.useState({});
   const hasTextAncestor = React.useContext(TextAncestorContext);
   const hiddenImageRef = React.useRef(null);
@@ -254,53 +246,6 @@ const Image: React.AbstractComponent<
     }
   }
 
-  // Image loading
-  const uri = resolveAssetUri(source);
-  let headers;
-  if (source && typeof source.headers === 'object') {
-    headers = ((source.headers: any): { [key: string]: string });
-  }
-
-  React.useEffect(() => {
-    if (uri != null) {
-      updateState(LOADING);
-      if (onLoadStart) onLoadStart();
-
-      const requestId = ImageLoader.load(
-        { uri, headers },
-        function load(result) {
-          updateState(LOADED);
-          setLoadedUri(result.uri);
-          if (onLoad) {
-            onLoad(result);
-          }
-          if (onLoadEnd) {
-            onLoadEnd();
-          }
-        },
-        function error() {
-          updateState(ERRORED);
-          if (onError) {
-            onError({
-              nativeEvent: {
-                error: `Failed to load resource ${uri} (404)`
-              }
-            });
-          }
-          if (onLoadEnd) {
-            onLoadEnd();
-          }
-        }
-      );
-
-      const effectCleanup = () => {
-        if (requestId) ImageLoader.release(requestId);
-      };
-
-      return effectCleanup;
-    }
-  }, [updateState, onError, onLoad, onLoadEnd, onLoadStart, uri, headers]);
-
   return (
     <View
       {...rest}
@@ -349,6 +294,83 @@ ImageWithStatics.prefetch = function (uri) {
 
 ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
+};
+
+type UseSourceParams = {
+  onLoad?: Function,
+  onLoadStart?: Function,
+  onLoadEnd?: Function,
+  onError?: Function
+};
+
+/**
+ * Image loading/state management hook
+ * @param params
+ * @param source
+ * @returns {{state: string, uri: string}}
+ */
+const useSource = (
+  { onLoad, onLoadStart, onLoadEnd, onError }: UseSourceParams,
+  source: ?Source
+): { state: string, uri: string } => {
+  const [loadedUri, setLoadedUri] = React.useState('');
+  const [state, updateState] = React.useState(() => {
+    const uri = resolveAssetUri(source);
+    if (uri != null) {
+      const isLoaded = ImageLoader.has(uri);
+      if (isLoaded) return LOADED;
+    }
+    return IDLE;
+  });
+
+  const loadInput = React.useRef(null);
+
+  React.useEffect(() => {
+    const uri = resolveAssetUri(source);
+    if (uri == null) return;
+
+    let headers;
+    if (source && typeof source.headers === 'object') {
+      headers = ((source.headers: any): { [key: string]: string });
+    }
+
+    const nextInput = { uri, headers };
+    const currentInput = loadInput.current;
+    if (JSON.stringify(nextInput) === JSON.stringify(currentInput)) return;
+
+    updateState(LOADING);
+    if (onLoadStart) onLoadStart();
+
+    loadInput.current = nextInput;
+    const requestId = ImageLoader.load(
+      nextInput,
+      function load(result) {
+        updateState(LOADED);
+        setLoadedUri(result.uri);
+        if (onLoad) onLoad(result);
+        if (onLoadEnd) onLoadEnd();
+      },
+      function error() {
+        updateState(ERRORED);
+        if (onError) {
+          onError({
+            nativeEvent: {
+              error: `Failed to load resource ${uri} (404)`
+            }
+          });
+        }
+        if (onLoadEnd) onLoadEnd();
+      }
+    );
+
+    const effectCleanup = () => ImageLoader.release(requestId);
+    return effectCleanup;
+  }, [updateState, onError, onLoad, onLoadEnd, onLoadStart, source]);
+
+  return {
+    state,
+    loadedUri
+  };
 };
 
 const styles = StyleSheet.create({
