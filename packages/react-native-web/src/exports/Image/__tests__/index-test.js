@@ -171,6 +171,38 @@ describe('components/Image', () => {
       expect(onLoadEndStub.mock.calls.length).toBe(2);
     });
 
+    test('is called on update if "headers" are different', () => {
+      const onLoadStartStub = jest.fn();
+      const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
+      const { rerender } = render(
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={{
+            uri: 'https://test.com/img.jpg',
+            headers: { 'x-custom-header': 'abc123' }
+          }}
+        />
+      );
+      act(() => {
+        rerender(
+          <Image
+            onLoad={onLoadStub}
+            onLoadEnd={onLoadEndStub}
+            onLoadStart={onLoadStartStub}
+            source={{
+              uri: 'https://test.com/img.jpg',
+              headers: { 'x-custom-header': '123abc' }
+            }}
+          />
+        );
+      });
+      expect(onLoadStub.mock.calls.length).toBe(2);
+      expect(onLoadEndStub.mock.calls.length).toBe(2);
+    });
+
     test('is not called on update if "uri" is the same', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
@@ -222,6 +254,42 @@ describe('components/Image', () => {
       expect(onLoadStub.mock.calls.length).toBe(1);
       expect(onLoadEndStub.mock.calls.length).toBe(1);
     });
+
+    test('is not called on update if "headers" and "uri" the same', () => {
+      const onLoadStartStub = jest.fn();
+      const onLoadStub = jest.fn();
+      const onLoadEndStub = jest.fn();
+      const { rerender } = render(
+        <Image
+          onLoad={onLoadStub}
+          onLoadEnd={onLoadEndStub}
+          onLoadStart={onLoadStartStub}
+          source={{
+            uri: 'https://test.com/img.jpg',
+            width: 1,
+            height: 1,
+            headers: { 'x-custom-header': 'abc123' }
+          }}
+        />
+      );
+      act(() => {
+        rerender(
+          <Image
+            onLoad={onLoadStub}
+            onLoadEnd={onLoadEndStub}
+            onLoadStart={onLoadStartStub}
+            source={{
+              uri: 'https://test.com/img.jpg',
+              width: 1,
+              height: 1,
+              headers: { 'x-custom-header': 'abc123' }
+            }}
+          />
+        );
+      });
+      expect(onLoadStub.mock.calls.length).toBe(1);
+      expect(onLoadEndStub.mock.calls.length).toBe(1);
+    });
   });
 
   describe('prop "resizeMode"', () => {
@@ -242,7 +310,8 @@ describe('components/Image', () => {
         '',
         {},
         { uri: '' },
-        { uri: 'https://google.com' }
+        { uri: 'https://google.com' },
+        { uri: 'https://google.com', headers: { 'x-custom-header': 'abc123' } }
       ];
       sources.forEach((source) => {
         expect(() => render(<Image source={source} />)).not.toThrow();
@@ -336,6 +405,31 @@ describe('components/Image', () => {
       });
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img@2x.png'
+      );
+    });
+
+    test('it correctly passes headers to ImageLoader', () => {
+      const uri = 'https://google.com/favicon.ico';
+      const headers = { 'x-custom-header': 'abc123' };
+      const source = { uri, headers };
+      render(<Image source={source} />);
+
+      expect(ImageLoader.load).toHaveBeenCalledWith(
+        expect.objectContaining({ headers }),
+        expect.any(Function),
+        expect.any(Function)
+      );
+    });
+
+    test('it correctly passes uri to ImageLoader', () => {
+      const uri = 'https://google.com/favicon.ico';
+      const source = { uri };
+      render(<Image source={source} />);
+
+      expect(ImageLoader.load).toHaveBeenCalledWith(
+        expect.objectContaining({ uri }),
+        expect.any(Function),
+        expect.any(Function)
       );
     });
   });
