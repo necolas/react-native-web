@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ImageProps } from './types';
+import type { ImageProps, Source } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -312,9 +312,10 @@ type UseSourceParams = {
 const useSource = (
   { onLoad, onLoadStart, onLoadEnd, onError }: UseSourceParams,
   source: ?Source
-): { state: string, uri: string } => {
+): { state: string, loadedUri: string } => {
+  const lastLoadedSource = React.useRef();
   const [loadedUri, setLoadedUri] = React.useState('');
-  const [state, updateState] = React.useState(() => {
+  const [state, setState] = React.useState(() => {
     const uri = resolveAssetUri(source);
     if (uri != null) {
       const isLoaded = ImageLoader.has(uri);
@@ -323,11 +324,14 @@ const useSource = (
     return IDLE;
   });
 
-  const loadInput = React.useRef(null);
-
-  React.useEffect(() => {
+  // This object would only change when load related fields change
+  // We try to maintain strict object reference to prevent the effect hook running due to object change
+  const stableSource = React.useMemo(() => {
     const uri = resolveAssetUri(source);
-    if (uri == null) return;
+    if (uri == null) {
+      lastLoadedSource.current = null;
+      return null;
+    }
 
     let headers;
     if (source && typeof source.headers === 'object') {
@@ -335,27 +339,35 @@ const useSource = (
     }
 
     const nextInput = { uri, headers };
-    const currentInput = loadInput.current;
-    if (JSON.stringify(nextInput) === JSON.stringify(currentInput)) return;
+    if (
+      JSON.stringify(nextInput) !== JSON.stringify(lastLoadedSource.current)
+    ) {
+      lastLoadedSource.current = nextInput;
+    }
 
-    updateState(LOADING);
+    return lastLoadedSource.current;
+  }, [source]);
+
+  React.useEffect(() => {
+    if (stableSource == null) return;
+
+    setState(LOADING);
     if (onLoadStart) onLoadStart();
 
-    loadInput.current = nextInput;
     const requestId = ImageLoader.load(
-      nextInput,
+      stableSource,
       function load(result) {
-        updateState(LOADED);
+        setState(LOADED);
         setLoadedUri(result.uri);
         if (onLoad) onLoad(result);
         if (onLoadEnd) onLoadEnd();
       },
       function error() {
-        updateState(ERRORED);
+        setState(ERRORED);
         if (onError) {
           onError({
             nativeEvent: {
-              error: `Failed to load resource ${uri} (404)`
+              error: `Failed to load resource ${stableSource.uri} (404)`
             }
           });
         }
@@ -365,7 +377,7 @@ const useSource = (
 
     const effectCleanup = () => ImageLoader.release(requestId);
     return effectCleanup;
-  }, [updateState, onError, onLoad, onLoadEnd, onLoadStart, source]);
+  }, [onError, onLoad, onLoadEnd, onLoadStart, stableSource]);
 
   return {
     state,

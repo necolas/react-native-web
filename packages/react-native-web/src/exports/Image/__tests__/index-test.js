@@ -432,6 +432,21 @@ describe('components/Image', () => {
         expect.any(Function)
       );
     });
+
+    // A common case is `source` declared as an inline object, which cause is to be a
+    // new object (with the same content) each time parent component renders
+    test('it still loads the image if source object is changed', () => {
+      ImageLoader.load.mockImplementation(() => {});
+
+      const releaseSpy = jest.spyOn(ImageLoader, 'release');
+
+      const uri = 'https://google.com/favicon.ico';
+      const { rerender } = render(<Image source={{ uri }} />);
+      rerender(<Image source={{ uri }} />);
+
+      // when the underlying source didn't change we expect the initial request is not cancelled due to re-render
+      expect(releaseSpy).not.toHaveBeenCalled();
+    });
   });
 
   describe('prop "style"', () => {
