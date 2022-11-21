@@ -1319,7 +1319,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     const next = {
       // OffsetTop gets the correct offset for each cell for inverted lists beacuse it ignores
       // parent's transformations (like 'transform: [{scaleY: -1}]').
-      offset: !this.props.horizontal ? e.nativeEvent.target.offsetTop : layout.x,
+      offset: !horizontalOrDefault(this.props.horizontal) ? e.nativeEvent.target.offsetTop : e.nativeEvent.target.offsetLeft,
       length: this._selectLength(layout),
       index,
       inLayout: true,
