@@ -7,13 +7,17 @@
  * @flow
  */
 
+import type { ImageSource, ImageResult } from './types';
+
 const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
   static _entries = {};
 
-  static has(uri: string): boolean {
+  static has(uri: ?string): boolean {
+    if (uri == null) return false;
+
     const entries = ImageUriCache._entries;
     const isDataUri = dataUriPattern.test(uri);
     return isDataUri || Boolean(entries[uri]);
@@ -118,7 +122,7 @@ const ImageLoader = {
       clearInterval(interval);
     }
   },
-  has(uri: string): boolean {
+  has(uri: ?string): boolean {
     return ImageUriCache.has(uri);
   },
   load(
@@ -205,13 +209,6 @@ const ImageLoader = {
   }
 };
 
-type ImageSource = { uri: string, headers?: { [key: string]: string } };
-
-type ImageResult = {
-  uri: string,
-  width: number,
-  height: number,
-  nativeEvent: Event
-};
+export { ImageSource, ImageResult } from './types';
 
 export default ImageLoader;

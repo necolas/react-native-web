@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { ImageResult } from '../../modules/ImageLoader';
 import type { ColorValue, GenericStyleProp } from '../../types';
 import type { ViewProps } from '../View/types';
 
@@ -103,7 +104,7 @@ export type ImageStyle = {
 };
 
 export type ImageLoadingProps = {|
-  onLoad?: (e: any) => void,
+  onLoad?: (e: ImageResult) => void,
   onLoadStart?: () => void,
   onLoadEnd?: () => void,
   onError?: ({ nativeEvent: { error: string } }) => void,
