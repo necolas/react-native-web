@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ImageProps, Source } from './types';
+import type { ImageProps, Source, ImageLoadingProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -296,13 +296,6 @@ ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
-type UseSourceParams = {
-  onLoad?: Function,
-  onLoadStart?: Function,
-  onLoadEnd?: Function,
-  onError?: Function
-};
-
 /**
  * Image loading/state management hook
  * @param params
@@ -310,7 +303,7 @@ type UseSourceParams = {
  * @returns {{state: string, uri: string}}
  */
 const useSource = (
-  { onLoad, onLoadStart, onLoadEnd, onError }: UseSourceParams,
+  { onLoad, onLoadStart, onLoadEnd, onError }: ImageLoadingProps,
   source: ?Source
 ): { state: string, loadedUri: string } => {
   const lastLoadedSource = React.useRef();

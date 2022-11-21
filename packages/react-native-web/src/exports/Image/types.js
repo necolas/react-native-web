@@ -102,17 +102,21 @@ export type ImageStyle = {
   tintColor?: ColorValue
 };
 
+export type ImageLoadingProps = {|
+  onLoad?: (e: any) => void,
+  onLoadStart?: () => void,
+  onLoadEnd?: () => void,
+  onError?: ({ nativeEvent: { error: string } }) => void,
+  onProgress?: (e: any) => void
+|};
+
 export type ImageProps = {
-  ...ViewProps,
+  ...$Exact<ViewProps>,
+  ...ImageLoadingProps,
   blurRadius?: number,
   defaultSource?: Source,
   draggable?: boolean,
-  onError?: (e: any) => void,
   onLayout?: (e: any) => void,
-  onLoad?: (e: any) => void,
-  onLoadEnd?: (e: any) => void,
-  onLoadStart?: (e: any) => void,
-  onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
   source?: Source,
   style?: GenericStyleProp<ImageStyle>
