@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { ImageResult } from '../../modules/ImageLoader';
 import type { ImageProps, Source, ImageLoadingProps } from './types';
 
 import * as React from 'react';
@@ -108,6 +109,7 @@ function resolveAssetDimensions(source) {
   }
 }
 
+// Todo: move this to ImageLoader, and handle URI create by URL.createObjectURL
 function resolveAssetUri(source): ?string {
   let uri = null;
   if (typeof source === 'number') {
@@ -305,26 +307,66 @@ ImageWithStatics.queryCache = function (uris) {
 const useSource = (
   { onLoad, onLoadStart, onLoadEnd, onError }: ImageLoadingProps,
   source: ?Source
-): { state: string, loadedUri: string } => {
-  const lastLoadedSource = React.useRef();
-  const [loadedUri, setLoadedUri] = React.useState('');
+): { state: string, loadedUri: ?string } => {
+  const input = React.useRef({ uri: '' });
+  const [requestId, setRequestId] = React.useState(-1);
   const [state, setState] = React.useState(() => {
     const uri = resolveAssetUri(source);
-    if (uri != null) {
-      const isLoaded = ImageLoader.has(uri);
-      if (isLoaded) return LOADED;
-    }
-    return IDLE;
+
+    return {
+      // Use the resolved URI for cases where it was already loaded or preloaded
+      result: { uri },
+      status: ImageLoader.has(uri) ? LOADED : IDLE
+    };
   });
 
-  // This object would only change when load related fields change
-  // We try to maintain strict object reference to prevent the effect hook running due to object change
-  const stableSource = React.useMemo(() => {
+  const handleLoad = React.useCallback(
+    (result: ImageResult) => {
+      if (onLoad) onLoad(result);
+      if (onLoadEnd) onLoadEnd();
+      setState({ status: LOADED, result });
+    },
+    [onLoad, onLoadEnd]
+  );
+
+  const handleError = React.useCallback(
+    (error) => {
+      if (onError) {
+        onError({
+          nativeEvent: {
+            error: `Failed to load resource ${input.current.uri} (404)`
+          }
+        });
+      }
+      if (onLoadEnd) onLoadEnd();
+
+      setState({ status: ERRORED, result: error });
+    },
+    [onError, onLoadEnd]
+  );
+
+  const startLoading = React.useCallback(
+    (nextInput) => {
+      if (onLoadStart) onLoadStart();
+      const requestId = ImageLoader.load(nextInput, handleLoad, handleError);
+      setRequestId(requestId);
+
+      setState((prevState) => ({ ...prevState, status: LOADING }));
+    },
+    [handleError, handleLoad, onLoadStart]
+  );
+
+  // Cleanup on umount or after starting a new request
+  React.useEffect(() => {
+    return () => {
+      if (requestId > 0) ImageLoader.release(requestId);
+    };
+  }, [requestId]);
+
+  // (Maybe) start loading on source changes
+  React.useEffect(() => {
     const uri = resolveAssetUri(source);
-    if (uri == null) {
-      lastLoadedSource.current = null;
-      return null;
-    }
+    if (uri == null) return;
 
     let headers;
     if (source && typeof source.headers === 'object') {
@@ -332,49 +374,17 @@ const useSource = (
     }
 
     const nextInput = { uri, headers };
-    if (
-      JSON.stringify(nextInput) !== JSON.stringify(lastLoadedSource.current)
-    ) {
-      lastLoadedSource.current = nextInput;
-    }
 
-    return lastLoadedSource.current;
-  }, [source]);
+    // Do nothing if the input is virtually the same as the last loaded source
+    if (JSON.stringify(nextInput) === JSON.stringify(input.current)) return;
 
-  React.useEffect(() => {
-    if (stableSource == null) return;
-
-    setState(LOADING);
-    if (onLoadStart) onLoadStart();
-
-    const requestId = ImageLoader.load(
-      stableSource,
-      function load(result) {
-        setState(LOADED);
-        setLoadedUri(result.uri);
-        if (onLoad) onLoad(result);
-        if (onLoadEnd) onLoadEnd();
-      },
-      function error() {
-        setState(ERRORED);
-        if (onError) {
-          onError({
-            nativeEvent: {
-              error: `Failed to load resource ${stableSource.uri} (404)`
-            }
-          });
-        }
-        if (onLoadEnd) onLoadEnd();
-      }
-    );
-
-    const effectCleanup = () => ImageLoader.release(requestId);
-    return effectCleanup;
-  }, [onError, onLoad, onLoadEnd, onLoadStart, stableSource]);
+    input.current = nextInput;
+    startLoading(nextInput);
+  }, [source, startLoading]);
 
   return {
-    state,
-    loadedUri
+    state: state.status,
+    loadedUri: state.result.uri
   };
 };
 
