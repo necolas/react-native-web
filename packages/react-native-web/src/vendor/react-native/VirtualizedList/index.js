@@ -732,12 +732,29 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
     // For issue https://github.com/necolas/react-native-web/issues/995
     this.invertedWheelEventHandler = (ev: any) => {
+      const scrollOffset = this.props.horizontal ? ev.target.scrollLeft : ev.target.scrollTop;
+      const scrollLength = this.props.horizontal ? ev.target.scrollWidth : ev.target.scrollHeight;
+      const clientLength = this.props.horizontal ? ev.target.clientWidth : ev.target.clientHeight;
+      const isEventTargetScrollable = scrollLength > clientLength;
+      const delta = this.props.horizontal
+        ? ev.deltaX || ev.wheelDeltaX
+        : ev.deltaY || ev.wheelDeltaY;
+      let leftoverDelta = delta;
+      if (isEventTargetScrollable) {
+        leftoverDelta = delta < 0
+          ? Math.min(delta + scrollOffset, 0)
+          : Math.max(delta - (scrollLength - clientLength - scrollOffset), 0);
+      }
+      const targetDelta = delta - leftoverDelta;
+
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
         const node = (this._scrollRef: any).getScrollableNode();
         if (this.props.horizontal) {
-          node.scrollLeft -= ev.deltaX || ev.wheelDeltaX
+          ev.target.scrollLeft += targetDelta;
+          node.scrollLeft -= leftoverDelta;
         } else {
-          node.scrollTop -= ev.deltaY || ev.wheelDeltaY
+          ev.target.scrollTop += targetDelta;
+          node.scrollTop -= leftoverDelta;
         }
         ev.preventDefault();
       }
