@@ -52,13 +52,13 @@ function update() {
   }
 
   const win = window;
-  const docEl = win.document.documentElement;
+  const visualViewport = win.visualViewport;
 
   dimensions.window = {
     fontScale: 1,
-    height: docEl.clientHeight,
+    height: Math.round(visualViewport.height),
     scale: win.devicePixelRatio || 1,
-    width: docEl.clientWidth
+    width: Math.round(visualViewport.width)
   };
 
   dimensions.screen = {
@@ -128,5 +128,5 @@ export default class Dimensions {
 }
 
 if (canUseDOM) {
-  window.addEventListener('resize', handleResize, false);
+  window.visualViewport.addEventListener('resize', handleResize, false);
 }
