@@ -51,27 +51,37 @@ function update() {
     return;
   }
 
+  let updated = false;
   const win = window;
   const docEl = win.document.documentElement;
 
-  dimensions.window = {
+  const newWindow = {
     fontScale: 1,
     height: docEl.clientHeight,
     scale: win.devicePixelRatio || 1,
     width: docEl.clientWidth
   };
 
-  dimensions.screen = {
+  const newScreen = {
     fontScale: 1,
     height: win.screen.height,
     scale: win.devicePixelRatio || 1,
     width: win.screen.width
   };
+  
+  if (JSON.stringify(newWindow) !== JSON.stringify(dimensions.window)) {
+    updated = true;
+    dimensions.window = newWindow;
+  }
+  if (JSON.stringify(newScreen) !== JSON.stringify(dimensions.screen)) {
+    updated = true;
+    dimensions.screen = newScreen;
+  }
+  return updated;
 }
 
 function handleResize() {
-  update();
-  if (Array.isArray(listeners['change'])) {
+  if (update() && Array.isArray(listeners['change'])) {
     listeners['change'].forEach((handler) => handler(dimensions));
   }
 }
