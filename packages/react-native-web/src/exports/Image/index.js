@@ -315,14 +315,14 @@ const useSource = (
 
     return {
       // Use the resolved URI for cases where it was already loaded or preloaded
-      result: { uri },
+      result: { source: { uri } },
       status: ImageLoader.has(uri) ? LOADED : IDLE
     };
   });
 
   const handleLoad = React.useCallback(
     (result: ImageResult) => {
-      if (onLoad) onLoad(result);
+      if (onLoad) onLoad({ nativeEvent: result });
       if (onLoadEnd) onLoadEnd();
       setState({ status: LOADED, result });
     },
@@ -384,7 +384,7 @@ const useSource = (
 
   return {
     state: state.status,
-    loadedUri: state.result.uri
+    loadedUri: state.result.source.uri
   };
 };
 

@@ -14,8 +14,9 @@ export type ImageSource = {|
 |};
 
 export type ImageResult = {|
-  uri: string,
-  width: number,
-  height: number,
-  nativeEvent: Event
+  source: {
+    uri: string,
+    width: number,
+    height: number
+  }
 |};
