@@ -173,7 +173,7 @@ describe('components/Image', () => {
       expect(onLoadEndStub.mock.calls.length).toBe(2);
     });
 
-    test('is called on update if "headers" are different', () => {
+    test('is called on update if "headers" are modified', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
@@ -257,7 +257,9 @@ describe('components/Image', () => {
       expect(onLoadEndStub.mock.calls.length).toBe(1);
     });
 
-    test('is not called on update if "headers" and "uri" the same', () => {
+    // This test verifies that wen source is declared in-line and the parent component
+    // re-renders we aren't restarting the load process because the source is structurally equal
+    test('is not called on update when "headers" and "uri" are not modified', () => {
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
