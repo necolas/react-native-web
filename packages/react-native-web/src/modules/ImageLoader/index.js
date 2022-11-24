@@ -152,7 +152,7 @@ const ImageLoader = {
 
     image.onerror = onError;
     image.onload = handleLoad;
-    requests[id] = { image };
+    requests[id] = { image, source };
 
     // When headers are supplied we can't load the image through `image.src`, but we `fetch` it as an AJAX request
     if (source.headers) {
@@ -207,6 +207,16 @@ const ImageLoader = {
       }
     });
     return Promise.resolve(result);
+  },
+  resolveBlobUri(uri: string): string {
+    const request = Object.values(requests).find(
+      ({ source }) => source.uri === uri
+    );
+    if (request) {
+      return request.image.src;
+    }
+
+    return uri;
   }
 };
 

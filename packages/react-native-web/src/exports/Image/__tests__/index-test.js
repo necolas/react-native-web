@@ -21,9 +21,11 @@ describe('components/Image', () => {
   beforeEach(() => {
     ImageUriCache._entries = {};
     window.Image = jest.fn(() => ({}));
-    ImageLoader.load = jest.fn().mockImplementation((src, onLoad, onError) => {
-      onLoad(src);
-    });
+    ImageLoader.load = jest
+      .fn()
+      .mockImplementation((source, onLoad, onError) => {
+        onLoad({ source });
+      });
   });
 
   afterEach(() => {
@@ -309,6 +311,7 @@ describe('components/Image', () => {
         null,
         '',
         {},
+        [],
         { uri: '' },
         { uri: 'https://google.com' },
         { uri: 'https://google.com', headers: { 'x-custom-header': 'abc123' } }
@@ -369,19 +372,32 @@ describe('components/Image', () => {
     test('is correctly updated only when loaded if defaultSource provided', () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uri = 'https://testing.com/fullSize.jpg';
-      let loadCallback;
-      ImageLoader.load = jest
-        .fn()
-        .mockImplementationOnce((_, onLoad, onError) => {
-          loadCallback = onLoad;
-        });
+      const calls = [];
+
+      // Capture calls and resolve them after render
+      ImageLoader.load = jest.fn().mockImplementation((source, onLoad) => {
+        calls.push({ source, onLoad });
+      });
+
       const { container } = render(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
       );
-      expect(container.firstChild).toMatchSnapshot();
+
+      // Both defaultSource and source are loaded at the same time
+      // But we assume defaultSource is loaded quicker
       act(() => {
-        loadCallback({ uri });
+        const call = calls.find(({ source }) => source.uri === defaultUri);
+        call.onLoad({ source: call.source });
       });
+
+      expect(container.firstChild).toMatchSnapshot();
+
+      // After a while the main source loads as well
+      act(() => {
+        const call = calls.find(({ source }) => source.uri === uri);
+        call.onLoad({ source: call.source });
+      });
+
       expect(container.firstChild).toMatchSnapshot();
     });
 
