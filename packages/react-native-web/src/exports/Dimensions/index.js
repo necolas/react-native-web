@@ -73,10 +73,12 @@ function update() {
     updated = true;
     dimensions.window = newWindow;
   }
+  
   if (JSON.stringify(newScreen) !== JSON.stringify(dimensions.screen)) {
     updated = true;
     dimensions.screen = newScreen;
   }
+  
   return updated;
 }
 
