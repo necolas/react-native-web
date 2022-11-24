@@ -10,13 +10,15 @@
 
 export type ImageSource = {|
   uri: string,
-  headers?: { [key: string]: string }
+  headers?: { [key: string]: string },
+  width?: ?number,
+  height?: ?number
 |};
 
 export type ImageResult = {|
-  source: {
+  source: {|
     uri: string,
     width: number,
     height: number
-  }
+  |}
 |};

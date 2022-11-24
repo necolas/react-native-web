@@ -104,7 +104,7 @@ export type ImageStyle = {
 };
 
 export type ImageLoadingProps = {|
-  onLoad?: (e: ImageResult) => void,
+  onLoad?: (e: { nativeEvent: ImageResult }) => void,
   onLoadStart?: () => void,
   onLoadEnd?: () => void,
   onError?: ({ nativeEvent: { error: string } }) => void,

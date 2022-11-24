@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ImageResult } from '../../modules/ImageLoader';
+import type { ImageResult, ImageSource } from '../../modules/ImageLoader';
 import type { ImageProps, Source, ImageLoadingProps } from './types';
 
 import * as React from 'react';
@@ -100,7 +100,7 @@ function resolveAssetDimensions(source: ImageSource) {
   return { height, width };
 }
 
-function resolveSource(source: ?Source): Source {
+function resolveSource(source: ?Source): ImageSource {
   let resolvedSource = { uri: '' };
 
   if (typeof source === 'number') {
@@ -117,7 +117,7 @@ function resolveSource(source: ?Source): Source {
 
     return resolveSource(source[0]);
   } else if (source && typeof source.uri === 'string') {
-    resolvedSource = resolveObjectSource((source: Source));
+    resolvedSource = resolveObjectSource(source);
   }
 
   if (resolvedSource.uri) {
@@ -135,6 +135,8 @@ function resolveSource(source: ?Source): Source {
 // get the URI from the packager
 function resolveNumericSource(source: number): ImageSource {
   const asset = getAssetByID(source);
+  if (!asset) return { uri: '' };
+
   let scale = asset.scales[0];
   if (asset.scales.length > 1) {
     const preferredScale = PixelRatio.get();
@@ -148,25 +150,22 @@ function resolveNumericSource(source: number): ImageSource {
 
   const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
   const uri = `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}`;
+  const { height, width } = asset;
 
-  return {
-    uri,
-    width: asset.width,
-    height: asset.height
-  };
+  return { uri, height, width };
 }
 
 function resolveStringSource(source: string): ImageSource {
   return { uri: source };
 }
 
-function resolveObjectSource(source: Source): ImageSource {
-  return source;
+function resolveObjectSource(source: Object): ImageSource {
+  return (source: ImageSource);
 }
 
 function resolveSvgDataUriSource(
-  source: Source,
-  match: RegExpMatchArray
+  source: Object,
+  match: Array<string>
 ): ImageSource {
   const [, prefix, svg] = match;
   // inline SVG markup may contain characters (e.g., #, ") that need to be escaped
@@ -189,10 +188,10 @@ function resolveBlobUri(source: ImageSource): ImageSource {
 function getSourceToDisplay(main, fallback) {
   if (main.status === LOADED) return main.source;
 
-  if (main.satus === LOADING && !fallback.source.uri) {
+  if (main.status === LOADING && !fallback.source.uri) {
     // Most of the time it's safe to use the main URI as img.src before loading
     // But it should not be used when the image would be loaded using `fetch` with headers
-    if (!main.headers) return main.source;
+    if (!main.source.headers) return main.source;
   }
 
   return fallback.source;
@@ -348,19 +347,17 @@ ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
-// Todo: see if we can just use `result` as `source` (width|height might cause problems)
-
 /**
  * Image loading/state management hook
  * @param callbacks
  * @param source
- * @returns {{state: string, uri: string}}
+ * @returns {{status: string, source: ImageSource}}
  */
 const useSource = (
   callbacks: ImageLoadingProps,
   source: ?Source
-): { status: IDLE | LOADING | LOADED | ERRORED, source: ImageSource } => {
-  const [resolvedSource, setResolvedSource] = React.useState(() =>
+): { status: string, source: ImageSource } => {
+  const [resolvedSource, setResolvedSource] = React.useState<ImageSource>(() =>
     resolveSource(source)
   );
 
@@ -368,7 +365,7 @@ const useSource = (
     ImageLoader.has(resolveSource.uri) ? LOADED : IDLE
   );
 
-  const [result, setResult] = React.useState(resolvedSource);
+  const [result, setResult] = React.useState<ImageSource>(resolvedSource);
 
   // Trigger a resolved source change when necessary
   React.useEffect(() => {
@@ -401,7 +398,7 @@ const useSource = (
       if (onLoadEnd) onLoadEnd();
 
       setStatus(LOADED);
-      setResult(result.source);
+      setResult({ ...resolvedSource, ...result.source });
     }
 
     function handleError() {

@@ -209,11 +209,11 @@ const ImageLoader = {
     return Promise.resolve(result);
   },
   resolveBlobUri(uri: string): string {
-    const request = Object.values(requests).find(
-      ({ source }) => source.uri === uri
-    );
-    if (request) {
-      return request.image.src;
+    for (const key in requests) {
+      const request = requests[key];
+      if (request.source.uri === uri) {
+        return request.image.src;
+      }
     }
 
     return uri;
