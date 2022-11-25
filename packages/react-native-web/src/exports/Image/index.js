@@ -124,8 +124,6 @@ function resolveSource(source: ?Source): ImageSource {
     const match = resolvedSource.uri.match(svgDataUriPattern);
     if (match) {
       resolvedSource = resolveSvgDataUriSource(resolvedSource, match);
-    } else {
-      resolvedSource = resolveBlobUri(resolvedSource);
     }
   }
 
@@ -178,11 +176,8 @@ function resolveSvgDataUriSource(
 }
 
 // resolve any URI that might have a local blob URL create by `createObjectURL`
-function resolveBlobUri(source: ImageSource): ImageSource {
-  return {
-    ...source,
-    uri: ImageLoader.resolveBlobUri(source.uri) || source.uri
-  };
+function resolveBlobUri(source: ImageSource): string {
+  return ImageLoader.resolveBlobUri(source.uri);
 }
 
 function getSourceToDisplay(main, fallback) {
@@ -242,7 +237,7 @@ const Image: React.AbstractComponent<
   const fallbackSource = useSource(imageLoadingProps, defaultSource);
   const mainSource = useSource(imageLoadingProps, source);
   const availableSource = getSourceToDisplay(mainSource, fallbackSource);
-  const displayImageUri = availableSource.uri;
+  const displayImageUri = resolveBlobUri(availableSource);
   const imageSizeStyle = resolveAssetDimensions(availableSource);
 
   const [layout, updateLayout] = React.useState({});
