@@ -81,12 +81,13 @@ const ImageLoader = {
   release(requestId: number) {
     const request = requests[requestId];
     if (request) {
-      const { image, cleanup } = request;
+      const { image, cleanup, source } = request;
       if (cleanup) cleanup();
 
       image.onerror = null;
       image.onload = null;
       image.src = '';
+      ImageUriCache.remove(source.uri);
       delete requests[requestId];
     }
   },
@@ -135,7 +136,8 @@ const ImageLoader = {
 
     const handleLoad = () => {
       // avoid blocking the main thread
-      const onDecode = () =>
+      const onDecode = () => {
+        ImageUriCache.add(source.uri);
         onLoad({
           source: {
             uri: image.src,
@@ -143,6 +145,7 @@ const ImageLoader = {
             height: image.naturalHeight
           }
         });
+      };
 
       // Safari currently throws exceptions when decoding svgs.
       // We want to catch that error and allow the load handler
