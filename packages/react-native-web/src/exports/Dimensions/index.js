@@ -52,13 +52,24 @@ function update() {
   }
 
   const win = window;
-  const visualViewport = win.visualViewport;
+  let height;
+  let width;
+
+  if (win.visualViewport) {
+    const visualViewport = win.visualViewport;
+    height = Math.round(visualViewport.height);
+    width = Math.round(visualViewport.width);
+  } else {
+    const docEl = win.document.documentElement;
+    height = docEl.clientHeight;
+    width = docEl.clientWidth;
+  }
 
   dimensions.window = {
     fontScale: 1,
-    height: Math.round(visualViewport.height),
+    height,
     scale: win.devicePixelRatio || 1,
-    width: Math.round(visualViewport.width)
+    width
   };
 
   dimensions.screen = {
@@ -128,5 +139,9 @@ export default class Dimensions {
 }
 
 if (canUseDOM) {
-  window.visualViewport.addEventListener('resize', handleResize, false);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', handleResize, false);
+  } else {
+    window.addEventListener('resize', handleResize, false);
+  }
 }
