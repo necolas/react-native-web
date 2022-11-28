@@ -215,6 +215,17 @@ describe('compiler/createReactDOMStyle', () => {
     });
   });
 
+  test('verticalAlign', () => {
+    expect(
+      createReactDOMStyle({
+        verticalAlign: 'top',
+        textAlignVertical: 'center'
+      })
+    ).toEqual({
+      verticalAlign: 'top'
+    });
+  });
+
   describe('transform', () => {
     // passthrough if transform value is ever a string
     test('string', () => {

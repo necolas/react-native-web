@@ -52,7 +52,6 @@ export type TextStyle = {
     | 'left'
     | 'right'
     | 'start',
-  textAlignVertical?: ?string,
   textDecorationColor?: ?ColorValue,
   textDecorationLine?:
     | 'none'
@@ -67,6 +66,7 @@ export type TextStyle = {
     | 'geometricPrecision'
     | 'optimizeLegibility'
     | 'optimizeSpeed',
+  textShadow?: ?string,
   textShadowColor?: ?ColorValue,
   textShadowOffset?: {| width?: number, height?: number |},
   textShadowRadius?: ?number,
@@ -79,13 +79,16 @@ export type TextStyle = {
     | 'isolate-override'
     | 'plaintext',
   userSelect?: 'none' | 'text',
+  verticalAlign?: ?string,
   whiteSpace?: ?string,
   wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all',
   wordWrap?: ?string,
   writingDirection?: 'auto' | 'ltr' | 'rtl',
   /* @platform web */
   MozOsxFontSmoothing?: ?string,
-  WebkitFontSmoothing?: ?string
+  WebkitFontSmoothing?: ?string,
+  // deprecated
+  textAlignVertical?: ?string
 };
 
 export type TextProps = {

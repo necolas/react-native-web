@@ -167,7 +167,13 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
         resolvedStyle[prop] = value;
       }
     } else if (prop === 'textAlignVertical') {
-      resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
+      warnOnce(
+        'textAlignVertical',
+        '"textAlignVertical" style is deprecated. Use "verticalAlign".'
+      );
+      if (resolvedStyle.verticalAlign == null) {
+        resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
+      }
     } else if (prop === 'textDecorationLine') {
       // use 'text-decoration' for browsers that only support CSS2
       // text-decoration (e.g., IE, Edge)
