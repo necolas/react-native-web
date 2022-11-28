@@ -49,13 +49,3 @@ cd my-app
 npm install react-native-web
 npm start
 ```
-
-### Integrations
-
-Visit the [React Native Directory](https://reactnative.directory/?web=true) to find React Native packages with known web support. Popular web frameworks maintain example integrations.
-
-* [Docz](https://github.com/doczjs/docz/tree/master/examples/react-native)
-* [Gatsby](https://github.com/slorber/gatsby-plugin-react-native-web)
-* [Next.js](https://github.com/zeit/next.js/tree/master/examples/with-react-native-web) (and [example recipes](https://gist.github.com/necolas/f9034091723f1b279be86c7429eb0c96))
-* [Razzle](https://github.com/jaredpalmer/razzle/tree/master/examples/with-react-native-web)
-* [Styleguidist](https://github.com/styleguidist/react-styleguidist/tree/master/examples/react-native)
