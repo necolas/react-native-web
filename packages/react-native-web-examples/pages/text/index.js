@@ -76,27 +76,27 @@ function FontVariant() {
   return (
     <View>
       <Heading>fontVariant</Heading>
-      <Text style={{ fontVariant: ['small-caps'] }}>Small Caps{'\n'}</Text>
+      <Text style={{ fontVariant: 'small-caps' }}>Small Caps{'\n'}</Text>
       <Text
         style={{
-          fontVariant: ['oldstyle-nums']
+          fontVariant: 'oldstyle-nums'
         }}
       >
         Old Style nums 0123456789{'\n'}
       </Text>
       <Text
         style={{
-          fontVariant: ['lining-nums']
+          fontVariant: 'lining-nums'
         }}
       >
         Lining nums 0123456789{'\n'}
       </Text>
-      <Text style={{ fontVariant: ['tabular-nums'] }}>
+      <Text style={{ fontVariant: 'tabular-nums' }}>
         Tabular nums{'\n'}
         1111{'\n'}
         2222{'\n'}
       </Text>
-      <Text style={{ fontVariant: ['proportional-nums'] }}>
+      <Text style={{ fontVariant: 'proportional-nums' }}>
         Proportional nums{'\n'}
         1111{'\n'}
         2222{'\n'}

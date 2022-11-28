@@ -9,6 +9,7 @@
 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 import canUseDOM from '../../../modules/canUseDom';
+import { warnOnce } from '../../../modules/warnOnce';
 
 type Style = { [key: string]: any };
 
@@ -157,7 +158,13 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       }
     } else if (prop === 'fontVariant') {
       if (Array.isArray(value) && value.length > 0) {
+        warnOnce(
+          'fontVariant',
+          '"fontVariant" style array value is deprecated. Use space-separated values.'
+        );
         resolvedStyle.fontVariant = value.join(' ');
+      } else {
+        resolvedStyle[prop] = value;
       }
     } else if (prop === 'textAlignVertical') {
       resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;

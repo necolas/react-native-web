@@ -193,6 +193,12 @@ describe('compiler/createReactDOMStyle', () => {
 
   test('fontVariant', () => {
     expect(
+      createReactDOMStyle({ fontVariant: 'common-ligatures small-caps' })
+    ).toEqual({
+      fontVariant: 'common-ligatures small-caps'
+    });
+
+    expect(
       createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })
     ).toEqual({
       fontVariant: 'common-ligatures small-caps'
