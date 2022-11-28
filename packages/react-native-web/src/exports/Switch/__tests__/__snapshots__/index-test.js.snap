@@ -9,7 +9,7 @@ exports[`components/Switch disabled when "true" and value="false", a disabled ch
 
 exports[`components/Switch disabled when "true" and value="false", a disabled checkbox is rendered with provided thumbColor 1`] = `
 <div
-  class="css-view-175oi2r r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-left-1fe0xdi r-transform-1sncvnh r-transitionDuration-13tjlyg"
+  class="css-view-175oi2r r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-left-1fe0xdi r-transform-agouwx r-transitionDuration-13tjlyg"
   style="background-color: rgb(255, 255, 255); height: 20px; margin-left: 0px; width: 20px;"
 />
 `;
@@ -23,7 +23,7 @@ exports[`components/Switch disabled when "true" and value="false", a disabled ch
 
 exports[`components/Switch disabled when "true" and value="true", a disabled checkbox is rendered with provided activeThumbColor 1`] = `
 <div
-  class="css-view-175oi2r r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-transform-1sncvnh r-transitionDuration-13tjlyg r-left-7b7h2f"
+  class="css-view-175oi2r r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-transform-agouwx r-transitionDuration-13tjlyg r-left-7b7h2f"
   style="background-color: rgb(255, 255, 255); height: 20px; margin-left: -20px; width: 20px;"
 />
 `;

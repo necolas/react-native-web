@@ -25,12 +25,7 @@ describe('StyleSheet/compile', () => {
         pointerEvents: 'box-only',
         start: '12.34%',
         textAlign: 'start',
-        transform: [
-          {
-            translateX: 50,
-            scale: -1
-          }
-        ]
+        transform: 'translateX(50px) scale(-1)'
       });
 
       expect(result).toMatchInlineSnapshot(`
@@ -61,7 +56,7 @@ describe('StyleSheet/compile', () => {
               "r-textAlign-fdjqy7",
               "r-textAlign-1ff274t",
             ],
-            "transform": "r-transform-1ehiua4",
+            "transform": "r-transform-d7xd9i",
           },
           [
             [
@@ -165,7 +160,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-transform-1ehiua4{transform:translateX(50px);}",
+                ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
               ],
               2.2,
             ],
@@ -179,19 +174,14 @@ describe('StyleSheet/compile', () => {
     test('converts style to classic CSS', () => {
       const result = classic(
         {
-          animationDirection: ['alternate', 'alternate-reverse'],
+          animationDirection: 'alternate,alternate-reverse',
           animationKeyframes: [
             { '0%': { top: 0 }, '50%': { top: 5 }, '100%': { top: 10 } },
             { from: { left: 0 }, to: { left: 10 } }
           ],
           marginHorizontal: 10,
           font: '14px System',
-          transform: [
-            {
-              translateX: 50,
-              scale: -1
-            }
-          ]
+          transform: 'translateX(50px) scale(-1)'
         },
         'text'
       );

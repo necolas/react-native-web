@@ -99,6 +99,10 @@ const mapTransform = (transform: Object): string => {
 export const createTransformValue = (style: Style): string => {
   let transform = style.transform;
   if (Array.isArray(style.transform)) {
+    warnOnce(
+      'transform',
+      '"transform" style array value is deprecated. Use space-separated string functions, e.g., "scaleX(2) rotateX(15deg)".'
+    );
     transform = style.transform.map(mapTransform).join(' ');
   }
   return transform;

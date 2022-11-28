@@ -270,24 +270,26 @@ export type ShadowStyles = {|
 export type TransformStyles = {|
   perspective?: ?NumberOrString,
   perspectiveOrigin?: ?string,
-  transform?: Array<
-    | {| +perspective: NumberOrString |}
-    | {| +rotate: string |}
-    | {| +rotateX: string |}
-    | {| +rotateY: string |}
-    | {| +rotateZ: string |}
-    | {| +scale: number |}
-    | {| +scaleX: number |}
-    | {| +scaleY: number |}
-    | {| +scaleZ: number |}
-    | {| +scale3d: string |}
-    | {| +skewX: string |}
-    | {| +skewY: string |}
-    | {| +translateX: NumberOrString |}
-    | {| +translateY: NumberOrString |}
-    | {| +translateZ: NumberOrString |}
-    | {| +translate3d: string |}
-  >,
+  transform?:
+    | ?string
+    | Array<
+        | {| +perspective: NumberOrString |}
+        | {| +rotate: string |}
+        | {| +rotateX: string |}
+        | {| +rotateY: string |}
+        | {| +rotateZ: string |}
+        | {| +scale: number |}
+        | {| +scaleX: number |}
+        | {| +scaleY: number |}
+        | {| +scaleZ: number |}
+        | {| +scale3d: string |}
+        | {| +skewX: string |}
+        | {| +skewY: string |}
+        | {| +translateX: NumberOrString |}
+        | {| +translateY: NumberOrString |}
+        | {| +translateZ: NumberOrString |}
+        | {| +translate3d: string |}
+      >,
   transformOrigin?: ?string,
   transformStyle?: ?('flat' | 'preserve-3d')
 |};
