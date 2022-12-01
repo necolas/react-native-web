@@ -9,6 +9,7 @@
 
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
+import { warnOnce } from '../../modules/warnOnce';
 
 const emptyObject = {};
 
@@ -55,6 +56,29 @@ export const createTextShadowValue = (style: Object): void | string => {
   }
 };
 
+const PROPERTIES_STANDARD: { [key: string]: string } = {
+  borderBottomEndRadius: 'borderEndEndRadius',
+  borderBottomStartRadius: 'borderEndStartRadius',
+  borderTopEndRadius: 'borderStartEndRadius',
+  borderTopStartRadius: 'borderStartStartRadius',
+  borderEndColor: 'borderInlineEndColor',
+  borderEndStyle: 'borderInlineEndStyle',
+  borderEndWidth: 'borderInlineEndWidth',
+  borderStartColor: 'borderInlineStartColor',
+  borderStartStyle: 'borderInlineStartStyle',
+  borderStartWidth: 'borderInlineStartWidth',
+  end: 'insetInlineEnd',
+  marginEnd: 'marginInlineEnd',
+  marginHorizontal: 'marginInline',
+  marginStart: 'marginInlineStart',
+  marginVertical: 'marginBlock',
+  paddingEnd: 'paddingInlineEnd',
+  paddingHorizontal: 'paddingInline',
+  paddingStart: 'paddingInlineStart',
+  paddingVertical: 'paddingBlock',
+  start: 'insetInlineStart'
+};
+
 /**
  * Preprocess styles
  */
@@ -66,12 +90,12 @@ export const preprocess = <T: {| [key: string]: any |}>(
 
   for (const originalProp in style) {
     const originalValue = style[originalProp];
-    let prop = originalProp;
+    let prop = PROPERTIES_STANDARD[originalProp] || originalProp;
     let value = originalValue;
 
     if (
       !Object.prototype.hasOwnProperty.call(style, originalProp) ||
-      originalValue == null
+      (prop !== originalProp && style[prop] != null)
     ) {
       continue;
     }

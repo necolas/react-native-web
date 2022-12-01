@@ -18,7 +18,7 @@ describe('StyleSheet', () => {
       button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
       html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
       input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-      [stylesheet-group=\\"2.2\\"]{}
+      [stylesheet-group=\\"3\\"]{}
       .r-bottom-1p0dtai{bottom:0px;}
       .r-left-1d2f490{left:0px;}
       .r-position-u8s1d{position:absolute;}
@@ -335,8 +335,8 @@ describe('StyleSheet', () => {
         [
           "",
           {
-            "marginLeft": "0px",
-            "marginRight": "0px",
+            "marginLeft": "1px",
+            "marginRight": "11px",
             "right": "12.34%",
             "textAlign": "right",
           },
@@ -361,48 +361,53 @@ describe('StyleSheet', () => {
       const staticStyle = [a, b, c];
       expect(StyleSheet(staticStyle)).toMatchInlineSnapshot(`
         [
-          "r-left-2s0hu9 r-textAlign-fdjqy7 r-marginRight-zso239",
+          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf",
           null,
         ]
       `);
       expect(StyleSheet(staticStyle, { writingDirection }))
         .toMatchInlineSnapshot(`
         [
-          "r-right-1bnbe1j r-textAlign-1ff274t r-marginLeft-1n0xq6e",
+          "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t r-marginInlineEnd-t1sew1",
           null,
         ]
       `);
-      // logical wins
+      const z = StyleSheet.create({ x: { marginRight: 33 } }).x;
+      expect(StyleSheet([staticStyle, z])).toMatchInlineSnapshot(`
+        [
+          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf r-marginRight-j4vy6k",
+          null,
+        ]
+      `);
       expect(
         StyleSheet(
           [
             staticStyle,
             { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
           ],
+
           {
             writingDirection
           }
         )
       ).toMatchInlineSnapshot(`
         [
-          "r-right-1bnbe1j r-textAlign-1ff274t",
+          "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
           {
-            "marginLeft": "0px",
-            "marginRight": "0px",
+            "marginLeft": "1px",
+            "marginRight": "11px",
           },
         ]
       `);
       // logical can be nulled
       expect(
-        StyleSheet([staticStyle, { marginEnd: null, marginLeft: 11 }], {
+        StyleSheet([staticStyle, { marginEnd: null }], {
           writingDirection
         })
       ).toMatchInlineSnapshot(`
         [
-          "r-right-1bnbe1j r-textAlign-1ff274t",
-          {
-            "marginLeft": "11px",
-          },
+          "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
+          null,
         ]
       `);
     });

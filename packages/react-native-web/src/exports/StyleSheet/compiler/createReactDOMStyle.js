@@ -52,6 +52,8 @@ const STYLE_SHORT_FORM_EXPANSIONS = {
     'borderBottomColor',
     'borderLeftColor'
   ],
+  borderBlockColor: ['borderTopColor', 'borderBottomColor'],
+  borderInlineColor: ['borderRightColor', 'borderLeftColor'],
   borderRadius: [
     'borderTopLeftRadius',
     'borderTopRightRadius',
@@ -64,18 +66,52 @@ const STYLE_SHORT_FORM_EXPANSIONS = {
     'borderBottomStyle',
     'borderLeftStyle'
   ],
+  borderBlockStyle: ['borderTopStyle', 'borderBottomStyle'],
+  borderInlineStyle: ['borderRightStyle', 'borderLeftStyle'],
   borderWidth: [
     'borderTopWidth',
     'borderRightWidth',
     'borderBottomWidth',
     'borderLeftWidth'
   ],
-  marginHorizontal: ['marginRight', 'marginLeft'],
-  marginVertical: ['marginTop', 'marginBottom'],
+  borderBlockWidth: ['borderTopWidth', 'borderBottomWidth'],
+  borderInlineWidth: ['borderRightWidth', 'borderLeftWidth'],
+  insetBlock: ['top', 'bottom'],
+  insetInline: ['left', 'right'],
+  marginBlock: ['marginTop', 'marginBottom'],
+  marginInline: ['marginRight', 'marginLeft'],
+  paddingBlock: ['paddingTop', 'paddingBottom'],
+  paddingInline: ['paddingRight', 'paddingLeft'],
   overflow: ['overflowX', 'overflowY'],
   overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
-  paddingHorizontal: ['paddingRight', 'paddingLeft'],
-  paddingVertical: ['paddingTop', 'paddingBottom']
+  borderBlockStartColor: ['borderTopColor'],
+  borderBlockStartStyle: ['borderTopStyle'],
+  borderBlockStartWidth: ['borderTopWidth'],
+  borderBlockEndColor: ['borderBottomColor'],
+  borderBlockEndStyle: ['borderBottomStyle'],
+  borderBlockEndWidth: ['borderBottomWidth'],
+  //borderInlineStartColor: ['borderLeftColor'],
+  //borderInlineStartStyle: ['borderLeftStyle'],
+  //borderInlineStartWidth: ['borderLeftWidth'],
+  //borderInlineEndColor: ['borderRightColor'],
+  //borderInlineEndStyle: ['borderRightStyle'],
+  //borderInlineEndWidth: ['borderRightWidth'],
+  borderEndStartRadius: ['borderBottomLeftRadius'],
+  borderEndEndRadius: ['borderBottomRightRadius'],
+  borderStartStartRadius: ['borderTopLeftRadius'],
+  borderStartEndRadius: ['borderTopRightRadius'],
+  insetBlockEnd: ['bottom'],
+  insetBlockStart: ['top'],
+  //insetInlineEnd: ['right'],
+  //insetInlineStart: ['left'],
+  marginBlockStart: ['marginTop'],
+  marginBlockEnd: ['marginBottom'],
+  //marginInlineStart: ['marginLeft'],
+  //marginInlineEnd: ['marginRight'],
+  paddingBlockStart: ['paddingTop'],
+  paddingBlockEnd: ['paddingBottom']
+  //paddingInlineStart: ['marginLeft'],
+  //paddingInlineEnd: ['marginRight'],
 };
 
 /**
@@ -193,21 +229,30 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     } else {
       const value = normalizeValueWithProperty(style[prop], prop);
       const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
-      if (isInline && prop === 'margin') {
-        if (style.marginHorizontal == null) {
+      if (isInline && prop === 'inset') {
+        if (style.insetInline == null) {
+          resolvedStyle.left = value;
+          resolvedStyle.right = value;
+        }
+        if (style.insetBlock == null) {
+          resolvedStyle.top = value;
+          resolvedStyle.bottom = value;
+        }
+      } else if (isInline && prop === 'margin') {
+        if (style.marginInline == null) {
           resolvedStyle.marginLeft = value;
           resolvedStyle.marginRight = value;
         }
-        if (style.marginVertical == null) {
+        if (style.marginBlock == null) {
           resolvedStyle.marginTop = value;
           resolvedStyle.marginBottom = value;
         }
       } else if (isInline && prop === 'padding') {
-        if (style.paddingHorizontal == null) {
+        if (style.paddingInline == null) {
           resolvedStyle.paddingLeft = value;
           resolvedStyle.paddingRight = value;
         }
-        if (style.paddingVertical == null) {
+        if (style.paddingBlock == null) {
           resolvedStyle.paddingTop = value;
           resolvedStyle.paddingBottom = value;
         }

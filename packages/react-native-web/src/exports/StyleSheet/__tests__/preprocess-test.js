@@ -8,6 +8,75 @@
 import { preprocess } from '../preprocess';
 
 describe('StyleSheet/preprocess', () => {
+  describe('non-standard styles', () => {
+    test('converts non-standard logical styles', () => {
+      expect(
+        preprocess({
+          end: 1,
+          marginEnd: 1,
+          marginHorizontal: 1,
+          marginStart: 1,
+          marginVertical: 1,
+          paddingEnd: 1,
+          paddingHorizontal: 1,
+          paddingStart: 1,
+          paddingVertical: 1,
+          start: 1
+        })
+      ).toEqual({
+        insetInlineEnd: 1,
+        insetInlineStart: 1,
+        marginBlock: 1,
+        marginInline: 1,
+        marginInlineEnd: 1,
+        marginInlineStart: 1,
+        paddingBlock: 1,
+        paddingInline: 1,
+        paddingInlineEnd: 1,
+        paddingInlineStart: 1
+      });
+    });
+
+    test('respects standard logical styles', () => {
+      expect(
+        preprocess({
+          end: 1,
+          marginEnd: 1,
+          marginHorizontal: 1,
+          marginStart: 1,
+          marginVertical: 1,
+          paddingEnd: 1,
+          paddingHorizontal: 1,
+          paddingStart: 1,
+          paddingVertical: 1,
+          start: 1,
+          // standard
+          insetInlineEnd: 2,
+          insetInlineStart: 2,
+          marginBlock: 2,
+          marginInline: 2,
+          marginInlineEnd: 2,
+          marginInlineStart: 2,
+          paddingBlock: 2,
+          paddingInline: 2,
+          paddingInlineEnd: 2,
+          paddingInlineStart: 2
+        })
+      ).toEqual({
+        insetInlineEnd: 2,
+        insetInlineStart: 2,
+        marginBlock: 2,
+        marginInline: 2,
+        marginInlineEnd: 2,
+        marginInlineStart: 2,
+        paddingBlock: 2,
+        paddingInline: 2,
+        paddingInlineEnd: 2,
+        paddingInlineStart: 2
+      });
+    });
+  });
+
   describe('preprocesses multiple shadow styles into a single declaration', () => {
     test('shadowColor only', () => {
       expect(preprocess({ shadowColor: 'red' })).toEqual({

@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     transitionDuration: '0.1s'
   },
   thumbActive: {
-    start: '100%'
+    insetInlineStart: '100%'
   },
   nativeControl: {
     ...StyleSheet.absoluteFillObject,

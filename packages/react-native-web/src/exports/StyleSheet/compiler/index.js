@@ -29,7 +29,7 @@ const cache = new Map();
 const emptyObject = {};
 
 const classicGroup = 1;
-const atomicGroup = 2.2;
+const atomicGroup = 3;
 const customGroup: { [key: string]: number } = {
   borderColor: 2,
   borderRadius: 2,
@@ -37,14 +37,45 @@ const customGroup: { [key: string]: number } = {
   borderWidth: 2,
   display: 2,
   flex: 2,
+  inset: 2,
   margin: 2,
   overflow: 2,
   overscrollBehavior: 2,
   padding: 2,
-  marginHorizontal: 2.1,
-  marginVertical: 2.1,
-  paddingHorizontal: 2.1,
-  paddingVertical: 2.1
+  insetBlock: 2.1,
+  insetInline: 2.1,
+  marginInline: 2.1,
+  marginBlock: 2.1,
+  paddingInline: 2.1,
+  paddingBlock: 2.1,
+  borderBlockStartColor: 2.2,
+  borderBlockStartStyle: 2.2,
+  borderBlockStartWidth: 2.2,
+  borderBlockEndColor: 2.2,
+  borderBlockEndStyle: 2.2,
+  borderBlockEndWidth: 2.2,
+  borderInlineStartColor: 2.2,
+  borderInlineStartStyle: 2.2,
+  borderInlineStartWidth: 2.2,
+  borderInlineEndColor: 2.2,
+  borderInlineEndStyle: 2.2,
+  borderInlineEndWidth: 2.2,
+  borderEndStartRadius: 2.2,
+  borderEndEndRadius: 2.2,
+  borderStartStartRadius: 2.2,
+  borderStartEndRadius: 2.2,
+  insetBlockEnd: 2.2,
+  insetBlockStart: 2.2,
+  insetInlineEnd: 2.2,
+  insetInlineStart: 2.2,
+  marginBlockStart: 2.2,
+  marginBlockEnd: 2.2,
+  marginInlineStart: 2.2,
+  marginInlineEnd: 2.2,
+  paddingBlockStart: 2.2,
+  paddingBlockEnd: 2.2,
+  paddingInlineStart: 2.2,
+  paddingInlineEnd: 2.2
 };
 
 const borderTopLeftRadius = 'borderTopLeftRadius';
@@ -86,22 +117,22 @@ const PROPERTIES_FLIP: { [key: string]: string } = {
 
 // Map of I18N property names to their LTR equivalent.
 const PROPERTIES_I18N: { [key: string]: string } = {
-  borderTopStartRadius: borderTopLeftRadius,
-  borderTopEndRadius: borderTopRightRadius,
-  borderBottomStartRadius: borderBottomLeftRadius,
-  borderBottomEndRadius: borderBottomRightRadius,
-  borderStartColor: borderLeftColor,
-  borderStartStyle: borderLeftStyle,
-  borderStartWidth: borderLeftWidth,
-  borderEndColor: borderRightColor,
-  borderEndStyle: borderRightStyle,
-  borderEndWidth: borderRightWidth,
-  end: right,
-  marginStart: marginLeft,
-  marginEnd: marginRight,
-  paddingStart: paddingLeft,
-  paddingEnd: paddingRight,
-  start: left
+  borderStartStartRadius: borderTopLeftRadius,
+  borderStartEndRadius: borderTopRightRadius,
+  borderEndStartRadius: borderBottomLeftRadius,
+  borderEndEndRadius: borderBottomRightRadius,
+  borderInlineStartColor: borderLeftColor,
+  borderInlineStartStyle: borderLeftStyle,
+  borderInlineStartWidth: borderLeftWidth,
+  borderInlineEndColor: borderRightColor,
+  borderInlineEndStyle: borderRightStyle,
+  borderInlineEndWidth: borderRightWidth,
+  insetInlineEnd: right,
+  insetInlineStart: left,
+  marginInlineStart: marginLeft,
+  marginInlineEnd: marginRight,
+  paddingInlineStart: paddingLeft,
+  paddingInlineEnd: paddingRight
 };
 
 const PROPERTIES_VALUE = ['clear', 'float', 'textAlign'];
@@ -110,7 +141,7 @@ export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
 
-  function atomicCompile(prop, value) {
+  function atomicCompile(srcProp, prop, value) {
     const valueString = stringifyValueWithProperty(value, prop);
     const cacheKey = prop + valueString;
     const cachedResult = cache.get(cacheKey);
@@ -119,8 +150,9 @@ export function atomic(style: Style): CompilerOutput {
       identifier = cachedResult[0];
       compiledRules.push(cachedResult[1]);
     } else {
-      identifier = createIdentifier('r', prop, value);
-      const order = customGroup[prop] || atomicGroup;
+      const v = srcProp !== prop ? cacheKey : valueString;
+      identifier = createIdentifier('r', srcProp, v);
+      const order = customGroup[srcProp] || atomicGroup;
       const rules = createAtomicRules(identifier, prop, value);
       const orderedRules = [rules, order];
       compiledRules.push(orderedRules);
@@ -131,14 +163,14 @@ export function atomic(style: Style): CompilerOutput {
 
   Object.keys(style)
     .sort()
-    .forEach((prop) => {
-      const value = style[prop];
+    .forEach((srcProp) => {
+      const value = style[srcProp];
       if (value != null) {
         let localizeableValue;
         // BiDi flip values
-        if (PROPERTIES_VALUE.indexOf(prop) > -1) {
-          const left = atomicCompile(prop, 'left');
-          const right = atomicCompile(prop, 'right');
+        if (PROPERTIES_VALUE.indexOf(srcProp) > -1) {
+          const left = atomicCompile(srcProp, srcProp, 'left');
+          const right = atomicCompile(srcProp, srcProp, 'right');
           if (value === 'start') {
             localizeableValue = [left, right];
           } else if (value === 'end') {
@@ -146,14 +178,18 @@ export function atomic(style: Style): CompilerOutput {
           }
         }
         // BiDi flip properties
-        const propPolyfill = PROPERTIES_I18N[prop];
+        const propPolyfill = PROPERTIES_I18N[srcProp];
         if (propPolyfill != null) {
-          const ltr = atomicCompile(propPolyfill, value);
-          const rtl = atomicCompile(PROPERTIES_FLIP[propPolyfill], value);
+          const ltr = atomicCompile(srcProp, propPolyfill, value);
+          const rtl = atomicCompile(
+            srcProp,
+            PROPERTIES_FLIP[propPolyfill],
+            value
+          );
           localizeableValue = [ltr, rtl];
         }
         // BiDi flip transitionProperty value
-        if (prop === 'transitionProperty') {
+        if (srcProp === 'transitionProperty') {
           const values = Array.isArray(value) ? value : [value];
           const polyfillIndices = [];
 
@@ -174,8 +210,8 @@ export function atomic(style: Style): CompilerOutput {
                 const rtlPolyfill = PROPERTIES_FLIP[ltrPolyfill];
                 ltrPolyfillValues[i] = ltrPolyfill;
                 rtlPolyfillValues[i] = rtlPolyfill;
-                const ltr = atomicCompile(prop, ltrPolyfillValues);
-                const rtl = atomicCompile(prop, rtlPolyfillValues);
+                const ltr = atomicCompile(srcProp, srcProp, ltrPolyfillValues);
+                const rtl = atomicCompile(srcProp, srcProp, rtlPolyfillValues);
                 localizeableValue = [ltr, rtl];
               }
             });
@@ -183,12 +219,12 @@ export function atomic(style: Style): CompilerOutput {
         }
 
         if (localizeableValue == null) {
-          localizeableValue = atomicCompile(prop, value);
+          localizeableValue = atomicCompile(srcProp, srcProp, value);
         } else {
           compiledStyle['$$css$localize'] = true;
         }
 
-        compiledStyle[prop] = localizeableValue;
+        compiledStyle[srcProp] = localizeableValue;
       }
     });
 
@@ -204,7 +240,7 @@ export function classic(style: Style, name: string): CompilerOutput {
   const compiledRules = [];
 
   const { animationKeyframes, ...rest } = style;
-  const identifier = createIdentifier('css', name, style);
+  const identifier = createIdentifier('css', name, JSON.stringify(style));
   const selector = `.${identifier}`;
   let animationName;
   if (animationKeyframes != null) {
@@ -270,6 +306,8 @@ export function inline(
             originalValues[i] = isRTL
               ? PROPERTIES_FLIP[valuePolyfill]
               : valuePolyfill;
+
+            value = originalValues.join(' ');
           }
         }
       });
@@ -280,9 +318,13 @@ export function inline(
       nextStyle[prop] = value;
     }
 
-    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
+    if (prop === originalProp) {
       frozenProps[prop] = true;
     }
+
+    //    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
+    //    frozenProps[prop] = true;
+    //}
   }
 
   return createReactDOMStyle(nextStyle, true);
@@ -408,8 +450,8 @@ function createDeclarationBlock(style: Style): string {
 /**
  * An identifier is associated with a unique set of styles.
  */
-function createIdentifier(prefix: string, name: string, value: Value): string {
-  const hashedString = hash(name + stringifyValueWithProperty(value, name));
+function createIdentifier(prefix: string, name: string, key: string): string {
+  const hashedString = hash(name + key);
   return process.env.NODE_ENV !== 'production'
     ? `${prefix}-${name}-${hashedString}`
     : `${prefix}-${hashedString}`;
@@ -420,7 +462,11 @@ function createIdentifier(prefix: string, name: string, value: Value): string {
  */
 function createKeyframes(keyframes: Object): [string, Rules] {
   const prefixes = ['-webkit-', ''];
-  const identifier = createIdentifier('r', 'animation', keyframes);
+  const identifier = createIdentifier(
+    'r',
+    'animation',
+    JSON.stringify(keyframes)
+  );
 
   const steps =
     '{' +

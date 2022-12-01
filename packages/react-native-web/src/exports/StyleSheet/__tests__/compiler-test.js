@@ -9,7 +9,7 @@ import { atomic, classic, inline } from '../compiler';
 
 describe('StyleSheet/compile', () => {
   describe('atomic', () => {
-    test.only('converts style to atomic CSS', () => {
+    test('converts style to atomic CSS', () => {
       const result = atomic({
         animationDirection: ['alternate', 'alternate-reverse'],
         animationKeyframes: [
@@ -17,13 +17,14 @@ describe('StyleSheet/compile', () => {
           { from: { left: 0 }, to: { left: 10 } }
         ],
         fontFamily: 'System',
-        marginHorizontal: 10,
-        marginStart: 1,
-        marginEnd: 2,
+        insetInlineStart: '12.34%',
+        marginBlockEnd: 5,
+        marginInline: 10,
+        marginInlineEnd: 2,
+        marginInlineStart: 1,
         placeholderTextColor: 'gray',
         scrollbarWidth: 'none',
         pointerEvents: 'box-only',
-        start: '12.34%',
         textAlign: 'start',
         transform: 'translateX(50px) scale(-1)'
       });
@@ -36,22 +37,23 @@ describe('StyleSheet/compile', () => {
             "animationDirection": "r-animationDirection-1kmv48j",
             "animationKeyframes": "r-animationKeyframes-zacbmr",
             "fontFamily": "r-fontFamily-1qd0xha",
-            "marginEnd": [
-              "r-marginRight-a5pmau",
-              "r-marginLeft-9cviqr",
+            "insetInlineStart": [
+              "r-insetInlineStart-1xn1m1p",
+              "r-insetInlineStart-1y2vi53",
             ],
-            "marginHorizontal": "r-marginHorizontal-vlx1xi",
-            "marginStart": [
-              "r-marginLeft-13kc5u0",
-              "r-marginRight-1knfw1x",
+            "marginBlockEnd": "r-marginBlockEnd-1xf1q1v",
+            "marginInline": "r-marginInline-lcslpx",
+            "marginInlineEnd": [
+              "r-marginInlineEnd-n2wkgt",
+              "r-marginInlineEnd-r7lizz",
+            ],
+            "marginInlineStart": [
+              "r-marginInlineStart-hjq6k0",
+              "r-marginInlineStart-1iwt575",
             ],
             "placeholderTextColor": "r-placeholderTextColor-1418aci",
             "pointerEvents": "r-pointerEvents-ah5dr5",
             "scrollbarWidth": "r-scrollbarWidth-2eszeu",
-            "start": [
-              "r-left-2s0hu9",
-              "r-right-1bnbe1j",
-            ],
             "textAlign": [
               "r-textAlign-fdjqy7",
               "r-textAlign-1ff274t",
@@ -63,7 +65,7 @@ describe('StyleSheet/compile', () => {
               [
                 ".r-animationDirection-1kmv48j{animation-direction:alternate,alternate-reverse;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
@@ -73,41 +75,59 @@ describe('StyleSheet/compile', () => {
                 "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
               ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
-                ".r-marginRight-a5pmau{margin-right:2px;}",
+                ".r-insetInlineStart-1xn1m1p{left:12.34%;}",
               ],
               2.2,
             ],
             [
               [
-                ".r-marginLeft-9cviqr{margin-left:2px;}",
+                ".r-insetInlineStart-1y2vi53{right:12.34%;}",
               ],
               2.2,
             ],
             [
               [
-                ".r-marginHorizontal-vlx1xi{margin-left:10px;margin-right:10px;}",
+                ".r-marginBlockEnd-1xf1q1v{margin-bottom:5px;}",
+              ],
+              2.2,
+            ],
+            [
+              [
+                ".r-marginInline-lcslpx{margin-left:10px;margin-right:10px;}",
               ],
               2.1,
             ],
             [
               [
-                ".r-marginLeft-13kc5u0{margin-left:1px;}",
+                ".r-marginInlineEnd-n2wkgt{margin-right:2px;}",
               ],
               2.2,
             ],
             [
               [
-                ".r-marginRight-1knfw1x{margin-right:1px;}",
+                ".r-marginInlineEnd-r7lizz{margin-left:2px;}",
+              ],
+              2.2,
+            ],
+            [
+              [
+                ".r-marginInlineStart-hjq6k0{margin-left:1px;}",
+              ],
+              2.2,
+            ],
+            [
+              [
+                ".r-marginInlineStart-1iwt575{margin-right:1px;}",
               ],
               2.2,
             ],
@@ -118,51 +138,39 @@ describe('StyleSheet/compile', () => {
                 ".r-placeholderTextColor-1418aci:-ms-input-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
                 ".r-placeholderTextColor-1418aci::placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-pointerEvents-ah5dr5>*{pointer-events:none;}",
                 ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
                 ".r-scrollbarWidth-2eszeu{scrollbar-width:none;}",
               ],
-              2.2,
-            ],
-            [
-              [
-                ".r-left-2s0hu9{left:12.34%;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-right-1bnbe1j{right:12.34%;}",
-              ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-textAlign-fdjqy7{text-align:left;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-textAlign-1ff274t{text-align:right;}",
               ],
-              2.2,
+              3,
             ],
             [
               [
                 ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
               ],
-              2.2,
+              3,
             ],
           ],
         ]
@@ -179,17 +187,17 @@ describe('StyleSheet/compile', () => {
             { '0%': { top: 0 }, '50%': { top: 5 }, '100%': { top: 10 } },
             { from: { left: 0 }, to: { left: 10 } }
           ],
-          marginHorizontal: 10,
+          marginInline: 10,
           font: '14px System',
           transform: 'translateX(50px) scale(-1)'
         },
-        'text'
+        'test'
       );
       expect(result).toMatchInlineSnapshot(`
         [
           {
             "$$css": true,
-            "css-text-1jr0ypv": "css-text-1jr0ypv",
+            "css-test-tbk4su": "css-test-tbk4su",
           },
           [
             [
@@ -198,7 +206,7 @@ describe('StyleSheet/compile', () => {
                 "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
                 "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-                ".css-text-1jr0ypv{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px);}",
+                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
               ],
               1,
             ],
@@ -211,7 +219,8 @@ describe('StyleSheet/compile', () => {
   describe('inline', () => {
     test('converts style to inline styles', () => {
       const result = inline({
-        marginHorizontal: 10,
+        marginBlockEnd: 5,
+        marginInline: 10,
         display: 'flex',
         flexShrink: 1
       });
@@ -220,6 +229,7 @@ describe('StyleSheet/compile', () => {
         {
           "display": "flex",
           "flexShrink": 1,
+          "marginBottom": "5px",
           "marginLeft": "10px",
           "marginRight": "10px",
         }
@@ -276,12 +286,13 @@ describe('StyleSheet/compile', () => {
 
         test(`converts "start" properties for ${dir}`, () => {
           const initial = {
-            borderStartColor: 'red',
-            borderStartStyle: 'solid',
-            borderStartWidth: 1,
-            start: 1,
-            marginStart: 5,
-            paddingStart: 10
+            borderInlineStartColor: 'red',
+            borderInlineStartStyle: 'solid',
+            borderInlineStartWidth: 1,
+            insetInlineStart: 1,
+            marginBlockStart: 5,
+            marginInlineStart: 5,
+            paddingInlineStart: 10
           };
 
           const expectedLTR = {
@@ -290,6 +301,7 @@ describe('StyleSheet/compile', () => {
             borderLeftWidth: '1px',
             left: '1px',
             marginLeft: '5px',
+            marginTop: '5px',
             paddingLeft: '10px'
           };
           const expectedRTL = {
@@ -298,6 +310,7 @@ describe('StyleSheet/compile', () => {
             borderRightWidth: '1px',
             right: '1px',
             marginRight: '5px',
+            marginTop: '5px',
             paddingRight: '10px'
           };
           expect(inline(initial, isRTL)).toEqual(
@@ -307,12 +320,13 @@ describe('StyleSheet/compile', () => {
 
         test(`converts "end" properties for ${dir}`, () => {
           const initial = {
-            borderEndColor: 'red',
-            borderEndStyle: 'solid',
-            borderEndWidth: 1,
-            end: 1,
-            marginEnd: 5,
-            paddingEnd: 10
+            borderInlineEndColor: 'red',
+            borderInlineEndStyle: 'solid',
+            borderInlineEndWidth: 1,
+            insetInlineEnd: 1,
+            marginBlockEnd: 5,
+            marginInlineEnd: 5,
+            paddingInlineEnd: 10
           };
 
           const expectedLTR = {
@@ -320,6 +334,7 @@ describe('StyleSheet/compile', () => {
             borderRightStyle: 'solid',
             borderRightWidth: '1px',
             right: '1px',
+            marginBottom: '5px',
             marginRight: '5px',
             paddingRight: '10px'
           };
@@ -328,6 +343,7 @@ describe('StyleSheet/compile', () => {
             borderLeftStyle: 'solid',
             borderLeftWidth: '1px',
             left: '1px',
+            marginBottom: '5px',
             marginLeft: '5px',
             paddingLeft: '10px'
           };
@@ -341,7 +357,7 @@ describe('StyleSheet/compile', () => {
             clear: 'start',
             float: 'start',
             textAlign: 'start',
-            transitionProperty: 'start'
+            transitionProperty: 'insetInlineStart'
           };
 
           const expectedLTR = {
@@ -366,7 +382,7 @@ describe('StyleSheet/compile', () => {
             clear: 'end',
             float: 'end',
             textAlign: 'end',
-            transitionProperty: 'end'
+            transitionProperty: 'insetInlineEnd'
           };
 
           const expectedLTR = {
@@ -386,33 +402,39 @@ describe('StyleSheet/compile', () => {
           );
         });
 
-        test('end/start properties take precedence over left/right', () => {
+        test('physical properties take precedence over logical properties', () => {
           const initialLTR = {
-            borderStartWidth: 10,
+            borderInlineStartWidth: 10,
             borderLeftWidth: 0,
-            end: 10,
+            insetInlineEnd: 10,
             right: 0,
-            marginStart: 10,
+            insetBlockStart: 5,
+            top: 0,
+            marginInlineStart: 10,
             marginLeft: 0
           };
           const expectedLTR = {
-            borderLeftWidth: '10px',
-            marginLeft: '10px',
-            right: '10px'
+            borderLeftWidth: '0px',
+            marginLeft: '0px',
+            right: '0px',
+            top: '0px'
           };
 
           const initialRTL = {
-            borderStartWidth: 10,
+            borderInlineStartWidth: 10,
             borderRightWidth: 0,
-            end: 10,
+            insetInlineEnd: 10,
             left: 0,
-            marginStart: 10,
+            insetBlockStart: 5,
+            top: 0,
+            marginInlineStart: 10,
             marginRight: 0
           };
           const expectedRTL = {
-            borderRightWidth: '10px',
-            marginRight: '10px',
-            left: '10px'
+            borderRightWidth: '0px',
+            marginRight: '0px',
+            left: '0px',
+            top: '0px'
           };
           expect(inline(isRTL ? initialRTL : initialLTR, isRTL)).toEqual(
             isRTL ? expectedRTL : expectedLTR

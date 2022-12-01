@@ -48,7 +48,7 @@ describe('AppRegistry', () => {
         [stylesheet-group=\\"2\\"]{}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
-        [stylesheet-group=\\"2.2\\"]{}
+        [stylesheet-group=\\"3\\"]{}
         .r-bottom-1p0dtai{bottom:0px;}
         .r-left-1d2f490{left:0px;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
@@ -92,7 +92,7 @@ describe('AppRegistry', () => {
         [stylesheet-group=\\"2\\"]{}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
-        [stylesheet-group=\\"2.2\\"]{}
+        [stylesheet-group=\\"3\\"]{}
         .r-bottom-1p0dtai{bottom:0px;}
         .r-left-1d2f490{left:0px;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
@@ -129,7 +129,7 @@ describe('AppRegistry', () => {
         .r-borderWidth-1bee2fs{border-bottom-width:1234px;border-left-width:1234px;border-right-width:1234px;border-top-width:1234px;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
-        [stylesheet-group=\\"2.2\\"]{}
+        [stylesheet-group=\\"3\\"]{}
         .r-backgroundColor-aot4c7{background-color:rgba(128,0,128,1.00);}
         .r-bottom-1p0dtai{bottom:0px;}
         .r-left-1d2f490{left:0px;}

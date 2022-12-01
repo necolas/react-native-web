@@ -113,7 +113,7 @@ describe.each([['concurrent'], ['legacy']])('AppRegistry', (mode) => {
           "[stylesheet-group=\\"2\\"] {}",
           ".r-display-xoduu5 {display: inline-flex;}",
           ".r-flex-13awgt0 {flex: 1;}",
-          "[stylesheet-group=\\"2.2\\"] {}",
+          "[stylesheet-group=\\"3\\"] {}",
           ".r-bottom-1p0dtai {bottom: 0px;}",
           ".r-left-1d2f490 {left: 0px;}",
           ".r-pointerEvents-105ug2t {pointer-events: auto !important;}",
