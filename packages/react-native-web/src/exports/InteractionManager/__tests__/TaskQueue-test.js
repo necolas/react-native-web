@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Promise from 'promise';
-
 function expectToBeCalledOnce(fn) {
   expect(fn.mock.calls.length).toBe(1);
 }
@@ -47,6 +45,11 @@ describe('TaskQueue', () => {
   });
 
   it('should handle blocking promise task', () => {
+    onMoreTasks.mockImplementation(() => {
+      taskQueue.processNext();
+      jest.runAllTimers();
+    });
+
     const task1 = jest.fn(() => {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -68,8 +71,14 @@ describe('TaskQueue', () => {
 
     clearTaskQueue(taskQueue);
 
-    expectToBeCalledOnce(onMoreTasks);
-    expectToBeCalledOnce(task2);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      });
+    }).then(() => {
+      expectToBeCalledOnce(onMoreTasks);
+      expectToBeCalledOnce(task2);
+    });
   });
 
   it('should handle nested simple tasks', () => {
@@ -90,6 +99,11 @@ describe('TaskQueue', () => {
   });
 
   it('should handle nested promises', () => {
+    onMoreTasks.mockImplementation(() => {
+      taskQueue.processNext();
+      jest.runAllTimers();
+    });
+
     const task1 = jest.fn(() => {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -115,10 +129,16 @@ describe('TaskQueue', () => {
 
     clearTaskQueue(taskQueue);
 
-    expectToBeCalledOnce(task1);
-    expectToBeCalledOnce(task2);
-    expectToBeCalledOnce(task3);
-    expectToBeCalledOnce(task4);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      });
+    }).then(() => {
+      expectToBeCalledOnce(task1);
+      expectToBeCalledOnce(task2);
+      expectToBeCalledOnce(task3);
+      expectToBeCalledOnce(task4);
+    });
   });
 
   it('should be able to cancel tasks', () => {

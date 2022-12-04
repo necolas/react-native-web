@@ -13,7 +13,6 @@ import type { Task } from './TaskQueue';
 import TaskQueue from './TaskQueue';
 import type { EventSubscription } from '../../vendor/react-native/emitter/EventEmitter';
 import EventEmitter from '../../vendor/react-native/emitter/EventEmitter';
-import { setImmediate } from './immediateShim';
 
 const _emitter = new EventEmitter<{
   interactionComplete: [],
@@ -94,6 +93,20 @@ let _nextUpdateHandle: TimeoutID | number = 0;
 let _inc = 0;
 let _deadline = -1;
 
+const scheduleMicrotask =
+  typeof window !== 'undefined' && typeof window.queueMicrotask === 'function'
+    ? window.queueMicrotask
+    : typeof Promise !== 'undefined'
+    ? (callback) =>
+        Promise.resolve(null)
+          .then(callback)
+          .catch((error) => {
+            setTimeout(() => {
+              throw error;
+            });
+          })
+    : setTimeout;
+
 /**
  * Schedule an asynchronous update to the interaction state.
  */
@@ -102,7 +115,8 @@ function _scheduleUpdate() {
     if (_deadline > 0) {
       _nextUpdateHandle = setTimeout(_processUpdate);
     } else {
-      _nextUpdateHandle = setImmediate(_processUpdate);
+      scheduleMicrotask(_processUpdate);
+      _nextUpdateHandle = 1;
     }
   }
 }
