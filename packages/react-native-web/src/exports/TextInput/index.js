@@ -232,6 +232,7 @@ const TextInput: React.AbstractComponent<
     const hostNode = e.target;
     const text = hostNode.value;
     e.nativeEvent.text = text;
+    e.nativeEvent.cursorPosition = hostNode.selectionStart;
     handleContentSizeChange(hostNode);
     if (onChange) {
       onChange(e);
