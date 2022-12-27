@@ -68,14 +68,9 @@ export function validate(obj: Object) {
       let suggestion = '';
       if (prop === 'animation' || prop === 'animationName') {
         suggestion = 'Did you mean "animationKeyframes"?';
-        // } else if (prop === 'boxShadow') {
-        //  suggestion = 'Did you mean "shadow{Color,Offset,Opacity,Radius}"?';
         isInvalid = true;
       } else if (prop === 'direction') {
         suggestion = 'Did you mean "writingDirection"?';
-        isInvalid = true;
-      } else if (prop === 'verticalAlign') {
-        suggestion = 'Did you mean "textAlignVertical"?';
         isInvalid = true;
       } else if (invalidShortforms[prop]) {
         suggestion = 'Please use long-form properties.';

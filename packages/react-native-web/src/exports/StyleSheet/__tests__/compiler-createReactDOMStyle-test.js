@@ -72,12 +72,6 @@ describe('compiler/createReactDOMStyle', () => {
     `);
   });
 
-  test('aspectRatio', () => {
-    expect(createReactDOMStyle({ aspectRatio: 9 / 16 })).toEqual({
-      aspectRatio: '0.5625'
-    });
-  });
-
   describe('flexbox styles', () => {
     test('flex: -1', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({
@@ -188,72 +182,6 @@ describe('compiler/createReactDOMStyle', () => {
           "fontFamily": "Noto,BlinkMacSystemFont",
         }
       `);
-    });
-  });
-
-  test('fontVariant', () => {
-    expect(
-      createReactDOMStyle({ fontVariant: 'common-ligatures small-caps' })
-    ).toEqual({
-      fontVariant: 'common-ligatures small-caps'
-    });
-
-    expect(
-      createReactDOMStyle({ fontVariant: ['common-ligatures', 'small-caps'] })
-    ).toEqual({
-      fontVariant: 'common-ligatures small-caps'
-    });
-  });
-
-  test('textAlignVertical', () => {
-    expect(
-      createReactDOMStyle({
-        textAlignVertical: 'center'
-      })
-    ).toEqual({
-      verticalAlign: 'middle'
-    });
-  });
-
-  test('verticalAlign', () => {
-    expect(
-      createReactDOMStyle({
-        verticalAlign: 'top',
-        textAlignVertical: 'center'
-      })
-    ).toEqual({
-      verticalAlign: 'top'
-    });
-  });
-
-  describe('transform', () => {
-    // passthrough if transform value is ever a string
-    test('string', () => {
-      const transform =
-        'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)';
-      const style = { transform };
-      const resolved = createReactDOMStyle(style);
-
-      expect(resolved).toEqual({ transform });
-    });
-
-    test('array', () => {
-      const style = {
-        transform: [
-          { perspective: 50 },
-          { scaleX: 20 },
-          { translateX: 20 },
-          { rotate: '20deg' },
-          { matrix: [1, 2, 3, 4, 5, 6] },
-          { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
-        ]
-      };
-      const resolved = createReactDOMStyle(style);
-
-      expect(resolved).toEqual({
-        transform:
-          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
-      });
     });
   });
 });

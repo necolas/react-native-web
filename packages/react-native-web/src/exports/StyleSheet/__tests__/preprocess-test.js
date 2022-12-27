@@ -75,6 +75,76 @@ describe('StyleSheet/preprocess', () => {
         paddingInlineStart: 2
       });
     });
+
+    test('converts non-standard textAlignVertical', () => {
+      expect(
+        preprocess({
+          textAlignVertical: 'center'
+        })
+      ).toEqual({
+        verticalAlign: 'middle'
+      });
+
+      expect(
+        preprocess({
+          verticalAlign: 'top',
+          textAlignVertical: 'center'
+        })
+      ).toEqual({
+        verticalAlign: 'top'
+      });
+    });
+
+    test('aspectRatio', () => {
+      expect(preprocess({ aspectRatio: 9 / 16 })).toEqual({
+        aspectRatio: '0.5625'
+      });
+    });
+
+    test('fontVariant', () => {
+      expect(
+        preprocess({ fontVariant: 'common-ligatures small-caps' })
+      ).toEqual({
+        fontVariant: 'common-ligatures small-caps'
+      });
+
+      expect(
+        preprocess({ fontVariant: ['common-ligatures', 'small-caps'] })
+      ).toEqual({
+        fontVariant: 'common-ligatures small-caps'
+      });
+    });
+
+    describe('transform', () => {
+      // passthrough if transform value is ever a string
+      test('string', () => {
+        const transform =
+          'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)';
+        const style = { transform };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({ transform });
+      });
+
+      test('array', () => {
+        const style = {
+          transform: [
+            { perspective: 50 },
+            { scaleX: 20 },
+            { translateX: 20 },
+            { rotate: '20deg' },
+            { matrix: [1, 2, 3, 4, 5, 6] },
+            { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
+          ]
+        };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({
+          transform:
+            'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
+        });
+      });
+    });
   });
 
   describe('preprocesses multiple shadow styles into a single declaration', () => {

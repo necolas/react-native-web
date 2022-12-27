@@ -56,6 +56,23 @@ export const createTextShadowValue = (style: Object): void | string => {
   }
 };
 
+// { scale: 2 } => 'scale(2)'
+// { translateX: 20 } => 'translateX(20px)'
+// { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
+const mapTransform = (transform: Object): string => {
+  const type = Object.keys(transform)[0];
+  const value = transform[type];
+  if (type === 'matrix' || type === 'matrix3d') {
+    return `${type}(${value.join(',')})`;
+  } else {
+    const normalizedValue = normalizeValueWithProperty(value, type);
+    return `${type}(${normalizedValue})`;
+  }
+};
+export const createTransformValue = (value: Array<Object>): string => {
+  return value.map(mapTransform).join(' ');
+};
+
 const PROPERTIES_STANDARD: { [key: string]: string } = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
@@ -79,6 +96,13 @@ const PROPERTIES_STANDARD: { [key: string]: string } = {
   start: 'insetInlineStart'
 };
 
+const ignoredProps = {
+  elevation: true,
+  overlayColor: true,
+  resizeMode: true,
+  tintColor: true
+};
+
 /**
  * Preprocess styles
  */
@@ -88,9 +112,64 @@ export const preprocess = <T: {| [key: string]: any |}>(
   const style = originalStyle || emptyObject;
   const nextStyle = {};
 
+  // Convert shadow styles
+  if (
+    style.shadowColor != null ||
+    style.shadowOffset != null ||
+    style.shadowOpacity != null ||
+    style.shadowRadius != null
+  ) {
+    warnOnce(
+      'shadowStyles',
+      `"shadow*" style props are deprecated. Use "boxShadow".`
+    );
+    const boxShadowValue = createBoxShadowValue(style);
+    if (boxShadowValue != null && nextStyle.boxShadow == null) {
+      const { boxShadow } = style;
+      const value = boxShadow
+        ? `${boxShadow}, ${boxShadowValue}`
+        : boxShadowValue;
+      nextStyle.boxShadow = value;
+    }
+  }
+
+  // Convert text shadow styles
+  if (
+    style.textShadowColor != null ||
+    style.textShadowOffset != null ||
+    style.textShadowRadius != null
+  ) {
+    warnOnce(
+      'textShadowStyles',
+      `"textShadow*" style props are deprecated. Use "textShadow".`
+    );
+    const textShadowValue = createTextShadowValue(style);
+    if (textShadowValue != null && nextStyle.textShadow == null) {
+      const { textShadow } = style;
+      const value = textShadow
+        ? `${textShadow}, ${textShadowValue}`
+        : textShadowValue;
+      nextStyle.textShadow = value;
+    }
+  }
+
   for (const originalProp in style) {
+    if (
+      // Ignore some React Native styles
+      ignoredProps[originalProp] != null ||
+      originalProp === 'shadowColor' ||
+      originalProp === 'shadowOffset' ||
+      originalProp === 'shadowOpacity' ||
+      originalProp === 'shadowRadius' ||
+      originalProp === 'textShadowColor' ||
+      originalProp === 'textShadowOffset' ||
+      originalProp === 'textShadowRadius'
+    ) {
+      continue;
+    }
+
     const originalValue = style[originalProp];
-    let prop = PROPERTIES_STANDARD[originalProp] || originalProp;
+    const prop = PROPERTIES_STANDARD[originalProp] || originalProp;
     let value = originalValue;
 
     if (
@@ -100,42 +179,37 @@ export const preprocess = <T: {| [key: string]: any |}>(
       continue;
     }
 
-    // Convert shadow styles
-    if (
-      prop === 'shadowColor' ||
-      prop === 'shadowOffset' ||
-      prop === 'shadowOpacity' ||
-      prop === 'shadowRadius'
-    ) {
-      const boxShadowValue = createBoxShadowValue(style);
-      if (boxShadowValue != null && nextStyle.boxShadow == null) {
-        const { boxShadow } = style;
-        prop = 'boxShadow';
-        value = boxShadow ? `${boxShadow}, ${boxShadowValue}` : boxShadowValue;
-      } else {
-        continue;
+    if (prop === 'aspectRatio') {
+      nextStyle[prop] = value.toString();
+    } else if (prop === 'fontVariant') {
+      if (Array.isArray(value) && value.length > 0) {
+        warnOnce(
+          'fontVariant',
+          '"fontVariant" style array value is deprecated. Use space-separated values.'
+        );
+        value = value.join(' ');
       }
-    }
-
-    // Convert text shadow styles
-    if (
-      prop === 'textShadowColor' ||
-      prop === 'textShadowOffset' ||
-      prop === 'textShadowRadius'
-    ) {
-      const textShadowValue = createTextShadowValue(style);
-      if (textShadowValue != null && nextStyle.textShadow == null) {
-        const { textShadow } = style;
-        prop = 'textShadow';
-        value = textShadow
-          ? `${textShadow}, ${textShadowValue}`
-          : textShadowValue;
-      } else {
-        continue;
+      nextStyle[prop] = value;
+    } else if (prop === 'textAlignVertical') {
+      warnOnce(
+        'textAlignVertical',
+        '"textAlignVertical" style is deprecated. Use "verticalAlign".'
+      );
+      if (style.verticalAlign == null) {
+        nextStyle.verticalAlign = value === 'center' ? 'middle' : value;
       }
+    } else if (prop === 'transform') {
+      if (Array.isArray(value)) {
+        warnOnce(
+          'transform',
+          '"transform" style array value is deprecated. Use space-separated string functions, e.g., "scaleX(2) rotateX(15deg)".'
+        );
+        value = createTransformValue(value);
+      }
+      nextStyle.transform = value;
+    } else {
+      nextStyle[prop] = value;
     }
-
-    nextStyle[prop] = value;
   }
 
   // $FlowIgnore

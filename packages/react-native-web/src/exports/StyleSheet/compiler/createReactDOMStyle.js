@@ -9,7 +9,6 @@
 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 import canUseDOM from '../../../modules/canUseDom';
-import { warnOnce } from '../../../modules/warnOnce';
 
 type Style = { [key: string]: any };
 
@@ -32,13 +31,6 @@ const supportsCSS3TextDecoration =
     window.CSS.supports != null &&
     (window.CSS.supports('text-decoration-line', 'none') ||
       window.CSS.supports('-webkit-text-decoration-line', 'none')));
-
-const ignoredProps = {
-  elevation: true,
-  overlayColor: true,
-  resizeMode: true,
-  tintColor: true
-};
 
 const MONOSPACE_FONT_STACK = 'monospace,monospace';
 
@@ -115,36 +107,6 @@ const STYLE_SHORT_FORM_EXPANSIONS = {
 };
 
 /**
- * Transform
- */
-
-// { scale: 2 } => 'scale(2)'
-// { translateX: 20 } => 'translateX(20px)'
-// { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
-const mapTransform = (transform: Object): string => {
-  const type = Object.keys(transform)[0];
-  const value = transform[type];
-  if (type === 'matrix' || type === 'matrix3d') {
-    return `${type}(${value.join(',')})`;
-  } else {
-    const normalizedValue = normalizeValueWithProperty(value, type);
-    return `${type}(${normalizedValue})`;
-  }
-};
-
-export const createTransformValue = (style: Style): string => {
-  let transform = style.transform;
-  if (Array.isArray(style.transform)) {
-    warnOnce(
-      'transform',
-      '"transform" style array value is deprecated. Use space-separated string functions, e.g., "scaleX(2) rotateX(15deg)".'
-    );
-    transform = style.transform.map(mapTransform).join(' ');
-  }
-  return transform;
-};
-
-/**
  * Reducer
  */
 
@@ -160,16 +122,12 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
 
     if (
       // Ignore everything with a null value
-      value == null ||
-      // Ignore some React Native styles
-      ignoredProps[prop]
+      value == null
     ) {
       continue;
     }
 
-    if (prop === 'aspectRatio') {
-      resolvedStyle[prop] = value.toString();
-    } else if (prop === 'backgroundClip') {
+    if (prop === 'backgroundClip') {
       // TODO: remove once this issue is fixed
       // https://github.com/rofrischmann/inline-style-prefixer/issues/159
       if (value === 'text') {
@@ -196,24 +154,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       } else {
         resolvedStyle[prop] = value;
       }
-    } else if (prop === 'fontVariant') {
-      if (Array.isArray(value) && value.length > 0) {
-        warnOnce(
-          'fontVariant',
-          '"fontVariant" style array value is deprecated. Use space-separated values.'
-        );
-        resolvedStyle.fontVariant = value.join(' ');
-      } else {
-        resolvedStyle[prop] = value;
-      }
-    } else if (prop === 'textAlignVertical') {
-      warnOnce(
-        'textAlignVertical',
-        '"textAlignVertical" style is deprecated. Use "verticalAlign".'
-      );
-      if (resolvedStyle.verticalAlign == null) {
-        resolvedStyle.verticalAlign = value === 'center' ? 'middle' : value;
-      }
     } else if (prop === 'textDecorationLine') {
       // use 'text-decoration' for browsers that only support CSS2
       // text-decoration (e.g., IE, Edge)
@@ -222,8 +162,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       } else {
         resolvedStyle.textDecorationLine = value;
       }
-    } else if (prop === 'transform' || prop === 'transformMatrix') {
-      resolvedStyle.transform = createTransformValue(style);
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;
     } else {
@@ -265,7 +203,7 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
           }
         });
       } else {
-        resolvedStyle[prop] = Array.isArray(value) ? value.join(',') : value;
+        resolvedStyle[prop] = value;
       }
     }
   }

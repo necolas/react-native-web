@@ -11,7 +11,7 @@ describe('StyleSheet/compile', () => {
   describe('atomic', () => {
     test('converts style to atomic CSS', () => {
       const result = atomic({
-        animationDirection: ['alternate', 'alternate-reverse'],
+        animationDirection: 'alternate,alternate-reverse',
         animationKeyframes: [
           { '0%': { top: 0 }, '50%': { top: 5 }, '100%': { top: 10 } },
           { from: { left: 0 }, to: { left: 10 } }
@@ -34,7 +34,7 @@ describe('StyleSheet/compile', () => {
           {
             "$$css": true,
             "$$css$localize": true,
-            "animationDirection": "r-animationDirection-1kmv48j",
+            "animationDirection": "r-animationDirection-1wgwto7",
             "animationKeyframes": "r-animationKeyframes-zacbmr",
             "fontFamily": "r-fontFamily-1qd0xha",
             "insetInlineStart": [
@@ -63,7 +63,7 @@ describe('StyleSheet/compile', () => {
           [
             [
               [
-                ".r-animationDirection-1kmv48j{animation-direction:alternate,alternate-reverse;}",
+                ".r-animationDirection-1wgwto7{animation-direction:alternate,alternate-reverse;}",
               ],
               3,
             ],
