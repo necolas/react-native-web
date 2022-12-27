@@ -9,7 +9,7 @@
     "dev": "npm run dev --workspaces --if-present",
     "flow": "flow --flowconfig-name ./configs/.flowconfig",
     "format": "prettier --check --ignore-path ./configs/.prettierignore \"**/*.js\"",
-    "format:fix": "prettier --write \"**/*.js\" --ignore-path ./configs/.prettierignore",
+    "format:fix": "prettier --write --ignore-path ./configs/.prettierignore \"**/*.js\"",
     "lint": "eslint configs packages scripts --config ./configs/.eslintrc",
     "lint:fix": "npm run lint --fix",
     "prerelease": "npm run test && npm run build",
