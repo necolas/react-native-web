@@ -7,7 +7,7 @@
 
 import React from 'react';
 import View from '../';
-import { createEventTarget } from 'dom-event-testing-library';
+import { createEventTarget, setPointerEvent } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
 describe('components/View', () => {
@@ -202,6 +202,21 @@ describe('components/View', () => {
     });
   });
 
+  describe('prop "onClick"', () => {
+    test('is called', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<View onClick={onClick} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onClick).toBeCalled();
+    });
+  });
+
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = jest.fn();
@@ -215,6 +230,28 @@ describe('components/View', () => {
         target.blur();
       });
       expect(onFocus).toBeCalled();
+    });
+  });
+
+  describe('prop "onPointerDown"', () => {
+    beforeEach(() => {
+      setPointerEvent(true);
+    });
+    afterEach(() => {
+      setPointerEvent(false);
+    });
+
+    test('is called', () => {
+      const onPointerDown = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<View onPointerDown={onPointerDown} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+      });
+      expect(onPointerDown).toBeCalled();
     });
   });
 

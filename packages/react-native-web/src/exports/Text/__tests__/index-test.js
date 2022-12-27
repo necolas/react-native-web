@@ -9,7 +9,7 @@
 
 import React from 'react';
 import Text from '../';
-import { createEventTarget } from 'dom-event-testing-library';
+import { createEventTarget, setPointerEvent } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
 describe('components/Text', () => {
@@ -227,6 +227,28 @@ describe('components/Text', () => {
         target.focus();
       });
       expect(onFocus).toBeCalled();
+    });
+  });
+
+  describe('prop "onPointerDown"', () => {
+    beforeEach(() => {
+      setPointerEvent(true);
+    });
+    afterEach(() => {
+      setPointerEvent(false);
+    });
+
+    test('is called', () => {
+      const onPointerDown = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onPointerDown={onPointerDown} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+      });
+      expect(onPointerDown).toBeCalled();
     });
   });
 

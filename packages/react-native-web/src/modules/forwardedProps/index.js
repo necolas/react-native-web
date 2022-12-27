@@ -119,8 +119,18 @@ export const accessibilityProps = {
 
 export const clickProps = {
   onClick: true,
-  onClickCapture: true,
-  onContextMenu: true
+  onAuxClick: true,
+  onContextMenu: true,
+  onGotPointerCapture: true,
+  onLostPointerCapture: true,
+  onPointerCancel: true,
+  onPointerDown: true,
+  onPointerEnter: true,
+  onPointerMove: true,
+  onPointerLeave: true,
+  onPointerOut: true,
+  onPointerOver: true,
+  onPointerUp: true
 };
 
 export const focusProps = {
@@ -157,6 +167,5 @@ export const touchProps = {
 };
 
 export const styleProps = {
-  classList: true,
   style: true
 };
