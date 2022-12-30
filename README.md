@@ -8,7 +8,7 @@ This is the development monorepo for "React Native for Web" and related projects
   * Contains workflows used by GitHub Actions.
   * Contains issue templates.
 * `configs`
-  * Contains configration files used by the monorepo tooling (compiling, linting, testing, etc.)
+  * Contains configuration files used by the monorepo tooling (compiling, linting, testing, etc.)
 * `packages`
   * [react-native-web](https://github.com/necolas/react-native-web/blob/master/packages/react-native-web)
   * Contains the individual packages managed in the monorepo.

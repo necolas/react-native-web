@@ -30,13 +30,13 @@ npm install --save-dev babel-plugin-react-native-web
 
 ### Expo
 
-[Expo](https://expo.io) is a framework and a platform for universal React applications. [Expo for Web](https://docs.expo.io/workflow/web/) uses React Native for Web, provides dozens of additional cross-platform APIs, includes web build optimizations, and is compatibile with the broader React Native ecosystem.
+[Expo](https://expo.dev) is a framework and a platform for universal React applications. [Expo for Web](https://docs.expo.dev/workflow/web/) uses React Native for Web, provides dozens of additional cross-platform APIs, includes web build optimizations, and is compatible with the broader React Native ecosystem.
 
 ```shell
-npx expo-cli init my-app
+npx create-expo-app my-app
 cd my-app
-npm install react-dom react-native-web
-npx expo-cli start
+npx expo install react-dom react-native-web @expo/webpack-config
+npx expo start --web
 ```
 
 ### Create React App
