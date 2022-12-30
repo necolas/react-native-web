@@ -9,7 +9,7 @@ jobs:
   label-actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hramos/label-actions@v1
         with:
           configuration-path: .github/labels-config.yml
