@@ -14,7 +14,7 @@ How to integrate React Native for Web into an existing React Native codebase.
 
 Please read the [setup]({{ '/docs/setup' | url }}) guide first. If you have an existing React Native application, there are more areas that require attention and customization before most web bundlers can consume the non-standard JavaScript in packages produced by the React Native ecosystem. Additionally, 3rd party React Native packages with web support are listed in the [React Native Directory](https://reactnative.directory/?web=true).
 
-If you are interested in making a multi-platform app it is *strongly recommended* that you use [Expo](https://expo.io) (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.io/versions/v35.0.0/guides/running-in-the-browser/) and takes care of all the configuration work required.
+If you are interested in making a multi-platform app it is *strongly recommended* that you use [Expo](https://expo.dev) (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.dev/workflow/web/) and takes care of all the configuration work required.
 
 ---
 
