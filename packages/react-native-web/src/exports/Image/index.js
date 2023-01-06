@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { ImageSource, LoadRequest } from '../../modules/ImageLoader';
 import type { ImageProps } from './types';
 
 import * as React from 'react';
@@ -165,6 +166,23 @@ function resolveAssetUri(source): ?string {
   return uri;
 }
 
+function raiseOnErrorEvent(uri, { onError, onLoadEnd }) {
+  if (onError) {
+    onError({
+      nativeEvent: {
+        error: `Failed to load resource ${uri} (404)`
+      }
+    });
+  }
+  if (onLoadEnd) onLoadEnd();
+}
+
+function hasSourceDiff(a: ImageSource, b: ImageSource) {
+  return (
+    a.uri !== b.uri || JSON.stringify(a.headers) !== JSON.stringify(b.headers)
+  );
+}
+
 interface ImageStatics {
   getSize: (
     uri: string,
@@ -177,10 +195,12 @@ interface ImageStatics {
   ) => Promise<{| [uri: string]: 'disk/memory' |}>;
 }
 
-const Image: React.AbstractComponent<
+type ImageComponent = React.AbstractComponent<
   ImageProps,
   React.ElementRef<typeof View>
-> = React.forwardRef((props, ref) => {
+>;
+
+const BaseImage: ImageComponent = React.forwardRef((props, ref) => {
   const {
     'aria-label': ariaLabel,
     blurRadius,
@@ -300,16 +320,7 @@ const Image: React.AbstractComponent<
         },
         function error() {
           updateState(ERRORED);
-          if (onError) {
-            onError({
-              nativeEvent: {
-                error: `Failed to load resource ${uri} (404)`
-              }
-            });
-          }
-          if (onLoadEnd) {
-            onLoadEnd();
-          }
+          raiseOnErrorEvent(uri, { onError, onLoadEnd });
         }
       );
     }
@@ -353,14 +364,69 @@ const Image: React.AbstractComponent<
   );
 });
 
-Image.displayName = 'Image';
+BaseImage.displayName = 'Image';
 
-// $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
-const ImageWithStatics = (Image: React.AbstractComponent<
-  ImageProps,
-  React.ElementRef<typeof View>
-> &
-  ImageStatics);
+/**
+ * This component handles specifically loading an image source with headers
+ * default source is never loaded using headers
+ */
+const ImageWithHeaders: ImageComponent = React.forwardRef((props, ref) => {
+  // $FlowIgnore: This component would only be rendered when `source` matches `ImageSource`
+  const nextSource: ImageSource = props.source;
+  const [blobUri, setBlobUri] = React.useState('');
+  const request = React.useRef<LoadRequest>({
+    cancel: () => {},
+    source: { uri: '', headers: {} },
+    promise: Promise.resolve('')
+  });
+
+  const { onLoadStart, ...forwardedProps } = props;
+  const { onError, onLoadEnd } = forwardedProps;
+
+  React.useEffect(() => {
+    if (!hasSourceDiff(nextSource, request.current.source)) {
+      return;
+    }
+
+    // When source changes we want to clean up any old/running requests
+    request.current.cancel();
+
+    if (onLoadStart) {
+      onLoadStart();
+    }
+
+    // Store a ref for the current load request so we know what's the last loaded source,
+    // and so we can cancel it if a different source is passed through props
+    request.current = ImageLoader.loadWithHeaders(nextSource);
+
+    request.current.promise
+      .then((uri) => setBlobUri(uri))
+      .catch(() =>
+        raiseOnErrorEvent(request.current.source.uri, { onError, onLoadEnd })
+      );
+  }, [nextSource, onLoadStart, onError, onLoadEnd]);
+
+  // Cancel any request on unmount
+  React.useEffect(() => request.current.cancel, []);
+
+  // Until the current component resolves the request (using headers)
+  // we skip forwarding the source so the base component doesn't attempt
+  // to load the original source
+  const source = blobUri ? { ...nextSource, uri: blobUri } : undefined;
+
+  return <BaseImage {...forwardedProps} ref={ref} source={source} />;
+});
+
+// $FlowFixMe
+const ImageWithStatics: ImageComponent & ImageStatics = React.forwardRef(
+  (props, ref) => {
+    if (props.source && props.source.headers) {
+      return <ImageWithHeaders {...props} ref={ref} />;
+    }
+
+    return <BaseImage {...props} ref={ref} />;
+  }
+);
 
 ImageWithStatics.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
