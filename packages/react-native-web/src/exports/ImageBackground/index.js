@@ -16,12 +16,12 @@ import Image from '../Image';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-type ImageBackgroundProps = {
+type ImageBackgroundProps = {|
   ...ImageProps,
   imageRef?: any,
   imageStyle?: $PropertyType<ImageProps, 'style'>,
   style?: $PropertyType<ViewProps, 'style'>
-};
+|};
 
 const emptyObject = {};
 
