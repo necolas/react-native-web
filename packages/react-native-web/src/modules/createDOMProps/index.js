@@ -238,7 +238,7 @@ const createDOMProps = (elementType, props, options) => {
       elementType === 'select' ||
       elementType === 'textarea'
     ) {
-      domProps.required = true;
+      domProps.required = accessibilityRequired;
     }
   }
   if (role != null) {

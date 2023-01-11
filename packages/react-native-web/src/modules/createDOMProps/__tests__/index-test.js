@@ -112,6 +112,13 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-live']).toEqual('off');
   });
 
+  test('prop "accessibilityRequired" becomes "aria-required" and "required"', () => {
+    const accessibilityRequired = false;
+    const props = createDOMProps('input', { accessibilityRequired });
+    expect(props['aria-required']).toEqual(false);
+    expect(props.required).toEqual(false);
+  });
+
   test('prop "accessibilityRole" becomes "role"', () => {
     const accessibilityRole = 'button';
     const props = createProps({ accessibilityRole });
