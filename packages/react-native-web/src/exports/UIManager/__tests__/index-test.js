@@ -44,6 +44,19 @@ describe('apis/UIManager', () => {
         expect(node.getAttribute('tabIndex')).toBeNull();
       });
     });
+
+    test('doesn\'t set tabIndex="-1" in other cases', () => {
+      // on body
+      UIManager.focus(document.body);
+      expect(document.body.getAttribute('tabIndex')).toBeNull();
+
+      // on contenteditable elements
+      const div = document.createElement('div');
+      div.contentEditable = 'true';
+      div.isContentEditable = true; // jsdom doesn't support this API yet (https://github.com/jsdom/jsdom/issues/1670)
+      UIManager.focus(div);
+      expect(div.getAttribute('tabIndex')).toBeNull();
+    });
   });
 
   describe('updateView', () => {
