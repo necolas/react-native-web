@@ -34,6 +34,7 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
 };
 
 const focusableElements = {
+  BODY: true,
   A: true,
   INPUT: true,
   SELECT: true,
