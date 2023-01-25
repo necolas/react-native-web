@@ -1,18 +1,18 @@
 {
   "private": true,
   "name": "react-native-web-examples",
-  "version": "0.18.11",
+  "version": "0.18.12",
   "scripts": {
     "build": "next build",
     "dev": "next",
     "start": "next start"
   },
   "dependencies": {
-    "babel-plugin-react-native-web": "0.18.11",
+    "babel-plugin-react-native-web": "0.18.12",
     "next": "^12.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-native-web": "0.18.11"
+    "react-native-web": "0.18.12"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
