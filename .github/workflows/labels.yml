@@ -1,16 +1,22 @@
 name: labels
 
-# This workflow is triggered when a label is added to an issue.
 on:
   issues:
-    types: labeled
+    types: [labeled, unlabeled]
+  pull_request:
+    types: [labeled, unlabeled]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   label-actions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: hramos/label-actions@v1
+      - uses: dessant/label-actions@v3
         with:
-          configuration-path: .github/labels-config.yml
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          config-path: .github/labels-config.yml
+          github-token: ${{ github.token }}
