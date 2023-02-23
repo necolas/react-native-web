@@ -327,7 +327,7 @@ const BaseImage: ImageComponent = React.forwardRef((props, ref) => {
 
     function abortPendingRequest() {
       if (requestRef.current != null) {
-        ImageLoader.abort(requestRef.current);
+        ImageLoader.clear(requestRef.current);
         requestRef.current = null;
       }
     }
