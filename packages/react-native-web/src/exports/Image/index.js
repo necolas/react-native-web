@@ -316,7 +316,7 @@ const Image: React.AbstractComponent<
 
     function abortPendingRequest() {
       if (requestRef.current != null) {
-        ImageLoader.abort(requestRef.current);
+        ImageLoader.clear(requestRef.current);
         requestRef.current = null;
       }
     }
