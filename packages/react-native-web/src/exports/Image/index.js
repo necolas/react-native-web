@@ -225,24 +225,18 @@ const BaseImage: ImageComponent = React.forwardRef((props, ref) => {
     }
   }
 
-  const [state, updateState] = React.useState(() => {
-    const uri = resolveAssetUri(source);
-    if (uri != null) {
-      const isLoaded = ImageLoader.has(uri);
-      if (isLoaded) {
-        return LOADED;
-      }
-    }
-    return IDLE;
-  });
-
+  const [state, updateState] = React.useState(IDLE);
   const [layout, updateLayout] = React.useState({});
   const hasTextAncestor = React.useContext(TextAncestorContext);
   const hiddenImageRef = React.useRef(null);
   const filterRef = React.useRef(_filterId++);
   const requestRef = React.useRef(null);
+  const uri = resolveAssetUri(source);
+  const isCached = uri != null && ImageLoader.has(uri);
   const shouldDisplaySource =
-    state === LOADED || (state === LOADING && defaultSource == null);
+    state === LOADED ||
+    isCached ||
+    (state === LOADING && defaultSource == null);
   const [flatStyle, _resizeMode, filter, _tintColor] = getFlatStyle(
     style,
     blurRadius,
@@ -297,7 +291,6 @@ const BaseImage: ImageComponent = React.forwardRef((props, ref) => {
   }
 
   // Image loading
-  const uri = resolveAssetUri(source);
   React.useEffect(() => {
     abortPendingRequest();
 
