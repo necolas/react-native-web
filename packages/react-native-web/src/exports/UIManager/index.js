@@ -7,28 +7,38 @@
  * @noflow
  */
 
-import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import setValueForStyles from '../../modules/setValueForStyles';
 
 const getRect = (node) => {
-  // Unlike the DOM's getBoundingClientRect, React Native layout measurements
-  // for "height" and "width" ignore scale transforms.
-  // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
-  const { x, y, top, left } = getBoundingClientRect(node);
-  const width = node.offsetWidth;
   const height = node.offsetHeight;
-  return { x, y, width, height, top, left };
+  const width = node.offsetWidth;
+  let left = node.offsetLeft;
+  let top = node.offsetTop;
+  node = node.offsetParent;
+
+  while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
+    left += node.offsetLeft + node.clientLeft - node.scrollLeft;
+    top += node.offsetTop + node.clientTop - node.scrollTop;
+    node = node.offsetParent;
+  }
+
+  top -= window.scrollY;
+  left -= window.scrollX;
+
+  return { width, height, top, left };
 };
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || (node && node.parentNode);
   if (node && relativeNode) {
     setTimeout(() => {
-      const relativeRect = getBoundingClientRect(relativeNode);
-      const { height, left, top, width } = getRect(node);
-      const x = left - relativeRect.left;
-      const y = top - relativeRect.top;
-      callback(x, y, width, height, left, top);
+      if (node.isConnected && relativeNode.isConnected) {
+        const relativeRect = getRect(relativeNode);
+        const { height, left, top, width } = getRect(node);
+        const x = left - relativeRect.left;
+        const y = top - relativeRect.top;
+        callback(x, y, width, height, left, top);
+      }
     }, 0);
   }
 };
