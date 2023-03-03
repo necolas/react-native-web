@@ -248,8 +248,8 @@ describe('components/Image', () => {
       });
     });
 
-    test('is not set immediately if the image has not already been loaded', () => {
-      const uri = 'https://google.com/favicon.ico';
+    test('is set immediately while image is loading and there is no default source', () => {
+      const uri = 'https://google.com/not-yet-loaded-image.ico';
       const source = { uri };
       const { container } = render(<Image source={source} />);
       expect(container.firstChild).toMatchSnapshot();
