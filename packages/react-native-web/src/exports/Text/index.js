@@ -192,6 +192,7 @@ const textStyle = {
   listStyle: 'none',
   margin: 0,
   padding: 0,
+  position: 'relative',
   textAlign: 'inherit',
   textDecoration: 'none',
   whiteSpace: 'pre-wrap',

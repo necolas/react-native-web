@@ -9,6 +9,7 @@ import AppRegistry from '..';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import StyleSheet from '../../StyleSheet';
+import Text from '../../Text';
 import View from '../../View';
 
 const NoopComponent = () => React.createElement('div');
@@ -44,13 +45,20 @@ describe('AppRegistry', () => {
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
         input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
         [stylesheet-group=\\"1\\"]{}
+        .css-text-13q1o4w{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:pre-wrap;word-wrap:break-word;}
+        .css-textHasAncestor-1jxf684{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:inherit;display:inline;font:inherit;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:inherit;word-wrap:break-word;}
         .css-view-175oi2r{align-items:stretch;background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;list-style:none;margin:0px;min-height:0px;min-width:0px;padding:0px;position:relative;text-decoration:none;z-index:0;}
         [stylesheet-group=\\"2\\"]{}
+        .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group=\\"3\\"]{}
+        .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-bottom-1p0dtai{bottom:0px;}
+        .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
+        .r-maxWidth-dnmrzs{max-width:100%;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>*{pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
@@ -59,7 +67,12 @@ describe('AppRegistry', () => {
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}
-        .r-top-ipm5af{top:0px;}</style>"
+        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+        .r-top-ipm5af{top:0px;}
+        .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
+        .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+        .r-whiteSpace-3s2u2q{white-space:nowrap;}
+        .r-wordWrap-1iln25a{word-wrap:normal;}</style>"
       `);
     });
 
@@ -78,7 +91,8 @@ describe('AppRegistry', () => {
       };
 
       // First render "RootComponent"
-      const RootComponent = () => React.createElement(View);
+      const RootComponent = () =>
+        React.createElement(View, React.createElement(Text));
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
       expect(first).toMatchInlineSnapshot(`
@@ -88,13 +102,20 @@ describe('AppRegistry', () => {
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
         input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
         [stylesheet-group=\\"1\\"]{}
+        .css-text-13q1o4w{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:pre-wrap;word-wrap:break-word;}
+        .css-textHasAncestor-1jxf684{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:inherit;display:inline;font:inherit;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:inherit;word-wrap:break-word;}
         .css-view-175oi2r{align-items:stretch;background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;list-style:none;margin:0px;min-height:0px;min-width:0px;padding:0px;position:relative;text-decoration:none;z-index:0;}
         [stylesheet-group=\\"2\\"]{}
+        .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group=\\"3\\"]{}
+        .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-bottom-1p0dtai{bottom:0px;}
+        .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
+        .r-maxWidth-dnmrzs{max-width:100%;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>*{pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
@@ -103,7 +124,12 @@ describe('AppRegistry', () => {
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}
-        .r-top-ipm5af{top:0px;}"
+        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+        .r-top-ipm5af{top:0px;}
+        .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
+        .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+        .r-whiteSpace-3s2u2q{white-space:nowrap;}
+        .r-wordWrap-1iln25a{word-wrap:normal;}"
       `);
 
       // Second render "AlternativeComponent"
@@ -124,15 +150,22 @@ describe('AppRegistry', () => {
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
         input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
         [stylesheet-group=\\"1\\"]{}
+        .css-text-13q1o4w{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:pre-wrap;word-wrap:break-word;}
+        .css-textHasAncestor-1jxf684{background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;color:inherit;display:inline;font:inherit;list-style:none;margin:0px;padding:0px;position:relative;text-align:inherit;text-decoration:none;white-space:inherit;word-wrap:break-word;}
         .css-view-175oi2r{align-items:stretch;background-color:rgba(0,0,0,0.00);border:0 solid black;box-sizing:border-box;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;list-style:none;margin:0px;min-height:0px;min-width:0px;padding:0px;position:relative;text-decoration:none;z-index:0;}
         [stylesheet-group=\\"2\\"]{}
         .r-borderWidth-1bee2fs{border-bottom-width:1234px;border-left-width:1234px;border-right-width:1234px;border-top-width:1234px;}
+        .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group=\\"3\\"]{}
+        .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-backgroundColor-aot4c7{background-color:rgba(128,0,128,1.00);}
         .r-bottom-1p0dtai{bottom:0px;}
+        .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
+        .r-maxWidth-dnmrzs{max-width:100%;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>*{pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
@@ -141,7 +174,12 @@ describe('AppRegistry', () => {
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}
-        .r-top-ipm5af{top:0px;}"
+        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+        .r-top-ipm5af{top:0px;}
+        .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
+        .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
+        .r-whiteSpace-3s2u2q{white-space:nowrap;}
+        .r-wordWrap-1iln25a{word-wrap:normal;}"
       `);
 
       // Third render "RootComponent" again
