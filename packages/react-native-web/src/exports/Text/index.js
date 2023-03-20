@@ -193,7 +193,7 @@ const textStyle = {
   margin: 0,
   padding: 0,
   position: 'relative',
-  textAlign: 'inherit',
+  textAlign: 'start',
   textDecoration: 'none',
   whiteSpace: 'pre-wrap',
   wordWrap: 'break-word'
@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
     ...textStyle,
     color: 'inherit',
     font: 'inherit',
+    textAlign: 'inherit',
     whiteSpace: 'inherit'
   },
   textOneLine: {
