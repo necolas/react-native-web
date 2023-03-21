@@ -5,7 +5,6 @@ permalink: /docs/style-sheet/index.html
 eleventyNavigation:
   key: StyleSheet
   parent: APIs
-  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

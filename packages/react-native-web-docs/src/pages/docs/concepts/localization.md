@@ -5,7 +5,6 @@ permalink: /docs/localization/index.html
 eleventyNavigation:
   key: Localization
   parent: Concepts
-  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -23,7 +22,7 @@ The non-standard [direction-independent style properties and values]({{ '/docs/s
 
 ```jsx
 // "start" is "left" for LTR and "right" for RTL
-const style = { paddingStart: 10, marginStart: 10 };
+const style = { paddingInlineStart: 10, marginInlineStart: 10 };
 return (
   <View style={style} />
 );

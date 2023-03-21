@@ -5,6 +5,7 @@ permalink: /docs/interactions/index.html
 eleventyNavigation:
   key: Interactions
   parent: Concepts
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -17,27 +18,31 @@ Interactions and gestures for the web.
 
 ---
 
-## Click Props API
+## PointerEvent Props API
 
-Click interactions are available on supporting elements. These events are React DOM synthetic mouse events. The `click` events may be dispatched by the browser following user interactions with a pointer (mouse or touch) as well as a keyboard.
+Pointer interactions are available on supporting elements. These events are React DOM synthetic mouse events. The `click` events may be dispatched by the browser following user interactions with a pointer (mouse or touch) as well as a keyboard.
 
 In cases where a native `click` is not dispatched following a valid keyboard interaction (due to the native semantics of the host element), it will be emulated by React Native for Web. This helps to improve the accessibility of elements for all forms of interaction hardware.
 
-{% call macro.prop('onClick', '?(event: MouseEvent) => void') %}
-Called when the element is clicked. 
+{% call macro.prop('onClick', '?(event: PointerEvent) => void') %}
+Called when the element is clicked.
 {% endcall %}
 
-{% call macro.prop('onClickCapture', '?(event: MouseEvent) => void') %}
+{% call macro.prop('onClickCapture', '?(event: PointerEvent) => void') %}
 Called when the element is clicked. (Capture phase.)
 {% endcall %}
 
-{% call macro.prop('onContextMenu', '?(event: MouseEvent) => void') %}
+{% call macro.prop('onContextMenu', '?(event: PointerEvent) => void') %}
 Called when a native context menu is displayed. This may be in response to mouse, touch, or mouse+keyboard interaction.
+{% endcall %}
+
+{% call macro.prop('onPointer*', '?(event: PointerEvent) => void') %}
+Support for the PointerEvent API.
 {% endcall %}
 
 ---
 
-## Focus Props API
+## FocusEvent Props API
 
 Focus interactions are available on supporting elements. The focus events are React DOM synthetic focus events. These events are also fired in response to focus being programmatically moved.
 
@@ -51,7 +56,7 @@ Called when the element receives focus.
 
 ---
 
-## Keyboard Props API
+## KeyboardEvent Props API
 
 Keyboard interactions are available on supporting elements. The keyboard events are React DOM synthetic keyboard events.
 
@@ -73,7 +78,7 @@ Called when a key is released. (Capture phase.)
 
 ---
 
-## Responder Props API
+## ResponderEvent Props API
 
 "Responder" interactions are available on supporting elements. The Responder System allows views and gesture recognizers to opt-in to negotiating over a single, global “interaction lock”. For a view to become the “responder” means that pointer interactions are exclusive to that view and none other. A view can negotiate to become the “responder” without requiring knowledge of other views. A more specialized API for working with multi-pointer gestures is available by using the [PanResponder]({{ '/docs/pan-responder' | url }}) module.
 
@@ -141,11 +146,11 @@ A pointer down event occured on the screen. The responder is notified of all sta
 
 {% call macro.prop('onResponderMove', '?(event: ResponderEvent) => void') %}
 A pointer move event occured on the screen. The responder is notified of all move events, even if the pointer target is not this view (i.e., additional pointers are being used). Therefore, this callback may be called multiple times while the view is the responder.
-{% endcall %} 
+{% endcall %}
 
 {% call macro.prop('onResponderEnd', '?(event: ResponderEvent) => void') %}
 A pointer up event occured on the screen. The responder is notified of all end events, even if the pointer target is not this view (i.e., additional pointers are being used). Therefore, this callback may be called multiple times while the view is the responder.
-{% endcall %} 
+{% endcall %}
 
 {% call macro.prop('onResponderRelease', '?(event: ResponderEvent) => void') %}
 As soon as there are no more pointers that *started* inside descendants of the responder, this callback is called on the responder and the interaction lock is released. This is the point at which you should provide visual feedback for users that the interaction is over.

@@ -5,6 +5,7 @@ permalink: /docs/view/index.html
 eleventyNavigation:
   key: View
   parent: Components
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -37,20 +38,20 @@ import { View } from 'react-native';
 The [accessibility props]({{ '/docs/accessibility' | url }}).
 {% endcall %}
 
-{% call macro.prop('...ClickProps') %}
-The [click props]({{ '/docs/interactions' | url }}).
+{% call macro.prop('...PointerProps') %}
+The [PointerEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('...FocusProps') %}
-The [focus props]({{ '/docs/interactions' | url }}).
+The [FocusEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('...KeyboardProps') %}
-The [keyboard props]({{ '/docs/interactions' | url }}).
+The [KeyboardEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('...ResponderProps') %}
-The [responder props]({{ '/docs/interactions' | url }}).
+The [ResponderEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('children', 'any') %}
@@ -65,10 +66,6 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir).
 {% endcall %}
 
-{% call macro.prop('focusable', '?boolean') %}
-Set whether the view can receive keyboard focus.
-{% endcall %}
-
 {% call macro.prop('href', '?string') %}
 If `href` is defined, the view is rendered as an anchor tag pointing to this URL.
 {% endcall %}
@@ -77,24 +74,24 @@ If `href` is defined, the view is rendered as an anchor tag pointing to this URL
 If `href` is defined, this prop defines related attributes to include on the anchor (e.g., `download`, `rel`, `target`) which may modify its behavior.
 {% endcall %}
 
-{% call macro.prop('lang', '?string') %}
-Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
+{% call macro.prop('id', '?string') %}
+Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
 {% endcall %}
 
-{% call macro.prop('nativeID', '?string') %}
-Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
+{% call macro.prop('lang', '?string') %}
+Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('onLayout', '?({ nativeEvent: { layout: { x, y, width, height } } }) => void') %}
 This is invoked when a component is mounted and when its layout changes. `x` and `y` are the offsets from the parent node.
 {% endcall %}
 
-{% call macro.prop('pointerEvents', '?("all" | "none" | "box-only" | "box-none")') %}
-Equivalent to [CSS pointer-events](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) with 2 additional values. A value of `"box-none"` preserves pointer events on the element's children; `"box-only"` disables pointer events on the element's children.
-{% endcall %}
-
 {% call macro.prop('style', '?Style') %}
 Set the styles of the view.
+{% endcall %}
+
+{% call macro.prop('tabIndex', '0 | -1') %}
+Set whether the view can receive keyboard focus.
 {% endcall %}
 
 {% call macro.prop('testID', '?string') %}

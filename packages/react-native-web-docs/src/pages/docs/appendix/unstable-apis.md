@@ -7,7 +7,6 @@ eleventyNavigation:
   key: Unstable APIs
   parent: Appendix
   order: 1
-  label: "Change"
 ---
 
 :::lead

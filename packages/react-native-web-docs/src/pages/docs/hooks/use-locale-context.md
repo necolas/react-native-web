@@ -5,7 +5,6 @@ permalink: /docs/use-locale-context/index.html
 eleventyNavigation:
   key: useLocaleContext
   parent: Hooks
-  label: "New"
 ---
 
 {% import "fragments/macros.html" as macro with context %}

@@ -5,6 +5,7 @@ permalink: /docs/text-input/index.html
 eleventyNavigation:
   key: TextInput
   parent: Components
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -31,12 +32,16 @@ import { TextInput } from 'react-native-web';
 The [accessibility props]({{ '/docs/accessibility' | url }}).
 {% endcall %}
 
-{% call macro.prop('...ClickProps') %}
-The [click props]({{ '/docs/interactions' | url }}).
+{% call macro.prop('...PointerProps') %}
+The [PointerEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('...FocusProps') %}
-The [focus props]({{ '/docs/interactions' | url }}).
+The [FocusEvent props]({{ '/docs/interactions' | url }}).
+{% endcall %}
+
+{% call macro.prop('...KeyboardProps') %}
+The [KeyboardEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('autoCapitalize', '?string') %}
@@ -79,11 +84,15 @@ Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API
 Equivalent to [HTMLElement.disabled](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled)
 {% endcall %}
 
-{% call macro.prop('editable', '?boolean = true') %}
-Equivalent to [HTMLElement.readonly](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/readonly)
+{% call macro.prop('enterKeyHint', '?string') %}
+Specifies what action label (or icon) to present for the enter key on virtual keyboards. Equivalent to [HTMLElement.enterkeyhint](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute)
 {% endcall %}
 
-{% call macro.prop('keyboardType', '?string') %}
+{% call macro.prop('id', '?string') %}
+Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
+{% endcall %}
+
+{% call macro.prop('inputMode', '?string') %}
 Hints at the type of data that might be entered by the user while editing the element or its contents. Equivalent to [HTMLElement.inputMode](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode). Safari iOS requires an ancestral `<form action>` element to display the search keyboard. (Not available when multiline is true.)
 {% endcall %}
 
@@ -97,14 +106,6 @@ Equivalent to [HTMLElement.maxlength](https://developer.mozilla.org/en-US/docs/W
 
 {% call macro.prop('multiline', '?boolean = false') %}
 If `true`, the text input can be multiple lines.
-{% endcall %}
-
-{% call macro.prop('nativeID', '?string') %}
-Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
-{% endcall %}
-
-{% call macro.prop('numberOfLines', '?number = 1') %}
-Sets the number of lines for a multiline input. (Requires `multiline` to be `true`.)
 {% endcall %}
 
 {% call macro.prop('onChange', '?(e: ChangeEvent) => void') %}
@@ -139,7 +140,6 @@ Callback that is called when the text input's selection changes.
 Callback that is called when the keyboard's submit button is pressed. When `multiline={true}`, this is only called if `blurOnSubmit={true}`.
 {% endcall %}
 
-
 {% call macro.prop('placeholder', '?boolean') %}
 Text that appears in the form control when it has no value set.
 {% endcall %}
@@ -148,8 +148,12 @@ Text that appears in the form control when it has no value set.
 Equivalent to defining `::placeholder { color }` via a CSS property.
 {% endcall %}
 
-{% call macro.prop('returnKeyType', '?string') %}
-Specifies what action label (or icon) to present for the enter key on virtual keyboards. Equivalent to [HTMLElement.enterkeyhint](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute)
+{% call macro.prop('readOnly', '?boolean = false') %}
+Equivalent to [HTMLElement.readonly](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/readonly)
+{% endcall %}
+
+{% call macro.prop('rows', '?number = 1') %}
+Sets the number of lines for a multiline input. (Requires `multiline` to be `true`.)
 {% endcall %}
 
 {% call macro.prop('secureTextEntry', '?boolean = false') %}

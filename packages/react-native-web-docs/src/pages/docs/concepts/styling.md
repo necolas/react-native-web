@@ -5,6 +5,7 @@ permalink: /docs/styling/index.html
 eleventyNavigation:
   key: Styling
   parent: Concepts
+  label: "Change"
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -89,8 +90,28 @@ Accepts only positive integers, `0`, or `-1`.
 The value of `-1` is non-standard and equivalent to setting `flowGrow:0` and `flexShrink:1`.
 {% endcall %}
 
+{% call macro.prop('inset', '?(string | number)') %}
+Equivalent to [inset](https://developer.mozilla.org/en-US/docs/Web/CSS/inset).
+{% endcall %}
+
+{% call macro.prop('insetBlock', '?(string | number)') %}
+Equivalent to [inset-block](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-block).
+{% endcall %}
+
+{% call macro.prop('insetInline', '?(string | number)') %}
+Equivalent to [inset-inline](https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline).
+{% endcall %}
+
 {% call macro.prop('margin', '?(number | string)') %}
 Accepts only a single value that is applied to all sides.
+{% endcall %}
+
+{% call macro.prop('marginBlock', '?(number | string)') %}
+Equivalent to [margin-block](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block).
+{% endcall %}
+
+{% call macro.prop('marginInline', '?(number | string)') %}
+Equivalent to [margin-inline](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline). Accepts only a single value.
 {% endcall %}
 
 {% call macro.prop('overflow', '?("auto" | "hidden" | "visible")') %}
@@ -105,6 +126,14 @@ Accepts only a single value that is applied to both axes.
 Accepts only a single value that is applied to all sides.
 {% endcall %}
 
+{% call macro.prop('paddingBlock', '?(number | string)') %}
+Equivalent to [padding-block](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block).
+{% endcall %}
+
+{% call macro.prop('paddingInline', '?(number | string)') %}
+Equivalent to [padding-inline](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline). Accepts only a single value.
+{% endcall %}
+
 ### Non-standard properties
 
 {{ site.name }} includes compatibility with the following non-standard React Native properties and values.
@@ -113,117 +142,8 @@ Accepts only a single value that is applied to all sides.
 A web-only CSS extension for defining keyframes. The value is an object representing a [CSS keyframes definition](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations). For example: `{ '0%': { opacity: 1 } }`.
 {% endcall %}
 
-{% call macro.prop('borderEndColor', '?string') %}
-Equivalent to [border-inline-end-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-color).
-{% endcall %}
-
-{% call macro.prop('borderEndStyle', '?string') %}
-Equivalent to [border-inline-end-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style).
-{% endcall %}
-
-{% call macro.prop('borderEndWidth', '?(string | number)') %}
-Equivalent to [border-inline-end-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width).
-{% endcall %}
-
-{% call macro.prop('borderStartColor', '?string') %}
-Equivalent to [border-inline-start-color](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color).
-{% endcall %}
-
-{% call macro.prop('borderStartStyle', '?string') %}
-Equivalent to [border-inline-start-style](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-style).
-{% endcall %}
-
-{% call macro.prop('borderStartWidth', '?(string | number)') %}
-Equivalent to [border-inline-start-width](https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width).
-{% endcall %}
-
-{% call macro.prop('borderBottomEndRadius', '?(string | number)') %}
-Equivalent to [border-end-end-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-end-radius).
-{% endcall %}
-
-{% call macro.prop('borderBottomStartRadius', '?(string | number)') %}
-Equivalent to [border-end-start-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-end-start-radius).
-{% endcall %}
-
-{% call macro.prop('borderTopEndRadius', '?(string | number)') %}
-Equivalent to [border-start-end-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-end-radius).
-{% endcall %}
-
-{% call macro.prop('borderTopStartRadius', '?(string | number)') %}
-Equivalent to [border-start-start-radius](https://developer.mozilla.org/en-US/docs/Web/CSS/border-start-start-radius).
-{% endcall %}
-
-{% call macro.prop('end', '?(string | number)') %}
-Defines the logical inline end position of an element. Equivalent to `right` for `ltr` writing direction.
-{% endcall %}
-
-{% call macro.prop('marginHorizontal', '?(number | string)') %}
-Equivalent to [margin-inline](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline). Accepts only a single value.
-{% endcall %}
-
-{% call macro.prop('marginVertical', '?(number | string)') %}
-Equivalent to [margin-block](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-block).
-{% endcall %}
-
-{% call macro.prop('marginEnd', '?(string | number)') %}
-Equivalent to [margin-inline-end](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end).
-{% endcall %}
-
-{% call macro.prop('marginStart', '?(string | number)') %}
-Equivalent to [margin-inline-start](https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start).
-{% endcall %}
-
-{% call macro.prop('paddingHorizontal', '?(number | string)') %}
-Equivalent to [padding-inline](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline). Accepts only a single value.
-{% endcall %}
-
-{% call macro.prop('paddingVertical', '?(number | string)') %}
-Equivalent to [padding-block](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-block). Accepts only a single value.
-{% endcall %}
-
-{% call macro.prop('paddingEnd', '?(string | number)') %}
-Equivalent to [padding-inline-end](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end).
-{% endcall %}
-
-{% call macro.prop('paddingStart', '?(string | number)') %}
-Equivalent to [padding-inline-start](https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start).
-{% endcall %}
-
-{% call macro.prop('shadowColor', '?string') %}
-{% endcall %}
-
-{% call macro.prop('shadowOffset', '?(string | number)') %}
-{% endcall %}
-
-{% call macro.prop('shadowOpacity', '?number') %}
-{% endcall %}
-
-{% call macro.prop('shadowRadius', '?(string | number)') %}
-{% endcall %}
-
-{% call macro.prop('start', '?(string | number)') %}
-Defines the logical inline end position of an element. Equivalent to `left` for `ltr` writing direction.
-{% endcall %}
-
-{% call macro.prop('textAlign', '?string') %}
-Includes support for non-standard `"start"` and `"end"` values for localization support.
-{% endcall %}
-
-{% call macro.prop('textAlignVertical', '?string') %}
-Equivalent to [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align).
-{% endcall %}
-
-{% call macro.prop('textShadowColor', '?string') %}
-{% endcall %}
-
-{% call macro.prop('textShadowOffset', '?(string | number)') %}
-{% endcall %}
-
-{% call macro.prop('textShadowRadius', '?(string | number)') %}
-{% endcall %}
-
-{% call macro.prop('transform', '?Array<Object>') %}
-Implements React Native's [JavaScript syntax for transforms](https://reactnative.dev/docs/transforms#reference).
+{% call macro.prop('pointerEvents', '?("all" | "none" | "box-only" | "box-none")') %}
+Equivalent to [CSS pointer-events](https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events) with 2 additional values. A value of `"box-none"` preserves pointer events on the element's children; `"box-only"` disables pointer events on the element's children.
 {% endcall %}
 
 {% call macro.prop('writingDirection', '?("auto" | "ltr" | "rtl")') %}
