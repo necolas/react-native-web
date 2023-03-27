@@ -5,6 +5,7 @@ export { default as processColor } from './exports/processColor';
 export { default as render } from './exports/render';
 export { default as unmountComponentAtNode } from './exports/unmountComponentAtNode';
 export { default as NativeModules } from './exports/NativeModules';
+export { default as TurrboModuleRegistry } from './exports/TurboModuleRegistry';
 
 // APIs
 export { default as AccessibilityInfo } from './exports/AccessibilityInfo';
