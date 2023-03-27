@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     animationDuration: '0.75s',
     animationKeyframes: [
       {
-        '0%': { transform: [{ rotate: '0deg' }] },
-        '100%': { transform: [{ rotate: '360deg' }] }
+        '0%': { transform: 'rotate(0deg)' },
+        '100%': { transform: 'rotate(360deg)' }
       }
     ],
     animationTimingFunction: 'linear',

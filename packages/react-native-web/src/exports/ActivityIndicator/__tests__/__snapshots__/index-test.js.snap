@@ -9,7 +9,7 @@ exports[`components/ActivityIndicator prop "accessibilityLabel" value is set 1`]
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -46,7 +46,7 @@ exports[`components/ActivityIndicator prop "accessibilityLiveRegion" value is se
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -82,7 +82,7 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
   >
     <svg
       height="100%"
@@ -118,7 +118,7 @@ exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -181,7 +181,7 @@ exports[`components/ActivityIndicator prop "dataSet" value is set 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -217,7 +217,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w"
   >
     <svg
       height="100%"
@@ -253,7 +253,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0 r-animationPlayState-1abnn5w r-visibility-11j9u27"
   >
     <svg
       height="100%"
@@ -290,7 +290,7 @@ exports[`components/ActivityIndicator prop "nativeID" value is set 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -326,7 +326,7 @@ exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-1r8g8re r-width-1acpoxo r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-1r8g8re r-width-1acpoxo r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -362,7 +362,7 @@ exports[`components/ActivityIndicator prop "size" is a number 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
     style="height: 30px; width: 30px;"
   >
     <svg
@@ -400,7 +400,7 @@ exports[`components/ActivityIndicator prop "style" value is set 1`] = `
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"
@@ -437,7 +437,7 @@ exports[`components/ActivityIndicator prop "testID" value is set 1`] = `
   role="progressbar"
 >
   <div
-    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-127358a r-animationTimingFunction-1ldzwu0"
+    class="css-view-175oi2r r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
   >
     <svg
       height="100%"

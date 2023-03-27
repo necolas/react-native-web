@@ -117,17 +117,17 @@ const styles = StyleSheet.create({
     }
   },
   slideIn: {
-    transform: [{ translateY: '0%' }],
+    transform: 'translateY(0%)',
     animationKeyframes: {
-      '0%': { transform: [{ translateY: '100%' }] },
-      '100%': { transform: [{ translateY: '0%' }] }
+      '0%': { transform: 'translateY(100%)' },
+      '100%': { transform: 'translateY(0%)' }
     }
   },
   slideOut: {
-    transform: [{ translateY: '100%' }],
+    transform: 'translateY(100%)',
     animationKeyframes: {
-      '0%': { transform: [{ translateY: '0%' }] },
-      '100%': { transform: [{ translateY: '100%' }] }
+      '0%': { transform: 'translateY(0%)' },
+      '100%': { transform: 'translateY(100%)' }
     }
   },
   hidden: {

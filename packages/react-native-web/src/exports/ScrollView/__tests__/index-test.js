@@ -68,14 +68,12 @@ describe('components/ScrollView', () => {
       let rerender;
       act(() => {
         ({ rerender } = render(
-          <ScrollView nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
+          <ScrollView id="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
       expect(ref).toHaveBeenCalledTimes(1);
       act(() => {
-        rerender(
-          <ScrollView nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />
-        );
+        rerender(<ScrollView id="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
       expect(ref).toHaveBeenCalledTimes(1);
     });

@@ -452,7 +452,7 @@ class LayoutRTLExample extends React.Component {
                 source={iconSource}
                 style={[
                   styles.image,
-                  { transform: [{ scaleX: this.state.isRTL ? -1 : 1 }] }
+                  { transform: `scaleX(${this.state.isRTL ? -1 : 1})` }
                 ]}
               />
               <Text style={styles.fontSizeSmall}>RTL flip</Text>

@@ -182,7 +182,7 @@ const Image: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, ref) => {
   const {
-    accessibilityLabel,
+    'aria-label': ariaLabel,
     blurRadius,
     defaultSource,
     draggable,
@@ -240,7 +240,7 @@ const Image: React.AbstractComponent<
   // Accessibility image allows users to trigger the browser's image context menu
   const hiddenImage = displayImageUri
     ? createElement('img', {
-        alt: accessibilityLabel || '',
+        alt: ariaLabel || '',
         style: styles.accessibilityImage$raw,
         draggable: draggable || false,
         ref: hiddenImageRef,
@@ -327,7 +327,7 @@ const Image: React.AbstractComponent<
   return (
     <View
       {...rest}
-      accessibilityLabel={accessibilityLabel}
+      aria-label={ariaLabel}
       onLayout={handleLayout}
       pointerEvents={pointerEvents}
       ref={ref}

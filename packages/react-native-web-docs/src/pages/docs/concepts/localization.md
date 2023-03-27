@@ -50,7 +50,7 @@ The `useLocaleContext` API can be used for fine-grained control of layout, e.g.,
 const { direction, locale } = useLocaleContext();
 
 const isRTL = direction === 'rtl';
-const style = { transform: [{ scaleX: isRTL ? -1 : 1 }] };
+const style = { scaleX: isRTL ? -1 : 1 };
 
 <Image source={'forward.svg'} style={style} />
 <Image source={isRTL ? 'back.svg' : 'forward.svg'} />

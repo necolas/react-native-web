@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/Image prop "accessibilityLabel" 1`] = `
+exports[`components/Image prop "aria-label" 1`] = `
 <div
   aria-label="accessibilityLabel"
   class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"

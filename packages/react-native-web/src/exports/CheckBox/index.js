@@ -30,7 +30,7 @@ const CheckBox: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
   const {
-    accessibilityReadOnly,
+    'aria-readonly': ariaReadOnly,
     color,
     disabled,
     onChange,
@@ -64,7 +64,7 @@ const CheckBox: React.AbstractComponent<
     checked: value,
     disabled: disabled,
     onChange: handleChange,
-    readOnly: accessibilityReadOnly,
+    readOnly: ariaReadOnly || other.accessibilityReadOnly,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'
@@ -73,8 +73,8 @@ const CheckBox: React.AbstractComponent<
   return (
     <View
       {...other}
-      accessibilityDisabled={disabled}
-      accessibilityReadOnly={accessibilityReadOnly}
+      aria-disabled={disabled}
+      aria-readonly={ariaReadOnly}
       style={[styles.root, style, disabled && styles.cursorDefault]}
     >
       {fakeControl}

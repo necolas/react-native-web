@@ -26,13 +26,10 @@ describe('components/Image', () => {
     window.Image = originalImage;
   });
 
-  test('prop "accessibilityLabel"', () => {
+  test('prop "aria-label"', () => {
     const defaultSource = { uri: 'https://google.com/favicon.ico' };
     const { container } = render(
-      <Image
-        accessibilityLabel="accessibilityLabel"
-        defaultSource={defaultSource}
-      />
+      <Image aria-label="accessibilityLabel" defaultSource={defaultSource} />
     );
     expect(container.firstChild).toMatchSnapshot();
   });

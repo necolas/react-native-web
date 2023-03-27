@@ -26,12 +26,7 @@ const AppContainer: React.AbstractComponent<Props> = React.forwardRef(
     const { children, WrapperComponent } = props;
 
     let innerView = (
-      <View
-        children={children}
-        key={1}
-        pointerEvents="box-none"
-        style={styles.appContainer}
-      />
+      <View children={children} key={1} style={styles.appContainer} />
     );
 
     if (WrapperComponent) {
@@ -40,11 +35,7 @@ const AppContainer: React.AbstractComponent<Props> = React.forwardRef(
 
     return (
       <RootTagContext.Provider value={props.rootTag}>
-        <View
-          pointerEvents="box-none"
-          ref={forwardedRef}
-          style={styles.appContainer}
-        >
+        <View ref={forwardedRef} style={styles.appContainer}>
           {innerView}
         </View>
       </RootTagContext.Provider>
@@ -58,6 +49,7 @@ export default AppContainer;
 
 const styles = StyleSheet.create({
   appContainer: {
-    flex: 1
+    flex: 1,
+    pointerEvents: 'box-none'
   }
 });

@@ -121,7 +121,7 @@ class LocationXY extends React.Component {
   };
 
   render() {
-    const transform = { transform: [{ translateX: this.state.translateX }] };
+    const transform = { transform: `translateX${this.state.translateX}` };
     return (
       <View style={styles.box}>
         <View style={styles.outer} {...this.panResponder.panHandlers}>

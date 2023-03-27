@@ -2149,10 +2149,10 @@ function describeNestedLists(childList: {
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    transform: [{scaleY: -1}],
+    transform: 'scaleY(-1)',
   },
   horizontallyInverted: {
-    transform: [{scaleX: -1}],
+    transform: 'scaleX(-1)',
   },
   row: {
     flexDirection: 'row',

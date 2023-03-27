@@ -41,11 +41,11 @@ const ProgressBar: React.AbstractComponent<
   return (
     <View
       {...other}
-      accessibilityRole="progressbar"
-      accessibilityValueMax={100}
-      accessibilityValueMin={0}
-      accessibilityValueNow={indeterminate ? null : percentageProgress}
+      aria-valuemax={100}
+      aria-valuemin={0}
+      aria-valuenow={indeterminate ? null : percentageProgress}
       ref={ref}
+      role="progressbar"
       style={[styles.track, style, { backgroundColor: trackColor }]}
     >
       <View
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     animationDuration: '1s',
     animationKeyframes: [
       {
-        '0%': { transform: [{ translateX: '-100%' }] },
-        '100%': { transform: [{ translateX: '400%' }] }
+        '0%': { transform: 'translateX(-100%)' },
+        '100%': { transform: 'translateX(400%)' }
       }
     ],
     animationTimingFunction: 'linear',

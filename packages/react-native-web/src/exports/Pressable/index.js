@@ -75,7 +75,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
     delayPressIn,
     delayPressOut,
     disabled,
-    focusable,
     onBlur,
     onContextMenu,
     onFocus,
@@ -88,6 +87,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     onPressIn,
     onPressOut,
     style,
+    tabIndex,
     testOnly_hovered,
     testOnly_pressed,
     ...rest
@@ -190,22 +190,28 @@ function Pressable(props: Props, forwardedRef): React.Node {
     [onKeyDown, onKeyDownPress]
   );
 
+  let _tabIndex;
+  if (tabIndex !== undefined) {
+    _tabIndex = tabIndex;
+  } else {
+    _tabIndex = disabled ? -1 : 0;
+  }
+
   return (
     <View
       {...rest}
       {...pressEventHandlers}
-      accessibilityDisabled={disabled}
-      focusable={!disabled && focusable !== false}
+      aria-disabled={disabled}
       onBlur={blurHandler}
       onContextMenu={contextMenuHandler}
       onFocus={focusHandler}
       onKeyDown={keyDownHandler}
-      pointerEvents={disabled ? 'none' : rest.pointerEvents}
       ref={setRef}
       style={[
-        !disabled && styles.root,
+        disabled ? styles.disabled : styles.active,
         typeof style === 'function' ? style(interactionState) : style
       ]}
+      tabIndex={_tabIndex}
     >
       {typeof children === 'function' ? children(interactionState) : children}
     </View>
@@ -218,9 +224,12 @@ function useForceableState(forced: boolean): [boolean, (boolean) => void] {
 }
 
 const styles = StyleSheet.create({
-  root: {
+  active: {
     cursor: 'pointer',
     touchAction: 'manipulation'
+  },
+  disabled: {
+    pointerEvents: 'none'
   }
 });
 

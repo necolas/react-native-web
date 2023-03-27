@@ -137,6 +137,7 @@ exports[`components/Pressable prop "accessibilityRole" value is "button" 1`] = `
 <button
   class="css-view-175oi2r r-cursor-1loqt21 r-touchAction-1otgn73"
   role="button"
+  tabindex="0"
   type="button"
 />
 `;
@@ -161,6 +162,7 @@ exports[`components/Pressable prop "href" 1`] = `
 <a
   class="css-view-175oi2r r-cursor-1loqt21 r-touchAction-1otgn73"
   href="#href"
+  tabindex="0"
 />
 `;
 
