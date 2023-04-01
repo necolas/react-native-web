@@ -8,13 +8,13 @@
  * @format
  */
 
-import typeof ScrollView from '../../../exports/ScrollView';
+import ScrollView from '../../../exports/ScrollView';
+import type { LayoutEvent } from '../../../types';
 import type {
-  LayoutEvent,
   FocusEvent,
 } from '../Types/CoreEventTypes';
-
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
+import { type ViewProps } from '../../../exports/View';
+type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
@@ -289,7 +289,7 @@ type OptionalProps = {|
 |};
 
 export type Props = {|
-  ...React.ElementConfig<ScrollView>,
+  ...React.ElementConfig<typeof ScrollView>,
   ...RequiredProps,
   ...OptionalProps,
 |};

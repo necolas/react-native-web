@@ -14,3 +14,4 @@
 
 [options]
 munge_underscores=true
+indexed_access=true

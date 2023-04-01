@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {FrameMetricProps} from './VirtualizedListProps';
+import type {FrameMetricProps} from '../VirtualizedList/VirtualizedListProps';
 
 /**
  * Used to find the indices of the frames that overlap the given offsets. Useful for finding the

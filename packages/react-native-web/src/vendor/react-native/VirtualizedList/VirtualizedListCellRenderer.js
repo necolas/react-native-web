@@ -8,18 +8,19 @@
  * @format
  */
 
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
+import type { LayoutEvent } from '../../../types';
 import type {
   FocusEvent,
-  LayoutEvent,
 } from '../Types/CoreEventTypes';
 import type {CellRendererProps, RenderItemType} from './VirtualizedListProps';
 
-import View from '../../../exports/View';
+import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import {VirtualizedListCellContextProvider} from './VirtualizedListContext.js';
 import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
+
+type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 
 export type Props<ItemT> = {
   CellRendererComponent?: ?React.ComponentType<CellRendererProps<ItemT>>,

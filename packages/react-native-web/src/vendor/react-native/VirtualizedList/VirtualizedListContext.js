@@ -8,7 +8,7 @@
  * @format
  */
 
-import typeof VirtualizedList from './VirtualizedList';
+import typeof VirtualizedList from '../VirtualizedList';
 
 import * as React from 'react';
 import {useContext, useMemo} from 'react';

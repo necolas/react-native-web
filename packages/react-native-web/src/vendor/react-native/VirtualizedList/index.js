@@ -8,13 +8,11 @@
  * @format
  */
 
-type ScrollResponderType = any;
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
+import type { LayoutEvent } from '../../../types';
 import type {
-  LayoutEvent,
   ScrollEvent,
 } from '../Types/CoreEventTypes';
-import type {ViewToken} from './ViewabilityHelper';
+import type {ViewToken} from '../ViewabilityHelper';
 import type {
   FrameMetricProps,
   Item,
@@ -26,7 +24,7 @@ import type {
 
 import RefreshControl from '../../../exports/RefreshControl';
 import ScrollView from '../../../exports/ScrollView';
-import View from '../../../exports/View';
+import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import findNodeHandle from '../../../exports/findNodeHandle';
 
@@ -60,6 +58,9 @@ const ON_EDGE_REACHED_EPSILON = 0.001;
 
 let _usedIndexForKey = false;
 let _keylessItemComponentName: string = '';
+
+type ScrollResponderType = any;
+type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
 
 type ViewabilityHelperCallbackTuple = {
   viewabilityHelper: ViewabilityHelper,
