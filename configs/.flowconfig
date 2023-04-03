@@ -6,9 +6,11 @@
 <PROJECT_ROOT>/packages/.*/dist/.*
 <PROJECT_ROOT>/packages/react-native-web-docs/.*
 <PROJECT_ROOT>/packages/react-native-web-examples/.*
-.*/node_modules/.*/.*.json
 
 [include]
+
+[declarations]
+.*/node_modules/.*
 
 [libs]
 
