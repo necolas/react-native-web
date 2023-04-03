@@ -1945,6 +1945,19 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     const lastFocusedCellRenderer = this._cellRefs[this._lastFocusedCellKey];
     const focusedCellIndex = lastFocusedCellRenderer.props.index;
     const itemCount = props.getItemCount(props.data);
+    
+    // The last cell we rendered may be at a new index. Bail if we don't know
+    // where it is.
+    if (
+      focusedCellIndex >= itemCount ||
+      this._keyExtractor(
+        props.getItem(props.data, focusedCellIndex),
+        focusedCellIndex,
+        props,
+      ) !== this._lastFocusedCellKey
+    ) {
+      return [];
+    }
 
     let first = focusedCellIndex;
     let heightOfCellsBeforeFocused = 0;
