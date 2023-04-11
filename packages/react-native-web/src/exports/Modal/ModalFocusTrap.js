@@ -25,7 +25,7 @@ import canUseDOM from '../../modules/canUseDom';
 
 const FocusBracket = () => {
   return createElement('div', {
-    accessibilityRole: 'none',
+    role: 'none',
     tabIndex: 0,
     style: styles.focusBracket
   });

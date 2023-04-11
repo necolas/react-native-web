@@ -56,10 +56,10 @@ const ActivityIndicator: React.AbstractComponent<
   return (
     <View
       {...other}
-      accessibilityRole="progressbar"
-      accessibilityValueMax={1}
-      accessibilityValueMin={0}
+      aria-valuemax={1}
+      aria-valuemin={0}
       ref={forwardedRef}
+      role="progressbar"
       style={[styles.container, style]}
     >
       <View

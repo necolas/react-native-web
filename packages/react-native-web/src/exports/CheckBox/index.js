@@ -22,6 +22,7 @@ type CheckBoxProps = {
   disabled?: boolean,
   onChange?: ?(e: any) => void,
   onValueChange?: ?(e: any) => void,
+  readOnly?: boolean,
   value?: boolean
 };
 
@@ -35,6 +36,7 @@ const CheckBox: React.AbstractComponent<
     disabled,
     onChange,
     onValueChange,
+    readOnly,
     style,
     value,
     ...other
@@ -64,7 +66,7 @@ const CheckBox: React.AbstractComponent<
     checked: value,
     disabled: disabled,
     onChange: handleChange,
-    readOnly: ariaReadOnly || other.accessibilityReadOnly,
+    readOnly: readOnly || ariaReadOnly || other.accessibilityReadOnly,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'

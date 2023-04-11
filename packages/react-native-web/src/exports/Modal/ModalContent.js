@@ -54,9 +54,9 @@ const ModalContent: React.AbstractComponent<
   return (
     <View
       {...rest}
-      accessibilityModal={true}
-      accessibilityRole={active ? 'dialog' : null}
+      aria-modal={true}
       ref={forwardedRef}
+      role={active ? 'dialog' : null}
       style={style}
     >
       <View style={styles.container}>{children}</View>
