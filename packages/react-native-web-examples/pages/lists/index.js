@@ -15,7 +15,7 @@ import {
   Image,
   StyleSheet,
   Switch,
-  TouchableHighlight,
+  Pressable,
   Text,
   TextInput,
   View
@@ -92,14 +92,11 @@ class ItemComponent extends React.PureComponent<{
     const itemHash = Math.abs(hashCode(item.title));
     const imgSource = THUMB_URLS[itemHash % THUMB_URLS.length];
     return (
-      <TouchableHighlight
-        onHideUnderlay={this.props.onHideUnderlay}
+      <Pressable
         onPress={this._onPress}
-        onShowUnderlay={this.props.onShowUnderlay}
+        onPressIn={this.props.onShowUnderlay}
+        onPressOut={this.props.onHideUnderlay}
         style={horizontal ? styles.horizItem : styles.item}
-        tvParallaxProperties={{
-          pressMagnification: 1.1
-        }}
       >
         <View
           style={[
@@ -116,7 +113,7 @@ class ItemComponent extends React.PureComponent<{
             {item.title} - {item.text}
           </Text>
         </View>
-      </TouchableHighlight>
+      </Pressable>
     );
   }
 }
@@ -172,15 +169,11 @@ class Spindicator extends React.PureComponent<{}> {
         style={[
           styles.spindicator,
           {
-            transform: [
-              {
-                rotate: this.props.value.interpolate({
-                  inputRange: [0, 5000],
-                  outputRange: ['0deg', '360deg'],
-                  extrapolate: 'extend'
-                })
-              }
-            ]
+            rotate: this.props.value.interpolate({
+              inputRange: [0, 5000],
+              outputRange: ['0deg', '360deg'],
+              extrapolate: 'extend'
+            })
           }
         ]}
       />
@@ -263,9 +256,7 @@ class SingleColumnExample extends React.PureComponent {
   };
 
   _onChangeScrollToIndex = (text) => {
-    this._listRef
-      .getNode()
-      .scrollToIndex({ viewPosition: 0.5, index: Number(text) });
+    this._listRef.scrollToIndex({ viewPosition: 0.5, index: Number(text) });
   };
 
   _scrollPos = new Animated.Value(0);
@@ -283,7 +274,7 @@ class SingleColumnExample extends React.PureComponent {
   );
 
   componentDidUpdate() {
-    this._listRef.getNode().recordInteraction(); // e.g. flipping logViewable switch
+    this._listRef.recordInteraction(); // e.g. flipping logViewable switch
   }
 
   render() {
@@ -398,7 +389,7 @@ class SingleColumnExample extends React.PureComponent {
     }
   };
   _pressItem = (key: string) => {
-    this._listRef.getNode().recordInteraction();
+    this._listRef.recordInteraction();
     pressItem(this, key);
   };
   _listRef: AnimatedFlatList;
@@ -469,7 +460,7 @@ const styles = StyleSheet.create({
   smallSwitch: {
     top: 1,
     margin: -6,
-    transform: [{ scale: 0.7 }]
+    transform: 'scale(0.7)'
   },
   stacked: {
     alignItems: 'center',

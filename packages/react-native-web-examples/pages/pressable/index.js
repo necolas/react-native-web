@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  Pressable
-} from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Pressable } from 'react-native';
+import Button from '../../shared/button';
 import Example from '../../shared/example';
 
 export default function PressablePage() {
@@ -29,7 +23,6 @@ export default function PressablePage() {
     <Example title="Pressable">
       <View style={styles.container}>
         <Pressable
-          accessibilityRole="button"
           delayLongPress="750"
           delayPressIn={delay}
           delayPressOut={delay}
@@ -45,6 +38,7 @@ export default function PressablePage() {
           onPress={handleEvent(`onPress - ${delay}ms delay`)}
           onPressIn={handleEvent(`onPressIn - ${delay}ms delay`)}
           onPressOut={handleEvent(`oPressOut - ${delay}ms delay`)}
+          role="button"
           style={(state) => [
             styles.pressable,
             !disabled && state.focused && styles.focused,

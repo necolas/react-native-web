@@ -6,8 +6,8 @@ const Spacer = () => <View style={{ height: '1rem' }} />;
 
 const Heading = ({ children }) => (
   <Text
-    accessibilityRole="heading"
     children={children}
+    role="heading"
     style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}
   />
 );
@@ -298,9 +298,7 @@ function TextShadow() {
       <Text
         style={{
           fontSize: 20,
-          textShadowOffset: { width: 2, height: 2 },
-          textShadowRadius: 1,
-          textShadowColor: '#00cccc'
+          textShadow: '2px 2px 1px #00cccc'
         }}
       >
         Text shadow example
@@ -383,8 +381,9 @@ export default function TextPage() {
           />{' '}
           and an inline image{' '}
           <Image
+            resizeMode="cover"
             source={{ uri: 'http://lorempixel.com/30/11' }}
-            style={{ width: 30, height: 11, resizeMode: 'cover' }}
+            style={{ width: 30, height: 11 }}
           />
           .
         </Text>
@@ -412,14 +411,16 @@ export default function TextPage() {
           And then continues as text.
         </Text>
 
-        <Text selectable={true}>
+        <Text>
           This text is <Text style={{ fontWeight: 'bold' }}>selectable</Text> if
           you click-and-hold.
         </Text>
-        <Text selectable={false}>
+        <Text>
           This text is{' '}
-          <Text style={{ fontWeight: 'bold' }}>not selectable</Text> if you
-          click-and-hold.
+          <Text style={{ fontWeight: 'bold', userSelect: 'none' }}>
+            not selectable
+          </Text>{' '}
+          if you click-and-hold.
         </Text>
 
         <View style={{ paddingVertical: 20 }}>

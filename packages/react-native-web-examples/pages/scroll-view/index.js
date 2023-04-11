@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Pressable,
-  View
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native';
+import Button from '../../shared/button';
 import Example from '../../shared/example';
 
 const ITEMS = [...Array(12)].map((_, i) => `Item ${i}`);

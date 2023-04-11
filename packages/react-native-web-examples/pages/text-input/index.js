@@ -39,13 +39,13 @@ export default function TextInputPage() {
           style={styles.textinput}
         />
         <TextInput
-          defaultValue="editable (false)"
-          editable={false}
+          defaultValue="readOnly (true)"
+          readOnly={true}
           style={styles.textinput}
         />
         <TextInput
-          keyboardType="numeric"
-          placeholder="keyboardType 'numeric'"
+          inputMode="numeric"
+          placeholder="inputMode 'numeric'"
           style={styles.textinput}
         />
         <TextInput
@@ -71,8 +71,8 @@ export default function TextInputPage() {
         />
         <TextInput
           multiline={true}
-          numberOfLines={3}
           placeholder="multiline"
+          rows={3}
           style={styles.multiline}
         />
       </View>

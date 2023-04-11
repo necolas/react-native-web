@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Modal, View, Text, Button, StyleSheet } from 'react-native';
+import { Modal, View, Text, StyleSheet } from 'react-native';
+import Button from '../../shared/button';
 import Example from '../../shared/example';
 
 function Gap() {

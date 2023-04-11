@@ -8,11 +8,7 @@ const logoUri =
 function Link(props) {
   return (
     <NextLink href={props.href}>
-      <Text
-        {...props}
-        accessibilityRole="link"
-        style={[styles.link, props.style]}
-      />
+      <Text {...props} role="link" style={[styles.link, props.style]} />
     </NextLink>
   );
 }
@@ -22,7 +18,7 @@ export default function IndexPage() {
     <View style={styles.app}>
       <View style={styles.header}>
         <Image
-          accessibilityLabel="React logo"
+          aria-label="React logo"
           resizeMode="contain"
           source={{ uri: logoUri }}
           style={styles.logo}
@@ -36,9 +32,9 @@ export default function IndexPage() {
         example app built on Next.js
       </Text>
 
-      <View accessibilityRole="list">
+      <View role="list">
         {process.env.pages.map((name) => (
-          <View accessibilityRole="listitem" key={name} style={styles.listitem}>
+          <View key={name} role="listitem" style={styles.listitem}>
             <Link href={'/' + name} style={styles.pageLink}>
               {name}
             </Link>

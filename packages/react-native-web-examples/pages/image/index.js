@@ -47,7 +47,11 @@ export default function ImagePage() {
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={styles.text}>Static image</Text>
-          <Image source={'/image/ladybug.jpg'} style={styles.image} />
+          <Image
+            resizeMode="cover"
+            source={'/image/ladybug.jpg'}
+            style={styles.image}
+          />
         </View>
         <View style={styles.column}>
           <Text style={styles.text}>Progressive JPEG</Text>
@@ -143,8 +147,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 0.5,
     height: 120,
-    width: 120,
-    resizeMode: 'cover'
+    width: 120
   },
   resizeMode: {
     borderColor: 'black',

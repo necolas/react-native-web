@@ -13,8 +13,11 @@ function Box({ pointerEvents }) {
   return (
     <Pressable
       onPress={log}
-      pointerEvents={pointerEvents}
-      style={({ pressed }) => [styles.box, pressed && styles.purple]}
+      style={({ pressed }) => [
+        styles.box,
+        pressed && styles.purple,
+        pointerEventsStyles[pointerEvents]
+      ]}
     >
       <Pressable
         onPress={log}
@@ -46,7 +49,7 @@ export default function ViewPage() {
   return (
     <Example title="View">
       <View style={styles.container}>
-        <Text accessibilityRole="heading" style={styles.heading}>
+        <Text role="heading" style={styles.heading}>
           onLayout
         </Text>
         <View>
@@ -56,11 +59,11 @@ export default function ViewPage() {
           <Text>{JSON.stringify(layoutInfo, null, 2)}</Text>
         </View>
 
-        <Text accessibilityRole="heading" style={styles.heading}>
+        <Text role="heading" style={styles.heading}>
           pointerEvents
         </Text>
-        <View pointerEvents="box-none">
-          <View pointerEvents="box-none" style={styles.boxContainer}>
+        <View style={pointerEventsStyles['box-none']}>
+          <View style={[styles.boxContainer, pointerEventsStyles['box-none']]}>
             <Box pointerEvents="none" />
             <Box pointerEvents="auto" />
             <Box pointerEvents="box-only" />
@@ -110,5 +113,20 @@ const styles = StyleSheet.create({
   },
   purple: {
     backgroundColor: 'purple'
+  }
+});
+
+const pointerEventsStyles = StyleSheet.create({
+  auto: {
+    pointerEvents: 'auto'
+  },
+  none: {
+    pointerEvents: 'none'
+  },
+  'box-only': {
+    pointerEvents: 'box-only'
+  },
+  'box-none': {
+    pointerEvents: 'box-none'
   }
 });

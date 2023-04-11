@@ -12,9 +12,9 @@
 
 import React from 'react';
 import {
-  Button,
   Image,
   PixelRatio,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,7 +41,9 @@ function ListItem(props) {
         </View>
       </View>
       <View style={styles.column3}>
-        <Button onPress={() => {}} style={styles.smallButton} title="Button" />
+        <Pressable onPress={() => {}} style={styles.smallButton}>
+          <Text>Button</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -88,12 +90,13 @@ function withRTLState(Component) {
 const RTLToggler = ({ isRTL, setRTL }) => {
   const toggleRTL = () => setRTL(!isRTL);
   return (
-    <Button
-      accessibilityLabel="Change layout direction"
+    <Pressable
+      aria-label="Change layout direction"
       color="gray"
       onPress={toggleRTL}
-      title={isRTL ? 'RTL' : 'LTR'}
-    />
+    >
+      <Text>{isRTL ? 'RTL' : 'LTR'}</Text>
+    </Pressable>
   );
 };
 

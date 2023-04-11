@@ -18,11 +18,11 @@ export default class LinkingPage extends PureComponent {
           Linking.openURL
         </Text>
         <Text
-          accessibilityRole="link"
           href="https://mathiasbynens.github.io/rel-noopener/malicious.html"
           hrefAttrs={{
             target: '_blank'
           }}
+          role="link"
           style={styles.text}
         >
           target="_blank"
