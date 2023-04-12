@@ -12,11 +12,10 @@ import canUseDOM from '../canUseDom';
 
 type Listener = (e: any) => void;
 
-type EventHandle = (target: EventTarget, callback: ?Listener) => () => void;
-
 export type EventOptions = {
   capture?: boolean,
-  passive?: boolean
+  passive?: boolean,
+  once?: boolean
 };
 
 const emptyFunction = () => {};
@@ -72,28 +71,19 @@ function normalizeEvent(event: any) {
 /**
  *
  */
-export default function createEventHandle(
-  type: string,
+export function addEventListener(
+  target: EventTarget,
+  type: any,
+  listener: Listener,
   options: ?EventOptions
-): EventHandle {
+): () => void {
   const opts = getOptions(options);
+  const compatListener = (e: any) => listener(normalizeEvent(e));
+  target.addEventListener(type, compatListener, opts);
 
-  return function (target: EventTarget, listener: ?Listener) {
-    if (target == null || typeof target.addEventListener !== 'function') {
-      throw new Error('createEventHandle: called on an invalid target.');
-    }
-
-    const element = (target: any);
-    if (listener != null) {
-      const compatListener = (e) => listener(normalizeEvent(e));
-      element.addEventListener(type, compatListener, opts);
-      return function removeListener() {
-        if (element != null) {
-          element.removeEventListener(type, compatListener, opts);
-        }
-      };
-    } else {
-      return emptyFunction;
+  return function removeEventListener() {
+    if (target != null) {
+      target.removeEventListener(type, compatListener, opts);
     }
   };
 }

@@ -7,7 +7,7 @@
  * @flow
  */
 
-import createEventHandle from '../createEventHandle';
+import { addEventListener } from '../addEventListener';
 import useLayoutEffect from '../useLayoutEffect';
 import useStable from '../useStable';
 
@@ -27,16 +27,16 @@ type AddListener = (
  * }).
  */
 export default function useEvent(
-  event: string,
+  eventType: string,
   options?: ?{
     capture?: boolean,
-    passive?: boolean
+    passive?: boolean,
+    once?: boolean
   }
 ): AddListener {
   const targetListeners = useStable(() => new Map());
 
   const addListener = useStable(() => {
-    const addEventListener = createEventHandle(event, options);
     return (target: EventTarget, callback: Callback) => {
       const removeTargetListener = targetListeners.get(target);
       if (removeTargetListener != null) {
@@ -44,8 +44,14 @@ export default function useEvent(
       }
       if (callback == null) {
         targetListeners.delete(target);
+        callback = () => {};
       }
-      const removeEventListener = addEventListener(target, callback);
+      const removeEventListener = addEventListener(
+        target,
+        eventType,
+        callback,
+        options
+      );
       targetListeners.set(target, removeEventListener);
       return removeEventListener;
     };

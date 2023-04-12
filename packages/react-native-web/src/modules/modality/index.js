@@ -7,7 +7,7 @@
  * @flow
  */
 
-import createEventHandle from '../createEventHandle';
+import { addEventListener } from '../addEventListener';
 import canUseDOM from '../canUseDom';
 
 export type Modality = 'keyboard' | 'mouse' | 'touch' | 'pen';
@@ -44,32 +44,6 @@ const VISIBILITYCHANGE = 'visibilitychange';
 
 const bubbleOptions = { passive: true };
 const captureOptions = { capture: true, passive: true };
-
-// Window events
-const addBlurListener = createEventHandle(BLUR, bubbleOptions);
-const addFocusListener = createEventHandle(FOCUS, bubbleOptions);
-// Must be capture phase because 'stopPropagation' might prevent these
-// events bubbling to the document.
-const addVisibilityChangeListener = createEventHandle(
-  VISIBILITYCHANGE,
-  captureOptions
-);
-const addKeyDownListener = createEventHandle(KEYDOWN, captureOptions);
-const addPointerDownListener = createEventHandle(POINTERDOWN, captureOptions);
-const addPointerMoveListener = createEventHandle(POINTERMOVE, captureOptions);
-// Fallback events
-const addContextMenuListener = createEventHandle(CONTEXTMENU, captureOptions);
-const addMouseDownListener = createEventHandle(MOUSEDOWN, captureOptions);
-const addMouseMoveListener = createEventHandle(MOUSEMOVE, captureOptions);
-const addMouseUpListener = createEventHandle(MOUSEUP, captureOptions);
-const addScrollListener = createEventHandle(SCROLL, captureOptions);
-const addSelectiomChangeListener = createEventHandle(
-  SELECTIONCHANGE,
-  captureOptions
-);
-const addTouchCancelListener = createEventHandle(TOUCHCANCEL, captureOptions);
-const addTouchMoveListener = createEventHandle(TOUCHMOVE, captureOptions);
-const addTouchStartListener = createEventHandle(TOUCHSTART, captureOptions);
 
 function restoreModality() {
   if (previousModality != null || previousActiveModality != null) {
@@ -184,22 +158,30 @@ function onPointerish(event: any) {
 }
 
 if (canUseDOM) {
-  addBlurListener(window, onBlurWindow);
-  addFocusListener(window, onFocusWindow);
-  addKeyDownListener(document, onKeyDown);
-  addPointerDownListener(document, onPointerish);
-  addPointerMoveListener(document, onPointerish);
-  addVisibilityChangeListener(document, onVisibilityChange);
-  // fallbacks
-  addContextMenuListener(document, onPointerish);
-  addMouseDownListener(document, onPointerish);
-  addMouseMoveListener(document, onPointerish);
-  addMouseUpListener(document, onPointerish);
-  addTouchCancelListener(document, onPointerish);
-  addTouchMoveListener(document, onPointerish);
-  addTouchStartListener(document, onPointerish);
-  addSelectiomChangeListener(document, onPointerish);
-  addScrollListener(document, onPointerish);
+  // Window events
+  addEventListener(window, BLUR, onBlurWindow, bubbleOptions);
+  addEventListener(window, FOCUS, onFocusWindow, bubbleOptions);
+  // Must be capture phase because 'stopPropagation' might prevent these
+  // events bubbling to the document.
+  addEventListener(document, KEYDOWN, onKeyDown, captureOptions);
+  addEventListener(
+    document,
+    VISIBILITYCHANGE,
+    onVisibilityChange,
+    captureOptions
+  );
+  addEventListener(document, POINTERDOWN, onPointerish, captureOptions);
+  addEventListener(document, POINTERMOVE, onPointerish, captureOptions);
+  // Fallback events
+  addEventListener(document, CONTEXTMENU, onPointerish, captureOptions);
+  addEventListener(document, MOUSEDOWN, onPointerish, captureOptions);
+  addEventListener(document, MOUSEMOVE, onPointerish, captureOptions);
+  addEventListener(document, MOUSEUP, onPointerish, captureOptions);
+  addEventListener(document, TOUCHCANCEL, onPointerish, captureOptions);
+  addEventListener(document, TOUCHMOVE, onPointerish, captureOptions);
+  addEventListener(document, TOUCHSTART, onPointerish, captureOptions);
+  addEventListener(document, SELECTIONCHANGE, onPointerish, captureOptions);
+  addEventListener(document, SCROLL, onPointerish, captureOptions);
 }
 
 function callListeners() {

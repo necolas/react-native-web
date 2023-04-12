@@ -9,17 +9,16 @@
 
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import createEventHandle from '..';
+import { addEventListener } from '..';
 
-describe('create-event-handle', () => {
+describe('addEventListener', () => {
   test('can render correctly using ReactDOMServer', () => {
     const listener = jest.fn();
     const targetRef = React.createRef();
-    const addClickListener = createEventHandle('click');
 
     function Component() {
       React.useEffect(() => {
-        return addClickListener(targetRef.current, listener);
+        return addEventListener(targetRef.current, 'click', listener);
       });
       return <div ref={targetRef} />;
     }

@@ -10,18 +10,17 @@
 import * as React from 'react';
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import createEventHandle from '..';
+import { addEventListener } from '..';
 
-describe('create-event-handle', () => {
-  describe('createEventTarget()', () => {
+describe('addEventListener', () => {
+  describe('addEventListener()', () => {
     test('event dispatched on target', () => {
       const listener = jest.fn();
       const targetRef = React.createRef();
-      const addClickListener = createEventHandle('click');
 
       function Component() {
         React.useEffect(() => {
-          return addClickListener(targetRef.current, listener);
+          return addEventListener(targetRef.current, 'click', listener);
         });
         return <div ref={targetRef} />;
       }
@@ -42,20 +41,19 @@ describe('create-event-handle', () => {
       const listenerCapture = jest.fn();
       const targetRef = React.createRef();
       const parentRef = React.createRef();
-      const addClickListener = createEventHandle('click');
-      const addClickCaptureListener = createEventHandle('click', {
-        capture: true
-      });
 
       function Component() {
         React.useEffect(() => {
-          const removeClickListener = addClickListener(
+          const removeClickListener = addEventListener(
             targetRef.current,
+            'click',
             listener
           );
-          const removeClickCaptureListener = addClickCaptureListener(
+          const removeClickCaptureListener = addEventListener(
             targetRef.current,
-            listenerCapture
+            'click',
+            listenerCapture,
+            { capture: true }
           );
           return () => {
             removeClickListener();
@@ -91,20 +89,19 @@ describe('create-event-handle', () => {
       });
       const targetRef = React.createRef();
       const childRef = React.createRef();
-      const addClickListener = createEventHandle('click');
-      const addClickCaptureListener = createEventHandle('click', {
-        capture: true
-      });
 
       function Component() {
         React.useEffect(() => {
-          const removeClickListener = addClickListener(
+          const removeClickListener = addEventListener(
             targetRef.current,
+            'click',
             listener
           );
-          const removeClickCaptureListener = addClickCaptureListener(
+          const removeClickCaptureListener = addEventListener(
             targetRef.current,
-            listenerCapture
+            'click',
+            listenerCapture,
+            { capture: true }
           );
           return () => {
             removeClickListener();
@@ -135,11 +132,10 @@ describe('create-event-handle', () => {
       const listener = jest.fn();
       const targetRef = React.createRef();
       const childRef = React.createRef();
-      const addClickListener = createEventHandle('click');
 
       function Component() {
         React.useEffect(() => {
-          return addClickListener(targetRef.current, listener);
+          return addEventListener(targetRef.current, 'click', listener);
         });
         return (
           <div ref={targetRef}>
@@ -162,11 +158,10 @@ describe('create-event-handle', () => {
     test('listener can be attached to document', () => {
       const listener = jest.fn();
       const targetRef = React.createRef();
-      const addClickListener = createEventHandle('click');
 
       function Component({ target }) {
         React.useEffect(() => {
-          return addClickListener(target, listener);
+          return addEventListener(target, 'click', listener);
         });
         return <div ref={targetRef} />;
       }
@@ -184,11 +179,10 @@ describe('create-event-handle', () => {
     test('listener can be attached to window ', () => {
       const listener = jest.fn();
       const targetRef = React.createRef();
-      const addClickListener = createEventHandle('click');
 
       function Component({ target }) {
         React.useEffect(() => {
-          return addClickListener(target, listener);
+          return addEventListener(target, 'click', listener);
         });
         return <div ref={targetRef} />;
       }
@@ -206,11 +200,10 @@ describe('create-event-handle', () => {
     test('custom event dispatched on target', () => {
       const listener = jest.fn();
       const targetRef = React.createRef();
-      const addMagicEventListener = createEventHandle('magic-event');
 
       function Component() {
         React.useEffect(() => {
-          return addMagicEventListener(targetRef.current, listener);
+          return addEventListener(targetRef.current, 'magic-event', listener);
         });
         return <div ref={targetRef} />;
       }
@@ -230,10 +223,7 @@ describe('create-event-handle', () => {
       const targetRef = React.createRef();
       const parentRef = React.createRef();
       const childRef = React.createRef();
-      const addClickListener = createEventHandle('click');
-      const addClickCaptureListener = createEventHandle('click', {
-        capture: true
-      });
+
       const listener = jest.fn((e) => {
         log.push(['bubble', e.currentTarget.id]);
       });
@@ -244,10 +234,14 @@ describe('create-event-handle', () => {
       function Component() {
         React.useEffect(() => {
           // the same event handle is used to set listeners on different targets
-          addClickListener(targetRef.current, listener);
-          addClickListener(parentRef.current, listener);
-          addClickCaptureListener(targetRef.current, listenerCapture);
-          addClickCaptureListener(parentRef.current, listenerCapture);
+          addEventListener(targetRef.current, 'click', listener);
+          addEventListener(parentRef.current, 'click', listener);
+          addEventListener(targetRef.current, 'click', listenerCapture, {
+            capture: true
+          });
+          addEventListener(parentRef.current, 'click', listenerCapture, {
+            capture: true
+          });
         });
         return (
           <div id="parent" ref={parentRef}>
@@ -280,14 +274,6 @@ describe('create-event-handle', () => {
       const log = [];
       const targetRef = React.createRef();
       const childRef = React.createRef();
-      const addClickListener = createEventHandle('click');
-      const addClickAltListener = createEventHandle('click');
-      const addClickCaptureListener = createEventHandle('click', {
-        capture: true
-      });
-      const addClickCaptureAltListener = createEventHandle('click', {
-        capture: true
-      });
       const listener = jest.fn((e) => {
         log.push(['bubble', 'target']);
       });
@@ -303,10 +289,14 @@ describe('create-event-handle', () => {
 
       function Component() {
         React.useEffect(() => {
-          addClickListener(targetRef.current, listener);
-          addClickAltListener(targetRef.current, listenerAlt);
-          addClickCaptureListener(targetRef.current, listenerCapture);
-          addClickCaptureAltListener(targetRef.current, listenerCaptureAlt);
+          addEventListener(targetRef.current, 'click', listener);
+          addEventListener(targetRef.current, 'click', listenerAlt);
+          addEventListener(targetRef.current, 'click', listenerCapture, {
+            capture: true
+          });
+          addEventListener(targetRef.current, 'click', listenerCaptureAlt, {
+            capture: true
+          });
         });
         return (
           <div id="target" ref={targetRef}>
@@ -344,12 +334,11 @@ describe('create-event-handle', () => {
       const targetListener = jest.fn();
       const targetRef = React.createRef();
       const childRef = React.createRef();
-      const addClickListener = createEventHandle('click');
 
       function Component() {
         React.useEffect(() => {
-          addClickListener(childRef.current, childListener);
-          addClickListener(targetRef.current, targetListener);
+          addEventListener(childRef.current, 'click', childListener);
+          addEventListener(targetRef.current, 'click', targetListener);
         });
         return (
           <div ref={targetRef}>
@@ -376,13 +365,11 @@ describe('create-event-handle', () => {
       });
       const secondListener = jest.fn();
       const targetRef = React.createRef();
-      const addFirstClickListener = createEventHandle('click');
-      const addSecondClickListener = createEventHandle('click');
 
       function Component() {
         React.useEffect(() => {
-          addFirstClickListener(targetRef.current, firstListener);
-          addSecondClickListener(targetRef.current, secondListener);
+          addEventListener(targetRef.current, 'click', firstListener);
+          addEventListener(targetRef.current, 'click', secondListener);
         });
         return <div ref={targetRef} />;
       }
