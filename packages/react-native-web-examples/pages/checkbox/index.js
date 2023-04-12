@@ -25,7 +25,7 @@ export default function CheckboxPage() {
         <Divider />
         <CheckBox disabled style={styles.item} value={true} />
         <Divider />
-        <CheckBox accessibilityReadOnly style={styles.item} value={true} />
+        <CheckBox aria-readonly style={styles.item} value={true} />
       </View>
       <View style={styles.row}>
         <CheckBox value={false} />

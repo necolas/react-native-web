@@ -1,35 +1,48 @@
 import { Linking, StyleSheet, Text } from 'react-native';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import Example from '../../shared/example';
 
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
-export default class LinkingPage extends PureComponent {
-  handlePress() {
+export default function LinkingPage(props) {
+  const [, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log('adding listener');
+    const listener = Linking.addEventListener('onOpen', () => {
+      console.log('onOpen event');
+    });
+    return () => {
+      console.log('removing listener');
+      listener.remove();
+    };
+  });
+
+  function handlePress() {
     Linking.canOpenURL(url).then((supported) => {
-      return Linking.openURL(url);
+      setCount((x) => x + 1);
+      const v = Linking.openURL(url);
+      return v;
     });
   }
 
-  render() {
-    return (
-      <Example title="Linking">
-        <Text onPress={this.handlePress} style={styles.text}>
-          Linking.openURL
-        </Text>
-        <Text
-          href="https://mathiasbynens.github.io/rel-noopener/malicious.html"
-          hrefAttrs={{
-            target: '_blank'
-          }}
-          role="link"
-          style={styles.text}
-        >
-          target="_blank"
-        </Text>
-      </Example>
-    );
-  }
+  return (
+    <Example title="Linking">
+      <Text onPress={handlePress} style={styles.text}>
+        Linking.openURL
+      </Text>
+      <Text
+        href="https://mathiasbynens.github.io/rel-noopener/malicious.html"
+        hrefAttrs={{
+          target: '_blank'
+        }}
+        role="link"
+        style={styles.text}
+      >
+        target="_blank"
+      </Text>
+    </Example>
+  );
 }
 
 const styles = StyleSheet.create({

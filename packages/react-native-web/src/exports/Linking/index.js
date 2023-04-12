@@ -15,12 +15,6 @@ const initialURL = canUseDOM ? window.location.href : '';
 
 type Callback = (...args: any) => void;
 
-type OnOpenCallback = (
-  event: 'onOpen',
-  callback: (url: string) => void
-) => void;
-type GenericCallback = (event: string, callback: Callback) => void;
-
 class Linking {
   /**
    * An object mapping of event name
@@ -41,31 +35,44 @@ class Linking {
    * Adds a event listener for the specified event. The callback will be called when the
    * said event is dispatched.
    */
-  addEventListener: OnOpenCallback | GenericCallback = (
-    event: string,
+  addEventListener(
+    eventType: string,
     callback: Callback
-  ) => {
-    if (!this._eventCallbacks[event]) {
-      this._eventCallbacks[event] = [callback];
-      return;
+  ): {| remove(): void |} {
+    const _this = this;
+
+    if (!_this._eventCallbacks[eventType]) {
+      _this._eventCallbacks[eventType] = [callback];
     }
-    this._eventCallbacks[event].push(callback);
-  };
+    _this._eventCallbacks[eventType].push(callback);
+
+    return {
+      remove() {
+        const callbacks = _this._eventCallbacks[eventType];
+        const filteredCallbacks = callbacks.filter(
+          (c) => c.toString() !== callback.toString()
+        );
+        _this._eventCallbacks[eventType] = filteredCallbacks;
+      }
+    };
+  }
 
   /**
    * Removes a previously added event listener for the specified event. The callback must
    * be the same object as the one passed to `addEventListener`.
    */
-  removeEventListener: OnOpenCallback | GenericCallback = (
-    event: string,
-    callback: Callback
-  ) => {
-    const callbacks = this._eventCallbacks[event];
+  removeEventListener(eventType: string, callback: Callback): void {
+    console.error(
+      `Linking.removeEventListener('${eventType}', ...): Method has been ` +
+        'deprecated. Please instead use `remove()` on the subscription ' +
+        'returned by `Linking.addEventListener`.'
+    );
+    const callbacks = this._eventCallbacks[eventType];
     const filteredCallbacks = callbacks.filter(
       (c) => c.toString() !== callback.toString()
     );
-    this._eventCallbacks[event] = filteredCallbacks;
-  };
+    this._eventCallbacks[eventType] = filteredCallbacks;
+  }
 
   canOpenURL(): Promise<boolean> {
     return Promise.resolve(true);

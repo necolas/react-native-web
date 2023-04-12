@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
     color: '#1977f2'
   },
   listitem: {
-    marginVertical: '0.5rem',
-    textAlign: 'center'
+    marginVertical: '0.5rem'
   },
   pageLink: {
     fontSize: '1.25rem',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
