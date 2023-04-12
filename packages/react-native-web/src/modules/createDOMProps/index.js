@@ -168,7 +168,9 @@ const createDOMProps = (elementType, props, options) => {
     );
   }
   const _ariaActiveDescendant =
-    ariaActiveDescendant || accessibilityActiveDescendant;
+    ariaActiveDescendant != null
+      ? ariaActiveDescendant
+      : accessibilityActiveDescendant;
   if (_ariaActiveDescendant != null) {
     domProps['aria-activedescendant'] = _ariaActiveDescendant;
   }
@@ -179,7 +181,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityAtomic is deprecated. Use aria-atomic.`
     );
   }
-  const _ariaAtomic = ariaAtomic || accessibilityAtomic;
+  const _ariaAtomic =
+    ariaAtomic != null ? ariaActiveDescendant : accessibilityAtomic;
   if (_ariaAtomic != null) {
     domProps['aria-atomic'] = _ariaAtomic;
   }
@@ -190,7 +193,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityAutoComplete is deprecated. Use aria-autocomplete.`
     );
   }
-  const _ariaAutoComplete = ariaAutoComplete || accessibilityAutoComplete;
+  const _ariaAutoComplete =
+    ariaAutoComplete != null ? ariaAutoComplete : accessibilityAutoComplete;
   if (_ariaAutoComplete != null) {
     domProps['aria-autocomplete'] = _ariaAutoComplete;
   }
@@ -201,7 +205,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityBusy is deprecated. Use aria-busy.`
     );
   }
-  const _ariaBusy = ariaBusy || accessibilityBusy;
+  const _ariaBusy = ariaBusy != null ? ariaBusy : accessibilityBusy;
   if (_ariaBusy != null) {
     domProps['aria-busy'] = _ariaBusy;
   }
@@ -212,7 +216,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityChecked is deprecated. Use aria-checked.`
     );
   }
-  const _ariaChecked = ariaChecked || accessibilityChecked;
+  const _ariaChecked = ariaChecked != null ? ariaChecked : accessibilityChecked;
   if (_ariaChecked != null) {
     domProps['aria-checked'] = _ariaChecked;
   }
@@ -223,7 +227,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityColumnCount is deprecated. Use aria-colcount.`
     );
   }
-  const _ariaColumnCount = ariaColumnCount || accessibilityColumnCount;
+  const _ariaColumnCount =
+    ariaColumnCount != null ? ariaColumnCount : accessibilityColumnCount;
   if (_ariaColumnCount != null) {
     domProps['aria-colcount'] = _ariaColumnCount;
   }
@@ -234,7 +239,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityColumnIndex is deprecated. Use aria-colindex.`
     );
   }
-  const _ariaColumnIndex = ariaColumnIndex || accessibilityColumnIndex;
+  const _ariaColumnIndex =
+    ariaColumnIndex != null ? ariaColumnIndex : accessibilityColumnIndex;
   if (_ariaColumnIndex != null) {
     domProps['aria-colindex'] = _ariaColumnIndex;
   }
@@ -245,7 +251,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityColumnSpan is deprecated. Use aria-colspan.`
     );
   }
-  const _ariaColumnSpan = ariaColumnSpan || accessibilityColumnSpan;
+  const _ariaColumnSpan =
+    ariaColumnSpan != null ? ariaColumnSpan : accessibilityColumnSpan;
   if (_ariaColumnSpan != null) {
     domProps['aria-colspan'] = _ariaColumnSpan;
   }
@@ -256,7 +263,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityControls is deprecated. Use aria-controls.`
     );
   }
-  const _ariaControls = ariaControls || accessibilityControls;
+  const _ariaControls =
+    ariaControls != null ? ariaControls : accessibilityControls;
   if (_ariaControls != null) {
     domProps['aria-controls'] = processIDRefList(_ariaControls);
   }
@@ -267,7 +275,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityCurrent is deprecated. Use aria-current.`
     );
   }
-  const _ariaCurrent = ariaCurrent || accessibilityCurrent;
+  const _ariaCurrent = ariaCurrent != null ? ariaCurrent : accessibilityCurrent;
   if (_ariaCurrent != null) {
     domProps['aria-current'] = _ariaCurrent;
   }
@@ -278,7 +286,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityDescribedBy is deprecated. Use aria-describedby.`
     );
   }
-  const _ariaDescribedBy = ariaDescribedBy || accessibilityDescribedBy;
+  const _ariaDescribedBy =
+    ariaDescribedBy != null ? ariaDescribedBy : accessibilityDescribedBy;
   if (_ariaDescribedBy != null) {
     domProps['aria-describedby'] = processIDRefList(_ariaDescribedBy);
   }
@@ -289,7 +298,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityDetails is deprecated. Use aria-details.`
     );
   }
-  const _ariaDetails = ariaDetails || accessibilityDetails;
+  const _ariaDetails = ariaDetails != null ? ariaDetails : accessibilityDetails;
   if (_ariaDetails != null) {
     domProps['aria-details'] = _ariaDetails;
   }
@@ -314,7 +323,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityErrorMessage is deprecated. Use aria-errormessage.`
     );
   }
-  const _ariaErrorMessage = ariaErrorMessage || accessibilityErrorMessage;
+  const _ariaErrorMessage =
+    ariaErrorMessage != null ? ariaErrorMessage : accessibilityErrorMessage;
   if (_ariaErrorMessage != null) {
     domProps['aria-errormessage'] = _ariaErrorMessage;
   }
@@ -325,7 +335,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityExpanded is deprecated. Use aria-expanded.`
     );
   }
-  const _ariaExpanded = ariaExpanded || accessibilityExpanded;
+  const _ariaExpanded =
+    ariaExpanded != null ? ariaExpanded : accessibilityExpanded;
   if (_ariaExpanded != null) {
     domProps['aria-expanded'] = _ariaExpanded;
   }
@@ -336,7 +347,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityFlowTo is deprecated. Use aria-flowto.`
     );
   }
-  const _ariaFlowTo = ariaFlowTo || accessibilityFlowTo;
+  const _ariaFlowTo = ariaFlowTo != null ? ariaFlowTo : accessibilityFlowTo;
   if (_ariaFlowTo != null) {
     domProps['aria-flowto'] = processIDRefList(_ariaFlowTo);
   }
@@ -347,7 +358,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityHasPopup is deprecated. Use aria-haspopup.`
     );
   }
-  const _ariaHasPopup = ariaHasPopup || accessibilityHasPopup;
+  const _ariaHasPopup =
+    ariaHasPopup != null ? ariaHasPopup : accessibilityHasPopup;
   if (_ariaHasPopup != null) {
     domProps['aria-haspopup'] = _ariaHasPopup;
   }
@@ -358,7 +370,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityHidden is deprecated. Use aria-hidden.`
     );
   }
-  const _ariaHidden = ariaHidden || accessibilityHidden;
+  const _ariaHidden = ariaHidden != null ? ariaHidden : accessibilityHidden;
   if (_ariaHidden === true) {
     domProps['aria-hidden'] = _ariaHidden;
   }
@@ -369,7 +381,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityInvalid is deprecated. Use aria-invalid.`
     );
   }
-  const _ariaInvalid = ariaInvalid || accessibilityInvalid;
+  const _ariaInvalid = ariaInvalid != null ? ariaInvalid : accessibilityInvalid;
   if (_ariaInvalid != null) {
     domProps['aria-invalid'] = _ariaInvalid;
   }
@@ -380,7 +392,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityKeyShortcuts is deprecated. Use aria-keyshortcuts.`
     );
   }
-  const _ariaKeyShortcuts = ariaKeyShortcuts || accessibilityKeyShortcuts;
+  const _ariaKeyShortcuts =
+    ariaKeyShortcuts != null ? ariaKeyShortcuts : accessibilityKeyShortcuts;
   if (_ariaKeyShortcuts != null) {
     domProps['aria-keyshortcuts'] = processIDRefList(_ariaKeyShortcuts);
   }
@@ -391,7 +404,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityLabel is deprecated. Use aria-label.`
     );
   }
-  const _ariaLabel = ariaLabel || accessibilityLabel;
+  const _ariaLabel = ariaLabel != null ? ariaLabel : accessibilityLabel;
   if (_ariaLabel != null) {
     domProps['aria-label'] = _ariaLabel;
   }
@@ -402,7 +415,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityLabelledBy is deprecated. Use aria-labelledby.`
     );
   }
-  const _ariaLabelledBy = ariaLabelledBy || accessibilityLabelledBy;
+  const _ariaLabelledBy =
+    ariaLabelledBy != null ? ariaLabelledBy : accessibilityLabelledBy;
   if (_ariaLabelledBy != null) {
     domProps['aria-labelledby'] = processIDRefList(_ariaLabelledBy);
   }
@@ -413,7 +427,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityLevel is deprecated. Use aria-level.`
     );
   }
-  const _ariaLevel = ariaLevel || accessibilityLevel;
+  const _ariaLevel = ariaLevel != null ? ariaLevel : accessibilityLevel;
   if (_ariaLevel != null) {
     domProps['aria-level'] = _ariaLevel;
   }
@@ -424,7 +438,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityLiveRegion is deprecated. Use aria-live.`
     );
   }
-  const _ariaLive = ariaLive || accessibilityLiveRegion;
+  const _ariaLive = ariaLive != null ? ariaLive : accessibilityLiveRegion;
   if (_ariaLive != null) {
     domProps['aria-live'] = _ariaLive === 'none' ? 'off' : _ariaLive;
   }
@@ -435,7 +449,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityModal is deprecated. Use aria-modal.`
     );
   }
-  const _ariaModal = ariaModal || accessibilityModal;
+  const _ariaModal = ariaModal != null ? ariaModal : accessibilityModal;
   if (_ariaModal != null) {
     domProps['aria-modal'] = _ariaModal;
   }
@@ -446,7 +460,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityMultiline is deprecated. Use aria-multiline.`
     );
   }
-  const _ariaMultiline = ariaMultiline || accessibilityMultiline;
+  const _ariaMultiline =
+    ariaMultiline != null ? ariaMultiline : accessibilityMultiline;
   if (_ariaMultiline != null) {
     domProps['aria-multiline'] = _ariaMultiline;
   }
@@ -458,7 +473,9 @@ const createDOMProps = (elementType, props, options) => {
     );
   }
   const _ariaMultiSelectable =
-    ariaMultiSelectable || accessibilityMultiSelectable;
+    ariaMultiSelectable != null
+      ? ariaMultiSelectable
+      : accessibilityMultiSelectable;
   if (_ariaMultiSelectable != null) {
     domProps['aria-multiselectable'] = _ariaMultiSelectable;
   }
@@ -469,7 +486,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityOrientation is deprecated. Use aria-orientation.`
     );
   }
-  const _ariaOrientation = ariaOrientation || accessibilityOrientation;
+  const _ariaOrientation =
+    ariaOrientation != null ? ariaOrientation : accessibilityOrientation;
   if (_ariaOrientation != null) {
     domProps['aria-orientation'] = _ariaOrientation;
   }
@@ -480,7 +498,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityOwns is deprecated. Use aria-owns.`
     );
   }
-  const _ariaOwns = ariaOwns || accessibilityOwns;
+  const _ariaOwns = ariaOwns != null ? ariaOwns : accessibilityOwns;
   if (_ariaOwns != null) {
     domProps['aria-owns'] = processIDRefList(_ariaOwns);
   }
@@ -491,7 +509,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityPlaceholder is deprecated. Use aria-placeholder.`
     );
   }
-  const _ariaPlaceholder = ariaPlaceholder || accessibilityPlaceholder;
+  const _ariaPlaceholder =
+    ariaPlaceholder != null ? ariaPlaceholder : accessibilityPlaceholder;
   if (_ariaPlaceholder != null) {
     domProps['aria-placeholder'] = _ariaPlaceholder;
   }
@@ -502,7 +521,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityPosInSet is deprecated. Use aria-posinset.`
     );
   }
-  const _ariaPosInSet = ariaPosInSet || accessibilityPosInSet;
+  const _ariaPosInSet =
+    ariaPosInSet != null ? ariaPosInSet : accessibilityPosInSet;
   if (_ariaPosInSet != null) {
     domProps['aria-posinset'] = _ariaPosInSet;
   }
@@ -513,7 +533,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityPressed is deprecated. Use aria-pressed.`
     );
   }
-  const _ariaPressed = ariaPressed || accessibilityPressed;
+  const _ariaPressed = ariaPressed != null ? ariaPressed : accessibilityPressed;
   if (_ariaPressed != null) {
     domProps['aria-pressed'] = _ariaPressed;
   }
@@ -524,7 +544,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityReadOnly is deprecated. Use aria-readonly.`
     );
   }
-  const _ariaReadOnly = ariaReadOnly || accessibilityReadOnly;
+  const _ariaReadOnly =
+    ariaReadOnly != null ? ariaReadOnly : accessibilityReadOnly;
   if (_ariaReadOnly != null) {
     domProps['aria-readonly'] = _ariaReadOnly;
     // Enhance with native semantics
@@ -543,7 +564,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityRequired is deprecated. Use aria-required.`
     );
   }
-  const _ariaRequired = ariaRequired || accessibilityRequired;
+  const _ariaRequired =
+    ariaRequired != null ? ariaRequired : accessibilityRequired;
   if (_ariaRequired != null) {
     domProps['aria-required'] = _ariaRequired;
     // Enhance with native semantics
@@ -571,7 +593,9 @@ const createDOMProps = (elementType, props, options) => {
     );
   }
   const _ariaRoleDescription =
-    ariaRoleDescription || accessibilityRoleDescription;
+    ariaRoleDescription != null
+      ? ariaRoleDescription
+      : accessibilityRoleDescription;
   if (_ariaRoleDescription != null) {
     domProps['aria-roledescription'] = _ariaRoleDescription;
   }
@@ -582,7 +606,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityRowCount is deprecated. Use aria-rowcount.`
     );
   }
-  const _ariaRowCount = ariaRowCount || accessibilityRowCount;
+  const _ariaRowCount =
+    ariaRowCount != null ? ariaRowCount : accessibilityRowCount;
   if (_ariaRowCount != null) {
     domProps['aria-rowcount'] = _ariaRowCount;
   }
@@ -593,7 +618,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityRowIndex is deprecated. Use aria-rowindex.`
     );
   }
-  const _ariaRowIndex = ariaRowIndex || accessibilityRowIndex;
+  const _ariaRowIndex =
+    ariaRowIndex != null ? ariaRowIndex : accessibilityRowIndex;
   if (_ariaRowIndex != null) {
     domProps['aria-rowindex'] = _ariaRowIndex;
   }
@@ -604,7 +630,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityRowSpan is deprecated. Use aria-rowspan.`
     );
   }
-  const _ariaRowSpan = ariaRowSpan || accessibilityRowSpan;
+  const _ariaRowSpan = ariaRowSpan != null ? ariaRowSpan : accessibilityRowSpan;
   if (_ariaRowSpan != null) {
     domProps['aria-rowspan'] = _ariaRowSpan;
   }
@@ -615,7 +641,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilitySelected is deprecated. Use aria-selected.`
     );
   }
-  const _ariaSelected = ariaSelected || accessibilitySelected;
+  const _ariaSelected =
+    ariaSelected != null ? ariaSelected : accessibilitySelected;
   if (_ariaSelected != null) {
     domProps['aria-selected'] = _ariaSelected;
   }
@@ -626,7 +653,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilitySetSize is deprecated. Use aria-setsize.`
     );
   }
-  const _ariaSetSize = ariaSetSize || accessibilitySetSize;
+  const _ariaSetSize = ariaSetSize != null ? ariaSetSize : accessibilitySetSize;
   if (_ariaSetSize != null) {
     domProps['aria-setsize'] = _ariaSetSize;
   }
@@ -637,7 +664,7 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilitySort is deprecated. Use aria-sort.`
     );
   }
-  const _ariaSort = ariaSort || accessibilitySort;
+  const _ariaSort = ariaSort != null ? ariaSort : accessibilitySort;
   if (_ariaSort != null) {
     domProps['aria-sort'] = _ariaSort;
   }
@@ -648,7 +675,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityValueMax is deprecated. Use aria-valuemax.`
     );
   }
-  const _ariaValueMax = ariaValueMax || accessibilityValueMax;
+  const _ariaValueMax =
+    ariaValueMax != null ? ariaValueMax : accessibilityValueMax;
   if (_ariaValueMax != null) {
     domProps['aria-valuemax'] = _ariaValueMax;
   }
@@ -659,7 +687,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityValueMin is deprecated. Use aria-valuemin.`
     );
   }
-  const _ariaValueMin = ariaValueMin || accessibilityValueMin;
+  const _ariaValueMin =
+    ariaValueMin != null ? ariaValueMin : accessibilityValueMin;
   if (_ariaValueMin != null) {
     domProps['aria-valuemin'] = _ariaValueMin;
   }
@@ -670,7 +699,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityValueNow is deprecated. Use aria-valuenow.`
     );
   }
-  const _ariaValueNow = ariaValueNow || accessibilityValueNow;
+  const _ariaValueNow =
+    ariaValueNow != null ? ariaValueNow : accessibilityValueNow;
   if (_ariaValueNow != null) {
     domProps['aria-valuenow'] = _ariaValueNow;
   }
@@ -681,7 +711,8 @@ const createDOMProps = (elementType, props, options) => {
       `accessibilityValueText is deprecated. Use aria-valuetext.`
     );
   }
-  const _ariaValueText = ariaValueText || accessibilityValueText;
+  const _ariaValueText =
+    ariaValueText != null ? ariaValueText : accessibilityValueText;
   if (_ariaValueText != null) {
     domProps['aria-valuetext'] = _ariaValueText;
   }
@@ -770,7 +801,7 @@ const createDOMProps = (elementType, props, options) => {
   if (nativeID != null) {
     warnOnce('nativeID', `nativeID is deprecated. Use id.`);
   }
-  const _id = id || nativeID;
+  const _id = id != null ? id : nativeID;
   if (_id != null) {
     domProps.id = _id;
   }

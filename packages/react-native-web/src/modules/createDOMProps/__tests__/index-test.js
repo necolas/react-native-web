@@ -71,7 +71,7 @@ describe('modules/createDOMProps', () => {
     expect(_props).toMatchInlineSnapshot(`
       {
         "aria-activedescendant": "activedescendant",
-        "aria-atomic": true,
+        "aria-atomic": "activedescendant",
         "aria-autocomplete": "list",
         "aria-busy": true,
         "aria-checked": true,
@@ -112,6 +112,7 @@ describe('modules/createDOMProps', () => {
         "aria-setsize": 5,
         "aria-sort": "ascending",
         "aria-valuemax": 5,
+        "aria-valuemin": 0,
         "aria-valuenow": 3,
         "aria-valuetext": "3",
         "className": "className",

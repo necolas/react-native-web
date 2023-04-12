@@ -66,7 +66,10 @@ const CheckBox: React.AbstractComponent<
     checked: value,
     disabled: disabled,
     onChange: handleChange,
-    readOnly: readOnly || ariaReadOnly || other.accessibilityReadOnly,
+    readOnly:
+      readOnly === true ||
+      ariaReadOnly === true ||
+      other.accessibilityReadOnly === true,
     ref: forwardedRef,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox'
