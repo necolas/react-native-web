@@ -62,8 +62,14 @@ function update() {
    */
   if (win.visualViewport) {
     const visualViewport = win.visualViewport;
-    height = Math.round(visualViewport.height);
-    width = Math.round(visualViewport.width);
+    /**
+     * We are multiplying by scale because height and width from visual viewport
+     * also react to pinch zoom, and become smaller when zoomed. But it is not desired
+     * behaviour, since originally documentElement client height and width were used,
+     * and they do not react to pinch zoom.
+     */
+    height = Math.round(visualViewport.height * visualViewport.scale);
+    width = Math.round(visualViewport.width * visualViewport.scale);
   } else {
     const docEl = win.document.documentElement;
     height = docEl.clientHeight;
