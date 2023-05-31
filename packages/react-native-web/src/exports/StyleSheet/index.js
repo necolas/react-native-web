@@ -18,14 +18,21 @@ import canUseDOM from '../../modules/canUseDom';
 const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
 const sheet = createSheet();
 
-function customStyleq(styles, isRTL) {
+const defaultPreprocessOptions = { shadow: true, textShadow: true };
+
+function customStyleq(styles, options: Options = {}) {
+  const { writingDirection, ...preprocessOptions } = options;
+  const isRTL = writingDirection === 'rtl';
   return styleq.factory({
     transform(style) {
       const compiledStyle = staticStyleMap.get(style);
       if (compiledStyle != null) {
         return localizeStyle(compiledStyle, isRTL);
       }
-      return preprocess(style);
+      return preprocess(style, {
+        ...defaultPreprocessOptions,
+        ...preprocessOptions
+      });
     }
   })(styles);
 }
@@ -41,7 +48,9 @@ function insertRules(compiledOrderedRules) {
 }
 
 function compileAndInsertAtomic(style) {
-  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
+  const [compiledStyle, compiledOrderedRules] = atomic(
+    preprocess(style, defaultPreprocessOptions)
+  );
   insertRules(compiledOrderedRules);
   return compiledStyle;
 }
@@ -141,11 +150,15 @@ function getSheet(): { id: string, textContent: string } {
  * resolve
  */
 type StyleProps = [string, { [key: string]: mixed } | null];
-type Options = { writingDirection: 'ltr' | 'rtl' };
+type Options = {
+  shadow?: boolean,
+  textShadow?: boolean,
+  writingDirection: 'ltr' | 'rtl'
+};
 
-function StyleSheet(styles: any, options?: Options): StyleProps {
-  const isRTL = options != null && options.writingDirection === 'rtl';
-  const styleProps: StyleProps = customStyleq(styles, isRTL);
+function StyleSheet(styles: any, options?: Options = {}): StyleProps {
+  const isRTL = options.writingDirection === 'rtl';
+  const styleProps: StyleProps = customStyleq(styles, options);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
     styleProps[1] = inline(styleProps[1], isRTL);
   }
