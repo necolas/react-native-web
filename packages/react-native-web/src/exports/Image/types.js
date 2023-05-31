@@ -9,16 +9,7 @@
  */
 
 import type { ColorValue, GenericStyleProp } from '../../types';
-import type { ViewProps } from '../View/types';
-
-import type {
-  AnimationStyles,
-  BorderStyles,
-  InteractionStyles,
-  LayoutStyles,
-  ShadowStyles,
-  TransformStyles
-} from '../../types/styles';
+import type { ViewProps, ViewStyle } from '../View/types';
 
 type SourceObject = {
   /**
@@ -88,16 +79,7 @@ export type ResizeMode =
 export type Source = number | string | SourceObject | Array<SourceObject>;
 
 export type ImageStyle = {
-  ...AnimationStyles,
-  ...BorderStyles,
-  ...InteractionStyles,
-  ...LayoutStyles,
-  ...ShadowStyles,
-  ...TransformStyles,
-  backgroundColor?: ColorValue,
-  boxShadow?: string,
-  filter?: string,
-  opacity?: number,
+  ...ViewStyle,
   // @deprecated
   resizeMode?: ResizeMode,
   tintColor?: ColorValue

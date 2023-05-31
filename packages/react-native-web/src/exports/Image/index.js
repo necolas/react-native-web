@@ -51,7 +51,12 @@ function createTintColorSVG(tintColor, id) {
   ) : null;
 }
 
-function getFlatStyle(style, blurRadius, filterId, tintColorProp) {
+function extractNonStandardStyleProps(
+  style,
+  blurRadius,
+  filterId,
+  tintColorProp
+) {
   const flatStyle = StyleSheet.flatten(style);
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
 
@@ -93,19 +98,7 @@ function getFlatStyle(style, blurRadius, filterId, tintColorProp) {
     _filter = filters.join(' ');
   }
 
-  // These styles are converted to CSS filters applied to the
-  // element displaying the background image.
-  delete flatStyle.blurRadius;
-  delete flatStyle.shadowColor;
-  delete flatStyle.shadowOpacity;
-  delete flatStyle.shadowOffset;
-  delete flatStyle.shadowRadius;
-  delete flatStyle.tintColor;
-  // These styles are not supported on View
-  delete flatStyle.overlayColor;
-  delete flatStyle.resizeMode;
-
-  return [flatStyle, resizeMode, _filter, tintColor];
+  return [resizeMode, _filter, tintColor];
 }
 
 function resolveAssetDimensions(source) {
@@ -223,7 +216,7 @@ const Image: React.AbstractComponent<
   const requestRef = React.useRef(null);
   const shouldDisplaySource =
     state === LOADED || (state === LOADING && defaultSource == null);
-  const [flatStyle, _resizeMode, filter, _tintColor] = getFlatStyle(
+  const [_resizeMode, filter, _tintColor] = extractNonStandardStyleProps(
     style,
     blurRadius,
     filterRef.current,
@@ -335,7 +328,11 @@ const Image: React.AbstractComponent<
         styles.root,
         hasTextAncestor && styles.inline,
         imageSizeStyle,
-        flatStyle
+        style,
+        styles.undo,
+        // TEMP: avoid deprecated shadow props regression
+        // until Image refactored to use createElement.
+        { boxShadow: null }
       ]}
     >
       <View
@@ -382,6 +379,19 @@ const styles = StyleSheet.create({
   },
   inline: {
     display: 'inline-flex'
+  },
+  undo: {
+    // These styles are converted to CSS filters applied to the
+    // element displaying the background image.
+    blurRadius: null,
+    shadowColor: null,
+    shadowOpacity: null,
+    shadowOffset: null,
+    shadowRadius: null,
+    tintColor: null,
+    // These styles are not supported
+    overlayColor: null,
+    resizeMode: null
   },
   image: {
     ...StyleSheet.absoluteFillObject,

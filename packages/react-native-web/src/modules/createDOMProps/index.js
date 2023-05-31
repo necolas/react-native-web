@@ -787,7 +787,10 @@ const createDOMProps = (elementType, props, options) => {
   }
   const [className, inlineStyle] = StyleSheet(
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
-    { writingDirection: options ? options.writingDirection : 'ltr' }
+    {
+      writingDirection: 'ltr',
+      ...options
+    }
   );
   if (className) {
     domProps.className = className;

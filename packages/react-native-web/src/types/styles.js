@@ -306,7 +306,7 @@ export type LayoutStyles = {|
 export type ShadowStyles = {|
   // @deprecated
   shadowColor?: ?ColorValue,
-  shadowOffset?: {|
+  shadowOffset?: ?{|
     width?: DimensionValue,
     height?: DimensionValue
   |},

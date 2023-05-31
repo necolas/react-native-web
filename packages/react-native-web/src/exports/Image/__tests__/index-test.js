@@ -345,7 +345,7 @@ describe('components/Image', () => {
   });
 
   describe('prop "style"', () => {
-    test('supports "shadow" properties (convert to filter)', () => {
+    test('supports "shadow" properties (converts to filter)', () => {
       const { container } = render(
         <Image
           style={{ shadowColor: 'red', shadowOffset: { width: 1, height: 1 } }}
@@ -357,6 +357,18 @@ describe('components/Image', () => {
     test('removes other unsupported View styles', () => {
       const { container } = render(
         <Image style={{ overlayColor: 'red', tintColor: 'blue' }} />
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('supports static and dynamic styles', () => {
+      const { container } = render(
+        <Image
+          style={[
+            { $$css: true, position: 'pos-abs' },
+            { transitionTimingFunction: 'ease-in' }
+          ]}
+        />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
