@@ -42,36 +42,64 @@ module.exports = function ({ types: t }) {
       ImportDeclaration(path, state) {
         const { specifiers } = path.node;
         if (isReactNativeModule(path.node)) {
-          const imports = specifiers
-            .map((specifier) => {
-              if (t.isImportSpecifier(specifier)) {
-                const importName = specifier.imported.name;
-                const distLocation = getDistLocation(importName, state.opts);
+          if (state.opts.legacy !== false) {
+            const imports = specifiers
+              .map((specifier) => {
+                if (t.isImportSpecifier(specifier)) {
+                  const importName = specifier.imported.name;
+                  const distLocation = getDistLocation(importName, state.opts);
 
-                if (distLocation) {
-                  return t.importDeclaration(
-                    [
-                      t.importDefaultSpecifier(
-                        t.identifier(specifier.local.name)
-                      )
-                    ],
-                    t.stringLiteral(distLocation)
-                  );
+                  if (distLocation) {
+                    return t.importDeclaration(
+                      [
+                        t.importDefaultSpecifier(
+                          t.identifier(specifier.local.name)
+                        )
+                      ],
+                      t.stringLiteral(distLocation)
+                    );
+                  }
                 }
-              }
-              return t.importDeclaration(
-                [specifier],
-                t.stringLiteral(getDistLocation('index', state.opts))
-              );
-            })
-            .filter(Boolean);
+                return t.importDeclaration(
+                  [specifier],
+                  t.stringLiteral(getDistLocation('index', state.opts))
+                );
+              })
+              .filter(Boolean);
 
-          path.replaceWithMultiple(imports);
+            path.replaceWithMultiple(imports);
+          } else {
+            const styleSheetSpecifierIndex = specifiers.findIndex(
+              (specifier) =>
+                specifier.imported && specifier.imported.name === 'StyleSheet'
+            );
+            if (styleSheetSpecifierIndex !== -1) {
+              const otherSpecifiers = [
+                ...specifiers.slice(0, styleSheetSpecifierIndex),
+                ...specifiers.slice(styleSheetSpecifierIndex + 1)
+              ];
+
+              const newImports = [
+                t.importDeclaration(
+                  [t.importDefaultSpecifier(t.identifier('StyleSheet'))],
+                  t.stringLiteral(
+                    'react-native-web/dist/exports/StyleSheet/runtime'
+                  )
+                ),
+                t.importDeclaration(
+                  otherSpecifiers,
+                  t.stringLiteral('react-native')
+                )
+              ];
+
+              path.replaceWithMultiple(newImports);
+            }
+          }
         }
       },
       ExportNamedDeclaration(path, state) {
         const { specifiers } = path.node;
-        if (isReactNativeModule(path.node)) {
+        if (isReactNativeModule(path.node) && state.opts.legacy !== false) {
           const exports = specifiers
             .map((specifier) => {
               if (t.isExportSpecifier(specifier)) {
@@ -104,7 +132,7 @@ module.exports = function ({ types: t }) {
         }
       },
       VariableDeclaration(path, state) {
-        if (isReactNativeRequire(t, path.node)) {
+        if (isReactNativeRequire(t, path.node) && state.opts.legacy !== false) {
           const { id } = path.node.declarations[0];
           if (t.isObjectPattern(id)) {
             const imports = id.properties

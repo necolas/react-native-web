@@ -12,7 +12,7 @@ import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 
 const originalImage = window.Image;
 
@@ -20,6 +20,16 @@ describe('components/Image', () => {
   beforeEach(() => {
     ImageUriCache._entries = {};
     window.Image = jest.fn(() => ({}));
+    ImageLoader.load = jest
+      .fn()
+      .mockImplementation((source, onLoad, onError) => {
+        act(() => onLoad({ source }));
+      });
+    ImageLoader.loadWithHeaders = jest.fn().mockImplementation((source) => ({
+      source,
+      promise: Promise.resolve(`blob:${Math.random()}`),
+      cancel: jest.fn()
+    }));
   });
 
   afterEach(() => {
@@ -102,10 +112,6 @@ describe('components/Image', () => {
 
   describe('prop "onLoad"', () => {
     test('is called after image is loaded from network', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
@@ -117,15 +123,10 @@ describe('components/Image', () => {
           source="https://test.com/img.jpg"
         />
       );
-      jest.runOnlyPendingTimers();
       expect(onLoadStub).toBeCalled();
     });
 
     test('is called after image is loaded from cache', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
       const onLoadStartStub = jest.fn();
       const onLoadStub = jest.fn();
       const onLoadEndStub = jest.fn();
@@ -139,7 +140,6 @@ describe('components/Image', () => {
           source={uri}
         />
       );
-      jest.runOnlyPendingTimers();
       expect(onLoadStub).toBeCalled();
       ImageUriCache.remove(uri);
     });
@@ -223,6 +223,34 @@ describe('components/Image', () => {
     });
   });
 
+  describe('prop "onLoadStart"', () => {
+    test('is called on update if "headers" are modified', () => {
+      const onLoadStartStub = jest.fn();
+      const { rerender } = render(
+        <Image
+          onLoadStart={onLoadStartStub}
+          source={{
+            uri: 'https://test.com/img.jpg',
+            headers: { 'x-custom-header': 'abc123' }
+          }}
+        />
+      );
+      act(() => {
+        rerender(
+          <Image
+            onLoadStart={onLoadStartStub}
+            source={{
+              uri: 'https://test.com/img.jpg',
+              headers: { 'x-custom-header': '123abc' }
+            }}
+          />
+        );
+      });
+
+      expect(onLoadStartStub.mock.calls.length).toBe(2);
+    });
+  });
+
   describe('prop "resizeMode"', () => {
     ['contain', 'cover', 'none', 'repeat', 'stretch', undefined].forEach(
       (resizeMode) => {
@@ -241,15 +269,16 @@ describe('components/Image', () => {
         '',
         {},
         { uri: '' },
-        { uri: 'https://google.com' }
+        { uri: 'https://google.com' },
+        { uri: 'https://google.com', headers: { 'x-custom-header': 'abc123' } }
       ];
       sources.forEach((source) => {
         expect(() => render(<Image source={source} />)).not.toThrow();
       });
     });
 
-    test('is not set immediately if the image has not already been loaded', () => {
-      const uri = 'https://google.com/favicon.ico';
+    test('is set immediately while image is loading and there is no default source', () => {
+      const uri = 'https://google.com/not-yet-loaded-image.ico';
       const source = { uri };
       const { container } = render(<Image source={source} />);
       expect(container.firstChild).toMatchSnapshot();
@@ -257,11 +286,6 @@ describe('components/Image', () => {
 
     test('is set immediately if the image was preloaded', () => {
       const uri = 'https://yahoo.com/favicon.ico';
-      ImageLoader.load = jest
-        .fn()
-        .mockImplementationOnce((_, onLoad, onError) => {
-          onLoad();
-        });
       return Image.prefetch(uri).then(() => {
         const source = { uri };
         const { container } = render(<Image source={source} />, {
@@ -341,6 +365,51 @@ describe('components/Image', () => {
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img@2x.png'
       );
+    });
+
+    test('it works with headers in 2 stages', async () => {
+      const uri = 'https://google.com/favicon.ico';
+      const headers = { 'x-custom-header': 'abc123' };
+      const source = { uri, headers };
+
+      // Stage 1
+      const loadRequest = {
+        promise: Promise.resolve('blob:123'),
+        cancel: jest.fn(),
+        source
+      };
+
+      ImageLoader.loadWithHeaders.mockReturnValue(loadRequest);
+
+      render(<Image source={source} />);
+
+      expect(ImageLoader.loadWithHeaders).toHaveBeenCalledWith(
+        expect.objectContaining(source)
+      );
+
+      // Stage 2
+      return waitFor(() => {
+        expect(ImageLoader.load).toHaveBeenCalledWith(
+          'blob:123',
+          expect.any(Function),
+          expect.any(Function)
+        );
+      });
+    });
+
+    // A common case is `source` declared as an inline object, which cause is to be a
+    // new object (with the same content) each time parent component renders
+    test('it still loads the image if source object is changed', () => {
+      const uri = 'https://google.com/favicon.ico';
+      const headers = { 'x-custom-header': 'abc123' };
+      const { rerender } = render(<Image source={{ uri, headers }} />);
+      rerender(<Image source={{ uri, headers }} />);
+
+      // when the underlying source didn't change we don't expect more than 1 load calls
+      return waitFor(() => {
+        expect(ImageLoader.loadWithHeaders).toHaveBeenCalledTimes(1);
+        expect(ImageLoader.load).toHaveBeenCalledTimes(1);
+      });
     });
   });
 

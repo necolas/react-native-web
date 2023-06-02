@@ -74,12 +74,13 @@ let id = 0;
 const requests = {};
 
 const ImageLoader = {
-  abort(requestId: number) {
-    let image = requests[`${requestId}`];
+  clear(requestId: number) {
+    const image = requests[`${requestId}`];
     if (image) {
       image.onerror = null;
       image.onload = null;
-      image = null;
+      ImageUriCache.remove(image.src);
+      image.src = '';
       delete requests[`${requestId}`];
     }
   },
@@ -102,7 +103,7 @@ const ImageLoader = {
         }
       }
       if (complete) {
-        ImageLoader.abort(requestId);
+        ImageLoader.clear(requestId);
         clearInterval(interval);
       }
     }
@@ -111,7 +112,7 @@ const ImageLoader = {
       if (typeof failure === 'function') {
         failure();
       }
-      ImageLoader.abort(requestId);
+      ImageLoader.clear(requestId);
       clearInterval(interval);
     }
   },
@@ -122,9 +123,19 @@ const ImageLoader = {
     id += 1;
     const image = new window.Image();
     image.onerror = onError;
-    image.onload = (e) => {
+    image.onload = (nativeEvent) => {
+      ImageUriCache.add(uri);
       // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
+      const onDecode = () => {
+        // Append `source` to match RN's ImageLoadEvent interface
+        nativeEvent.source = {
+          uri: image.src,
+          width: image.naturalWidth,
+          height: image.naturalHeight
+        };
+
+        onLoad({ nativeEvent });
+      };
       if (typeof image.decode === 'function') {
         // Safari currently throws exceptions when decoding svgs.
         // We want to catch that error and allow the load handler
@@ -136,16 +147,48 @@ const ImageLoader = {
     };
     image.src = uri;
     requests[`${id}`] = image;
+
     return id;
+  },
+  loadWithHeaders(source: ImageSource): LoadRequest {
+    let uri: string;
+    const abortController = new AbortController();
+    const request = new Request(source.uri, {
+      headers: source.headers,
+      signal: abortController.signal
+    });
+    request.headers.append('accept', 'image/*');
+
+    const promise = fetch(request)
+      .then((response) => response.blob())
+      .then((blob) => {
+        uri = URL.createObjectURL(blob);
+        return uri;
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          return '';
+        }
+
+        throw error;
+      });
+
+    return {
+      promise,
+      source,
+      cancel: () => {
+        abortController.abort();
+        URL.revokeObjectURL(uri);
+      }
+    };
   },
   prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
       ImageLoader.load(
         uri,
         () => {
-          // Add the uri to the cache so it can be immediately displayed when used
-          // but also immediately remove it to correctly reflect that it has no active references
-          ImageUriCache.add(uri);
+          // load() adds the uri to the cache so it can be immediately displayed when used,
+          // but we also immediately remove it to correctly reflect that it has no active references
           ImageUriCache.remove(uri);
           resolve();
         },
@@ -162,6 +205,17 @@ const ImageLoader = {
     });
     return Promise.resolve(result);
   }
+};
+
+export type LoadRequest = {|
+  cancel: Function,
+  source: ImageSource,
+  promise: Promise<string>
+|};
+
+export type ImageSource = {
+  uri: string,
+  headers: { [key: string]: string }
 };
 
 export default ImageLoader;

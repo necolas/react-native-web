@@ -15,9 +15,18 @@ import AnimatedTransform from './AnimatedTransform';
 import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-import StyleSheet from '../../../../exports/StyleSheet';
-
-const flattenStyle = StyleSheet.flatten;
+function flattenStyle(...styles: any): { [key: string]: any } {
+  const flatArray = styles.flat(Infinity);
+  const result = {};
+  for (let i = 0; i < flatArray.length; i++) {
+    const style = flatArray[i];
+    if (style != null && typeof style === 'object') {
+      // $FlowFixMe
+      Object.assign(result, style);
+    }
+  }
+  return result;
+}
 
 function createAnimatedStyle(inputStyle: any): Object {
   const style = flattenStyle(inputStyle);
