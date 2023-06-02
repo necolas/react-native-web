@@ -74,12 +74,13 @@ let id = 0;
 const requests = {};
 
 const ImageLoader = {
-  abort(requestId: number) {
-    let image = requests[`${requestId}`];
+  clear(requestId: number) {
+    const image = requests[`${requestId}`];
     if (image) {
       image.onerror = null;
       image.onload = null;
-      image = null;
+      ImageUriCache.remove(image.src);
+      image.src = '';
       delete requests[`${requestId}`];
     }
   },
@@ -102,7 +103,7 @@ const ImageLoader = {
         }
       }
       if (complete) {
-        ImageLoader.abort(requestId);
+        ImageLoader.clear(requestId);
         clearInterval(interval);
       }
     }
@@ -111,7 +112,7 @@ const ImageLoader = {
       if (typeof failure === 'function') {
         failure();
       }
-      ImageLoader.abort(requestId);
+      ImageLoader.clear(requestId);
       clearInterval(interval);
     }
   },
@@ -123,6 +124,7 @@ const ImageLoader = {
     const image = new window.Image();
     image.onerror = onError;
     image.onload = (e) => {
+      ImageUriCache.add(uri);
       // avoid blocking the main thread
       const onDecode = () => onLoad({ nativeEvent: e });
       if (typeof image.decode === 'function') {
@@ -143,9 +145,8 @@ const ImageLoader = {
       ImageLoader.load(
         uri,
         () => {
-          // Add the uri to the cache so it can be immediately displayed when used
-          // but also immediately remove it to correctly reflect that it has no active references
-          ImageUriCache.add(uri);
+          // load() adds the uri to the cache so it can be immediately displayed when used,
+          // but we also immediately remove it to correctly reflect that it has no active references
           ImageUriCache.remove(uri);
           resolve();
         },
