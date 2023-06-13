@@ -175,7 +175,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       {...pressEventHandlers}
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
-      pointerEvents={disabled ? 'none' : undefined}
+      pointerEvents={disabled ? 'box-none' : undefined}
       ref={setRef}
       style={[
         styles.root,
