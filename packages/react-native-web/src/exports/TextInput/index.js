@@ -99,6 +99,7 @@ const TextInput: React.AbstractComponent<
     autoCompleteType,
     autoCorrect = true,
     blurOnSubmit,
+    caretHidden,
     clearTextOnFocus,
     dir,
     editable,
@@ -402,6 +403,7 @@ const TextInput: React.AbstractComponent<
     { '--placeholderTextColor': placeholderTextColor },
     styles.textinput$raw,
     styles.placeholder,
+    caretHidden && styles.caretHidden,
     props.style
   ];
   supportedProps.type = multiline ? undefined : type;
@@ -448,6 +450,9 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     placeholderTextColor: 'var(--placeholderTextColor)'
+  },
+  caretHidden: {
+    caretColor: 'transparent'
   }
 });
 

@@ -105,6 +105,14 @@ describe('components/TextInput', () => {
     });
   });
 
+  describe('prop "caretHidden"', () => {
+    test('value "true"', () => {
+      const { container } = render(<TextInput caretHidden />);
+      const style = window.getComputedStyle(container.firstChild);
+      expect(style.caretColor).toEqual('transparent');
+    });
+  });
+
   describe('prop "clearTextOnFocus"', () => {
     const defaultValue = 'defaultValue';
 
