@@ -75,6 +75,11 @@ export default function TextInputPage() {
           rows={3}
           style={styles.multiline}
         />
+        <TextInput
+          caretHidden
+          defaultValue="caretHidden"
+          style={styles.textinput}
+        />
       </View>
     </Example>
   );

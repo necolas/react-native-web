@@ -25,6 +25,7 @@ export type TextInputProps = {
   autoCorrect?: ?boolean,
   autoFocus?: ?boolean,
   blurOnSubmit?: ?boolean,
+  caretHidden?: ?boolean,
   clearTextOnFocus?: ?boolean,
   defaultValue?: ?string,
   dir?: ?('auto' | 'ltr' | 'rtl'),
