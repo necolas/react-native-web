@@ -12,7 +12,7 @@
 
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import normalizeColor from 'normalize-css-color';
+import normalizeColor from '@react-native/normalize-color';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';

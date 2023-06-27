@@ -13,7 +13,7 @@ import type { Node } from 'React';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import BoundingDimensions from './BoundingDimensions';
-import normalizeColor from 'normalize-css-color';
+import normalizeColor from '@react-native/normalize-color';
 import Position from './Position';
 import React from 'react';
 import UIManager from '../UIManager';
