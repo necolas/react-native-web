@@ -24,7 +24,7 @@ function createAnimatedStyle(inputStyle: any): Object {
   const animatedStyles = {}
   for (const key in style) {
     const value = style[key];
-    if (key === 'transform') {
+    if (key === 'transform' && Array.isArray(value)) {
       animatedStyles[key] = new AnimatedTransform(value);
     }
     else if (value instanceof AnimatedNode) {
