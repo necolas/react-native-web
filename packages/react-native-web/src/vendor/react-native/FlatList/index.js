@@ -627,7 +627,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
           'Expected array of items with numColumns > 1',
         );
         return (
-          <View style={StyleSheet.compose(styles.row, columnWrapperStyle)}>
+          <View style={[styles.row, columnWrapperStyle]}>
             {item.map((it, kk) => {
               const element = render({
                 // $FlowFixMe[incompatible-call]
