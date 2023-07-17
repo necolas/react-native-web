@@ -44,6 +44,7 @@ const Switch: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
   const {
+    'aria-label': ariaLabel,
     accessibilityLabel,
     activeThumbColor,
     activeTrackColor,
@@ -166,7 +167,7 @@ const Switch: React.AbstractComponent<
   ];
 
   const nativeControl = createElement('input', {
-    accessibilityLabel,
+    'aria-label': ariaLabel || accessibilityLabel,
     checked: value,
     disabled: disabled,
     onBlur: handleFocusState,
