@@ -37,6 +37,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
 
   const [isRendering, setIsRendering] = React.useState(false);
   const wasVisible = React.useRef(false);
+  const wasRendering = React.useRef(false);
 
   const isAnimated = animationType && animationType !== 'none';
 
@@ -54,13 +55,17 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
         }
       } else {
         setIsRendering(false);
-        if (onDismiss) {
-          onDismiss();
-        }
       }
     },
-    [onDismiss, onShow, visible]
+    [onShow, visible]
   );
+
+  React.useEffect(() => {
+    if (wasRendering.current && !isRendering && onDismiss) {
+      onDismiss();
+    }
+    wasRendering.current = isRendering;
+  }, [isRendering, onDismiss]);
 
   React.useEffect(() => {
     if (visible) {
