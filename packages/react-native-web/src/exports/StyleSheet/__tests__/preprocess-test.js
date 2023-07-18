@@ -99,6 +99,12 @@ describe('StyleSheet/preprocess', () => {
       expect(preprocess({ aspectRatio: 9 / 16 })).toEqual({
         aspectRatio: '0.5625'
       });
+
+      expect(preprocess({ aspectRatio: '0.5' })).toEqual({
+        aspectRatio: '0.5'
+      });
+
+      expect(preprocess({ aspectRatio: undefined })).toEqual({});
     });
 
     test('fontVariant', () => {

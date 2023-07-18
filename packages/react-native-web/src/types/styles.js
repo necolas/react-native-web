@@ -188,7 +188,7 @@ export type LayoutStyles = {|
     | 'flex-start'
     | 'stretch'
   ),
-  aspectRatio?: ?number,
+  aspectRatio?: ?NumberOrString,
   backfaceVisibility?: ?VisiblilityValue,
   borderWidth?: ?DimensionValue,
   borderBlockWidth?: ?DimensionValue,

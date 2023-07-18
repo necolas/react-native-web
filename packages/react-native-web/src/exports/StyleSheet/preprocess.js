@@ -182,7 +182,7 @@ export const preprocess = <T: {| [key: string]: any |}>(
       continue;
     }
 
-    if (prop === 'aspectRatio') {
+    if (prop === 'aspectRatio' && typeof value === 'number') {
       nextStyle[prop] = value.toString();
     } else if (prop === 'fontVariant') {
       if (Array.isArray(value) && value.length > 0) {
