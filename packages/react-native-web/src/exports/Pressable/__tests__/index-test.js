@@ -246,6 +246,35 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('press interaction as button (keyboard)', () => {
+    const onPress = jest.fn();
+    const preventDefault = jest.fn();
+    const ref = React.createRef();
+
+    function TestCase() {
+      return (
+        <Pressable
+          onPress={(e) => {
+            onPress(e);
+          }}
+          ref={ref}
+          role="button"
+        />
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+    const target = createEventTarget(ref.current);
+    act(() => {
+      target.keydown({ key: ' ', preventDefault });
+      jest.runAllTimers();
+    });
+    // Calling preventDefault prevents native 'click' event dispatch
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
+
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
