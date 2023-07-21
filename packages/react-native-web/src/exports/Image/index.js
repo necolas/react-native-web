@@ -164,7 +164,11 @@ interface ImageStatics {
     success: (width: number, height: number) => void,
     failure: () => void
   ) => void;
-  resolveAssetSource: (source: Source) => { uri: string, width?: number, height?: number };
+  resolveAssetSource: (source: Source) => {
+    uri: string,
+    width?: number,
+    height?: number
+  };
   prefetch: (uri: string) => Promise<void>;
   queryCache: (
     uris: Array<string>
@@ -360,9 +364,11 @@ const ImageWithStatics = (Image: React.AbstractComponent<
 > &
   ImageStatics);
 
-ImageWithStatics.resolveAssetSource = function resolveAssetSource(
-  source
-): { uri: string, width?: number, height?: number } {
+ImageWithStatics.resolveAssetSource = function resolveAssetSource(source): {
+  uri: string,
+  width?: number,
+  height?: number
+} {
   const uri = resolveAssetUri(source) || '';
   const dimensions = resolveAssetDimensions(source) || {};
   let width, height;
