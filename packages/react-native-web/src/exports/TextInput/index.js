@@ -193,6 +193,13 @@ const TextInput: React.AbstractComponent<
 
   const dimensions = React.useRef({ height: null, width: null });
   const hostRef = React.useRef(null);
+  const prevSelection = React.useRef({start: 0, end: 0});
+  const prevSecureTextEntry = React.useRef(false);
+
+  React.useEffect(() => {
+    setSelection(hostRef.current, prevSelection.current);
+    prevSecureTextEntry.current = secureTextEntry;
+  }, [secureTextEntry]);
 
   const handleContentSizeChange = React.useCallback(
     (hostNode) => {
@@ -324,18 +331,22 @@ const TextInput: React.AbstractComponent<
   }
 
   function handleSelectionChange(e) {
-    if (onSelectionChange) {
-      try {
-        const node = e.target;
-        const { selectionStart, selectionEnd } = node;
-        e.nativeEvent.selection = {
-          start: selectionStart,
-          end: selectionEnd
-        };
+    try {
+      const node = e.target;
+      const { selectionStart, selectionEnd } = node;
+      const selection = {
+        start: selectionStart,
+        end: selectionEnd
+      };
+      if (onSelectionChange) {
+        e.nativeEvent.selection = selection;
         e.nativeEvent.text = e.target.value;
         onSelectionChange(e);
-      } catch (e) {}
-    }
+      }
+      if (prevSecureTextEntry.current === secureTextEntry) {
+        prevSelection.current = selection;
+      }
+    } catch (e) {}
   }
 
   useLayoutEffect(() => {
