@@ -332,8 +332,7 @@ const TextInput: React.AbstractComponent<
 
   function handleSelectionChange(e) {
     try {
-      const node = e.target;
-      const { selectionStart, selectionEnd } = node;
+      const { selectionStart, selectionEnd } = e.target;
       const selection = {
         start: selectionStart,
         end: selectionEnd
