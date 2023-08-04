@@ -193,11 +193,11 @@ const TextInput: React.AbstractComponent<
 
   const dimensions = React.useRef({ height: null, width: null });
   const hostRef = React.useRef(null);
-  const prevSelection = React.useRef({ start: 0, end: 0 });
+  const prevSelection = React.useRef(null);
   const prevSecureTextEntry = React.useRef(false);
 
   React.useEffect(() => {
-    if (hostRef.current) {
+    if (hostRef.current && prevSelection.current) {
       setSelection(hostRef.current, prevSelection.current);
     }
     prevSecureTextEntry.current = secureTextEntry;
