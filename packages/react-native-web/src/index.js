@@ -68,3 +68,6 @@ export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 export { default as useColorScheme } from './exports/useColorScheme';
 export { default as useLocaleContext } from './exports/useLocaleContext';
 export { default as useWindowDimensions } from './exports/useWindowDimensions';
+
+// compat apis
+export { default as PermissionsAndroid } from './exports/PermissionsAndroid';
