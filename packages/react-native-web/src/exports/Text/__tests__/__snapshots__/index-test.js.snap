@@ -150,7 +150,7 @@ exports[`components/Text prop "nativeID" value is set 1`] = `
 
 exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
-  class="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01"
+  class="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1qsk4np r-textOverflow-1udbk01"
   dir="auto"
 />
 `;

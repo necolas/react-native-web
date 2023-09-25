@@ -52,6 +52,7 @@ describe('AppRegistry', () => {
         .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
         .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
@@ -109,6 +110,7 @@ describe('AppRegistry', () => {
         .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
         .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
@@ -158,6 +160,7 @@ describe('AppRegistry', () => {
         .r-display-krxsd3{display:-webkit-box;}
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
+        .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
         .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
