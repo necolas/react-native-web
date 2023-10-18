@@ -37,7 +37,7 @@ const propsToAccessibilityComponent = (
   props: Object = emptyObject
 ): void | string => {
   // special-case for "label" role which doesn't map to an ARIA role
-  if (props.accessibilityRole === 'label') {
+  if (props.accessibilityRole === 'label' || props.role === 'label') {
     return 'label';
   }
 
