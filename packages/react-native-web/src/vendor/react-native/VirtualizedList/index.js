@@ -49,12 +49,14 @@ import {
 import invariant from 'fbjs/lib/invariant';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
+import { supportsPassiveEvents } from '../../../modules/addEventListener';
 
 export type {RenderItemProps, RenderItemType, Separators};
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
 const ON_EDGE_REACHED_EPSILON = 0.001;
+const canUsePassiveEvents = supportsPassiveEvents();
 
 let _usedIndexForKey = false;
 let _keylessItemComponentName: string = '';
@@ -746,7 +748,8 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   setupWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       this._scrollRef.getScrollableNode().addEventListener('wheel',
-          this.invertedWheelEventHandler
+          this.invertedWheelEventHandler,
+          canUsePassiveEvents ? { passive: true } : false
       );
     } else {
       setTimeout(() => this.setupWebWheelHandler(), 50);
