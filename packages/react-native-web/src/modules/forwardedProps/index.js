@@ -12,6 +12,7 @@ export const defaultProps = {
   dataSet: true,
   dir: true,
   id: true,
+  name: true,
   ref: true,
   suppressHydrationWarning: true,
   tabIndex: true,
