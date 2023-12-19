@@ -203,10 +203,6 @@ export const preprocess = <T: {| [key: string]: any |}>(
       }
     } else if (prop === 'transform') {
       if (Array.isArray(value)) {
-        warnOnce(
-          'transform',
-          '"transform" style array value is deprecated. Use space-separated string functions, e.g., "scaleX(2) rotateX(15deg)".'
-        );
         value = createTransformValue(value);
       }
       nextStyle.transform = value;
