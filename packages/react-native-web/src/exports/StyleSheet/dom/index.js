@@ -18,8 +18,8 @@ type Sheet = {
 };
 
 const defaultId = 'react-native-stylesheet';
-const roots = new WeakMap<Node, number>();
-const sheets = [];
+const _roots = new WeakMap<Node, number>();
+const _sheets = [];
 
 const initialRules = [
   // minimal top-level reset
@@ -31,16 +31,25 @@ const initialRules = [
 ];
 
 export function createSheet(
-  root?: HTMLElement,
+  _rootNode?: Document | ShadowRoot,
   id?: string = defaultId
 ): Sheet {
   let sheet;
 
   if (canUseDOM) {
-    const rootNode: Node = root != null ? root.getRootNode() : document;
+    window.__sheets = window.__sheets || _sheets;
+    window.__roots = window.__roots || _roots;
+
+    const sheets = window.__sheets;
+    const roots = window.__roots;
+    let rootNode = _rootNode;
+
+    if (_rootNode == null) {
+      rootNode = document;
+    }
     // Create the initial style sheet
     if (sheets.length === 0) {
-      sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(id));
+      sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(id, rootNode));
       initialRules.forEach((rule) => {
         sheet.insert(rule, 0);
       });
@@ -65,14 +74,14 @@ export function createSheet(
     }
   } else {
     // Create the initial style sheet
-    if (sheets.length === 0) {
+    if (_sheets.length === 0) {
       sheet = createOrderedCSSStyleSheet(createCSSStyleSheet(id));
       initialRules.forEach((rule) => {
         sheet.insert(rule, 0);
       });
-      sheets.push(sheet);
+      _sheets.push(sheet);
     } else {
-      sheet = sheets[0];
+      sheet = _sheets[0];
     }
   }
 
@@ -82,6 +91,7 @@ export function createSheet(
     },
     id,
     insert(cssText: string, groupValue: number) {
+      const sheets = canUseDOM ? window.__sheets : _sheets;
       sheets.forEach((s) => {
         s.insert(cssText, groupValue);
       });

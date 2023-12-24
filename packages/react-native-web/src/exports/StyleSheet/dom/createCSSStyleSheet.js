@@ -14,19 +14,18 @@ export default function createCSSStyleSheet(
   rootNode?: Document | ShadowRoot,
   textContent?: string
 ): ?CSSStyleSheet {
-  if (canUseDOM) {
-    const root = rootNode != null ? rootNode : document;
-    let element = root.getElementById(id);
+  if (canUseDOM && rootNode != null) {
+    let element = rootNode.getElementById(id);
     if (element == null) {
       element = document.createElement('style');
       element.setAttribute('id', id);
       if (typeof textContent === 'string') {
         element.appendChild(document.createTextNode(textContent));
       }
-      if (root instanceof ShadowRoot) {
-        root.insertBefore(element, root.firstChild);
+      if (rootNode instanceof ShadowRoot) {
+        rootNode.insertBefore(element, rootNode.firstChild);
       } else {
-        const head = root.head;
+        const head = rootNode.head;
         if (head) {
           head.insertBefore(element, head.firstChild);
         }

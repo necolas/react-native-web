@@ -12,7 +12,7 @@ import type { ComponentType, Node } from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
-import renderLegacy, { hydrateLegacy, render, hydrate } from '../render';
+import render, { hydrateLegacy, renderLegacy, hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
 import React from 'react';
 
@@ -32,6 +32,7 @@ export default function renderApplication<Props: Object>(
   }
 ): Application {
   const { hydrate: shouldHydrate, initialProps, mode, rootTag } = options;
+
   const renderFn = shouldHydrate
     ? mode === 'concurrent'
       ? hydrate
