@@ -20,7 +20,7 @@ export type EventOptions = {
 
 const emptyFunction = () => {};
 
-function supportsPassiveEvents(): boolean {
+export function supportsPassiveEvents(): boolean {
   let supported = false;
   // Check if browser supports event with passive listeners
   // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
