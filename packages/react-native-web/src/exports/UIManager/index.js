@@ -82,7 +82,7 @@ const UIManager = {
   measureInWindow(node, callback) {
     if (node) {
       setTimeout(() => {
-        const { height, left, top, width } = getRect(node);
+        const { height, left, top, width } = node.getBoundingClientRect();
         callback(left, top, width, height);
       }, 0);
     }
