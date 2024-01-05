@@ -14,23 +14,22 @@ import canUseDOM from '../../modules/canUseDom';
 
 export type ModalPortalProps = {|
   children: any
-|};
+    |};
 
 function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
   const elementRef = React.useRef(null);
 
-  if (canUseDOM && !elementRef.current) {
-    const element = document.createElement('div');
-
-    if (element && document.body) {
-      document.body.appendChild(element);
-      elementRef.current = element;
-    }
-  }
-
   React.useEffect(() => {
     if (canUseDOM) {
+      if (!elementRef.current) {
+        const element = document.createElement('div');
+
+        if (element && document.body) {
+          document.body.appendChild(element);
+          elementRef.current = element;
+        };
+      }
       return () => {
         if (document.body && elementRef.current) {
           document.body.removeChild(elementRef.current);
