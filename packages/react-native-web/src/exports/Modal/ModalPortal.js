@@ -14,7 +14,7 @@ import canUseDOM from '../../modules/canUseDom';
 
 export type ModalPortalProps = {|
   children: any
-    |};
+|};
 
 function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
