@@ -45,6 +45,7 @@ export type EventHandlers = $ReadOnly<{|
   onClick: (event: ClickEvent) => void,
   onContextMenu: (event: ClickEvent) => void,
   onKeyDown: (event: KeyboardEvent) => void,
+  onKeyUp: (event: KeyboardEvent) => void,
   onResponderGrant: (event: ResponderEvent) => void,
   onResponderMove: (event: ResponderEvent) => void,
   onResponderRelease: (event: ResponderEvent) => void,
@@ -302,31 +303,6 @@ export default class PressResponder {
       this._receiveSignal(RESPONDER_RELEASE, event);
     };
 
-    const keyupHandler = (event: KeyboardEvent) => {
-      const { onPress } = this._config;
-      const { target } = event;
-
-      if (this._touchState !== NOT_RESPONDER && isValidKeyPress(event)) {
-        end(event);
-        document.removeEventListener('keyup', keyupHandler);
-
-        const role = target.getAttribute('role');
-        const elementType = getElementType(target);
-
-        const isNativeInteractiveElement =
-          role === 'link' ||
-          elementType === 'a' ||
-          elementType === 'button' ||
-          elementType === 'input' ||
-          elementType === 'select' ||
-          elementType === 'textarea';
-
-        if (onPress != null && !isNativeInteractiveElement) {
-          onPress(event);
-        }
-      }
-    };
-
     return {
       onStartShouldSetResponder: (event): boolean => {
         const { disabled } = this._config;
@@ -345,9 +321,6 @@ export default class PressResponder {
         if (!disabled && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
-            // Listen to 'keyup' on document to account for situations where
-            // focus is moved to another element during 'keydown'.
-            document.addEventListener('keyup', keyupHandler);
           }
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
           const role = getElementRole(target);
@@ -361,6 +334,30 @@ export default class PressResponder {
             event.preventDefault();
           }
           event.stopPropagation();
+        }
+      },
+
+      onKeyUp: (event) => {
+        const { onPress } = this._config;
+        const { target } = event;
+
+        if (this._touchState !== NOT_RESPONDER && isValidKeyPress(event)) {
+          end(event);
+
+          const role = target.getAttribute('role');
+          const elementType = getElementType(target);
+
+          const isNativeInteractiveElement =
+            role === 'link' ||
+            elementType === 'a' ||
+            elementType === 'button' ||
+            elementType === 'input' ||
+            elementType === 'select' ||
+            elementType === 'textarea';
+
+          if (onPress != null && !isNativeInteractiveElement) {
+            onPress(event);
+          }
         }
       },
 
