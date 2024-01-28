@@ -186,7 +186,6 @@ const textStyle = {
   backgroundColor: 'transparent',
   border: '0 solid black',
   boxSizing: 'border-box',
-  color: 'black',
   display: 'inline',
   font: '14px System',
   listStyle: 'none',
