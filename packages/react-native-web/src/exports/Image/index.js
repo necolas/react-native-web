@@ -20,6 +20,7 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
 import { warnOnce } from '../../modules/warnOnce';
+import useCallbackRef from '../../vendor/react-native/Utilities/useCallbackRef';
 
 export type { ImageProps };
 
@@ -230,6 +231,12 @@ const Image: React.AbstractComponent<
   const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
   const backgroundSize = getBackgroundSize();
 
+  const onErrorRef = useCallbackRef(onError);
+  const onLoadRef = useCallbackRef(onLoad);
+  const onLoadEndRef = useCallbackRef(onLoadEnd);
+  const onLoadStartRef = useCallbackRef(onLoadStart);
+
+
   // Accessibility image allows users to trigger the browser's image context menu
   const hiddenImage = displayImageUri
     ? createElement('img', {
@@ -276,32 +283,32 @@ const Image: React.AbstractComponent<
 
     if (uri != null) {
       updateState(LOADING);
-      if (onLoadStart) {
-        onLoadStart();
+      if (onLoadStartRef.current) {
+        onLoadStartRef.current();
       }
 
       requestRef.current = ImageLoader.load(
         uri,
         function load(e) {
           updateState(LOADED);
-          if (onLoad) {
-            onLoad(e);
+          if (onLoadRef.current) {
+            onLoadRef.current(e);
           }
-          if (onLoadEnd) {
-            onLoadEnd();
+          if (onLoadEndRef.current) {
+            onLoadEndRef.current();
           }
         },
         function error() {
           updateState(ERRORED);
-          if (onError) {
-            onError({
+          if (onErrorRef.current) {
+            onErrorRef.current({
               nativeEvent: {
                 error: `Failed to load resource ${uri} (404)`
               }
             });
           }
-          if (onLoadEnd) {
-            onLoadEnd();
+          if (onLoadEndRef.current) {
+            onLoadEndRef.current();
           }
         }
       );
@@ -315,7 +322,7 @@ const Image: React.AbstractComponent<
     }
 
     return abortPendingRequest;
-  }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+  }, [uri, requestRef, updateState, onErrorRef, onLoadRef, onLoadEndRef, onLoadStartRef]);
 
   return (
     <View
