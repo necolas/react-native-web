@@ -18,7 +18,7 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import invariant from 'fbjs/lib/invariant';
-import normalizeColor from '@react-native/normalize-color';
+import normalizeColor from '@react-native/normalize-colors';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
 
