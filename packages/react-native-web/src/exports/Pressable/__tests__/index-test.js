@@ -200,50 +200,80 @@ describe('components/Pressable', () => {
     expect(onContextMenu).toBeCalled();
   });
 
-  test('press interaction (keyboard)', () => {
-    let container;
-    const onPress = jest.fn();
-    const onPressIn = jest.fn();
-    const onPressOut = jest.fn();
-    const ref = React.createRef();
+  describe('press interaction (keyboard)', () => {
+    test('trigger press when keyup is on the same element', () => {
+      let container;
+      const onPress = jest.fn();
+      const onPressIn = jest.fn();
+      const onPressOut = jest.fn();
+      const ref = React.createRef();
 
-    function TestCase() {
-      const [shown, setShown] = React.useState(true);
-      return shown ? (
-        <Pressable
-          children={({ pressed }) =>
-            pressed ? <div data-testid="press-content" /> : null
-          }
-          onPress={(e) => {
-            onPress(e);
-            setShown(false);
-          }}
-          onPressIn={onPressIn}
-          onPressOut={onPressOut}
-          ref={ref}
-          style={({ pressed }) => [pressed && { outline: 'press-ring' }]}
-        />
-      ) : null;
-    }
+      function TestCase() {
+        const [shown, setShown] = React.useState(true);
+        return shown ? (
+          <Pressable
+            children={({ pressed }) =>
+              pressed ? <div data-testid="press-content" /> : null
+            }
+            onPress={(e) => {
+              onPress(e);
+              setShown(false);
+            }}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+            ref={ref}
+            style={({ pressed }) => [pressed && { outline: 'press-ring' }]}
+          />
+        ) : null;
+      }
 
-    act(() => {
-      ({ container } = render(<TestCase />));
+      act(() => {
+        ({ container } = render(<TestCase />));
+      });
+      const target = createEventTarget(ref.current);
+      expect(container.firstChild).toMatchSnapshot();
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+      expect(onPressIn).toBeCalled();
+      expect(container.firstChild).toMatchSnapshot();
+      act(() => {
+        target.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+      expect(onPressOut).toBeCalled();
+      expect(onPress).toBeCalled();
+      expect(container.firstChild).toMatchSnapshot();
     });
-    const target = createEventTarget(ref.current);
-    expect(container.firstChild).toMatchSnapshot();
-    act(() => {
-      target.keydown({ key: 'Enter' });
-      jest.runAllTimers();
+
+    test('ignore press when keyup is on a different element', () => {
+      const onPress = jest.fn();
+      const firstRef = React.createRef();
+
+      function TestCase() {
+        return (
+          <Pressable
+            onPress={(e) => {
+              onPress(e);
+            }}
+            ref={firstRef}
+          />
+        );
+      }
+
+      act(() => {
+        render(<TestCase />);
+      });
+      const target = createEventTarget(firstRef.current);
+      const body = createEventTarget(document.body);
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        body.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+      expect(onPress).not.toBeCalled();
     });
-    expect(onPressIn).toBeCalled();
-    expect(container.firstChild).toMatchSnapshot();
-    act(() => {
-      target.keyup({ key: 'Enter' });
-      jest.runAllTimers();
-    });
-    expect(onPressOut).toBeCalled();
-    expect(onPress).toBeCalled();
-    expect(container.firstChild).toMatchSnapshot();
   });
 
   test('press interaction as button (keyboard)', () => {

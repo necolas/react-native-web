@@ -233,6 +233,7 @@ export default class PressResponder {
     pageY: number
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
+  _responderElement: ?HTMLElement = null;
 
   constructor(config: PressResponderConfig) {
     this.configure(config);
@@ -320,10 +321,13 @@ export default class PressResponder {
           elementType === 'input' ||
           elementType === 'select' ||
           elementType === 'textarea';
+        const isActiveElement = this._responderElement === target;
 
-        if (onPress != null && !isNativeInteractiveElement) {
+        if (onPress != null && !isNativeInteractiveElement && isActiveElement) {
           onPress(event);
         }
+
+        this._responderElement = null;
       }
     };
 
@@ -345,6 +349,7 @@ export default class PressResponder {
         if (!disabled && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
+            this._responderElement = target;
             // Listen to 'keyup' on document to account for situations where
             // focus is moved to another element during 'keydown'.
             document.addEventListener('keyup', keyupHandler);
