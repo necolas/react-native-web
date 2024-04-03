@@ -326,6 +326,8 @@ export default class PressResponder {
         if (onPress != null && !isNativeInteractiveElement && isActiveElement) {
           onPress(event);
         }
+
+        this._responderElement = null;
       }
     };
 
