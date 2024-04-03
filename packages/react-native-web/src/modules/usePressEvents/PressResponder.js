@@ -233,7 +233,7 @@ export default class PressResponder {
     pageY: number
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
-  _responderElement: HTMLElement;
+  _responderElement: ?HTMLElement = null;
 
   constructor(config: PressResponderConfig) {
     this.configure(config);
