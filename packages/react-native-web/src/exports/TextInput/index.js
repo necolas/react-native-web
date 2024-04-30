@@ -140,6 +140,7 @@ const TextInput: React.AbstractComponent<
     secureTextEntry = false,
     selection,
     selectTextOnFocus,
+    showSoftInputOnFocus,
     spellCheck
   } = props;
 
@@ -419,6 +420,8 @@ const TextInput: React.AbstractComponent<
     caretHidden && styles.caretHidden
   ];
   supportedProps.type = multiline ? undefined : type;
+  supportedProps.virtualkeyboardpolicy =
+    showSoftInputOnFocus === false ? 'manual' : 'auto';
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 

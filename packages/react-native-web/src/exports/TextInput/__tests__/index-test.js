@@ -740,6 +740,26 @@ describe('components/TextInput', () => {
     expect(input.value).toEqual(value);
   });
 
+  describe('prop "showSoftInputOnFocus"', () => {
+    test('default value', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('auto');
+    });
+
+    test('true value', () => {
+      const { container } = render(<TextInput showSoftInputOnFocus={true} />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('auto');
+    });
+
+    test('false value', () => {
+      const { container } = render(<TextInput showSoftInputOnFocus={false} />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('manual');
+    });
+  });
+
   describe('imperative methods', () => {
     test('node.clear()', () => {
       const ref = React.createRef();
