@@ -5,7 +5,7 @@ permalink: /docs/text-input/index.html
 eleventyNavigation:
   key: TextInput
   parent: Components
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -166,6 +166,10 @@ If `true`, all text will automatically be selected on focus.
 
 {% call macro.prop('spellCheck', '?boolean') %}
 Equivalent to [HTMLElement.spellcheck](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck)
+{% endcall %}
+
+{% call macro.prop('showSoftInputOnFocus', '?boolean = true') %}
+If `false`, will set [HTMLElement.virtualkeyboardpolicy](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/virtualkeyboardpolicy) to `manual`.
 {% endcall %}
 
 {% call macro.prop('style', '?Style') %}
