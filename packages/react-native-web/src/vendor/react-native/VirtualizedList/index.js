@@ -746,8 +746,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   setupWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       this._scrollRef.getScrollableNode().addEventListener('wheel',
-          this.invertedWheelEventHandler,
-          { passive: true },
+          this.invertedWheelEventHandler
       );
     } else {
       setTimeout(() => this.setupWebWheelHandler(), 50);
