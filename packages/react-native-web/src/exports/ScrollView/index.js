@@ -698,10 +698,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
 
   _setInnerViewRef = (node) => {
     this._innerViewRef = node;
-  };
 
-  _setScrollNodeRef = (node) => {
-    this._scrollNodeRef = node;
     // ScrollView needs to add more methods to the hostNode in addition to those
     // added by `usePlatformMethods`. This is temporarily until an API like
     // `ScrollView.scrollTo(hostNode, { x, y })` is added to React Native.
@@ -720,6 +717,10 @@ class ScrollView extends React.Component<ScrollViewProps> {
     }
     const ref = mergeRefs(this.props.forwardedRef);
     ref(node);
+  };
+
+  _setScrollNodeRef = (node) => {
+    this._scrollNodeRef = node;
   };
 }
 
