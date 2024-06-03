@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { ViewProps } from '../View';
 
 import * as React from 'react';

@@ -8,7 +8,7 @@
  * @flow strict-local
  */
 
-'use strict';
+'use client';
 
 import type { DisplayMetrics } from '../Dimensions';
 

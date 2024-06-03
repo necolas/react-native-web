@@ -7,6 +7,9 @@
  *
  * @flow
  */
+
+'use client';
+
 import canUseDOM from '../../modules/canUseDom';
 
 export type ColorSchemeName = 'light' | 'dark';

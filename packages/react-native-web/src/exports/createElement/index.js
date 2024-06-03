@@ -7,6 +7,8 @@
  * @noflow
  */
 
+'use client';
+
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
 import React from 'react';
