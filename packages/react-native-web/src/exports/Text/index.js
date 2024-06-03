@@ -7,6 +7,7 @@
  *
  * @flow
  */
+'use client';
 
 import type { PlatformMethods } from '../../types';
 import type { TextProps } from './types';

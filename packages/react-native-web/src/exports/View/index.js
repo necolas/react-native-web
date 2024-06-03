@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { PlatformMethods } from '../../types';
 import type { ViewProps } from './types';
 
@@ -69,13 +71,16 @@ const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> =
     } = props;
 
     if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(props.children).forEach((item) => {
-        if (typeof item === 'string') {
-          console.error(
-            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
-          );
-        }
-      });
+      // Skip parsing RSC objects as this will prevent errors from surfacing in the renderer.
+      if (!props.children || !('$$typeof' in props.children)) {
+        React.Children.toArray(props.children).forEach((item) => {
+          if (typeof item === 'string') {
+            console.error(
+              `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+            );
+          }
+        });
+      }
     }
 
     const hasTextAncestor = React.useContext(TextAncestorContext);

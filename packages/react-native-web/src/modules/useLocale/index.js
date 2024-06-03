@@ -7,6 +7,8 @@
  * @flow strict
  */
 
+'use client';
+
 import type { Node } from 'react';
 
 import React, { createContext, useContext } from 'react';

@@ -7,22 +7,16 @@
  * @flow
  */
 
-import type { Node } from 'React';
-
 import View from '../../exports/View';
 import React from 'react';
 
 /**
  * Common implementation for a simple stubbed view.
  */
-class UnimplementedView extends React.Component<*, *> {
-  render(): Node {
-    return (
-      <View style={[unimplementedViewStyles, this.props.style]}>
-        {this.props.children}
-      </View>
-    );
-  }
+function UnimplementedView({ style, ...props }) {
+  return (
+    <View style={[unimplementedViewStyles, style]} {...props} />
+  );
 }
 
 const unimplementedViewStyles =

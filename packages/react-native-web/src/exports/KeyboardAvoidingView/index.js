@@ -7,6 +7,7 @@
  *
  * @flow
  */
+'use client';
 
 import type { LayoutEvent, LayoutValue } from '../../types';
 import type { ViewProps } from '../View';

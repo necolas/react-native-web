@@ -7,6 +7,7 @@
  *
  * @flow
  */
+'use client';
 
 import type { ImageProps } from './types';
 

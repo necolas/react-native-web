@@ -7,6 +7,8 @@
  * @flow
  */
 
+'use client';
+
 /**
  * Hook for integrating the Responder System into React
  *

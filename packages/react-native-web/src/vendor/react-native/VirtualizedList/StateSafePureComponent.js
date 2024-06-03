@@ -8,6 +8,8 @@
  * @format
  */
 
+'use client';
+
 import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 

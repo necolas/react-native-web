@@ -8,6 +8,7 @@
  * @format
  */
 
+'use client';
 'use strict';
 
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';

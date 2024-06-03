@@ -7,6 +7,7 @@
  *
  * @noflow
  */
+'use client';
 
 import type { ViewProps, ViewStyle } from '../View/types';
 

@@ -7,6 +7,7 @@
  *
  * @flow
  */
+'use client';
 
 import type { ViewProps } from '../View';
 

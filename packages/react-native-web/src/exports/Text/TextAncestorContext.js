@@ -6,6 +6,7 @@
  *
  * @flow strict
  */
+'use client';
 
 import type { Context } from 'react';
 

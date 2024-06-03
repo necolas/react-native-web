@@ -6,7 +6,7 @@
  *
  * @flow strict-local
  */
-
+'use client';
 'use strict';
 
 import type { HoverEventsConfig } from '../../modules/useHover';

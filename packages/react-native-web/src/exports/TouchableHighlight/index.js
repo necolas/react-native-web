@@ -7,7 +7,7 @@
  * @flow strict-local
  * @format
  */
-
+'use client';
 'use strict';
 
 import type { ColorValue } from '../../types';
