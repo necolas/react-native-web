@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { ImageProps } from './types';
 
 import * as React from 'react';

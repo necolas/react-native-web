@@ -6,6 +6,9 @@
  *
  * @flow
  */
+
+'use client';
+
 import canUseDOM from '../../modules/canUseDom';
 
 function isScreenReaderEnabled(): Promise<*> {

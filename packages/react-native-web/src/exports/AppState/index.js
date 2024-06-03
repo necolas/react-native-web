@@ -8,6 +8,8 @@
  * @noflow
  */
 
+'use client';
+
 import invariant from 'fbjs/lib/invariant';
 import EventEmitter from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import canUseDOM from '../../modules/canUseDom';
