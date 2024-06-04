@@ -6,15 +6,17 @@
  *
  * @flow
  */
+import type { Node } from 'React';
 
 import View from '../../exports/View';
+import type { ViewProps } from '../../exports/View/types';
 import React from 'react';
 
 /**
  * Common implementation for a simple stubbed view.
  */
-function UnimplementedView({ style, ...props }) {
-  return <View style={[unimplementedViewStyles, style]} {...props} />;
+function UnimplementedView({ style, ...props }: ViewProps): Node {
+  return <View {...props} style={[unimplementedViewStyles, style]} />;
 }
 
 const unimplementedViewStyles =
