@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 let clipboardAvailable;
 
 export default class Clipboard {

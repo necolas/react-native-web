@@ -8,7 +8,7 @@
  * @format
  */
 
-'use strict';
+'use client';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { ViewProps } from '../View';

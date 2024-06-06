@@ -7,5 +7,7 @@
  * @flow strict
  */
 
+'use client';
+
 import { useLocaleContext } from '../../modules/useLocale';
 export default useLocaleContext;
