@@ -7,9 +7,7 @@
  * @flow strict-local
  * @format
  */
-
 'use client';
-'use strict';
 
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
 import type { ViewProps } from '../View';

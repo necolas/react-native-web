@@ -7,7 +7,6 @@
  *
  * @flow
  */
-
 'use client';
 
 import type { PlatformMethods } from '../../types';

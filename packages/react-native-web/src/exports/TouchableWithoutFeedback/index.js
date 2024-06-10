@@ -7,9 +7,7 @@
  * @flow strict-local
  * @format
  */
-
 'use client';
-'use strict';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { ViewProps } from '../View';

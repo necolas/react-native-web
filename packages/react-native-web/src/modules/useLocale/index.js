@@ -6,7 +6,6 @@
  *
  * @flow strict
  */
-
 'use client';
 
 import type { Node } from 'react';
