@@ -9,7 +9,6 @@
  */
 
 'use client';
-'use strict';
 
 import type { DisplayMetrics } from '../Dimensions';
 
