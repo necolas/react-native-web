@@ -7,7 +7,6 @@
  * @flow
  * @format
  */
-'use client';
 
 import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';

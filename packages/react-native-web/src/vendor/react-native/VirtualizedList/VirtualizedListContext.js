@@ -8,8 +8,6 @@
  * @format
  */
 
-'use client';
-
 import typeof VirtualizedList from '../VirtualizedList';
 
 import * as React from 'react';

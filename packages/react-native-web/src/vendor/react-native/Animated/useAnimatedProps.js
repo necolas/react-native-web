@@ -8,7 +8,6 @@
  * @format
  */
 
-'use client';
 'use strict';
 
 import AnimatedProps from './nodes/AnimatedProps';

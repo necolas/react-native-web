@@ -8,8 +8,6 @@
  * @format
  */
 
-'use client';
-
 import type { LayoutEvent } from '../../../types';
 import type {
   FocusEvent,

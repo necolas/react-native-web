@@ -8,8 +8,6 @@
  * @format
  */
 
-'use client';
-
 import type {ViewToken} from '../ViewabilityHelper';
 import View from '../../../exports/View';
 import VirtualizedList from '../VirtualizedList';
