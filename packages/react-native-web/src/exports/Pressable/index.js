@@ -6,8 +6,7 @@
  *
  * @flow strict-local
  */
-
-'use strict';
+'use client';
 
 import type { HoverEventsConfig } from '../../modules/useHover';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';

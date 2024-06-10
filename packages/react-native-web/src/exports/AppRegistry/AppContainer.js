@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
