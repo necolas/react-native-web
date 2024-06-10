@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.18.6",
+    "@react-native/assets-registry": "0.74.84",
     "@react-native/normalize-colors": "^0.74.1",
     "fbjs": "^3.0.4",
     "inline-style-prefixer": "^6.0.1",
