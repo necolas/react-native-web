@@ -11,6 +11,7 @@
   "files": [
     "dist",
     "src",
+    "extend-react-native.d.ts",
     "!**/__tests__"
   ],
   "scripts": {
@@ -19,6 +20,7 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --config-file ../../configs/babel.config.js --out-dir dist/cjs --ignore \"**/__tests__\"",
     "build:es": "babel src --config-file ../../configs/babel.config.js --out-dir dist --ignore \"**/__tests__\"",
     "build:flow": "gen-flow-files ./src --out-dir ./dist",
+    "build:typescript": "tsc",
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {
@@ -49,5 +51,8 @@
     "react-component",
     "react-native",
     "web"
-  ]
+  ],
+  "devDependencies": {
+    "react-native": "^0.74.3"
+  }
 }
