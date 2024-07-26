@@ -50,8 +50,5 @@
     "react-component",
     "react-native",
     "web"
-  ],
-  "devDependencies": {
-    "react-native": "^0.74.3"
-  }
+  ]
 }
