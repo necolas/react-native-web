@@ -20,7 +20,6 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --config-file ../../configs/babel.config.js --out-dir dist/cjs --ignore \"**/__tests__\"",
     "build:es": "babel src --config-file ../../configs/babel.config.js --out-dir dist --ignore \"**/__tests__\"",
     "build:flow": "gen-flow-files ./src --out-dir ./dist",
-    "build:typescript": "tsc",
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {
