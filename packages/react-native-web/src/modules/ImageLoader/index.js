@@ -8,6 +8,7 @@
  */
 
 const dataUriPattern = /^data:/;
+const imageComponentToCheckCache = new window.Image();
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
@@ -116,7 +117,10 @@ const ImageLoader = {
     }
   },
   has(uri: string): boolean {
-    return ImageUriCache.has(uri);
+    imageComponentToCheckCache.src = uri;
+    const isInCache = imageComponentToCheckCache.complete;
+    imageComponentToCheckCache.src = '';
+    return isInCache;
   },
   load(uri: string, onLoad: Function, onError: Function): number {
     id += 1;
