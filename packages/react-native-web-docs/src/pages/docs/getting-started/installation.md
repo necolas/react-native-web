@@ -83,16 +83,16 @@ yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loa
 Add the necessary scripts to run the project to your `package.json`
 
 ```json
-"build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
-"web": "webpack serve --mode=development --config webpack.config.js",
+"build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js --progress",
+"web": "webpack serve --mode=development --config webpack.config.js --progress",
 ```
 
 ```json
 "scripts": {
   "android": "react-native run-android",
   "ios": "react-native run-ios",
-  "build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js", // This line for build project
-  "web": "webpack serve --mode=development --config webpack.config.js", // This line for dev mode
+  "build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js --progress", // This line for build project
+  "web": "webpack serve --mode=development --config webpack.config.js --progress", // This line for dev mode
   "lint": "eslint .",
   "start": "react-native start",
   "test": "jest"
