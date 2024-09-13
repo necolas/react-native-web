@@ -77,10 +77,15 @@ yarn add -D babel-plugin-react-native-web
 Install `webpack` dependencies
 
 ```sh
-yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver
+yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver url-loader
 ```
 
 Add the necessary scripts to run the project to your `package.json`
+
+```json
+"build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
+"web": "webpack serve --mode=development --config webpack.config.js",
+```
 
 ```json
 "scripts": {
@@ -180,6 +185,7 @@ Create a file called `index.html` in the root folder of your project
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="React Native Web" />
     <title>React Native Web</title>
     <style>
       #app-root {
@@ -329,6 +335,86 @@ moduleNameMapper: {
 },
 ```
 
-Done
+## Additional
+
+To copy public static files to production, add an additional configuration in `webpack`
+
+```sh
+yarn add -D copy-webpack-plugin
+```
+
+Import the configuration into your `webpack` configuration file
+
+```js
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+```
+
+and finally add the configuration in the `plugin` part
+
+```js
+plugins: [
+  new HtmlWebpackPlugin({
+    template: path.join(__dirname, "index.html"),
+  }),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin({
+    // See: https://github.com/necolas/react-native-web/issues/349
+    __DEV__: JSON.stringify(true),
+  }),
+  new CopyWebpackPlugin({ // ADD THIS LINE
+    patterns: [{ from: "public", to: "" }],
+  }),
+],
+```
+
+With these settings, all files inside the `public` folder will be compiled together to the `dist` folder.
+
+Now you can add a favicon for example in the `public/assets/favicon.png` folder
+
+And add it to your `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="React Native Web" />
+    <link rel="icon" href="./assets/favicon.png" />
+    <title>React Native Web</title>
+    <style>
+      #app-root {
+        display: flex;
+        flex: 1 1 100%;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-root"></div>
+  </body>
+</html>
+```
+
+Now you will see your favicon appearing in development mode as well as in production.
+
+## @react-navigation
+
+Follow the manual installation documentation for @react-navigation/native which is required to use React Navigation
+
+https://reactnavigation.org/docs/getting-started/
+
+Then use one of the Navigators you intend to use.
+
+For example: Native Stack Navigator
+
+https://reactnavigation.org/docs/native-stack-navigator
+
+Read the information about web support
+
+https://reactnavigation.org/docs/web-support
+
+## Done
 
 Your react native web project configured with webpack is ready for the initial kickstart
