@@ -9,14 +9,14 @@ import { createSheet } from '../dom';
 
 describe('createSheet', () => {
   test('creates a sheet on the client', () => {
-    const sheet = createSheet();
+    const sheet = createSheet(document);
     expect(sheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
     expect(typeof sheet.getTextContent()).toBe('string');
     expect(typeof sheet.insert).toBe('function');
   });
 
   test('supports multiple documents with same styles', () => {
-    const sheet = createSheet();
+    const sheet = createSheet(document);
     sheet.insert('.test-sheet { opacity: 1 }', 3);
 
     // Iframe -----
@@ -25,7 +25,7 @@ describe('createSheet', () => {
     const iframeDoc = iframe.contentWindow.document;
     const iframeRootTag = document.createElement('div');
     iframeDoc.body.appendChild(iframeRootTag);
-    const iframeSheet = createSheet(iframeRootTag);
+    const iframeSheet = createSheet(iframeDoc);
 
     // Did we generate a new sheet?
     expect(sheet).not.toBe(iframeSheet);
@@ -39,20 +39,22 @@ describe('createSheet', () => {
     expect(iframeSheet.getTextContent().includes('test-iframe')).toBe(true);
 
     // ShadowDOM -----
+    const shadowRootHost = document.createElement('div');
+    const shadowRoot = shadowRootHost.attachShadow({ mode: 'open' });
     const div = document.createElement('div');
-    const shadowRoot = div.attachShadow({ mode: 'open' });
-    const shadowRootTag = document.createElement('div');
-    shadowRoot.appendChild(shadowRootTag);
-    document.body.appendChild(shadowRoot);
-    const shadowSheet = createSheet(shadowRootTag);
+    shadowRoot.appendChild(div);
+    document.body.appendChild(shadowRootHost);
+    const shadowSheet = createSheet(shadowRoot);
 
     // Did we generate a new sheet?
     expect(sheet).not.toBe(shadowSheet);
     expect(shadowSheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
     expect(typeof shadowSheet.insert).toBe('function');
-    // expect(shadowRoot.getElementById('react-native-stylesheet')).not.toBe(null);
+    expect(shadowRoot.getElementById('react-native-stylesheet')).not.toBe(null);
     // Does the content match existing sheets?
-    expect(shadowSheet.getTextContent().includes('test-sheet')).toBe(true);
+    // NOTE: commented out because JSDOM doesn't reproduce the inserted text content.
+    // JSDOM doesn't appear to populate `sheet.cssRules` after a sheet's `textContent` is set.
+    // expect(shadowSheet.getTextContent().includes('test-sheet')).toBe(true);
     // Does the content update when other sheets are updated?
     sheet.insert('.test-shadow { opacity: 0 }', 3);
     expect(shadowSheet.getTextContent().includes('test-shadow')).toBe(true);

@@ -19,34 +19,38 @@ import {
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import { createSheet } from '../StyleSheet/dom';
 
-export function hydrate(element, root) {
-  createSheet(root);
-  return domHydrateRoot(root, element);
+export function hydrate(element, container) {
+  const rootNode = container.getRootNode();
+  createSheet(rootNode);
+  return domHydrateRoot(container, element);
 }
 
-export function render(element, root) {
-  createSheet(root);
-  const reactRoot = domCreateRoot(root);
+export default function render(element, container) {
+  const rootNode = container.getRootNode();
+  const reactRoot = domCreateRoot(container);
   reactRoot.render(element);
+  createSheet(rootNode);
   return reactRoot;
 }
 
-export function hydrateLegacy(element, root, callback) {
-  createSheet(root);
-  domLegacyHydrate(element, root, callback);
+export function hydrateLegacy(element, container, callback) {
+  const rootNode = container.getRootNode();
+  domLegacyHydrate(element, container, callback);
+  createSheet(rootNode);
   return {
     unmount: function () {
-      return unmountComponentAtNode(root);
+      return unmountComponentAtNode(container);
     }
   };
 }
 
-export default function renderLegacy(element, root, callback) {
-  createSheet(root);
-  domLegacyRender(element, root, callback);
+export function renderLegacy(element, container, callback) {
+  const rootNode = container.getRootNode();
+  domLegacyRender(element, container, callback);
+  createSheet(rootNode);
   return {
     unmount: function () {
-      return unmountComponentAtNode(root);
+      return unmountComponentAtNode(container);
     }
   };
 }

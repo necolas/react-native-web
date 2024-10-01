@@ -1,51 +1,137 @@
-import React from 'react';
-import { AppRegistry, Text, StyleSheet } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { Pressable, Text, StyleSheet, View, render } from 'react-native';
 import Example from '../../shared/example';
 
-function App() {
-  return <Text style={styles.text}>Should be red and bold</Text>;
+function IframeWrapper({ children }) {
+  const iframeHost = useRef();
+  const reactRoot = useRef();
+
+  useEffect(() => {
+    if (iframeHost.current) {
+      if (!reactRoot.current) {
+        const iframeElement = iframeHost.current;
+        const iframeAppContainer = document.createElement('div');
+        iframeElement.contentWindow.document.body.appendChild(
+          iframeAppContainer
+        );
+        reactRoot.current = render(children, iframeAppContainer);
+      }
+      reactRoot.current.render(children);
+    }
+  });
+
+  return <iframe ref={iframeHost} style={{ border: 'none' }} />;
 }
 
-const styles = StyleSheet.create({
-  text: {
-    color: 'red',
-    fontWeight: 'bold'
-  }
-});
+function ShadowDomWrapper({ children }) {
+  const shadowHost = useRef();
+  const reactRoot = useRef();
 
-AppRegistry.registerComponent('App', () => App);
+  useEffect(() => {
+    if (shadowHost.current) {
+      if (!reactRoot.current) {
+        const shadowRoot = shadowHost.current.attachShadow({ mode: 'open' });
+        reactRoot.current = render(children, shadowRoot);
+      }
+      reactRoot.current.render(children);
+    }
+  });
 
-export default function AppStatePage() {
-  const iframeRef = React.useRef(null);
-  const shadowRef = React.useRef(null);
+  return <div ref={shadowHost} />;
+}
 
-  React.useEffect(() => {
-    const iframeElement = iframeRef.current;
-    const iframeBody = iframeElement.contentWindow.document.body;
-    const iframeRootTag = document.createElement('div');
-    iframeRootTag.id = 'iframe-root';
-    iframeBody.appendChild(iframeRootTag);
-    const app1 = AppRegistry.runApplication('App', { rootTag: iframeRootTag });
+function Heading({ children }) {
+  return (
+    <Text role="heading" style={styles.heading}>
+      {children}
+    </Text>
+  );
+}
 
-    const shadowElement = shadowRef.current;
-    const shadowRoot = shadowElement.attachShadow({ mode: 'open' });
-    const shadowRootTag = document.createElement('div');
-    shadowRootTag.id = 'shadow-root';
-    shadowRoot.appendChild(shadowRootTag);
-    const app2 = AppRegistry.runApplication('App', { rootTag: shadowRootTag });
+function Button({ active, onPress, title }) {
+  return (
+    <Pressable
+      onPress={() => onPress((old) => !old)}
+      style={[styles.button, active && styles.buttonActive]}
+    >
+      <Text style={styles.buttonText}>{title}</Text>
+    </Pressable>
+  );
+}
 
-    return () => {
-      app1.unmount();
-      app2.unmount();
-    };
-  }, []);
+function App() {
+  const [active, setActive] = useState(false);
+  const [activeIframe, setActiveIframe] = useState(false);
+  const [activeShadow, setActiveShadow] = useState(false);
 
   return (
     <Example title="AppRegistry">
-      <Text>Styles in iframe</Text>
-      <iframe ref={iframeRef} />
-      <Text>Styles in ShadowRoot</Text>
-      <div ref={shadowRef} />
+      <View style={styles.app}>
+        <View style={styles.header}>
+          <Heading>Styles in document</Heading>
+          <Text style={styles.text}>Should be red and bold</Text>
+          <Button active={active} onPress={setActive} title={'Button'} />
+
+          <Heading>Styles in ShadowRoot</Heading>
+          <ShadowDomWrapper>
+            <Text style={styles.text}>Should be red and bold</Text>
+            <Button
+              active={activeShadow}
+              onPress={setActiveShadow}
+              title={'Button'}
+            />
+          </ShadowDomWrapper>
+
+          <Heading>Styles in iframe</Heading>
+          <IframeWrapper>
+            <Text style={styles.text}>Should be red and bold</Text>
+            <Button
+              active={activeIframe}
+              onPress={setActiveIframe}
+              title={'Button'}
+            />
+          </IframeWrapper>
+        </View>
+      </View>
     </Example>
   );
+}
+
+const styles = StyleSheet.create({
+  app: {
+    marginHorizontal: 'auto',
+    maxWidth: 500
+  },
+  header: {
+    padding: 20
+  },
+  heading: {
+    fontWeight: 'bold',
+    fontSize: '1.125rem',
+    marginBlockStart: '1rem',
+    marginBlockEnd: '0.25rem'
+  },
+  text: {
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  button: {
+    backgroundColor: 'red',
+    paddingBlock: 5,
+    paddingInline: 10
+  },
+  buttonActive: {
+    backgroundColor: 'blue'
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    userSelect: 'none'
+  }
+});
+
+export default function AppStatePage() {
+  return <App />;
 }
