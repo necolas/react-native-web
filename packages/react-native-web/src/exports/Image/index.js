@@ -44,7 +44,7 @@ function createTintColorSVG(tintColor, id) {
       <defs>
         <filter id={`tint-${id}`} suppressHydrationWarning={true}>
           <feFlood floodColor={`${tintColor}`} key={tintColor} />
-          <feComposite in2="SourceAlpha" operator="atop" />
+          <feComposite in2="SourceAlpha" operator="in" />
         </filter>
       </defs>
     </svg>
