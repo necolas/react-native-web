@@ -290,7 +290,9 @@ const TextInput: React.AbstractComponent<
           clearTimeout(focusTimeout);
         }
         focusTimeout = setTimeout(() => {
-          if (hostNode != null) {
+          // Check if the input is still focused after the timeout
+          // (see #2704)
+          if (hostNode != null && document.activeElement === hostNode) {
             hostNode.select();
           }
         }, 0);
