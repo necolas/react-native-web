@@ -121,6 +121,10 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
     const componentDirection = props.dir || langDirection;
     const writingDirection = componentDirection || contextDirection;
 
+    const capitalizeText = (text) => {
+      return text.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
     const supportedProps = pickProps(rest);
     supportedProps.dir = componentDirection;
     // 'auto' by default allows browsers to infer writing direction (root elements only)
@@ -145,6 +149,15 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
       onPress && styles.pressable
     ];
 
+    if (props.style && props.style.textTransform === 'capitalize') {
+      supportedProps.children = React.Children.map(props.children, child => {
+        if (typeof child === 'string') {
+          return capitalizeText(child);
+        }
+        return child;
+      });
+    }
+    
     if (props.href != null) {
       component = 'a';
       if (hrefAttrs != null) {
