@@ -6,6 +6,7 @@
  *
  * @flow
  */
+'use client';
 
 import VirtualizedList from '../../vendor/react-native/VirtualizedList';
 export default VirtualizedList;

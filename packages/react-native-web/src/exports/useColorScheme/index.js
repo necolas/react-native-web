@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import * as React from 'react';
 import type { ColorSchemeName } from '../Appearance';
 import Appearance from '../Appearance';

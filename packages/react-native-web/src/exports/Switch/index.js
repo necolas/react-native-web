@@ -6,6 +6,7 @@
  *
  * @flow
  */
+'use client';
 
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
