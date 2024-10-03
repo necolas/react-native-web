@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { Application } from './renderApplication';
 import type { ComponentType, Node } from 'react';
 

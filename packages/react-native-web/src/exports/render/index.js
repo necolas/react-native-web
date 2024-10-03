@@ -7,6 +7,8 @@
  * @noflow
  */
 
+'use client';
+
 import {
   hydrate as domLegacyHydrate,
   render as domLegacyRender

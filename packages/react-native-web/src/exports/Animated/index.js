@@ -7,5 +7,7 @@
  * @flow
  */
 
+'use client';
+
 import Animated from '../../vendor/react-native/Animated/Animated';
 export default Animated;
