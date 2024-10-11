@@ -298,7 +298,7 @@ const Image: React.AbstractComponent<
           if (onError) {
             onError({
               nativeEvent: {
-                error: `Failed to load resource ${uri} (404)`
+                error: `Failed to load resource ${uri}`
               }
             });
           }
