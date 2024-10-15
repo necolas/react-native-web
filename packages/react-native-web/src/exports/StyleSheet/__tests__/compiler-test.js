@@ -79,7 +79,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;}",
+                ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}",
               ],
               3,
             ],
@@ -206,7 +206,7 @@ describe('StyleSheet/compile', () => {
                 "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
                 "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
+                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
               ],
               1,
             ],
