@@ -20,7 +20,7 @@ Accessibility in {{ site.name }} combines several separate web APIs into a cohes
 
 ## Accessibility Props API
 
-{{ site.name }} includes APIs for making accessible apps. (Note that the React Native-specific `accessibility*` props are deprecated in favor of `aria-*` props).
+{{ site.name }} includes APIs for making accessible apps. (Note that for compatibility with existing React Native code, the React Native-specific `accessibility*` props are also supported.)
 
 {% call macro.prop('aria-activedescendant', '?string') %}
 Equivalent to [aria-activedescendant](https://www.w3.org/TR/wai-aria-1.2/#aria-activedescendant).

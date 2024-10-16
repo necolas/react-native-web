@@ -186,18 +186,22 @@ export const preprocess = <T: {| [key: string]: any |}>(
       nextStyle[prop] = value.toString();
     } else if (prop === 'fontVariant') {
       if (Array.isArray(value) && value.length > 0) {
+        /*
         warnOnce(
           'fontVariant',
           '"fontVariant" style array value is deprecated. Use space-separated values.'
         );
+        */
         value = value.join(' ');
       }
       nextStyle[prop] = value;
     } else if (prop === 'textAlignVertical') {
+      /*
       warnOnce(
         'textAlignVertical',
         '"textAlignVertical" style is deprecated. Use "verticalAlign".'
       );
+      */
       if (style.verticalAlign == null) {
         nextStyle.verticalAlign = value === 'center' ? 'middle' : value;
       }

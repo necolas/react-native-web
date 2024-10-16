@@ -25,7 +25,7 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
-import { warnOnce } from '../../modules/warnOnce';
+//import { warnOnce } from '../../modules/warnOnce';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -163,7 +163,7 @@ const TextInput: React.AbstractComponent<
       type = 'text';
     }
   } else if (keyboardType != null) {
-    warnOnce('keyboardType', 'keyboardType is deprecated. Use inputMode.');
+    // warnOnce('keyboardType', 'keyboardType is deprecated. Use inputMode.');
     switch (keyboardType) {
       case 'email-address':
         type = 'email';
@@ -394,9 +394,11 @@ const TextInput: React.AbstractComponent<
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
+  /*
   if (returnKeyType != null) {
     warnOnce('returnKeyType', 'returnKeyType is deprecated. Use enterKeyHint.');
   }
+  */
   supportedProps.enterKeyHint = enterKeyHint || returnKeyType;
   supportedProps.inputMode = _inputMode;
   supportedProps.onBlur = handleBlur;
@@ -404,16 +406,20 @@ const TextInput: React.AbstractComponent<
   supportedProps.onFocus = handleFocus;
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
+  /*
   if (editable != null) {
     warnOnce('editable', 'editable is deprecated. Use readOnly.');
   }
+  */
   supportedProps.readOnly = readOnly === true || editable === false;
+  /*
   if (numberOfLines != null) {
     warnOnce(
       'numberOfLines',
       'TextInput numberOfLines is deprecated. Use rows.'
     );
   }
+  */
   supportedProps.rows = multiline ? (rows != null ? rows : numberOfLines) : 1;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = [
