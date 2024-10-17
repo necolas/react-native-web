@@ -12,9 +12,9 @@
 
 import type { ImageProps } from './types';
 
+import { getAssetByID } from '@react-native/assets-registry/registry';
 import * as React from 'react';
 import createElement from '../createElement';
-import { getAssetByID } from '../../modules/AssetRegistry';
 import { createBoxShadowValue } from '../StyleSheet/preprocess';
 import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';

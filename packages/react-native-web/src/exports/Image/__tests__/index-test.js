@@ -7,7 +7,7 @@
 
 /* eslint-disable react/jsx-no-bind */
 
-import * as AssetRegistry from '../../../modules/AssetRegistry';
+import * as AssetRegistry from '@react-native/assets-registry/registry';
 import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
