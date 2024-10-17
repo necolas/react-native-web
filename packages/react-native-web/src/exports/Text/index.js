@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   textMultiLine: {
     display: '-webkit-box',
     maxWidth: '100%',
-    overflow: 'hidden',
+    overflow: 'clip',
     textOverflow: 'ellipsis',
     WebkitBoxOrient: 'vertical'
   },
