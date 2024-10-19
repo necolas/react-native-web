@@ -9,8 +9,6 @@
  * From React 16.0.0
  */
 
-import invariant from 'fbjs/lib/invariant';
-
 var twoArgumentPooler = function(a1, a2) {
   var Klass = this;
   if (Klass.instancePool.length) {

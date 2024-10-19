@@ -16,7 +16,7 @@ import {
 } from '../vendor/emitter/EventEmitter';
 import Platform from '../../../exports/Platform';
 import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 
 type NativeModule = $ReadOnly<{
   addListener: (eventType: string) => void,

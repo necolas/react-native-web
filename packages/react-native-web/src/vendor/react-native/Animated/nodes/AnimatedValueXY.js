@@ -13,7 +13,7 @@
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../../modules/invariant';
 
 type ValueXYListenerCallback = (value: {
   x: number,

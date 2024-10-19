@@ -15,7 +15,7 @@ import AnimatedNode from './AnimatedNode';
 import AnimatedStyle from './AnimatedStyle';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../../modules/invariant';
 
 class AnimatedProps extends AnimatedNode {
   _props: Object;

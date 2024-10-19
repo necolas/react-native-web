@@ -14,7 +14,7 @@ import type { ViewProps, ViewStyle } from '../View/types';
 
 import Dimensions from '../Dimensions';
 import dismissKeyboard from '../../modules/dismissKeyboard';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import mergeRefs from '../../modules/mergeRefs';
 import Platform from '../Platform';
 import ScrollViewBase from './ScrollViewBase';

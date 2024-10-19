@@ -11,7 +11,7 @@
 import type { ComponentType, Node } from 'react';
 
 import AppContainer from './AppContainer';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import renderLegacy, { hydrateLegacy, render, hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
 import React from 'react';

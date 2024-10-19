@@ -8,7 +8,7 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 
 type Content =
   | { title?: string, message?: string, url: string }

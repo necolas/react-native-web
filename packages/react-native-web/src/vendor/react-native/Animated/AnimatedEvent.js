@@ -13,7 +13,7 @@
 import AnimatedValue from './nodes/AnimatedValue';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 
 import {shouldUseNativeDriver}from  './NativeAnimatedHelper';
 

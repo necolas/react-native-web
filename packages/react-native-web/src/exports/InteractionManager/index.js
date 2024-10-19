@@ -8,7 +8,7 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import type { Task } from './TaskQueue';
 import TaskQueue from './TaskQueue';
 import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';

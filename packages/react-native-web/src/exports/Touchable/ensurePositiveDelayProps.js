@@ -7,7 +7,7 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 
 const ensurePositiveDelayProps = (props: any) => {
   invariant(

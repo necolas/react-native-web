@@ -12,7 +12,7 @@
 
 import type {FrameMetricProps} from '../VirtualizedList/VirtualizedListProps';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 
 export type ViewToken = {
   item: any,

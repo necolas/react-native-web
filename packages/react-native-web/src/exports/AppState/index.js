@@ -10,7 +10,7 @@
 
 'use client';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import EventEmitter from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import canUseDOM from '../../modules/canUseDom';
 

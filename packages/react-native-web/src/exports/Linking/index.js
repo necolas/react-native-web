@@ -8,7 +8,7 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import canUseDOM from '../../modules/canUseDom';
 
 const initialURL = canUseDOM ? window.location.href : '';
