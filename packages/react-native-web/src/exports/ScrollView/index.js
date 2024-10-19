@@ -23,7 +23,7 @@ import TextInputState from '../../modules/TextInputState';
 import UIManager from '../UIManager';
 import View from '../View';
 import React from 'react';
-import warning from 'fbjs/lib/warning';
+import warning from '../../modules/warning';
 
 type ScrollViewProps = {
   ...ViewProps,
