@@ -21,7 +21,7 @@ export function hydrate(element, root) {
   return domHydrateRoot(root, element);
 }
 
-export function render(element, root) {
+export default function render(element, root) {
   createSheet(root);
   const reactRoot = domCreateRoot(root);
   reactRoot.render(element);
