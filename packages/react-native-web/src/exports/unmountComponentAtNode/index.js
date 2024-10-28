@@ -7,5 +7,7 @@
  * @noflow
  */
 
-import { unmountComponentAtNode } from 'react-dom';
-export default unmountComponentAtNode;
+export default function unmountComponentAtNode(rootTag) {
+  rootTag.unmount();
+  return true;
+}

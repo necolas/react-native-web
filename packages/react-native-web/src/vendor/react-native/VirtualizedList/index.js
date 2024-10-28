@@ -26,7 +26,6 @@ import RefreshControl from '../../../exports/RefreshControl';
 import ScrollView from '../../../exports/ScrollView';
 import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
-import findNodeHandle from '../../../exports/findNodeHandle';
 
 import Batchinator from '../Batchinator';
 import clamp from '../Utilities/clamp';
