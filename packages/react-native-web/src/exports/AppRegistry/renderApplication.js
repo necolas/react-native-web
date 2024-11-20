@@ -12,7 +12,7 @@ import type { ComponentType, Node } from 'react';
 
 import AppContainer from './AppContainer';
 import invariant from 'fbjs/lib/invariant';
-import { render, hydrate } from '../render';
+import render, { hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
 import React from 'react';
 
