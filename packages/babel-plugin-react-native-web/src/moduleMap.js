@@ -55,7 +55,6 @@ module.exports = {
   VirtualizedList: true,
   YellowBox: true,
   createElement: true,
-  findNodeHandle: true,
   processColor: true,
   render: true,
   unmountComponentAtNode: true,
