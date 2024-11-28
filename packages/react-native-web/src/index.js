@@ -68,3 +68,4 @@ export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';
 export { default as useColorScheme } from './exports/useColorScheme';
 export { default as useLocaleContext } from './exports/useLocaleContext';
 export { default as useWindowDimensions } from './exports/useWindowDimensions';
+export { default as useAnimatedValue } from './exports/Animated/useAnimatedValue';
