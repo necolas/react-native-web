@@ -8,6 +8,8 @@
  * @noflow
  */
 
+'use client';
+
 import invariant from 'fbjs/lib/invariant';
 import EventEmitter from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import canUseDOM from '../../modules/canUseDom';
@@ -34,7 +36,7 @@ const AppStates = {
 let changeEmitter = null;
 
 export default class AppState {
-  static isAvailable = canUseDOM && document[VISIBILITY_STATE_PROPERTY];
+  static isAvailable = canUseDOM && !!document[VISIBILITY_STATE_PROPERTY];
 
   static get currentState() {
     if (!AppState.isAvailable) {

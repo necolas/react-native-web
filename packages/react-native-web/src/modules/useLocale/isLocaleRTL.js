@@ -60,9 +60,16 @@ export function isLocaleRTL(locale: string): boolean {
   let isRTL = false;
   // $FlowFixMe
   if (Intl.Locale) {
-    // $FlowFixMe
-    const script = new Intl.Locale(locale).maximize().script;
-    isRTL = rtlScripts.has(script);
+    try {
+      // $FlowFixMe
+      const script = new Intl.Locale(locale).maximize().script;
+      isRTL = rtlScripts.has(script);
+    } catch {
+      // RangeError: Incorrect locale information provided
+      // Fallback to inferring from language
+      const lang = locale.split('-')[0];
+      isRTL = rtlLangs.has(lang);
+    }
   } else {
     // Fallback to inferring from language
     const lang = locale.split('-')[0];
