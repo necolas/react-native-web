@@ -25,15 +25,15 @@ describe('StyleSheet/preprocess', () => {
         })
       ).toEqual({
         insetInlineEnd: 1,
-        insetInlineStart: 1,
-        marginBlock: 1,
-        marginInline: 1,
-        marginInlineEnd: 1,
-        marginInlineStart: 1,
-        paddingBlock: 1,
-        paddingInline: 1,
-        paddingInlineEnd: 1,
-        paddingInlineStart: 1
+        marginTop: 1,
+        marginBottom: 1,
+        marginLeft: 1,
+        marginRight: 1,
+        paddingTop: 1,
+        paddingBottom: 1,
+        paddingLeft: 1,
+        paddingRight: 1,
+        insetInlineStart: 1
       });
     });
 
@@ -53,26 +53,26 @@ describe('StyleSheet/preprocess', () => {
           // standard
           insetInlineEnd: 2,
           insetInlineStart: 2,
-          marginBlock: 2,
-          marginInline: 2,
-          marginInlineEnd: 2,
-          marginInlineStart: 2,
-          paddingBlock: 2,
-          paddingInline: 2,
-          paddingInlineEnd: 2,
-          paddingInlineStart: 2
+          marginTop: 2,
+          marginBottom: 2,
+          marginLeft: 2,
+          marginRight: 2,
+          paddingTop: 2,
+          paddingBottom: 2,
+          paddingLeft: 2,
+          paddingRight: 2
         })
       ).toEqual({
         insetInlineEnd: 2,
         insetInlineStart: 2,
-        marginBlock: 2,
-        marginInline: 2,
-        marginInlineEnd: 2,
-        marginInlineStart: 2,
-        paddingBlock: 2,
-        paddingInline: 2,
-        paddingInlineEnd: 2,
-        paddingInlineStart: 2
+        marginTop: 2,
+        marginBottom: 2,
+        marginLeft: 2,
+        marginRight: 2,
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: 2,
+        paddingRight: 2
       });
     });
 
@@ -252,6 +252,150 @@ describe('StyleSheet/preprocess', () => {
         })
       ).toEqual({
         textShadow: '5px 10px 15px rgba(50,60,70,0.50)'
+      });
+    });
+  });
+
+  describe('preprocesses multiple padding styles with different order', () => {
+    test('padding first', () => {
+      expect(
+        preprocess({
+          padding: 0,
+          paddingTop: 1,
+          paddingBottom: 2,
+          paddingRight: 3,
+          paddingLeft: 4
+        })
+      ).toEqual({
+        paddingTop: 1,
+        paddingBottom: 2,
+        paddingRight: 3,
+        paddingLeft: 4
+      });
+    });
+
+    test('padding last', () => {
+      expect(
+        preprocess({
+          paddingTop: 0,
+          paddingBottom: 1,
+          paddingRight: 2,
+          paddingLeft: 3,
+          padding: 4
+        })
+      ).toEqual({
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingRight: 4,
+        paddingLeft: 4
+      });
+    });
+
+    test('paddingVertical/paddingHorizontal (paddingBlock/paddingInline) first', () => {
+      expect(
+        preprocess({
+          paddingVertical: 0,
+          paddingTop: 1,
+          paddingBottom: 2,
+          paddingHorizontal: 3,
+          paddingRight: 4,
+          paddingLeft: 5
+        })
+      ).toEqual({
+        paddingTop: 1,
+        paddingBottom: 2,
+        paddingRight: 4,
+        paddingLeft: 5
+      });
+    });
+
+    test('paddingVertical/paddingHorizontal (paddingBlock/paddingInline) last', () => {
+      expect(
+        preprocess({
+          paddingTop: 0,
+          paddingBottom: 1,
+          paddingVertical: 2,
+          paddingRight: 3,
+          paddingLeft: 4,
+          paddingHorizontal: 5
+        })
+      ).toEqual({
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingRight: 5,
+        paddingLeft: 5
+      });
+    });
+  });
+
+  describe('preprocesses multiple margin styles with different order', () => {
+    test('margin first', () => {
+      expect(
+        preprocess({
+          margin: 0,
+          marginTop: 1,
+          marginBottom: 2,
+          marginRight: 3,
+          marginLeft: 4
+        })
+      ).toEqual({
+        marginTop: 1,
+        marginBottom: 2,
+        marginRight: 3,
+        marginLeft: 4
+      });
+    });
+
+    test('margin last', () => {
+      expect(
+        preprocess({
+          marginTop: 0,
+          marginBottom: 1,
+          marginRight: 2,
+          marginLeft: 3,
+          margin: 4
+        })
+      ).toEqual({
+        marginTop: 4,
+        marginBottom: 4,
+        marginRight: 4,
+        marginLeft: 4
+      });
+    });
+
+    test('marginVertical/marginHorizontal (marginBlock/marginInline) first', () => {
+      expect(
+        preprocess({
+          marginVertical: 0,
+          marginTop: 1,
+          marginBottom: 2,
+          marginHorizontal: 3,
+          marginRight: 4,
+          marginLeft: 5
+        })
+      ).toEqual({
+        marginTop: 1,
+        marginBottom: 2,
+        marginRight: 4,
+        marginLeft: 5
+      });
+    });
+
+    test('marginVertical/marginHorizontal (marginBlock/marginInline) last', () => {
+      expect(
+        preprocess({
+          marginTop: 0,
+          marginBottom: 1,
+          marginVertical: 2,
+          marginRight: 3,
+          marginLeft: 4,
+          marginHorizontal: 5
+        })
+      ).toEqual({
+        marginTop: 2,
+        marginBottom: 2,
+        marginRight: 5,
+        marginLeft: 5
       });
     });
   });

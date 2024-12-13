@@ -1,0 +1,72 @@
+const STYLE_SHORT_FORM_EXPANSIONS = {
+  borderColor: [
+    'borderTopColor',
+    'borderRightColor',
+    'borderBottomColor',
+    'borderLeftColor'
+  ],
+  borderBlockColor: ['borderTopColor', 'borderBottomColor'],
+  borderInlineColor: ['borderRightColor', 'borderLeftColor'],
+  borderRadius: [
+    'borderTopLeftRadius',
+    'borderTopRightRadius',
+    'borderBottomRightRadius',
+    'borderBottomLeftRadius'
+  ],
+  borderStyle: [
+    'borderTopStyle',
+    'borderRightStyle',
+    'borderBottomStyle',
+    'borderLeftStyle'
+  ],
+  borderBlockStyle: ['borderTopStyle', 'borderBottomStyle'],
+  borderInlineStyle: ['borderRightStyle', 'borderLeftStyle'],
+  borderWidth: [
+    'borderTopWidth',
+    'borderRightWidth',
+    'borderBottomWidth',
+    'borderLeftWidth'
+  ],
+  borderBlockWidth: ['borderTopWidth', 'borderBottomWidth'],
+  borderInlineWidth: ['borderRightWidth', 'borderLeftWidth'],
+  insetBlock: ['top', 'bottom'],
+  insetInline: ['left', 'right'],
+  margin: ['marginTop', 'marginBottom', 'marginRight', 'marginLeft'],
+  marginBlock: ['marginTop', 'marginBottom'],
+  marginInline: ['marginRight', 'marginLeft'],
+  padding: ['paddingTop', 'paddingBottom', 'paddingRight', 'paddingLeft'],
+  paddingBlock: ['paddingTop', 'paddingBottom'],
+  paddingInline: ['paddingRight', 'paddingLeft'],
+  overflow: ['overflowX', 'overflowY'],
+  overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
+  borderBlockStartColor: ['borderTopColor'],
+  borderBlockStartStyle: ['borderTopStyle'],
+  borderBlockStartWidth: ['borderTopWidth'],
+  borderBlockEndColor: ['borderBottomColor'],
+  borderBlockEndStyle: ['borderBottomStyle'],
+  borderBlockEndWidth: ['borderBottomWidth'],
+  //borderInlineStartColor: ['borderLeftColor'],
+  //borderInlineStartStyle: ['borderLeftStyle'],
+  //borderInlineStartWidth: ['borderLeftWidth'],
+  //borderInlineEndColor: ['borderRightColor'],
+  //borderInlineEndStyle: ['borderRightStyle'],
+  //borderInlineEndWidth: ['borderRightWidth'],
+  borderEndStartRadius: ['borderBottomLeftRadius'],
+  borderEndEndRadius: ['borderBottomRightRadius'],
+  borderStartStartRadius: ['borderTopLeftRadius'],
+  borderStartEndRadius: ['borderTopRightRadius'],
+  insetBlockEnd: ['bottom'],
+  insetBlockStart: ['top'],
+  //insetInlineEnd: ['right'],
+  //insetInlineStart: ['left'],
+  marginBlockStart: ['marginTop'],
+  marginBlockEnd: ['marginBottom'],
+  marginInlineStart: ['marginLeft'],
+  marginInlineEnd: ['marginRight'],
+  paddingBlockStart: ['paddingTop'],
+  paddingBlockEnd: ['paddingBottom'],
+  paddingInlineStart: ['paddingLeft'],
+  paddingInlineEnd: ['paddingRight']
+};
+
+export default STYLE_SHORT_FORM_EXPANSIONS;

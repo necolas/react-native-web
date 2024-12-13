@@ -9,6 +9,7 @@
 
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
+import STYLE_SHORT_FORM_EXPANSIONS from './constants/shortFormExpansions';
 import { warnOnce } from '../../modules/warnOnce';
 
 const emptyObject = {};
@@ -156,6 +157,8 @@ export const preprocess = <T: {| [key: string]: any |}>(
     }
   }
 
+  const isStyle = style.$$css !== true;
+
   for (const originalProp in style) {
     if (
       // Ignore some React Native styles
@@ -211,7 +214,25 @@ export const preprocess = <T: {| [key: string]: any |}>(
       }
       nextStyle.transform = value;
     } else {
-      nextStyle[prop] = value;
+      const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
+
+      if (isStyle && Array.isArray(longFormProperties)) {
+        for (let i = 0, len = longFormProperties.length; i < len; i++) {
+          /*if (nextStyle[property]) {
+            console.warn('Duplicated style properties overwrite detected', {
+              longForm: prop,
+              longFormValue: value,
+              shortForm: longFormProperties[i],
+              shortFormValue: nextStyle[longFormProperties[i]],
+              style
+            });
+          }
+          */
+          nextStyle[longFormProperties[i]] = value;
+        }
+      } else {
+        nextStyle[prop] = value;
+      }
     }
   }
 

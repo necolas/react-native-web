@@ -8,6 +8,7 @@
  */
 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
+import STYLE_SHORT_FORM_EXPANSIONS from '../constants/shortFormExpansions';
 import canUseDOM from '../../../modules/canUseDom';
 
 type Style = { [key: string]: any };
@@ -36,75 +37,6 @@ const MONOSPACE_FONT_STACK = 'monospace,monospace';
 
 const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
-
-const STYLE_SHORT_FORM_EXPANSIONS = {
-  borderColor: [
-    'borderTopColor',
-    'borderRightColor',
-    'borderBottomColor',
-    'borderLeftColor'
-  ],
-  borderBlockColor: ['borderTopColor', 'borderBottomColor'],
-  borderInlineColor: ['borderRightColor', 'borderLeftColor'],
-  borderRadius: [
-    'borderTopLeftRadius',
-    'borderTopRightRadius',
-    'borderBottomRightRadius',
-    'borderBottomLeftRadius'
-  ],
-  borderStyle: [
-    'borderTopStyle',
-    'borderRightStyle',
-    'borderBottomStyle',
-    'borderLeftStyle'
-  ],
-  borderBlockStyle: ['borderTopStyle', 'borderBottomStyle'],
-  borderInlineStyle: ['borderRightStyle', 'borderLeftStyle'],
-  borderWidth: [
-    'borderTopWidth',
-    'borderRightWidth',
-    'borderBottomWidth',
-    'borderLeftWidth'
-  ],
-  borderBlockWidth: ['borderTopWidth', 'borderBottomWidth'],
-  borderInlineWidth: ['borderRightWidth', 'borderLeftWidth'],
-  insetBlock: ['top', 'bottom'],
-  insetInline: ['left', 'right'],
-  marginBlock: ['marginTop', 'marginBottom'],
-  marginInline: ['marginRight', 'marginLeft'],
-  paddingBlock: ['paddingTop', 'paddingBottom'],
-  paddingInline: ['paddingRight', 'paddingLeft'],
-  overflow: ['overflowX', 'overflowY'],
-  overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
-  borderBlockStartColor: ['borderTopColor'],
-  borderBlockStartStyle: ['borderTopStyle'],
-  borderBlockStartWidth: ['borderTopWidth'],
-  borderBlockEndColor: ['borderBottomColor'],
-  borderBlockEndStyle: ['borderBottomStyle'],
-  borderBlockEndWidth: ['borderBottomWidth'],
-  //borderInlineStartColor: ['borderLeftColor'],
-  //borderInlineStartStyle: ['borderLeftStyle'],
-  //borderInlineStartWidth: ['borderLeftWidth'],
-  //borderInlineEndColor: ['borderRightColor'],
-  //borderInlineEndStyle: ['borderRightStyle'],
-  //borderInlineEndWidth: ['borderRightWidth'],
-  borderEndStartRadius: ['borderBottomLeftRadius'],
-  borderEndEndRadius: ['borderBottomRightRadius'],
-  borderStartStartRadius: ['borderTopLeftRadius'],
-  borderStartEndRadius: ['borderTopRightRadius'],
-  insetBlockEnd: ['bottom'],
-  insetBlockStart: ['top'],
-  //insetInlineEnd: ['right'],
-  //insetInlineStart: ['left'],
-  marginBlockStart: ['marginTop'],
-  marginBlockEnd: ['marginBottom'],
-  //marginInlineStart: ['marginLeft'],
-  //marginInlineEnd: ['marginRight'],
-  paddingBlockStart: ['paddingTop'],
-  paddingBlockEnd: ['paddingBottom']
-  //paddingInlineStart: ['marginLeft'],
-  //paddingInlineEnd: ['marginRight'],
-};
 
 /**
  * Reducer
@@ -166,7 +98,7 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       resolvedStyle.direction = value;
     } else {
       const value = normalizeValueWithProperty(style[prop], prop);
-      const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
+
       if (isInline && prop === 'inset') {
         if (style.insetInline == null) {
           resolvedStyle.left = value;
@@ -194,16 +126,16 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
           resolvedStyle.paddingTop = value;
           resolvedStyle.paddingBottom = value;
         }
-      } else if (longFormProperties) {
-        longFormProperties.forEach((longForm, i) => {
-          // The value of any longform property in the original styles takes
-          // precedence over the shortform's value.
-          if (style[longForm] == null) {
-            resolvedStyle[longForm] = value;
-          }
-        });
       } else {
-        resolvedStyle[prop] = value;
+        const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
+
+        if (Array.isArray(longFormProperties)) {
+          for (let i = 0, len = longFormProperties.length; i < len; i++) {
+            resolvedStyle[longFormProperties[i]] = value;
+          }
+        } else {
+          resolvedStyle[prop] = value;
+        }
       }
     }
   }
