@@ -3,7 +3,7 @@
 exports[`components/Image prop "aria-label" 1`] = `
 <div
   aria-label="accessibilityLabel"
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -20,7 +20,7 @@ exports[`components/Image prop "aria-label" 1`] = `
 
 exports[`components/Image prop "blurRadius" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -37,7 +37,7 @@ exports[`components/Image prop "blurRadius" 1`] = `
 
 exports[`components/Image prop "defaultSource" does not override "height" and "width" styles 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
   style="height: 20px; width: 40px;"
 >
   <div
@@ -55,7 +55,7 @@ exports[`components/Image prop "defaultSource" does not override "height" and "w
 
 exports[`components/Image prop "defaultSource" sets "height" and "width" styles if missing 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
   style="height: 10px; width: 20px;"
 >
   <div
@@ -73,7 +73,7 @@ exports[`components/Image prop "defaultSource" sets "height" and "width" styles 
 
 exports[`components/Image prop "defaultSource" sets background image when value is a string 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -90,7 +90,7 @@ exports[`components/Image prop "defaultSource" sets background image when value 
 
 exports[`components/Image prop "defaultSource" sets background image when value is an object 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -107,7 +107,7 @@ exports[`components/Image prop "defaultSource" sets background image when value 
 
 exports[`components/Image prop "draggable" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -124,7 +124,7 @@ exports[`components/Image prop "draggable" 1`] = `
 
 exports[`components/Image prop "focusable" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
   tabindex="0"
 >
   <div
@@ -135,7 +135,7 @@ exports[`components/Image prop "focusable" 1`] = `
 
 exports[`components/Image prop "nativeID" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
   id="nativeID"
 >
   <div
@@ -146,7 +146,7 @@ exports[`components/Image prop "nativeID" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "contain" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-ehq7j7"
@@ -156,7 +156,7 @@ exports[`components/Image prop "resizeMode" value "contain" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "cover" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -166,7 +166,7 @@ exports[`components/Image prop "resizeMode" value "cover" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "none" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundPosition-1mrlafo r-backgroundSize-1sxrcry"
@@ -176,7 +176,7 @@ exports[`components/Image prop "resizeMode" value "none" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "repeat" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundPosition-1mrlafo r-backgroundRepeat-17leim2 r-backgroundSize-1sxrcry"
@@ -186,7 +186,7 @@ exports[`components/Image prop "resizeMode" value "repeat" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "stretch" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-x3cy2q"
@@ -196,7 +196,7 @@ exports[`components/Image prop "resizeMode" value "stretch" 1`] = `
 
 exports[`components/Image prop "resizeMode" value "undefined" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -206,7 +206,7 @@ exports[`components/Image prop "resizeMode" value "undefined" 1`] = `
 
 exports[`components/Image prop "source" is correctly updated only when loaded if defaultSource provided 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -223,7 +223,7 @@ exports[`components/Image prop "source" is correctly updated only when loaded if
 
 exports[`components/Image prop "source" is correctly updated only when loaded if defaultSource provided 2`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -240,7 +240,7 @@ exports[`components/Image prop "source" is correctly updated only when loaded if
 
 exports[`components/Image prop "source" is correctly updated when missing in initial render 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -257,7 +257,7 @@ exports[`components/Image prop "source" is correctly updated when missing in ini
 
 exports[`components/Image prop "source" is not set immediately if the image has not already been loaded 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -274,7 +274,7 @@ exports[`components/Image prop "source" is not set immediately if the image has 
 
 exports[`components/Image prop "source" is set immediately if the image has already been loaded 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -291,7 +291,7 @@ exports[`components/Image prop "source" is set immediately if the image has alre
 
 exports[`components/Image prop "source" is set immediately if the image has already been loaded 2`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -308,7 +308,7 @@ exports[`components/Image prop "source" is set immediately if the image has alre
 
 exports[`components/Image prop "source" is set immediately if the image was preloaded 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -325,7 +325,7 @@ exports[`components/Image prop "source" is set immediately if the image was prel
 
 exports[`components/Image prop "style" removes other unsupported View styles 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -353,7 +353,7 @@ exports[`components/Image prop "style" removes other unsupported View styles 1`]
 
 exports[`components/Image prop "style" supports "shadow" properties (converts to filter) 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"
@@ -364,7 +364,7 @@ exports[`components/Image prop "style" supports "shadow" properties (converts to
 
 exports[`components/Image prop "style" supports static and dynamic styles 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010 pos-abs"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010 pos-abs"
   style="transition-timing-function: ease-in;"
 >
   <div
@@ -375,7 +375,7 @@ exports[`components/Image prop "style" supports static and dynamic styles 1`] = 
 
 exports[`components/Image prop "testID" 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
   data-testid="testID"
 >
   <div
@@ -386,7 +386,7 @@ exports[`components/Image prop "testID" 1`] = `
 
 exports[`components/Image prop "tintColor" convert to filter 1`] = `
 <div
-  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+  class="css-view-175oi2r r-flexBasis-1mlwlqe r-overflowX-11yh6sk r-overflowY-buy8e9 r-zIndex-417010"
 >
   <div
     class="css-view-175oi2r r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-4gszlv"

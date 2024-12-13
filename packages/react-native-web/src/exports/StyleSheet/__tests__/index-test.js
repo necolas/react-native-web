@@ -317,7 +317,7 @@ describe('StyleSheet', () => {
         [
           "",
           {
-            "marginLeft": "10px",
+            "marginRight": "10px",
             "right": "12.34%",
             "textAlign": "right",
           },
@@ -329,13 +329,14 @@ describe('StyleSheet', () => {
             inlineStyle,
             { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
           ],
+
           { writingDirection }
         )
       ).toMatchInlineSnapshot(`
         [
           "",
           {
-            "marginLeft": "1px",
+            "marginLeft": "0px",
             "marginRight": "11px",
             "right": "12.34%",
             "textAlign": "right",
@@ -361,21 +362,21 @@ describe('StyleSheet', () => {
       const staticStyle = [a, b, c];
       expect(StyleSheet(staticStyle)).toMatchInlineSnapshot(`
         [
-          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf",
+          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginRight-zso239",
           null,
         ]
       `);
       expect(StyleSheet(staticStyle, { writingDirection }))
         .toMatchInlineSnapshot(`
         [
-          "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t r-marginInlineEnd-t1sew1",
+          "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t r-marginRight-zso239",
           null,
         ]
       `);
       const z = StyleSheet.create({ x: { marginRight: 33 } }).x;
       expect(StyleSheet([staticStyle, z])).toMatchInlineSnapshot(`
         [
-          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf r-marginRight-j4vy6k",
+          "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginRight-j4vy6k",
           null,
         ]
       `);
@@ -394,7 +395,7 @@ describe('StyleSheet', () => {
         [
           "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
           {
-            "marginLeft": "1px",
+            "marginLeft": "0px",
             "marginRight": "11px",
           },
         ]

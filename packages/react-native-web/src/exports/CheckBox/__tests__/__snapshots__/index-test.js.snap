@@ -6,10 +6,10 @@ exports[`CheckBox prop "accessibilityLabel" value is set 1`] = `
   class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -21,10 +21,10 @@ exports[`CheckBox prop "accessibilityReadOnly" value is set 1`] = `
   class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     readonly=""
     type="checkbox"
   />
@@ -36,12 +36,12 @@ exports[`CheckBox prop "color" value is set 1`] = `
   class="css-view-175oi2r r-cursor-1loqt21 r-height-10ptun7 r-userSelect-lrvibr r-width-1janqcz"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu r-backgroundImage-rs94m5 r-backgroundRepeat-u6sd8q"
+    class="css-view-175oi2r r-alignItems-1awozwy r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu r-backgroundImage-rs94m5 r-backgroundRepeat-u6sd8q"
     style="background-color: rgb(173, 216, 230); border-top-color: rgba(173,216,230,1.00); border-right-color: rgba(173,216,230,1.00); border-bottom-color: rgba(173,216,230,1.00); border-left-color: rgba(173,216,230,1.00);"
   />
   <input
     checked=""
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -54,10 +54,10 @@ exports[`CheckBox prop "dataSet" value is set 1`] = `
   data-two="two"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -69,10 +69,10 @@ exports[`CheckBox prop "nativeID" value is set 1`] = `
   id="123"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -84,10 +84,10 @@ exports[`CheckBox prop "style" value is set 1`] = `
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>
@@ -99,10 +99,10 @@ exports[`CheckBox prop "testID" value is set 1`] = `
   data-testid="123"
 >
   <div
-    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderColor-1awa8pu r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
+    class="css-view-175oi2r r-alignItems-1awozwy r-backgroundColor-14lw9ot r-borderBottomColor-1luj3t9 r-borderBottomLeftRadius-101sy47 r-borderBottomRightRadius-l5bh9y r-borderBottomStyle-rull8r r-borderBottomWidth-wgabs5 r-borderLeftColor-1quz018 r-borderLeftStyle-mm0ijv r-borderLeftWidth-dwliz8 r-borderRightColor-1crvoxr r-borderRightStyle-14skgim r-borderRightWidth-18p6if4 r-borderTopColor-c94j4y r-borderTopLeftRadius-1iymjk7 r-borderTopRightRadius-s2skl2 r-borderTopStyle-1efd50x r-borderTopWidth-1jxfwug r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu"
   />
   <input
-    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-margin-crgep1 r-padding-t60dpp r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
+    class="r-appearance-30o5oe r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-marginBottom-p1pxzi r-marginLeft-11wrixw r-marginRight-61z16t r-marginTop-1mnahxq r-paddingBottom-1mdbw0j r-paddingLeft-gy4na3 r-paddingRight-9aemit r-paddingTop-wk8lta r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-cursor-1ei5mc7"
     type="checkbox"
   />
 </div>

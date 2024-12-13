@@ -150,14 +150,14 @@ exports[`components/Text prop "nativeID" value is set 1`] = `
 
 exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
-  class="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01"
+  class="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflowX-11yh6sk r-overflowY-buy8e9 r-textOverflow-1udbk01"
   dir="auto"
 />
 `;
 
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
-  class="css-text-146c3p1 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
+  class="css-text-146c3p1 r-maxWidth-dnmrzs r-overflowX-11yh6sk r-overflowY-buy8e9 r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
   dir="auto"
 />
 `;
