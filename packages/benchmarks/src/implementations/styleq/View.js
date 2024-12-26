@@ -11,7 +11,7 @@ function View(props) {
 const styles = {
   root: {
     $$css: true,
-    'css-175oi2r': 'css-175oi2r'
+    'css-g5y9jx': 'css-g5y9jx'
   }
 };
 

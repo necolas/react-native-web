@@ -5,12 +5,12 @@ exports[`components/Modal forwards props 1`] = `
   aria-label="label"
   aria-labelledby="labelledby"
   aria-modal="true"
-  class="css-view-175oi2r r-bottom-1p0dtai r-left-1d2f490 r-position-1xcajam r-right-zchlnj r-top-ipm5af r-backgroundColor-14lw9ot"
+  class="css-view-g5y9jx r-bottom-1p0dtai r-left-1d2f490 r-position-1xcajam r-right-zchlnj r-top-ipm5af r-backgroundColor-14lw9ot"
   data-testid="root"
   role="dialog"
 >
   <div
-    class="css-view-175oi2r r-flex-13awgt0 r-top-ipm5af"
+    class="css-view-g5y9jx r-flex-13awgt0 r-top-ipm5af"
   />
 </div>
 `;
