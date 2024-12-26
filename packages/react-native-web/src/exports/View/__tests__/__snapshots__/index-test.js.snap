@@ -2,16 +2,16 @@
 
 exports[`components/View default 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View non-text is rendered 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 >
   <div
-    class="css-view-175oi2r"
+    class="css-view-g5y9jx"
     data-testid="1"
   />
 </div>
@@ -20,41 +20,41 @@ exports[`components/View non-text is rendered 1`] = `
 exports[`components/View prop "aria-label" value is set 1`] = `
 <div
   aria-label="accessibility label"
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View prop "aria-labelledby" value is set 1`] = `
 <div
   aria-labelledby="123"
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View prop "aria-live" value is set 1`] = `
 <div
   aria-live="polite"
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View prop "dir" value is "ltr" 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   dir="ltr"
 />
 `;
 
 exports[`components/View prop "dir" value is "rtl" 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   dir="rtl"
 />
 `;
 
 exports[`components/View prop "href" href with accessibilityRole 1`] = `
 <a
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   href="https://example.com"
   role="presentation"
 />
@@ -62,27 +62,27 @@ exports[`components/View prop "href" href with accessibilityRole 1`] = `
 
 exports[`components/View prop "href" value is set 1`] = `
 <a
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   href="https://example.com"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" null values are excluded 1`] = `
 <a
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   href="https://example.com"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" requires "href" 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
 <a
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   href="https://example.com"
   target="_blank"
 />
@@ -90,7 +90,7 @@ exports[`components/View prop "hrefAttrs" target variant is set 1`] = `
 
 exports[`components/View prop "hrefAttrs" value is set 1`] = `
 <a
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   download="filename.jpg"
   href="https://example.com"
   rel="nofollow"
@@ -100,7 +100,7 @@ exports[`components/View prop "hrefAttrs" value is set 1`] = `
 
 exports[`components/View prop "lang" ar 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   dir="rtl"
   lang="ar"
 />
@@ -108,7 +108,7 @@ exports[`components/View prop "lang" ar 1`] = `
 
 exports[`components/View prop "lang" fr 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   dir="ltr"
   lang="fr"
 />
@@ -116,13 +116,13 @@ exports[`components/View prop "lang" fr 1`] = `
 
 exports[`components/View prop "lang" undefined 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
 />
 `;
 
 exports[`components/View prop "lang" with dir 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   dir="ltr"
   lang="ar"
 />
@@ -130,27 +130,27 @@ exports[`components/View prop "lang" with dir 1`] = `
 
 exports[`components/View prop "nativeID" value is set 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   id="nativeID"
 />
 `;
 
 exports[`components/View prop "pointerEvents" 1`] = `
 <div
-  class="css-view-175oi2r r-pointerEvents-ah5dr5"
+  class="css-view-g5y9jx r-pointerEvents-ah5dr5"
 />
 `;
 
 exports[`components/View prop "role" value alters HTML element 1`] = `
 <article
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   role="article"
 />
 `;
 
 exports[`components/View prop "role" value is "button" 1`] = `
 <button
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   role="button"
   type="button"
 />
@@ -158,21 +158,21 @@ exports[`components/View prop "role" value is "button" 1`] = `
 
 exports[`components/View prop "role" value is set 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   role="presentation"
 />
 `;
 
 exports[`components/View prop "style" value is set 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
 />
 `;
 
 exports[`components/View prop "testID" value is set 1`] = `
 <div
-  class="css-view-175oi2r"
+  class="css-view-g5y9jx"
   data-testid="123"
 />
 `;
