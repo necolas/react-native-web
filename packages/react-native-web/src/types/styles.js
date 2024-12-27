@@ -341,6 +341,6 @@ export type TransformStyles = {|
         | {| +translateZ: NumberOrString |}
         | {| +translate3d: string |}
       >,
-  transformOrigin?: ?string,
+  transformOrigin?: ?string | Array<NumberOrString>,
   transformStyle?: ?('flat' | 'preserve-3d')
 |};

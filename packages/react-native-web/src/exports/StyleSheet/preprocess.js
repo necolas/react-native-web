@@ -73,6 +73,13 @@ export const createTransformValue = (value: Array<Object>): string => {
   return value.map(mapTransform).join(' ');
 };
 
+// [2, '30%', 10] => '2px 30% 10px'
+export const createTransformOriginValue = (
+  value: Array<number | string>
+): string => {
+  return value.map((v) => normalizeValueWithProperty(v)).join(' ');
+};
+
 const PROPERTIES_STANDARD: { [key: string]: string } = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
@@ -210,6 +217,11 @@ export const preprocess = <T: {| [key: string]: any |}>(
         value = createTransformValue(value);
       }
       nextStyle.transform = value;
+    } else if (prop === 'transformOrigin') {
+      if (Array.isArray(value)) {
+        value = createTransformOriginValue(value);
+      }
+      nextStyle.transformOrigin = value;
     } else {
       nextStyle[prop] = value;
     }
