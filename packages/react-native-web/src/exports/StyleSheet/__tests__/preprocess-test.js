@@ -188,6 +188,28 @@ describe('StyleSheet/preprocess', () => {
         });
       });
     });
+
+    describe('transformOrigin', () => {
+      // passthrough if transformOrigin value is ever a string
+      test('string', () => {
+        const transformOrigin = '2px 30% 10px';
+        const style = { transformOrigin };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({ transformOrigin });
+      });
+
+      test('array', () => {
+        const style = {
+          transformOrigin: [2, '30%', 10]
+        };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({
+          transformOrigin: '2px 30% 10px'
+        });
+      });
+    });
   });
 
   describe('preprocesses multiple shadow styles into a single declaration', () => {
