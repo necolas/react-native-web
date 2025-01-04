@@ -56,6 +56,25 @@ export const createTextShadowValue = (style: Object): void | string => {
   }
 };
 
+// { offsetX: 1, offsetY: 2, blurRadius: 3, spreadDistance: 4, color: 'rgba(255, 0, 0)', inset: true }
+// => 'rgba(255, 0, 0) 1px 2px 3px 4px inset'
+const mapBoxShadow = (boxShadow: Object | string): string => {
+  if (typeof boxShadow === 'string') {
+    return boxShadow;
+  }
+  const offsetX = normalizeValueWithProperty(boxShadow.offsetX) || 0;
+  const offsetY = normalizeValueWithProperty(boxShadow.offsetY) || 0;
+  const blurRadius = normalizeValueWithProperty(boxShadow.blurRadius) || 0;
+  const spreadDistance =
+    normalizeValueWithProperty(boxShadow.spreadDistance) || 0;
+  const color = normalizeColor(boxShadow.color) || 'black';
+  const position = boxShadow.inset ? 'inset ' : '';
+  return `${position}${offsetX} ${offsetY} ${blurRadius} ${spreadDistance} ${color}`;
+};
+export const createBoxShadowArrayValue = (value: Array<Object>): string => {
+  return value.map(mapBoxShadow).join(', ');
+};
+
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
@@ -126,12 +145,8 @@ export const preprocess = <T: {| [key: string]: any |}>(
       `"shadow*" style props are deprecated. Use "boxShadow".`
     );
     const boxShadowValue = createBoxShadowValue(style);
-    if (boxShadowValue != null && nextStyle.boxShadow == null) {
-      const { boxShadow } = style;
-      const value = boxShadow
-        ? `${boxShadow}, ${boxShadowValue}`
-        : boxShadowValue;
-      nextStyle.boxShadow = value;
+    if (boxShadowValue != null) {
+      nextStyle.boxShadow = boxShadowValue;
     }
   }
 
@@ -184,6 +199,12 @@ export const preprocess = <T: {| [key: string]: any |}>(
 
     if (prop === 'aspectRatio' && typeof value === 'number') {
       nextStyle[prop] = value.toString();
+    } else if (prop === 'boxShadow') {
+      if (Array.isArray(value)) {
+        value = createBoxShadowArrayValue(value);
+      }
+      const { boxShadow } = nextStyle;
+      nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
     } else if (prop === 'fontVariant') {
       if (Array.isArray(value) && value.length > 0) {
         /*
