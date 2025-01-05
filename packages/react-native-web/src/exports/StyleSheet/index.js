@@ -80,7 +80,7 @@ function create<T: Object>(styles: T): $ReadOnly<T> {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
     // Only compile at runtime if the style is not already compiled
-    if (styleObj != null && styleObj.$$css !== true) {
+    if (styleObj != null && styleObj.$$css !== true && typeof(styleObj) === 'object') {
       let compiledStyles;
       if (key.indexOf('$raw') > -1) {
         compiledStyles = compileAndInsertReset(styleObj, key.split('$raw')[0]);
