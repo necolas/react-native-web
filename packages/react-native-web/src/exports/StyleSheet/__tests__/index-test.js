@@ -133,6 +133,19 @@ describe('StyleSheet', () => {
       expect(() => StyleSheet.flatten([null, false, undefined])).not.toThrow();
     });
 
+    test('should not fail on single flatten style object', () => {
+      const style = StyleSheet.create({
+        opacity: 1,
+        position: 'absolute'
+      });
+      expect(style).toMatchInlineSnapshot(`
+        {
+          "opacity": 1,
+          "position": "absolute",
+        }
+      `);
+    });
+
     test('should recursively flatten arrays', () => {
       const style = StyleSheet.flatten([
         null,
