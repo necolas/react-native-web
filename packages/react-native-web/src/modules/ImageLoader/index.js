@@ -95,6 +95,8 @@ const ImageLoader = {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
           success(naturalWidth, naturalHeight);
+        } else {
+          errorCallback();
         }
       }
     }

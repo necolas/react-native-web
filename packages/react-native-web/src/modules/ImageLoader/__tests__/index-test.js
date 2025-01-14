@@ -35,6 +35,16 @@ describe('ImageLoader', () => {
     expect(failureCallback).toHaveBeenCalledTimes(1);
     expect(successCallback).toHaveBeenCalledTimes(0);
   });
+
+  test('Failure callback is called when image fails to decode', async () => {
+    window.Image = NotDecodingMockImage;
+    const successCallback = jest.fn();
+    const failureCallback = jest.fn();
+    ImageLoader.getSize(testImage, successCallback, failureCallback);
+    await jest.runAllTimers();
+    expect(failureCallback).toHaveBeenCalledTimes(1);
+    expect(successCallback).toHaveBeenCalledTimes(0);
+  });
 });
 
 class MockImage {
@@ -65,5 +75,11 @@ class NotLoadingMockImage extends MockImage {
   set src(uri) {
     this._src = uri;
     window.setTimeout(this.onerror, 0);
+  }
+}
+
+class NotDecodingMockImage extends MockImage {
+  decode() {
+    return Promise.reject();
   }
 }
