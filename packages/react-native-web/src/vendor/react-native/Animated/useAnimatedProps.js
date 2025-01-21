@@ -24,16 +24,11 @@ import {
 
 import useLayoutEffect from '../../../modules/useLayoutEffect';
 
-type ReducedProps<TProps> = {
-  ...TProps,
-  collapsable: boolean,
-  ...
-};
 type CallbackRef<T> = T => mixed;
 
 export default function useAnimatedProps<TProps: {...}, TInstance>(
   props: TProps,
-): [ReducedProps<TProps>, CallbackRef<TInstance | null>] {
+): [TProps, CallbackRef<TInstance | null>] {
   const [, scheduleUpdate] = useReducer(count => count + 1, 0);
   const onUpdateRef = useRef<?() => void>(null);
 
@@ -102,12 +97,9 @@ export default function useAnimatedProps<TProps: {...}, TInstance>(
 
 function reduceAnimatedProps<TProps>(
   node: AnimatedProps,
-): ReducedProps<TProps> {
-  // Force `collapsable` to be false so that the native view is not flattened.
-  // Flattened views cannot be accurately referenced by the native driver.
+): TProps {
   return {
     ...node.__getValue(),
-    collapsable: false,
   };
 }
 
