@@ -1,19 +1,19 @@
-import React, { useRef } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Animated, Pressable, StyleSheet, Text, View, useAnimatedValue } from 'react-native';
 import Example from '../../shared/example';
 
 export default function AnimatedPage() {
-  const anim = useRef(new Animated.Value(0));
+  const anim = useAnimatedValue(0);
 
   const animateBox = () => {
-    Animated.timing(anim.current, {
+    Animated.timing(anim, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: false
     }).start();
   };
 
-  const transform = anim.current.interpolate({
+  const transform = anim.interpolate({
     inputRange: [0, 1],
     outputRange: ['rotate(0deg)', 'rotate(45deg)']
   });
