@@ -21,7 +21,7 @@ import type {
 import type {AnimationConfig, EndCallback} from './animations/Animation';
 import type {InterpolationConfigType} from './nodes/AnimatedInterpolation';
 import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
 import type {EventSubscription} from '../vendor/emitter/EventEmitter';
 

@@ -12,7 +12,7 @@ import type {ViewToken} from '../ViewabilityHelper';
 import View from '../../../exports/View';
 import VirtualizedList from '../VirtualizedList';
 import {keyExtractor as defaultKeyExtractor} from '../VirtualizeUtils';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 import * as React from 'react';
 
 type Item = any;

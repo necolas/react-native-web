@@ -11,7 +11,7 @@
 'use client';
 
 import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import canUseDOM from '../../modules/canUseDom';
 
 export type DisplayMetrics = {|

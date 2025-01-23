@@ -12,7 +12,7 @@ import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import deepDiffer from '../deepDiffer';
 import Platform from '../../../exports/Platform';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 import * as React from 'react';
 
 type ScrollViewNativeComponent = any;

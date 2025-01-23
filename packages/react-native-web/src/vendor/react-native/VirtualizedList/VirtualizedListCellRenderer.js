@@ -17,7 +17,7 @@ import type {CellRendererProps, RenderItemType} from './VirtualizedListProps';
 import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import {VirtualizedListCellContextProvider} from './VirtualizedListContext.js';
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../modules/invariant';
 import * as React from 'react';
 
 type ViewStyleProp = $PropertyType<ViewProps, 'style'>;

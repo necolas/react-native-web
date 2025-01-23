@@ -13,7 +13,7 @@
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../../modules/invariant';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
 

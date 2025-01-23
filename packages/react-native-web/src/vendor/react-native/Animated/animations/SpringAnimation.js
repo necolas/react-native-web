@@ -17,7 +17,7 @@ import type AnimatedInterpolation from '../nodes/AnimatedInterpolation';
 import Animation from './Animation';
 import SpringConfig from '../SpringConfig';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../../../modules/invariant';
 
 import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
 

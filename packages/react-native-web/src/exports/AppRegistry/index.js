@@ -13,7 +13,7 @@
 import type { Application } from './renderApplication';
 import type { ComponentType, Node } from 'react';
 
-import invariant from 'fbjs/lib/invariant';
+import invariant from '../../modules/invariant';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
 
