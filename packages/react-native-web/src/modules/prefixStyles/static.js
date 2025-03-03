@@ -1,4 +1,3 @@
-import backgroundClip from 'inline-style-prefixer/lib/plugins/backgroundClip';
 import crossFade from 'inline-style-prefixer/lib/plugins/crossFade';
 import cursor from 'inline-style-prefixer/lib/plugins/cursor';
 import filter from 'inline-style-prefixer/lib/plugins/filter';
@@ -15,7 +14,6 @@ const wmms = ['Webkit', 'Moz', 'ms'];
 
 export default {
   plugins: [
-    backgroundClip,
     crossFade,
     cursor,
     filter,
