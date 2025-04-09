@@ -84,5 +84,9 @@
     "trailingComma": "none"
   },
   "author": "Nicolas Gallagher",
-  "license": "MIT"
+  "license": "MIT",
+  "overrides": {
+    "next@<=14.2.15": "14.2.15",
+    "send@<=0.19.0": "0.19.0"
+  }
 }
