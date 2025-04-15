@@ -56,6 +56,7 @@ export const accessibilityProps = {
   'aria-pressed': true,
   'aria-readonly': true,
   'aria-required': true,
+  inert: true,
   role: true,
   'aria-roledescription': true,
   'aria-rowcount': true,
