@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "name": "react-ui-monorepo",
   "scripts": {
+    "build": "npm install -g gulp-cli",
     "clean": "del-cli ./packages/*/dist",
     "build": "npm run clean && npm run build --workspaces --if-present",
     "compile": "npm run build",
