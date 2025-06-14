@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: necolas/compressed-size-action@master
+    - uses: necolas/compressed-size-action@11ab3ec7a896ab4f174c1737819db22c9cb37628 # master
       with:
         build-script: "compile"
         exclude: "./packages/react-native-web/dist/cjs/{index.js,**/*.js}"
