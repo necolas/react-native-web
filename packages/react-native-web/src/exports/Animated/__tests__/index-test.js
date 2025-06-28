@@ -9,6 +9,7 @@
 
 import Animated from '..';
 import Easing from '../../Easing';
+import AnimatedImplementation from '../../../vendor/react-native/Animated/AnimatedImplementation';
 
 const AnimatedInterpolation = Animated.Interpolation;
 
@@ -327,6 +328,76 @@ describe('Animated', () => {
 
       expect(interpolation(1e-12)).toBe('rgba(0, 0, 0, 0)');
       expect(interpolation(2 / 3)).toBe('rgba(0, 0, 0, 0.667)');
+    });
+  });
+
+  describe('sequence and loop', () => {
+    it('supports restarting sequence after it was stopped during execution', () => {
+      const anim1 = { start: jest.fn(), stop: jest.fn() };
+      const anim2 = { start: jest.fn(), stop: jest.fn() };
+      const cb = jest.fn();
+
+      const seq = AnimatedImplementation.sequence([anim1, anim2]);
+
+      seq.start(cb);
+
+      anim1.start.mock.calls[0][0]({ finished: true });
+      seq.stop();
+
+      // anim1 should be finished so anim2 should also start
+      expect(anim1.start).toHaveBeenCalledTimes(1);
+      expect(anim2.start).toHaveBeenCalledTimes(1);
+
+      seq.start(cb);
+
+      // after restart the sequence should resume from the anim2
+      expect(anim1.start).toHaveBeenCalledTimes(1);
+      expect(anim2.start).toHaveBeenCalledTimes(2);
+    });
+
+    it('supports restarting sequence after it was finished without a reset', () => {
+      const anim1 = { start: jest.fn(), stop: jest.fn() };
+      const anim2 = { start: jest.fn(), stop: jest.fn() };
+      const cb = jest.fn();
+
+      const seq = AnimatedImplementation.sequence([anim1, anim2]);
+
+      seq.start(cb);
+      anim1.start.mock.calls[0][0]({ finished: true });
+      anim2.start.mock.calls[0][0]({ finished: true });
+
+      // sequence should be finished
+      expect(cb).toBeCalledWith({ finished: true });
+
+      seq.start(cb);
+
+      // sequence should successfully restart from the anim1
+      expect(anim1.start).toHaveBeenCalledTimes(2);
+      expect(anim2.start).toHaveBeenCalledTimes(1);
+    });
+
+    it('restarts sequence normally in a loop if resetBeforeIteration is false', () => {
+      const anim1 = { start: jest.fn(), stop: jest.fn() };
+      const anim2 = { start: jest.fn(), stop: jest.fn() };
+      const seq = AnimatedImplementation.sequence([anim1, anim2]);
+
+      const loop = AnimatedImplementation.loop(seq, {
+        resetBeforeIteration: false
+      });
+
+      loop.start();
+
+      expect(anim1.start).toHaveBeenCalledTimes(1);
+
+      anim1.start.mock.calls[0][0]({ finished: true });
+
+      expect(anim2.start).toHaveBeenCalledTimes(1);
+
+      anim2.start.mock.calls[0][0]({ finished: true });
+
+      // after anim2 is finished, the sequence is finished,
+      // hence the loop iteration is finished, so the next iteration starts
+      expect(anim1.start).toHaveBeenCalledTimes(2);
     });
   });
 });
