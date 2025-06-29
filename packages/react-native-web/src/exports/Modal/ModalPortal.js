@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import canUseDOM from '../../modules/canUseDom';
 
 export type ModalPortalProps = {|
@@ -41,7 +41,7 @@ function ModalPortal(props: ModalPortalProps): React.Node {
   }, []);
 
   return elementRef.current && canUseDOM
-    ? ReactDOM.createPortal(children, elementRef.current)
+    ? createPortal(children, elementRef.current)
     : null;
 }
 
