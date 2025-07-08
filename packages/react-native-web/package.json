@@ -22,7 +22,7 @@
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.6",
+    "@babel/runtime": "^7.27.6",
     "@react-native/normalize-colors": "^0.74.1",
     "fbjs": "^3.0.4",
     "inline-style-prefixer": "^6.0.1",
