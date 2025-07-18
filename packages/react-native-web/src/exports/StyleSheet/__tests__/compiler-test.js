@@ -176,6 +176,30 @@ describe('StyleSheet/compile', () => {
         ]
       `);
     });
+
+    test('when parent is pointer-events=box-none, pointer-events=auto applied to children', () => {
+      const result = atomic({
+        pointerEvents: 'box-none'
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "$$css": true,
+            "pointerEvents": "r-pointerEvents-12vffkv",
+          },
+          [
+            [
+              [
+                ".r-pointerEvents-12vffkv * {pointer-events:auto;}",
+                ".r-pointerEvents-12vffkv{pointer-events:none!important;}",
+              ],
+              3,
+            ],
+          ],
+        ]
+      `);
+    });
   });
 
   describe('classic', () => {

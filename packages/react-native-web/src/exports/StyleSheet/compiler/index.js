@@ -391,7 +391,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
         finalValue = 'none!important';
         if (value === 'box-none') {
           const block = createDeclarationBlock({ pointerEvents: 'auto' });
-          rules.push(`${selector}>*${block}`);
+          rules.push(`${selector} * ${block}`);
         }
       }
       const block = createDeclarationBlock({ pointerEvents: finalValue });
