@@ -16,6 +16,9 @@ const Platform = {
       return true;
     }
     return false;
+  },
+  get Version(): string {
+    return '0.0.0';
   }
 };
 
