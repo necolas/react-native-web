@@ -18,7 +18,7 @@ const Platform = {
     return false;
   },
   get Version(): string {
-    return "0.0.0"
+    return '0.0.0';
   }
 };
 
