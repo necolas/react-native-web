@@ -63,8 +63,9 @@ describe('AppRegistry', () => {
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv * {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
+        .r-pointerEvents-633pao * {pointer-events:none;}
         .r-pointerEvents-633pao{pointer-events:none!important;}
-        .r-pointerEvents-ah5dr5>*{pointer-events:none;}
+        .r-pointerEvents-ah5dr5 * {pointer-events:none;}
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}
@@ -121,8 +122,9 @@ describe('AppRegistry', () => {
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv * {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
+        .r-pointerEvents-633pao * {pointer-events:none;}
         .r-pointerEvents-633pao{pointer-events:none!important;}
-        .r-pointerEvents-ah5dr5>*{pointer-events:none;}
+        .r-pointerEvents-ah5dr5 * {pointer-events:none;}
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}
@@ -172,8 +174,9 @@ describe('AppRegistry', () => {
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv * {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
+        .r-pointerEvents-633pao * {pointer-events:none;}
         .r-pointerEvents-633pao{pointer-events:none!important;}
-        .r-pointerEvents-ah5dr5>*{pointer-events:none;}
+        .r-pointerEvents-ah5dr5 * {pointer-events:none;}
         .r-pointerEvents-ah5dr5{pointer-events:auto!important;}
         .r-position-u8s1d{position:absolute;}
         .r-right-zchlnj{right:0px;}

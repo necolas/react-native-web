@@ -142,7 +142,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-pointerEvents-ah5dr5>*{pointer-events:none;}",
+                ".r-pointerEvents-ah5dr5 * {pointer-events:none;}",
                 ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
               ],
               3,
@@ -169,6 +169,30 @@ describe('StyleSheet/compile', () => {
             [
               [
                 ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
+              ],
+              3,
+            ],
+          ],
+        ]
+      `);
+    });
+
+    test('when parent is pointer-events=none, pointer-events=none applied to children', () => {
+      const result = atomic({
+        pointerEvents: 'none'
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "$$css": true,
+            "pointerEvents": "r-pointerEvents-633pao",
+          },
+          [
+            [
+              [
+                ".r-pointerEvents-633pao * {pointer-events:none;}",
+                ".r-pointerEvents-633pao{pointer-events:none!important;}",
               ],
               3,
             ],
