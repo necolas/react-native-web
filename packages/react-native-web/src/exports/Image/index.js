@@ -167,6 +167,12 @@ interface ImageStatics {
     failure: () => void
   ) => void;
   prefetch: (uri: string) => Promise<void>;
+  resolveAssetSource: (source: $PropertyType<ImageProps, 'source'>) => {
+    height: ?number,
+    width: ?number,
+    scale: number,
+    uri: string
+  };
   queryCache: (
     uris: Array<string>
   ) => Promise<{| [uri: string]: 'disk/memory' |}>;
@@ -373,6 +379,30 @@ ImageWithStatics.prefetch = function (uri) {
 
 ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
+};
+
+ImageWithStatics.resolveAssetSource = function (source) {
+  if (typeof source !== 'number') {
+    throw new Error(
+      'May only call Image.resolveAssetSource with images included in the asset registry'
+    );
+  }
+
+  const asset = getAssetByID(source);
+  const uri = resolveAssetUri(source);
+
+  if (!asset || !uri) {
+    throw new Error(
+      'Unable to find requested resource in asset registry - ' + source
+    );
+  }
+
+  return {
+    height: asset.height,
+    width: asset.width,
+    uri,
+    scale: asset.scales[0]
+  };
 };
 
 const styles = StyleSheet.create({
