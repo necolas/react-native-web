@@ -879,6 +879,7 @@ const createDOMProps = (elementType, props, options) => {
       `props.pointerEvents is deprecated. Use style.pointerEvents`
     );
   }
+
   const [className, inlineStyle] = StyleSheet(
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
     {

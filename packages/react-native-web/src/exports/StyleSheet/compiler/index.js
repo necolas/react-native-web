@@ -387,15 +387,15 @@ function createAtomicRules(identifier: string, property, value): Rules {
       } else if (value === 'none') {
         finalValue = 'none!important';
         const block = createDeclarationBlock({ pointerEvents: 'none' });
-        rules.push(`${selector} * ${block}`);
+        rules.push(`${selector}>* ${block}`);
       } else if (value === 'box-none') {
         finalValue = 'none!important';
         const block = createDeclarationBlock({ pointerEvents: 'auto' });
-        rules.push(`${selector} * ${block}`);
+        rules.push(`${selector}>* ${block}`);
       } else if (value === 'box-only') {
         finalValue = 'auto!important';
         const block = createDeclarationBlock({ pointerEvents: 'none' });
-        rules.push(`${selector} * ${block}`);
+        rules.push(`${selector}>* ${block}`);
       }
       const block = createDeclarationBlock({ pointerEvents: finalValue });
       rules.push(`${selector}${block}`);
