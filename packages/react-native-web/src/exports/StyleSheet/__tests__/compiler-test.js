@@ -142,7 +142,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-pointerEvents-ah5dr5 * {pointer-events:none;}",
+                ".r-pointerEvents-ah5dr5>* {pointer-events:none;}",
                 ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
               ],
               3,
@@ -191,7 +191,7 @@ describe('StyleSheet/compile', () => {
           [
             [
               [
-                ".r-pointerEvents-633pao * {pointer-events:none;}",
+                ".r-pointerEvents-633pao>* {pointer-events:none;}",
                 ".r-pointerEvents-633pao{pointer-events:none!important;}",
               ],
               3,
@@ -215,7 +215,7 @@ describe('StyleSheet/compile', () => {
           [
             [
               [
-                ".r-pointerEvents-12vffkv * {pointer-events:auto;}",
+                ".r-pointerEvents-12vffkv>* {pointer-events:auto;}",
                 ".r-pointerEvents-12vffkv{pointer-events:none!important;}",
               ],
               3,
