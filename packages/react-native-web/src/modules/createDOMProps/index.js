@@ -879,8 +879,11 @@ const createDOMProps = (elementType, props, options) => {
       `props.pointerEvents is deprecated. Use style.pointerEvents`
     );
   }
+  const pointerEventsValue =
+    StyleSheet.flatten(style).pointerEvents || pointerEvents;
+
   const [className, inlineStyle] = StyleSheet(
-    [style, pointerEvents && pointerEventsStyles[pointerEvents]],
+    [style, pointerEventsValue && pointerEventsStyles[pointerEventsValue]],
     {
       writingDirection: 'ltr',
       ...options
