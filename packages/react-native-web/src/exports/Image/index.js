@@ -404,8 +404,7 @@ const styles = StyleSheet.create({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100%',
-    width: '100%',
-    zIndex: -1
+    width: '100%'
   },
   accessibilityImage$raw: {
     ...StyleSheet.absoluteFillObject,
