@@ -4,7 +4,7 @@ import Tree from './cases/Tree';
 import SierpinskiTriangle from './cases/SierpinskiTriangle';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const implementations = impl;
 const packageNames = Object.keys(implementations);
@@ -74,4 +74,4 @@ const tests = {
 const root = document.querySelector('.root');
 const element = <App tests={tests} />;
 
-ReactDOM.createRoot(root).render(element);
+createRoot(root).render(element);
