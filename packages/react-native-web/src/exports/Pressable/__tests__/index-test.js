@@ -342,4 +342,11 @@ describe('components/Pressable', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
   });
+
+  describe('prop "title"', () => {
+    test('value is set', () => {
+      const { container } = render(<Pressable title="123" />);
+      expect(container.firstChild).toHaveProperty('title', '123');
+    });
+  });
 });
