@@ -626,6 +626,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
 
     const props = {
       ...other,
+      horizontal,
       style: [baseStyle, pagingEnabled && pagingEnabledStyle, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
