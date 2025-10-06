@@ -14,7 +14,7 @@ eleventyNavigation:
 The fundamental layout primitive.
 :::
 
-View uses a flexbox column layout by default. Every instance of `View` uses relative positioning by default and the `zIndex` can only be used to control the relative Z-axis stacking of siblings within their parent.
+View uses a flexbox column layout by default. Every instance of `View` uses relative positioning by default.
 
 Raw text nodes are **not** allowed as children of View. A View nested within a Text will render inline without altering its display or that of its children.
 
