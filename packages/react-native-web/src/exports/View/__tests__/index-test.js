@@ -307,4 +307,16 @@ describe('components/View', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
   });
+
+  describe('default styles', () => {
+    test('default zIndex should be "auto" not 0', () => {
+      // Using 'auto' instead of 0 prevents creating a new CSS stacking context,
+      // which allows nested Views with z-index to layer correctly relative to
+      // elements outside the View hierarchy
+      const { container } = render(<View />);
+      const element = container.firstChild;
+      const computedStyle = window.getComputedStyle(element);
+      expect(computedStyle.zIndex).toBe('auto');
+    });
+  });
 });

@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     padding: 0,
     position: 'relative',
     textDecoration: 'none',
-    zIndex: 0
+    zIndex: 'auto'
   },
   inline: {
     display: 'inline-flex'
