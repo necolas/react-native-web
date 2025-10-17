@@ -16,6 +16,7 @@ export const defaultProps = {
   suppressHydrationWarning: true,
   tabIndex: true,
   testID: true,
+  title: true,
   // @deprecated
   focusable: true,
   nativeID: true
