@@ -99,6 +99,49 @@ describe('StyleSheet/preprocess', () => {
       expect(preprocess({ aspectRatio: 9 / 16 })).toEqual({
         aspectRatio: '0.5625'
       });
+
+      expect(preprocess({ aspectRatio: '0.5' })).toEqual({
+        aspectRatio: '0.5'
+      });
+
+      expect(preprocess({ aspectRatio: undefined })).toEqual({});
+    });
+
+    describe('boxShadow', () => {
+      // passthrough if boxShadow value is ever a string
+      test('string', () => {
+        const boxShadow = '0 1px 2px rgba(0, 0, 0, 0.5)';
+        const style = { boxShadow };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({ boxShadow });
+      });
+
+      test('array', () => {
+        const boxShadow = [
+          '0 1px 2px rgba(0, 0, 0, 0.5)',
+          {
+            offsetX: 1,
+            offsetY: 2,
+            blurRadius: 3
+          },
+          {
+            offsetX: 5,
+            offsetY: 6,
+            blurRadius: 7,
+            spreadDistance: 8,
+            color: 'rgba(0, 255, 0, 0.75)',
+            inset: true
+          }
+        ];
+        const style = { boxShadow };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({
+          boxShadow:
+            '0 1px 2px rgba(0, 0, 0, 0.5), 1px 2px 3px 0 black, inset 5px 6px 7px 8px rgba(0,255,0,0.75)'
+        });
+      });
     });
 
     test('fontVariant', () => {
@@ -145,6 +188,28 @@ describe('StyleSheet/preprocess', () => {
         });
       });
     });
+
+    describe('transformOrigin', () => {
+      // passthrough if transformOrigin value is ever a string
+      test('string', () => {
+        const transformOrigin = '2px 30% 10px';
+        const style = { transformOrigin };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({ transformOrigin });
+      });
+
+      test('array', () => {
+        const style = {
+          transformOrigin: [2, '30%', 10]
+        };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({
+          transformOrigin: '2px 30% 10px'
+        });
+      });
+    });
   });
 
   describe('preprocesses multiple shadow styles into a single declaration', () => {
@@ -182,6 +247,43 @@ describe('StyleSheet/preprocess', () => {
         })
       ).toEqual({
         boxShadow: '1px 2px 3px rgba(50,60,70,0.25)'
+      });
+    });
+
+    test('shadow styles and string boxShadow together', () => {
+      expect(
+        preprocess({
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          boxShadow: '4px 5px 6px black'
+        })
+      ).toEqual({
+        boxShadow: '4px 5px 6px black, 1px 2px 3px rgba(50,60,70,0.25)'
+      });
+    });
+
+    test('shadow styles and array boxShadow together', () => {
+      expect(
+        preprocess({
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          boxShadow: [
+            {
+              offsetX: 2,
+              offsetY: 3,
+              spreadDistance: 5,
+              color: 'rgba(10,20,30,0.45)',
+              inset: true
+            }
+          ]
+        })
+      ).toEqual({
+        boxShadow:
+          'inset 2px 3px 0 5px rgba(10,20,30,0.45), 1px 2px 3px rgba(50,60,70,0.25)'
       });
     });
   });

@@ -12,7 +12,7 @@ import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
 
-const ANIMATION_DURATION = 300;
+const ANIMATION_DURATION = 250;
 
 function getAnimationStyle(animationType, visible) {
   if (animationType === 'slide') {
@@ -37,6 +37,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
 
   const [isRendering, setIsRendering] = React.useState(false);
   const wasVisible = React.useRef(false);
+  const wasRendering = React.useRef(false);
 
   const isAnimated = animationType && animationType !== 'none';
 
@@ -54,13 +55,17 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
         }
       } else {
         setIsRendering(false);
-        if (onDismiss) {
-          onDismiss();
-        }
       }
     },
-    [onDismiss, onShow, visible]
+    [onShow, visible]
   );
+
+  React.useEffect(() => {
+    if (wasRendering.current && !isRendering && onDismiss) {
+      onDismiss();
+    }
+    wasRendering.current = isRendering;
+  }, [isRendering, onDismiss]);
 
   React.useEffect(() => {
     if (visible) {
@@ -95,12 +100,12 @@ const styles = StyleSheet.create({
   },
   animatedIn: {
     animationDuration: `${ANIMATION_DURATION}ms`,
-    animationTimingFunction: 'ease-in'
+    animationTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
   },
   animatedOut: {
     pointerEvents: 'none',
     animationDuration: `${ANIMATION_DURATION}ms`,
-    animationTimingFunction: 'ease-out'
+    animationTimingFunction: 'cubic-bezier(0.47, 0, 0.745, 0.715)'
   },
   fadeIn: {
     opacity: 1,

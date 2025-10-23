@@ -12,7 +12,7 @@ import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import TouchableOpacity from '../TouchableOpacity';
 import Text from '../Text';
-import { warnOnce } from '../../modules/warnOnce';
+//import { warnOnce } from '../../modules/warnOnce';
 
 type ButtonProps = {|
   accessibilityLabel?: ?string,
@@ -27,7 +27,7 @@ const Button: React.AbstractComponent<
   ButtonProps,
   React.ElementRef<typeof TouchableOpacity>
 > = React.forwardRef((props, forwardedRef) => {
-  warnOnce('Button', 'Button is deprecated. Please use Pressable.');
+  // warnOnce('Button', 'Button is deprecated. Please use Pressable.');
 
   const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
 

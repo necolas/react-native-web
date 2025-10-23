@@ -309,6 +309,32 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(insideElement);
   });
 
+  test('focus is not trapped after closing modal', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal visible={true} />
+      </>
+    );
+
+    const outsideElement = document.querySelector('[data-testid="outside"]');
+    const onDismissCallback = jest.fn(() => outsideElement.focus());
+
+    rerender(
+      <>
+        <a data-testid={'outside'} href={'#outside'}>
+          Outside
+        </a>
+        <Modal onDismiss={onDismissCallback} visible={false} />
+      </>
+    );
+
+    expect(onDismissCallback).toBeCalledTimes(1);
+    expect(document.activeElement).toBe(outsideElement);
+  });
+
   test('focus is brought back to the element that triggered modal after closing', () => {
     const { rerender } = render(
       <>

@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { ImageProps, Source } from './types';
 
 import * as React from 'react';
@@ -44,7 +46,7 @@ function createTintColorSVG(tintColor, id) {
       <defs>
         <filter id={`tint-${id}`} suppressHydrationWarning={true}>
           <feFlood floodColor={`${tintColor}`} key={tintColor} />
-          <feComposite in2="SourceAlpha" operator="atop" />
+          <feComposite in2="SourceAlpha" operator="in" />
         </filter>
       </defs>
     </svg>
@@ -180,7 +182,8 @@ const Image: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, ref) => {
   const {
-    'aria-label': ariaLabel,
+    'aria-label': _ariaLabel,
+    accessibilityLabel,
     blurRadius,
     defaultSource,
     draggable,
@@ -194,6 +197,7 @@ const Image: React.AbstractComponent<
     style,
     ...rest
   } = props;
+  const ariaLabel = _ariaLabel || accessibilityLabel;
 
   if (process.env.NODE_ENV !== 'production') {
     if (props.children) {
@@ -301,7 +305,7 @@ const Image: React.AbstractComponent<
           if (onError) {
             onError({
               nativeEvent: {
-                error: `Failed to load resource ${uri} (404)`
+                error: `Failed to load resource ${uri}`
               }
             });
           }

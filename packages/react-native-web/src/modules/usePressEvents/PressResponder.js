@@ -116,11 +116,15 @@ const Transitions = Object.freeze({
   }
 });
 
+const getElementRole = (element) => element.getAttribute('role');
+
+const getElementType = (element) => element.tagName.toLowerCase();
+
 const isActiveSignal = (signal) =>
   signal === RESPONDER_ACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isButtonRole = (element) => element.getAttribute('role') === 'button';
+const isButtonRole = (element) => getElementRole(element) === 'button';
 
 const isPressStartSignal = (signal) =>
   signal === RESPONDER_INACTIVE_PRESS_START ||
@@ -132,10 +136,10 @@ const isTerminalSignal = (signal) =>
 
 const isValidKeyPress = (event) => {
   const { key, target } = event;
-  const role = target.getAttribute('role');
   const isSpacebar = key === ' ' || key === 'Spacebar';
-
-  return key === 'Enter' || (isSpacebar && role === 'button');
+  const isButtonish =
+    getElementType(target) === 'button' || isButtonRole(target);
+  return key === 'Enter' || (isSpacebar && isButtonish);
 };
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 450; // 500 - 50
@@ -229,6 +233,7 @@ export default class PressResponder {
     pageY: number
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
+  _responderElement: ?HTMLElement = null;
 
   constructor(config: PressResponderConfig) {
     this.configure(config);
@@ -307,7 +312,7 @@ export default class PressResponder {
         document.removeEventListener('keyup', keyupHandler);
 
         const role = target.getAttribute('role');
-        const elementType = target.tagName.toLowerCase();
+        const elementType = getElementType(target);
 
         const isNativeInteractiveElement =
           role === 'link' ||
@@ -316,10 +321,13 @@ export default class PressResponder {
           elementType === 'input' ||
           elementType === 'select' ||
           elementType === 'textarea';
+        const isActiveElement = this._responderElement === target;
 
-        if (onPress != null && !isNativeInteractiveElement) {
+        if (onPress != null && !isNativeInteractiveElement && isActiveElement) {
           onPress(event);
         }
+
+        this._responderElement = null;
       }
     };
 
@@ -341,15 +349,20 @@ export default class PressResponder {
         if (!disabled && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
+            this._responderElement = target;
             // Listen to 'keyup' on document to account for situations where
             // focus is moved to another element during 'keydown'.
             document.addEventListener('keyup', keyupHandler);
           }
-          const role = target.getAttribute('role');
           const isSpacebarKey = key === ' ' || key === 'Spacebar';
-          const isButtonRole = role === 'button' || role === 'menuitem';
-          if (isSpacebarKey && isButtonRole) {
-            // Prevent spacebar scrolling the window
+          const role = getElementRole(target);
+          const isButtonLikeRole = role === 'button' || role === 'menuitem';
+          if (
+            isSpacebarKey &&
+            isButtonLikeRole &&
+            getElementType(target) !== 'button'
+          ) {
+            // Prevent spacebar scrolling the window if using non-native button
             event.preventDefault();
           }
           event.stopPropagation();

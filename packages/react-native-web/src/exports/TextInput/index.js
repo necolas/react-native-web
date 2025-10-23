@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { PlatformMethods } from '../../types';
 import type { TextInputProps } from './types';
 
@@ -23,7 +25,7 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
-import { warnOnce } from '../../modules/warnOnce';
+//import { warnOnce } from '../../modules/warnOnce';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -140,6 +142,7 @@ const TextInput: React.AbstractComponent<
     secureTextEntry = false,
     selection,
     selectTextOnFocus,
+    showSoftInputOnFocus,
     spellCheck
   } = props;
 
@@ -160,7 +163,7 @@ const TextInput: React.AbstractComponent<
       type = 'text';
     }
   } else if (keyboardType != null) {
-    warnOnce('keyboardType', 'keyboardType is deprecated. Use inputMode.');
+    // warnOnce('keyboardType', 'keyboardType is deprecated. Use inputMode.');
     switch (keyboardType) {
       case 'email-address':
         type = 'email';
@@ -193,6 +196,15 @@ const TextInput: React.AbstractComponent<
 
   const dimensions = React.useRef({ height: null, width: null });
   const hostRef = React.useRef(null);
+  const prevSelection = React.useRef(null);
+  const prevSecureTextEntry = React.useRef(false);
+
+  React.useEffect(() => {
+    if (hostRef.current && prevSelection.current) {
+      setSelection(hostRef.current, prevSelection.current);
+    }
+    prevSecureTextEntry.current = secureTextEntry;
+  }, [secureTextEntry]);
 
   const handleContentSizeChange = React.useCallback(
     (hostNode) => {
@@ -280,7 +292,9 @@ const TextInput: React.AbstractComponent<
           clearTimeout(focusTimeout);
         }
         focusTimeout = setTimeout(() => {
-          if (hostNode != null) {
+          // Check if the input is still focused after the timeout
+          // (see #2704)
+          if (hostNode != null && document.activeElement === hostNode) {
             hostNode.select();
           }
         }, 0);
@@ -324,18 +338,21 @@ const TextInput: React.AbstractComponent<
   }
 
   function handleSelectionChange(e) {
-    if (onSelectionChange) {
-      try {
-        const node = e.target;
-        const { selectionStart, selectionEnd } = node;
-        e.nativeEvent.selection = {
-          start: selectionStart,
-          end: selectionEnd
-        };
+    try {
+      const { selectionStart, selectionEnd } = e.target;
+      const selection = {
+        start: selectionStart,
+        end: selectionEnd
+      };
+      if (onSelectionChange) {
+        e.nativeEvent.selection = selection;
         e.nativeEvent.text = e.target.value;
         onSelectionChange(e);
-      } catch (e) {}
-    }
+      }
+      if (prevSecureTextEntry.current === secureTextEntry) {
+        prevSelection.current = selection;
+      }
+    } catch (e) {}
   }
 
   useLayoutEffect(() => {
@@ -377,9 +394,11 @@ const TextInput: React.AbstractComponent<
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
+  /*
   if (returnKeyType != null) {
     warnOnce('returnKeyType', 'returnKeyType is deprecated. Use enterKeyHint.');
   }
+  */
   supportedProps.enterKeyHint = enterKeyHint || returnKeyType;
   supportedProps.inputMode = _inputMode;
   supportedProps.onBlur = handleBlur;
@@ -387,16 +406,20 @@ const TextInput: React.AbstractComponent<
   supportedProps.onFocus = handleFocus;
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
+  /*
   if (editable != null) {
     warnOnce('editable', 'editable is deprecated. Use readOnly.');
   }
+  */
   supportedProps.readOnly = readOnly === true || editable === false;
+  /*
   if (numberOfLines != null) {
     warnOnce(
       'numberOfLines',
       'TextInput numberOfLines is deprecated. Use rows.'
     );
   }
+  */
   supportedProps.rows = multiline ? (rows != null ? rows : numberOfLines) : 1;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = [
@@ -407,6 +430,8 @@ const TextInput: React.AbstractComponent<
     caretHidden && styles.caretHidden
   ];
   supportedProps.type = multiline ? undefined : type;
+  supportedProps.virtualkeyboardpolicy =
+    showSoftInputOnFocus === false ? 'manual' : 'auto';
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 

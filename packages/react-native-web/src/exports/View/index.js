@@ -8,6 +8,8 @@
  * @flow
  */
 
+'use client';
+
 import type { PlatformMethods } from '../../types';
 import type { ViewProps } from './types';
 
@@ -145,6 +147,7 @@ View.displayName = 'View';
 
 const styles = StyleSheet.create({
   view$raw: {
+    alignContent: 'flex-start',
     alignItems: 'stretch',
     backgroundColor: 'transparent',
     border: '0 solid black',

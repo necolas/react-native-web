@@ -79,7 +79,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;}",
+                ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}",
               ],
               3,
             ],
@@ -142,7 +142,7 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-pointerEvents-ah5dr5>*{pointer-events:none;}",
+                ".r-pointerEvents-ah5dr5>* {pointer-events:none;}",
                 ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
               ],
               3,
@@ -169,6 +169,54 @@ describe('StyleSheet/compile', () => {
             [
               [
                 ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
+              ],
+              3,
+            ],
+          ],
+        ]
+      `);
+    });
+
+    test('when parent is pointer-events=none, pointer-events=none applied to children', () => {
+      const result = atomic({
+        pointerEvents: 'none'
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "$$css": true,
+            "pointerEvents": "r-pointerEvents-633pao",
+          },
+          [
+            [
+              [
+                ".r-pointerEvents-633pao>* {pointer-events:none;}",
+                ".r-pointerEvents-633pao{pointer-events:none!important;}",
+              ],
+              3,
+            ],
+          ],
+        ]
+      `);
+    });
+
+    test('when parent is pointer-events=box-none, pointer-events=auto applied to children', () => {
+      const result = atomic({
+        pointerEvents: 'box-none'
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "$$css": true,
+            "pointerEvents": "r-pointerEvents-12vffkv",
+          },
+          [
+            [
+              [
+                ".r-pointerEvents-12vffkv>* {pointer-events:auto;}",
+                ".r-pointerEvents-12vffkv{pointer-events:none!important;}",
               ],
               3,
             ],
@@ -206,7 +254,7 @@ describe('StyleSheet/compile', () => {
                 "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
                 "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
+                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
               ],
               1,
             ],

@@ -47,7 +47,7 @@ const styles = {
   },
   color4: {
     $$css: true,
-    backgroundColor: 'r-1dgebii'
+    backgroundColor: 'r-18z3xeu'
   },
   color5: {
     $$css: true,

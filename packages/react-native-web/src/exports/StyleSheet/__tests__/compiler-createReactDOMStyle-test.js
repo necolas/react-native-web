@@ -149,13 +149,13 @@ describe('compiler/createReactDOMStyle', () => {
       expect(createReactDOMStyle({ fontFamily: 'System' }))
         .toMatchInlineSnapshot(`
         {
-          "fontFamily": "-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
+          "fontFamily": "-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
       expect(createReactDOMStyle({ font: '14px System' }))
         .toMatchInlineSnapshot(`
         {
-          "font": "14px -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
+          "font": "14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
     });
@@ -164,13 +164,13 @@ describe('compiler/createReactDOMStyle', () => {
       expect(createReactDOMStyle({ fontFamily: 'Noto, System' }))
         .toMatchInlineSnapshot(`
         {
-          "fontFamily": "Noto,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
+          "fontFamily": "Noto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
       expect(createReactDOMStyle({ font: '14px Noto, System' }))
         .toMatchInlineSnapshot(`
         {
-          "font": "14px Noto, -apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Roboto,Helvetica,Arial,sans-serif",
+          "font": "14px Noto, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
         }
       `);
     });

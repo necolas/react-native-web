@@ -32,7 +32,6 @@ class AnimatedProps extends AnimatedNode {
     }
     this._props = props;
     this._callback = callback;
-    this.__attach();
   }
 
   __getValue(): Object {
@@ -78,6 +77,7 @@ class AnimatedProps extends AnimatedNode {
     if (this.__isNative && this._animatedView) {
       this.__disconnectAnimatedView();
     }
+    this._animatedView = null;
     for (const key in this._props) {
       const value = this._props[key];
       if (value instanceof AnimatedNode) {

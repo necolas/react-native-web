@@ -68,7 +68,7 @@ if (!skipGit) {
   // commit
   execSync(`git commit -m "${version}" --no-verify`);
   // tag
-  execSync(`git tag -m ${version} "${version}"`);
+  execSync(`git tag -fam ${version} "${version}"`);
 }
 
 // Publish public packages

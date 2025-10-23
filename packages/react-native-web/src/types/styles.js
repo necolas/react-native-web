@@ -188,7 +188,7 @@ export type LayoutStyles = {|
     | 'flex-start'
     | 'stretch'
   ),
-  aspectRatio?: ?number,
+  aspectRatio?: ?NumberOrString,
   backfaceVisibility?: ?VisiblilityValue,
   borderWidth?: ?DimensionValue,
   borderBlockWidth?: ?DimensionValue,
@@ -341,6 +341,6 @@ export type TransformStyles = {|
         | {| +translateZ: NumberOrString |}
         | {| +translate3d: string |}
       >,
-  transformOrigin?: ?string,
+  transformOrigin?: ?string | Array<NumberOrString>,
   transformStyle?: ?('flat' | 'preserve-3d')
 |};

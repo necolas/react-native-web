@@ -379,20 +379,23 @@ function createAtomicRules(identifier: string, property, value): Rules {
 
     // Polyfill for additional 'pointer-events' values
     // See d13f78622b233a0afc0c7a200c0a0792c8ca9e58
+    // See https://reactnative.dev/docs/view#pointerevents
     case 'pointerEvents': {
       let finalValue = value;
-      if (value === 'auto' || value === 'box-only') {
+      if (value === 'auto') {
         finalValue = 'auto!important';
-        if (value === 'box-only') {
-          const block = createDeclarationBlock({ pointerEvents: 'none' });
-          rules.push(`${selector}>*${block}`);
-        }
-      } else if (value === 'none' || value === 'box-none') {
+      } else if (value === 'none') {
         finalValue = 'none!important';
-        if (value === 'box-none') {
-          const block = createDeclarationBlock({ pointerEvents: 'auto' });
-          rules.push(`${selector}>*${block}`);
-        }
+        const block = createDeclarationBlock({ pointerEvents: 'none' });
+        rules.push(`${selector}>* ${block}`);
+      } else if (value === 'box-none') {
+        finalValue = 'none!important';
+        const block = createDeclarationBlock({ pointerEvents: 'auto' });
+        rules.push(`${selector}>* ${block}`);
+      } else if (value === 'box-only') {
+        finalValue = 'auto!important';
+        const block = createDeclarationBlock({ pointerEvents: 'none' });
+        rules.push(`${selector}>* ${block}`);
       }
       const block = createDeclarationBlock({ pointerEvents: finalValue });
       rules.push(`${selector}${block}`);

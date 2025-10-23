@@ -27,20 +27,20 @@ describe('createOrderedCSSStyleSheet', () => {
 
       sheet.insert('.a {}', 0);
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"0\\"]{}
+        "[stylesheet-group="0"]{}
         .a {}"
       `);
 
       sheet.insert('.b {}', 0);
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"0\\"]{}
+        "[stylesheet-group="0"]{}
         .a {}
         .b {}"
       `);
 
       sheet.insert('.c {}', 0);
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"0\\"]{}
+        "[stylesheet-group="0"]{}
         .a {}
         .b {}
         .c {}"
@@ -55,7 +55,7 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('.a {}', 0);
 
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"0\\"]{}
+        "[stylesheet-group="0"]{}
         .a {}"
       `);
     });
@@ -68,7 +68,7 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('.a {}', 0);
 
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"0\\"]{}
+        "[stylesheet-group="0"]{}
         .a {}
         .b {}
         .c {}"
@@ -90,23 +90,23 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('.twenty-point2 {}', 20.2);
 
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"1\\"]{}
+        "[stylesheet-group="1"]{}
         .one {}
-        [stylesheet-group=\\"2.2\\"]{}
+        [stylesheet-group="2.2"]{}
         .two {}
-        [stylesheet-group=\\"3\\"]{}
+        [stylesheet-group="3"]{}
         .three {}
-        [stylesheet-group=\\"4\\"]{}
+        [stylesheet-group="4"]{}
         .four-1 {}
         .four-2 {}
-        [stylesheet-group=\\"9.9\\"]{}
+        [stylesheet-group="9.9"]{}
         .nine-1 {}
         .nine-2 {}
-        [stylesheet-group=\\"10\\"]{}
+        [stylesheet-group="10"]{}
         .ten {}
-        [stylesheet-group=\\"20\\"]{}
+        [stylesheet-group="20"]{}
         .twenty {}
-        [stylesheet-group=\\"20.2\\"]{}
+        [stylesheet-group="20.2"]{}
         .twenty-point2 {}"
       `);
     });
@@ -135,9 +135,9 @@ describe('createOrderedCSSStyleSheet', () => {
       element.appendChild(document.createTextNode(textContent));
       const clientSheet = createOrderedCSSStyleSheet(element.sheet);
       expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
-        "[stylesheet-group=\\"1\\"] {}
+        "[stylesheet-group="1"] {}
         .one {width: 10px;}
-        [stylesheet-group=\\"2\\"] {}
+        [stylesheet-group="2"] {}
         .two-1 {height: 20px;}
         .two-2 {color: red;}
         @keyframes anim { 

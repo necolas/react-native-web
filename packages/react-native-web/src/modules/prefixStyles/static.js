@@ -1,7 +1,4 @@
-import backgroundClip from 'inline-style-prefixer/lib/plugins/backgroundClip';
 import crossFade from 'inline-style-prefixer/lib/plugins/crossFade';
-import cursor from 'inline-style-prefixer/lib/plugins/cursor';
-import filter from 'inline-style-prefixer/lib/plugins/filter';
 import imageSet from 'inline-style-prefixer/lib/plugins/imageSet';
 import logical from 'inline-style-prefixer/lib/plugins/logical';
 import position from 'inline-style-prefixer/lib/plugins/position';
@@ -14,17 +11,7 @@ const wms = ['Webkit', 'ms'];
 const wmms = ['Webkit', 'Moz', 'ms'];
 
 export default {
-  plugins: [
-    backgroundClip,
-    crossFade,
-    cursor,
-    filter,
-    imageSet,
-    logical,
-    position,
-    sizing,
-    transition
-  ],
+  plugins: [crossFade, imageSet, logical, position, sizing, transition],
   prefixMap: {
     appearance: wmms,
     userSelect: wm,
