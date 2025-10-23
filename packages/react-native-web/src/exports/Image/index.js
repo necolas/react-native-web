@@ -10,7 +10,7 @@
 
 'use client';
 
-import type { ImageProps } from './types';
+import type { ImageProps, Source } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -166,6 +166,11 @@ interface ImageStatics {
     success: (width: number, height: number) => void,
     failure: () => void
   ) => void;
+  resolveAssetSource: (source: Source) => {
+    uri: string,
+    width?: number,
+    height?: number
+  };
   prefetch: (uri: string) => Promise<void>;
   queryCache: (
     uris: Array<string>
@@ -362,6 +367,23 @@ const ImageWithStatics = (Image: React.AbstractComponent<
   React.ElementRef<typeof View>
 > &
   ImageStatics);
+
+ImageWithStatics.resolveAssetSource = function resolveAssetSource(source): {
+  uri: string,
+  width?: number,
+  height?: number
+} {
+  const uri = resolveAssetUri(source) || '';
+  const dimensions = resolveAssetDimensions(source) || {};
+  let width, height;
+  if (typeof dimensions.width === 'number') {
+    width = dimensions.width;
+  }
+  if (typeof dimensions.height === 'number') {
+    height = dimensions.height;
+  }
+  return { uri, width, height };
+};
 
 ImageWithStatics.getSize = function (uri, success, failure) {
   ImageLoader.getSize(uri, success, failure);
