@@ -88,31 +88,23 @@ const ImageLoader = {
     success: (width: number, height: number) => void,
     failure: () => void
   ) {
-    let complete = false;
-    const interval = setInterval(callback, 16);
     const requestId = ImageLoader.load(uri, callback, errorCallback);
-
     function callback() {
       const image = requests[`${requestId}`];
       if (image) {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
           success(naturalWidth, naturalHeight);
-          complete = true;
+        } else {
+          errorCallback();
         }
       }
-      if (complete) {
-        ImageLoader.abort(requestId);
-        clearInterval(interval);
-      }
     }
-
     function errorCallback() {
       if (typeof failure === 'function') {
         failure();
       }
       ImageLoader.abort(requestId);
-      clearInterval(interval);
     }
   },
   has(uri: string): boolean {
