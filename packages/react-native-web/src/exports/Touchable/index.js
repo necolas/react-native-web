@@ -1009,8 +1009,8 @@ const Touchable = {
       '#' + ('00000000' + normalizedColor.toString(16)).substr(-8);
     return (
       <View
-        pointerEvents="none"
         style={{
+          pointerEvents: 'none',
           position: 'absolute',
           borderColor: hexColor.slice(0, -2) + '55', // More opaque
           borderWidth: 1,
