@@ -9,7 +9,7 @@
 
 import { atomic, classic, inline } from './compiler';
 import { createSheet } from './dom';
-import { localizeStyle } from 'styleq/transform-localize-style';
+import { localizeStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
