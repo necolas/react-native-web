@@ -7,7 +7,7 @@
  * @flow
  */
 
-const cache = new WeakMap();
+const cache = new WeakMap<Object, Array<Object>>();
 const markerProp = '$$css$localize';
 
 /**
@@ -19,7 +19,7 @@ const markerProp = '$$css$localize';
  * => { float: 'float-left' }
  */
 
-function compileStyle(style, isRTL) {
+function compileStyle(style: Object, isRTL: boolean) {
   // Create a new compiled style for styleq
   const compiledStyle = {};
   for (const prop in style) {
@@ -35,12 +35,12 @@ function compileStyle(style, isRTL) {
   return compiledStyle;
 }
 
-export function localizeStyle(style, isRTL) {
+export function localizeStyle(style: Object, isRTL: boolean): Object {
   if (style[markerProp] != null) {
     const compiledStyleIndex = isRTL ? 1 : 0;
     // Check the cache in case we've already seen this object
-    if (cache.has(style)) {
-      const cachedStyles = cache.get(style);
+    let cachedStyles = cache.get(style);
+    if (cachedStyles != null) {
       let compiledStyle = cachedStyles[compiledStyleIndex];
       if (compiledStyle == null) {
         // Update the missing cache entry
@@ -53,7 +53,7 @@ export function localizeStyle(style, isRTL) {
 
     // Create a new compiled style for styleq
     const compiledStyle = compileStyle(style, isRTL);
-    const cachedStyles = new Array(2);
+    cachedStyles = new Array<Object>(2);
     cachedStyles[compiledStyleIndex] = compiledStyle;
     cache.set(style, cachedStyles);
     return compiledStyle;
