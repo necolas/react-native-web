@@ -87,7 +87,7 @@ const ImageLoader = {
     success: (width: number, height: number) => void,
     failure: () => void
   ) {
-    const requestId = ImageLoader.load(uri, callback, errorCallback);
+    const requestId = ImageLoader.load(uri, callback, failure);
     function callback() {
       const image = requests.get(requestId);
       if (image) {
@@ -97,23 +97,24 @@ const ImageLoader = {
         }
       }
     }
-    function errorCallback() {
-      if (typeof failure === 'function') {
-        failure();
-      }
-      ImageLoader.abort(requestId);
-    }
   },
   has(uri: string): boolean {
     return ImageUriCache.has(uri);
   },
   load(uri: string, onLoad: Function, onError: Function): number {
     id += 1;
+    const requestId = id;
     const image = new window.Image();
-    image.onerror = onError;
+    image.onerror = () => {
+      onError();
+      ImageLoader.abort(requestId);
+    };
     image.onload = (e) => {
       // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
+      const onDecode = () => {
+        onLoad({ nativeEvent: e });
+        ImageLoader.abort(requestId);
+      };
       if (typeof image.decode === 'function') {
         // Safari currently throws exceptions when decoding svgs.
         // We want to catch that error and allow the load handler
@@ -124,8 +125,8 @@ const ImageLoader = {
       }
     };
     image.src = uri;
-    requests.set(id, image);
-    return id;
+    requests.set(requestId, image);
+    return requestId;
   },
   prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
