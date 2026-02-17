@@ -75,11 +75,10 @@ const requests = new Map();
 
 const ImageLoader = {
   abort(requestId: number) {
-    let image = requests.get(`${requestId}`);
+    const image = requests.get(`${requestId}`);
     if (image) {
       image.onerror = null;
       image.onload = null;
-      image = null;
       requests.delete(`${requestId}`);
     }
   },
