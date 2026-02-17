@@ -37,11 +37,11 @@ export class ImageUriCache {
   static remove(uri: string) {
     const entries = ImageUriCache._entries;
     const entry = entries.get(uri);
-    if (entry) {
+    if (entry?.refCount > 0) {
       entry.refCount -= 1;
+      // Free up entries when the cache is "full"
+      ImageUriCache._cleanUpIfNeeded();
     }
-    // Free up entries when the cache is "full"
-    ImageUriCache._cleanUpIfNeeded();
   }
 
   static _cleanUpIfNeeded() {
