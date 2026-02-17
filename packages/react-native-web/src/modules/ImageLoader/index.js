@@ -75,11 +75,11 @@ const requests = new Map();
 
 const ImageLoader = {
   abort(requestId: number) {
-    const image = requests.get(`${requestId}`);
+    const image = requests.get(requestId);
     if (image) {
       image.onerror = null;
       image.onload = null;
-      requests.delete(`${requestId}`);
+      requests.delete(requestId);
     }
   },
   getSize(
@@ -92,7 +92,7 @@ const ImageLoader = {
     const requestId = ImageLoader.load(uri, callback, errorCallback);
 
     function callback() {
-      const image = requests.get(`${requestId}`);
+      const image = requests.get(requestId);
       if (image) {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
@@ -134,7 +134,7 @@ const ImageLoader = {
       }
     };
     image.src = uri;
-    requests.set(`${id}`, image);
+    requests.set(id, image);
     return id;
   },
   prefetch(uri: string): Promise<void> {
