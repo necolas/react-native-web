@@ -11,32 +11,34 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries = {};
+  static _entries = new Map();
 
   static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
     const isDataUri = dataUriPattern.test(uri);
-    return isDataUri || Boolean(entries[uri]);
+    return isDataUri || entries.has(uri);
   }
 
   static add(uri: string) {
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
-    if (entries[uri]) {
-      entries[uri].lastUsedTimestamp = lastUsedTimestamp;
-      entries[uri].refCount += 1;
+    const entry = entries.get(uri);
+    if (entry) {
+      entry.lastUsedTimestamp = lastUsedTimestamp;
+      entry.refCount += 1;
     } else {
-      entries[uri] = {
+      entries.set(uri, {
         lastUsedTimestamp,
         refCount: 1
-      };
+      });
     }
   }
 
   static remove(uri: string) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    const entry = entries.get(uri);
+    if (entry) {
+      entry.refCount -= 1;
     }
     // Free up entries when the cache is "full"
     ImageUriCache._cleanUpIfNeeded();
@@ -44,14 +46,12 @@ export class ImageUriCache {
 
   static _cleanUpIfNeeded() {
     const entries = ImageUriCache._entries;
-    const imageUris = Object.keys(entries);
 
-    if (imageUris.length + 1 > ImageUriCache._maximumEntries) {
+    if (entries.size + 1 > ImageUriCache._maximumEntries) {
       let leastRecentlyUsedKey;
       let leastRecentlyUsedEntry;
 
-      imageUris.forEach((uri) => {
-        const entry = entries[uri];
+      entries.forEach((entry, uri) => {
         if (
           (!leastRecentlyUsedEntry ||
             entry.lastUsedTimestamp <
@@ -64,23 +64,23 @@ export class ImageUriCache {
       });
 
       if (leastRecentlyUsedKey) {
-        delete entries[leastRecentlyUsedKey];
+        entries.delete(leastRecentlyUsedKey);
       }
     }
   }
 }
 
 let id = 0;
-const requests = {};
+const requests = new Map();
 
 const ImageLoader = {
   abort(requestId: number) {
-    let image = requests[`${requestId}`];
+    let image = requests.get(`${requestId}`);
     if (image) {
       image.onerror = null;
       image.onload = null;
       image = null;
-      delete requests[`${requestId}`];
+      requests.delete(`${requestId}`);
     }
   },
   getSize(
@@ -93,7 +93,7 @@ const ImageLoader = {
     const requestId = ImageLoader.load(uri, callback, errorCallback);
 
     function callback() {
-      const image = requests[`${requestId}`];
+      const image = requests.get(`${requestId}`);
       if (image) {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
@@ -135,7 +135,7 @@ const ImageLoader = {
       }
     };
     image.src = uri;
-    requests[`${id}`] = image;
+    requests.set(`${id}`, image);
     return id;
   },
   prefetch(uri: string): Promise<void> {
