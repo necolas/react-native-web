@@ -111,6 +111,7 @@ const PROPERTIES_STANDARD: { [key: string]: string } = {
   borderStartStyle: 'borderInlineStartStyle',
   borderStartWidth: 'borderInlineStartWidth',
   end: 'insetInlineEnd',
+  experimental_backgroundImage: 'backgroundImage',
   marginEnd: 'marginInlineEnd',
   marginHorizontal: 'marginInline',
   marginStart: 'marginInlineStart',

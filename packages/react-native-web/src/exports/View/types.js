@@ -209,6 +209,7 @@ export type ViewStyle = {
   backgroundSize?: ?string,
   boxShadow?: ?string,
   clip?: ?string,
+  experimental_backgroundImage?: ?string,
   filter?: ?string,
   opacity?: ?number,
   outlineColor?: ?ColorValue,

@@ -9,6 +9,18 @@ import { preprocess } from '../preprocess';
 
 describe('StyleSheet/preprocess', () => {
   describe('non-standard styles', () => {
+    test('converts experimental_backgroundImage to backgroundImage', () => {
+      expect(
+        preprocess({
+          experimental_backgroundImage:
+            'linear-gradient(116.565deg, rgb(255, 215, 0), rgb(0, 0, 255))'
+        })
+      ).toEqual({
+        backgroundImage:
+          'linear-gradient(116.565deg, rgb(255, 215, 0), rgb(0, 0, 255))'
+      });
+    });
+
     test('converts non-standard logical styles', () => {
       expect(
         preprocess({
