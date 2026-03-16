@@ -120,11 +120,20 @@ const ImageLoader = {
   },
   load(uri: string, onLoad: Function, onError: Function): number {
     id += 1;
+    const requestId = id;
     const image = new window.Image();
-    image.onerror = onError;
+    image.onerror = (e) => {
+      if (typeof onError === 'function') {
+        onError(e);
+      }
+      ImageLoader.abort(requestId);
+    };
     image.onload = (e) => {
       // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
+      const onDecode = () => {
+        onLoad({ nativeEvent: e });
+        ImageLoader.abort(requestId);
+      };
       if (typeof image.decode === 'function') {
         // Safari currently throws exceptions when decoding svgs.
         // We want to catch that error and allow the load handler
@@ -135,8 +144,8 @@ const ImageLoader = {
       }
     };
     image.src = uri;
-    requests[`${id}`] = image;
-    return id;
+    requests[`${requestId}`] = image;
+    return requestId;
   },
   prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
