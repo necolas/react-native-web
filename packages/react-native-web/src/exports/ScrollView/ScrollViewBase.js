@@ -74,6 +74,7 @@ const ScrollViewBase: React.AbstractComponent<
   React.ElementRef<typeof View>
 > = React.forwardRef((props, forwardedRef) => {
   const {
+    focusable,
     onScroll,
     onTouchMove,
     onWheel,
@@ -150,9 +151,16 @@ const ScrollViewBase: React.AbstractComponent<
     showsHorizontalScrollIndicator === false ||
     showsVerticalScrollIndicator === false;
 
+  // ScrollView should not be focusable by default to prevent it from being a
+  // keyboard focus target (especially important for Chromium 130+ which makes
+  // scrollable containers focusable as fallback focus targets during reverse
+  // navigation with Shift+Tab). Only override if explicitly set to true.
+  const scrollViewFocusable = focusable === true;
+
   return (
     <View
       {...rest}
+      focusable={scrollViewFocusable}
       onScroll={handleScroll}
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
