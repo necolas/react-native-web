@@ -314,7 +314,7 @@ function LineExample({ description, children }) {
 
       <View
         style={{
-          borderWidth: 2,
+          borderWidth: 1,
           borderColor: 'black',
           width: 200
         }}
@@ -459,6 +459,22 @@ export default function TextPage() {
           <LineExample description="With very long word, text is limited to 1 line and long word is truncated.">
             <Text numberOfLines={1}>
               goal aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </Text>
+          </LineExample>
+
+          <LineExample description="With reduced line height, vertical content is not clipped (1 line)">
+            <Text numberOfLines={1} style={{ lineHeight: 8 }}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
+            </Text>
+          </LineExample>
+
+          <LineExample description="With reduced line height, vertical content is not clipped (2 lines, not working)">
+            <Text numberOfLines={2} style={{ lineHeight: 8 }}>
+              {
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              }
             </Text>
           </LineExample>
 

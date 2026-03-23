@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   textOneLine: {
     maxWidth: '100%',
-    overflow: 'hidden',
+    overflowInline: 'clip',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     wordWrap: 'normal'

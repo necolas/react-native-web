@@ -157,7 +157,7 @@ exports[`components/Text prop "numberOfLines" value is set 1`] = `
 
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
-  class="css-text-146c3p1 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
+  class="css-text-146c3p1 r-maxWidth-dnmrzs r-overflowInline-1b3bawr r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
   dir="auto"
 />
 `;
