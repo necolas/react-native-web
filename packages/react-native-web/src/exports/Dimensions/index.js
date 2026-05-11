@@ -13,6 +13,7 @@
 import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import invariant from 'fbjs/lib/invariant';
 import canUseDOM from '../../modules/canUseDom';
+import { getScopedState } from '../../modules/asyncContext';
 
 export type DisplayMetrics = {|
   fontScale: number,
@@ -30,7 +31,7 @@ type DimensionKey = 'window' | 'screen';
 
 type DimensionEventListenerType = 'change';
 
-const dimensions = {
+const createDefaultDimensions = (): DimensionsValue => ({
   window: {
     fontScale: 1,
     height: 0,
@@ -43,7 +44,19 @@ const dimensions = {
     scale: 1,
     width: 0
   }
-};
+});
+
+// `dimensions` is the only piece of module state that needs per-request
+// isolation: each SSR render writes its own `window` / `screen` values via
+// `Dimensions.set`, and `Dimensions.get` reads them back. On the client
+// and outside any request scope this returns a stable process singleton.
+function getDimensions(): DimensionsValue {
+  return getScopedState('Dimensions', createDefaultDimensions);
+}
+
+// Event listeners are runtime subscriptions added post-mount; on the
+// server no resize events fire. Keeping these module-level matches the
+// historical singleton behavior and avoids spurious per-request maps.
 const listeners = {};
 
 let shouldInit = canUseDOM;
@@ -79,6 +92,7 @@ function update() {
     width = docEl.clientWidth;
   }
 
+  const dimensions = getDimensions();
   dimensions.window = {
     fontScale: 1,
     height,
@@ -97,6 +111,7 @@ function update() {
 function handleResize() {
   update();
   if (Array.isArray(listeners['change'])) {
+    const dimensions = getDimensions();
     listeners['change'].forEach((handler) => handler(dimensions));
   }
 }
@@ -107,6 +122,7 @@ export default class Dimensions {
       shouldInit = false;
       update();
     }
+    const dimensions = getDimensions();
     invariant(dimensions[dimension], `No dimension set for key ${dimension}`);
     return dimensions[dimension];
   }
@@ -116,6 +132,7 @@ export default class Dimensions {
       if (canUseDOM) {
         invariant(false, 'Dimensions cannot be set in the browser');
       } else {
+        const dimensions = getDimensions();
         if (initialDimensions.screen != null) {
           dimensions.screen = initialDimensions.screen;
         }
@@ -160,6 +177,7 @@ export default class Dimensions {
         );
       } else {
         setForHydration = true;
+        const dimensions = getDimensions();
         if (initialDimensions.screen != null) {
           dimensions.screen = initialDimensions.screen;
         }
