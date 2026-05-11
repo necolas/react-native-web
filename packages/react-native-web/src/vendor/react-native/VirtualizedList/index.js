@@ -622,7 +622,8 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       props.onEndReachedThreshold,
     );
     const {contentLength, offset, visibleLength} = this._scrollMetrics;
-    const distanceFromEnd = contentLength - visibleLength - offset;
+    const distanceFromEnd =
+      contentLength - visibleLength - offset - this._footerLength;
 
     // Wait until the scroll view metrics have been set up. And until then,
     // we will trust the initialNumToRender suggestion
@@ -1519,7 +1520,8 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     } = this.props;
     const {contentLength, visibleLength, offset} = this._scrollMetrics;
     let distanceFromStart = offset;
-    let distanceFromEnd = contentLength - visibleLength - offset;
+    let distanceFromEnd =
+      contentLength - visibleLength - offset - this._footerLength;
 
     // Especially when oERT is zero it's necessary to 'floor' very small distance values to be 0
     // since debouncing causes us to not fire this event for every single "pixel" we scroll and can thus
