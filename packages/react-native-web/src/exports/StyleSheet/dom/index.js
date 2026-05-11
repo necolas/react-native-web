@@ -14,6 +14,7 @@ import type {
 import canUseDOM from '../../../modules/canUseDom';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
+import { installDeltaIngest } from './ingestDelta';
 
 type Sheet = {
   ...OrderedCSSStyleSheet,
@@ -80,6 +81,12 @@ export function createSheet(
       });
       roots.set(rootNode, sheets.length);
       sheets.push(sheet);
+      // Install the global ingest hook so any `<style data-rnw-delta>`
+      // elements that stream into the document AFTER this point — when
+      // suspense boundaries resolve and React commits their chunk —
+      // also get registered into the bookkeeping. The hook also drains
+      // any IDs that arrived in window.__RNW_DELTA__ before RNW booted.
+      installDeltaIngest(sheets);
     } else {
       const index = roots.get(rootNode);
       if (index == null) {
@@ -122,6 +129,16 @@ export function createSheet(
       let result: InsertResult = { groupCreated: false, ruleAdded: false };
       sheets.forEach((s, index) => {
         const r = s.insert(cssText, groupValue);
+        if (index === 0) {
+          result = r;
+        }
+      });
+      return result;
+    },
+    registerExisting(cssText: string, groupValue: number): InsertResult {
+      let result: InsertResult = { groupCreated: false, ruleAdded: false };
+      sheets.forEach((s, index) => {
+        const r = s.registerExisting(cssText, groupValue);
         if (index === 0) {
           result = r;
         }

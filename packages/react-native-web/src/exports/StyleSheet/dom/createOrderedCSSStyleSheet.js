@@ -22,7 +22,13 @@ export type InsertResult = {|
 
 export type OrderedCSSStyleSheet = {|
   getTextContent: () => string,
-  insert: (cssText: string, groupValue: number) => InsertResult
+  insert: (cssText: string, groupValue: number) => InsertResult,
+  // Update the bookkeeping (groups + selectors) as if the rule had been
+  // inserted, but skip the CSSOM `insertRule` call. Used to tell the runtime
+  // sheet about rules that already exist in a separate `<style>` element
+  // (e.g. a streaming SSR delta tag emitted into <body>) so it does not
+  // re-insert them into the primary sheet at runtime.
+  registerExisting: (cssText: string, groupValue: number) => InsertResult
 |};
 
 const slice = Array.prototype.slice;
@@ -183,6 +189,35 @@ export default function createOrderedCSSStyleSheet(
             ruleAdded = false;
           }
         }
+      }
+
+      return { groupCreated, ruleAdded };
+    },
+
+    /**
+     * Like `insert`, but only updates the bookkeeping records — the rule is
+     * NOT written into the primary CSSOM sheet. Used by the streaming-SSR
+     * client ingest path: a `<style data-rnw-delta="N">` element already
+     * carries the rule in the document, so the browser is already applying
+     * it; we just need RNW to know about it so subsequent runtime inserts
+     * dedup correctly.
+     */
+    registerExisting(cssText: string, groupValue: number): InsertResult {
+      const group = Number(groupValue);
+      let groupCreated = false;
+      let ruleAdded = false;
+
+      if (groups[group] == null) {
+        const markerRule = encodeGroupRule(group);
+        groups[group] = { start: null, rules: [markerRule] };
+        groupCreated = true;
+      }
+
+      const selectorText = getSelectorText(cssText);
+      if (selectorText != null && selectors[selectorText] == null) {
+        selectors[selectorText] = true;
+        groups[group].rules.push(cssText);
+        ruleAdded = true;
       }
 
       return { groupCreated, ruleAdded };
