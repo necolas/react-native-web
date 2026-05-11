@@ -7,7 +7,10 @@
  * @flow strict-local
  */
 
-import type { OrderedCSSStyleSheet } from './createOrderedCSSStyleSheet';
+import type {
+  InsertResult,
+  OrderedCSSStyleSheet
+} from './createOrderedCSSStyleSheet';
 import canUseDOM from '../../../modules/canUseDom';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
@@ -16,6 +19,8 @@ type Sheet = {
   ...OrderedCSSStyleSheet,
   id: string
 };
+
+export type { InsertResult } from './createOrderedCSSStyleSheet';
 
 const defaultId = 'react-native-stylesheet';
 const roots = new WeakMap<Node, number>();
@@ -81,10 +86,18 @@ export function createSheet(
       return sheet.getTextContent();
     },
     id,
-    insert(cssText: string, groupValue: number) {
-      sheets.forEach((s) => {
-        s.insert(cssText, groupValue);
+    insert(cssText: string, groupValue: number): InsertResult {
+      // Forward the primary sheet's result. Secondary sheets (e.g. Shadow DOM
+      // clones) inherit the same dedup state so the primary's signal is the
+      // authoritative answer for whether new content was added.
+      let result: InsertResult = { groupCreated: false, ruleAdded: false };
+      sheets.forEach((s, index) => {
+        const r = s.insert(cssText, groupValue);
+        if (index === 0) {
+          result = r;
+        }
       });
+      return result;
     }
   };
 }

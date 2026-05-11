@@ -14,9 +14,127 @@ import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
 import canUseDOM from '../../modules/canUseDom';
+import { getScopedState, hasRequestScope } from '../../modules/asyncContext';
 
 const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
 const sheet = createSheet();
+
+// ---------------------------------------------------------------------------
+// Per-request delta tracking
+//
+// On the server, callers wrap each SSR render in `runInRequestScope`. Any rule
+// inserted into the process-wide sheet during the scope is also pushed into a
+// per-request delta buffer here, so the streaming pipeline can emit only the
+// rules that landed during the current chunk. Outside any scope (client,
+// legacy two-pass renderer, module-load time on the server) this is a no-op
+// and the shared sheet behaves exactly as upstream.
+// ---------------------------------------------------------------------------
+
+const REQUEST_DELTA_KEY = 'StyleSheet.delta';
+
+type RequestDelta = {|
+  // Rules added in insertion order, bucketed by group number.
+  pending: Map<number, Array<string>>,
+  // Groups for which a `[stylesheet-group="N"]{}` marker rule has already
+  // been emitted in a prior flush during this request. Subsequent flushes
+  // skip the marker for these groups; only the new content is emitted.
+  emittedGroupMarkers: Set<number>
+|};
+
+function createRequestDelta(): RequestDelta {
+  return {
+    emittedGroupMarkers: new Set(),
+    pending: new Map()
+  };
+}
+
+function appendRequestDelta(cssText: string, groupValue: number): void {
+  if (!hasRequestScope()) return;
+  const delta = getScopedState<RequestDelta>(
+    REQUEST_DELTA_KEY,
+    createRequestDelta
+  );
+  const group = Number(groupValue);
+  let bucket = delta.pending.get(group);
+  if (bucket == null) {
+    bucket = [];
+    delta.pending.set(group, bucket);
+  }
+  bucket.push(cssText);
+}
+
+function encodeGroupMarker(group: number): string {
+  return `[stylesheet-group="${group}"]{}`;
+}
+
+/**
+ * Drain the current request's pending delta into a CSS text fragment suitable
+ * for emission as `<style data-rnw-delta="...">{textContent}</style>` in the
+ * streamed response. Returns an empty string if there is no active request
+ * scope or no pending rules.
+ *
+ * Each group present in the delta is preceded by its `[stylesheet-group="N"]`
+ * marker rule the first time it appears for the request; subsequent flushes
+ * skip the marker because the client already knows the group exists.
+ */
+function takeRequestDelta(): string {
+  if (!hasRequestScope()) return '';
+  const delta = getScopedState<RequestDelta>(
+    REQUEST_DELTA_KEY,
+    createRequestDelta
+  );
+  if (delta.pending.size === 0) return '';
+
+  const orderedGroups = Array.from(delta.pending.keys()).sort((a, b) =>
+    a > b ? 1 : -1
+  );
+  const out = [];
+  for (const group of orderedGroups) {
+    const bucket = delta.pending.get(group);
+    if (bucket == null || bucket.length === 0) continue;
+    if (!delta.emittedGroupMarkers.has(group)) {
+      out.push(encodeGroupMarker(group));
+      delta.emittedGroupMarkers.add(group);
+    }
+    for (const rule of bucket) {
+      out.push(rule);
+    }
+  }
+  delta.pending.clear();
+  return out.join('\n');
+}
+
+/**
+ * Discard any pending delta entries for the current request without emitting
+ * them. The streaming pipeline calls this after the shell head dump, since
+ * the full sheet text has already been emitted there and the delta channel
+ * should only carry rules added *after* that point.
+ */
+function resetRequestDelta(): void {
+  if (!hasRequestScope()) return;
+  const delta = getScopedState<RequestDelta>(
+    REQUEST_DELTA_KEY,
+    createRequestDelta
+  );
+  delta.pending.clear();
+  // Note: we do not reset emittedGroupMarkers — once a marker has been emitted
+  // for the request (e.g. inline in the shell dump's text), subsequent chunks
+  // should not re-emit it.
+}
+
+/**
+ * Pre-mark groups whose markers are already present in the shell head dump
+ * so subsequent delta flushes don't emit duplicate markers for them. Called
+ * by the streaming pipeline immediately after rendering the shell.
+ */
+function markGroupsAsEmitted(groupNumbers: $ReadOnlyArray<number>): void {
+  if (!hasRequestScope()) return;
+  const delta = getScopedState<RequestDelta>(
+    REQUEST_DELTA_KEY,
+    createRequestDelta
+  );
+  for (const g of groupNumbers) delta.emittedGroupMarkers.add(g);
+}
 
 const defaultPreprocessOptions = { shadow: true, textShadow: true };
 
@@ -41,7 +159,14 @@ function insertRules(compiledOrderedRules) {
   compiledOrderedRules.forEach(([rules, order]) => {
     if (sheet != null) {
       rules.forEach((rule) => {
-        sheet.insert(rule, order);
+        const { ruleAdded } = sheet.insert(rule, order);
+        // Only mirror rules that the dedup check accepted. Rules that the
+        // shared sheet already had (module-load-time inserts from a prior
+        // request, or repeated inserts within the same request) must not
+        // appear in the delta — they are already in the head dump.
+        if (ruleAdded) {
+          appendRequestDelta(rule, order);
+        }
       });
     }
   });
@@ -173,6 +298,9 @@ StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
 StyleSheet.getSheet = getSheet;
+StyleSheet.takeRequestDelta = takeRequestDelta;
+StyleSheet.resetRequestDelta = resetRequestDelta;
+StyleSheet.markGroupsAsEmitted = markGroupsAsEmitted;
 // `hairlineWidth` is not implemented using screen density as browsers may
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
@@ -189,6 +317,9 @@ export type IStyleSheet = {
   compose: typeof compose,
   flatten: typeof flatten,
   getSheet: typeof getSheet,
+  takeRequestDelta: typeof takeRequestDelta,
+  resetRequestDelta: typeof resetRequestDelta,
+  markGroupsAsEmitted: typeof markGroupsAsEmitted,
   hairlineWidth: number
 };
 

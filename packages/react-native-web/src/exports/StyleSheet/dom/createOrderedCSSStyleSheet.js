@@ -10,9 +10,19 @@
 type Groups = { [key: number]: { start: ?number, rules: Array<string> } };
 type Selectors = { [key: string]: boolean };
 
+export type InsertResult = {|
+  // True iff the user rule passed the selectors dedup check and was appended
+  // to the group's rule list. False if the selector was already known or the
+  // rule was rejected by the CSSOM (vendor-prefix / unrecognized pseudo).
+  ruleAdded: boolean,
+  // True iff this insert created a brand-new group (the marker rule was added
+  // for the first time).
+  groupCreated: boolean
+|};
+
 export type OrderedCSSStyleSheet = {|
   getTextContent: () => string,
-  insert: (cssText: string, groupValue: number) => void
+  insert: (cssText: string, groupValue: number) => InsertResult
 |};
 
 const slice = Array.prototype.slice;
@@ -106,16 +116,22 @@ export default function createOrderedCSSStyleSheet(
     },
 
     /**
-     * Insert a rule into the style sheet
+     * Insert a rule into the style sheet. Returns details about whether the
+     * group and/or rule were actually added so callers can mirror genuine
+     * mutations into a side channel (e.g. an ALS per-request delta buffer)
+     * without re-implementing the dedup logic.
      */
-    insert(cssText: string, groupValue: number) {
+    insert(cssText: string, groupValue: number): InsertResult {
       const group = Number(groupValue);
+      let groupCreated = false;
+      let ruleAdded = false;
 
       // Create a new group.
       if (groups[group] == null) {
         const markerRule = encodeGroupRule(group);
         // Create the internal record.
         groups[group] = { start: null, rules: [markerRule] };
+        groupCreated = true;
         // Update CSSOM.
         if (sheet != null) {
           sheetInsert(sheet, group, markerRule);
@@ -130,6 +146,7 @@ export default function createOrderedCSSStyleSheet(
         // Update the internal records.
         selectors[selectorText] = true;
         groups[group].rules.push(cssText);
+        ruleAdded = true;
         // Update CSSOM.
         if (sheet != null) {
           const isInserted = sheetInsert(sheet, group, cssText);
@@ -137,9 +154,13 @@ export default function createOrderedCSSStyleSheet(
             // Revert internal record change if a rule was rejected (e.g.,
             // unrecognized pseudo-selector)
             groups[group].rules.pop();
+            delete selectors[selectorText];
+            ruleAdded = false;
           }
         }
       }
+
+      return { groupCreated, ruleAdded };
     }
   };
 
