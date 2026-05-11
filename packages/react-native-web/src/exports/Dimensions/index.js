@@ -47,6 +47,7 @@ const dimensions = {
 const listeners = {};
 
 let shouldInit = canUseDOM;
+let setForHydration = false;
 
 function update() {
   if (!canUseDOM) {
@@ -102,7 +103,7 @@ function handleResize() {
 
 export default class Dimensions {
   static get(dimension: DimensionKey): DisplayMetrics {
-    if (shouldInit) {
+    if (shouldInit && !setForHydration) {
       shouldInit = false;
       update();
     }
@@ -148,6 +149,30 @@ export default class Dimensions {
         (_handler) => _handler !== handler
       );
     }
+  }
+
+  static unsafe_setForHydration(initialDimensions: ?DimensionsValue): void {
+    if (initialDimensions) {
+      if (!canUseDOM) {
+        invariant(
+          false,
+          'Dimensions unsafe_setForHydration should only be used in the browser'
+        );
+      } else {
+        setForHydration = true;
+        if (initialDimensions.screen != null) {
+          dimensions.screen = initialDimensions.screen;
+        }
+        if (initialDimensions.window != null) {
+          dimensions.window = initialDimensions.window;
+        }
+      }
+    }
+  }
+
+  static unsafe_restoreFromHydration(): void {
+    setForHydration = false;
+    update();
   }
 }
 
