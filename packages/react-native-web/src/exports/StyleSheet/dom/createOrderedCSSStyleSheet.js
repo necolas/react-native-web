@@ -43,29 +43,54 @@ const slice = Array.prototype.slice;
  * https://gist.github.com/necolas/aa0c37846ad6bd3b05b727b959e82674
  */
 export default function createOrderedCSSStyleSheet(
-  sheet: ?CSSStyleSheet
+  sheet: ?CSSStyleSheet,
+  additionalSheets?: ?$ReadOnlyArray<CSSStyleSheet>
 ): OrderedCSSStyleSheet {
   const groups: Groups = {};
   const selectors: Selectors = {};
 
   /**
-   * Hydrate approximate record from any existing rules in the sheet.
+   * Hydrate the records from rules in a CSSStyleSheet. `isPrimary` controls
+   * whether to record absolute rule indices in `groups[g].start` — only the
+   * primary sheet's positions are meaningful for `sheetInsert`. For
+   * additional (delta) sheets we just merge their rules into the bookkeeping
+   * so the dedup map sees them; later runtime inserts will compute their own
+   * positions in the primary sheet.
    */
-  if (sheet != null) {
+  function hydrate(source: CSSStyleSheet, isPrimary: boolean) {
     let group;
-    slice.call(sheet.cssRules).forEach((cssRule, i) => {
+    slice.call(source.cssRules).forEach((cssRule, i) => {
       const cssText = cssRule.cssText;
-      // Create record of existing selectors and rules
       if (cssText.indexOf('stylesheet-group') > -1) {
         group = decodeGroupRule(cssRule);
-        groups[group] = { start: i, rules: [cssText] };
+        // Don't overwrite an existing group record discovered in an earlier
+        // source — both sheets may contain the marker for the same group.
+        if (groups[group] == null) {
+          groups[group] = {
+            start: isPrimary ? i : null,
+            rules: [cssText]
+          };
+        }
       } else {
         const selectorText = getSelectorText(cssText);
-        if (selectorText != null) {
+        if (
+          selectorText != null &&
+          group != null &&
+          selectors[selectorText] == null
+        ) {
           selectors[selectorText] = true;
           groups[group].rules.push(cssText);
         }
       }
+    });
+  }
+
+  if (sheet != null) {
+    hydrate(sheet, true);
+  }
+  if (additionalSheets != null) {
+    additionalSheets.forEach((s) => {
+      if (s != null) hydrate(s, false);
     });
   }
 

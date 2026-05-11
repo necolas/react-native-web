@@ -165,5 +165,64 @@ describe('createOrderedCSSStyleSheet', () => {
         .b {color: red;}"
       `);
     });
+
+    test('hydrates from additional (streaming-delta) sheets', () => {
+      // Primary sheet contains the shell head dump (group 0 + group 2).
+      const primary = insertStyleElement();
+      const primaryServer = createOrderedCSSStyleSheet();
+      primaryServer.insert('.a { color: red }', 0);
+      primaryServer.insert('.b { width: 10px }', 2);
+      primary.appendChild(
+        document.createTextNode(primaryServer.getTextContent())
+      );
+
+      // Two delta tags, as a streaming SSR pipeline would have emitted them.
+      // Delta 1 carries group 1 rules; delta 2 carries group 3 rules. They
+      // include their own group-marker rules so hydration knows which group
+      // each rule belongs to.
+      const delta1 = insertStyleElement();
+      const deltaServer1 = createOrderedCSSStyleSheet();
+      deltaServer1.insert('.c { padding: 8px }', 1);
+      delta1.appendChild(
+        document.createTextNode(deltaServer1.getTextContent())
+      );
+
+      const delta2 = insertStyleElement();
+      const deltaServer2 = createOrderedCSSStyleSheet();
+      deltaServer2.insert('.d { margin: 4px }', 3);
+      delta2.appendChild(
+        document.createTextNode(deltaServer2.getTextContent())
+      );
+
+      const clientSheet = createOrderedCSSStyleSheet(primary.sheet, [
+        delta1.sheet,
+        delta2.sheet
+      ]);
+
+      // The unified record sees every group from every source, in order.
+      expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
+        "[stylesheet-group="0"] {}
+        .a {color: red;}
+        [stylesheet-group="1"] {}
+        .c {padding: 8px;}
+        [stylesheet-group="2"] {}
+        .b {width: 10px;}
+        [stylesheet-group="3"] {}
+        .d {margin: 4px;}"
+      `);
+
+      // Dedup is unified: a rule that already lives in a delta tag is a
+      // no-op when inserted again at runtime.
+      const repeatPaddingResult = clientSheet.insert('.c { padding: 8px }', 1);
+      expect(repeatPaddingResult.ruleAdded).toBe(false);
+
+      // A brand-new rule at runtime lands in the primary sheet's records.
+      const newResult = clientSheet.insert('.e { gap: 12px }', 1);
+      expect(newResult.ruleAdded).toBe(true);
+
+      removeStyleElement(primary);
+      removeStyleElement(delta1);
+      removeStyleElement(delta2);
+    });
   });
 });
