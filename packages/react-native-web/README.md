@@ -1,3 +1,17 @@
+# This fork
+
+This is a fork of [React Native Web](https://necolas.github.io/react-native-web/) made to experiment with and add support for SSR Suspense.
+
+The running changelog from this fork
+
+- The ability to override Dimensions on both the server and browser, to keep the value in sync for SSR + Hydration
+- Fixing support for latest stylex
+- Fixing virtualization for lists with very large footers
+- AsyncLocalStorage scoping of Dimensions for concurrent SSR request isolation
+- ALS scoping of StyleSheets
+- Support for additional react-native-stylesheet elements, which will be appended to every suspense chunk returned by the server. This was implemented to prevent FOUC.
+
+
 # React Native for Web
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
