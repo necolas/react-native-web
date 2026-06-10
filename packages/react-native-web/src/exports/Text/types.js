@@ -26,6 +26,25 @@ type FontWeightValue =
 
 type NumberOrString = number | string;
 
+export type TextLayout = {|
+  ascender: number,
+  capHeight: number,
+  descender: number,
+  height: number,
+  width: number,
+  x: number,
+  xHeight: number,
+  y: number
+|};
+
+export type TextLayoutEvent = {
+  nativeEvent: {
+    lines: Array<TextLayout>,
+    target?: any
+  },
+  timeStamp: number
+};
+
 export type TextStyle = {
   ...ViewStyle,
   color?: ?ColorValue,
@@ -116,6 +135,7 @@ export type TextProps = {
     | 'listitem'
     | 'none'
     | 'text',
+  onTextLayout?: (e: TextLayoutEvent) => mixed,
   onPress?: (e: any) => void,
   selectable?: boolean
 };

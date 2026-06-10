@@ -281,6 +281,224 @@ describe('components/Text', () => {
     });
   });
 
+  describe('prop "onTextLayout"', () => {
+    let createRange;
+    let getBoundingClientRect;
+    let ResizeObserver;
+    let resizeObserverObserve;
+
+    const rect = ({ bottom, height, left, right, top, width }) => ({
+      bottom,
+      height,
+      left,
+      right,
+      top,
+      width
+    });
+
+    beforeEach(() => {
+      const range = {
+        detach: jest.fn(),
+        getClientRects: jest.fn(() => [
+          rect({
+            bottom: 30,
+            height: 10,
+            left: 20,
+            right: 70,
+            top: 20,
+            width: 50
+          }),
+          rect({
+            bottom: 30,
+            height: 10,
+            left: 75,
+            right: 95,
+            top: 20,
+            width: 20
+          }),
+          rect({
+            bottom: 45,
+            height: 10,
+            left: 20,
+            right: 60,
+            top: 35,
+            width: 40
+          })
+        ]),
+        selectNodeContents: jest.fn()
+      };
+      createRange = jest
+        .spyOn(document, 'createRange')
+        .mockImplementation(() => range);
+      getBoundingClientRect = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockImplementation(() =>
+          rect({
+            bottom: 60,
+            height: 40,
+            left: 20,
+            right: 100,
+            top: 20,
+            width: 80
+          })
+        );
+      resizeObserverObserve = jest.fn();
+      ResizeObserver = window.ResizeObserver;
+      window.ResizeObserver = jest.fn(function (callback) {
+        this.callback = callback;
+        this.disconnect = jest.fn();
+        this.observe = resizeObserverObserve;
+        this.unobserve = jest.fn();
+      });
+    });
+
+    afterEach(() => {
+      createRange.mockRestore();
+      getBoundingClientRect.mockRestore();
+      window.ResizeObserver = ResizeObserver;
+    });
+
+    test('is called with text line measurements', () => {
+      const onTextLayout = jest.fn();
+      act(() => {
+        render(<Text onTextLayout={onTextLayout}>Hello world</Text>);
+      });
+
+      expect(onTextLayout).toBeCalledTimes(1);
+      expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
+        {
+          ascender: 10,
+          capHeight: 10,
+          descender: 0,
+          height: 10,
+          width: 75,
+          x: 0,
+          xHeight: 10,
+          y: 0
+        },
+        {
+          ascender: 10,
+          capHeight: 10,
+          descender: 0,
+          height: 10,
+          width: 40,
+          x: 0,
+          xHeight: 10,
+          y: 15
+        }
+      ]);
+    });
+
+    test('does not measure text layout without a handler', () => {
+      act(() => {
+        render(<Text>Hello world</Text>);
+      });
+
+      expect(createRange).not.toBeCalled();
+    });
+
+    test('does not measure again after a render without layout changes', () => {
+      const onTextLayout = jest.fn();
+      let rerender;
+      act(() => {
+        ({ rerender } = render(
+          <Text nativeID="one" onTextLayout={onTextLayout}>
+            Hello world
+          </Text>
+        ));
+      });
+
+      expect(createRange).toBeCalledTimes(1);
+
+      act(() => {
+        rerender(
+          <Text nativeID="two" onTextLayout={onTextLayout}>
+            Hello world
+          </Text>
+        );
+      });
+
+      expect(createRange).toBeCalledTimes(1);
+    });
+
+    test('groups fragments with vertical overlap into the same line', () => {
+      document.createRange().getClientRects.mockImplementationOnce(() => [
+        rect({
+          bottom: 40,
+          height: 20,
+          left: 20,
+          right: 60,
+          top: 20,
+          width: 40
+        }),
+        rect({
+          bottom: 35,
+          height: 10,
+          left: 62,
+          right: 100,
+          top: 25,
+          width: 38
+        }),
+        rect({
+          bottom: 60,
+          height: 10,
+          left: 20,
+          right: 70,
+          top: 50,
+          width: 50
+        })
+      ]);
+      const onTextLayout = jest.fn();
+      act(() => {
+        render(
+          <Text onTextLayout={onTextLayout}>
+            <Text>Big</Text>
+            <Text>small</Text>
+            {'\nNext'}
+          </Text>
+        );
+      });
+
+      expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
+        {
+          ascender: 20,
+          capHeight: 20,
+          descender: 0,
+          height: 20,
+          width: 80,
+          x: 0,
+          xHeight: 20,
+          y: 0
+        },
+        {
+          ascender: 10,
+          capHeight: 10,
+          descender: 0,
+          height: 10,
+          width: 50,
+          x: 0,
+          xHeight: 10,
+          y: 30
+        }
+      ]);
+    });
+
+    test('observes the parent element for layout changes', () => {
+      let container;
+      act(() => {
+        ({ container } = render(
+          <div>
+            <Text onTextLayout={() => {}}>Hello world</Text>
+          </div>
+        ));
+      });
+
+      const textNode = container.firstChild.firstChild;
+      expect(resizeObserverObserve).toBeCalledWith(textNode);
+      expect(resizeObserverObserve).toBeCalledWith(textNode.parentElement);
+    });
+  });
+
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
