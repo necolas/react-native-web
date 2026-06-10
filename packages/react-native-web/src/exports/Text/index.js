@@ -21,6 +21,7 @@ import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
+import useTextLayout from '../../modules/useTextLayout';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
@@ -69,6 +70,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
       onSelectionChangeShouldSetResponderCapture,
       onStartShouldSetResponder,
       onStartShouldSetResponderCapture,
+      onTextLayout,
       selectable,
       ...rest
     } = props;
@@ -87,6 +89,7 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> =
     const { direction: contextDirection } = useLocaleContext();
 
     useElementLayout(hostRef, onLayout);
+    useTextLayout(hostRef, onTextLayout);
     useResponderEvents(hostRef, {
       onMoveShouldSetResponder,
       onMoveShouldSetResponderCapture,
