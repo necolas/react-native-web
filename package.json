@@ -83,5 +83,12 @@
     "trailingComma": "none"
   },
   "author": "Nicolas Gallagher",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/owner/repo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
 }
