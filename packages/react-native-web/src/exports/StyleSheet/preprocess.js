@@ -141,8 +141,8 @@ export const preprocess = <T: {| [key: string]: any |}>(
 
   // Convert shadow styles
   if (
-    (options.shadow === true,
-    style.shadowColor != null ||
+    options.shadow === true &&
+    (style.shadowColor != null ||
       style.shadowOffset != null ||
       style.shadowOpacity != null ||
       style.shadowRadius != null)
@@ -159,8 +159,8 @@ export const preprocess = <T: {| [key: string]: any |}>(
 
   // Convert text shadow styles
   if (
-    (options.textShadow === true,
-    style.textShadowColor != null ||
+    options.textShadow === true &&
+    (style.textShadowColor != null ||
       style.textShadowOffset != null ||
       style.textShadowRadius != null)
   ) {
