@@ -241,6 +241,34 @@ describe('modules/createDOMProps', () => {
     expect(props.role).toEqual('button');
   });
 
+  describe('redundant "heading" role is not set on heading elements', () => {
+    test('prop "role" of "heading" on heading elements', () => {
+      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((elementType) => {
+        const props = createDOMProps(elementType, { role: 'heading' });
+        expect(props.role).toBeUndefined();
+      });
+    });
+
+    test('prop "accessibilityRole" of "header" on heading elements', () => {
+      const props = createDOMProps('h1', { accessibilityRole: 'header' });
+      expect(props.role).toBeUndefined();
+    });
+
+    test('prop "role" of "heading" on non-heading elements', () => {
+      const props = createDOMProps('div', {
+        role: 'heading',
+        'aria-level': 2
+      });
+      expect(props.role).toEqual('heading');
+      expect(props['aria-level']).toEqual(2);
+    });
+
+    test('prop "accessibilityRole" of "header" on non-heading elements', () => {
+      const props = createDOMProps('div', { accessibilityRole: 'header' });
+      expect(props.role).toEqual('heading');
+    });
+  });
+
   test('prop "nativeID" becomes "id"', () => {
     const nativeID = 'Example.nativeID';
     const props = createProps({ nativeID });

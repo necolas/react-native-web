@@ -16,6 +16,7 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
 const isArray = Array.isArray;
 
 const uppercasePattern = /[A-Z]/g;
+const headingPattern = /^h[1-6]$/;
 function toHyphenLower(match) {
   return '-' + match.toLowerCase();
 }
@@ -652,8 +653,16 @@ const createDOMProps = (elementType, props, options) => {
   }
   */
   if (role != null) {
-    // 'presentation' synonym has wider browser support
-    domProps['role'] = role === 'none' ? 'presentation' : role;
+    // Skip the role when it is redundant with the element type,
+    // e.g., <h1 role="heading">, which fails accessibility audits.
+    const isRedundantHeadingRole =
+      role === 'heading' &&
+      typeof elementType === 'string' &&
+      headingPattern.test(elementType);
+    if (!isRedundantHeadingRole) {
+      // 'presentation' synonym has wider browser support
+      domProps['role'] = role === 'none' ? 'presentation' : role;
+    }
   }
 
   /*
