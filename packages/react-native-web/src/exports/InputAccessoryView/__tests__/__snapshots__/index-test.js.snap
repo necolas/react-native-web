@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/InputAccessoryView is exported and renders its children 1`] = `
+<div
+  class="css-view-g5y9jx"
+  id="accessory"
+  style="align-self: flex-start; border-top-color: rgba(255,0,0,1.00); border-right-color: rgba(255,0,0,1.00); border-bottom-color: rgba(255,0,0,1.00); border-left-color: rgba(255,0,0,1.00); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;"
+>
+  <div>
+    child
+  </div>
+</div>
+`;
