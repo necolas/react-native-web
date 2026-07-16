@@ -216,6 +216,28 @@ describe('modules/createDOMProps', () => {
     });
   });
 
+  test('prop "accessibilityDisabled" becomes "aria-disabled" and "disabled"', () => {
+    const accessibilityDisabled = true;
+    const props = createDOMProps('button', { accessibilityDisabled });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props.disabled).toEqual(true);
+  });
+
+  test('prop "aria-disabled" alone does not become "disabled"', () => {
+    const props = createDOMProps('button', { 'aria-disabled': true });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props.disabled).toBeUndefined();
+  });
+
+  test('props "aria-disabled" and "accessibilityDisabled" become "aria-disabled" and "disabled"', () => {
+    const props = createDOMProps('button', {
+      'aria-disabled': true,
+      accessibilityDisabled: true
+    });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props.disabled).toEqual(true);
+  });
+
   test('prop "accessibilityLabel" becomes "aria-label"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const props = createProps({ accessibilityLabel });

@@ -201,7 +201,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled}
+      accessibilityDisabled={disabled}
       onBlur={blurHandler}
       onContextMenu={contextMenuHandler}
       onFocus={focusHandler}

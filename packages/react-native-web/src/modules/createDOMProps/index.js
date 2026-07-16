@@ -331,13 +331,17 @@ const createDOMProps = (elementType, props, options) => {
 
   if (disabled === true) {
     domProps['aria-disabled'] = true;
-    // Enhance with native semantics
+    // Enhance with native semantics. The native 'disabled' attribute removes
+    // the element from the tab flow and blocks focus, so it is only set when
+    // the element is disabled (not when only 'aria-disabled' is set, which
+    // must keep the element focusable and perceivable by assistive tech).
     if (
-      elementType === 'button' ||
-      elementType === 'form' ||
-      elementType === 'input' ||
-      elementType === 'select' ||
-      elementType === 'textarea'
+      accessibilityDisabled === true &&
+      (elementType === 'button' ||
+        elementType === 'form' ||
+        elementType === 'input' ||
+        elementType === 'select' ||
+        elementType === 'textarea')
     ) {
       domProps.disabled = true;
     }

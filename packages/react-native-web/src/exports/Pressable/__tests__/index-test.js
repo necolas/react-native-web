@@ -54,6 +54,21 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('prop "disabled" with role "button"', () => {
+    const { container } = render(<Pressable disabled={true} role="button" />);
+    expect(container.firstChild.hasAttribute('disabled')).toBe(true);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('prop "aria-disabled" with role "button"', () => {
+    const { container } = render(
+      <Pressable aria-disabled={true} role="button" />
+    );
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
+    expect(container.firstChild.hasAttribute('disabled')).toBe(false);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
   test('prop "href"', () => {
     const { container } = render(<Pressable href="#href" />);
     expect(container.firstChild).toMatchSnapshot();
