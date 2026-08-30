@@ -140,7 +140,7 @@ Callback that is called when the text input's selection changes.
 Callback that is called when the keyboard's submit button is pressed. When `multiline={true}`, this is only called if `blurOnSubmit={true}`.
 {% endcall %}
 
-{% call macro.prop('placeholder', '?boolean') %}
+{% call macro.prop('placeholder', '?string') %}
 Text that appears in the form control when it has no value set.
 {% endcall %}
 
