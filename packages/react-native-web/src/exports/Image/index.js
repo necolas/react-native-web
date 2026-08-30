@@ -188,10 +188,12 @@ const Image: React.AbstractComponent<
     onLoadEnd,
     onLoadStart,
     pointerEvents,
-    source,
+    source: sourceProp,
+    src,
     style,
     ...rest
   } = props;
+  const source = src != null ? src : sourceProp;
   const ariaLabel = _ariaLabel || accessibilityLabel;
 
   if (process.env.NODE_ENV !== 'production') {
