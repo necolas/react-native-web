@@ -401,4 +401,31 @@ describe('components/Image', () => {
       });
     });
   });
+
+  describe('prop "src"', () => {
+    test('renders the image URI', () => {
+      const src = 'https://example.com/src.png';
+      ImageUriCache.add(src);
+
+      const { container } = render(<Image src={src} />);
+
+      expect(container.querySelector('img').src).toBe(src);
+      ImageUriCache.remove(src);
+    });
+
+    test('takes precedence over "source"', () => {
+      const src = 'https://example.com/src.png';
+      const sourceUri = 'https://example.com/source.png';
+      ImageUriCache.add(src);
+      ImageUriCache.add(sourceUri);
+
+      const { container } = render(
+        <Image source={{ uri: sourceUri }} src={src} />
+      );
+
+      expect(container.querySelector('img').src).toBe(src);
+      ImageUriCache.remove(src);
+      ImageUriCache.remove(sourceUri);
+    });
+  });
 });

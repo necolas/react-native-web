@@ -98,6 +98,11 @@ export type ImageProps = {
   onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
   source?: Source,
+  /**
+   * A remote URL string for the image resource. Takes precedence over
+   * `source`.
+   */
+  src?: string,
   style?: GenericStyleProp<ImageStyle>,
   tintColor?: ColorValue
 };
