@@ -25,7 +25,7 @@ export default function useColorScheme(): ColorSchemeName {
     }
     const { remove } = Appearance.addChangeListener(listener);
     return remove;
-  });
+  }, []);
 
   return colorScheme;
 }
