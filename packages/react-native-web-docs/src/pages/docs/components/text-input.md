@@ -100,7 +100,7 @@ Hints at the type of data that might be entered by the user while editing the el
 Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
-{% call macro.prop('maxLength', '?string') %}
+{% call macro.prop('maxLength', '?number') %}
 Equivalent to [HTMLElement.maxlength](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength).
 {% endcall %}
 
