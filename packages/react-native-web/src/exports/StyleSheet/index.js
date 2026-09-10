@@ -8,6 +8,7 @@
  */
 
 import { atomic, classic, inline } from './compiler';
+import { CASCADE_LAYER_NAME } from './dom/cascadeLayer';
 import { createSheet } from './dom';
 import { localizeStyle } from 'styleq/transform-localize-style';
 import { preprocess } from './preprocess';
@@ -169,6 +170,10 @@ function StyleSheet(styles: any, options?: Options = {}): StyleProps {
 
 StyleSheet.absoluteFill = absoluteFill;
 StyleSheet.absoluteFillObject = absoluteFillObject;
+// The cascade layer the runtime style sheet's rules belong to. Exported so an application can
+// position it against its own layers with an `@layer` statement, rather than depending on the
+// order style elements happen to be inserted in.
+StyleSheet.cascadeLayerName = CASCADE_LAYER_NAME;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
@@ -185,6 +190,7 @@ export type IStyleSheet = {
   (styles: $ReadOnlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
   absoluteFillObject: Object,
+  cascadeLayerName: string,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,
