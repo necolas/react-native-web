@@ -13,6 +13,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/necolas/react-native-web.git"
+    "url": "git+https://github.com/necolas/react-native-web.git"
   }
 }
