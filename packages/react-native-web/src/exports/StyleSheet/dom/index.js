@@ -8,6 +8,7 @@
  */
 
 import type { OrderedCSSStyleSheet } from './createOrderedCSSStyleSheet';
+import { wrapInCascadeLayer } from './cascadeLayer';
 import canUseDOM from '../../../modules/canUseDom';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
@@ -77,8 +78,14 @@ export function createSheet(
   }
 
   return {
+    /**
+     * The style sheet serialized for delivery in an HTML document. Wrapped in the cascade layer so
+     * server-rendered rules carry the same precedence the runtime sheet gives them: emitted
+     * unlayered, they would outrank the application's own layered rules until hydration replaced
+     * them, and hydration would find no layer to read the rules back out of.
+     */
     getTextContent() {
-      return sheet.getTextContent();
+      return wrapInCascadeLayer(sheet.getTextContent());
     },
     id,
     insert(cssText: string, groupValue: number) {
