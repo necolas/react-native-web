@@ -275,17 +275,15 @@ const Image: React.AbstractComponent<
   }
 
   // Image loading
-  // The load event handlers are read through a ref so that changes to their
-  // identity (e.g., inline functions re-created by a parent render) do not
-  // re-run the effect, which would abort the in-flight request, reset the
-  // state to LOADING, and call 'onLoadStart' again for the same uri. The
-  // handlers invoked are always the ones from the most recent render.
+  // Read the load handlers through a ref, so that a new handler identity does
+  // not abort and restart the request for the same uri.
   const loadEventHandlersRef = React.useRef({
     onError,
     onLoad,
     onLoadEnd,
     onLoadStart
   });
+
   useLayoutEffect(() => {
     loadEventHandlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
   });
