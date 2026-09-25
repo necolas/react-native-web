@@ -20,6 +20,7 @@ import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
+import useLayoutEffect from '../../modules/useLayoutEffect';
 import View from '../View';
 import { warnOnce } from '../../modules/warnOnce';
 
@@ -285,7 +286,7 @@ const Image: React.AbstractComponent<
     onLoadEnd,
     onLoadStart
   });
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     loadEventHandlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
   });
 
