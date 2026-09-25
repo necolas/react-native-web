@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   track: {
     forcedColorAdjust: 'none',
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     height: '70%',
     margin: 'auto',
     transitionDuration: '0.1s',
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     insetInlineStart: '100%'
   },
   nativeControl: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     height: '100%',
     margin: 0,
     appearance: 'none',

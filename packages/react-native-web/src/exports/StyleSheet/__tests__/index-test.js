@@ -40,18 +40,6 @@ describe('StyleSheet', () => {
     `);
   });
 
-  test('absoluteFillObject', () => {
-    expect(StyleSheet.absoluteFillObject).toMatchInlineSnapshot(`
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    `);
-  });
-
   describe('create', () => {
     test('returns original style objects', () => {
       const style = StyleSheet.create({ root: { position: 'absolute' } });

@@ -63,15 +63,9 @@ function compileAndInsertReset(style, key) {
 
 /* ----- API ----- */
 
-const absoluteFillObject = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
-};
-
-const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
+const absoluteFill = create({
+  x: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }
+}).x;
 
 /**
  * create
@@ -168,7 +162,6 @@ function StyleSheet(styles: any, options?: Options = {}): StyleProps {
 }
 
 StyleSheet.absoluteFill = absoluteFill;
-StyleSheet.absoluteFillObject = absoluteFillObject;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
@@ -184,7 +177,6 @@ if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
 export type IStyleSheet = {
   (styles: $ReadOnlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
-  absoluteFillObject: Object,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,
