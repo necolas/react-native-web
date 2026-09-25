@@ -11,47 +11,47 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries = {};
+  static _entries = new Map();
 
   static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
     const isDataUri = dataUriPattern.test(uri);
-    return isDataUri || Boolean(entries[uri]);
+    return isDataUri || entries.has(uri);
   }
 
   static add(uri: string) {
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
-    if (entries[uri]) {
-      entries[uri].lastUsedTimestamp = lastUsedTimestamp;
-      entries[uri].refCount += 1;
+    const entry = entries.get(uri);
+    if (entry) {
+      entry.lastUsedTimestamp = lastUsedTimestamp;
+      entry.refCount += 1;
     } else {
-      entries[uri] = {
+      entries.set(uri, {
         lastUsedTimestamp,
         refCount: 1
-      };
+      });
     }
   }
 
   static remove(uri: string) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    const entry = entries.get(uri);
+    if (entry?.refCount > 0) {
+      entry.refCount -= 1;
+      // Free up entries when the cache is "full"
+      ImageUriCache._cleanUpIfNeeded();
     }
-    // Free up entries when the cache is "full"
-    ImageUriCache._cleanUpIfNeeded();
   }
 
   static _cleanUpIfNeeded() {
     const entries = ImageUriCache._entries;
-    const imageUris = Object.keys(entries);
 
-    if (imageUris.length + 1 > ImageUriCache._maximumEntries) {
+    if (entries.size + 1 > ImageUriCache._maximumEntries) {
       let leastRecentlyUsedKey;
       let leastRecentlyUsedEntry;
 
-      imageUris.forEach((uri) => {
-        const entry = entries[uri];
+      entries.forEach((entry, uri) => {
         if (
           (!leastRecentlyUsedEntry ||
             entry.lastUsedTimestamp <
@@ -64,23 +64,22 @@ export class ImageUriCache {
       });
 
       if (leastRecentlyUsedKey) {
-        delete entries[leastRecentlyUsedKey];
+        entries.delete(leastRecentlyUsedKey);
       }
     }
   }
 }
 
 let id = 0;
-const requests = {};
+const requests = new Map();
 
 const ImageLoader = {
   abort(requestId: number) {
-    let image = requests[`${requestId}`];
+    const image = requests.get(requestId);
     if (image) {
       image.onerror = null;
       image.onload = null;
-      image = null;
-      delete requests[`${requestId}`];
+      requests.delete(requestId);
     }
   },
   getSize(
@@ -88,31 +87,15 @@ const ImageLoader = {
     success: (width: number, height: number) => void,
     failure: () => void
   ) {
-    let complete = false;
-    const interval = setInterval(callback, 16);
-    const requestId = ImageLoader.load(uri, callback, errorCallback);
-
+    const requestId = ImageLoader.load(uri, callback, failure);
     function callback() {
-      const image = requests[`${requestId}`];
+      const image = requests.get(requestId);
       if (image) {
         const { naturalHeight, naturalWidth } = image;
         if (naturalHeight && naturalWidth) {
           success(naturalWidth, naturalHeight);
-          complete = true;
         }
       }
-      if (complete) {
-        ImageLoader.abort(requestId);
-        clearInterval(interval);
-      }
-    }
-
-    function errorCallback() {
-      if (typeof failure === 'function') {
-        failure();
-      }
-      ImageLoader.abort(requestId);
-      clearInterval(interval);
     }
   },
   has(uri: string): boolean {
@@ -120,11 +103,18 @@ const ImageLoader = {
   },
   load(uri: string, onLoad: Function, onError: Function): number {
     id += 1;
+    const requestId = id;
     const image = new window.Image();
-    image.onerror = onError;
+    image.onerror = () => {
+      onError();
+      ImageLoader.abort(requestId);
+    };
     image.onload = (e) => {
       // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
+      const onDecode = () => {
+        onLoad({ nativeEvent: e });
+        ImageLoader.abort(requestId);
+      };
       if (typeof image.decode === 'function') {
         // Safari currently throws exceptions when decoding svgs.
         // We want to catch that error and allow the load handler
@@ -135,8 +125,8 @@ const ImageLoader = {
       }
     };
     image.src = uri;
-    requests[`${id}`] = image;
-    return id;
+    requests.set(requestId, image);
+    return requestId;
   },
   prefetch(uri: string): Promise<void> {
     return new Promise((resolve, reject) => {
