@@ -401,4 +401,72 @@ describe('components/Image', () => {
       });
     });
   });
+
+  describe('load event handler identity', () => {
+    test('load is not restarted on update if only the handler identities change', () => {
+      const originalAbort = ImageLoader.abort;
+      ImageLoader.load = jest.fn();
+      ImageLoader.abort = jest.fn();
+      const firstStubs = {
+        onLoad: jest.fn(),
+        onLoadEnd: jest.fn(),
+        onLoadStart: jest.fn()
+      };
+      const secondStubs = {
+        onLoad: jest.fn(),
+        onLoadEnd: jest.fn(),
+        onLoadStart: jest.fn()
+      };
+      const { rerender } = render(
+        <Image {...firstStubs} source={'https://test.com/img.jpg'} />
+      );
+      act(() => {
+        rerender(
+          <Image {...secondStubs} source={'https://test.com/img.jpg'} />
+        );
+      });
+      expect(ImageLoader.load.mock.calls.length).toBe(1);
+      expect(ImageLoader.abort).not.toHaveBeenCalled();
+      expect(firstStubs.onLoadStart.mock.calls.length).toBe(1);
+      expect(secondStubs.onLoadStart).not.toHaveBeenCalled();
+      ImageLoader.abort = originalAbort;
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+    });
+
+    test('most recent handlers are called when a load settles after an update', () => {
+      let resolveLoad;
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        resolveLoad = onLoad;
+      });
+      const firstStubs = {
+        onLoad: jest.fn(),
+        onLoadEnd: jest.fn(),
+        onLoadStart: jest.fn()
+      };
+      const secondStubs = {
+        onLoad: jest.fn(),
+        onLoadEnd: jest.fn(),
+        onLoadStart: jest.fn()
+      };
+      const { rerender } = render(
+        <Image {...firstStubs} source={'https://test.com/img.jpg'} />
+      );
+      act(() => {
+        rerender(
+          <Image {...secondStubs} source={'https://test.com/img.jpg'} />
+        );
+      });
+      act(() => {
+        resolveLoad();
+      });
+      expect(firstStubs.onLoad).not.toHaveBeenCalled();
+      expect(secondStubs.onLoad.mock.calls.length).toBe(1);
+      expect(secondStubs.onLoadEnd.mock.calls.length).toBe(1);
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+    });
+  });
 });

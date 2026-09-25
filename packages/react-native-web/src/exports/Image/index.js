@@ -274,12 +274,28 @@ const Image: React.AbstractComponent<
   }
 
   // Image loading
+  // The load event handlers are read through a ref so that changes to their
+  // identity (e.g., inline functions re-created by a parent render) do not
+  // re-run the effect, which would abort the in-flight request, reset the
+  // state to LOADING, and call 'onLoadStart' again for the same uri. The
+  // handlers invoked are always the ones from the most recent render.
+  const loadEventHandlersRef = React.useRef({
+    onError,
+    onLoad,
+    onLoadEnd,
+    onLoadStart
+  });
+  React.useEffect(() => {
+    loadEventHandlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
+  });
+
   const uri = resolveAssetUri(source);
   React.useEffect(() => {
     abortPendingRequest();
 
     if (uri != null) {
       updateState(LOADING);
+      const { onLoadStart } = loadEventHandlersRef.current;
       if (onLoadStart) {
         onLoadStart();
       }
@@ -288,6 +304,7 @@ const Image: React.AbstractComponent<
         uri,
         function load(e) {
           updateState(LOADED);
+          const { onLoad, onLoadEnd } = loadEventHandlersRef.current;
           if (onLoad) {
             onLoad(e);
           }
@@ -297,6 +314,7 @@ const Image: React.AbstractComponent<
         },
         function error() {
           updateState(ERRORED);
+          const { onError, onLoadEnd } = loadEventHandlersRef.current;
           if (onError) {
             onError({
               nativeEvent: {
@@ -319,7 +337,7 @@ const Image: React.AbstractComponent<
     }
 
     return abortPendingRequest;
-  }, [uri, requestRef, updateState, onError, onLoad, onLoadEnd, onLoadStart]);
+  }, [uri, requestRef, updateState]);
 
   return (
     <View
