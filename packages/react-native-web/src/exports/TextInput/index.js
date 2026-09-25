@@ -91,6 +91,31 @@ function isEventComposing(nativeEvent) {
 
 let focusTimeout: ?TimeoutID = null;
 
+/**
+ * The scrollHeight of a textarea is never less than its own height, so it
+ * can't be used to detect that the content has become smaller than the box.
+ * Measure a zero-height copy instead so the box the textarea has been given
+ * (and any scroll position clamped to it) is left alone.
+ */
+function measureContentSize(hostNode) {
+  const clone = hostNode.cloneNode();
+  clone.value = hostNode.value;
+  // Keep the same wrapping width, but take the copy out of the layout.
+  clone.style.width = window.getComputedStyle(hostNode).width;
+  clone.style.height = '0';
+  clone.style.minHeight = '0';
+  clone.style.maxHeight = 'none';
+  clone.style.overflow = 'hidden';
+  clone.style.position = 'fixed';
+  clone.style.top = '0';
+  clone.style.left = '0';
+  clone.style.visibility = 'hidden';
+  hostNode.after(clone);
+  const size = { height: clone.scrollHeight, width: clone.scrollWidth };
+  clone.remove();
+  return size;
+}
+
 const TextInput: React.AbstractComponent<
   TextInputProps,
   HTMLElement & PlatformMethods
@@ -209,8 +234,8 @@ const TextInput: React.AbstractComponent<
   const handleContentSizeChange = React.useCallback(
     (hostNode) => {
       if (multiline && onContentSizeChange && hostNode != null) {
-        const newHeight = hostNode.scrollHeight;
-        const newWidth = hostNode.scrollWidth;
+        const { height: newHeight, width: newWidth } =
+          measureContentSize(hostNode);
         if (
           newHeight !== dimensions.current.height ||
           newWidth !== dimensions.current.width
