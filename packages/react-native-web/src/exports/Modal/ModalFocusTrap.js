@@ -36,6 +36,11 @@ function attemptFocus(element: any) {
     return false;
   }
 
+  // Programmatically focusable elements can still be excluded from tab order.
+  if (element.hasAttribute?.('tabindex') && element.tabIndex < 0) {
+    return false;
+  }
+
   try {
     element.focus();
   } catch (e) {
