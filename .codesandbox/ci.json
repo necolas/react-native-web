@@ -5,5 +5,5 @@
   ],
   "buildCommand": "build",
   "sandboxes": ["/packages/react-native-web-examples/"],
-  "node": "22"
+  "node": "20"
 }
