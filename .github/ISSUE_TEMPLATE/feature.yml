@@ -1,6 +1,6 @@
 name: Feature request
 description: If you have a suggestion…
-labels: ["enhancement"]
+labels: ['enhancement']
 body:
   - type: markdown
     attributes:
@@ -11,8 +11,8 @@ body:
       label: Is there an existing request?
       description: Please search open and closed issues to see if this request has already been made.
       options:
-      - label: I have searched for this request
-        required: true
+        - label: I have searched for this request
+          required: true
   - type: textarea
     attributes:
       label: Describe the feature request

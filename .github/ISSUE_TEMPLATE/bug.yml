@@ -1,6 +1,6 @@
 name: Bug report
 description: File a bug report
-labels: ["bug"]
+labels: ['bug']
 body:
   - type: markdown
     attributes:
@@ -11,8 +11,8 @@ body:
       label: Is there an existing issue for this?
       description: Please search to see if an issue already exists for the bug you encountered.
       options:
-      - label: I have searched the existing issues
-        required: true
+        - label: I have searched the existing issues
+          required: true
   - type: textarea
     attributes:
       label: Describe the issue
@@ -39,7 +39,7 @@ body:
     attributes:
       label: Test case
       description: Please provide a link to a reduced test case that reproduces the issue.
-      placeholder: "https://codesandbox.io/s/6lx6ql1w5r"
+      placeholder: 'https://codesandbox.io/s/6lx6ql1w5r'
     validations:
       required: true
   - type: textarea

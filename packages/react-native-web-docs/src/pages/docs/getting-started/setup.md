@@ -32,7 +32,7 @@ module.exports = {
       'react-native$': 'react-native-web'
     }
   }
-}
+};
 ```
 
 ### Compiler
@@ -79,9 +79,9 @@ Node.js can alias `react-native` to `react-native-web` using [`module-alias`](ht
 
 ```js
 // Install the `module-alias` package as a dependency first
-const moduleAlias = require("module-alias");
+const moduleAlias = require('module-alias');
 moduleAlias.addAliases({
-  "react-native": require.resolve("react-native-web"),
+  'react-native': require.resolve('react-native-web')
 });
 moduleAlias();
 ```
@@ -119,9 +119,17 @@ Full-screen React Native apps with a root `<ScrollView>` may require the followi
 
 ```css
 /* These styles make the body full-height */
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 /* These styles disable body scrolling if you are using <ScrollView> */
-body { overflow: hidden; }
+body {
+  overflow: hidden;
+}
 /* These styles make the root element full-height */
-#root { display:flex; height:100%; }
+#root {
+  display: flex;
+  height: 100%;
+}
 ```

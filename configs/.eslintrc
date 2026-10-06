@@ -17,16 +17,8 @@
     "requireConfigFile": false,
     "sourceType": "module"
   },
-  "extends": [
-    "plugin:flowtype/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "flowtype",
-    "promise",
-    "react",
-    "react-hooks"
-  ],
+  "extends": ["plugin:flowtype/recommended", "prettier"],
+  "plugins": ["flowtype", "promise", "react", "react-hooks"],
   "env": {
     "browser": true,
     "es6": true,
@@ -41,15 +33,13 @@
     "packages/**/vendor/*",
     "packages/**/.next"
   ],
-  "globals": {
-
-  },
+  "globals": {},
   "rules": {
     "camelcase": 0,
     "constructor-super": 2,
     "default-case": [2, { "commentPattern": "^no default$" }],
     "eqeqeq": [2, "allow-null"],
-    "handle-callback-err": [2, "^(err|error)$" ],
+    "handle-callback-err": [2, "^(err|error)$"],
     "new-cap": [2, { "newIsCap": true, "capIsNew": false }],
     "no-alert": 1,
     "no-array-constructor": 2,
@@ -126,7 +116,11 @@
     "no-with": 2,
     "prefer-const": 2,
     "prefer-rest-params": 2,
-    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+    "quotes": [
+      2,
+      "single",
+      { "avoidEscape": true, "allowTemplateLiterals": true }
+    ],
     "radix": 2,
     "use-isnan": 2,
     "valid-typeof": 2,

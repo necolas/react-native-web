@@ -19,7 +19,7 @@ PanResponder reconciles several pointers into a single gesture. It makes single-
 
 Please refer to the React Native documentation below:
 
-* [PanResponder](https://reactnative.dev/docs/panresponder)
+- [PanResponder](https://reactnative.dev/docs/panresponder)
 
 ---
 

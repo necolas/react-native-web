@@ -26,13 +26,13 @@ React Native for Web is a compatibility layer between React DOM and React Native
 
 ## Components
 
-{{ site.name }} provides all the core components you'd expect from React Native. You will mostly work with `View`, `Image`, `Text`, `TextInput`, and `ScrollView`. The core components include props for working with interactions, including the advanced gesture [responder system]({{ '/docs/interactions' | url }}). Each component's documentation contains live and editable examples to try out. 
+{{ site.name }} provides all the core components you'd expect from React Native. You will mostly work with `View`, `Image`, `Text`, `TextInput`, and `ScrollView`. The core components include props for working with interactions, including the advanced gesture [responder system]({{ '/docs/interactions' | url }}). Each component's documentation contains live and editable examples to try out.
 
 React Native for Web exports many different modules to support a variety of use cases. Your application can use as many or as few of these modules as needed. The babel plugin will help you to only bundle the modules that you are using.
 
 ## Styles
 
-{{ site.name }} components use JavaScript to author styles which are converted to native CSS. The design of this styling system avoids *all* the [problems with CSS at scale](https://speakerdeck.com/vjeux/react-css-in-js) and produces highly optimized CSS without the need to learn a domain-specific styling language and without the need for specialized tooling that parses markup to remove unused styles.
+{{ site.name }} components use JavaScript to author styles which are converted to native CSS. The design of this styling system avoids _all_ the [problems with CSS at scale](https://speakerdeck.com/vjeux/react-css-in-js) and produces highly optimized CSS without the need to learn a domain-specific styling language and without the need for specialized tooling that parses markup to remove unused styles.
 
 ## Reliable and tested
 

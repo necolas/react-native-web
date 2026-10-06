@@ -45,11 +45,11 @@ MacBook Pro (13-inch, Early 2011); 2.3 GHz Intel Core i5; 8 GB 1333 MHz DDR3 RAM
 
 Typical render timings: mean ± standard deviations.
 
-| Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
-| :--- | ---: | ---: | ---: |
-| `css-modules`                         |     `23.41` `±03.06` |     `35.38` `±06.41` |                   - |
-| `react-native-web@0.11.0`             |     `28.37` `±04.39` |     `41.50` `±05.75` |    `23.13` `±03.51` |
-| `inline-styles`                       |     `66.19` `±06.31` |    `104.22` `±10.22` |    `09.96` `±02.76` |
+| Implementation            | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
+| :------------------------ | -------------------: | -------------------: | ------------------: |
+| `css-modules`             |     `23.41` `±03.06` |     `35.38` `±06.41` |                   - |
+| `react-native-web@0.11.0` |     `28.37` `±04.39` |     `41.50` `±05.75` |    `23.13` `±03.51` |
+| `inline-styles`           |     `66.19` `±06.31` |    `104.22` `±10.22` |    `09.96` `±02.76` |
 
 ### Moto G4
 
@@ -57,8 +57,8 @@ Moto G4 (Android 7); Octa-core (4x1.5 GHz & 4x1.2 Ghz); 2 GB RAM. Google Chrome 
 
 Typical render timings: mean ± standard deviations.
 
-| Implementation                        | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
-| :--- | ---: | ---: | ---: |
-| `css-modules`                         |     `71.33` `±09.68` |    `101.36` `±12.36` |                   - |
-| `react-native-web@0.11.0`             |     `83.65` `±12.40` |    `123.59` `±14.40` |    `75.41` `±07.74` |
-| `inline-styles`                       |    `188.35` `±17.69` |    `282.35` `±22.48` |    `28.10` `±06.87` |
+| Implementation            | Mount deep tree (ms) | Mount wide tree (ms) | Dynamic update (ms) |
+| :------------------------ | -------------------: | -------------------: | ------------------: |
+| `css-modules`             |     `71.33` `±09.68` |    `101.36` `±12.36` |                   - |
+| `react-native-web@0.11.0` |     `83.65` `±12.40` |    `123.59` `±14.40` |    `75.41` `±07.74` |
+| `inline-styles`           |    `188.35` `±17.69` |    `282.35` `±22.48` |    `28.10` `±06.87` |

@@ -13,7 +13,7 @@ Client and server rendering with {{ site.name }}.
 
 React Native for Web can be used for multi-platform and web-only applications. It can incrementally adopted by existing React Web apps and integrated with existing React Native apps. Preact is also supported.
 
-{{ site.name }} components interoperate with React DOM components. They can be incrementally introduced at any point in an application's component tree. One thing to be aware of is that external CSS applied to *all* tags in a document may interfere with the default rendering of some {{ site.name }} components.
+{{ site.name }} components interoperate with React DOM components. They can be incrementally introduced at any point in an application's component tree. One thing to be aware of is that external CSS applied to _all_ tags in a document may interfere with the default rendering of some {{ site.name }} components.
 
 ---
 
@@ -42,7 +42,7 @@ Or render individual components:
 import { render } from 'react-native';
 import Header from './src/Header';
 
-render(<Header />, document.getElementById('header'))
+render(<Header />, document.getElementById('header'));
 ```
 
 You might need to adjust the styles of the HTML document's root elements for your app to fill the viewport.
@@ -51,6 +51,8 @@ You might need to adjust the styles of the HTML document's root elements for you
 <html style="height:100%">
   <body style="height:100%">
     <div id="root" style="display:flex;height:100%"></div>
+  </body>
+</html>
 ```
 
 :::callout
@@ -72,7 +74,9 @@ import { AppRegistry } from 'react-native-web';
 AppRegistry.registerComponent('App', () => App);
 
 // prerender the app
-const { element, getStyleElement } = AppRegistry.getApplication('App', { initialProps });
+const { element, getStyleElement } = AppRegistry.getApplication('App', {
+  initialProps
+});
 // first the element
 const html = ReactDOMServer.renderToString(element);
 // then the styles (optionally include a nonce if your CSP policy requires it)
@@ -90,5 +94,5 @@ ${css}
 ${html}
 </div>
 <script nonce="${nonce}" src="${bundlePath}"></script>
-`
+`;
 ```

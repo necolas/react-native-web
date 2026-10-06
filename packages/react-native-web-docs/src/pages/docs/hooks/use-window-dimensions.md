@@ -3,7 +3,7 @@ title: useWindowDimensions
 date: Last Modified
 permalink: /docs/use-window-dimensions/index.html
 eleventyNavigation:
-  key: useWindowDimensions 
+  key: useWindowDimensions
   parent: Hooks
 ---
 

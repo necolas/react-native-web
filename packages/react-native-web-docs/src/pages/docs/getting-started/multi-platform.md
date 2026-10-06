@@ -14,7 +14,7 @@ How to integrate React Native for Web into an existing React Native codebase.
 
 Please read the [setup]({{ '/docs/setup' | url }}) guide first. If you have an existing React Native application, there are more areas that require attention and customization before most web bundlers can consume the non-standard JavaScript in packages produced by the React Native ecosystem. Additionally, 3rd party React Native packages with web support are listed in the [React Native Directory](https://reactnative.directory/?web=true).
 
-If you are interested in making a multi-platform app it is *strongly recommended* that you use [Expo](https://expo.dev) (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.dev/workflow/web/) and takes care of all the configuration work required.
+If you are interested in making a multi-platform app it is _strongly recommended_ that you use [Expo](https://expo.dev) (or learn from the source code for the Web integration). Expo includes [web support](https://docs.expo.dev/workflow/web/) and takes care of all the configuration work required.
 
 ---
 
@@ -26,7 +26,7 @@ Minor platform differences can use the `Platform` module.
 import { Platform } from 'react-native';
 
 const styles = StyleSheet.create({
-  height: (Platform.OS === 'web') ? 200 : 100,
+  height: Platform.OS === 'web' ? 200 : 100
 });
 ```
 
@@ -108,7 +108,7 @@ const imageLoaderConfiguration = {
     loader: 'url-loader',
     options: {
       name: '[name].[ext]',
-      esModule: false,
+      esModule: false
     }
   }
 };
@@ -130,10 +130,7 @@ module.exports = {
   // ...the rest of your config
 
   module: {
-    rules: [
-      babelLoaderConfiguration,
-      imageLoaderConfiguration
-    ]
+    rules: [babelLoaderConfiguration, imageLoaderConfiguration]
   },
 
   resolve: {
@@ -144,9 +141,9 @@ module.exports = {
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension
     // `.web.js`.
-    extensions: [ '.web.js', '.js' ]
+    extensions: ['.web.js', '.js']
   }
-}
+};
 ```
 
 To run in development from the root of your application:

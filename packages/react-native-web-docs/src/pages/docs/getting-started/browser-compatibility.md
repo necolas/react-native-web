@@ -16,11 +16,11 @@ Understanding {{ site.name }} browser compatibility.
 
 The browsers with known support include:
 
-* Chrome 60+
-* Safari 10.1+ / iOS Safari 10.1+
-* Edge 12+
-* Firefox ESR+
-* Opera
+- Chrome 60+
+- Safari 10.1+ / iOS Safari 10.1+
+- Edge 12+
+- Firefox ESR+
+- Opera
 
 If specific exports have a different browser support expectation, it will be documented with that export.
 
@@ -39,7 +39,7 @@ Most CSS properties and values are supported. Vendor prefixes are automatically 
 ```js
 const style = {
   userSelect: 'none'
-}
+};
 ```
 
 The resulting CSS is:

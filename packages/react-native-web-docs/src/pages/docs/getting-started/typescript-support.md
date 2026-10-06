@@ -51,12 +51,12 @@ Now you can use `react-native` components in your project with TS support to `re
 import { View, ViewStyle } from 'react-native';
 
 const style: ViewStyle = {
-  position: "fixed", // RN style properties are augmented with Web-only options e.g. 'fixed'
-  marginBlock: "auto", // All Web CSS style properties are also available to use
+  position: 'fixed', // RN style properties are augmented with Web-only options e.g. 'fixed'
+  marginBlock: 'auto' // All Web CSS style properties are also available to use
 };
 
 <View
   href="https://necolas.github.io/react-native-web/" // RNW prop
   style={style}
-/>
+/>;
 ```

@@ -3,7 +3,7 @@ title: useColorScheme
 date: Last Modified
 permalink: /docs/use-color-scheme/index.html
 eleventyNavigation:
-  key: useColorScheme 
+  key: useColorScheme
   parent: Hooks
 ---
 
