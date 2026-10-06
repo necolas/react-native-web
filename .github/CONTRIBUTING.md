@@ -14,7 +14,7 @@ Fork, then clone the repo:
 git clone https://github.com/your-username/react-native-web.git
 ```
 
-Install dependencies (requires Node.js >= 16.0):
+Install dependencies (requires Node.js >= 22.0):
 
 ```
 npm install
