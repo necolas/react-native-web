@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     borderColor: '#AAB8C2'
   },
   nativeControl: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     height: '100%',
     margin: 0,
     appearance: 'none',

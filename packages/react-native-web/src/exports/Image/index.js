@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     resizeMode: null
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'transparent',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   accessibilityImage$raw: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     height: '100%',
     opacity: 0,
     width: '100%',

@@ -33,10 +33,6 @@ import { StyleSheet } from 'react-native';
 A very common pattern is to create overlays with position absolute and zero positioning, so `absoluteFill` can be used for convenience and to reduce duplication of these repeated styles.
 {% endcall %}
 
-{% call macro.prop('absoluteFillObject', '?Object') %}
-Sometimes you may want `absoluteFill` but with a couple tweaks - `absoluteFillObject` can be used to create a customized entry in a StyleSheet.
-{% endcall %}
-
 {% call macro.prop('hairlineWidth', '?Object') %}
 Equal to 1px. This is not implemented using screen density as browsers may round sub-pixel values down to `0`, causing the line not to be rendered.
 {% endcall %}
