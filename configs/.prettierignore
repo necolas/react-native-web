@@ -1,7 +1,9 @@
-../coverage
 ../**/dist
-../flow-typed
+
 ../node_modules
-../packages/**/vendor/*
+../coverage
+../flow-typed
+
+../packages/**/*.html
 ../packages/**/.next
-../packages/react-native-web-docs/src/includes/**/*.html
+../packages/**/vendor/*
