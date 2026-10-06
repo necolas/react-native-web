@@ -5,7 +5,7 @@ permalink: /docs/view/index.html
 eleventyNavigation:
   key: View
   parent: Components
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -55,7 +55,7 @@ The [ResponderEvent props]({{ '/docs/interactions' | url }}).
 {% endcall %}
 
 {% call macro.prop('children', 'any') %}
-The children of a `View` element can be other elements and must *not* include strings (or components that render down to strings).
+The children of a `View` element can be other elements and must _not_ include strings (or components that render down to strings).
 {% endcall %}
 
 {% call macro.prop('dataSet', '?Object') %}

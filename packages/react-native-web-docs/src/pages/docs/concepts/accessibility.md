@@ -5,7 +5,7 @@ permalink: /docs/accessibility/index.html
 eleventyNavigation:
   key: Accessibility
   parent: Concepts
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -222,12 +222,9 @@ The `Text` and `View` components can be rendered as links. If the `href` prop is
 The `hrefAttrs` prop sets link-related attributes.
 
 ```jsx
-const hrefAttrs = { download: true, rel: "nofollow", target: "blank" };
+const hrefAttrs = { download: true, rel: 'nofollow', target: 'blank' };
 
-<Text
-  href="/document.pdf"
-  hrefAttrs={hrefAttrs}
-/>
+<Text href="/document.pdf" hrefAttrs={hrefAttrs} />;
 // <a download href="/document.pdf" rel="nofollow" target="_blank"></a>
 ```
 
@@ -252,12 +249,7 @@ The `tabIndex` prop determines whether a component is user-focusable and appears
 {{ site.name }} components express semantics exclusively via the `aria-*` props.
 
 ```jsx
-<View
-  aria-label="..."
-  aria-pressed={false}
-  id="abc"
-  role="menuitem"
-/>
+<View aria-label="..." aria-pressed={false} id="abc" role="menuitem" />
 /*
 <div
   aria-label="..."
@@ -291,7 +283,6 @@ If the `"heading"` role is combined with an `aria-level`, the equivalent HTML he
 ```
 
 Note: Avoid changing `role` values over time or after user actions. Generally, accessibility APIs do not provide a means of notifying assistive technologies if a `role` changes.
-
 
 [aria-in-html-url]: https://w3c.github.io/aria-in-html/
 [html-accessibility-url]: http://www.html5accessibility.com/

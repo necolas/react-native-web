@@ -36,5 +36,5 @@ Converts a layout size (dp) to pixel size (px). Guaranteed to return an integer 
 {% endcall %}
 
 {% call macro.prop('roundToNearestPixel', '(number) => number') %}
-Rounds a layout size (dp) to the nearest layout size that corresponds to an integer number of pixels. For example, on a device with a PixelRatio of 3, `PixelRatio.roundToNearestPixel(8.4) = 8.33`, which corresponds to exactly (8.33 * 3) = 25 pixels.
+Rounds a layout size (dp) to the nearest layout size that corresponds to an integer number of pixels. For example, on a device with a PixelRatio of 3, `PixelRatio.roundToNearestPixel(8.4) = 8.33`, which corresponds to exactly (8.33 \* 3) = 25 pixels.
 {% endcall %}

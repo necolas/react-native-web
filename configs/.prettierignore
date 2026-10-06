@@ -4,3 +4,4 @@
 ../node_modules
 ../packages/**/vendor/*
 ../packages/**/.next
+../packages/react-native-web-docs/src/includes/**/*.html

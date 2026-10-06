@@ -20,10 +20,10 @@ import {
   testWithPointerType,
   clearPointers,
   createEventTarget,
-  setPointerEvent,
+  setPointerEvent
 } from 'dom-event-testing-library';
 
-describeWithPointerEvent('useTap', hasPointerEvent => {
+describeWithPointerEvent('useTap', (hasPointerEvent) => {
   beforeEach(() => {
     // basic PointerEvent mock
     setPointerEvent(hasPointerEvent);
@@ -35,14 +35,14 @@ describeWithPointerEvent('useTap', hasPointerEvent => {
   });
 
   // test all the pointer types supported by the environment
-  testWithPointerType('pointer down', pointerType => {
+  testWithPointerType('pointer down', (pointerType) => {
     const ref = createRef(null);
     const onTapStart = jest.fn();
 
     // component to test
     function Component() {
       useTapEvents(ref, { onTapStart });
-      return <div ref={ref} />
+      return <div ref={ref} />;
     }
 
     // render component
@@ -87,9 +87,9 @@ Tests that dispatch multiple pointer events will dispatch multi-touch native eve
 
 ```js
 // first pointer is active
-target.pointerdown({pointerId: 1, pointerType});
+target.pointerdown({ pointerId: 1, pointerType });
 // second pointer is active
-target.pointerdown({pointerId: 2, pointerType});
+target.pointerdown({ pointerId: 2, pointerType });
 ```
 
 ## API
@@ -98,23 +98,23 @@ target.pointerdown({pointerId: 2, pointerType});
 
 To create a new event target pass the DOM node to `createEventTarget(node)`. This target can then be used to dispatch event sequences and customize the event payload. The following are currently supported:
 
-* `blur`
-* `click`
-* `contextmenu`
-* `focus` (includes the complete sequence of focus-related events)
-* `keydown`
-* `keyup`
-* `pointercancel`
-* `pointerdown`
-* `pointerhover` (moves when pointer is not down)
-* `pointermove` (moves when pointer is down)
-* `pointerover`
-* `pointerout`
-* `scroll`
-* `select`
-* `selectionchange`
-* `tap` (equivalent to `pointerdown` followed by `pointerup`)
-* `virtualclick`
+- `blur`
+- `click`
+- `contextmenu`
+- `focus` (includes the complete sequence of focus-related events)
+- `keydown`
+- `keyup`
+- `pointercancel`
+- `pointerdown`
+- `pointerhover` (moves when pointer is not down)
+- `pointermove` (moves when pointer is down)
+- `pointerover`
+- `pointerout`
+- `scroll`
+- `select`
+- `selectionchange`
+- `tap` (equivalent to `pointerdown` followed by `pointerup`)
+- `virtualclick`
 
 The target also has `node` property equal to the node that was used to create the target, and a `setBoundClientRect({x,y,width,height})` method that can be used to mock the return value of `getBoundingClientRect`.
 
@@ -125,7 +125,7 @@ The target also has `node` property equal to the node that was used to create th
 This is just like `describe` but it will run the entire test suite twice, once in an environment with `PointerEvent` mocked and once without.
 
 ```js
-describeWithPointerEvent('useTap', hasPointerEvent => {
+describeWithPointerEvent('useTap', (hasPointerEvent) => {
   // test suite
 });
 ```
@@ -135,7 +135,7 @@ describeWithPointerEvent('useTap', hasPointerEvent => {
 The is just like `test` but it will run the test for every pointer type supported by the environment. When `PointerEvent` is mocked, the pointer types will be `mouse`, `touch`, and `pen`; otherwise the pointer types will be `mouse` and `touch`.
 
 ```js
-testWithPointerType('pointer down', pointerType => {
+testWithPointerType('pointer down', (pointerType) => {
   // test unit
 });
 ```

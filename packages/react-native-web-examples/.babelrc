@@ -1,9 +1,4 @@
 {
-  "presets": [
-    "next/babel",
-    "@babel/preset-flow"
-  ],
-  "plugins": [
-    [ "react-native-web", { "commonjs": true } ]
-  ]
+  "presets": ["next/babel", "@babel/preset-flow"],
+  "plugins": [["react-native-web", { "commonjs": true }]]
 }

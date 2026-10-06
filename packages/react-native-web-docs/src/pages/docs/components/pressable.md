@@ -64,7 +64,7 @@ Called when the pointer is held down for as long as the value of `delayLongPress
 {% endcall %}
 
 {% call macro.prop('onPress', '?(e: MouseEvent) => void') %}
-Called when the pointer is released without first being cancelled (e.g. by a scroll that steals the responder lock). Equivalent to the `click` DOM event. 
+Called when the pointer is released without first being cancelled (e.g. by a scroll that steals the responder lock). Equivalent to the `click` DOM event.
 {% endcall %}
 
 {% call macro.prop('onPressIn', '?(e: ResponderEvent) => void') %}

@@ -32,7 +32,7 @@ Returns a `Promise` that resolves to the string of the URL that initially loaded
 {% endcall %}
 
 {% call macro.prop('openURL', '(url, target) => Promise<>') %}
-Try to open the given url in a secure fashion. The provided target (including `undefined`) will be passed as the window target, or "_blank" if no target included. The method returns a Promise object. If the url opens, the promise is resolved. If not, the promise is rejected.
+Try to open the given url in a secure fashion. The provided target (including `undefined`) will be passed as the window target, or "\_blank" if no target included. The method returns a Promise object. If the url opens, the promise is resolved. If not, the promise is rejected.
 {% endcall %}
 
 ---

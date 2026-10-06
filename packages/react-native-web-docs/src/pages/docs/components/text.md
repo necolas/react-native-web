@@ -5,7 +5,7 @@ permalink: /docs/text/index.html
 eleventyNavigation:
   key: Text
   parent: Components
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -61,7 +61,7 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 {% endcall %}
 
 {% call macro.prop('dir', '?("auto" | "ltr" | "rtl") = "auto"') %}
-Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir). The default value of `"auto"` is not set on *nested* text elements.
+Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir). The default value of `"auto"` is not set on _nested_ text elements.
 {% endcall %}
 
 {% call macro.prop('href', '?string') %}

@@ -15,7 +15,6 @@ AppState can tell you if the app is in the foreground or background, and notify 
 
 States: active (the app is running in the foreground), background (the app is running in the background, i.e., the user has not focused the app's tab).
 
-
 ```js
 import { AppState } from 'react-native';
 ```

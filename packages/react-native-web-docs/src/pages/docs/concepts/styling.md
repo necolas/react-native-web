@@ -5,7 +5,7 @@ permalink: /docs/styling/index.html
 eleventyNavigation:
   key: Styling
   parent: Concepts
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -31,7 +31,7 @@ const Component = () => <View style={styles.root} />;
 All the React Native components accept a `style` property. The value can be a registered object, a plain object, or an array of objects. The array syntax will merge styles from left-to-right as normal JavaScript objects, and can be used to conditionally apply styles:
 
 ```jsx
-<View style={[ styles.element, isActive && styles.active ]} />
+<View style={[styles.element, isActive && styles.active]} />
 ```
 
 To let other components customize the style of a component's children you can expose a prop so styles can be explicitly passed into the component.
@@ -40,20 +40,15 @@ To let other components customize the style of a component's children you can ex
 function List(props) {
   return (
     <View style={props.style}>
-      {elements.map((element) =>
-        <View style={[ styles.element, props.elementStyle ]} />
-      )}
+      {elements.map((element) => (
+        <View style={[styles.element, props.elementStyle]} />
+      ))}
     </View>
   );
 }
 
 function App() {
-  return (
-    <List
-      elementStyle={styles.listElement}
-      style={styles.list}
-    />
-  );
+  return <List elementStyle={styles.listElement} style={styles.list} />;
 }
 ```
 
@@ -63,11 +58,11 @@ You have greater control over how styles are composed when compared to using cla
 
 ## Styles API
 
-{{ site.name }} supports all *long-form* CSS properties. There is no direct support for `@`-rules, selectors, pseudo-selectors, and pseudo-elements, equivalents of which are demonstrated in the [styling patterns](#styling-patterns) section below.
+{{ site.name }} supports all _long-form_ CSS properties. There is no direct support for `@`-rules, selectors, pseudo-selectors, and pseudo-elements, equivalents of which are demonstrated in the [styling patterns](#styling-patterns) section below.
 
 ### Short-form properties
 
-The supported short-form CSS properties accept only a *single* value.
+The supported short-form CSS properties accept only a _single_ value.
 
 {% call macro.prop('borderColor', '?string') %}
 Accepts only a single value that is applied to all sides.
@@ -194,7 +189,7 @@ const red = { color: 'red' }
 </Text>
 ```
 
-This approach means that components are designed with isolation in mind. You should be able to drop a component anywhere in your application, trusting that as long as the props are the same, it will *look and behave* the same way. Text properties that could inherit from outside of the props would break this isolation.
+This approach means that components are designed with isolation in mind. You should be able to drop a component anywhere in your application, trusting that as long as the props are the same, it will _look and behave_ the same way. Text properties that could inherit from outside of the props would break this isolation.
 
 ---
 
@@ -222,24 +217,26 @@ Style resolution is deterministic and slightly different from CSS. In the follow
 
 ```html
 <style>
-  .marginTop { margin-top: 10px; }
-  .marginBottom { margin-bottom: 20px; }
-  .margin { margin: 0; }
+  .marginTop {
+    margin-top: 10px;
+  }
+  .marginBottom {
+    margin-bottom: 20px;
+  }
+  .margin {
+    margin: 0;
+  }
 </style>
 
 <div class="marginTop marginBottom margin"></div>
 ```
 
-But in {{ site.name }} the most *precise* style property takes precedence, resulting in margins of `10,0,20,0`.
+But in {{ site.name }} the most _precise_ style property takes precedence, resulting in margins of `10,0,20,0`.
 
 ```jsx
-const style = [
-  { marginTop: 10 },
-  { marginBottom: 20 },
-  { margin: 0 }
-];
+const style = [{ marginTop: 10 }, { marginBottom: 20 }, { margin: 0 }];
 
-const Box = () => <View style={style} />
+const Box = () => <View style={style} />;
 ```
 
 {{ site.name }} transforms styles objects into CSS and inline styles. Any styles defined using `StyleSheet.create` will ultimately be rendered using CSS class names. Each rule is broken down into declarations, properties are expanded to their long-form, and the resulting key-value pairs are mapped to unique "atomic CSS" class names.
@@ -247,7 +244,7 @@ const Box = () => <View style={style} />
 Input:
 
 ```jsx
-const Box = () => <View style={styles.box} />
+const Box = () => <View style={styles.box} />;
 
 const styles = StyleSheet.create({
   box: {
@@ -260,16 +257,24 @@ Output:
 
 ```html
 <style>
-  .r-156q2ks { margin-top: 0px; }
-  .r-61z16t { margin-right: 0px; }
-  .r-p1pxzi { margin-bottom: 0px; }
-  .r-11wrixw { margin-left: 0px; }
+  .r-156q2ks {
+    margin-top: 0px;
+  }
+  .r-61z16t {
+    margin-right: 0px;
+  }
+  .r-p1pxzi {
+    margin-bottom: 0px;
+  }
+  .r-11wrixw {
+    margin-left: 0px;
+  }
 </style>
 
 <div class="r-156q2ks r-61z16t r-p1pxzi r-11wrixw"></div>
 ```
 
-This ensures that CSS order doesn't impact rendering and CSS rules are efficiently deduplicated. Rather than the total CSS growing in proportion to the number of *rules*, it grows in proportion to the number of *unique declarations*. As a result, the DOM style sheet is only written to when new unique declarations are defined and it is usually small enough to be pre-rendered and inlined.
+This ensures that CSS order doesn't impact rendering and CSS rules are efficiently deduplicated. Rather than the total CSS growing in proportion to the number of _rules_, it grows in proportion to the number of _unique declarations_. As a result, the DOM style sheet is only written to when new unique declarations are defined and it is usually small enough to be pre-rendered and inlined.
 
 Class names are deterministic, which means that the resulting CSS and HTML is consistent across builds – important for large apps using code-splitting and deploying incremental updates.
 

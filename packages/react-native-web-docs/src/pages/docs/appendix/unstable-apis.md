@@ -70,19 +70,19 @@ const styled = (Component, styler) => {
     render() {
       const theme = this.context.getTheme && this.context.getTheme();
       const localProps = { ...this.props, theme };
-      const nextProps = { ...this.props }
+      const nextProps = { ...this.props };
       const style = typeof styler === 'function' ? styler(localProps) : styler;
-      nextProps.style = [ style, this.props.style ];
+      nextProps.style = [style, this.props.style];
 
-      return (
-        isDOMComponent
-          ? unstable_createElement(Component, nextProps)
-          : <Component {...nextProps} />
+      return isDOMComponent ? (
+        unstable_createElement(Component, nextProps)
+      ) : (
+        <Component {...nextProps} />
       );
     }
   }
   return Styled;
-}
+};
 
 const styles = StyleSheet.create({
   container: {

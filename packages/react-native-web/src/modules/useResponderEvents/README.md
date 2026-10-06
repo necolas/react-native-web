@@ -7,8 +7,8 @@ NOTE: Although the responder events mention only `touches`, this is for historic
 ## How it works
 
 A view can become the "responder" after the following native events: `scroll`, `selectionchange`, `touchstart`, `touchmove`, `mousedown`, `mousemove`. If nothing is already the "responder", the event propagates to (capture) and from (bubble) the event target until a view returns `true` for `on*ShouldSetResponder(Capture)`.
- 
-If something is *already* the responder, the negotiation event propagates to (capture) and from (bubble) the lowest common ancestor of the event target and the current responder. Then negotiation happens between the current responder and the view that wants to become the responder.
+
+If something is _already_ the responder, the negotiation event propagates to (capture) and from (bubble) the lowest common ancestor of the event target and the current responder. Then negotiation happens between the current responder and the view that wants to become the responder.
 
 ## API
 
@@ -33,17 +33,17 @@ function View(props) {
     onResponderTerminationRequest: props.onResponderTerminationRequest,
     onScrollShouldSetResponder: props.onScrollShouldSetResponder,
     onScrollShouldSetResponderCapture: props.onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder: props.onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture: props.onSelectionChangeShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder:
+      props.onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture:
+      props.onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder: props.onStartShouldSetResponder,
     onStartShouldSetResponderCapture: props.onStartShouldSetResponderCapture
-  }
+  };
 
   useResponderEvents(hostRef, callbacks);
 
-  return (
-    <div ref={hostRef} />
-  );
+  return <div ref={hostRef} />;
 }
 ```
 
@@ -91,7 +91,7 @@ The responder has been taken from this view. It may have been taken by another v
 
 ### Responder lifecycle
 
-If a view is the responder, the following methods will be called only for this view (i.e., no bubbling.) These methods are *always* bookended by `onResponderGrant` (before) and either `onResponderRelease` or `onResponderTerminate` (after).
+If a view is the responder, the following methods will be called only for this view (i.e., no bubbling.) These methods are _always_ bookended by `onResponderGrant` (before) and either `onResponderRelease` or `onResponderTerminate` (after).
 
 #### onResponderStart
 
@@ -107,7 +107,7 @@ A pointer up event occured on the screen. The responder is notified of all end e
 
 #### onResponderRelease
 
-As soon as there are no more pointers that *started* inside descendants of the responder, this method is called on the responder and the interaction lock is released. This is the point at which you should provide visual feedback for users that the interaction is over.
+As soon as there are no more pointers that _started_ inside descendants of the responder, this method is called on the responder and the interaction lock is released. This is the point at which you should provide visual feedback for users that the interaction is over.
 
 ### Responder events
 

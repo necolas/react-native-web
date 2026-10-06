@@ -5,7 +5,7 @@ permalink: /docs/interactions/index.html
 eleventyNavigation:
   key: Interactions
   parent: Concepts
-  label: "Change"
+  label: 'Change'
 ---
 
 {% import "fragments/macros.html" as macro with context %}
@@ -82,7 +82,7 @@ Called when a key is released. (Capture phase.)
 
 "Responder" interactions are available on supporting elements. The Responder System allows views and gesture recognizers to opt-in to negotiating over a single, global “interaction lock”. For a view to become the “responder” means that pointer interactions are exclusive to that view and none other. A view can negotiate to become the “responder” without requiring knowledge of other views. A more specialized API for working with multi-pointer gestures is available by using the [PanResponder]({{ '/docs/pan-responder' | url }}) module.
 
-A view can become the "responder" after the following native events: `scroll`, `touchstart`, `touchmove`, `mousedown`, `mousemove`. If nothing is already the "responder", the event propagates to (capture) and from (bubble) the event target until a view returns `true` for `on*SetResponder(Capture)`. If a view is *currently* the responder, the negotiation event propagates to (capture) and from (bubble) the lowest common ancestor of the event target and the current responder. Then negotiation happens between the current responder and the view that wants to become the responder.
+A view can become the "responder" after the following native events: `scroll`, `touchstart`, `touchmove`, `mousedown`, `mousemove`. If nothing is already the "responder", the event propagates to (capture) and from (bubble) the event target until a view returns `true` for `on*SetResponder(Capture)`. If a view is _currently_ the responder, the negotiation event propagates to (capture) and from (bubble) the lowest common ancestor of the event target and the current responder. Then negotiation happens between the current responder and the view that wants to become the responder.
 
 NOTE: For historical reasons (originating from React Native), mouse interactions are represented as a single `touch`.
 
@@ -138,7 +138,7 @@ The responder has been taken from this view. It may have been taken by another v
 
 ### Lifecycle props
 
-If a view is the responder, the following callbacks will be called only for this view (i.e., no bubbling.) These callbacks are *always* bookended by `onResponderGrant` (before) and either `onResponderRelease` or `onResponderTerminate` (after).
+If a view is the responder, the following callbacks will be called only for this view (i.e., no bubbling.) These callbacks are _always_ bookended by `onResponderGrant` (before) and either `onResponderRelease` or `onResponderTerminate` (after).
 
 {% call macro.prop('onResponderStart', '?(event: ResponderEvent) => void') %}
 A pointer down event occured on the screen. The responder is notified of all start events, even if the pointer target is not this view (i.e., additional pointers are being used). Therefore, this callback may be called multiple times while the view is the responder.
@@ -153,7 +153,7 @@ A pointer up event occured on the screen. The responder is notified of all end e
 {% endcall %}
 
 {% call macro.prop('onResponderRelease', '?(event: ResponderEvent) => void') %}
-As soon as there are no more pointers that *started* inside descendants of the responder, this callback is called on the responder and the interaction lock is released. This is the point at which you should provide visual feedback for users that the interaction is over.
+As soon as there are no more pointers that _started_ inside descendants of the responder, this callback is called on the responder and the interaction lock is released. This is the point at which you should provide visual feedback for users that the interaction is over.
 {% endcall %}
 
 ### ResponderEvent

@@ -2,7 +2,7 @@
 title: Help
 date: Last Modified
 permalink: /docs/help/index.html
-description: 
+description:
 eleventyNavigation:
   key: Help
   parent: Start
