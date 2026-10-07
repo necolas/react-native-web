@@ -7,7 +7,7 @@ const logoUri =
 
 function Link(props) {
   return (
-    <NextLink href={props.href}>
+    <NextLink href={props.href} legacyBehavior={true} passHref={true}>
       <Text {...props} role="link" style={[styles.link, props.style]} />
     </NextLink>
   );
@@ -33,7 +33,7 @@ export default function IndexPage() {
       </Text>
 
       <View role="list">
-        {process.env.pages.map((name) => (
+        {JSON.parse(process.env.pages).map((name) => (
           <View key={name} role="listitem" style={styles.listitem}>
             <Link href={'/' + name} style={styles.pageLink}>
               {name}
