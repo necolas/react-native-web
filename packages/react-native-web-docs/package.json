@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/necolas/react-native-web",
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.1",
+    "@11ty/eleventy": "^3.1.6",
     "@11ty/eleventy-navigation": "^0.3.3",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
     "csso": "^5.0.3",
