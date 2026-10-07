@@ -1,9 +1,0 @@
-../**/dist
-
-../node_modules
-../coverage
-../flow-typed
-
-../packages/**/*.html
-../packages/**/.next
-../packages/**/vendor/*
