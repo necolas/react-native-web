@@ -1,7 +1,6 @@
 import React from 'react';
 import ScrollView from '../';
 import { createEventTarget } from 'dom-event-testing-library';
-import { findDOMNode } from 'react-dom';
 import { act, render } from '@testing-library/react';
 
 describe('components/ScrollView', () => {
@@ -30,7 +29,7 @@ describe('components/ScrollView', () => {
           <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
         );
       });
-      const target = createEventTarget(findDOMNode(ref.current));
+      const target = createEventTarget(ref.current);
       act(() => {
         target.scroll();
         target.scroll();

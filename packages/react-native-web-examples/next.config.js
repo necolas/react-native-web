@@ -7,7 +7,7 @@ const pages = fs
   .map((dirent) => dirent.name);
 
 module.exports = {
-  env: { pages },
+  env: { pages: JSON.stringify(pages) },
   webpack: (config, options) => {
     config.resolve.alias['react-native'] = 'react-native-web';
     return config;

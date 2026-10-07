@@ -13,11 +13,11 @@
     "prop-types": "^15.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native-web": "0.18.10"
+    "react-native-web": "0.21.3"
   },
   "devDependencies": {
     "babel-loader": "^8.2.5",
-    "babel-plugin-react-native-web": "0.18.10",
+    "babel-plugin-react-native-web": "0.21.3",
     "css-loader": "^6.7.1",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
