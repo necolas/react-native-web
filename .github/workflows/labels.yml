@@ -15,8 +15,8 @@ jobs:
   label-actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: dessant/label-actions@v3
+      - uses: actions/checkout@v7
+      - uses: dessant/label-actions@v5
         with:
           config-path: .github/labels-config.yml
           github-token: ${{ github.token }}

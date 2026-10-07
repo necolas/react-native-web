@@ -6,10 +6,11 @@ jobs:
   compressed-size:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: necolas/compressed-size-action@master
+      - uses: actions/checkout@v7
+      - uses: preactjs/compressed-size-action@v2
         with:
           build-script: 'compile'
+          omit-unchanged: 'true'
           exclude: './packages/react-native-web/dist/cjs/{index.js,**/*.js}'
           pattern: './packages/react-native-web/dist/{index.js,**/*.js}'
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
