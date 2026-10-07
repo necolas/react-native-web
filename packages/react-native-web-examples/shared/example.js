@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     width: 40,
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: 1
   },
   container: {
     alignItems: 'center',
