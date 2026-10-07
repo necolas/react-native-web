@@ -19,7 +19,14 @@ export type PackagerAsset = {
   type: string
 };
 
-const assets: Array<PackagerAsset> = [];
+// React Native Web exposes both CJS and ESM versions.
+// This avoids duplicating the registry itself, returning the same data through either CJS or ESM.
+const ASSET_REGISTRY = Symbol.for('react-native-web.AssetRegistry');
+if (!global[ASSET_REGISTRY]) {
+  global[ASSET_REGISTRY] = [];
+}
+
+const assets: Array<PackagerAsset> = global[ASSET_REGISTRY];
 
 export function registerAsset(asset: PackagerAsset): number {
   // `push` returns new array length, so the first asset will
