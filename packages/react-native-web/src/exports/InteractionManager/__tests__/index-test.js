@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function expectToBeCalledOnce(fn) {
+function expectToHaveBeenCalledOnce(fn) {
   expect(fn.mock.calls.length).toBe(1);
 }
 
@@ -111,7 +111,7 @@ describe('InteractionManager', () => {
     InteractionManager.runAfterInteractions(task2);
     jest.runAllTimers();
 
-    expectToBeCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task1);
   });
 
   it('runs tasks added while processing previous tasks', () => {
@@ -179,7 +179,7 @@ describe('promise tasks', () => {
     });
     InteractionManager.runAfterInteractions({ gen: task1, name: 'gen1' });
     jest.runAllTimers();
-    expectToBeCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task1);
   });
 
   it('should handle nested promises', () => {
@@ -198,8 +198,8 @@ describe('promise tasks', () => {
     });
     InteractionManager.runAfterInteractions({ gen: task1, name: 'gen1' });
     jest.runAllTimers();
-    expectToBeCalledOnce(task1);
-    expectToBeCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task2);
   });
 
   it('should pause promise tasks during interactions then resume', () => {
@@ -216,15 +216,15 @@ describe('promise tasks', () => {
     InteractionManager.runAfterInteractions(task1);
     InteractionManager.runAfterInteractions({ gen: task2, name: 'gen2' });
     jest.runOnlyPendingTimers();
-    expectToBeCalledOnce(task1);
-    expectToBeCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task2);
     const handle = InteractionManager.createInteractionHandle();
     jest.runAllTimers();
     jest.runAllTimers(); // Just to be sure...
     expect(task3).not.toHaveBeenCalled();
     InteractionManager.clearInteractionHandle(handle);
     jest.runAllTimers();
-    expectToBeCalledOnce(task3);
+    expectToHaveBeenCalledOnce(task3);
   });
 
   it('should execute tasks in loop within deadline', () => {
@@ -235,8 +235,8 @@ describe('promise tasks', () => {
     InteractionManager.runAfterInteractions(task2);
 
     jest.runOnlyPendingTimers();
-    expectToBeCalledOnce(task1);
-    expectToBeCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task2);
   });
 
   it('should execute tasks one at a time if deadline exceeded', () => {
@@ -251,12 +251,12 @@ describe('promise tasks', () => {
 
     jest.runOnlyPendingTimers();
 
-    expectToBeCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task1);
     expect(task2).not.toHaveBeenCalled();
 
     jest.runOnlyPendingTimers();
 
-    expectToBeCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task2);
   });
 
   const bigAsyncTest = (resolveTest) => {
@@ -296,12 +296,12 @@ describe('promise tasks', () => {
     InteractionManager.runAfterInteractions(task1);
     InteractionManager.runAfterInteractions({ gen: task2, name: 'gen2' });
     InteractionManager.runAfterInteractions(task6).then(() => {
-      expectToBeCalledOnce(task1);
-      expectToBeCalledOnce(task2);
-      expectToBeCalledOnce(task3);
-      expectToBeCalledOnce(task4);
-      expectToBeCalledOnce(task5);
-      expectToBeCalledOnce(task6);
+      expectToHaveBeenCalledOnce(task1);
+      expectToHaveBeenCalledOnce(task2);
+      expectToHaveBeenCalledOnce(task3);
+      expectToHaveBeenCalledOnce(task4);
+      expectToHaveBeenCalledOnce(task5);
+      expectToHaveBeenCalledOnce(task6);
       resolveTest();
     });
 

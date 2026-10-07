@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function expectToBeCalledOnce(fn) {
+function expectToHaveBeenCalledOnce(fn) {
   expect(fn.mock.calls.length).toBe(1);
 }
 
@@ -41,7 +41,7 @@ describe('TaskQueue', () => {
     taskQueue.enqueue({ run: task1, name: 'run1' });
     expect(taskQueue.hasTasksToProcess()).toBe(true);
     taskQueue.processNext();
-    expectToBeCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task1);
   });
 
   it('should handle blocking promise task', () => {
@@ -64,7 +64,7 @@ describe('TaskQueue', () => {
 
     taskQueue.processNext();
 
-    expectToBeCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task1);
     expect(task2).not.toHaveBeenCalled();
     expect(onMoreTasks).not.toHaveBeenCalled();
     expect(taskQueue.hasTasksToProcess()).toBe(false);
@@ -76,8 +76,8 @@ describe('TaskQueue', () => {
         resolve();
       });
     }).then(() => {
-      expectToBeCalledOnce(onMoreTasks);
-      expectToBeCalledOnce(task2);
+      expectToHaveBeenCalledOnce(onMoreTasks);
+      expectToHaveBeenCalledOnce(task2);
     });
   });
 
@@ -93,9 +93,9 @@ describe('TaskQueue', () => {
 
     clearTaskQueue(taskQueue);
 
-    expectToBeCalledOnce(task1);
-    expectToBeCalledOnce(task2);
-    expectToBeCalledOnce(task3);
+    expectToHaveBeenCalledOnce(task1);
+    expectToHaveBeenCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task3);
   });
 
   it('should handle nested promises', () => {
@@ -134,10 +134,10 @@ describe('TaskQueue', () => {
         resolve();
       });
     }).then(() => {
-      expectToBeCalledOnce(task1);
-      expectToBeCalledOnce(task2);
-      expectToBeCalledOnce(task3);
-      expectToBeCalledOnce(task4);
+      expectToHaveBeenCalledOnce(task1);
+      expectToHaveBeenCalledOnce(task2);
+      expectToHaveBeenCalledOnce(task3);
+      expectToHaveBeenCalledOnce(task4);
     });
   });
 
@@ -154,8 +154,8 @@ describe('TaskQueue', () => {
     clearTaskQueue(taskQueue);
     expect(task1).not.toHaveBeenCalled();
     expect(task3).not.toHaveBeenCalled();
-    expectToBeCalledOnce(task2);
-    expectToBeCalledOnce(task4);
+    expectToHaveBeenCalledOnce(task2);
+    expectToHaveBeenCalledOnce(task4);
     expect(taskQueue.hasTasksToProcess()).toBe(false);
   });
 
