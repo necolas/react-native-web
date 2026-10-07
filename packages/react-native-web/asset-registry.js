@@ -5,9 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { default: AssetRegistry } = require('./src/exports/AssetRegistry');
-
-module.exports = {
-  registerAsset: AssetRegistry.registerAsset,
-  getAssetByID: AssetRegistry.getAssetByID
-};
+// TODO: move this to package.json:exports
+// Metro uses this entrypoint to interact with the asset registry
+module.exports = require('./dist/cjs/exports/AssetRegistry');
