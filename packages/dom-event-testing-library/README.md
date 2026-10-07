@@ -59,7 +59,7 @@ describeWithPointerEvent('useTap', (hasPointerEvent) => {
     });
 
     // assertion
-    expect(onTapStart).toBeCalled();
+    expect(onTapStart).toHaveBeenCalled();
   });
 });
 ```

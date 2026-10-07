@@ -34,7 +34,7 @@ describe('components/View', () => {
 
     test('error logged (single)', () => {
       render(<View>hello</View>);
-      expect(console.error).toBeCalled();
+      expect(console.error).toHaveBeenCalled();
     });
 
     test('error logged (array)', () => {
@@ -45,7 +45,7 @@ describe('components/View', () => {
           <View />
         </View>
       );
-      expect(console.error).toBeCalled();
+      expect(console.error).toHaveBeenCalled();
     });
   });
 
@@ -198,7 +198,7 @@ describe('components/View', () => {
         target.focus();
         body.focus({ relatedTarget: target.node });
       });
-      expect(onBlur).toBeCalled();
+      expect(onBlur).toHaveBeenCalled();
     });
   });
 
@@ -213,7 +213,7 @@ describe('components/View', () => {
       act(() => {
         target.click();
       });
-      expect(onClick).toBeCalled();
+      expect(onClick).toHaveBeenCalled();
     });
   });
 
@@ -229,7 +229,7 @@ describe('components/View', () => {
         target.focus();
         target.blur();
       });
-      expect(onFocus).toBeCalled();
+      expect(onFocus).toHaveBeenCalled();
     });
   });
 
@@ -251,7 +251,7 @@ describe('components/View', () => {
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
       });
-      expect(onPointerDown).toBeCalled();
+      expect(onPointerDown).toHaveBeenCalled();
     });
   });
 
@@ -259,7 +259,7 @@ describe('components/View', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<View ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {

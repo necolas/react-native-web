@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`components/Switch disabled when "true" and value="false", a disabled checkbox is rendered with provided false value of trackColor 1`] = `
 <div

@@ -90,12 +90,12 @@ describe('components/Pressable', () => {
     act(() => {
       target.focus();
     });
-    expect(onFocus).toBeCalled();
+    expect(onFocus).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       body.focus({ relatedTarget: target.node });
     });
-    expect(onBlur).toBeCalled();
+    expect(onBlur).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -118,11 +118,11 @@ describe('components/Pressable', () => {
     act(() => {
       target.focus();
     });
-    expect(onFocus).toBeCalled();
+    expect(onFocus).toHaveBeenCalled();
     act(() => {
       body.focus({ relatedTarget: target.node });
     });
-    expect(onBlur).toBeCalled();
+    expect(onBlur).toHaveBeenCalled();
   });
 
   test('hover interaction', () => {
@@ -148,12 +148,12 @@ describe('components/Pressable', () => {
     act(() => {
       target.pointerover();
     });
-    expect(onHoverIn).toBeCalled();
+    expect(onHoverIn).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerout();
     });
-    expect(onHoverOut).toBeCalled();
+    expect(onHoverOut).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
   });
 
@@ -185,19 +185,19 @@ describe('components/Pressable', () => {
       target.pointerdown({ button: 0 });
       jest.runAllTimers();
     });
-    expect(onPressIn).toBeCalled();
+    expect(onPressIn).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerup({ button: 0 });
       jest.runAllTimers();
     });
-    expect(onPressOut).toBeCalled();
-    expect(onPress).toBeCalled();
+    expect(onPressOut).toHaveBeenCalled();
+    expect(onPress).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.contextmenu({});
     });
-    expect(onContextMenu).toBeCalled();
+    expect(onContextMenu).toHaveBeenCalled();
   });
 
   describe('press interaction (keyboard)', () => {
@@ -236,14 +236,14 @@ describe('components/Pressable', () => {
         target.keydown({ key: 'Enter' });
         jest.runAllTimers();
       });
-      expect(onPressIn).toBeCalled();
+      expect(onPressIn).toHaveBeenCalled();
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
         target.keyup({ key: 'Enter' });
         jest.runAllTimers();
       });
-      expect(onPressOut).toBeCalled();
-      expect(onPress).toBeCalled();
+      expect(onPressOut).toHaveBeenCalled();
+      expect(onPress).toHaveBeenCalled();
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -272,7 +272,7 @@ describe('components/Pressable', () => {
         body.keyup({ key: 'Enter' });
         jest.runAllTimers();
       });
-      expect(onPress).not.toBeCalled();
+      expect(onPress).not.toHaveBeenCalled();
     });
   });
 
@@ -309,7 +309,7 @@ describe('components/Pressable', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<Pressable ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
 
     test('node has imperative methods', () => {

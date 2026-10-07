@@ -92,7 +92,7 @@ describe('components/ActivityIndicator', () => {
         target.focus();
         body.focus({ relatedTarget: target.node });
       });
-      expect(onBlur).toBeCalled();
+      expect(onBlur).toHaveBeenCalled();
     });
   });
 
@@ -107,7 +107,7 @@ describe('components/ActivityIndicator', () => {
       act(() => {
         target.focus();
       });
-      expect(onFocus).toBeCalled();
+      expect(onFocus).toHaveBeenCalled();
     });
   });
 
@@ -115,7 +115,7 @@ describe('components/ActivityIndicator', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<ActivityIndicator ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
   });
 

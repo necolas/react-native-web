@@ -34,7 +34,7 @@ describe('components/ScrollView', () => {
         target.scroll();
         target.scroll();
       });
-      expect(onScroll).toBeCalled();
+      expect(onScroll).toHaveBeenCalled();
     });
 
     test('is not called when descendant scrolls', () => {
@@ -51,7 +51,7 @@ describe('components/ScrollView', () => {
       act(() => {
         target.scroll();
       });
-      expect(onScroll).not.toBeCalled();
+      expect(onScroll).not.toHaveBeenCalled();
     });
   });
 
@@ -59,7 +59,7 @@ describe('components/ScrollView', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<ScrollView ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {

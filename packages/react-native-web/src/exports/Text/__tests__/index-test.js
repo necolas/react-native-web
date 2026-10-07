@@ -183,7 +183,7 @@ describe('components/Text', () => {
         target.focus();
         body.focus({ relatedTarget: target.node });
       });
-      expect(onBlur).toBeCalled();
+      expect(onBlur).toHaveBeenCalled();
     });
   });
 
@@ -198,7 +198,7 @@ describe('components/Text', () => {
       act(() => {
         target.click();
       });
-      expect(onClick).toBeCalled();
+      expect(onClick).toHaveBeenCalled();
     });
 
     test('is still called if "onPress" is provided', () => {
@@ -211,7 +211,7 @@ describe('components/Text', () => {
       act(() => {
         target.click();
       });
-      expect(onClick).toBeCalled();
+      expect(onClick).toHaveBeenCalled();
     });
   });
 
@@ -226,7 +226,7 @@ describe('components/Text', () => {
       act(() => {
         target.focus();
       });
-      expect(onFocus).toBeCalled();
+      expect(onFocus).toHaveBeenCalled();
     });
   });
 
@@ -248,7 +248,7 @@ describe('components/Text', () => {
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
       });
-      expect(onPointerDown).toBeCalled();
+      expect(onPointerDown).toHaveBeenCalled();
     });
   });
 
@@ -264,7 +264,7 @@ describe('components/Text', () => {
         target.pointerdown({ button: 0 });
         target.pointerup({ button: 0 });
       });
-      expect(onPress).toBeCalled();
+      expect(onPress).toHaveBeenCalled();
     });
 
     test('is not called if "onClick" is provided', () => {
@@ -277,7 +277,7 @@ describe('components/Text', () => {
       act(() => {
         target.click();
       });
-      expect(onPress).not.toBeCalled();
+      expect(onPress).not.toHaveBeenCalled();
     });
   });
 
@@ -285,7 +285,7 @@ describe('components/Text', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<Text ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {
