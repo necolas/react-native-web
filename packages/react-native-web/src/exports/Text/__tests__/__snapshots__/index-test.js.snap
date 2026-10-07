@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`components/Text default 1`] = `
 <div
@@ -152,6 +152,7 @@ exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
   class="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1qsk4np r-textOverflow-1udbk01"
   dir="auto"
+  style="-webkit-line-clamp: 3;"
 />
 `;
 

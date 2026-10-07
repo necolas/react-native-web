@@ -79,7 +79,7 @@ describe('CheckBox', () => {
         target.focus();
         body.focus({ relatedTarget: target.node });
       });
-      expect(onBlur).toBeCalled();
+      expect(onBlur).toHaveBeenCalled();
     });
   });
 
@@ -106,7 +106,7 @@ describe('CheckBox', () => {
       act(() => {
         target.focus();
       });
-      expect(onFocus).toBeCalled();
+      expect(onFocus).toHaveBeenCalled();
     });
   });
 
@@ -136,7 +136,7 @@ describe('CheckBox', () => {
     test('value is set', () => {
       const ref = jest.fn();
       render(<CheckBox ref={ref} />);
-      expect(ref).toBeCalled();
+      expect(ref).toHaveBeenCalled();
     });
   });
 

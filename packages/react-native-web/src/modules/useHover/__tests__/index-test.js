@@ -63,11 +63,11 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerout();
         child.pointerover();
       });
-      expect(onHoverEnd).toBeCalled();
+      expect(onHoverEnd).toHaveBeenCalled();
       act(() => {
         child.pointerout();
       });
-      expect(onHoverStart).toBeCalled();
+      expect(onHoverStart).toHaveBeenCalled();
     });
   });
 
@@ -100,10 +100,10 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerover();
         target.pointerout();
       });
-      expect(onHoverChange).not.toBeCalled();
-      expect(onHoverStart).not.toBeCalled();
-      expect(onHoverUpdate).not.toBeCalled();
-      expect(onHoverEnd).not.toBeCalled();
+      expect(onHoverChange).not.toHaveBeenCalled();
+      expect(onHoverStart).not.toHaveBeenCalled();
+      expect(onHoverUpdate).not.toHaveBeenCalled();
+      expect(onHoverEnd).not.toHaveBeenCalled();
     });
   });
 
@@ -126,7 +126,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
       act(() => {
         target.pointerover({ pointerType: 'mouse' });
       });
-      expect(onHoverStart).toBeCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
     });
 
     test('is not called for touch pointers', () => {
@@ -136,7 +136,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
       });
-      expect(onHoverStart).not.toBeCalled();
+      expect(onHoverStart).not.toHaveBeenCalled();
     });
 
     test('is called if a mouse pointer is used after a touch pointer', () => {
@@ -147,7 +147,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerup({ pointerType: 'touch' });
         target.pointerover({ pointerType: 'mouse' });
       });
-      expect(onHoverStart).toBeCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -170,13 +170,13 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
       act(() => {
         target.pointerover();
       });
-      expect(onHoverChange).toBeCalledTimes(1);
-      expect(onHoverChange).toBeCalledWith(true);
+      expect(onHoverChange).toHaveBeenCalledTimes(1);
+      expect(onHoverChange).toHaveBeenCalledWith(true);
       act(() => {
         target.pointerout();
       });
-      expect(onHoverChange).toBeCalledTimes(2);
-      expect(onHoverChange).toBeCalledWith(false);
+      expect(onHoverChange).toHaveBeenCalledTimes(2);
+      expect(onHoverChange).toHaveBeenCalledWith(false);
     });
 
     test('is not called for touch pointers', () => {
@@ -186,7 +186,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
       });
-      expect(onHoverChange).not.toBeCalled();
+      expect(onHoverChange).not.toHaveBeenCalled();
     });
   });
 
@@ -215,7 +215,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerover();
         target.pointerout();
       });
-      expect(onHoverEnd).toBeCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
     });
 
     test('is not called for touch pointers', () => {
@@ -225,7 +225,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
       });
-      expect(onHoverEnd).not.toBeCalled();
+      expect(onHoverEnd).not.toHaveBeenCalled();
     });
 
     test('is not called when entering children of the target', () => {
@@ -237,7 +237,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerout({ relatedTarget: childRef.current });
         child.pointerover({ relatedTarget: target.node });
       });
-      expect(onHoverEnd).not.toBeCalled();
+      expect(onHoverEnd).not.toHaveBeenCalled();
     });
   });
 
@@ -257,7 +257,7 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerhover({ x: 0, y: 0 });
         target.pointerhover({ x: 1, y: 1 });
       });
-      expect(onHoverUpdate).toBeCalledTimes(2);
+      expect(onHoverUpdate).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -290,19 +290,19 @@ describeWithPointerEvent('useHover', (hasPointerEvents) => {
         target.pointerhover({ x: 1, y: 1 });
         target.pointerout();
       });
-      expect(onHoverStart).toBeCalledTimes(1);
-      expect(onHoverUpdate).toBeCalledTimes(1);
-      expect(onHoverEnd).toBeCalledTimes(1);
-      expect(onHoverChange).toBeCalledTimes(2);
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverUpdate).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverChange).toHaveBeenCalledTimes(2);
       act(() => {
         target.pointerover();
         target.pointerhover({ x: 1, y: 1 });
         target.pointerout();
       });
-      expect(onHoverStart).toBeCalledTimes(2);
-      expect(onHoverUpdate).toBeCalledTimes(2);
-      expect(onHoverEnd).toBeCalledTimes(2);
-      expect(onHoverChange).toBeCalledTimes(4);
+      expect(onHoverStart).toHaveBeenCalledTimes(2);
+      expect(onHoverUpdate).toHaveBeenCalledTimes(2);
+      expect(onHoverEnd).toHaveBeenCalledTimes(2);
+      expect(onHoverChange).toHaveBeenCalledTimes(4);
     });
   });
 });

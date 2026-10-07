@@ -109,7 +109,7 @@ describe('components/TextInput', () => {
     test('value "true"', () => {
       const { container } = render(<TextInput caretHidden />);
       const style = window.getComputedStyle(container.firstChild);
-      expect(style.caretColor).toEqual('transparent');
+      expect(style.caretColor).toEqual('rgba(0, 0, 0, 0)');
     });
   });
 
@@ -341,7 +341,7 @@ describe('components/TextInput', () => {
     input.dispatchEvent(keydown({ key: 'a' }));
     input.dispatchEvent(new window.Event('change', { bubbles: true }));
     expect(onChangeText).toHaveBeenCalledTimes(1);
-    expect(onChangeText).toBeCalledWith('a');
+    expect(onChangeText).toHaveBeenCalledWith('a');
   });
 
   test('prop "onFocus"', () => {
@@ -368,7 +368,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'ArrowLeft' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -390,7 +390,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Backspace' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -412,7 +412,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Enter' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -434,7 +434,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Escape' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -456,7 +456,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: ' ' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -478,7 +478,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Tab' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -500,7 +500,7 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'a' }));
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -530,7 +530,7 @@ describe('components/TextInput', () => {
         })
       );
       expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toBeCalledWith(
+      expect(onKeyPress).toHaveBeenCalledWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: true,

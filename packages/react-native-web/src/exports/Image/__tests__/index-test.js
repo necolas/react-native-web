@@ -118,7 +118,7 @@ describe('components/Image', () => {
         />
       );
       jest.runOnlyPendingTimers();
-      expect(onLoadStub).toBeCalled();
+      expect(onLoadStub).toHaveBeenCalled();
     });
 
     test('is called after image is loaded from cache', () => {
@@ -140,7 +140,7 @@ describe('components/Image', () => {
         />
       );
       jest.runOnlyPendingTimers();
-      expect(onLoadStub).toBeCalled();
+      expect(onLoadStub).toHaveBeenCalled();
       ImageUriCache.remove(uri);
     });
 

@@ -367,7 +367,7 @@ describe('Animated', () => {
       anim2.start.mock.calls[0][0]({ finished: true });
 
       // sequence should be finished
-      expect(cb).toBeCalledWith({ finished: true });
+      expect(cb).toHaveBeenCalledWith({ finished: true });
 
       seq.start(cb);
 

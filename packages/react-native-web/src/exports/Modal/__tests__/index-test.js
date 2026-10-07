@@ -170,25 +170,25 @@ describe('components/Modal', () => {
   test('executes onShow callback when initially showing', () => {
     const onShowCallback = jest.fn();
     render(<Modal onShow={onShowCallback} visible={true} />);
-    expect(onShowCallback).toBeCalledTimes(1);
+    expect(onShowCallback).toHaveBeenCalledTimes(1);
   });
 
   test('does not execute onShow callback when initially hidden', () => {
     const onShowCallback = jest.fn();
     render(<Modal onShow={onShowCallback} visible={false} />);
-    expect(onShowCallback).toBeCalledTimes(0);
+    expect(onShowCallback).toHaveBeenCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially hidden', () => {
     const onDismissCallback = jest.fn();
     render(<Modal onDismiss={onDismissCallback} visible={false} />);
-    expect(onDismissCallback).toBeCalledTimes(0);
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially showing', () => {
     const onDismissCallback = jest.fn();
     render(<Modal onDismiss={onDismissCallback} visible={true} />);
-    expect(onDismissCallback).toBeCalledTimes(0);
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
   });
 
   test('executes onShow callback when visibility changes', () => {
@@ -196,9 +196,9 @@ describe('components/Modal', () => {
     const { rerender } = render(
       <Modal onShow={onShowCallback} visible={false} />
     );
-    expect(onShowCallback).toBeCalledTimes(0);
+    expect(onShowCallback).toHaveBeenCalledTimes(0);
     rerender(<Modal onShow={onShowCallback} visible={true} />);
-    expect(onShowCallback).toBeCalledTimes(1);
+    expect(onShowCallback).toHaveBeenCalledTimes(1);
   });
 
   test('executes onDismiss callback when visibility changes', () => {
@@ -206,9 +206,9 @@ describe('components/Modal', () => {
     const { rerender } = render(
       <Modal onDismiss={onDismissCallback} visible={true} />
     );
-    expect(onDismissCallback).toBeCalledTimes(0);
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
     rerender(<Modal onDismiss={onDismissCallback} visible={false} />);
-    expect(onDismissCallback).toBeCalledTimes(1);
+    expect(onDismissCallback).toHaveBeenCalledTimes(1);
   });
 
   test('animationTypes none is the same as omitting', () => {
@@ -331,7 +331,7 @@ describe('components/Modal', () => {
       </>
     );
 
-    expect(onDismissCallback).toBeCalledTimes(1);
+    expect(onDismissCallback).toHaveBeenCalledTimes(1);
     expect(document.activeElement).toBe(outsideElement);
   });
 

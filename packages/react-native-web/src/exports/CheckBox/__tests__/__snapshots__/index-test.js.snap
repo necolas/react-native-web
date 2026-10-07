@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`CheckBox prop "accessibilityLabel" value is set 1`] = `
 <div
@@ -37,7 +37,7 @@ exports[`CheckBox prop "color" value is set 1`] = `
 >
   <div
     class="css-view-g5y9jx r-alignItems-1awozwy r-borderRadius-1jkafct r-borderStyle-1phboty r-borderWidth-d045u9 r-height-1pi2tsx r-justifyContent-1777fci r-width-13qz1uu r-backgroundImage-rs94m5 r-backgroundRepeat-u6sd8q"
-    style="background-color: rgb(173, 216, 230); border-top-color: rgba(173,216,230,1.00); border-right-color: rgba(173,216,230,1.00); border-bottom-color: rgba(173,216,230,1.00); border-left-color: rgba(173,216,230,1.00);"
+    style="background-color: rgb(173, 216, 230); border-top-color: rgb(173, 216, 230); border-right-color: rgb(173, 216, 230); border-bottom-color: rgb(173, 216, 230); border-left-color: rgb(173, 216, 230);"
   />
   <input
     checked=""

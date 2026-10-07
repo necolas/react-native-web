@@ -65,8 +65,8 @@ describe('TaskQueue', () => {
     taskQueue.processNext();
 
     expectToBeCalledOnce(task1);
-    expect(task2).not.toBeCalled();
-    expect(onMoreTasks).not.toBeCalled();
+    expect(task2).not.toHaveBeenCalled();
+    expect(onMoreTasks).not.toHaveBeenCalled();
     expect(taskQueue.hasTasksToProcess()).toBe(false);
 
     clearTaskQueue(taskQueue);
@@ -152,8 +152,8 @@ describe('TaskQueue', () => {
     taskQueue.enqueue(task4);
     taskQueue.cancelTasks([task1, task3]);
     clearTaskQueue(taskQueue);
-    expect(task1).not.toBeCalled();
-    expect(task3).not.toBeCalled();
+    expect(task1).not.toHaveBeenCalled();
+    expect(task3).not.toHaveBeenCalled();
     expectToBeCalledOnce(task2);
     expectToBeCalledOnce(task4);
     expect(taskQueue.hasTasksToProcess()).toBe(false);
@@ -164,7 +164,7 @@ describe('TaskQueue', () => {
     taskQueue.enqueue(task1);
     taskQueue.cancelTasks([task1]);
     clearTaskQueue(taskQueue);
-    expect(task1).not.toBeCalled();
+    expect(task1).not.toHaveBeenCalled();
     expect(taskQueue.hasTasksToProcess()).toBe(false);
   });
 
