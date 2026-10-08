@@ -330,10 +330,7 @@ export function inline(
  * Create a value string that normalizes different input values with a common
  * output.
  */
-export function stringifyValueWithProperty(
-  value: Value,
-  property: ?string
-): string {
+function stringifyValueWithProperty(value: Value, property: ?string): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'
