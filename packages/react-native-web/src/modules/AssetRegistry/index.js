@@ -22,6 +22,7 @@ export type PackagerAsset = {
 // `globalThis` is missing in some of our browser targets (Chrome 49, Safari 10), so we fall back
 // to `global` and `window`. Once the browser targets support `globalThis`, use it directly.
 const globalObject: any =
+  // $FlowFixMe[cannot-resolve-name] Flow 0.148 doesn't know about `globalThis`
   typeof globalThis !== 'undefined'
     ? globalThis
     : typeof global !== 'undefined'
