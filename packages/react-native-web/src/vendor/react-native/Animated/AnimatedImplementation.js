@@ -18,7 +18,6 @@ import AnimatedInterpolation from './nodes/AnimatedInterpolation';
 import AnimatedModulo from './nodes/AnimatedModulo';
 import AnimatedMultiplication from './nodes/AnimatedMultiplication';
 import AnimatedNode from './nodes/AnimatedNode';
-import AnimatedProps from './nodes/AnimatedProps';
 import AnimatedSubtraction from './nodes/AnimatedSubtraction';
 import AnimatedTracking from './nodes/AnimatedTracking';
 import AnimatedValue from './nodes/AnimatedValue';

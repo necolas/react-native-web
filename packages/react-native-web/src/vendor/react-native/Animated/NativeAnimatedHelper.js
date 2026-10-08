@@ -43,9 +43,6 @@ let queue: Array<() => void> = [];
 let singleOpQueue: Array<any> = [];
 
 const useSingleOpBatching = false;
-  Platform.OS === 'android' &&
-  !!NativeAnimatedModule?.queueAndExecuteBatchedOperations &&
-  ReactNativeFeatureFlags.animatedShouldUseSingleOp();
 let flushQueueTimeout = null;
 
 const eventListenerGetValueCallbacks = {};
