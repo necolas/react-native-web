@@ -11,6 +11,7 @@
   "files": [
     "dist",
     "src",
+    "asset-registry.js",
     "!**/__tests__"
   ],
   "scripts": {
