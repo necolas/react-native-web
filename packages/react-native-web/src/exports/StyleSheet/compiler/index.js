@@ -8,7 +8,7 @@
  */
 
 import createReactDOMStyle from './createReactDOMStyle';
-import hash from './hash';
+import hash from '../../../vendor/hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 import prefixStyles from '../../../modules/prefixStyles';
