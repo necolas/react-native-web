@@ -108,7 +108,7 @@ export default class App extends Component {
                 {results.map((r, i) => (
                   <ReportCard
                     benchmarkName={r.benchmarkName}
-                    key={i}
+                    key={r.id}
                     libraryName={r.libraryName}
                     libraryVersion={r.libraryVersion}
                     mean={r.mean}
@@ -207,6 +207,7 @@ export default class App extends Component {
           results: state.results.concat([
             {
               ...results,
+              id: `${benchmarkName}-${libraryName}-${state.results.length}`,
               benchmarkName,
               libraryName,
               libraryVersion:
