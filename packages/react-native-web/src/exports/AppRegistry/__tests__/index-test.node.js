@@ -53,13 +53,13 @@ describe('AppRegistry', () => {
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
         .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
-        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-bottom-1p0dtai{bottom:0px;}
         .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
         .r-maxWidth-dnmrzs{max-width:100%;}
+        .r-overflowInline-1b3bawr{overflow-inline:clip;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>* {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
@@ -112,13 +112,13 @@ describe('AppRegistry', () => {
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
         .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
-        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-bottom-1p0dtai{bottom:0px;}
         .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
         .r-maxWidth-dnmrzs{max-width:100%;}
+        .r-overflowInline-1b3bawr{overflow-inline:clip;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>* {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
@@ -163,7 +163,6 @@ describe('AppRegistry', () => {
         .r-display-xoduu5{display:inline-flex;}
         .r-flex-13awgt0{flex:1;}
         .r-overflow-1qsk4np{overflow-x:clip;overflow-y:clip;}
-        .r-overflow-1udh08x{overflow-x:hidden;overflow-y:hidden;}
         [stylesheet-group="3"]{}
         .r-WebkitBoxOrient-8akbws{-webkit-box-orient:vertical;}
         .r-backgroundColor-aot4c7{background-color:rgba(128,0,128,1.00);}
@@ -171,6 +170,7 @@ describe('AppRegistry', () => {
         .r-cursor-1loqt21{cursor:pointer;}
         .r-left-1d2f490{left:0px;}
         .r-maxWidth-dnmrzs{max-width:100%;}
+        .r-overflowInline-1b3bawr{overflow-inline:clip;}
         .r-pointerEvents-105ug2t{pointer-events:auto!important;}
         .r-pointerEvents-12vffkv>* {pointer-events:auto;}
         .r-pointerEvents-12vffkv{pointer-events:none!important;}
