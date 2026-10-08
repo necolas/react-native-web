@@ -22,7 +22,6 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import useLayoutEffect from '../../modules/useLayoutEffect';
 import View from '../View';
-import { warnOnce } from '../../modules/warnOnce';
 
 export type { ImageProps };
 
@@ -62,19 +61,6 @@ function extractNonStandardStyleProps(
 ) {
   const flatStyle = StyleSheet.flatten(style);
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
-
-  if (flatStyle.resizeMode) {
-    warnOnce(
-      'Image.style.resizeMode',
-      'Image: style.resizeMode is deprecated. Please use props.resizeMode.'
-    );
-  }
-  if (flatStyle.tintColor) {
-    warnOnce(
-      'Image.style.tintColor',
-      'Image: style.tintColor is deprecated. Please use props.tintColor.'
-    );
-  }
 
   // Add CSS filters
   // React Native exposes these features as props and proprietary styles

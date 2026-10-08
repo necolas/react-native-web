@@ -9,7 +9,6 @@
 
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
-import { warnOnce } from '../../modules/warnOnce';
 
 const emptyObject = {};
 
@@ -147,10 +146,6 @@ export const preprocess = <T: {| [key: string]: any |}>(
       style.shadowOpacity != null ||
       style.shadowRadius != null)
   ) {
-    warnOnce(
-      'shadowStyles',
-      `"shadow*" style props are deprecated. Use "boxShadow".`
-    );
     const boxShadowValue = createBoxShadowValue(style);
     if (boxShadowValue != null) {
       nextStyle.boxShadow = boxShadowValue;
@@ -164,10 +159,6 @@ export const preprocess = <T: {| [key: string]: any |}>(
       style.textShadowOffset != null ||
       style.textShadowRadius != null)
   ) {
-    warnOnce(
-      'textShadowStyles',
-      `"textShadow*" style props are deprecated. Use "textShadow".`
-    );
     const textShadowValue = createTextShadowValue(style);
     if (textShadowValue != null && nextStyle.textShadow == null) {
       const { textShadow } = style;
@@ -214,22 +205,10 @@ export const preprocess = <T: {| [key: string]: any |}>(
       nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
     } else if (prop === 'fontVariant') {
       if (Array.isArray(value) && value.length > 0) {
-        /*
-        warnOnce(
-          'fontVariant',
-          '"fontVariant" style array value is deprecated. Use space-separated values.'
-        );
-        */
         value = value.join(' ');
       }
       nextStyle[prop] = value;
     } else if (prop === 'textAlignVertical') {
-      /*
-      warnOnce(
-        'textAlignVertical',
-        '"textAlignVertical" style is deprecated. Use "verticalAlign".'
-      );
-      */
       if (style.verticalAlign == null) {
         nextStyle.verticalAlign = value === 'center' ? 'middle' : value;
       }

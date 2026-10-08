@@ -19,7 +19,6 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-//import { warnOnce } from '../../modules/warnOnce';
 
 type ViewStyle = $PropertyType<ViewProps, 'style'>;
 
@@ -34,13 +33,6 @@ type Props = $ReadOnly<{|
  * On press down, the opacity of the wrapped view is decreased, dimming it.
  */
 function TouchableOpacity(props: Props, forwardedRef): React.Node {
-  /*
-  warnOnce(
-    'TouchableOpacity',
-    'TouchableOpacity is deprecated. Please use Pressable.'
-  );
-  */
-
   const {
     activeOpacity,
     delayPressIn,
