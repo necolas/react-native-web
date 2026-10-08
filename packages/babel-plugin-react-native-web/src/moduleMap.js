@@ -7,6 +7,7 @@ module.exports = {
   AppRegistry: true,
   AppState: true,
   Appearance: true,
+  AssetRegistry: true,
   BackHandler: true,
   Button: true,
   CheckBox: true,
