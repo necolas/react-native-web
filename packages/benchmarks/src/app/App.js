@@ -1,5 +1,11 @@
 import Benchmark from './Benchmark';
-import { Picker, StyleSheet, ScrollView, Pressable, View } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  View,
+  unstable_createElement as createElement
+} from 'react-native';
 import React, { Component } from 'react';
 import Button from './Button';
 import { IconClear, IconEye } from './Icons';
@@ -9,6 +15,17 @@ import Layout from './Layout';
 import { colors } from './theme';
 
 const Overlay = () => <View style={[StyleSheet.absoluteFill, { zIndex: 2 }]} />;
+
+const Select = ({ disabled, onValueChange, options, style, value }) =>
+  createElement('select', {
+    disabled,
+    onChange: (e) => onValueChange(e.target.value),
+    style,
+    value,
+    children: options.map((option) =>
+      createElement('option', { key: option, children: option, value: option })
+    )
+  });
 
 export default class App extends Component {
   static displayName = '@app/App';
@@ -42,37 +59,25 @@ export default class App extends Component {
                 <Text style={styles.pickerTitle}>Library</Text>
                 <Text style={{ fontWeight: 'bold' }}>{currentLibraryName}</Text>
 
-                <Picker
-                  enabled={status !== 'running'}
+                <Select
+                  disabled={status === 'running'}
                   onValueChange={this._handleChangeLibrary}
-                  selectedValue={currentLibraryName}
+                  options={Object.keys(tests[currentBenchmarkName])}
                   style={styles.picker}
-                >
-                  {Object.keys(tests[currentBenchmarkName]).map(
-                    (libraryName) => (
-                      <Picker.Item
-                        key={libraryName}
-                        label={libraryName}
-                        value={libraryName}
-                      />
-                    )
-                  )}
-                </Picker>
+                  value={currentLibraryName}
+                />
               </View>
               <View style={{ width: 1, backgroundColor: colors.fadedGray }} />
               <View style={styles.pickerContainer}>
                 <Text style={styles.pickerTitle}>Benchmark</Text>
                 <Text>{currentBenchmarkName}</Text>
-                <Picker
-                  enabled={status !== 'running'}
+                <Select
+                  disabled={status === 'running'}
                   onValueChange={this._handleChangeBenchmark}
-                  selectedValue={currentBenchmarkName}
+                  options={Object.keys(tests)}
                   style={styles.picker}
-                >
-                  {Object.keys(tests).map((test) => (
-                    <Picker.Item key={test} label={test} value={test} />
-                  ))}
-                </Picker>
+                  value={currentBenchmarkName}
+                />
               </View>
             </View>
 
