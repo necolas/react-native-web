@@ -18,6 +18,7 @@ export type AppearancePreferences = {|
   colorScheme: ColorSchemeName
 |};
 
+type ColorSchemeSetting = ColorSchemeName | 'auto' | 'unspecified' | null;
 type AppearanceListener = (preferences: AppearancePreferences) => void;
 type DOMAppearanceListener = (ev: MediaQueryListEvent) => any;
 
@@ -28,21 +29,47 @@ function getQuery(): MediaQueryList | null {
 }
 
 const query = getQuery();
+let colorSchemeOverride: ColorSchemeName | null = null;
+const appearanceListeners = new Set<AppearanceListener>();
 const listenerMapping = new WeakMap<
   AppearanceListener,
   DOMAppearanceListener
 >();
 
+function getSystemColorScheme(): ColorSchemeName {
+  return query && query.matches ? 'dark' : 'light';
+}
+
+function notifyListeners(colorScheme: ColorSchemeName): void {
+  Array.from(appearanceListeners).forEach((listener) => {
+    listener({ colorScheme });
+  });
+}
+
 const Appearance = {
   getColorScheme(): ColorSchemeName {
-    return query && query.matches ? 'dark' : 'light';
+    return colorSchemeOverride ?? getSystemColorScheme();
+  },
+
+  setColorScheme(colorScheme: ColorSchemeSetting): void {
+    const previousColorScheme = Appearance.getColorScheme();
+    colorSchemeOverride =
+      colorScheme === 'light' || colorScheme === 'dark' ? colorScheme : null;
+    const nextColorScheme = Appearance.getColorScheme();
+
+    if (nextColorScheme !== previousColorScheme) {
+      notifyListeners(nextColorScheme);
+    }
   },
 
   addChangeListener(listener: AppearanceListener): { remove: () => void } {
+    appearanceListeners.add(listener);
     let mappedListener = listenerMapping.get(listener);
     if (!mappedListener) {
-      mappedListener = ({ matches }: MediaQueryListEvent) => {
-        listener({ colorScheme: matches ? 'dark' : 'light' });
+      mappedListener = () => {
+        if (colorSchemeOverride == null) {
+          listener({ colorScheme: getSystemColorScheme() });
+        }
       };
       listenerMapping.set(listener, mappedListener);
     }
@@ -55,6 +82,7 @@ const Appearance = {
       if (query && mappedListener) {
         query.removeListener(mappedListener);
       }
+      appearanceListeners.delete(listener);
       listenerMapping.delete(listener);
     }
 
