@@ -18,7 +18,6 @@ import Position from './Position';
 import React from 'react';
 import UIManager from '../UIManager';
 import View from '../View';
-import { warnOnce } from '../../modules/warnOnce';
 
 type Event = Object;
 type PressEvent = Object;
@@ -372,11 +371,6 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
 const TouchableMixin = {
   // HACK (part 1): basic support for touchable interactions using a keyboard
   componentDidMount: function () {
-    warnOnce(
-      'TouchableMixin',
-      'TouchableMixin is deprecated. Please use Pressable.'
-    );
-
     const touchableNode = this.getTouchableNode && this.getTouchableNode();
     if (touchableNode && touchableNode.addEventListener) {
       this._touchableBlurListener = (e) => {
@@ -975,6 +969,11 @@ const {
 TouchableMixin.withoutDefaultFocusAndBlur =
   TouchableMixinWithoutDefaultFocusAndBlur;
 
+/**
+ * @deprecated `Touchable` has been removed from the React Native public API
+ * types. It remains exported at runtime because `react-native-svg` still uses
+ * it, and will be removed once `react-native-svg` is updated.
+ */
 const Touchable = {
   Mixin: TouchableMixin,
   TOUCH_TARGET_DEBUG: false, // Highlights all touchable targets. Toggle with Inspector.

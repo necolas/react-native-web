@@ -53,6 +53,14 @@ export { default as StatusBar } from './exports/StatusBar';
 export { default as Switch } from './exports/Switch';
 export { default as Text } from './exports/Text';
 export { default as TextInput } from './exports/TextInput';
+// `Touchable` has been removed from the public API types, but remains
+// re-exported at runtime here because of a hanging `react-native-svg` call
+// site (fbsource).
+// TODO(huntie): Remove this re-export once `react-native-svg` is updated.
+/* $FlowFixMe[prop-missing] This is intentional: `Touchable` is a value-only
+ * re-export that is absent from the public API types. */
+/* $FlowFixMe[invalid-export] This is intentional: `Touchable` is a value-only
+ * re-export that is absent from the public API types. */
 export { default as Touchable } from './exports/Touchable';
 export { default as TouchableHighlight } from './exports/TouchableHighlight';
 export { default as TouchableNativeFeedback } from './exports/TouchableNativeFeedback';
