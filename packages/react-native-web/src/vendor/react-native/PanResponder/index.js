@@ -10,7 +10,7 @@
 
 'use strict';
 
-import InteractionManager from '../../../exports/InteractionManager';
+import InteractionManager from '../../../modules/InteractionManager';
 import TouchHistoryMath from '../TouchHistoryMath';
 
 import type {PressEvent} from '../Types/CoreEventTypes';
