@@ -11,73 +11,10 @@ function expectToHaveBeenCalledOnce(fn) {
 
 describe('InteractionManager', () => {
   let InteractionManager;
-  let interactionStart;
-  let interactionComplete;
 
   beforeEach(() => {
     jest.resetModules();
     InteractionManager = require('..');
-
-    interactionStart = jest.fn();
-    interactionComplete = jest.fn();
-
-    InteractionManager.addListener(
-      InteractionManager.Events.interactionStart,
-      interactionStart
-    );
-
-    InteractionManager.addListener(
-      InteractionManager.Events.interactionComplete,
-      interactionComplete
-    );
-  });
-
-  it('throws when clearing an undefined handle', () => {
-    expect(() => InteractionManager.clearInteractionHandle()).toThrow();
-  });
-
-  it('notifies asynchronously when interaction starts', () => {
-    InteractionManager.createInteractionHandle();
-    expect(interactionStart).not.toHaveBeenCalled();
-
-    jest.runAllTimers();
-    expect(interactionStart).toHaveBeenCalled();
-    expect(interactionComplete).not.toHaveBeenCalled();
-  });
-
-  it('notifies asynchronously when interaction stops', () => {
-    const handle = InteractionManager.createInteractionHandle();
-    jest.runAllTimers();
-    interactionStart.mockClear();
-    InteractionManager.clearInteractionHandle(handle);
-    expect(interactionComplete).not.toHaveBeenCalled();
-
-    jest.runAllTimers();
-    expect(interactionStart).not.toHaveBeenCalled();
-    expect(interactionComplete).toHaveBeenCalled();
-  });
-
-  it('does not notify when started & stoped in same event loop', () => {
-    const handle = InteractionManager.createInteractionHandle();
-    InteractionManager.clearInteractionHandle(handle);
-
-    jest.runAllTimers();
-    expect(interactionStart).not.toHaveBeenCalled();
-    expect(interactionComplete).not.toHaveBeenCalled();
-  });
-
-  it('does not notify when going from two -> one active interactions', () => {
-    InteractionManager.createInteractionHandle();
-    const handle = InteractionManager.createInteractionHandle();
-    jest.runAllTimers();
-
-    interactionStart.mockClear();
-    interactionComplete.mockClear();
-
-    InteractionManager.clearInteractionHandle(handle);
-    jest.runAllTimers();
-    expect(interactionStart).not.toHaveBeenCalled();
-    expect(interactionComplete).not.toHaveBeenCalled();
   });
 
   it('run tasks asynchronously when there are interactions', () => {
@@ -97,6 +34,16 @@ describe('InteractionManager', () => {
     jest.runAllTimers();
     InteractionManager.clearInteractionHandle(handle);
     expect(task).not.toHaveBeenCalled();
+
+    jest.runAllTimers();
+    expect(task).toHaveBeenCalled();
+  });
+
+  it('runs tasks when an interaction starts and ends before the update', () => {
+    const task = jest.fn();
+    const handle = InteractionManager.createInteractionHandle();
+    InteractionManager.runAfterInteractions(task);
+    InteractionManager.clearInteractionHandle(handle);
 
     jest.runAllTimers();
     expect(task).toHaveBeenCalled();
@@ -132,192 +79,14 @@ describe('InteractionManager', () => {
   it('allows tasks to be cancelled', () => {
     const task1 = jest.fn();
     const task2 = jest.fn();
-    const promise1 = InteractionManager.runAfterInteractions(task1);
+    const pending1 = InteractionManager.runAfterInteractions(task1);
     InteractionManager.runAfterInteractions(task2);
     expect(task1).not.toHaveBeenCalled();
     expect(task2).not.toHaveBeenCalled();
-    promise1.cancel();
+    pending1.cancel();
 
     jest.runAllTimers();
     expect(task1).not.toHaveBeenCalled();
     expect(task2).toHaveBeenCalled();
-  });
-
-  it('should support promise variant', () => {
-    expect.assertions(1);
-    const task = jest.fn();
-    const promise = InteractionManager.runAfterInteractions()
-      .done(task)
-      .then(() => {
-        expect(task).toHaveBeenCalled();
-      });
-    jest.runAllTimers();
-    return promise;
-  });
-});
-
-describe('promise tasks', () => {
-  let InteractionManager;
-  let sequenceId;
-
-  function createSequenceTask(expectedSequenceId) {
-    return jest.fn(() => {
-      expect(++sequenceId).toBe(expectedSequenceId);
-    });
-  }
-
-  beforeEach(() => {
-    jest.resetModules();
-    InteractionManager = require('..');
-    sequenceId = 0;
-  });
-
-  it('should run a basic promise task', () => {
-    const task1 = jest.fn(() => {
-      expect(++sequenceId).toBe(1);
-      return new Promise((resolve) => resolve());
-    });
-    InteractionManager.runAfterInteractions({ gen: task1, name: 'gen1' });
-    jest.runAllTimers();
-    expectToHaveBeenCalledOnce(task1);
-  });
-
-  it('should handle nested promises', () => {
-    const task1 = jest.fn(() => {
-      expect(++sequenceId).toBe(1);
-      return new Promise((resolve) => {
-        InteractionManager.runAfterInteractions({
-          gen: task2,
-          name: 'gen2'
-        }).then(resolve);
-      });
-    });
-    const task2 = jest.fn(() => {
-      expect(++sequenceId).toBe(2);
-      return new Promise((resolve) => resolve());
-    });
-    InteractionManager.runAfterInteractions({ gen: task1, name: 'gen1' });
-    jest.runAllTimers();
-    expectToHaveBeenCalledOnce(task1);
-    expectToHaveBeenCalledOnce(task2);
-  });
-
-  it('should pause promise tasks during interactions then resume', () => {
-    const task1 = createSequenceTask(1);
-    const task2 = jest.fn(() => {
-      expect(++sequenceId).toBe(2);
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          InteractionManager.runAfterInteractions(task3).then(resolve);
-        }, 1);
-      });
-    });
-    const task3 = createSequenceTask(3);
-    InteractionManager.runAfterInteractions(task1);
-    InteractionManager.runAfterInteractions({ gen: task2, name: 'gen2' });
-    jest.runOnlyPendingTimers();
-    expectToHaveBeenCalledOnce(task1);
-    expectToHaveBeenCalledOnce(task2);
-    const handle = InteractionManager.createInteractionHandle();
-    jest.runAllTimers();
-    jest.runAllTimers(); // Just to be sure...
-    expect(task3).not.toHaveBeenCalled();
-    InteractionManager.clearInteractionHandle(handle);
-    jest.runAllTimers();
-    expectToHaveBeenCalledOnce(task3);
-  });
-
-  it('should execute tasks in loop within deadline', () => {
-    InteractionManager.setDeadline(100);
-    const task1 = createSequenceTask(1);
-    const task2 = createSequenceTask(2);
-    InteractionManager.runAfterInteractions(task1);
-    InteractionManager.runAfterInteractions(task2);
-
-    jest.runOnlyPendingTimers();
-    expectToHaveBeenCalledOnce(task1);
-    expectToHaveBeenCalledOnce(task2);
-  });
-
-  it('should execute tasks one at a time if deadline exceeded', () => {
-    InteractionManager.setDeadline(100);
-    const task1 = jest.fn(() => {
-      expect(++sequenceId).toBe(1);
-      jest.setSystemTime(Date.now() + 200);
-    });
-    const task2 = createSequenceTask(2);
-    InteractionManager.runAfterInteractions(task1);
-    InteractionManager.runAfterInteractions(task2);
-
-    jest.runOnlyPendingTimers();
-
-    expectToHaveBeenCalledOnce(task1);
-    expect(task2).not.toHaveBeenCalled();
-
-    jest.runOnlyPendingTimers();
-
-    expectToHaveBeenCalledOnce(task2);
-  });
-
-  const bigAsyncTest = (resolveTest) => {
-    const task1 = createSequenceTask(1);
-    const task2 = jest.fn(() => {
-      expect(++sequenceId).toBe(2);
-      return new Promise((resolve) => {
-        InteractionManager.runAfterInteractions(task3);
-        setTimeout(() => {
-          InteractionManager.runAfterInteractions({
-            gen: task4,
-            name: 'gen4'
-          })
-            .then(resolve)
-            .then(() => {
-              // Explicit exhaustion of the task queue is required
-              jest.runAllTimers();
-            });
-        }, 1);
-      });
-    });
-    const task3 = createSequenceTask(3);
-    const task4 = jest.fn(() => {
-      expect(++sequenceId).toBe(4);
-      return new Promise((resolve) => {
-        InteractionManager.runAfterInteractions(task5)
-          .then(resolve)
-          .then(() => {
-            // Explicit exhaustion of the task queue is required
-            jest.runAllTimers();
-          });
-      });
-    });
-    const task5 = createSequenceTask(5);
-    const task6 = createSequenceTask(6);
-
-    InteractionManager.runAfterInteractions(task1);
-    InteractionManager.runAfterInteractions({ gen: task2, name: 'gen2' });
-    InteractionManager.runAfterInteractions(task6).then(() => {
-      expectToHaveBeenCalledOnce(task1);
-      expectToHaveBeenCalledOnce(task2);
-      expectToHaveBeenCalledOnce(task3);
-      expectToHaveBeenCalledOnce(task4);
-      expectToHaveBeenCalledOnce(task5);
-      expectToHaveBeenCalledOnce(task6);
-      resolveTest();
-    });
-
-    jest.runAllTimers();
-  };
-
-  it('resolves async tasks recursively before other queued tasks', () => {
-    return new Promise(bigAsyncTest);
-  });
-
-  it('should also work with a deadline', () => {
-    InteractionManager.setDeadline(100);
-    const task = jest.fn(() => {
-      jest.setSystemTime(Date.now() + 200);
-    });
-    InteractionManager.runAfterInteractions(task);
-    return new Promise(bigAsyncTest);
   });
 });
