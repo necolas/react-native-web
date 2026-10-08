@@ -321,10 +321,6 @@ export function inline(
     if (prop === originalProp) {
       frozenProps[prop] = true;
     }
-
-    //    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
-    //    frozenProps[prop] = true;
-    //}
   }
 
   return createReactDOMStyle(nextStyle, true);

@@ -683,13 +683,6 @@ describe('components/TextInput', () => {
       expect(input.selectionEnd).toEqual(4);
       expect(input.selectionStart).toEqual(4);
     });
-
-    // testIfDocumentIsFocused('value "true"', () => {
-    // const input = findNativeInput(mount(<TextInput defaultValue={'text'} selectTextOnFocus />));
-    // input.node.focus()
-    // assert.equal(input.node.selectionEnd, 4)
-    // assert.equal(input.node.selectionStart, 0)
-    // });
   });
 
   describe('prop "selection"', () => {

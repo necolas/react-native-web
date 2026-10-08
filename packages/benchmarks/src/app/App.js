@@ -218,8 +218,6 @@ export default class App extends Component {
         }),
         this._scrollToEnd
       );
-      // console.log(results);
-      // console.log(results.samples.map(sample => sample.elapsed.toFixed(1)).join('\n'));
     };
 
   _handleClear = () => {

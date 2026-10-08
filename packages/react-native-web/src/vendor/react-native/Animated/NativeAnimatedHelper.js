@@ -200,9 +200,6 @@ const API = {
     config: AnimatedNodeConfig,
   ): void {
     invariant(nativeOps, 'Native animated module is not available');
-    //if (nativeOps.updateAnimatedNodeConfig) {
-    //  API.queueOperation(nativeOps.updateAnimatedNodeConfig, tag, config);
-    //}
   },
   startListeningToAnimatedNodeValue: function (tag: number) {
     invariant(nativeOps, 'Native animated module is not available');
