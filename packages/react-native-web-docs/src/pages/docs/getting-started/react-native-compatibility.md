@@ -57,6 +57,7 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | Appearance          | ✓      |                                                                                                                 |
 | AppRegistry         | ✓      | Includes additional support for server rendering with `getApplication`.                                         |
 | AppState            | ✓      |                                                                                                                 |
+| AssetRegistry       | ✓      |                                                                                                                 |
 | BackHandler         | (✓)    | Mock. No equivalent web APIs.                                                                                   |
 | Clipboard           | ✓      |                                                                                                                 |
 | DeviceInfo          | (✓)    | Limited information.                                                                                            |
