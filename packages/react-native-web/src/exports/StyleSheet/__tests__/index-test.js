@@ -68,6 +68,7 @@ describe('StyleSheet', () => {
         [
           "r-position-u8s1d",
           null,
+          "",
         ]
       `);
     });
@@ -88,6 +89,7 @@ describe('StyleSheet', () => {
         [
           "r-boxShadow-o3ayyy r-textShadow-1x2q051",
           null,
+          "",
         ]
       `);
     });
@@ -159,18 +161,21 @@ describe('StyleSheet', () => {
         [
           "",
           null,
+          "",
         ]
       `);
       expect(StyleSheet({})).toMatchInlineSnapshot(`
         [
           "",
           null,
+          "",
         ]
       `);
       expect(StyleSheet([])).toMatchInlineSnapshot(`
         [
           "",
           null,
+          "",
         ]
       `);
     });
@@ -189,6 +194,7 @@ describe('StyleSheet', () => {
         [
           "position-absolute opacity-05 width-200",
           null,
+          "",
         ]
       `);
     });
@@ -219,6 +225,7 @@ describe('StyleSheet', () => {
         [
           "borderWidth-0 borderColor-red display-flex position-absolute opacity-05 width-200",
           null,
+          "",
         ]
       `);
     });
@@ -272,6 +279,7 @@ describe('StyleSheet', () => {
             "paddingRight": "40px",
             "paddingTop": "8px",
           },
+          "",
         ]
       `);
 
@@ -286,6 +294,7 @@ describe('StyleSheet', () => {
             "marginRight": "8px",
             "marginTop": "40px",
           },
+          "",
         ]
       `);
     });
@@ -310,6 +319,7 @@ describe('StyleSheet', () => {
             "marginRight": "10px",
             "textAlign": "left",
           },
+          "",
         ]
       `);
       expect(StyleSheet(inlineStyle, { writingDirection }))
@@ -321,6 +331,7 @@ describe('StyleSheet', () => {
             "right": "12.34%",
             "textAlign": "right",
           },
+          "",
         ]
       `);
       expect(
@@ -329,6 +340,7 @@ describe('StyleSheet', () => {
             inlineStyle,
             { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
           ],
+
           { writingDirection }
         )
       ).toMatchInlineSnapshot(`
@@ -340,6 +352,7 @@ describe('StyleSheet', () => {
             "right": "12.34%",
             "textAlign": "right",
           },
+          "",
         ]
       `);
       expect(
@@ -354,6 +367,7 @@ describe('StyleSheet', () => {
             "right": "12.34%",
             "textAlign": "right",
           },
+          "",
         ]
       `);
 
@@ -363,6 +377,7 @@ describe('StyleSheet', () => {
         [
           "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf",
           null,
+          "",
         ]
       `);
       expect(StyleSheet(staticStyle, { writingDirection }))
@@ -370,6 +385,7 @@ describe('StyleSheet', () => {
         [
           "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t r-marginInlineEnd-t1sew1",
           null,
+          "",
         ]
       `);
       const z = StyleSheet.create({ x: { marginRight: 33 } }).x;
@@ -377,6 +393,7 @@ describe('StyleSheet', () => {
         [
           "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf r-marginRight-j4vy6k",
           null,
+          "",
         ]
       `);
       expect(
@@ -397,6 +414,7 @@ describe('StyleSheet', () => {
             "marginLeft": "1px",
             "marginRight": "11px",
           },
+          "",
         ]
       `);
       // logical can be nulled
@@ -408,6 +426,7 @@ describe('StyleSheet', () => {
         [
           "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
           null,
+          "",
         ]
       `);
     });
