@@ -19,14 +19,26 @@ export type PackagerAsset = {
   type: string
 };
 
+// `globalThis` is missing in some of our browser targets (Chrome 49, Safari 10), so we fall back
+// to `global` and `window`. Once the browser targets support `globalThis`, use it directly.
+const globalObject: any =
+  typeof globalThis !== 'undefined'
+    ? globalThis
+    : typeof global !== 'undefined'
+    ? global
+    : typeof window !== 'undefined'
+    ? window
+    : {};
+
 // React Native Web exposes both CJS and ESM versions.
 // This avoids duplicating the registry itself, returning the same data through either CJS or ESM.
 const ASSET_REGISTRY = Symbol.for('react-native-web.AssetRegistry');
-if (!global[ASSET_REGISTRY]) {
-  global[ASSET_REGISTRY] = [];
+
+if (!globalObject[ASSET_REGISTRY]) {
+  globalObject[ASSET_REGISTRY] = [];
 }
 
-const assets: Array<PackagerAsset> = global[ASSET_REGISTRY];
+const assets: Array<PackagerAsset> = globalObject[ASSET_REGISTRY];
 
 export function registerAsset(asset: PackagerAsset): number {
   // `push` returns new array length, so the first asset will
