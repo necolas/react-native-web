@@ -14,6 +14,7 @@ import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
 import canUseDOM from '../../modules/canUseDom';
+import useLayoutEffect from '../../modules/useLayoutEffect';
 
 /**
  * This Component is used to "wrap" the modal we're opening
@@ -83,7 +84,9 @@ const ModalFocusTrap = ({
     lastFocusedElement: null
   });
 
-  React.useEffect(() => {
+  // A layout effect, so that focus is trapped from the commit that makes the
+  // modal active, not a task later.
+  useLayoutEffect(() => {
     if (canUseDOM) {
       const trapFocus = () => {
         // We should not trap focus if:
