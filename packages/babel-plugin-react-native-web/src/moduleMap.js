@@ -60,6 +60,7 @@ module.exports = {
   processColor: true,
   render: true,
   unmountComponentAtNode: true,
+  useAnimatedValue: true,
   useColorScheme: true,
   useLocaleContext: true,
   useWindowDimensions: true
