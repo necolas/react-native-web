@@ -79,5 +79,6 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | StyleSheet          | ✓      |                                                                                                                 |
 | UIManager           | ✓      |                                                                                                                 |
 | Vibration           | ✓      |                                                                                                                 |
+| useAnimatedValue    | ✓      |                                                                                                                 |
 | useColorScheme      | ✓      |                                                                                                                 |
 | useWindowDimensions | ✓      |                                                                                                                 |
