@@ -1300,39 +1300,193 @@ describe('useResponderEvents', () => {
       );
     });
 
-    testWithPointerType('is called if input "select" occurs', (pointerType) => {
-      const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
-      };
+    testWithPointerType(
+      'is called if input "select" occurs with non-collapsed selection',
+      (pointerType) => {
+        const targetCallbacks = {
+          onStartShouldSetResponder: jest.fn(() => true),
+          onResponderTerminate: jest.fn(),
+          onResponderTerminationRequest: jest.fn(() => false)
+        };
 
-      const inputRef = createRef();
+        const inputRef = createRef();
 
-      const Component = () => {
-        useResponderEvents(targetRef, targetCallbacks);
-        return (
-          <div>
-            <div ref={targetRef} />
-            <input ref={inputRef} />
-          </div>
-        );
-      };
+        const Component = () => {
+          useResponderEvents(targetRef, targetCallbacks);
+          return (
+            <div>
+              <div ref={targetRef} />
+              <input defaultValue="text" ref={inputRef} />
+            </div>
+          );
+        };
 
-      // render
-      render(<Component />);
-      const target = createEventTarget(targetRef.current);
-      const input = createEventTarget(inputRef.current);
-      // getSelection is not supported in jest
-      act(() => {
-        target.pointerdown({ pointerType });
-        input.select({});
-      });
-      // responder terminates
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
-      // responder should not be set
-      expect(getResponderNode()).toBe(null);
-    });
+        // render
+        render(<Component />);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
+        act(() => {
+          target.pointerdown({ pointerType });
+          inputRef.current.setSelectionRange(0, 4);
+          input.select({});
+        });
+        // responder terminates
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        // responder should not be set
+        expect(getResponderNode()).toBe(null);
+      }
+    );
+
+    testWithPointerType(
+      'is not called if input "select" occurs with collapsed selection',
+      (pointerType) => {
+        const targetCallbacks = {
+          onStartShouldSetResponder: jest.fn(() => true),
+          onResponderTerminate: jest.fn(),
+          onResponderTerminationRequest: jest.fn(() => false)
+        };
+
+        const inputRef = createRef();
+
+        const Component = () => {
+          useResponderEvents(targetRef, targetCallbacks);
+          return (
+            <div>
+              <div ref={targetRef} />
+              <input defaultValue="text" ref={inputRef} />
+            </div>
+          );
+        };
+
+        // render
+        render(<Component />);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
+        act(() => {
+          target.pointerdown({ pointerType });
+          inputRef.current.setSelectionRange(2, 2);
+          input.select({});
+        });
+        // responder does not terminate
+        expect(targetCallbacks.onResponderTerminate).not.toHaveBeenCalled();
+        // responder should still be set
+        expect(getResponderNode()).toBe(targetRef.current);
+      }
+    );
+
+    testWithPointerType(
+      'is called if "select" occurs on input without numeric selection (e.g. type="email")',
+      (pointerType) => {
+        const targetCallbacks = {
+          onStartShouldSetResponder: jest.fn(() => true),
+          onResponderTerminate: jest.fn(),
+          onResponderTerminationRequest: jest.fn(() => false)
+        };
+
+        const inputRef = createRef();
+
+        const Component = () => {
+          useResponderEvents(targetRef, targetCallbacks);
+          return (
+            <div>
+              <div ref={targetRef} />
+              <input ref={inputRef} type="email" />
+            </div>
+          );
+        };
+
+        // render
+        render(<Component />);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
+        act(() => {
+          target.pointerdown({ pointerType });
+          input.select({});
+        });
+        // responder terminates (fail-open)
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        // responder should not be set
+        expect(getResponderNode()).toBe(null);
+      }
+    );
+
+    testWithPointerType(
+      'is called if "select" occurs on non-input target',
+      (pointerType) => {
+        const targetCallbacks = {
+          onStartShouldSetResponder: jest.fn(() => true),
+          onResponderTerminate: jest.fn(),
+          onResponderTerminationRequest: jest.fn(() => false)
+        };
+
+        const nonInputRef = createRef();
+
+        const Component = () => {
+          useResponderEvents(targetRef, targetCallbacks);
+          return (
+            <div>
+              <div ref={targetRef} />
+              <div ref={nonInputRef} />
+            </div>
+          );
+        };
+
+        // render
+        render(<Component />);
+        const target = createEventTarget(targetRef.current);
+        const nonInput = createEventTarget(nonInputRef.current);
+        act(() => {
+          target.pointerdown({ pointerType });
+          nonInput.select({});
+        });
+        // responder terminates (fail-open)
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        // responder should not be set
+        expect(getResponderNode()).toBe(null);
+      }
+    );
+
+    testWithPointerType(
+      'is called if reading selectionStart throws',
+      (pointerType) => {
+        const targetCallbacks = {
+          onStartShouldSetResponder: jest.fn(() => true),
+          onResponderTerminate: jest.fn(),
+          onResponderTerminationRequest: jest.fn(() => false)
+        };
+
+        const inputRef = createRef();
+
+        const Component = () => {
+          useResponderEvents(targetRef, targetCallbacks);
+          return (
+            <div>
+              <div ref={targetRef} />
+              <input ref={inputRef} />
+            </div>
+          );
+        };
+
+        // render
+        render(<Component />);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
+        Object.defineProperty(inputRef.current, 'selectionStart', {
+          get() {
+            throw new Error('InvalidStateError');
+          },
+          configurable: true
+        });
+        act(() => {
+          target.pointerdown({ pointerType });
+          input.select({});
+        });
+        // responder terminates (fail-open)
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        // responder should not be set
+        expect(getResponderNode()).toBe(null);
+      }
+    );
 
     testWithPointerType(
       'is called if "selectionchange" occurs',
