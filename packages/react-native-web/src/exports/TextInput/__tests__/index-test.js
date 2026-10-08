@@ -8,7 +8,7 @@
 import React from 'react';
 import TextInput from '..';
 import { createEventTarget } from 'dom-event-testing-library';
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 
 function findInput(container) {
   return container.querySelector('input');
@@ -331,6 +331,53 @@ describe('components/TextInput', () => {
     // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
     input.dispatchEvent(new window.Event('change', { bubbles: true }));
     expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  describe('prop "onContentSizeChange"', () => {
+    // jsdom has no layout, so report a height that only depends on the
+    // content (like a zero-height textarea would) and no width.
+    let scrollHeight;
+    beforeEach(() => {
+      scrollHeight = jest
+        .spyOn(HTMLTextAreaElement.prototype, 'scrollHeight', 'get')
+        .mockImplementation(function () {
+          return this.style.height === '0px'
+            ? this.value.split('\n').length * 10
+            : 0;
+        });
+    });
+    afterEach(() => {
+      scrollHeight.mockRestore();
+    });
+
+    test('is called when the content shrinks', () => {
+      const onContentSizeChange = jest.fn();
+      const { container } = render(
+        <TextInput
+          multiline
+          onContentSizeChange={onContentSizeChange}
+          style={{ height: 100 }}
+        />
+      );
+      const textarea = findTextArea(container);
+      expect(onContentSizeChange).toHaveBeenCalledTimes(1);
+      expect(onContentSizeChange).toHaveBeenLastCalledWith({
+        nativeEvent: { contentSize: { height: 10, width: 0 } }
+      });
+      fireEvent.change(textarea, { target: { value: 'a\nb\nc' } });
+      expect(onContentSizeChange).toHaveBeenCalledTimes(2);
+      expect(onContentSizeChange).toHaveBeenLastCalledWith({
+        nativeEvent: { contentSize: { height: 30, width: 0 } }
+      });
+      fireEvent.change(textarea, { target: { value: 'a' } });
+      expect(onContentSizeChange).toHaveBeenCalledTimes(3);
+      expect(onContentSizeChange).toHaveBeenLastCalledWith({
+        nativeEvent: { contentSize: { height: 10, width: 0 } }
+      });
+      // the textarea itself is left untouched
+      expect(textarea.style.height).toBe('100px');
+      expect(container.querySelectorAll('textarea')).toHaveLength(1);
+    });
   });
 
   test.skip('prop "onChangeText"', () => {
