@@ -21,7 +21,6 @@
   "plugins": ["flowtype", "promise", "react", "react-hooks"],
   "env": {
     "browser": true,
-    "es6": true,
     "es2021": true,
     "jest": true,
     "node": true
