@@ -7,6 +7,7 @@
 
 import React from 'react';
 import TextInput from '..';
+import View from '../../View';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
@@ -655,6 +656,36 @@ describe('components/TextInput', () => {
       textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
       expect(onSubmitEditing).toHaveBeenCalledTimes(1);
       expect(preventDefault).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('key event propagation', () => {
+    test('most "keydown" events propagate to ancestors', () => {
+      const onKeyDown = jest.fn();
+      const { container } = render(
+        <View onKeyDown={onKeyDown}>
+          <TextInput />
+        </View>
+      );
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Escape' }));
+      input.dispatchEvent(keydown({ key: 'ArrowLeft' }));
+      input.dispatchEvent(keydown({ key: 'a' }));
+      expect(onKeyDown).toHaveBeenCalledTimes(3);
+    });
+
+    test('"Enter" and "Space" "keydown" events do not propagate', () => {
+      const onKeyDown = jest.fn();
+      const { container } = render(
+        <View onKeyDown={onKeyDown}>
+          <TextInput />
+        </View>
+      );
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Enter' }));
+      input.dispatchEvent(keydown({ key: ' ' }));
+      input.dispatchEvent(keydown({ key: 'Spacebar' }));
+      expect(onKeyDown).not.toHaveBeenCalled();
     });
   });
 
