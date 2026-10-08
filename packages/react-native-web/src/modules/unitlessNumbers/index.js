@@ -14,8 +14,6 @@ const unitlessNumbers = {
   borderImageOutset: true,
   borderImageSlice: true,
   borderImageWidth: true,
-  boxFlex: true,
-  boxFlexGroup: true,
   boxOrdinalGroup: true,
   columnCount: true,
   flex: true,
