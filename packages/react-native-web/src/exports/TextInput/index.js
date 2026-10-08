@@ -420,7 +420,7 @@ const TextInput: React.AbstractComponent<
     );
   }
   */
-  supportedProps.rows = multiline ? (rows != null ? rows : numberOfLines) : 1;
+  supportedProps.rows = multiline ? rows ?? numberOfLines ?? 1 : 1;
   supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
   supportedProps.style = [
     { '--placeholderTextColor': placeholderTextColor },

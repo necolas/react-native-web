@@ -306,6 +306,12 @@ describe('components/TextInput', () => {
       const textarea = findTextArea(container);
       expect(textarea.getAttribute('rows')).toEqual('3');
     });
+
+    test('with "multiline" defaults to 1 row', () => {
+      const { container } = render(<TextInput multiline />);
+      const textarea = findTextArea(container);
+      expect(textarea.getAttribute('rows')).toEqual('1');
+    });
   });
 
   test('prop "onBlur"', () => {
