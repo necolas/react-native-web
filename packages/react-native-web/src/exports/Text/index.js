@@ -200,7 +200,8 @@ const textStyle = {
   textAlign: 'start',
   textDecoration: 'none',
   whiteSpace: 'pre-wrap',
-  wordWrap: 'break-word'
+  wordWrap: 'break-word',
+  flexShrink: 0
 };
 
 const styles = StyleSheet.create({
