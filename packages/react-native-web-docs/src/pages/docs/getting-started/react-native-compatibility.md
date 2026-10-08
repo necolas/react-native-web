@@ -43,7 +43,6 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | TouchableWithoutFeedback | ✓      |                                                                                                                                                                                               |
 | View                     | ✓      |                                                                                                                                                                                               |
 | VirtualizedList          | ✓      |                                                                                                                                                                                               |
-| YellowBox                | (✓)    | Mock. No YellowBox functionality.                                                                                                                                                             |
 
 ## APIs
 
