@@ -39,7 +39,7 @@ describe('AppRegistry', () => {
         </AppContainer>
       `);
       expect(styleElement).toMatchInlineSnapshot(`
-        "<style id="react-native-stylesheet">[stylesheet-group="0"]{}
+        "<style id="react-native-stylesheet">@layer rnw{[stylesheet-group="0"]{}
         body{margin:0;}
         button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
@@ -74,7 +74,7 @@ describe('AppRegistry', () => {
         .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
         .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
         .r-whiteSpace-3s2u2q{white-space:nowrap;}
-        .r-wordWrap-1iln25a{word-wrap:normal;}</style>"
+        .r-wordWrap-1iln25a{word-wrap:normal;}}</style>"
       `);
     });
 
@@ -98,7 +98,7 @@ describe('AppRegistry', () => {
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
       expect(first).toMatchInlineSnapshot(`
-        "[stylesheet-group="0"]{}
+        "@layer rnw{[stylesheet-group="0"]{}
         body{margin:0;}
         button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
@@ -133,7 +133,7 @@ describe('AppRegistry', () => {
         .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
         .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
         .r-whiteSpace-3s2u2q{white-space:nowrap;}
-        .r-wordWrap-1iln25a{word-wrap:normal;}"
+        .r-wordWrap-1iln25a{word-wrap:normal;}}"
       `);
 
       // Second render "AlternativeComponent"
@@ -148,7 +148,7 @@ describe('AppRegistry', () => {
       );
       const second = getApplicationStyles('AlternativeApp');
       expect(second).toMatchInlineSnapshot(`
-        "[stylesheet-group="0"]{}
+        "@layer rnw{[stylesheet-group="0"]{}
         body{margin:0;}
         button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
         html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
@@ -185,7 +185,7 @@ describe('AppRegistry', () => {
         .r-userSelect-1xnzce8{-moz-user-select:text;-webkit-user-select:text;user-select:text;}
         .r-userSelect-lrvibr{-moz-user-select:none;-webkit-user-select:none;user-select:none;}
         .r-whiteSpace-3s2u2q{white-space:nowrap;}
-        .r-wordWrap-1iln25a{word-wrap:normal;}"
+        .r-wordWrap-1iln25a{word-wrap:normal;}}"
       `);
 
       // Third render "RootComponent" again

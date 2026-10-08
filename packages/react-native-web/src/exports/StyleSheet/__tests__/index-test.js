@@ -13,7 +13,7 @@ describe('StyleSheet', () => {
     expect(StyleSheet.getSheet()).toMatchInlineSnapshot(`
       {
         "id": "react-native-stylesheet",
-        "textContent": "[stylesheet-group="0"]{}
+        "textContent": "@layer rnw{[stylesheet-group="0"]{}
       body{margin:0;}
       button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
       html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
@@ -23,7 +23,7 @@ describe('StyleSheet', () => {
       .r-left-1d2f490{left:0px;}
       .r-position-u8s1d{position:absolute;}
       .r-right-zchlnj{right:0px;}
-      .r-top-ipm5af{top:0px;}",
+      .r-top-ipm5af{top:0px;}}",
       }
     `);
   });
