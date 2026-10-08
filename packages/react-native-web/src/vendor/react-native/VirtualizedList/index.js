@@ -457,7 +457,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       const scrollOffset = this.props.horizontal ? ev.target.scrollLeft : ev.target.scrollTop;
       const scrollLength = this.props.horizontal ? ev.target.scrollWidth : ev.target.scrollHeight;
       const clientLength = this.props.horizontal ? ev.target.clientWidth : ev.target.clientHeight;
-      const isEventTargetScrollable = scrollLength > clientLength;
+      const isEventTargetScrollable = ev.target !== ev.currentTarget && scrollLength > clientLength;
       const delta = this.props.horizontal
         ? ev.deltaX || ev.wheelDeltaX
         : ev.deltaY || ev.wheelDeltaY;
