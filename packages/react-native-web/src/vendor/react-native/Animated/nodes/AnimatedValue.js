@@ -12,7 +12,7 @@
 
 import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import InteractionManager from '../../../../exports/InteractionManager';
+import InteractionManager from '../../../../modules/InteractionManager';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type AnimatedNode from './AnimatedNode';

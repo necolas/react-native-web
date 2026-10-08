@@ -9,11 +9,10 @@
  */
 
 import TaskQueue from './TaskQueue';
-import requestIdleCallback from '../../modules/requestIdleCallback';
+import requestIdleCallback from '../requestIdleCallback';
 
 /**
- * `InteractionManager` has been removed from React Native, so it is no longer
- * exported here. It is only kept for `vendor/`.
+ * Removed from React Native. Kept for internal use only.
  *
  * TODO: Delete this module once no internals rely on it.
  */

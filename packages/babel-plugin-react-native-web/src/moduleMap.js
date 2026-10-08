@@ -19,7 +19,6 @@ module.exports = {
   Image: true,
   ImageBackground: true,
   InputAccessoryView: true,
-  InteractionManager: true,
   Keyboard: true,
   KeyboardAvoidingView: true,
   LayoutAnimation: true,

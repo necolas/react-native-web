@@ -53,7 +53,7 @@
 
 import type { PressEvent } from '../../vendor/react-native/Types/CoreEventTypes';
 
-import InteractionManager from '../InteractionManager';
+import InteractionManager from '../../modules/InteractionManager';
 import TouchHistoryMath from '../../vendor/react-native/TouchHistoryMath';
 
 export type GestureState = {|
