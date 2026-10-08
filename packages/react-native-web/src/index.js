@@ -50,7 +50,6 @@ export { default as StatusBar } from './exports/StatusBar';
 export { default as Switch } from './exports/Switch';
 export { default as Text } from './exports/Text';
 export { default as TextInput } from './exports/TextInput';
-export { default as Touchable } from './exports/Touchable';
 export { default as TouchableHighlight } from './exports/TouchableHighlight';
 export { default as TouchableNativeFeedback } from './exports/TouchableNativeFeedback';
 export { default as TouchableOpacity } from './exports/TouchableOpacity';
