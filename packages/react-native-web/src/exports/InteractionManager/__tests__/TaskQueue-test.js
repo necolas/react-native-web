@@ -10,16 +10,13 @@ function expectToHaveBeenCalledOnce(fn) {
 }
 
 function clearTaskQueue(taskQueue) {
-  do {
-    jest.runAllTimers();
+  while (taskQueue.hasTasksToProcess()) {
     taskQueue.processNext();
-    jest.runAllTimers();
-  } while (taskQueue.hasTasksToProcess());
+  }
 }
 
 describe('TaskQueue', () => {
   let taskQueue;
-  let onMoreTasks;
   let sequenceId;
 
   function createSequenceTask(expectedSequenceId) {
@@ -30,115 +27,34 @@ describe('TaskQueue', () => {
 
   beforeEach(() => {
     jest.resetModules();
-    onMoreTasks = jest.fn();
     const TaskQueue = require('../TaskQueue');
-    taskQueue = new TaskQueue({ onMoreTasks });
+    taskQueue = new TaskQueue();
     sequenceId = 0;
   });
 
   it('should run a basic task', () => {
     const task1 = createSequenceTask(1);
-    taskQueue.enqueue({ run: task1, name: 'run1' });
+    taskQueue.enqueue(task1);
     expect(taskQueue.hasTasksToProcess()).toBe(true);
     taskQueue.processNext();
     expectToHaveBeenCalledOnce(task1);
   });
 
-  it('should handle blocking promise task', () => {
-    onMoreTasks.mockImplementation(() => {
-      taskQueue.processNext();
-      jest.runAllTimers();
-    });
-
-    const task1 = jest.fn(() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          expect(++sequenceId).toBe(1);
-          resolve();
-        }, 1);
-      });
-    });
-    const task2 = createSequenceTask(2);
-    taskQueue.enqueue({ gen: task1, name: 'gen1' });
-    taskQueue.enqueue({ run: task2, name: 'run2' });
-
-    taskQueue.processNext();
-
-    expectToHaveBeenCalledOnce(task1);
-    expect(task2).not.toHaveBeenCalled();
-    expect(onMoreTasks).not.toHaveBeenCalled();
-    expect(taskQueue.hasTasksToProcess()).toBe(false);
-
-    clearTaskQueue(taskQueue);
-
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      });
-    }).then(() => {
-      expectToHaveBeenCalledOnce(onMoreTasks);
-      expectToHaveBeenCalledOnce(task2);
-    });
-  });
-
-  it('should handle nested simple tasks', () => {
+  it('should handle nested tasks', () => {
     const task1 = jest.fn(() => {
       expect(++sequenceId).toBe(1);
-      taskQueue.enqueue({ run: task3, name: 'run3' });
+      taskQueue.enqueue(task3);
     });
     const task2 = createSequenceTask(2);
     const task3 = createSequenceTask(3);
-    taskQueue.enqueue({ run: task1, name: 'run1' });
-    taskQueue.enqueue({ run: task2, name: 'run2' }); // not blocked by task 1
+    taskQueue.enqueue(task1);
+    taskQueue.enqueue(task2); // not blocked by task 1
 
     clearTaskQueue(taskQueue);
 
     expectToHaveBeenCalledOnce(task1);
     expectToHaveBeenCalledOnce(task2);
     expectToHaveBeenCalledOnce(task3);
-  });
-
-  it('should handle nested promises', () => {
-    onMoreTasks.mockImplementation(() => {
-      taskQueue.processNext();
-      jest.runAllTimers();
-    });
-
-    const task1 = jest.fn(() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          expect(++sequenceId).toBe(1);
-          taskQueue.enqueue({ gen: task2, name: 'gen2' });
-          taskQueue.enqueue({ run: resolve, name: 'resolve1' });
-        }, 1);
-      });
-    });
-    const task2 = jest.fn(() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          expect(++sequenceId).toBe(2);
-          taskQueue.enqueue({ run: task3, name: 'run3' });
-          taskQueue.enqueue({ run: resolve, name: 'resolve2' });
-        }, 1);
-      });
-    });
-    const task3 = createSequenceTask(3);
-    const task4 = createSequenceTask(4);
-    taskQueue.enqueue({ gen: task1, name: 'gen1' });
-    taskQueue.enqueue({ run: task4, name: 'run4' }); // blocked by task 1 promise
-
-    clearTaskQueue(taskQueue);
-
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      });
-    }).then(() => {
-      expectToHaveBeenCalledOnce(task1);
-      expectToHaveBeenCalledOnce(task2);
-      expectToHaveBeenCalledOnce(task3);
-      expectToHaveBeenCalledOnce(task4);
-    });
   });
 
   it('should be able to cancel tasks', () => {
@@ -166,20 +82,5 @@ describe('TaskQueue', () => {
     clearTaskQueue(taskQueue);
     expect(task1).not.toHaveBeenCalled();
     expect(taskQueue.hasTasksToProcess()).toBe(false);
-  });
-
-  it('should not crash when task is cancelled between being started and resolved', () => {
-    const task1 = jest.fn(() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 1);
-      });
-    });
-
-    taskQueue.enqueue({ gen: task1, name: 'gen1' });
-    taskQueue.processNext();
-    taskQueue.cancelTasks([task1]);
-    jest.runAllTimers();
   });
 });

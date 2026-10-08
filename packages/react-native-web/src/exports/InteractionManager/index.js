@@ -22,12 +22,11 @@ const InteractionManager = {
    * Schedule a function to run after all interactions have completed.
    */
   runAfterInteractions(task: () => void): { cancel: () => void } {
-    const tasks = [task];
-    _taskQueue.enqueueTasks(tasks);
+    _taskQueue.enqueue(task);
     _scheduleUpdate();
     return {
       cancel: () => {
-        _taskQueue.cancelTasks(tasks);
+        _taskQueue.cancelTasks([task]);
       }
     };
   },
@@ -51,7 +50,7 @@ const InteractionManager = {
 };
 
 const _interactionSet = new Set<number>();
-const _taskQueue = new TaskQueue({ onMoreTasks: _scheduleUpdate });
+const _taskQueue = new TaskQueue();
 let _nextUpdateHandle: TimeoutID | number = 0;
 let _inc = 0;
 
