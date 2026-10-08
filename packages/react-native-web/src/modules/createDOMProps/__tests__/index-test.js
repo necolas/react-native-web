@@ -241,6 +241,17 @@ describe('modules/createDOMProps', () => {
     expect(props.role).toEqual('button');
   });
 
+  test('omits redundant role="heading" on native heading elements', () => {
+    expect(
+      createDOMProps('h1', { accessibilityRole: 'header' }).role
+    ).toBeUndefined();
+    expect(
+      createDOMProps('h3', { role: 'heading', 'aria-level': 3 }).role
+    ).toBeUndefined();
+    // Non-heading hosts still receive the ARIA role.
+    expect(createDOMProps('div', { role: 'heading' }).role).toEqual('heading');
+  });
+
   test('prop "nativeID" becomes "id"', () => {
     const nativeID = 'Example.nativeID';
     const props = createProps({ nativeID });

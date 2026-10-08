@@ -377,8 +377,20 @@ const createDOMProps = (elementType, props, options) => {
   }
 
   if (role != null) {
-    // 'presentation' synonym has wider browser support
-    domProps['role'] = role === 'none' ? 'presentation' : role;
+    // A native h1–h6 already exposes the heading role and its level.
+    // role="heading" overrides that implicit role and drops the level,
+    // so audits no longer see a real heading.
+    const isNativeHeading =
+      elementType === 'h1' ||
+      elementType === 'h2' ||
+      elementType === 'h3' ||
+      elementType === 'h4' ||
+      elementType === 'h5' ||
+      elementType === 'h6';
+    if (!(role === 'heading' && isNativeHeading)) {
+      // 'presentation' synonym has wider browser support
+      domProps['role'] = role === 'none' ? 'presentation' : role;
+    }
   }
 
   const _ariaRoleDescription =
