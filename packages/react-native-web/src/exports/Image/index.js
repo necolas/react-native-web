@@ -233,7 +233,8 @@ const Image: React.AbstractComponent<
   const displayImageUri = resolveAssetUri(selectedSource);
   const imageSizeStyle = resolveAssetDimensions(selectedSource);
   const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
-  const backgroundSize = getBackgroundSize();
+  const cachedBackgroundSize = React.useRef(null);
+  const backgroundSize = getBackgroundSize() || cachedBackgroundSize.current;
 
   // Accessibility image allows users to trigger the browser's image context menu
   const hiddenImage = displayImageUri
@@ -261,7 +262,8 @@ const Image: React.AbstractComponent<
         );
         const x = Math.ceil(scaleFactor * naturalWidth);
         const y = Math.ceil(scaleFactor * naturalHeight);
-        return `${x}px ${y}px`;
+        cachedBackgroundSize.current = `${x}px ${y}px`;
+        return cachedBackgroundSize.current;
       }
     }
   }
