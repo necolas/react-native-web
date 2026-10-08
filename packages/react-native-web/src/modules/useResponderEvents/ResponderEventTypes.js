@@ -41,9 +41,6 @@ export type TouchEvent = {
   touches: Array<Touch>
 };
 
-export const BLUR = 'blur';
-export const CONTEXT_MENU = 'contextmenu';
-export const FOCUS_OUT = 'focusout';
 export const MOUSE_DOWN = 'mousedown';
 export const MOUSE_MOVE = 'mousemove';
 export const MOUSE_UP = 'mouseup';
