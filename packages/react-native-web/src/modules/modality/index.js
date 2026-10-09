@@ -20,7 +20,6 @@ let modality = 'keyboard';
 let previousModality;
 let previousActiveModality;
 let isEmulatingMouseEvents = false;
-const listeners = new Set();
 
 const KEYBOARD = 'keyboard';
 const MOUSE = 'mouse';
@@ -55,7 +54,6 @@ function restoreModality() {
       activeModality = previousActiveModality;
       previousActiveModality = null;
     }
-    callListeners();
   }
 }
 
@@ -64,7 +62,6 @@ function onBlurWindow() {
   previousActiveModality = activeModality;
   activeModality = KEYBOARD;
   modality = KEYBOARD;
-  callListeners();
   // for fallback events
   isEmulatingMouseEvents = false;
 }
@@ -80,7 +77,6 @@ function onKeyDown(event) {
   if (modality !== KEYBOARD) {
     modality = KEYBOARD;
     activeModality = KEYBOARD;
-    callListeners();
   }
 }
 
@@ -98,14 +94,12 @@ function onPointerish(event: any) {
       if (activeModality !== event.pointerType) {
         modality = event.pointerType;
         activeModality = event.pointerType;
-        callListeners();
       }
       return;
     }
     if (eventType === POINTERMOVE) {
       if (modality !== event.pointerType) {
         modality = event.pointerType;
-        callListeners();
       }
       return;
     }
@@ -117,13 +111,11 @@ function onPointerish(event: any) {
         if (activeModality !== MOUSE) {
           modality = MOUSE;
           activeModality = MOUSE;
-          callListeners();
         }
       }
       if (eventType === MOUSEMOVE) {
         if (modality !== MOUSE) {
           modality = MOUSE;
-          callListeners();
         }
       }
     }
@@ -137,7 +129,6 @@ function onPointerish(event: any) {
       if (activeModality !== TOUCH) {
         modality = TOUCH;
         activeModality = TOUCH;
-        callListeners();
       }
       return;
     }
@@ -184,28 +175,12 @@ if (canUseDOM) {
   addEventListener(document, SCROLL, onPointerish, captureOptions);
 }
 
-function callListeners() {
-  const value = { activeModality, modality };
-  listeners.forEach((listener) => {
-    listener(value);
-  });
-}
-
 export function getActiveModality(): Modality {
   return activeModality;
 }
 
 export function getModality(): Modality {
   return modality;
-}
-
-export function addModalityListener(
-  listener: ({ activeModality: Modality, modality: Modality }) => void
-): () => void {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
 }
 
 export function testOnly_resetActiveModality() {

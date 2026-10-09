@@ -10,7 +10,6 @@
 
 import useAnimatedProps from './useAnimatedProps';
 import useMergeRefs from '../Utilities/useMergeRefs';
-import StyleSheet from '../../../exports/StyleSheet';
 import View from '../../../exports/View';
 import * as React from 'react';
 
