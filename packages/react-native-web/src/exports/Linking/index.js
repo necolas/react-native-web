@@ -42,16 +42,14 @@ class Linking {
     const _this = this;
 
     if (!_this._eventCallbacks[eventType]) {
-      _this._eventCallbacks[eventType] = [callback];
+      _this._eventCallbacks[eventType] = [];
     }
     _this._eventCallbacks[eventType].push(callback);
 
     return {
       remove() {
         const callbacks = _this._eventCallbacks[eventType];
-        const filteredCallbacks = callbacks.filter(
-          (c) => c.toString() !== callback.toString()
-        );
+        const filteredCallbacks = callbacks.filter((c) => c !== callback);
         _this._eventCallbacks[eventType] = filteredCallbacks;
       }
     };
@@ -68,9 +66,7 @@ class Linking {
         'returned by `Linking.addEventListener`.'
     );
     const callbacks = this._eventCallbacks[eventType];
-    const filteredCallbacks = callbacks.filter(
-      (c) => c.toString() !== callback.toString()
-    );
+    const filteredCallbacks = callbacks.filter((c) => c !== callback);
     this._eventCallbacks[eventType] = filteredCallbacks;
   }
 
