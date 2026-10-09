@@ -16,19 +16,11 @@ Understanding {{ site.name }} browser compatibility.
 
 The browsers with known support include:
 
-- Chrome 60+
-- Safari 10.1+ / iOS Safari 10.1+
-- Edge 12+
-- Firefox ESR+
-- Opera
+- Chrome 95+ / Edge 95+
+- Firefox 93+
+- Safari 15.1+ / iOS Safari 15.1+
 
 If specific exports have a different browser support expectation, it will be documented with that export.
-
----
-
-## JavaScript
-
-Your application may need to polyfill `Promise`, `Object.assign`, `Array.from`, and [`ResizeObserver`](https://github.com/que-etc/resize-observer-polyfill) as necessary for your desired browser support.
 
 ---
 
@@ -52,5 +44,3 @@ The resulting CSS is:
 ```
 
 Certain CSS properties are not supported across all browsers, but are polyfilled by {{ site.name }}.
-
-(N.B. Safari prior to version 10.1 can suffer from extremely [poor flexbox performance](https://bugs.webkit.org/show_bug.cgi?id=150445). The recommended way to work around this issue (as used on mobile.twitter.com) is to set `display:block` on Views in your element hierarchy that you know don't need flexbox layout.)

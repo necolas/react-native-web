@@ -361,12 +361,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
     // Equivalent to using '::placeholder'
     case 'placeholderTextColor': {
       const block = createDeclarationBlock({ color: value, opacity: 1 });
-      rules.push(
-        `${selector}::-webkit-input-placeholder${block}`,
-        `${selector}::-moz-placeholder${block}`,
-        `${selector}:-ms-input-placeholder${block}`,
-        `${selector}::placeholder${block}`
-      );
+      rules.push(`${selector}::placeholder${block}`);
       break;
     }
 
@@ -457,7 +452,6 @@ function createIdentifier(prefix: string, name: string, key: string): string {
  * Create individual CSS keyframes rules.
  */
 function createKeyframes(keyframes: Object): [string, Rules] {
-  const prefixes = ['-webkit-', ''];
   const identifier = createIdentifier(
     'r',
     'animation',
@@ -475,9 +469,7 @@ function createKeyframes(keyframes: Object): [string, Rules] {
       .join('') +
     '}';
 
-  const rules = prefixes.map((prefix) => {
-    return `@${prefix}keyframes ${identifier}${steps}`;
-  });
+  const rules = [`@keyframes ${identifier}${steps}`];
   return [identifier, rules];
 }
 
