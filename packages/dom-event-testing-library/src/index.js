@@ -10,8 +10,8 @@
 import { buttonType, buttonsType } from './constants';
 import * as domEvents from './domEvents';
 import * as domEventSequences from './domEventSequences';
-import { hasPointerEvent, setPointerEvent, platform } from './domEnvironment';
-import { describeWithPointerEvent, testWithPointerType } from './testHelpers';
+import { platform } from './domEnvironment';
+import { testWithPointerType } from './testHelpers';
 
 const createEventTarget = (node) => ({
   node,
@@ -123,9 +123,6 @@ export {
   buttonsType,
   clearPointers,
   createEventTarget,
-  describeWithPointerEvent,
   platform,
-  hasPointerEvent,
-  setPointerEvent,
   testWithPointerType
 };

@@ -259,9 +259,7 @@ function eventListener(domEvent: any) {
 
   /**
    * Manage emulated events and early bailout.
-   * Since PointerEvent is not used yet (lack of support in older Safari), it's
-   * necessary to manually manage the mess of browser touch/mouse events.
-   * And bailout early for termination events when there is no active responder.
+   * Bailout early for termination events when there is no active responder.
    */
 
   // Flag when browser may produce emulated events
