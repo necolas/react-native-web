@@ -27,8 +27,8 @@ import { Clipboard } from 'react-native';
 Determines whether the browser environment supports Clipboard at all.
 {% endcall %}
 
-{% call macro.prop('setString', '() => boolean') %}
-Copies a string to the clipboard. On web, some browsers may not support copying to the clipboard, therefore, this function returns a boolean to indicate if the copy was successful.
+{% call macro.prop('setString', '(text: string) => void') %}
+Copies a string to the clipboard. This method does not return a value.
 {% endcall %}
 
 {% call macro.prop('getString', '() => Promise<"">') %}

@@ -26,8 +26,7 @@ export default class Clipboard {
     return Promise.resolve('');
   }
 
-  static setString(text: string): boolean {
-    let success = false;
+  static setString(text: string): void {
     const body = document.body;
 
     if (body) {
@@ -49,14 +48,12 @@ export default class Clipboard {
 
       // attempt to copy
       try {
-        success = document.execCommand('copy');
+        document.execCommand('copy');
       } catch (e) {}
 
       // remove selection and node
       selection.removeAllRanges();
       body.removeChild(node);
     }
-
-    return success;
   }
 }
