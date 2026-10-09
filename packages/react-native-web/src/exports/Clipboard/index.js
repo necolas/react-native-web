@@ -49,8 +49,7 @@ export default class Clipboard {
 
       // attempt to copy
       try {
-        document.execCommand('copy');
-        success = true;
+        success = document.execCommand('copy');
       } catch (e) {}
 
       // remove selection and node
