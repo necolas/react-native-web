@@ -97,6 +97,10 @@ Prefetches a remote image for later use by downloading it. Once an image has bee
 Performs cache interrogation. Returns a mapping from URL to cache status: "disk", "memory", "disk/memory". If a requested URL is not in the mapping, it means it's not in the cache.
 {% endcall %}
 
+{% call macro.prop('resolveAssetSource', '?(source: Source) => { uri: string, width?: number, height?: number }') %}
+Resolves an asset reference into an object which has the properties uri, width, and height.
+{% endcall %}
+
 ---
 
 ## Examples
