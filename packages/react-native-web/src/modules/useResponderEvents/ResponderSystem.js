@@ -258,7 +258,7 @@ function eventListener(domEvent: any) {
   const eventTarget = domEvent.target;
 
   /**
-   * Manage emulated events and early bailout.
+   * Ignore mouse events emulated after a touch.
    * Bailout early for termination events when there is no active responder.
    */
 
