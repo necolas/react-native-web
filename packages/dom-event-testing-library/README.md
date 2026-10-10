@@ -123,7 +123,7 @@ Touch and pen sequences record their active pointers so that `touches`, `targetT
 
 #### `testWithPointerType`
 
-The is just like `test` but it will run the test once for each pointer type: `mouse`, `touch`, and `pen`.
+This just like `test` but it will run the test once for each pointer type: `mouse`, `touch`, and `pen`.
 
 ```js
 testWithPointerType('pointer down', (pointerType) => {
