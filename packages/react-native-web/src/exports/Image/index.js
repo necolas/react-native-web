@@ -159,10 +159,9 @@ interface ImageStatics {
   ) => Promise<{| [uri: string]: 'disk/memory' |}>;
 }
 
-const Image: React.AbstractComponent<
-  ImageProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, ref) => {
+const Image = (
+  props: ImageProps & { ref?: React.Ref<typeof View> }
+): React.Node => {
   const {
     'aria-label': _ariaLabel,
     accessibilityLabel,
@@ -175,6 +174,7 @@ const Image: React.AbstractComponent<
     onLoadEnd,
     onLoadStart,
     pointerEvents,
+    ref,
     source,
     style,
     ...rest
@@ -355,7 +355,7 @@ const Image: React.AbstractComponent<
       {createTintColorSVG(tintColor, filterRef.current)}
     </View>
   );
-});
+};
 
 Image.displayName = 'Image';
 

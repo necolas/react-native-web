@@ -37,6 +37,7 @@ export type Props = $ReadOnly<{|
   onPress?: $PropertyType<PressResponderConfig, 'onPress'>,
   onPressIn?: $PropertyType<PressResponderConfig, 'onPressStart'>,
   onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
+  ref?: React.Ref<any>,
   rejectResponderTermination?: ?boolean,
   testID?: $PropertyType<ViewProps, 'testID'>
 |}>;
@@ -60,7 +61,7 @@ const forwardPropsList = {
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
+function TouchableWithoutFeedback(props: Props): React.Node {
   const {
     delayPressIn,
     delayPressOut,
@@ -71,6 +72,7 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
     onPress,
     onPressIn,
     onPressOut,
+    ref,
     rejectResponderTermination
   } = props;
 
@@ -108,16 +110,14 @@ function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const supportedProps = pickProps(props);
   supportedProps.accessibilityDisabled = disabled;
   supportedProps.focusable = !disabled && focusable !== false;
-  supportedProps.ref = useMergeRefs(forwardedRef, hostRef, element.ref);
+  supportedProps.ref = useMergeRefs(ref, hostRef, element.ref);
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
   return React.cloneElement(element, elementProps, ...children);
 }
 
-const MemoedTouchableWithoutFeedback = React.memo(
-  React.forwardRef(TouchableWithoutFeedback)
-);
+const MemoedTouchableWithoutFeedback = React.memo(TouchableWithoutFeedback);
 MemoedTouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
 export default (MemoedTouchableWithoutFeedback: React.AbstractComponent<

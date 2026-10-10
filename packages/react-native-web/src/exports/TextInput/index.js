@@ -90,10 +90,9 @@ function isEventComposing(nativeEvent) {
 
 let focusTimeout: ?TimeoutID = null;
 
-const TextInput: React.AbstractComponent<
-  TextInputProps,
-  HTMLElement & PlatformMethods
-> = React.forwardRef((props, forwardedRef) => {
+const TextInput = (
+  props: TextInputProps & { ref?: React.Ref<any> }
+): React.Node => {
   const {
     autoCapitalize = 'sentences',
     autoComplete,
@@ -136,6 +135,7 @@ const TextInput: React.AbstractComponent<
     onSubmitEditing,
     placeholderTextColor,
     readOnly = false,
+    ref,
     returnKeyType,
     rows,
     secureTextEntry = false,
@@ -415,12 +415,7 @@ const TextInput: React.AbstractComponent<
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 
-  const setRef = useMergeRefs(
-    hostRef,
-    platformMethodsRef,
-    imperativeRef,
-    forwardedRef
-  );
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, ref);
 
   supportedProps.ref = setRef;
 
@@ -434,10 +429,9 @@ const TextInput: React.AbstractComponent<
   });
 
   return element;
-});
+};
 
 TextInput.displayName = 'TextInput';
-// $FlowFixMe
 TextInput.State = TextInputState;
 
 const styles = StyleSheet.create({
@@ -461,4 +455,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TextInput;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (TextInput: React.AbstractComponent<
+  TextInputProps,
+  HTMLElement & PlatformMethods
+>);

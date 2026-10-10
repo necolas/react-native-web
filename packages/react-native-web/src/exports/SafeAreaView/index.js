@@ -14,13 +14,15 @@ import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-const SafeAreaView: React.AbstractComponent<
-  ViewProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, ref) => {
-  const { style, ...rest } = props;
+type SafeAreaViewProps = {
+  ...ViewProps,
+  ref?: React.Ref<typeof View>
+};
+
+const SafeAreaView = (props: SafeAreaViewProps): React.Node => {
+  const { ref, style, ...rest } = props;
   return <View {...rest} ref={ref} style={[styles.root, style]} />;
-});
+};
 
 SafeAreaView.displayName = 'SafeAreaView';
 
@@ -33,4 +35,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SafeAreaView;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (SafeAreaView: React.AbstractComponent<
+  SafeAreaViewProps,
+  React.ElementRef<typeof View>
+>);
