@@ -91,8 +91,8 @@ const createEventTarget = (node) => ({
    * target.tap({ pointerType: 'touch' })
    */
   tap(payload) {
-    domEventSequences.pointerdown(payload);
-    domEventSequences.pointerup(payload);
+    domEventSequences.pointerdown(node, payload);
+    domEventSequences.pointerup(node, payload);
   },
   virtualclick(payload) {
     node.dispatchEvent(domEvents.virtualclick(payload));
