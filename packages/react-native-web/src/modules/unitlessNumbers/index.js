@@ -14,8 +14,6 @@ const unitlessNumbers = {
   borderImageOutset: true,
   borderImageSlice: true,
   borderImageWidth: true,
-  boxFlex: true,
-  boxFlexGroup: true,
   boxOrdinalGroup: true,
   columnCount: true,
   flex: true,
@@ -60,17 +58,14 @@ const unitlessNumbers = {
 };
 
 /**
- * Support style names that may come passed in prefixed by adding permutations
- * of vendor prefixes.
+ * Support style names that may come passed in prefixed with 'Webkit', which
+ * is still required for some properties (e.g. 'WebkitLineClamp').
  */
-const prefixes = ['ms', 'Moz', 'O', 'Webkit'];
 const prefixKey = (prefix: string, key: string) => {
   return prefix + key.charAt(0).toUpperCase() + key.substring(1);
 };
 Object.keys(unitlessNumbers).forEach((prop) => {
-  prefixes.forEach((prefix) => {
-    unitlessNumbers[prefixKey(prefix, prop)] = unitlessNumbers[prop];
-  });
+  unitlessNumbers[prefixKey('Webkit', prop)] = unitlessNumbers[prop];
 });
 
 export default unitlessNumbers;

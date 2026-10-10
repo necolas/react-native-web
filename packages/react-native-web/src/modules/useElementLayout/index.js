@@ -16,7 +16,6 @@ import canUseDOM from '../canUseDom';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
-let didWarn = !canUseDOM;
 let resizeObserver = null;
 
 function getResizeObserver(): ?ResizeObserver {
@@ -46,17 +45,6 @@ function getResizeObserver(): ?ResizeObserver {
           }
         });
       });
-    }
-  } else if (!didWarn) {
-    if (
-      process.env.NODE_ENV !== 'production' &&
-      process.env.NODE_ENV !== 'test'
-    ) {
-      console.warn(
-        'onLayout relies on ResizeObserver which is not supported by your browser. ' +
-          'Please include a polyfill, e.g., https://github.com/que-etc/resize-observer-polyfill.'
-      );
-      didWarn = true;
     }
   }
   return resizeObserver;

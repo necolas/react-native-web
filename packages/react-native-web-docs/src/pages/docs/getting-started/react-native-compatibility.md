@@ -22,13 +22,11 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | :----------------------- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ActivityIndicator        | ✓      |                                                                                                                                                                                               |
 | Button                   | ✓      |                                                                                                                                                                                               |
-| CheckBox                 | ✓      |                                                                                                                                                                                               |
 | FlatList                 | ✓      |                                                                                                                                                                                               |
 | Image                    | ✓      | Missing multiple sources ([#515](https://github.com/necolas/react-native-web/issues/515)) and HTTP headers ([#1019](https://github.com/necolas/react-native-web/issues/1019)).                |
 | ImageBackground          | ✓      |                                                                                                                                                                                               |
 | KeyboardAvoidingView     | (✓)    | Mock. No equivalent web APIs.                                                                                                                                                                 |
 | Modal                    | ✓      |                                                                                                                                                                                               |
-| Picker                   | ✓      |                                                                                                                                                                                               |
 | Pressable                | ✓      |                                                                                                                                                                                               |
 | RefreshControl           | ✘      | Not started ([#1027](https://github.com/necolas/react-native-web/issues/1027)).                                                                                                               |
 | SafeAreaView             | ✓      |                                                                                                                                                                                               |
@@ -38,14 +36,12 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | Switch                   | ✓      |                                                                                                                                                                                               |
 | Text                     | ✓      | No `onLongPress` ([#1011](https://github.com/necolas/react-native-web/issues/1011)).                                                                                                          |
 | TextInput                | ✓      | Missing rich text features ([#1023](https://github.com/necolas/react-native-web/issues/1023)), and auto-expanding behaviour ([#795](https://github.com/necolas/react-native-web/issues/795)). |
-| Touchable                | ✓      | Includes additional support for mouse and keyboard interactions.                                                                                                                              |
 | TouchableHighlight       | ✓      |                                                                                                                                                                                               |
 | TouchableNativeFeedback  | ✘      | Not started ([#1024](https://github.com/necolas/react-native-web/issues/1024)).                                                                                                               |
 | TouchableOpacity         | ✓      |                                                                                                                                                                                               |
 | TouchableWithoutFeedback | ✓      |                                                                                                                                                                                               |
 | View                     | ✓      |                                                                                                                                                                                               |
 | VirtualizedList          | ✓      |                                                                                                                                                                                               |
-| YellowBox                | (✓)    | Mock. No YellowBox functionality.                                                                                                                                                             |
 
 ## APIs
 
@@ -65,7 +61,6 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | Easing              | ✓      |                                                                                                                 |
 | Geolocation         | ✓      |                                                                                                                 |
 | I18nManager         | (✓)    | Mock. See [localization](https://necolas.github.io/react-native-web/docs/localization/) for preferred approach. |
-| InteractionManager  | (✓)    |                                                                                                                 |
 | Keyboard            | (✓)    | Mock.                                                                                                           |
 | LayoutAnimation     | (✓)    | Missing translation to web animations.                                                                          |
 | Linking             | ✓      |                                                                                                                 |

@@ -7,7 +7,7 @@
  * @flow strict-local
  */
 
-import unitlessNumbers from './unitlessNumbers';
+import unitlessNumbers from '../../../modules/unitlessNumbers';
 import normalizeColor from './normalizeColor';
 
 const colorProps = {

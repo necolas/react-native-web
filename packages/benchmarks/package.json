@@ -10,7 +10,6 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "d3-scale-chromatic": "^3.0.0",
-    "prop-types": "^15.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-native-web": "0.21.3"

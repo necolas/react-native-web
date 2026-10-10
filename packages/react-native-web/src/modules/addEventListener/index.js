@@ -8,7 +8,6 @@
  */
 
 'use strict';
-import canUseDOM from '../canUseDom';
 
 type Listener = (e: any) => void;
 
@@ -19,35 +18,6 @@ export type EventOptions = {
 };
 
 const emptyFunction = () => {};
-
-function supportsPassiveEvents(): boolean {
-  let supported = false;
-  // Check if browser supports event with passive listeners
-  // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
-  if (canUseDOM) {
-    try {
-      const options = {};
-      Object.defineProperty(options, 'passive', {
-        get() {
-          supported = true;
-          return false;
-        }
-      });
-      window.addEventListener('test', null, options);
-      window.removeEventListener('test', null, options);
-    } catch (e) {}
-  }
-  return supported;
-}
-
-const canUsePassiveEvents = supportsPassiveEvents();
-
-function getOptions(options: ?EventOptions): EventOptions | boolean {
-  if (options == null) {
-    return false;
-  }
-  return canUsePassiveEvents ? options : Boolean(options.capture);
-}
 
 /**
  * Shim generic API compatibility with ReactDOM's synthetic events, without needing the
@@ -77,7 +47,7 @@ export function addEventListener(
   listener: Listener,
   options: ?EventOptions
 ): () => void {
-  const opts = getOptions(options);
+  const opts = options ?? false;
   const compatListener = (e: any) => listener(normalizeEvent(e));
   target.addEventListener(type, compatListener, opts);
 

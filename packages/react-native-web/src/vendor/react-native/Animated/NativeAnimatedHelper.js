@@ -43,9 +43,6 @@ let queue: Array<() => void> = [];
 let singleOpQueue: Array<any> = [];
 
 const useSingleOpBatching = false;
-  Platform.OS === 'android' &&
-  !!NativeAnimatedModule?.queueAndExecuteBatchedOperations &&
-  ReactNativeFeatureFlags.animatedShouldUseSingleOp();
 let flushQueueTimeout = null;
 
 const eventListenerGetValueCallbacks = {};
@@ -203,9 +200,6 @@ const API = {
     config: AnimatedNodeConfig,
   ): void {
     invariant(nativeOps, 'Native animated module is not available');
-    //if (nativeOps.updateAnimatedNodeConfig) {
-    //  API.queueOperation(nativeOps.updateAnimatedNodeConfig, tag, config);
-    //}
   },
   startListeningToAnimatedNodeValue: function (tag: number) {
     invariant(nativeOps, 'Native animated module is not available');
