@@ -11,7 +11,6 @@ import type { ImageProps } from '../Image';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef } from 'react';
 import Image from '../Image';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -20,6 +19,7 @@ type ImageBackgroundProps = {
   ...ImageProps,
   imageRef?: any,
   imageStyle?: $PropertyType<ImageProps, 'style'>,
+  ref?: React.Ref<typeof View>,
   style?: $PropertyType<ViewProps, 'style'>
 };
 
@@ -28,21 +28,19 @@ const emptyObject = {};
 /**
  * Very simple drop-in replacement for <Image> which supports nesting views.
  */
-const ImageBackground: React.AbstractComponent<
-  ImageBackgroundProps,
-  React.ElementRef<typeof View>
-> = forwardRef((props, forwardedRef) => {
+const ImageBackground = (props: ImageBackgroundProps): React.Node => {
   const {
     children,
     style = emptyObject,
     imageStyle,
     imageRef,
+    ref,
     ...rest
   } = props;
   const { height, width } = StyleSheet.flatten(style);
 
   return (
-    <View ref={forwardedRef} style={style}>
+    <View ref={ref} style={style}>
       <Image
         {...rest}
         ref={imageRef}
@@ -66,8 +64,12 @@ const ImageBackground: React.AbstractComponent<
       {children}
     </View>
   );
-});
+};
 
 ImageBackground.displayName = 'ImageBackground';
 
-export default ImageBackground;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (ImageBackground: React.AbstractComponent<
+  ImageBackgroundProps,
+  React.ElementRef<typeof View>
+>);

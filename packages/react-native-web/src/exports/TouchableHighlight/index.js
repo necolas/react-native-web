@@ -69,7 +69,7 @@ function hasPressHandler(props): boolean {
  * TouchableHighlight must have one child (not zero or more than one).
  * If you wish to have several child components, wrap them in a View.
  */
-function TouchableHighlight(props: Props, forwardedRef): React.Node {
+function TouchableHighlight(props: Props): React.Node {
   const {
     activeOpacity,
     children,
@@ -84,6 +84,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
     onPressIn,
     onPressOut,
     onShowUnderlay,
+    ref,
     rejectResponderTermination,
     style,
     testOnly_pressed,
@@ -92,7 +93,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
+  const setRef = useMergeRefs(ref, hostRef);
 
   const [extraStyles, setExtraStyles] = useState(
     testOnly_pressed === true
@@ -195,11 +196,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableHighlight = React.memo(
-  React.forwardRef(TouchableHighlight)
-);
+const MemoedTouchableHighlight = React.memo(TouchableHighlight);
 MemoedTouchableHighlight.displayName = 'TouchableHighlight';
 
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
 export default (MemoedTouchableHighlight: React.AbstractComponent<
   Props,
   React.ElementRef<typeof View>

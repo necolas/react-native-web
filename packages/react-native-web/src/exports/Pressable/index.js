@@ -14,7 +14,7 @@ import type { PressResponderConfig } from '../../modules/usePressEvents/PressRes
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { forwardRef, memo, useMemo, useState, useRef } from 'react';
+import { memo, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
@@ -56,6 +56,7 @@ type Props = {
   onPressMove?: $PropertyType<PressResponderConfig, 'onPressMove'>,
   // Called when a touch is released, before `onPress`.
   onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
+  ref?: React.Ref<typeof View>,
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp),
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
@@ -68,7 +69,7 @@ type Props = {
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-function Pressable(props: Props, forwardedRef): React.Node {
+function Pressable(props: Props): React.Node {
   const {
     children,
     delayLongPress,
@@ -86,6 +87,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     onPressMove,
     onPressIn,
     onPressOut,
+    ref,
     style,
     tabIndex,
     testOnly_hovered,
@@ -98,7 +100,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
+  const setRef = useMergeRefs(ref, hostRef);
 
   const pressConfig = useMemo(
     () => ({
@@ -233,9 +235,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedPressable = memo(forwardRef(Pressable));
+const MemoedPressable = memo(Pressable);
 MemoedPressable.displayName = 'Pressable';
 
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
 export default (MemoedPressable: React.AbstractComponent<
   Props,
   React.ElementRef<typeof View>

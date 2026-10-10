@@ -16,36 +16,35 @@ type Props = {
   WrapperComponent?: ?React.ComponentType<*>,
   // $FlowFixMe
   children?: React.Children,
+  ref?: React.Ref<any>,
   rootTag: any
 };
 
 const RootTagContext: React.Context<any> = React.createContext(null);
 
-const AppContainer: React.AbstractComponent<Props> = React.forwardRef(
-  (props: Props, forwardedRef?: React.Ref<any>) => {
-    const { children, WrapperComponent } = props;
+const AppContainer = (props: Props): React.Node => {
+  const { children, ref, WrapperComponent } = props;
 
-    let innerView = (
-      <View children={children} key={1} style={styles.appContainer} />
-    );
+  let innerView = (
+    <View children={children} key={1} style={styles.appContainer} />
+  );
 
-    if (WrapperComponent) {
-      innerView = <WrapperComponent>{innerView}</WrapperComponent>;
-    }
-
-    return (
-      <RootTagContext.Provider value={props.rootTag}>
-        <View ref={forwardedRef} style={styles.appContainer}>
-          {innerView}
-        </View>
-      </RootTagContext.Provider>
-    );
+  if (WrapperComponent) {
+    innerView = <WrapperComponent>{innerView}</WrapperComponent>;
   }
-);
+
+  return (
+    <RootTagContext.Provider value={props.rootTag}>
+      <View ref={ref} style={styles.appContainer}>
+        {innerView}
+      </View>
+    </RootTagContext.Provider>
+  );
+};
 
 AppContainer.displayName = 'AppContainer';
 
-export default AppContainer;
+export default (AppContainer: React.AbstractComponent<Props>);
 
 const styles = StyleSheet.create({
   appContainer: {

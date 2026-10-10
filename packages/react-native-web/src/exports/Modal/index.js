@@ -11,6 +11,7 @@
 'use client';
 
 import type { ViewProps } from '../View';
+import typeof View from '../View';
 
 import * as React from 'react';
 import ModalPortal from './ModalPortal';
@@ -29,6 +30,7 @@ export type ModalProps = {
   |}) => void,
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
+  ref?: React.Ref<View>,
   presentationStyle?: ?(
     | 'fullScreen'
     | 'pageSheet'
@@ -85,16 +87,14 @@ function addActiveModal(modalId, listener) {
   notifyActiveModalListeners();
 }
 
-const Modal: React.AbstractComponent<
-  ModalProps,
-  React.ElementRef<typeof ModalContent>
-> = React.forwardRef((props, forwardedRef) => {
+const Modal = (props: ModalProps): React.Node => {
   const {
     animationType,
     children,
     onDismiss,
     onRequestClose,
     onShow,
+    ref,
     transparent,
     visible = true,
     ...rest
@@ -137,7 +137,7 @@ const Modal: React.AbstractComponent<
             {...rest}
             active={isActive}
             onRequestClose={onRequestClose}
-            ref={forwardedRef}
+            ref={ref}
             transparent={transparent}
           >
             {children}
@@ -146,6 +146,10 @@ const Modal: React.AbstractComponent<
       </ModalAnimation>
     </ModalPortal>
   );
-});
+};
 
-export default Modal;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (Modal: React.AbstractComponent<
+  ModalProps,
+  React.ElementRef<View>
+>);

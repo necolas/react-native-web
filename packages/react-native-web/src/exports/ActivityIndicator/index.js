@@ -25,17 +25,16 @@ type ActivityIndicatorProps = {
   animating?: boolean,
   color?: ?string,
   hidesWhenStopped?: boolean,
+  ref?: React.Ref<typeof View>,
   size?: 'small' | 'large' | number
 };
 
-const ActivityIndicator: React.AbstractComponent<
-  ActivityIndicatorProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
+const ActivityIndicator = (props: ActivityIndicatorProps): React.Node => {
   const {
     animating = true,
     color = '#1976D2',
     hidesWhenStopped = true,
+    ref,
     size = 'small',
     style,
     ...other
@@ -60,7 +59,7 @@ const ActivityIndicator: React.AbstractComponent<
       {...other}
       aria-valuemax={1}
       aria-valuemin={0}
-      ref={forwardedRef}
+      ref={ref}
       role="progressbar"
       style={[styles.container, style]}
     >
@@ -77,7 +76,7 @@ const ActivityIndicator: React.AbstractComponent<
       />
     </View>
   );
-});
+};
 
 ActivityIndicator.displayName = 'ActivityIndicator';
 
@@ -116,4 +115,8 @@ const indicatorSizes = StyleSheet.create({
   }
 });
 
-export default ActivityIndicator;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (ActivityIndicator: React.AbstractComponent<
+  ActivityIndicatorProps,
+  React.ElementRef<typeof View>
+>);
