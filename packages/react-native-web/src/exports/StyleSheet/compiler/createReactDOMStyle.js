@@ -8,7 +8,6 @@
  */
 
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import canUseDOM from '../../../modules/canUseDom';
 
 type Style = { [key: string]: any };
 
@@ -24,13 +23,6 @@ type Style = { [key: string]: any };
  */
 
 const emptyObject = {};
-
-const supportsCSS3TextDecoration =
-  !canUseDOM ||
-  (window.CSS != null &&
-    window.CSS.supports != null &&
-    (window.CSS.supports('text-decoration-line', 'none') ||
-      window.CSS.supports('-webkit-text-decoration-line', 'none')));
 
 const MONOSPACE_FONT_STACK = 'monospace,monospace';
 
@@ -153,14 +145,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
         resolvedStyle[prop] = MONOSPACE_FONT_STACK;
       } else {
         resolvedStyle[prop] = value;
-      }
-    } else if (prop === 'textDecorationLine') {
-      // use 'text-decoration' for browsers that only support CSS2
-      // text-decoration (e.g., IE, Edge)
-      if (!supportsCSS3TextDecoration) {
-        resolvedStyle.textDecoration = value;
-      } else {
-        resolvedStyle.textDecorationLine = value;
       }
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;

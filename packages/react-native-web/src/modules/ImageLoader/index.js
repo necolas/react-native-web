@@ -125,14 +125,10 @@ const ImageLoader = {
     image.onload = (e) => {
       // avoid blocking the main thread
       const onDecode = () => onLoad({ nativeEvent: e });
-      if (typeof image.decode === 'function') {
-        // Safari currently throws exceptions when decoding svgs.
-        // We want to catch that error and allow the load handler
-        // to be forwarded to the onLoad handler in this case
-        image.decode().then(onDecode, onDecode);
-      } else {
-        setTimeout(onDecode, 0);
-      }
+      // Safari currently throws exceptions when decoding svgs.
+      // We want to catch that error and allow the load handler
+      // to be forwarded to the onLoad handler in this case
+      image.decode().then(onDecode, onDecode);
     };
     image.src = uri;
     requests[`${id}`] = image;

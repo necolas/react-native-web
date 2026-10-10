@@ -70,9 +70,7 @@ describe('StyleSheet/compile', () => {
             [
               [
                 ".r-animationKeyframes-zacbmr{animation-name:r-animation-8jhqzh,r-animation-5azpl5;}",
-                "@-webkit-keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
                 "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
-                "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
               ],
               3,
@@ -133,9 +131,6 @@ describe('StyleSheet/compile', () => {
             ],
             [
               [
-                ".r-placeholderTextColor-1418aci::-webkit-input-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
-                ".r-placeholderTextColor-1418aci::-moz-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
-                ".r-placeholderTextColor-1418aci:-ms-input-placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
                 ".r-placeholderTextColor-1418aci::placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
               ],
               3,
@@ -250,9 +245,7 @@ describe('StyleSheet/compile', () => {
           [
             [
               [
-                "@-webkit-keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
                 "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
-                "@-webkit-keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
                 ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
               ],

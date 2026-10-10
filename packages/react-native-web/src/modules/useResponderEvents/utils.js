@@ -129,7 +129,7 @@ export function getLowestCommonAncestor(
 
 /**
  * Determine whether any of the active touches are within the current responder.
- * This cannot rely on W3C `targetTouches`, as neither IE11 nor Safari implement it.
+ * This cannot rely on W3C `targetTouches`, as Safari doesn't implement it.
  */
 export function hasTargetTouches(target: any, touches: any): boolean {
   if (!touches || touches.length === 0) {

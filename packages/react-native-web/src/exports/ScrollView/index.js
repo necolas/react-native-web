@@ -724,9 +724,7 @@ const commonStyle = {
   // Enable hardware compositing in modern browsers.
   // Creates a new layer with its own backing surface that can significantly
   // improve scroll performance.
-  transform: 'translateZ(0)',
-  // iOS native scrolling
-  WebkitOverflowScrolling: 'touch'
+  transform: 'translateZ(0)'
 };
 
 const styles = StyleSheet.create({

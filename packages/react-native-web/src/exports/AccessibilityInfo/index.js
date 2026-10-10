@@ -32,17 +32,13 @@ function isReduceMotionEnabled(): Promise<*> {
 
 function addChangeListener(fn) {
   if (prefersReducedMotionMedia != null) {
-    prefersReducedMotionMedia.addEventListener != null
-      ? prefersReducedMotionMedia.addEventListener('change', fn)
-      : prefersReducedMotionMedia.addListener(fn);
+    prefersReducedMotionMedia.addEventListener('change', fn);
   }
 }
 
 function removeChangeListener(fn) {
   if (prefersReducedMotionMedia != null) {
-    prefersReducedMotionMedia.removeEventListener != null
-      ? prefersReducedMotionMedia.removeEventListener('change', fn)
-      : prefersReducedMotionMedia.removeListener(fn);
+    prefersReducedMotionMedia.removeEventListener('change', fn);
   }
 }
 
