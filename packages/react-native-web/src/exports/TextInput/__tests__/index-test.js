@@ -27,8 +27,7 @@ const testIfDocumentIsFocused = (message, fn) => {
 };
 
 function createEvent(type, data = {}) {
-  const event = document.createEvent('CustomEvent');
-  event.initCustomEvent(type, true, true);
+  const event = new CustomEvent(type, { bubbles: true, cancelable: true });
   if (data != null) {
     Object.keys(data).forEach((key) => {
       const value = data[key];
