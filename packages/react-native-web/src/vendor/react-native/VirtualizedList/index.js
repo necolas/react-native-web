@@ -453,35 +453,41 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
       // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
     // For issue https://github.com/necolas/react-native-web/issues/995
-    this.invertedWheelEventHandler = (ev: any) => {
-      const scrollOffset = this.props.horizontal ? ev.target.scrollLeft : ev.target.scrollTop;
-      const scrollLength = this.props.horizontal ? ev.target.scrollWidth : ev.target.scrollHeight;
-      const clientLength = this.props.horizontal ? ev.target.clientWidth : ev.target.clientHeight;
-      const isEventTargetScrollable = scrollLength > clientLength;
-      const delta = this.props.horizontal
-        ? ev.deltaX || ev.wheelDeltaX
-        : ev.deltaY || ev.wheelDeltaY;
-      let leftoverDelta = delta;
-      if (isEventTargetScrollable) {
-        leftoverDelta = delta < 0
-          ? Math.min(delta + scrollOffset, 0)
-          : Math.max(delta - (scrollLength - clientLength - scrollOffset), 0);
-      }
-      const targetDelta = delta - leftoverDelta;
+    this.invertedWheelEventHandler = (ev) => {
+        const isHorizontal = this.props.horizontal;
+        const deltaX = ev.deltaX || ev.wheelDeltaX || 0;
+        const deltaY = ev.deltaY || ev.wheelDeltaY || 0;
 
-      if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
-        const node = (this._scrollRef: any).getScrollableNode();
-        if (this.props.horizontal) {
-          ev.target.scrollLeft += targetDelta;
-          const nextScrollLeft = node.scrollLeft - leftoverDelta;
-          node.scrollLeft = !this.props.getItemLayout ? Math.min(nextScrollLeft, this._totalCellLength) : nextScrollLeft;
-        } else {
-          ev.target.scrollTop += targetDelta;
-          const nextScrollTop = node.scrollTop - leftoverDelta;
-          node.scrollTop = !this.props.getItemLayout ? Math.min(nextScrollTop, this._totalCellLength) : nextScrollTop;
+        const scrollOffset = isHorizontal ? ev.target.scrollLeft : ev.target.scrollTop;
+        const scrollLength = isHorizontal ? ev.target.scrollWidth : ev.target.scrollHeight;
+        const clientLength = isHorizontal ? ev.target.clientWidth : ev.target.clientHeight;
+        const isEventTargetScrollable = scrollLength > clientLength;
+        const delta = isHorizontal ? deltaX : deltaY;
+        let leftoverDelta = delta;
+        if (isEventTargetScrollable) {
+            leftoverDelta = delta < 0 ? Math.min(delta + scrollOffset, 0) : Math.max(delta - (scrollLength - clientLength - scrollOffset), 0);
         }
-        ev.preventDefault();
-      }
+        const targetDelta = delta - leftoverDelta;
+        if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
+            const node = this._scrollRef.getScrollableNode();
+            if (isHorizontal) {
+                ev.target.scrollLeft += targetDelta;
+                const nextScrollLeft = node.scrollLeft - leftoverDelta;
+                node.scrollLeft = !this.props.getItemLayout ? Math.min(nextScrollLeft, this._totalCellLength) : nextScrollLeft;
+                
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    ev.preventDefault();
+                }
+            } else {
+                ev.target.scrollTop += targetDelta;
+                const nextScrollTop = node.scrollTop - leftoverDelta;
+                node.scrollTop = !this.props.getItemLayout ? Math.min(nextScrollTop, this._totalCellLength) : nextScrollTop;
+
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    ev.preventDefault();
+                }
+            }
+        }
     };
   }
 
