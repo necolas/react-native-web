@@ -567,6 +567,86 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(outsideElement);
   });
 
+  test('focus is trapped in the same commit that makes the modal active', () => {
+    // Its layout effect runs in that commit, after the modal's own effects and
+    // before passive effects: what it sees is what an event arriving right
+    // after the commit would see.
+    function Probe({ active, onCommit }) {
+      React.useLayoutEffect(() => {
+        if (active) onCommit();
+      }, [active, onCommit]);
+      return null;
+    }
+
+    let seen;
+    const onCommit = () => {
+      const dialog = document.querySelector('[role="dialog"]');
+      seen = dialog != null && dialog.contains(document.activeElement);
+    };
+
+    function Test({ visible }) {
+      const [active, setActive] = React.useState(false);
+      return (
+        <>
+          <a data-testid={'outside'} href={'#outside'}>
+            Outside
+          </a>
+          <Modal onShow={() => setActive(true)} visible={visible}>
+            <a data-testid={'inside'} href={'#hello'}>
+              Hello
+            </a>
+          </Modal>
+          <Probe active={active} onCommit={onCommit} />
+        </>
+      );
+    }
+
+    const { rerender } = render(<Test visible={false} />);
+    document.querySelector('[data-testid="outside"]').focus();
+    rerender(<Test visible={true} />);
+
+    expect(seen).toBe(true);
+  });
+
+  test('escape goes to the new top modal in the same commit that makes it active', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    // See the test above: an Escape right after the commit that makes modal B
+    // active.
+    function Probe({ active }) {
+      React.useLayoutEffect(() => {
+        if (active) {
+          document.dispatchEvent(
+            new KeyboardEvent('keyup', { bubbles: true, key: 'Escape' })
+          );
+        }
+      }, [active]);
+      return null;
+    }
+
+    function Test({ visibleB }) {
+      const [activeB, setActiveB] = React.useState(false);
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal
+            onRequestClose={spyB}
+            onShow={() => setActiveB(true)}
+            visible={visibleB}
+          />
+          <Probe active={activeB} />
+        </>
+      );
+    }
+
+    const { rerender } = render(<Test visibleB={false} />);
+    rerender(<Test visibleB={true} />);
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
   test('creates portal outside of the react container', () => {
     const { container, baseElement } = render(
       <Modal visible={true}>
