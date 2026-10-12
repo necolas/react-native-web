@@ -110,7 +110,7 @@ function TouchableWithoutFeedback(props: Props): React.Node {
   const supportedProps = pickProps(props);
   supportedProps.accessibilityDisabled = disabled;
   supportedProps.focusable = !disabled && focusable !== false;
-  supportedProps.ref = useMergeRefs(ref, hostRef, element.ref);
+  supportedProps.ref = useMergeRefs(ref, hostRef, element.props.ref);
 
   const elementProps = Object.assign(supportedProps, pressEventHandlers);
 
