@@ -17,6 +17,7 @@ import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
+import useLayoutEffect from '../../modules/useLayoutEffect';
 
 export type ModalProps = {
   ...ViewProps,
@@ -51,6 +52,19 @@ let uniqueModalIdentifier = 0;
 
 const activeModalStack = [];
 const activeModalListeners = {};
+// The modal each modal is rendered in, if any.
+const parentModals = {};
+
+const ModalContext = React.createContext(null);
+
+function isInside(modalId, ancestorId) {
+  for (let id = parentModals[modalId]; id != null; id = parentModals[id]) {
+    if (id === ancestorId) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function notifyActiveModalListeners() {
   if (activeModalStack.length === 0) {
@@ -71,6 +85,7 @@ function removeActiveModal(modalId) {
     activeModalListeners[modalId](false);
     delete activeModalListeners[modalId];
   }
+  delete parentModals[modalId];
   const index = activeModalStack.indexOf(modalId);
   if (index !== -1) {
     activeModalStack.splice(index, 1);
@@ -78,9 +93,17 @@ function removeActiveModal(modalId) {
   }
 }
 
-function addActiveModal(modalId, listener) {
+function addActiveModal(modalId, parentId, listener) {
   removeActiveModal(modalId);
-  activeModalStack.push(modalId);
+  parentModals[modalId] = parentId;
+  // A modal rendered inside this one, shown in the same commit, was added
+  // first (layout effects run children first), and stays on top.
+  const insideIndex = activeModalStack.findIndex((id) => isInside(id, modalId));
+  activeModalStack.splice(
+    insideIndex === -1 ? activeModalStack.length : insideIndex,
+    0,
+    modalId
+  );
   activeModalListeners[modalId] = listener;
   notifyActiveModalListeners();
 }
@@ -103,6 +126,7 @@ const Modal: React.AbstractComponent<
   // Set a unique model identifier so we can correctly route
   // dismissals and check the layering of modals.
   const modalId = React.useMemo(() => uniqueModalIdentifier++, []);
+  const parentModalId = React.useContext(ModalContext);
 
   const [isActive, setIsActive] = React.useState(false);
 
@@ -114,11 +138,19 @@ const Modal: React.AbstractComponent<
   }, [modalId, onDismiss]);
 
   const onShowCallback = React.useCallback(() => {
-    addActiveModal(modalId, setIsActive);
     if (onShow) {
       onShow();
     }
-  }, [modalId, onShow]);
+  }, [onShow]);
+
+  // Active from the commit that shows it, not once its animation has ended:
+  // the modal below stops trapping focus and handling Escape before anything
+  // in this one can take focus.
+  useLayoutEffect(() => {
+    if (visible) {
+      addActiveModal(modalId, parentModalId, setIsActive);
+    }
+  }, [modalId, parentModalId, visible]);
 
   React.useEffect(() => {
     return () => removeActiveModal(modalId);
@@ -140,7 +172,9 @@ const Modal: React.AbstractComponent<
             ref={forwardedRef}
             transparent={transparent}
           >
-            {children}
+            <ModalContext.Provider value={modalId}>
+              {children}
+            </ModalContext.Provider>
           </ModalContent>
         </ModalFocusTrap>
       </ModalAnimation>

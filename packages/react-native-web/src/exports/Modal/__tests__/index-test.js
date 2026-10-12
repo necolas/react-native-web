@@ -567,6 +567,96 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(outsideElement);
   });
 
+  test('a modal is active before its animation ends', () => {
+    const { getByTestId } = render(
+      <Modal animationType={'fade'} visible={true}>
+        <a data-testid={'inside'} href={'#hello'}>
+          Hello
+        </a>
+      </Modal>
+    );
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(getByTestId('inside'))).toBeTruthy();
+  });
+
+  test('focus moved into a modal opening over another stays there', () => {
+    const { rerender } = render(
+      <>
+        <Modal key={'modal-a'} visible={true}>
+          <a data-testid={'inside-a'} href={'#a'}>
+            A
+          </a>
+        </Modal>
+        <Modal animationType={'fade'} key={'modal-b'} visible={false}>
+          <a data-testid={'inside-b'} href={'#b'}>
+            B
+          </a>
+        </Modal>
+      </>
+    );
+    rerender(
+      <>
+        <Modal key={'modal-a'} visible={true}>
+          <a data-testid={'inside-a'} href={'#a'}>
+            A
+          </a>
+        </Modal>
+        <Modal animationType={'fade'} key={'modal-b'} visible={true}>
+          <a data-testid={'inside-b'} href={'#b'}>
+            B
+          </a>
+          <a data-testid={'inside-b-2'} href={'#b2'}>
+            B2
+          </a>
+        </Modal>
+      </>
+    );
+
+    // Before modal B's animation ends.
+    const insideElement = document.querySelector('[data-testid="inside-b-2"]');
+    insideElement.focus();
+    expect(document.activeElement).toBe(insideElement);
+  });
+
+  test('escape goes to a modal opening over another before its animation ends', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+    const { rerender } = render(
+      <>
+        <Modal onRequestClose={spyA} visible={true} />
+        <Modal animationType={'fade'} onRequestClose={spyB} visible={false} />
+      </>
+    );
+    rerender(
+      <>
+        <Modal onRequestClose={spyA} visible={true} />
+        <Modal animationType={'fade'} onRequestClose={spyB} visible={true} />
+      </>
+    );
+
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('a modal shown inside another in the same commit stays on top', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    render(
+      <Modal onRequestClose={spyA} visible={true}>
+        <Modal onRequestClose={spyB} visible={true} />
+      </Modal>
+    );
+
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
   test('creates portal outside of the react container', () => {
     const { container, baseElement } = render(
       <Modal visible={true}>
