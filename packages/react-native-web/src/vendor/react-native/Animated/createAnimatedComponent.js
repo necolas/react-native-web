@@ -36,7 +36,8 @@ export type AnimatedComponentType<
 export default function createAnimatedComponent<TProps: {...}, TInstance>(
   Component: React.AbstractComponent<TProps, TInstance>,
 ): React.AbstractComponent<TProps, TInstance> {
-  return React.forwardRef((props, forwardedRef) => {
+  // $FlowFixMe: Flow 0.148 does not support ref as a prop
+  return ({ref: forwardedRef, ...props}) => {
     const [reducedProps, callbackRef] = useAnimatedProps<TProps, TInstance>(
       props,
     );
@@ -60,5 +61,5 @@ export default function createAnimatedComponent<TProps: {...}, TInstance>(
         ref={ref}
       />
     );
-  });
+  };
 }

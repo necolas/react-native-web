@@ -32,7 +32,7 @@ type Props = $ReadOnly<{|
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, dimming it.
  */
-function TouchableOpacity(props: Props, forwardedRef): React.Node {
+function TouchableOpacity(props: Props): React.Node {
   const {
     activeOpacity,
     delayPressIn,
@@ -44,13 +44,14 @@ function TouchableOpacity(props: Props, forwardedRef): React.Node {
     onPress,
     onPressIn,
     onPressOut,
+    ref,
     rejectResponderTermination,
     style,
     ...rest
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
+  const setRef = useMergeRefs(ref, hostRef);
 
   const [duration, setDuration] = useState('0s');
   const [opacityOverride, setOpacityOverride] = useState(null);
@@ -151,9 +152,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableOpacity = React.memo(React.forwardRef(TouchableOpacity));
+const MemoedTouchableOpacity = React.memo(TouchableOpacity);
 MemoedTouchableOpacity.displayName = 'TouchableOpacity';
 
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
 export default (MemoedTouchableOpacity: React.AbstractComponent<
   Props,
   React.ElementRef<typeof View>

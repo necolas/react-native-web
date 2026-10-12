@@ -23,6 +23,7 @@ type Props = {
   onScrollEndDrag?: (e: any) => void,
   onTouchMove?: (e: any) => void,
   onWheel?: (e: any) => void,
+  ref?: React.Ref<typeof View>,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   showsHorizontalScrollIndicator?: boolean,
@@ -69,14 +70,12 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
+const ScrollViewBase = (props: Props): React.Node => {
   const {
     onScroll,
     onTouchMove,
     onWheel,
+    ref,
     scrollEnabled = true,
     scrollEventThrottle = 0,
     showsHorizontalScrollIndicator,
@@ -156,7 +155,7 @@ const ScrollViewBase: React.AbstractComponent<
       onScroll={handleScroll}
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
-      ref={useMergeRefs(scrollRef, forwardedRef)}
+      ref={useMergeRefs(scrollRef, ref)}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
@@ -164,7 +163,7 @@ const ScrollViewBase: React.AbstractComponent<
       ]}
     />
   );
-});
+};
 
 // Chrome doesn't support e.preventDefault in this case; touch-action must be
 // used to disable scrolling.
@@ -180,4 +179,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ScrollViewBase;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (ScrollViewBase: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof View>
+>);

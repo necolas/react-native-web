@@ -24,6 +24,7 @@ type SwitchProps = {
   activeTrackColor?: ColorValue,
   disabled?: boolean,
   onValueChange?: (e: any) => void,
+  ref?: React.Ref<any>,
   thumbColor?: ColorValue,
   trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
   value?: boolean
@@ -41,10 +42,7 @@ const defaultActiveThumbColor = '#009688';
 const defaultThumbColor = '#FAFAFA';
 const defaultDisabledThumbColor = '#BDBDBD';
 
-const Switch: React.AbstractComponent<
-  SwitchProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
+const Switch = (props: SwitchProps): React.Node => {
   const {
     'aria-label': ariaLabel,
     accessibilityLabel,
@@ -52,6 +50,7 @@ const Switch: React.AbstractComponent<
     activeTrackColor,
     disabled = false,
     onValueChange,
+    ref,
     style = emptyObject,
     thumbColor,
     trackColor,
@@ -175,7 +174,7 @@ const Switch: React.AbstractComponent<
     onBlur: handleFocusState,
     onChange: handleChange,
     onFocus: handleFocusState,
-    ref: forwardedRef,
+    ref,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox',
     role: 'switch'
@@ -188,7 +187,7 @@ const Switch: React.AbstractComponent<
       {nativeControl}
     </View>
   );
-});
+};
 
 Switch.displayName = 'Switch';
 
@@ -233,4 +232,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Switch;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (Switch: React.AbstractComponent<
+  SwitchProps,
+  React.ElementRef<typeof View>
+>);

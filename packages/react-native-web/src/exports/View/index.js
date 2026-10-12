@@ -46,102 +46,102 @@ const forwardPropsList = Object.assign(
 
 const pickProps = (props) => pick(props, forwardPropsList);
 
-const View: React.AbstractComponent<ViewProps, HTMLElement & PlatformMethods> =
-  React.forwardRef((props, forwardedRef) => {
-    const {
-      hrefAttrs,
-      onLayout,
-      onMoveShouldSetResponder,
-      onMoveShouldSetResponderCapture,
-      onResponderEnd,
-      onResponderGrant,
-      onResponderMove,
-      onResponderReject,
-      onResponderRelease,
-      onResponderStart,
-      onResponderTerminate,
-      onResponderTerminationRequest,
-      onScrollShouldSetResponder,
-      onScrollShouldSetResponderCapture,
-      onSelectionChangeShouldSetResponder,
-      onSelectionChangeShouldSetResponderCapture,
-      onStartShouldSetResponder,
-      onStartShouldSetResponderCapture,
-      ...rest
-    } = props;
+const View = (props: ViewProps & { ref?: React.Ref<any> }): React.Node => {
+  const {
+    hrefAttrs,
+    onLayout,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture,
+    ref,
+    ...rest
+  } = props;
 
-    if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(props.children).forEach((item) => {
-        if (typeof item === 'string') {
-          console.error(
-            `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
-          );
-        }
-      });
-    }
-
-    const hasTextAncestor = React.useContext(TextAncestorContext);
-    const hostRef = React.useRef(null);
-    const { direction: contextDirection } = useLocaleContext();
-
-    useElementLayout(hostRef, onLayout);
-    useResponderEvents(hostRef, {
-      onMoveShouldSetResponder,
-      onMoveShouldSetResponderCapture,
-      onResponderEnd,
-      onResponderGrant,
-      onResponderMove,
-      onResponderReject,
-      onResponderRelease,
-      onResponderStart,
-      onResponderTerminate,
-      onResponderTerminationRequest,
-      onScrollShouldSetResponder,
-      onScrollShouldSetResponderCapture,
-      onSelectionChangeShouldSetResponder,
-      onSelectionChangeShouldSetResponderCapture,
-      onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
+  if (process.env.NODE_ENV !== 'production') {
+    React.Children.toArray(props.children).forEach((item) => {
+      if (typeof item === 'string') {
+        console.error(
+          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`
+        );
+      }
     });
+  }
 
-    let component = 'div';
+  const hasTextAncestor = React.useContext(TextAncestorContext);
+  const hostRef = React.useRef(null);
+  const { direction: contextDirection } = useLocaleContext();
 
-    const langDirection =
-      props.lang != null ? getLocaleDirection(props.lang) : null;
-    const componentDirection = props.dir || langDirection;
-    const writingDirection = componentDirection || contextDirection;
+  useElementLayout(hostRef, onLayout);
+  useResponderEvents(hostRef, {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  });
 
-    const supportedProps = pickProps(rest);
-    supportedProps.dir = componentDirection;
-    supportedProps.style = [
-      styles.view$raw,
-      hasTextAncestor && styles.inline,
-      props.style
-    ];
-    if (props.href != null) {
-      component = 'a';
-      if (hrefAttrs != null) {
-        const { download, rel, target } = hrefAttrs;
-        if (download != null) {
-          supportedProps.download = download;
-        }
-        if (rel != null) {
-          supportedProps.rel = rel;
-        }
-        if (typeof target === 'string') {
-          supportedProps.target =
-            target.charAt(0) !== '_' ? '_' + target : target;
-        }
+  let component = 'div';
+
+  const langDirection =
+    props.lang != null ? getLocaleDirection(props.lang) : null;
+  const componentDirection = props.dir || langDirection;
+  const writingDirection = componentDirection || contextDirection;
+
+  const supportedProps = pickProps(rest);
+  supportedProps.dir = componentDirection;
+  supportedProps.style = [
+    styles.view$raw,
+    hasTextAncestor && styles.inline,
+    props.style
+  ];
+  if (props.href != null) {
+    component = 'a';
+    if (hrefAttrs != null) {
+      const { download, rel, target } = hrefAttrs;
+      if (download != null) {
+        supportedProps.download = download;
+      }
+      if (rel != null) {
+        supportedProps.rel = rel;
+      }
+      if (typeof target === 'string') {
+        supportedProps.target =
+          target.charAt(0) !== '_' ? '_' + target : target;
       }
     }
+  }
 
-    const platformMethodsRef = usePlatformMethods(supportedProps);
-    const setRef = useMergeRefs(hostRef, platformMethodsRef, forwardedRef);
+  const platformMethodsRef = usePlatformMethods(supportedProps);
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, ref);
 
-    supportedProps.ref = setRef;
+  supportedProps.ref = setRef;
 
-    return createElement(component, supportedProps, { writingDirection });
-  });
+  return createElement(component, supportedProps, { writingDirection });
+};
 
 View.displayName = 'View';
 
@@ -172,4 +172,8 @@ const styles = StyleSheet.create({
 
 export type { ViewProps };
 
-export default View;
+// $FlowFixMe: Flow 0.148 does not support ref as a prop
+export default (View: React.AbstractComponent<
+  ViewProps,
+  HTMLElement & PlatformMethods
+>);
