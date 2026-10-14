@@ -31,8 +31,7 @@
   "globals": {
     "ClientRect": "readonly",
     "Readonly": "readonly",
-    "ReadonlyArray": "readonly",
-    "Values": "readonly"
+    "ReadonlyArray": "readonly"
   },
   "rules": {
     "camelcase": 0,
