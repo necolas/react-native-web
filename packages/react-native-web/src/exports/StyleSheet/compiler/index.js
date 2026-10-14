@@ -423,7 +423,7 @@ function createDeclarationBlock(style: Style): string {
     .map((property) => {
       const value = domStyle[property];
       const prop = hyphenateStyleName(property);
-      // The prefixer may return an array of values:
+      // The prefixing function may return an array of values:
       // { width: [ '-webkit-fill-available', 'fill-available' ] }
       // to represent "fallback" declarations
       // { width: -webkit-fill-available; width: fill-available; }
