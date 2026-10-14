@@ -20,7 +20,7 @@
     "prepare": "husky install configs/husky",
     "test": "npm run flow && npm run format && npm run lint && npm run unit --runInBand",
     "unit": "npm-run-all \"unit:* {@}\" --",
-    "unit:dom": "jest --config ./configs/jest.config.js",
+    "unit:dom": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config ./configs/jest.config.js",
     "unit:node": "jest --config ./configs/jest.config.node.js"
   },
   "devDependencies": {
