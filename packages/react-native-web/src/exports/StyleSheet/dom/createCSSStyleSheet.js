@@ -15,7 +15,7 @@ export default function createCSSStyleSheet(
 ): ?CSSStyleSheet {
   if (canUseDOM) {
     const root = rootNode != null ? rootNode : document;
-    let element = root.getElementById(id);
+    let element = root.querySelector<HTMLStyleElement>(`style#${id}`);
     if (element == null) {
       element = document.createElement('style');
       element.setAttribute('id', id);
@@ -31,7 +31,7 @@ export default function createCSSStyleSheet(
         }
       }
     }
-    return element instanceof HTMLStyleElement ? element.sheet : null;
+    return element.sheet;
   } else {
     return null;
   }
