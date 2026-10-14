@@ -8,12 +8,71 @@ import * as Timing from './timing';
 import React, { Component } from 'react';
 import { getMean, getMedian, getStdDev } from './math';
 
+/**
+ * @typedef {Object} BenchResultsType
+ * @property {number} startTime
+ * @property {number} endTime
+ * @property {number} runTime
+ * @property {number} sampleCount
+ * @property {Array<FullSampleTimingType>} samples
+ * @property {number} max
+ * @property {number} min
+ * @property {number} median
+ * @property {number} mean
+ * @property {number} stdDev
+ * @property {number} meanLayout
+ * @property {number} meanScripting
+ */
+
+/**
+ * @typedef {Object} SampleTimingType
+ * @property {number} scriptingStart
+ * @property {number} [scriptingEnd]
+ * @property {number} [layoutStart]
+ * @property {number} [layoutEnd]
+ */
+
+/**
+ * @typedef {Object} FullSampleTimingType
+ * @property {number} start
+ * @property {number} end
+ * @property {number} scriptingStart
+ * @property {number} scriptingEnd
+ * @property {number} [layoutStart]
+ * @property {number} [layoutEnd]
+ */
+
 export const BenchmarkType = {
   MOUNT: 'mount',
   UPDATE: 'update',
   UNMOUNT: 'unmount'
 };
 
+/** @typedef {typeof BenchmarkType[keyof typeof BenchmarkType]} BenchmarkTypeValue */
+
+/**
+ * @typedef {Object} BenchmarkPropsType
+ * @property {React.ComponentType<any>} component
+ * @property {boolean} [forceLayout]
+ * @property {(x: { cycle: number }) => Object} getComponentProps
+ * @property {(x: BenchResultsType) => void} onComplete
+ * @property {number} sampleCount
+ * @property {number} timeout
+ * @property {BenchmarkTypeValue} type
+ */
+
+/**
+ * @typedef {Object} BenchmarkStateType
+ * @property {Object} componentProps
+ * @property {number} cycle
+ * @property {boolean} running
+ */
+
+/**
+ * @param {number} cycle
+ * @param {BenchmarkTypeValue} type
+ * @returns {boolean}
+ */
 const shouldRender = (cycle, type) => {
   switch (type) {
     // Render every odd iteration (first, third, etc)
@@ -29,6 +88,11 @@ const shouldRender = (cycle, type) => {
   }
 };
 
+/**
+ * @param {number} cycle
+ * @param {BenchmarkTypeValue} type
+ * @returns {boolean}
+ */
 const shouldRecord = (cycle, type) => {
   switch (type) {
     // Record every odd iteration (when mounted: first, third, etc)
@@ -45,6 +109,12 @@ const shouldRecord = (cycle, type) => {
   }
 };
 
+/**
+ * @param {number} cycle
+ * @param {number} sampleCount
+ * @param {BenchmarkTypeValue} type
+ * @returns {boolean}
+ */
 const isDone = (cycle, sampleCount, type) => {
   switch (type) {
     case BenchmarkType.MOUNT:
@@ -58,11 +128,17 @@ const isDone = (cycle, sampleCount, type) => {
   }
 };
 
+/**
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
 const sortNumbers = (a, b) => a - b;
 
 /**
  * Benchmark
  * TODO: documentation
+ * @extends {Component<BenchmarkPropsType, BenchmarkStateType>}
  */
 export default class Benchmark extends Component {
   static displayName = 'Benchmark';
@@ -75,6 +151,10 @@ export default class Benchmark extends Component {
 
   static Type = BenchmarkType;
 
+  /**
+   * @param {BenchmarkPropsType} props
+   * @param {Object} [context]
+   */
   constructor(props, context) {
     super(props, context);
     const cycle = 0;
@@ -84,10 +164,15 @@ export default class Benchmark extends Component {
       cycle,
       running: false
     };
+    /** @type {?number} */
+    this._raf = null;
+    /** @type {number} */
     this._startTime = 0;
+    /** @type {Array<SampleTimingType>} */
     this._samples = [];
   }
 
+  /** @param {BenchmarkPropsType} nextProps */
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
       this.setState((state) => ({
@@ -96,6 +181,10 @@ export default class Benchmark extends Component {
     }
   }
 
+  /**
+   * @param {BenchmarkPropsType} nextProps
+   * @param {BenchmarkStateType} nextState
+   */
   componentWillUpdate(nextProps, nextState) {
     if (nextState.running && !this.state.running) {
       this._startTime = Timing.now();
@@ -138,6 +227,7 @@ export default class Benchmark extends Component {
     }
   }
 
+  /** @returns {React.ReactNode} */
   render() {
     const { component: Component, type } = this.props;
     const { componentProps, cycle, running } = this.state;
@@ -177,6 +267,7 @@ export default class Benchmark extends Component {
     });
   }
 
+  /** @returns {Array<FullSampleTimingType>} */
   getSamples() {
     return this._samples.reduce(
       (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
@@ -194,6 +285,7 @@ export default class Benchmark extends Component {
     );
   }
 
+  /** @param {number} endTime */
   _handleComplete(endTime) {
     const { onComplete } = this.props;
     const samples = this.getSamples();

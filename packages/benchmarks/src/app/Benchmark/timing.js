@@ -1,4 +1,7 @@
-// Returns a high resolution time (if possible) in milliseconds
+/**
+ * Returns a high resolution time (if possible) in milliseconds
+ * @returns {number}
+ */
 export function now() {
   if (window && window.performance) {
     return window.performance.now();

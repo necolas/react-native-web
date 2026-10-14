@@ -1,3 +1,7 @@
+/**
+ * @param {Array<number>} values
+ * @returns {number}
+ */
 export const getStdDev = (values) => {
   const avg = getMean(values);
 
@@ -9,11 +13,19 @@ export const getStdDev = (values) => {
   return Math.sqrt(getMean(squareDiffs));
 };
 
+/**
+ * @param {Array<number>} values
+ * @returns {number}
+ */
 export const getMean = (values) => {
   const sum = values.reduce((sum, value) => sum + value, 0);
   return sum / values.length;
 };
 
+/**
+ * @param {Array<number>} values
+ * @returns {number}
+ */
 export const getMedian = (values) => {
   if (values.length === 1) {
     return values[0];
