@@ -111,7 +111,6 @@ const PREFIXED_PROPERTIES = Object.fromEntries(
     'lineClamp',
     'mask',
     'maskClip',
-    'maskComposite',
     'maskImage',
     'maskOrigin',
     'maskPosition',
@@ -303,8 +302,14 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
         const prefixedProp = PREFIXED_PROPERTIES[prop];
         const prefixedValue = prefixValue(prop, value);
         resolvedStyle[prop] = prefixedValue;
+
         if (prefixedProp != null) {
           resolvedStyle[prefixedProp] = prefixedValue;
+        }
+
+        // Firefox < 97
+        if (prop === 'printColorAdjust') {
+          resolvedStyle.colorAdjust = prefixedValue;
         }
       }
     }
