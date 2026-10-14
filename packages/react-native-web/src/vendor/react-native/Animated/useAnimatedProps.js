@@ -14,7 +14,13 @@ import AnimatedProps from './nodes/AnimatedProps';
 import {AnimatedEvent} from './AnimatedEvent';
 import useRefEffect from '../Utilities/useRefEffect';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
-import {useCallback, useEffect, useMemo, useReducer, useRef} from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 
 import useLayoutEffect from '../../../modules/useLayoutEffect';
 

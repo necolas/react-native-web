@@ -15,7 +15,9 @@ import createAnimatedComponent from '../createAnimatedComponent';
 
 import type {AnimatedComponentType} from '../createAnimatedComponent';
 
-export default createAnimatedComponent(Image as $FlowFixMe) as AnimatedComponentType<
+export default createAnimatedComponent(
+  Image as $FlowFixMe,
+) as AnimatedComponentType<
   Omit<React.ElementConfig<typeof Image>, 'ref'>,
   React.ElementRef<typeof Image>,
 >;

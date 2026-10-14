@@ -8,7 +8,7 @@
  * @format
  */
 
-import View, {type ViewProps} from '../../../exports/View';
+import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import deepDiffer from '../deepDiffer';
 import Platform from '../../../exports/Platform';

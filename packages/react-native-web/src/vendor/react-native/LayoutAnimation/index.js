@@ -48,8 +48,8 @@ function configureNext(
   if (!Platform.isTesting) {
     UIManager.configureNextLayoutAnimation(
       config,
-      onAnimationDidEnd ?? function () {},
-      function () {} /* unused onError */,
+      onAnimationDidEnd ?? function() {},
+      function() {} /* unused onError */,
     );
   }
 }
@@ -72,11 +72,7 @@ const Presets: {
   linear: LayoutAnimationConfig,
   spring: LayoutAnimationConfig,
 } = {
-  easeInEaseOut: create(
-    300,
-    'easeInEaseOut',
-    'opacity',
-  ) as LayoutAnimationConfig,
+  easeInEaseOut: create(300, 'easeInEaseOut', 'opacity') as LayoutAnimationConfig,
   linear: create(500, 'linear', 'opacity') as LayoutAnimationConfig,
   spring: {
     duration: 700,
@@ -142,15 +138,9 @@ const LayoutAnimation = {
     console.error('LayoutAnimation.checkConfig(...) has been disabled.');
   },
   Presets,
-  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut) as (
-    onAnimationDidEnd?: any,
-  ) => void,
-  linear: configureNext.bind(null, Presets.linear) as (
-    onAnimationDidEnd?: any,
-  ) => void,
-  spring: configureNext.bind(null, Presets.spring) as (
-    onAnimationDidEnd?: any,
-  ) => void,
+  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut) as (onAnimationDidEnd?: any) => void,
+  linear: configureNext.bind(null, Presets.linear) as (onAnimationDidEnd?: any) => void,
+  spring: configureNext.bind(null, Presets.spring) as (onAnimationDidEnd?: any) => void,
 };
 
 export default LayoutAnimation;

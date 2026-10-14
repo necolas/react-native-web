@@ -48,7 +48,9 @@ const NativeAnimatedAPI = NativeAnimatedHelper.API;
 const defaultColor: RgbaValue = {r: 0, g: 0, b: 0, a: 1.0};
 let _uniqueId = 1;
 
-const processColorObject = (color: NativeColorValue): ?NativeColorValue => {
+const processColorObject = (
+  color: NativeColorValue,
+): ?NativeColorValue => {
   return color;
 };
 

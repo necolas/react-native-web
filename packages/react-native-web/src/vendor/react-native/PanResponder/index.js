@@ -188,16 +188,9 @@ type ActiveCallback = (
   gestureState: GestureState,
 ) => boolean;
 
-type InteractionState = {
-  handle: ?number,
-  shouldCancelClick: boolean,
-  timeout: ?number,
-};
+type InteractionState = {handle: ?number, shouldCancelClick: boolean, timeout: ?number};
 
-type PassiveCallback = (
-  event: PressEvent,
-  gestureState: GestureState,
-) => unknown;
+type PassiveCallback = (event: PressEvent, gestureState: GestureState) => unknown;
 
 type PanResponderConfig = Readonly<{|
   onMoveShouldSetPanResponder?: ?ActiveCallback,
@@ -393,23 +386,23 @@ const PanResponder = {
    *  are the responder.
    */
   create(config: PanResponderConfig): {|
-    getInteractionHandle: () => ?number,
-    panHandlers: {|
-      onClickCapture: (event: any) => void,
-      onMoveShouldSetResponder: (event: PressEvent) => boolean,
-      onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
-      onResponderEnd: (event: PressEvent) => void,
-      onResponderGrant: (event: PressEvent) => boolean,
-      onResponderMove: (event: PressEvent) => void,
-      onResponderReject: (event: PressEvent) => void,
-      onResponderRelease: (event: PressEvent) => void,
-      onResponderStart: (event: PressEvent) => void,
-      onResponderTerminate: (event: PressEvent) => void,
-      onResponderTerminationRequest: (event: PressEvent) => boolean,
-      onStartShouldSetResponder: (event: PressEvent) => boolean,
-      onStartShouldSetResponderCapture: (event: PressEvent) => boolean,
-    |},
-  |} {
+  getInteractionHandle: () => ?number,
+  panHandlers: {|
+    onClickCapture: (event: any) => void,
+    onMoveShouldSetResponder: (event: PressEvent) => boolean,
+    onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
+    onResponderEnd: (event: PressEvent) => void,
+    onResponderGrant: (event: PressEvent) => boolean,
+    onResponderMove: (event: PressEvent) => void,
+    onResponderReject: (event: PressEvent) => void,
+    onResponderRelease: (event: PressEvent) => void,
+    onResponderStart: (event: PressEvent) => void,
+    onResponderTerminate: (event: PressEvent) => void,
+    onResponderTerminationRequest: (event: PressEvent) => boolean,
+    onStartShouldSetResponder: (event: PressEvent) => boolean,
+    onStartShouldSetResponderCapture: (event: PressEvent) => boolean,
+  |},
+|} {
     const interactionState: InteractionState = {
       handle: null,
       shouldCancelClick: false,
@@ -487,8 +480,7 @@ const PanResponder = {
 
       onResponderGrant(event: PressEvent): boolean {
         if (!interactionState.handle) {
-          interactionState.handle =
-            InteractionManager.createInteractionHandle();
+          interactionState.handle = InteractionManager.createInteractionHandle();
         }
         if (interactionState.timeout) {
           clearInteractionTimeout(interactionState);

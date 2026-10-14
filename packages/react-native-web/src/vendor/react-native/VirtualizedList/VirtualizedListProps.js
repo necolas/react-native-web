@@ -9,9 +9,11 @@
  */
 
 import ScrollView from '../../../exports/ScrollView';
-import type {LayoutEvent} from '../../../types';
-import type {FocusEvent} from '../Types/CoreEventTypes';
-import {type ViewProps} from '../../../exports/View';
+import type { LayoutEvent } from '../../../types';
+import type {
+  FocusEvent,
+} from '../Types/CoreEventTypes';
+import { type ViewProps } from '../../../exports/View';
 type ViewStyleProp = ViewProps['style'];
 import type {
   ViewabilityConfig,

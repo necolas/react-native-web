@@ -8,11 +8,13 @@
  * @format
  */
 
-import type {LayoutEvent} from '../../../types';
-import type {FocusEvent} from '../Types/CoreEventTypes';
+import type { LayoutEvent } from '../../../types';
+import type {
+  FocusEvent,
+} from '../Types/CoreEventTypes';
 import type {CellRendererProps, RenderItemType} from './VirtualizedListProps';
 
-import View, {type ViewProps} from '../../../exports/View';
+import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
 import {VirtualizedListCellContextProvider} from './VirtualizedListContext.js';
 import invariant from 'fbjs/lib/invariant';
@@ -202,8 +204,8 @@ export default class CellRenderer<ItemT> extends React.Component<
         ? [styles.rowReverse, inversionStyle]
         : [styles.columnReverse, inversionStyle]
       : horizontal
-        ? [styles.row, inversionStyle]
-        : inversionStyle;
+      ? [styles.row, inversionStyle]
+      : inversionStyle;
     const result = !CellRendererComponent ? (
       // $FlowFixMe[incompatible-type] View drops unsupported props
       <View

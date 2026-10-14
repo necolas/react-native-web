@@ -36,7 +36,7 @@ class AnimatedTransform extends AnimatedWithChildren {
 
   __getValue(): ReadonlyArray<Object> {
     return this._transforms.map(transform => {
-      const result: { [string]: unknown } = {};
+      const result: {[string]: unknown} = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -51,7 +51,7 @@ class AnimatedTransform extends AnimatedWithChildren {
 
   __getAnimatedValue(): ReadonlyArray<Object> {
     return this._transforms.map(transform => {
-      const result: { [string]: unknown } = {};
+      const result: {[string]: unknown} = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {

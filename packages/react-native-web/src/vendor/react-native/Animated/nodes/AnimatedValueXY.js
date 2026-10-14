@@ -15,7 +15,11 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 
 import invariant from 'fbjs/lib/invariant';
 
-type ValueXYListenerCallback = (value: {x: number, y: number, ...}) => unknown;
+type ValueXYListenerCallback = (value: {
+  x: number,
+  y: number,
+  ...
+}) => unknown;
 
 let _uniqueId = 1;
 
@@ -34,7 +38,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
       y: string,
       ...
     },
-    ...
+    ...,
   };
 
   constructor(
@@ -123,7 +127,11 @@ class AnimatedValueXY extends AnimatedWithChildren {
    * See https://reactnative.dev/docs/animatedvaluexy.html#resetanimation
    */
   resetAnimation(
-    callback?: (value: {x: number, y: number, ...}) => void,
+    callback?: (value: {
+      x: number,
+      y: number,
+      ...
+    }) => void,
   ): void {
     this.x.resetAnimation();
     this.y.resetAnimation();
@@ -137,7 +145,13 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See https://reactnative.dev/docs/animatedvaluexy.html#stopanimation
    */
-  stopAnimation(callback?: (value: {x: number, y: number, ...}) => void): void {
+  stopAnimation(
+    callback?: (value: {
+      x: number,
+      y: number,
+      ...
+    }) => void,
+  ): void {
     this.x.stopAnimation();
     this.y.stopAnimation();
     callback && callback(this.__getValue());

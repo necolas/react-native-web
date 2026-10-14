@@ -33,7 +33,7 @@ type RequiredProps<SectionT extends SectionBase<any>> = {|
    *
    *     sections: $ReadOnlyArray<{
    *       data: $ReadOnlyArray<SectionItem>,
-   *       renderItem?: ({item: SectionItem, ...}) => ?React.Node,
+   *       renderItem?: ({item: SectionItem, ...}) => ?React.Element<*>,
    *       ItemSeparatorComponent?: ?ReactClass<{highlighted: boolean, ...}>,
    *     }>
    */

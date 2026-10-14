@@ -37,8 +37,7 @@ export type {EventSubscription};
  * can theoretically listen to `RCTDeviceEventEmitter` (although discouraged).
  */
 export default class NativeEventEmitter<TEventToArgsMap extends {...}>
-  implements IEventEmitter<TEventToArgsMap>
-{
+  implements IEventEmitter<TEventToArgsMap> {
   _nativeModule: ?NativeModule;
 
   constructor(nativeModule: ?NativeModule) {
@@ -97,7 +96,9 @@ export default class NativeEventEmitter<TEventToArgsMap extends {...}>
     RCTDeviceEventEmitter.emit(eventType, ...args);
   }
 
-  removeAllListeners<TEvent extends keyof TEventToArgsMap>(eventType?: ?TEvent): void {
+  removeAllListeners<TEvent extends keyof TEventToArgsMap>(
+    eventType?: ?TEvent,
+  ): void {
     invariant(
       eventType != null,
       '`NativeEventEmitter.removeAllListener()` requires a non-null argument.',

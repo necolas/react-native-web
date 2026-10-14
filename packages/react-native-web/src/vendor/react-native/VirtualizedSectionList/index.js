@@ -563,10 +563,7 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
           setLeadingSeparatorProps({...leadingSeparatorProps, ...newProps});
         } else if (prevCellKey != null) {
           // update the previous item's separator
-          updatePropsFor(prevCellKey, {
-            ...leadingSeparatorProps,
-            ...newProps,
-          });
+          updatePropsFor(prevCellKey, {...leadingSeparatorProps, ...newProps});
         }
       } else if (select === 'trailing' && SeparatorComponent != null) {
         setSeparatorProps({...separatorProps, ...newProps});

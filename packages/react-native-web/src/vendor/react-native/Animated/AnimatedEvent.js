@@ -17,7 +17,7 @@ import NativeAnimatedHelper from './NativeAnimatedHelper';
 
 import invariant from 'fbjs/lib/invariant';
 
-import {shouldUseNativeDriver} from './NativeAnimatedHelper';
+import {shouldUseNativeDriver}from  './NativeAnimatedHelper';
 
 export type Mapping = {[key: string]: Mapping, ...} | AnimatedValue;
 export type EventConfig = {
@@ -181,7 +181,7 @@ export class AnimatedEvent {
     this._attachedEvent && this._attachedEvent.detach();
   }
 
-  __getHandler(): (...args: any) => void {
+  __getHandler(): ((...args: any) => void) {
     if (this.__isNative) {
       if (__DEV__) {
         let validatedMapping = false;

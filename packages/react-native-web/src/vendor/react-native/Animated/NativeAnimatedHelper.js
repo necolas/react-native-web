@@ -44,8 +44,7 @@ let singleOpQueue: Array<any> = [];
 const useSingleOpBatching: boolean = false;
 let flushQueueTimeout: any = null;
 
-const eventListenerGetValueCallbacks: {[number]: ?(value: number) => void} =
-  {};
+const eventListenerGetValueCallbacks: {[number]: ?(value: number) => void} = {};
 const eventListenerAnimationFinishedCallbacks: {[number]: ?EndCallback} = {};
 let globalEventEmitterGetValueListener: ?EventSubscription = null;
 let globalEventEmitterAnimationFinishedListener: ?EventSubscription = null;
@@ -199,6 +198,9 @@ const API = {
     config: AnimatedNodeConfig,
   ): void {
     invariant(nativeOps, 'Native animated module is not available');
+    //if (nativeOps.updateAnimatedNodeConfig) {
+    //  API.queueOperation(nativeOps.updateAnimatedNodeConfig, tag, config);
+    //}
   },
   startListeningToAnimatedNodeValue: function (tag: number) {
     invariant(nativeOps, 'Native animated module is not available');
@@ -561,7 +563,7 @@ export {
   generateNewAnimationId,
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
-  transformDataType,
+  transformDataType
 };
 
 export default {

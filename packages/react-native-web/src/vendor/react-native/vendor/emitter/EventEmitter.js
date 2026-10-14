@@ -71,10 +71,7 @@ export default class EventEmitter<TEventToArgsMap extends {...}>
     listener: (...args: TEventToArgsMap[TEvent]) => unknown,
     context: unknown,
   ): EventSubscription {
-    const registrations = allocate<TEventToArgsMap[TEvent]>(
-      this._registry,
-      eventType,
-    );
+    const registrations = allocate<TEventToArgsMap[TEvent]>(this._registry, eventType);
     const registration: Registration<TEventToArgsMap[TEvent]> = {
       context,
       listener,
@@ -109,7 +106,9 @@ export default class EventEmitter<TEventToArgsMap extends {...}>
   /**
    * Removes all registered listeners.
    */
-  removeAllListeners<TEvent extends keyof TEventToArgsMap>(eventType?: ?TEvent): void {
+  removeAllListeners<TEvent extends keyof TEventToArgsMap>(
+    eventType?: ?TEvent,
+  ): void {
     if (eventType == null) {
       this._registry = {};
     } else {
@@ -121,8 +120,7 @@ export default class EventEmitter<TEventToArgsMap extends {...}>
    * Returns the number of registered listeners for the supplied event.
    */
   listenerCount<TEvent extends keyof TEventToArgsMap>(eventType: TEvent): number {
-    const registrations: ?Set<Registration<unknown>> =
-      this._registry[eventType];
+    const registrations: ?Set<Registration<unknown>> = this._registry[eventType];
     return registrations == null ? 0 : registrations.size;
   }
 }
