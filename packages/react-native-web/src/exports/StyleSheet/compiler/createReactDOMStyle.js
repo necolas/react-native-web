@@ -162,7 +162,7 @@ const PREFIXED_SIZING_VALUES: Set<string> = new Set([
   'contain-floats'
 ]);
 
-const PREFIXED_FUNCTIONS = ['cross-fade', 'image-set'];
+const PREFIXED_FUNCTIONS_PATTERN = /(cross-fade|image-set)\(/g;
 
 // Only split multi values, not cubic beziers
 const VALUE_SEPARATOR_PATTERN = /,(?![^()]*(?:\([^()]*\))?\))/g;
@@ -192,11 +192,13 @@ const prefixValue = (prop: string, value: any): any => {
     return value;
   }
 
-  // Only the first matching function is prefixed
-  for (const name of PREFIXED_FUNCTIONS) {
-    if (value.indexOf(name + '(') > -1) {
-      return [value.replaceAll(name + '(', '-webkit-' + name + '('), value];
-    }
+  const prefixedValue = value.replace(
+    PREFIXED_FUNCTIONS_PATTERN,
+    '-webkit-$1('
+  );
+
+  if (prefixedValue !== value) {
+    return [prefixedValue, value];
   }
 
   if (SIZING_PROPERTIES.has(prop) && PREFIXED_SIZING_VALUES.has(value)) {

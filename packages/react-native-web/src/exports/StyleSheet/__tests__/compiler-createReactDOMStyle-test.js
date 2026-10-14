@@ -239,7 +239,7 @@ describe('compiler/createReactDOMStyle', () => {
         'image-set("a.png" 1x), cross-fade(url(a.png), url(b.png), 50%)';
       expect(createReactDOMStyle({ backgroundImage })).toEqual({
         backgroundImage: [
-          'image-set("a.png" 1x), -webkit-cross-fade(url(a.png), url(b.png), 50%)',
+          '-webkit-image-set("a.png" 1x), -webkit-cross-fade(url(a.png), url(b.png), 50%)',
           backgroundImage
         ]
       });
