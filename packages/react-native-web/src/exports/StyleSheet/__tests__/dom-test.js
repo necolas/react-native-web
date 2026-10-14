@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { CASCADE_LAYER_NAME } from '../dom/cascadeLayer';
 import { createSheet } from '../dom';
 
 describe('createSheet', () => {
@@ -56,5 +57,33 @@ describe('createSheet', () => {
     // Does the content update when other sheets are updated?
     sheet.insert('.test-shadow { opacity: 0 }', 3);
     expect(shadowSheet.getTextContent().includes('test-shadow')).toBe(true);
+  });
+
+  describe('#getTextContent', () => {
+    // Serialized text is delivered in the HTML document and read back by the next client that
+    // hydrates it. Emitted unlayered it would outrank the application's own layered rules until
+    // hydration replaced it, and hydration would find no layer to read the rules back out of —
+    // so every server-rendered rule would stay unlayered and be duplicated into an empty layer.
+    test('serializes into the cascade layer', () => {
+      const sheet = createSheet();
+      const textContent = sheet.getTextContent();
+      expect(textContent.startsWith(`@layer ${CASCADE_LAYER_NAME}{`)).toBe(
+        true
+      );
+      expect(textContent.endsWith('}')).toBe(true);
+    });
+
+    test('nests the rules rather than placing them beside an empty layer', () => {
+      const sheet = createSheet();
+      sheet.insert('.test-serialized { opacity: 1 }', 3);
+      const textContent = sheet.getTextContent();
+      expect(textContent).toContain('.test-serialized');
+      expect(textContent).not.toContain(`@layer ${CASCADE_LAYER_NAME}{}`);
+    });
+
+    test('is deterministic across calls', () => {
+      const sheet = createSheet();
+      expect(sheet.getTextContent()).toBe(sheet.getTextContent());
+    });
   });
 });

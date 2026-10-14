@@ -10,6 +10,17 @@
 type Groups = { [key: number]: { start: ?number, rules: Array<string> } };
 type Selectors = { [key: string]: boolean };
 
+/**
+ * The rule container this module reads and writes: a CSSStyleSheet, or any grouping rule exposing
+ * the same members. Typed structurally because a CSSLayerBlockRule satisfies it identically, which
+ * is what allows the sheet's rules to be nested in a cascade layer.
+ */
+export type CSSRuleContainer = interface {
+  +cssRules: interface { +length: number, [index: number]: Object },
+  insertRule(cssText: string, position: number): number,
+  deleteRule(position: number): void
+};
+
 export type OrderedCSSStyleSheet = {|
   getTextContent: () => string,
   insert: (cssText: string, groupValue: number) => void
@@ -33,7 +44,7 @@ const slice = Array.prototype.slice;
  * https://gist.github.com/necolas/aa0c37846ad6bd3b05b727b959e82674
  */
 export default function createOrderedCSSStyleSheet(
-  sheet: ?CSSStyleSheet
+  sheet: ?CSSRuleContainer
 ): OrderedCSSStyleSheet {
   const groups: Groups = {};
   const selectors: Selectors = {};
