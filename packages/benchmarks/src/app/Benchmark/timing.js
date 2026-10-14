@@ -1,7 +1,5 @@
-// @flow
-
 // Returns a high resolution time (if possible) in milliseconds
-export function now(): number {
+export function now() {
   if (window && window.performance) {
     return window.performance.now();
   } else {

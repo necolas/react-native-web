@@ -1,10 +1,8 @@
-/* @noflow */
-
 import Text from './Text';
 import { StyleSheet, View } from 'react-native';
 import React, { Fragment } from 'react';
 
-const fmt = (time: number) => {
+const fmt = (time) => {
   const i = Number(Math.round(time + 'e2') + 'e-2').toFixed(2);
   return 10 / i > 1 ? `0${i}` : i;
 };
