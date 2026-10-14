@@ -200,21 +200,35 @@ export type ResponderConfig = {
   onSelectionChangeShouldSetResponderCapture?: ?(e: ResponderEvent) => boolean
 };
 
-const emptyObject = {};
+type ShouldSetCallbackName =
+  | 'onStartShouldSetResponder'
+  | 'onStartShouldSetResponderCapture'
+  | 'onMoveShouldSetResponder'
+  | 'onMoveShouldSetResponderCapture'
+  | 'onScrollShouldSetResponder'
+  | 'onScrollShouldSetResponderCapture';
+
+type ShouldSetRegistration = [
+  ShouldSetCallbackName,
+  ShouldSetCallbackName,
+  { bubbles: boolean }
+];
+
+const emptyObject: ResponderConfig = {};
 
 /* ------------ IMPLEMENTATION ------------ */
 
-const startRegistration = [
+const startRegistration: ShouldSetRegistration = [
   'onStartShouldSetResponderCapture',
   'onStartShouldSetResponder',
   { bubbles: true }
 ];
-const moveRegistration = [
+const moveRegistration: ShouldSetRegistration = [
   'onMoveShouldSetResponderCapture',
   'onMoveShouldSetResponder',
   { bubbles: true }
 ];
-const scrollRegistration = [
+const scrollRegistration: ShouldSetRegistration = [
   'onScrollShouldSetResponderCapture',
   'onScrollShouldSetResponder',
   { bubbles: false }
@@ -243,7 +257,7 @@ function changeCurrentResponder(responder: ResponderInstance) {
   currentResponder = responder;
 }
 
-function getResponderConfig(id: ResponderId): ResponderConfig | Object {
+function getResponderConfig(id: ResponderId): ResponderConfig {
   const config = responderListenersMap.get(id);
   return config != null ? config : emptyObject;
 }
@@ -485,7 +499,7 @@ function findWantsResponder(
   domEvent: any,
   responderEvent: ResponderEvent
 ) {
-  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type as any]; // for Flow
+  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type]; // for Flow
 
   if (shouldSetCallbacks != null) {
     const { idPath, nodePath } = eventPaths;
@@ -494,9 +508,13 @@ function findWantsResponder(
     const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
     const { bubbles } = shouldSetCallbacks[2];
 
-    const check = function (id: ResponderId, node: any, callbackName: string) {
+    const check = function (
+      id: ResponderId,
+      node: any,
+      callbackName: ShouldSetCallbackName
+    ) {
       const config = getResponderConfig(id);
-      const shouldSetCallback = (config as any)[callbackName];
+      const shouldSetCallback = config[callbackName];
       if (shouldSetCallback != null) {
         responderEvent.currentTarget = node;
         if (shouldSetCallback(responderEvent) === true) {
@@ -635,7 +653,8 @@ const documentEventsBubblePhase = [
   'selectionchange'
 ];
 export function attachListeners() {
-  if (canUseDOM && (window as any).__reactResponderSystemActive == null) {
+  // $FlowFixMe[incompatible-use]
+  if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener);
@@ -643,7 +662,8 @@ export function attachListeners() {
     documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
-    (window as any).__reactResponderSystemActive = true;
+    // $FlowFixMe[incompatible-use]
+    window.__reactResponderSystemActive = true;
   }
 }
 

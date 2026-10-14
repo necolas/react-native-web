@@ -175,9 +175,8 @@ StyleSheet.getSheet = getSheet;
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
 
-const devToolsHook = canUseDOM
-  ? (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
-  : null;
+// $FlowFixMe[incompatible-use]
+const devToolsHook = canUseDOM ? window.__REACT_DEVTOOLS_GLOBAL_HOOK__ : null;
 
 if (devToolsHook) {
   devToolsHook.resolveRNStyle = StyleSheet.flatten;

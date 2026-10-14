@@ -22,6 +22,8 @@ export type GenericStyleProp<out T> =
 export type LayoutValue = {
   x: number,
   y: number,
+  left: number,
+  top: number,
   width: number,
   height: number
 };
@@ -29,7 +31,7 @@ export type LayoutValue = {
 export type LayoutEvent = {
   nativeEvent: {
     layout: LayoutValue,
-    target: any
+    target?: any
   },
   timeStamp: number
 };
