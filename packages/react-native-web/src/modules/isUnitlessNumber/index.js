@@ -9,7 +9,7 @@
  * @see https://github.com/react/react/blob/v19.3.0/packages/react-dom-bindings/src/shared/isUnitlessNumber.js
  */
 
-const unitlessNumbers = new Set([
+const properties = [
   'animationIterationCount',
   'aspectRatio',
   'borderImageOutset',
@@ -53,11 +53,15 @@ const unitlessNumbers = new Set([
   'scaleX',
   'scaleY',
   'scaleZ',
-  'shadowOpacity',
+  'shadowOpacity'
+];
 
-  // Known Prefixed Properties
-  'WebkitLineClamp'
-]);
+const unitlessNumbers: Set<string> = new Set(properties);
+
+// Support style names prefixed with 'Webkit' (e.g. 'WebkitLineClamp')
+for (const prop of properties) {
+  unitlessNumbers.add('Webkit' + prop.charAt(0).toUpperCase() + prop.slice(1));
+}
 
 export default function isUnitlessNumber(name: string): boolean {
   return unitlessNumbers.has(name);
