@@ -131,48 +131,53 @@ const PREFIXED_PROPERTIES = Object.fromEntries(
   ])
 );
 
-const PREFIXED_PROPERTY_NAMES: { [string]: boolean } = Object.fromEntries(
-  Object.keys(PREFIXED_PROPERTIES).map((prop) => [
-    hyphenateStyleName(prop),
-    true
-  ])
+const PREFIXED_PROPERTY_NAMES = Object.keys(PREFIXED_PROPERTIES)
+  .map(hyphenateStyleName)
+  .join('|');
+
+const PREFIXED_PROPERTY_TEST_PATTERN = new RegExp(
+  `(?:^|[\\s,])(?:${PREFIXED_PROPERTY_NAMES})(?=[\\s,]|$)`
 );
 
-const SIZING_PROPERTIES: { [string]: boolean } = {
-  height: true,
-  width: true,
-  minHeight: true,
-  minWidth: true,
-  maxHeight: true,
-  maxWidth: true,
-  columnWidth: true
-};
+const PREFIXED_PROPERTY_REPLACE_PATTERN = new RegExp(
+  `(^|\\s)(${PREFIXED_PROPERTY_NAMES})(?=\\s|$)`,
+  'g'
+);
 
-const SIZING_VALUES: { [string]: boolean } = {
-  'min-content': true,
-  'max-content': true,
-  'fill-available': true,
-  'fit-content': true,
-  'contain-floats': true
-};
+const SIZING_PROPERTIES: Set<string> = new Set([
+  'height',
+  'width',
+  'minHeight',
+  'minWidth',
+  'maxHeight',
+  'maxWidth',
+  'columnWidth'
+]);
 
-const WORD_PATTERN = /(^|\s)([a-z-]+)(?=\s|$)/g;
+const PREFIXED_SIZING_VALUES: Set<string> = new Set([
+  'min-content',
+  'max-content',
+  'fill-available',
+  'fit-content',
+  'contain-floats'
+]);
+
+const PREFIXED_FUNCTIONS = ['cross-fade', 'image-set'];
 
 // Only split multi values, not cubic beziers
-const MULTIPLE_VALUES_PATTERN = /,(?![^()]*(?:\([^()]*\))?\))/g;
+const VALUE_SEPARATOR_PATTERN = /,(?![^()]*(?:\([^()]*\))?\))/g;
 
-const prefixTransitionValue = (value: string): string =>
-  value
-    .split(MULTIPLE_VALUES_PATTERN)
+const prefixTransitionValue = (value: string): string => {
+  if (!PREFIXED_PROPERTY_TEST_PATTERN.test(value)) {
+    return value;
+  }
+
+  return value
+    .split(VALUE_SEPARATOR_PATTERN)
     .map((singleValue) => {
-      if (singleValue.indexOf('-webkit-') > -1) {
-        return singleValue;
-      }
-
       const prefixedValue = singleValue.replace(
-        WORD_PATTERN,
-        (match, space, word) =>
-          PREFIXED_PROPERTY_NAMES[word] ? `${space}-webkit-${word}` : match
+        PREFIXED_PROPERTY_REPLACE_PATTERN,
+        '$1-webkit-$2'
       );
 
       return prefixedValue !== singleValue
@@ -180,29 +185,27 @@ const prefixTransitionValue = (value: string): string =>
         : singleValue;
     })
     .join(',');
+};
 
-const prefixValue = (prop: string, value: any, isInline?: boolean): any => {
-  if (typeof value !== 'string') {
+const prefixValue = (prop: string, value: any): any => {
+  if (typeof value !== 'string' || value.indexOf('-webkit-') > -1) {
     return value;
+  }
+
+  // Only the first matching function is prefixed
+  for (const name of PREFIXED_FUNCTIONS) {
+    if (value.indexOf(name + '(') > -1) {
+      return [value.replaceAll(name + '(', '-webkit-' + name + '('), value];
+    }
+  }
+
+  if (SIZING_PROPERTIES.has(prop) && PREFIXED_SIZING_VALUES.has(value)) {
+    return ['-webkit-' + value, value];
   }
   if (prop === 'transition' || prop === 'transitionProperty') {
     return prefixTransitionValue(value);
   }
-  if (isInline) {
-    return value;
-  }
-  if (SIZING_PROPERTIES[prop] && SIZING_VALUES[value]) {
-    return ['-webkit-' + value, value];
-  }
-  if (value.indexOf('-webkit-') > -1) {
-    return value;
-  }
-  if (value.indexOf('image-set(') > -1) {
-    return [value.replace(/image-set\(/g, '-webkit-image-set('), value];
-  }
-  if (value.indexOf('cross-fade(') > -1) {
-    return [value.replace(/cross-fade\(/g, '-webkit-cross-fade('), value];
-  }
+
   return value;
 };
 
@@ -254,17 +257,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       }
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;
-    } else if (PREFIXED_PROPERTIES[prop] != null) {
-      let normalizedValue = normalizeValueWithProperty(value, prop);
-
-      if (typeof normalizedValue === 'number') {
-        // React DOM adds 'px' to numbers it doesn't know as unitless
-        normalizedValue = String(normalizedValue);
-      }
-
-      normalizedValue = prefixValue(prop, normalizedValue, isInline);
-      resolvedStyle[prop] = normalizedValue;
-      resolvedStyle[PREFIXED_PROPERTIES[prop]] = normalizedValue;
     } else {
       const value = normalizeValueWithProperty(style[prop], prop);
       const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
@@ -296,15 +288,22 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
           resolvedStyle.paddingBottom = value;
         }
       } else if (longFormProperties) {
-        longFormProperties.forEach((longForm, i) => {
+        longFormProperties.forEach((longForm) => {
           // The value of any longform property in the original styles takes
           // precedence over the shortform's value.
           if (style[longForm] == null) {
             resolvedStyle[longForm] = value;
           }
         });
+      } else if (isInline) {
+        resolvedStyle[prop] = value;
       } else {
-        resolvedStyle[prop] = prefixValue(prop, value, isInline);
+        const prefixedProp = PREFIXED_PROPERTIES[prop];
+        const prefixedValue = prefixValue(prop, value);
+        resolvedStyle[prop] = prefixedValue;
+        if (prefixedProp != null) {
+          resolvedStyle[prefixedProp] = prefixedValue;
+        }
       }
     }
   }

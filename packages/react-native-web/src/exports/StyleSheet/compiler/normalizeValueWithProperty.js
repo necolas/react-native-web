@@ -29,8 +29,8 @@ export default function normalizeValueWithProperty(
   property?: ?string
 ): any {
   if (
-    (property == null || !isUnitlessNumber(property)) &&
-    typeof value === 'number'
+    typeof value === 'number' &&
+    (property == null || !isUnitlessNumber(property))
   ) {
     return `${value}px`;
   } else if (property != null && colorProps[property]) {
