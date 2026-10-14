@@ -1,0 +1,20 @@
+{
+  "folders": [{ "path": "." }],
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "flowtype.flow-for-vscode"
+    ]
+  },
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
+    "js/ts.validate.enabled": false,
+    "eslint.options": {
+      "ignorePath": "configs/.eslintignore",
+      "overrideConfigFile": "configs/.eslintrc"
+    }
+  }
+}
