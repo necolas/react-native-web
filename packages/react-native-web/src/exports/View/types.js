@@ -214,6 +214,7 @@ export type ViewStyle = {
   filter?: ?string,
   mask?: ?string,
   maskClip?: ?string,
+  maskComposite?: ?string,
   maskImage?: ?string,
   maskOrigin?: ?string,
   maskPosition?: ?string,

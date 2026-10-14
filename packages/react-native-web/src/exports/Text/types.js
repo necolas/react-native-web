@@ -79,7 +79,7 @@ export type TextStyle = {
   textShadowColor?: ?ColorValue,
   textShadowOffset?: {| width?: number, height?: number |},
   textShadowRadius?: ?number,
-  textSizeAdjust?: ?NumberOrString,
+  textSizeAdjust?: ?string,
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase',
   unicodeBidi?:
     | 'normal'

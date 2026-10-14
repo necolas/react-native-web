@@ -28,14 +28,13 @@ export default function normalizeValueWithProperty(
   value: any,
   property?: ?string
 ): any {
-  let returnValue = value;
   if (
     (property == null || !isUnitlessNumber(property)) &&
     typeof value === 'number'
   ) {
-    returnValue = `${value}px`;
+    return `${value}px`;
   } else if (property != null && colorProps[property]) {
-    returnValue = normalizeColor(value);
+    return normalizeColor(value);
   }
-  return returnValue;
+  return value;
 }

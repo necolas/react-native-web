@@ -7,6 +7,7 @@
  * @flow
  */
 
+import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
 type Style = { [key: string]: any };
@@ -110,6 +111,7 @@ const PREFIXED_PROPERTIES = Object.fromEntries(
     'lineClamp',
     'mask',
     'maskClip',
+    'maskComposite',
     'maskImage',
     'maskOrigin',
     'maskPosition',
@@ -128,6 +130,81 @@ const PREFIXED_PROPERTIES = Object.fromEntries(
     'Webkit' + prop.charAt(0).toUpperCase() + prop.substring(1)
   ])
 );
+
+const PREFIXED_PROPERTY_NAMES: { [string]: boolean } = Object.fromEntries(
+  Object.keys(PREFIXED_PROPERTIES).map((prop) => [
+    hyphenateStyleName(prop),
+    true
+  ])
+);
+
+const SIZING_PROPERTIES: { [string]: boolean } = {
+  height: true,
+  width: true,
+  minHeight: true,
+  minWidth: true,
+  maxHeight: true,
+  maxWidth: true,
+  columnWidth: true
+};
+
+const SIZING_VALUES: { [string]: boolean } = {
+  'min-content': true,
+  'max-content': true,
+  'fill-available': true,
+  'fit-content': true,
+  'contain-floats': true
+};
+
+const WORD_PATTERN = /(^|\s)([a-z-]+)(?=\s|$)/g;
+
+// Only split multi values, not cubic beziers
+const MULTIPLE_VALUES_PATTERN = /,(?![^()]*(?:\([^()]*\))?\))/g;
+
+const prefixTransitionValue = (value: string): string =>
+  value
+    .split(MULTIPLE_VALUES_PATTERN)
+    .map((singleValue) => {
+      if (singleValue.indexOf('-webkit-') > -1) {
+        return singleValue;
+      }
+
+      const prefixedValue = singleValue.replace(
+        WORD_PATTERN,
+        (match, space, word) =>
+          PREFIXED_PROPERTY_NAMES[word] ? `${space}-webkit-${word}` : match
+      );
+
+      return prefixedValue !== singleValue
+        ? `${prefixedValue},${singleValue}`
+        : singleValue;
+    })
+    .join(',');
+
+const prefixValue = (prop: string, value: any, isInline?: boolean): any => {
+  if (typeof value !== 'string') {
+    return value;
+  }
+  if (prop === 'transition' || prop === 'transitionProperty') {
+    return prefixTransitionValue(value);
+  }
+  if (isInline) {
+    return value;
+  }
+  if (SIZING_PROPERTIES[prop] && SIZING_VALUES[value]) {
+    return ['-webkit-' + value, value];
+  }
+  if (value.indexOf('-webkit-') > -1) {
+    return value;
+  }
+  if (value.indexOf('image-set(') > -1) {
+    return [value.replace(/image-set\(/g, '-webkit-image-set('), value];
+  }
+  if (value.indexOf('cross-fade(') > -1) {
+    return [value.replace(/cross-fade\(/g, '-webkit-cross-fade('), value];
+  }
+  return value;
+};
 
 /**
  * Reducer
@@ -151,8 +228,8 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     }
 
     if (prop === 'backgroundClip') {
+      resolvedStyle.backgroundClip = value;
       if (value === 'text') {
-        resolvedStyle.backgroundClip = value;
         resolvedStyle.WebkitBackgroundClip = value;
       }
     } else if (prop === 'flex') {
@@ -178,7 +255,14 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;
     } else if (PREFIXED_PROPERTIES[prop] != null) {
-      const normalizedValue = normalizeValueWithProperty(value, prop);
+      let normalizedValue = normalizeValueWithProperty(value, prop);
+
+      if (typeof normalizedValue === 'number') {
+        // React DOM adds 'px' to numbers it doesn't know as unitless
+        normalizedValue = String(normalizedValue);
+      }
+
+      normalizedValue = prefixValue(prop, normalizedValue, isInline);
       resolvedStyle[prop] = normalizedValue;
       resolvedStyle[PREFIXED_PROPERTIES[prop]] = normalizedValue;
     } else {
@@ -220,7 +304,7 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
           }
         });
       } else {
-        resolvedStyle[prop] = value;
+        resolvedStyle[prop] = prefixValue(prop, value, isInline);
       }
     }
   }
