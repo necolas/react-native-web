@@ -12,14 +12,15 @@ import normalizeColor from './normalizeColor';
 
 const colorProps: { [string]: boolean } = {
   backgroundColor: true,
-  borderColor: true,
-  borderTopColor: true,
-  borderRightColor: true,
   borderBottomColor: true,
+  borderColor: true,
   borderLeftColor: true,
+  borderRightColor: true,
+  borderTopColor: true,
   color: true,
   shadowColor: true,
   textDecorationColor: true,
+  textEmphasisColor: true,
   textShadowColor: true
 };
 

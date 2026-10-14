@@ -11,7 +11,6 @@ import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import prefixStyles from '../../../modules/prefixStyles';
 
 type Value = Object | Array<any> | string | number;
 type Style = { [key: string]: Value };
@@ -419,7 +418,7 @@ function createAtomicRules(
  * Creates a CSS declaration block from a StyleSheet object.
  */
 function createDeclarationBlock(style: Style): string {
-  const domStyle = prefixStyles(createReactDOMStyle(style));
+  const domStyle = createReactDOMStyle(style);
   const declarationsString = Object.keys(domStyle)
     .map((property) => {
       const value = domStyle[property];

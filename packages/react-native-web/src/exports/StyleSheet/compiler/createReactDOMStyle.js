@@ -98,6 +98,37 @@ const STYLE_SHORT_FORM_EXPANSIONS: { [string]: Array<string> } = {
   //paddingInlineEnd: ['marginRight'],
 };
 
+const PREFIXED_PROPERTIES = Object.fromEntries(
+  [
+    'appearance',
+    'backdropFilter',
+    'backfaceVisibility',
+    'boxDecorationBreak',
+    'hyphenateCharacter',
+    'hyphens',
+    'initialLetter',
+    'lineClamp',
+    'mask',
+    'maskClip',
+    'maskImage',
+    'maskOrigin',
+    'maskPosition',
+    'maskRepeat',
+    'maskSize',
+    'printColorAdjust',
+    'rubyPosition',
+    'textEmphasis',
+    'textEmphasisColor',
+    'textEmphasisPosition',
+    'textEmphasisStyle',
+    'textSizeAdjust',
+    'userSelect'
+  ].map((prop) => [
+    prop,
+    'Webkit' + prop.charAt(0).toUpperCase() + prop.substring(1)
+  ])
+);
+
 /**
  * Reducer
  */
@@ -120,8 +151,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     }
 
     if (prop === 'backgroundClip') {
-      // TODO: remove once this issue is fixed
-      // https://github.com/rofrischmann/inline-style-prefixer/issues/159
       if (value === 'text') {
         resolvedStyle.backgroundClip = value;
         resolvedStyle.WebkitBackgroundClip = value;
@@ -148,6 +177,10 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
       }
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;
+    } else if (PREFIXED_PROPERTIES[prop] != null) {
+      const normalizedValue = normalizeValueWithProperty(value, prop);
+      resolvedStyle[prop] = normalizedValue;
+      resolvedStyle[PREFIXED_PROPERTIES[prop]] = normalizedValue;
     } else {
       const value = normalizeValueWithProperty(style[prop], prop);
       const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
