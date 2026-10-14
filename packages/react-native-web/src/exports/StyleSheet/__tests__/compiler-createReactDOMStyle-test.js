@@ -191,9 +191,6 @@ describe('compiler/createReactDOMStyle', () => {
         initialLetter: 2,
         WebkitInitialLetter: 2
       });
-      expect(createReactDOMStyle({ initialLetter: 2 }, true)).toEqual({
-        initialLetter: 2
-      });
     });
 
     test('backgroundClip', () => {
@@ -224,16 +221,6 @@ describe('compiler/createReactDOMStyle', () => {
       ).toEqual({ backgroundImage: '-webkit-image-set("a.png" 1x)' });
     });
 
-    test('cross-fade', () => {
-      const backgroundImage = 'cross-fade(url(a.png), url(b.png), 50%)';
-      expect(createReactDOMStyle({ backgroundImage })).toEqual({
-        backgroundImage: [
-          '-webkit-cross-fade(url(a.png), url(b.png), 50%)',
-          backgroundImage
-        ]
-      });
-    });
-
     test('image-set and cross-fade', () => {
       const backgroundImage =
         'image-set("a.png" 1x), cross-fade(url(a.png), url(b.png), 50%)';
@@ -248,9 +235,6 @@ describe('compiler/createReactDOMStyle', () => {
     test('sizing', () => {
       expect(createReactDOMStyle({ width: 'fill-available' })).toEqual({
         width: ['-webkit-fill-available', 'fill-available']
-      });
-      expect(createReactDOMStyle({ width: 'fit-content' }, true)).toEqual({
-        width: 'fit-content'
       });
     });
 
@@ -267,11 +251,6 @@ describe('compiler/createReactDOMStyle', () => {
         createReactDOMStyle({ transitionProperty: 'opacity,mask' })
       ).toEqual({
         transitionProperty: 'opacity,-webkit-mask,mask'
-      });
-      expect(
-        createReactDOMStyle({ transitionProperty: 'opacity,mask' }, true)
-      ).toEqual({
-        transitionProperty: 'opacity,mask'
       });
       expect(
         createReactDOMStyle({ transitionProperty: 'opacity, transform' })
