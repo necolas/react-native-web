@@ -21,8 +21,8 @@ export default function usePlatformMethods({
   pointerEvents,
   style
 }: {
-  style?: GenericStyleProp<*>,
-  pointerEvents?: $PropertyType<ViewProps, 'pointerEvents'>
+  style?: GenericStyleProp<any>,
+  pointerEvents?: ViewProps['pointerEvents']
 }): (hostNode: any) => void {
   // Avoid creating a new ref on every render.
   const ref = useStable(() => (hostNode: any) => {

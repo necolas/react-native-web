@@ -10,12 +10,14 @@
 
 'use strict';
 
+import type {EventMapping} from './NativeAnimatedModule';
+
 import AnimatedValue from './nodes/AnimatedValue';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
 
 import invariant from 'fbjs/lib/invariant';
 
-import {shouldUseNativeDriver}from  './NativeAnimatedHelper';
+import {shouldUseNativeDriver} from './NativeAnimatedHelper';
 
 export type Mapping = {[key: string]: Mapping, ...} | AnimatedValue;
 export type EventConfig = {
@@ -28,13 +30,13 @@ const __DEV__ = process.env.NODE_ENV !== 'production';
 export function attachNativeEvent(
   viewRef: any,
   eventName: string,
-  argMapping: $ReadOnlyArray<?Mapping>,
+  argMapping: ReadonlyArray<?Mapping>,
 ): {detach: () => void} {
   // Find animated values in `argMapping` and create an array representing their
   // key path inside the `nativeEvent` object. Ex.: ['contentOffset', 'x'].
-  const eventMappings = [];
+  const eventMappings: Array<EventMapping> = [];
 
-  const traverse = (value, path) => {
+  const traverse = (value: unknown, path: Array<string>) => {
     if (value instanceof AnimatedValue) {
       value.__makeNative();
 
@@ -74,7 +76,7 @@ export function attachNativeEvent(
           NativeAnimatedHelper.API.removeAnimatedEventFromView(
             viewRef,
             eventName,
-            // $FlowFixMe[incompatible-call]
+            // $FlowFixMe[incompatible-type]
             mapping.animatedValueTag,
           );
         });
@@ -83,8 +85,8 @@ export function attachNativeEvent(
   };
 }
 
-function validateMapping(argMapping, args) {
-  const validate = (recMapping, recEvt, key) => {
+function validateMapping(argMapping: ReadonlyArray<?Mapping>, args: any) {
+  const validate = (recMapping: ?Mapping, recEvt: any, key: string) => {
     if (recMapping instanceof AnimatedValue) {
       invariant(
         typeof recEvt === 'number',
@@ -129,13 +131,12 @@ function validateMapping(argMapping, args) {
 }
 
 export class AnimatedEvent {
-  _argMapping: $ReadOnlyArray<?Mapping>;
+  _argMapping: ReadonlyArray<?Mapping>;
   _listeners: Array<Function> = [];
-  _callListeners: Function;
   _attachedEvent: ?{detach: () => void, ...};
   __isNative: boolean;
 
-  constructor(argMapping: $ReadOnlyArray<?Mapping>, config: EventConfig) {
+  constructor(argMapping: ReadonlyArray<?Mapping>, config: EventConfig) {
     this._argMapping = argMapping;
 
     if (config == null) {
@@ -146,7 +147,6 @@ export class AnimatedEvent {
     if (config.listener) {
       this.__addListener(config.listener);
     }
-    this._callListeners = this._callListeners.bind(this);
     this._attachedEvent = null;
     this.__isNative = shouldUseNativeDriver(config);
   }
@@ -181,7 +181,7 @@ export class AnimatedEvent {
     this._attachedEvent && this._attachedEvent.detach();
   }
 
-  __getHandler(): ((...args: any) => void) {
+  __getHandler(): (...args: any) => void {
     if (this.__isNative) {
       if (__DEV__) {
         let validatedMapping = false;
@@ -204,16 +204,13 @@ export class AnimatedEvent {
         validatedMapping = true;
       }
 
-      const traverse = (recMapping, recEvt, key) => {
+      const traverse = (recMapping: ?Mapping, recEvt: any, key: string) => {
         if (recMapping instanceof AnimatedValue) {
           if (typeof recEvt === 'number') {
             recMapping.setValue(recEvt);
           }
         } else if (typeof recMapping === 'object') {
           for (const mappingKey in recMapping) {
-            /* $FlowFixMe(>=0.120.0) This comment suppresses an error found
-             * when Flow v0.120 was deployed. To see the error, delete this
-             * comment and run Flow. */
             traverse(recMapping[mappingKey], recEvt[mappingKey], mappingKey);
           }
         }
@@ -226,7 +223,7 @@ export class AnimatedEvent {
     };
   }
 
-  _callListeners(...args: any) {
+  _callListeners = (...args: any) => {
     this._listeners.forEach(listener => listener(...args));
-  }
+  };
 }

@@ -50,7 +50,7 @@ const InteractionManager = {
 
 const _interactionSet = new Set<number>();
 const _taskQueue = new TaskQueue();
-let _nextUpdateHandle: TimeoutID | number = 0;
+let _nextUpdateHandle: number = 0;
 let _inc = 0;
 
 /**

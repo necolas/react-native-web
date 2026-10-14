@@ -44,7 +44,7 @@ const dimensions = {
     width: 0
   }
 };
-const listeners = {};
+const listeners: { [string]: Array<(DimensionsValue) => void> } = {};
 
 let shouldInit = canUseDOM;
 

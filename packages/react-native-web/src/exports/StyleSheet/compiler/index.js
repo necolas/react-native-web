@@ -25,7 +25,7 @@ type CompiledStyle = {
 };
 type CompilerOutput = [CompiledStyle, Array<RulesData>];
 
-const cache = new Map();
+const cache = new Map<string, [string, RulesData]>();
 const emptyObject = {};
 
 const classicGroup = 1;
@@ -141,7 +141,7 @@ export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
 
-  function atomicCompile(srcProp, prop, value) {
+  function atomicCompile(srcProp: string, prop: string, value: Value): string {
     const valueString = stringifyValueWithProperty(value, prop);
     const cacheKey = prop + valueString;
     const cachedResult = cache.get(cacheKey);
@@ -166,7 +166,7 @@ export function atomic(style: Style): CompilerOutput {
     .forEach((srcProp) => {
       const value = style[srcProp];
       if (value != null) {
-        let localizeableValue;
+        let localizeableValue: string | Array<string> | void;
         // BiDi flip values
         if (PROPERTIES_VALUE.indexOf(srcProp) > -1) {
           const left = atomicCompile(srcProp, srcProp, 'left');
@@ -236,8 +236,8 @@ export function atomic(style: Style): CompilerOutput {
  * No support for 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function classic(style: Style, name: string): CompilerOutput {
-  const compiledStyle = { $$css: true };
-  const compiledRules = [];
+  const compiledStyle: CompiledStyle = { $$css: true };
+  const compiledRules: Rules = [];
 
   const { animationKeyframes, ...rest } = style;
   const identifier = createIdentifier('css', name, JSON.stringify(style));
@@ -263,10 +263,10 @@ export function classic(style: Style, name: string): CompilerOutput {
 export function inline(
   originalStyle: Style,
   isRTL?: boolean
-): { [key: string]: mixed } {
+): { [key: string]: unknown } {
   const style = originalStyle || emptyObject;
-  const frozenProps = {};
-  const nextStyle = {};
+  const frozenProps: { [string]: boolean } = {};
+  const nextStyle: Style = {};
 
   for (const originalProp in style) {
     const originalValue = style[originalProp];
@@ -274,6 +274,7 @@ export function inline(
     let value = originalValue;
 
     if (
+      // $FlowFixMe[invalid-this-arg]
       !Object.prototype.hasOwnProperty.call(style, originalProp) ||
       originalValue == null
     ) {
@@ -295,7 +296,6 @@ export function inline(
     }
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
-      // $FlowFixMe
       const originalValues = Array.isArray(originalValue)
         ? originalValue
         : [originalValue];
@@ -342,8 +342,12 @@ function stringifyValueWithProperty(value: Value, property: ?string): string {
  * Create the Atomic CSS rules needed for a given StyleSheet rule.
  * Translates StyleSheet declarations to CSS.
  */
-function createAtomicRules(identifier: string, property, value): Rules {
-  const rules = [];
+function createAtomicRules(
+  identifier: string,
+  property: string,
+  value: Value
+): Rules {
+  const rules: Rules = [];
   const selector = `.${identifier}`;
 
   // Handle non-standard properties and object values that require multiple
@@ -476,13 +480,13 @@ function createKeyframes(keyframes: Object): [string, Rules] {
 /**
  * Create CSS keyframes rules and names from a StyleSheet keyframes object.
  */
-function processKeyframesValue(keyframesValue) {
+function processKeyframesValue(keyframesValue: Value): [Array<string>, Rules] {
   if (typeof keyframesValue === 'number') {
     throw new Error(`Invalid CSS keyframes type: ${typeof keyframesValue}`);
   }
 
-  const animationNames = [];
-  const rules = [];
+  const animationNames: Array<string> = [];
+  const rules: Rules = [];
   const value = Array.isArray(keyframesValue)
     ? keyframesValue
     : [keyframesValue];

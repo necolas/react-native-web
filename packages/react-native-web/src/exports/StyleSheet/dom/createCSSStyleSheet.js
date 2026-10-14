@@ -8,7 +8,6 @@
  */
 import canUseDOM from '../../../modules/canUseDom';
 
-// $FlowFixMe: HTMLStyleElement is incorrectly typed - https://github.com/facebook/flow/issues/2696
 export default function createCSSStyleSheet(
   id: string,
   rootNode?: Document | ShadowRoot,
@@ -32,8 +31,7 @@ export default function createCSSStyleSheet(
         }
       }
     }
-    // $FlowFixMe: HTMLElement is incorrectly typed
-    return element.sheet;
+    return element instanceof HTMLStyleElement ? element.sheet : null;
   } else {
     return null;
   }

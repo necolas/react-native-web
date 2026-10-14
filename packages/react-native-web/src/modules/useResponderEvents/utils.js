@@ -16,7 +16,7 @@ function getEventPath(domEvent: any): Array<any> {
   // Use the anchor node as the initial target to reconstruct a path.
   // (We actually only need the first "responder" node in practice.)
   if (domEvent.type === 'selectionchange') {
-    const target = window.getSelection().anchorNode;
+    const target = window.getSelection()?.anchorNode;
     return composedPathFallback(target);
   } else {
     const path =

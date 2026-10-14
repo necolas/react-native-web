@@ -27,7 +27,7 @@ type ProviderProps = {
   children: any
 };
 
-const defaultLocale = {
+const defaultLocale: LocaleValue = {
   direction: 'ltr',
   locale: 'en-US'
 };

@@ -10,7 +10,7 @@
 import unitlessNumbers from '../../../modules/unitlessNumbers';
 import normalizeColor from './normalizeColor';
 
-const colorProps = {
+const colorProps: { [string]: boolean } = {
   backgroundColor: true,
   borderColor: true,
   borderTopColor: true,

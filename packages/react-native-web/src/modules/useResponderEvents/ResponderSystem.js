@@ -157,6 +157,11 @@ import canUseDOM from '../canUseDom';
 
 type ResponderId = number;
 
+type EventPaths = {
+  idPath: Array<ResponderId>,
+  nodePath: Array<any>
+};
+
 type ActiveResponderInstance = {
   id: ResponderId,
   idPath: Array<number>,
@@ -223,7 +228,7 @@ const shouldSetResponderEvents = {
 };
 
 const emptyResponder = { id: null, idPath: null, node: null };
-const responderListenersMap = new Map();
+const responderListenersMap = new Map<ResponderId, ResponderConfig>();
 
 let isEmulatingMouseEvents = false;
 let trackedTouchCount = 0;
@@ -322,7 +327,8 @@ function eventListener(domEvent: any) {
    * Responder System logic
    */
 
-  let eventPaths = getResponderPaths(domEvent);
+  const responderPaths = getResponderPaths(domEvent);
+  let eventPaths: ?EventPaths = responderPaths;
   let wasNegotiated = false;
   let wantsResponder;
 
@@ -331,7 +337,7 @@ function eventListener(domEvent: any) {
     // If there is already a responder, prune the event paths to the lowest common ancestor
     // of the existing responder and deepest target of the event.
     const currentResponderIdPath = currentResponder.idPath;
-    const eventIdPath = eventPaths.idPath;
+    const eventIdPath = responderPaths.idPath;
 
     if (currentResponderIdPath != null && eventIdPath != null) {
       const lowestCommonAncestor = getLowestCommonAncestor(
@@ -347,7 +353,7 @@ function eventListener(domEvent: any) {
           (lowestCommonAncestor === currentResponder.id ? 1 : 0);
         eventPaths = {
           idPath: eventIdPath.slice(index),
-          nodePath: eventPaths.nodePath.slice(index)
+          nodePath: responderPaths.nodePath.slice(index)
         };
       } else {
         eventPaths = null;
@@ -474,8 +480,12 @@ function eventListener(domEvent: any) {
  * relevant "shouldSet" functions for the given event type. If any of those functions
  * call "stopPropagation" on the event, stop searching for a responder.
  */
-function findWantsResponder(eventPaths, domEvent, responderEvent) {
-  const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
+function findWantsResponder(
+  eventPaths: EventPaths,
+  domEvent: any,
+  responderEvent: ResponderEvent
+) {
+  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type as any]; // for Flow
 
   if (shouldSetCallbacks != null) {
     const { idPath, nodePath } = eventPaths;
@@ -484,9 +494,9 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
     const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
     const { bubbles } = shouldSetCallbacks[2];
 
-    const check = function (id, node, callbackName) {
+    const check = function (id: ResponderId, node: any, callbackName: string) {
       const config = getResponderConfig(id);
-      const shouldSetCallback = config[callbackName];
+      const shouldSetCallback = (config as any)[callbackName];
       if (shouldSetCallback != null) {
         responderEvent.currentTarget = node;
         if (shouldSetCallback(responderEvent) === true) {
@@ -625,7 +635,7 @@ const documentEventsBubblePhase = [
   'selectionchange'
 ];
 export function attachListeners() {
-  if (canUseDOM && window.__reactResponderSystemActive == null) {
+  if (canUseDOM && (window as any).__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener);
@@ -633,7 +643,7 @@ export function attachListeners() {
     documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
-    window.__reactResponderSystemActive = true;
+    (window as any).__reactResponderSystemActive = true;
   }
 }
 

@@ -182,7 +182,7 @@ class SpringAnimation extends Animation {
     restSpeedThreshold: number,
     stiffness: number,
     toValue: any,
-    type: $TEMPORARY$string<'spring'>,
+    type: string,
   |} {
     return {
       type: 'spring',

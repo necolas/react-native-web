@@ -1,5 +1,8 @@
 const plugin = require('..');
-const pluginTester = require('babel-plugin-tester').default;
+const {
+  default: pluginTester,
+  prettierFormatter
+} = require('babel-plugin-tester');
 
 const tests = [
   // import react-native
@@ -73,6 +76,13 @@ pluginTester({
       }
     }
   },
+  formatResult: (code) =>
+    prettierFormatter(code, {
+      config: {
+        singleQuote: true,
+        trailingComma: 'none'
+      }
+    }),
   plugin,
   pluginName: 'Rewrite react-native to react-native-web',
   tests

@@ -21,7 +21,7 @@ const flattenStyle = StyleSheet.flatten;
 
 function createAnimatedStyle(inputStyle: any): Object {
   const style = flattenStyle(inputStyle);
-  const animatedStyles = {}
+  const animatedStyles: {[string]: unknown} = {};
   for (const key in style) {
     const value = style[key];
     if (key === 'transform' && Array.isArray(value)) {
@@ -48,8 +48,8 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   // Recursively get values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetValues(style) {
-    const updatedStyle = {};
+  _walkStyleAndGetValues(style: {readonly [string]: unknown}): {[string]: unknown} {
+    const updatedStyle: { [string]: unknown } = {};
     for (const key in style) {
       const value = style[key];
       if (value instanceof AnimatedNode) {
@@ -76,8 +76,8 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   // Recursively get animated values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetAnimatedValues(style) {
-    const updatedStyle = {};
+  _walkStyleAndGetAnimatedValues(style: {readonly [string]: unknown}): {[string]: unknown} {
+    const updatedStyle: { [string]: unknown } = {};
     for (const key in style) {
       const value = style[key];
       if (value instanceof AnimatedNode) {
@@ -124,7 +124,7 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   __getNativeConfig(): Object {
-    const styleConfig = {};
+    const styleConfig: {[string]: ?number} = {};
     for (const styleKey in this._style) {
       if (this._style[styleKey] instanceof AnimatedNode) {
         const style = this._style[styleKey];

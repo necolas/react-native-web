@@ -11,7 +11,7 @@ import type {
   ResponderTouchHistoryStore,
   TouchHistory
 } from './ResponderTouchHistoryStore';
-import type { TouchEvent } from './ResponderEventTypes';
+import type { Touch, TouchEvent } from './ResponderEventTypes';
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 
@@ -41,15 +41,15 @@ export type ResponderEvent = {|
 |};
 
 const emptyFunction = () => {};
-const emptyObject = {};
-const emptyArray = [];
+const emptyObject: ResponderEvent['dispatchConfig'] = {};
+const emptyArray: Array<Touch> = [];
 
 /**
  * Safari produces very large identifiers that would cause the `touchBank` array
  * length to be so large as to crash the browser, if not normalized like this.
  * In the future the `touchBank` should use an object/map instead.
  */
-function normalizeIdentifier(identifier) {
+function normalizeIdentifier(identifier: number): number {
   return identifier > 20 ? identifier % 20 : identifier;
 }
 
@@ -61,10 +61,10 @@ export default function createResponderEvent(
   domEvent: any,
   responderTouchHistoryStore: ResponderTouchHistoryStore
 ): ResponderEvent {
-  let rect;
+  let rect: ?{ left: number, top: number, ... };
   let propagationWasStopped = false;
-  let changedTouches;
-  let touches;
+  let changedTouches: Array<Touch>;
+  let touches: Array<Touch>;
 
   const domEventChangedTouches = domEvent.changedTouches;
   const domEventType = domEvent.type;
@@ -94,8 +94,8 @@ export default function createResponderEvent(
       : emptyFunction;
   const timestamp = domEvent.timeStamp;
 
-  function normalizeTouches(touches) {
-    return Array.prototype.slice.call(touches).map((touch) => {
+  function normalizeTouches(touches: TouchList): Array<Touch> {
+    return Array.from(touches).map((touch) => {
       return {
         force: touch.force,
         identifier: normalizeIdentifier(touch.identifier),
@@ -117,7 +117,7 @@ export default function createResponderEvent(
     changedTouches = normalizeTouches(domEventChangedTouches);
     touches = normalizeTouches(domEvent.touches);
   } else {
-    const emulatedTouches = [
+    const emulatedTouches: Array<Touch> = [
       {
         force,
         identifier,
@@ -140,7 +140,7 @@ export default function createResponderEvent(
         : emulatedTouches;
   }
 
-  const responderEvent = {
+  const responderEvent: ResponderEvent = {
     bubbles: true,
     cancelable: true,
     // `currentTarget` is set before dispatch
@@ -189,13 +189,13 @@ export default function createResponderEvent(
   // Using getters and functions serves two purposes:
   // 1) The value of `currentTarget` is not initially available.
   // 2) Measuring the clientRect may cause layout jank and should only be done on-demand.
-  function locationX(x) {
+  function locationX(x: number): number | void {
     rect = rect || getBoundingClientRect(responderEvent.currentTarget);
     if (rect) {
       return x - rect.left;
     }
   }
-  function locationY(y) {
+  function locationY(y: number): number | void {
     rect = rect || getBoundingClientRect(responderEvent.currentTarget);
     if (rect) {
       return y - rect.top;

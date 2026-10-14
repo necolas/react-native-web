@@ -39,7 +39,7 @@ class AnimatedModulo extends AnimatedWithChildren {
     );
   }
 
-  interpolate<OutputT: number | string>(
+  interpolate<OutputT extends number | string>(
     config: InterpolationConfigType<OutputT>,
   ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);

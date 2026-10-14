@@ -14,13 +14,7 @@ import AnimatedProps from './nodes/AnimatedProps';
 import {AnimatedEvent} from './AnimatedEvent';
 import useRefEffect from '../Utilities/useRefEffect';
 import NativeAnimatedHelper from './NativeAnimatedHelper';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
+import {useCallback, useEffect, useMemo, useReducer, useRef} from 'react';
 
 import useLayoutEffect from '../../../modules/useLayoutEffect';
 
@@ -29,12 +23,12 @@ type ReducedProps<TProps> = {
   collapsable: boolean,
   ...
 };
-type CallbackRef<T> = T => mixed;
+type CallbackRef<T> = T => unknown;
 
-export default function useAnimatedProps<TProps: {...}, TInstance>(
+export default function useAnimatedProps<TProps extends {...}, TInstance>(
   props: TProps,
 ): [ReducedProps<TProps>, CallbackRef<TInstance | null>] {
-  const [, scheduleUpdate] = useReducer(count => count + 1, 0);
+  const [, scheduleUpdate] = useReducer<number, void>((count: number) => count + 1, 0);
   const onUpdateRef = useRef<?() => void>(null);
 
   // TODO: Only invalidate `node` if animated props or `style` change. In the
@@ -61,7 +55,7 @@ export default function useAnimatedProps<TProps: {...}, TInstance>(
   // But there is no way to transparently compose three separate callback refs,
   // so we just combine them all into one for now.
   const refEffect = useCallback(
-    instance => {
+    (instance: TInstance) => {
       // NOTE: This may be called more often than necessary (e.g. when `props`
       // changes), but `setNativeView` already optimizes for that.
       node.setNativeView(instance);
@@ -78,7 +72,7 @@ export default function useAnimatedProps<TProps: {...}, TInstance>(
       const events = [];
 
       for (const propName in props) {
-        const propValue = props[propName];
+        const propValue = (props as any)[propName];
         if (propValue instanceof AnimatedEvent && propValue.__isNative) {
           propValue.__attach(target, propName);
           events.push([propName, propValue]);

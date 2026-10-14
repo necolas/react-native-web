@@ -15,7 +15,7 @@ import {useContext, useMemo} from 'react';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
-type Context = $ReadOnly<{
+type Context = Readonly<{
   cellKey: ?string,
   getScrollMetrics: () => {
     contentLength: number,
@@ -33,9 +33,7 @@ type Context = $ReadOnly<{
     cellKey: string,
     ref: React.ElementRef<VirtualizedList>,
   }) => void,
-  unregisterAsNestedChild: ({
-    ref: React.ElementRef<VirtualizedList>,
-  }) => void,
+  unregisterAsNestedChild: ({ref: React.ElementRef<VirtualizedList>}) => void,
 }>;
 
 export const VirtualizedListContext: React.Context<?Context> =

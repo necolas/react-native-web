@@ -15,7 +15,7 @@
  * @flow
  */
 
-function murmurhash2_32_gc(str, seed) {
+function murmurhash2_32_gc(str: string, seed: number): number {
   var l = str.length,
     h = seed ^ l,
     i = 0,

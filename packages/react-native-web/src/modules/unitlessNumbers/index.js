@@ -8,7 +8,7 @@
  * @flow
  */
 
-const unitlessNumbers = {
+const unitlessNumbers: { [string]: boolean } = {
   animationIterationCount: true,
   aspectRatio: true,
   borderImageOutset: true,

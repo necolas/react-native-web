@@ -29,7 +29,7 @@ const MONOSPACE_FONT_STACK = 'monospace,monospace';
 const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
-const STYLE_SHORT_FORM_EXPANSIONS = {
+const STYLE_SHORT_FORM_EXPANSIONS: { [string]: Array<string> } = {
   borderColor: [
     'borderTopColor',
     'borderRightColor',
@@ -107,7 +107,7 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     return emptyObject;
   }
 
-  const resolvedStyle = {};
+  const resolvedStyle: Style = {};
 
   for (const prop in style) {
     const value = style[prop];

@@ -57,7 +57,7 @@ class DecayAnimation extends Animation {
   __getNativeAnimationConfig(): {|
     deceleration: number,
     iterations: number,
-    type: $TEMPORARY$string<'decay'>,
+    type: string,
     velocity: number,
   |} {
     return {

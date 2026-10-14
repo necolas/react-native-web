@@ -13,9 +13,8 @@ import StyleSheet from '../StyleSheet';
 import View from '../View';
 
 type Props = {
-  WrapperComponent?: ?React.ComponentType<*>,
-  // $FlowFixMe
-  children?: React.Children,
+  WrapperComponent?: ?React.ComponentType<{ children: React.Node, ... }>,
+  children?: React.Node,
   ref?: React.Ref<any>,
   rootTag: any
 };
@@ -44,7 +43,7 @@ const AppContainer = (props: Props): React.Node => {
 
 AppContainer.displayName = 'AppContainer';
 
-export default (AppContainer: React.AbstractComponent<Props>);
+export default AppContainer as React.ComponentType<Props>;
 
 const styles = StyleSheet.create({
   appContainer: {

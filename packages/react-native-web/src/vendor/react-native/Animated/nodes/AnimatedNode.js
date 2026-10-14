@@ -17,7 +17,7 @@ import invariant from 'fbjs/lib/invariant';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
 
-type ValueListenerCallback = (state: {value: number, ...}) => mixed;
+type ValueListenerCallback = (state: {value: number, ...}) => unknown;
 
 let _uniqueId = 1;
 
@@ -71,7 +71,7 @@ class AnimatedNode {
    *
    * See https://reactnative.dev/docs/animatedvalue#addlistener
    */
-  addListener(callback: (value: any) => mixed): string {
+  addListener(callback: (value: any) => unknown): string {
     const id = String(_uniqueId++);
     this._listeners[id] = callback;
     if (this.__isNative) {

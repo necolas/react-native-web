@@ -10,7 +10,7 @@
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
 
-const emptyObject = {};
+const emptyObject: { [string]: any } = {};
 
 /**
  * Shadows
@@ -121,7 +121,7 @@ const PROPERTIES_STANDARD: { [key: string]: string } = {
   start: 'insetInlineStart'
 };
 
-const ignoredProps = {
+const ignoredProps: { [string]: boolean } = {
   elevation: true,
   overlayColor: true,
   resizeMode: true,
@@ -131,12 +131,12 @@ const ignoredProps = {
 /**
  * Preprocess styles
  */
-export const preprocess = <T: {| [key: string]: any |}>(
+export const preprocess = <T extends {| [key: string]: any |}>(
   originalStyle: T,
-  options?: { shadow?: boolean, textShadow?: boolean } = {}
+  options?: { readonly shadow?: boolean, readonly textShadow?: boolean } = {}
 ): T => {
   const style = originalStyle || emptyObject;
-  const nextStyle = {};
+  const nextStyle: { [string]: any } = {};
 
   // Convert shadow styles
   if (
@@ -189,6 +189,7 @@ export const preprocess = <T: {| [key: string]: any |}>(
     let value = originalValue;
 
     if (
+      // $FlowFixMe[invalid-this-arg]
       !Object.prototype.hasOwnProperty.call(style, originalProp) ||
       (prop !== originalProp && style[prop] != null)
     ) {
@@ -227,8 +228,7 @@ export const preprocess = <T: {| [key: string]: any |}>(
     }
   }
 
-  // $FlowIgnore
-  return nextStyle;
+  return nextStyle as any;
 };
 
 export default preprocess;

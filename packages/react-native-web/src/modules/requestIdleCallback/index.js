@@ -23,8 +23,8 @@ const _requestIdleCallback = function (cb: Function, options?: Object) {
 const isSupported =
   canUseDOM && typeof window.requestIdleCallback !== 'undefined';
 
-const requestIdleCallback: (cb: any, options?: any) => TimeoutID = isSupported
-  ? window.requestIdleCallback
+const requestIdleCallback: (cb: any, options?: any) => number = isSupported
+  ? (cb, options) => window.requestIdleCallback(cb, options)
   : _requestIdleCallback;
 
 export default requestIdleCallback;

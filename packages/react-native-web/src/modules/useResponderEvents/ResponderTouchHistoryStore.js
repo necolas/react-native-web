@@ -23,12 +23,14 @@ type TouchRecord = {|
   touchActive: boolean
 |};
 
-export type TouchHistory = $ReadOnly<{|
+type MutableTouchHistory = {|
   indexOfSingleActiveTouch: number,
   mostRecentTimeStamp: number,
   numberActiveTouches: number,
   touchBank: Array<TouchRecord>
-|}>;
+|};
+
+export type TouchHistory = Readonly<MutableTouchHistory>;
 
 /**
  * Tracks the position and time of each active touch by `touch.identifier`. We
@@ -42,7 +44,7 @@ const MAX_TOUCH_BANK = 20;
 function timestampForTouch(touch: Touch): number {
   // The legacy internal implementation provides "timeStamp", which has been
   // renamed to "timestamp".
-  return (touch: any).timeStamp || touch.timestamp;
+  return (touch as any).timeStamp || touch.timestamp;
 }
 
 /**
@@ -94,7 +96,10 @@ function getTouchIdentifier({ identifier }: Touch): number {
   return identifier;
 }
 
-function recordTouchStart(touch: Touch, touchHistory): void {
+function recordTouchStart(
+  touch: Touch,
+  touchHistory: MutableTouchHistory
+): void {
   const identifier = getTouchIdentifier(touch);
   const touchRecord = touchHistory.touchBank[identifier];
   if (touchRecord) {
@@ -105,7 +110,10 @@ function recordTouchStart(touch: Touch, touchHistory): void {
   touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
 }
 
-function recordTouchMove(touch: Touch, touchHistory): void {
+function recordTouchMove(
+  touch: Touch,
+  touchHistory: MutableTouchHistory
+): void {
   const touchRecord = touchHistory.touchBank[getTouchIdentifier(touch)];
   if (touchRecord) {
     touchRecord.touchActive = true;
@@ -125,7 +133,7 @@ function recordTouchMove(touch: Touch, touchHistory): void {
   }
 }
 
-function recordTouchEnd(touch: Touch, touchHistory): void {
+function recordTouchEnd(touch: Touch, touchHistory: MutableTouchHistory): void {
   const touchRecord = touchHistory.touchBank[getTouchIdentifier(touch)];
   if (touchRecord) {
     touchRecord.touchActive = false;
@@ -154,7 +162,7 @@ function printTouch(touch: Touch): string {
   });
 }
 
-function printTouchBank(touchHistory): string {
+function printTouchBank(touchHistory: MutableTouchHistory): string {
   const { touchBank } = touchHistory;
   let printed = JSON.stringify(touchBank.slice(0, MAX_TOUCH_BANK));
   if (touchBank.length > MAX_TOUCH_BANK) {
@@ -164,7 +172,7 @@ function printTouchBank(touchHistory): string {
 }
 
 export class ResponderTouchHistoryStore {
-  _touchHistory = {
+  _touchHistory: MutableTouchHistory = {
     touchBank: [], //Array<TouchRecord>
     numberActiveTouches: 0,
     // If there is only one active touch, we remember its location. This prevents

@@ -36,17 +36,17 @@ let __nativeAnimationIdCount = 1; /* used for started animations */
 
 let nativeEventEmitter;
 
-let waitingForQueuedOperations = new Set();
+let waitingForQueuedOperations = new Set<string>();
 let queueOperations = false;
 let queue: Array<() => void> = [];
-// $FlowFixMe
 let singleOpQueue: Array<any> = [];
 
-const useSingleOpBatching = false;
-let flushQueueTimeout = null;
+const useSingleOpBatching: boolean = false;
+let flushQueueTimeout: any = null;
 
-const eventListenerGetValueCallbacks = {};
-const eventListenerAnimationFinishedCallbacks = {};
+const eventListenerGetValueCallbacks: {[number]: ?(value: number) => void} =
+  {};
+const eventListenerAnimationFinishedCallbacks: {[number]: ?EndCallback} = {};
 let globalEventEmitterGetValueListener: ?EventSubscription = null;
 let globalEventEmitterAnimationFinishedListener: ?EventSubscription = null;
 
@@ -81,7 +81,7 @@ const nativeOps: ?typeof NativeAnimatedModule = useSingleOpBatching
         acc[functionName] = i + 1;
         return acc;
       }, {});
-    })(): $FlowFixMe)
+    })() as $FlowFixMe)
   : NativeAnimatedModule;
 
 /**
@@ -95,10 +95,10 @@ const API = {
   ): void {
     invariant(nativeOps, 'Native animated module is not available');
     if (useSingleOpBatching) {
-      if (saveValueCallback) {
+      if (saveValueCallback != null) {
         eventListenerGetValueCallbacks[tag] = saveValueCallback;
       }
-      // $FlowFixMe
+      // $FlowFixMe[incompatible-type]
       API.queueOperation(nativeOps.getValue, tag);
     } else {
       API.queueOperation(nativeOps.getValue, tag, saveValueCallback);
@@ -171,13 +171,13 @@ const API = {
     }
     */
   },
-  queueOperation: <Args: $ReadOnlyArray<mixed>, Fn: (...Args) => void>(
+  queueOperation: <Args extends ReadonlyArray<unknown>, Fn extends (...Args) => void>(
     fn: Fn,
     ...args: Args
   ): void => {
     if (useSingleOpBatching) {
       // Get the command ID from the queued function, and push that ID and any arguments needed to execute the operation
-      // $FlowFixMe: surprise, fn is actually a number
+      // surprise, fn is actually a number
       singleOpQueue.push(fn, ...args);
       return;
     }
@@ -228,11 +228,11 @@ const API = {
   ): void {
     invariant(nativeOps, 'Native animated module is not available');
     if (useSingleOpBatching) {
-      if (endCallback) {
+      if (endCallback != null) {
         eventListenerAnimationFinishedCallbacks[animationId] = endCallback;
       }
-      // $FlowFixMe
       API.queueOperation(
+        // $FlowFixMe[incompatible-type]
         nativeOps.startAnimatingNode,
         animationId,
         nodeTag,
@@ -369,7 +369,7 @@ const SUPPORTED_COLOR_STYLES = {
   tintColor: true,
 };
 
-const SUPPORTED_STYLES = {
+const SUPPORTED_STYLES: {[string]: boolean} = {
   ...SUPPORTED_COLOR_STYLES,
   borderBottomEndRadius: true,
   borderBottomLeftRadius: true,
@@ -394,7 +394,7 @@ const SUPPORTED_STYLES = {
   translateY: true,
 };
 
-const SUPPORTED_TRANSFORMS = {
+const SUPPORTED_TRANSFORMS: {[string]: boolean} = {
   translateX: true,
   translateY: true,
   scale: true,
@@ -407,7 +407,7 @@ const SUPPORTED_TRANSFORMS = {
   perspective: true,
 };
 
-const SUPPORTED_INTERPOLATION_PARAMS = {
+const SUPPORTED_INTERPOLATION_PARAMS: {[string]: boolean} = {
   inputRange: true,
   outputRange: true,
   extrapolate: true,
@@ -444,7 +444,7 @@ function isSupportedInterpolationParam(param: string): boolean {
 }
 
 function validateTransform(
-  configs: Array<
+  configs: ReadonlyArray<
     | {
         type: 'animated',
         property: string,
@@ -478,7 +478,7 @@ function validateStyles(styles: {[key: string]: ?number, ...}): void {
   }
 }
 
-function validateInterpolation<OutputT: number | string>(
+function validateInterpolation<OutputT extends number | string>(
   config: InterpolationConfigType<OutputT>,
 ): void {
   for (const key in config) {
@@ -505,7 +505,7 @@ function assertNativeAnimatedModule(): void {
 let _warnedMissingNativeAnimated = false;
 
 function shouldUseNativeDriver(
-  config: $ReadOnly<{...AnimationConfig, ...}> | EventConfig,
+  config: Readonly<{...AnimationConfig, ...}> | EventConfig,
 ): boolean {
   if (config.useNativeDriver == null) {
     console.warn(
@@ -562,7 +562,7 @@ export {
   generateNewAnimationId,
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
-  transformDataType
+  transformDataType,
 };
 
 export default {
@@ -589,6 +589,7 @@ export default {
       nativeEventEmitter = new NativeEventEmitter(
         // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
         // If you want to use the native module on other platforms, please remove this condition and test its behavior
+        // $FlowFixMe[class-object-subtyping]
         Platform.OS !== 'ios' ? null : NativeAnimatedModule,
       );
     }

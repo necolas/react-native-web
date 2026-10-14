@@ -25,28 +25,28 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = Object.assign(
-  {},
-  forwardedProps.defaultProps,
-  forwardedProps.accessibilityProps,
-  forwardedProps.clickProps,
-  forwardedProps.focusProps,
-  forwardedProps.keyboardProps,
-  forwardedProps.mouseProps,
-  forwardedProps.touchProps,
-  forwardedProps.styleProps,
-  {
-    href: true,
-    lang: true,
-    onScroll: true,
-    onWheel: true,
-    pointerEvents: true
-  }
-);
+const forwardPropsList = {
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  href: true,
+  lang: true,
+  onScroll: true,
+  onWheel: true,
+  pointerEvents: true
+};
 
-const pickProps = (props) => pick(props, forwardPropsList);
+const pickProps = (props: { ... }) => pick(props, forwardPropsList);
 
-const View = (props: ViewProps & { ref?: React.Ref<any> }): React.Node => {
+const View = (props: {
+  ...ViewProps,
+  ref?: React.Ref<HTMLElement & PlatformMethods>
+}): React.Node => {
   const {
     hrefAttrs,
     onLayout,
@@ -172,8 +172,4 @@ const styles = StyleSheet.create({
 
 export type { ViewProps };
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (View: React.AbstractComponent<
-  ViewProps,
-  HTMLElement & PlatformMethods
->);
+export default View;

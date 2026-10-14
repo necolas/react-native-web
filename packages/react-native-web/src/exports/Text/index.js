@@ -25,26 +25,26 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = Object.assign(
-  {},
-  forwardedProps.defaultProps,
-  forwardedProps.accessibilityProps,
-  forwardedProps.clickProps,
-  forwardedProps.focusProps,
-  forwardedProps.keyboardProps,
-  forwardedProps.mouseProps,
-  forwardedProps.touchProps,
-  forwardedProps.styleProps,
-  {
-    href: true,
-    lang: true,
-    pointerEvents: true
-  }
-);
+const forwardPropsList = {
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  href: true,
+  lang: true,
+  pointerEvents: true
+};
 
-const pickProps = (props) => pick(props, forwardPropsList);
+const pickProps = (props: { ... }) => pick(props, forwardPropsList);
 
-const Text = (props: TextProps & { ref?: React.Ref<any> }): React.Node => {
+const Text = (props: {
+  ...TextProps,
+  ref?: React.Ref<HTMLElement & PlatformMethods>
+}): React.Node => {
   const {
     hrefAttrs,
     numberOfLines,
@@ -97,7 +97,7 @@ const Text = (props: TextProps & { ref?: React.Ref<any> }): React.Node => {
   });
 
   const handleClick = React.useCallback(
-    (e) => {
+    (e: any) => {
       if (onClick != null) {
         onClick(e);
       } else if (onPress != null) {
@@ -228,8 +228,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (Text: React.AbstractComponent<
-  TextProps,
-  HTMLElement & PlatformMethods
->);
+export default Text;

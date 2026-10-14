@@ -21,25 +21,25 @@ type ColorValue = any;
 type NativeColorValue = any;
 type ProcessedColorValue = any;
 
-export type AnimatedColorConfig = $ReadOnly<{
+export type AnimatedColorConfig = Readonly<{
   useNativeDriver: boolean,
 }>;
 
-type ColorListenerCallback = (value: ColorValue) => mixed;
+type ColorListenerCallback = (value: ColorValue) => unknown;
 
 export type RgbaValue = {
-  +r: number,
-  +g: number,
-  +b: number,
-  +a: number,
+  readonly r: number,
+  readonly g: number,
+  readonly b: number,
+  readonly a: number,
   ...
 };
 
 type RgbaAnimatedValue = {
-  +r: AnimatedValue,
-  +g: AnimatedValue,
-  +b: AnimatedValue,
-  +a: AnimatedValue,
+  readonly r: AnimatedValue,
+  readonly g: AnimatedValue,
+  readonly b: AnimatedValue,
+  readonly a: AnimatedValue,
   ...
 };
 
@@ -48,9 +48,7 @@ const NativeAnimatedAPI = NativeAnimatedHelper.API;
 const defaultColor: RgbaValue = {r: 0, g: 0, b: 0, a: 1.0};
 let _uniqueId = 1;
 
-const processColorObject = (
-  color: NativeColorValue,
-): ?NativeColorValue => {
+const processColorObject = (color: NativeColorValue): ?NativeColorValue => {
   return color;
 };
 
@@ -64,12 +62,12 @@ function processColor(
 
   if (isRgbaValue(color)) {
     // $FlowIgnore[incompatible-cast] - Type is verified above
-    return (color: RgbaValue);
+    return color as RgbaValue;
   }
 
   let normalizedColor: ?ProcessedColorValue = normalizeColor(
     // $FlowIgnore[incompatible-cast] - Type is verified above
-    (color: ColorValue),
+    color as ColorValue,
   );
   if (normalizedColor === undefined || normalizedColor === null) {
     return null;
@@ -138,8 +136,8 @@ export default class AnimatedColor extends AnimatedWithChildren {
     let value: RgbaValue | RgbaAnimatedValue | ColorValue =
       valueIn ?? defaultColor;
     if (isRgbaAnimatedValue(value)) {
-      // $FlowIgnore[incompatible-cast] - Type is verified above
-      const rgbaAnimatedValue: RgbaAnimatedValue = (value: RgbaAnimatedValue);
+      // $FlowFixMe[incompatible-type] - Type is verified above
+      const rgbaAnimatedValue: RgbaAnimatedValue = value as RgbaAnimatedValue;
       this.r = rgbaAnimatedValue.r;
       this.g = rgbaAnimatedValue.g;
       this.b = rgbaAnimatedValue.b;
@@ -147,14 +145,14 @@ export default class AnimatedColor extends AnimatedWithChildren {
     } else {
       const processedColor: RgbaValue | NativeColorValue =
         // $FlowIgnore[incompatible-cast] - Type is verified above
-        processColor((value: ColorValue | RgbaValue)) ?? defaultColor;
+        processColor(value as ColorValue | RgbaValue) ?? defaultColor;
       let initColor: RgbaValue = defaultColor;
       if (isRgbaValue(processedColor)) {
         // $FlowIgnore[incompatible-cast] - Type is verified above
-        initColor = (processedColor: RgbaValue);
+        initColor = processedColor as RgbaValue;
       } else {
         // $FlowIgnore[incompatible-cast] - Type is verified above
-        this.nativeColor = (processedColor: NativeColorValue);
+        this.nativeColor = processedColor as NativeColorValue;
       }
 
       this.r = new AnimatedValue(initColor.r);
