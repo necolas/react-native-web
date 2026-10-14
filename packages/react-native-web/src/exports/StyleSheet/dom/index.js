@@ -23,7 +23,7 @@ const sheets: Array<OrderedCSSStyleSheet> = [];
 
 const initialRules = [
   // minimal top-level reset
-  'html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
+  'html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
   'body{margin:0;}',
   // minimal form pseudo-element reset
   'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}',
