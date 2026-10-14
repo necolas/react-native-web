@@ -177,7 +177,6 @@ const API = {
   ): void => {
     if (useSingleOpBatching) {
       // Get the command ID from the queued function, and push that ID and any arguments needed to execute the operation
-      // surprise, fn is actually a number
       singleOpQueue.push(fn, ...args);
       return;
     }
