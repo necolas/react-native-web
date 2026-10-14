@@ -11,11 +11,9 @@ type Groups = { [key: number]: { start: ?number, rules: Array<string> } };
 type Selectors = { [key: string]: boolean };
 
 export type OrderedCSSStyleSheet = {|
-  getTextContent: () => string,
-  insert: (cssText: string, groupValue: number) => void
+  readonly getTextContent: () => string,
+  readonly insert: (cssText: string, groupValue: number) => void
 |};
-
-const slice = Array.prototype.slice;
 
 /**
  * Order-based insertion of CSS.
@@ -43,7 +41,7 @@ export default function createOrderedCSSStyleSheet(
    */
   if (sheet != null) {
     let group;
-    slice.call(sheet.cssRules).forEach((cssRule, i) => {
+    Array.from(sheet.cssRules).forEach((cssRule, i) => {
       const cssText = cssRule.cssText;
       // Create record of existing selectors and rules
       if (cssText.indexOf('stylesheet-group') > -1) {
@@ -59,7 +57,7 @@ export default function createOrderedCSSStyleSheet(
     });
   }
 
-  function sheetInsert(sheet, group, text) {
+  function sheetInsert(sheet: CSSStyleSheet, group: number, text: string) {
     const orderedGroups = getOrderedGroups(groups);
     const groupIndex = orderedGroups.indexOf(group);
     const nextGroupIndex = groupIndex + 1;
@@ -99,7 +97,9 @@ export default function createOrderedCSSStyleSheet(
           // build-time extraction of the style sheet.
           const marker = rules.shift();
           rules.sort();
-          rules.unshift(marker);
+          if (marker != null) {
+            rules.unshift(marker);
+          }
           return rules.join('\n');
         })
         .join('\n');
@@ -150,12 +150,12 @@ export default function createOrderedCSSStyleSheet(
  * Helper functions
  */
 
-function encodeGroupRule(group) {
+function encodeGroupRule(group: number) {
   return `[stylesheet-group="${group}"]{}`;
 }
 
 const groupPattern = /["']/g;
-function decodeGroupRule(cssRule) {
+function decodeGroupRule(cssRule: any) {
   return Number(cssRule.selectorText.split(groupPattern)[1]);
 }
 
@@ -166,14 +166,17 @@ function getOrderedGroups(obj: { [key: number]: any }) {
 }
 
 const selectorPattern = /\s*([,])\s*/g;
-function getSelectorText(cssText) {
+function getSelectorText(cssText: string) {
   const selector = cssText.split('{')[0].trim();
   return selector !== '' ? selector.replace(selectorPattern, '$1') : null;
 }
 
-function insertRuleAt(root, cssText: string, position: number): boolean {
+function insertRuleAt(
+  root: CSSStyleSheet,
+  cssText: string,
+  position: number
+): boolean {
   try {
-    // $FlowFixMe: Flow is missing CSSOM types needed to type 'root'.
     root.insertRule(cssText, position);
     return true;
   } catch (e) {

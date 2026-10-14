@@ -16,7 +16,7 @@ import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-const createSvgCircle = (style) => (
+const createSvgCircle = (style: { ... }) => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />
 );
 
@@ -25,7 +25,7 @@ type ActivityIndicatorProps = {
   animating?: boolean,
   color?: ?string,
   hidesWhenStopped?: boolean,
-  ref?: React.Ref<typeof View>,
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   size?: 'small' | 'large' | number
 };
 
@@ -115,8 +115,4 @@ const indicatorSizes = StyleSheet.create({
   }
 });
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (ActivityIndicator: React.AbstractComponent<
-  ActivityIndicatorProps,
-  React.ElementRef<typeof View>
->);
+export default ActivityIndicator;

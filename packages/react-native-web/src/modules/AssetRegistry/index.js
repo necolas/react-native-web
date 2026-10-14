@@ -19,27 +19,18 @@ export type PackagerAsset = {
   type: string
 };
 
-// `globalThis` is missing in some of our browser targets (Chrome 49, Safari 10), so we fall back
-// to `global` and `window`. Once the browser targets support `globalThis`, use it directly.
-const globalObject: any =
-  // $FlowFixMe[cannot-resolve-name] Flow 0.148 doesn't know about `globalThis`
-  typeof globalThis !== 'undefined'
-    ? globalThis
-    : typeof global !== 'undefined'
-    ? global
-    : typeof window !== 'undefined'
-    ? window
-    : {};
-
 // React Native Web exposes both CJS and ESM versions.
 // This avoids duplicating the registry itself, returning the same data through either CJS or ESM.
 const ASSET_REGISTRY = Symbol.for('react-native-web.AssetRegistry');
 
-if (!globalObject[ASSET_REGISTRY]) {
-  globalObject[ASSET_REGISTRY] = [];
+// $FlowFixMe[prop-missing] `globalThis` cannot be augmented
+if (!globalThis[ASSET_REGISTRY]) {
+  // $FlowFixMe[prop-missing] `globalThis` cannot be augmented
+  globalThis[ASSET_REGISTRY] = [];
 }
 
-const assets: Array<PackagerAsset> = globalObject[ASSET_REGISTRY];
+// $FlowFixMe[prop-missing] `globalThis` cannot be augmented
+const assets: Array<PackagerAsset> = globalThis[ASSET_REGISTRY];
 
 export function registerAsset(asset: PackagerAsset): number {
   // `push` returns new array length, so the first asset will

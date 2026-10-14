@@ -1,5 +1,5 @@
 const plugin = require('..');
-const pluginTester = require('babel-plugin-tester').default;
+const { pluginTester } = require('babel-plugin-tester');
 
 const tests = [
   // import react-native

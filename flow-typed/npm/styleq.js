@@ -4,14 +4,14 @@ type CompiledStyle = {
 };
 
 type InlineStyle = {
-  [key: string]: mixed,
+  [key: string]: unknown,
 };
 
 type EitherStyle = CompiledStyle | InlineStyle;
 
-type StylesArray<+T> = T | $ReadOnlyArray<StylesArray<T>>;
+type StylesArray<out T> = T | ReadonlyArray<StylesArray<T>>;
 type Styles = StylesArray<EitherStyle | false | void>;
-type Style<+T = EitherStyle> = StylesArray<false | ?T>;
+type Style<out T = EitherStyle> = StylesArray<false | ?T>;
 
 type StyleqOptions = {
   disableCache?: boolean,
@@ -23,7 +23,7 @@ type StyleqResult = [string, InlineStyle | null];
 type Styleq = (styles: Styles) => StyleqResult;
 
 type IStyleq = {
-  (...styles: $ReadOnlyArray<Styles>): StyleqResult,
+  (...styles: ReadonlyArray<Styles>): StyleqResult,
   factory: (options?: StyleqOptions) => Styleq,
 };
 

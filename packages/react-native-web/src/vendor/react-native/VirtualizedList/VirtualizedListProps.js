@@ -14,7 +14,7 @@ import type {
   FocusEvent,
 } from '../Types/CoreEventTypes';
 import { type ViewProps } from '../../../exports/View';
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
+type ViewStyleProp = ViewProps['style'];
 import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
@@ -39,7 +39,7 @@ export type RenderItemProps<ItemT> = {
   ...
 };
 
-export type CellRendererProps<ItemT> = $ReadOnly<{
+export type CellRendererProps<ItemT> = Readonly<{
   cellKey: string,
   children: React.Node,
   index: number,
@@ -156,17 +156,17 @@ type OptionalProps = {|
    * `highlight` and `unhighlight` (which set the `highlighted: boolean` prop) are insufficient for
    * your use-case.
    */
-  ListItemComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  ListItemComponent?: ?(React.ComponentType<any> | React.MixedElement),
   /**
    * Rendered when the list is empty. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListEmptyComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  ListEmptyComponent?: ?(React.ComponentType<any> | React.MixedElement),
   /**
    * Rendered at the bottom of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListFooterComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  ListFooterComponent?: ?(React.ComponentType<any> | React.MixedElement),
   /**
    * Styling for internal View for ListFooterComponent
    */
@@ -175,7 +175,7 @@ type OptionalProps = {|
    * Rendered at the top of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListHeaderComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  ListHeaderComponent?: ?(React.ComponentType<any> | React.MixedElement),
   /**
    * Styling for internal View for ListHeaderComponent
    */
@@ -245,7 +245,7 @@ type OptionalProps = {|
    * <RefreshControl> component built internally. The onRefresh and refreshing
    * props are also ignored. Only works for vertical VirtualizedList.
    */
-  refreshControl?: ?React.Element<any>,
+  refreshControl?: ?React.MixedElement,
   /**
    * Set this true while waiting for new data from a refresh.
    */
@@ -259,7 +259,7 @@ type OptionalProps = {|
   /**
    * Render a custom scroll component, e.g. with a differently styled `RefreshControl`.
    */
-  renderScrollComponent?: (props: Object) => React.Element<any>,
+  renderScrollComponent?: (props: Object) => React.MixedElement,
   /**
    * Amount of time between low-pri item render batches, e.g. for rendering items quite a ways off
    * screen. Similar fill rate/responsiveness tradeoff as `maxToRenderPerBatch`.

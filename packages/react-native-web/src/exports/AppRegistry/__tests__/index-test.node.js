@@ -27,9 +27,9 @@ describe('AppRegistry', () => {
         'App',
         {}
       );
-      const styleElement = ReactDOMServer.renderToStaticMarkup(
-        getStyleElement()
-      );
+
+      const styleElement =
+        ReactDOMServer.renderToStaticMarkup(getStyleElement());
 
       expect(element).toMatchInlineSnapshot(`
         <AppContainer

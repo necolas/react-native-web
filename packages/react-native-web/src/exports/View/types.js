@@ -210,6 +210,7 @@ export type ViewStyle = {
   boxShadow?: ?string,
   clip?: ?string,
   filter?: ?string,
+  forcedColorAdjust?: 'auto' | 'none',
   opacity?: ?number,
   outlineColor?: ?ColorValue,
   outlineOffset?: ?NumberOrString,
@@ -236,6 +237,7 @@ export type ViewProps = {
   lang?: string,
   style?: GenericStyleProp<ViewStyle>,
   tabIndex?: ?(0 | -1),
+  suppressHydrationWarning?: ?boolean,
   testID?: ?string,
   // unstable
   href?: ?string,

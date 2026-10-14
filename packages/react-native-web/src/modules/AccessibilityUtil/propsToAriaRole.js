@@ -7,7 +7,7 @@
  * @flow
  */
 
-const accessibilityRoleToWebRole = {
+const accessibilityRoleToWebRole: { [string]: ?string } = {
   adjustable: 'slider',
   button: 'button',
   header: 'heading',

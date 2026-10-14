@@ -17,7 +17,7 @@ type Content =
 class Share {
   static share(content: Content, options: Object = {}): Promise<Object> {
     invariant(
-      typeof content === 'object' && content !== null,
+      typeof content === 'object' && content != null,
       'Content to share must be a valid object'
     );
     invariant(

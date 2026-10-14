@@ -18,7 +18,7 @@ type ButtonProps = {|
   color?: ?string,
   disabled?: boolean,
   onPress?: ?(e: any) => void,
-  ref?: React.Ref<typeof TouchableOpacity>,
+  ref?: React.Ref<React.ElementRef<typeof TouchableOpacity>>,
   testID?: ?string,
   title: string
 |};
@@ -73,8 +73,4 @@ const styles = StyleSheet.create({
 
 export type { ButtonProps };
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (Button: React.AbstractComponent<
-  ButtonProps,
-  React.ElementRef<typeof TouchableOpacity>
->);
+export default Button;

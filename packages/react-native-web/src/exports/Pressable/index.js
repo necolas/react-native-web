@@ -21,13 +21,13 @@ import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-export type StateCallbackType = $ReadOnly<{|
+export type StateCallbackType = Readonly<{|
   focused: boolean,
   hovered: boolean,
   pressed: boolean
 |}>;
 
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
+type ViewStyleProp = ViewProps['style'];
 
 type Props = {
   ...ViewProps,
@@ -41,22 +41,22 @@ type Props = {
   // Whether the press behavior is disabled.
   disabled?: ?boolean,
   // Called when the view is hovered
-  onHoverIn?: $PropertyType<HoverEventsConfig, 'onHoverStart'>,
+  onHoverIn?: HoverEventsConfig['onHoverStart'],
   // Called when the view is no longer hovered
-  onHoverOut?: $PropertyType<HoverEventsConfig, 'onHoverEnd'>,
+  onHoverOut?: HoverEventsConfig['onHoverEnd'],
   // Called when this view's layout changes
-  onLayout?: $PropertyType<ViewProps, 'onLayout'>,
+  onLayout?: ViewProps['onLayout'],
   // Called when a long-tap gesture is detected.
-  onLongPress?: $PropertyType<PressResponderConfig, 'onLongPress'>,
+  onLongPress?: PressResponderConfig['onLongPress'],
   // Called when a single tap gesture is detected.
-  onPress?: $PropertyType<PressResponderConfig, 'onPress'>,
+  onPress?: PressResponderConfig['onPress'],
   // Called when a touch is engaged, before `onPress`.
-  onPressIn?: $PropertyType<PressResponderConfig, 'onPressStart'>,
+  onPressIn?: PressResponderConfig['onPressStart'],
   // Called when a touch is moving, after `onPressIn`.
-  onPressMove?: $PropertyType<PressResponderConfig, 'onPressMove'>,
+  onPressMove?: PressResponderConfig['onPressMove'],
   // Called when a touch is released, before `onPress`.
-  onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
-  ref?: React.Ref<typeof View>,
+  onPressOut?: PressResponderConfig['onPressEnd'],
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp),
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
@@ -145,7 +145,7 @@ function Pressable(props: Props): React.Node {
   const interactionState = { hovered, focused, pressed };
 
   const blurHandler = React.useCallback(
-    (e) => {
+    (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
         setFocused(false);
         if (onBlur != null) {
@@ -157,7 +157,7 @@ function Pressable(props: Props): React.Node {
   );
 
   const focusHandler = React.useCallback(
-    (e) => {
+    (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
         setFocused(true);
         if (onFocus != null) {
@@ -169,7 +169,7 @@ function Pressable(props: Props): React.Node {
   );
 
   const contextMenuHandler = React.useCallback(
-    (e) => {
+    (e: any) => {
       if (onContextMenuPress != null) {
         onContextMenuPress(e);
       }
@@ -181,7 +181,7 @@ function Pressable(props: Props): React.Node {
   );
 
   const keyDownHandler = React.useCallback(
-    (e) => {
+    (e: any) => {
       if (onKeyDownPress != null) {
         onKeyDownPress(e);
       }
@@ -192,7 +192,7 @@ function Pressable(props: Props): React.Node {
     [onKeyDown, onKeyDownPress]
   );
 
-  let _tabIndex;
+  let _tabIndex: ViewProps['tabIndex'];
   if (tabIndex !== undefined) {
     _tabIndex = tabIndex;
   } else {
@@ -235,11 +235,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedPressable = memo(Pressable);
+const MemoedPressable: component(...Props) = memo(Pressable);
 MemoedPressable.displayName = 'Pressable';
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (MemoedPressable: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
->);
+export default MemoedPressable;

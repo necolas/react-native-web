@@ -12,33 +12,30 @@ export interface EventSubscription {
   remove(): void;
 }
 
-export interface IEventEmitter<TEventToArgsMap: {...}> {
-  addListener<TEvent: $Keys<TEventToArgsMap>>(
+export interface IEventEmitter<TEventToArgsMap extends {...}> {
+  addListener<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed,
-    context?: mixed,
+    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
+    context?: unknown,
   ): EventSubscription;
 
-  emit<TEvent: $Keys<TEventToArgsMap>>(
+  emit<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    ...args: $ElementType<TEventToArgsMap, TEvent>
+    ...args: TEventToArgsMap[TEvent]
   ): void;
 
-  removeAllListeners<TEvent: $Keys<TEventToArgsMap>>(eventType?: ?TEvent): void;
+  removeAllListeners<TEvent extends keyof TEventToArgsMap>(eventType?: ?TEvent): void;
 
-  listenerCount<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent): number;
+  listenerCount<TEvent extends keyof TEventToArgsMap>(eventType: TEvent): number;
 }
 
 interface Registration<TArgs> {
-  +context: mixed;
-  +listener: (...args: TArgs) => mixed;
-  +remove: () => void;
+  readonly context: unknown;
+  readonly listener: (...args: TArgs) => unknown;
+  readonly remove: () => void;
 }
 
-type Registry<TEventToArgsMap: {...}> = $ObjMap<
-  TEventToArgsMap,
-  <TArgs>(TArgs) => Set<Registration<TArgs>>,
->;
+type Registry = {[eventType: string]: Set<Registration<any>>};
 
 /**
  * EventEmitter manages listeners and publishes events to them.
@@ -60,22 +57,22 @@ type Registry<TEventToArgsMap: {...}> = $ObjMap<
  *   emitter.emit('error', new Error('Resource not found'));
  *
  */
-export default class EventEmitter<TEventToArgsMap: {...}>
+export default class EventEmitter<TEventToArgsMap extends {...}>
   implements IEventEmitter<TEventToArgsMap>
 {
-  _registry: Registry<TEventToArgsMap> = {};
+  _registry: Registry = {};
 
   /**
    * Registers a listener that is called when the supplied event is emitted.
    * Returns a subscription that has a `remove` method to undo registration.
    */
-  addListener<TEvent: $Keys<TEventToArgsMap>>(
+  addListener<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed,
-    context: mixed,
+    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
+    context: unknown,
   ): EventSubscription {
-    const registrations = allocate(this._registry, eventType);
-    const registration: Registration<$ElementType<TEventToArgsMap, TEvent>> = {
+    const registrations = allocate<TEventToArgsMap[TEvent]>(this._registry, eventType);
+    const registration: Registration<TEventToArgsMap[TEvent]> = {
       context,
       listener,
       remove(): void {
@@ -93,13 +90,12 @@ export default class EventEmitter<TEventToArgsMap: {...}>
    * If a listener modifies the listeners registered for the same event, those
    * changes will not be reflected in the current invocation of `emit`.
    */
-  emit<TEvent: $Keys<TEventToArgsMap>>(
+  emit<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    ...args: $ElementType<TEventToArgsMap, TEvent>
+    ...args: TEventToArgsMap[TEvent]
   ): void {
-    const registrations: ?Set<
-      Registration<$ElementType<TEventToArgsMap, TEvent>>,
-    > = this._registry[eventType];
+    const registrations: ?Set<Registration<any>> =
+      this._registry[eventType];
     if (registrations != null) {
       for (const registration of [...registrations]) {
         registration.listener.apply(registration.context, args);
@@ -110,7 +106,7 @@ export default class EventEmitter<TEventToArgsMap: {...}>
   /**
    * Removes all registered listeners.
    */
-  removeAllListeners<TEvent: $Keys<TEventToArgsMap>>(
+  removeAllListeners<TEvent extends keyof TEventToArgsMap>(
     eventType?: ?TEvent,
   ): void {
     if (eventType == null) {
@@ -123,19 +119,15 @@ export default class EventEmitter<TEventToArgsMap: {...}>
   /**
    * Returns the number of registered listeners for the supplied event.
    */
-  listenerCount<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent): number {
-    const registrations: ?Set<Registration<mixed>> = this._registry[eventType];
+  listenerCount<TEvent extends keyof TEventToArgsMap>(eventType: TEvent): number {
+    const registrations: ?Set<Registration<unknown>> = this._registry[eventType];
     return registrations == null ? 0 : registrations.size;
   }
 }
 
-function allocate<
-  TEventToArgsMap: {...},
-  TEvent: $Keys<TEventToArgsMap>,
-  TEventArgs: $ElementType<TEventToArgsMap, TEvent>,
->(
-  registry: Registry<TEventToArgsMap>,
-  eventType: TEvent,
+function allocate<TEventArgs>(
+  registry: Registry,
+  eventType: string,
 ): Set<Registration<TEventArgs>> {
   let registrations: ?Set<Registration<TEventArgs>> = registry[eventType];
   if (registrations == null) {

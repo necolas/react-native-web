@@ -14,7 +14,7 @@ type ClickEvent = any;
 type KeyboardEvent = any;
 type ResponderEvent = any;
 
-export type PressResponderConfig = $ReadOnly<{|
+export type PressResponderConfig = Readonly<{|
   // The gesture can be interrupted by a parent gesture, e.g., scroll.
   // Defaults to true.
   cancelable?: ?boolean,
@@ -41,7 +41,7 @@ export type PressResponderConfig = $ReadOnly<{|
   onPressEnd?: ?(event: ResponderEvent) => void
 |}>;
 
-export type EventHandlers = $ReadOnly<{|
+export type EventHandlers = Readonly<{|
   onClick: (event: ClickEvent) => void,
   onContextMenu: (event: ClickEvent) => void,
   onKeyDown: (event: KeyboardEvent) => void,
@@ -78,7 +78,9 @@ const RESPONDER_GRANT = 'RESPONDER_GRANT';
 const RESPONDER_RELEASE = 'RESPONDER_RELEASE';
 const RESPONDER_TERMINATED = 'RESPONDER_TERMINATED';
 
-const Transitions = Object.freeze({
+const Transitions: {
+  readonly [TouchState]: { readonly [TouchSignal]: TouchState }
+} = Object.freeze({
   NOT_RESPONDER: {
     DELAY: ERROR,
     RESPONDER_GRANT: RESPONDER_INACTIVE_PRESS_START,
@@ -116,25 +118,25 @@ const Transitions = Object.freeze({
   }
 });
 
-const getElementRole = (element) => element.getAttribute('role');
+const getElementRole = (element: Element) => element.getAttribute('role');
 
-const getElementType = (element) => element.tagName.toLowerCase();
+const getElementType = (element: Element) => element.tagName.toLowerCase();
 
-const isActiveSignal = (signal) =>
+const isActiveSignal = (signal: TouchState) =>
   signal === RESPONDER_ACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isButtonRole = (element) => getElementRole(element) === 'button';
+const isButtonRole = (element: Element) => getElementRole(element) === 'button';
 
-const isPressStartSignal = (signal) =>
+const isPressStartSignal = (signal: TouchState) =>
   signal === RESPONDER_INACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_PRESS_START ||
   signal === RESPONDER_ACTIVE_LONG_PRESS_START;
 
-const isTerminalSignal = (signal) =>
+const isTerminalSignal = (signal: TouchSignal) =>
   signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
-const isValidKeyPress = (event) => {
+const isValidKeyPress = (event: any) => {
   const { key, target } = event;
   const isSpacebar = key === ' ' || key === 'Spacebar';
   const isButtonish =
@@ -223,12 +225,12 @@ export default class PressResponder {
   _config: PressResponderConfig;
   _eventHandlers: ?EventHandlers = null;
   _isPointerTouch: ?boolean = false;
-  _longPressDelayTimeout: ?TimeoutID = null;
+  _longPressDelayTimeout: ?number = null;
   _longPressDispatched: ?boolean = false;
-  _pressDelayTimeout: ?TimeoutID = null;
-  _pressOutDelayTimeout: ?TimeoutID = null;
+  _pressDelayTimeout: ?number = null;
+  _pressOutDelayTimeout: ?number = null;
   _selectionTerminated: ?boolean;
-  _touchActivatePosition: ?$ReadOnly<{|
+  _touchActivatePosition: ?Readonly<{|
     pageX: number,
     pageY: number
   |}>;
@@ -467,7 +469,7 @@ export default class PressResponder {
    */
   _receiveSignal(signal: TouchSignal, event: ResponderEvent): void {
     const prevState = this._touchState;
-    let nextState = null;
+    let nextState: ?TouchState = null;
     if (Transitions[prevState] != null) {
       nextState = Transitions[prevState][signal];
     }
@@ -609,7 +611,11 @@ export default class PressResponder {
   }
 }
 
-function normalizeDelay(delay: ?number, min = 0, fallback = 0): number {
+function normalizeDelay(
+  delay: ?number,
+  min: number = 0,
+  fallback: number = 0
+): number {
   return Math.max(min, delay ?? fallback);
 }
 

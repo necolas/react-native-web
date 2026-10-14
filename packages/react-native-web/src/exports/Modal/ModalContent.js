@@ -20,7 +20,7 @@ export type ModalContentProps = {
   active?: ?(boolean | (() => boolean)),
   children?: any,
   onRequestClose?: ?() => void,
-  ref?: React.Ref<typeof View>,
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   transparent?: ?boolean
 };
 
@@ -82,8 +82,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (ModalContent: React.AbstractComponent<
-  ModalContentProps,
-  React.ElementRef<typeof View>
->);
+export default ModalContent;

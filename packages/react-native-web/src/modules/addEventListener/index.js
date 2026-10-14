@@ -12,9 +12,9 @@
 type Listener = (e: any) => void;
 
 export type EventOptions = {
-  capture?: boolean,
-  passive?: boolean,
-  once?: boolean
+  readonly capture?: boolean,
+  readonly passive?: boolean,
+  readonly once?: boolean
 };
 
 const emptyFunction = () => {};
@@ -24,10 +24,10 @@ const emptyFunction = () => {};
  * large amount of code ReactDOM uses to do this. Ideally we wouldn't use a synthetic
  * event wrapper at all.
  */
-function isPropagationStopped() {
+function isPropagationStopped(this: Event) {
   return this.cancelBubble;
 }
-function isDefaultPrevented() {
+function isDefaultPrevented(this: Event) {
   return this.defaultPrevented;
 }
 function normalizeEvent(event: any) {

@@ -19,7 +19,7 @@ type Sheet = {
 
 const defaultId = 'react-native-stylesheet';
 const roots = new WeakMap<Node, number>();
-const sheets = [];
+const sheets: Array<OrderedCSSStyleSheet> = [];
 
 const initialRules = [
   // minimal top-level reset
@@ -34,7 +34,7 @@ export function createSheet(
   root?: HTMLElement,
   id?: string = defaultId
 ): Sheet {
-  let sheet;
+  let sheet: OrderedCSSStyleSheet;
 
   if (canUseDOM) {
     const rootNode: Node = root != null ? root.getRootNode() : document;
@@ -55,7 +55,7 @@ export function createSheet(
           initialSheet != null ? initialSheet.getTextContent() : '';
         // Cast rootNode to 'any' because Flow types for getRootNode are wrong
         sheet = createOrderedCSSStyleSheet(
-          createCSSStyleSheet(id, (rootNode: any), textContent)
+          createCSSStyleSheet(id, rootNode as any, textContent)
         );
         roots.set(rootNode, sheets.length);
         sheets.push(sheet);

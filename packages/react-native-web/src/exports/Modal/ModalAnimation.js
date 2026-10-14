@@ -14,7 +14,10 @@ import createElement from '../createElement';
 
 const ANIMATION_DURATION = 250;
 
-function getAnimationStyle(animationType, visible) {
+function getAnimationStyle(
+  animationType: ?('none' | 'slide' | 'fade'),
+  visible: ?boolean
+): Object {
   if (animationType === 'slide') {
     return visible ? animatedSlideInStyles : animatedSlideOutStyles;
   }
@@ -36,7 +39,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
   const { animationType, children, onDismiss, onShow, visible } = props;
 
   const [isRendering, setIsRendering] = React.useState(false);
-  const wasVisible = React.useRef(false);
+  const wasVisible = React.useRef<?boolean>(false);
   const wasRendering = React.useRef(false);
 
   const isAnimated = animationType && animationType !== 'none';

@@ -20,9 +20,9 @@ import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-type ViewStyle = $PropertyType<ViewProps, 'style'>;
+type ViewStyle = ViewProps['style'];
 
-type Props = $ReadOnly<{|
+type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
   style?: ?ViewStyle
@@ -54,7 +54,7 @@ function TouchableOpacity(props: Props): React.Node {
   const setRef = useMergeRefs(ref, hostRef);
 
   const [duration, setDuration] = useState('0s');
-  const [opacityOverride, setOpacityOverride] = useState(null);
+  const [opacityOverride, setOpacityOverride] = useState<?number>(null);
 
   const setOpacityTo = useCallback(
     (value: ?number, duration: number) => {
@@ -87,7 +87,7 @@ function TouchableOpacity(props: Props): React.Node {
       delayPressEnd: delayPressOut,
       onLongPress,
       onPress,
-      onPressStart(event) {
+      onPressStart(event: any) {
         const isGrant =
           event.dispatchConfig != null
             ? event.dispatchConfig.registrationName === 'onResponderGrant'
@@ -97,7 +97,7 @@ function TouchableOpacity(props: Props): React.Node {
           onPressIn(event);
         }
       },
-      onPressEnd(event) {
+      onPressEnd(event: any) {
         setOpacityInactive(250);
         if (onPressOut != null) {
           onPressOut(event);
@@ -152,11 +152,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableOpacity = React.memo(TouchableOpacity);
+const MemoedTouchableOpacity: component(...Props) =
+  React.memo(TouchableOpacity);
 MemoedTouchableOpacity.displayName = 'TouchableOpacity';
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (MemoedTouchableOpacity: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
->);
+export default MemoedTouchableOpacity;

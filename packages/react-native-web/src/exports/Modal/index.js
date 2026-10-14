@@ -24,13 +24,13 @@ export type ModalProps = {
   animationType?: 'none' | 'slide' | 'fade',
   children: any,
   hardwareAccelerated?: ?boolean,
-  onDismiss?: ?() => mixed,
+  onDismiss?: ?() => unknown,
   onOrientationChange?: ?(e: {|
     orientation: 'portrait' | 'landscape'
   |}) => void,
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
-  ref?: React.Ref<View>,
+  ref?: React.Ref<React.ElementRef<View>>,
   presentationStyle?: ?(
     | 'fullScreen'
     | 'pageSheet'
@@ -51,8 +51,8 @@ export type ModalProps = {
 
 let uniqueModalIdentifier = 0;
 
-const activeModalStack = [];
-const activeModalListeners = {};
+const activeModalStack: Array<number> = [];
+const activeModalListeners: { [number]: (active: boolean) => void } = {};
 
 function notifyActiveModalListeners() {
   if (activeModalStack.length === 0) {
@@ -66,7 +66,7 @@ function notifyActiveModalListeners() {
   });
 }
 
-function removeActiveModal(modalId) {
+function removeActiveModal(modalId: number) {
   if (modalId in activeModalListeners) {
     // Before removing this listener we should probably tell it
     // that it's no longer the active modal for sure.
@@ -80,7 +80,7 @@ function removeActiveModal(modalId) {
   }
 }
 
-function addActiveModal(modalId, listener) {
+function addActiveModal(modalId: number, listener: (active: boolean) => void) {
   removeActiveModal(modalId);
   activeModalStack.push(modalId);
   activeModalListeners[modalId] = listener;
@@ -133,6 +133,7 @@ const Modal = (props: ModalProps): React.Node => {
         visible={visible}
       >
         <ModalFocusTrap active={isActive}>
+          {/* $FlowFixMe[incompatible-type] Unsupported props are dropped by View */}
           <ModalContent
             {...rest}
             active={isActive}
@@ -148,8 +149,4 @@ const Modal = (props: ModalProps): React.Node => {
   );
 };
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (Modal: React.AbstractComponent<
-  ModalProps,
-  React.ElementRef<View>
->);
+export default Modal;

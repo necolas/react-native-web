@@ -18,9 +18,9 @@ import View from '../View';
 type ImageBackgroundProps = {
   ...ImageProps,
   imageRef?: any,
-  imageStyle?: $PropertyType<ImageProps, 'style'>,
-  ref?: React.Ref<typeof View>,
-  style?: $PropertyType<ViewProps, 'style'>
+  imageStyle?: ImageProps['style'],
+  ref?: React.Ref<React.ElementRef<typeof View>>,
+  style?: ViewProps['style']
 };
 
 const emptyObject = {};
@@ -68,8 +68,4 @@ const ImageBackground = (props: ImageBackgroundProps): React.Node => {
 
 ImageBackground.displayName = 'ImageBackground';
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (ImageBackground: React.AbstractComponent<
-  ImageBackgroundProps,
-  React.ElementRef<typeof View>
->);
+export default ImageBackground;

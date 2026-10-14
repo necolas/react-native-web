@@ -16,7 +16,7 @@ import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 
 type ScrollViewNativeComponent = any;
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
+type ViewStyleProp = ViewProps['style'];
 import type {
   ViewToken,
   ViewabilityConfigCallbackPair,
@@ -165,7 +165,7 @@ function numColumnsOrDefault(numColumns: ?number) {
   return numColumns ?? 1;
 }
 
-function isArrayLike(data: mixed): boolean {
+function isArrayLike(data: unknown): boolean {
   // $FlowExpectedError[incompatible-use]
   return typeof Object(data).length === 'number';
 }
@@ -178,16 +178,9 @@ type FlatListProps<ItemT> = {|
 type VirtualizedListProps = React.ElementConfig<typeof VirtualizedList>;
 
 export type Props<ItemT> = {
-  ...$Diff<
+  ...Omit<
     VirtualizedListProps,
-    {
-      getItem: $PropertyType<VirtualizedListProps, 'getItem'>,
-      getItemCount: $PropertyType<VirtualizedListProps, 'getItemCount'>,
-      getItemLayout: $PropertyType<VirtualizedListProps, 'getItemLayout'>,
-      renderItem: $PropertyType<VirtualizedListProps, 'renderItem'>,
-      keyExtractor: $PropertyType<VirtualizedListProps, 'keyExtractor'>,
-      ...
-    },
+    'getItem' | 'getItemCount' | 'getItemLayout' | 'renderItem' | 'keyExtractor',
   >,
   ...FlatListProps<ItemT>,
   ...
@@ -501,7 +494,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   _getItem = (
     data: $ArrayLike<ItemT>,
     index: number,
-  ): ?(ItemT | $ReadOnlyArray<ItemT>) => {
+  ): ?(ItemT | ReadonlyArray<ItemT>) => {
     const numColumns = numColumnsOrDefault(this.props.numColumns);
     if (numColumns > 1) {
       const ret = [];
@@ -546,7 +539,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       );
       return items
         .map((item, kk) =>
-          keyExtractor(((item: $FlowFixMe): ItemT), index * numColumns + kk),
+          keyExtractor(item as $FlowFixMe as ItemT, index * numColumns + kk),
         )
         .join(':');
     }
@@ -596,7 +589,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   }
 
   _renderer = (
-    ListItemComponent: ?(React.ComponentType<any> | React.Element<any>),
+    ListItemComponent: ?(React.ComponentType<any> | React.MixedElement),
     renderItem: ?RenderItemType<ItemT>,
     columnWrapperStyle: ?ViewStyleProp,
     numColumns: ?number,
@@ -630,7 +623,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
           <View style={[styles.row, columnWrapperStyle]}>
             {item.map((it, kk) => {
               const element = render({
-                // $FlowFixMe[incompatible-call]
+                // $FlowFixMe[incompatible-type]
                 item: it,
                 index: index * cols + kk,
                 separators: info.separators,

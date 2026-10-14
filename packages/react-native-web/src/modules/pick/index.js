@@ -8,7 +8,7 @@
  */
 
 export default function pick(obj: Object, list: { [string]: boolean }): Object {
-  const nextObj = {};
+  const nextObj: { [string]: unknown } = {};
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       if (list[key] === true) {

@@ -19,7 +19,6 @@
     "build": "npm-run-all clean -p \"build:* {@}\" --",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --config-file ../../configs/babel.config.js --out-dir dist/cjs --ignore \"**/__tests__\"",
     "build:es": "babel src --config-file ../../configs/babel.config.js --out-dir dist --ignore \"**/__tests__\"",
-    "build:flow": "gen-flow-files ./src --out-dir ./dist",
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {

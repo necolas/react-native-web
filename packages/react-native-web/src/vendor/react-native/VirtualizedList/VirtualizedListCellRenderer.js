@@ -20,14 +20,14 @@ import {VirtualizedListCellContextProvider} from './VirtualizedListContext.js';
 import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
+type ViewStyleProp = ViewProps['style'];
 
 export type Props<ItemT> = {
   CellRendererComponent?: ?React.ComponentType<CellRendererProps<ItemT>>,
   ItemSeparatorComponent: ?React.ComponentType<
     any | {highlighted: boolean, leadingItem: ?ItemT},
   >,
-  ListItemComponent?: ?(React.ComponentType<any> | React.Element<any>),
+  ListItemComponent?: ?(React.ComponentType<any> | React.MixedElement),
   cellKey: string,
   horizontal: ?boolean,
   index: number,
@@ -38,14 +38,14 @@ export type Props<ItemT> = {
   onUnmount: (cellKey: string) => void,
   onUpdateSeparators: (
     cellKeys: Array<?string>,
-    props: $Shape<SeparatorProps<ItemT>>,
+    props: Partial<SeparatorProps<ItemT>>,
   ) => void,
   prevCellKey: ?string,
   renderItem?: ?RenderItemType<ItemT>,
   ...
 };
 
-type SeparatorProps<ItemT> = $ReadOnly<{|
+type SeparatorProps<ItemT> = Readonly<{|
   highlighted: boolean,
   leadingItem: ?ItemT,
 |}>;
@@ -145,6 +145,7 @@ export default class CellRenderer<ItemT> extends React.Component<
       /* $FlowFixMe[incompatible-type-arg] (>=0.108.0 site=react_native_fb)
        * This comment suppresses an error found when Flow v0.108 was deployed.
        * To see the error, delete this comment and run Flow. */
+      // $FlowFixMe[not-a-function]
       return React.createElement(ListItemComponent, {
         item,
         index,
@@ -206,6 +207,7 @@ export default class CellRenderer<ItemT> extends React.Component<
       ? [styles.row, inversionStyle]
       : inversionStyle;
     const result = !CellRendererComponent ? (
+      // $FlowFixMe[incompatible-type] View drops unsupported props
       <View
         style={cellStyle}
         onFocusCapture={onCellFocusCapture}

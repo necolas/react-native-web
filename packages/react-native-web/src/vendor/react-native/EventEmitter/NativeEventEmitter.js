@@ -18,7 +18,7 @@ import Platform from '../../../exports/Platform';
 import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
 import invariant from 'fbjs/lib/invariant';
 
-type NativeModule = $ReadOnly<{
+type NativeModule = Readonly<{
   addListener: (eventType: string) => void,
   removeListeners: (count: number) => void,
   ...
@@ -36,7 +36,7 @@ export type {EventSubscription};
  * This means event names must be globally unique, and it means that call sites
  * can theoretically listen to `RCTDeviceEventEmitter` (although discouraged).
  */
-export default class NativeEventEmitter<TEventToArgsMap: {...}>
+export default class NativeEventEmitter<TEventToArgsMap extends {...}>
   implements IEventEmitter<TEventToArgsMap> {
   _nativeModule: ?NativeModule;
 
@@ -50,10 +50,10 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
     }
   }
 
-  addListener<TEvent: $Keys<TEventToArgsMap>>(
+  addListener<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed,
-    context?: mixed,
+    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
+    context?: unknown,
   ): EventSubscription {
     this._nativeModule?.addListener(eventType);
     let subscription: ?EventSubscription = RCTDeviceEventEmitter.addListener(
@@ -77,9 +77,9 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
   /**
    * @deprecated Use `remove` on the EventSubscription from `addListener`.
    */
-  removeListener<TEvent: $Keys<TEventToArgsMap>>(
+  removeListener<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    listener: (...args: $ElementType<TEventToArgsMap, TEvent>) => mixed,
+    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
   ): void {
     this._nativeModule?.removeListeners(1);
     // NOTE: This will report a deprecation notice via `console.error`.
@@ -87,16 +87,16 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
     RCTDeviceEventEmitter.removeListener(eventType, listener);
   }
 
-  emit<TEvent: $Keys<TEventToArgsMap>>(
+  emit<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
-    ...args: $ElementType<TEventToArgsMap, TEvent>
+    ...args: TEventToArgsMap[TEvent]
   ): void {
     // Generally, `RCTDeviceEventEmitter` is directly invoked. But this is
     // included for completeness.
     RCTDeviceEventEmitter.emit(eventType, ...args);
   }
 
-  removeAllListeners<TEvent: $Keys<TEventToArgsMap>>(
+  removeAllListeners<TEvent extends keyof TEventToArgsMap>(
     eventType?: ?TEvent,
   ): void {
     invariant(
@@ -107,7 +107,7 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
     RCTDeviceEventEmitter.removeAllListeners(eventType);
   }
 
-  listenerCount<TEvent: $Keys<TEventToArgsMap>>(eventType: TEvent): number {
+  listenerCount<TEvent extends keyof TEventToArgsMap>(eventType: TEvent): number {
     return RCTDeviceEventEmitter.listenerCount(eventType);
   }
 }

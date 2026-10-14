@@ -59,7 +59,7 @@ let _usedIndexForKey = false;
 let _keylessItemComponentName: string = '';
 
 type ScrollResponderType = any;
-type ViewStyleProp = $PropertyType<ViewProps, 'style'>;
+type ViewStyleProp = ViewProps['style'];
 
 type ViewabilityHelperCallbackTuple = {
   viewabilityHelper: ViewabilityHelper,
@@ -122,7 +122,7 @@ function windowSizeOrDefault(windowSize: ?number) {
 }
 
 function findLastWhere<T>(
-  arr: $ReadOnlyArray<T>,
+  arr: ReadonlyArray<T>,
   predicate: (element: T) => boolean,
 ): T | null {
   for (let i = arr.length - 1; i >= 0; i--) {
@@ -470,7 +470,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       const targetDelta = delta - leftoverDelta;
 
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
-        const node = (this._scrollRef: any).getScrollableNode();
+        const node = (this._scrollRef as any).getScrollableNode();
         if (this.props.horizontal) {
           ev.target.scrollLeft += targetDelta;
           const nextScrollLeft = node.scrollLeft - leftoverDelta;
@@ -536,7 +536,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   static _createRenderMask(
     props: Props,
     cellsAroundViewport: {first: number, last: number},
-    additionalRegions?: ?$ReadOnlyArray<{first: number, last: number}>,
+    additionalRegions?: ?ReadonlyArray<{first: number, last: number}>,
   ): CellRenderMask {
     const itemCount = props.getItemCount(props.data);
 
@@ -953,7 +953,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     // 2a. Add a cell for ListEmptyComponent if applicable
     const itemCount = this.props.getItemCount(data);
     if (itemCount === 0 && ListEmptyComponent) {
-      const element: React.Element<any> = ((React.isValidElement(
+      const element: any = (React.isValidElement(
         ListEmptyComponent,
       ) ? (
         ListEmptyComponent
@@ -961,7 +961,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         // $FlowFixMe[not-a-component]
         // $FlowFixMe[incompatible-type-arg]
         <ListEmptyComponent />
-      )): any);
+      )) as any;
       cells.push(
         <VirtualizedListCellContextProvider
           cellKey={this._getCellKey() + '-empty'}
@@ -1019,6 +1019,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           cells.push(
             <View
               key={`$spacer-${section.first}`}
+              // $FlowFixMe[incompatible-type]
               style={{[spacerKey]: spacerSize}}
             />,
           );
@@ -1283,7 +1284,12 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   _onCellLayout = (e: LayoutEvent, cellKey: string, index: number): void => {
     const layout = e.nativeEvent.layout;
-    const next = {
+    const next: {
+      inLayout?: boolean,
+      index: number,
+      length: number,
+      offset: number,
+    } = {
       offset: this._selectOffset(layout),
       length: this._selectLength(layout),
       index,
@@ -1486,7 +1492,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   _selectLength(
-    metrics: $ReadOnly<{
+    metrics: Readonly<{
       height: number,
       width: number,
       ...
@@ -1498,7 +1504,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   _selectOffset(
-    metrics: $ReadOnly<{
+    metrics: Readonly<{
       x: number,
       y: number,
       ...
@@ -1917,9 +1923,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     const frame = this._frames[this._keyExtractor(item, index, props)];
     if (!frame || frame.index !== index) {
       if (getItemLayout) {
-        /* $FlowFixMe[prop-missing] (>=0.63.0 site=react_native_fb) This comment
-         * suppresses an error found when Flow v0.63 was deployed. To see the error
-         * delete this comment and run Flow. */
+        // $FlowFixMe[incompatible-type]
         return getItemLayout(data, index);
       }
     }
@@ -1928,7 +1932,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   _getNonViewportRenderRegions = (
     props: FrameMetricProps,
-  ): $ReadOnlyArray<{
+  ): ReadonlyArray<{
     first: number,
     last: number,
   }> => {

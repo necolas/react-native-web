@@ -58,7 +58,7 @@ const Switch = (props: SwitchProps): React.Node => {
     ...other
   } = props;
 
-  const thumbRef = React.useRef(null);
+  const thumbRef = React.useRef<?React.ElementRef<typeof View>>(null);
 
   function handleChange(event: Object) {
     if (onValueChange != null) {
@@ -97,8 +97,8 @@ const Switch = (props: SwitchProps): React.Node => {
   })();
 
   const thumbCurrentColor = value
-    ? activeThumbColor ?? defaultActiveThumbColor
-    : thumbColor ?? defaultThumbColor;
+    ? (activeThumbColor ?? defaultActiveThumbColor)
+    : (thumbColor ?? defaultThumbColor);
 
   const thumbHeight = height;
   const thumbWidth = thumbHeight;
@@ -232,8 +232,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (Switch: React.AbstractComponent<
-  SwitchProps,
-  React.ElementRef<typeof View>
->);
+export default Switch;

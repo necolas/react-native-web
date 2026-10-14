@@ -23,14 +23,14 @@ type Props = {
   onScrollEndDrag?: (e: any) => void,
   onTouchMove?: (e: any) => void,
   onWheel?: (e: any) => void,
-  ref?: React.Ref<typeof View>,
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   showsHorizontalScrollIndicator?: boolean,
   showsVerticalScrollIndicator?: boolean
 };
 
-function normalizeScrollEvent(e) {
+function normalizeScrollEvent(e: any) {
   return {
     nativeEvent: {
       contentOffset: {
@@ -85,7 +85,7 @@ const ScrollViewBase = (props: Props): React.Node => {
   } = props;
 
   const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = React.useRef(null);
+  const scrollTimeout = React.useRef<?number>(null);
   const scrollRef = React.useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
@@ -150,6 +150,7 @@ const ScrollViewBase = (props: Props): React.Node => {
     showsVerticalScrollIndicator === false;
 
   return (
+    // $FlowFixMe[incompatible-type] Unsupported props are dropped by View
     <View
       {...rest}
       onScroll={handleScroll}
@@ -179,8 +180,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (ScrollViewBase: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
->);
+export default ScrollViewBase;

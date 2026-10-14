@@ -11,7 +11,7 @@
 
 import canUseDOM from '../../modules/canUseDom';
 
-function isScreenReaderEnabled(): Promise<*> {
+function isScreenReaderEnabled(): Promise<boolean> {
   return new Promise((resolve, reject) => {
     resolve(true);
   });
@@ -22,7 +22,7 @@ const prefersReducedMotionMedia =
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
 
-function isReduceMotionEnabled(): Promise<*> {
+function isReduceMotionEnabled(): Promise<boolean> {
   return new Promise((resolve, reject) => {
     resolve(
       prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true
@@ -30,13 +30,13 @@ function isReduceMotionEnabled(): Promise<*> {
   });
 }
 
-function addChangeListener(fn) {
+function addChangeListener(fn: (event: MediaQueryListEvent) => void) {
   if (prefersReducedMotionMedia != null) {
     prefersReducedMotionMedia.addEventListener('change', fn);
   }
 }
 
-function removeChangeListener(fn) {
+function removeChangeListener(fn: (event: MediaQueryListEvent) => void) {
   if (prefersReducedMotionMedia != null) {
     prefersReducedMotionMedia.removeEventListener('change', fn);
   }
@@ -74,7 +74,7 @@ const AccessibilityInfo = {
       if (!prefersReducedMotionMedia) {
         return;
       }
-      const listener = (event) => {
+      const listener = (event: MediaQueryListEvent) => {
         handler(event.matches);
       };
       addChangeListener(listener);

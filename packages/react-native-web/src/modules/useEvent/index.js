@@ -7,6 +7,8 @@
  * @flow
  */
 
+import type { EventOptions } from '../addEventListener';
+
 import { addEventListener } from '../addEventListener';
 import useLayoutEffect from '../useLayoutEffect';
 import useStable from '../useStable';
@@ -28,13 +30,9 @@ type AddListener = (
  */
 export default function useEvent(
   eventType: string,
-  options?: ?{
-    capture?: boolean,
-    passive?: boolean,
-    once?: boolean
-  }
+  options?: ?EventOptions
 ): AddListener {
-  const targetListeners = useStable(() => new Map());
+  const targetListeners = useStable(() => new Map<EventTarget, () => void>());
 
   const addListener = useStable(() => {
     return (target: EventTarget, callback: Callback) => {
@@ -43,6 +41,7 @@ export default function useEvent(
         removeTargetListener();
       }
       if (callback == null) {
+        // $FlowFixMe[react-rule-hook-mutation]
         targetListeners.delete(target);
         callback = () => {};
       }
@@ -52,6 +51,7 @@ export default function useEvent(
         callback,
         options
       );
+      // $FlowFixMe[react-rule-hook-mutation]
       targetListeners.set(target, removeEventListener);
       return removeEventListener;
     };
@@ -62,6 +62,7 @@ export default function useEvent(
       targetListeners.forEach((removeListener) => {
         removeListener();
       });
+      // $FlowFixMe[react-rule-hook-mutation]
       targetListeners.clear();
     };
   }, [targetListeners]);

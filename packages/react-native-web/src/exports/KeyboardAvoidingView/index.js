@@ -19,7 +19,7 @@ import View from '../View';
 type KeyboardAvoidingViewProps = {
   ...ViewProps,
   behavior?: 'height' | 'padding' | 'position',
-  contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
+  contentContainerStyle?: ViewProps['style'],
   keyboardVerticalOffset: number
 };
 

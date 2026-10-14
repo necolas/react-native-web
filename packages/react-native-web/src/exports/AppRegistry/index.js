@@ -30,7 +30,10 @@ export type ComponentProvider = () => ComponentType<any>;
 export type ComponentProviderInstrumentationHook = (
   component: ComponentProvider
 ) => ComponentType<any>;
-export type WrapperComponentProvider = (any) => ComponentType<*>;
+export type WrapperComponentProvider = (any) => ComponentType<{
+  children: Node,
+  ...
+}>;
 
 export type AppConfig = {
   appKey: string,
@@ -121,8 +124,8 @@ export default class AppRegistry {
       console.log(
         `Running application "${appKey}" with appParams:\n`,
         params,
-        `\nDevelopment-level warnings: ${isDevelopment ? 'ON' : 'OFF'}.` +
-          `\nPerformance optimizations: ${isDevelopment ? 'OFF' : 'ON'}.`
+        `\nDevelopment-level warnings: ON.` +
+          `\nPerformance optimizations: OFF.`
       );
     }
 

@@ -34,7 +34,7 @@ export type TextStyle = {
   fontSize?: ?NumberOrString,
   fontStyle?: 'italic' | 'normal',
   fontWeight?: ?FontWeightValue,
-  fontVariant?: $ReadOnlyArray<
+  fontVariant?: ReadonlyArray<
     | 'small-caps'
     | 'oldstyle-nums'
     | 'lining-nums'

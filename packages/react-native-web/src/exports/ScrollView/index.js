@@ -765,7 +765,7 @@ const styles = StyleSheet.create({
 
 const ForwardedScrollView = (props: {
   ...React.ElementConfig<typeof ScrollView>,
-  ref?: React.Ref<typeof ScrollView>
+  ref?: React.Ref<React.ElementRef<typeof ScrollView>>
 }): React.Node => {
   const { ref, ...rest } = props;
   return <ScrollView {...rest} forwardedRef={ref} />;
@@ -773,8 +773,4 @@ const ForwardedScrollView = (props: {
 
 ForwardedScrollView.displayName = 'ScrollView';
 
-// $FlowFixMe: Flow 0.148 does not support ref as a prop
-export default (ForwardedScrollView: React.AbstractComponent<
-  React.ElementConfig<typeof ScrollView>,
-  React.ElementRef<typeof ScrollView>
->);
+export default ForwardedScrollView;

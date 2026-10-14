@@ -34,7 +34,7 @@ type FrameMetrics = {
   ...
 };
 
-const DEBUG = false;
+const DEBUG: boolean = false;
 
 let _listeners: Array<(Info) => void> = [];
 let _minSampleCount = 10;
@@ -115,7 +115,7 @@ class FillRateHelper {
       total_time_spent,
     };
     if (DEBUG) {
-      const derived = {
+      const derived: {[string]: number} = {
         avg_blankness: this._info.pixels_blank / this._info.pixels_sampled,
         avg_speed: this._info.pixels_scrolled / (total_time_spent / 1000),
         avg_speed_when_any_blank:
@@ -128,7 +128,6 @@ class FillRateHelper {
         mostly_blank_time_frac: this._info.mostly_blank_ms / total_time_spent,
       };
       for (const key in derived) {
-        // $FlowFixMe[prop-missing]
         derived[key] = Math.round(1000 * derived[key]) / 1000;
       }
       console.debug('FillRateHelper deactivateAndFlush: ', {derived, info});

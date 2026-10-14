@@ -21,7 +21,7 @@ export type SectionBase<SectionItemT> = {
   /**
    * The data for rendering items in this section.
    */
-  data: $ReadOnlyArray<SectionItemT>,
+  data: ReadonlyArray<SectionItemT>,
   /**
    * Optional key to keep track of section re-ordering. If you don't plan on re-ordering sections,
    * the array index will be used by default.
@@ -39,17 +39,17 @@ export type SectionBase<SectionItemT> = {
       ...
     },
     ...
-  }) => null | React.Element<any>,
+  }) => null | React.MixedElement,
   ItemSeparatorComponent?: ?React.ComponentType<any>,
   keyExtractor?: (item: SectionItemT, index?: ?number) => string,
   ...
 };
 
-type RequiredProps<SectionT: SectionBase<any>> = {|
-  sections: $ReadOnlyArray<SectionT>,
+type RequiredProps<SectionT extends SectionBase<any>> = {|
+  sections: ReadonlyArray<SectionT>,
 |};
 
-type OptionalProps<SectionT: SectionBase<any>> = {|
+type OptionalProps<SectionT extends SectionBase<any>> = {|
   /**
    * Default renderer for every item in every section.
    */
@@ -64,7 +64,7 @@ type OptionalProps<SectionT: SectionBase<any>> = {|
       ...
     },
     ...
-  }) => null | React.Element<any>,
+  }) => null | React.MixedElement,
   /**
    * Rendered at the top of each section. These stick to the top of the `ScrollView` by default on
    * iOS. See `stickySectionHeadersEnabled`.
@@ -72,14 +72,14 @@ type OptionalProps<SectionT: SectionBase<any>> = {|
   renderSectionHeader?: ?(info: {
     section: SectionT,
     ...
-  }) => null | React.Element<any>,
+  }) => null | React.MixedElement,
   /**
    * Rendered at the bottom of each section.
    */
   renderSectionFooter?: ?(info: {
     section: SectionT,
     ...
-  }) => null | React.Element<any>,
+  }) => null | React.MixedElement,
   /**
    * Rendered at the top and bottom of each section (note this is different from
    * `ItemSeparatorComponent` which is only rendered between items). These are intended to separate
@@ -101,13 +101,9 @@ type VirtualizedListProps = React.ElementConfig<typeof VirtualizedList>;
 export type Props<SectionT> = {|
   ...RequiredProps<SectionT>,
   ...OptionalProps<SectionT>,
-  ...$Diff<
+  ...Omit<
     VirtualizedListProps,
-    {
-      renderItem: $PropertyType<VirtualizedListProps, 'renderItem'>,
-      data: $PropertyType<VirtualizedListProps, 'data'>,
-      ...
-    },
+    'renderItem' | 'data',
   >,
 |};
 export type ScrollToLocationParamsType = {|
@@ -126,7 +122,7 @@ type State = {childProps: VirtualizedListProps, ...};
  * sections when new props are received, which should be plenty fast for up to ~10,000 items.
  */
 class VirtualizedSectionList<
-  SectionT: SectionBase<any>,
+  SectionT extends SectionBase<any>,
 > extends React.PureComponent<Props<SectionT>, State> {
   scrollToLocation(params: ScrollToLocationParamsType) {
     let index = params.itemIndex;
@@ -172,7 +168,7 @@ class VirtualizedSectionList<
     const listHeaderOffset = this.props.ListHeaderComponent ? 1 : 0;
 
     const stickyHeaderIndices = this.props.stickySectionHeadersEnabled
-      ? ([]: Array<number>)
+      ? ([] as Array<number>)
       : undefined;
 
     let itemCount = 0;
@@ -211,7 +207,7 @@ class VirtualizedSectionList<
 
   _getItem(
     props: Props<SectionT>,
-    sections: ?$ReadOnlyArray<Item>,
+    sections: ?ReadonlyArray<Item>,
     index: number,
   ): ?Item {
     if (!sections) {
@@ -455,12 +451,12 @@ class VirtualizedSectionList<
   _updateHighlightMap: {[string]: (boolean) => void} = {};
   _updatePropsMap: {[string]: void | (boolean => void)} = {};
   _listRef: ?React.ElementRef<typeof VirtualizedList>;
-  _captureRef = (ref: null | React$ElementRef<Class<VirtualizedList>>) => {
+  _captureRef = (ref: null | React.ElementRef<Class<VirtualizedList>>) => {
     this._listRef = ref;
   };
 }
 
-type ItemWithSeparatorCommonProps = $ReadOnly<{|
+type ItemWithSeparatorCommonProps = Readonly<{|
   leadingItem: ?Item,
   leadingSection: ?Object,
   section: Object,
@@ -468,7 +464,7 @@ type ItemWithSeparatorCommonProps = $ReadOnly<{|
   trailingSection: ?Object,
 |}>;
 
-type ItemWithSeparatorProps = $ReadOnly<{|
+type ItemWithSeparatorProps = Readonly<{|
   ...ItemWithSeparatorCommonProps,
   LeadingSeparatorComponent: ?React.ComponentType<any>,
   SeparatorComponent: ?React.ComponentType<any>,
@@ -529,7 +525,7 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
 
   React.useEffect(() => {
     setSelfHighlightCallback(cellKey, setSeparatorHighlighted);
-    // $FlowFixMe[incompatible-call]
+    // $FlowFixMe[incompatible-type]
     setSelfUpdatePropsCallback(cellKey, setSeparatorProps);
 
     return () => {
@@ -560,7 +556,7 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
     },
     updateProps: (
       select: 'leading' | 'trailing',
-      newProps: $Shape<ItemWithSeparatorCommonProps>,
+      newProps: Partial<ItemWithSeparatorCommonProps>,
     ) => {
       if (select === 'leading') {
         if (LeadingSeparatorComponent != null) {
@@ -606,11 +602,4 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
 /* $FlowFixMe[class-object-subtyping] added when improving typing for this
  * parameters */
 // $FlowFixMe[method-unbinding]
-export default (VirtualizedSectionList: React.AbstractComponent<
-  React.ElementConfig<typeof VirtualizedSectionList>,
-  $ReadOnly<{
-    getListRef: () => ?React.ElementRef<typeof VirtualizedList>,
-    scrollToLocation: (params: ScrollToLocationParamsType) => void,
-    ...
-  }>,
->);
+export default VirtualizedSectionList;

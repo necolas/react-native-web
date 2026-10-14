@@ -45,7 +45,7 @@ function attemptFocus(element: any) {
   return document.activeElement === element;
 }
 
-function focusFirstDescendant(element: any) {
+function focusFirstDescendant(element: any): boolean {
   for (let i = 0; i < element.childNodes.length; i++) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusFirstDescendant(child)) {
@@ -55,7 +55,7 @@ function focusFirstDescendant(element: any) {
   return false;
 }
 
-function focusLastDescendant(element: any) {
+function focusLastDescendant(element: any): boolean {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
     if (attemptFocus(child) || focusLastDescendant(child)) {
@@ -77,7 +77,7 @@ const ModalFocusTrap = ({
   const trapElementRef = React.useRef<?HTMLElement>();
   const focusRef = React.useRef<{
     trapFocusInProgress: boolean,
-    lastFocusedElement: ?HTMLElement
+    lastFocusedElement: ?Element
   }>({
     trapFocusInProgress: false,
     lastFocusedElement: null

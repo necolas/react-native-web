@@ -18,15 +18,12 @@ import type {AnimatedComponentType} from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const FlatListWithEventThrottle: React.AbstractComponent<
-  React.ElementConfig<typeof FlatList>,
-  React.ElementRef<typeof FlatList>,
-  // $FlowFixMe: Flow 0.148 does not support ref as a prop
-> = (props) => <FlatList scrollEventThrottle={0.0001} {...props} />;
+// $FlowFixMe[underconstrained-implicit-instantiation]
+const FlatListWithEventThrottle = (props: any) => <FlatList scrollEventThrottle={0.0001} {...props} />;
 
-export default (createAnimatedComponent(
+export default createAnimatedComponent(
   FlatListWithEventThrottle,
-): AnimatedComponentType<
+) as AnimatedComponentType<
   React.ElementConfig<typeof FlatList>,
   React.ElementRef<typeof FlatList>,
->);
+>;

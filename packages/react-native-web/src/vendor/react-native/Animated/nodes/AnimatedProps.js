@@ -35,7 +35,7 @@ class AnimatedProps extends AnimatedNode {
   }
 
   __getValue(): Object {
-    const props = {};
+    const props: {[string]: unknown} = {};
     for (const key in this._props) {
       const value = this._props[key];
       if (value instanceof AnimatedNode) {
@@ -54,7 +54,7 @@ class AnimatedProps extends AnimatedNode {
   }
 
   __getAnimatedValue(): Object {
-    const props = {};
+    const props: {[string]: unknown} = {};
     for (const key in this._props) {
       const value = this._props[key];
       if (value instanceof AnimatedNode) {
@@ -153,7 +153,7 @@ class AnimatedProps extends AnimatedNode {
   }
 
   __getNativeConfig(): Object {
-    const propsConfig = {};
+    const propsConfig: {[string]: unknown} = {};
     for (const propKey in this._props) {
       const value = this._props[propKey];
       if (value instanceof AnimatedNode) {

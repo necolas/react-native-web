@@ -19,27 +19,27 @@ import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
-export type Props = $ReadOnly<{|
-  accessibilityLabel?: $PropertyType<ViewProps, 'accessibilityLabel'>,
-  accessibilityLiveRegion?: $PropertyType<ViewProps, 'accessibilityLiveRegion'>,
-  accessibilityRole?: $PropertyType<ViewProps, 'accessibilityRole'>,
+export type Props = Readonly<{|
+  accessibilityLabel?: ViewProps['accessibilityLabel'],
+  accessibilityLiveRegion?: ViewProps['accessibilityLiveRegion'],
+  accessibilityRole?: ViewProps['accessibilityRole'],
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,
   delayPressOut?: ?number,
   disabled?: ?boolean,
   focusable?: ?boolean,
-  nativeID?: $PropertyType<ViewProps, 'nativeID'>,
-  onBlur?: $PropertyType<ViewProps, 'onBlur'>,
-  onFocus?: $PropertyType<ViewProps, 'onFocus'>,
-  onLayout?: $PropertyType<ViewProps, 'onLayout'>,
-  onLongPress?: $PropertyType<PressResponderConfig, 'onLongPress'>,
-  onPress?: $PropertyType<PressResponderConfig, 'onPress'>,
-  onPressIn?: $PropertyType<PressResponderConfig, 'onPressStart'>,
-  onPressOut?: $PropertyType<PressResponderConfig, 'onPressEnd'>,
+  nativeID?: ViewProps['nativeID'],
+  onBlur?: ViewProps['onBlur'],
+  onFocus?: ViewProps['onFocus'],
+  onLayout?: ViewProps['onLayout'],
+  onLongPress?: PressResponderConfig['onLongPress'],
+  onPress?: PressResponderConfig['onPress'],
+  onPressIn?: PressResponderConfig['onPressStart'],
+  onPressOut?: PressResponderConfig['onPressEnd'],
   ref?: React.Ref<any>,
   rejectResponderTermination?: ?boolean,
-  testID?: $PropertyType<ViewProps, 'testID'>
+  testID?: ViewProps['testID']
 |}>;
 
 const forwardPropsList = {
@@ -59,7 +59,7 @@ const forwardPropsList = {
   testID: true
 };
 
-const pickProps = (props) => pick(props, forwardPropsList);
+const pickProps = (props: Props) => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props): React.Node {
   const {
@@ -105,22 +105,21 @@ function TouchableWithoutFeedback(props: Props): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
-  const element = React.Children.only(props.children);
+  const element: any = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
   supportedProps.accessibilityDisabled = disabled;
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, hostRef, element.props.ref);
 
-  const elementProps = Object.assign(supportedProps, pressEventHandlers);
+  const elementProps = { ...supportedProps, ...pressEventHandlers };
 
   return React.cloneElement(element, elementProps, ...children);
 }
 
-const MemoedTouchableWithoutFeedback = React.memo(TouchableWithoutFeedback);
+const MemoedTouchableWithoutFeedback: component(...Props) = React.memo(
+  TouchableWithoutFeedback
+);
 MemoedTouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
-export default (MemoedTouchableWithoutFeedback: React.AbstractComponent<
-  Props,
-  React.ElementRef<any>
->);
+export default MemoedTouchableWithoutFeedback;

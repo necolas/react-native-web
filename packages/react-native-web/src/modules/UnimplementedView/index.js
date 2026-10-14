@@ -6,8 +6,8 @@
  *
  * @flow
  */
-import type { Node } from 'React';
-import type { ViewProps } from '../../exports/View/types';
+import type { Node } from 'react';
+import type { ViewProps, ViewStyle } from '../../exports/View/types';
 
 import View from '../../exports/View';
 import React from 'react';
@@ -19,7 +19,7 @@ function UnimplementedView({ style, ...props }: ViewProps): Node {
   return <View {...props} style={[unimplementedViewStyles, style]} />;
 }
 
-const unimplementedViewStyles =
+const unimplementedViewStyles: ViewStyle =
   process.env.NODE_ENV !== 'production'
     ? {
         alignSelf: 'flex-start',

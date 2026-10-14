@@ -1,6 +1,3 @@
-/**
- * @flow
- */
 import React from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
 import Example from '../../shared/example';
@@ -67,33 +64,27 @@ class DraggableCircle extends React.PureComponent {
     this.forceUpdate();
   }
 
-  _handleStartShouldSetPanResponder = (
-    e: Object,
-    gestureState: Object
-  ): boolean => {
+  _handleStartShouldSetPanResponder = (e, gestureState) => {
     // Should we become active when the user presses down on the circle?
     return true;
   };
 
-  _handleMoveShouldSetPanResponder = (
-    e: Object,
-    gestureState: Object
-  ): boolean => {
+  _handleMoveShouldSetPanResponder = (e, gestureState) => {
     // Should we become active when the user moves a touch over the circle?
     return true;
   };
 
-  _handlePanResponderGrant = (e: Object, gestureState: Object) => {
+  _handlePanResponderGrant = (e, gestureState) => {
     this._highlight();
   };
 
-  _handlePanResponderMove = (e: Object, gestureState: Object) => {
+  _handlePanResponderMove = (e, gestureState) => {
     this._circleStyles.left = this._previousLeft + gestureState.dx;
     this._circleStyles.top = this._previousTop + gestureState.dy;
     this._updateNativeStyles();
   };
 
-  _handlePanResponderEnd = (e: Object, gestureState: Object) => {
+  _handlePanResponderEnd = (e, gestureState) => {
     this._unHighlight();
     this._previousLeft += gestureState.dx;
     this._previousTop += gestureState.dy;
