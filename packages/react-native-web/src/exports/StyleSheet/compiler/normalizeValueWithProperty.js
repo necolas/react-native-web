@@ -7,7 +7,7 @@
  * @flow strict-local
  */
 
-import unitlessNumbers from '../../../modules/unitlessNumbers';
+import isUnitlessNumber from '../../../modules/isUnitlessNumber';
 import normalizeColor from './normalizeColor';
 
 const colorProps: { [string]: boolean } = {
@@ -29,7 +29,7 @@ export default function normalizeValueWithProperty(
 ): any {
   let returnValue = value;
   if (
-    (property == null || !unitlessNumbers[property]) &&
+    (property == null || !isUnitlessNumber(property)) &&
     typeof value === 'number'
   ) {
     returnValue = `${value}px`;
