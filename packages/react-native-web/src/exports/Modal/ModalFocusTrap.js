@@ -58,7 +58,7 @@ function focusFirstDescendant(element: any): boolean {
 function focusLastDescendant(element: any): boolean {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
-    if (attemptFocus(child) || focusLastDescendant(child)) {
+    if (focusLastDescendant(child) || attemptFocus(child)) {
       return true;
     }
   }
