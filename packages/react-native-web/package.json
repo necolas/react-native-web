@@ -22,7 +22,7 @@
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {
-    "@react-native/normalize-colors": "^0.87.1",
+    "@react-native/normalize-colors": "^0.88.0",
     "fbjs": "^3.0.5",
     "memoize-one": "^6.0.0",
     "nullthrows": "^1.1.1",
