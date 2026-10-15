@@ -23,6 +23,12 @@
     "unit:dom": "npm run unit -- --selectProjects dom",
     "unit:node": "npm run unit -- --selectProjects node"
   },
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "core-js": false,
+    "fsevents": false,
+    "unrs-resolver@1.12.2": true
+  },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
     "@babel/core": "^7.29.7",
