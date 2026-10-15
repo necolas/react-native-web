@@ -11,10 +11,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
-    "js/ts.validate.enabled": false,
-    "eslint.options": {
-      "ignorePath": "configs/.eslintignore",
-      "overrideConfigFile": "configs/.eslintrc"
-    }
+    "js/ts.validate.enabled": false
   }
 }

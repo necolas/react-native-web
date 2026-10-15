@@ -10,7 +10,7 @@
     "flow": "flow",
     "format": "prettier --check --ignore-unknown .",
     "format:fix": "prettier --write --ignore-unknown .",
-    "lint": "eslint configs packages scripts --config ./configs/.eslintrc",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prerelease": "npm run test && npm run build",
     "release": "node ./scripts/releaseReactNativeWebPackages.js",
@@ -20,8 +20,8 @@
     "prepare": "husky",
     "test": "npm run flow && npm run format && npm run lint && npm run unit --runInBand",
     "unit": "npm-run-all \"unit:* {@}\" --",
-    "unit:dom": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config ./configs/jest.config.js",
-    "unit:node": "jest --config ./configs/jest.config.node.js"
+    "unit:dom": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "unit:node": "jest --config ./jest.config.node.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
@@ -62,7 +62,7 @@
     ],
     "**/*.js": [
       "prettier --write --ignore-unknown --no-error-on-unmatched-pattern",
-      "eslint --fix --no-error-on-unmatched-pattern --config ./configs/.eslintrc"
+      "eslint --fix --no-error-on-unmatched-pattern"
     ]
   },
   "prettier": {
