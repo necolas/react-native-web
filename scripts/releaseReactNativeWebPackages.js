@@ -24,6 +24,13 @@ if (version == null || oneTimeCode == null) {
   process.exit(1);
 }
 
+try {
+  execSync('npm whoami', { stdio: 'ignore' });
+} catch {
+  console.error('You must be logged in to npm. Run `npm login` first.');
+  process.exit(1);
+}
+
 console.log(`Publishing react-native-web@${version}`);
 
 // Collect 'react-native-web' workspaces and package manifests
