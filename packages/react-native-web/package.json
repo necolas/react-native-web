@@ -29,6 +29,9 @@
     "postcss-value-parser": "^4.2.0",
     "styleq": "^0.1.3"
   },
+  "devDependencies": {
+    "del-cli": "^8.0.1"
+  },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
