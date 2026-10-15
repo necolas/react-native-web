@@ -4,7 +4,7 @@ const csso = require('csso');
 const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
 const eleventySvgContentsPlugin = require('eleventy-plugin-svg-contents');
 const eleventySyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
-const htmlmin = require('html-minifier');
+const htmlmin = require('html-minifier-terser');
 const markdown = require('markdown-it');
 const markdownAnchor = require('markdown-it-anchor');
 const markdownAttrs = require('markdown-it-attrs');
@@ -12,7 +12,7 @@ const markdownContainer = require('markdown-it-container');
 const markdownEmoji = require('markdown-it-emoji');
 const markdownFootnote = require('markdown-it-footnote');
 const markdownTasks = require('markdown-it-task-lists');
-const UglifyJS = require('uglify-es');
+const terser = require('terser');
 
 module.exports = function (eleventyConfig) {
   // Merge data instead of overriding
@@ -58,12 +58,8 @@ module.exports = function (eleventyConfig) {
     return csso.minify(code).css;
   });
   // Minify JS
-  eleventyConfig.addFilter('jsmin', function (code) {
-    const minified = UglifyJS.minify(code);
-    if (minified.error) {
-      console.log('UglifyJS error: ', minified.error);
-      return code;
-    }
+  eleventyConfig.addAsyncFilter('jsmin', async function (code) {
+    const minified = await terser.minify(code);
     return minified.code;
   });
 

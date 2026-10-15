@@ -2,25 +2,41 @@
 
 'use strict';
 
-const execSync = require('child_process').execSync;
-const fs = require('fs');
-const glob = require('glob');
-const minimist = require('minimist');
-const path = require('path');
+const { execSync } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+const { parseArgs } = require('node:util');
 
-const args = process.argv.slice(2);
-const argv = minimist(args);
+const { positionals, values } = parseArgs({
+  allowPositionals: true,
+  options: {
+    'skip-git': { type: 'boolean', default: false },
+    otp: { type: 'string' }
+  }
+});
 
-const version = argv._[0];
-const skipGit = argv['skip-git'];
-const oneTimeCode = argv.otp;
+const version = positionals[0];
+const skipGit = values['skip-git'];
+const oneTimeCode = values.otp;
+
+if (version == null || oneTimeCode == null) {
+  console.error('Usage: npm run release <version> --otp <code> [--skip-git]');
+  process.exit(1);
+}
+
+try {
+  execSync('npm whoami', { stdio: 'ignore' });
+} catch {
+  console.error('You must be logged in to npm. Run `npm login` first.');
+  process.exit(1);
+}
 
 console.log(`Publishing react-native-web@${version}`);
 
 // Collect 'react-native-web' workspaces and package manifests
 const workspacePaths = require('../package.json').workspaces.reduce(
   (acc, w) => {
-    const resolvedPaths = glob.sync(w);
+    const resolvedPaths = fs.globSync(w);
     resolvedPaths.forEach((p) => {
       // Remove duplicates and unrelated packages
       if (p.includes('react-native-web') && acc.indexOf(p) === -1) {

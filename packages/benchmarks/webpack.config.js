@@ -25,6 +25,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
+                namedExport: false,
                 localIdentName: '[hash:base64:8]'
               }
             }
@@ -38,7 +39,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: false,
-            extends: path.resolve(appDirectory, '../../configs/babel.config')
+            extends: path.resolve(appDirectory, '../../babel.config')
           }
         }
       }

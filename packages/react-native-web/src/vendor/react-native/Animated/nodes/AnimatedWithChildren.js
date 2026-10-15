@@ -78,7 +78,6 @@ class AnimatedWithChildren extends AnimatedNode {
     super.__callListeners(value);
     if (!this.__isNative) {
       for (const child of this._children) {
-        // $FlowFixMe[method-unbinding] added when improving typing for this parameters
         if (child.__getValue) {
           child.__callListeners(child.__getValue());
         }

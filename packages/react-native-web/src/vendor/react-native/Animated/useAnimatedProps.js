@@ -164,7 +164,6 @@ function getEventTarget<TInstance>(instance: TInstance): TInstance {
     : instance;
 }
 
-// $FlowFixMe[unclear-type] - Legacy instance assumptions.
 function isFabricInstance(instance: any): boolean {
   return (
     hasFabricHandle(instance) ||
@@ -181,7 +180,6 @@ function isFabricInstance(instance: any): boolean {
   );
 }
 
-// $FlowFixMe[unclear-type] - Legacy instance assumptions.
 function hasFabricHandle(instance: any): boolean {
   // eslint-disable-next-line dot-notation
   return instance?.['_internalInstanceHandle']?.stateNode?.canonical != null;

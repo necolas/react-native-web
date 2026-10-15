@@ -2,7 +2,7 @@
 
 const babelConfig = require('./babel.config.js');
 
-module.exports = {
+const shared = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '<rootDir>/packages/react-native-web/src/vendor/'
@@ -21,9 +21,25 @@ module.exports = {
   snapshotFormat: {
     printBasicPrototype: false
   },
-  testEnvironment: 'node',
-  testMatch: ['**/__tests__/**/?(*-)+(spec|test).node.[jt]s?(x)'],
   transform: {
     '\\.[jt]sx?$': ['babel-jest', babelConfig()]
   }
+};
+
+module.exports = {
+  projects: [
+    {
+      ...shared,
+      displayName: 'dom',
+      setupFiles: [require.resolve('./jest.setup.dom.js')],
+      testEnvironment: 'jsdom',
+      testMatch: ['**/__tests__/**/?(*-)+(spec|test).[jt]s?(x)']
+    },
+    {
+      ...shared,
+      displayName: 'node',
+      testEnvironment: 'node',
+      testMatch: ['**/__tests__/**/?(*-)+(spec|test).node.[jt]s?(x)']
+    }
+  ]
 };

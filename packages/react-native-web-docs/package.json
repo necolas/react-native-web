@@ -15,7 +15,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "csso": "^5.0.5",
     "eleventy-plugin-svg-contents": "^0.7.0",
-    "html-minifier": "^4.0.0",
+    "html-minifier-terser": "^7.2.0",
     "markdown-it": "^15.0.2",
     "markdown-it-anchor": "^10.0.0",
     "markdown-it-attrs": "^5.0.1",
@@ -23,6 +23,6 @@
     "markdown-it-emoji": "^3.1.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-task-lists": "^2.1.1",
-    "uglify-es": "^3.3.9"
+    "terser": "^5.51.2"
   }
 }

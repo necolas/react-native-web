@@ -17,14 +17,13 @@
   "scripts": {
     "clean": "del-cli ./dist",
     "build": "npm-run-all clean -p \"build:* {@}\" --",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --config-file ../../configs/babel.config.js --out-dir dist/cjs --ignore \"**/__tests__\"",
-    "build:es": "babel src --config-file ../../configs/babel.config.js --out-dir dist --ignore \"**/__tests__\"",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --root-mode upward --out-dir dist/cjs --ignore \"**/__tests__\"",
+    "build:es": "babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\"",
     "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.6",
-    "@react-native/normalize-colors": "^0.74.1",
-    "fbjs": "^3.0.4",
+    "@react-native/normalize-colors": "^0.88.0",
+    "fbjs": "^3.0.5",
     "memoize-one": "^6.0.0",
     "nullthrows": "^1.1.1",
     "postcss-value-parser": "^4.2.0",

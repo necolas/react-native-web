@@ -490,7 +490,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       props;
 
     invariant(
-      // $FlowFixMe[prop-missing]
       !onScroll || !onScroll.__isNative,
       'Components based on VirtualizedList must be wrapped with Animated.createAnimatedComponent ' +
         'to support native onScroll events with useNativeDriver',
@@ -521,7 +520,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     }
 
     if (__DEV__ && !this._hasWarned.flexWrap) {
-      // $FlowFixMe[underconstrained-implicit-instantiation]
       const flatStyles = StyleSheet.flatten(this.props.contentContainerStyle);
       if (flatStyles != null && flatStyles.flexWrap === 'wrap') {
         console.warn(
@@ -927,8 +925,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       const element = React.isValidElement(ListHeaderComponent) ? (
         ListHeaderComponent
       ) : (
-        // $FlowFixMe[not-a-component]
-        // $FlowFixMe[incompatible-type-arg]
         <ListHeaderComponent />
       );
       cells.push(
@@ -941,10 +937,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
               inversionStyle,
               this.props.ListHeaderComponentStyle,
             ]}>
-            {
-              // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
-              element
-            }
+            {element}
           </View>
         </VirtualizedListCellContextProvider>,
       );
@@ -958,8 +951,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       ) ? (
         ListEmptyComponent
       ) : (
-        // $FlowFixMe[not-a-component]
-        // $FlowFixMe[incompatible-type-arg]
         <ListEmptyComponent />
       )) as any;
       cells.push(
@@ -1050,8 +1041,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       const element = React.isValidElement(ListFooterComponent) ? (
         ListFooterComponent
       ) : (
-        // $FlowFixMe[not-a-component]
-        // $FlowFixMe[incompatible-type-arg]
         <ListFooterComponent />
       );
       cells.push(
@@ -1064,10 +1053,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
               inversionStyle,
               this.props.ListFooterComponentStyle,
             ]}>
-            {
-              // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
-              element
-            }
+            {element}
           </View>
         </VirtualizedListCellContextProvider>,
       );
@@ -1247,7 +1233,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   _defaultRenderScrollComponent = props => {
     const onRefresh = props.onRefresh;
     if (this._isNestedWithSameOrientation()) {
-      // $FlowFixMe[prop-missing] - Typing ReactNativeComponent revealed errors
       return <View {...props} />;
     } else if (onRefresh) {
       invariant(
@@ -1257,14 +1242,11 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           '`',
       );
       return (
-        // $FlowFixMe[prop-missing] Invalid prop usage
-        // $FlowFixMe[incompatible-use]
         <ScrollView
           {...props}
           refreshControl={
             props.refreshControl == null ? (
               <RefreshControl
-                // $FlowFixMe[incompatible-type]
                 refreshing={props.refreshing}
                 onRefresh={onRefresh}
                 progressViewOffset={props.progressViewOffset}
@@ -1276,8 +1258,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         />
       );
     } else {
-      // $FlowFixMe[prop-missing] Invalid prop usage
-      // $FlowFixMe[incompatible-use]
       return <ScrollView {...props} />;
     }
   };

@@ -228,8 +228,6 @@ function createInterpolationFromStringOutputRange(
     .match(stringShapeRegex)
     /* $FlowFixMe[incompatible-use] (>=0.18.0): `outputRange[0].match()` can
      * return `null`. Need to guard against this possibility. */
-    /* $FlowFixMe[incompatible-call] (>=0.18.0): `outputRange[0].match()` can
-     * return `null`. Need to guard against this possibility. */
     .map((value, i) => {
       return createInterpolation({
         ...config,
@@ -293,11 +291,6 @@ function checkInfiniteRange(name: string, arr: ReadonlyArray<number>) {
   invariant(arr.length >= 2, name + ' must have at least 2 elements');
   invariant(
     arr.length !== 2 || arr[0] !== -Infinity || arr[1] !== Infinity,
-    /* $FlowFixMe[incompatible-type] (>=0.13.0) - In the addition expression
-     * below this comment, one or both of the operands may be something that
-     * doesn't cleanly convert to a string, like undefined, null, and object,
-     * etc. If you really mean this implicit string conversion, you can do
-     * something like String(myThing) */
     name + 'cannot be ]-infinity;+infinity[ ' + String(arr),
   );
 }
