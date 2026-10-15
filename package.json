@@ -37,7 +37,6 @@
     "del-cli": "^8.0.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-promise": "^7.3.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "flow-bin": "0.335.0",

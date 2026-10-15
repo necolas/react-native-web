@@ -12,7 +12,7 @@
     "sourceType": "module"
   },
   "extends": ["prettier"],
-  "plugins": ["promise", "react", "react-hooks"],
+  "plugins": ["react", "react-hooks"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -124,9 +124,6 @@
     "use-isnan": 2,
     "valid-typeof": 2,
     "yoda": [2, "never"],
-
-    // promise
-    "promise/param-names": 2,
 
     // react
     "react/display-name": 0,
