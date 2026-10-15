@@ -2,6 +2,7 @@
   "private": true,
   "name": "benchmarks",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "clean": "del-cli ./dist",
     "build": "NODE_ENV=production npm run dev",

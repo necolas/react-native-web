@@ -1,5 +1,3 @@
-/* eslint-env jasmine, jest */
-
 import Linking from '..';
 
 describe('apis/Linking', () => {

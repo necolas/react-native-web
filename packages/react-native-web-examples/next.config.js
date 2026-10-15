@@ -1,12 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
 
 const pages = fs
-  .readdirSync(path.resolve(__dirname, 'pages'), { withFileTypes: true })
+  .readdirSync(path.resolve(import.meta.dirname, 'pages'), {
+    withFileTypes: true
+  })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name);
 
-module.exports = {
+export default {
   env: { pages: JSON.stringify(pages) },
   webpack: (config, options) => {
     config.resolve.alias['react-native'] = 'react-native-web';

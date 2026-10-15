@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-'use strict';
-
-const { execSync } = require('node:child_process');
-const fs = require('node:fs');
-const path = require('node:path');
-const { parseArgs } = require('node:util');
+import { execSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { parseArgs } from 'node:util';
+import packageJson from '../package.json' with { type: 'json' };
 
 const { positionals, values } = parseArgs({
   allowPositionals: true,
@@ -34,19 +33,16 @@ try {
 console.log(`Publishing react-native-web@${version}`);
 
 // Collect 'react-native-web' workspaces and package manifests
-const workspacePaths = require('../package.json').workspaces.reduce(
-  (acc, w) => {
-    const resolvedPaths = fs.globSync(w);
-    resolvedPaths.forEach((p) => {
-      // Remove duplicates and unrelated packages
-      if (p.includes('react-native-web') && acc.indexOf(p) === -1) {
-        acc.push(p);
-      }
-    });
-    return acc;
-  },
-  []
-);
+const workspacePaths = packageJson.workspaces.reduce((acc, w) => {
+  const resolvedPaths = fs.globSync(w);
+  resolvedPaths.forEach((p) => {
+    // Remove duplicates and unrelated packages
+    if (p.includes('react-native-web') && acc.indexOf(p) === -1) {
+      acc.push(p);
+    }
+  });
+  return acc;
+}, []);
 
 const workspaces = workspacePaths.map((dir) => {
   const directory = path.resolve(dir);

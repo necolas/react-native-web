@@ -7,7 +7,7 @@
 
 /* eslint-disable react/jsx-no-bind */
 
-import * as AssetRegistry from '../../../modules/AssetRegistry';
+import { registerAsset } from '../../../modules/AssetRegistry';
 import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
@@ -321,22 +321,22 @@ describe('components/Image', () => {
     });
 
     test('it correctly selects the source scale', () => {
-      AssetRegistry.getAssetByID = jest.fn(() => ({
+      const assetId = registerAsset({
         httpServerLocation: 'static',
         name: 'img',
         scales: [1, 2, 3],
         type: 'png'
-      }));
+      });
 
       PixelRatio.get = jest.fn(() => 1.0);
-      let { container } = render(<Image source={1} />);
+      let { container } = render(<Image source={assetId} />);
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img.png'
       );
 
       act(() => {
         PixelRatio.get = jest.fn(() => 2.2);
-        ({ container } = render(<Image source={1} />));
+        ({ container } = render(<Image source={assetId} />));
       });
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img@2x.png'

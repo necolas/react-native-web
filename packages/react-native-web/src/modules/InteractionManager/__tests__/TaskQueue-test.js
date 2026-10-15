@@ -25,9 +25,9 @@ describe('TaskQueue', () => {
     });
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.resetModules();
-    const TaskQueue = require('../TaskQueue');
+    const TaskQueue = (await import('../TaskQueue.js')).default;
     taskQueue = new TaskQueue();
     sequenceId = 0;
   });
