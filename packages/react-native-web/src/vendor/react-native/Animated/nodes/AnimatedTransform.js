@@ -15,9 +15,9 @@ import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 class AnimatedTransform extends AnimatedWithChildren {
-  _transforms: $ReadOnlyArray<Object>;
+  _transforms: ReadonlyArray<Object>;
 
-  constructor(transforms: $ReadOnlyArray<Object>) {
+  constructor(transforms: ReadonlyArray<Object>) {
     super();
     this._transforms = transforms;
   }
@@ -34,9 +34,9 @@ class AnimatedTransform extends AnimatedWithChildren {
     super.__makeNative();
   }
 
-  __getValue(): $ReadOnlyArray<Object> {
+  __getValue(): ReadonlyArray<Object> {
     return this._transforms.map(transform => {
-      const result = {};
+      const result: {[string]: unknown} = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -49,9 +49,9 @@ class AnimatedTransform extends AnimatedWithChildren {
     });
   }
 
-  __getAnimatedValue(): $ReadOnlyArray<Object> {
+  __getAnimatedValue(): ReadonlyArray<Object> {
     return this._transforms.map(transform => {
-      const result = {};
+      const result: {[string]: unknown} = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -89,7 +89,10 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __getNativeConfig(): any {
-    const transConfigs = [];
+    const transConfigs: Array<
+      | {type: 'animated', property: string, nodeTag: ?number}
+      | {type: 'static', property: string, value: number | string},
+    > = [];
 
     this._transforms.forEach(transform => {
       for (const key in transform) {

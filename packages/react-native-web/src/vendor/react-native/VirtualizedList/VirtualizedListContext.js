@@ -15,7 +15,7 @@ import {useContext, useMemo} from 'react';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
-type Context = $ReadOnly<{
+type Context = Readonly<{
   cellKey: ?string,
   getScrollMetrics: () => {
     contentLength: number,

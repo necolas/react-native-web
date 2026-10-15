@@ -10,8 +10,8 @@
 import { buttonType, buttonsType } from './constants';
 import * as domEvents from './domEvents';
 import * as domEventSequences from './domEventSequences';
-import { hasPointerEvent, setPointerEvent, platform } from './domEnvironment';
-import { describeWithPointerEvent, testWithPointerType } from './testHelpers';
+import { platform } from './domEnvironment';
+import { testWithPointerType } from './testHelpers';
 
 const createEventTarget = (node) => ({
   node,
@@ -91,8 +91,8 @@ const createEventTarget = (node) => ({
    * target.tap({ pointerType: 'touch' })
    */
   tap(payload) {
-    domEventSequences.pointerdown(payload);
-    domEventSequences.pointerup(payload);
+    domEventSequences.pointerdown(node, payload);
+    domEventSequences.pointerup(node, payload);
   },
   virtualclick(payload) {
     node.dispatchEvent(domEvents.virtualclick(payload));
@@ -123,9 +123,6 @@ export {
   buttonsType,
   clearPointers,
   createEventTarget,
-  describeWithPointerEvent,
   platform,
-  hasPointerEvent,
-  setPointerEvent,
   testWithPointerType
 };

@@ -10,9 +10,9 @@
 import * as React from 'react';
 
 export default function mergeRefs(
-  ...args: $ReadOnlyArray<React.ElementRef<any>>
+  ...args: ReadonlyArray<React.ElementRef<any>>
 ): (node: HTMLElement | null) => void {
-  return function forwardRef(node: HTMLElement | null) {
+  return (node: HTMLElement | null) => {
     args.forEach((ref: React.ElementRef<any>) => {
       if (ref == null) {
         return;

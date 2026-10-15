@@ -10,7 +10,7 @@
 
 import {useCallback} from 'react';
 
-type CallbackRef<T> = T => mixed;
+type CallbackRef<T> = T => unknown;
 type ObjectRef<T> = {current: T, ...};
 
 type Ref<T> = CallbackRef<T> | ObjectRef<T>;
@@ -25,7 +25,7 @@ type Ref<T> = CallbackRef<T> | ObjectRef<T>;
  * lead to problems with the given refs being invoked more times than desired.
  */
 export default function useMergeRefs<T>(
-  ...refs: $ReadOnlyArray<?Ref<T>>
+  ...refs: ReadonlyArray<?Ref<T>>
 ): CallbackRef<T> {
   return useCallback(
     (current: T) => {

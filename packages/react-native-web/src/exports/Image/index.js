@@ -10,7 +10,8 @@
 
 'use client';
 
-import type { ImageProps } from './types';
+import type { ImageProps, ResizeMode, Source } from './types';
+import type { ColorValue, LayoutEvent } from '../../types';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -33,7 +34,7 @@ const IDLE = 'IDLE';
 let _filterId = 0;
 const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 
-function createTintColorSVG(tintColor, id) {
+function createTintColorSVG(tintColor: ?ColorValue, id: ?number): React.Node {
   return tintColor && id != null ? (
     <svg
       style={{
@@ -54,11 +55,11 @@ function createTintColorSVG(tintColor, id) {
 }
 
 function extractNonStandardStyleProps(
-  style,
-  blurRadius,
-  filterId,
-  tintColorProp
-) {
+  style: ImageProps['style'],
+  blurRadius: ?number,
+  filterId: ?number,
+  tintColorProp: ?ColorValue
+): [?ResizeMode, ?string, ?ColorValue] {
   const flatStyle = StyleSheet.flatten(style);
   const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
 
@@ -90,7 +91,9 @@ function extractNonStandardStyleProps(
   return [resizeMode, _filter, tintColor];
 }
 
-function resolveAssetDimensions(source) {
+function resolveAssetDimensions(
+  source: ?Source
+): ?{ height: ?number, width: ?number } {
   if (typeof source === 'number') {
     const { height, width } = getAssetByID(source);
     return { height, width };
@@ -104,7 +107,7 @@ function resolveAssetDimensions(source) {
   }
 }
 
-function resolveAssetUri(source): ?string {
+function resolveAssetUri(source: ?Source): ?string {
   let uri = null;
   if (typeof source === 'number') {
     // get the URI from the packager
@@ -147,22 +150,10 @@ function resolveAssetUri(source): ?string {
   return uri;
 }
 
-interface ImageStatics {
-  getSize: (
-    uri: string,
-    success: (width: number, height: number) => void,
-    failure: () => void
-  ) => void;
-  prefetch: (uri: string) => Promise<void>;
-  queryCache: (
-    uris: Array<string>
-  ) => Promise<{| [uri: string]: 'disk/memory' |}>;
-}
-
-const Image: React.AbstractComponent<
-  ImageProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, ref) => {
+const Image = (props: {
+  ...ImageProps,
+  ref?: React.Ref<React.ElementRef<typeof View>>
+}): React.Node => {
   const {
     'aria-label': _ariaLabel,
     accessibilityLabel,
@@ -175,8 +166,11 @@ const Image: React.AbstractComponent<
     onLoadEnd,
     onLoadStart,
     pointerEvents,
+    ref,
+    resizeMode: resizeModeProp,
     source,
     style,
+    tintColor: tintColorProp,
     ...rest
   } = props;
   const ariaLabel = _ariaLabel || accessibilityLabel;
@@ -200,21 +194,25 @@ const Image: React.AbstractComponent<
     return IDLE;
   });
 
-  const [layout, updateLayout] = React.useState({});
+  const [layout, updateLayout] = React.useState<{
+    readonly height?: number,
+    readonly width?: number,
+    ...
+  }>({});
   const hasTextAncestor = React.useContext(TextAncestorContext);
   const hiddenImageRef = React.useRef(null);
   const filterRef = React.useRef(_filterId++);
-  const requestRef = React.useRef(null);
+  const requestRef = React.useRef<?number>(null);
   const shouldDisplaySource =
     state === LOADED || (state === LOADING && defaultSource == null);
   const [_resizeMode, filter, _tintColor] = extractNonStandardStyleProps(
     style,
     blurRadius,
     filterRef.current,
-    props.tintColor
+    tintColorProp
   );
-  const resizeMode = props.resizeMode || _resizeMode || 'cover';
-  const tintColor = props.tintColor || _tintColor;
+  const resizeMode = resizeModeProp || _resizeMode || 'cover';
+  const tintColor = tintColorProp || _tintColor;
   const selectedSource = shouldDisplaySource ? source : defaultSource;
   const displayImageUri = resolveAssetUri(selectedSource);
   const imageSizeStyle = resolveAssetDimensions(selectedSource);
@@ -252,7 +250,7 @@ const Image: React.AbstractComponent<
     }
   }
 
-  function handleLayout(e) {
+  function handleLayout(e: LayoutEvent) {
     if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
       const { layout } = e.nativeEvent;
       onLayout && onLayout(e);
@@ -325,12 +323,14 @@ const Image: React.AbstractComponent<
   }, [uri, requestRef, updateState]);
 
   return (
+    // $FlowFixMe[incompatible-type] Unsupported props are dropped by View
     <View
       {...rest}
       aria-label={ariaLabel}
       onLayout={handleLayout}
       pointerEvents={pointerEvents}
       ref={ref}
+      // $FlowFixMe[incompatible-type] Image style props are not View style props
       style={[
         styles.root,
         hasTextAncestor && styles.inline,
@@ -355,26 +355,25 @@ const Image: React.AbstractComponent<
       {createTintColorSVG(tintColor, filterRef.current)}
     </View>
   );
-});
+};
 
 Image.displayName = 'Image';
 
-// $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
-const ImageWithStatics = (Image: React.AbstractComponent<
-  ImageProps,
-  React.ElementRef<typeof View>
-> &
-  ImageStatics);
-
-ImageWithStatics.getSize = function (uri, success, failure) {
+Image.getSize = function (
+  uri: string,
+  success: (width: number, height: number) => void,
+  failure: () => void
+) {
   ImageLoader.getSize(uri, success, failure);
 };
 
-ImageWithStatics.prefetch = function (uri) {
+Image.prefetch = function (uri: string): Promise<void> {
   return ImageLoader.prefetch(uri);
 };
 
-ImageWithStatics.queryCache = function (uris) {
+Image.queryCache = function (
+  uris: Array<string>
+): Promise<{| [uri: string]: 'disk/memory' |}> {
   return ImageLoader.queryCache(uris);
 };
 
@@ -443,4 +442,4 @@ const resizeModeStyles = StyleSheet.create({
   }
 });
 
-export default ImageWithStatics;
+export default Image;

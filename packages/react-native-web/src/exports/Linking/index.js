@@ -110,9 +110,9 @@ class Linking {
   }
 }
 
-const open = (url, target) => {
+const open = (url: string, target?: string) => {
   if (canUseDOM) {
-    const urlToOpen = new URL(url, window.location).toString();
+    const urlToOpen = new URL(url, window.location.href).toString();
     if (urlToOpen.indexOf('tel:') === 0) {
       window.location = urlToOpen;
     } else {
@@ -121,4 +121,4 @@ const open = (url, target) => {
   }
 };
 
-export default (new Linking(): Linking);
+export default new Linking() as Linking;

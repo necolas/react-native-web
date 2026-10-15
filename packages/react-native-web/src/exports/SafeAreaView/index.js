@@ -13,36 +13,25 @@ import type { ViewProps } from '../View';
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
-import canUseDOM from '../../modules/canUseDom';
 
-const cssFunction: 'constant' | 'env' = (function () {
-  if (
-    canUseDOM &&
-    window.CSS &&
-    window.CSS.supports &&
-    window.CSS.supports('top: constant(safe-area-inset-top)')
-  ) {
-    return 'constant';
-  }
-  return 'env';
-})();
+type SafeAreaViewProps = {
+  ...ViewProps,
+  ref?: React.Ref<React.ElementRef<typeof View>>
+};
 
-const SafeAreaView: React.AbstractComponent<
-  ViewProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, ref) => {
-  const { style, ...rest } = props;
+const SafeAreaView = (props: SafeAreaViewProps): React.Node => {
+  const { ref, style, ...rest } = props;
   return <View {...rest} ref={ref} style={[styles.root, style]} />;
-});
+};
 
 SafeAreaView.displayName = 'SafeAreaView';
 
 const styles = StyleSheet.create({
   root: {
-    paddingTop: `${cssFunction}(safe-area-inset-top)`,
-    paddingRight: `${cssFunction}(safe-area-inset-right)`,
-    paddingBottom: `${cssFunction}(safe-area-inset-bottom)`,
-    paddingLeft: `${cssFunction}(safe-area-inset-left)`
+    paddingTop: 'env(safe-area-inset-top)',
+    paddingRight: 'env(safe-area-inset-right)',
+    paddingBottom: 'env(safe-area-inset-bottom)',
+    paddingLeft: 'env(safe-area-inset-left)'
   }
 });
 

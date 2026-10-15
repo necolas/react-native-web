@@ -27,8 +27,7 @@ const testIfDocumentIsFocused = (message, fn) => {
 };
 
 function createEvent(type, data = {}) {
-  const event = document.createEvent('CustomEvent');
-  event.initCustomEvent(type, true, true);
+  const event = new CustomEvent(type, { bubbles: true, cancelable: true });
   if (data != null) {
     Object.keys(data).forEach((key) => {
       const value = data[key];
@@ -677,19 +676,12 @@ describe('components/TextInput', () => {
 
   describe('prop "selectTextOnFocus"', () => {
     testIfDocumentIsFocused('value "false"', () => {
-      const { container } = render(<TextInput defaultValue={'text'} />);
+      const { container } = render(<TextInput defaultValue="text" />);
       const input = findInput(container);
       input.focus();
       expect(input.selectionEnd).toEqual(4);
       expect(input.selectionStart).toEqual(4);
     });
-
-    // testIfDocumentIsFocused('value "true"', () => {
-    // const input = findNativeInput(mount(<TextInput defaultValue={'text'} selectTextOnFocus />));
-    // input.node.focus()
-    // assert.equal(input.node.selectionEnd, 4)
-    // assert.equal(input.node.selectionStart, 0)
-    // });
   });
 
   describe('prop "selection"', () => {

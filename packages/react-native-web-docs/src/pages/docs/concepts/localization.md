@@ -49,6 +49,6 @@ const { direction, locale } = useLocaleContext();
 const isRTL = direction === 'rtl';
 const style = { scaleX: isRTL ? -1 : 1 };
 
-<Image source={'forward.svg'} style={style} />
+<Image source="forward.svg" style={style} />
 <Image source={isRTL ? 'back.svg' : 'forward.svg'} />
 ```

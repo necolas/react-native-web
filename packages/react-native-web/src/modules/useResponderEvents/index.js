@@ -22,7 +22,7 @@ import type { ResponderConfig } from './ResponderSystem';
 import * as React from 'react';
 import * as ResponderSystem from './ResponderSystem';
 
-const emptyObject = {};
+const emptyObject: ResponderConfig = {};
 let idCounter = 0;
 
 function useStable<T>(getInitialValue: () => T): T {

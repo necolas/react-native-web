@@ -19,7 +19,7 @@ type ValueXYListenerCallback = (value: {
   x: number,
   y: number,
   ...
-}) => mixed;
+}) => unknown;
 
 let _uniqueId = 1;
 
@@ -43,8 +43,8 @@ class AnimatedValueXY extends AnimatedWithChildren {
 
   constructor(
     valueIn?: ?{
-      +x: number | AnimatedValue,
-      +y: number | AnimatedValue,
+      readonly x: number | AnimatedValue,
+      readonly y: number | AnimatedValue,
       ...
     },
   ) {
@@ -168,7 +168,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    */
   addListener(callback: ValueXYListenerCallback): string {
     const id = String(_uniqueId++);
-    const jointCallback = ({value: number}) => {
+    const jointCallback = ({value: number}: {value: number, ...}) => {
       callback(this.__getValue());
     };
     this._listeners[id] = {

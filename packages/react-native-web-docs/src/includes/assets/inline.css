@@ -21,8 +21,9 @@
   --docs-spacing-72: 18rem;
   --docs-spacing-80: 20rem;
 
-  --docs-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica, Arial, sans-serif;
+  --docs-font-family:
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
   --docs-font-size: 14px;
   --docs-heading-size: 2em;
   --docs-line-height: 1.5;
@@ -63,8 +64,8 @@
     --docs-ring-offset-shadow: 0 0 #0000;
     --docs-ring-shadow: 0 0 #0000;
 
-    --docs-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --docs-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -87,8 +88,8 @@
     --docs-ring-offset-shadow: 0 0 #0000;
     --docs-ring-shadow: 0 0 #0000;
 
-    --docs-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --docs-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -115,8 +116,9 @@ select {
 }
 code,
 pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 hr {
   box-sizing: content-box;
@@ -421,7 +423,7 @@ h6 {
   font-style: italic;
   border-left-width: 0.25rem;
   border-left-color: #e5e7eb;
-  quotes: '\201C''\201D''\2018''\2019';
+  quotes: '\201C' '\201D' '\2018' '\2019';
   margin-top: 1.6em;
   margin-bottom: 1.6em;
   padding-left: 1em;

@@ -18,7 +18,12 @@ import { useEffect, useState } from 'react';
 export default function useWindowDimensions(): DisplayMetrics {
   const [dims, setDims] = useState(() => Dimensions.get('window'));
   useEffect(() => {
-    function handleChange({ window }) {
+    function handleChange({
+      window
+    }: {
+      readonly window: ?DisplayMetrics,
+      ...
+    }) {
       if (window != null) {
         setDims(window);
       }

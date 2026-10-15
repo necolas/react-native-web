@@ -42,10 +42,10 @@ export default class Clipboard {
 
       // select the text
       const selection = window.getSelection();
-      selection.removeAllRanges();
+      selection?.removeAllRanges();
       const range = document.createRange();
       range.selectNodeContents(node);
-      selection.addRange(range);
+      selection?.addRange(range);
 
       // attempt to copy
       try {
@@ -54,7 +54,7 @@ export default class Clipboard {
       } catch (e) {}
 
       // remove selection and node
-      selection.removeAllRanges();
+      selection?.removeAllRanges();
       body.removeChild(node);
     }
 

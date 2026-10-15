@@ -12,7 +12,7 @@
 
 import _bezier from './bezier';
 
-let ease;
+let ease: ?(t: number) => number;
 
 /**
  * The `Easing` module implements common easing functions. This module is used

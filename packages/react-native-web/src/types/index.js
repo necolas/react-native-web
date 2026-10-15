@@ -11,24 +11,19 @@ export type ColorValue = null | string;
 
 export type DimensionValue = null | number | string;
 
-export type EdgeInsetsValue = {|
-  top: number,
-  left: number,
-  right: number,
-  bottom: number
-|};
-
-export type GenericStyleProp<+T> =
+export type GenericStyleProp<out T> =
   | null
   | void
-  | $ReadOnly<T>
+  | Readonly<T>
   | false
   | ''
-  | $ReadOnlyArray<GenericStyleProp<T>>;
+  | ReadonlyArray<GenericStyleProp<T>>;
 
 export type LayoutValue = {
   x: number,
   y: number,
+  left: number,
+  top: number,
   width: number,
   height: number
 };
@@ -36,7 +31,7 @@ export type LayoutValue = {
 export type LayoutEvent = {
   nativeEvent: {
     layout: LayoutValue,
-    target: any
+    target?: any
   },
   timeStamp: number
 };

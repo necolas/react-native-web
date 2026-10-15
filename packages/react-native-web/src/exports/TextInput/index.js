@@ -30,7 +30,11 @@ import TextInputState from '../../modules/TextInputState';
  * Determines whether a 'selection' prop differs from a node's existing
  * selection state.
  */
-const isSelectionStale = (node, selection) => {
+type Selection = { readonly start: number, readonly end?: number };
+
+type TextInputElement = HTMLInputElement | HTMLTextAreaElement;
+
+const isSelectionStale = (node: TextInputElement, selection: Selection) => {
   const { selectionEnd, selectionStart } = node;
   const { start, end } = selection;
   return start !== selectionStart || end !== selectionEnd;
@@ -40,7 +44,7 @@ const isSelectionStale = (node, selection) => {
  * Certain input types do no support 'selectSelectionRange' and will throw an
  * error.
  */
-const setSelection = (node, selection) => {
+const setSelection = (node: TextInputElement, selection: Selection) => {
   if (isSelectionStale(node, selection)) {
     const { start, end } = selection;
     try {
@@ -49,51 +53,48 @@ const setSelection = (node, selection) => {
   }
 };
 
-const forwardPropsList = Object.assign(
-  {},
-  forwardedProps.defaultProps,
-  forwardedProps.accessibilityProps,
-  forwardedProps.clickProps,
-  forwardedProps.focusProps,
-  forwardedProps.keyboardProps,
-  forwardedProps.mouseProps,
-  forwardedProps.touchProps,
-  forwardedProps.styleProps,
-  {
-    autoCapitalize: true,
-    autoComplete: true,
-    autoCorrect: true,
-    autoFocus: true,
-    defaultValue: true,
-    disabled: true,
-    lang: true,
-    maxLength: true,
-    onChange: true,
-    onScroll: true,
-    placeholder: true,
-    pointerEvents: true,
-    readOnly: true,
-    rows: true,
-    spellCheck: true,
-    value: true,
-    type: true
-  }
-);
+const forwardPropsList = {
+  ...forwardedProps.defaultProps,
+  ...forwardedProps.accessibilityProps,
+  ...forwardedProps.clickProps,
+  ...forwardedProps.focusProps,
+  ...forwardedProps.keyboardProps,
+  ...forwardedProps.mouseProps,
+  ...forwardedProps.touchProps,
+  ...forwardedProps.styleProps,
+  autoCapitalize: true,
+  autoComplete: true,
+  autoCorrect: true,
+  autoFocus: true,
+  defaultValue: true,
+  disabled: true,
+  lang: true,
+  maxLength: true,
+  onChange: true,
+  onScroll: true,
+  placeholder: true,
+  pointerEvents: true,
+  readOnly: true,
+  rows: true,
+  spellCheck: true,
+  value: true,
+  type: true
+};
 
-const pickProps = (props) => pick(props, forwardPropsList);
+const pickProps = (props: { ... }) => pick(props, forwardPropsList);
 
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
-function isEventComposing(nativeEvent) {
+function isEventComposing(nativeEvent: KeyboardEvent) {
   return nativeEvent.isComposing || nativeEvent.keyCode === 229;
 }
 
-let focusTimeout: ?TimeoutID = null;
+let focusTimeout: ?number = null;
 
-const TextInput: React.AbstractComponent<
-  TextInputProps,
-  HTMLElement & PlatformMethods
-> = React.forwardRef((props, forwardedRef) => {
+const TextInput = (props: {
+  ...TextInputProps,
+  ref?: React.Ref<HTMLElement & PlatformMethods>
+}): React.Node => {
   const {
     autoCapitalize = 'sentences',
     autoComplete,
@@ -136,6 +137,7 @@ const TextInput: React.AbstractComponent<
     onSubmitEditing,
     placeholderTextColor,
     readOnly = false,
+    ref,
     returnKeyType,
     rows,
     secureTextEntry = false,
@@ -192,10 +194,13 @@ const TextInput: React.AbstractComponent<
     type = 'password';
   }
 
-  const dimensions = React.useRef({ height: null, width: null });
+  const dimensions = React.useRef<{ height: ?number, width: ?number }>({
+    height: null,
+    width: null
+  });
   const hostRef = React.useRef(null);
-  const prevSelection = React.useRef(null);
-  const prevSecureTextEntry = React.useRef(false);
+  const prevSelection = React.useRef<?Selection>(null);
+  const prevSecureTextEntry = React.useRef<?boolean>(false);
 
   React.useEffect(() => {
     if (hostRef.current && prevSelection.current) {
@@ -205,7 +210,7 @@ const TextInput: React.AbstractComponent<
   }, [secureTextEntry]);
 
   const handleContentSizeChange = React.useCallback(
-    (hostNode) => {
+    (hostNode: ?HTMLElement) => {
       if (multiline && onContentSizeChange && hostNode != null) {
         const newHeight = hostNode.scrollHeight;
         const newWidth = hostNode.scrollWidth;
@@ -230,7 +235,7 @@ const TextInput: React.AbstractComponent<
   );
 
   const imperativeRef = React.useMemo(
-    () => (hostNode) => {
+    () => (hostNode: any) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `usePlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
@@ -252,7 +257,7 @@ const TextInput: React.AbstractComponent<
     [handleContentSizeChange]
   );
 
-  function handleBlur(e) {
+  function handleBlur(e: any) {
     TextInputState._currentlyFocusedNode = null;
     if (onBlur) {
       e.nativeEvent.text = e.target.value;
@@ -260,7 +265,7 @@ const TextInput: React.AbstractComponent<
     }
   }
 
-  function handleChange(e) {
+  function handleChange(e: any) {
     const hostNode = e.target;
     const text = hostNode.value;
     e.nativeEvent.text = text;
@@ -273,7 +278,7 @@ const TextInput: React.AbstractComponent<
     }
   }
 
-  function handleFocus(e) {
+  function handleFocus(e: any) {
     const hostNode = e.target;
     if (onFocus) {
       e.nativeEvent.text = hostNode.value;
@@ -300,7 +305,7 @@ const TextInput: React.AbstractComponent<
     }
   }
 
-  function handleKeyDown(e) {
+  function handleKeyDown(e: any) {
     const hostNode = e.target;
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
@@ -335,7 +340,7 @@ const TextInput: React.AbstractComponent<
     }
   }
 
-  function handleSelectionChange(e) {
+  function handleSelectionChange(e: any) {
     try {
       const { selectionStart, selectionEnd } = e.target;
       const selection = {
@@ -415,12 +420,7 @@ const TextInput: React.AbstractComponent<
 
   const platformMethodsRef = usePlatformMethods(supportedProps);
 
-  const setRef = useMergeRefs(
-    hostRef,
-    platformMethodsRef,
-    imperativeRef,
-    forwardedRef
-  );
+  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, ref);
 
   supportedProps.ref = setRef;
 
@@ -434,10 +434,9 @@ const TextInput: React.AbstractComponent<
   });
 
   return element;
-});
+};
 
 TextInput.displayName = 'TextInput';
-// $FlowFixMe
 TextInput.State = TextInputState;
 
 const styles = StyleSheet.create({

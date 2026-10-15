@@ -19,11 +19,11 @@ type Sheet = {
 
 const defaultId = 'react-native-stylesheet';
 const roots = new WeakMap<Node, number>();
-const sheets = [];
+const sheets: Array<OrderedCSSStyleSheet> = [];
 
 const initialRules = [
   // minimal top-level reset
-  'html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
+  'html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}',
   'body{margin:0;}',
   // minimal form pseudo-element reset
   'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}',
@@ -34,7 +34,7 @@ export function createSheet(
   root?: HTMLElement,
   id?: string = defaultId
 ): Sheet {
-  let sheet;
+  let sheet: OrderedCSSStyleSheet;
 
   if (canUseDOM) {
     const rootNode: Node = root != null ? root.getRootNode() : document;
@@ -55,7 +55,7 @@ export function createSheet(
           initialSheet != null ? initialSheet.getTextContent() : '';
         // Cast rootNode to 'any' because Flow types for getRootNode are wrong
         sheet = createOrderedCSSStyleSheet(
-          createCSSStyleSheet(id, (rootNode: any), textContent)
+          createCSSStyleSheet(id, rootNode as any, textContent)
         );
         roots.set(rootNode, sheets.length);
         sheets.push(sheet);

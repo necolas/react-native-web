@@ -7,22 +7,11 @@
 
 import { act, render } from '@testing-library/react';
 import * as React from 'react';
-import {
-  describeWithPointerEvent,
-  clearPointers,
-  createEventTarget,
-  setPointerEvent
-} from 'dom-event-testing-library';
+import { clearPointers, createEventTarget } from 'dom-event-testing-library';
 import useHover from '..';
-import { testOnly_resetActiveModality } from '../../modality';
 
-describeWithPointerEvent('useHover', (hasPointerEvents) => {
-  beforeEach(() => {
-    setPointerEvent(hasPointerEvents);
-  });
-
+describe('useHover', () => {
   afterEach(() => {
-    testOnly_resetActiveModality();
     // make sure all tests reset state machine tracking pointers on the mock surface
     clearPointers();
   });

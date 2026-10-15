@@ -157,6 +157,11 @@ import canUseDOM from '../canUseDom';
 
 type ResponderId = number;
 
+type EventPaths = {
+  idPath: Array<ResponderId>,
+  nodePath: Array<any>
+};
+
 type ActiveResponderInstance = {
   id: ResponderId,
   idPath: Array<number>,
@@ -195,21 +200,35 @@ export type ResponderConfig = {
   onSelectionChangeShouldSetResponderCapture?: ?(e: ResponderEvent) => boolean
 };
 
-const emptyObject = {};
+type ShouldSetCallbackName =
+  | 'onStartShouldSetResponder'
+  | 'onStartShouldSetResponderCapture'
+  | 'onMoveShouldSetResponder'
+  | 'onMoveShouldSetResponderCapture'
+  | 'onScrollShouldSetResponder'
+  | 'onScrollShouldSetResponderCapture';
+
+type ShouldSetRegistration = [
+  ShouldSetCallbackName,
+  ShouldSetCallbackName,
+  { bubbles: boolean }
+];
+
+const emptyObject: ResponderConfig = {};
 
 /* ------------ IMPLEMENTATION ------------ */
 
-const startRegistration = [
+const startRegistration: ShouldSetRegistration = [
   'onStartShouldSetResponderCapture',
   'onStartShouldSetResponder',
   { bubbles: true }
 ];
-const moveRegistration = [
+const moveRegistration: ShouldSetRegistration = [
   'onMoveShouldSetResponderCapture',
   'onMoveShouldSetResponder',
   { bubbles: true }
 ];
-const scrollRegistration = [
+const scrollRegistration: ShouldSetRegistration = [
   'onScrollShouldSetResponderCapture',
   'onScrollShouldSetResponder',
   { bubbles: false }
@@ -223,7 +242,7 @@ const shouldSetResponderEvents = {
 };
 
 const emptyResponder = { id: null, idPath: null, node: null };
-const responderListenersMap = new Map();
+const responderListenersMap = new Map<ResponderId, ResponderConfig>();
 
 let isEmulatingMouseEvents = false;
 let trackedTouchCount = 0;
@@ -238,7 +257,7 @@ function changeCurrentResponder(responder: ResponderInstance) {
   currentResponder = responder;
 }
 
-function getResponderConfig(id: ResponderId): ResponderConfig | Object {
+function getResponderConfig(id: ResponderId): ResponderConfig {
   const config = responderListenersMap.get(id);
   return config != null ? config : emptyObject;
 }
@@ -258,10 +277,8 @@ function eventListener(domEvent: any) {
   const eventTarget = domEvent.target;
 
   /**
-   * Manage emulated events and early bailout.
-   * Since PointerEvent is not used yet (lack of support in older Safari), it's
-   * necessary to manually manage the mess of browser touch/mouse events.
-   * And bailout early for termination events when there is no active responder.
+   * Ignore mouse events emulated after a touch.
+   * Bailout early for termination events when there is no active responder.
    */
 
   // Flag when browser may produce emulated events
@@ -324,7 +341,8 @@ function eventListener(domEvent: any) {
    * Responder System logic
    */
 
-  let eventPaths = getResponderPaths(domEvent);
+  const responderPaths = getResponderPaths(domEvent);
+  let eventPaths: ?EventPaths = responderPaths;
   let wasNegotiated = false;
   let wantsResponder;
 
@@ -333,7 +351,7 @@ function eventListener(domEvent: any) {
     // If there is already a responder, prune the event paths to the lowest common ancestor
     // of the existing responder and deepest target of the event.
     const currentResponderIdPath = currentResponder.idPath;
-    const eventIdPath = eventPaths.idPath;
+    const eventIdPath = responderPaths.idPath;
 
     if (currentResponderIdPath != null && eventIdPath != null) {
       const lowestCommonAncestor = getLowestCommonAncestor(
@@ -349,7 +367,7 @@ function eventListener(domEvent: any) {
           (lowestCommonAncestor === currentResponder.id ? 1 : 0);
         eventPaths = {
           idPath: eventIdPath.slice(index),
-          nodePath: eventPaths.nodePath.slice(index)
+          nodePath: responderPaths.nodePath.slice(index)
         };
       } else {
         eventPaths = null;
@@ -476,8 +494,12 @@ function eventListener(domEvent: any) {
  * relevant "shouldSet" functions for the given event type. If any of those functions
  * call "stopPropagation" on the event, stop searching for a responder.
  */
-function findWantsResponder(eventPaths, domEvent, responderEvent) {
-  const shouldSetCallbacks = shouldSetResponderEvents[(domEvent.type: any)]; // for Flow
+function findWantsResponder(
+  eventPaths: EventPaths,
+  domEvent: any,
+  responderEvent: ResponderEvent
+) {
+  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type]; // for Flow
 
   if (shouldSetCallbacks != null) {
     const { idPath, nodePath } = eventPaths;
@@ -486,7 +508,11 @@ function findWantsResponder(eventPaths, domEvent, responderEvent) {
     const shouldSetCallbackBubbleName = shouldSetCallbacks[1];
     const { bubbles } = shouldSetCallbacks[2];
 
-    const check = function (id, node, callbackName) {
+    const check = function (
+      id: ResponderId,
+      node: any,
+      callbackName: ShouldSetCallbackName
+    ) {
       const config = getResponderConfig(id);
       const shouldSetCallback = config[callbackName];
       if (shouldSetCallback != null) {
@@ -627,6 +653,7 @@ const documentEventsBubblePhase = [
   'selectionchange'
 ];
 export function attachListeners() {
+  // $FlowFixMe[incompatible-use]
   if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
     documentEventsBubblePhase.forEach((eventType) => {
@@ -635,6 +662,7 @@ export function attachListeners() {
     documentEventsCapturePhase.forEach((eventType) => {
       document.addEventListener(eventType, eventListener, true);
     });
+    // $FlowFixMe[incompatible-use]
     window.__reactResponderSystemActive = true;
   }
 }

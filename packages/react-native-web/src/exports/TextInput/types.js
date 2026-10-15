@@ -77,6 +77,7 @@ export type TextInputProps = {
   editable?: ?boolean,
   keyboardType?:
     | 'default'
+    | 'decimal-pad'
     | 'email-address'
     | 'number-pad'
     | 'numbers-and-punctuation'

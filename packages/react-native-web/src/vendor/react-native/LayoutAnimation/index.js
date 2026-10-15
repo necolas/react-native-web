@@ -25,7 +25,7 @@ type Type =
 
 type Property = 'opacity' | 'scaleX' | 'scaleY' | 'scaleXY';
 
-type AnimationConfig = $ReadOnly<{|
+type AnimationConfig = Readonly<{|
   duration?: number,
   delay?: number,
   springDamping?: number,
@@ -34,7 +34,7 @@ type AnimationConfig = $ReadOnly<{|
   property?: Property,
 |}>;
 
-type LayoutAnimationConfig = $ReadOnly<{|
+type LayoutAnimationConfig = Readonly<{|
   duration: number,
   create?: AnimationConfig,
   update?: AnimationConfig,
@@ -67,9 +67,13 @@ function create(
   };
 }
 
-const Presets = {
-  easeInEaseOut: (create(300, 'easeInEaseOut', 'opacity'): LayoutAnimationConfig),
-  linear: (create(500, 'linear', 'opacity'): LayoutAnimationConfig),
+const Presets: {
+  easeInEaseOut: LayoutAnimationConfig,
+  linear: LayoutAnimationConfig,
+  spring: LayoutAnimationConfig,
+} = {
+  easeInEaseOut: create(300, 'easeInEaseOut', 'opacity') as LayoutAnimationConfig,
+  linear: create(500, 'linear', 'opacity') as LayoutAnimationConfig,
   spring: {
     duration: 700,
     create: {
@@ -130,13 +134,13 @@ const LayoutAnimation = {
     scaleY: 'scaleY',
     scaleXY: 'scaleXY',
   }),
-  checkConfig(...args: Array<mixed>) {
+  checkConfig(...args: Array<unknown>) {
     console.error('LayoutAnimation.checkConfig(...) has been disabled.');
   },
   Presets,
-  easeInEaseOut: (configureNext.bind(null, Presets.easeInEaseOut): (onAnimationDidEnd?: any) => void),
-  linear: (configureNext.bind(null, Presets.linear): (onAnimationDidEnd?: any) => void),
-  spring: (configureNext.bind(null, Presets.spring): (onAnimationDidEnd?: any) => void),
+  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut) as (onAnimationDidEnd?: any) => void,
+  linear: configureNext.bind(null, Presets.linear) as (onAnimationDidEnd?: any) => void,
+  spring: configureNext.bind(null, Presets.spring) as (onAnimationDidEnd?: any) => void,
 };
 
 export default LayoutAnimation;

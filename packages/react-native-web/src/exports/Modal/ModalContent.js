@@ -20,14 +20,12 @@ export type ModalContentProps = {
   active?: ?(boolean | (() => boolean)),
   children?: any,
   onRequestClose?: ?() => void,
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   transparent?: ?boolean
 };
 
-const ModalContent: React.AbstractComponent<
-  ModalContentProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
-  const { active, children, onRequestClose, transparent, ...rest } = props;
+const ModalContent = (props: ModalContentProps): React.Node => {
+  const { active, children, onRequestClose, ref, transparent, ...rest } = props;
 
   React.useEffect(() => {
     if (canUseDOM) {
@@ -55,14 +53,14 @@ const ModalContent: React.AbstractComponent<
     <View
       {...rest}
       aria-modal={true}
-      ref={forwardedRef}
+      ref={ref}
       role={active ? 'dialog' : null}
       style={style}
     >
       <View style={styles.container}>{children}</View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   modal: {

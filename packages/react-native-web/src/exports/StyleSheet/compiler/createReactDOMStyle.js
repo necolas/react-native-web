@@ -7,8 +7,8 @@
  * @flow
  */
 
+import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import canUseDOM from '../../../modules/canUseDom';
 
 type Style = { [key: string]: any };
 
@@ -25,19 +25,12 @@ type Style = { [key: string]: any };
 
 const emptyObject = {};
 
-const supportsCSS3TextDecoration =
-  !canUseDOM ||
-  (window.CSS != null &&
-    window.CSS.supports != null &&
-    (window.CSS.supports('text-decoration-line', 'none') ||
-      window.CSS.supports('-webkit-text-decoration-line', 'none')));
-
 const MONOSPACE_FONT_STACK = 'monospace,monospace';
 
 const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
-const STYLE_SHORT_FORM_EXPANSIONS = {
+const STYLE_SHORT_FORM_EXPANSIONS: { [string]: Array<string> } = {
   borderColor: [
     'borderTopColor',
     'borderRightColor',
@@ -106,6 +99,117 @@ const STYLE_SHORT_FORM_EXPANSIONS = {
   //paddingInlineEnd: ['marginRight'],
 };
 
+const PREFIXED_PROPERTIES = Object.fromEntries(
+  [
+    'appearance',
+    'backdropFilter',
+    'backfaceVisibility',
+    'boxDecorationBreak',
+    'hyphenateCharacter',
+    'hyphens',
+    'initialLetter',
+    'lineClamp',
+    'mask',
+    'maskClip',
+    'maskImage',
+    'maskOrigin',
+    'maskPosition',
+    'maskRepeat',
+    'maskSize',
+    'printColorAdjust',
+    'rubyPosition',
+    'textEmphasis',
+    'textEmphasisColor',
+    'textEmphasisPosition',
+    'textEmphasisStyle',
+    'textSizeAdjust',
+    'userSelect'
+  ].map((prop) => [
+    prop,
+    'Webkit' + prop.charAt(0).toUpperCase() + prop.substring(1)
+  ])
+);
+
+const PREFIXED_PROPERTY_NAMES = Object.keys(PREFIXED_PROPERTIES)
+  .map(hyphenateStyleName)
+  .join('|');
+
+const PREFIXED_PROPERTY_TEST_PATTERN = new RegExp(
+  `(?:^|[\\s,])(?:${PREFIXED_PROPERTY_NAMES})(?=[\\s,]|$)`
+);
+
+const PREFIXED_PROPERTY_REPLACE_PATTERN = new RegExp(
+  `(^|\\s)(${PREFIXED_PROPERTY_NAMES})(?=\\s|$)`,
+  'g'
+);
+
+const SIZING_PROPERTIES: Set<string> = new Set([
+  'height',
+  'width',
+  'minHeight',
+  'minWidth',
+  'maxHeight',
+  'maxWidth',
+  'columnWidth'
+]);
+
+const PREFIXED_SIZING_VALUES: Set<string> = new Set([
+  'min-content',
+  'max-content',
+  'fill-available',
+  'fit-content',
+  'contain-floats'
+]);
+
+const PREFIXED_FUNCTIONS_PATTERN = /(cross-fade|image-set)\(/g;
+
+// Only split multi values, not cubic beziers
+const VALUE_SEPARATOR_PATTERN = /,(?![^()]*(?:\([^()]*\))?\))/g;
+
+const prefixTransitionValue = (value: string): string => {
+  if (!PREFIXED_PROPERTY_TEST_PATTERN.test(value)) {
+    return value;
+  }
+
+  return value
+    .split(VALUE_SEPARATOR_PATTERN)
+    .map((singleValue) => {
+      const prefixedValue = singleValue.replace(
+        PREFIXED_PROPERTY_REPLACE_PATTERN,
+        '$1-webkit-$2'
+      );
+
+      return prefixedValue !== singleValue
+        ? `${prefixedValue},${singleValue}`
+        : singleValue;
+    })
+    .join(',');
+};
+
+const prefixValue = (prop: string, value: any): any => {
+  if (typeof value !== 'string' || value.indexOf('-webkit-') > -1) {
+    return value;
+  }
+
+  const prefixedValue = value.replace(
+    PREFIXED_FUNCTIONS_PATTERN,
+    '-webkit-$1('
+  );
+
+  if (prefixedValue !== value) {
+    return [prefixedValue, value];
+  }
+
+  if (SIZING_PROPERTIES.has(prop) && PREFIXED_SIZING_VALUES.has(value)) {
+    return ['-webkit-' + value, value];
+  }
+  if (prop === 'transition' || prop === 'transitionProperty') {
+    return prefixTransitionValue(value);
+  }
+
+  return value;
+};
+
 /**
  * Reducer
  */
@@ -115,7 +219,7 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     return emptyObject;
   }
 
-  const resolvedStyle = {};
+  const resolvedStyle: Style = {};
 
   for (const prop in style) {
     const value = style[prop];
@@ -128,10 +232,8 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
     }
 
     if (prop === 'backgroundClip') {
-      // TODO: remove once this issue is fixed
-      // https://github.com/rofrischmann/inline-style-prefixer/issues/159
+      resolvedStyle.backgroundClip = value;
       if (value === 'text') {
-        resolvedStyle.backgroundClip = value;
         resolvedStyle.WebkitBackgroundClip = value;
       }
     } else if (prop === 'flex') {
@@ -153,14 +255,6 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
         resolvedStyle[prop] = MONOSPACE_FONT_STACK;
       } else {
         resolvedStyle[prop] = value;
-      }
-    } else if (prop === 'textDecorationLine') {
-      // use 'text-decoration' for browsers that only support CSS2
-      // text-decoration (e.g., IE, Edge)
-      if (!supportsCSS3TextDecoration) {
-        resolvedStyle.textDecoration = value;
-      } else {
-        resolvedStyle.textDecorationLine = value;
       }
     } else if (prop === 'writingDirection') {
       resolvedStyle.direction = value;
@@ -195,15 +289,28 @@ const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
           resolvedStyle.paddingBottom = value;
         }
       } else if (longFormProperties) {
-        longFormProperties.forEach((longForm, i) => {
+        longFormProperties.forEach((longForm) => {
           // The value of any longform property in the original styles takes
           // precedence over the shortform's value.
           if (style[longForm] == null) {
             resolvedStyle[longForm] = value;
           }
         });
-      } else {
+      } else if (isInline) {
         resolvedStyle[prop] = value;
+      } else {
+        const prefixedProp = PREFIXED_PROPERTIES[prop];
+        const prefixedValue = prefixValue(prop, value);
+        resolvedStyle[prop] = prefixedValue;
+
+        if (prefixedProp != null) {
+          resolvedStyle[prefixedProp] = prefixedValue;
+        }
+
+        // Firefox < 97
+        if (prop === 'printColorAdjust') {
+          resolvedStyle.colorAdjust = prefixedValue;
+        }
       }
     }
   }

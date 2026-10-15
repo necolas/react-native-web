@@ -24,6 +24,7 @@ type SwitchProps = {
   activeTrackColor?: ColorValue,
   disabled?: boolean,
   onValueChange?: (e: any) => void,
+  ref?: React.Ref<any>,
   thumbColor?: ColorValue,
   trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
   value?: boolean
@@ -41,10 +42,7 @@ const defaultActiveThumbColor = '#009688';
 const defaultThumbColor = '#FAFAFA';
 const defaultDisabledThumbColor = '#BDBDBD';
 
-const Switch: React.AbstractComponent<
-  SwitchProps,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
+const Switch = (props: SwitchProps): React.Node => {
   const {
     'aria-label': ariaLabel,
     accessibilityLabel,
@@ -52,6 +50,7 @@ const Switch: React.AbstractComponent<
     activeTrackColor,
     disabled = false,
     onValueChange,
+    ref,
     style = emptyObject,
     thumbColor,
     trackColor,
@@ -59,7 +58,7 @@ const Switch: React.AbstractComponent<
     ...other
   } = props;
 
-  const thumbRef = React.useRef(null);
+  const thumbRef = React.useRef<?React.ElementRef<typeof View>>(null);
 
   function handleChange(event: Object) {
     if (onValueChange != null) {
@@ -98,8 +97,8 @@ const Switch: React.AbstractComponent<
   })();
 
   const thumbCurrentColor = value
-    ? activeThumbColor ?? defaultActiveThumbColor
-    : thumbColor ?? defaultThumbColor;
+    ? (activeThumbColor ?? defaultActiveThumbColor)
+    : (thumbColor ?? defaultThumbColor);
 
   const thumbHeight = height;
   const thumbWidth = thumbHeight;
@@ -175,7 +174,7 @@ const Switch: React.AbstractComponent<
     onBlur: handleFocusState,
     onChange: handleChange,
     onFocus: handleFocusState,
-    ref: forwardedRef,
+    ref,
     style: [styles.nativeControl, styles.cursorInherit],
     type: 'checkbox',
     role: 'switch'
@@ -188,7 +187,7 @@ const Switch: React.AbstractComponent<
       {nativeControl}
     </View>
   );
-});
+};
 
 Switch.displayName = 'Switch';
 

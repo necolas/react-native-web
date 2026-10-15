@@ -10,34 +10,32 @@
 
 import useAnimatedProps from './useAnimatedProps';
 import useMergeRefs from '../Utilities/useMergeRefs';
-import StyleSheet from '../../../exports/StyleSheet';
 import View from '../../../exports/View';
 import * as React from 'react';
 
 export type AnimatedComponentType<
-  -Props: {+[string]: mixed, ...},
-  +Instance = mixed,
-> = React.AbstractComponent<
-  $ObjMap<
-    Props &
-      $ReadOnly<{
-        passthroughAnimatedPropExplicitValues?: React.ElementConfig<
-          typeof View,
-        >,
-      }>,
-    () => any,
-  >,
-  Instance,
->;
+  in Props extends {readonly [string]: unknown, ...},
+  out Instance = unknown,
+> = component(
+  ref?: React.Ref<Instance>,
+  ...{
+    [K in keyof {
+      ...Omit<Props, 'ref'>,
+      readonly passthroughAnimatedPropExplicitValues?: React.ComponentProps<
+        typeof View,
+      >,
+    }]: any,
+  }
+);
 
 /**
  * Experimental implementation of `createAnimatedComponent` that is intended to
  * be compatible with concurrent rendering.
  */
-export default function createAnimatedComponent<TProps: {...}, TInstance>(
-  Component: React.AbstractComponent<TProps, TInstance>,
-): React.AbstractComponent<TProps, TInstance> {
-  return React.forwardRef((props, forwardedRef) => {
+export default function createAnimatedComponent<TProps extends {...}, TInstance>(
+  Component: component(ref?: React.Ref<TInstance>, ...TProps),
+): AnimatedComponentType<TProps, TInstance> {
+  const AnimatedComponent = ({ref: forwardedRef, ...props}: any) => {
     const [reducedProps, callbackRef] = useAnimatedProps<TProps, TInstance>(
       props,
     );
@@ -61,5 +59,6 @@ export default function createAnimatedComponent<TProps: {...}, TInstance>(
         ref={ref}
       />
     );
-  });
+  };
+  return AnimatedComponent as any;
 }

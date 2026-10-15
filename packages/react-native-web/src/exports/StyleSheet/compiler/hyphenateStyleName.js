@@ -9,9 +9,9 @@
 
 const uppercasePattern = /[A-Z]/g;
 const msPattern = /^ms-/;
-const cache = {};
+const cache: { [string]: string } = {};
 
-function toHyphenLower(match) {
+function toHyphenLower(match: string) {
   return '-' + match.toLowerCase();
 }
 

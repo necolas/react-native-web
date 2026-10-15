@@ -184,4 +184,94 @@ describe('compiler/createReactDOMStyle', () => {
       `);
     });
   });
+
+  describe('prefixed values', () => {
+    test('unitless number', () => {
+      expect(createReactDOMStyle({ initialLetter: 2 })).toEqual({
+        initialLetter: 2,
+        WebkitInitialLetter: 2
+      });
+    });
+
+    test('backgroundClip', () => {
+      expect(createReactDOMStyle({ backgroundClip: 'padding-box' })).toEqual({
+        backgroundClip: 'padding-box'
+      });
+      expect(createReactDOMStyle({ backgroundClip: 'text' })).toEqual({
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text'
+      });
+    });
+
+    test('image-set', () => {
+      const backgroundImage = 'image-set("a.png" 1x, "b.png" 2x)';
+      expect(createReactDOMStyle({ backgroundImage })).toEqual({
+        backgroundImage: [
+          '-webkit-image-set("a.png" 1x, "b.png" 2x)',
+          backgroundImage
+        ]
+      });
+      expect(createReactDOMStyle({ backgroundImage }, true)).toEqual({
+        backgroundImage
+      });
+      expect(
+        createReactDOMStyle({
+          backgroundImage: '-webkit-image-set("a.png" 1x)'
+        })
+      ).toEqual({ backgroundImage: '-webkit-image-set("a.png" 1x)' });
+    });
+
+    test('image-set and cross-fade', () => {
+      const backgroundImage =
+        'image-set("a.png" 1x), cross-fade(url(a.png), url(b.png), 50%)';
+      expect(createReactDOMStyle({ backgroundImage })).toEqual({
+        backgroundImage: [
+          '-webkit-image-set("a.png" 1x), -webkit-cross-fade(url(a.png), url(b.png), 50%)',
+          backgroundImage
+        ]
+      });
+    });
+
+    test('sizing', () => {
+      expect(createReactDOMStyle({ width: 'fill-available' })).toEqual({
+        width: ['-webkit-fill-available', 'fill-available']
+      });
+    });
+
+    test('transition', () => {
+      expect(
+        createReactDOMStyle({
+          transition: 'opacity 1s cubic-bezier(0, 0, 1, 1), backdrop-filter 2s'
+        })
+      ).toEqual({
+        transition:
+          'opacity 1s cubic-bezier(0, 0, 1, 1), -webkit-backdrop-filter 2s, backdrop-filter 2s'
+      });
+      expect(
+        createReactDOMStyle({ transitionProperty: 'opacity,mask' })
+      ).toEqual({
+        transitionProperty: 'opacity,-webkit-mask,mask'
+      });
+      expect(
+        createReactDOMStyle({ transitionProperty: 'opacity, transform' })
+      ).toEqual({
+        transitionProperty: 'opacity, transform'
+      });
+      expect(
+        createReactDOMStyle({
+          transitionProperty: 'mask-image, text-emphasis-color'
+        })
+      ).toEqual({
+        transitionProperty:
+          '-webkit-mask-image,mask-image, -webkit-text-emphasis-color, text-emphasis-color'
+      });
+      expect(
+        createReactDOMStyle({
+          transition: 'opacity 1s, -webkit-transform 1s, backdrop-filter 1s'
+        })
+      ).toEqual({
+        transition: 'opacity 1s, -webkit-transform 1s, backdrop-filter 1s'
+      });
+    });
+  });
 });

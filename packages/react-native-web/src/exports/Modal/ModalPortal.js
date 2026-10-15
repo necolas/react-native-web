@@ -18,7 +18,7 @@ export type ModalPortalProps = {|
 
 function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;
-  const elementRef = React.useRef(null);
+  const elementRef = React.useRef<?HTMLDivElement>(null);
 
   if (canUseDOM && !elementRef.current) {
     const element = document.createElement('div');

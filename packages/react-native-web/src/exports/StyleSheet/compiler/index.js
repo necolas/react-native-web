@@ -11,7 +11,6 @@ import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import prefixStyles from '../../../modules/prefixStyles';
 
 type Value = Object | Array<any> | string | number;
 type Style = { [key: string]: Value };
@@ -25,7 +24,7 @@ type CompiledStyle = {
 };
 type CompilerOutput = [CompiledStyle, Array<RulesData>];
 
-const cache = new Map();
+const cache = new Map<string, [string, RulesData]>();
 const emptyObject = {};
 
 const classicGroup = 1;
@@ -141,7 +140,7 @@ export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
 
-  function atomicCompile(srcProp, prop, value) {
+  function atomicCompile(srcProp: string, prop: string, value: Value): string {
     const valueString = stringifyValueWithProperty(value, prop);
     const cacheKey = prop + valueString;
     const cachedResult = cache.get(cacheKey);
@@ -166,7 +165,7 @@ export function atomic(style: Style): CompilerOutput {
     .forEach((srcProp) => {
       const value = style[srcProp];
       if (value != null) {
-        let localizeableValue;
+        let localizeableValue: string | Array<string> | void;
         // BiDi flip values
         if (PROPERTIES_VALUE.indexOf(srcProp) > -1) {
           const left = atomicCompile(srcProp, srcProp, 'left');
@@ -236,8 +235,8 @@ export function atomic(style: Style): CompilerOutput {
  * No support for 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function classic(style: Style, name: string): CompilerOutput {
-  const compiledStyle = { $$css: true };
-  const compiledRules = [];
+  const compiledStyle: CompiledStyle = { $$css: true };
+  const compiledRules: Rules = [];
 
   const { animationKeyframes, ...rest } = style;
   const identifier = createIdentifier('css', name, JSON.stringify(style));
@@ -263,10 +262,10 @@ export function classic(style: Style, name: string): CompilerOutput {
 export function inline(
   originalStyle: Style,
   isRTL?: boolean
-): { [key: string]: mixed } {
+): { [key: string]: unknown } {
   const style = originalStyle || emptyObject;
-  const frozenProps = {};
-  const nextStyle = {};
+  const frozenProps: { [string]: boolean } = {};
+  const nextStyle: Style = {};
 
   for (const originalProp in style) {
     const originalValue = style[originalProp];
@@ -274,6 +273,7 @@ export function inline(
     let value = originalValue;
 
     if (
+      // $FlowFixMe[invalid-this-arg]
       !Object.prototype.hasOwnProperty.call(style, originalProp) ||
       originalValue == null
     ) {
@@ -295,7 +295,6 @@ export function inline(
     }
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
-      // $FlowFixMe
       const originalValues = Array.isArray(originalValue)
         ? originalValue
         : [originalValue];
@@ -321,10 +320,6 @@ export function inline(
     if (prop === originalProp) {
       frozenProps[prop] = true;
     }
-
-    //    if (PROPERTIES_I18N.hasOwnProperty(originalProp)) {
-    //    frozenProps[prop] = true;
-    //}
   }
 
   return createReactDOMStyle(nextStyle, true);
@@ -334,10 +329,7 @@ export function inline(
  * Create a value string that normalizes different input values with a common
  * output.
  */
-export function stringifyValueWithProperty(
-  value: Value,
-  property: ?string
-): string {
+function stringifyValueWithProperty(value: Value, property: ?string): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'
@@ -349,8 +341,12 @@ export function stringifyValueWithProperty(
  * Create the Atomic CSS rules needed for a given StyleSheet rule.
  * Translates StyleSheet declarations to CSS.
  */
-function createAtomicRules(identifier: string, property, value): Rules {
-  const rules = [];
+function createAtomicRules(
+  identifier: string,
+  property: string,
+  value: Value
+): Rules {
+  const rules: Rules = [];
   const selector = `.${identifier}`;
 
   // Handle non-standard properties and object values that require multiple
@@ -368,12 +364,7 @@ function createAtomicRules(identifier: string, property, value): Rules {
     // Equivalent to using '::placeholder'
     case 'placeholderTextColor': {
       const block = createDeclarationBlock({ color: value, opacity: 1 });
-      rules.push(
-        `${selector}::-webkit-input-placeholder${block}`,
-        `${selector}::-moz-placeholder${block}`,
-        `${selector}:-ms-input-placeholder${block}`,
-        `${selector}::placeholder${block}`
-      );
+      rules.push(`${selector}::placeholder${block}`);
       break;
     }
 
@@ -427,15 +418,15 @@ function createAtomicRules(identifier: string, property, value): Rules {
  * Creates a CSS declaration block from a StyleSheet object.
  */
 function createDeclarationBlock(style: Style): string {
-  const domStyle = prefixStyles(createReactDOMStyle(style));
+  const domStyle = createReactDOMStyle(style);
   const declarationsString = Object.keys(domStyle)
     .map((property) => {
       const value = domStyle[property];
       const prop = hyphenateStyleName(property);
-      // The prefixer may return an array of values:
-      // { display: [ '-webkit-flex', 'flex' ] }
+      // The prefixing function may return an array of values:
+      // { width: [ '-webkit-fill-available', 'fill-available' ] }
       // to represent "fallback" declarations
-      // { display: -webkit-flex; display: flex; }
+      // { width: -webkit-fill-available; width: fill-available; }
       if (Array.isArray(value)) {
         return value.map((v) => `${prop}:${v}`).join(';');
       } else {
@@ -464,7 +455,6 @@ function createIdentifier(prefix: string, name: string, key: string): string {
  * Create individual CSS keyframes rules.
  */
 function createKeyframes(keyframes: Object): [string, Rules] {
-  const prefixes = ['-webkit-', ''];
   const identifier = createIdentifier(
     'r',
     'animation',
@@ -482,22 +472,20 @@ function createKeyframes(keyframes: Object): [string, Rules] {
       .join('') +
     '}';
 
-  const rules = prefixes.map((prefix) => {
-    return `@${prefix}keyframes ${identifier}${steps}`;
-  });
+  const rules = [`@keyframes ${identifier}${steps}`];
   return [identifier, rules];
 }
 
 /**
  * Create CSS keyframes rules and names from a StyleSheet keyframes object.
  */
-function processKeyframesValue(keyframesValue) {
+function processKeyframesValue(keyframesValue: Value): [Array<string>, Rules] {
   if (typeof keyframesValue === 'number') {
     throw new Error(`Invalid CSS keyframes type: ${typeof keyframesValue}`);
   }
 
-  const animationNames = [];
-  const rules = [];
+  const animationNames: Array<string> = [];
+  const rules: Rules = [];
   const value = Array.isArray(keyframesValue)
     ? keyframesValue
     : [keyframesValue];

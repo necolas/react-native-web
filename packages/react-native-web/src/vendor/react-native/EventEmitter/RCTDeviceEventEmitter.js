@@ -19,4 +19,4 @@ type RCTDeviceEventDefinitions = $FlowFixMe;
  *
  * NativeModules that emit events should instead subclass `NativeEventEmitter`.
  */
-export default (new EventEmitter(): IEventEmitter<RCTDeviceEventDefinitions>);
+export default new EventEmitter() as IEventEmitter<RCTDeviceEventDefinitions>;

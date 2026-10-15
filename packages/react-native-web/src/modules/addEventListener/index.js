@@ -8,56 +8,26 @@
  */
 
 'use strict';
-import canUseDOM from '../canUseDom';
 
 type Listener = (e: any) => void;
 
 export type EventOptions = {
-  capture?: boolean,
-  passive?: boolean,
-  once?: boolean
+  readonly capture?: boolean,
+  readonly passive?: boolean,
+  readonly once?: boolean
 };
 
 const emptyFunction = () => {};
-
-function supportsPassiveEvents(): boolean {
-  let supported = false;
-  // Check if browser supports event with passive listeners
-  // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
-  if (canUseDOM) {
-    try {
-      const options = {};
-      Object.defineProperty(options, 'passive', {
-        get() {
-          supported = true;
-          return false;
-        }
-      });
-      window.addEventListener('test', null, options);
-      window.removeEventListener('test', null, options);
-    } catch (e) {}
-  }
-  return supported;
-}
-
-const canUsePassiveEvents = supportsPassiveEvents();
-
-function getOptions(options: ?EventOptions): EventOptions | boolean {
-  if (options == null) {
-    return false;
-  }
-  return canUsePassiveEvents ? options : Boolean(options.capture);
-}
 
 /**
  * Shim generic API compatibility with ReactDOM's synthetic events, without needing the
  * large amount of code ReactDOM uses to do this. Ideally we wouldn't use a synthetic
  * event wrapper at all.
  */
-function isPropagationStopped() {
+function isPropagationStopped(this: Event) {
   return this.cancelBubble;
 }
-function isDefaultPrevented() {
+function isDefaultPrevented(this: Event) {
   return this.defaultPrevented;
 }
 function normalizeEvent(event: any) {
@@ -77,7 +47,7 @@ export function addEventListener(
   listener: Listener,
   options: ?EventOptions
 ): () => void {
-  const opts = getOptions(options);
+  const opts = options ?? false;
   const compatListener = (e: any) => listener(normalizeEvent(e));
   target.addEventListener(type, compatListener, opts);
 

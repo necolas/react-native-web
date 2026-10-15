@@ -18,15 +18,14 @@ type ButtonProps = {|
   color?: ?string,
   disabled?: boolean,
   onPress?: ?(e: any) => void,
+  ref?: React.Ref<React.ElementRef<typeof TouchableOpacity>>,
   testID?: ?string,
   title: string
 |};
 
-const Button: React.AbstractComponent<
-  ButtonProps,
-  React.ElementRef<typeof TouchableOpacity>
-> = React.forwardRef((props, forwardedRef) => {
-  const { accessibilityLabel, color, disabled, onPress, testID, title } = props;
+const Button = (props: ButtonProps): React.Node => {
+  const { accessibilityLabel, color, disabled, onPress, ref, testID, title } =
+    props;
 
   return (
     <TouchableOpacity
@@ -35,7 +34,7 @@ const Button: React.AbstractComponent<
       disabled={disabled}
       focusable={!disabled}
       onPress={onPress}
-      ref={forwardedRef}
+      ref={ref}
       style={[
         styles.button,
         color && { backgroundColor: color },
@@ -48,7 +47,7 @@ const Button: React.AbstractComponent<
       </Text>
     </TouchableOpacity>
   );
-});
+};
 
 Button.displayName = 'Button';
 

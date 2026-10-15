@@ -25,7 +25,7 @@ import type {RgbaValue} from '../nodes/AnimatedColor';
 
 import AnimatedColor from '../nodes/AnimatedColor';
 
-export type TimingAnimationConfig = $ReadOnly<{
+export type TimingAnimationConfig = Readonly<{
   ...AnimationConfig,
   toValue:
     | number
@@ -44,7 +44,7 @@ export type TimingAnimationConfig = $ReadOnly<{
   delay?: number,
 }>;
 
-export type TimingAnimationConfigSingle = $ReadOnly<{
+export type TimingAnimationConfigSingle = Readonly<{
   ...AnimationConfig,
   toValue: number,
   easing?: (value: number) => number,
@@ -52,7 +52,7 @@ export type TimingAnimationConfigSingle = $ReadOnly<{
   delay?: number,
 }>;
 
-let _easeInOut;
+let _easeInOut: ?(t: number) => number;
 function easeInOut() {
   if (!_easeInOut) {
     _easeInOut = Easing.inOut(Easing.ease);
@@ -127,7 +127,6 @@ class TimingAnimation extends Animation {
           this.__startNativeAnimation(animatedValue);
         } else {
           this._animationFrame = requestAnimationFrame(
-            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             this.onUpdate.bind(this),
           );
         }
@@ -160,7 +159,6 @@ class TimingAnimation extends Animation {
           (this._toValue - this._fromValue),
     );
     if (this.__active) {
-      // $FlowFixMe[method-unbinding] added when improving typing for this parameters
       this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
     }
   }
