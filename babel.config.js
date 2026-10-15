@@ -1,6 +1,7 @@
 const createConfig = ({ modules }) => {
   const plugins = [
-    ['babel-plugin-syntax-hermes-parser', { parseLangTypes: 'flow' }]
+    ['babel-plugin-syntax-hermes-parser', { parseLangTypes: 'flow' }],
+    '@babel/plugin-transform-flow-strip-types'
   ].concat(modules ? ['babel-plugin-add-module-exports'] : []);
 
   return {
@@ -26,10 +27,9 @@ const createConfig = ({ modules }) => {
           }
         }
       ],
-      ['@babel/preset-react', { useSpread: true }],
-      '@babel/preset-flow'
+      ['@babel/preset-react', { useSpread: true }]
     ],
-    plugins: plugins
+    plugins
   };
 };
 
