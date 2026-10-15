@@ -2,7 +2,7 @@ module.exports = {
   settings: {
     react: {
       version: '19.0',
-      flowVersion: '0.335.0' // Flow version
+      flowVersion: '0.335.0'
     }
   },
   // hermes parser to support Flow syntax
