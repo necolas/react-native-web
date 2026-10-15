@@ -21,7 +21,7 @@ export type AnimatedComponentType<
   ...{
     [K in keyof {
       ...Omit<Props, 'ref'>,
-      readonly passthroughAnimatedPropExplicitValues?: React.ElementConfig<
+      readonly passthroughAnimatedPropExplicitValues?: React.ComponentProps<
         typeof View,
       >,
     }]: any,

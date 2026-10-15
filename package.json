@@ -39,7 +39,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "flow-bin": "0.335.0",
+    "flow-bin": "0.336.0",
     "hermes-eslint": "0.37.0",
     "husky": "^9.1.7",
     "jest": "^30.5.2",

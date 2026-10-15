@@ -289,7 +289,7 @@ type OptionalProps = {|
 |};
 
 export type Props = {|
-  ...React.ElementConfig<typeof ScrollView>,
+  ...React.ComponentProps<typeof ScrollView>,
   ...RequiredProps,
   ...OptionalProps,
 |};

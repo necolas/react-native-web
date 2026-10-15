@@ -96,7 +96,7 @@ type OptionalProps<SectionT extends SectionBase<any>> = {|
   onEndReached?: ?({distanceFromEnd: number, ...}) => void,
 |};
 
-type VirtualizedListProps = React.ElementConfig<typeof VirtualizedList>;
+type VirtualizedListProps = React.ComponentProps<typeof VirtualizedList>;
 
 export type Props<SectionT> = {|
   ...RequiredProps<SectionT>,
@@ -599,7 +599,4 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
   );
 }
 
-/* $FlowFixMe[class-object-subtyping] added when improving typing for this
- * parameters */
-// $FlowFixMe[method-unbinding]
 export default VirtualizedSectionList;

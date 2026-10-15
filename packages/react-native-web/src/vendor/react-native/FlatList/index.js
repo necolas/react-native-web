@@ -175,7 +175,7 @@ type FlatListProps<ItemT> = {|
   ...OptionalProps<ItemT>,
 |};
 
-type VirtualizedListProps = React.ElementConfig<typeof VirtualizedList>;
+type VirtualizedListProps = React.ComponentProps<typeof VirtualizedList>;
 
 export type Props<ItemT> = {
   ...Omit<
@@ -392,8 +392,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     | ?React.ElementRef<typeof View>
     | ?React.ElementRef<ScrollViewNativeComponent> {
     if (this._listRef) {
-      /* $FlowFixMe[incompatible-return] Suppresses errors found when fixing
-       * TextInput typing */
       return this._listRef.getScrollRef();
     }
   }
@@ -417,9 +415,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
         }));
     } else if (this.props.onViewableItemsChanged) {
       this._virtualizedListPairs.push({
-        /* $FlowFixMe[incompatible-call] (>=0.63.0 site=react_native_fb) This
-         * comment suppresses an error found when Flow v0.63 was deployed. To
-         * see the error delete this comment and run Flow. */
         viewabilityConfig: this.props.viewabilityConfig,
         onViewableItemsChanged: this._createOnViewableItemsChanged(
           this.props.onViewableItemsChanged,
@@ -428,7 +423,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   }
 
-  // $FlowFixMe[missing-local-annot]
   componentDidUpdate(prevProps: Props<ItemT>) {
     invariant(
       prevProps.numColumns === this.props.numColumns,
@@ -459,12 +453,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     this._listRef = ref;
   };
 
-  // $FlowFixMe[missing-local-annot]
   _checkProps(props: Props<ItemT>) {
     const {
-      // $FlowFixMe[prop-missing] this prop doesn't exist, is only used for an invariant
       getItem,
-      // $FlowFixMe[prop-missing] this prop doesn't exist, is only used for an invariant
       getItemCount,
       horizontal,
       columnWrapperStyle,
@@ -544,7 +535,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
         .join(':');
     }
 
-    // $FlowFixMe[incompatible-call] Can't call keyExtractor with an array
     return keyExtractor(items, index);
   };
 
@@ -601,11 +591,8 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     const render = (props: RenderItemProps<ItemT>): React.Node => {
       if (ListItemComponent) {
         // $FlowFixMe[not-a-component] Component isn't valid
-        // $FlowFixMe[incompatible-type-arg] Component isn't valid
-        // $FlowFixMe[incompatible-return] Component isn't valid
         return <ListItemComponent {...props} />;
       } else if (renderItem) {
-        // $FlowFixMe[incompatible-call]
         return renderItem(props);
       } else {
         return null;
@@ -659,7 +646,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     const renderer = strictMode ? this._memoizedRenderer : this._renderer;
 
     return (
-      // $FlowFixMe[incompatible-exact] - `restProps` (`Props`) is inexact.
       <VirtualizedList
         {...restProps}
         getItem={this._getItem}

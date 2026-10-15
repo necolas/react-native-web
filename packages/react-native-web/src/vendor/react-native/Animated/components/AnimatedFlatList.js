@@ -24,6 +24,6 @@ const FlatListWithEventThrottle = (props: any) => <FlatList scrollEventThrottle=
 export default createAnimatedComponent(
   FlatListWithEventThrottle,
 ) as AnimatedComponentType<
-  React.ElementConfig<typeof FlatList>,
+  React.ComponentProps<typeof FlatList>,
   React.ElementRef<typeof FlatList>,
 >;

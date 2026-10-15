@@ -139,12 +139,6 @@ export default class CellRenderer<ItemT> extends React.Component<
     }
 
     if (ListItemComponent) {
-      /* $FlowFixMe[not-a-component] (>=0.108.0 site=react_native_fb) This
-       * comment suppresses an error found when Flow v0.108 was deployed. To
-       * see the error, delete this comment and run Flow. */
-      /* $FlowFixMe[incompatible-type-arg] (>=0.108.0 site=react_native_fb)
-       * This comment suppresses an error found when Flow v0.108 was deployed.
-       * To see the error, delete this comment and run Flow. */
       // $FlowFixMe[not-a-function]
       return React.createElement(ListItemComponent, {
         item,
@@ -195,8 +189,7 @@ export default class CellRenderer<ItemT> extends React.Component<
     )
       ? // $FlowFixMe[incompatible-type]
         ItemSeparatorComponent
-      : // $FlowFixMe[incompatible-type]
-        ItemSeparatorComponent && (
+      : ItemSeparatorComponent && (
           <ItemSeparatorComponent {...this.state.separatorProps} />
         );
     const cellStyle = inversionStyle

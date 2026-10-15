@@ -24,6 +24,6 @@ const SectionListWithEventThrottle = (props: any) => <SectionList scrollEventThr
 export default createAnimatedComponent(
   SectionListWithEventThrottle,
 ) as AnimatedComponentType<
-  React.ElementConfig<typeof SectionList>,
+  React.ComponentProps<typeof SectionList>,
   React.ElementRef<typeof SectionList>,
 >;

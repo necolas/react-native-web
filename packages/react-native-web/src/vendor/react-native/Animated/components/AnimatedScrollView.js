@@ -18,11 +18,11 @@ import type {AnimatedComponentType} from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const ScrollViewWithEventThrottle = (props: React.ElementConfig<typeof ScrollView>) => <ScrollView scrollEventThrottle={0.0001} {...props} />;
+const ScrollViewWithEventThrottle = (props: React.ComponentProps<typeof ScrollView>) => <ScrollView scrollEventThrottle={0.0001} {...props} />;
 
 export default createAnimatedComponent(
   ScrollViewWithEventThrottle,
 ) as AnimatedComponentType<
-  React.ElementConfig<typeof ScrollView>,
+  React.ComponentProps<typeof ScrollView>,
   React.ElementRef<typeof ScrollView>,
 >;
