@@ -18,7 +18,8 @@ export default function ClipboardPage() {
       </View>
       <TextInput
         multiline={true}
-        placeholder={'Try pasting here afterwards'}
+        placeholder="Try pasting here afterwards"
+        placeholderTextColor="#999"
         style={styles.textInput}
       />
     </Example>

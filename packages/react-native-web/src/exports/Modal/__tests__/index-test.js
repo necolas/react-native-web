@@ -13,7 +13,7 @@ describe('components/Modal', () => {
   test('visible by default', () => {
     const { getByTestId } = render(
       <Modal>
-        <a data-testid={'inside'} href={'#hello'}>
+        <a data-testid="inside" href="#hello">
           Hello
         </a>
       </Modal>
@@ -37,7 +37,7 @@ describe('components/Modal', () => {
   test('render children when visible', () => {
     const { getByTestId } = render(
       <Modal visible={true}>
-        <a data-testid={'inside'} href={'#hello'}>
+        <a data-testid="inside" href="#hello">
           Hello
         </a>
       </Modal>
@@ -50,7 +50,7 @@ describe('components/Modal', () => {
   test('does not render children when not visible', () => {
     const { container } = render(
       <Modal visible={false}>
-        <a data-testid={'inside'} href={'#hello'}>
+        <a data-testid="inside" href="#hello">
           Hello
         </a>
       </Modal>
@@ -61,13 +61,13 @@ describe('components/Modal', () => {
   test('invisible modals will not be the active modal', () => {
     const { getByTestId } = render(
       <>
-        <Modal key={'modal-a'} visible={true}>
-          <a data-testid={'inside-a'} href={'#hello'}>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
             Hello
           </a>
         </Modal>
-        <Modal key={'modal-b'} visible={false}>
-          <a data-testid={'inside-b'} href={'#hello'}>
+        <Modal key="modal-b" visible={false}>
+          <a data-testid="inside-b" href="#hello">
             Hello
           </a>
         </Modal>
@@ -82,13 +82,13 @@ describe('components/Modal', () => {
   test('multiple modals will only mark one as active', () => {
     const { getByTestId } = render(
       <>
-        <Modal key={'modal-a'} visible={true}>
-          <a data-testid={'inside-a'} href={'#hello'}>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
             Hello
           </a>
         </Modal>
-        <Modal key={'modal-b'} visible={true}>
-          <a data-testid={'inside-b'} href={'#hello'}>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
             Hello
           </a>
         </Modal>
@@ -103,13 +103,13 @@ describe('components/Modal', () => {
   test('modal active state changes propogate', () => {
     const { rerender, getByTestId } = render(
       <>
-        <Modal key={'modal-a'} visible={true}>
-          <a data-testid={'inside-a'} href={'#hello'}>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
             Hello
           </a>
         </Modal>
-        <Modal key={'modal-b'} visible={false}>
-          <a data-testid={'inside-b'} href={'#hello'}>
+        <Modal key="modal-b" visible={false}>
+          <a data-testid="inside-b" href="#hello">
             Hello
           </a>
         </Modal>
@@ -118,13 +118,13 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <Modal key={'modal-a'} visible={true}>
-          <a data-testid={'inside-a'} href={'#hello'}>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
             Hello
           </a>
         </Modal>
-        <Modal key={'modal-b'} visible={true}>
-          <a data-testid={'inside-b'} href={'#hello'}>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
             Hello
           </a>
         </Modal>
@@ -140,13 +140,13 @@ describe('components/Modal', () => {
   test('removed modal sets others active state', () => {
     const { rerender, getByTestId } = render(
       <>
-        <Modal key={'modal-a'} visible={true}>
-          <a data-testid={'inside-a'} href={'#hello'}>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
             Hello
           </a>
         </Modal>
-        <Modal key={'modal-b'} visible={true}>
-          <a data-testid={'inside-b'} href={'#hello'}>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
             Hello
           </a>
         </Modal>
@@ -154,8 +154,8 @@ describe('components/Modal', () => {
     );
 
     rerender(
-      <Modal key={'modal-a'} visible={true}>
-        <a data-testid={'inside-a'} href={'#hello'}>
+      <Modal key="modal-a" visible={true}>
+        <a data-testid="inside-a" href="#hello">
           Hello
         </a>
       </Modal>
@@ -213,7 +213,7 @@ describe('components/Modal', () => {
 
   test('animationTypes none is the same as omitting', () => {
     const { rerender, baseElement } = render(
-      <Modal animationType={'none'} visible={true} />
+      <Modal animationType="none" visible={true} />
     );
     const animationNoneElement = baseElement.lastChild.lastChild;
     const animationNoneStyle = window.getComputedStyle(
@@ -244,7 +244,7 @@ describe('components/Modal', () => {
   test('creates view with role="dialog" when active', () => {
     const { baseElement } = render(
       <Modal visible={true}>
-        <a href={'#hello'}>Hello</a>
+        <a href="#hello">Hello</a>
       </Modal>
     );
     const dialogElement =
@@ -257,11 +257,11 @@ describe('components/Modal', () => {
   test('focus is trapped by default', () => {
     render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -277,11 +277,11 @@ describe('components/Modal', () => {
   test('focus is trapped when active flag changes', () => {
     const { rerender } = render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -294,11 +294,11 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -312,7 +312,7 @@ describe('components/Modal', () => {
   test('focus is not trapped after closing modal', () => {
     const { rerender } = render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true} />
@@ -324,7 +324,7 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal onDismiss={onDismissCallback} visible={false} />
@@ -338,15 +338,15 @@ describe('components/Modal', () => {
   test('focus is brought back to the element that triggered modal after closing', () => {
     const { rerender } = render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
-        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+        <a data-testid="modal-trigger" href="#modal-trigger">
           Outside
         </a>
       </>
@@ -360,15 +360,15 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
-        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+        <a data-testid="modal-trigger" href="#modal-trigger">
           Outside
         </a>
       </>
@@ -379,15 +379,15 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
-        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+        <a data-testid="modal-trigger" href="#modal-trigger">
           Outside
         </a>
       </>
@@ -399,15 +399,15 @@ describe('components/Modal', () => {
   test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
     const { rerender } = render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
-        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+        <a data-testid="modal-trigger" href="#modal-trigger">
           Outside
         </a>
       </>
@@ -421,15 +421,15 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
-        <a data-testid={'modal-trigger'} href={'#modal-trigger'}>
+        <a data-testid="modal-trigger" href="#modal-trigger">
           Outside
         </a>
       </>
@@ -440,11 +440,11 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -457,11 +457,11 @@ describe('components/Modal', () => {
   test('focus is trapped when active', () => {
     render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -478,13 +478,13 @@ describe('components/Modal', () => {
     render(
       <>
         <Modal visible={true}>
-          <a data-testid={'inside-a'} href={'#'}>
+          <a data-testid="inside-a" href="#">
             Inside A
           </a>
-          <a data-testid={'inside-b'} href={'#'}>
+          <a data-testid="inside-b" href="#">
             Inside B
           </a>
-          <a data-testid={'inside-c'} href={'#'}>
+          <a data-testid="inside-c" href="#">
             Inside C
           </a>
         </Modal>
@@ -507,13 +507,13 @@ describe('components/Modal', () => {
     render(
       <>
         <Modal visible={true}>
-          <a data-testid={'inside-a'} href={'#'}>
+          <a data-testid="inside-a" href="#">
             Inside A
           </a>
-          <a data-testid={'inside-b'} href={'#'}>
+          <a data-testid="inside-b" href="#">
             Inside B
           </a>
-          <a data-testid={'inside-c'} href={'#'}>
+          <a data-testid="inside-c" href="#">
             Inside C
           </a>
         </Modal>
@@ -535,7 +535,7 @@ describe('components/Modal', () => {
   test('focus is trapped without contents', () => {
     render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={true}>
@@ -552,11 +552,11 @@ describe('components/Modal', () => {
   test('focus is not trapped when inactive', () => {
     render(
       <>
-        <a data-testid={'outside'} href={'#outside'}>
+        <a data-testid="outside" href="#outside">
           Outside
         </a>
         <Modal visible={false}>
-          <a data-testid={'inside'} href={'#hello'}>
+          <a data-testid="inside" href="#hello">
             Hello
           </a>
         </Modal>
@@ -570,7 +570,7 @@ describe('components/Modal', () => {
   test('creates portal outside of the react container', () => {
     const { container, baseElement } = render(
       <Modal visible={true}>
-        <a data-testid={'hello'} href={'#hello'}>
+        <a data-testid="hello" href="#hello">
           Hello World
         </a>
       </Modal>
@@ -585,7 +585,7 @@ describe('components/Modal', () => {
   test('portal created is a div', () => {
     const { baseElement } = render(
       <Modal visible={true}>
-        <a data-testid={'hello'} href={'#hello'}>
+        <a data-testid="hello" href="#hello">
           Hello World
         </a>
       </Modal>
@@ -644,11 +644,11 @@ describe('components/Modal', () => {
 
     const { getByTestId, rerender } = render(
       <>
-        <Modal animationType={'slide'} onRequestClose={spyA} visible={false}>
-          <a data-testid={'a'} />
+        <Modal animationType="slide" onRequestClose={spyA} visible={false}>
+          <a data-testid="a" />
 
-          <Modal animationType={'slide'} onRequestClose={spyB} visible={false}>
-            <a data-testid={'b'} />
+          <Modal animationType="slide" onRequestClose={spyB} visible={false}>
+            <a data-testid="b" />
           </Modal>
         </Modal>
       </>
@@ -656,11 +656,11 @@ describe('components/Modal', () => {
 
     rerender(
       <>
-        <Modal animationType={'slide'} onRequestClose={spyA} visible={true}>
-          <a data-testid={'a'} />
+        <Modal animationType="slide" onRequestClose={spyA} visible={true}>
+          <a data-testid="a" />
 
-          <Modal animationType={'slide'} onRequestClose={spyB} visible={true}>
-            <a data-testid={'b'} />
+          <Modal animationType="slide" onRequestClose={spyB} visible={true}>
+            <a data-testid="b" />
           </Modal>
         </Modal>
       </>

@@ -676,7 +676,7 @@ describe('components/TextInput', () => {
 
   describe('prop "selectTextOnFocus"', () => {
     testIfDocumentIsFocused('value "false"', () => {
-      const { container } = render(<TextInput defaultValue={'text'} />);
+      const { container } = render(<TextInput defaultValue="text" />);
       const input = findInput(container);
       input.focus();
       expect(input.selectionEnd).toEqual(4);

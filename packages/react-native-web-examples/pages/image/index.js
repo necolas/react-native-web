@@ -49,7 +49,7 @@ export default function ImagePage() {
           <Text style={styles.text}>Static image</Text>
           <Image
             resizeMode="cover"
-            source={'/image/ladybug.jpg'}
+            source="/image/ladybug.jpg"
             style={styles.image}
           />
         </View>

@@ -102,7 +102,7 @@ const PaddingExample = withRTLState(({ isRTL, setRTL }) => {
   const color = 'teal';
 
   return (
-    <Block title={'padding{Start,End}'}>
+    <Block title="padding{Start,End}">
       <Text style={styles.bold}>Styles</Text>
       <Text>paddingStart: 50,</Text>
       <Text>paddingEnd: 10</Text>
@@ -138,7 +138,7 @@ const PaddingExample = withRTLState(({ isRTL, setRTL }) => {
 
 const MarginExample = withRTLState(({ isRTL, setRTL }) => {
   return (
-    <Block title={'margin{Start,End}'}>
+    <Block title="margin{Start,End}">
       <Text style={styles.bold}>Styles</Text>
       <Text>marginStart: 50,</Text>
       <Text>marginEnd: 10</Text>
@@ -228,7 +228,7 @@ const PositionExample = withRTLState(({ isRTL, setRTL }) => {
 
 const BorderWidthExample = withRTLState(({ isRTL, setRTL }) => {
   return (
-    <Block title={'border{Start,End}Width'}>
+    <Block title="border{Start,End}Width">
       <Text style={styles.bold}>Styles</Text>
       <Text>borderStartWidth: 10,</Text>
       <Text>borderEndWidth: 50</Text>
@@ -252,7 +252,7 @@ const BorderWidthExample = withRTLState(({ isRTL, setRTL }) => {
 
 const BorderColorExample = withRTLState(({ isRTL, setRTL }) => {
   return (
-    <Block title={'border{Start,End}Color'}>
+    <Block title="border{Start,End}Color">
       <Text style={styles.bold}>Styles</Text>
       <Text>borderStartColor: 'red',</Text>
       <Text>borderEndColor: 'green',</Text>
@@ -279,7 +279,7 @@ const BorderColorExample = withRTLState(({ isRTL, setRTL }) => {
 
 const BorderRadiiExample = withRTLState(({ isRTL, setRTL }) => {
   return (
-    <Block title={'border{Top,Bottom}{Start,End}Radius'}>
+    <Block title="border{Top,Bottom}{Start,End}Radius">
       <Text style={styles.bold}>Styles</Text>
       <Text>borderTopStartRadius: 10,</Text>
       <Text>borderTopEndRadius: 20,</Text>
@@ -386,7 +386,7 @@ class LayoutRTLExample extends React.Component {
         dir={this.state.isRTL ? 'rtl' : 'ltr'}
         style={[styles.container]}
       >
-        <Block title={'Current layout direction'}>
+        <Block title="Current layout direction">
           <View dir="ltr" style={styles.directionBox}>
             <Text style={styles.directionText}>
               {this.state.isRTL ? 'Right-to-Left' : 'Left-to-Right'}
@@ -399,9 +399,9 @@ class LayoutRTLExample extends React.Component {
         </Block>
 
         <TextAlignmentExample
-          description={'Depends on the text content.'}
+          description="Depends on the text content."
           style={styles.fontSizeSmall}
-          title={'Default text alignment'}
+          title="Default text alignment"
         />
         <TextAlignmentExample
           style={[styles.fontSizeSmall, styles.textAlignLeft]}
@@ -426,7 +426,7 @@ class LayoutRTLExample extends React.Component {
         <BorderWidthExample />
         <BorderRadiiExample />
 
-        <Block title={'A simple list-item layout'}>
+        <Block title="A simple list-item layout">
           <View style={styles.list}>
             <ListItem
               imageSource={{ uri: 'https://picsum.photos/130/130?image=222' }}
@@ -437,7 +437,7 @@ class LayoutRTLExample extends React.Component {
           </View>
         </Block>
 
-        <Block title={'Working with icons'}>
+        <Block title="Working with icons">
           <View
             style={[
               styles.flexDirectionRow,

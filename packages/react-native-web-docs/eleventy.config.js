@@ -49,14 +49,17 @@ module.exports = function (eleventyConfig) {
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     return new Intl.DateTimeFormat('en-US', options).format(dateObj);
   });
+
   // Date formatting (machine readable)
   eleventyConfig.addFilter('machineDate', (dateObj) => {
     return dateObj.toISOString();
   });
+
   // Minify CSS
   eleventyConfig.addFilter('cssmin', function (code) {
     return csso.minify(code).css;
   });
+
   // Minify JS
   eleventyConfig.addAsyncFilter('jsmin', async function (code) {
     const minified = await terser.minify(code);
