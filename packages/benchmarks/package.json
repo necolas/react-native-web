@@ -16,10 +16,8 @@
   },
   "devDependencies": {
     "babel-loader": "^10.1.1",
-    "babel-plugin-react-native-web": "0.21.4",
     "css-loader": "^7.1.5",
     "style-loader": "^4.0.0",
-    "url-loader": "^4.1.1",
     "webpack": "^5.111.1",
     "webpack-bundle-analyzer": "^5.4.0",
     "webpack-cli": "^7.2.3"
