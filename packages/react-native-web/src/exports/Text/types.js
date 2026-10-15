@@ -41,8 +41,13 @@ export type TextStyle = {
     | 'tabular-nums'
     | 'proportional-nums'
   >,
+  hyphenateCharacter?: ?string,
+  hyphens?: 'auto' | 'manual' | 'none',
+  initialLetter?: ?NumberOrString,
   letterSpacing?: ?NumberOrString,
+  lineClamp?: ?number,
   lineHeight?: ?NumberOrString,
+  rubyPosition?: 'alternate' | 'over' | 'under',
   textAlign?:
     | 'center'
     | 'end'
@@ -59,6 +64,10 @@ export type TextStyle = {
     | 'line-through'
     | 'underline line-through',
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed',
+  textEmphasis?: ?string,
+  textEmphasisColor?: ?ColorValue,
+  textEmphasisPosition?: ?string,
+  textEmphasisStyle?: ?string,
   textIndent?: ?NumberOrString,
   textOverflow?: ?string,
   textRendering?:
@@ -70,6 +79,7 @@ export type TextStyle = {
   textShadowColor?: ?ColorValue,
   textShadowOffset?: {| width?: number, height?: number |},
   textShadowRadius?: ?number,
+  textSizeAdjust?: ?string,
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase',
   unicodeBidi?:
     | 'normal'

@@ -12,14 +12,15 @@ import normalizeColor from './normalizeColor';
 
 const colorProps: { [string]: boolean } = {
   backgroundColor: true,
-  borderColor: true,
-  borderTopColor: true,
-  borderRightColor: true,
   borderBottomColor: true,
+  borderColor: true,
   borderLeftColor: true,
+  borderRightColor: true,
+  borderTopColor: true,
   color: true,
   shadowColor: true,
   textDecorationColor: true,
+  textEmphasisColor: true,
   textShadowColor: true
 };
 
@@ -27,14 +28,13 @@ export default function normalizeValueWithProperty(
   value: any,
   property?: ?string
 ): any {
-  let returnValue = value;
   if (
-    (property == null || !isUnitlessNumber(property)) &&
-    typeof value === 'number'
+    typeof value === 'number' &&
+    (property == null || !isUnitlessNumber(property))
   ) {
-    returnValue = `${value}px`;
+    return `${value}px`;
   } else if (property != null && colorProps[property]) {
-    returnValue = normalizeColor(value);
+    return normalizeColor(value);
   }
-  return returnValue;
+  return value;
 }

@@ -11,7 +11,6 @@ import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
-import prefixStyles from '../../../modules/prefixStyles';
 
 type Value = Object | Array<any> | string | number;
 type Style = { [key: string]: Value };
@@ -419,15 +418,15 @@ function createAtomicRules(
  * Creates a CSS declaration block from a StyleSheet object.
  */
 function createDeclarationBlock(style: Style): string {
-  const domStyle = prefixStyles(createReactDOMStyle(style));
+  const domStyle = createReactDOMStyle(style);
   const declarationsString = Object.keys(domStyle)
     .map((property) => {
       const value = domStyle[property];
       const prop = hyphenateStyleName(property);
-      // The prefixer may return an array of values:
-      // { display: [ '-webkit-flex', 'flex' ] }
+      // The prefixing function may return an array of values:
+      // { width: [ '-webkit-fill-available', 'fill-available' ] }
       // to represent "fallback" declarations
-      // { display: -webkit-flex; display: flex; }
+      // { width: -webkit-fill-available; width: fill-available; }
       if (Array.isArray(value)) {
         return value.map((v) => `${prop}:${v}`).join(';');
       } else {

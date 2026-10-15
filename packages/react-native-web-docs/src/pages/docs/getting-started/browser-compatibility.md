@@ -16,8 +16,8 @@ Understanding {{ site.name }} browser compatibility.
 
 The browsers with known support include:
 
-- Chrome 95+ / Edge 95+
-- Firefox 93+
+- Chrome 96+ / Edge 96+
+- Firefox 94+
 - Safari 15.1+ / iOS Safari 15.1+
 
 If specific exports have a different browser support expectation, it will be documented with that export.

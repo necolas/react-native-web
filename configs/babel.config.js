@@ -18,9 +18,9 @@ const createConfig = ({ modules }) => {
           exclude: ['transform-typeof-symbol'],
           targets: {
             browsers: [
-              'chrome 95',
-              'edge 95',
-              'firefox 93',
+              'chrome 96',
+              'edge 96',
+              'firefox 94',
               'safari 15.1',
               'ios_saf 15.1'
             ]
