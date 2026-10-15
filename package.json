@@ -19,9 +19,9 @@
     "postrelease": "npm run release:react-native-web-docs && npm run release:benchmarks",
     "prepare": "husky",
     "test": "npm run flow && npm run format && npm run lint && npm run unit --runInBand",
-    "unit": "npm-run-all \"unit:* {@}\" --",
-    "unit:dom": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
-    "unit:node": "jest --config ./jest.config.node.js"
+    "unit": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "unit:dom": "npm run unit -- --selectProjects dom",
+    "unit:node": "npm run unit -- --selectProjects node"
   },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
