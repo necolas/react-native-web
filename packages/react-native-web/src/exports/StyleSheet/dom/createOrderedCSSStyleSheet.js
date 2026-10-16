@@ -60,7 +60,8 @@ export default function createOrderedCSSStyleSheet(
       if (cssText.indexOf('stylesheet-group') > -1) {
         group = decodeGroupRule(cssRule);
         groups[group] = { start: i, rules: [cssText] };
-      } else {
+      } else if (group != null) {
+        // Rules before the first group are the page's own, not this sheet's
         const selectorText = getSelectorText(cssText);
         if (selectorText != null) {
           selectors[selectorText] = true;

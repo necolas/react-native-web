@@ -165,5 +165,21 @@ describe('createOrderedCSSStyleSheet', () => {
         .b {color: red;}"
       `);
     });
+
+    test('leaves rules the page declared before the first group to the page', () => {
+      element.appendChild(
+        document.createTextNode(
+          '.page { color: blue }\n[stylesheet-group="0"]{}\n.a { color: red }'
+        )
+      );
+      const clientSheet = createOrderedCSSStyleSheet(element.sheet);
+      clientSheet.insert('.page { color: red }', 0);
+      expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
+        "[stylesheet-group="0"] {}
+        .a {color: red;}
+        .page { color: red }"
+      `);
+      expect(element.sheet.cssRules[0].cssText).toBe('.page {color: blue;}');
+    });
   });
 });

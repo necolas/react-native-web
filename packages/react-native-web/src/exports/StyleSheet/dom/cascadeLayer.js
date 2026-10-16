@@ -9,89 +9,50 @@
 
 import type { CSSRuleContainer } from './createOrderedCSSStyleSheet';
 
-/**
- * The cascade layer the runtime style sheet's rules belong to.
- *
- * The rules this sheet holds are framework defaults, but an unlayered declaration takes precedence
- * over every layered one regardless of specificity or layer order. Emitting them unlayered makes
- * them a ceiling rather than a default: an application that puts its own rules in a cascade layer
- * finds them silently outranked, with no error and no specificity fight available to win.
- *
- * Nesting them in a layer restores the intended precedence. Application styles stay unlayered and
- * continue to win, and an application that uses layers can position this one by name.
- */
-export const CASCADE_LAYER_NAME = 'rnw';
+export type CascadeLayer = {|
+  +name: string,
+  +rule: CSSRuleContainer
+|};
 
-const layerBlockPrefix = `@layer ${CASCADE_LAYER_NAME}{`;
+const layerBlockPattern = /^@layer\s*([^{]*?)\s*\{/;
 
 /**
- * Serialize css text as the contents of the cascade layer. Pure, total, and deterministic: the
- * single place the layer's syntax is written, so the runtime sheet and the extracted text cannot
- * disagree about what the layer is called or how it is opened.
+ * The cascade layer a rule opens, when the rule is a layer block. A layer statement such as
+ * `@layer rnw;` groups no rules, so it has no 'insertRule'.
  */
-export function wrapInCascadeLayer(cssText: string): string {
-  return `${layerBlockPrefix}${cssText}}`;
+export function readCascadeLayer(rule: Object): ?CascadeLayer {
+  if (typeof rule.insertRule !== 'function') {
+    return null;
+  }
+  const match = layerBlockPattern.exec(rule.cssText);
+  return match != null ? { name: match[1], rule } : null;
 }
 
 /**
- * A CSSLayerBlockRule is the only rule type exposing both 'name' and 'insertRule'.
- * CSSKeyframesRule has a 'name' and no 'insertRule', and the legacy numeric 'type' reports 0 for
- * every rule added after that enum was frozen, so it distinguishes nothing.
+ * The first cascade layer block in a style sheet, e.g. one a page declared in the style sheet's
+ * element, `<style id="react-native-stylesheet">@layer rnw{}</style>`, or one a server rendered.
+ * The runtime rules are inserted into it, so a page's unlayered and later-layered styles take
+ * precedence over them. An engine without cascade layers drops the block, which leaves the sheet
+ * unlayered.
  */
-export function isCascadeLayerRule(rule: ?Object): boolean {
-  return (
-    rule != null &&
-    rule.name === CASCADE_LAYER_NAME &&
-    typeof rule.insertRule === 'function'
-  );
-}
-
-/**
- * The sheet's own cascade layer block, or null where the CSSOM cannot express one.
- *
- * Support is measured rather than assumed, because an engine without it fails silently in two
- * directions: 'insertRule' may accept the layer text and expose it as an ordinary style rule, and
- * a style element whose text is wrapped in a layer block may fail to parse in full. A rule that
- * turns out not to be a layer is removed again, so an unsupported engine is left exactly as it was.
- */
-export function resolveCascadeLayer(
-  sheet: ?CSSRuleContainer
-): ?CSSRuleContainer {
+export function findCascadeLayer(sheet: ?CSSRuleContainer): ?CascadeLayer {
   if (sheet == null) {
     return null;
   }
   const rules = sheet.cssRules;
   for (let i = 0; i < rules.length; i += 1) {
-    if (isCascadeLayerRule(rules[i])) {
-      return rules[i];
+    const layer = readCascadeLayer(rules[i]);
+    if (layer != null) {
+      return layer;
     }
   }
-  const position = rules.length;
-  try {
-    sheet.insertRule(`${layerBlockPrefix}}`, position);
-  } catch (e) {
-    return null;
-  }
-  if (isCascadeLayerRule(rules[position])) {
-    return rules[position];
-  }
-  sheet.deleteRule(position);
   return null;
 }
 
 /**
- * Whether this document's CSSOM implements cascade layers. Measured against a detached probe so
- * the answer is available before a style element's text is composed, and leaves the document as
- * it was found.
+ * Serialize css text as the contents of the layer block named 'name', an anonymous layer when the
+ * name is empty, so a copy of the sheet carries the same precedence as the sheet it was taken from.
  */
-export function documentSupportsCascadeLayer(): boolean {
-  const head = document.head;
-  if (head == null) {
-    return false;
-  }
-  const probe = document.createElement('style');
-  head.appendChild(probe);
-  const supported = resolveCascadeLayer(probe.sheet) != null;
-  head.removeChild(probe);
-  return supported;
+export function wrapInCascadeLayer(cssText: string, name: string): string {
+  return name === '' ? `@layer{${cssText}}` : `@layer ${name}{${cssText}}`;
 }

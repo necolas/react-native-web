@@ -8,8 +8,7 @@
  */
 
 import { atomic, classic, inline } from './compiler';
-import { CASCADE_LAYER_NAME } from './dom/cascadeLayer';
-import { createSheet } from './dom';
+import { createSheet, setCascadeLayer } from './dom';
 import { localizeStyle } from 'styleq/transform-localize-style';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
@@ -170,10 +169,6 @@ function StyleSheet(styles: any, options?: Options = {}): StyleProps {
 
 StyleSheet.absoluteFill = absoluteFill;
 StyleSheet.absoluteFillObject = absoluteFillObject;
-// The cascade layer the runtime style sheet's rules belong to. Exported so an application can
-// position it against its own layers with an `@layer` statement, rather than depending on the
-// order style elements happen to be inserted in.
-StyleSheet.cascadeLayerName = CASCADE_LAYER_NAME;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
@@ -181,6 +176,7 @@ StyleSheet.getSheet = getSheet;
 // `hairlineWidth` is not implemented using screen density as browsers may
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
+StyleSheet.setCascadeLayer = setCascadeLayer;
 
 if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = StyleSheet.flatten;
@@ -190,12 +186,12 @@ export type IStyleSheet = {
   (styles: $ReadOnlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
   absoluteFillObject: Object,
-  cascadeLayerName: string,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,
   getSheet: typeof getSheet,
-  hairlineWidth: number
+  hairlineWidth: number,
+  setCascadeLayer: typeof setCascadeLayer
 };
 
 const stylesheet: IStyleSheet = StyleSheet;

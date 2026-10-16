@@ -279,3 +279,26 @@ This ensures that CSS order doesn't impact rendering and CSS rules are efficient
 Class names are deterministic, which means that the resulting CSS and HTML is consistent across builds – important for large apps using code-splitting and deploying incremental updates.
 
 At runtime registered styles are resolved to DOM style props and memoized. Any dynamic styles that contain declarations previously registered as static styles can also be converted to CSS class names. Otherwise, they render as inline styles.
+
+### Cascade layers
+
+The generated CSS is not in a [cascade layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer), so it takes precedence over every rule an app puts in one. An app that orders its own CSS in layers can nest the generated CSS in a layer and position it among them:
+
+```js
+StyleSheet.setCascadeLayer('rnw');
+```
+
+```css
+@layer rnw, base, components, utilities;
+```
+
+The CSS rendered on the server is nested in the same layer. Alternatively, a page can declare the layer in the style sheet's element before {{ site.name }} loads:
+
+```html
+<style id="react-native-stylesheet">
+  @layer rnw {
+  }
+</style>
+```
+
+CSS outside any layer, such as a global reset, then takes precedence over every style defined with `StyleSheet`.

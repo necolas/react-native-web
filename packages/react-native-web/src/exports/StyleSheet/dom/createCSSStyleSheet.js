@@ -6,13 +6,6 @@
  *
  * @flow strict-local
  */
-
-import type { CSSRuleContainer } from './createOrderedCSSStyleSheet';
-import {
-  documentSupportsCascadeLayer,
-  resolveCascadeLayer,
-  wrapInCascadeLayer
-} from './cascadeLayer';
 import canUseDOM from '../../../modules/canUseDom';
 
 // $FlowFixMe: HTMLStyleElement is incorrectly typed - https://github.com/facebook/flow/issues/2696
@@ -20,7 +13,7 @@ export default function createCSSStyleSheet(
   id: string,
   rootNode?: Document | ShadowRoot,
   textContent?: string
-): ?CSSRuleContainer {
+): ?CSSStyleSheet {
   if (canUseDOM) {
     const root = rootNode != null ? rootNode : document;
     let element = root.getElementById(id);
@@ -28,13 +21,7 @@ export default function createCSSStyleSheet(
       element = document.createElement('style');
       element.setAttribute('id', id);
       if (typeof textContent === 'string') {
-        element.appendChild(
-          document.createTextNode(
-            documentSupportsCascadeLayer()
-              ? wrapInCascadeLayer(textContent)
-              : textContent
-          )
-        );
+        element.appendChild(document.createTextNode(textContent));
       }
       if (root instanceof ShadowRoot) {
         root.insertBefore(element, root.firstChild);
@@ -46,9 +33,7 @@ export default function createCSSStyleSheet(
       }
     }
     // $FlowFixMe: HTMLElement is incorrectly typed
-    const sheet: ?CSSRuleContainer = element.sheet;
-    const layer = resolveCascadeLayer(sheet);
-    return layer != null ? layer : sheet;
+    return element.sheet;
   } else {
     return null;
   }
