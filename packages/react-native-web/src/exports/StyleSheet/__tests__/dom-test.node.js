@@ -31,4 +31,22 @@ describe('createSheet', () => {
       .test { opacity: 0 }"
     `);
   });
+
+  test('serializes the sheet in the cascade layer set for it', () => {
+    jest.isolateModules(() => {
+      const dom = require('../dom');
+      const sheet = dom.createSheet();
+      sheet.insert('.test { opacity: 0 }', 1);
+      dom.setCascadeLayer('rnw');
+      expect(sheet.getTextContent()).toMatchInlineSnapshot(`
+        "@layer rnw{[stylesheet-group="0"]{}
+        body{margin:0;}
+        button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+        html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+        input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+        [stylesheet-group="1"]{}
+        .test { opacity: 0 }}"
+      `);
+    });
+  });
 });

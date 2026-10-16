@@ -8,7 +8,7 @@
  */
 
 import { atomic, classic, inline } from './compiler';
-import { createSheet } from './dom';
+import { createSheet, setCascadeLayer } from './dom';
 import { localizeStyle } from 'styleq/transform-localize-style';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
@@ -176,6 +176,7 @@ StyleSheet.getSheet = getSheet;
 // `hairlineWidth` is not implemented using screen density as browsers may
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
+StyleSheet.setCascadeLayer = setCascadeLayer;
 
 if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = StyleSheet.flatten;
@@ -189,7 +190,8 @@ export type IStyleSheet = {
   compose: typeof compose,
   flatten: typeof flatten,
   getSheet: typeof getSheet,
-  hairlineWidth: number
+  hairlineWidth: number,
+  setCascadeLayer: typeof setCascadeLayer
 };
 
 const stylesheet: IStyleSheet = StyleSheet;

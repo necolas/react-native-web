@@ -50,3 +50,7 @@ Define style objects. Each key of the object passed to `create` must define a st
 {% call macro.prop('flatten', '(styles: Style) => Object') %}
 Flatten an array of styles into a single style object. **This is not recommended as it is not compatible with static extraction of styles to CSS.**
 {% endcall %}
+
+{% call macro.prop('setCascadeLayer', '(name: string) => void') %}
+A web-only method that nests the generated CSS in the [cascade layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) `name`, including the CSS rendered on the server. Call it before rendering. See [Cascade layers]({{ '/docs/styling/#cascade-layers' | url }}).
+{% endcall %}

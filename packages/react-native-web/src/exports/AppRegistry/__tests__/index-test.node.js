@@ -192,5 +192,24 @@ describe('AppRegistry', () => {
       const third = getApplicationStyles('App');
       expect(third).toEqual(second);
     });
+
+    test('"getStyleElement" renders the sheet in the cascade layer set for it', () => {
+      jest.isolateModules(() => {
+        const IsolatedAppRegistry = require('..');
+        require('../../StyleSheet').setCascadeLayer('rnw');
+        IsolatedAppRegistry.registerComponent('App', () => NoopComponent);
+        const { getStyleElement } = IsolatedAppRegistry.getApplication('App');
+        const styleElement = ReactDOMServer.renderToStaticMarkup(
+          getStyleElement()
+        );
+
+        expect(
+          styleElement.startsWith(
+            '<style id="react-native-stylesheet">@layer rnw{[stylesheet-group="0"]{}'
+          )
+        ).toBe(true);
+        expect(styleElement.endsWith('}</style>')).toBe(true);
+      });
+    });
   });
 });
