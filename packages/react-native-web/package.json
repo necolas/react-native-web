@@ -5,21 +5,23 @@
   "name": "react-native-web",
   "version": "0.21.4",
   "description": "React Native for Web",
-  "module": "dist/index.js",
-  "main": "dist/cjs/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./asset-registry": "./dist/exports/AssetRegistry/index.js",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "sideEffects": false,
   "files": [
     "dist",
-    "src",
-    "asset-registry.js",
     "!**/__tests__"
   ],
   "scripts": {
     "clean": "del-cli ./dist",
-    "build": "npm-run-all clean -p \"build:* {@}\" --",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --root-mode upward --out-dir dist/cjs --ignore \"**/__tests__\"",
-    "build:es": "babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\"",
-    "dev": "npm-run-all clean -p \"build:* {@} -- --watch\""
+    "build": "npm run clean && babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\"",
+    "dev": "npm run clean && babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\" --watch"
   },
   "dependencies": {
     "@react-native/normalize-colors": "^0.88.0",

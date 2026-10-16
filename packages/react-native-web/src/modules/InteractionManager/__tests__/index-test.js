@@ -12,9 +12,9 @@ function expectToHaveBeenCalledOnce(fn) {
 describe('InteractionManager', () => {
   let InteractionManager;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.resetModules();
-    InteractionManager = require('..');
+    InteractionManager = (await import('../index.js')).default;
   });
 
   it('run tasks asynchronously when there are interactions', () => {

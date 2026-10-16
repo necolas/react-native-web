@@ -3,6 +3,7 @@
   "name": "react-native-web-docs",
   "version": "0.21.4",
   "description": "Documentation website for React Native for Web",
+  "type": "module",
   "scripts": {
     "dev": "eleventy --serve",
     "build": "ELEVENTY_PRODUCTION=true eleventy",
