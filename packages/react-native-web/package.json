@@ -7,8 +7,15 @@
   "description": "React Native for Web",
   "type": "module",
   "main": "dist/index.js",
+  "types": "types/react-native-web.d.ts",
   "exports": {
-    ".": "./dist/index.js",
+    ".": {
+      "types": "./types/react-native-web.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./types/index.d.ts"
+    },
     "./asset-registry": "./dist/exports/AssetRegistry/index.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
@@ -16,6 +23,7 @@
   "sideEffects": false,
   "files": [
     "dist",
+    "types",
     "!**/__tests__"
   ],
   "scripts": {
@@ -35,8 +43,22 @@
     "del-cli": "^8.0.1"
   },
   "peerDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "author": "Nicolas Gallagher",
   "license": "MIT",
