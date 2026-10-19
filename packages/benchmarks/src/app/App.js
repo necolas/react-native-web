@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     color: colors.deepGray
   },
   picker: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     appearance: 'none',
     opacity: 0,
     width: '100%'

@@ -63,16 +63,8 @@ function compileAndInsertReset(style: { [key: string]: any }, key: string) {
 
 /* ----- API ----- */
 
-const absoluteFillObject = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
-};
-
-const absoluteFill: Readonly<typeof absoluteFillObject> = create({
-  x: { ...absoluteFillObject }
+const absoluteFill = create({
+  x: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }
 }).x;
 
 /**
@@ -166,7 +158,6 @@ function StyleSheet(styles: any, options?: Options = {}): StyleProps {
 }
 
 StyleSheet.absoluteFill = absoluteFill;
-StyleSheet.absoluteFillObject = absoluteFillObject;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
@@ -185,7 +176,6 @@ if (devToolsHook) {
 export type IStyleSheet = {
   (styles: ReadonlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
-  absoluteFillObject: Object,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,
