@@ -121,8 +121,8 @@ export function getLowestCommonAncestor(
     if (itemA === itemB) {
       return itemA;
     }
-    itemA = pathA[indexA++];
-    itemB = pathB[indexB++];
+    itemA = pathA[++indexA];
+    itemB = pathB[++indexB];
   }
   return null;
 }
