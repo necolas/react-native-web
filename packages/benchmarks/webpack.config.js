@@ -1,12 +1,11 @@
-const BundleAnalyzerPlugin =
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const path = require('path');
+import path from 'node:path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-const appDirectory = path.resolve(__dirname);
+const appDirectory = import.meta.dirname;
 
-module.exports = {
+export default {
   mode: 'production',
-  context: __dirname,
+  context: appDirectory,
   entry: './src/index',
   output: {
     path: path.resolve(appDirectory, 'dist'),
@@ -39,7 +38,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: false,
-            extends: path.resolve(appDirectory, '../../babel.config')
+            extends: path.resolve(appDirectory, '../../babel.config.js')
           }
         }
       }

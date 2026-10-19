@@ -17,17 +17,9 @@ npm install --save-dev babel-plugin-react-native-web
 
 ```
 {
-  "plugins": [
-    ["react-native-web", { commonjs: true }]
-  ]
+  "plugins": ["react-native-web"]
 }
 ```
-
-You should configure the plugin to match the module format used by your
-bundler. Most modern bundlers will use a package's ES modules by default (i.e.,
-if `package.json` has a `module` field). But if you need the plugin to rewrite
-import paths to point to CommonJS modules, you must set the `commonjs` option
-to `true`.
 
 ## Example
 
@@ -44,8 +36,8 @@ import { StyleSheet, View } from 'react-native';
 **After**
 
 ```js
-import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
-import View from 'react-native-web/dist/exports/View';
+import StyleSheet from 'react-native-web/dist/exports/StyleSheet/index.js';
+import View from 'react-native-web/dist/exports/View/index.js';
 ```
 
 [package-badge]: https://img.shields.io/npm/v/babel-plugin-react-native-web.svg?style=flat

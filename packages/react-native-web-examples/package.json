@@ -2,6 +2,7 @@
   "private": true,
   "name": "react-native-web-examples",
   "version": "0.21.4",
+  "type": "module",
   "scripts": {
     "build": "next build --webpack",
     "dev": "next dev --webpack",

@@ -53,24 +53,17 @@ module.exports = {
 
 ### Jest
 
-[Jest](https://facebook.github.io/jest/) can be configured to understand the aliased module.
+[Jest](https://facebook.github.io/jest/) can be configured to understand the aliased module. The package is only published as ES modules, so Jest must also transform it.
 
 ```js
 {
   "moduleNameMapper": {
     "^react-native$": "react-native-web"
-  }
+  },
+  "transformIgnorePatterns": [
+    "/node_modules/(?!react-native-web/)"
+  ]
 }
-```
-
-### Flow
-
-[Flow](https://flow.org) can be configured to understand the aliased module.
-
-```yml
-[options]
-# Alias the package name
-module.name_mapper='^react-native$' -> 'react-native-web'
 ```
 
 ### Node.js
@@ -80,9 +73,11 @@ Node.js can alias `react-native` to `react-native-web` using [`module-alias`](ht
 ```js
 // Install the `module-alias` package as a dependency first
 const moduleAlias = require('module-alias');
+
 moduleAlias.addAliases({
   'react-native': require.resolve('react-native-web')
 });
+
 moduleAlias();
 ```
 
@@ -96,19 +91,6 @@ The project's Babel plugin (see [Installation]({{ '/docs/installation' | url }})
 {
   "plugins": ['react-native-web']
 }
-```
-
----
-
-## Types
-
-Flow can be configured to pull types from React Native for Web's source code.
-
-```yml
-[options]
-# Point flow to the 'module' field by default
-module.system.node.main_field=module
-module.system.node.main_field=main
 ```
 
 ---

@@ -13,11 +13,11 @@ import type { PackagerAsset } from '../../modules/AssetRegistry';
 
 import { registerAsset, getAssetByID } from '../../modules/AssetRegistry';
 
-const AssetRegistry = {
+export default {
   registerAsset,
   getAssetByID
 };
 
-export default AssetRegistry;
+export { registerAsset, getAssetByID };
 
 export type { PackagerAsset };

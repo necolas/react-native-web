@@ -1,7 +1,3 @@
-'use strict';
-
-const babelConfig = require('./babel.config.js');
-
 const shared = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
@@ -22,22 +18,26 @@ const shared = {
     printBasicPrototype: false
   },
   transform: {
-    '\\.[jt]sx?$': ['babel-jest', babelConfig()]
+    '\\.[jt]sx?$': 'babel-jest'
   }
 };
 
-module.exports = {
+export default {
   projects: [
     {
       ...shared,
       displayName: 'dom',
-      setupFiles: [require.resolve('./jest.setup.dom.js')],
+      setupFiles: [
+        '<rootDir>/jest.setup.globals.js',
+        '<rootDir>/jest.setup.dom.js'
+      ],
       testEnvironment: 'jsdom',
       testMatch: ['**/__tests__/**/?(*-)+(spec|test).[jt]s?(x)']
     },
     {
       ...shared,
       displayName: 'node',
+      setupFiles: ['<rootDir>/jest.setup.globals.js'],
       testEnvironment: 'node',
       testMatch: ['**/__tests__/**/?(*-)+(spec|test).node.[jt]s?(x)']
     }
