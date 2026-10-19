@@ -72,6 +72,16 @@ describe('compiler/createReactDOMStyle', () => {
     `);
   });
 
+  describe('colors', () => {
+    test('rgb() with a slash alpha', () => {
+      expect(
+        createReactDOMStyle({ backgroundColor: 'rgb(10 20 30 / 0.4)' })
+      ).toEqual({
+        backgroundColor: 'rgba(10,20,30,0.40)'
+      });
+    });
+  });
+
   describe('flexbox styles', () => {
     test('flex: -1', () => {
       expect(createReactDOMStyle({ flex: -1 })).toEqual({

@@ -42,6 +42,12 @@ describe('processColor', () => {
       const expectedInt = 0xff0a141e;
       expect(colorFromString).toEqual(platformSpecific(expectedInt));
     });
+
+    it('should convert rgb(x y z / a)', () => {
+      const colorFromString = processColor('rgb(10 20 30 / 0.4)');
+      const expectedInt = 0x660a141e;
+      expect(colorFromString).toEqual(platformSpecific(expectedInt));
+    });
   });
 
   describe('RGBA strings', () => {
