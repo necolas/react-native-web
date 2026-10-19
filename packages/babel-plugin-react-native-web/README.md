@@ -2,8 +2,7 @@
 
 [![npm version][package-badge]][package-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
 
-A Babel plugin that will alias `react-native` to `react-native-web` and exclude
-any modules not required by your app (keeping bundle size down).
+A Babel plugin that will alias `react-native` to `react-native-web` and exclude any modules not required by your app (keeping bundle size down).
 
 ## Installation
 
@@ -15,7 +14,7 @@ npm install --save-dev babel-plugin-react-native-web
 
 **.babelrc**
 
-```
+```json
 {
   "plugins": ["react-native-web"]
 }
