@@ -22,9 +22,7 @@ npm install --save-dev babel-plugin-react-native-web
 
 ## Example
 
-NOTE: `react-native-web` internal paths are _not stable_ and you must not rely
-on them. Always use the Babel plugin to optimize your build. What follows is an
-example of the rewrite performed by the plugin.
+NOTE: `react-native-web` internal paths are _not stable_ and you must not rely on them. Always use the Babel plugin to optimize your build. What follows is an example of the rewrite performed by the plugin.
 
 **Before**
 
