@@ -18,7 +18,7 @@ const originalImage = window.Image;
 
 describe('components/Image', () => {
   beforeEach(() => {
-    ImageUriCache._entries = {};
+    ImageUriCache._entries = new Map();
     window.Image = jest.fn(() => ({}));
   });
 
