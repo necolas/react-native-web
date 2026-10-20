@@ -881,59 +881,6 @@ describe('useResponderEvents', () => {
         expect(getResponderNode()).toBe(null);
       }
     );
-
-    test('move onto a sibling grants responder to their parent when it has no registered ancestor', () => {
-      // A touch move stays on its touchstart target, so only a mouse can move onto a sibling
-      const pointerType = 'mouse';
-      const siblingRef = createRef();
-      const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
-      };
-      const siblingCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
-      };
-      const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
-      };
-
-      const Component = () => {
-        useResponderEvents(parentRef, parentCallbacks);
-        useResponderEvents(targetRef, targetCallbacks);
-        useResponderEvents(siblingRef, siblingCallbacks);
-        return (
-          <div ref={parentRef}>
-            <div ref={targetRef} />
-            <div ref={siblingRef} />
-          </div>
-        );
-      };
-
-      // render
-      render(<Component />);
-      const target = createEventTarget(targetRef.current);
-      const sibling = createEventTarget(siblingRef.current);
-      // gesture start
-      act(() => {
-        target.pointerdown({ pointerType });
-      });
-      expect(getResponderNode()).toBe(targetRef.current);
-      // gesture move onto the sibling
-      act(() => {
-        sibling.pointermove({ pointerType });
-      });
-      // responder set (bubble phase)
-      expect(parentCallbacks.onMoveShouldSetResponder).toHaveBeenCalledTimes(1);
-      // responder grant
-      expect(getResponderNode()).toBe(parentRef.current);
-      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
-      // gesture end
-      act(() => {
-        sibling.pointerup({ pointerType });
-      });
-      // no responder should be set
-      expect(getResponderNode()).toBe(null);
-    });
   });
 
   /**
@@ -2435,6 +2382,91 @@ describe('useResponderEvents', () => {
         'parent: onMoveShouldSetResponder',
         'grandParent: onMoveShouldSetResponder',
         'target: onResponderMove'
+      ]);
+    });
+
+    /**
+     * If a node is responder, then the negotiation with a sibling should
+     * capture to and bubble from the first common ancestor, even when that
+     * ancestor has no ancestors connected to the responder system.
+     */
+    test('negotiate from first common ancestor when it has no responder ancestors', () => {
+      const pointerType = 'mouse';
+      let eventLog = [];
+      const parentCallbacks = {
+        onMoveShouldSetResponderCapture() {
+          eventLog.push('parent: onMoveShouldSetResponderCapture');
+          return false;
+        },
+        onMoveShouldSetResponder() {
+          eventLog.push('parent: onMoveShouldSetResponder');
+          return true;
+        },
+        onResponderGrant() {
+          eventLog.push('parent: onResponderGrant');
+        }
+      };
+      const targetCallbacks = {
+        onStartShouldSetResponder() {
+          eventLog.push('target: onStartShouldSetResponder');
+          return true;
+        },
+        onResponderGrant() {
+          eventLog.push('target: onResponderGrant');
+        },
+        onResponderTerminationRequest() {
+          eventLog.push('target: onResponderTerminationRequest');
+          return true;
+        },
+        onResponderTerminate() {
+          eventLog.push('target: onResponderTerminate');
+        }
+      };
+      const siblingCallbacks = {
+        onStartShouldSetResponder() {
+          eventLog.push('sibling: onStartShouldSetResponder');
+          return true;
+        }
+      };
+
+      const Component = () => {
+        useResponderEvents(parentRef, parentCallbacks);
+        useResponderEvents(targetRef, targetCallbacks);
+        useResponderEvents(siblingRef, siblingCallbacks);
+        return (
+          <div ref={parentRef}>
+            <div ref={targetRef} />
+            <div ref={siblingRef} />
+          </div>
+        );
+      };
+
+      // render
+      render(<Component />);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
+      // gesture start on target
+      act(() => {
+        target.pointerdown({ pointerType });
+      });
+      expect(getResponderNode()).toBe(targetRef.current);
+      expect(eventLog).toEqual([
+        'target: onStartShouldSetResponder',
+        'target: onResponderGrant'
+      ]);
+      eventLog = [];
+      // gesture move on sibling
+      act(() => {
+        sibling.pointermove({ pointerType });
+      });
+      // negotiates from first common ancestor (i.e., parent) and transfers
+      expect(getResponderNode()).toBe(parentRef.current);
+      expect(eventLog).toEqual([
+        'parent: onMoveShouldSetResponderCapture',
+        'parent: onMoveShouldSetResponder',
+        'target: onResponderTerminationRequest',
+        'target: onResponderTerminate',
+        'parent: onResponderGrant'
       ]);
     });
 
