@@ -8,70 +8,50 @@
  * @flow
  */
 
-import invariant from 'fbjs/lib/invariant';
 import canUseDOM from '../../modules/canUseDom';
 
 const initialURL = canUseDOM ? window.location.href : '';
 
-type Callback = (...args: any) => void;
+type Listener = (...args: any) => unknown;
+type LinkingTarget = '_blank' | '_self' | '_parent' | '_top';
 
 class Linking {
-  /**
-   * An object mapping of event name
-   * and all the callbacks subscribing to it
-   */
-  _eventCallbacks: { [key: string]: Array<Callback> } = {};
+  // Wrap each listener in an object so the same function can be registered twice
+  _listeners: { [type: string]: Set<{| listener: Listener |}> } = {};
 
-  _dispatchEvent(event: string, ...data: any) {
-    const listeners = this._eventCallbacks[event];
-    if (listeners != null && Array.isArray(listeners)) {
-      listeners.map((listener) => {
-        listener(...data);
-      });
+  addListener(type: string, listener: Listener): {| remove(): void |} {
+    const listeners = this._listeners;
+    const entry = { listener };
+
+    if (listeners[type] == null) {
+      listeners[type] = new Set();
     }
-  }
 
-  /**
-   * Adds a event listener for the specified event. The callback will be called when the
-   * said event is dispatched.
-   */
-  addEventListener(
-    eventType: string,
-    callback: Callback
-  ): {| remove(): void |} {
-    const _this = this;
-
-    if (!_this._eventCallbacks[eventType]) {
-      _this._eventCallbacks[eventType] = [callback];
-    }
-    _this._eventCallbacks[eventType].push(callback);
+    listeners[type].add(entry);
 
     return {
       remove() {
-        const callbacks = _this._eventCallbacks[eventType];
-        const filteredCallbacks = callbacks.filter(
-          (c) => c.toString() !== callback.toString()
-        );
-        _this._eventCallbacks[eventType] = filteredCallbacks;
+        listeners[type]?.delete(entry);
       }
     };
   }
 
-  /**
-   * Removes a previously added event listener for the specified event. The callback must
-   * be the same object as the one passed to `addEventListener`.
-   */
-  removeEventListener(eventType: string, callback: Callback): void {
-    console.error(
-      `Linking.removeEventListener('${eventType}', ...): Method has been ` +
-        'deprecated. Please instead use `remove()` on the subscription ' +
-        'returned by `Linking.addEventListener`.'
-    );
-    const callbacks = this._eventCallbacks[eventType];
-    const filteredCallbacks = callbacks.filter(
-      (c) => c.toString() !== callback.toString()
-    );
-    this._eventCallbacks[eventType] = filteredCallbacks;
+  addEventListener(type: string, listener: Listener): {| remove(): void |} {
+    return this.addListener(type, listener);
+  }
+
+  emit(type: string, ...args: any) {
+    this._listeners[type]?.forEach(({ listener }) => listener(...args));
+  }
+
+  listenerCount(type: string): number {
+    return this._listeners[type]?.size ?? 0;
+  }
+
+  removeAllListeners(type?: ?string) {
+    if (type != null) {
+      this._listeners[type]?.clear();
+    }
   }
 
   canOpenURL(): Promise<boolean> {
@@ -82,39 +62,39 @@ class Linking {
     return Promise.resolve(initialURL);
   }
 
+  sendIntent(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  openSettings(): Promise<void> {
+    return Promise.resolve();
+  }
+
   /**
    * Try to open the given url in a secure fashion. The method returns a Promise object.
    * If a target is passed (including undefined) that target will be used, otherwise '_blank'.
    * If the url opens, the promise is resolved. If not, the promise is rejected.
-   * Dispatches the `onOpen` event if `url` is opened successfully.
+   * Emits the `onOpen` event if `url` is opened successfully.
    */
-  openURL(url: string, target?: string): Promise<Object | void> {
+  openURL(url: string, target?: LinkingTarget): Promise<void> {
     if (arguments.length === 1) {
       target = '_blank';
     }
     try {
       open(url, target);
-      this._dispatchEvent('onOpen', url);
+      this.emit('onOpen', url);
       return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(e);
+    } catch (error) {
+      return Promise.reject(error);
     }
-  }
-
-  _validateURL(url: string) {
-    invariant(
-      typeof url === 'string',
-      'Invalid URL: should be a string. Was: ' + url
-    );
-    invariant(url, 'Invalid URL: cannot be empty');
   }
 }
 
-const open = (url: string, target?: string) => {
+const open = (url: string, target?: LinkingTarget) => {
   if (canUseDOM) {
     const urlToOpen = new URL(url, window.location.href).toString();
     if (urlToOpen.indexOf('tel:') === 0) {
-      window.location = urlToOpen;
+      window.location.href = urlToOpen;
     } else {
       window.open(urlToOpen, target, 'noopener');
     }
