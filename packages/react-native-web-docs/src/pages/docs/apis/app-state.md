@@ -43,4 +43,4 @@ Add a listener to `AppState` changes. Listen to the `"change"` event type. The h
 
 ## Examples
 
-{{ macro.codesandbox('app-state') }}
+{{ macro.example('app-state') }}

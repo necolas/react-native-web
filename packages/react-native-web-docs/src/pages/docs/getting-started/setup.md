@@ -97,7 +97,7 @@ The project's Babel plugin (see [Installation]({{ '/docs/installation' | url }})
 
 ## Root element
 
-Full-screen React Native apps with a root `<ScrollView>` may require the following styles inlined in the HTML document shell. ([Example](https://codesandbox.io/s/52x1871vjl?file=/public/index.html:352-644).)
+Full-screen React Native apps with a root `<ScrollView>` may require the following styles inlined in the HTML document shell.
 
 ```css
 /* These styles make the body full-height */

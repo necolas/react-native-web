@@ -57,4 +57,4 @@ Determines if the modal and its content is rendered.
 
 ## Examples
 
-{{ macro.codesandbox('modal') }}
+{{ macro.example('modal') }}

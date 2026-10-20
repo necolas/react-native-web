@@ -101,4 +101,4 @@ Performs cache interrogation. Returns a mapping from URL to cache status: "disk"
 
 ## Examples
 
-{{ macro.codesandbox('image') }}
+{{ macro.example('image') }}
