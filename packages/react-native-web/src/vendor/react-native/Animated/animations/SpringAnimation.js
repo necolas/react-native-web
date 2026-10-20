@@ -182,7 +182,7 @@ class SpringAnimation extends Animation {
     restSpeedThreshold: number,
     stiffness: number,
     toValue: any,
-    type: $TEMPORARY$string<'spring'>,
+    type: string,
   |} {
     return {
       type: 'spring',
@@ -360,7 +360,6 @@ class SpringAnimation extends Animation {
       this.__debouncedOnEnd({finished: true});
       return;
     }
-    // $FlowFixMe[method-unbinding] added when improving typing for this parameters
     this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
   }
 

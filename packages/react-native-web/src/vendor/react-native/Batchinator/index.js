@@ -10,7 +10,7 @@
 
 'use strict';
 
-import InteractionManager from '../../../exports/InteractionManager';
+import InteractionManager from '../../../modules/InteractionManager';
 
 /**
  * A simple class for batching up invocations of a low-pri callback. A timeout is set to run the

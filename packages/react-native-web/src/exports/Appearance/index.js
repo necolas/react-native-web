@@ -22,7 +22,7 @@ type AppearanceListener = (preferences: AppearancePreferences) => void;
 type DOMAppearanceListener = (ev: MediaQueryListEvent) => any;
 
 function getQuery(): MediaQueryList | null {
-  return canUseDOM && window.matchMedia != null
+  return canUseDOM && typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-color-scheme: dark)')
     : null;
 }
@@ -47,13 +47,13 @@ const Appearance = {
       listenerMapping.set(listener, mappedListener);
     }
     if (query) {
-      query.addListener(mappedListener);
+      query.addEventListener('change', mappedListener);
     }
 
     function remove(): void {
       const mappedListener = listenerMapping.get(listener);
       if (query && mappedListener) {
-        query.removeListener(mappedListener);
+        query.removeEventListener('change', mappedListener);
       }
       listenerMapping.delete(listener);
     }

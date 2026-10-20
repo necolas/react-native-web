@@ -71,10 +71,10 @@ Create a `web/webpack.config.js` file:
 ```js
 // web/webpack.config.js
 
-const path = require('path');
-const webpack = require('webpack');
+import path from 'node:path';
+import webpack from 'webpack';
 
-const appDirectory = path.resolve(__dirname, '../');
+const appDirectory = path.resolve(import.meta.dirname, '../');
 
 // This is needed for webpack to compile JavaScript.
 // Many OSS React Native packages are not compiled to ES5 before being
@@ -113,7 +113,7 @@ const imageLoaderConfiguration = {
   }
 };
 
-module.exports = {
+export default {
   entry: [
     // load any web API polyfills
     // path.resolve(appDirectory, 'polyfills-web.js'),

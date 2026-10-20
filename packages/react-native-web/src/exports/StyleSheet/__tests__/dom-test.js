@@ -50,7 +50,6 @@ describe('createSheet', () => {
     expect(sheet).not.toBe(shadowSheet);
     expect(shadowSheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
     expect(typeof shadowSheet.insert).toBe('function');
-    // expect(shadowRoot.getElementById('react-native-stylesheet')).not.toBe(null);
     // Does the content match existing sheets?
     expect(shadowSheet.getTextContent().includes('test-sheet')).toBe(true);
     // Does the content update when other sheets are updated?

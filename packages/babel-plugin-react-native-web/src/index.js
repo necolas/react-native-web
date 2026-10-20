@@ -1,15 +1,12 @@
 const moduleMap = require('./moduleMap');
 
-const isCommonJS = (opts) => opts.commonjs === true;
-
-const getDistLocation = (importName, opts) => {
-  const format = isCommonJS(opts) ? 'cjs/' : '';
+const getDistLocation = (importName) => {
   const internalName =
     importName === 'unstable_createElement' ? 'createElement' : importName;
   if (internalName === 'index') {
-    return `react-native-web/dist/${format}index`;
+    return 'react-native-web/dist/index.js';
   } else if (internalName && moduleMap[internalName]) {
-    return `react-native-web/dist/${format}exports/${internalName}`;
+    return `react-native-web/dist/exports/${internalName}/index.js`;
   }
 };
 
@@ -39,14 +36,14 @@ module.exports = function ({ types: t }) {
   return {
     name: 'Rewrite react-native to react-native-web',
     visitor: {
-      ImportDeclaration(path, state) {
+      ImportDeclaration(path) {
         const { specifiers } = path.node;
         if (isReactNativeModule(path.node)) {
           const imports = specifiers
             .map((specifier) => {
               if (t.isImportSpecifier(specifier)) {
                 const importName = specifier.imported.name;
-                const distLocation = getDistLocation(importName, state.opts);
+                const distLocation = getDistLocation(importName);
 
                 if (distLocation) {
                   return t.importDeclaration(
@@ -61,7 +58,7 @@ module.exports = function ({ types: t }) {
               }
               return t.importDeclaration(
                 [specifier],
-                t.stringLiteral(getDistLocation('index', state.opts))
+                t.stringLiteral(getDistLocation('index'))
               );
             })
             .filter(Boolean);
@@ -69,7 +66,7 @@ module.exports = function ({ types: t }) {
           path.replaceWithMultiple(imports);
         }
       },
-      ExportNamedDeclaration(path, state) {
+      ExportNamedDeclaration(path) {
         const { specifiers } = path.node;
         if (isReactNativeModule(path.node)) {
           const exports = specifiers
@@ -77,7 +74,7 @@ module.exports = function ({ types: t }) {
               if (t.isExportSpecifier(specifier)) {
                 const exportName = specifier.exported.name;
                 const localName = specifier.local.name;
-                const distLocation = getDistLocation(localName, state.opts);
+                const distLocation = getDistLocation(localName);
 
                 if (distLocation) {
                   return t.exportNamedDeclaration(
@@ -95,7 +92,7 @@ module.exports = function ({ types: t }) {
               return t.exportNamedDeclaration(
                 null,
                 [specifier],
-                t.stringLiteral(getDistLocation('index', state.opts))
+                t.stringLiteral(getDistLocation('index'))
               );
             })
             .filter(Boolean);
@@ -103,16 +100,13 @@ module.exports = function ({ types: t }) {
           path.replaceWithMultiple(exports);
         }
       },
-      VariableDeclaration(path, state) {
+      VariableDeclaration(path) {
         if (isReactNativeRequire(t, path.node)) {
           const { id } = path.node.declarations[0];
           if (t.isObjectPattern(id)) {
             const imports = id.properties
               .map((identifier) => {
-                const distLocation = getDistLocation(
-                  identifier.key.name,
-                  state.opts
-                );
+                const distLocation = getDistLocation(identifier.key.name);
                 if (distLocation) {
                   return t.variableDeclaration(path.node.kind, [
                     t.variableDeclarator(
@@ -136,7 +130,7 @@ module.exports = function ({ types: t }) {
               t.variableDeclarator(
                 t.identifier(name),
                 t.callExpression(t.identifier('require'), [
-                  t.stringLiteral(getDistLocation('index', state.opts))
+                  t.stringLiteral(getDistLocation('index'))
                 ])
               )
             ]);

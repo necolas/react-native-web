@@ -2,27 +2,26 @@
   "private": true,
   "name": "benchmarks",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "clean": "del-cli ./dist",
     "build": "NODE_ENV=production npm run dev",
-    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && webpack --config ./webpack.config.js"
+    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && webpack-cli --config ./webpack.config.js"
   },
   "dependencies": {
-    "classnames": "^2.3.1",
-    "d3-scale-chromatic": "^3.0.0",
-    "prop-types": "^15.6.0",
+    "classnames": "^2.5.1",
+    "d3-scale-chromatic": "^3.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native-web": "0.21.3"
+    "react-native-web": "0.21.4"
   },
   "devDependencies": {
-    "babel-loader": "^8.2.5",
-    "babel-plugin-react-native-web": "0.21.3",
-    "css-loader": "^6.7.1",
-    "style-loader": "^3.3.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.94.0",
-    "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.10.0"
+    "babel-loader": "^10.1.1",
+    "css-loader": "^7.1.5",
+    "del-cli": "^8.0.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.111.1",
+    "webpack-bundle-analyzer": "^5.4.0",
+    "webpack-cli": "^7.2.3"
   }
 }

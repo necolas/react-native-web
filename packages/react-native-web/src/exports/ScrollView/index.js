@@ -113,13 +113,6 @@ class ScrollView extends React.Component<ScrollViewProps> {
    * Invoke this from an `onStartShouldSetResponderCapture` event.
    */
   scrollResponderHandleStartShouldSetResponderCapture: boolean = (e: Event) => {
-    // First see if we want to eat taps while the keyboard is up
-    // var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
-    // if (!this.props.keyboardShouldPersistTaps &&
-    //   currentlyFocusedTextInput != null &&
-    //   e.target !== currentlyFocusedTextInput) {
-    //   return true;
-    // }
     return this.scrollResponderIsAnimating();
   };
 
@@ -731,9 +724,7 @@ const commonStyle = {
   // Enable hardware compositing in modern browsers.
   // Creates a new layer with its own backing surface that can significantly
   // improve scroll performance.
-  transform: 'translateZ(0)',
-  // iOS native scrolling
-  WebkitOverflowScrolling: 'touch'
+  transform: 'translateZ(0)'
 };
 
 const styles = StyleSheet.create({
@@ -772,12 +763,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const ForwardedScrollView: React.AbstractComponent<
-  React.ElementConfig<typeof ScrollView>,
-  React.ElementRef<typeof ScrollView>
-> = React.forwardRef((props, forwardedRef) => {
-  return <ScrollView {...props} forwardedRef={forwardedRef} />;
-});
+const ForwardedScrollView = (props: {
+  ...React.ComponentProps<typeof ScrollView>,
+  ref?: React.Ref<React.ElementRef<typeof ScrollView>>
+}): React.Node => {
+  const { ref, ...rest } = props;
+  return <ScrollView {...rest} forwardedRef={ref} />;
+};
 
 ForwardedScrollView.displayName = 'ScrollView';
 

@@ -49,4 +49,4 @@ Default `"small"`. Set the size of the activity indicator.
 
 ## Examples
 
-{{ macro.codesandbox('activity-indicator') }}
+{{ macro.example('activity-indicator') }}

@@ -27,8 +27,8 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-export interface RCTExport<T: void = void> {
-  +getConstants?: () => {};
+export interface RCTExport<T extends void = void> {
+  readonly getConstants?: () => {};
 }
 
 // eslint-disable-next-line lint/react-native-modules

@@ -25,7 +25,7 @@ type Item = any;
 
 export type SectionBase<SectionItemT> = _SectionBase<SectionItemT>;
 
-type RequiredProps<SectionT: SectionBase<any>> = {|
+type RequiredProps<SectionT extends SectionBase<any>> = {|
   /**
    * The actual data to render, akin to the `data` prop in [`<FlatList>`](https://reactnative.dev/docs/flatlist).
    *
@@ -37,10 +37,10 @@ type RequiredProps<SectionT: SectionBase<any>> = {|
    *       ItemSeparatorComponent?: ?ReactClass<{highlighted: boolean, ...}>,
    *     }>
    */
-  sections: $ReadOnlyArray<SectionT>,
+  sections: ReadonlyArray<SectionT>,
 |};
 
-type OptionalProps<SectionT: SectionBase<any>> = {|
+type OptionalProps<SectionT extends SectionBase<any>> = {|
   /**
    * Default renderer for every item in every section. Can be over-ridden on a per-section basis.
    */
@@ -55,7 +55,7 @@ type OptionalProps<SectionT: SectionBase<any>> = {|
       ...
     },
     ...
-  }) => null | React.Element<any>,
+  }) => null | React.MixedElement,
   /**
    * A marker property for telling the list to re-render (since it implements `PureComponent`). If
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
@@ -93,24 +93,9 @@ type OptionalProps<SectionT: SectionBase<any>> = {|
 |};
 
 export type Props<SectionT> = {|
-  ...$Diff<
+  ...Omit<
     VirtualizedSectionListProps<SectionT>,
-    {
-      getItem: $PropertyType<VirtualizedSectionListProps<SectionT>, 'getItem'>,
-      getItemCount: $PropertyType<
-        VirtualizedSectionListProps<SectionT>,
-        'getItemCount',
-      >,
-      renderItem: $PropertyType<
-        VirtualizedSectionListProps<SectionT>,
-        'renderItem',
-      >,
-      keyExtractor: $PropertyType<
-        VirtualizedSectionListProps<SectionT>,
-        'keyExtractor',
-      >,
-      ...
-    },
+    'getItem' | 'getItemCount' | 'renderItem' | 'keyExtractor',
   >,
   ...RequiredProps<SectionT>,
   ...OptionalProps<SectionT>,
@@ -172,7 +157,7 @@ export type Props<SectionT> = {|
  *
  */
 export default class SectionList<
-  SectionT: SectionBase<any>,
+  SectionT extends SectionBase<any>,
 > extends React.PureComponent<Props<SectionT>, void> {
   props: Props<SectionT>;
 
@@ -248,7 +233,7 @@ export default class SectionList<
   }
 
   _wrapperListRef: ?React.ElementRef<typeof VirtualizedSectionList>;
-  _captureRef = ref => {
+  _captureRef = (ref: ?React.ElementRef<typeof VirtualizedSectionList>) => {
     this._wrapperListRef = ref;
   };
 }

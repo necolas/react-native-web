@@ -16,7 +16,7 @@ describe('StyleSheet', () => {
         "textContent": "[stylesheet-group="0"]{}
       body{margin:0;}
       button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
-      html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+      html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
       input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
       [stylesheet-group="3"]{}
       .r-bottom-1p0dtai{bottom:0px;}
@@ -30,18 +30,6 @@ describe('StyleSheet', () => {
 
   test('absoluteFill', () => {
     expect(StyleSheet.absoluteFill).toMatchInlineSnapshot(`
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    `);
-  });
-
-  test('absoluteFillObject', () => {
-    expect(StyleSheet.absoluteFillObject).toMatchInlineSnapshot(`
       {
         "bottom": 0,
         "left": 0,

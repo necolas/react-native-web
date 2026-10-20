@@ -1,20 +1,18 @@
-'use strict';
+import eleventyNavigationPlugin from '@11ty/eleventy-navigation';
+import eleventySyntaxHighlightPlugin from '@11ty/eleventy-plugin-syntaxhighlight';
+import * as csso from 'csso';
+import eleventySvgContentsPlugin from 'eleventy-plugin-svg-contents';
+import htmlmin from 'html-minifier-terser';
+import markdown from 'markdown-it';
+import markdownAnchor from 'markdown-it-anchor';
+import markdownAttrs from 'markdown-it-attrs';
+import markdownContainer from 'markdown-it-container';
+import * as markdownEmoji from 'markdown-it-emoji';
+import markdownFootnote from 'markdown-it-footnote';
+import markdownTasks from 'markdown-it-task-lists';
+import * as terser from 'terser';
 
-const csso = require('csso');
-const eleventyNavigationPlugin = require('@11ty/eleventy-navigation');
-const eleventySvgContentsPlugin = require('eleventy-plugin-svg-contents');
-const eleventySyntaxHighlightPlugin = require('@11ty/eleventy-plugin-syntaxhighlight');
-const htmlmin = require('html-minifier');
-const markdown = require('markdown-it');
-const markdownAnchor = require('markdown-it-anchor');
-const markdownAttrs = require('markdown-it-attrs');
-const markdownContainer = require('markdown-it-container');
-const markdownEmoji = require('markdown-it-emoji');
-const markdownFootnote = require('markdown-it-footnote');
-const markdownTasks = require('markdown-it-task-lists');
-const UglifyJS = require('uglify-es');
-
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
   // Merge data instead of overriding
   // https://www.11ty.dev/docs/data-deep-merge/
   eleventyConfig.setDataDeepMerge(true);
@@ -49,21 +47,20 @@ module.exports = function (eleventyConfig) {
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     return new Intl.DateTimeFormat('en-US', options).format(dateObj);
   });
+
   // Date formatting (machine readable)
   eleventyConfig.addFilter('machineDate', (dateObj) => {
     return dateObj.toISOString();
   });
+
   // Minify CSS
   eleventyConfig.addFilter('cssmin', function (code) {
     return csso.minify(code).css;
   });
+
   // Minify JS
-  eleventyConfig.addFilter('jsmin', function (code) {
-    const minified = UglifyJS.minify(code);
-    if (minified.error) {
-      console.log('UglifyJS error: ', minified.error);
-      return code;
-    }
+  eleventyConfig.addAsyncFilter('jsmin', async function (code) {
+    const minified = await terser.minify(code);
     return minified.code;
   });
 
@@ -76,6 +73,10 @@ module.exports = function (eleventyConfig) {
   // PASSTHROUGH -----
 
   eleventyConfig.addPassthroughCopy('src/static');
+  eleventyConfig.addPassthroughCopy({
+    'src/.nojekyll': '.nojekyll',
+    '../react-native-web-examples/dist': 'examples'
+  });
 
   // COLLECTIONS -----
 
@@ -157,4 +158,4 @@ module.exports = function (eleventyConfig) {
     // Matches the GitHub Pages subdirectory of the site (necolas.github.io/react-native-web)
     pathPrefix: '/react-native-web/'
   };
-};
+}

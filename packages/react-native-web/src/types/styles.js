@@ -324,22 +324,22 @@ export type TransformStyles = {|
   transform?:
     | ?string
     | Array<
-        | {| +perspective: NumberOrString |}
-        | {| +rotate: string |}
-        | {| +rotateX: string |}
-        | {| +rotateY: string |}
-        | {| +rotateZ: string |}
-        | {| +scale: number |}
-        | {| +scaleX: number |}
-        | {| +scaleY: number |}
-        | {| +scaleZ: number |}
-        | {| +scale3d: string |}
-        | {| +skewX: string |}
-        | {| +skewY: string |}
-        | {| +translateX: NumberOrString |}
-        | {| +translateY: NumberOrString |}
-        | {| +translateZ: NumberOrString |}
-        | {| +translate3d: string |}
+        | {| readonly perspective: NumberOrString |}
+        | {| readonly rotate: string |}
+        | {| readonly rotateX: string |}
+        | {| readonly rotateY: string |}
+        | {| readonly rotateZ: string |}
+        | {| readonly scale: number |}
+        | {| readonly scaleX: number |}
+        | {| readonly scaleY: number |}
+        | {| readonly scaleZ: number |}
+        | {| readonly scale3d: string |}
+        | {| readonly skewX: string |}
+        | {| readonly skewY: string |}
+        | {| readonly translateX: NumberOrString |}
+        | {| readonly translateY: NumberOrString |}
+        | {| readonly translateZ: NumberOrString |}
+        | {| readonly translate3d: string |}
       >,
   transformOrigin?: ?string | Array<NumberOrString>,
   transformStyle?: ?('flat' | 'preserve-3d')

@@ -23,13 +23,14 @@ type Props = {
   onScrollEndDrag?: (e: any) => void,
   onTouchMove?: (e: any) => void,
   onWheel?: (e: any) => void,
+  ref?: React.Ref<React.ElementRef<typeof View>>,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
   showsHorizontalScrollIndicator?: boolean,
   showsVerticalScrollIndicator?: boolean
 };
 
-function normalizeScrollEvent(e) {
+function normalizeScrollEvent(e: any) {
   return {
     nativeEvent: {
       contentOffset: {
@@ -69,14 +70,12 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
-> = React.forwardRef((props, forwardedRef) => {
+const ScrollViewBase = (props: Props): React.Node => {
   const {
     onScroll,
     onTouchMove,
     onWheel,
+    ref,
     scrollEnabled = true,
     scrollEventThrottle = 0,
     showsHorizontalScrollIndicator,
@@ -86,7 +85,7 @@ const ScrollViewBase: React.AbstractComponent<
   } = props;
 
   const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = React.useRef(null);
+  const scrollTimeout = React.useRef<?number>(null);
   const scrollRef = React.useRef(null);
 
   function createPreventableScrollHandler(handler: Function) {
@@ -151,12 +150,13 @@ const ScrollViewBase: React.AbstractComponent<
     showsVerticalScrollIndicator === false;
 
   return (
+    // $FlowFixMe[incompatible-type] Unsupported props are dropped by View
     <View
       {...rest}
       onScroll={handleScroll}
       onTouchMove={createPreventableScrollHandler(onTouchMove)}
       onWheel={createPreventableScrollHandler(onWheel)}
-      ref={useMergeRefs(scrollRef, forwardedRef)}
+      ref={useMergeRefs(scrollRef, ref)}
       style={[
         style,
         !scrollEnabled && styles.scrollDisabled,
@@ -164,7 +164,7 @@ const ScrollViewBase: React.AbstractComponent<
       ]}
     />
   );
-});
+};
 
 // Chrome doesn't support e.preventDefault in this case; touch-action must be
 // used to disable scrolling.

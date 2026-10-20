@@ -11,7 +11,9 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries = {};
+  static _entries: {
+    [uri: string]: { lastUsedTimestamp: number, refCount: number }
+  } = {};
 
   static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
@@ -71,11 +73,11 @@ export class ImageUriCache {
 }
 
 let id = 0;
-const requests = {};
+const requests: { [string]: HTMLImageElement } = {};
 
 const ImageLoader = {
   abort(requestId: number) {
-    let image = requests[`${requestId}`];
+    let image: ?HTMLImageElement = requests[`${requestId}`];
     if (image) {
       image.onerror = null;
       image.onload = null;
@@ -125,14 +127,10 @@ const ImageLoader = {
     image.onload = (e) => {
       // avoid blocking the main thread
       const onDecode = () => onLoad({ nativeEvent: e });
-      if (typeof image.decode === 'function') {
-        // Safari currently throws exceptions when decoding svgs.
-        // We want to catch that error and allow the load handler
-        // to be forwarded to the onLoad handler in this case
-        image.decode().then(onDecode, onDecode);
-      } else {
-        setTimeout(onDecode, 0);
-      }
+      // Safari currently throws exceptions when decoding svgs.
+      // We want to catch that error and allow the load handler
+      // to be forwarded to the onLoad handler in this case
+      image.decode().then(onDecode, onDecode);
     };
     image.src = uri;
     requests[`${id}`] = image;
@@ -154,7 +152,7 @@ const ImageLoader = {
     });
   },
   queryCache(uris: Array<string>): Promise<{| [uri: string]: 'disk/memory' |}> {
-    const result = {};
+    const result: { [uri: string]: 'disk/memory' } = {};
     uris.forEach((u) => {
       if (ImageUriCache.has(u)) {
         result[u] = 'disk/memory';

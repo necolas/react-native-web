@@ -39,4 +39,4 @@ Try to open the given url in a secure fashion. The provided target (including `u
 
 ## Examples
 
-{{ macro.codesandbox('linking') }}
+{{ macro.example('linking') }}

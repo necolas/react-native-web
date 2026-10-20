@@ -12,47 +12,40 @@ eleventyNavigation:
 How to add TypeScript support to your project.
 :::
 
-The type definitions for `react-native-web` are available on [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-native-web).
+`react-native-web` includes types that augment the `react-native` types (0.88 or later) with web-only props and styles.
 
 ---
 
-## Installation
+## Setup
 
-Simply install the following dependency in your project.
-
-```shell
-npm install --save-dev @types/react-native-web
-```
-
-The package comes with the `react-native-web` declaration types, so you can use it normally in your project.
-
-```ts
-import { AppRegistry } from 'react-native-web';
-```
-
----
-
-## Using it in React Native projects
-
-To extend the `react-native` types, you have to supply `react-native-web` as a member of the `types` compiler option in the `tsconfig.json` file.
+Add `react-native-web/types` to the `types` compiler option in the `tsconfig.json` file.
 
 ```json
 {
-  ...
   "compilerOptions": {
-    "types": ["react-native-web"]
+    "types": ["react-native-web/types"]
   }
 }
 ```
 
+You can also add a reference to `react-native-web/types` in a `.d.ts` file of your project (e.g., `env.d.ts`).
+
+```ts
+/// <reference types="react-native-web/types" />
+```
+
+---
+
+## Usage
+
 Now you can use `react-native` components in your project with TS support to `react-native-web` props and styles :tada:
 
 ```jsx
-import { View, ViewStyle } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 
 const style: ViewStyle = {
-  position: 'fixed', // RN style properties are augmented with Web-only options e.g. 'fixed'
-  marginBlock: 'auto' // All Web CSS style properties are also available to use
+  position: 'fixed', // RN style properties are augmented with web-only options e.g. 'fixed'
+  transitionDuration: '200ms' // Web-only style properties are also available
 };
 
 <View

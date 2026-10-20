@@ -11,7 +11,7 @@
 import normalizeColor from '@react-native/normalize-colors';
 
 const processColor = (color?: string | number): ?number => {
-  if (color === undefined || color === null) {
+  if (color == null) {
     return color;
   }
 

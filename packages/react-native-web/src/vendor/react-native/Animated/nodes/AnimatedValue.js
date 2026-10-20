@@ -12,7 +12,7 @@
 
 import AnimatedInterpolation from './AnimatedInterpolation';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import InteractionManager from '../../../../exports/InteractionManager';
+import InteractionManager from '../../../../modules/InteractionManager';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type AnimatedNode from './AnimatedNode';
@@ -20,7 +20,7 @@ import type Animation, {EndCallback} from '../animations/Animation';
 import type {InterpolationConfigType} from './AnimatedInterpolation';
 import type AnimatedTracking from './AnimatedTracking';
 
-export type AnimatedValueConfig = $ReadOnly<{
+export type AnimatedValueConfig = Readonly<{
   useNativeDriver: boolean,
 }>;
 
@@ -49,7 +49,7 @@ const NativeAnimatedAPI = NativeAnimatedHelper.API;
  * transform which can receive values from multiple parents.
  */
 function _flush(rootNode: AnimatedValue): void {
-  const animatedStyles = new Set();
+  const animatedStyles = new Set<AnimatedNode>();
   function findAnimatedStyles(node: AnimatedValue | AnimatedNode) {
     /* $FlowFixMe[prop-missing] (>=0.68.0 site=react_native_fb) This comment
      * suppresses an error found when Flow v0.68 was deployed. To see the error
@@ -226,7 +226,7 @@ class AnimatedValue extends AnimatedWithChildren {
    * Interpolates the value before updating the property, e.g. mapping 0-1 to
    * 0-10.
    */
-  interpolate<OutputT: number | string>(
+  interpolate<OutputT extends number | string>(
     config: InterpolationConfigType<OutputT>,
   ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);

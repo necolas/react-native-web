@@ -20,7 +20,7 @@ const sheet = createSheet();
 
 const defaultPreprocessOptions = { shadow: true, textShadow: true };
 
-function customStyleq(styles, options: Options = {}) {
+function customStyleq(styles: any, options: Options = {}) {
   const { writingDirection, ...preprocessOptions } = options;
   const isRTL = writingDirection === 'rtl';
   return styleq.factory({
@@ -37,7 +37,7 @@ function customStyleq(styles, options: Options = {}) {
   })(styles);
 }
 
-function insertRules(compiledOrderedRules) {
+function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
   compiledOrderedRules.forEach(([rules, order]) => {
     if (sheet != null) {
       rules.forEach((rule) => {
@@ -47,7 +47,7 @@ function insertRules(compiledOrderedRules) {
   });
 }
 
-function compileAndInsertAtomic(style) {
+function compileAndInsertAtomic(style: { [key: string]: any }) {
   const [compiledStyle, compiledOrderedRules] = atomic(
     preprocess(style, defaultPreprocessOptions)
   );
@@ -55,7 +55,7 @@ function compileAndInsertAtomic(style) {
   return compiledStyle;
 }
 
-function compileAndInsertReset(style, key) {
+function compileAndInsertReset(style: { [key: string]: any }, key: string) {
   const [compiledStyle, compiledOrderedRules] = classic(style, key);
   insertRules(compiledOrderedRules);
   return compiledStyle;
@@ -63,22 +63,17 @@ function compileAndInsertReset(style, key) {
 
 /* ----- API ----- */
 
-const absoluteFillObject = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
-};
-
-const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
+const absoluteFill = create({
+  x: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }
+}).x;
 
 /**
  * create
  */
-function create<T: Object>(styles: T): $ReadOnly<T> {
-  Object.keys(styles).forEach((key) => {
-    const styleObj = styles[key];
+function create<const T extends { ... }>(styles: T): Readonly<T> {
+  const stylesMap: { [key: string]: any } = styles;
+  Object.keys(stylesMap).forEach((key) => {
+    const styleObj = stylesMap[key];
     // Only compile at runtime if the style is not already compiled
     if (styleObj != null && styleObj.$$css !== true) {
       let compiledStyles;
@@ -87,7 +82,7 @@ function create<T: Object>(styles: T): $ReadOnly<T> {
       } else {
         if (process.env.NODE_ENV !== 'production') {
           validate(styleObj);
-          styles[key] = Object.freeze(styleObj);
+          stylesMap[key] = Object.freeze(styleObj);
         }
         compiledStyles = compileAndInsertAtomic(styleObj);
       }
@@ -113,11 +108,6 @@ function compose(style1: any, style2: any): any {
       );
     }
     /* eslint-enable prefer-rest-params */
-    /*
-    console.warn(
-      'StyleSheet.compose(a, b) is deprecated; use array syntax, i.e., [a,b].'
-    );
-    */
   }
   return [style1, style2];
 }
@@ -131,7 +121,7 @@ function flatten(...styles: any): { [key: string]: any } {
   for (let i = 0; i < flatArray.length; i++) {
     const style = flatArray[i];
     if (style != null && typeof style === 'object') {
-      // $FlowFixMe
+      // $FlowFixMe[unsafe-object-assign]
       Object.assign(result, style);
     }
   }
@@ -151,11 +141,11 @@ function getSheet(): { id: string, textContent: string } {
 /**
  * resolve
  */
-type StyleProps = [string, { [key: string]: mixed } | null];
+type StyleProps = [string, { [key: string]: unknown } | null];
 type Options = {
   shadow?: boolean,
   textShadow?: boolean,
-  writingDirection: 'ltr' | 'rtl'
+  writingDirection?: 'ltr' | 'rtl'
 };
 
 function StyleSheet(styles: any, options?: Options = {}): StyleProps {
@@ -168,7 +158,6 @@ function StyleSheet(styles: any, options?: Options = {}): StyleProps {
 }
 
 StyleSheet.absoluteFill = absoluteFill;
-StyleSheet.absoluteFillObject = absoluteFillObject;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
@@ -177,19 +166,22 @@ StyleSheet.getSheet = getSheet;
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
 
-if (canUseDOM && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
-  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = StyleSheet.flatten;
+// $FlowFixMe[incompatible-use]
+const devToolsHook = canUseDOM ? window.__REACT_DEVTOOLS_GLOBAL_HOOK__ : null;
+
+if (devToolsHook) {
+  devToolsHook.resolveRNStyle = StyleSheet.flatten;
 }
 
 export type IStyleSheet = {
-  (styles: $ReadOnlyArray<any>, options?: Options): StyleProps,
+  (styles: ReadonlyArray<any>, options?: Options): StyleProps,
   absoluteFill: Object,
-  absoluteFillObject: Object,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,
   getSheet: typeof getSheet,
-  hairlineWidth: number
+  hairlineWidth: number,
+  ...
 };
 
 const stylesheet: IStyleSheet = StyleSheet;

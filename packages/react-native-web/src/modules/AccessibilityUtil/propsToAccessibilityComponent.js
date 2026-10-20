@@ -9,7 +9,7 @@
 
 import propsToAriaRole from './propsToAriaRole';
 
-const roleComponents = {
+const roleComponents: { [string]: string } = {
   article: 'article',
   banner: 'header',
   blockquote: 'blockquote',

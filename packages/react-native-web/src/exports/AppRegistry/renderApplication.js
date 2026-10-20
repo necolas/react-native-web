@@ -20,14 +20,15 @@ export type Application = {
   unmount: () => void
 };
 
-export default function renderApplication<Props: Object>(
+export default function renderApplication<Props extends Object>(
   RootComponent: ComponentType<Props>,
-  WrapperComponent?: ?ComponentType<*>,
+  WrapperComponent?: ?ComponentType<{ children: Node, ... }>,
   callback?: () => void,
   options: {
     hydrate: boolean,
     initialProps: Props,
-    rootTag: any
+    rootTag: any,
+    ...
   }
 ): Application {
   const { hydrate: shouldHydrate, initialProps, rootTag } = options;
@@ -50,7 +51,7 @@ export default function renderApplication<Props: Object>(
 export function getApplication(
   RootComponent: ComponentType<Object>,
   initialProps: Object,
-  WrapperComponent?: ?ComponentType<*>
+  WrapperComponent?: ?ComponentType<{ children: Node, ... }>
 ): {| element: Node, getStyleElement: (Object) => Node |} {
   const element = (
     <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
@@ -58,7 +59,7 @@ export function getApplication(
     </AppContainer>
   );
   // Don't escape CSS text
-  const getStyleElement = (props) => {
+  const getStyleElement = (props: Object) => {
     const sheet = StyleSheet.getSheet();
     return (
       <style

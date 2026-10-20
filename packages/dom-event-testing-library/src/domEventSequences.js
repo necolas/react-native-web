@@ -15,7 +15,7 @@ import {
   defaultBrowserChromeSize
 } from './constants';
 import * as domEvents from './domEvents';
-import { hasPointerEvent, platform } from './domEnvironment';
+import { platform } from './domEnvironment';
 import * as touchStore from './touchStore';
 
 /**
@@ -127,9 +127,7 @@ export function contextmenu(target, defaultPayload = {}) {
   const preventDefault = payload.preventDefault;
 
   if (pointerType === 'touch') {
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerdown(payload));
-    }
+    dispatch(domEvents.pointerdown(payload));
     const touch = createTouch(target, payload);
     touchStore.addTouch(touch);
     const touchEventPayload = createTouchEventPayload(target, touch, payload);
@@ -153,9 +151,7 @@ export function contextmenu(target, defaultPayload = {}) {
   } else if (pointerType === 'mouse') {
     if (ctrlKey === true) {
       const { button, buttons } = payload;
-      if (hasPointerEvent()) {
-        dispatch(domEvents.pointerdown({ ...payload, ctrlKey }));
-      }
+      dispatch(domEvents.pointerdown({ ...payload, ctrlKey }));
       dispatch(domEvents.mousedown({ ...payload, ctrlKey }));
       if (platform.get() === 'mac') {
         dispatch(
@@ -165,9 +161,7 @@ export function contextmenu(target, defaultPayload = {}) {
     } else {
       const button = buttonType.secondary;
       const buttons = buttonsType.secondary;
-      if (hasPointerEvent()) {
-        dispatch(domEvents.pointerdown({ ...payload, button, buttons }));
-      }
+      dispatch(domEvents.pointerdown({ ...payload, button, buttons }));
       dispatch(domEvents.mousedown({ ...payload, button, buttons }));
       dispatch(
         domEvents.contextmenu({ ...payload, button, buttons, preventDefault })
@@ -201,9 +195,8 @@ export function pointercancel(target, defaultPayload) {
     ...defaultPayload
   };
 
-  if (hasPointerEvent()) {
-    dispatchEvent(domEvents.pointercancel(payload));
-  }
+  dispatchEvent(domEvents.pointercancel(payload));
+
   if (pointerType === 'mouse') {
     dispatchEvent(domEvents.dragstart(payload));
   } else {
@@ -227,30 +220,23 @@ export function pointerdown(target, defaultPayload) {
   };
 
   if (pointerType === 'mouse') {
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerover(payload));
-      dispatch(domEvents.pointerenter(payload));
-    }
+    dispatch(domEvents.pointerover(payload));
+    dispatch(domEvents.pointerenter(payload));
     dispatch(domEvents.mouseover(payload));
     dispatch(domEvents.mouseenter(payload));
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerdown(payload));
-    }
+    dispatch(domEvents.pointerdown(payload));
     dispatch(domEvents.mousedown(payload));
     focus(target);
   } else {
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerover(payload));
-      dispatch(domEvents.pointerenter(payload));
-      dispatch(domEvents.pointerdown(payload));
-    }
+    dispatch(domEvents.pointerover(payload));
+    dispatch(domEvents.pointerenter(payload));
+    dispatch(domEvents.pointerdown(payload));
+
     const touch = createTouch(target, payload);
     touchStore.addTouch(touch);
     const touchEventPayload = createTouchEventPayload(target, touch, payload);
     dispatch(domEvents.touchstart(touchEventPayload));
-    if (hasPointerEvent()) {
-      dispatch(domEvents.gotpointercapture(payload));
-    }
+    dispatch(domEvents.gotpointercapture(payload));
   }
 }
 
@@ -262,12 +248,10 @@ export function pointerover(target, defaultPayload) {
     ...defaultPayload
   };
 
-  if (hasPointerEvent()) {
-    // Pointer must move before it can dispatch "over"
-    dispatch(domEvents.pointermove());
-    dispatch(domEvents.pointerover(payload));
-    dispatch(domEvents.pointerenter(payload));
-  }
+  // Pointer must move before it can dispatch "over"
+  dispatch(domEvents.pointermove());
+  dispatch(domEvents.pointerover(payload));
+  dispatch(domEvents.pointerenter(payload));
   dispatch(domEvents.mousemove());
   dispatch(domEvents.mouseover(payload));
   dispatch(domEvents.mouseenter(payload));
@@ -283,13 +267,12 @@ export function pointerout(target, defaultPayload) {
 
   const { relatedTarget } = payload;
 
-  if (hasPointerEvent()) {
-    dispatch(domEvents.pointerout(payload));
-    // Only call the leave event if exiting the subtree
-    if (!target.contains(relatedTarget)) {
-      dispatch(domEvents.pointerleave(payload));
-    }
+  dispatch(domEvents.pointerout(payload));
+  // Only call the leave event if exiting the subtree
+  if (!target.contains(relatedTarget)) {
+    dispatch(domEvents.pointerleave(payload));
   }
+
   dispatch(domEvents.mouseout(payload));
   if (!target.contains(relatedTarget)) {
     // Only call the leave event if exiting the subtree
@@ -306,9 +289,7 @@ export function pointerhover(target, defaultPayload) {
     ...defaultPayload
   };
 
-  if (hasPointerEvent()) {
-    dispatch(domEvents.pointermove(payload));
-  }
+  dispatch(domEvents.pointermove(payload));
   dispatch(domEvents.mousemove(payload));
 }
 
@@ -326,22 +307,17 @@ export function pointermove(target, defaultPayload) {
   };
 
   if (pointerType === 'mouse') {
-    if (hasPointerEvent()) {
-      dispatch(
-        domEvents.pointermove({ pressure: 0.5, button: -1, ...payload })
-      );
-    }
+    dispatch(domEvents.pointermove({ pressure: 0.5, button: -1, ...payload }));
     dispatch(domEvents.mousemove(payload));
   } else {
-    if (hasPointerEvent()) {
-      dispatch(
-        domEvents.pointermove({
-          pressure: 1,
-          button: -1,
-          ...payload
-        })
-      );
-    }
+    dispatch(
+      domEvents.pointermove({
+        pressure: 1,
+        button: -1,
+        ...payload
+      })
+    );
+
     const touch = createTouch(target, payload);
     touchStore.updateTouch(touch);
     const touchEventPayload = createTouchEventPayload(target, touch, payload);
@@ -364,20 +340,17 @@ export function pointerup(target, defaultPayload) {
     platform.get() === 'mac' && payload.ctrlKey === true;
 
   if (pointerType === 'mouse') {
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerup(payload));
-    }
+    dispatch(domEvents.pointerup(payload));
     dispatch(domEvents.mouseup(payload));
     if (isPrimaryButton && !isContextMenuAction) {
       dispatch(domEvents.click(payload));
     }
   } else {
-    if (hasPointerEvent()) {
-      dispatch(domEvents.pointerup(payload));
-      dispatch(domEvents.lostpointercapture(payload));
-      dispatch(domEvents.pointerout(payload));
-      dispatch(domEvents.pointerleave(payload));
-    }
+    dispatch(domEvents.pointerup(payload));
+    dispatch(domEvents.lostpointercapture(payload));
+    dispatch(domEvents.pointerout(payload));
+    dispatch(domEvents.pointerleave(payload));
+
     const touch = createTouch(target, payload);
     const isGesture = touchStore.removeTouch(touch);
     const touchEventPayload = createTouchEventPayload(target, touch, payload);

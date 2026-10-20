@@ -14,19 +14,7 @@ import invariant from 'fbjs/lib/invariant';
 import EventEmitter from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import canUseDOM from '../../modules/canUseDom';
 
-// Android 4.4 browser
-const isPrefixed =
-  canUseDOM &&
-  !document.hasOwnProperty('hidden') &&
-  document.hasOwnProperty('webkitHidden');
-
 const EVENT_TYPES = ['change', 'memoryWarning'];
-const VISIBILITY_CHANGE_EVENT = isPrefixed
-  ? 'webkitvisibilitychange'
-  : 'visibilitychange';
-const VISIBILITY_STATE_PROPERTY = isPrefixed
-  ? 'webkitVisibilityState'
-  : 'visibilityState';
 
 const AppStates = {
   BACKGROUND: 'background',
@@ -36,14 +24,14 @@ const AppStates = {
 let changeEmitter = null;
 
 export default class AppState {
-  static isAvailable = canUseDOM && !!document[VISIBILITY_STATE_PROPERTY];
+  static isAvailable = canUseDOM && !!document.visibilityState;
 
   static get currentState() {
     if (!AppState.isAvailable) {
       return AppStates.ACTIVE;
     }
 
-    switch (document[VISIBILITY_STATE_PROPERTY]) {
+    switch (document.visibilityState) {
       case 'hidden':
       case 'prerender':
       case 'unloaded':
@@ -65,7 +53,7 @@ export default class AppState {
           changeEmitter = new EventEmitter();
 
           document.addEventListener(
-            VISIBILITY_CHANGE_EVENT,
+            'visibilitychange',
             () => {
               if (changeEmitter) {
                 changeEmitter.emit('change', AppState.currentState);

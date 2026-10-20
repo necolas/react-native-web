@@ -46,7 +46,7 @@ const rtlLangs = new Set([
   'yi' // Yiddish
 ]);
 
-const cache = new Map();
+const cache = new Map<string, boolean>();
 
 /**
  * Determine the writing direction of a locale
@@ -58,19 +58,12 @@ export function isLocaleRTL(locale: string): boolean {
   }
 
   let isRTL = false;
-  // $FlowFixMe
-  if (Intl.Locale) {
-    try {
-      // $FlowFixMe
-      const script = new Intl.Locale(locale).maximize().script;
-      isRTL = rtlScripts.has(script);
-    } catch {
-      // RangeError: Incorrect locale information provided
-      // Fallback to inferring from language
-      const lang = locale.split('-')[0];
-      isRTL = rtlLangs.has(lang);
-    }
-  } else {
+
+  try {
+    const script = new Intl.Locale(locale).maximize().script;
+    isRTL = script != null && rtlScripts.has(script);
+  } catch {
+    // RangeError: Incorrect locale information provided
     // Fallback to inferring from language
     const lang = locale.split('-')[0];
     isRTL = rtlLangs.has(lang);

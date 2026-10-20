@@ -7,7 +7,7 @@
 
 /* eslint-disable react/jsx-no-bind */
 
-import * as AssetRegistry from '../../../modules/AssetRegistry';
+import { registerAsset } from '../../../modules/AssetRegistry';
 import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
@@ -153,7 +153,7 @@ describe('components/Image', () => {
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
           onLoadStart={onLoadStartStub}
-          source={'https://test.com/img.jpg'}
+          source="https://test.com/img.jpg"
         />
       );
       act(() => {
@@ -162,7 +162,7 @@ describe('components/Image', () => {
             onLoad={onLoadStub}
             onLoadEnd={onLoadEndStub}
             onLoadStart={onLoadStartStub}
-            source={'https://blah.com/img.png'}
+            source="https://blah.com/img.png"
           />
         );
       });
@@ -179,7 +179,7 @@ describe('components/Image', () => {
           onLoad={onLoadStub}
           onLoadEnd={onLoadEndStub}
           onLoadStart={onLoadStartStub}
-          source={'https://test.com/img.jpg'}
+          source="https://test.com/img.jpg"
         />
       );
       act(() => {
@@ -188,7 +188,7 @@ describe('components/Image', () => {
             onLoad={onLoadStub}
             onLoadEnd={onLoadEndStub}
             onLoadStart={onLoadStartStub}
-            source={'https://test.com/img.jpg'}
+            source="https://test.com/img.jpg"
           />
         );
       });
@@ -321,22 +321,22 @@ describe('components/Image', () => {
     });
 
     test('it correctly selects the source scale', () => {
-      AssetRegistry.getAssetByID = jest.fn(() => ({
+      const assetId = registerAsset({
         httpServerLocation: 'static',
         name: 'img',
         scales: [1, 2, 3],
         type: 'png'
-      }));
+      });
 
       PixelRatio.get = jest.fn(() => 1.0);
-      let { container } = render(<Image source={1} />);
+      let { container } = render(<Image source={assetId} />);
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img.png'
       );
 
       act(() => {
         PixelRatio.get = jest.fn(() => 2.2);
-        ({ container } = render(<Image source={1} />));
+        ({ container } = render(<Image source={assetId} />));
       });
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img@2x.png'
@@ -378,7 +378,7 @@ describe('components/Image', () => {
     test('convert to filter', () => {
       const defaultSource = { uri: 'https://google.com/favicon.ico' };
       const { container } = render(
-        <Image defaultSource={defaultSource} tintColor={'red'} />
+        <Image defaultSource={defaultSource} tintColor="red" />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
@@ -418,12 +418,10 @@ describe('components/Image', () => {
         onLoadStart: jest.fn()
       };
       const { rerender } = render(
-        <Image {...firstStubs} source={'https://test.com/img.jpg'} />
+        <Image {...firstStubs} source="https://test.com/img.jpg" />
       );
       act(() => {
-        rerender(
-          <Image {...secondStubs} source={'https://test.com/img.jpg'} />
-        );
+        rerender(<Image {...secondStubs} source="https://test.com/img.jpg" />);
       });
       expect(ImageLoader.load.mock.calls.length).toBe(1);
       expect(ImageLoader.abort).not.toHaveBeenCalled();
@@ -451,12 +449,10 @@ describe('components/Image', () => {
         onLoadStart: jest.fn()
       };
       const { rerender } = render(
-        <Image {...firstStubs} source={'https://test.com/img.jpg'} />
+        <Image {...firstStubs} source="https://test.com/img.jpg" />
       );
       act(() => {
-        rerender(
-          <Image {...secondStubs} source={'https://test.com/img.jpg'} />
-        );
+        rerender(<Image {...secondStubs} source="https://test.com/img.jpg" />);
       });
       act(() => {
         resolveLoad();

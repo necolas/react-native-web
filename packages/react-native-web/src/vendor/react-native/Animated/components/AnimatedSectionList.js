@@ -18,13 +18,12 @@ import type {AnimatedComponentType} from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const SectionListWithEventThrottle = React.forwardRef((props, ref) => (
-  <SectionList scrollEventThrottle={0.0001} {...props} ref={ref} />
-));
+// $FlowFixMe[underconstrained-implicit-instantiation]
+const SectionListWithEventThrottle = (props: any) => <SectionList scrollEventThrottle={0.0001} {...props} />;
 
-export default (createAnimatedComponent(
+export default createAnimatedComponent(
   SectionListWithEventThrottle,
-): AnimatedComponentType<
-  React.ElementConfig<typeof SectionList>,
+) as AnimatedComponentType<
+  React.ComponentProps<typeof SectionList>,
   React.ElementRef<typeof SectionList>,
->);
+>;

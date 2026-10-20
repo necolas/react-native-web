@@ -3,8 +3,6 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @noflow
  */
 'use strict';
 
@@ -22,14 +20,6 @@ import {
 } from 'react-native';
 import Example from '../../shared/example';
 
-type Item = {
-  title: string,
-  text: string,
-  key: string,
-  pressed: boolean,
-  noImage?: ?boolean
-};
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const HEADER = { height: 30, width: 100 };
@@ -42,19 +32,19 @@ const VIEWABILITY_CONFIG = {
   waitForInteraction: true
 };
 const THUMB_URLS = [
-  './lists/like.png',
-  './lists/dislike.png',
-  './lists/call.png',
-  './lists/fist.png',
-  './lists/bandaged.png',
-  './lists/flowers.png',
-  './lists/heart.png',
-  './lists/liking.png',
-  './lists/party.png',
-  './lists/poke.png',
-  './lists/superlike.png',
-  './lists/victory.png'
-];
+  '/lists/like.png',
+  '/lists/dislike.png',
+  '/lists/call.png',
+  '/lists/fist.png',
+  '/lists/bandaged.png',
+  '/lists/flowers.png',
+  '/lists/heart.png',
+  '/lists/liking.png',
+  '/lists/party.png',
+  '/lists/poke.png',
+  '/lists/superlike.png',
+  '/lists/victory.png'
+].map((url) => process.env.basePath + url);
 const LOREM_IPSUM =
   'Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix ' +
   'civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id ' +
@@ -62,7 +52,7 @@ const LOREM_IPSUM =
   'vulputate est, vel an accusam intellegam interesset. Nam eu stet pericula reprimique, ea vim illud ' +
   'modus, putant invidunt reprehendunt ne qui.';
 
-function genItemData(count: number, start: number = 0): Array<Item> {
+function genItemData(count, start = 0) {
   const dataBlob = [];
   for (let ii = start; ii < count + start; ii++) {
     const itemHash = Math.abs(hashCode('Item ' + ii));
@@ -76,14 +66,7 @@ function genItemData(count: number, start: number = 0): Array<Item> {
   return dataBlob;
 }
 
-class ItemComponent extends React.PureComponent<{
-  fixedHeight?: ?boolean,
-  horizontal?: ?boolean,
-  item: Item,
-  onPress: (key: string) => void,
-  onShowUnderlay?: () => void,
-  onHideUnderlay?: () => void
-}> {
+class ItemComponent extends React.PureComponent {
   _onPress = () => {
     this.props.onPress(this.props.item.key);
   };
@@ -118,7 +101,7 @@ class ItemComponent extends React.PureComponent<{
   }
 }
 
-class FooterComponent extends React.PureComponent<{}> {
+class FooterComponent extends React.PureComponent {
   render() {
     return (
       <View style={styles.headerFooterContainer}>
@@ -131,7 +114,7 @@ class FooterComponent extends React.PureComponent<{}> {
   }
 }
 
-class HeaderComponent extends React.PureComponent<{}> {
+class HeaderComponent extends React.PureComponent {
   render() {
     return (
       <View style={styles.headerFooterContainer}>
@@ -144,13 +127,13 @@ class HeaderComponent extends React.PureComponent<{}> {
   }
 }
 
-class SeparatorComponent extends React.PureComponent<{}> {
+class SeparatorComponent extends React.PureComponent {
   render() {
     return <View style={styles.separator} />;
   }
 }
 
-class ItemSeparatorComponent extends React.PureComponent<{}> {
+class ItemSeparatorComponent extends React.PureComponent {
   render() {
     const style = this.props.highlighted
       ? [
@@ -162,7 +145,7 @@ class ItemSeparatorComponent extends React.PureComponent<{}> {
   }
 }
 
-class Spindicator extends React.PureComponent<{}> {
+class Spindicator extends React.PureComponent {
   render() {
     return (
       <Animated.View
@@ -181,7 +164,7 @@ class Spindicator extends React.PureComponent<{}> {
   }
 }
 
-function hashCode(str: string): number {
+function hashCode(str) {
   let hash = 15;
   for (let ii = str.length - 1; ii >= 0; ii--) {
     hash = (hash << 5) - hash + str.charCodeAt(ii);
@@ -189,14 +172,14 @@ function hashCode(str: string): number {
   return hash;
 }
 
-function getItemLayout(data: any, index: number, horizontal?: boolean) {
+function getItemLayout(data, index, horizontal) {
   const [length, separator, header] = horizontal
     ? [HORIZ_WIDTH, 0, HEADER.width]
     : [ITEM_HEIGHT, SEPARATOR_HEIGHT, HEADER.height];
   return { length, offset: (length + separator) * index + header, index };
 }
 
-function pressItem(context: Object, key: string) {
+function pressItem(context, key) {
   const index = Number(key);
   const pressed = !context.state.data[index].pressed;
   context.setState((state) => {
@@ -210,7 +193,7 @@ function pressItem(context: Object, key: string) {
   });
 }
 
-function renderSmallSwitchOption(context: Object, key: string) {
+function renderSmallSwitchOption(context, key) {
   return (
     <View style={styles.option}>
       <Text>{key}:</Text>
@@ -223,7 +206,7 @@ function renderSmallSwitchOption(context: Object, key: string) {
   );
 }
 
-function PlainInput(props: Object) {
+function PlainInput(props) {
   return (
     <TextInput
       autoCapitalize="none"
@@ -345,7 +328,7 @@ class SingleColumnExample extends React.PureComponent {
   _captureRef = (ref) => {
     this._listRef = ref;
   };
-  _getItemLayout = (data: any, index: number) => {
+  _getItemLayout = (data, index) => {
     return getItemLayout(data, index, this.state.horizontal);
   };
   _onEndReached = () => {
@@ -371,15 +354,7 @@ class SingleColumnExample extends React.PureComponent {
   };
   // This is called when items change viewability by scrolling into or out of
   // the viewable area.
-  _onViewableItemsChanged = (info: {
-    changed: Array<{
-      key: string,
-      isViewable: boolean,
-      item: any,
-      index: ?number,
-      section?: any
-    }>
-  }) => {
+  _onViewableItemsChanged = (info) => {
     // Impressions can be logged here
     if (this.state.logViewable) {
       console.log(
@@ -388,11 +363,10 @@ class SingleColumnExample extends React.PureComponent {
       );
     }
   };
-  _pressItem = (key: string) => {
+  _pressItem = (key) => {
     this._listRef.recordInteraction();
     pressItem(this, key);
   };
-  _listRef: AnimatedFlatList;
 }
 
 const styles = StyleSheet.create({

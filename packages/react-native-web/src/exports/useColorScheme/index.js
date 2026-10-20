@@ -11,7 +11,7 @@
 'use client';
 
 import * as React from 'react';
-import type { ColorSchemeName } from '../Appearance';
+import type { AppearancePreferences, ColorSchemeName } from '../Appearance';
 import Appearance from '../Appearance';
 
 export default function useColorScheme(): ColorSchemeName {
@@ -20,7 +20,7 @@ export default function useColorScheme(): ColorSchemeName {
   );
 
   React.useEffect(() => {
-    function listener(appearance) {
+    function listener(appearance: AppearancePreferences) {
       setColorScheme(appearance.colorScheme);
     }
     const { remove } = Appearance.addChangeListener(listener);

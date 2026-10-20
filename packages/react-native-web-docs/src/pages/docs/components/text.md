@@ -104,4 +104,4 @@ Set the test selector label (via `data-testid`).
 
 ## Examples
 
-{{ macro.codesandbox('text') }}
+{{ macro.example('text') }}

@@ -13,6 +13,7 @@
 import type { ColorValue } from '../../types';
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
 import type { ViewProps } from '../View';
+import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 
 import * as React from 'react';
 import { useCallback, useMemo, useState, useRef } from 'react';
@@ -21,9 +22,9 @@ import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-type ViewStyle = $PropertyType<ViewProps, 'style'>;
+type ViewStyle = ViewProps['style'];
 
-type Props = $ReadOnly<{|
+type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
   onHideUnderlay?: ?() => void,
@@ -33,12 +34,15 @@ type Props = $ReadOnly<{|
   underlayColor?: ?ColorValue
 |}>;
 
-type ExtraStyles = $ReadOnly<{|
+type ExtraStyles = Readonly<{|
   child: ViewStyle,
   underlay: ViewStyle
 |}>;
 
-function createExtraStyles(activeOpacity, underlayColor): ExtraStyles {
+function createExtraStyles(
+  activeOpacity: ?number,
+  underlayColor: ?ColorValue
+): ExtraStyles {
   return {
     child: { opacity: activeOpacity ?? 0.85 },
     underlay: {
@@ -47,7 +51,7 @@ function createExtraStyles(activeOpacity, underlayColor): ExtraStyles {
   };
 }
 
-function hasPressHandler(props): boolean {
+function hasPressHandler(props: Props): boolean {
   return (
     props.onPress != null ||
     props.onPressIn != null ||
@@ -69,7 +73,7 @@ function hasPressHandler(props): boolean {
  * TouchableHighlight must have one child (not zero or more than one).
  * If you wish to have several child components, wrap them in a View.
  */
-function TouchableHighlight(props: Props, forwardedRef): React.Node {
+function TouchableHighlight(props: Props): React.Node {
   const {
     activeOpacity,
     children,
@@ -84,6 +88,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
     onPressIn,
     onPressOut,
     onShowUnderlay,
+    ref,
     rejectResponderTermination,
     style,
     testOnly_pressed,
@@ -92,7 +97,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
   } = props;
 
   const hostRef = useRef(null);
-  const setRef = useMergeRefs(forwardedRef, hostRef);
+  const setRef = useMergeRefs(ref, hostRef);
 
   const [extraStyles, setExtraStyles] = useState(
     testOnly_pressed === true
@@ -131,13 +136,13 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
       delayPressEnd: delayPressOut,
       onLongPress,
       onPress,
-      onPressStart(event) {
+      onPressStart(event: ResponderEvent) {
         showUnderlay();
         if (onPressIn != null) {
           onPressIn(event);
         }
       },
-      onPressEnd(event) {
+      onPressEnd(event: ResponderEvent) {
         hideUnderlay();
         if (onPressOut != null) {
           onPressOut(event);
@@ -161,7 +166,7 @@ function TouchableHighlight(props: Props, forwardedRef): React.Node {
 
   const pressEventHandlers = usePressEvents(hostRef, pressConfig);
 
-  const child = React.Children.only(children);
+  const child: any = React.Children.only(children);
 
   return (
     <View
@@ -195,12 +200,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableHighlight = React.memo(
-  React.forwardRef(TouchableHighlight)
-);
+const MemoedTouchableHighlight: component(...Props) =
+  React.memo(TouchableHighlight);
 MemoedTouchableHighlight.displayName = 'TouchableHighlight';
 
-export default (MemoedTouchableHighlight: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>
->);
+export default MemoedTouchableHighlight;

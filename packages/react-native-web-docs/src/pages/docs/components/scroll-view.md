@@ -117,4 +117,4 @@ Scrolls to the end of the scroll view.
 
 ## Examples
 
-{{ macro.codesandbox('scroll-view') }}
+{{ macro.example('scroll-view') }}

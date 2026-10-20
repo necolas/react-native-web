@@ -23,12 +23,14 @@ type TouchRecord = {|
   touchActive: boolean
 |};
 
-export type TouchHistory = $ReadOnly<{|
+type MutableTouchHistory = {|
   indexOfSingleActiveTouch: number,
   mostRecentTimeStamp: number,
   numberActiveTouches: number,
   touchBank: Array<TouchRecord>
-|}>;
+|};
+
+export type TouchHistory = Readonly<MutableTouchHistory>;
 
 /**
  * Tracks the position and time of each active touch by `touch.identifier`. We
@@ -39,12 +41,6 @@ export type TouchHistory = $ReadOnly<{|
 const __DEV__ = process.env.NODE_ENV !== 'production';
 const MAX_TOUCH_BANK = 20;
 
-function timestampForTouch(touch: Touch): number {
-  // The legacy internal implementation provides "timeStamp", which has been
-  // renamed to "timestamp".
-  return (touch: any).timeStamp || touch.timestamp;
-}
-
 /**
  * TODO: Instead of making gestures recompute filtered velocity, we could
  * include a built in velocity computation that can be reused globally.
@@ -54,13 +50,13 @@ function createTouchRecord(touch: Touch): TouchRecord {
     touchActive: true,
     startPageX: touch.pageX,
     startPageY: touch.pageY,
-    startTimeStamp: timestampForTouch(touch),
+    startTimeStamp: touch.timestamp,
     currentPageX: touch.pageX,
     currentPageY: touch.pageY,
-    currentTimeStamp: timestampForTouch(touch),
+    currentTimeStamp: touch.timestamp,
     previousPageX: touch.pageX,
     previousPageY: touch.pageY,
-    previousTimeStamp: timestampForTouch(touch)
+    previousTimeStamp: touch.timestamp
   };
 }
 
@@ -68,13 +64,13 @@ function resetTouchRecord(touchRecord: TouchRecord, touch: Touch): void {
   touchRecord.touchActive = true;
   touchRecord.startPageX = touch.pageX;
   touchRecord.startPageY = touch.pageY;
-  touchRecord.startTimeStamp = timestampForTouch(touch);
+  touchRecord.startTimeStamp = touch.timestamp;
   touchRecord.currentPageX = touch.pageX;
   touchRecord.currentPageY = touch.pageY;
-  touchRecord.currentTimeStamp = timestampForTouch(touch);
+  touchRecord.currentTimeStamp = touch.timestamp;
   touchRecord.previousPageX = touch.pageX;
   touchRecord.previousPageY = touch.pageY;
-  touchRecord.previousTimeStamp = timestampForTouch(touch);
+  touchRecord.previousTimeStamp = touch.timestamp;
 }
 
 function getTouchIdentifier({ identifier }: Touch): number {
@@ -94,7 +90,10 @@ function getTouchIdentifier({ identifier }: Touch): number {
   return identifier;
 }
 
-function recordTouchStart(touch: Touch, touchHistory): void {
+function recordTouchStart(
+  touch: Touch,
+  touchHistory: MutableTouchHistory
+): void {
   const identifier = getTouchIdentifier(touch);
   const touchRecord = touchHistory.touchBank[identifier];
   if (touchRecord) {
@@ -102,10 +101,13 @@ function recordTouchStart(touch: Touch, touchHistory): void {
   } else {
     touchHistory.touchBank[identifier] = createTouchRecord(touch);
   }
-  touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+  touchHistory.mostRecentTimeStamp = touch.timestamp;
 }
 
-function recordTouchMove(touch: Touch, touchHistory): void {
+function recordTouchMove(
+  touch: Touch,
+  touchHistory: MutableTouchHistory
+): void {
   const touchRecord = touchHistory.touchBank[getTouchIdentifier(touch)];
   if (touchRecord) {
     touchRecord.touchActive = true;
@@ -114,8 +116,8 @@ function recordTouchMove(touch: Touch, touchHistory): void {
     touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
     touchRecord.currentPageX = touch.pageX;
     touchRecord.currentPageY = touch.pageY;
-    touchRecord.currentTimeStamp = timestampForTouch(touch);
-    touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+    touchRecord.currentTimeStamp = touch.timestamp;
+    touchHistory.mostRecentTimeStamp = touch.timestamp;
   } else {
     console.warn(
       'Cannot record touch move without a touch start.\n',
@@ -125,7 +127,7 @@ function recordTouchMove(touch: Touch, touchHistory): void {
   }
 }
 
-function recordTouchEnd(touch: Touch, touchHistory): void {
+function recordTouchEnd(touch: Touch, touchHistory: MutableTouchHistory): void {
   const touchRecord = touchHistory.touchBank[getTouchIdentifier(touch)];
   if (touchRecord) {
     touchRecord.touchActive = false;
@@ -134,8 +136,8 @@ function recordTouchEnd(touch: Touch, touchHistory): void {
     touchRecord.previousTimeStamp = touchRecord.currentTimeStamp;
     touchRecord.currentPageX = touch.pageX;
     touchRecord.currentPageY = touch.pageY;
-    touchRecord.currentTimeStamp = timestampForTouch(touch);
-    touchHistory.mostRecentTimeStamp = timestampForTouch(touch);
+    touchRecord.currentTimeStamp = touch.timestamp;
+    touchHistory.mostRecentTimeStamp = touch.timestamp;
   } else {
     console.warn(
       'Cannot record touch end without a touch start.\n',
@@ -150,11 +152,11 @@ function printTouch(touch: Touch): string {
     identifier: touch.identifier,
     pageX: touch.pageX,
     pageY: touch.pageY,
-    timestamp: timestampForTouch(touch)
+    timestamp: touch.timestamp
   });
 }
 
-function printTouchBank(touchHistory): string {
+function printTouchBank(touchHistory: MutableTouchHistory): string {
   const { touchBank } = touchHistory;
   let printed = JSON.stringify(touchBank.slice(0, MAX_TOUCH_BANK));
   if (touchBank.length > MAX_TOUCH_BANK) {
@@ -164,7 +166,7 @@ function printTouchBank(touchHistory): string {
 }
 
 export class ResponderTouchHistoryStore {
-  _touchHistory = {
+  _touchHistory: MutableTouchHistory = {
     touchBank: [], //Array<TouchRecord>
     numberActiveTouches: 0,
     // If there is only one active touch, we remember its location. This prevents

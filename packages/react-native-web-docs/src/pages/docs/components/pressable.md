@@ -107,4 +107,4 @@ Whether the view is being pressed by a pointer or keyboard interaction key.
 
 ## Examples
 
-{{ macro.codesandbox('pressable') }}
+{{ macro.example('pressable') }}

@@ -3,9 +3,11 @@
   "name": "react-native-web-docs",
   "version": "0.21.4",
   "description": "Documentation website for React Native for Web",
+  "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "ELEVENTY_PRODUCTION=true eleventy",
+    "build:examples": "BASE_PATH=/react-native-web/examples npm run build -w react-native-web-examples",
+    "dev": "npm run build:examples && eleventy --serve",
+    "build": "npm run build:examples && ELEVENTY_PRODUCTION=true eleventy",
     "debug": "DEBUG=* eleventy"
   },
   "homepage": "https://github.com/necolas/react-native-web",
@@ -15,16 +17,14 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "csso": "^5.0.5",
     "eleventy-plugin-svg-contents": "^0.7.0",
-    "eleventy-plugin-toc": "^1.1.5",
-    "html-minifier": "^4.0.0",
+    "html-minifier-terser": "^7.2.0",
     "markdown-it": "^15.0.2",
     "markdown-it-anchor": "^10.0.0",
     "markdown-it-attrs": "^5.0.1",
     "markdown-it-container": "^4.0.0",
     "markdown-it-emoji": "^3.1.0",
     "markdown-it-footnote": "^4.0.0",
-    "markdown-it-for-inline": "^2.0.1",
     "markdown-it-task-lists": "^2.1.1",
-    "uglify-es": "^3.3.9"
+    "terser": "^5.51.2"
   }
 }

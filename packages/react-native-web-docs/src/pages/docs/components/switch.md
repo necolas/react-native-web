@@ -65,4 +65,4 @@ The value of the switch. If `true` the switch will be turned on.
 
 Custom sizes can be created using styles.
 
-{{ macro.codesandbox('switch') }}
+{{ macro.example('switch') }}

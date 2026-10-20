@@ -39,4 +39,4 @@ Styles to forward to the image component.
 
 ## Examples
 
-{{ macro.codesandbox('image-background') }}
+{{ macro.example('image-background') }}

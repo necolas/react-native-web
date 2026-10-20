@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for reporting an issue! Create a test case for your issue by forking this template https://codesandbox.io/s/6lx6ql1w5r
+        Thank you for reporting an issue! Create a minimal repository that reproduces the issue and link it below.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -38,8 +38,8 @@ body:
   - type: input
     attributes:
       label: Test case
-      description: Please provide a link to a reduced test case that reproduces the issue.
-      placeholder: 'https://codesandbox.io/s/6lx6ql1w5r'
+      description: Please provide a link to a repository with a reduced test case that reproduces the issue.
+      placeholder: 'https://github.com/your-username/your-repro-repo'
     validations:
       required: true
   - type: textarea

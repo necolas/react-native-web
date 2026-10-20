@@ -12,21 +12,14 @@ import { defaultBrowserChromeSize } from '../constants';
 import {
   clearPointers,
   createEventTarget,
-  describeWithPointerEvent,
   testWithPointerType
 } from '../index';
 
 /**
  * Unit test helpers
  */
-describeWithPointerEvent('describeWithPointerEvent', (pointerEvent) => {
-  test('provides boolean to tests', () => {
-    expect(pointerEvent).toMatchSnapshot();
-  });
-
-  testWithPointerType('testWithPointerType', (pointerType) => {
-    expect(pointerType).toMatchSnapshot();
-  });
+testWithPointerType('testWithPointerType', (pointerType) => {
+  expect(pointerType).toMatchSnapshot();
 });
 
 /**

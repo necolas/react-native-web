@@ -7,7 +7,6 @@
  * @flow
  */
 
-import { getModality } from '../modality';
 import useEvent from '../useEvent';
 import useLayoutEffect from '../useLayoutEffect';
 
@@ -19,7 +18,7 @@ export type HoverEventsConfig = {
   contain?: ?boolean,
   disabled?: ?boolean,
   onHoverStart?: ?(e: any) => void,
-  onHoverChange?: ?(bool: boolean) => void,
+  onHoverChange?: ?(boolean: boolean) => void,
   onHoverUpdate?: ?(e: any) => void,
   onHoverEnd?: ?(e: any) => void
 };
@@ -32,8 +31,6 @@ const emptyObject = {};
 const opts = { passive: true };
 const lockEventType = 'react-gui:hover:lock';
 const unlockEventType = 'react-gui:hover:unlock';
-const supportsPointerEvent = () =>
-  !!(typeof window !== 'undefined' && window.PointerEvent != null);
 
 function dispatchCustomEvent(
   target: EventTarget,
@@ -41,19 +38,12 @@ function dispatchCustomEvent(
   payload?: {
     bubbles?: boolean,
     cancelable?: boolean,
-    detail?: { [key: string]: mixed }
+    detail?: { [key: string]: unknown }
   }
 ) {
-  const event = document.createEvent('CustomEvent');
   const { bubbles = true, cancelable = true, detail } = payload || emptyObject;
-  event.initCustomEvent(type, bubbles, cancelable, detail);
+  const event = new CustomEvent(type, { bubbles, cancelable, detail });
   target.dispatchEvent(event);
-}
-
-// This accounts for the non-PointerEvent fallback events.
-function getPointerType(event) {
-  const { pointerType } = event;
-  return pointerType != null ? pointerType : getModality();
 }
 
 export default function useHover(
@@ -69,20 +59,9 @@ export default function useHover(
     onHoverEnd
   } = config;
 
-  const canUsePE = supportsPointerEvent();
-
-  const addMoveListener = useEvent(
-    canUsePE ? 'pointermove' : 'mousemove',
-    opts
-  );
-  const addEnterListener = useEvent(
-    canUsePE ? 'pointerenter' : 'mouseenter',
-    opts
-  );
-  const addLeaveListener = useEvent(
-    canUsePE ? 'pointerleave' : 'mouseleave',
-    opts
-  );
+  const addMoveListener = useEvent('pointermove', opts);
+  const addEnterListener = useEvent('pointerenter', opts);
+  const addLeaveListener = useEvent('pointerleave', opts);
   // These custom events are used to implement the "contain" prop.
   const addLockListener = useEvent(lockEventType, opts);
   const addUnlockListener = useEvent(unlockEventType, opts);
@@ -93,7 +72,7 @@ export default function useHover(
       /**
        * End the hover gesture
        */
-      const hoverEnd = function (e) {
+      const hoverEnd = function (e: any) {
         if (onHoverEnd != null) {
           onHoverEnd(e);
         }
@@ -108,9 +87,9 @@ export default function useHover(
       /**
        * Leave element
        */
-      const leaveListener = function (e) {
+      const leaveListener = function (e: any) {
         const target = targetRef.current;
-        if (target != null && getPointerType(e) !== 'touch') {
+        if (target != null && e.pointerType !== 'touch') {
           if (contain) {
             dispatchCustomEvent(target, unlockEventType);
           }
@@ -121,16 +100,9 @@ export default function useHover(
       /**
        * Move within element
        */
-      const moveListener = function (e) {
-        if (getPointerType(e) !== 'touch') {
+      const moveListener = function (e: any) {
+        if (e.pointerType !== 'touch') {
           if (onHoverUpdate != null) {
-            // Not all browsers have these properties
-            if (e.x == null) {
-              e.x = e.clientX;
-            }
-            if (e.y == null) {
-              e.y = e.clientY;
-            }
             onHoverUpdate(e);
           }
         }
@@ -139,7 +111,7 @@ export default function useHover(
       /**
        * Start the hover gesture
        */
-      const hoverStart = function (e) {
+      const hoverStart = function (e: any) {
         if (onHoverStart != null) {
           onHoverStart(e);
         }
@@ -156,19 +128,19 @@ export default function useHover(
       /**
        * Enter element
        */
-      const enterListener = function (e) {
+      const enterListener = function (e: any) {
         const target = targetRef.current;
-        if (target != null && getPointerType(e) !== 'touch') {
+        if (target != null && e.pointerType !== 'touch') {
           if (contain) {
             dispatchCustomEvent(target, lockEventType);
           }
           hoverStart(e);
-          const lockListener = function (lockEvent) {
+          const lockListener = function (lockEvent: Event) {
             if (lockEvent.target !== target) {
               hoverEnd(e);
             }
           };
-          const unlockListener = function (lockEvent) {
+          const unlockListener = function (lockEvent: Event) {
             if (lockEvent.target !== target) {
               hoverStart(e);
             }

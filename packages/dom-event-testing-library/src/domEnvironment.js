@@ -6,33 +6,6 @@
  */
 
 /**
- * Change environment support for PointerEvent.
- */
-
-const emptyFunction = function () {};
-
-export function hasPointerEvent() {
-  return global != null && global.PointerEvent != null;
-}
-
-export function setPointerEvent(bool) {
-  const pointerCaptureFn = (name) => (id) => {
-    if (typeof id !== 'number') {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('A pointerId must be passed to "%s"', name);
-      }
-    }
-  };
-  global.PointerEvent = bool ? emptyFunction : undefined;
-  global.HTMLElement.prototype.setPointerCapture = bool
-    ? pointerCaptureFn('setPointerCapture')
-    : undefined;
-  global.HTMLElement.prototype.releasePointerCapture = bool
-    ? pointerCaptureFn('releasePointerCapture')
-    : undefined;
-}
-
-/**
  * Change environment host platform.
  */
 

@@ -11,6 +11,7 @@
 'use client';
 
 import type { ViewProps } from '../View';
+import typeof View from '../View';
 
 import * as React from 'react';
 import ModalPortal from './ModalPortal';
@@ -23,12 +24,13 @@ export type ModalProps = {
   animationType?: 'none' | 'slide' | 'fade',
   children: any,
   hardwareAccelerated?: ?boolean,
-  onDismiss?: ?() => mixed,
+  onDismiss?: ?() => unknown,
   onOrientationChange?: ?(e: {|
     orientation: 'portrait' | 'landscape'
   |}) => void,
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
+  ref?: React.Ref<React.ElementRef<View>>,
   presentationStyle?: ?(
     | 'fullScreen'
     | 'pageSheet'
@@ -49,8 +51,8 @@ export type ModalProps = {
 
 let uniqueModalIdentifier = 0;
 
-const activeModalStack = [];
-const activeModalListeners = {};
+const activeModalStack: Array<number> = [];
+const activeModalListeners: { [number]: (active: boolean) => void } = {};
 
 function notifyActiveModalListeners() {
   if (activeModalStack.length === 0) {
@@ -64,7 +66,7 @@ function notifyActiveModalListeners() {
   });
 }
 
-function removeActiveModal(modalId) {
+function removeActiveModal(modalId: number) {
   if (modalId in activeModalListeners) {
     // Before removing this listener we should probably tell it
     // that it's no longer the active modal for sure.
@@ -78,23 +80,21 @@ function removeActiveModal(modalId) {
   }
 }
 
-function addActiveModal(modalId, listener) {
+function addActiveModal(modalId: number, listener: (active: boolean) => void) {
   removeActiveModal(modalId);
   activeModalStack.push(modalId);
   activeModalListeners[modalId] = listener;
   notifyActiveModalListeners();
 }
 
-const Modal: React.AbstractComponent<
-  ModalProps,
-  React.ElementRef<typeof ModalContent>
-> = React.forwardRef((props, forwardedRef) => {
+const Modal = (props: ModalProps): React.Node => {
   const {
     animationType,
     children,
     onDismiss,
     onRequestClose,
     onShow,
+    ref,
     transparent,
     visible = true,
     ...rest
@@ -133,11 +133,12 @@ const Modal: React.AbstractComponent<
         visible={visible}
       >
         <ModalFocusTrap active={isActive}>
+          {/* $FlowFixMe[incompatible-type] Unsupported props are dropped by View */}
           <ModalContent
             {...rest}
             active={isActive}
             onRequestClose={onRequestClose}
-            ref={forwardedRef}
+            ref={ref}
             transparent={transparent}
           >
             {children}
@@ -146,6 +147,6 @@ const Modal: React.AbstractComponent<
       </ModalAnimation>
     </ModalPortal>
   );
-});
+};
 
 export default Modal;

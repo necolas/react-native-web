@@ -19,17 +19,17 @@ const TextInputState = {
   /**
    * Internal state
    */
-  _currentlyFocusedNode: (null: ?Object),
+  _currentlyFocusedNode: null as ?Object,
 
   /**
    * Returns the ID of the currently focused text field, if one exists
    * If no text field is focused it returns null
    */
   currentlyFocusedField(): ?Object {
-    if (document.activeElement !== this._currentlyFocusedNode) {
-      this._currentlyFocusedNode = null;
+    if (document.activeElement !== TextInputState._currentlyFocusedNode) {
+      TextInputState._currentlyFocusedNode = null;
     }
-    return this._currentlyFocusedNode;
+    return TextInputState._currentlyFocusedNode;
   },
 
   /**
@@ -39,7 +39,7 @@ const TextInputState = {
    */
   focusTextInput(textFieldNode: ?Object) {
     if (textFieldNode !== null) {
-      this._currentlyFocusedNode = textFieldNode;
+      TextInputState._currentlyFocusedNode = textFieldNode;
       if (document.activeElement !== textFieldNode) {
         UIManager.focus(textFieldNode);
       }
@@ -53,7 +53,7 @@ const TextInputState = {
    */
   blurTextInput(textFieldNode: ?Object) {
     if (textFieldNode !== null) {
-      this._currentlyFocusedNode = null;
+      TextInputState._currentlyFocusedNode = null;
       if (document.activeElement === textFieldNode) {
         UIManager.blur(textFieldNode);
       }

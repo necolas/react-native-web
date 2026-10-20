@@ -38,12 +38,10 @@ export type TouchEvent = {
   // The timestamp has a lowercase "s" in the Responder system
   timestamp: number,
   // TouchList is an array in the Responder system
-  touches: Array<Touch>
+  touches: Array<Touch>,
+  type?: string
 };
 
-export const BLUR = 'blur';
-export const CONTEXT_MENU = 'contextmenu';
-export const FOCUS_OUT = 'focusout';
 export const MOUSE_DOWN = 'mousedown';
 export const MOUSE_MOVE = 'mousemove';
 export const MOUSE_UP = 'mouseup';
@@ -56,28 +54,28 @@ export const SCROLL = 'scroll';
 export const SELECT = 'select';
 export const SELECTION_CHANGE = 'selectionchange';
 
-export function isStartish(eventType: mixed): boolean {
+export function isStartish(eventType: unknown): boolean {
   return eventType === TOUCH_START || eventType === MOUSE_DOWN;
 }
 
-export function isMoveish(eventType: mixed): boolean {
+export function isMoveish(eventType: unknown): boolean {
   return eventType === TOUCH_MOVE || eventType === MOUSE_MOVE;
 }
 
-export function isEndish(eventType: mixed): boolean {
+export function isEndish(eventType: unknown): boolean {
   return (
     eventType === TOUCH_END || eventType === MOUSE_UP || isCancelish(eventType)
   );
 }
 
-export function isCancelish(eventType: mixed): boolean {
+export function isCancelish(eventType: unknown): boolean {
   return eventType === TOUCH_CANCEL || eventType === MOUSE_CANCEL;
 }
 
-export function isScroll(eventType: mixed): boolean {
+export function isScroll(eventType: unknown): boolean {
   return eventType === SCROLL;
 }
 
-export function isSelectionChange(eventType: mixed): boolean {
+export function isSelectionChange(eventType: unknown): boolean {
   return eventType === SELECT || eventType === SELECTION_CHANGE;
 }

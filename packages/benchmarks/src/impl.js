@@ -1,25 +1,28 @@
-/* @noflow */
-
-import { type Component } from 'react';
 import packageJson from '../package.json';
 
 const context = require.context('./implementations/', true, /index\.js$/);
 const { dependencies } = packageJson;
 
-type ComponentsType = {
-  Box: Component,
-  Dot: Component,
-  Provider: Component,
-  View: Component
-};
+/**
+ * @typedef {Object} ComponentsType
+ * @property {React.ComponentType<any>} Box
+ * @property {React.ComponentType<any>} Dot
+ * @property {React.ComponentType<any>} Provider
+ * @property {React.ComponentType<any>} View
+ */
 
-type ImplementationType = {
-  components: ComponentsType,
-  name: string,
-  version: string
-};
+/**
+ * @typedef {Object} ImplementationType
+ * @property {ComponentsType} components
+ * @property {string} name
+ * @property {string} version
+ */
 
-const toImplementations = (context: Object): Array<ImplementationType> =>
+/**
+ * @param {Object} context
+ * @returns {Array<ImplementationType>}
+ */
+const toImplementations = (context) =>
   context.keys().map((path) => {
     const components = context(path).default;
     const name = path.split('/')[1];
@@ -27,7 +30,11 @@ const toImplementations = (context: Object): Array<ImplementationType> =>
     return { components, name, version };
   });
 
-const toObject = (impls: Array<ImplementationType>): Object =>
+/**
+ * @param {Array<ImplementationType>} impls
+ * @returns {Object}
+ */
+const toObject = (impls) =>
   impls.reduce((acc, impl) => {
     acc[impl.name] = impl;
     return acc;
