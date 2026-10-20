@@ -25,4 +25,4 @@ Please refer to the React Native documentation below:
 
 ## Examples
 
-{{ macro.codesandbox('pan-responder') }}
+{{ macro.example('pan-responder') }}

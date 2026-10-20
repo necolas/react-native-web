@@ -73,6 +73,10 @@ export default function (eleventyConfig) {
   // PASSTHROUGH -----
 
   eleventyConfig.addPassthroughCopy('src/static');
+  eleventyConfig.addPassthroughCopy({
+    'src/.nojekyll': '.nojekyll',
+    '../react-native-web-examples/dist': 'examples'
+  });
 
   // COLLECTIONS -----
 

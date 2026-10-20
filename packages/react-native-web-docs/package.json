@@ -5,8 +5,9 @@
   "description": "Documentation website for React Native for Web",
   "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "ELEVENTY_PRODUCTION=true eleventy",
+    "build:examples": "BASE_PATH=/react-native-web/examples npm run build -w react-native-web-examples",
+    "dev": "npm run build:examples && eleventy --serve",
+    "build": "npm run build:examples && ELEVENTY_PRODUCTION=true eleventy",
     "debug": "DEBUG=* eleventy"
   },
   "homepage": "https://github.com/necolas/react-native-web",

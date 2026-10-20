@@ -206,4 +206,4 @@ Returns `true` if the input is currently focused; `false` otherwise.
 
 ## Examples
 
-{{ macro.codesandbox('text-input') }}
+{{ macro.example('text-input') }}

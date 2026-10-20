@@ -39,4 +39,4 @@ Not properly supported on Web. Returns a Promise of an empty string.
 
 ## Examples
 
-{{ macro.codesandbox('clipboard') }}
+{{ macro.example('clipboard') }}

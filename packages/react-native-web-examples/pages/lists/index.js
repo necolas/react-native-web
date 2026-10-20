@@ -32,19 +32,19 @@ const VIEWABILITY_CONFIG = {
   waitForInteraction: true
 };
 const THUMB_URLS = [
-  './lists/like.png',
-  './lists/dislike.png',
-  './lists/call.png',
-  './lists/fist.png',
-  './lists/bandaged.png',
-  './lists/flowers.png',
-  './lists/heart.png',
-  './lists/liking.png',
-  './lists/party.png',
-  './lists/poke.png',
-  './lists/superlike.png',
-  './lists/victory.png'
-];
+  '/lists/like.png',
+  '/lists/dislike.png',
+  '/lists/call.png',
+  '/lists/fist.png',
+  '/lists/bandaged.png',
+  '/lists/flowers.png',
+  '/lists/heart.png',
+  '/lists/liking.png',
+  '/lists/party.png',
+  '/lists/poke.png',
+  '/lists/superlike.png',
+  '/lists/victory.png'
+].map((url) => process.env.basePath + url);
 const LOREM_IPSUM =
   'Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix ' +
   'civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id ' +

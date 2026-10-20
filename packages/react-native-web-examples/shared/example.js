@@ -4,7 +4,11 @@ export default function Example(props) {
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <Text aria-label="Back" href="/" style={styles.back}>
+        <Text
+          aria-label="Back"
+          href={process.env.basePath + '/'}
+          style={styles.back}
+        >
           <svg
             style={{ fill: '#555', height: '100%' }}
             viewBox="0 0 140 140"

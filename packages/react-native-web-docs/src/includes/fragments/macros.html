@@ -28,11 +28,14 @@
   </div>
 {% endmacro %}
 
-{% macro codesandbox(path = '/') %}
+{% macro example(path) %}
   <iframe
-  src="https://codesandbox.io/embed/github/necolas/react-native-web/tree/{{ site.packageVersion }}/packages/react-native-web-examples?codemirror=1&fontsize=12&hidedevtools=1&hidenavigation=1&initialpath=/{{ path }}&module=%2Fpages%2F{{ path }}%2Findex.js&theme=light"
+  src="{{ ('/examples/' + path + '/') | url }}"
   style="width:100%; height:500px; border:1px solid var(--docs-border-color); border-radius:4px; overflow:hidden;"
-  title="React Native for Web: {{ path}} examples"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+  title="React Native for Web: {{ path}} example"
+  loading="lazy"
   ></iframe>
+  <div class="flex" style="justify-content:flex-end;">
+    <a class="text-sm py-2" style="text-decoration:none;" href="{{ site.githubUrl }}/blob/{{ site.packageVersion }}/packages/react-native-web-examples/pages/{{ path }}/index.js" target="_blank" rel="noopener noreferrer">View source</a>
+  </div>
 {% endmacro %}

@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+const basePath = process.env.BASE_PATH ?? '';
+
 const pages = fs
   .readdirSync(path.resolve(import.meta.dirname, 'pages'), {
     withFileTypes: true
@@ -9,7 +11,14 @@ const pages = fs
   .map((dirent) => dirent.name);
 
 export default {
-  env: { pages: JSON.stringify(pages) },
+  basePath,
+  distDir: 'dist',
+  output: 'export',
+  trailingSlash: true,
+  env: {
+    basePath,
+    pages: JSON.stringify(pages)
+  },
   webpack: (config, options) => {
     config.resolve.alias['react-native'] = 'react-native-web';
     return config;

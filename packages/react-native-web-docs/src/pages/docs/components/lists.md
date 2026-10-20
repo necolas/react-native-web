@@ -27,4 +27,4 @@ These components are the same JavaScript implementations as those found in React
 
 ## Examples
 
-{{ macro.codesandbox('lists') }}
+{{ macro.example('lists') }}

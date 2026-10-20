@@ -55,4 +55,4 @@ The width of the dimension.
 
 ## Examples
 
-{{ macro.codesandbox('dimensions') }}
+{{ macro.example('dimensions') }}
