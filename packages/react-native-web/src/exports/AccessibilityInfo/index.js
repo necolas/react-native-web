@@ -14,11 +14,11 @@ import canUseDOM from '../../modules/canUseDom';
 type ChangeHandler = (enabled: boolean) => void;
 type EventSubscription = { remove: () => void };
 
-const createMedia = (query: string) => {
+const createMedia = (query: string, fallback: boolean) => {
   if (!canUseDOM || typeof window.matchMedia !== 'function') {
     return {
       get matches(): boolean {
-        return false;
+        return fallback;
       },
       addChangeHandler(handler: ChangeHandler): EventSubscription {
         return { remove() {} };
@@ -59,9 +59,15 @@ const createMedia = (query: string) => {
   };
 };
 
-const contrastMedia = createMedia('(prefers-contrast: more)');
-const motionMedia = createMedia('(prefers-reduced-motion: reduce)');
-const transparencyMedia = createMedia('(prefers-reduced-transparency: reduce)');
+const prefersContrastMedia = createMedia('(prefers-contrast: more)', false);
+const prefersReducedMotionMedia = createMedia(
+  '(prefers-reduced-motion: reduce)',
+  true
+);
+const prefersReducedTransparencyMedia = createMedia(
+  '(prefers-reduced-transparency: reduce)',
+  false
+);
 
 const AccessibilityInfo = {
   announceForAccessibility(announcement: string): void {},
@@ -83,19 +89,19 @@ const AccessibilityInfo = {
   prefersCrossFadeTransitions: (): Promise<boolean> => Promise.resolve(false),
 
   isHighTextContrastEnabled: (): Promise<boolean> =>
-    Promise.resolve(contrastMedia.matches),
+    Promise.resolve(prefersContrastMedia.matches),
   isReduceMotionEnabled: (): Promise<boolean> =>
-    Promise.resolve(motionMedia.matches),
+    Promise.resolve(prefersReducedMotionMedia.matches),
   isReduceTransparencyEnabled: (): Promise<boolean> =>
-    Promise.resolve(transparencyMedia.matches),
+    Promise.resolve(prefersReducedTransparencyMedia.matches),
 
   addEventListener(eventName: string, handler: Function): EventSubscription {
     if (eventName === 'highTextContrastChanged') {
-      return contrastMedia.addChangeHandler(handler);
+      return prefersContrastMedia.addChangeHandler(handler);
     } else if (eventName === 'reduceMotionChanged') {
-      return motionMedia.addChangeHandler(handler);
+      return prefersReducedMotionMedia.addChangeHandler(handler);
     } else if (eventName === 'reduceTransparencyChanged') {
-      return transparencyMedia.addChangeHandler(handler);
+      return prefersReducedTransparencyMedia.addChangeHandler(handler);
     }
 
     return { remove() {} };
@@ -106,7 +112,9 @@ const AccessibilityInfo = {
     eventType: 'click' | 'focus' | 'viewHoverEnter' | 'windowStateChange'
   ): void {
     if (eventType === 'focus') {
-      handle.focus();
+      try {
+        handle.focus();
+      } catch {}
     }
   },
 
