@@ -18,6 +18,7 @@ import invariant from 'invariant';
 import mergeRefs from '../../modules/mergeRefs';
 import Platform from '../Platform';
 import ScrollViewBase from './ScrollViewBase';
+import splitLayoutProps from '../../modules/splitLayoutProps';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 import UIManager from '../UIManager';
@@ -651,21 +652,32 @@ class ScrollView extends React.Component<ScrollViewProps> {
       'ScrollViewClass must not be undefined'
     );
 
-    const scrollView = (
+    if (refreshControl) {
+      // The refresh control wraps the scroll view, the same as on Android. The
+      // wrapper gets only the props that place the scroll view in its parent,
+      // so that no style (for example, the flip of an inverted list) applies
+      // two times.
+      const { inner, outer } = splitLayoutProps(
+        StyleSheet.flatten(this.props.style)
+      );
+      return React.cloneElement(
+        refreshControl,
+        { style: [styles.refreshControl, outer] },
+        <ScrollViewClass
+          {...props}
+          ref={this._setScrollNodeRef}
+          style={[baseStyle, pagingEnabled && pagingEnabledStyle, inner]}
+        >
+          {contentContainer}
+        </ScrollViewClass>
+      );
+    }
+
+    return (
       <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
         {contentContainer}
       </ScrollViewClass>
     );
-
-    if (refreshControl) {
-      return React.cloneElement(
-        refreshControl,
-        { style: props.style },
-        scrollView
-      );
-    }
-
-    return scrollView;
   }
 
   _handleContentOnLayout = (e: Object) => {
@@ -762,6 +774,10 @@ const styles = StyleSheet.create({
   },
   pagingEnabledChild: {
     scrollSnapAlign: 'start'
+  },
+  refreshControl: {
+    flexGrow: 1,
+    flexShrink: 1
   }
 });
 

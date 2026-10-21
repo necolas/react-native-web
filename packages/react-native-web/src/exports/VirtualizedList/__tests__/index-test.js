@@ -24,7 +24,7 @@ function mockScrollMetrics(node, offset, length, horizontal = false) {
   });
 }
 
-function renderList({ horizontal = false, inverted = true } = {}) {
+function renderList({ horizontal = false, inverted = true, onRefresh } = {}) {
   return render(
     <VirtualizedList
       data={[0]}
@@ -34,6 +34,8 @@ function renderList({ horizontal = false, inverted = true } = {}) {
       horizontal={horizontal}
       inverted={inverted}
       keyExtractor={String}
+      onRefresh={onRefresh}
+      refreshing={false}
       renderItem={() => <div data-testid="nested" />}
       testID="list"
     />
@@ -104,6 +106,13 @@ describe('components/VirtualizedList', () => {
       expect(wheel(nested, -20).defaultPrevented).toBe(true);
       expect(nested.scrollTop).toBe(0);
       expect(list.scrollTop).toBe(215);
+    });
+
+    test('with "onRefresh" flips the list only one time', () => {
+      const { getByTestId } = renderList({ onRefresh: () => {} });
+      const list = getByTestId('list');
+      expect(getComputedStyle(list).transform).not.toContain('scaleY(-1)');
+      expect(getComputedStyle(list.parentNode).transform).toBe('scaleY(-1)');
     });
   });
 });
