@@ -666,7 +666,12 @@ class ScrollView extends React.Component<ScrollViewProps> {
         <ScrollViewClass
           {...props}
           ref={this._setScrollNodeRef}
-          style={[baseStyle, pagingEnabled && pagingEnabledStyle, inner]}
+          style={[
+            baseStyle,
+            pagingEnabled && pagingEnabledStyle,
+            styles.refreshControlScrollView,
+            inner
+          ]}
         >
           {contentContainer}
         </ScrollViewClass>
@@ -778,6 +783,10 @@ const styles = StyleSheet.create({
   refreshControl: {
     flexGrow: 1,
     flexShrink: 1
+  },
+  // The browser must not start its own pull to refresh, which reloads the page.
+  refreshControlScrollView: {
+    overscrollBehaviorY: 'contain'
   }
 });
 

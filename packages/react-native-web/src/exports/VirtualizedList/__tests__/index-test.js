@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
 import VirtualizedList from '../';
 
 function mockScrollMetrics(node, offset, length, horizontal = false) {
@@ -53,6 +54,20 @@ function wheel(target, delta, horizontal = false) {
 }
 
 describe('components/VirtualizedList', () => {
+  describe('prop "onRefresh"', () => {
+    test('a pull at the top of the list calls "onRefresh"', () => {
+      const onRefresh = jest.fn();
+      const { getByTestId } = renderList({ inverted: false, onRefresh });
+      const target = createEventTarget(getByTestId('nested'));
+      act(() => {
+        target.pointerdown({ pointerType: 'touch', x: 0, y: 0 });
+        target.pointermove({ pointerType: 'touch', x: 0, y: 200 });
+        target.pointerup({ pointerType: 'touch', x: 0, y: 200 });
+      });
+      expect(onRefresh).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('prop "inverted"', () => {
     test('wheel over the list itself scrolls in the inverted direction', () => {
       const { getByTestId } = renderList();

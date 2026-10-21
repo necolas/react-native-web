@@ -142,5 +142,16 @@ describe('components/ScrollView', () => {
       expect(scrollView.style.backgroundColor).toBe('rgb(255, 0, 0)');
       expect(scrollView.style.paddingTop).toBe('20px');
     });
+
+    test('scroll view stops the browser pull to refresh', () => {
+      const { getByTestId } = render(
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={false} />}
+          testID="scroll-view"
+        />
+      );
+      const scrollView = getByTestId('scroll-view');
+      expect(getComputedStyle(scrollView).overscrollBehaviorY).toBe('contain');
+    });
   });
 });
