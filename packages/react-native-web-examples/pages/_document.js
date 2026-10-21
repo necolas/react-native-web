@@ -1,10 +1,18 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import { AppRegistry } from 'react-native';
 
+const style = `
+body,html,#__next{height:100%}
+body{overflow:hidden}
+#__next{display:flex;flex-direction:column}
+`.trim();
+
 export default function MyDocument() {
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{style}</style>
+      </Head>
       <body>
         <Main />
         <NextScript />
