@@ -45,7 +45,7 @@ import {
   computeWindowedRenderLimits,
   keyExtractor as defaultKeyExtractor,
 } from '../VirtualizeUtils';
-import invariant from 'fbjs/lib/invariant';
+import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
 

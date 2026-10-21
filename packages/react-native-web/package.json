@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@react-native/normalize-colors": "^0.88.0",
-    "fbjs": "^3.0.5",
+    "invariant": "^2.2.4",
     "memoize-one": "^6.0.0",
     "nullthrows": "^1.1.1",
     "postcss-value-parser": "^4.2.0",

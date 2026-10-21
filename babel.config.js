@@ -9,14 +9,9 @@ export default function (api) {
           // files on disk, which Jest's transform cache does not track.
           []
         : // Output is published as "type": "module", which requires fully specified
-          // import paths (e.g. './View/index.js', 'fbjs/lib/invariant.js')
+          // import paths (e.g. './View/index.js', 'styleq/transform-localize-style.js')
           // Only list packages without an "exports" field in `includePackages`
-          [
-            [
-              'babel-plugin-fully-specified',
-              { includePackages: ['fbjs/', 'styleq/'] }
-            ]
-          ])
+          [['babel-plugin-fully-specified', { includePackages: ['styleq/'] }]])
     ],
     presets: [
       ['@babel/preset-react', { useSpread: true }],
