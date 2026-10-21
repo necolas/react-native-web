@@ -8,6 +8,7 @@
  * @flow
  */
 
+import invariant from 'fbjs/lib/invariant';
 import canUseDOM from '../../modules/canUseDom';
 
 const initialURL = canUseDOM ? window.location.href : '';
@@ -41,7 +42,12 @@ class Linking {
   }
 
   emit(type: string, ...args: any) {
-    this._listeners[type]?.forEach(({ listener }) => listener(...args));
+    const listeners = this._listeners[type];
+
+    if (listeners != null) {
+      // Copy so mutations during emit do not change this invocation
+      [...listeners].forEach(({ listener }) => listener(...args));
+    }
   }
 
   listenerCount(type: string): number {
@@ -49,9 +55,12 @@ class Linking {
   }
 
   removeAllListeners(type?: ?string) {
-    if (type != null) {
-      this._listeners[type]?.clear();
-    }
+    invariant(
+      type != null,
+      '`NativeEventEmitter.removeAllListener()` requires a non-null argument.'
+    );
+
+    this._listeners[type]?.clear();
   }
 
   canOpenURL(): Promise<boolean> {
@@ -62,8 +71,15 @@ class Linking {
     return Promise.resolve(initialURL);
   }
 
-  sendIntent(): Promise<void> {
-    return Promise.resolve();
+  sendIntent(
+    action: string,
+    extras?: Array<{
+      key: string,
+      value: string | number | boolean,
+      ...
+    }>
+  ): Promise<void> {
+    return Promise.reject(new Error('Unsupported'));
   }
 
   openSettings(): Promise<void> {

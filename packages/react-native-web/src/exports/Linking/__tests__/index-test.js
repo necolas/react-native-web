@@ -38,90 +38,73 @@ describe('apis/Linking', () => {
       Linking.openURL('http://foo.com', undefined);
     });
   });
-});
 
-describe('apis/Linking event listeners', () => {
-  let subscriptions;
+  describe('listeners', () => {
+    afterEach(() => {
+      Linking.removeAllListeners('onOpen');
+      Linking.removeAllListeners('other');
+      jest.restoreAllMocks();
+    });
 
-  beforeEach(() => {
-    subscriptions = [];
-    jest.spyOn(window, 'open').mockImplementation(() => {});
+    test('registers each subscription once and removes only itself', async () => {
+      jest.spyOn(window, 'open').mockImplementation(() => {});
+      // jest.fn() instances have identical source
+      const first = jest.fn();
+      const second = jest.fn();
+      const subscription = Linking.addEventListener('onOpen', first);
+      Linking.addEventListener('onOpen', first);
+      Linking.addEventListener('onOpen', second);
+      expect(Linking.listenerCount('onOpen')).toBe(3);
+
+      subscription.remove();
+      subscription.remove();
+      expect(Linking.listenerCount('onOpen')).toBe(2);
+
+      await Linking.openURL('https://example.com');
+      expect(first).toHaveBeenCalledTimes(1);
+      expect(second).toHaveBeenCalledTimes(1);
+      expect(second).toHaveBeenCalledWith('https://example.com');
+    });
+
+    test('emit calls only the listeners present when it starts', () => {
+      let isAdded = false;
+      const first = jest.fn(() => {
+        secondSubscription.remove();
+        if (!isAdded) {
+          isAdded = true;
+          Linking.addListener('onOpen', first);
+        }
+      });
+      const second = jest.fn();
+      Linking.addListener('onOpen', first);
+      const secondSubscription = Linking.addListener('onOpen', second);
+
+      Linking.emit('onOpen');
+      expect(first).toHaveBeenCalledTimes(1);
+      expect(second).toHaveBeenCalledTimes(1);
+
+      Linking.emit('onOpen');
+      expect(first).toHaveBeenCalledTimes(3);
+      expect(second).toHaveBeenCalledTimes(1);
+    });
+
+    test('removeAllListeners clears one event type and requires a type', () => {
+      const first = jest.fn();
+      const other = jest.fn();
+      Linking.addListener('onOpen', first);
+      Linking.addListener('other', other);
+
+      Linking.removeAllListeners('onOpen');
+      Linking.emit('onOpen');
+      Linking.emit('other');
+
+      expect(first).not.toHaveBeenCalled();
+      expect(other).toHaveBeenCalledTimes(1);
+      expect(() => Linking.removeAllListeners()).toThrow();
+    });
   });
 
-  afterEach(() => {
-    subscriptions.forEach((subscription) => subscription.remove());
-    jest.restoreAllMocks();
-  });
-
-  function subscribe(callback) {
-    const subscription = Linking.addEventListener('onOpen', callback);
-    subscriptions.push(subscription);
-    return subscription;
-  }
-
-  test('calls each listener once per event', async () => {
-    const first = jest.fn();
-    const second = jest.fn();
-    subscribe(first);
-    subscribe(second);
-
-    await Linking.openURL('https://example.com');
-
-    expect(first).toHaveBeenCalledTimes(1);
-    expect(first).toHaveBeenCalledWith('https://example.com');
-    expect(second).toHaveBeenCalledTimes(1);
-  });
-
-  test('removing a listener keeps other callbacks with identical source', async () => {
-    const first = jest.fn();
-    const second = jest.fn();
-    expect(first.toString()).toBe(second.toString());
-    const subscription = subscribe(first);
-    subscribe(second);
-
-    subscription.remove();
-    await Linking.openURL('https://example.com');
-
-    expect(first).not.toHaveBeenCalled();
-    expect(second).toHaveBeenCalledTimes(1);
-  });
-
-  test('removing one subscription keeps other registrations of the same callback', async () => {
-    const callback = jest.fn();
-    const subscription = subscribe(callback);
-    subscribe(callback);
-
-    subscription.remove();
-    subscription.remove();
-    await Linking.openURL('https://example.com');
-
-    expect(callback).toHaveBeenCalledTimes(1);
-  });
-
-  test('listenerCount counts each subscription', () => {
-    const callback = jest.fn();
-    expect(Linking.listenerCount('onOpen')).toBe(0);
-
-    const subscription = subscribe(callback);
-    subscribe(callback);
-    expect(Linking.listenerCount('onOpen')).toBe(2);
-
-    subscription.remove();
-    expect(Linking.listenerCount('onOpen')).toBe(1);
-  });
-
-  test('removeAllListeners removes the listeners of one event', () => {
-    const first = jest.fn();
-    const second = jest.fn();
-    subscribe(first);
-    const other = Linking.addEventListener('other', second);
-    subscriptions.push(other);
-
-    Linking.removeAllListeners('onOpen');
-    Linking.emit('onOpen', 'a');
-    Linking.emit('other', 'b');
-
-    expect(first).not.toHaveBeenCalled();
-    expect(second).toHaveBeenCalledWith('b');
+  test('sendIntent rejects as unsupported', async () => {
+    await expect(Linking.sendIntent('action')).rejects.toThrow('Unsupported');
   });
 });
