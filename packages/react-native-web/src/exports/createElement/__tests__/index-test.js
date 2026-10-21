@@ -477,6 +477,23 @@ describe('exports/createElement', () => {
       expect(getAttribute(roleIsNone, 'role')).toBe('presentation');
     });
 
+    test('accessibilityRole "header" renders a native heading without role="heading"', () => {
+      const { container: heading } = render(
+        createElement('div', { accessibilityRole: 'header' })
+      );
+      expect(heading.firstChild.nodeName).toBe('H1');
+      expect(getAttribute(heading, 'role')).toBeNull();
+
+      const { container: levelTwo } = render(
+        createElement('div', {
+          accessibilityRole: 'header',
+          'aria-level': 2
+        })
+      );
+      expect(levelTwo.firstChild.nodeName).toBe('H2');
+      expect(getAttribute(levelTwo, 'role')).toBeNull();
+    });
+
     test('accessibilityRoleDescription', () => {
       const { container: isEmpty } = render(
         createElement('div', { accessibilityRoleDescription: null })

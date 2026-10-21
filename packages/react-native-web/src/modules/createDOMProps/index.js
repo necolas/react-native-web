@@ -377,8 +377,21 @@ const createDOMProps = (elementType, props, options) => {
   }
 
   if (role != null) {
-    // 'presentation' synonym has wider browser support
-    domProps['role'] = role === 'none' ? 'presentation' : role;
+    // h1-h6 already have the heading role. An explicit role="heading" on
+    // them fails heading audits such as axe "page-has-heading-one".
+    const isNativeHeading =
+      role === 'heading' &&
+      (elementType === 'h1' ||
+        elementType === 'h2' ||
+        elementType === 'h3' ||
+        elementType === 'h4' ||
+        elementType === 'h5' ||
+        elementType === 'h6');
+
+    if (!isNativeHeading) {
+      // 'presentation' synonym has wider browser support
+      domProps['role'] = role === 'none' ? 'presentation' : role;
+    }
   }
 
   const _ariaRoleDescription =
