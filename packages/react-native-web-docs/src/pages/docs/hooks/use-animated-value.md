@@ -13,7 +13,7 @@ eleventyNavigation:
 Create an `Animated.Value` that persists for the lifetime of a component.
 :::
 
-`useAnimatedValue` creates an `Animated.Value` on the first render and returns the same instance on every subsequent render.
+`useAnimatedValue` creates an `Animated.Value` on the first render and returns the same instance on every subsequent render. Changes to the arguments after the first render are ignored.
 
 ```js
 import { Animated, useAnimatedValue } from 'react-native';
@@ -27,11 +27,11 @@ const fadeAnim = useAnimatedValue(0);
 ### Arguments
 
 {% call macro.prop('initialValue', 'number') %}
-The initial value of the `Animated.Value`. Changes to this argument after the first render are ignored.
+The initial value of the `Animated.Value`.
 {% endcall %}
 
 {% call macro.prop('config', '?{ useNativeDriver: boolean }') %}
-Optional configuration passed to the `Animated.Value` constructor.
+Optional configuration passed to the `Animated.Value` constructor. `useNativeDriver` is not supported on web.
 {% endcall %}
 
 ### Return value

@@ -15,6 +15,7 @@ import useAnimatedValue from '..';
 describe('useAnimatedValue', () => {
   test('returns an Animated.Value with the initial value', () => {
     let value;
+
     function Component(): React.Node {
       value = useAnimatedValue(5);
       return null;
@@ -27,6 +28,7 @@ describe('useAnimatedValue', () => {
 
   test('returns the same instance across rerenders', () => {
     const values = [];
+
     function Component({ initialValue }): React.Node {
       values.push(useAnimatedValue(initialValue));
       return null;
