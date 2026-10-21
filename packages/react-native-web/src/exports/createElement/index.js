@@ -14,17 +14,17 @@ import createDOMProps from '../../modules/createDOMProps';
 import React from 'react';
 import { LocaleProvider } from '../../modules/useLocale';
 
-const createElement = (component, props, options) => {
+const createElement = (component, props, options, ...children) => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
-  if (component?.constructor === String) {
+  if (props != null && component?.constructor === String) {
     accessibilityComponent =
       AccessibilityUtil.propsToAccessibilityComponent(props);
   }
   const Component = accessibilityComponent || component;
   const domProps = createDOMProps(Component, props, options);
 
-  const element = React.createElement(Component, domProps);
+  const element = React.createElement(Component, domProps, ...children);
 
   // Update locale context if element's writing direction prop changes
   const elementWithLocaleProvider = domProps.dir ? (

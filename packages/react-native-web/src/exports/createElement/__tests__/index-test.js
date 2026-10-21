@@ -31,6 +31,17 @@ describe('exports/createElement', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('renders variadic children', () => {
+    let { container } = render(
+      createElement('div', null, undefined, createElement('span'), 'text')
+    );
+    expect(container.firstChild.innerHTML).toBe('<span></span>text');
+    ({ container } = render(
+      createElement('div', { children: 'prop' }, undefined, 'arg')
+    ));
+    expect(container.firstChild.innerHTML).toBe('arg');
+  });
+
   describe('prop "accessibilityRole"', () => {
     test('string component type', () => {
       const { container } = render(

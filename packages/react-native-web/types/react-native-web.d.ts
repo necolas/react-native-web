@@ -104,8 +104,9 @@ export function unmountComponentAtNode(root: Root): boolean;
 
 export function unstable_createElement(
   component: string | ComponentType<any>,
-  props?: object,
-  options?: object
+  props?: object | null,
+  options?: object,
+  ...children: ReactNode[]
 ): ReactElement;
 
 export function useLocaleContext(): {
