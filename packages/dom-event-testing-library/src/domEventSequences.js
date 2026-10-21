@@ -78,7 +78,7 @@ function createTouchEventPayload(target, touch, payload) {
 
 function getPointerType(payload) {
   let pointerType = 'mouse';
-  if (payload != null && payload.pointerType != null) {
+  if (payload?.pointerType != null) {
     pointerType = payload.pointerType;
   }
   return pointerType;

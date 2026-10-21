@@ -71,23 +71,14 @@ export default function createResponderEvent(
 
   const metaKey = domEvent.metaKey === true;
   const shiftKey = domEvent.shiftKey === true;
-  const force =
-    (domEventChangedTouches && domEventChangedTouches[0].force) || 0;
+  const force = domEventChangedTouches?.[0].force || 0;
   const identifier = normalizeIdentifier(
-    (domEventChangedTouches && domEventChangedTouches[0].identifier) || 0
+    domEventChangedTouches?.[0].identifier || 0
   );
-  const clientX =
-    (domEventChangedTouches && domEventChangedTouches[0].clientX) ||
-    domEvent.clientX;
-  const clientY =
-    (domEventChangedTouches && domEventChangedTouches[0].clientY) ||
-    domEvent.clientY;
-  const pageX =
-    (domEventChangedTouches && domEventChangedTouches[0].pageX) ||
-    domEvent.pageX;
-  const pageY =
-    (domEventChangedTouches && domEventChangedTouches[0].pageY) ||
-    domEvent.pageY;
+  const clientX = domEventChangedTouches?.[0].clientX || domEvent.clientX;
+  const clientY = domEventChangedTouches?.[0].clientY || domEvent.clientY;
+  const pageX = domEventChangedTouches?.[0].pageX || domEvent.pageX;
+  const pageY = domEventChangedTouches?.[0].pageY || domEvent.pageY;
   const preventDefault =
     typeof domEvent.preventDefault === 'function'
       ? domEvent.preventDefault.bind(domEvent)

@@ -3,7 +3,7 @@
  * @returns {number}
  */
 export function now() {
-  if (window && window.performance) {
+  if (window?.performance) {
     return window.performance.now();
   } else {
     return Date.now();

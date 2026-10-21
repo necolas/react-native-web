@@ -20,9 +20,7 @@ export default function usePressEvents(
   config: PressResponderConfig
 ): EventHandlers {
   const pressResponderRef = useRef<?PressResponder>(null);
-  if (pressResponderRef.current == null) {
-    pressResponderRef.current = new PressResponder(config);
-  }
+  pressResponderRef.current ??= new PressResponder(config);
   const pressResponder = pressResponderRef.current;
 
   // Re-configure to use the current node and configuration.

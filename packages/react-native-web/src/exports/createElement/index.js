@@ -17,7 +17,7 @@ import { LocaleProvider } from '../../modules/useLocale';
 const createElement = (component, props, options) => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
-  if (component && component.constructor === String) {
+  if (component?.constructor === String) {
     accessibilityComponent =
       AccessibilityUtil.propsToAccessibilityComponent(props);
   }

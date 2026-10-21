@@ -119,8 +119,7 @@ const Text = (props: {
   supportedProps.dir = componentDirection;
   // 'auto' by default allows browsers to infer writing direction (root elements only)
   if (!hasTextAncestor) {
-    supportedProps.dir =
-      componentDirection != null ? componentDirection : 'auto';
+    supportedProps.dir = componentDirection ?? 'auto';
   }
 
   if (onClick || onPress) {

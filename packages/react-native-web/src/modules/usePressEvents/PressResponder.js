@@ -258,9 +258,7 @@ export default class PressResponder {
    * Returns a set of props to spread into the interactive element.
    */
   getEventHandlers(): EventHandlers {
-    if (this._eventHandlers == null) {
-      this._eventHandlers = this._createEventHandlers();
-    }
+    this._eventHandlers ??= this._createEventHandlers();
     return this._eventHandlers;
   }
 
@@ -621,10 +619,10 @@ function normalizeDelay(
 
 function getTouchFromResponderEvent(event: ResponderEvent) {
   const { changedTouches, touches } = event.nativeEvent;
-  if (touches != null && touches.length > 0) {
+  if (touches?.length > 0) {
     return touches[0];
   }
-  if (changedTouches != null && changedTouches.length > 0) {
+  if (changedTouches?.length > 0) {
     return changedTouches[0];
   }
   return event.nativeEvent;

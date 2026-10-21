@@ -200,14 +200,14 @@ export class ResponderTouchHistoryStore {
         const { touchBank } = touchHistory;
         for (let i = 0; i < touchBank.length; i++) {
           const touchTrackToCheck = touchBank[i];
-          if (touchTrackToCheck != null && touchTrackToCheck.touchActive) {
+          if (touchTrackToCheck?.touchActive) {
             touchHistory.indexOfSingleActiveTouch = i;
             break;
           }
         }
         if (__DEV__) {
           const activeRecord = touchBank[touchHistory.indexOfSingleActiveTouch];
-          if (!(activeRecord != null && activeRecord.touchActive)) {
+          if (!activeRecord?.touchActive) {
             console.error('Cannot find single active touch.');
           }
         }

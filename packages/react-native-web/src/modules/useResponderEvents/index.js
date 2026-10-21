@@ -27,9 +27,7 @@ let idCounter = 0;
 
 function useStable<T>(getInitialValue: () => T): T {
   const ref = React.useRef<T | null>(null);
-  if (ref.current == null) {
-    ref.current = getInitialValue();
-  }
+  ref.current ??= getInitialValue();
   return ref.current;
 }
 

@@ -259,7 +259,7 @@ function changeCurrentResponder(responder: ResponderInstance) {
 
 function getResponderConfig(id: ResponderId): ResponderConfig {
   const config = responderListenersMap.get(id);
-  return config != null ? config : emptyObject;
+  return config ?? emptyObject;
 }
 
 /**

@@ -311,8 +311,7 @@ const TextInput = (props: {
     e.stopPropagation();
 
     const blurOnSubmitDefault = !multiline;
-    const shouldBlurOnSubmit =
-      blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+    const shouldBlurOnSubmit = blurOnSubmit ?? blurOnSubmitDefault;
 
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
@@ -405,8 +404,8 @@ const TextInput = (props: {
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
   supportedProps.readOnly = readOnly === true || editable === false;
-  supportedProps.rows = multiline ? (rows != null ? rows : numberOfLines) : 1;
-  supportedProps.spellCheck = spellCheck != null ? spellCheck : autoCorrect;
+  supportedProps.rows = multiline ? (rows ?? numberOfLines) : 1;
+  supportedProps.spellCheck = spellCheck ?? autoCorrect;
   supportedProps.style = [
     { '--placeholderTextColor': placeholderTextColor },
     styles.textinput$raw,

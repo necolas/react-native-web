@@ -17,7 +17,7 @@ const getRect = (node) => {
   let top = node.offsetTop;
   node = node.offsetParent;
 
-  while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
+  while (node?.nodeType === 1 /* Node.ELEMENT_NODE */) {
     left += node.offsetLeft + node.clientLeft - node.scrollLeft;
     top += node.offsetTop + node.clientTop - node.scrollTop;
     node = node.offsetParent;
@@ -30,7 +30,7 @@ const getRect = (node) => {
 };
 
 const measureLayout = (node, relativeToNativeNode, callback) => {
-  const relativeNode = relativeToNativeNode || (node && node.parentNode);
+  const relativeNode = relativeToNativeNode || node?.parentNode;
   if (node && relativeNode) {
     setTimeout(() => {
       if (node.isConnected && relativeNode.isConnected) {

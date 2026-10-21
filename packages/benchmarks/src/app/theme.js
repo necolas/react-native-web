@@ -3,9 +3,7 @@ import { Dimensions, Platform } from 'react-native';
 const baseFontSize = 14;
 const baseUnit = 1.3125;
 const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
+  typeof window !== 'undefined' && window.document?.createElement
 );
 
 const createPlatformLength = (multiplier) =>

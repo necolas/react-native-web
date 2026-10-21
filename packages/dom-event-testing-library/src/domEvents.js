@@ -195,7 +195,7 @@ function createPointerEvent(
     getModifierState(keyArg) {
       return createGetModifierState(keyArg, modifierState);
     },
-    height: isMouse ? 1 : height != null ? height : defaultPointerSize,
+    height: isMouse ? 1 : (height ?? defaultPointerSize),
     metaKey,
     movementX,
     movementY,
@@ -218,7 +218,7 @@ function createPointerEvent(
     tiltY,
     timeStamp,
     twist,
-    width: isMouse ? 1 : width != null ? width : defaultPointerSize
+    width: isMouse ? 1 : (width ?? defaultPointerSize)
   });
 }
 
@@ -369,7 +369,7 @@ export function pointercancel(payload) {
 }
 
 export function pointerdown(payload) {
-  const isTouch = payload != null && payload.pointerType === 'touch';
+  const isTouch = payload?.pointerType === 'touch';
   return createPointerEvent('pointerdown', {
     button: buttonType.primary,
     buttons: buttonsType.primary,

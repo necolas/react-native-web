@@ -35,7 +35,7 @@ const listenerMapping = new WeakMap<
 
 const Appearance = {
   getColorScheme(): ColorSchemeName {
-    return query && query.matches ? 'dark' : 'light';
+    return query?.matches ? 'dark' : 'light';
   },
 
   addChangeListener(listener: AppearanceListener): { remove: () => void } {

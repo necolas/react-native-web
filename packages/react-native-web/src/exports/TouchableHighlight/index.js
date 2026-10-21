@@ -180,11 +180,11 @@ function TouchableHighlight(props: Props): React.Node {
         styles.root,
         style,
         !disabled && styles.actionable,
-        extraStyles && extraStyles.underlay
+        extraStyles?.underlay
       ]}
     >
       {React.cloneElement(child, {
-        style: [child.props.style, extraStyles && extraStyles.child]
+        style: [child.props.style, extraStyles?.child]
       })}
     </View>
   );

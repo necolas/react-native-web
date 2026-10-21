@@ -253,7 +253,7 @@ const Image = (props: {
   function handleLayout(e: LayoutEvent) {
     if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
       const { layout } = e.nativeEvent;
-      onLayout && onLayout(e);
+      onLayout?.(e);
       updateLayout(layout);
     }
   }

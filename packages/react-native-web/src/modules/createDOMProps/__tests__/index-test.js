@@ -71,7 +71,7 @@ describe('modules/createDOMProps', () => {
     expect(_props).toMatchInlineSnapshot(`
       {
         "aria-activedescendant": "activedescendant",
-        "aria-atomic": "activedescendant",
+        "aria-atomic": true,
         "aria-autocomplete": "list",
         "aria-busy": true,
         "aria-checked": true,

@@ -79,12 +79,12 @@ export default class AppRegistry {
         getApplication(
           componentProviderInstrumentationHook(componentProvider),
           appParameters ? appParameters.initialProps : emptyObject,
-          wrapperComponentProvider && wrapperComponentProvider(appParameters)
+          wrapperComponentProvider?.(appParameters)
         ),
       run: (appParameters): Application =>
         renderApplication(
           componentProviderInstrumentationHook(componentProvider),
-          wrapperComponentProvider && wrapperComponentProvider(appParameters),
+          wrapperComponentProvider?.(appParameters),
           appParameters.callback,
           {
             hydrate: appParameters.hydrate || false,

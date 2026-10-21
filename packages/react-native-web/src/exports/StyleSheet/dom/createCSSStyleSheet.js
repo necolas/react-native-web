@@ -14,7 +14,7 @@ export default function createCSSStyleSheet(
   textContent?: string
 ): ?CSSStyleSheet {
   if (canUseDOM) {
-    const root = rootNode != null ? rootNode : document;
+    const root = rootNode ?? document;
     let element = root.querySelector<HTMLStyleElement>(`style#${id}`);
     if (element == null) {
       element = document.createElement('style');
