@@ -11,7 +11,6 @@ jobs:
         env:
           MINIFY: 'true'
         with:
-          build-script: 'compile'
           omit-unchanged: 'true'
           pattern: './packages/react-native-web/dist/{index.js,**/*.js}'
           repo-token: '${{ secrets.GITHUB_TOKEN }}'

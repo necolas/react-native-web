@@ -6,7 +6,6 @@
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
     "build": "npm run clean && npm run build --workspaces --if-present",
-    "compile": "npm run build",
     "dev": "npm run dev --workspaces --if-present",
     "flow": "flow",
     "format": "prettier --check --ignore-unknown .",
