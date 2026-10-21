@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   FlatList,
+  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
-  Text,
-  View
+  Text
 } from 'react-native';
 import Example from '../../shared/example';
 
@@ -26,20 +26,31 @@ function useRefresh() {
   return { count, onRefresh, refreshing };
 }
 
-function Item({ title }) {
+function Item({ onPress, title }) {
   return (
-    <View style={styles.item}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
+    >
       <Text>{title}</Text>
-    </View>
+    </Pressable>
   );
 }
 
 export default function RefreshControlPage() {
   const list = useRefresh();
+  const invertedList = useRefresh();
   const scrollView = useRefresh();
+  const [lastPress, setLastPress] = React.useState('none');
+
+  const renderItem = ({ item }) => (
+    <Item onPress={() => setLastPress(item)} title={item} />
+  );
 
   return (
     <Example title="RefreshControl">
+      <Text style={styles.label}>Last press: {lastPress}</Text>
+
       <Text style={styles.label}>
         FlatList with onRefresh (refreshed {list.count} times)
       </Text>
@@ -48,7 +59,21 @@ export default function RefreshControlPage() {
         keyExtractor={(item) => item}
         onRefresh={list.onRefresh}
         refreshing={list.refreshing}
-        renderItem={({ item }) => <Item title={item} />}
+        renderItem={renderItem}
+        style={styles.list}
+      />
+
+      <Text style={styles.label}>
+        Inverted FlatList, pull up from the bottom (refreshed{' '}
+        {invertedList.count} times)
+      </Text>
+      <FlatList
+        data={ITEMS}
+        inverted
+        keyExtractor={(item) => item}
+        onRefresh={invertedList.onRefresh}
+        refreshing={invertedList.refreshing}
+        renderItem={renderItem}
         style={styles.list}
       />
 
@@ -68,7 +93,7 @@ export default function RefreshControlPage() {
         style={styles.list}
       >
         {ITEMS.map((item) => (
-          <Item key={item} title={item} />
+          <Item key={item} onPress={() => setLastPress(item)} title={item} />
         ))}
       </ScrollView>
     </Example>
@@ -80,6 +105,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
     borderBottomWidth: 1,
     padding: 16
+  },
+  itemPressed: {
+    backgroundColor: '#e8f0fe'
   },
   label: {
     marginBottom: 8,
