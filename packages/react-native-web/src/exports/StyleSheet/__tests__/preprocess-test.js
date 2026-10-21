@@ -380,6 +380,7 @@ describe('StyleSheet/preprocess', () => {
       });
     });
   });
+
   describe('shadow conversion options', () => {
     test('shadow styles are not converted when options.shadow is not true', () => {
       expect(preprocess({ shadowColor: 'red' })).toEqual({});
