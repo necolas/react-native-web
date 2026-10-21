@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: preactjs/compressed-size-action@v2
+        env:
+          MINIFY: 'true'
         with:
           build-script: 'compile'
           omit-unchanged: 'true'
