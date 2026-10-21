@@ -25,8 +25,28 @@ import { Platform } from 'react-native';
 
 ### Static properties
 
+{% call macro.prop('constants', '{ reactNativeVersion }') %}
+`reactNativeVersion` is always `{ major: 0, minor: 0, patch: 0, prerelease: undefined }` on web.
+{% endcall %}
+
+{% call macro.prop('isDisableAnimations', 'false') %}
+This value is always `false` on web.
+{% endcall %}
+
+{% call macro.prop('isTV', 'false') %}
+This value is always `false` on web.
+{% endcall %}
+
+{% call macro.prop('isTesting', 'boolean') %}
+This value is `true` when `process.env.NODE_ENV` is `"test"`.
+{% endcall %}
+
 {% call macro.prop('OS', '"web"') %}
 This value will be `"web"` when running in a Web browser.
+{% endcall %}
+
+{% call macro.prop('Version', '"0.0.0"') %}
+This value is always `"0.0.0"` on web.
 {% endcall %}
 
 ### Static methods

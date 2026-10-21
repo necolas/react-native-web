@@ -10,15 +10,25 @@
 
 const Platform = {
   OS: 'web',
-  select: (obj: Object): any => ('web' in obj ? obj.web : obj.default),
-  get isTesting(): boolean {
-    if (process.env.NODE_ENV === 'test') {
-      return true;
+  Version: '0.0.0',
+  isDisableAnimations: false,
+  isTV: false,
+
+  constants: {
+    reactNativeVersion: {
+      major: 0,
+      minor: 0,
+      patch: 0,
+      prerelease: undefined
     }
-    return false;
   },
-  get Version(): string {
-    return '0.0.0';
+
+  select(spec: Object): any {
+    return 'web' in spec ? spec.web : spec.default;
+  },
+
+  get isTesting(): boolean {
+    return process.env.NODE_ENV === 'test';
   }
 };
 
