@@ -29,15 +29,17 @@ This also works with composite components defined in your existing component gal
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
 import { unstable_createElement, useLocaleContext } from 'react-native-web';
-import { StyleSheet, } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const CustomButton = (props) => {
   const { direction } = useLocaleContext();
-  return unstable_createElement(RaisedButton, {
-    ...props,
-    style: [ styles.button, props.style ]
-  });
-}, { writingDirection: direction });
+
+  return unstable_createElement(
+    RaisedButton,
+    { ...props, style: [styles.button, props.style] },
+    { writingDirection: direction }
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
