@@ -101,6 +101,7 @@ const TextInput = (props: {
     autoCompleteType,
     autoCorrect = true,
     blurOnSubmit,
+    submitBehavior,
     caretHidden,
     clearTextOnFocus,
     dir,
@@ -310,10 +311,19 @@ const TextInput = (props: {
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
 
-    const blurOnSubmitDefault = !multiline;
-    const shouldBlurOnSubmit =
-      blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
-
+    // Support submitBehavior prop (React Native 0.73+), fallback to blurOnSubmit for backwards compatibility
+    var shouldBlurOnSubmit;
+    var shouldSubmit;
+    if (submitBehavior != null) {
+      // submitBehavior takes precedence over blurOnSubmit
+      shouldSubmit = submitBehavior === 'submit' || submitBehavior === 'blurAndSubmit';
+      shouldBlurOnSubmit = submitBehavior === 'blurAndSubmit';
+    } else {
+      // Fallback to blurOnSubmit logic for backwards compatibility
+      var blurOnSubmitDefault = !multiline;
+      shouldBlurOnSubmit = blurOnSubmit == null ? blurOnSubmitDefault : blurOnSubmit;
+      shouldSubmit = blurOnSubmit || !multiline;
+    }
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
 
@@ -328,7 +338,8 @@ const TextInput = (props: {
       !isComposing &&
       !e.isDefaultPrevented()
     ) {
-      if ((blurOnSubmit || !multiline) && onSubmitEditing) {
+      // submitBehavior === 'newline' means don't submit, just insert newline (default behavior)
+      if (shouldSubmit && onSubmitEditing) {
         // prevent "Enter" from inserting a newline or submitting a form
         e.preventDefault();
         nativeEvent.text = e.target.value;
