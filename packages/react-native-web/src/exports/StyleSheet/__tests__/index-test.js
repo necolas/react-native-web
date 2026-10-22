@@ -400,4 +400,25 @@ describe('StyleSheet', () => {
       `);
     });
   });
+
+  describe('inline pointerEvents', () => {
+    test('resolves to the same class as StyleSheet.create', () => {
+      const registered = StyleSheet.create({
+        none: { pointerEvents: 'none' },
+        auto: { pointerEvents: 'auto' },
+        boxNone: { pointerEvents: 'box-none' },
+        boxOnly: { pointerEvents: 'box-only' }
+      });
+
+      for (const key of Object.keys(registered)) {
+        const [registeredClass] = StyleSheet(registered[key]);
+        const [inlineClass, inlineStyle] = StyleSheet({
+          opacity: 0.5,
+          pointerEvents: registered[key].pointerEvents
+        });
+        expect(inlineClass).toBe(registeredClass);
+        expect(inlineStyle).toEqual({ opacity: 0.5 });
+      }
+    });
+  });
 });
