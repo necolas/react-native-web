@@ -14,6 +14,7 @@ import * as React from 'react';
 import View from '../View';
 import StyleSheet from '../StyleSheet';
 import canUseDOM from '../../modules/canUseDom';
+import useLayoutEffect from '../../modules/useLayoutEffect';
 
 export type ModalContentProps = {
   ...ViewProps,
@@ -27,7 +28,9 @@ export type ModalContentProps = {
 const ModalContent = (props: ModalContentProps): React.Node => {
   const { active, children, onRequestClose, ref, transparent, ...rest } = props;
 
-  React.useEffect(() => {
+  // A layout effect, so that Escape goes to the active modal from the commit
+  // that sets `role="dialog"`, not a task later.
+  useLayoutEffect(() => {
     if (canUseDOM) {
       const closeOnEscape = (e: KeyboardEvent) => {
         if (active && e.key === 'Escape') {
