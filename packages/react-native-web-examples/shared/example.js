@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function Example(props) {
   return (
@@ -21,7 +21,9 @@ export default function Example(props) {
           {props.title}
         </Text>
       </View>
-      <View style={styles.container}>{props.children}</View>
+      <ScrollView contentContainerStyle={styles.container}>
+        {props.children}
+      </ScrollView>
     </View>
   );
 }
