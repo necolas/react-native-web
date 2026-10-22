@@ -309,11 +309,11 @@ export default class PressResponder {
         end(event);
         document.removeEventListener('keyup', keyupHandler);
 
-        const role = target.getAttribute('role');
         const elementType = getElementType(target);
 
+        // Elements that dispatch a native 'click' when activated by keyboard.
+        // ARIA roles (e.g. 'link') don't add this behavior to other elements.
         const isNativeInteractiveElement =
-          role === 'link' ||
           elementType === 'a' ||
           elementType === 'button' ||
           elementType === 'input' ||
