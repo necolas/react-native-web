@@ -27,18 +27,34 @@ export type ModalContentProps = {
 const ModalContent = (props: ModalContentProps): React.Node => {
   const { active, children, onRequestClose, ref, transparent, ...rest } = props;
 
+  const escapeKeyDownRef = React.useRef<?KeyboardEvent>(null);
+
   React.useEffect(() => {
     if (canUseDOM) {
+      const recordEscapeKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && !e.repeat) {
+          escapeKeyDownRef.current = active ? e : null;
+        }
+      };
       const closeOnEscape = (e: KeyboardEvent) => {
-        if (active && e.key === 'Escape') {
+        if (e.key !== 'Escape') {
+          return;
+        }
+        const keyDown = escapeKeyDownRef.current;
+        escapeKeyDownRef.current = null;
+        if (active && keyDown != null && !keyDown.defaultPrevented) {
           e.stopPropagation();
           if (onRequestClose) {
             onRequestClose();
           }
         }
       };
+      document.addEventListener('keydown', recordEscapeKeyDown, true);
       document.addEventListener('keyup', closeOnEscape, false);
-      return () => document.removeEventListener('keyup', closeOnEscape, false);
+      return () => {
+        document.removeEventListener('keydown', recordEscapeKeyDown, true);
+        document.removeEventListener('keyup', closeOnEscape, false);
+      };
     }
   }, [active, onRequestClose]);
 

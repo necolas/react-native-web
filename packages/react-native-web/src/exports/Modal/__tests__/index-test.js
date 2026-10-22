@@ -7,7 +7,13 @@
 
 import Modal from '..';
 import React from 'react';
+import TextInput from '../../TextInput';
 import { fireEvent, render } from '@testing-library/react';
+
+function pressEscape(target) {
+  fireEvent.keyDown(target, { key: 'Escape' });
+  fireEvent.keyUp(target, { key: 'Escape' });
+}
 
 describe('components/Modal', () => {
   test('visible by default', () => {
@@ -616,7 +622,7 @@ describe('components/Modal', () => {
 
     render(<Modal onRequestClose={spy} visible={true} />);
 
-    fireEvent.keyUp(document, { key: 'Escape' });
+    pressEscape(document);
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
@@ -632,7 +638,7 @@ describe('components/Modal', () => {
       </>
     );
 
-    fireEvent.keyUp(document, { key: 'Escape' });
+    pressEscape(document);
 
     expect(spyA).toHaveBeenCalledTimes(0);
     expect(spyB).toHaveBeenCalledTimes(1);
@@ -675,9 +681,148 @@ describe('components/Modal', () => {
     fireEvent.animationEnd(animationAElement);
     fireEvent.animationEnd(animationBElement);
 
+    pressEscape(document);
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose when a TextInput is focused', () => {
+    const spy = jest.fn();
+
+    const { getByTestId } = render(
+      <Modal onRequestClose={spy} visible={true}>
+        <TextInput testID={'input'} />
+      </Modal>
+    );
+
+    pressEscape(getByTestId('input'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key closes one modal per key press', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    function TestComponent() {
+      const [visibleB, setVisibleB] = React.useState(true);
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal
+            onRequestClose={() => {
+              spyB();
+              setVisibleB(false);
+            }}
+            visible={visibleB}
+          />
+        </>
+      );
+    }
+
+    render(<TestComponent />);
+
+    pressEscape(document);
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key closes one modal per key press when the app handles it', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    function TestComponent() {
+      const [visibleB, setVisibleB] = React.useState(true);
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal onRequestClose={spyB} visible={visibleB}>
+            <a
+              data-testid={'b'}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  e.preventDefault();
+                  setVisibleB(false);
+                }
+              }}
+            />
+          </Modal>
+        </>
+      );
+    }
+
+    const { getByTestId } = render(<TestComponent />);
+
+    fireEvent.keyDown(getByTestId('b'), { key: 'Escape' });
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(0);
+  });
+
+  test('holding escape closes one modal per key press', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    function TestComponent() {
+      const [visibleB, setVisibleB] = React.useState(true);
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal
+            onRequestClose={() => {
+              spyB();
+              setVisibleB(false);
+            }}
+            visible={visibleB}
+          />
+        </>
+      );
+    }
+
+    render(<TestComponent />);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: 'Escape', repeat: true });
+    fireEvent.keyDown(document, { key: 'Escape', repeat: true });
     fireEvent.keyUp(document, { key: 'Escape' });
 
     expect(spyA).toHaveBeenCalledTimes(0);
     expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key does not fire onRequestClose when the keydown was handled', () => {
+    const spy = jest.fn();
+
+    const { getByTestId } = render(
+      <Modal onRequestClose={spy} visible={true}>
+        <a
+          data-testid={'a'}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              e.preventDefault();
+            }
+          }}
+        />
+      </Modal>
+    );
+
+    pressEscape(getByTestId('a'));
+
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  test('escape key does not fire onRequestClose for a key press that began before the modal was active', () => {
+    const spy = jest.fn();
+
+    const { rerender } = render(<Modal onRequestClose={spy} visible={false} />);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    rerender(<Modal onRequestClose={spy} visible={true} />);
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spy).toHaveBeenCalledTimes(0);
   });
 });
