@@ -6,6 +6,7 @@
  */
 
 import Modal from '..';
+import ScrollView from '../../ScrollView';
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -530,6 +531,76 @@ describe('components/Modal', () => {
     insideStartElement.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(insideEndElement);
+  });
+
+  test.each([{ tabIndex: -1 }, { focusable: false }])(
+    'wraps focus through children of a ScrollView excluded from tab order: %s',
+    (props) => {
+      const { getByTestId } = render(
+        <Modal visible={true}>
+          <ScrollView {...props} testID="scroll">
+            <button data-testid="first">First</button>
+            <button data-testid="last">Last</button>
+          </ScrollView>
+        </Modal>
+      );
+      const first = getByTestId('first');
+      const last = getByTestId('last');
+      const trap = getByTestId('scroll').closest('[role="dialog"]').parentNode;
+
+      expect(document.activeElement).toBe(first);
+      first.focus();
+      trap.previousSibling.focus();
+      expect(document.activeElement).toBe(last);
+      trap.nextSibling.focus();
+      expect(document.activeElement).toBe(first);
+    }
+  );
+
+  test('skips excluded elements at both ends of the modal', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <button tabIndex={-1}>Excluded first</button>
+        <button data-testid="first">First</button>
+        <button data-testid="last">Last</button>
+        <button tabIndex={-1}>Excluded last</button>
+      </Modal>
+    );
+    const first = getByTestId('first');
+    const last = getByTestId('last');
+    const trap = first.closest('[role="dialog"]').parentNode;
+    expect(document.activeElement).toBe(first);
+    trap.previousSibling.focus();
+    expect(document.activeElement).toBe(last);
+    trap.nextSibling.focus();
+    expect(document.activeElement).toBe(first);
+  });
+
+  test('allows explicitly focusing an excluded element inside the modal', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <button>First</button>
+        <button data-testid="excluded" tabIndex={-1}>
+          Excluded
+        </button>
+      </Modal>
+    );
+    const excluded = getByTestId('excluded');
+    excluded.focus();
+    expect(document.activeElement).toBe(excluded);
+  });
+
+  test('falls back to the trap when all descendants are excluded from tab order', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <button data-testid="excluded" tabIndex={-1}>
+          Excluded
+        </button>
+      </Modal>
+    );
+    const excluded = getByTestId('excluded');
+    const trap = excluded.closest('[role="dialog"]').parentNode;
+    expect(document.activeElement).toBe(trap);
   });
 
   test('focus is trapped without contents', () => {
