@@ -147,14 +147,35 @@ export function hasTargetTouches(target: any, touches: any): boolean {
 }
 
 /**
- * Ignore 'selectionchange' events that don't correspond with a person's intent to
+ * Ignore 'selectionchange' and 'select' events that don't correspond with a person's intent to
  * select text.
+ *
+ * 'selectionchange' events are evaluated via Window Selection API (isSelectionValid),
+ * while 'select' events are dispatched on elements (such as <input> or <textarea>)
+ * that maintain their own selectionStart / selectionEnd properties.
  */
 export function hasValidSelection(domEvent: any): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }
-  return domEvent.type === 'select';
+  if (domEvent.type === 'select') {
+    const target = domEvent.target;
+    if (target != null) {
+      try {
+        const start = target.selectionStart;
+        const end = target.selectionEnd;
+        if (typeof start === 'number' && typeof end === 'number') {
+          return start !== end;
+        }
+      } catch (e) {
+        // Some engines (historically Chrome/WebKit) throw InvalidStateError
+        // when reading selection properties on unsupported types (e.g. type="number")
+      }
+    }
+    // Fail-open: if we cannot prove the selection is collapsed, preserve legacy termination behavior
+    return true;
+  }
+  return false;
 }
 
 /**
