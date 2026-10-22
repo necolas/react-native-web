@@ -58,6 +58,48 @@ describe('useHover', () => {
       });
       expect(onHoverStart).toHaveBeenCalled();
     });
+
+    test('resumes the hover gesture on the nearest ancestor only', () => {
+      const onOuterHoverStart = jest.fn();
+      const onMiddleHoverStart = jest.fn();
+      const outerRef = React.createRef();
+      const middleRef = React.createRef();
+      const innerRef = React.createRef();
+      const Component = () => {
+        useHover(outerRef, {
+          contain: true,
+          onHoverStart: onOuterHoverStart
+        });
+        useHover(middleRef, {
+          contain: true,
+          onHoverStart: onMiddleHoverStart
+        });
+        useHover(innerRef, { contain: true });
+        return (
+          <div ref={outerRef}>
+            <div ref={middleRef}>
+              <div ref={innerRef} />
+            </div>
+          </div>
+        );
+      };
+      render(<Component />);
+      const outer = createEventTarget(outerRef.current);
+      const middle = createEventTarget(middleRef.current);
+      const inner = createEventTarget(innerRef.current);
+      act(() => {
+        outer.pointerover();
+        outer.pointerout({ relatedTarget: middle.node });
+        middle.pointerover();
+        middle.pointerout({ relatedTarget: inner.node });
+        inner.pointerover();
+      });
+      act(() => {
+        inner.pointerout({ relatedTarget: middle.node });
+      });
+      expect(onMiddleHoverStart).toHaveBeenCalledTimes(2);
+      expect(onOuterHoverStart).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('disabled', () => {
