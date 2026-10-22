@@ -47,7 +47,7 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 
 | Name                | Status | Notes                                                                                                           |
 | :------------------ | :----- | :-------------------------------------------------------------------------------------------------------------- |
-| AccessibilityInfo   | (✓)    | Mock. No equivalent web APIs.                                                                                   |
+| AccessibilityInfo   | (✓)    | Uses media queries for contrast, motion, and transparency. Focus calls `focus()`. Other methods are mocks.      |
 | Alert               | ✘      | Not started ([#1026](https://github.com/necolas/react-native-web/issues/1026)).                                 |
 | Animated            | ✓      | Missing `useNativeDriver` support.                                                                              |
 | Appearance          | ✓      |                                                                                                                 |

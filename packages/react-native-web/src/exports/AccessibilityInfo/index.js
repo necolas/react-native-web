@@ -11,103 +11,122 @@
 
 import canUseDOM from '../../modules/canUseDom';
 
-function isScreenReaderEnabled(): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    resolve(true);
-  });
-}
+type ChangeHandler = (enabled: boolean) => void;
+type EventSubscription = { remove: () => void };
 
-const prefersReducedMotionMedia =
-  canUseDOM && typeof window.matchMedia === 'function'
-    ? window.matchMedia('(prefers-reduced-motion: reduce)')
-    : null;
-
-function isReduceMotionEnabled(): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    resolve(
-      prefersReducedMotionMedia ? prefersReducedMotionMedia.matches : true
-    );
-  });
-}
-
-function addChangeListener(fn: (event: MediaQueryListEvent) => void) {
-  if (prefersReducedMotionMedia != null) {
-    prefersReducedMotionMedia.addEventListener('change', fn);
+const createMedia = (query: string, fallback: boolean) => {
+  if (!canUseDOM || typeof window.matchMedia !== 'function') {
+    return {
+      get matches(): boolean {
+        return fallback;
+      },
+      addChangeHandler(handler: ChangeHandler): EventSubscription {
+        return { remove() {} };
+      }
+    };
   }
-}
 
-function removeChangeListener(fn: (event: MediaQueryListEvent) => void) {
-  if (prefersReducedMotionMedia != null) {
-    prefersReducedMotionMedia.removeEventListener('change', fn);
-  }
-}
+  // Wrap each handler in an object so the same function can be registered twice
+  const handlers: Set<{ handler: ChangeHandler }> = new Set();
+  const media = window.matchMedia(query);
 
-const handlers = {};
+  const listener = (event: MediaQueryListEvent) => {
+    // Copy so mutations during emit do not change this invocation
+    [...handlers].forEach(({ handler }) => handler(event.matches));
+  };
+
+  return {
+    get matches(): boolean {
+      return media.matches;
+    },
+    addChangeHandler(handler: ChangeHandler): EventSubscription {
+      const entry = { handler };
+
+      if (handlers.size === 0) {
+        media.addEventListener('change', listener);
+      }
+
+      handlers.add(entry);
+
+      return {
+        remove() {
+          if (handlers.delete(entry) && handlers.size === 0) {
+            media.removeEventListener('change', listener);
+          }
+        }
+      };
+    }
+  };
+};
+
+const prefersContrastMedia = createMedia('(prefers-contrast: more)', false);
+const prefersReducedMotionMedia = createMedia(
+  '(prefers-reduced-motion: reduce)',
+  true
+);
+const prefersReducedTransparencyMedia = createMedia(
+  '(prefers-reduced-transparency: reduce)',
+  false
+);
 
 const AccessibilityInfo = {
-  /**
-   * Query whether a screen reader is currently enabled.
-   *
-   * Returns a promise which resolves to a boolean.
-   * The result is `true` when a screen reader is enabled and `false` otherwise.
-   */
-  isScreenReaderEnabled,
+  announceForAccessibility(announcement: string): void {},
 
-  /**
-   * Query whether the user prefers reduced motion.
-   *
-   * Returns a promise which resolves to a boolean.
-   * The result is `true` when a screen reader is enabled and `false` otherwise.
-   */
-  isReduceMotionEnabled,
+  announceForAccessibilityWithOptions(
+    announcement: string,
+    options: { queue?: boolean, priority?: 'low' | 'default' | 'high' }
+  ): void {},
 
-  /**
-   * Deprecated
-   */
-  fetch: isScreenReaderEnabled,
+  getRecommendedTimeoutMillis: (originalTimeout: number): Promise<number> =>
+    Promise.resolve(originalTimeout),
 
-  /**
-   * Add an event handler. Supported events: reduceMotionChanged
-   */
-  addEventListener: function (eventName: string, handler: Function): Object {
-    if (eventName === 'reduceMotionChanged') {
-      if (!prefersReducedMotionMedia) {
-        return;
-      }
-      const listener = (event: MediaQueryListEvent) => {
-        handler(event.matches);
-      };
-      addChangeListener(listener);
-      handlers[handler] = listener;
+  isAccessibilityServiceEnabled: (): Promise<boolean> => Promise.resolve(true),
+  isBoldTextEnabled: (): Promise<boolean> => Promise.resolve(false),
+  isDarkerSystemColorsEnabled: (): Promise<boolean> => Promise.resolve(false),
+  isGrayscaleEnabled: (): Promise<boolean> => Promise.resolve(false),
+  isInvertColorsEnabled: (): Promise<boolean> => Promise.resolve(false),
+  isScreenReaderEnabled: (): Promise<boolean> => Promise.resolve(true),
+  prefersCrossFadeTransitions: (): Promise<boolean> => Promise.resolve(false),
+
+  isHighTextContrastEnabled: (): Promise<boolean> =>
+    Promise.resolve(prefersContrastMedia.matches),
+  isReduceMotionEnabled: (): Promise<boolean> =>
+    Promise.resolve(prefersReducedMotionMedia.matches),
+  isReduceTransparencyEnabled: (): Promise<boolean> =>
+    Promise.resolve(prefersReducedTransparencyMedia.matches),
+
+  addEventListener(eventName: string, handler: Function): EventSubscription {
+    if (eventName === 'highTextContrastChanged') {
+      return prefersContrastMedia.addChangeHandler(handler);
+    } else if (eventName === 'reduceMotionChanged') {
+      return prefersReducedMotionMedia.addChangeHandler(handler);
+    } else if (eventName === 'reduceTransparencyChanged') {
+      return prefersReducedTransparencyMedia.addChangeHandler(handler);
     }
 
-    return {
-      remove: () => AccessibilityInfo.removeEventListener(eventName, handler)
-    };
+    return { remove() {} };
+  },
+
+  sendAccessibilityEvent(
+    handle: HTMLElement,
+    eventType: 'click' | 'focus' | 'viewHoverEnter' | 'windowStateChange'
+  ): void {
+    if (eventType === 'focus') {
+      try {
+        handle.focus();
+      } catch {}
+    }
   },
 
   /**
-   * Set accessibility focus to a react component.
+   * Set accessibility focus to a React component.
+   *
+   * @deprecated Use `sendAccessibilityEvent` with eventType `focus` instead.
    */
-  setAccessibilityFocus: function (reactTag: number): void {},
-
-  /**
-   * Post a string to be announced by the screen reader.
-   */
-  announceForAccessibility: function (announcement: string): void {},
-
-  /**
-   * Remove an event handler.
-   */
-  removeEventListener: function (eventName: string, handler: Function): void {
-    if (eventName === 'reduceMotionChanged') {
-      const listener = handlers[handler];
-      if (!listener || !prefersReducedMotionMedia) {
-        return;
-      }
-      removeChangeListener(listener);
-    }
-    return;
+  setAccessibilityFocus(node: HTMLElement): void {
+    try {
+      node.focus();
+    } catch {}
   }
 };
 
