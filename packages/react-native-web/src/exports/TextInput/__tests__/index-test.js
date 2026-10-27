@@ -758,6 +758,14 @@ describe('components/TextInput', () => {
     });
   });
 
+  describe('prop "title"', () => {
+    test('value is set', () => {
+      const { container } = render(<TextInput title="Hello" />);
+      const input = findInput(container);
+      expect(input.getAttribute('title')).toBe('Hello');
+    });
+  });
+
   describe('imperative methods', () => {
     test('node.clear()', () => {
       const ref = React.createRef();

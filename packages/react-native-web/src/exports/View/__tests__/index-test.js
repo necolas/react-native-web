@@ -301,6 +301,13 @@ describe('components/View', () => {
     });
   });
 
+  describe('prop "title"', () => {
+    test('value is set', () => {
+      const { container } = render(<View title="Hello" />);
+      expect(container.firstChild.getAttribute('title')).toBe('Hello');
+    });
+  });
+
   describe('prop "type"', () => {
     test('default is "button" when role is "button"', () => {
       const { container } = render(<View role="button" />);

@@ -188,6 +188,7 @@ interface WebSharedProps extends WebEventProps {
   dataSet?: Record<string, unknown> | undefined;
   lang?: string | undefined;
   suppressHydrationWarning?: boolean | undefined;
+  title?: string | undefined;
   /** @unstable */
   href?: string | undefined;
   /** @unstable */
@@ -455,6 +456,7 @@ declare module 'react-native' {
 
   interface ImageProps {
     draggable?: boolean | undefined;
+    title?: string | undefined;
   }
 
   interface ButtonProps {
@@ -462,6 +464,7 @@ declare module 'react-native' {
   }
 
   interface TouchableWithoutFeedbackProps {
+    title?: string | undefined;
     type?: ButtonType | undefined;
   }
 

@@ -40,6 +40,7 @@ export type Props = Readonly<{|
   ref?: React.Ref<any>,
   rejectResponderTermination?: ?boolean,
   testID?: ViewProps['testID'],
+  title?: ViewProps['title'],
   type?: ViewProps['type']
 |}>;
 
@@ -58,6 +59,7 @@ const forwardPropsList = {
   onFocus: true,
   onLayout: true,
   testID: true,
+  title: true,
   type: true
 };
 
