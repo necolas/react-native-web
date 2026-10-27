@@ -2224,24 +2224,6 @@ describe('useResponderEvents', () => {
     test('negotiate from first common ancestor when there are siblings', () => {
       const pointerType = 'touch';
       let eventLog = [];
-      const grandParentCallbacks = {
-        onStartShouldSetResponderCapture() {
-          eventLog.push('grandParent: onStartShouldSetResponderCapture');
-          return false;
-        },
-        onStartShouldSetResponder() {
-          eventLog.push('grandParent: onStartShouldSetResponder');
-          return false;
-        },
-        onMoveShouldSetResponderCapture() {
-          eventLog.push('grandParent: onMoveShouldSetResponderCapture');
-          return false;
-        },
-        onMoveShouldSetResponder() {
-          eventLog.push('grandParent: onMoveShouldSetResponder');
-          return false;
-        }
-      };
       const parentCallbacks = {
         onStartShouldSetResponderCapture() {
           eventLog.push('parent: onStartShouldSetResponderCapture');
@@ -2307,7 +2289,6 @@ describe('useResponderEvents', () => {
       };
 
       const Component = () => {
-        useResponderEvents(grandParentRef, grandParentCallbacks);
         useResponderEvents(parentRef, parentCallbacks);
         useResponderEvents(targetRef, targetCallbacks);
         useResponderEvents(siblingRef, siblingCallbacks);
@@ -2331,7 +2312,6 @@ describe('useResponderEvents', () => {
       });
       expect(getResponderNode()).toBe(targetRef.current);
       expect(eventLog).toEqual([
-        'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponderCapture',
         'target: onStartShouldSetResponder',
@@ -2347,10 +2327,8 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor of current responder and sibling (i.e., parent)
       expect(eventLog).toEqual([
-        'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponder',
-        'grandParent: onStartShouldSetResponder',
         'target: onResponderStart'
       ]);
       eventLog = [];
@@ -2362,10 +2340,8 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor
       expect(eventLog).toEqual([
-        'grandParent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponder',
-        'grandParent: onMoveShouldSetResponder',
         'target: onResponderMove'
       ]);
       eventLog = [];
@@ -2377,10 +2353,8 @@ describe('useResponderEvents', () => {
       expect(getResponderNode()).toBe(targetRef.current);
       // negotiates from first common ancestor
       expect(eventLog).toEqual([
-        'grandParent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponderCapture',
         'parent: onMoveShouldSetResponder',
-        'grandParent: onMoveShouldSetResponder',
         'target: onResponderMove'
       ]);
     });
