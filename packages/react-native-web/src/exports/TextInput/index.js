@@ -404,7 +404,7 @@ const TextInput = (props: {
   supportedProps.onKeyDown = handleKeyDown;
   supportedProps.onSelect = handleSelectionChange;
   supportedProps.readOnly = readOnly === true || editable === false;
-  supportedProps.rows = multiline ? (rows ?? numberOfLines) : 1;
+  supportedProps.rows = multiline ? (rows ?? numberOfLines ?? 1) : 1;
   supportedProps.spellCheck = spellCheck ?? autoCorrect;
   supportedProps.style = [
     { '--placeholderTextColor': placeholderTextColor },
