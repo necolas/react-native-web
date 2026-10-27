@@ -622,7 +622,9 @@ describe('components/TextInput', () => {
     });
 
     test('multi-line input', () => {
+      jest.useFakeTimers();
       const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
       const { container } = render(
         <TextInput
           defaultValue="12345"
@@ -631,8 +633,15 @@ describe('components/TextInput', () => {
         />
       );
       const textarea = findTextArea(container);
-      textarea.dispatchEvent(keydown({ key: 'Enter' }));
+      const blur = jest.spyOn(textarea, 'blur');
+      textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onSubmitEditing).not.toHaveBeenCalled();
+      expect(preventDefault).not.toHaveBeenCalled();
+      expect(blur).not.toHaveBeenCalled();
+      jest.useRealTimers();
     });
 
     test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
@@ -691,22 +700,6 @@ describe('components/TextInput', () => {
 
       return { blur, onSubmitEditing, preventDefault };
     }
-
-    test('single-line default is "blurAndSubmit"', () => {
-      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({});
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
-      expect(preventDefault).toHaveBeenCalledTimes(1);
-      expect(blur).toHaveBeenCalledTimes(1);
-    });
-
-    test('multi-line default is "newline"', () => {
-      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
-        multiline: true
-      });
-      expect(onSubmitEditing).not.toHaveBeenCalled();
-      expect(preventDefault).not.toHaveBeenCalled();
-      expect(blur).not.toHaveBeenCalled();
-    });
 
     test('value "submit"', () => {
       [false, true].forEach((multiline) => {
