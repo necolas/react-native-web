@@ -36,7 +36,8 @@ const forwardPropsList = {
   ...forwardedProps.styleProps,
   href: true,
   lang: true,
-  pointerEvents: true
+  pointerEvents: true,
+  type: true
 };
 
 const pickProps = (props: { ... }) => pick(props, forwardPropsList);

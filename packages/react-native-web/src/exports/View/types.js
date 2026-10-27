@@ -253,6 +253,7 @@ export type ViewProps = {
   // unstable
   href?: ?string,
   hrefAttrs?: ?{ download?: ?boolean, rel?: ?string, target?: ?string },
+  type?: ?('button' | 'reset' | 'submit'),
   // @deprecated
   focusable?: ?boolean,
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',

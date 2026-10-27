@@ -20,9 +20,10 @@ import type {
   Role
 } from 'react-native';
 
+type ButtonType = 'button' | 'reset' | 'submit';
+type NumberOrString = number | string;
 type idRef = string;
 type idRefList = idRef | Array<idRef>;
-type NumberOrString = number | string;
 
 // Roles that react-native-web renders as a specific HTML element.
 // See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
@@ -197,6 +198,8 @@ interface WebSharedProps extends WebEventProps {
         target?: string | undefined;
       }
     | undefined;
+  /** Sets the `type` attribute when the element renders as a `<button>`. */
+  type?: ButtonType | undefined;
 }
 
 // Styles that react-native does not declare.
@@ -452,6 +455,14 @@ declare module 'react-native' {
 
   interface ImageProps {
     draggable?: boolean | undefined;
+  }
+
+  interface ButtonProps {
+    type?: ButtonType | undefined;
+  }
+
+  interface TouchableWithoutFeedbackProps {
+    type?: ButtonType | undefined;
   }
 
   interface PressableProps extends Pick<

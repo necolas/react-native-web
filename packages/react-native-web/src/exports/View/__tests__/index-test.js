@@ -300,4 +300,16 @@ describe('components/View', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
   });
+
+  describe('prop "type"', () => {
+    test('default is "button" when role is "button"', () => {
+      const { container } = render(<View role="button" />);
+      expect(container.firstChild.getAttribute('type')).toBe('button');
+    });
+
+    test('value is set when role is "button"', () => {
+      const { container } = render(<View role="button" type="submit" />);
+      expect(container.firstChild.getAttribute('type')).toBe('submit');
+    });
+  });
 });

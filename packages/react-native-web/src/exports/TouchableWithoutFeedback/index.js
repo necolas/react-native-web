@@ -39,7 +39,8 @@ export type Props = Readonly<{|
   onPressOut?: PressResponderConfig['onPressEnd'],
   ref?: React.Ref<any>,
   rejectResponderTermination?: ?boolean,
-  testID?: ViewProps['testID']
+  testID?: ViewProps['testID'],
+  type?: ViewProps['type']
 |}>;
 
 const forwardPropsList = {
@@ -56,7 +57,8 @@ const forwardPropsList = {
   onBlur: true,
   onFocus: true,
   onLayout: true,
-  testID: true
+  testID: true,
+  type: true
 };
 
 const pickProps = (props: Props) => pick(props, forwardPropsList);

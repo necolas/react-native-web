@@ -38,7 +38,8 @@ const forwardPropsList = {
   lang: true,
   onScroll: true,
   onWheel: true,
-  pointerEvents: true
+  pointerEvents: true,
+  type: true
 };
 
 const pickProps = (props: { ... }) => pick(props, forwardPropsList);

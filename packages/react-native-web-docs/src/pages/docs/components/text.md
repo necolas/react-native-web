@@ -100,6 +100,10 @@ Set whether the view can receive keyboard focus.
 Set the test selector label (via `data-testid`).
 {% endcall %}
 
+{% call macro.prop('type', '?("button" | "reset" | "submit")') %}
+If the element renders as a `<button>`, this prop sets its [type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#type). Defaults to `"button"`. Use `"submit"` to submit a parent `<form>`.
+{% endcall %}
+
 ---
 
 ## Examples
