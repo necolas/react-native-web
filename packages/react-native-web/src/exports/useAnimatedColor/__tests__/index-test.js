@@ -26,6 +26,18 @@ describe('useAnimatedColor', () => {
     expect(value && value.__getValue()).toBe('rgba(255, 0, 0, 1)');
   });
 
+  test('accepts a color string', () => {
+    let value;
+
+    function Component(): React.Node {
+      value = useAnimatedColor('red');
+      return null;
+    }
+
+    render(<Component />);
+    expect(value && value.__getValue()).toBe('rgba(255, 0, 0, 1)');
+  });
+
   test('returns the same instance across rerenders', () => {
     const values = [];
 
