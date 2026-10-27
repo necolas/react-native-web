@@ -49,8 +49,14 @@ const Appearance = {
   setColorScheme(colorScheme: ColorSchemeName | 'auto' | 'unspecified'): void {
     if (canUseDOM) {
       const prevColorScheme = getColorScheme();
+
       colorSchemeOverride =
         colorScheme === 'light' || colorScheme === 'dark' ? colorScheme : null;
+
+      // Make form controls, scrollbars and light-dark() follow the override
+      if (document.documentElement != null) {
+        document.documentElement.style.colorScheme = colorSchemeOverride ?? '';
+      }
 
       if (getColorScheme() !== prevColorScheme) {
         notifyListeners();

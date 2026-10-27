@@ -35,6 +35,7 @@ describe('Appearance', () => {
 
   afterEach(() => {
     window.matchMedia = originalMatchMedia;
+    document.documentElement.style.colorScheme = '';
   });
 
   describe('getColorScheme', () => {
@@ -62,6 +63,16 @@ describe('Appearance', () => {
       Appearance.setColorScheme('light');
       Appearance.setColorScheme('unspecified');
       expect(Appearance.getColorScheme()).toBe('dark');
+    });
+
+    test('sets the color-scheme CSS property of the document element', () => {
+      const { style } = document.documentElement;
+      Appearance.setColorScheme('dark');
+      expect(style.colorScheme).toBe('dark');
+      Appearance.setColorScheme('light');
+      expect(style.colorScheme).toBe('light');
+      Appearance.setColorScheme('auto');
+      expect(style.colorScheme).toBe('');
     });
   });
 
