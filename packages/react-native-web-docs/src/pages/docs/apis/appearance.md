@@ -30,3 +30,7 @@ Add an event handler that is called with `{colorScheme: "dark" | "light"}` when 
 {% call macro.prop('getColorScheme', '() => ("dark" | "light")') %}
 You can use the Appearance module to determine if the user prefers a dark color scheme. Although the color scheme is available immediately, this may change (e.g. scheduled color scheme change at sunrise or sunset). Any rendering logic or styles that depend on the user preferred color scheme should try to call this function on every render, rather than caching the value.
 {% endcall %}
+
+{% call macro.prop('setColorScheme', '(colorScheme: "dark" | "light" | "auto" | "unspecified") => void') %}
+Force the color scheme returned by `getColorScheme` and `useColorScheme`. Pass `"auto"` or `"unspecified"` to follow the user's preference again. Listeners are called when the resulting color scheme changes. This has no effect on the server. It also does not change CSS `prefers-color-scheme` media queries, the `light-dark()` CSS function, or the colors of native form controls and scrollbars.
+{% endcall %}

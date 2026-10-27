@@ -8,11 +8,16 @@
  */
 
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import Appearance from '../../Appearance';
 import useColorScheme from '..';
 
 describe('useColorScheme', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+    Appearance.setColorScheme('auto');
+  });
+
   test('keeps its subscription active across rerenders', () => {
     const remove = jest.fn();
     const addChangeListener = jest
@@ -34,5 +39,32 @@ describe('useColorScheme', () => {
 
     unmount();
     expect(remove).toHaveBeenCalledTimes(1);
+  });
+
+  test('returns the color scheme set by a child mount effect', () => {
+    function Child(): React.Node {
+      React.useEffect(() => {
+        Appearance.setColorScheme('dark');
+      }, []);
+      return null;
+    }
+
+    function Parent(): React.Node {
+      const colorScheme = useColorScheme();
+      return (
+        <div>
+          {colorScheme}
+          <Child />
+        </div>
+      );
+    }
+
+    const { container } = render(<Parent />);
+    expect(container.textContent).toBe('dark');
+
+    act(() => {
+      Appearance.setColorScheme('light');
+    });
+    expect(container.textContent).toBe('light');
   });
 });
