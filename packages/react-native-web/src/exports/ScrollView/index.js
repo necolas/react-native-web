@@ -651,21 +651,12 @@ class ScrollView extends React.Component<ScrollViewProps> {
       'ScrollViewClass must not be undefined'
     );
 
-    const scrollView = (
+    return (
       <ScrollViewClass {...props} ref={this._setScrollNodeRef}>
+        {refreshControl}
         {contentContainer}
       </ScrollViewClass>
     );
-
-    if (refreshControl) {
-      return React.cloneElement(
-        refreshControl,
-        { style: props.style },
-        scrollView
-      );
-    }
-
-    return scrollView;
   }
 
   _handleContentOnLayout = (e: Object) => {
