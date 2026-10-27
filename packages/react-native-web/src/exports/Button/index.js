@@ -20,12 +20,21 @@ type ButtonProps = {|
   onPress?: ?(e: any) => void,
   ref?: React.Ref<React.ElementRef<typeof TouchableOpacity>>,
   testID?: ?string,
-  title: string
+  title: string,
+  type?: ?('button' | 'reset' | 'submit')
 |};
 
 const Button = (props: ButtonProps): React.Node => {
-  const { accessibilityLabel, color, disabled, onPress, ref, testID, title } =
-    props;
+  const {
+    accessibilityLabel,
+    color,
+    disabled,
+    onPress,
+    ref,
+    testID,
+    title,
+    type
+  } = props;
 
   return (
     <TouchableOpacity
@@ -41,6 +50,7 @@ const Button = (props: ButtonProps): React.Node => {
         disabled && styles.buttonDisabled
       ]}
       testID={testID}
+      type={type}
     >
       <Text style={[styles.text, disabled && styles.textDisabled]}>
         {title}
