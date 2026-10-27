@@ -165,17 +165,13 @@ const TextInput = (props: {
 
   if (inputMode != null) {
     _inputMode = inputMode;
-    if (inputMode === 'email') {
-      type = 'email';
-    } else if (inputMode === 'tel') {
-      type = 'tel';
-    } else if (inputMode === 'search') {
-      type = 'search';
-    } else if (inputMode === 'url') {
-      type = 'url';
-    } else {
-      type = 'text';
-    }
+    type =
+      inputMode === 'email' ||
+      inputMode === 'search' ||
+      inputMode === 'tel' ||
+      inputMode === 'url'
+        ? inputMode
+        : 'text';
   } else if (keyboardType != null) {
     switch (keyboardType) {
       case 'email-address':
