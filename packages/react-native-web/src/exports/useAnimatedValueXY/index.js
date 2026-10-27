@@ -10,6 +10,8 @@
 
 'use client';
 
+import type { AnimatedValueConfig } from '../../vendor/react-native/Animated/nodes/AnimatedValue';
+
 import Animated from '../Animated';
 import { useRef } from 'react';
 
@@ -19,7 +21,7 @@ export default function useAnimatedValueXY(
     y: number
   },
   // `useNativeDriver` is not supported on web, so the config is not used.
-  config?: ?{ useNativeDriver: boolean }
+  config?: ?AnimatedValueConfig
 ): Animated.ValueXY {
   const ref = useRef<null | Animated.ValueXY>(null);
   if (ref.current == null) {
