@@ -648,18 +648,132 @@ describe('components/TextInput', () => {
         />
       );
       const textarea = findTextArea(container);
-      textarea.dispatchEvent(
-        keydown({ key: 'Enter', preventDefault, shiftKey: true })
-      );
-      // shift+enter should enter newline, not submit
-      expect(onSubmitEditing).not.toHaveBeenCalledWith(
-        expect.objectContaining({ shiftKey: true })
-      );
-      expect(preventDefault).not.toHaveBeenCalled();
-
       textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
       expect(onSubmitEditing).toHaveBeenCalledTimes(1);
       expect(preventDefault).toHaveBeenCalledTimes(1);
+
+      // shift+enter also submits, as in React Native
+      textarea.dispatchEvent(
+        keydown({ key: 'Enter', preventDefault, shiftKey: true })
+      );
+      expect(onSubmitEditing).toHaveBeenCalledTimes(2);
+      expect(preventDefault).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('prop "submitBehavior"', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    function renderAndSubmit(props) {
+      const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
+
+      const { container } = render(
+        <TextInput onSubmitEditing={onSubmitEditing} {...props} />
+      );
+
+      const node = props.multiline
+        ? findTextArea(container)
+        : findInput(container);
+
+      const blur = jest.spyOn(node, 'blur');
+      node.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
+
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      return { blur, onSubmitEditing, preventDefault };
+    }
+
+    test('single-line default is "blurAndSubmit"', () => {
+      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({});
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(blur).toHaveBeenCalledTimes(1);
+    });
+
+    test('multi-line default is "newline"', () => {
+      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+        multiline: true
+      });
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+      expect(preventDefault).not.toHaveBeenCalled();
+      expect(blur).not.toHaveBeenCalled();
+    });
+
+    test('value "submit"', () => {
+      [false, true].forEach((multiline) => {
+        const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+          multiline,
+          submitBehavior: 'submit'
+        });
+        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(blur).not.toHaveBeenCalled();
+      });
+    });
+
+    test('value "blurAndSubmit"', () => {
+      [false, true].forEach((multiline) => {
+        const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+          multiline,
+          submitBehavior: 'blurAndSubmit'
+        });
+        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(blur).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    test('value "newline" on single-line input is "blurAndSubmit"', () => {
+      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+        submitBehavior: 'newline'
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(blur).toHaveBeenCalledTimes(1);
+    });
+
+    test('takes precedence over "blurOnSubmit"', () => {
+      const { blur, onSubmitEditing } = renderAndSubmit({
+        blurOnSubmit: true,
+        submitBehavior: 'submit'
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(blur).not.toHaveBeenCalled();
+    });
+
+    test('single-line "blurOnSubmit={false}" is "submit"', () => {
+      const { blur, onSubmitEditing } = renderAndSubmit({
+        blurOnSubmit: false
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(blur).not.toHaveBeenCalled();
+    });
+
+    test('multi-line without "onSubmitEditing" does not insert a newline', () => {
+      const { blur, preventDefault } = renderAndSubmit({
+        multiline: true,
+        onSubmitEditing: undefined,
+        submitBehavior: 'blurAndSubmit'
+      });
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(blur).toHaveBeenCalledTimes(1);
+    });
+
+    test('single-line without "onSubmitEditing" does not prevent form submit', () => {
+      const { preventDefault } = renderAndSubmit({
+        onSubmitEditing: undefined,
+        submitBehavior: 'submit'
+      });
+      expect(preventDefault).not.toHaveBeenCalled();
     });
   });
 

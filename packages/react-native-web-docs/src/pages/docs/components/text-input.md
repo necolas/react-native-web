@@ -61,7 +61,7 @@ If `true`, focuses the input on mount. Only the first form element in a document
 {% endcall %}
 
 {% call macro.prop('blurOnSubmit', '?boolean') %}
-If `true`, the text field will blur when submitted. The default value is `true` for single-line fields and `false` for multiline fields. Note, for multiline fields setting `blurOnSubmit` to `true` means that pressing return will blur the field and trigger the `onSubmitEditing` event instead of inserting a newline into the field.
+Deprecated. Use `submitBehavior`. If `true`, the text field will blur when submitted. The default value is `true` for single-line fields and `false` for multiline fields. Note, for multiline fields setting `blurOnSubmit` to `true` means that pressing return will blur the field and trigger the `onSubmitEditing` event instead of inserting a newline into the field.
 {% endcall %}
 
 {% call macro.prop('clearTextOnFocus', '?boolean = false') %}
@@ -137,7 +137,7 @@ Callback that is called when the text input's selection changes.
 {% endcall %}
 
 {% call macro.prop('onSubmitEditing', '?() => void') %}
-Callback that is called when the keyboard's submit button is pressed. When `multiline={true}`, this is only called if `blurOnSubmit={true}`.
+Callback that is called when the keyboard's submit button is pressed. When `multiline={true}`, this is not called if `submitBehavior` is `'newline'` (the default).
 {% endcall %}
 
 {% call macro.prop('placeholder', '?string') %}
@@ -174,6 +174,10 @@ If `false`, will set [HTMLElement.virtualkeyboardpolicy](https://developer.mozil
 
 {% call macro.prop('style', '?Style') %}
 Set the styles of the view. `TextInput` supports typographic styles in addition to those of `View`.
+{% endcall %}
+
+{% call macro.prop('submitBehavior', '?("submit" | "blurAndSubmit" | "newline")') %}
+What happens when the return key is pressed. `'submit'` calls `onSubmitEditing`. `'blurAndSubmit'` calls `onSubmitEditing` and blurs the field. `'newline'` inserts a newline and is only valid for multiline fields (single-line fields use `'blurAndSubmit'` instead). The default value is `'blurAndSubmit'` for single-line fields and `'newline'` for multiline fields.
 {% endcall %}
 
 {% call macro.prop('testID', '?string') %}
