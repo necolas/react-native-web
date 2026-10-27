@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
 import VirtualizedList from '../';
 
 function mockScrollMetrics(node, offset, length, horizontal = false) {
@@ -24,7 +25,7 @@ function mockScrollMetrics(node, offset, length, horizontal = false) {
   });
 }
 
-function renderList({ horizontal = false, inverted = true } = {}) {
+function renderList({ horizontal = false, inverted = true, onRefresh } = {}) {
   return render(
     <VirtualizedList
       data={[0]}
@@ -34,6 +35,8 @@ function renderList({ horizontal = false, inverted = true } = {}) {
       horizontal={horizontal}
       inverted={inverted}
       keyExtractor={String}
+      onRefresh={onRefresh}
+      refreshing={false}
       renderItem={() => <div data-testid="nested" />}
       testID="list"
     />
@@ -51,6 +54,20 @@ function wheel(target, delta, horizontal = false) {
 }
 
 describe('components/VirtualizedList', () => {
+  describe('prop "onRefresh"', () => {
+    test('a pull at the top of the list calls "onRefresh"', () => {
+      const onRefresh = jest.fn();
+      const { getByTestId } = renderList({ inverted: false, onRefresh });
+      const target = createEventTarget(getByTestId('nested'));
+      act(() => {
+        target.pointerdown({ pointerType: 'touch', x: 0, y: 0 });
+        target.pointermove({ pointerType: 'touch', x: 0, y: 200 });
+        target.pointerup({ pointerType: 'touch', x: 0, y: 200 });
+      });
+      expect(onRefresh).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('prop "inverted"', () => {
     test('wheel over the list itself scrolls in the inverted direction', () => {
       const { getByTestId } = renderList();
@@ -104,6 +121,13 @@ describe('components/VirtualizedList', () => {
       expect(wheel(nested, -20).defaultPrevented).toBe(true);
       expect(nested.scrollTop).toBe(0);
       expect(list.scrollTop).toBe(215);
+    });
+
+    test('with "onRefresh" flips the list only one time', () => {
+      const { getByTestId } = renderList({ onRefresh: () => {} });
+      const list = getByTestId('list');
+      expect(getComputedStyle(list).transform).not.toContain('scaleY(-1)');
+      expect(getComputedStyle(list.parentNode).transform).toBe('scaleY(-1)');
     });
   });
 });

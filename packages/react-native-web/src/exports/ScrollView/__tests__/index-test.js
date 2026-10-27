@@ -1,4 +1,5 @@
 import React from 'react';
+import RefreshControl from '../../RefreshControl';
 import ScrollView from '../';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
@@ -122,6 +123,35 @@ describe('components/ScrollView', () => {
         />
       );
       expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('wrapper gets the layout styles and scroll view gets the others', () => {
+      const { getByTestId } = render(
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={false} />}
+          style={{ backgroundColor: 'red', marginTop: 10, paddingTop: 20 }}
+          testID="scroll-view"
+        />
+      );
+      const scrollView = getByTestId('scroll-view');
+      const wrapper = scrollView.parentNode;
+      expect(wrapper.style.marginTop).toBe('10px');
+      expect(wrapper.style.backgroundColor).toBe('');
+      expect(wrapper.style.paddingTop).toBe('');
+      expect(scrollView.style.marginTop).toBe('');
+      expect(scrollView.style.backgroundColor).toBe('rgb(255, 0, 0)');
+      expect(scrollView.style.paddingTop).toBe('20px');
+    });
+
+    test('scroll view stops the browser pull to refresh', () => {
+      const { getByTestId } = render(
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={false} />}
+          testID="scroll-view"
+        />
+      );
+      const scrollView = getByTestId('scroll-view');
+      expect(getComputedStyle(scrollView).overscrollBehaviorY).toBe('contain');
     });
   });
 });

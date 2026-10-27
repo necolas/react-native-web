@@ -27,7 +27,7 @@ exports[`components/ScrollView prop "refreshControl" with 1`] = `
   id="refresh-control"
 >
   <div
-    class="css-view-g5y9jx r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-agouwx"
+    class="css-view-g5y9jx r-flexDirection-eqz5dr r-flexGrow-16y2uox r-flexShrink-1wbh5a2 r-overflowX-11yh6sk r-overflowY-1rnoaur r-transform-agouwx r-overscrollBehaviorY-9w239g"
     style="background-color: rgb(255, 0, 0);"
   >
     <div
