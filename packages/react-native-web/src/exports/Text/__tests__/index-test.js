@@ -333,4 +333,11 @@ describe('components/Text', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
   });
+
+  describe('prop "title"', () => {
+    test('value is set', () => {
+      const { container } = render(<Text title="Hello" />);
+      expect(container.firstChild.getAttribute('title')).toBe('Hello');
+    });
+  });
 });

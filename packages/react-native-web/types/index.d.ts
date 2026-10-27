@@ -464,6 +464,7 @@ declare module 'react-native' {
   }
 
   interface TouchableWithoutFeedbackProps {
+    title?: string | undefined;
     type?: ButtonType | undefined;
   }
 

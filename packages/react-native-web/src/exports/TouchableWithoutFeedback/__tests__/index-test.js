@@ -23,4 +23,13 @@ describe('components/TouchableWithoutFeedback', () => {
     );
     expect(ref).toHaveBeenCalled();
   });
+
+  test('forwards title', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback title="Hello">
+        <View />
+      </TouchableWithoutFeedback>
+    );
+    expect(container.firstChild.getAttribute('title')).toBe('Hello');
+  });
 });
