@@ -43,6 +43,8 @@ type RgbaAnimatedValue = {
   ...
 };
 
+export type InputValue = ?(RgbaValue | RgbaAnimatedValue | ColorValue);
+
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 
 const defaultColor: RgbaValue = {r: 0, g: 0, b: 0, a: 1.0};
@@ -130,10 +132,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
     ...
   } = {};
 
-  constructor(
-    valueIn?: ?(RgbaValue | RgbaAnimatedValue | ColorValue),
-    config?: ?AnimatedColorConfig,
-  ) {
+  constructor(valueIn?: InputValue, config?: ?AnimatedColorConfig) {
     super();
     let value: RgbaValue | RgbaAnimatedValue | ColorValue =
       valueIn ?? defaultColor;

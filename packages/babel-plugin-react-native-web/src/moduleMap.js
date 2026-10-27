@@ -54,7 +54,9 @@ module.exports = {
   processColor: true,
   render: true,
   unmountComponentAtNode: true,
+  useAnimatedColor: true,
   useAnimatedValue: true,
+  useAnimatedValueXY: true,
   useColorScheme: true,
   useLocaleContext: true,
   useWindowDimensions: true

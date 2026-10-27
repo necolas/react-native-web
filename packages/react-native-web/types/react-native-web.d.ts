@@ -55,7 +55,9 @@ export {
   VirtualizedList,
   LogBox,
   DeviceEventEmitter,
+  useAnimatedColor,
   useAnimatedValue,
+  useAnimatedValueXY,
   useColorScheme,
   useWindowDimensions
 } from 'react-native';
