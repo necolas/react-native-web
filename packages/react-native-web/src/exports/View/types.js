@@ -250,6 +250,7 @@ export type ViewProps = {
   tabIndex?: ?(0 | -1),
   suppressHydrationWarning?: ?boolean,
   testID?: ?string,
+  title?: ?string,
   // unstable
   href?: ?string,
   hrefAttrs?: ?{ download?: ?boolean, rel?: ?string, target?: ?string },

@@ -180,6 +180,10 @@ Set the styles of the view. `TextInput` supports typographic styles in addition 
 Set the test selector label (via `data-testid`).
 {% endcall %}
 
+{% call macro.prop('title', '?string') %}
+Set the advisory information for the element (via `title`). Browsers usually show it as a tooltip on hover.
+{% endcall %}
+
 {% call macro.prop('value', '?string') %}
 The value of the input when using it as a controlled component.
 {% endcall %}
