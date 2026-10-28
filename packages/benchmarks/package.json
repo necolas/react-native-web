@@ -13,7 +13,8 @@
     "d3-scale-chromatic": "^3.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-native-web": "0.21.4"
+    "react-native-web": "0.21.4",
+    "styleq": "^0.2.1"
   },
   "devDependencies": {
     "babel-loader": "^10.1.1",
