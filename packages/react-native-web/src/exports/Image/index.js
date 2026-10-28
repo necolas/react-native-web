@@ -249,11 +249,14 @@ const Image = (props: {
     }
   }
 
+  // Only 'center' and 'repeat' read the layout, so other images are not
+  // observed unless the user sets 'onLayout'.
+  const needsLayout = resizeMode === 'center' || resizeMode === 'repeat';
+
   function handleLayout(e: LayoutEvent) {
-    if (resizeMode === 'center' || resizeMode === 'repeat' || onLayout) {
-      const { layout } = e.nativeEvent;
-      onLayout?.(e);
-      updateLayout(layout);
+    onLayout?.(e);
+    if (needsLayout) {
+      updateLayout(e.nativeEvent.layout);
     }
   }
 
@@ -326,7 +329,7 @@ const Image = (props: {
     <View
       {...rest}
       aria-label={ariaLabel}
-      onLayout={handleLayout}
+      onLayout={needsLayout || onLayout != null ? handleLayout : undefined}
       pointerEvents={pointerEvents}
       ref={ref}
       // $FlowFixMe[incompatible-type] Image style props are not View style props

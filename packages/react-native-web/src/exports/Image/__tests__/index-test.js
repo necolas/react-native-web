@@ -465,4 +465,33 @@ describe('components/Image', () => {
       });
     });
   });
+
+  describe('layout observation', () => {
+    let observe;
+
+    beforeEach(() => {
+      observe = jest.spyOn(window.ResizeObserver.prototype, 'observe');
+    });
+
+    afterEach(() => {
+      observe.mockRestore();
+    });
+
+    test('is skipped by default', () => {
+      render(<Image />);
+      expect(observe).not.toHaveBeenCalled();
+    });
+
+    test('is done when "onLayout" is set', () => {
+      render(<Image onLayout={() => {}} />);
+      expect(observe).toHaveBeenCalledTimes(1);
+    });
+
+    ['center', 'repeat'].forEach((resizeMode) => {
+      test(`is done when "resizeMode" is "${resizeMode}"`, () => {
+        render(<Image resizeMode={resizeMode} />);
+        expect(observe).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
 });

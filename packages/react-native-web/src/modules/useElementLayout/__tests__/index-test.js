@@ -10,20 +10,17 @@ import React from 'react';
 import useElementLayout from '..';
 
 describe('modules/useElementLayout', () => {
-  const observe = jest.fn();
-  const unobserve = jest.fn();
-
-  beforeAll(() => {
-    window.ResizeObserver = jest.fn(() => ({ observe, unobserve }));
-  });
-
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
+  let observe;
+  let unobserve;
 
   beforeEach(() => {
-    observe.mockClear();
-    unobserve.mockClear();
+    observe = jest.spyOn(window.ResizeObserver.prototype, 'observe');
+    unobserve = jest.spyOn(window.ResizeObserver.prototype, 'unobserve');
+  });
+
+  afterEach(() => {
+    observe.mockRestore();
+    unobserve.mockRestore();
   });
 
   const Component = ({ onLayout }) => {
