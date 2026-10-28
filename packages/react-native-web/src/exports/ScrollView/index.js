@@ -483,7 +483,6 @@ class ScrollView extends React.Component<ScrollViewProps> {
       onResponderGrant: this.scrollResponderHandleResponderGrant,
       onResponderTerminationRequest:
         this.scrollResponderHandleTerminationRequest,
-      onResponderTerminate: this.scrollResponderHandleTerminate,
       onResponderRelease: this.scrollResponderHandleResponderRelease,
       onResponderReject: this.scrollResponderHandleResponderReject
     };

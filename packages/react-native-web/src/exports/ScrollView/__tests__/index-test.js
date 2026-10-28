@@ -2,6 +2,7 @@ import React from 'react';
 import ScrollView from '../';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
+import { terminateResponder } from '../../../modules/useResponderEvents/ResponderSystem';
 
 describe('components/ScrollView', () => {
   describe('prop "centerContent"', () => {
@@ -17,6 +18,30 @@ describe('components/ScrollView', () => {
         <ScrollView centerContent style={{ backgroundColor: 'blue' }} />
       );
       expect(container.firstChild).toMatchSnapshot();
+    });
+  });
+
+  describe('prop "onResponderTerminate"', () => {
+    test('is called when the responder is terminated', () => {
+      const onResponderTerminate = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(
+          <ScrollView
+            onResponderTerminate={onResponderTerminate}
+            onStartShouldSetResponderCapture={() => true}
+            ref={ref}
+          />
+        );
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+      });
+      act(() => {
+        terminateResponder();
+      });
+      expect(onResponderTerminate).toHaveBeenCalledTimes(1);
     });
   });
 
