@@ -125,6 +125,9 @@ describe('components/ScrollView', () => {
       expect(typeof node.scrollToEnd === 'function').toBe(true);
       expect(typeof node.flashScrollIndicators === 'function').toBe(true);
       expect(typeof node.scrollResponderZoomTo === 'function').toBe(true);
+      expect(() =>
+        node.scrollResponderZoomTo({ x: 0, y: 0, width: 1, height: 1 })
+      ).toThrow('zoomToRect is not implemented');
       expect(
         typeof node.scrollResponderScrollNativeHandleToKeyboard === 'function'
       ).toBe(true);

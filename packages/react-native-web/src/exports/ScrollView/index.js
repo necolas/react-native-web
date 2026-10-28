@@ -16,7 +16,6 @@ import Dimensions from '../Dimensions';
 import dismissKeyboard from '../../modules/dismissKeyboard';
 import invariant from 'invariant';
 import mergeRefs from '../../modules/mergeRefs';
-import Platform from '../Platform';
 import ScrollViewBase from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
@@ -250,9 +249,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
     },
     animated?: boolean // deprecated, put this inside the rect argument instead
   ) => {
-    if (Platform.OS !== 'ios') {
-      invariant('zoomToRect is not implemented');
-    }
+    invariant(false, 'zoomToRect is not implemented');
   };
 
   /**
