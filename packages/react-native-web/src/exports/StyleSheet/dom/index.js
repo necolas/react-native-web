@@ -11,6 +11,7 @@ import type { OrderedCSSStyleSheet } from './createOrderedCSSStyleSheet';
 import canUseDOM from '../../../modules/canUseDom';
 import createCSSStyleSheet from './createCSSStyleSheet';
 import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
+import { systemColorRules } from '../../../modules/systemColors';
 
 type Sheet = {
   ...OrderedCSSStyleSheet,
@@ -27,7 +28,9 @@ const initialRules = [
   'body{margin:0;}',
   // minimal form pseudo-element reset
   'button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}',
-  'input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}'
+  'input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}',
+  // system colors not supported by every browser
+  ...systemColorRules
 ];
 
 export function createSheet(

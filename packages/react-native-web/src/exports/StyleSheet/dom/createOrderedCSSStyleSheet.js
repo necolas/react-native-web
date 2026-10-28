@@ -166,9 +166,16 @@ function getOrderedGroups(obj: { [key: number]: any }) {
 }
 
 const selectorPattern = /\s*([,])\s*/g;
+const whitespacePattern = /\s+/g;
 function getSelectorText(cssText: string) {
   const selector = cssText.split('{')[0].trim();
-  return selector !== '' ? selector.replace(selectorPattern, '$1') : null;
+  if (selector === '') {
+    return null;
+  }
+  // Browsers reformat @supports conditions, e.g. "(color:mark)" as "(color: mark)"
+  return selector.startsWith('@supports')
+    ? selector.replace(whitespacePattern, '')
+    : selector.replace(selectorPattern, '$1');
 }
 
 function insertRuleAt(
