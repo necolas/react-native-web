@@ -20,6 +20,8 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
 export type Props = Readonly<{|
+  'aria-label'?: ViewProps['aria-label'],
+  'aria-live'?: ViewProps['aria-live'],
   accessibilityLabel?: ViewProps['accessibilityLabel'],
   accessibilityLiveRegion?: ViewProps['accessibilityLiveRegion'],
   accessibilityRole?: ViewProps['accessibilityRole'],
@@ -39,12 +41,16 @@ export type Props = Readonly<{|
   onPressOut?: PressResponderConfig['onPressEnd'],
   ref?: React.Ref<any>,
   rejectResponderTermination?: ?boolean,
+  role?: ViewProps['role'],
   testID?: ViewProps['testID'],
   title?: ViewProps['title'],
   type?: ViewProps['type']
 |}>;
 
 const forwardPropsList = {
+  'aria-label': true,
+  'aria-live': true,
+  accessibilityDisabled: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
@@ -57,6 +63,7 @@ const forwardPropsList = {
   onBlur: true,
   onFocus: true,
   onLayout: true,
+  role: true,
   testID: true,
   title: true,
   type: true

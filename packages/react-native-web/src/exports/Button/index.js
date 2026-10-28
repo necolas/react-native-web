@@ -38,12 +38,12 @@ const Button = (props: ButtonProps): React.Node => {
 
   return (
     <TouchableOpacity
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
+      aria-label={accessibilityLabel}
       disabled={disabled}
       focusable={!disabled}
       onPress={onPress}
       ref={ref}
+      role="button"
       style={[
         styles.button,
         color && { backgroundColor: color },

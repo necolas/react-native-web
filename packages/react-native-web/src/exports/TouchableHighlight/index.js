@@ -25,6 +25,7 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
+  'aria-disabled'?: ViewProps['aria-disabled'],
   activeOpacity?: ?number,
   onHideUnderlay?: ?() => void,
   onShowUnderlay?: ?() => void,
@@ -74,6 +75,7 @@ function hasPressHandler(props: Props): boolean {
  */
 function TouchableHighlight(props: Props): React.Node {
   const {
+    'aria-disabled': ariaDisabled,
     activeOpacity,
     children,
     delayPressIn,
@@ -168,7 +170,7 @@ function TouchableHighlight(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled}
+      aria-disabled={disabled ?? ariaDisabled}
       focusable={!disabled && focusable !== false}
       pointerEvents={disabled ? 'box-none' : undefined}
       ref={ref}

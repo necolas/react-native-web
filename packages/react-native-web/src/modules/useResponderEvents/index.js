@@ -41,14 +41,6 @@ export default function useResponderEvents(
   const {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
     onScrollShouldSetResponder,
     onScrollShouldSetResponderCapture,
     onSelectionChangeShouldSetResponder,
@@ -56,6 +48,16 @@ export default function useResponderEvents(
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   } = config;
+
+  const requiresResponderSystem =
+    onMoveShouldSetResponder != null ||
+    onMoveShouldSetResponderCapture != null ||
+    onScrollShouldSetResponder != null ||
+    onScrollShouldSetResponderCapture != null ||
+    onSelectionChangeShouldSetResponder != null ||
+    onSelectionChangeShouldSetResponderCapture != null ||
+    onStartShouldSetResponder != null ||
+    onStartShouldSetResponderCapture != null;
 
   // This is a separate effects so it doesn't run when the config changes.
   // On initial mount, attach global listeners if needed.
@@ -68,66 +70,20 @@ export default function useResponderEvents(
   }, [id]);
 
   // Register and unregister with the Responder System as necessary.
-  // The deps are the handlers, not the config object, which is new on every
-  // render. Components without handlers skip this effect after mount.
+  // Components with responder handlers run this effect on every render, so the
+  // latest config and host node are always registered. Components without
+  // handlers skip it after mount.
+  const registeredConfig = requiresResponderSystem ? config : null;
+
   React.useEffect(() => {
-    const requiresResponderSystem =
-      onMoveShouldSetResponder != null ||
-      onMoveShouldSetResponderCapture != null ||
-      onScrollShouldSetResponder != null ||
-      onScrollShouldSetResponderCapture != null ||
-      onSelectionChangeShouldSetResponder != null ||
-      onSelectionChangeShouldSetResponderCapture != null ||
-      onStartShouldSetResponder != null ||
-      onStartShouldSetResponderCapture != null;
-
-    const node = hostRef.current;
-
-    if (requiresResponderSystem) {
-      ResponderSystem.addNode(id, node, {
-        onMoveShouldSetResponder,
-        onMoveShouldSetResponderCapture,
-        onResponderEnd,
-        onResponderGrant,
-        onResponderMove,
-        onResponderReject,
-        onResponderRelease,
-        onResponderStart,
-        onResponderTerminate,
-        onResponderTerminationRequest,
-        onScrollShouldSetResponder,
-        onScrollShouldSetResponderCapture,
-        onSelectionChangeShouldSetResponder,
-        onSelectionChangeShouldSetResponderCapture,
-        onStartShouldSetResponder,
-        onStartShouldSetResponderCapture
-      });
-
+    if (registeredConfig != null) {
+      ResponderSystem.addNode(id, hostRef.current, registeredConfig);
       isAttachedRef.current = true;
     } else if (isAttachedRef.current) {
       ResponderSystem.removeNode(id);
       isAttachedRef.current = false;
     }
-  }, [
-    hostRef,
-    id,
-    onMoveShouldSetResponder,
-    onMoveShouldSetResponderCapture,
-    onResponderEnd,
-    onResponderGrant,
-    onResponderMove,
-    onResponderReject,
-    onResponderRelease,
-    onResponderStart,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onScrollShouldSetResponder,
-    onScrollShouldSetResponderCapture,
-    onSelectionChangeShouldSetResponder,
-    onSelectionChangeShouldSetResponderCapture,
-    onStartShouldSetResponder,
-    onStartShouldSetResponderCapture
-  ]);
+  }, [hostRef, id, registeredConfig]);
 
   React.useDebugValue(config);
 }

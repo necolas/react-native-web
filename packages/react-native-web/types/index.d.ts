@@ -23,6 +23,7 @@ import type {
 type ButtonType = 'button' | 'reset' | 'submit';
 type NumberOrString = number | string;
 type idRef = string;
+type idRefList = idRef | Array<idRef>;
 
 // Roles that react-native-web renders as a specific HTML element.
 // See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
@@ -72,6 +73,93 @@ interface WebAccessibilityProps {
   'aria-setsize'?: number | undefined;
   'aria-sort'?: 'ascending' | 'descending' | 'none' | 'other' | undefined;
   inert?: boolean | undefined;
+
+  /** @deprecated Use `aria-activedescendant`. */
+  accessibilityActiveDescendant?: idRef | undefined;
+  /** @deprecated Use `aria-atomic`. */
+  accessibilityAtomic?: boolean | undefined;
+  /** @deprecated Use `aria-autocomplete`. */
+  accessibilityAutoComplete?: 'none' | 'list' | 'inline' | 'both' | undefined;
+  /** @deprecated Use `aria-busy`. */
+  accessibilityBusy?: boolean | undefined;
+  /** @deprecated Use `aria-checked`. */
+  accessibilityChecked?: boolean | 'mixed' | undefined;
+  /** @deprecated Use `aria-colcount`. */
+  accessibilityColumnCount?: number | undefined;
+  /** @deprecated Use `aria-colindex`. */
+  accessibilityColumnIndex?: number | undefined;
+  /** @deprecated Use `aria-colspan`. */
+  accessibilityColumnSpan?: number | undefined;
+  /** @deprecated Use `aria-controls`. */
+  accessibilityControls?: idRefList | undefined;
+  /** @deprecated Use `aria-current`. */
+  accessibilityCurrent?:
+    boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
+  /** @deprecated Use `aria-describedby`. */
+  accessibilityDescribedBy?: idRefList | undefined;
+  /** @deprecated Use `aria-details`. */
+  accessibilityDetails?: idRef | undefined;
+  /** @deprecated Use `aria-disabled`. */
+  accessibilityDisabled?: boolean | undefined;
+  /** @deprecated Use `aria-errormessage`. */
+  accessibilityErrorMessage?: idRef | undefined;
+  /** @deprecated Use `aria-expanded`. */
+  accessibilityExpanded?: boolean | undefined;
+  /** @deprecated Use `aria-flowto`. */
+  accessibilityFlowTo?: idRefList | undefined;
+  /** @deprecated Use `aria-haspopup`. */
+  accessibilityHasPopup?:
+    'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false | undefined;
+  /** @deprecated Use `aria-hidden`. */
+  accessibilityHidden?: boolean | undefined;
+  /** @deprecated Use `aria-invalid`. */
+  accessibilityInvalid?: boolean | undefined;
+  /** @deprecated Use `aria-keyshortcuts`. */
+  accessibilityKeyShortcuts?: Array<string> | undefined;
+  /** @deprecated Use `aria-level`. */
+  accessibilityLevel?: number | undefined;
+  /** @deprecated Use `aria-modal`. */
+  accessibilityModal?: boolean | undefined;
+  /** @deprecated Use `aria-multiline`. */
+  accessibilityMultiline?: boolean | undefined;
+  /** @deprecated Use `aria-multiselectable`. */
+  accessibilityMultiSelectable?: boolean | undefined;
+  /** @deprecated Use `aria-orientation`. */
+  accessibilityOrientation?: 'horizontal' | 'vertical' | undefined;
+  /** @deprecated Use `aria-owns`. */
+  accessibilityOwns?: idRefList | undefined;
+  /** @deprecated Use `aria-placeholder`. */
+  accessibilityPlaceholder?: string | undefined;
+  /** @deprecated Use `aria-posinset`. */
+  accessibilityPosInSet?: number | undefined;
+  /** @deprecated Use `aria-pressed`. */
+  accessibilityPressed?: boolean | 'mixed' | undefined;
+  /** @deprecated Use `aria-readonly`. */
+  accessibilityReadOnly?: boolean | undefined;
+  /** @deprecated Use `aria-required`. */
+  accessibilityRequired?: boolean | undefined;
+  /** @deprecated Use `aria-roledescription`. */
+  accessibilityRoleDescription?: string | undefined;
+  /** @deprecated Use `aria-rowcount`. */
+  accessibilityRowCount?: number | undefined;
+  /** @deprecated Use `aria-rowindex`. */
+  accessibilityRowIndex?: number | undefined;
+  /** @deprecated Use `aria-rowspan`. */
+  accessibilityRowSpan?: number | undefined;
+  /** @deprecated Use `aria-selected`. */
+  accessibilitySelected?: boolean | undefined;
+  /** @deprecated Use `aria-setsize`. */
+  accessibilitySetSize?: number | undefined;
+  /** @deprecated Use `aria-sort`. */
+  accessibilitySort?: 'ascending' | 'descending' | 'none' | 'other' | undefined;
+  /** @deprecated Use `aria-valuemax`. */
+  accessibilityValueMax?: number | undefined;
+  /** @deprecated Use `aria-valuemin`. */
+  accessibilityValueMin?: number | undefined;
+  /** @deprecated Use `aria-valuenow`. */
+  accessibilityValueNow?: number | undefined;
+  /** @deprecated Use `aria-valuetext`. */
+  accessibilityValueText?: string | undefined;
 }
 
 // Events that react-native does not declare.

@@ -131,77 +131,77 @@ describe('modules/createDOMProps', () => {
       expect(createProps({})).toEqual({});
     });
 
-    describe('"accessibilityRole" of "link"', () => {
-      const accessibilityRole = 'link';
+    describe('"role" of "link"', () => {
+      const role = 'link';
 
       test('default case', () => {
-        expect(createProps({ accessibilityRole })).toEqual(
+        expect(createProps({ role })).toEqual(
           expect.not.objectContaining({ tabIndex: '-1' })
         );
       });
 
       test('when "focusable" is true', () => {
-        expect(createProps({ accessibilityRole, focusable: true })).toEqual(
+        expect(createProps({ role, focusable: true })).toEqual(
           expect.not.objectContaining({ tabIndex: '-1' })
         );
       });
 
       test('when "focusable" is false', () => {
-        expect(createProps({ accessibilityRole, focusable: false })).toEqual(
+        expect(createProps({ role, focusable: false })).toEqual(
           expect.objectContaining({ tabIndex: '-1' })
         );
       });
 
       test('when "aria-disabled" is true', () => {
-        expect(
-          createProps({ accessibilityRole, 'aria-disabled': true })
-        ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
+        expect(createProps({ role, 'aria-disabled': true })).toEqual(
+          expect.objectContaining({ 'aria-disabled': true })
+        );
       });
 
       test('when "aria-disabled" is false', () => {
-        expect(
-          createProps({ accessibilityRole, 'aria-disabled': false })
-        ).toEqual(expect.not.objectContaining({ tabIndex: '-1' }));
+        expect(createProps({ role, 'aria-disabled': false })).toEqual(
+          expect.not.objectContaining({ tabIndex: '-1' })
+        );
       });
     });
 
-    const testFocusableRole = (accessibilityRole) => {
+    const testFocusableRole = (role) => {
       test('default case', () => {
-        expect(createProps({ accessibilityRole })).toEqual(
+        expect(createProps({ role })).toEqual(
           expect.objectContaining({ tabIndex: '0' })
         );
       });
 
       test('when "focusable" is true', () => {
-        expect(createProps({ accessibilityRole, focusable: true })).toEqual(
+        expect(createProps({ role, focusable: true })).toEqual(
           expect.objectContaining({ tabIndex: '0' })
         );
       });
 
       test('when "focusable" is false', () => {
-        expect(createProps({ accessibilityRole, focusable: false })).toEqual(
+        expect(createProps({ role, focusable: false })).toEqual(
           expect.objectContaining({ tabIndex: '-1' })
         );
       });
 
       test('when "aria-disabled" is true', () => {
-        expect(
-          createProps({ accessibilityRole, 'aria-disabled': true })
-        ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
+        expect(createProps({ role, 'aria-disabled': true })).toEqual(
+          expect.objectContaining({ 'aria-disabled': true })
+        );
       });
 
       test('when "aria-disabled" is false', () => {
-        expect(
-          createProps({ accessibilityRole, 'aria-disabled': false })
-        ).toEqual(expect.objectContaining({ tabIndex: '0' }));
+        expect(createProps({ role, 'aria-disabled': false })).toEqual(
+          expect.objectContaining({ tabIndex: '0' })
+        );
       });
     };
 
-    describe('"accessibilityRole" of "button"', () => {
+    describe('"role" of "button"', () => {
       testFocusableRole('button');
     });
 
-    describe('with unfocusable accessibilityRole', () => {
+    describe('with unfocusable role', () => {
       test('when "focusable" is true', () => {
         expect(createProps({ focusable: true })).toEqual(
           expect.objectContaining({ tabIndex: '0' })
@@ -216,12 +216,80 @@ describe('modules/createDOMProps', () => {
     });
   });
 
+  // @deprecated
+  test('props "accessibility*" become "aria-*"', () => {
+    const cases = [
+      ['accessibilityActiveDescendant', 'aria-activedescendant', 'id'],
+      ['accessibilityAtomic', 'aria-atomic', true],
+      ['accessibilityAutoComplete', 'aria-autocomplete', 'list'],
+      ['accessibilityBusy', 'aria-busy', true],
+      ['accessibilityChecked', 'aria-checked', 'mixed'],
+      ['accessibilityColumnCount', 'aria-colcount', 5],
+      ['accessibilityColumnIndex', 'aria-colindex', 3],
+      ['accessibilityColumnSpan', 'aria-colspan', 2],
+      ['accessibilityControls', 'aria-controls', 'id'],
+      ['accessibilityCurrent', 'aria-current', 'page'],
+      ['accessibilityDescribedBy', 'aria-describedby', 'id'],
+      ['accessibilityDetails', 'aria-details', 'id'],
+      ['accessibilityDisabled', 'aria-disabled', true],
+      ['accessibilityErrorMessage', 'aria-errormessage', 'id'],
+      ['accessibilityExpanded', 'aria-expanded', true],
+      ['accessibilityFlowTo', 'aria-flowto', 'id'],
+      ['accessibilityHasPopup', 'aria-haspopup', 'menu'],
+      ['accessibilityHidden', 'aria-hidden', true],
+      ['accessibilityInvalid', 'aria-invalid', true],
+      ['accessibilityKeyShortcuts', 'aria-keyshortcuts', 'Enter'],
+      ['accessibilityLabel', 'aria-label', 'label'],
+      ['accessibilityLabelledBy', 'aria-labelledby', 'id'],
+      ['accessibilityLevel', 'aria-level', 2],
+      ['accessibilityLiveRegion', 'aria-live', 'polite'],
+      ['accessibilityModal', 'aria-modal', true],
+      ['accessibilityMultiline', 'aria-multiline', true],
+      ['accessibilityMultiSelectable', 'aria-multiselectable', true],
+      ['accessibilityOrientation', 'aria-orientation', 'vertical'],
+      ['accessibilityOwns', 'aria-owns', 'id'],
+      ['accessibilityPlaceholder', 'aria-placeholder', 'text'],
+      ['accessibilityPosInSet', 'aria-posinset', 1],
+      ['accessibilityPressed', 'aria-pressed', true],
+      ['accessibilityReadOnly', 'aria-readonly', true],
+      ['accessibilityRequired', 'aria-required', true],
+      ['accessibilityRoleDescription', 'aria-roledescription', 'text'],
+      ['accessibilityRowCount', 'aria-rowcount', 5],
+      ['accessibilityRowIndex', 'aria-rowindex', 3],
+      ['accessibilityRowSpan', 'aria-rowspan', 2],
+      ['accessibilitySelected', 'aria-selected', true],
+      ['accessibilitySetSize', 'aria-setsize', 4],
+      ['accessibilitySort', 'aria-sort', 'ascending'],
+      ['accessibilityValueMax', 'aria-valuemax', 10],
+      ['accessibilityValueMin', 'aria-valuemin', 0],
+      ['accessibilityValueNow', 'aria-valuenow', 5],
+      ['accessibilityValueText', 'aria-valuetext', 'five']
+    ];
+    cases.forEach(([prop, ariaProp, value]) => {
+      expect(createProps({ [prop]: value })[ariaProp]).toEqual(value);
+    });
+  });
+
+  // @deprecated
+  test('props "aria-*" take precedence over "accessibility*"', () => {
+    const props = createProps({
+      accessibilityLabel: 'legacy',
+      accessibilityLevel: 1,
+      'aria-label': 'label',
+      'aria-level': 2
+    });
+    expect(props['aria-label']).toEqual('label');
+    expect(props['aria-level']).toEqual(2);
+  });
+
+  // @deprecated
   test('prop "accessibilityLabel" becomes "aria-label"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const props = createProps({ accessibilityLabel });
     expect(props['aria-label']).toEqual(accessibilityLabel);
   });
 
+  // @deprecated
   test('prop "accessibilityLiveRegion" becomes "aria-live"', () => {
     const accessibilityLiveRegion = 'none';
     const props = createProps({ accessibilityLiveRegion });
@@ -287,6 +355,12 @@ describe('modules/createDOMProps', () => {
     expect(props.required).toEqual(false);
   });
 
+  test('prop "role" becomes "role"', () => {
+    const props = createProps({ role: 'button' });
+    expect(props.role).toEqual('button');
+  });
+
+  // @deprecated
   test('prop "accessibilityRole" becomes "role"', () => {
     const accessibilityRole = 'button';
     const props = createProps({ accessibilityRole });

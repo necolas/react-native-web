@@ -23,6 +23,7 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
+  'aria-disabled'?: ViewProps['aria-disabled'],
   activeOpacity?: ?number,
   style?: ?ViewStyle
 |}>;
@@ -33,6 +34,7 @@ type Props = Readonly<{|
  */
 function TouchableOpacity(props: Props): React.Node {
   const {
+    'aria-disabled': ariaDisabled,
     activeOpacity,
     delayPressIn,
     delayPressOut,
@@ -121,7 +123,7 @@ function TouchableOpacity(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled}
+      aria-disabled={disabled ?? ariaDisabled}
       focusable={!disabled && focusable !== false}
       pointerEvents={disabled ? 'box-none' : undefined}
       ref={ref}

@@ -12,39 +12,43 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
     expect(propsToAccessibilityComponent({})).toBeUndefined();
   });
 
-  test('when "accessibilityRole" is "button"', () => {
-    expect(
-      propsToAccessibilityComponent({ accessibilityRole: 'button' })
-    ).toEqual('button');
+  test('when "role" is "button"', () => {
+    expect(propsToAccessibilityComponent({ role: 'button' })).toEqual('button');
   });
 
-  test('when "accessibilityRole" is "heading"', () => {
-    expect(
-      propsToAccessibilityComponent({ accessibilityRole: 'heading' })
-    ).toEqual('h1');
+  test('when "role" is "heading"', () => {
+    expect(propsToAccessibilityComponent({ role: 'heading' })).toEqual('h1');
   });
 
-  test('when "accessibilityRole" is "heading" and "aria-level" is set', () => {
+  test('when "role" is "heading" and "aria-level" is set', () => {
     expect(
       propsToAccessibilityComponent({
-        accessibilityRole: 'heading',
+        role: 'heading',
         'aria-level': 3
       })
     ).toEqual('h3');
   });
 
-  test('when "accessibilityRole" is "heading" and "aria-level" is set', () => {
+  test('when "role" is "heading" and "aria-level" is set', () => {
     expect(
       propsToAccessibilityComponent({
-        accessibilityRole: 'heading',
+        role: 'heading',
         'aria-level': 3
       })
     ).toEqual('h3');
   });
 
-  test('when "accessibilityRole" is "label"', () => {
+  // @deprecated
+  test('when "accessibilityRole" is "heading" and "accessibilityLevel" is set', () => {
     expect(
-      propsToAccessibilityComponent({ accessibilityRole: 'label' })
-    ).toEqual('label');
+      propsToAccessibilityComponent({
+        accessibilityRole: 'heading',
+        accessibilityLevel: 3
+      })
+    ).toEqual('h3');
+  });
+
+  test('when "role" is "label"', () => {
+    expect(propsToAccessibilityComponent({ role: 'label' })).toEqual('label');
   });
 });

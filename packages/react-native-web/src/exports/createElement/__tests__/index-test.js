@@ -42,19 +42,15 @@ describe('exports/createElement', () => {
     expect(container.firstChild.innerHTML).toBe('arg');
   });
 
-  describe('prop "accessibilityRole"', () => {
+  describe('prop "role"', () => {
     test('string component type', () => {
-      const { container } = render(
-        createElement('span', { accessibilityRole: 'link' })
-      );
+      const { container } = render(createElement('span', { role: 'link' }));
       expect(container.firstChild.nodeName).toBe('SPAN');
     });
 
     test('function component type', () => {
       const Custom = () => <div />;
-      const { container } = render(
-        createElement(Custom, { accessibilityRole: 'link' })
-      );
+      const { container } = render(createElement(Custom, { role: 'link' }));
       expect(container.firstChild.nodeName).toBe('DIV');
     });
   });
@@ -300,28 +296,28 @@ describe('exports/createElement', () => {
       );
     });
 
-    test('accessibilityLabel', () => {
+    test('aria-label', () => {
       const { container: isEmpty } = render(
-        createElement('div', { accessibilityLabel: null })
+        createElement('div', { 'aria-label': null })
       );
       expect(getAttribute(isEmpty, 'aria-label')).toBeNull();
       const { container: hasValue } = render(
-        createElement('div', { accessibilityLabel: 'abc' })
+        createElement('div', { 'aria-label': 'abc' })
       );
       expect(getAttribute(hasValue, 'aria-label')).toBe('abc');
     });
 
-    test('accessibilityLabelledBy', () => {
+    test('aria-labelledby', () => {
       const { container: isEmpty } = render(
-        createElement('div', { accessibilityLabelledBy: null })
+        createElement('div', { 'aria-labelledby': null })
       );
       expect(getAttribute(isEmpty, 'aria-labelledby')).toBeNull();
       const { container: hasValue } = render(
-        createElement('div', { accessibilityLabelledBy: 'abc' })
+        createElement('div', { 'aria-labelledby': 'abc' })
       );
       expect(getAttribute(hasValue, 'aria-labelledby')).toBe('abc');
       const { container: hasMultipleValues } = render(
-        createElement('div', { accessibilityLabelledBy: ['abc', 'def'] })
+        createElement('div', { 'aria-labelledby': ['abc', 'def'] })
       );
       expect(getAttribute(hasMultipleValues, 'aria-labelledby')).toBe(
         'abc def'
@@ -339,13 +335,13 @@ describe('exports/createElement', () => {
       expect(getAttribute(hasValue, 'aria-level')).toBe('3');
     });
 
-    test('accessibilityLiveRegion', () => {
+    test('aria-live', () => {
       const { container: isEmpty } = render(
-        createElement('div', { accessibilityLiveRegion: null })
+        createElement('div', { 'aria-live': null })
       );
       expect(getAttribute(isEmpty, 'aria-live')).toBeNull();
       const { container: hasValue } = render(
-        createElement('div', { accessibilityLiveRegion: 'polite' })
+        createElement('div', { 'aria-live': 'polite' })
       );
       expect(getAttribute(hasValue, 'aria-live')).toBe('polite');
     });
@@ -468,21 +464,22 @@ describe('exports/createElement', () => {
       expect(getProperty(hasValue, 'required')).toBe(true);
     });
 
-    test('accessibilityRole', () => {
+    test('role', () => {
       const { container: isEmpty } = render(
-        createElement('div', { accessibilityRole: null })
+        createElement('div', { role: null })
       );
       expect(getAttribute(isEmpty, 'role')).toBeNull();
       const { container: hasValue } = render(
-        createElement('div', { accessibilityRole: 'button' })
+        createElement('div', { role: 'button' })
       );
       expect(getAttribute(hasValue, 'role')).toBe('button');
       const { container: roleIsNone } = render(
-        createElement('div', { accessibilityRole: 'none' })
+        createElement('div', { role: 'none' })
       );
       expect(getAttribute(roleIsNone, 'role')).toBe('presentation');
     });
 
+    // @deprecated
     test('accessibilityRole "header" renders a native heading without role="heading"', () => {
       const { container: heading } = render(
         createElement('div', { accessibilityRole: 'header' })
@@ -672,7 +669,7 @@ describe('exports/createElement', () => {
       expect(getAttribute(isTrueNativelyFocusable, 'tabindex')).toBeNull();
 
       const { container: isFalseFocusableRole } = render(
-        createElement('div', { accessibilityRole: 'button', focusable: false })
+        createElement('div', { role: 'button', focusable: false })
       );
       expect(getAttribute(isFalseFocusableRole, 'tabindex')).toBe('-1');
     });

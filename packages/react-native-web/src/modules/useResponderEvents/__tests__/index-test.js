@@ -172,6 +172,31 @@ describe('useResponderEvents', () => {
     expect(identifier <= 20).toBe(true);
   });
 
+  test('registers a new host node when handlers do not change', () => {
+    const targetRef = createRef();
+    const targetCallbacks = {
+      onStartShouldSetResponder: jest.fn(() => true),
+      onResponderGrant: jest.fn()
+    };
+    const Component = ({ isLink }) => {
+      // Like View, pass a new config object on every render
+      useResponderEvents(targetRef, { ...targetCallbacks });
+      return isLink ? <a ref={targetRef} /> : <div ref={targetRef} />;
+    };
+
+    // render
+    const { rerender } = render(<Component isLink={false} />);
+    // swap the host node, keep the same handlers
+    rerender(<Component isLink={true} />);
+    const target = createEventTarget(targetRef.current);
+    // gesture
+    act(() => {
+      target.pointerdown({ pointerType: 'mouse' });
+      target.pointerup({ pointerType: 'mouse' });
+    });
+    expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+  });
+
   /**
    * SET: onStartShouldSetResponderCapture
    */

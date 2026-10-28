@@ -18,10 +18,10 @@ export default class Button extends Component {
 
     return (
       <TouchableHighlight
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
+        aria-label={accessibilityLabel}
         disabled={disabled}
         onPress={onPress}
+        role="button"
         style={[
           styles.button,
           style,
