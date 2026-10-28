@@ -124,8 +124,7 @@ const STYLISTIC_SETS: { [key: string]: string } = {
 const hasFeatures = (value: ?string): boolean =>
   value != null && value !== 'normal';
 
-// 'normal' and null can't be part of a feature list, but are kept when the
-// other side has no features so they can override an earlier style object
+// Keep 'normal' and null to override an earlier style object
 const mergeFontFeatureSettings = (a: ?string, b: ?string): ?string => {
   if (hasFeatures(a) && hasFeatures(b)) {
     return `${String(a)}, ${String(b)}`;
