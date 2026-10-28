@@ -16,11 +16,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 
 type Props = {
   ...ViewProps,
-  onMomentumScrollBegin?: (e: any) => void,
-  onMomentumScrollEnd?: (e: any) => void,
   onScroll?: (e: any) => void,
-  onScrollBeginDrag?: (e: any) => void,
-  onScrollEndDrag?: (e: any) => void,
   onTouchMove?: (e: any) => void,
   onWheel?: (e: any) => void,
   ref?: React.Ref<React.ElementRef<typeof View>>,
