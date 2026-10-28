@@ -179,6 +179,7 @@ describe('StyleSheet/preprocess', () => {
       });
 
       expect(preprocess({ fontVariant: null })).toEqual({
+        fontFeatureSettings: null,
         fontVariant: null
       });
 
@@ -226,6 +227,34 @@ describe('StyleSheet/preprocess', () => {
       ).toEqual({
         fontFeatureSettings: "'ss01'",
         fontVariant: 'normal'
+      });
+
+      expect(preprocess({ fontFeatureSettings: 'normal' })).toEqual({
+        fontFeatureSettings: 'normal'
+      });
+
+      expect(preprocess({ fontFeatureSettings: null })).toEqual({
+        fontFeatureSettings: null
+      });
+
+      expect(
+        preprocess({
+          fontFeatureSettings: "'tnum'",
+          fontVariant: null
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum'",
+        fontVariant: null
+      });
+
+      expect(
+        preprocess({
+          fontVariant: null,
+          fontFeatureSettings: "'tnum'"
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum'",
+        fontVariant: null
       });
 
       expect(

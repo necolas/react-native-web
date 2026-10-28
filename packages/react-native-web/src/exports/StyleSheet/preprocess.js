@@ -121,14 +121,19 @@ const STYLISTIC_SETS: { [key: string]: string } = {
   'stylistic-twenty': "'ss20'"
 };
 
+const hasFeatures = (value: ?string): boolean =>
+  value != null && value !== 'normal';
+
+// 'normal' and null can't be part of a feature list, but are kept when the
+// other side has no features so they can override an earlier style object
 const mergeFontFeatureSettings = (a: ?string, b: ?string): ?string => {
-  if (a == null || a === 'normal') {
+  if (hasFeatures(a) && hasFeatures(b)) {
+    return `${String(a)}, ${String(b)}`;
+  }
+  if (hasFeatures(b) || a === undefined) {
     return b;
   }
-  if (b == null || b === 'normal') {
-    return a;
-  }
-  return `${a}, ${b}`;
+  return a;
 };
 
 const PROPERTIES_STANDARD: { [key: string]: string } = {
@@ -245,6 +250,13 @@ export const preprocess = <T extends {| [key: string]: any |}>(
     } else if (prop === 'fontVariant') {
       if (value == null) {
         nextStyle.fontVariant = value;
+        if (value === null) {
+          // Also clear stylistic sets applied by an earlier inline style
+          nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
+            nextStyle.fontFeatureSettings,
+            null
+          );
+        }
         continue;
       }
       const variants = typeof value === 'string' ? value.split(' ') : value;
