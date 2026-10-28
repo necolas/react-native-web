@@ -45,30 +45,30 @@ describe('compiler/createReactDOMStyle', () => {
     };
 
     expect(createReactDOMStyle(style, true)).toMatchInlineSnapshot(`
-      {
-        "borderBottomColor": "rgba(255,255,255,1.00)",
-        "borderBottomStyle": "solid",
-        "borderBottomWidth": "1px",
-        "borderLeftStyle": "solid",
-        "borderLeftWidth": "0px",
-        "borderRightStyle": "solid",
-        "borderRightWidth": "0px",
-        "borderTopStyle": "solid",
-        "borderTopWidth": "0px",
-        "boxSizing": "border-box",
-        "marginBottom": "25px",
-        "marginLeft": "10px",
-        "marginRight": "10px",
-        "marginTop": "50px",
-        "overflowX": "hidden",
-        "overflowY": "hidden",
-        "overscrollBehaviorX": "contain",
-        "overscrollBehaviorY": "contain",
-        "paddingBottom": "10px",
-        "paddingLeft": "50px",
-        "paddingRight": "25px",
-        "paddingTop": "10px",
-      }
+     {
+       "borderBottomColor": "rgba(255,255,255,1.00)",
+       "borderBottomStyle": "solid",
+       "borderBottomWidth": "1px",
+       "borderLeftStyle": "solid",
+       "borderLeftWidth": "0px",
+       "borderRightStyle": "solid",
+       "borderRightWidth": "0px",
+       "borderTopStyle": "solid",
+       "borderTopWidth": "0px",
+       "boxSizing": "border-box",
+       "marginBottom": "25px",
+       "marginLeft": "10px",
+       "marginRight": "10px",
+       "marginTop": "50px",
+       "overflowX": "hidden",
+       "overflowY": "hidden",
+       "overscrollBehaviorX": "contain",
+       "overscrollBehaviorY": "contain",
+       "paddingBottom": "10px",
+       "paddingLeft": "50px",
+       "paddingRight": "25px",
+       "paddingTop": "10px",
+     }
     `);
   });
 
@@ -140,57 +140,57 @@ describe('compiler/createReactDOMStyle', () => {
     test('general case', () => {
       expect(createReactDOMStyle({ fontFamily: 'Georgia, Times, serif' }))
         .toMatchInlineSnapshot(`
-        {
-          "fontFamily": "Georgia, Times, serif",
-        }
+       {
+         "fontFamily": "Georgia, Times, serif",
+       }
       `);
     });
 
     test('"monospace"', () => {
       expect(createReactDOMStyle({ fontFamily: 'monospace' }))
         .toMatchInlineSnapshot(`
-        {
-          "fontFamily": "monospace,monospace",
-        }
+       {
+         "fontFamily": "monospace,monospace",
+       }
       `);
     });
 
     test('"System"', () => {
       expect(createReactDOMStyle({ fontFamily: 'System' }))
         .toMatchInlineSnapshot(`
-        {
-          "fontFamily": "-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
-        }
+       {
+         "fontFamily": "-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
+       }
       `);
       expect(createReactDOMStyle({ font: '14px System' }))
         .toMatchInlineSnapshot(`
-        {
-          "font": "14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
-        }
+       {
+         "font": "14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
+       }
       `);
     });
 
     test('"Noto, System"', () => {
       expect(createReactDOMStyle({ fontFamily: 'Noto, System' }))
         .toMatchInlineSnapshot(`
-        {
-          "fontFamily": "Noto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
-        }
+       {
+         "fontFamily": "Noto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
+       }
       `);
       expect(createReactDOMStyle({ font: '14px Noto, System' }))
         .toMatchInlineSnapshot(`
-        {
-          "font": "14px Noto, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
-        }
+       {
+         "font": "14px Noto, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif",
+       }
       `);
     });
 
     test('"Noto, BlinkMacSystemFont"', () => {
       expect(createReactDOMStyle({ fontFamily: 'Noto, BlinkMacSystemFont' }))
         .toMatchInlineSnapshot(`
-        {
-          "fontFamily": "Noto,BlinkMacSystemFont",
-        }
+       {
+         "fontFamily": "Noto,BlinkMacSystemFont",
+       }
       `);
     });
   });

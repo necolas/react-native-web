@@ -30,145 +30,145 @@ describe('StyleSheet/compile', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        [
-          {
-            "$$css": true,
-            "$$css$localize": true,
-            "animationDirection": "r-animationDirection-1wgwto7",
-            "animationKeyframes": "r-animationKeyframes-zacbmr",
-            "fontFamily": "r-fontFamily-1qd0xha",
-            "insetInlineStart": [
-              "r-insetInlineStart-1xn1m1p",
-              "r-insetInlineStart-1y2vi53",
-            ],
-            "marginBlockEnd": "r-marginBlockEnd-1xf1q1v",
-            "marginInline": "r-marginInline-lcslpx",
-            "marginInlineEnd": [
-              "r-marginInlineEnd-n2wkgt",
-              "r-marginInlineEnd-r7lizz",
-            ],
-            "marginInlineStart": [
-              "r-marginInlineStart-hjq6k0",
-              "r-marginInlineStart-1iwt575",
-            ],
-            "placeholderTextColor": "r-placeholderTextColor-1418aci",
-            "pointerEvents": "r-pointerEvents-ah5dr5",
-            "scrollbarWidth": "r-scrollbarWidth-2eszeu",
-            "textAlign": [
-              "r-textAlign-fdjqy7",
-              "r-textAlign-1ff274t",
-            ],
-            "transform": "r-transform-d7xd9i",
-          },
-          [
-            [
-              [
-                ".r-animationDirection-1wgwto7{animation-direction:alternate,alternate-reverse;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-animationKeyframes-zacbmr{animation-name:r-animation-8jhqzh,r-animation-5azpl5;}",
-                "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
-                "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-insetInlineStart-1xn1m1p{left:12.34%;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-insetInlineStart-1y2vi53{right:12.34%;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-marginBlockEnd-1xf1q1v{margin-bottom:5px;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-marginInline-lcslpx{margin-left:10px;margin-right:10px;}",
-              ],
-              2.1,
-            ],
-            [
-              [
-                ".r-marginInlineEnd-n2wkgt{margin-right:2px;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-marginInlineEnd-r7lizz{margin-left:2px;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-marginInlineStart-hjq6k0{margin-left:1px;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-marginInlineStart-1iwt575{margin-right:1px;}",
-              ],
-              2.2,
-            ],
-            [
-              [
-                ".r-placeholderTextColor-1418aci::placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-pointerEvents-ah5dr5>* {pointer-events:none;}",
-                ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
-                ".r-scrollbarWidth-2eszeu{scrollbar-width:none;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-textAlign-fdjqy7{text-align:left;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-textAlign-1ff274t{text-align:right;}",
-              ],
-              3,
-            ],
-            [
-              [
-                ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
-              ],
-              3,
-            ],
-          ],
-        ]
+       [
+         {
+           "$$css": true,
+           "$$css$localize": true,
+           "animationDirection": "r-animationDirection-1wgwto7",
+           "animationKeyframes": "r-animationKeyframes-zacbmr",
+           "fontFamily": "r-fontFamily-1qd0xha",
+           "insetInlineStart": [
+             "r-insetInlineStart-1xn1m1p",
+             "r-insetInlineStart-1y2vi53",
+           ],
+           "marginBlockEnd": "r-marginBlockEnd-1xf1q1v",
+           "marginInline": "r-marginInline-lcslpx",
+           "marginInlineEnd": [
+             "r-marginInlineEnd-n2wkgt",
+             "r-marginInlineEnd-r7lizz",
+           ],
+           "marginInlineStart": [
+             "r-marginInlineStart-hjq6k0",
+             "r-marginInlineStart-1iwt575",
+           ],
+           "placeholderTextColor": "r-placeholderTextColor-1418aci",
+           "pointerEvents": "r-pointerEvents-ah5dr5",
+           "scrollbarWidth": "r-scrollbarWidth-2eszeu",
+           "textAlign": [
+             "r-textAlign-fdjqy7",
+             "r-textAlign-1ff274t",
+           ],
+           "transform": "r-transform-d7xd9i",
+         },
+         [
+           [
+             [
+               ".r-animationDirection-1wgwto7{animation-direction:alternate,alternate-reverse;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-animationKeyframes-zacbmr{animation-name:r-animation-8jhqzh,r-animation-5azpl5;}",
+               "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+               "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-fontFamily-1qd0xha{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-insetInlineStart-1xn1m1p{left:12.34%;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-insetInlineStart-1y2vi53{right:12.34%;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-marginBlockEnd-1xf1q1v{margin-bottom:5px;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-marginInline-lcslpx{margin-left:10px;margin-right:10px;}",
+             ],
+             2.1,
+           ],
+           [
+             [
+               ".r-marginInlineEnd-n2wkgt{margin-right:2px;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-marginInlineEnd-r7lizz{margin-left:2px;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-marginInlineStart-hjq6k0{margin-left:1px;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-marginInlineStart-1iwt575{margin-right:1px;}",
+             ],
+             2.2,
+           ],
+           [
+             [
+               ".r-placeholderTextColor-1418aci::placeholder{color:rgba(128,128,128,1.00);opacity:1;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-pointerEvents-ah5dr5>* {pointer-events:none;}",
+               ".r-pointerEvents-ah5dr5{pointer-events:auto!important;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-scrollbarWidth-2eszeu::-webkit-scrollbar{display:none}",
+               ".r-scrollbarWidth-2eszeu{scrollbar-width:none;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-textAlign-fdjqy7{text-align:left;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-textAlign-1ff274t{text-align:right;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-transform-d7xd9i{transform:translateX(50px) scale(-1);}",
+             ],
+             3,
+           ],
+         ],
+       ]
       `);
     });
 
@@ -178,21 +178,21 @@ describe('StyleSheet/compile', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        [
-          {
-            "$$css": true,
-            "pointerEvents": "r-pointerEvents-633pao",
-          },
-          [
-            [
-              [
-                ".r-pointerEvents-633pao>* {pointer-events:none;}",
-                ".r-pointerEvents-633pao{pointer-events:none!important;}",
-              ],
-              3,
-            ],
-          ],
-        ]
+       [
+         {
+           "$$css": true,
+           "pointerEvents": "r-pointerEvents-633pao",
+         },
+         [
+           [
+             [
+               ".r-pointerEvents-633pao>* {pointer-events:none;}",
+               ".r-pointerEvents-633pao{pointer-events:none!important;}",
+             ],
+             3,
+           ],
+         ],
+       ]
       `);
     });
 
@@ -202,21 +202,21 @@ describe('StyleSheet/compile', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        [
-          {
-            "$$css": true,
-            "pointerEvents": "r-pointerEvents-12vffkv",
-          },
-          [
-            [
-              [
-                ".r-pointerEvents-12vffkv>* {pointer-events:auto;}",
-                ".r-pointerEvents-12vffkv{pointer-events:none!important;}",
-              ],
-              3,
-            ],
-          ],
-        ]
+       [
+         {
+           "$$css": true,
+           "pointerEvents": "r-pointerEvents-12vffkv",
+         },
+         [
+           [
+             [
+               ".r-pointerEvents-12vffkv>* {pointer-events:auto;}",
+               ".r-pointerEvents-12vffkv{pointer-events:none!important;}",
+             ],
+             3,
+           ],
+         ],
+       ]
       `);
     });
   });
@@ -237,22 +237,22 @@ describe('StyleSheet/compile', () => {
         'test'
       );
       expect(result).toMatchInlineSnapshot(`
-        [
-          {
-            "$$css": true,
-            "css-test-tbk4su": "css-test-tbk4su",
-          },
-          [
-            [
-              [
-                "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
-                "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
-                ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
-              ],
-              1,
-            ],
-          ],
-        ]
+       [
+         {
+           "$$css": true,
+           "css-test-tbk4su": "css-test-tbk4su",
+         },
+         [
+           [
+             [
+               "@keyframes r-animation-8jhqzh{0%{top:0px;}50%{top:5px;}100%{top:10px;}}",
+               "@keyframes r-animation-5azpl5{from{left:0px;}to{left:10px;}}",
+               ".css-test-tbk4su{animation-direction:alternate,alternate-reverse;animation-name:r-animation-8jhqzh,r-animation-5azpl5;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-left:10px;margin-right:10px;transform:translateX(50px) scale(-1);}",
+             ],
+             1,
+           ],
+         ],
+       ]
       `);
     });
   });
@@ -267,13 +267,13 @@ describe('StyleSheet/compile', () => {
       });
 
       expect(result).toMatchInlineSnapshot(`
-        {
-          "display": "flex",
-          "flexShrink": 1,
-          "marginBottom": "5px",
-          "marginLeft": "10px",
-          "marginRight": "10px",
-        }
+       {
+         "display": "flex",
+         "flexShrink": 1,
+         "marginBottom": "5px",
+         "marginLeft": "10px",
+         "marginRight": "10px",
+       }
       `);
     });
 

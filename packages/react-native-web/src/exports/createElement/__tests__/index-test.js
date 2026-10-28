@@ -638,12 +638,12 @@ describe('exports/createElement', () => {
         })
       );
       expect(hasValue.firstChild).toMatchInlineSnapshot(`
-        <div
-          data-camel-case="camelCase"
-          data-ms-prefix="msPrefix"
-          data-one="1"
-          data-two="2"
-        />
+       <div
+         data-camel-case="camelCase"
+         data-ms-prefix="msPrefix"
+         data-one="1"
+         data-two="2"
+       />
       `);
     });
 

@@ -12,20 +12,20 @@ describe('apis/Dimensions', () => {
     const handler = jest.fn();
     Dimensions.addEventListener('change', handler);
     expect(Dimensions.get('screen')).toMatchInlineSnapshot(`
-      {
-        "fontScale": 1,
-        "height": 0,
-        "scale": 1,
-        "width": 0,
-      }
+     {
+       "fontScale": 1,
+       "height": 0,
+       "scale": 1,
+       "width": 0,
+     }
     `);
     expect(Dimensions.get('window')).toMatchInlineSnapshot(`
-      {
-        "fontScale": 1,
-        "height": 768,
-        "scale": 1,
-        "width": 1024,
-      }
+     {
+       "fontScale": 1,
+       "height": 768,
+       "scale": 1,
+       "width": 1024,
+     }
     `);
     expect(handler).toHaveBeenCalledTimes(0);
   });
