@@ -21,7 +21,7 @@ const markerProp = '$$css$localize';
 
 function compileStyle(style: Object, isRTL: boolean) {
   // Create a new compiled style for styleq
-  const compiledStyle = {};
+  const compiledStyle: Object = {};
   for (const prop in style) {
     if (prop !== markerProp) {
       const value = style[prop];

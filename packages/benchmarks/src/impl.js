@@ -1,7 +1,11 @@
 import packageJson from '../package.json';
 
-const context = require.context('./implementations/', true, /index\.js$/);
 const { dependencies } = packageJson;
+
+const context = import.meta.webpackContext('./implementations/', {
+  recursive: true,
+  regExp: /index\.js$/
+});
 
 /**
  * @typedef {Object} ComponentsType

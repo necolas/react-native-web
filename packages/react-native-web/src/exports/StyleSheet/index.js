@@ -141,7 +141,7 @@ function getSheet(): { id: string, textContent: string } {
 /**
  * resolve
  */
-type StyleProps = [string, { [key: string]: unknown } | null];
+type StyleProps = [string, { [key: string]: unknown } | null, string];
 type Options = {
   shadow?: boolean,
   textShadow?: boolean,
