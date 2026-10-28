@@ -294,6 +294,23 @@ describe('StyleSheet', () => {
       `);
     });
 
+    test('later fontVariant and fontFeatureSettings reset stylistic sets', () => {
+      const stylistic = { fontVariant: ['small-caps', 'stylistic-one'] };
+      expect(StyleSheet([stylistic, { fontVariant: null }])[1]).toEqual(null);
+      expect(
+        StyleSheet([stylistic, { fontFeatureSettings: 'normal' }])[1]
+      ).toEqual({ fontFeatureSettings: 'normal', fontVariant: 'small-caps' });
+      expect(StyleSheet([stylistic, { fontFeatureSettings: null }])[1]).toEqual(
+        { fontVariant: 'small-caps' }
+      );
+      expect(
+        StyleSheet([
+          { fontFeatureSettings: "'tnum'" },
+          { fontVariant: null }
+        ])[1]
+      ).toEqual(null);
+    });
+
     test('polyfills logical styles', () => {
       const inlineA = { start: '12.34%' };
       const inlineB = { textAlign: 'start' };

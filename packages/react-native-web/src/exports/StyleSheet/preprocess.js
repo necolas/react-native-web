@@ -98,6 +98,43 @@ export const createTransformOriginValue = (
   return value.map((v) => normalizeValueWithProperty(v)).join(' ');
 };
 
+const STYLISTIC_SETS: { [key: string]: string } = {
+  'stylistic-one': "'ss01'",
+  'stylistic-two': "'ss02'",
+  'stylistic-three': "'ss03'",
+  'stylistic-four': "'ss04'",
+  'stylistic-five': "'ss05'",
+  'stylistic-six': "'ss06'",
+  'stylistic-seven': "'ss07'",
+  'stylistic-eight': "'ss08'",
+  'stylistic-nine': "'ss09'",
+  'stylistic-ten': "'ss10'",
+  'stylistic-eleven': "'ss11'",
+  'stylistic-twelve': "'ss12'",
+  'stylistic-thirteen': "'ss13'",
+  'stylistic-fourteen': "'ss14'",
+  'stylistic-fifteen': "'ss15'",
+  'stylistic-sixteen': "'ss16'",
+  'stylistic-seventeen': "'ss17'",
+  'stylistic-eighteen': "'ss18'",
+  'stylistic-nineteen': "'ss19'",
+  'stylistic-twenty': "'ss20'"
+};
+
+const hasFeatures = (value: ?string): boolean =>
+  value != null && value !== 'normal';
+
+// Keep 'normal' and null to override an earlier style object
+const mergeFontFeatureSettings = (a: ?string, b: ?string): ?string => {
+  if (hasFeatures(a) && hasFeatures(b)) {
+    return `${String(a)}, ${String(b)}`;
+  }
+  if (hasFeatures(b) || a === undefined) {
+    return b;
+  }
+  return a;
+};
+
 const PROPERTIES_STANDARD: { [key: string]: string } = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
@@ -204,11 +241,41 @@ export const preprocess = <T extends {| [key: string]: any |}>(
       }
       const { boxShadow } = nextStyle;
       nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
+    } else if (prop === 'fontFeatureSettings') {
+      nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
+        value,
+        nextStyle.fontFeatureSettings
+      );
     } else if (prop === 'fontVariant') {
-      if (Array.isArray(value) && value.length > 0) {
-        value = value.join(' ');
+      if (value == null) {
+        nextStyle.fontVariant = value;
+        if (value !== undefined) {
+          // Also clear stylistic sets applied by an earlier inline style
+          nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
+            nextStyle.fontFeatureSettings,
+            null
+          );
+        }
+        continue;
       }
-      nextStyle[prop] = value;
+      const variants = typeof value === 'string' ? value.split(' ') : value;
+      const fontVariant = [];
+      const features = [];
+      variants.forEach((variant) => {
+        const feature = STYLISTIC_SETS[variant];
+        if (feature != null) {
+          features.push(feature);
+        } else if (variant) {
+          fontVariant.push(variant);
+        }
+      });
+      // Reset values set by an earlier style object
+      nextStyle.fontVariant =
+        fontVariant.length > 0 ? fontVariant.join(' ') : 'normal';
+      nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
+        nextStyle.fontFeatureSettings,
+        features.length > 0 ? features.join(', ') : 'normal'
+      );
     } else if (prop === 'textAlignVertical') {
       if (style.verticalAlign == null) {
         nextStyle.verticalAlign = value === 'center' ? 'middle' : value;
