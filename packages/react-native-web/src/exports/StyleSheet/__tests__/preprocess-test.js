@@ -148,13 +148,104 @@ describe('StyleSheet/preprocess', () => {
       expect(
         preprocess({ fontVariant: 'common-ligatures small-caps' })
       ).toEqual({
+        fontFeatureSettings: 'normal',
         fontVariant: 'common-ligatures small-caps'
       });
 
       expect(
         preprocess({ fontVariant: ['common-ligatures', 'small-caps'] })
       ).toEqual({
+        fontFeatureSettings: 'normal',
         fontVariant: 'common-ligatures small-caps'
+      });
+
+      expect(
+        preprocess({
+          fontVariant: ['small-caps', 'stylistic-one', 'stylistic-twenty']
+        })
+      ).toEqual({
+        fontFeatureSettings: "'ss01', 'ss20'",
+        fontVariant: 'small-caps'
+      });
+
+      expect(preprocess({ fontVariant: 'stylistic-two' })).toEqual({
+        fontFeatureSettings: "'ss02'",
+        fontVariant: 'normal'
+      });
+
+      expect(preprocess({ fontVariant: [] })).toEqual({
+        fontFeatureSettings: 'normal',
+        fontVariant: 'normal'
+      });
+
+      expect(preprocess({ fontVariant: null })).toEqual({
+        fontVariant: null
+      });
+
+      expect(preprocess({ fontVariant: undefined })).toEqual({
+        fontVariant: undefined
+      });
+    });
+
+    test('fontVariant with fontFeatureSettings', () => {
+      expect(
+        preprocess({
+          fontFeatureSettings: "'tnum'",
+          fontVariant: ['stylistic-one']
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum', 'ss01'",
+        fontVariant: 'normal'
+      });
+
+      expect(
+        preprocess({
+          fontVariant: ['stylistic-one'],
+          fontFeatureSettings: "'tnum'"
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum', 'ss01'",
+        fontVariant: 'normal'
+      });
+
+      expect(
+        preprocess({
+          fontFeatureSettings: 'normal',
+          fontVariant: ['stylistic-one']
+        })
+      ).toEqual({
+        fontFeatureSettings: "'ss01'",
+        fontVariant: 'normal'
+      });
+
+      expect(
+        preprocess({
+          fontVariant: ['stylistic-one'],
+          fontFeatureSettings: 'normal'
+        })
+      ).toEqual({
+        fontFeatureSettings: "'ss01'",
+        fontVariant: 'normal'
+      });
+
+      expect(
+        preprocess({
+          fontFeatureSettings: "'tnum'",
+          fontVariant: ['small-caps']
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum'",
+        fontVariant: 'small-caps'
+      });
+
+      expect(
+        preprocess({
+          fontVariant: ['small-caps'],
+          fontFeatureSettings: "'tnum'"
+        })
+      ).toEqual({
+        fontFeatureSettings: "'tnum'",
+        fontVariant: 'small-caps'
       });
     });
 

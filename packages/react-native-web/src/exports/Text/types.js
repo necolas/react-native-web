@@ -34,13 +34,43 @@ export type TextStyle = {
   fontSize?: ?NumberOrString,
   fontStyle?: 'italic' | 'normal',
   fontWeight?: ?FontWeightValue,
-  fontVariant?: ReadonlyArray<
-    | 'small-caps'
-    | 'oldstyle-nums'
-    | 'lining-nums'
-    | 'tabular-nums'
-    | 'proportional-nums'
-  >,
+  fontVariant?:
+    | ReadonlyArray<
+        | 'common-ligatures'
+        | 'contextual'
+        | 'discretionary-ligatures'
+        | 'historical-ligatures'
+        | 'lining-nums'
+        | 'no-common-ligatures'
+        | 'no-contextual'
+        | 'no-discretionary-ligatures'
+        | 'no-historical-ligatures'
+        | 'oldstyle-nums'
+        | 'proportional-nums'
+        | 'small-caps'
+        | 'stylistic-eight'
+        | 'stylistic-eighteen'
+        | 'stylistic-eleven'
+        | 'stylistic-fifteen'
+        | 'stylistic-five'
+        | 'stylistic-four'
+        | 'stylistic-fourteen'
+        | 'stylistic-nine'
+        | 'stylistic-nineteen'
+        | 'stylistic-one'
+        | 'stylistic-seven'
+        | 'stylistic-seventeen'
+        | 'stylistic-six'
+        | 'stylistic-sixteen'
+        | 'stylistic-ten'
+        | 'stylistic-thirteen'
+        | 'stylistic-three'
+        | 'stylistic-twelve'
+        | 'stylistic-twenty'
+        | 'stylistic-two'
+        | 'tabular-nums'
+      >
+    | string,
   hyphenateCharacter?: ?string,
   hyphens?: 'auto' | 'manual' | 'none',
   initialLetter?: ?NumberOrString,
