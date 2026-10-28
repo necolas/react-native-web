@@ -13,29 +13,30 @@
 import type { DisplayMetrics } from '../Dimensions';
 
 import Dimensions from '../Dimensions';
-import { useEffect, useState } from 'react';
+import canUseDOM from '../../modules/canUseDom';
+import { useSyncExternalStore } from 'react';
+
+// Matches the server render when `Dimensions.set` is not called
+const hydrationWindow: DisplayMetrics = {
+  fontScale: 1,
+  height: 0,
+  scale: 1,
+  width: 0
+};
+
+function subscribe(callback: () => void): () => void {
+  const subscription = Dimensions.addEventListener('change', callback);
+  return () => subscription.remove();
+}
+
+function getSnapshot(): DisplayMetrics {
+  return Dimensions.get('window');
+}
+
+function getServerSnapshot(): DisplayMetrics {
+  return canUseDOM ? hydrationWindow : Dimensions.get('window');
+}
 
 export default function useWindowDimensions(): DisplayMetrics {
-  const [dims, setDims] = useState(() => Dimensions.get('window'));
-  useEffect(() => {
-    function handleChange({
-      window
-    }: {
-      readonly window: ?DisplayMetrics,
-      ...
-    }) {
-      if (window != null) {
-        setDims(window);
-      }
-    }
-    Dimensions.addEventListener('change', handleChange);
-    // We might have missed an update between calling `get` in render and
-    // `addEventListener` in this handler, so we set it here. If there was
-    // no change, React will filter out this update as a no-op.
-    setDims(Dimensions.get('window'));
-    return () => {
-      Dimensions.removeEventListener('change', handleChange);
-    };
-  }, []);
-  return dims;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
