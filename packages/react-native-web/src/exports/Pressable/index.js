@@ -135,7 +135,6 @@ function Pressable(props: Props): React.Node {
     pressEventHandlers;
 
   useHover(hostRef, {
-    contain: true,
     disabled,
     onHoverChange: setHovered,
     onHoverStart: onHoverIn,
