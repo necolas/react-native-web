@@ -154,10 +154,7 @@ const SIZING_PROPERTIES: Set<string> = new Set([
 ]);
 
 const PREFIXED_SIZING_VALUES: Set<string> = new Set([
-  'min-content',
-  'max-content',
   'fill-available',
-  'fit-content',
   'contain-floats'
 ]);
 

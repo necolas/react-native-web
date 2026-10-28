@@ -97,7 +97,6 @@ const ScrollViewBase = (props: Props): React.Node => {
   function handleScroll(e: Object) {
     e.stopPropagation();
     if (e.target === scrollRef.current) {
-      e.persist();
       // A scroll happened, so the scroll resets the scrollend timeout.
       if (scrollTimeout.current != null) {
         clearTimeout(scrollTimeout.current);

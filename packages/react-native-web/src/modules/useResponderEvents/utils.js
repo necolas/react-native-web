@@ -19,11 +19,7 @@ function getEventPath(domEvent: any): Array<any> {
     const target = window.getSelection()?.anchorNode;
     return composedPathFallback(target);
   } else {
-    const path =
-      domEvent.composedPath != null
-        ? domEvent.composedPath()
-        : composedPathFallback(domEvent.target);
-    return path;
+    return domEvent.composedPath();
   }
 }
 

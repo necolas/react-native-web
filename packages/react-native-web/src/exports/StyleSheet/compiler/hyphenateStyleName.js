@@ -8,7 +8,6 @@
  */
 
 const uppercasePattern = /[A-Z]/g;
-const msPattern = /^ms-/;
 const cache: { [string]: string } = {};
 
 function toHyphenLower(match: string) {
@@ -20,8 +19,7 @@ function hyphenateStyleName(name: string): string {
     return cache[name];
   }
 
-  const hName = name.replace(uppercasePattern, toHyphenLower);
-  return (cache[name] = msPattern.test(hName) ? '-' + hName : hName);
+  return (cache[name] = name.replace(uppercasePattern, toHyphenLower));
 }
 
 export default hyphenateStyleName;
