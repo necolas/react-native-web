@@ -435,6 +435,14 @@ describe('StyleSheet/preprocess', () => {
       });
     });
 
+    test('shadow styles and null boxShadow together', () => {
+      expect(
+        preprocess({ shadowColor: 'red', boxShadow: null }, options)
+      ).toEqual({
+        boxShadow: '0px 0px 0px rgba(255,0,0,1.00)'
+      });
+    });
+
     test('shadow styles and array boxShadow together', () => {
       expect(
         preprocess(
@@ -536,6 +544,36 @@ describe('StyleSheet/preprocess', () => {
         )
       ).toEqual({
         textShadow: '5px 10px 15px rgba(50,60,70,0.50)'
+      });
+    });
+
+    test('textShadow styles and textShadow together', () => {
+      expect(
+        preprocess(
+          {
+            textShadowColor: 'red',
+            textShadowOffset: { width: 1, height: 2 },
+            textShadow: '4px 5px 6px black'
+          },
+          options
+        )
+      ).toEqual({
+        textShadow: '4px 5px 6px black, 1px 2px 0px rgba(255,0,0,1.00)'
+      });
+    });
+
+    test('textShadow styles and null textShadow together', () => {
+      expect(
+        preprocess(
+          {
+            textShadowColor: 'red',
+            textShadowOffset: { width: 1, height: 2 },
+            textShadow: null
+          },
+          options
+        )
+      ).toEqual({
+        textShadow: '1px 2px 0px rgba(255,0,0,1.00)'
       });
     });
   });

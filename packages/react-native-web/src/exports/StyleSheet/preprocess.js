@@ -197,12 +197,8 @@ export const preprocess = <T extends {| [key: string]: any |}>(
       style.textShadowRadius != null)
   ) {
     const textShadowValue = createTextShadowValue(style);
-    if (textShadowValue != null && nextStyle.textShadow == null) {
-      const { textShadow } = style;
-      const value = textShadow
-        ? `${textShadow}, ${textShadowValue}`
-        : textShadowValue;
-      nextStyle.textShadow = value;
+    if (textShadowValue != null) {
+      nextStyle.textShadow = textShadowValue;
     }
   }
 
@@ -240,7 +236,18 @@ export const preprocess = <T extends {| [key: string]: any |}>(
         value = createBoxShadowArrayValue(value);
       }
       const { boxShadow } = nextStyle;
-      nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
+      if (boxShadow == null) {
+        nextStyle.boxShadow = value;
+      } else if (value != null) {
+        nextStyle.boxShadow = `${value}, ${boxShadow}`;
+      }
+    } else if (prop === 'textShadow') {
+      const { textShadow } = nextStyle;
+      if (textShadow == null) {
+        nextStyle.textShadow = value;
+      } else if (value != null) {
+        nextStyle.textShadow = `${value}, ${textShadow}`;
+      }
     } else if (prop === 'fontFeatureSettings') {
       nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
         value,
