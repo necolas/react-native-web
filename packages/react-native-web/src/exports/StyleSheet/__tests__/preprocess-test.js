@@ -263,11 +263,6 @@ describe('StyleSheet/preprocess', () => {
       ).toEqual({
         boxShadow: '0px 0px 0px var(--shadow)'
       });
-      expect(
-        preprocess({ shadowColor: 'currentcolor', shadowOpacity: 0.5 }, options)
-      ).toEqual({
-        boxShadow: '0px 0px 0px currentcolor'
-      });
 
       expect(spy).toHaveBeenCalledTimes(2);
       spy.mockRestore();

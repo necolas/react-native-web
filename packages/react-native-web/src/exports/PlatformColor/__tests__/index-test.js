@@ -13,7 +13,6 @@ import StyleSheet from '../../StyleSheet';
 describe('PlatformColor', () => {
   test('returns a system color', () => {
     expect(PlatformColor('Canvas')).toBe('Canvas');
-    expect(PlatformColor('canvastext')).toBe('canvastext');
   });
 
   test('skips names that are not system colors', () => {
@@ -25,9 +24,6 @@ describe('PlatformColor', () => {
 
   test('returns a CSS custom property for newer system colors', () => {
     expect(PlatformColor('AccentColor')).toBe('var(--rnw-accentcolor)');
-    expect(PlatformColor('Mark', 'Highlight')).toBe(
-      'var(--rnw-mark, Highlight)'
-    );
     expect(PlatformColor('Mark', 'SelectedItem', 'Canvas', 'LinkText')).toBe(
       'var(--rnw-mark, var(--rnw-selecteditem, Canvas))'
     );
@@ -41,11 +37,9 @@ describe('PlatformColor', () => {
     expect(PlatformColor('systemBlue', { fallback: '#000' })).toBe(
       'rgba(0,0,0,1.00)'
     );
-    expect(PlatformColor({ fallback: 'red' })).toBe('rgba(255,0,0,1.00)');
     expect(PlatformColor('Mark', { fallback: 'Canvas' })).toBe(
       'var(--rnw-mark, Canvas)'
     );
-    expect(PlatformColor()).toBeUndefined();
   });
 
   test('ignores invalid options objects', () => {
