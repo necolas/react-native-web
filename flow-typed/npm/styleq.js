@@ -1,5 +1,5 @@
 type CompiledStyle = {
-  $$css: boolean,
+  $$css: boolean | string,
   [key: string]: string,
 };
 
@@ -19,7 +19,7 @@ type StyleqOptions = {
   transform?: (EitherStyle) => EitherStyle,
 };
 
-type StyleqResult = [string, InlineStyle | null];
+type StyleqResult = [string, InlineStyle | null, string];
 type Styleq = (styles: Styles) => StyleqResult;
 
 type IStyleq = {
@@ -30,11 +30,5 @@ type IStyleq = {
 declare module "styleq" {
   declare module.exports: {
     styleq: IStyleq
-  };
-}
-
-declare module "styleq/transform-localize-style" {
-  declare module.exports: {
-    localizeStyle: (style: EitherStyle, isRTL: boolean) => EitherStyle
   };
 }

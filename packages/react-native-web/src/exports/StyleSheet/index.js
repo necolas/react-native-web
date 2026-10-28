@@ -9,7 +9,7 @@
 
 import { atomic, classic, inline } from './compiler';
 import { createSheet } from './dom';
-import { localizeStyle } from 'styleq/transform-localize-style';
+import { localizeStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
@@ -141,7 +141,7 @@ function getSheet(): { id: string, textContent: string } {
 /**
  * resolve
  */
-type StyleProps = [string, { [key: string]: unknown } | null];
+type StyleProps = [string, { [key: string]: unknown } | null, string];
 type Options = {
   shadow?: boolean,
   textShadow?: boolean,
