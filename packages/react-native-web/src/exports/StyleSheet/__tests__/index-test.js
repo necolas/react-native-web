@@ -14,13 +14,13 @@ describe('StyleSheet', () => {
       {
         "id": "react-native-stylesheet",
         "textContent": "[stylesheet-group="0"]{}
-      @supports (color:accentcolor){:root{--rnw-accentcolor:accentcolor;}}
-      @supports (color:accentcolortext){:root{--rnw-accentcolortext:accentcolortext;}}
-      @supports (color:buttonborder){:root{--rnw-buttonborder:buttonborder;}}
-      @supports (color:mark){:root{--rnw-mark:mark;}}
-      @supports (color:marktext){:root{--rnw-marktext:marktext;}}
-      @supports (color:selecteditem){:root{--rnw-selecteditem:selecteditem;}}
-      @supports (color:selecteditemtext){:root{--rnw-selecteditemtext:selecteditemtext;}}
+      @supports (color:accentcolor){:host,:root{--rnw-accentcolor:accentcolor;}}
+      @supports (color:accentcolortext){:host,:root{--rnw-accentcolortext:accentcolortext;}}
+      @supports (color:buttonborder){:host,:root{--rnw-buttonborder:buttonborder;}}
+      @supports (color:mark){:host,:root{--rnw-mark:mark;}}
+      @supports (color:marktext){:host,:root{--rnw-marktext:marktext;}}
+      @supports (color:selecteditem){:host,:root{--rnw-selecteditem:selecteditem;}}
+      @supports (color:selecteditemtext){:host,:root{--rnw-selecteditemtext:selecteditemtext;}}
       body{margin:0;}
       button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
       html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}

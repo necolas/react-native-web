@@ -69,12 +69,18 @@ function processColor(
     return color as RgbaValue;
   }
 
+  // CSS variables (e.g. from PlatformColor) can contain a parsable fallback
+  if (typeof color === 'string' && color.startsWith('var(')) {
+    return color;
+  }
+
   let normalizedColor: ?ProcessedColorValue = normalizeColor(
     // $FlowIgnore[incompatible-cast] - Type is verified above
     color as ColorValue,
   );
   if (normalizedColor === undefined || normalizedColor === null) {
-    return null;
+    // Keep CSS values that cannot be parsed, e.g. system colors
+    return typeof color === 'string' ? color : null;
   }
 
   if (typeof normalizedColor === 'object') {
@@ -161,7 +167,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
       this.b = new AnimatedValue(initColor.b);
       this.a = new AnimatedValue(initColor.a);
     }
-    if (this.nativeColor || (config && config.useNativeDriver)) {
+    if (config && config.useNativeDriver) {
       this.__makeNative();
     }
   }

@@ -37,6 +37,10 @@ export default function PlatformColor(...args: Array<Arg>): void | string {
       console.error(
         'PlatformColor: the trailing options object must be of the form {fallback: string}; it is ignored.'
       );
+    } else if (options != null && fallback == null) {
+      console.error(
+        `PlatformColor: the fallback "${options.fallback}" is not a valid color; it is ignored.`
+      );
     }
   }
 

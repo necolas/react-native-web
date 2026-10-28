@@ -45,7 +45,6 @@ describe('PlatformColor', () => {
     expect(PlatformColor('Mark', { fallback: 'Canvas' })).toBe(
       'var(--rnw-mark, Canvas)'
     );
-    expect(PlatformColor('Mark', { fallback: 'nope' })).toBe('var(--rnw-mark)');
     expect(PlatformColor()).toBeUndefined();
   });
 
@@ -54,7 +53,8 @@ describe('PlatformColor', () => {
     expect(PlatformColor({ fallback: 'red' }, 'foo')).toBeUndefined();
     expect(PlatformColor('foo', { fallback: 1 })).toBeUndefined();
     expect(PlatformColor(null, 'Canvas')).toBe('Canvas');
-    expect(spy).toHaveBeenCalledTimes(2);
+    expect(PlatformColor('Mark', { fallback: 'nope' })).toBe('var(--rnw-mark)');
+    expect(spy).toHaveBeenCalledTimes(3);
     spy.mockRestore();
   });
 

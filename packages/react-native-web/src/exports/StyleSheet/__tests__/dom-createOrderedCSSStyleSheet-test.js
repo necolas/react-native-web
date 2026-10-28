@@ -169,11 +169,11 @@ describe('createOrderedCSSStyleSheet', () => {
     test('deduplicates @supports rules reformatted by the browser', () => {
       element.appendChild(
         document.createTextNode(
-          '[stylesheet-group="0"]{}\n@supports (color: mark) { :root { --rnw-mark: mark; } }'
+          '[stylesheet-group="0"]{}\n@supports (color: mark) { :host, :root { --rnw-mark: mark; } }'
         )
       );
-      const clientSheet = createOrderedCSSStyleSheet(element.sheet);
-      clientSheet.insert('@supports (color:mark){:root{--rnw-mark:mark;}}', 0);
+      const sheet = createOrderedCSSStyleSheet(element.sheet);
+      sheet.insert('@supports (color:mark){:host,:root{--rnw-mark:mark;}}', 0);
       expect(element.sheet.cssRules.length).toBe(2);
     });
   });

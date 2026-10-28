@@ -37,7 +37,7 @@ const newSystemColors: Set<string> = new Set([
 
 export const systemColorRules: Array<string> = Array.from(
   newSystemColors,
-  (name) => `@supports (color:${name}){:root{--rnw-${name}:${name};}}`
+  (name) => `@supports (color:${name}){:host,:root{--rnw-${name}:${name};}}`
 );
 
 /**
