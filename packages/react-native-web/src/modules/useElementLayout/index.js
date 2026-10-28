@@ -55,6 +55,7 @@ export default function useElementLayout(
   onLayout?: ?(e: LayoutEvent) => void
 ) {
   const observer = getResizeObserver();
+  const hasOnLayout = typeof onLayout === 'function';
 
   useLayoutEffect(() => {
     const node = ref.current;
@@ -67,17 +68,11 @@ export default function useElementLayout(
   // when 'onLayout' changes.
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null && observer != null) {
-      if (typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function') {
-        observer.observe(node);
-      } else {
+    if (node != null && observer != null && hasOnLayout) {
+      observer.observe(node);
+      return () => {
         observer.unobserve(node);
-      }
+      };
     }
-    return () => {
-      if (node != null && observer != null) {
-        observer.unobserve(node);
-      }
-    };
-  }, [ref, observer]);
+  }, [ref, observer, hasOnLayout]);
 }
