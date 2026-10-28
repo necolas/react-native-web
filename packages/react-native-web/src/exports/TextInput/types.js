@@ -17,6 +17,8 @@ export type TextInputStyle = {
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
 };
 
+export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
+
 export type TextInputProps = {
   ...ViewProps,
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words',
@@ -24,7 +26,6 @@ export type TextInputProps = {
   autoCompleteType?: ?string, // Compat with React Native (Bug react-native#26003)
   autoCorrect?: ?boolean,
   autoFocus?: ?boolean,
-  blurOnSubmit?: ?boolean,
   caretHidden?: ?boolean,
   clearTextOnFocus?: ?boolean,
   defaultValue?: ?string,
@@ -72,8 +73,10 @@ export type TextInputProps = {
   showSoftInputOnFocus?: ?boolean,
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
+  submitBehavior?: ?SubmitBehavior,
   value?: ?string,
   // deprecated
+  blurOnSubmit?: ?boolean,
   editable?: ?boolean,
   keyboardType?:
     | 'default'

@@ -11,7 +11,7 @@
 'use client';
 
 import type { PlatformMethods } from '../../types';
-import type { TextInputProps } from './types';
+import type { SubmitBehavior, TextInputProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -147,22 +147,31 @@ const TextInput = (props: {
     spellCheck
   } = props;
 
+  let submitBehavior: SubmitBehavior;
+  if (props.submitBehavior != null) {
+    // For single line text inputs, `'newline'` is not a valid option
+    submitBehavior =
+      !multiline && props.submitBehavior === 'newline'
+        ? 'blurAndSubmit'
+        : props.submitBehavior;
+  } else if (multiline) {
+    submitBehavior = blurOnSubmit === true ? 'blurAndSubmit' : 'newline';
+  } else {
+    submitBehavior = blurOnSubmit !== false ? 'blurAndSubmit' : 'submit';
+  }
+
   let type;
   let _inputMode;
 
   if (inputMode != null) {
     _inputMode = inputMode;
-    if (inputMode === 'email') {
-      type = 'email';
-    } else if (inputMode === 'tel') {
-      type = 'tel';
-    } else if (inputMode === 'search') {
-      type = 'search';
-    } else if (inputMode === 'url') {
-      type = 'url';
-    } else {
-      type = 'text';
-    }
+    type =
+      inputMode === 'email' ||
+      inputMode === 'search' ||
+      inputMode === 'tel' ||
+      inputMode === 'url'
+        ? inputMode
+        : 'text';
   } else if (keyboardType != null) {
     switch (keyboardType) {
       case 'email-address':
@@ -310,9 +319,6 @@ const TextInput = (props: {
     // Prevent key events bubbling (see #612)
     e.stopPropagation();
 
-    const blurOnSubmitDefault = !multiline;
-    const shouldBlurOnSubmit = blurOnSubmit ?? blurOnSubmitDefault;
-
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
 
@@ -322,18 +328,22 @@ const TextInput = (props: {
 
     if (
       e.key === 'Enter' &&
-      !e.shiftKey &&
       // Do not call submit if composition is occuring.
       !isComposing &&
       !e.isDefaultPrevented()
     ) {
-      if ((blurOnSubmit || !multiline) && onSubmitEditing) {
+      if (submitBehavior === 'newline') {
+        return;
+      }
+      if (multiline || onSubmitEditing) {
         // prevent "Enter" from inserting a newline or submitting a form
         e.preventDefault();
+      }
+      if (onSubmitEditing) {
         nativeEvent.text = e.target.value;
         onSubmitEditing(e);
       }
-      if (shouldBlurOnSubmit && hostNode != null) {
+      if (submitBehavior === 'blurAndSubmit' && hostNode != null) {
         setTimeout(() => hostNode.blur(), 0);
       }
     }
