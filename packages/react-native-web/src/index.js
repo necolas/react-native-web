@@ -26,6 +26,7 @@ export { default as NativeEventEmitter } from './exports/NativeEventEmitter';
 export { default as PanResponder } from './exports/PanResponder';
 export { default as PixelRatio } from './exports/PixelRatio';
 export { default as Platform } from './exports/Platform';
+export { default as PlatformColor } from './exports/PlatformColor';
 export { default as Share } from './exports/Share';
 export { default as StyleSheet } from './exports/StyleSheet';
 export { default as UIManager } from './exports/UIManager';

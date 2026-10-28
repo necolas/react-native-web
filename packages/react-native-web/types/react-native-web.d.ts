@@ -27,6 +27,7 @@ export {
   PanResponder,
   PixelRatio,
   Platform,
+  PlatformColor,
   Share,
   UIManager,
   Vibration,

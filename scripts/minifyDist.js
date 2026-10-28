@@ -12,7 +12,10 @@ async function minifyDir(dir) {
     const code = fs.readFileSync(filePath, 'utf-8');
 
     const result = await minify(code, {
-      compress: { directives: false },
+      compress: {
+        directives: false,
+        global_defs: { 'process.env.NODE_ENV': 'production' }
+      },
       module: true
     });
 

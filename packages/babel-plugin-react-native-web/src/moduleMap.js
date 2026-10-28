@@ -30,6 +30,7 @@ module.exports = {
   PanResponder: true,
   PixelRatio: true,
   Platform: true,
+  PlatformColor: true,
   Pressable: true,
   RefreshControl: true,
   SafeAreaView: true,

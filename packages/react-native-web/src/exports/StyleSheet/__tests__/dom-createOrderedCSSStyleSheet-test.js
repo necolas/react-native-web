@@ -165,5 +165,16 @@ describe('createOrderedCSSStyleSheet', () => {
         .b {color: red;}"
       `);
     });
+
+    test('deduplicates @supports rules reformatted by the browser', () => {
+      element.appendChild(
+        document.createTextNode(
+          '[stylesheet-group="0"]{}\n@supports (color: mark) { :host, :root { --rnw-mark: mark; } }'
+        )
+      );
+      const sheet = createOrderedCSSStyleSheet(element.sheet);
+      sheet.insert('@supports (color:mark){:host,:root{--rnw-mark:mark;}}', 0);
+      expect(element.sheet.cssRules.length).toBe(2);
+    });
   });
 });

@@ -229,6 +229,45 @@ describe('StyleSheet/preprocess', () => {
       });
     });
 
+    test('shadowColor system color', () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      expect(preprocess({ shadowColor: 'CanvasText' }, options)).toEqual({
+        boxShadow: '0px 0px 0px CanvasText'
+      });
+      expect(preprocess({ shadowColor: 'Mark' }, options)).toEqual({
+        boxShadow: '0px 0px 0px var(--rnw-mark)'
+      });
+
+      // Opacity is ignored for system and web colors
+      expect(
+        preprocess({ shadowColor: 'CanvasText', shadowOpacity: 0.5 }, options)
+      ).toEqual({
+        boxShadow: '0px 0px 0px CanvasText'
+      });
+      expect(
+        preprocess(
+          { shadowColor: 'var(--rnw-mark, red)', shadowOpacity: 0.5 },
+          options
+        )
+      ).toEqual({
+        boxShadow: '0px 0px 0px var(--rnw-mark, red)'
+      });
+
+      // No warning for other web colors
+      expect(
+        preprocess(
+          { shadowColor: 'var(--shadow)', shadowOpacity: 0.5 },
+          options
+        )
+      ).toEqual({
+        boxShadow: '0px 0px 0px var(--shadow)'
+      });
+
+      expect(spy).toHaveBeenCalledTimes(2);
+      spy.mockRestore();
+    });
+
     test('shadowOffset only', () => {
       expect(
         preprocess({ shadowOffset: { width: 1, height: 2 } }, options)

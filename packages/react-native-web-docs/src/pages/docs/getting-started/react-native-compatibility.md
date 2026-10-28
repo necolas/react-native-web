@@ -70,6 +70,7 @@ Visit the [React Native Directory](https://reactnative.directory/?web=true) to f
 | PanResponder        | ✓      |                                                                                                                 |
 | PixelRatio          | ✓      |                                                                                                                 |
 | Platform            | ✓      |                                                                                                                 |
+| PlatformColor       | ✓      | Mapped to CSS system colors.                                                                                    |
 | Settings            | ✘      | No equivalent web APIs.                                                                                         |
 | Share               | ✓      | Only available over HTTPS. Read about the [Web Share API](https://wicg.github.io/web-share/).                   |
 | StyleSheet          | ✓      |                                                                                                                 |
