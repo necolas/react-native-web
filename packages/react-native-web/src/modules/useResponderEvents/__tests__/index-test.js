@@ -2676,7 +2676,7 @@ describe('useResponderEvents', () => {
       };
 
       // render
-      render(<Component />);
+      const { rerender } = render(<Component />);
       const target = createEventTarget(targetRef.current);
       const parent = createEventTarget(parentRef.current);
       // first touch
@@ -2713,6 +2713,7 @@ describe('useResponderEvents', () => {
         eventLog.push('target: onResponderTerminationRequest');
         return true;
       };
+      rerender(<Component />);
       // scroll
       act(() => {
         parent.scroll();

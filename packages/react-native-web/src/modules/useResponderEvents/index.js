@@ -38,6 +38,25 @@ export default function useResponderEvents(
   const id = useStable(() => idCounter++);
   const isAttachedRef = React.useRef(false);
 
+  const {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  } = config;
+
   // This is a separate effects so it doesn't run when the config changes.
   // On initial mount, attach global listeners if needed.
   // On unmount, remove node potentially attached to the Responder System.
@@ -48,19 +67,10 @@ export default function useResponderEvents(
     };
   }, [id]);
 
-  // Register and unregister with the Responder System as necessary
+  // Register and unregister with the Responder System as necessary.
+  // The deps are the handlers, not the config object, which is new on every
+  // render. Components without handlers skip this effect after mount.
   React.useEffect(() => {
-    const {
-      onMoveShouldSetResponder,
-      onMoveShouldSetResponderCapture,
-      onScrollShouldSetResponder,
-      onScrollShouldSetResponderCapture,
-      onSelectionChangeShouldSetResponder,
-      onSelectionChangeShouldSetResponderCapture,
-      onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
-    } = config;
-
     const requiresResponderSystem =
       onMoveShouldSetResponder != null ||
       onMoveShouldSetResponderCapture != null ||
@@ -74,16 +84,50 @@ export default function useResponderEvents(
     const node = hostRef.current;
 
     if (requiresResponderSystem) {
-      ResponderSystem.addNode(id, node, config);
+      ResponderSystem.addNode(id, node, {
+        onMoveShouldSetResponder,
+        onMoveShouldSetResponderCapture,
+        onResponderEnd,
+        onResponderGrant,
+        onResponderMove,
+        onResponderReject,
+        onResponderRelease,
+        onResponderStart,
+        onResponderTerminate,
+        onResponderTerminationRequest,
+        onScrollShouldSetResponder,
+        onScrollShouldSetResponderCapture,
+        onSelectionChangeShouldSetResponder,
+        onSelectionChangeShouldSetResponderCapture,
+        onStartShouldSetResponder,
+        onStartShouldSetResponderCapture
+      });
+
       isAttachedRef.current = true;
     } else if (isAttachedRef.current) {
       ResponderSystem.removeNode(id);
       isAttachedRef.current = false;
     }
-  }, [config, hostRef, id]);
+  }, [
+    hostRef,
+    id,
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onResponderEnd,
+    onResponderGrant,
+    onResponderMove,
+    onResponderReject,
+    onResponderRelease,
+    onResponderStart,
+    onResponderTerminate,
+    onResponderTerminationRequest,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  ]);
 
-  React.useDebugValue({
-    isResponder: hostRef.current === ResponderSystem.getResponderNode()
-  });
   React.useDebugValue(config);
 }
