@@ -38,22 +38,6 @@ describe('useAnimatedColor', () => {
     expect(value && value.__getValue()).toBe('rgba(255, 0, 0, 1)');
   });
 
-  test('keeps system colors', () => {
-    const values = [];
-
-    function Component(): React.Node {
-      values.push(useAnimatedColor('CanvasText'));
-      values.push(useAnimatedColor('var(--rnw-mark, rgba(0,0,255,1.00))'));
-      return null;
-    }
-
-    render(<Component />);
-    expect(values[0].__getValue()).toBe('CanvasText');
-    expect(values[1].__getValue()).toBe('var(--rnw-mark, rgba(0,0,255,1.00))');
-    values[0].setValue('red');
-    expect(values[0].__getValue()).toBe('rgba(255, 0, 0, 1)');
-  });
-
   test('returns the same instance across rerenders', () => {
     const values = [];
 

@@ -23,6 +23,10 @@ const color = PlatformColor('AccentColor', 'Highlight', { fallback: 'blue' });
 
 Newer system colors (`AccentColor`, `Mark`, …) map to CSS custom properties that are defined only when the browser supports them, so the server and browser output match.
 
+:::callout
+**Note:** `PlatformColor` is not supported by `Animated`.
+:::
+
 ---
 
 ## API

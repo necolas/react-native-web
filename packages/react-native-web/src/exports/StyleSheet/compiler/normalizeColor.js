@@ -20,6 +20,10 @@ const normalizeColor = (
   let value: ?string;
 
   if (typeof color === 'string' && isWebColor(color)) {
+    // The opacity warning is only for system colors (PlatformColor output)
+    if (!color.startsWith('var(--rnw-')) {
+      return color;
+    }
     value = color;
   } else {
     const colorInt = processColor(color);
