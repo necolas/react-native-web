@@ -99,6 +99,11 @@ function Pressable(props: Props): React.Node {
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
+  // Only track the interaction state when it is read, so that hover, press
+  // and focus do not re-render a Pressable that does not use it.
+  const usesState =
+    typeof style === 'function' || typeof children === 'function';
+
   const hostRef = useRef(null);
   const setRef = useMergeRefs(ref, hostRef);
 
@@ -110,7 +115,7 @@ function Pressable(props: Props): React.Node {
       disabled,
       onLongPress,
       onPress,
-      onPressChange: setPressed,
+      onPressChange: usesState ? setPressed : undefined,
       onPressStart: onPressIn,
       onPressMove,
       onPressEnd: onPressOut
@@ -125,7 +130,8 @@ function Pressable(props: Props): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed
+      setPressed,
+      usesState
     ]
   );
 
@@ -136,7 +142,7 @@ function Pressable(props: Props): React.Node {
 
   useHover(hostRef, {
     disabled,
-    onHoverChange: setHovered,
+    onHoverChange: usesState ? setHovered : undefined,
     onHoverStart: onHoverIn,
     onHoverEnd: onHoverOut
   });
@@ -146,25 +152,29 @@ function Pressable(props: Props): React.Node {
   const blurHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(false);
+        if (usesState) {
+          setFocused(false);
+        }
         if (onBlur != null) {
           onBlur(e);
         }
       }
     },
-    [hostRef, setFocused, onBlur]
+    [hostRef, setFocused, onBlur, usesState]
   );
 
   const focusHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(true);
+        if (usesState) {
+          setFocused(true);
+        }
         if (onFocus != null) {
           onFocus(e);
         }
       }
     },
-    [hostRef, setFocused, onFocus]
+    [hostRef, setFocused, onFocus, usesState]
   );
 
   const contextMenuHandler = React.useCallback(

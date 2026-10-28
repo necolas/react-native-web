@@ -97,6 +97,31 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('interactions do not re-render without function "style" or "children"', () => {
+    const onRender = jest.fn();
+    const ref = React.createRef();
+    act(() => {
+      render(
+        <React.Profiler id="pressable" onRender={onRender}>
+          <Pressable onPress={() => {}} ref={ref} style={{ opacity: 1 }} />
+        </React.Profiler>
+      );
+    });
+    const target = createEventTarget(ref.current);
+    const body = createEventTarget(document.body);
+    act(() => {
+      target.pointerover();
+      target.focus();
+      target.pointerdown({ button: 0 });
+      jest.runAllTimers();
+      target.pointerup({ button: 0 });
+      jest.runAllTimers();
+      target.pointerout();
+      body.focus({ relatedTarget: target.node });
+    });
+    expect(onRender).toHaveBeenCalledTimes(1);
+  });
+
   test('focus interaction (disabled)', () => {
     const onBlur = jest.fn();
     const onFocus = jest.fn();
