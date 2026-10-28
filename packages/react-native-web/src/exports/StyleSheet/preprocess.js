@@ -250,7 +250,7 @@ export const preprocess = <T extends {| [key: string]: any |}>(
     } else if (prop === 'fontVariant') {
       if (value == null) {
         nextStyle.fontVariant = value;
-        if (value === null) {
+        if (value !== undefined) {
           // Also clear stylistic sets applied by an earlier inline style
           nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
             nextStyle.fontFeatureSettings,
