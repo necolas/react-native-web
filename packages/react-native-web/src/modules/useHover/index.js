@@ -8,7 +8,7 @@
  */
 
 import useEvent from '../useEvent';
-import useLayoutEffect from '../useLayoutEffect';
+import { useLayoutEffect } from 'react';
 
 /**
  * Types

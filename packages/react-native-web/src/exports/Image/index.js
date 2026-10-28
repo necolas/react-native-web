@@ -21,7 +21,6 @@ import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
-import useLayoutEffect from '../../modules/useLayoutEffect';
 import View from '../View';
 
 export type { ImageProps };
@@ -268,7 +267,7 @@ const Image = (props: {
     onLoadStart
   });
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     loadEventHandlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
   });
 

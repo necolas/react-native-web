@@ -10,7 +10,7 @@
 import type { EventOptions } from '../addEventListener';
 
 import { addEventListener } from '../addEventListener';
-import useLayoutEffect from '../useLayoutEffect';
+import { useLayoutEffect } from 'react';
 import useStable from '../useStable';
 
 type Callback = null | ((any) => void);

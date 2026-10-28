@@ -18,7 +18,6 @@ import createElement from '../createElement';
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
-import useLayoutEffect from '../../modules/useLayoutEffect';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePlatformMethods from '../../modules/usePlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
@@ -367,7 +366,7 @@ const TextInput = (props: {
     } catch (e) {}
   }
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     const node = hostRef.current;
     if (node != null && selection != null) {
       setSelection(node, selection);

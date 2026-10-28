@@ -17,12 +17,11 @@ import NativeAnimatedHelper from './NativeAnimatedHelper';
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
 } from 'react';
-
-import useLayoutEffect from '../../../modules/useLayoutEffect';
 
 type ReducedProps<TProps> = {
   ...TProps,
