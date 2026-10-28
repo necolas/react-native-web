@@ -45,7 +45,6 @@ export type Props = Readonly<{|
 |}>;
 
 const forwardPropsList = {
-  accessibilityDisabled: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
@@ -110,7 +109,7 @@ function TouchableWithoutFeedback(props: Props): React.Node {
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
-  supportedProps.accessibilityDisabled = disabled;
+  supportedProps['aria-disabled'] = disabled;
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, element.props.ref);
 

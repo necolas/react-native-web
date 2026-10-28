@@ -152,15 +152,15 @@ describe('modules/createDOMProps', () => {
         );
       });
 
-      test('when "accessibilityDisabled" is true', () => {
+      test('when "aria-disabled" is true', () => {
         expect(
-          createProps({ accessibilityRole, accessibilityDisabled: true })
+          createProps({ accessibilityRole, 'aria-disabled': true })
         ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
       });
 
-      test('when "disabled" is false', () => {
+      test('when "aria-disabled" is false', () => {
         expect(
-          createProps({ accessibilityRole, accessibilityDisabled: false })
+          createProps({ accessibilityRole, 'aria-disabled': false })
         ).toEqual(expect.not.objectContaining({ tabIndex: '-1' }));
       });
     });
@@ -184,15 +184,15 @@ describe('modules/createDOMProps', () => {
         );
       });
 
-      test('when "accessibilityDisabled" is true', () => {
+      test('when "aria-disabled" is true', () => {
         expect(
-          createProps({ accessibilityRole, accessibilityDisabled: true })
+          createProps({ accessibilityRole, 'aria-disabled': true })
         ).toEqual(expect.objectContaining({ 'aria-disabled': true }));
       });
 
-      test('when "accessibilityDisabled" is false', () => {
+      test('when "aria-disabled" is false', () => {
         expect(
-          createProps({ accessibilityRole, accessibilityDisabled: false })
+          createProps({ accessibilityRole, 'aria-disabled': false })
         ).toEqual(expect.objectContaining({ tabIndex: '0' }));
       });
     };
@@ -228,9 +228,61 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-live']).toEqual('off');
   });
 
-  test('prop "accessibilityRequired" becomes "aria-required" and "required"', () => {
-    const accessibilityRequired = false;
-    const props = createDOMProps('input', { accessibilityRequired });
+  test('prop "accessibilityState" becomes "aria-*"', () => {
+    const props = createProps({
+      accessibilityState: {
+        busy: true,
+        checked: 'mixed',
+        disabled: true,
+        expanded: false,
+        selected: true
+      }
+    });
+    expect(props['aria-busy']).toEqual(true);
+    expect(props['aria-checked']).toEqual('mixed');
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props['aria-expanded']).toEqual(false);
+    expect(props['aria-selected']).toEqual(true);
+  });
+
+  test('prop "accessibilityState" disables native elements', () => {
+    const props = createDOMProps('button', {
+      accessibilityState: { disabled: true }
+    });
+    expect(props.disabled).toEqual(true);
+    expect(props.tabIndex).toEqual('-1');
+  });
+
+  test('"aria-*" props take precedence over "accessibilityState"', () => {
+    const props = createProps({
+      accessibilityState: { checked: true, disabled: true },
+      'aria-checked': false,
+      'aria-disabled': false
+    });
+    expect(props['aria-checked']).toEqual(false);
+    expect(props['aria-disabled']).toBeUndefined();
+  });
+
+  test('prop "accessibilityValue" becomes "aria-value*"', () => {
+    const props = createProps({
+      accessibilityValue: { max: 10, min: 0, now: 5, text: 'five' }
+    });
+    expect(props['aria-valuemax']).toEqual(10);
+    expect(props['aria-valuemin']).toEqual(0);
+    expect(props['aria-valuenow']).toEqual(5);
+    expect(props['aria-valuetext']).toEqual('five');
+  });
+
+  test('"aria-value*" props take precedence over "accessibilityValue"', () => {
+    const props = createProps({
+      accessibilityValue: { now: 5 },
+      'aria-valuenow': 7
+    });
+    expect(props['aria-valuenow']).toEqual(7);
+  });
+
+  test('prop "aria-required" becomes "aria-required" and "required"', () => {
+    const props = createDOMProps('input', { 'aria-required': false });
     expect(props['aria-required']).toEqual(false);
     expect(props.required).toEqual(false);
   });

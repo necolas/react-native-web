@@ -47,99 +47,59 @@ const createDOMProps = (elementType, props, options) => {
 
   const {
     'aria-activedescendant': ariaActiveDescendant,
-    accessibilityActiveDescendant,
     'aria-atomic': ariaAtomic,
-    accessibilityAtomic,
     'aria-autocomplete': ariaAutoComplete,
-    accessibilityAutoComplete,
     'aria-busy': ariaBusy,
-    accessibilityBusy,
     'aria-checked': ariaChecked,
-    accessibilityChecked,
     'aria-colcount': ariaColumnCount,
-    accessibilityColumnCount,
     'aria-colindex': ariaColumnIndex,
-    accessibilityColumnIndex,
     'aria-colspan': ariaColumnSpan,
-    accessibilityColumnSpan,
     'aria-controls': ariaControls,
-    accessibilityControls,
     'aria-current': ariaCurrent,
-    accessibilityCurrent,
     'aria-describedby': ariaDescribedBy,
-    accessibilityDescribedBy,
     'aria-details': ariaDetails,
-    accessibilityDetails,
     'aria-disabled': ariaDisabled,
-    accessibilityDisabled,
     'aria-errormessage': ariaErrorMessage,
-    accessibilityErrorMessage,
     'aria-expanded': ariaExpanded,
-    accessibilityExpanded,
     'aria-flowto': ariaFlowTo,
-    accessibilityFlowTo,
     'aria-haspopup': ariaHasPopup,
-    accessibilityHasPopup,
     'aria-hidden': ariaHidden,
-    accessibilityHidden,
     'aria-invalid': ariaInvalid,
-    accessibilityInvalid,
     'aria-keyshortcuts': ariaKeyShortcuts,
-    accessibilityKeyShortcuts,
     'aria-label': ariaLabel,
     accessibilityLabel,
     'aria-labelledby': ariaLabelledBy,
     accessibilityLabelledBy,
     'aria-level': ariaLevel,
-    accessibilityLevel,
     'aria-live': ariaLive,
     accessibilityLiveRegion,
     'aria-modal': ariaModal,
-    accessibilityModal,
     'aria-multiline': ariaMultiline,
-    accessibilityMultiline,
     'aria-multiselectable': ariaMultiSelectable,
-    accessibilityMultiSelectable,
     'aria-orientation': ariaOrientation,
-    accessibilityOrientation,
     'aria-owns': ariaOwns,
-    accessibilityOwns,
     'aria-placeholder': ariaPlaceholder,
-    accessibilityPlaceholder,
     'aria-posinset': ariaPosInSet,
-    accessibilityPosInSet,
     'aria-pressed': ariaPressed,
-    accessibilityPressed,
     'aria-readonly': ariaReadOnly,
-    accessibilityReadOnly,
     'aria-required': ariaRequired,
-    accessibilityRequired,
     /* eslint-disable */
     role: ariaRole,
     accessibilityRole,
     /* eslint-enable */
     'aria-roledescription': ariaRoleDescription,
-    accessibilityRoleDescription,
     'aria-rowcount': ariaRowCount,
-    accessibilityRowCount,
     'aria-rowindex': ariaRowIndex,
-    accessibilityRowIndex,
     'aria-rowspan': ariaRowSpan,
-    accessibilityRowSpan,
     'aria-selected': ariaSelected,
-    accessibilitySelected,
     'aria-setsize': ariaSetSize,
-    accessibilitySetSize,
     'aria-sort': ariaSort,
-    accessibilitySort,
     'aria-valuemax': ariaValueMax,
-    accessibilityValueMax,
     'aria-valuemin': ariaValueMin,
-    accessibilityValueMin,
     'aria-valuenow': ariaValueNow,
-    accessibilityValueNow,
     'aria-valuetext': ariaValueText,
-    accessibilityValueText,
+    accessibilityState,
+    accessibilityValue,
     dataSet,
     focusable,
     id,
@@ -152,70 +112,61 @@ const createDOMProps = (elementType, props, options) => {
     ...domProps
   } = props;
 
-  const disabled = ariaDisabled || accessibilityDisabled;
+  const state = accessibilityState ?? emptyObject;
+  const value = accessibilityValue ?? emptyObject;
+  const disabled = ariaDisabled ?? state.disabled;
 
   const role = AccessibilityUtil.propsToAriaRole(props);
 
   // ACCESSIBILITY
-  const _ariaActiveDescendant =
-    ariaActiveDescendant ?? accessibilityActiveDescendant;
-  if (_ariaActiveDescendant != null) {
-    domProps['aria-activedescendant'] = _ariaActiveDescendant;
+  if (ariaActiveDescendant != null) {
+    domProps['aria-activedescendant'] = ariaActiveDescendant;
   }
 
-  const _ariaAtomic = ariaAtomic ?? accessibilityAtomic;
-  if (_ariaAtomic != null) {
-    domProps['aria-atomic'] = _ariaAtomic;
+  if (ariaAtomic != null) {
+    domProps['aria-atomic'] = ariaAtomic;
   }
 
-  const _ariaAutoComplete = ariaAutoComplete ?? accessibilityAutoComplete;
-  if (_ariaAutoComplete != null) {
-    domProps['aria-autocomplete'] = _ariaAutoComplete;
+  if (ariaAutoComplete != null) {
+    domProps['aria-autocomplete'] = ariaAutoComplete;
   }
 
-  const _ariaBusy = ariaBusy ?? accessibilityBusy;
+  const _ariaBusy = ariaBusy ?? state.busy;
   if (_ariaBusy != null) {
     domProps['aria-busy'] = _ariaBusy;
   }
 
-  const _ariaChecked = ariaChecked ?? accessibilityChecked;
+  const _ariaChecked = ariaChecked ?? state.checked;
   if (_ariaChecked != null) {
     domProps['aria-checked'] = _ariaChecked;
   }
 
-  const _ariaColumnCount = ariaColumnCount ?? accessibilityColumnCount;
-  if (_ariaColumnCount != null) {
-    domProps['aria-colcount'] = _ariaColumnCount;
+  if (ariaColumnCount != null) {
+    domProps['aria-colcount'] = ariaColumnCount;
   }
 
-  const _ariaColumnIndex = ariaColumnIndex ?? accessibilityColumnIndex;
-  if (_ariaColumnIndex != null) {
-    domProps['aria-colindex'] = _ariaColumnIndex;
+  if (ariaColumnIndex != null) {
+    domProps['aria-colindex'] = ariaColumnIndex;
   }
 
-  const _ariaColumnSpan = ariaColumnSpan ?? accessibilityColumnSpan;
-  if (_ariaColumnSpan != null) {
-    domProps['aria-colspan'] = _ariaColumnSpan;
+  if (ariaColumnSpan != null) {
+    domProps['aria-colspan'] = ariaColumnSpan;
   }
 
-  const _ariaControls = ariaControls ?? accessibilityControls;
-  if (_ariaControls != null) {
-    domProps['aria-controls'] = processIDRefList(_ariaControls);
+  if (ariaControls != null) {
+    domProps['aria-controls'] = processIDRefList(ariaControls);
   }
 
-  const _ariaCurrent = ariaCurrent ?? accessibilityCurrent;
-  if (_ariaCurrent != null) {
-    domProps['aria-current'] = _ariaCurrent;
+  if (ariaCurrent != null) {
+    domProps['aria-current'] = ariaCurrent;
   }
 
-  const _ariaDescribedBy = ariaDescribedBy ?? accessibilityDescribedBy;
-  if (_ariaDescribedBy != null) {
-    domProps['aria-describedby'] = processIDRefList(_ariaDescribedBy);
+  if (ariaDescribedBy != null) {
+    domProps['aria-describedby'] = processIDRefList(ariaDescribedBy);
   }
 
-  const _ariaDetails = ariaDetails ?? accessibilityDetails;
-  if (_ariaDetails != null) {
-    domProps['aria-details'] = _ariaDetails;
+  if (ariaDetails != null) {
+    domProps['aria-details'] = ariaDetails;
   }
 
   if (disabled === true) {
@@ -232,39 +183,33 @@ const createDOMProps = (elementType, props, options) => {
     }
   }
 
-  const _ariaErrorMessage = ariaErrorMessage ?? accessibilityErrorMessage;
-  if (_ariaErrorMessage != null) {
-    domProps['aria-errormessage'] = _ariaErrorMessage;
+  if (ariaErrorMessage != null) {
+    domProps['aria-errormessage'] = ariaErrorMessage;
   }
 
-  const _ariaExpanded = ariaExpanded ?? accessibilityExpanded;
+  const _ariaExpanded = ariaExpanded ?? state.expanded;
   if (_ariaExpanded != null) {
     domProps['aria-expanded'] = _ariaExpanded;
   }
 
-  const _ariaFlowTo = ariaFlowTo ?? accessibilityFlowTo;
-  if (_ariaFlowTo != null) {
-    domProps['aria-flowto'] = processIDRefList(_ariaFlowTo);
+  if (ariaFlowTo != null) {
+    domProps['aria-flowto'] = processIDRefList(ariaFlowTo);
   }
 
-  const _ariaHasPopup = ariaHasPopup ?? accessibilityHasPopup;
-  if (_ariaHasPopup != null) {
-    domProps['aria-haspopup'] = _ariaHasPopup;
+  if (ariaHasPopup != null) {
+    domProps['aria-haspopup'] = ariaHasPopup;
   }
 
-  const _ariaHidden = ariaHidden ?? accessibilityHidden;
-  if (_ariaHidden === true) {
-    domProps['aria-hidden'] = _ariaHidden;
+  if (ariaHidden === true) {
+    domProps['aria-hidden'] = ariaHidden;
   }
 
-  const _ariaInvalid = ariaInvalid ?? accessibilityInvalid;
-  if (_ariaInvalid != null) {
-    domProps['aria-invalid'] = _ariaInvalid;
+  if (ariaInvalid != null) {
+    domProps['aria-invalid'] = ariaInvalid;
   }
 
-  const _ariaKeyShortcuts = ariaKeyShortcuts ?? accessibilityKeyShortcuts;
-  if (_ariaKeyShortcuts != null) {
-    domProps['aria-keyshortcuts'] = processIDRefList(_ariaKeyShortcuts);
+  if (ariaKeyShortcuts != null) {
+    domProps['aria-keyshortcuts'] = processIDRefList(ariaKeyShortcuts);
   }
 
   const _ariaLabel = ariaLabel ?? accessibilityLabel;
@@ -277,9 +222,8 @@ const createDOMProps = (elementType, props, options) => {
     domProps['aria-labelledby'] = processIDRefList(_ariaLabelledBy);
   }
 
-  const _ariaLevel = ariaLevel ?? accessibilityLevel;
-  if (_ariaLevel != null) {
-    domProps['aria-level'] = _ariaLevel;
+  if (ariaLevel != null) {
+    domProps['aria-level'] = ariaLevel;
   }
 
   const _ariaLive = ariaLive ?? accessibilityLiveRegion;
@@ -287,50 +231,40 @@ const createDOMProps = (elementType, props, options) => {
     domProps['aria-live'] = _ariaLive === 'none' ? 'off' : _ariaLive;
   }
 
-  const _ariaModal = ariaModal ?? accessibilityModal;
-  if (_ariaModal != null) {
-    domProps['aria-modal'] = _ariaModal;
+  if (ariaModal != null) {
+    domProps['aria-modal'] = ariaModal;
   }
 
-  const _ariaMultiline = ariaMultiline ?? accessibilityMultiline;
-  if (_ariaMultiline != null) {
-    domProps['aria-multiline'] = _ariaMultiline;
+  if (ariaMultiline != null) {
+    domProps['aria-multiline'] = ariaMultiline;
   }
 
-  const _ariaMultiSelectable =
-    ariaMultiSelectable ?? accessibilityMultiSelectable;
-  if (_ariaMultiSelectable != null) {
-    domProps['aria-multiselectable'] = _ariaMultiSelectable;
+  if (ariaMultiSelectable != null) {
+    domProps['aria-multiselectable'] = ariaMultiSelectable;
   }
 
-  const _ariaOrientation = ariaOrientation ?? accessibilityOrientation;
-  if (_ariaOrientation != null) {
-    domProps['aria-orientation'] = _ariaOrientation;
+  if (ariaOrientation != null) {
+    domProps['aria-orientation'] = ariaOrientation;
   }
 
-  const _ariaOwns = ariaOwns ?? accessibilityOwns;
-  if (_ariaOwns != null) {
-    domProps['aria-owns'] = processIDRefList(_ariaOwns);
+  if (ariaOwns != null) {
+    domProps['aria-owns'] = processIDRefList(ariaOwns);
   }
 
-  const _ariaPlaceholder = ariaPlaceholder ?? accessibilityPlaceholder;
-  if (_ariaPlaceholder != null) {
-    domProps['aria-placeholder'] = _ariaPlaceholder;
+  if (ariaPlaceholder != null) {
+    domProps['aria-placeholder'] = ariaPlaceholder;
   }
 
-  const _ariaPosInSet = ariaPosInSet ?? accessibilityPosInSet;
-  if (_ariaPosInSet != null) {
-    domProps['aria-posinset'] = _ariaPosInSet;
+  if (ariaPosInSet != null) {
+    domProps['aria-posinset'] = ariaPosInSet;
   }
 
-  const _ariaPressed = ariaPressed ?? accessibilityPressed;
-  if (_ariaPressed != null) {
-    domProps['aria-pressed'] = _ariaPressed;
+  if (ariaPressed != null) {
+    domProps['aria-pressed'] = ariaPressed;
   }
 
-  const _ariaReadOnly = ariaReadOnly ?? accessibilityReadOnly;
-  if (_ariaReadOnly != null) {
-    domProps['aria-readonly'] = _ariaReadOnly;
+  if (ariaReadOnly != null) {
+    domProps['aria-readonly'] = ariaReadOnly;
     // Enhance with native semantics
     if (
       elementType === 'input' ||
@@ -341,16 +275,15 @@ const createDOMProps = (elementType, props, options) => {
     }
   }
 
-  const _ariaRequired = ariaRequired ?? accessibilityRequired;
-  if (_ariaRequired != null) {
-    domProps['aria-required'] = _ariaRequired;
+  if (ariaRequired != null) {
+    domProps['aria-required'] = ariaRequired;
     // Enhance with native semantics
     if (
       elementType === 'input' ||
       elementType === 'select' ||
       elementType === 'textarea'
     ) {
-      domProps.required = accessibilityRequired;
+      domProps.required = ariaRequired;
     }
   }
 
@@ -372,58 +305,51 @@ const createDOMProps = (elementType, props, options) => {
     }
   }
 
-  const _ariaRoleDescription =
-    ariaRoleDescription ?? accessibilityRoleDescription;
-  if (_ariaRoleDescription != null) {
-    domProps['aria-roledescription'] = _ariaRoleDescription;
+  if (ariaRoleDescription != null) {
+    domProps['aria-roledescription'] = ariaRoleDescription;
   }
 
-  const _ariaRowCount = ariaRowCount ?? accessibilityRowCount;
-  if (_ariaRowCount != null) {
-    domProps['aria-rowcount'] = _ariaRowCount;
+  if (ariaRowCount != null) {
+    domProps['aria-rowcount'] = ariaRowCount;
   }
 
-  const _ariaRowIndex = ariaRowIndex ?? accessibilityRowIndex;
-  if (_ariaRowIndex != null) {
-    domProps['aria-rowindex'] = _ariaRowIndex;
+  if (ariaRowIndex != null) {
+    domProps['aria-rowindex'] = ariaRowIndex;
   }
 
-  const _ariaRowSpan = ariaRowSpan ?? accessibilityRowSpan;
-  if (_ariaRowSpan != null) {
-    domProps['aria-rowspan'] = _ariaRowSpan;
+  if (ariaRowSpan != null) {
+    domProps['aria-rowspan'] = ariaRowSpan;
   }
 
-  const _ariaSelected = ariaSelected ?? accessibilitySelected;
+  const _ariaSelected = ariaSelected ?? state.selected;
   if (_ariaSelected != null) {
     domProps['aria-selected'] = _ariaSelected;
   }
 
-  const _ariaSetSize = ariaSetSize ?? accessibilitySetSize;
-  if (_ariaSetSize != null) {
-    domProps['aria-setsize'] = _ariaSetSize;
+  if (ariaSetSize != null) {
+    domProps['aria-setsize'] = ariaSetSize;
   }
 
-  const _ariaSort = ariaSort ?? accessibilitySort;
-  if (_ariaSort != null) {
-    domProps['aria-sort'] = _ariaSort;
+  if (ariaSort != null) {
+    domProps['aria-sort'] = ariaSort;
   }
 
-  const _ariaValueMax = ariaValueMax ?? accessibilityValueMax;
+  const _ariaValueMax = ariaValueMax ?? value.max;
   if (_ariaValueMax != null) {
     domProps['aria-valuemax'] = _ariaValueMax;
   }
 
-  const _ariaValueMin = ariaValueMin ?? accessibilityValueMin;
+  const _ariaValueMin = ariaValueMin ?? value.min;
   if (_ariaValueMin != null) {
     domProps['aria-valuemin'] = _ariaValueMin;
   }
 
-  const _ariaValueNow = ariaValueNow ?? accessibilityValueNow;
+  const _ariaValueNow = ariaValueNow ?? value.now;
   if (_ariaValueNow != null) {
     domProps['aria-valuenow'] = _ariaValueNow;
   }
 
-  const _ariaValueText = ariaValueText ?? accessibilityValueText;
+  const _ariaValueText = ariaValueText ?? value.text;
   if (_ariaValueText != null) {
     domProps['aria-valuetext'] = _ariaValueText;
   }
@@ -462,7 +388,7 @@ const createDOMProps = (elementType, props, options) => {
       elementType === 'select' ||
       elementType === 'textarea'
     ) {
-      if (focusable === false || accessibilityDisabled === true) {
+      if (focusable === false || disabled === true) {
         domProps.tabIndex = '-1';
       }
     } else if (

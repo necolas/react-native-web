@@ -33,11 +33,11 @@ describe('modules/AccessibilityUtil/propsToAccessibilityComponent', () => {
     ).toEqual('h3');
   });
 
-  test('when "accessibilityRole" is "heading" and "accessibilityLevel" is set', () => {
+  test('when "accessibilityRole" is "heading" and "aria-level" is set', () => {
     expect(
       propsToAccessibilityComponent({
         accessibilityRole: 'heading',
-        accessibilityLevel: 3
+        'aria-level': 3
       })
     ).toEqual('h3');
   });
