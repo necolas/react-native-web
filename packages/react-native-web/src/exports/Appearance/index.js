@@ -14,51 +14,64 @@ import canUseDOM from '../../modules/canUseDom';
 
 export type ColorSchemeName = 'light' | 'dark';
 
-export type AppearancePreferences = {|
+type AppearanceListener = (preferences: {|
   colorScheme: ColorSchemeName
-|};
+|}) => void;
 
-type AppearanceListener = (preferences: AppearancePreferences) => void;
-type DOMAppearanceListener = (ev: MediaQueryListEvent) => any;
-
-function getQuery(): MediaQueryList | null {
-  return canUseDOM && typeof window.matchMedia === 'function'
+const prefersDarkQuery: MediaQueryList | null =
+  canUseDOM && typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-color-scheme: dark)')
     : null;
+
+let colorSchemeOverride: ColorSchemeName | null = null;
+const listeners = new Set<AppearanceListener>();
+
+function getColorScheme(): ColorSchemeName {
+  return colorSchemeOverride ?? (prefersDarkQuery?.matches ? 'dark' : 'light');
 }
 
-const query = getQuery();
-const listenerMapping = new WeakMap<
-  AppearanceListener,
-  DOMAppearanceListener
->();
+function notifyListeners() {
+  for (const listener of Array.from(listeners)) {
+    listener({ colorScheme: getColorScheme() });
+  }
+}
+
+// Notify listeners when the system theme changes, unless an override is set
+prefersDarkQuery?.addEventListener('change', () => {
+  if (colorSchemeOverride == null) {
+    notifyListeners();
+  }
+});
 
 const Appearance = {
-  getColorScheme(): ColorSchemeName {
-    return query?.matches ? 'dark' : 'light';
+  getColorScheme,
+
+  setColorScheme(colorScheme: ColorSchemeName | 'auto' | 'unspecified'): void {
+    if (canUseDOM) {
+      const prevColorScheme = getColorScheme();
+
+      colorSchemeOverride =
+        colorScheme === 'light' || colorScheme === 'dark' ? colorScheme : null;
+
+      // Make form controls, scrollbars and light-dark() follow the override
+      if (document.documentElement != null) {
+        document.documentElement.style.colorScheme = colorSchemeOverride ?? '';
+      }
+
+      if (getColorScheme() !== prevColorScheme) {
+        notifyListeners();
+      }
+    }
   },
 
   addChangeListener(listener: AppearanceListener): { remove: () => void } {
-    let mappedListener = listenerMapping.get(listener);
-    if (!mappedListener) {
-      mappedListener = ({ matches }: MediaQueryListEvent) => {
-        listener({ colorScheme: matches ? 'dark' : 'light' });
-      };
-      listenerMapping.set(listener, mappedListener);
-    }
-    if (query) {
-      query.addEventListener('change', mappedListener);
-    }
+    listeners.add(listener);
 
-    function remove(): void {
-      const mappedListener = listenerMapping.get(listener);
-      if (query && mappedListener) {
-        query.removeEventListener('change', mappedListener);
+    return {
+      remove() {
+        listeners.delete(listener);
       }
-      listenerMapping.delete(listener);
-    }
-
-    return { remove };
+    };
   }
 };
 

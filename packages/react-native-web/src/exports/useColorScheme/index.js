@@ -11,21 +11,21 @@
 'use client';
 
 import * as React from 'react';
-import type { AppearancePreferences, ColorSchemeName } from '../Appearance';
+import type { ColorSchemeName } from '../Appearance';
 import Appearance from '../Appearance';
 
+function subscribe(callback: () => void): () => void {
+  return Appearance.addChangeListener(callback).remove;
+}
+
+function getServerSnapshot(): ColorSchemeName {
+  return 'light';
+}
+
 export default function useColorScheme(): ColorSchemeName {
-  const [colorScheme, setColorScheme] = React.useState(
-    Appearance.getColorScheme()
+  return React.useSyncExternalStore(
+    subscribe,
+    Appearance.getColorScheme,
+    getServerSnapshot
   );
-
-  React.useEffect(() => {
-    function listener(appearance: AppearancePreferences) {
-      setColorScheme(appearance.colorScheme);
-    }
-    const { remove } = Appearance.addChangeListener(listener);
-    return remove;
-  }, []);
-
-  return colorScheme;
 }
