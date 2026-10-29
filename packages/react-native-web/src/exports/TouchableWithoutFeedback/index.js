@@ -20,6 +20,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
 export type Props = Readonly<{|
+  'aria-disabled'?: ViewProps['aria-disabled'],
   accessibilityLabel?: ViewProps['accessibilityLabel'],
   accessibilityLiveRegion?: ViewProps['accessibilityLiveRegion'],
   accessibilityRole?: ViewProps['accessibilityRole'],
@@ -45,7 +46,6 @@ export type Props = Readonly<{|
 |}>;
 
 const forwardPropsList = {
-  accessibilityDisabled: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
@@ -112,7 +112,9 @@ function TouchableWithoutFeedback(props: Props): React.Node {
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
-  supportedProps.accessibilityDisabled = disabled;
+  if (disabled) {
+    supportedProps['aria-disabled'] = disabled;
+  }
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, hostRef, element.props.ref);
 

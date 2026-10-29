@@ -79,9 +79,9 @@ describe('components/Text', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    test('href with accessibilityRole', () => {
+    test('href with role', () => {
       const { container } = render(
-        <Text accessibilityRole="none" href="https://example.com" />
+        <Text href="https://example.com" role="none" />
       );
       expect(container.firstChild).toMatchSnapshot();
     });

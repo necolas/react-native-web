@@ -17,7 +17,7 @@ The following APIs are unstable and subject to breaking changes. Use at your own
 
 React Native for Web exports a web-specific module called `unstable_createElement`, which can be used to wrap React DOM components. This allows you to use React Native's accessibility and style optimizations. Since this is a web-specific export it should always be imported from the `react-native-web` package.
 
-In the example below, `Video` will now accept common React Native props such as `accessibilityLabel`, `accessible`, `style`, and even the Responder event props.
+In the example below, `Video` will now accept common React Native props such as `aria-label`, `accessible`, `style`, and even the Responder event props.
 
 ```js
 import { unstable_createElement } from 'react-native-web';

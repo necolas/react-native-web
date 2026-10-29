@@ -16,35 +16,33 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  describe('prop "accessibilityLabel"', () => {
+  describe('prop "aria-label"', () => {
     test('value is set', () => {
-      const { container } = render(<Pressable accessibilityLabel="label" />);
+      const { container } = render(<Pressable aria-label="label" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityLiveRegion"', () => {
+  describe('prop "aria-live"', () => {
     test('value is set', () => {
-      const { container } = render(
-        <Pressable accessibilityLiveRegion="polite" />
-      );
+      const { container } = render(<Pressable aria-live="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityRole"', () => {
+  describe('prop "role"', () => {
     test('value is set', () => {
-      const { container } = render(<Pressable accessibilityRole="none" />);
+      const { container } = render(<Pressable role="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value is "button"', () => {
-      const { container } = render(<Pressable accessibilityRole="button" />);
+      const { container } = render(<Pressable role="button" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Pressable accessibilityRole="article" />);
+      const { container } = render(<Pressable role="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -52,6 +50,11 @@ describe('components/Pressable', () => {
   test('prop "disabled"', () => {
     const { container } = render(<Pressable disabled={true} />);
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('prop "aria-disabled"', () => {
+    const { container } = render(<Pressable aria-disabled={true} />);
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
   });
 
   test('prop "href"', () => {

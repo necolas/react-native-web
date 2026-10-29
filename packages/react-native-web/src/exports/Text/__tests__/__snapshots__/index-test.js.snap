@@ -57,7 +57,7 @@ exports[`components/Text prop "dir" value is "rtl" 1`] = `
 />
 `;
 
-exports[`components/Text prop "href" href with accessibilityRole 1`] = `
+exports[`components/Text prop "href" href with role 1`] = `
 <a
   class="css-text-146c3p1"
   dir="auto"
