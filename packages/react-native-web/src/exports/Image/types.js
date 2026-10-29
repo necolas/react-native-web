@@ -98,6 +98,7 @@ export type ImageProps = {
   onProgress?: (e: any) => void,
   resizeMode?: ResizeMode,
   source?: Source,
+  src?: string,
   style?: GenericStyleProp<ImageStyle>,
   tintColor?: ColorValue
 };
