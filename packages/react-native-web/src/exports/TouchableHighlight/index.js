@@ -16,8 +16,7 @@ import type { ViewProps } from '../View';
 import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 
 import * as React from 'react';
-import { useCallback, useMemo, useState, useRef } from 'react';
-import useMergeRefs from '../../modules/useMergeRefs';
+import { useCallback, useMemo, useState } from 'react';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -88,16 +87,12 @@ function TouchableHighlight(props: Props): React.Node {
     onPressIn,
     onPressOut,
     onShowUnderlay,
-    ref,
     rejectResponderTermination,
     style,
     testOnly_pressed,
     underlayColor,
     ...rest
   } = props;
-
-  const hostRef = useRef(null);
-  const setRef = useMergeRefs(ref, hostRef);
 
   const [extraStyles, setExtraStyles] = useState(
     testOnly_pressed === true
@@ -164,7 +159,7 @@ function TouchableHighlight(props: Props): React.Node {
     ]
   );
 
-  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
+  const pressEventHandlers = usePressEvents(pressConfig);
 
   const child: any = React.Children.only(children);
 
@@ -175,7 +170,6 @@ function TouchableHighlight(props: Props): React.Node {
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
       pointerEvents={disabled ? 'box-none' : undefined}
-      ref={setRef}
       style={[
         styles.root,
         style,

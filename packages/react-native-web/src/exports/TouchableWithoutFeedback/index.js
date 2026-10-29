@@ -14,7 +14,7 @@ import type { PressResponderConfig } from '../../modules/usePressEvents/PressRes
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
@@ -80,8 +80,6 @@ function TouchableWithoutFeedback(props: Props): React.Node {
     rejectResponderTermination
   } = props;
 
-  const hostRef = useRef(null);
-
   const pressConfig = useMemo(
     () => ({
       cancelable: !rejectResponderTermination,
@@ -107,14 +105,14 @@ function TouchableWithoutFeedback(props: Props): React.Node {
     ]
   );
 
-  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
+  const pressEventHandlers = usePressEvents(pressConfig);
 
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
   supportedProps.accessibilityDisabled = disabled;
   supportedProps.focusable = !disabled && focusable !== false;
-  supportedProps.ref = useMergeRefs(ref, hostRef, element.props.ref);
+  supportedProps.ref = useMergeRefs(ref, element.props.ref);
 
   const elementProps = { ...supportedProps, ...pressEventHandlers };
 

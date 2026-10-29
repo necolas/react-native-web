@@ -129,7 +129,7 @@ function Pressable(props: Props): React.Node {
     ]
   );
 
-  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
+  const pressEventHandlers = usePressEvents(pressConfig);
 
   const { onContextMenu: onContextMenuPress, onKeyDown: onKeyDownPress } =
     pressEventHandlers;

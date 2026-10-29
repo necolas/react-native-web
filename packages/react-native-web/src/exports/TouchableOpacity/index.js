@@ -14,8 +14,7 @@ import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithout
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { useCallback, useMemo, useState, useRef } from 'react';
-import useMergeRefs from '../../modules/useMergeRefs';
+import { useCallback, useMemo, useState } from 'react';
 import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
@@ -44,14 +43,10 @@ function TouchableOpacity(props: Props): React.Node {
     onPress,
     onPressIn,
     onPressOut,
-    ref,
     rejectResponderTermination,
     style,
     ...rest
   } = props;
-
-  const hostRef = useRef(null);
-  const setRef = useMergeRefs(ref, hostRef);
 
   const [duration, setDuration] = useState('0s');
   const [opacityOverride, setOpacityOverride] = useState<?number>(null);
@@ -119,7 +114,7 @@ function TouchableOpacity(props: Props): React.Node {
     ]
   );
 
-  const pressEventHandlers = usePressEvents(hostRef, pressConfig);
+  const pressEventHandlers = usePressEvents(pressConfig);
 
   return (
     <View
@@ -128,7 +123,6 @@ function TouchableOpacity(props: Props): React.Node {
       accessibilityDisabled={disabled}
       focusable={!disabled && focusable !== false}
       pointerEvents={disabled ? 'box-none' : undefined}
-      ref={setRef}
       style={[
         styles.root,
         !disabled && styles.actionable,
