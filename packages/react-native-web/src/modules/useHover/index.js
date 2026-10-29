@@ -7,8 +7,8 @@
  * @flow
  */
 
+import { useLayoutEffect } from 'react';
 import useEvent from '../useEvent';
-import useLayoutEffect from '../useLayoutEffect';
 
 /**
  * Types

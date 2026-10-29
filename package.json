@@ -7,7 +7,7 @@
     "clean": "del-cli ./packages/*/dist",
     "build": "npm run clean && npm run build --workspaces --if-present",
     "dev": "npm run dev --workspaces --if-present",
-    "flow": "flow",
+    "flow": "flow full-check",
     "format": "prettier --check --ignore-unknown .",
     "format:fix": "prettier --write --ignore-unknown .",
     "lint": "eslint .",
