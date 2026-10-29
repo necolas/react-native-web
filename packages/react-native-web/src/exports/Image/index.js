@@ -10,8 +10,9 @@
 
 'use client';
 
-import type { ImageProps, ResizeMode, Source } from './types';
+import type { ImageProps, ResizeMode, Source, SourceObject } from './types';
 import type { ColorValue, LayoutEvent } from '../../types';
+import type { PackagerAsset } from '../../modules/AssetRegistry';
 
 import * as React from 'react';
 import createElement from '../createElement';
@@ -106,6 +107,25 @@ function resolveAssetDimensions(
   }
 }
 
+function resolvePackagerAsset(asset: PackagerAsset): {
+  scale: number,
+  uri: string
+} {
+  let scale = asset.scales[0];
+  if (asset.scales.length > 1) {
+    const preferredScale = PixelRatio.get();
+    // Get the scale which is closest to the preferred scale
+    scale = asset.scales.reduce((prev, curr) =>
+      Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale)
+        ? curr
+        : prev
+    );
+  }
+  const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
+  const uri = `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}`;
+  return { scale, uri };
+}
+
 function resolveAssetUri(source: ?Source): ?string {
   let uri = null;
   if (typeof source === 'number') {
@@ -116,20 +136,7 @@ function resolveAssetUri(source: ?Source): ?string {
         `Image: asset with ID "${source}" could not be found. Please check the image source or packager.`
       );
     }
-    let scale = asset.scales[0];
-    if (asset.scales.length > 1) {
-      const preferredScale = PixelRatio.get();
-      // Get the scale which is closest to the preferred scale
-      scale = asset.scales.reduce((prev, curr) =>
-        Math.abs(curr - preferredScale) < Math.abs(prev - preferredScale)
-          ? curr
-          : prev
-      );
-    }
-    const scaleSuffix = scale !== 1 ? `@${scale}x` : '';
-    uri = asset
-      ? `${asset.httpServerLocation}/${asset.name}${scaleSuffix}.${asset.type}`
-      : '';
+    uri = resolvePackagerAsset(asset).uri;
   } else if (typeof source === 'string') {
     uri = source;
   } else if (source && typeof source.uri === 'string') {
@@ -374,6 +381,27 @@ Image.queryCache = function (
   uris: Array<string>
 ): Promise<{| [uri: string]: 'disk/memory' |}> {
   return ImageLoader.queryCache(uris);
+};
+
+Image.resolveAssetSource = function (
+  source: ?Source
+): ?(
+  | SourceObject
+  | Array<SourceObject>
+  | {| height: ?number, scale: number, uri: string, width: ?number |}
+) {
+  if (source == null || typeof source === 'object') {
+    return source;
+  }
+  if (typeof source === 'string') {
+    return { uri: source };
+  }
+  const asset = getAssetByID(source);
+  if (asset == null) {
+    return null;
+  }
+  const { scale, uri } = resolvePackagerAsset(asset);
+  return { height: asset.height, scale, uri, width: asset.width };
 };
 
 const styles = StyleSheet.create({

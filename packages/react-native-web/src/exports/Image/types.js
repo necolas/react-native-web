@@ -11,7 +11,7 @@
 import type { ColorValue, GenericStyleProp } from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
 
-type SourceObject = {
+export type SourceObject = {
   /**
    * `body` is the HTTP body to send with the request. This must be a valid
    * UTF-8 string, and will be sent exactly as specified, with no

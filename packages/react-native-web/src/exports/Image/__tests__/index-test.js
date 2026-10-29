@@ -15,6 +15,7 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 
 const originalImage = window.Image;
+const originalPixelRatioGet = PixelRatio.get;
 
 describe('components/Image', () => {
   beforeEach(() => {
@@ -24,6 +25,7 @@ describe('components/Image', () => {
 
   afterEach(() => {
     window.Image = originalImage;
+    PixelRatio.get = originalPixelRatioGet;
   });
 
   test('prop "aria-label"', () => {
@@ -399,6 +401,52 @@ describe('components/Image', () => {
         [uriOne]: 'disk/memory',
         [uriTwo]: 'disk/memory'
       });
+    });
+  });
+
+  describe('resolveAssetSource', () => {
+    test('returns null and undefined as-is', () => {
+      expect(Image.resolveAssetSource(null)).toBe(null);
+      expect(Image.resolveAssetSource(undefined)).toBe(undefined);
+    });
+
+    test('returns object and array sources as-is', () => {
+      const source = {
+        headers: { Authorization: 'token' },
+        uri: 'https://google.com/favicon.ico'
+      };
+      const sources = [source];
+      expect(Image.resolveAssetSource(source)).toBe(source);
+      expect(Image.resolveAssetSource(sources)).toBe(sources);
+    });
+
+    test('wraps string sources', () => {
+      const uri = 'data:image/svg+xml;utf8,<svg></svg>';
+      expect(Image.resolveAssetSource(uri)).toEqual({ uri });
+    });
+
+    test('resolves packager assets', () => {
+      const assetId = registerAsset({
+        height: 10,
+        httpServerLocation: 'static',
+        name: 'img',
+        scales: [1, 2],
+        type: 'png',
+        width: 20
+      });
+
+      PixelRatio.get = jest.fn(() => 2);
+
+      expect(Image.resolveAssetSource(assetId)).toEqual({
+        height: 10,
+        scale: 2,
+        uri: 'static/img@2x.png',
+        width: 20
+      });
+    });
+
+    test('returns null for unknown packager assets', () => {
+      expect(Image.resolveAssetSource(99999)).toBe(null);
     });
   });
 
