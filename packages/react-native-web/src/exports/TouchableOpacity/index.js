@@ -23,7 +23,6 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
-  'aria-disabled'?: ViewProps['aria-disabled'],
   activeOpacity?: ?number,
   style?: ?ViewStyle
 |}>;
@@ -50,6 +49,8 @@ function TouchableOpacity(props: Props): React.Node {
     style,
     ...rest
   } = props;
+
+  const _disabled = disabled ?? ariaDisabled;
 
   const [duration, setDuration] = useState('0s');
   const [opacityOverride, setOpacityOverride] = useState<?number>(null);
@@ -79,7 +80,7 @@ function TouchableOpacity(props: Props): React.Node {
   const pressConfig = useMemo(
     () => ({
       cancelable: !rejectResponderTermination,
-      disabled,
+      disabled: _disabled,
       delayLongPress,
       delayPressStart: delayPressIn,
       delayPressEnd: delayPressOut,
@@ -106,7 +107,7 @@ function TouchableOpacity(props: Props): React.Node {
       delayLongPress,
       delayPressIn,
       delayPressOut,
-      disabled,
+      _disabled,
       onLongPress,
       onPress,
       onPressIn,
@@ -123,13 +124,13 @@ function TouchableOpacity(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled ?? ariaDisabled}
-      focusable={!disabled && focusable !== false}
-      pointerEvents={disabled ? 'box-none' : undefined}
+      aria-disabled={_disabled}
+      focusable={!_disabled && focusable !== false}
+      pointerEvents={_disabled ? 'box-none' : undefined}
       ref={ref}
       style={[
         styles.root,
-        !disabled && styles.actionable,
+        !_disabled && styles.actionable,
         style,
         opacityOverride != null && { opacity: opacityOverride },
         { transitionDuration: duration }

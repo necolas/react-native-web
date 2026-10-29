@@ -14,7 +14,7 @@ import type { PressResponderConfig } from '../../modules/usePressEvents/PressRes
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { memo, useMemo, useState, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
@@ -95,14 +95,19 @@ function Pressable(props: Props): React.Node {
     ...rest
   } = props;
 
-  const [hovered, setHovered] = useForceableState(testOnly_hovered === true);
-  const [focused, setFocused] = useForceableState(false);
-  const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
-
-  // Only track the interaction state when it is read, so that hover, press
-  // and focus do not re-render a Pressable that does not use it.
+  // Only re-render on hover, press and focus when the interaction state is read.
   const usesState =
     typeof style === 'function' || typeof children === 'function';
+
+  const [hovered, setHovered] = useForceableState(
+    testOnly_hovered === true,
+    usesState
+  );
+  const [focused, setFocused] = useForceableState(false, usesState);
+  const [pressed, setPressed] = useForceableState(
+    testOnly_pressed === true,
+    usesState
+  );
 
   const hostRef = useRef(null);
   const setRef = useMergeRefs(ref, hostRef);
@@ -115,7 +120,7 @@ function Pressable(props: Props): React.Node {
       disabled,
       onLongPress,
       onPress,
-      onPressChange: usesState ? setPressed : undefined,
+      onPressChange: setPressed,
       onPressStart: onPressIn,
       onPressMove,
       onPressEnd: onPressOut
@@ -130,8 +135,7 @@ function Pressable(props: Props): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed,
-      usesState
+      setPressed
     ]
   );
 
@@ -142,7 +146,7 @@ function Pressable(props: Props): React.Node {
 
   useHover(hostRef, {
     disabled,
-    onHoverChange: usesState ? setHovered : undefined,
+    onHoverChange: setHovered,
     onHoverStart: onHoverIn,
     onHoverEnd: onHoverOut
   });
@@ -152,29 +156,25 @@ function Pressable(props: Props): React.Node {
   const blurHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        if (usesState) {
-          setFocused(false);
-        }
+        setFocused(false);
         if (onBlur != null) {
           onBlur(e);
         }
       }
     },
-    [hostRef, setFocused, onBlur, usesState]
+    [hostRef, setFocused, onBlur]
   );
 
   const focusHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        if (usesState) {
-          setFocused(true);
-        }
+        setFocused(true);
         if (onFocus != null) {
           onFocus(e);
         }
       }
     },
-    [hostRef, setFocused, onFocus, usesState]
+    [hostRef, setFocused, onFocus]
   );
 
   const contextMenuHandler = React.useCallback(
@@ -229,9 +229,31 @@ function Pressable(props: Props): React.Node {
   );
 }
 
-function useForceableState(forced: boolean): [boolean, (boolean) => void] {
+function useForceableState(
+  forced: boolean,
+  tracked: boolean
+): [boolean, (boolean) => void] {
   const [bool, setBool] = useState(false);
-  return [bool || forced, setBool];
+  const valueRef = useRef(false);
+
+  const setValue = useCallback(
+    (value: boolean) => {
+      valueRef.current = value;
+      if (tracked) {
+        setBool(value);
+      }
+    },
+    [tracked]
+  );
+
+  // The state is not updated while untracked, so sync it when tracking resumes.
+  useEffect(() => {
+    if (tracked) {
+      setBool(valueRef.current);
+    }
+  }, [tracked]);
+
+  return [bool || forced, setValue];
 }
 
 const styles = StyleSheet.create({

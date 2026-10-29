@@ -20,6 +20,7 @@ import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
 export type Props = Readonly<{|
+  'aria-disabled'?: ViewProps['aria-disabled'],
   'aria-label'?: ViewProps['aria-label'],
   'aria-live'?: ViewProps['aria-live'],
   accessibilityLabel?: ViewProps['accessibilityLabel'],
@@ -73,6 +74,7 @@ const pickProps = (props: Props) => pick(props, forwardPropsList);
 
 function TouchableWithoutFeedback(props: Props): React.Node {
   const {
+    'aria-disabled': ariaDisabled,
     delayPressIn,
     delayPressOut,
     delayLongPress,
@@ -86,10 +88,12 @@ function TouchableWithoutFeedback(props: Props): React.Node {
     rejectResponderTermination
   } = props;
 
+  const _disabled = disabled ?? ariaDisabled;
+
   const pressConfig = useMemo(
     () => ({
       cancelable: !rejectResponderTermination,
-      disabled,
+      disabled: _disabled,
       delayLongPress,
       delayPressStart: delayPressIn,
       delayPressEnd: delayPressOut,
@@ -99,7 +103,7 @@ function TouchableWithoutFeedback(props: Props): React.Node {
       onPressEnd: onPressOut
     }),
     [
-      disabled,
+      _disabled,
       delayPressIn,
       delayPressOut,
       delayLongPress,
@@ -116,8 +120,10 @@ function TouchableWithoutFeedback(props: Props): React.Node {
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
   const supportedProps = pickProps(props);
-  supportedProps['aria-disabled'] = disabled;
-  supportedProps.focusable = !disabled && focusable !== false;
+  if (_disabled != null) {
+    supportedProps['aria-disabled'] = _disabled;
+  }
+  supportedProps.focusable = !_disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, element.props.ref);
 
   const elementProps = { ...supportedProps, ...pressEventHandlers };

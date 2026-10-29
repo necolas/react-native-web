@@ -74,6 +74,13 @@ export const createBoxShadowArrayValue = (value: Array<Object>): string => {
   return value.map(mapBoxShadow).join(', ');
 };
 
+const mergeShadows = (value: ?string, existing: ?string): ?string => {
+  if (existing == null) {
+    return value;
+  }
+  return value != null ? `${value}, ${existing}` : existing;
+};
+
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
@@ -235,19 +242,9 @@ export const preprocess = <T extends {| [key: string]: any |}>(
       if (Array.isArray(value)) {
         value = createBoxShadowArrayValue(value);
       }
-      const { boxShadow } = nextStyle;
-      if (boxShadow == null) {
-        nextStyle.boxShadow = value;
-      } else if (value != null) {
-        nextStyle.boxShadow = `${value}, ${boxShadow}`;
-      }
+      nextStyle.boxShadow = mergeShadows(value, nextStyle.boxShadow);
     } else if (prop === 'textShadow') {
-      const { textShadow } = nextStyle;
-      if (textShadow == null) {
-        nextStyle.textShadow = value;
-      } else if (value != null) {
-        nextStyle.textShadow = `${value}, ${textShadow}`;
-      }
+      nextStyle.textShadow = mergeShadows(value, nextStyle.textShadow);
     } else if (prop === 'fontFeatureSettings') {
       nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
         value,

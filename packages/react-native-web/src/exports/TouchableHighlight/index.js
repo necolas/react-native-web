@@ -25,7 +25,6 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<{|
   ...TouchableWithoutFeedbackProps,
-  'aria-disabled'?: ViewProps['aria-disabled'],
   activeOpacity?: ?number,
   onHideUnderlay?: ?() => void,
   onShowUnderlay?: ?() => void,
@@ -97,6 +96,8 @@ function TouchableHighlight(props: Props): React.Node {
     ...rest
   } = props;
 
+  const _disabled = disabled ?? ariaDisabled;
+
   const [extraStyles, setExtraStyles] = useState(
     testOnly_pressed === true
       ? createExtraStyles(activeOpacity, underlayColor)
@@ -128,7 +129,7 @@ function TouchableHighlight(props: Props): React.Node {
   const pressConfig = useMemo(
     () => ({
       cancelable: !rejectResponderTermination,
-      disabled,
+      disabled: _disabled,
       delayLongPress,
       delayPressStart: delayPressIn,
       delayPressEnd: delayPressOut,
@@ -151,7 +152,7 @@ function TouchableHighlight(props: Props): React.Node {
       delayLongPress,
       delayPressIn,
       delayPressOut,
-      disabled,
+      _disabled,
       onLongPress,
       onPress,
       onPressIn,
@@ -170,14 +171,14 @@ function TouchableHighlight(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled ?? ariaDisabled}
-      focusable={!disabled && focusable !== false}
-      pointerEvents={disabled ? 'box-none' : undefined}
+      aria-disabled={_disabled}
+      focusable={!_disabled && focusable !== false}
+      pointerEvents={_disabled ? 'box-none' : undefined}
       ref={ref}
       style={[
         styles.root,
         style,
-        !disabled && styles.actionable,
+        !_disabled && styles.actionable,
         extraStyles?.underlay
       ]}
     >
