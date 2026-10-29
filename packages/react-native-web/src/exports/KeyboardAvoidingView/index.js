@@ -8,9 +8,6 @@
  * @flow
  */
 
-'use client';
-
-import type { LayoutEvent, LayoutValue } from '../../types';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
@@ -20,40 +17,23 @@ type KeyboardAvoidingViewProps = {
   ...ViewProps,
   behavior?: 'height' | 'padding' | 'position',
   contentContainerStyle?: ViewProps['style'],
-  keyboardVerticalOffset: number
+  keyboardVerticalOffset?: number,
+  ref?: React.Ref<React.ElementRef<typeof View>>
 };
 
-class KeyboardAvoidingView extends React.Component<KeyboardAvoidingViewProps> {
-  frame: ?LayoutValue = null;
+const KeyboardAvoidingView = (props: KeyboardAvoidingViewProps): React.Node => {
+  const {
+    /* eslint-disable */
+    behavior,
+    contentContainerStyle,
+    keyboardVerticalOffset,
+    /* eslint-enable */
+    ...rest
+  } = props;
 
-  relativeKeyboardHeight(keyboardFrame: Object): number {
-    const frame = this.frame;
-    if (!frame || !keyboardFrame) {
-      return 0;
-    }
-    const keyboardY =
-      keyboardFrame.screenY - (this.props.keyboardVerticalOffset || 0);
-    return Math.max(frame.y + frame.height - keyboardY, 0);
-  }
+  return <View {...rest} />;
+};
 
-  onKeyboardChange(event: Object) {}
-
-  onLayout: (event: LayoutEvent) => void = (event: LayoutEvent) => {
-    this.frame = event.nativeEvent.layout;
-  };
-
-  render(): React.Node {
-    const {
-      /* eslint-disable */
-      behavior,
-      contentContainerStyle,
-      keyboardVerticalOffset,
-      /* eslint-enable */
-      ...rest
-    } = this.props;
-
-    return <View onLayout={this.onLayout} {...rest} />;
-  }
-}
+KeyboardAvoidingView.displayName = 'KeyboardAvoidingView';
 
 export default KeyboardAvoidingView;
