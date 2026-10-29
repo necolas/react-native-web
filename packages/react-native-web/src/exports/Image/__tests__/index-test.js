@@ -465,4 +465,13 @@ describe('components/Image', () => {
       });
     });
   });
+
+  test('prop "src" takes precedence over "source"', () => {
+    const src = 'https://example.com/src.png';
+    const uri = 'https://example.com/source.png';
+    ImageUriCache.add(src);
+    ImageUriCache.add(uri);
+    const { container } = render(<Image source={{ uri }} src={src} />);
+    expect(container.querySelector('img').src).toBe(src);
+  });
 });

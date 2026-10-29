@@ -166,11 +166,13 @@ const Image = (props: {
     onLoadStart,
     pointerEvents,
     resizeMode: resizeModeProp,
-    source,
+    source: sourceProp,
+    src,
     style,
     tintColor: tintColorProp,
     ...rest
   } = props;
+  const source = src ?? sourceProp;
   const ariaLabel = _ariaLabel || accessibilityLabel;
 
   if (process.env.NODE_ENV !== 'production') {
