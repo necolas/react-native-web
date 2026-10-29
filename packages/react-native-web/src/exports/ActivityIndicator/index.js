@@ -34,10 +34,9 @@ const ActivityIndicator = (props: ActivityIndicatorProps): React.Node => {
     animating = true,
     color = '#1976D2',
     hidesWhenStopped = true,
-    ref,
     size = 'small',
     style,
-    ...other
+    ...rest
   } = props;
 
   const svg = (
@@ -56,10 +55,9 @@ const ActivityIndicator = (props: ActivityIndicatorProps): React.Node => {
 
   return (
     <View
-      {...other}
+      {...rest}
       aria-valuemax={1}
       aria-valuemin={0}
-      ref={ref}
       role="progressbar"
       style={[styles.container, style]}
     >

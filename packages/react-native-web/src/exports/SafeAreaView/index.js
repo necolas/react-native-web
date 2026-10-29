@@ -20,8 +20,8 @@ type SafeAreaViewProps = {
 };
 
 const SafeAreaView = (props: SafeAreaViewProps): React.Node => {
-  const { ref, style, ...rest } = props;
-  return <View {...rest} ref={ref} style={[styles.root, style]} />;
+  const { style, ...rest } = props;
+  return <View {...rest} style={[styles.root, style]} />;
 };
 
 SafeAreaView.displayName = 'SafeAreaView';

@@ -8,10 +8,10 @@ const Box = ({
   fixed = false,
   layout = 'column',
   outer = false,
-  ...other
+  ...rest
 }) => (
   <View
-    {...other}
+    {...rest}
     className={classnames(styles[`color${color}`], {
       [styles.fixed]: fixed,
       [styles.outer]: outer,

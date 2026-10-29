@@ -55,7 +55,7 @@ const Switch = (props: SwitchProps): React.Node => {
     thumbColor,
     trackColor,
     value = false,
-    ...other
+    ...rest
   } = props;
 
   const thumbRef = React.useRef<?React.ElementRef<typeof View>>(null);
@@ -181,7 +181,7 @@ const Switch = (props: SwitchProps): React.Node => {
   });
 
   return (
-    <View {...other} style={rootStyle}>
+    <View {...rest} style={rootStyle}>
       <View style={trackStyle} />
       <View ref={thumbRef} style={thumbStyle} />
       {nativeControl}

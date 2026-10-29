@@ -7,10 +7,10 @@ const Box = ({
   fixed = false,
   layout = 'column',
   outer = false,
-  ...other
+  ...rest
 }) => (
   <View
-    {...other}
+    {...rest}
     style={[
       styles[`color${color}`],
       fixed && styles.fixed,

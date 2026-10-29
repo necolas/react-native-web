@@ -25,7 +25,7 @@ export type ModalContentProps = {
 };
 
 const ModalContent = (props: ModalContentProps): React.Node => {
-  const { active, children, onRequestClose, ref, transparent, ...rest } = props;
+  const { active, children, onRequestClose, transparent, ...rest } = props;
 
   React.useEffect(() => {
     if (canUseDOM) {
@@ -53,7 +53,6 @@ const ModalContent = (props: ModalContentProps): React.Node => {
     <View
       {...rest}
       aria-modal={true}
-      ref={ref}
       role={active ? 'dialog' : null}
       style={style}
     >

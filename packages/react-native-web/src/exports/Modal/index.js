@@ -94,7 +94,6 @@ const Modal = (props: ModalProps): React.Node => {
     onDismiss,
     onRequestClose,
     onShow,
-    ref,
     transparent,
     visible = true,
     ...rest
@@ -138,7 +137,6 @@ const Modal = (props: ModalProps): React.Node => {
             {...rest}
             active={isActive}
             onRequestClose={onRequestClose}
-            ref={ref}
             transparent={transparent}
           >
             {children}

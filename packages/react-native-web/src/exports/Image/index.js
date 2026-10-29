@@ -165,7 +165,6 @@ const Image = (props: {
     onLoadEnd,
     onLoadStart,
     pointerEvents,
-    ref,
     resizeMode: resizeModeProp,
     source,
     style,
@@ -328,7 +327,6 @@ const Image = (props: {
       aria-label={ariaLabel}
       onLayout={handleLayout}
       pointerEvents={pointerEvents}
-      ref={ref}
       // $FlowFixMe[incompatible-type] Image style props are not View style props
       style={[
         styles.root,

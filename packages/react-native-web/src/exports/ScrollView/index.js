@@ -554,7 +554,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
       onScroll,
       centerContent,
       /* eslint-enable */
-      ...other
+      ...rest
     } = this.props;
 
     if (process.env.NODE_ENV !== 'production' && this.props.style) {
@@ -620,7 +620,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
       : styles.pagingEnabledVertical;
 
     const props = {
-      ...other,
+      ...rest,
       style: [baseStyle, pagingEnabled && pagingEnabledStyle, this.props.style],
       onTouchStart: this.scrollResponderHandleTouchStart,
       onTouchMove: this.scrollResponderHandleTouchMove,
