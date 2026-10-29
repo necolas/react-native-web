@@ -16,13 +16,12 @@ describe('useHover', () => {
     clearPointers();
   });
 
-  describe('contain', () => {
-    let onHoverChange, onHoverStart, onHoverUpdate, onHoverEnd, ref, childRef;
+  describe('nested targets', () => {
+    let onHoverChange, onHoverStart, onHoverEnd, ref, childRef;
 
     const componentInit = () => {
       onHoverChange = jest.fn();
       onHoverStart = jest.fn();
-      onHoverUpdate = jest.fn();
       onHoverEnd = jest.fn();
       ref = React.createRef();
       childRef = React.createRef();
@@ -30,10 +29,9 @@ describe('useHover', () => {
         useHover(ref, {
           onHoverChange,
           onHoverStart,
-          onHoverUpdate,
           onHoverEnd
         });
-        useHover(childRef, { contain: true });
+        useHover(childRef, {});
         return (
           <div ref={ref}>
             <div ref={childRef} />
@@ -61,12 +59,11 @@ describe('useHover', () => {
   });
 
   describe('disabled', () => {
-    let onHoverChange, onHoverStart, onHoverUpdate, onHoverEnd, ref;
+    let onHoverChange, onHoverStart, onHoverEnd, ref;
 
     const componentInit = () => {
       onHoverChange = jest.fn();
       onHoverStart = jest.fn();
-      onHoverUpdate = jest.fn();
       onHoverEnd = jest.fn();
       ref = React.createRef();
       const Component = () => {
@@ -74,7 +71,6 @@ describe('useHover', () => {
           disabled: true,
           onHoverChange,
           onHoverStart,
-          onHoverUpdate,
           onHoverEnd
         });
         return <div ref={ref} />;
@@ -91,7 +87,6 @@ describe('useHover', () => {
       });
       expect(onHoverChange).not.toHaveBeenCalled();
       expect(onHoverStart).not.toHaveBeenCalled();
-      expect(onHoverUpdate).not.toHaveBeenCalled();
       expect(onHoverEnd).not.toHaveBeenCalled();
     });
   });
@@ -230,40 +225,18 @@ describe('useHover', () => {
     });
   });
 
-  describe('onHoverUpdate', () => {
-    test('is called after the active pointer moves"', () => {
-      const onHoverUpdate = jest.fn();
-      const ref = React.createRef();
-      const Component = () => {
-        useHover(ref, { onHoverUpdate });
-        return <div ref={ref} />;
-      };
-      render(<Component />);
-
-      const target = createEventTarget(ref.current);
-      act(() => {
-        target.pointerover();
-        target.pointerhover({ x: 0, y: 0 });
-        target.pointerhover({ x: 1, y: 1 });
-      });
-      expect(onHoverUpdate).toHaveBeenCalledTimes(2);
-    });
-  });
-
   describe('repeat use', () => {
-    let onHoverChange, onHoverStart, onHoverUpdate, onHoverEnd, ref;
+    let onHoverChange, onHoverStart, onHoverEnd, ref;
 
     const componentInit = () => {
       onHoverChange = jest.fn();
       onHoverStart = jest.fn();
-      onHoverUpdate = jest.fn();
       onHoverEnd = jest.fn();
       ref = React.createRef();
       const Component = () => {
         useHover(ref, {
           onHoverChange,
           onHoverStart,
-          onHoverUpdate,
           onHoverEnd
         });
         return <div ref={ref} />;
@@ -276,20 +249,16 @@ describe('useHover', () => {
       const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover();
-        target.pointerhover({ x: 1, y: 1 });
         target.pointerout();
       });
       expect(onHoverStart).toHaveBeenCalledTimes(1);
-      expect(onHoverUpdate).toHaveBeenCalledTimes(1);
       expect(onHoverEnd).toHaveBeenCalledTimes(1);
       expect(onHoverChange).toHaveBeenCalledTimes(2);
       act(() => {
         target.pointerover();
-        target.pointerhover({ x: 1, y: 1 });
         target.pointerout();
       });
       expect(onHoverStart).toHaveBeenCalledTimes(2);
-      expect(onHoverUpdate).toHaveBeenCalledTimes(2);
       expect(onHoverEnd).toHaveBeenCalledTimes(2);
       expect(onHoverChange).toHaveBeenCalledTimes(4);
     });

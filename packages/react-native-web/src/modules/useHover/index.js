@@ -15,11 +15,9 @@ import useEvent from '../useEvent';
  */
 
 export type HoverEventsConfig = {
-  contain?: ?boolean,
   disabled?: ?boolean,
   onHoverStart?: ?(e: any) => void,
   onHoverChange?: ?(boolean: boolean) => void,
-  onHoverUpdate?: ?(e: any) => void,
   onHoverEnd?: ?(e: any) => void
 };
 
@@ -50,19 +48,11 @@ export default function useHover(
   targetRef: any,
   config: HoverEventsConfig
 ): void {
-  const {
-    contain,
-    disabled,
-    onHoverStart,
-    onHoverChange,
-    onHoverUpdate,
-    onHoverEnd
-  } = config;
+  const { disabled, onHoverStart, onHoverChange, onHoverEnd } = config;
 
-  const addMoveListener = useEvent('pointermove', opts);
   const addEnterListener = useEvent('pointerenter', opts);
   const addLeaveListener = useEvent('pointerleave', opts);
-  // These custom events are used to implement the "contain" prop.
+  // These custom events end the hover of ancestors while a descendant is hovered.
   const addLockListener = useEvent(lockEventType, opts);
   const addUnlockListener = useEvent(unlockEventType, opts);
 
@@ -80,7 +70,6 @@ export default function useHover(
           onHoverChange(false);
         }
         // Remove the listeners once finished.
-        addMoveListener(target, null);
         addLeaveListener(target, null);
       };
 
@@ -90,21 +79,8 @@ export default function useHover(
       const leaveListener = function (e: any) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
-          if (contain) {
-            dispatchCustomEvent(target, unlockEventType);
-          }
+          dispatchCustomEvent(target, unlockEventType);
           hoverEnd(e);
-        }
-      };
-
-      /**
-       * Move within element
-       */
-      const moveListener = function (e: any) {
-        if (e.pointerType !== 'touch') {
-          if (onHoverUpdate != null) {
-            onHoverUpdate(e);
-          }
         }
       };
 
@@ -119,9 +95,6 @@ export default function useHover(
           onHoverChange(true);
         }
         // Set the listeners needed for the rest of the hover gesture.
-        if (onHoverUpdate != null) {
-          addMoveListener(target, !disabled ? moveListener : null);
-        }
         addLeaveListener(target, !disabled ? leaveListener : null);
       };
 
@@ -131,9 +104,7 @@ export default function useHover(
       const enterListener = function (e: any) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
-          if (contain) {
-            dispatchCustomEvent(target, lockEventType);
-          }
+          dispatchCustomEvent(target, lockEventType);
           hoverStart(e);
           const lockListener = function (lockEvent: Event) {
             if (lockEvent.target !== target) {
@@ -154,15 +125,12 @@ export default function useHover(
     }
   }, [
     addEnterListener,
-    addMoveListener,
     addLeaveListener,
     addLockListener,
     addUnlockListener,
-    contain,
     disabled,
     onHoverStart,
     onHoverChange,
-    onHoverUpdate,
     onHoverEnd,
     targetRef
   ]);
