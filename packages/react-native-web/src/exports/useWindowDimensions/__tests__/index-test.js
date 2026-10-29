@@ -19,9 +19,11 @@ describe('useWindowDimensions', () => {
   const { innerWidth, innerHeight } = window;
 
   afterEach(() => {
-    window.innerWidth = innerWidth;
-    window.innerHeight = innerHeight;
-    window.dispatchEvent(new Event('resize'));
+    act(() => {
+      window.innerWidth = innerWidth;
+      window.innerHeight = innerHeight;
+      window.dispatchEvent(new Event('resize'));
+    });
   });
 
   test('returns the window dimensions', () => {
@@ -45,12 +47,19 @@ describe('useWindowDimensions', () => {
     document.body.appendChild(container);
     const onRecoverableError = jest.fn();
 
+    let root;
+
     await act(async () => {
-      hydrateRoot(container, <Component />, { onRecoverableError });
+      root = hydrateRoot(container, <Component />, { onRecoverableError });
     });
 
     expect(onRecoverableError).not.toHaveBeenCalled();
     expect(container.textContent).toBe(`${innerWidth}x${innerHeight}`);
+
+    act(() => {
+      root.unmount();
+    });
+
     document.body.removeChild(container);
   });
 });
