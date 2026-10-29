@@ -57,46 +57,38 @@ describe('useHover', () => {
       expect(onHoverStart).toHaveBeenCalled();
     });
 
-    test('resumes the hover gesture on the nearest ancestor only', () => {
-      const onOuterHoverStart = jest.fn();
-      const onMiddleHoverStart = jest.fn();
-      const outerRef = React.createRef();
-      const middleRef = React.createRef();
-      const innerRef = React.createRef();
+    test('only changes the nearest ancestor', () => {
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef();
+      childRef = React.createRef();
+      const grandchildRef = React.createRef();
       const Component = () => {
-        useHover(outerRef, {
-          contain: true,
-          onHoverStart: onOuterHoverStart
-        });
-        useHover(middleRef, {
-          contain: true,
-          onHoverStart: onMiddleHoverStart
-        });
-        useHover(innerRef, { contain: true });
+        useHover(ref, { onHoverStart, onHoverEnd });
+        useHover(childRef, {});
+        useHover(grandchildRef, {});
         return (
-          <div ref={outerRef}>
-            <div ref={middleRef}>
-              <div ref={innerRef} />
+          <div ref={ref}>
+            <div ref={childRef}>
+              <div ref={grandchildRef} />
             </div>
           </div>
         );
       };
       render(<Component />);
-      const outer = createEventTarget(outerRef.current);
-      const middle = createEventTarget(middleRef.current);
-      const inner = createEventTarget(innerRef.current);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      const grandchild = createEventTarget(grandchildRef.current);
       act(() => {
-        outer.pointerover();
-        outer.pointerout({ relatedTarget: middle.node });
-        middle.pointerover();
-        middle.pointerout({ relatedTarget: inner.node });
-        inner.pointerover();
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: grandchild.node });
+        grandchild.pointerover();
+        grandchild.pointerout({ relatedTarget: child.node });
       });
-      act(() => {
-        inner.pointerout({ relatedTarget: middle.node });
-      });
-      expect(onMiddleHoverStart).toHaveBeenCalledTimes(2);
-      expect(onOuterHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
     });
   });
 

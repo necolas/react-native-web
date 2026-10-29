@@ -109,12 +109,14 @@ export default function useHover(
           const lockListener = function (lockEvent: Event) {
             if (lockEvent.target !== target) {
               hoverEnd(e);
+              // Ancestors further out are already locked.
+              lockEvent.stopPropagation();
             }
           };
           const unlockListener = function (lockEvent: Event) {
             if (lockEvent.target !== target) {
               hoverStart(e);
-              // Only the nearest ancestor resumes the hover gesture.
+              // Ancestors further out stay locked.
               lockEvent.stopPropagation();
             }
           };
