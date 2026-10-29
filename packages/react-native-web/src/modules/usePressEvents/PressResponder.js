@@ -138,7 +138,7 @@ const isTerminalSignal = (signal: TouchSignal) =>
 
 const isValidKeyPress = (event: any) => {
   const { key, target } = event;
-  const isSpacebar = key === ' ' || key === 'Spacebar';
+  const isSpacebar = key === ' ';
   const isButtonish =
     getElementType(target) === 'button' || isButtonRole(target);
   return key === 'Enter' || (isSpacebar && isButtonish);
@@ -264,8 +264,6 @@ export default class PressResponder {
 
   _createEventHandlers(): EventHandlers {
     const start = (event: ResponderEvent, shouldDelay?: boolean): void => {
-      event.persist();
-
       this._cancelPressOutDelayTimeout();
 
       this._longPressDispatched = false;
@@ -354,7 +352,7 @@ export default class PressResponder {
             // focus is moved to another element during 'keydown'.
             document.addEventListener('keyup', keyupHandler);
           }
-          const isSpacebarKey = key === ' ' || key === 'Spacebar';
+          const isSpacebarKey = key === ' ';
           const role = getElementRole(target);
           const isButtonLikeRole = role === 'button' || role === 'menuitem';
           if (
