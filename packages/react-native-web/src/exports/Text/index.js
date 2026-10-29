@@ -185,6 +185,9 @@ const textStyle = {
   font: '14px System',
   listStyle: 'none',
   margin: 0,
+  // A flex item's default min-width is its min-content size, so an unbroken
+  // word cannot shrink. Yoga has no such minimum, and View already opts out.
+  minWidth: 0,
   padding: 0,
   position: 'relative',
   textAlign: 'start',
