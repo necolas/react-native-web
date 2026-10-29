@@ -56,6 +56,40 @@ describe('useHover', () => {
       });
       expect(onHoverStart).toHaveBeenCalled();
     });
+
+    test('only changes the nearest ancestor', () => {
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef();
+      childRef = React.createRef();
+      const grandchildRef = React.createRef();
+      const Component = () => {
+        useHover(ref, { onHoverStart, onHoverEnd });
+        useHover(childRef, {});
+        useHover(grandchildRef, {});
+        return (
+          <div ref={ref}>
+            <div ref={childRef}>
+              <div ref={grandchildRef} />
+            </div>
+          </div>
+        );
+      };
+      render(<Component />);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      const grandchild = createEventTarget(grandchildRef.current);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: grandchild.node });
+        grandchild.pointerover();
+        grandchild.pointerout({ relatedTarget: child.node });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('disabled', () => {
