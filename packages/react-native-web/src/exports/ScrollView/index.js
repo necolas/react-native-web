@@ -181,25 +181,22 @@ class ScrollView extends React.Component<ScrollViewProps> {
     width: number,
     height: number
   ) => {
-    // React Native waits for keyboard metrics, which are never available on web.
-    setTimeout(() => {
-      const keyboardScreenY = Dimensions.get('window').height;
+    const keyboardScreenY = Dimensions.get('window').height;
 
-      let scrollOffsetY =
-        top - keyboardScreenY + height + this.additionalScrollOffset;
+    let scrollOffsetY =
+      top - keyboardScreenY + height + this.additionalScrollOffset;
 
-      // By default, this can scroll with negative offset, pulling the content
-      // down so that the target component's bottom meets the keyboard's top.
-      // If requested otherwise, cap the offset at 0 minimum to avoid content
-      // shifting down.
-      if (this.preventNegativeScrollOffset === true) {
-        scrollOffsetY = Math.max(0, scrollOffsetY);
-      }
+    // By default, this can scroll with negative offset, pulling the content
+    // down so that the target component's bottom meets the keyboard's top.
+    // If requested otherwise, cap the offset at 0 minimum to avoid content
+    // shifting down.
+    if (this.preventNegativeScrollOffset === true) {
+      scrollOffsetY = Math.max(0, scrollOffsetY);
+    }
 
-      this.scrollTo({ x: 0, y: scrollOffsetY, animated: true });
-      this.additionalScrollOffset = 0;
-      this.preventNegativeScrollOffset = false;
-    }, 0);
+    this.scrollTo({ x: 0, y: scrollOffsetY, animated: true });
+    this.additionalScrollOffset = 0;
+    this.preventNegativeScrollOffset = false;
   };
 
   flashScrollIndicators = () => {};
