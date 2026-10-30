@@ -7,6 +7,8 @@
 
 import React from 'react';
 import Pressable from '../';
+import TextInput from '../../TextInput';
+import View from '../../View';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
@@ -303,6 +305,116 @@ describe('components/Pressable', () => {
     });
     // Calling preventDefault prevents native 'click' event dispatch
     expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  test('ignore keyboard press from a nested element', () => {
+    const onKeyDown = jest.fn();
+    const onPress = jest.fn();
+    const onPressIn = jest.fn();
+    const inputRef = React.createRef();
+    const viewRef = React.createRef();
+
+    function TestCase() {
+      return (
+        <Pressable
+          focusable={false}
+          onKeyDown={onKeyDown}
+          onPress={onPress}
+          onPressIn={onPressIn}
+        >
+          <TextInput ref={inputRef} />
+          <View focusable={true} ref={viewRef} />
+        </Pressable>
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+
+    const input = createEventTarget(inputRef.current);
+    const view = createEventTarget(viewRef.current);
+
+    act(() => {
+      input.keydown({ key: 'Enter' });
+      input.keyup({ key: 'Enter' });
+      input.keydown({ key: ' ' });
+      input.keyup({ key: ' ' });
+      jest.runAllTimers();
+    });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(2);
+    expect(onPressIn).not.toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
+
+    act(() => {
+      view.keydown({ key: 'Enter' });
+      view.keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(3);
+    expect(onPressIn).not.toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
+  test('ignore keyboard press from a nested disabled pressable', () => {
+    const onPress = jest.fn();
+    const onPressIn = jest.fn();
+    const innerRef = React.createRef();
+
+    function TestCase() {
+      return (
+        <Pressable onPress={onPress} onPressIn={onPressIn}>
+          <Pressable disabled={true} ref={innerRef} />
+        </Pressable>
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+
+    const inner = createEventTarget(innerRef.current);
+
+    act(() => {
+      inner.keydown({ key: 'Enter' });
+      inner.keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+
+    expect(onPressIn).not.toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
+  test('end keyboard press when keyup is on a text input', () => {
+    const onPressOut = jest.fn();
+    const pressableRef = React.createRef();
+    const inputRef = React.createRef();
+
+    function TestCase() {
+      return (
+        <>
+          <Pressable onPressOut={onPressOut} ref={pressableRef} />
+          <TextInput ref={inputRef} />
+        </>
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+
+    act(() => {
+      createEventTarget(pressableRef.current).keydown({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+    act(() => {
+      createEventTarget(inputRef.current).keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+
+    expect(onPressOut).toHaveBeenCalled();
   });
 
   describe('prop "ref"', () => {
