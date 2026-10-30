@@ -186,6 +186,8 @@ const textStyle = {
   font: '14px System',
   listStyle: 'none',
   margin: 0,
+  minHeight: 0,
+  minWidth: 0,
   padding: 0,
   position: 'relative',
   textAlign: 'start',
