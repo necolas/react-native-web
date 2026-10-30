@@ -315,8 +315,11 @@ const TextInput = (props: {
 
   function handleKeyDown(e: any) {
     const hostNode = e.target;
-    // Prevent key events bubbling (see #612)
-    e.stopPropagation();
+    // Prevent 'Enter' and 'Space' key events bubbling to ancestors that
+    // may treat them as press events (see #612)
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.stopPropagation();
+    }
 
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
