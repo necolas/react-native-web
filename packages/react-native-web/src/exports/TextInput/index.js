@@ -315,9 +315,6 @@ const TextInput = (props: {
 
   function handleKeyDown(e: any) {
     const hostNode = e.target;
-    // Prevent key events bubbling (see #612)
-    e.stopPropagation();
-
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
 

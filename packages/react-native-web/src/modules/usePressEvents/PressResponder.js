@@ -343,8 +343,9 @@ export default class PressResponder {
 
       onKeyDown: (event) => {
         const { disabled } = this._config;
-        const { key, target } = event;
-        if (!disabled && isValidKeyPress(event)) {
+        const { currentTarget, key, target } = event;
+        // Ignore keys from nested elements, as react-native does (see #612)
+        if (!disabled && target === currentTarget && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
             this._responderElement = target;
