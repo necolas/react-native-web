@@ -274,6 +274,47 @@ describe('components/Pressable', () => {
       });
       expect(onPress).not.toHaveBeenCalled();
     });
+
+    test('trigger press when role is "link"', () => {
+      const onPress = jest.fn();
+      const ref = React.createRef();
+
+      act(() => {
+        render(<Pressable onPress={onPress} ref={ref} role="link" />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        target.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+      expect(onPress).toHaveBeenCalledTimes(1);
+    });
+
+    test('ignore press when role is "link" and href is set', () => {
+      // The browser dispatches a native 'click' for anchors
+      const onPress = jest.fn();
+      const ref = React.createRef();
+
+      act(() => {
+        render(
+          <Pressable
+            href="https://example.com"
+            onPress={onPress}
+            ref={ref}
+            role="link"
+          />
+        );
+      });
+      expect(ref.current.tagName).toBe('A');
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        target.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+      expect(onPress).not.toHaveBeenCalled();
+    });
   });
 
   test('press interaction as button (keyboard)', () => {
