@@ -22,7 +22,7 @@ function findSwitchThumb(container) {
 }
 
 describe('components/Switch', () => {
-  test('accessibilityLabel is applied to native checkbox', () => {
+  test('aria-label is applied to native checkbox', () => {
     const { container } = render(<Switch aria-label="switch" />);
     expect(findCheckbox(container).getAttribute('aria-label')).toBe('switch');
   });

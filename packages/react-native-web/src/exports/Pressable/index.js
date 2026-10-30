@@ -71,6 +71,7 @@ type Props = {
  */
 function Pressable(props: Props): React.Node {
   const {
+    'aria-disabled': ariaDisabled,
     children,
     delayLongPress,
     delayPressIn,
@@ -202,7 +203,7 @@ function Pressable(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled}
+      aria-disabled={disabled || ariaDisabled}
       onBlur={blurHandler}
       onContextMenu={contextMenuHandler}
       onFocus={focusHandler}

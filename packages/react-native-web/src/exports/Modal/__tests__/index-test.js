@@ -25,11 +25,7 @@ describe('components/Modal', () => {
 
   test('forwards props', () => {
     const { getByTestId } = render(
-      <Modal
-        accessibilityLabel="label"
-        accessibilityLabelledBy="labelledby"
-        testID="root"
-      />
+      <Modal aria-label="label" aria-labelledby="labelledby" testID="root" />
     );
     expect(getByTestId('root')).toMatchSnapshot();
   });
