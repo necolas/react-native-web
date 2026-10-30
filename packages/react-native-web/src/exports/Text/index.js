@@ -182,6 +182,7 @@ const textStyle = {
   boxSizing: 'border-box',
   color: 'black',
   display: 'inline',
+  flexShrink: 0,
   font: '14px System',
   listStyle: 'none',
   margin: 0,
