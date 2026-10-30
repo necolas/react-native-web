@@ -151,8 +151,24 @@ type Options = {
 function StyleSheet(styles: any, options?: Options = {}): StyleProps {
   const isRTL = options.writingDirection === 'rtl';
   const styleProps: StyleProps = customStyleq(styles, options);
-  if (Array.isArray(styleProps) && styleProps[1] != null) {
-    styleProps[1] = inline(styleProps[1], isRTL);
+  const inlineStyle = Array.isArray(styleProps) ? styleProps[1] : null;
+  if (inlineStyle != null) {
+    // `none`, `box-none`, and `box-only` need a child selector, which an
+    // inline style attribute cannot express. Compile them like StyleSheet.create.
+    const pointerEvents = inlineStyle.pointerEvents;
+    if (typeof pointerEvents === 'string') {
+      const compiled = compileAndInsertAtomic({ pointerEvents });
+      if (typeof compiled.pointerEvents === 'string') {
+        styleProps[0] = [styleProps[0], compiled.pointerEvents]
+          .filter(Boolean)
+          .join(' ');
+      }
+      delete inlineStyle.pointerEvents;
+      styleProps[1] = Object.keys(inlineStyle).length > 0 ? inlineStyle : null;
+    }
+    if (styleProps[1] != null) {
+      styleProps[1] = inline(styleProps[1], isRTL);
+    }
   }
   return styleProps;
 }
