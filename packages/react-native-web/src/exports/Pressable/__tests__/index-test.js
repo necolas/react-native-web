@@ -200,6 +200,142 @@ describe('components/Pressable', () => {
     expect(onContextMenu).toHaveBeenCalled();
   });
 
+  describe('press interaction (cross-element pointer release)', () => {
+    test('ignores a pointer click dispatched to an ancestor after a drag from a nested Pressable', () => {
+      // Reproduces https://github.com/necolas/react-native-web/issues/2765:
+      // a press that starts in a nested Pressable and is released over an
+      // ancestor makes the browser dispatch 'click' to the nearest common
+      // ancestor. That click must not fire the ancestor's onPress, because no
+      // press ever started on the ancestor.
+      const onParentPress = jest.fn();
+      const onChildPress = jest.fn();
+      const parentRef = React.createRef();
+      const childRef = React.createRef();
+      act(() => {
+        render(
+          <Pressable onPress={onParentPress} ref={parentRef}>
+            <Pressable onPress={onChildPress} ref={childRef} />
+          </Pressable>
+        );
+      });
+      const parent = createEventTarget(parentRef.current);
+      const child = createEventTarget(childRef.current);
+      act(() => {
+        child.pointerdown({ button: 0 });
+        jest.runAllTimers();
+      });
+      act(() => {
+        // The browser dispatches 'mouseup' to the element under the pointer,
+        // then dispatches 'click' to the nearest common ancestor with
+        // 'detail' > 0 for pointer-originated clicks.
+        parent.click({ button: 0, detail: 1 });
+        jest.runAllTimers();
+      });
+      expect(onChildPress).not.toHaveBeenCalled();
+      expect(onParentPress).not.toHaveBeenCalled();
+    });
+
+    test('calls onPress for a pointer click on an element where the press started', () => {
+      const onParentPress = jest.fn();
+      const parentRef = React.createRef();
+      const childRef = React.createRef();
+      act(() => {
+        render(
+          <Pressable onPress={onParentPress} ref={parentRef}>
+            <Pressable onPress={jest.fn()} ref={childRef} />
+          </Pressable>
+        );
+      });
+      const parent = createEventTarget(parentRef.current);
+      act(() => {
+        parent.pointerdown({ button: 0 });
+        jest.runAllTimers();
+      });
+      act(() => {
+        // Release still within the parent (e.g., over its child); the
+        // resulting common-ancestor click may fire onPress because the press
+        // did start on this element.
+        parent.click({ button: 0, detail: 1 });
+        jest.runAllTimers();
+      });
+      expect(onParentPress).toHaveBeenCalledTimes(1);
+    });
+
+    test('calls onPress for programmatic and virtual (assistive technology) clicks without a pointer gesture', () => {
+      // 'element.click()', 'HTMLElement#click' from scripts, and clicks
+      // dispatched by assistive technologies have no pointer gesture and a
+      // 'detail' of 0; they must continue to fire onPress.
+      const onPress = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Pressable onPress={onPress} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click({ button: 0, detail: 0 });
+        jest.runAllTimers();
+      });
+      expect(onPress).toHaveBeenCalledTimes(1);
+      act(() => {
+        target.virtualclick();
+        jest.runAllTimers();
+      });
+      expect(onPress).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  test('repeated pointer clicks each fire onPress once', () => {
+    const onPress = jest.fn();
+    const ref = React.createRef();
+    act(() => {
+      render(<Pressable onPress={onPress} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    for (let i = 0; i < 2; i++) {
+      act(() => {
+        target.pointerdown({ button: 0 });
+        jest.runAllTimers();
+      });
+      act(() => {
+        // The browser dispatches 'pointerup'/'mouseup', then 'click'.
+        ref.current.dispatchEvent(
+          new MouseEvent('pointerup', { bubbles: true, button: 0 })
+        );
+        ref.current.dispatchEvent(
+          new MouseEvent('mouseup', { bubbles: true, button: 0 })
+        );
+        target.click({ button: 0, detail: i + 1 });
+        jest.runAllTimers();
+      });
+    }
+    expect(onPress).toHaveBeenCalledTimes(2);
+  });
+
+  test('ignores a pointer click arriving after a keyboard-initiated press', () => {
+    // A keyboard press fires onPress from 'keyup'; it must not also arm the
+    // pointer-click path for a click that arrives before 'keyup'.
+    const onPress = jest.fn();
+    const ref = React.createRef();
+    act(() => {
+      render(<Pressable onPress={onPress} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    act(() => {
+      target.keydown({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+    act(() => {
+      target.click({ button: 0, detail: 1 });
+      jest.runAllTimers();
+    });
+    expect(onPress).not.toHaveBeenCalled();
+    act(() => {
+      target.keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
   describe('press interaction (keyboard)', () => {
     test('trigger press when keyup is on the same element', () => {
       let container;

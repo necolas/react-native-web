@@ -230,6 +230,8 @@ export default class PressResponder {
   _pressDelayTimeout: ?number = null;
   _pressOutDelayTimeout: ?number = null;
   _selectionTerminated: ?boolean;
+  _isPressStartedByCurrentGesture: boolean = false;
+  _pressStartedResetTimeout: ?number = null;
   _touchActivatePosition: ?Readonly<{|
     pageX: number,
     pageY: number
@@ -252,6 +254,10 @@ export default class PressResponder {
     this._cancelLongPressDelayTimeout();
     this._cancelPressDelayTimeout();
     this._cancelPressOutDelayTimeout();
+    if (this._pressStartedResetTimeout != null) {
+      clearTimeout(this._pressStartedResetTimeout);
+      this._pressStartedResetTimeout = null;
+    }
   }
 
   /**
@@ -299,6 +305,13 @@ export default class PressResponder {
 
     const end = (event: ResponderEvent): void => {
       this._receiveSignal(RESPONDER_RELEASE, event);
+      // The native 'click' event is dispatched immediately after 'mouseup';
+      // if no 'click' arrives for this element, clear the latch so a later
+      // unrelated click cannot consume a stale gesture.
+      this._pressStartedResetTimeout = setTimeout(() => {
+        this._isPressStartedByCurrentGesture = false;
+        this._pressStartedResetTimeout = null;
+      }, 0);
     };
 
     const keyupHandler = (event: KeyboardEvent) => {
@@ -324,6 +337,7 @@ export default class PressResponder {
         if (onPress != null && !isNativeInteractiveElement && isActiveElement) {
           onPress(event);
         }
+        this._isPressStartedByCurrentGesture = false;
 
         this._responderElement = null;
       }
@@ -367,7 +381,16 @@ export default class PressResponder {
         }
       },
 
-      onResponderGrant: (event) => start(event),
+      onResponderGrant: (event) => {
+        // Only a pointer grant arms the click latch; keyboard presses fire
+        // onPress from 'keyup' and must not arm it for a later stray click.
+        this._isPressStartedByCurrentGesture = true;
+        if (this._pressStartedResetTimeout != null) {
+          clearTimeout(this._pressStartedResetTimeout);
+          this._pressStartedResetTimeout = null;
+        }
+        start(event);
+      },
 
       onResponderMove: (event) => {
         if (this._config.onPressMove != null) {
@@ -389,6 +412,7 @@ export default class PressResponder {
         if (event.nativeEvent.type === 'selectionchange') {
           this._selectionTerminated = true;
         }
+        this._isPressStartedByCurrentGesture = false;
         this._receiveSignal(RESPONDER_TERMINATED, event);
       },
 
@@ -411,15 +435,30 @@ export default class PressResponder {
       },
 
       // NOTE: this diverges from react-native in 3 significant ways:
-      // * The `onPress` callback is not connected to the responder system (the native
-      //  `click` event must be used but is dispatched in many scenarios where no pointers
-      //   are on the screen.) Therefore, it's possible for `onPress` to be called without
-      //   `onPress{Start,End}` being called first.
+      // * The `onPress` callback is connected to the responder system for
+      //   pointer-originated clicks: a press must have started on this element during
+      //   the current gesture. Keyboard, screen-reader, and script clicks (native
+      //   `click` events with `detail` 0, dispatched with no pointers on the screen)
+      //   still fire `onPress` without `onPress{Start,End}` being called first.
       // * The `onPress` callback is only be called on the first ancestor of the native
       //   `click` target that is using the PressResponder.
       // * The event's `nativeEvent` is a `MouseEvent` not a `TouchEvent`.
       onClick: (event: any): void => {
         const { disabled, onPress } = this._config;
+        // 'click' events dispatched from a keyboard, screen reader, or script
+        // have no pointer gesture (detail is 0); they must always fire onPress.
+        // Pointer-originated clicks (detail > 0) only fire onPress when a press
+        // actually started on this element during the current gesture, so a
+        // click dispatched to a common ancestor after a cross-element drag
+        // cannot trigger a press that never happened.
+        const isProgrammaticClick = event.nativeEvent.detail === 0;
+        const isPressStartedByCurrentGesture =
+          this._isPressStartedByCurrentGesture;
+        this._isPressStartedByCurrentGesture = false;
+        if (this._pressStartedResetTimeout != null) {
+          clearTimeout(this._pressStartedResetTimeout);
+          this._pressStartedResetTimeout = null;
+        }
         if (!disabled) {
           // If long press dispatched, cancel default click behavior.
           // If the responder terminated because text was selected during the gesture,
@@ -427,7 +466,11 @@ export default class PressResponder {
           event.stopPropagation();
           if (this._longPressDispatched || this._selectionTerminated) {
             event.preventDefault();
-          } else if (onPress != null && event.altKey === false) {
+          } else if (
+            onPress != null &&
+            event.altKey === false &&
+            (isProgrammaticClick || isPressStartedByCurrentGesture)
+          ) {
             onPress(event);
           }
         } else {
