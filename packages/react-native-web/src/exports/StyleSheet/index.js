@@ -29,6 +29,12 @@ function customStyleq(styles: any, options: Options = {}) {
       if (compiledStyle != null) {
         return localizeStyle(compiledStyle, isRTL);
       }
+      // Compiled objects (e.g., from StyleX) are already in styleq's format.
+      // Preprocessing them would rewrite keys, and return a new object that
+      // defeats styleq's cache.
+      if (style.$$css === true) {
+        return localizeStyle(style, isRTL);
+      }
       return preprocess(style, {
         ...defaultPreprocessOptions,
         ...preprocessOptions
