@@ -36,11 +36,6 @@ export type LayoutEvent = {
   timeStamp: number
 };
 
-export type PointValue = {|
-  x: number,
-  y: number
-|};
-
 type LayoutCallback = (
   x: number,
   y: number,

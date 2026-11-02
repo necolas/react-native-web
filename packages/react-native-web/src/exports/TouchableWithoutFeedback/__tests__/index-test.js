@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
 import TouchableWithoutFeedback from '../';
 import View from '../../View';
 
@@ -31,5 +32,70 @@ describe('components/TouchableWithoutFeedback', () => {
       </TouchableWithoutFeedback>
     );
     expect(container.firstChild.getAttribute('title')).toBe('Hello');
+  });
+
+  test('prop "disabled" disables press', () => {
+    const onPress = jest.fn();
+    const ref = React.createRef();
+    let container;
+
+    act(() => {
+      ({ container } = render(
+        <TouchableWithoutFeedback disabled={true} onPress={onPress}>
+          <View ref={ref} />
+        </TouchableWithoutFeedback>
+      ));
+    });
+
+    const target = createEventTarget(ref.current);
+
+    act(() => {
+      target.pointerdown({ button: 0 });
+      jest.runAllTimers();
+    });
+    act(() => {
+      target.pointerup({ button: 0 });
+      jest.runAllTimers();
+    });
+
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
+  test('forwards ARIA props', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback
+        aria-label="Close"
+        aria-live="polite"
+        role="button"
+      >
+        <View />
+      </TouchableWithoutFeedback>
+    );
+
+    expect(container.firstChild.getAttribute('aria-label')).toBe('Close');
+    expect(container.firstChild.getAttribute('aria-live')).toBe('polite');
+    expect(container.firstChild.getAttribute('role')).toBe('button');
+  });
+
+  test('prop "accessibilityState.disabled" takes precedence over child "aria-disabled"', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback accessibilityState={{ disabled: true }}>
+        <View aria-disabled={false} />
+      </TouchableWithoutFeedback>
+    );
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test.each([
+    ['aria-disabled', { 'aria-disabled': true }],
+    ['accessibilityState.disabled', { accessibilityState: { disabled: true } }]
+  ])('keeps child prop "%s"', (_, props) => {
+    const { container } = render(
+      <TouchableWithoutFeedback>
+        <View {...props} />
+      </TouchableWithoutFeedback>
+    );
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
   });
 });

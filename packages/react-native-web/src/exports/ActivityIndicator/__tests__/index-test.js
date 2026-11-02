@@ -11,20 +11,18 @@ import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
 describe('components/ActivityIndicator', () => {
-  describe('prop "accessibilityLabel"', () => {
+  describe('prop "aria-label"', () => {
     test('value is set', () => {
       const { container } = render(
-        <ActivityIndicator accessibilityLabel="accessibility label" />
+        <ActivityIndicator aria-label="accessibility label" />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityLiveRegion"', () => {
+  describe('prop "aria-live"', () => {
     test('value is set', () => {
-      const { container } = render(
-        <ActivityIndicator accessibilityLiveRegion="polite" />
-      );
+      const { container } = render(<ActivityIndicator aria-live="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
