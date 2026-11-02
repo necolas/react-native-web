@@ -21,7 +21,11 @@ export class ImageUriCache {
     return isDataUri || Boolean(entries[uri]);
   }
 
-  static add(uri: string) {
+  static add(uri: string): boolean {
+    // "has" is always true for data URIs, so don't keep them in memory
+    if (dataUriPattern.test(uri)) {
+      return false;
+    }
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
     if (entries[uri]) {
@@ -33,13 +37,15 @@ export class ImageUriCache {
         refCount: 1
       };
     }
+    return true;
   }
 
   static remove(uri: string) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    if (!entries[uri]) {
+      return;
     }
+    entries[uri].refCount -= 1;
     // Free up entries when the cache is "full"
     ImageUriCache._cleanUpIfNeeded();
   }

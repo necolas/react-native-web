@@ -18,7 +18,7 @@ import * as React from 'react';
 import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import { createBoxShadowValue } from '../StyleSheet/preprocess';
-import ImageLoader from '../../modules/ImageLoader';
+import ImageLoader, { ImageUriCache } from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
@@ -268,7 +268,7 @@ const Image = (props: {
   // Image loading
   // Read the load handlers through a ref, so that a new handler identity does
   // not abort and restart the request for the same uri.
-  const loadEventHandlersRef = React.useRef({
+  const handlersRef = React.useRef({
     onError,
     onLoad,
     onLoadEnd,
@@ -276,49 +276,12 @@ const Image = (props: {
   });
 
   React.useLayoutEffect(() => {
-    loadEventHandlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
+    handlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
   });
 
   const uri = resolveAssetUri(source);
+
   React.useEffect(() => {
-    abortPendingRequest();
-
-    if (uri != null) {
-      updateState(LOADING);
-      const { onLoadStart } = loadEventHandlersRef.current;
-      if (onLoadStart) {
-        onLoadStart();
-      }
-
-      requestRef.current = ImageLoader.load(
-        uri,
-        function load(e) {
-          updateState(LOADED);
-          const { onLoad, onLoadEnd } = loadEventHandlersRef.current;
-          if (onLoad) {
-            onLoad(e);
-          }
-          if (onLoadEnd) {
-            onLoadEnd();
-          }
-        },
-        function error() {
-          updateState(ERRORED);
-          const { onError, onLoadEnd } = loadEventHandlersRef.current;
-          if (onError) {
-            onError({
-              nativeEvent: {
-                error: `Failed to load resource ${uri}`
-              }
-            });
-          }
-          if (onLoadEnd) {
-            onLoadEnd();
-          }
-        }
-      );
-    }
-
     function abortPendingRequest() {
       if (requestRef.current != null) {
         ImageLoader.abort(requestRef.current);
@@ -326,7 +289,62 @@ const Image = (props: {
       }
     }
 
-    return abortPendingRequest;
+    abortPendingRequest();
+
+    let isCacheEntryAdded = false;
+    let isCancelled = false;
+
+    if (uri != null) {
+      if (ImageLoader.has(uri)) {
+        isCacheEntryAdded = ImageUriCache.add(uri);
+        updateState(LOADED);
+      } else {
+        updateState(LOADING);
+      }
+
+      const { onLoadStart } = handlersRef.current;
+      onLoadStart?.();
+
+      requestRef.current = ImageLoader.load(
+        uri,
+        function load(e) {
+          // The decode callback can still run after the request is aborted
+          if (isCancelled) {
+            return;
+          }
+          if (!isCacheEntryAdded) {
+            isCacheEntryAdded = ImageUriCache.add(uri);
+          }
+
+          updateState(LOADED);
+          const { onLoad, onLoadEnd } = handlersRef.current;
+
+          onLoad?.(e);
+          onLoadEnd?.();
+        },
+        () => {
+          updateState(ERRORED);
+          const { onError, onLoadEnd } = handlersRef.current;
+
+          onError?.({
+            nativeEvent: {
+              error: `Failed to load resource ${uri}`
+            }
+          });
+
+          onLoadEnd?.();
+        }
+      );
+    }
+
+    return () => {
+      isCancelled = true;
+      abortPendingRequest();
+
+      if (uri != null && isCacheEntryAdded) {
+        ImageUriCache.remove(uri);
+      }
+    };
   }, [uri, requestRef, updateState]);
 
   return (

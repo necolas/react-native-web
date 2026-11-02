@@ -15,7 +15,27 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 
 const originalImage = window.Image;
+const originalImageLoaderAbort = ImageLoader.abort;
+const originalImageLoaderLoad = ImageLoader.load;
 const originalPixelRatioGet = PixelRatio.get;
+
+function mockLoad() {
+  ImageLoader.load = jest.fn((uri, onLoad) => {
+    onLoad();
+  });
+}
+
+function mockPendingLoad() {
+  const resolveLoad = {};
+  ImageLoader.load = jest.fn((uri, onLoad) => {
+    resolveLoad[uri] = onLoad;
+  });
+  return resolveLoad;
+}
+
+function createLoadHandlers() {
+  return { onLoad: jest.fn(), onLoadEnd: jest.fn(), onLoadStart: jest.fn() };
+}
 
 describe('components/Image', () => {
   beforeEach(() => {
@@ -25,6 +45,8 @@ describe('components/Image', () => {
 
   afterEach(() => {
     window.Image = originalImage;
+    ImageLoader.abort = originalImageLoaderAbort;
+    ImageLoader.load = originalImageLoaderLoad;
     PixelRatio.get = originalPixelRatioGet;
   });
 
@@ -103,125 +125,77 @@ describe('components/Image', () => {
   });
 
   describe('prop "onLoad"', () => {
-    test('is called after image is loaded from network', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source="https://test.com/img.jpg"
-        />
-      );
-      jest.runOnlyPendingTimers();
-      expect(onLoadStub).toHaveBeenCalled();
-    });
-
-    test('is called after image is loaded from cache', () => {
-      jest.useFakeTimers();
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      const uri = 'https://test.com/img.jpg';
-      ImageUriCache.add(uri);
-      render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={uri}
-        />
-      );
-      jest.runOnlyPendingTimers();
-      expect(onLoadStub).toHaveBeenCalled();
-      ImageUriCache.remove(uri);
-    });
+    test.each([false, true])(
+      'is called after image is loaded (cached: %s)',
+      (isCached) => {
+        const uri = 'https://test.com/img.jpg';
+        const handlers = createLoadHandlers();
+        mockLoad();
+        if (isCached) {
+          ImageUriCache.add(uri);
+        }
+        render(<Image {...handlers} source={uri} />);
+        expect(handlers.onLoad).toHaveBeenCalledTimes(1);
+        expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
+      }
+    );
 
     test('is called on update if "uri" is different', () => {
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
+      const handlers = createLoadHandlers();
+      mockLoad();
       const { rerender } = render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source="https://test.com/img.jpg"
-        />
+        <Image {...handlers} source="https://test.com/img.jpg" />
       );
-      act(() => {
-        rerender(
-          <Image
-            onLoad={onLoadStub}
-            onLoadEnd={onLoadEndStub}
-            onLoadStart={onLoadStartStub}
-            source="https://blah.com/img.png"
-          />
-        );
-      });
-      expect(onLoadStub.mock.calls.length).toBe(2);
-      expect(onLoadEndStub.mock.calls.length).toBe(2);
+      rerender(<Image {...handlers} source="https://blah.com/img.png" />);
+      expect(handlers.onLoad).toHaveBeenCalledTimes(2);
+      expect(handlers.onLoadEnd).toHaveBeenCalledTimes(2);
     });
 
-    test('is not called on update if "uri" is the same', () => {
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
-      const { rerender } = render(
+    test.each([
+      'https://test.com/img.jpg',
+      { uri: 'https://test.com/img.jpg', width: 1, height: 1 }
+    ])('is not called on update if "uri" is the same (%o)', (source) => {
+      const handlers = createLoadHandlers();
+      mockLoad();
+      const { rerender } = render(<Image {...handlers} source={source} />);
+      rerender(
         <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source="https://test.com/img.jpg"
+          {...handlers}
+          source={typeof source === 'object' ? { ...source } : source}
         />
       );
-      act(() => {
-        rerender(
-          <Image
-            onLoad={onLoadStub}
-            onLoadEnd={onLoadEndStub}
-            onLoadStart={onLoadStartStub}
-            source="https://test.com/img.jpg"
-          />
-        );
-      });
-      expect(onLoadStub.mock.calls.length).toBe(1);
-      expect(onLoadEndStub.mock.calls.length).toBe(1);
+      expect(handlers.onLoad).toHaveBeenCalledTimes(1);
+      expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
     });
 
-    test('is not called on update if "uri" is the same and given as an object', () => {
-      const onLoadStartStub = jest.fn();
-      const onLoadStub = jest.fn();
-      const onLoadEndStub = jest.fn();
+    test('is not restarted on update if only the handler identities change', () => {
+      const firstHandlers = createLoadHandlers();
+      const secondHandlers = createLoadHandlers();
+      ImageLoader.abort = jest.fn();
+      ImageLoader.load = jest.fn();
       const { rerender } = render(
-        <Image
-          onLoad={onLoadStub}
-          onLoadEnd={onLoadEndStub}
-          onLoadStart={onLoadStartStub}
-          source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
-        />
+        <Image {...firstHandlers} source="https://test.com/img.jpg" />
       );
+      rerender(<Image {...secondHandlers} source="https://test.com/img.jpg" />);
+      expect(ImageLoader.load).toHaveBeenCalledTimes(1);
+      expect(ImageLoader.abort).not.toHaveBeenCalled();
+      expect(firstHandlers.onLoadStart).toHaveBeenCalledTimes(1);
+      expect(secondHandlers.onLoadStart).not.toHaveBeenCalled();
+    });
+
+    test('calls the most recent handlers when a load settles after an update', () => {
+      const uri = 'https://test.com/img.jpg';
+      const firstHandlers = createLoadHandlers();
+      const secondHandlers = createLoadHandlers();
+      const resolveLoad = mockPendingLoad();
+      const { rerender } = render(<Image {...firstHandlers} source={uri} />);
+      rerender(<Image {...secondHandlers} source={uri} />);
       act(() => {
-        rerender(
-          <Image
-            onLoad={onLoadStub}
-            onLoadEnd={onLoadEndStub}
-            onLoadStart={onLoadStartStub}
-            source={{ uri: 'https://test.com/img.jpg', width: 1, height: 1 }}
-          />
-        );
+        resolveLoad[uri]();
       });
-      expect(onLoadStub.mock.calls.length).toBe(1);
-      expect(onLoadEndStub.mock.calls.length).toBe(1);
+      expect(firstHandlers.onLoad).not.toHaveBeenCalled();
+      expect(secondHandlers.onLoad).toHaveBeenCalledTimes(1);
+      expect(secondHandlers.onLoadEnd).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -250,75 +224,68 @@ describe('components/Image', () => {
       });
     });
 
-    test('is not set immediately if the image has not already been loaded', () => {
-      const uri = 'https://google.com/favicon.ico';
-      const source = { uri };
-      const { container } = render(<Image source={source} />);
-      expect(container.firstChild).toMatchSnapshot();
+    test('is shown only once loaded if defaultSource is provided', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uri = 'https://testing.com/fullSize.jpg';
+      const resolveLoad = mockPendingLoad();
+      const { container } = render(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+      );
+      expect(container.querySelector('img').src).toBe(defaultUri);
+      act(() => {
+        resolveLoad[uri]();
+      });
+      expect(container.querySelector('img').src).toBe(uri);
     });
 
-    test('is set immediately if the image was preloaded', () => {
-      const uri = 'https://yahoo.com/favicon.ico';
-      ImageLoader.load = jest
-        .fn()
-        .mockImplementationOnce((_, onLoad, onError) => {
-          onLoad();
-        });
+    test('is shown immediately if the image was preloaded', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uri = 'https://testing.com/fullSize.jpg';
+      mockLoad();
       return Image.prefetch(uri).then(() => {
-        const source = { uri };
-        const { container } = render(<Image source={source} />, {
-          disableLifecycleMethods: true
-        });
-        expect(container.firstChild).toMatchSnapshot();
-        ImageUriCache.remove(uri);
+        mockPendingLoad();
+        const { container } = render(
+          <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+        );
+        expect(container.querySelector('img').src).toBe(uri);
       });
     });
 
-    test('is set immediately if the image has already been loaded', () => {
-      const uriOne = 'https://google.com/favicon.ico';
-      const uriTwo = 'https://twitter.com/favicon.ico';
+    test('is shown immediately if another Image has already loaded it', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uri = 'https://testing.com/fullSize.jpg';
+      const resolveLoad = mockPendingLoad();
+      render(<Image source={{ uri }} />);
+      act(() => {
+        resolveLoad[uri]();
+      });
+      const { container } = render(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+      );
+      expect(container.querySelector('img').src).toBe(uri);
+    });
+
+    test('is shown immediately on update if the image has already been loaded', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uriOne = 'https://testing.com/one.jpg';
+      const uriTwo = 'https://testing.com/two.jpg';
       ImageUriCache.add(uriOne);
       ImageUriCache.add(uriTwo);
-
-      // initial render
+      mockPendingLoad();
       const { container, rerender } = render(
-        <Image source={{ uri: uriOne }} />
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriOne }} />
       );
-      ImageUriCache.remove(uriOne);
-      expect(container.firstChild).toMatchSnapshot();
-      // props update
-      act(() => {
-        rerender(<Image source={{ uri: uriTwo }} />);
-        ImageUriCache.remove(uriTwo);
-      });
-      expect(container.firstChild).toMatchSnapshot();
+      expect(container.querySelector('img').src).toBe(uriOne);
+      rerender(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriTwo }} />
+      );
+      expect(container.querySelector('img').src).toBe(uriTwo);
     });
 
     test('is correctly updated when missing in initial render', () => {
       const uri = 'https://testing.com/img.jpg';
       const { container, rerender } = render(<Image />);
-      act(() => {
-        rerender(<Image source={{ uri }} />);
-      });
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('is correctly updated only when loaded if defaultSource provided', () => {
-      const defaultUri = 'https://testing.com/preview.jpg';
-      const uri = 'https://testing.com/fullSize.jpg';
-      let loadCallback;
-      ImageLoader.load = jest
-        .fn()
-        .mockImplementationOnce((_, onLoad, onError) => {
-          loadCallback = onLoad;
-        });
-      const { container } = render(
-        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
-      );
-      expect(container.firstChild).toMatchSnapshot();
-      act(() => {
-        loadCallback();
-      });
+      rerender(<Image source={{ uri }} />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
@@ -336,13 +303,18 @@ describe('components/Image', () => {
         'http://localhost/static/img.png'
       );
 
-      act(() => {
-        PixelRatio.get = jest.fn(() => 2.2);
-        ({ container } = render(<Image source={assetId} />));
-      });
+      PixelRatio.get = jest.fn(() => 2.2);
+      ({ container } = render(<Image source={assetId} />));
       expect(container.querySelector('img').src).toBe(
         'http://localhost/static/img@2x.png'
       );
+    });
+
+    test('"src" takes precedence over "source"', () => {
+      const src = 'https://example.com/src.png';
+      const uri = 'https://example.com/source.png';
+      const { container } = render(<Image source={{ uri }} src={src} />);
+      expect(container.querySelector('img').src).toBe(src);
     });
   });
 
@@ -450,76 +422,67 @@ describe('components/Image', () => {
     });
   });
 
-  describe('load event handler identity', () => {
-    test('load is not restarted on update if only the handler identities change', () => {
-      const originalAbort = ImageLoader.abort;
-      ImageLoader.load = jest.fn();
-      ImageLoader.abort = jest.fn();
-      const firstStubs = {
-        onLoad: jest.fn(),
-        onLoadEnd: jest.fn(),
-        onLoadStart: jest.fn()
-      };
-      const secondStubs = {
-        onLoad: jest.fn(),
-        onLoadEnd: jest.fn(),
-        onLoadStart: jest.fn()
-      };
-      const { rerender } = render(
-        <Image {...firstStubs} source="https://test.com/img.jpg" />
-      );
-      act(() => {
-        rerender(<Image {...secondStubs} source="https://test.com/img.jpg" />);
-      });
-      expect(ImageLoader.load.mock.calls.length).toBe(1);
-      expect(ImageLoader.abort).not.toHaveBeenCalled();
-      expect(firstStubs.onLoadStart.mock.calls.length).toBe(1);
-      expect(secondStubs.onLoadStart).not.toHaveBeenCalled();
-      ImageLoader.abort = originalAbort;
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
+  describe('cache', () => {
+    test('releases its cache entry on unmount', () => {
+      const uri = 'https://testing.com/avatar.jpg';
+      mockLoad();
+      const { unmount } = render(<Image source={{ uri }} />);
+      expect(ImageUriCache._entries[uri].refCount).toBe(1);
+      unmount();
+      expect(ImageUriCache._entries[uri].refCount).toBe(0);
+      expect(ImageUriCache.has(uri)).toBe(true);
     });
 
-    test('most recent handlers are called when a load settles after an update', () => {
-      let resolveLoad;
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        resolveLoad = onLoad;
-      });
-      const firstStubs = {
-        onLoad: jest.fn(),
-        onLoadEnd: jest.fn(),
-        onLoadStart: jest.fn()
-      };
-      const secondStubs = {
-        onLoad: jest.fn(),
-        onLoadEnd: jest.fn(),
-        onLoadStart: jest.fn()
-      };
-      const { rerender } = render(
-        <Image {...firstStubs} source="https://test.com/img.jpg" />
+    test('ignores a load that resolves after unmount', () => {
+      const uri = 'https://testing.com/avatar.jpg';
+      const resolveLoad = mockPendingLoad();
+      const { unmount } = render(<Image source={{ uri }} />);
+      unmount();
+      resolveLoad[uri]();
+      expect(ImageUriCache.has(uri)).toBe(false);
+    });
+
+    test('ignores a load that resolves after the source changes', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uriOne = 'https://testing.com/one.jpg';
+      const uriTwo = 'https://testing.com/two.jpg';
+      const resolveLoad = mockPendingLoad();
+      const { container, rerender } = render(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriOne }} />
+      );
+      rerender(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriTwo }} />
       );
       act(() => {
-        rerender(<Image {...secondStubs} source="https://test.com/img.jpg" />);
+        resolveLoad[uriOne]();
       });
-      act(() => {
-        resolveLoad();
-      });
-      expect(firstStubs.onLoad).not.toHaveBeenCalled();
-      expect(secondStubs.onLoad.mock.calls.length).toBe(1);
-      expect(secondStubs.onLoadEnd.mock.calls.length).toBe(1);
-      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
-        onLoad();
-      });
+      expect(ImageUriCache.has(uriOne)).toBe(false);
+      expect(container.querySelector('img').src).toBe(defaultUri);
     });
-  });
 
-  test('prop "src" takes precedence over "source"', () => {
-    const src = 'https://example.com/src.png';
-    const uri = 'https://example.com/source.png';
-    ImageUriCache.add(src);
-    ImageUriCache.add(uri);
-    const { container } = render(<Image source={{ uri }} src={src} />);
-    expect(container.querySelector('img').src).toBe(src);
+    test('holds a reference while showing a cached image', () => {
+      const uri = 'https://testing.com/avatar.jpg';
+      ImageUriCache.add(uri);
+      ImageUriCache.remove(uri);
+      mockPendingLoad();
+      const { unmount } = render(<Image source={{ uri }} />);
+      expect(ImageUriCache._entries[uri].refCount).toBe(1);
+      unmount();
+      expect(ImageUriCache._entries[uri].refCount).toBe(0);
+    });
+
+    test('does not evict another entry when a data URI unmounts', () => {
+      const uri = 'https://testing.com/avatar.jpg';
+      const dataUri = 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+      ImageUriCache.add(uri);
+      ImageUriCache.remove(uri);
+      const maximumEntries = ImageUriCache._maximumEntries;
+      ImageUriCache._maximumEntries = 1;
+      mockLoad();
+      const { unmount } = render(<Image source={{ uri: dataUri }} />);
+      unmount();
+      ImageUriCache._maximumEntries = maximumEntries;
+      expect(ImageUriCache._entries[uri]).toBeDefined();
+    });
   });
 });
