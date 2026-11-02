@@ -87,13 +87,19 @@ describe('components/TouchableWithoutFeedback', () => {
     expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
   });
 
-  test.each([
-    ['aria-disabled', { 'aria-disabled': true }],
-    ['accessibilityState.disabled', { accessibilityState: { disabled: true } }]
-  ])('keeps child prop "%s"', (_, props) => {
+  test('keeps child prop "aria-disabled"', () => {
     const { container } = render(
       <TouchableWithoutFeedback>
-        <View {...props} />
+        <View aria-disabled={true} />
+      </TouchableWithoutFeedback>
+    );
+    expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test('keeps child prop "accessibilityState.disabled"', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback>
+        <View accessibilityState={{ disabled: true }} />
       </TouchableWithoutFeedback>
     );
     expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
