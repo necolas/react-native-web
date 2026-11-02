@@ -522,4 +522,34 @@ describe('components/Image', () => {
     const { container } = render(<Image source={{ uri }} src={src} />);
     expect(container.querySelector('img').src).toBe(src);
   });
+
+  describe('cache', () => {
+    test('is set immediately if another Image has already loaded it', () => {
+      const defaultUri = 'https://testing.com/preview.jpg';
+      const uri = 'https://testing.com/avatar.jpg';
+      ImageLoader.load = jest
+        .fn()
+        .mockImplementationOnce((_, onLoad, onError) => {
+          onLoad();
+        })
+        .mockImplementation(() => {});
+      render(<Image source={{ uri }} />);
+      const { container } = render(
+        <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
+      );
+      expect(container.querySelector('img').src).toBe(uri);
+    });
+
+    test('releases its cache entry on unmount', () => {
+      const uri = 'https://testing.com/avatar.jpg';
+      ImageLoader.load = jest.fn().mockImplementation((_, onLoad, onError) => {
+        onLoad();
+      });
+      const { unmount } = render(<Image source={{ uri }} />);
+      expect(ImageUriCache._entries[uri].refCount).toBe(1);
+      unmount();
+      expect(ImageUriCache._entries[uri].refCount).toBe(0);
+      expect(ImageUriCache.has(uri)).toBe(true);
+    });
+  });
 });

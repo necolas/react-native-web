@@ -18,7 +18,7 @@ import * as React from 'react';
 import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import { createBoxShadowValue } from '../StyleSheet/preprocess';
-import ImageLoader from '../../modules/ImageLoader';
+import ImageLoader, { ImageUriCache } from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
@@ -282,9 +282,10 @@ const Image = (props: {
   const uri = resolveAssetUri(source);
   React.useEffect(() => {
     abortPendingRequest();
+    let isCacheEntryAdded = false;
 
     if (uri != null) {
-      updateState(LOADING);
+      updateState(ImageLoader.has(uri) ? LOADED : LOADING);
       const { onLoadStart } = loadEventHandlersRef.current;
       if (onLoadStart) {
         onLoadStart();
@@ -293,6 +294,8 @@ const Image = (props: {
       requestRef.current = ImageLoader.load(
         uri,
         function load(e) {
+          ImageUriCache.add(uri);
+          isCacheEntryAdded = true;
           updateState(LOADED);
           const { onLoad, onLoadEnd } = loadEventHandlersRef.current;
           if (onLoad) {
@@ -326,7 +329,12 @@ const Image = (props: {
       }
     }
 
-    return abortPendingRequest;
+    return () => {
+      abortPendingRequest();
+      if (uri != null && isCacheEntryAdded) {
+        ImageUriCache.remove(uri);
+      }
+    };
   }, [uri, requestRef, updateState]);
 
   return (

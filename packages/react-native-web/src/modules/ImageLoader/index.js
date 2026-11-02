@@ -22,6 +22,10 @@ export class ImageUriCache {
   }
 
   static add(uri: string) {
+    // "has" is always true for data URIs, so don't keep them in memory
+    if (dataUriPattern.test(uri)) {
+      return;
+    }
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
     if (entries[uri]) {
