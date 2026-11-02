@@ -11,6 +11,7 @@ import { atomic, classic, inline } from './compiler';
 import { createSheet } from './dom';
 import { localizeStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
+import type { PreprocessOptions } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
 import canUseDOM from '../../modules/canUseDom';
@@ -18,26 +19,40 @@ import canUseDOM from '../../modules/canUseDom';
 const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
 const sheet = createSheet();
 
-const defaultPreprocessOptions = { shadow: true, textShadow: true };
+const defaultPreprocessOptions: PreprocessOptions = {
+  shadow: true,
+  textShadow: true
+};
 
-function customStyleq(styles: any, options: Options = {}) {
-  const { writingDirection, ...preprocessOptions } = options;
-  const isRTL = writingDirection === 'rtl';
+function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
   return styleq.factory({
     transform(style) {
       // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
       const compiledStyle =
         staticStyleMap.get(style) ?? (style.$$css === true ? style : null);
 
-      if (compiledStyle != null) {
-        return localizeStyle(compiledStyle, isRTL);
-      }
-
-      return preprocess(style, {
-        ...defaultPreprocessOptions,
-        ...preprocessOptions
-      });
+      return compiledStyle != null
+        ? localizeStyle(compiledStyle, isRTL)
+        : preprocess(style, preprocessOptions);
     }
+  });
+}
+
+const styleqLTR = createStyleq(false, defaultPreprocessOptions);
+const styleqRTL = createStyleq(true, defaultPreprocessOptions);
+
+function customStyleq(styles: any, options: Options = {}) {
+  if (!('shadow' in options) && !('textShadow' in options)) {
+    return options.writingDirection === 'rtl'
+      ? styleqRTL(styles)
+      : styleqLTR(styles);
+  }
+
+  const { writingDirection, ...preprocessOptions } = options;
+
+  return createStyleq(writingDirection === 'rtl', {
+    ...defaultPreprocessOptions,
+    ...preprocessOptions
   })(styles);
 }
 
