@@ -7,6 +7,7 @@
 
 import React from 'react';
 import TextInput from '..';
+import View from '../../View';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
@@ -362,6 +363,19 @@ describe('components/TextInput', () => {
     expect(onFocus).toHaveBeenCalledTimes(1);
     target.node.focus();
     expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
+  });
+
+  test('keydown events bubble to ancestors', () => {
+    const onKeyDown = jest.fn();
+    const { container } = render(
+      <View onKeyDown={onKeyDown}>
+        <TextInput />
+      </View>
+    );
+    const input = findInput(container);
+    input.dispatchEvent(keydown({ key: 'Escape' }));
+    input.dispatchEvent(keydown({ key: ' ' }));
+    expect(onKeyDown).toHaveBeenCalledTimes(2);
   });
 
   describe('prop "onKeyPress"', () => {

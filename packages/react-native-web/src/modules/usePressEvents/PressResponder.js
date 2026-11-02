@@ -343,9 +343,15 @@ export default class PressResponder {
 
       onKeyDown: (event) => {
         const { disabled } = this._config;
-        const { currentTarget, key, target } = event;
-        // Ignore keys from nested elements, as react-native does (see #612)
-        if (!disabled && target === currentTarget && isValidKeyPress(event)) {
+        const { key, target } = event;
+        const elementType = getElementType(target);
+
+        // Keys typed in a nested TextInput must not start a press
+        const isTextInput =
+          elementType === 'textarea' ||
+          (elementType === 'input' && target.type !== 'checkbox');
+
+        if (!disabled && !isTextInput && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
             this._responderElement = target;
