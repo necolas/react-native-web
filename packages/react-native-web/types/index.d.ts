@@ -111,7 +111,7 @@ interface WebSharedProps extends WebEventProps {
         target?: string | undefined;
       }
     | undefined;
-  /** Sets the `type` attribute when the element renders as a `<button>`. */
+  /** @unstable */
   type?: ButtonType | undefined;
 }
 

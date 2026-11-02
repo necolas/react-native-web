@@ -121,6 +121,7 @@ function TouchableOpacity(props: Props): React.Node {
       {...rest}
       {...pressEventHandlers}
       aria-disabled={disabled ?? rest['aria-disabled']}
+      disabled={disabled}
       focusable={!disabled && focusable !== false}
       pointerEvents={disabled ? 'box-none' : undefined}
       style={[

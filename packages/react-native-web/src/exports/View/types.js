@@ -208,6 +208,7 @@ export type ViewProps = {
   testID?: ?string,
   title?: ?string,
   // unstable
+  disabled?: ?boolean,
   href?: ?string,
   hrefAttrs?: ?{ download?: ?boolean, rel?: ?string, target?: ?string },
   type?: ?('button' | 'reset' | 'submit'),

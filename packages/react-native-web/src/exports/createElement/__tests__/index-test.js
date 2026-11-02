@@ -193,16 +193,11 @@ describe('exports/createElement', () => {
         createElement('button', { 'aria-disabled': null })
       );
       expect(getAttribute(isEmpty, 'aria-disabled')).toBeNull();
-      expect(getProperty(isEmpty, 'disabled')).toBe(false);
       const { container: hasValue } = render(
         createElement('button', { 'aria-disabled': true })
       );
       expect(getAttribute(hasValue, 'aria-disabled')).toBe('true');
-      expect(getProperty(hasValue, 'disabled')).toBe(true);
-      const { container: isNotSupported } = render(
-        createElement('div', { 'aria-disabled': true })
-      );
-      expect(getAttribute(isNotSupported, 'disabled')).toBeNull();
+      expect(getProperty(hasValue, 'disabled')).toBe(false);
     });
 
     test('aria-errormessage', () => {

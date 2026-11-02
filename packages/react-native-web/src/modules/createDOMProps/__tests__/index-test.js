@@ -200,7 +200,6 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-busy']).toEqual(true);
     expect(props['aria-checked']).toEqual('mixed');
     expect(props['aria-disabled']).toEqual(true);
-    expect(props.disabled).toEqual(true);
     expect(props['aria-expanded']).toEqual(false);
     expect(props['aria-selected']).toEqual(true);
     expect(props.accessibilityState).toBeUndefined();
