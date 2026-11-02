@@ -105,9 +105,9 @@ describe('components/View', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    test('href with accessibilityRole', () => {
+    test('href with role', () => {
       const { container } = render(
-        <View accessibilityRole="none" href="https://example.com" />
+        <View href="https://example.com" role="none" />
       );
       expect(container.firstChild).toMatchSnapshot();
     });

@@ -22,7 +22,6 @@ import type {
 type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
 type idRef = string;
-type idRefList = idRef | Array<idRef>;
 
 export type AccessibilityProps = {|
   'aria-activedescendant'?: ?idRef,
@@ -44,7 +43,7 @@ export type AccessibilityProps = {|
   'aria-haspopup'?: ?('dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false),
   'aria-hidden'?: ?boolean,
   'aria-invalid'?: ?boolean,
-  'aria-keyshortcuts'?: ?Array<string>,
+  'aria-keyshortcuts'?: ?string,
   'aria-label'?: ?string,
   'aria-labelledby'?: ?idRef,
   'aria-level'?: ?number,
@@ -72,67 +71,24 @@ export type AccessibilityProps = {|
   'aria-valuetext'?: ?string,
   role?: ?string,
 
-  // @deprecated
-  accessibilityActiveDescendant?: ?idRef,
-  accessibilityAtomic?: ?boolean,
-  accessibilityAutoComplete?: ?('none' | 'list' | 'inline' | 'both'),
-  accessibilityBusy?: ?boolean,
-  accessibilityChecked?: ?(boolean | 'mixed'),
-  accessibilityColumnCount?: ?number,
-  accessibilityColumnIndex?: ?number,
-  accessibilityColumnSpan?: ?number,
-  accessibilityControls?: ?idRefList,
-  accessibilityCurrent?: ?(
-    | boolean
-    | 'page'
-    | 'step'
-    | 'location'
-    | 'date'
-    | 'time'
-  ),
-  accessibilityDescribedBy?: ?idRefList,
-  accessibilityDetails?: ?idRef,
-  accessibilityDisabled?: ?boolean,
-  accessibilityErrorMessage?: ?idRef,
-  accessibilityExpanded?: ?boolean,
-  accessibilityFlowTo?: ?idRefList,
-  accessibilityHasPopup?: ?(
-    | 'dialog'
-    | 'grid'
-    | 'listbox'
-    | 'menu'
-    | 'tree'
-    | false
-  ),
-  accessibilityHidden?: ?boolean,
-  accessibilityInvalid?: ?boolean,
-  accessibilityKeyShortcuts?: ?Array<string>,
+  accessibilityHint?: ?string,
   accessibilityLabel?: ?string,
-  accessibilityLabelledBy?: ?idRefList,
-  accessibilityLevel?: ?number,
+  accessibilityLabelledBy?: ?(idRef | Array<idRef>),
   accessibilityLiveRegion?: ?('assertive' | 'none' | 'polite'),
-  accessibilityModal?: ?boolean,
-  accessibilityMultiline?: ?boolean,
-  accessibilityMultiSelectable?: ?boolean,
-  accessibilityOrientation?: ?('horizontal' | 'vertical'),
-  accessibilityOwns?: ?idRefList,
-  accessibilityPlaceholder?: ?string,
-  accessibilityPosInSet?: ?number,
-  accessibilityPressed?: ?(boolean | 'mixed'),
-  accessibilityReadOnly?: ?boolean,
-  accessibilityRequired?: ?boolean,
   accessibilityRole?: ?string,
-  accessibilityRoleDescription?: ?string,
-  accessibilityRowCount?: ?number,
-  accessibilityRowIndex?: ?number,
-  accessibilityRowSpan?: ?number,
-  accessibilitySelected?: ?boolean,
-  accessibilitySetSize?: ?number,
-  accessibilitySort?: ?('ascending' | 'descending' | 'none' | 'other'),
-  accessibilityValueMax?: ?number,
-  accessibilityValueMin?: ?number,
-  accessibilityValueNow?: ?number,
-  accessibilityValueText?: ?string
+  accessibilityState?: ?{|
+    busy?: ?boolean,
+    checked?: ?(boolean | 'mixed'),
+    disabled?: ?boolean,
+    expanded?: ?boolean,
+    selected?: ?boolean
+  |},
+  accessibilityValue?: ?{|
+    max?: ?number,
+    min?: ?number,
+    now?: ?number,
+    text?: ?string
+  |}
 |};
 
 export type EventProps = {|
