@@ -25,16 +25,14 @@ function customStyleq(styles: any, options: Options = {}) {
   const isRTL = writingDirection === 'rtl';
   return styleq.factory({
     transform(style) {
-      const compiledStyle = staticStyleMap.get(style);
+      // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
+      const compiledStyle =
+        staticStyleMap.get(style) ?? (style.$$css === true ? style : null);
+
       if (compiledStyle != null) {
         return localizeStyle(compiledStyle, isRTL);
       }
-      // Compiled objects (e.g., from StyleX) are already in styleq's format.
-      // Preprocessing them would rewrite keys, and return a new object that
-      // defeats styleq's cache.
-      if (style.$$css === true) {
-        return localizeStyle(style, isRTL);
-      }
+
       return preprocess(style, {
         ...defaultPreprocessOptions,
         ...preprocessOptions
