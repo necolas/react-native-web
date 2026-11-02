@@ -344,7 +344,14 @@ export default class PressResponder {
       onKeyDown: (event) => {
         const { disabled } = this._config;
         const { key, target } = event;
-        if (!disabled && isValidKeyPress(event)) {
+        const elementType = getElementType(target);
+
+        // Keys typed in a nested TextInput must not start a press
+        const isTextInput =
+          elementType === 'textarea' ||
+          (elementType === 'input' && target.type !== 'checkbox');
+
+        if (!disabled && !isTextInput && isValidKeyPress(event)) {
           if (this._touchState === NOT_RESPONDER) {
             start(event, false);
             this._responderElement = target;

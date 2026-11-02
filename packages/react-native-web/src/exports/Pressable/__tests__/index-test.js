@@ -7,6 +7,7 @@
 
 import React from 'react';
 import Pressable from '../';
+import TextInput from '../../TextInput';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
@@ -314,6 +315,48 @@ describe('components/Pressable', () => {
     });
     // Calling preventDefault prevents native 'click' event dispatch
     expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  test('ignore keyboard press from a nested text input', () => {
+    const onKeyDown = jest.fn();
+    const onPress = jest.fn();
+    const onPressIn = jest.fn();
+    const inputRef = React.createRef();
+    const textAreaRef = React.createRef();
+
+    function TestCase() {
+      return (
+        <Pressable
+          onKeyDown={onKeyDown}
+          onPress={onPress}
+          onPressIn={onPressIn}
+        >
+          <TextInput ref={inputRef} />
+          <TextInput multiline={true} ref={textAreaRef} />
+        </Pressable>
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+
+    const input = createEventTarget(inputRef.current);
+    const textArea = createEventTarget(textAreaRef.current);
+
+    act(() => {
+      input.keydown({ key: 'Enter' });
+      input.keyup({ key: 'Enter' });
+      input.keydown({ key: ' ' });
+      input.keyup({ key: ' ' });
+      textArea.keydown({ key: 'Enter' });
+      textArea.keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(3);
+    expect(onPressIn).not.toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
   });
 
   describe('prop "ref"', () => {
