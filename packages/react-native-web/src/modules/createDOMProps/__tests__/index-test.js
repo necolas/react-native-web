@@ -165,6 +165,26 @@ describe('modules/createDOMProps', () => {
     });
   });
 
+  describe('prop "disabled"', () => {
+    test('is set on native elements that support it', () => {
+      expect(createDOMProps('button', { disabled: true }).disabled).toBe(true);
+      expect(
+        createDOMProps('button', { disabled: false }).disabled
+      ).toBeUndefined();
+      expect(
+        createDOMProps('div', { disabled: true }).disabled
+      ).toBeUndefined();
+    });
+
+    test('is passed to components', () => {
+      const Component = () => null;
+      expect(createDOMProps(Component, { disabled: true }).disabled).toBe(true);
+      expect(createDOMProps(Component, { disabled: false }).disabled).toBe(
+        false
+      );
+    });
+  });
+
   test('prop "accessibilityLabel" becomes "aria-label"', () => {
     const accessibilityLabel = 'accessibilityLabel';
     const props = createProps({ accessibilityLabel });

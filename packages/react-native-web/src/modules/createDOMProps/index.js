@@ -355,7 +355,11 @@ const createDOMProps = (
   }
 
   // DISABLED
-  if (
+  if (typeof elementType !== 'string') {
+    if (disabled != null) {
+      domProps.disabled = disabled;
+    }
+  } else if (
     disabled === true &&
     (elementType === 'button' ||
       elementType === 'fieldset' ||
