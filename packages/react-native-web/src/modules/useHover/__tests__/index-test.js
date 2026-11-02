@@ -90,6 +90,56 @@ describe('useHover', () => {
       expect(onHoverStart).toHaveBeenCalledTimes(1);
       expect(onHoverEnd).toHaveBeenCalledTimes(1);
     });
+
+    test('does not resume when the pointer leaves the target too', () => {
+      componentInit();
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: document.body });
+        target.pointerout({ relatedTarget: document.body });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+    });
+
+    test('resumes the nearest ancestor that contains the pointer', () => {
+      const onParentHoverStart = jest.fn();
+      onHoverStart = jest.fn();
+      ref = React.createRef();
+      childRef = React.createRef();
+      const grandchildRef = React.createRef();
+      const Component = () => {
+        useHover(ref, { onHoverStart: onParentHoverStart });
+        useHover(childRef, { onHoverStart });
+        useHover(grandchildRef, {});
+        return (
+          <div ref={ref}>
+            <div ref={childRef}>
+              <div ref={grandchildRef} />
+            </div>
+          </div>
+        );
+      };
+      render(<Component />);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      const grandchild = createEventTarget(grandchildRef.current);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: grandchild.node });
+        grandchild.pointerover();
+        grandchild.pointerout({ relatedTarget: target.node });
+        child.pointerout({ relatedTarget: target.node });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onParentHoverStart).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('disabled', () => {

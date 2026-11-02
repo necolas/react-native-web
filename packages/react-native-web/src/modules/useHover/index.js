@@ -79,7 +79,9 @@ export default function useHover(
       const leaveListener = function (e: any) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
-          dispatchCustomEvent(target, unlockEventType);
+          dispatchCustomEvent(target, unlockEventType, {
+            detail: { relatedTarget: e.relatedTarget }
+          });
           hoverEnd(e);
         }
       };
@@ -113,7 +115,12 @@ export default function useHover(
               lockEvent.stopPropagation();
             }
           };
-          const unlockListener = function (lockEvent: Event) {
+          const unlockListener = function (lockEvent: any) {
+            const { relatedTarget } = lockEvent.detail || emptyObject;
+            // The pointer left this target too, so an ancestor may resume.
+            if (!target.contains(relatedTarget)) {
+              return;
+            }
             if (lockEvent.target !== target) {
               hoverStart(e);
               // Ancestors further out stay locked.
