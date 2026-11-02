@@ -2,6 +2,7 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
 import TouchableWithoutFeedback from '../';
+import Text from '../../Text';
 import View from '../../View';
 
 describe('components/TouchableWithoutFeedback', () => {
@@ -103,5 +104,14 @@ describe('components/TouchableWithoutFeedback', () => {
       </TouchableWithoutFeedback>
     );
     expect(container.firstChild.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test('prop "disabled" disables a native button child', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback disabled={true}>
+        <Text accessibilityRole="button">Save</Text>
+      </TouchableWithoutFeedback>
+    );
+    expect(container.firstChild.disabled).toBe(true);
   });
 });
