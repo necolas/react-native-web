@@ -109,6 +109,7 @@ const createDOMProps = (
     onAccessibilityAction,
     /* eslint-enable */
     dataSet,
+    disabled,
     focusable,
     id,
     nativeID,
@@ -180,18 +181,6 @@ const createDOMProps = (
   const _ariaDisabled = ariaDisabled ?? accessibilityState?.disabled;
   if (_ariaDisabled === true) {
     domProps['aria-disabled'] = true;
-    // Enhance with native semantics
-    if (
-      elementType === 'button' ||
-      elementType === 'fieldset' ||
-      elementType === 'input' ||
-      elementType === 'optgroup' ||
-      elementType === 'option' ||
-      elementType === 'select' ||
-      elementType === 'textarea'
-    ) {
-      domProps.disabled = true;
-    }
   }
 
   if (ariaErrorMessage != null) {
@@ -363,6 +352,20 @@ const createDOMProps = (
         }
       }
     }
+  }
+
+  // DISABLED
+  if (
+    disabled === true &&
+    (elementType === 'button' ||
+      elementType === 'fieldset' ||
+      elementType === 'input' ||
+      elementType === 'optgroup' ||
+      elementType === 'option' ||
+      elementType === 'select' ||
+      elementType === 'textarea')
+  ) {
+    domProps.disabled = true;
   }
 
   // FOCUS

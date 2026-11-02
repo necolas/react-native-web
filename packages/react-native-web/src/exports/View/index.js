@@ -34,6 +34,7 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
+  disabled: true,
   href: true,
   lang: true,
   onScroll: true,
