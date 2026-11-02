@@ -165,12 +165,17 @@ const ignoredProps: { [string]: boolean } = {
   tintColor: true
 };
 
+export type PreprocessOptions = {
+  readonly shadow?: boolean,
+  readonly textShadow?: boolean
+};
+
 /**
  * Preprocess styles
  */
 export const preprocess = <T extends {| [key: string]: any |}>(
   originalStyle: T,
-  options?: { readonly shadow?: boolean, readonly textShadow?: boolean } = {}
+  options?: PreprocessOptions = {}
 ): T => {
   const style = originalStyle || emptyObject;
   const nextStyle: { [string]: any } = {};
