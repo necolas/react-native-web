@@ -187,7 +187,7 @@ describe('components/Pressable', () => {
     onRender.mockClear();
 
     act(() => {
-      target.pointerover;
+      target.pointerover();
     });
 
     expect(onHoverIn).toHaveBeenCalled();
