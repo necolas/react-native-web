@@ -80,8 +80,6 @@ const forwardPropsList = {
   type: true
 };
 
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
-
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
 function isEventComposing(nativeEvent: KeyboardEvent) {
@@ -396,7 +394,7 @@ const TextInput = (props: {
   });
   const { direction: contextDirection } = useLocaleContext();
 
-  const supportedProps = pickProps(props);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';

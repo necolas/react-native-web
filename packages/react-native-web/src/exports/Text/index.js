@@ -41,8 +41,6 @@ const forwardPropsList = {
   type: true
 };
 
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
-
 const Text = (props: {
   ...TextProps,
   ref?: React.Ref<HTMLElement & PlatformMethods>
@@ -70,8 +68,7 @@ const Text = (props: {
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
     ref,
-    selectable,
-    ...rest
+    selectable
   } = props;
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
@@ -117,7 +114,7 @@ const Text = (props: {
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
 
-  const supportedProps = pickProps(rest);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.dir = componentDirection;
   // 'auto' by default allows browsers to infer writing direction (root elements only)
   if (!hasTextAncestor) {

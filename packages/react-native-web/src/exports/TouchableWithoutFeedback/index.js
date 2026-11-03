@@ -58,8 +58,6 @@ const forwardPropsList = {
   type: true
 };
 
-const pickProps = (props: Props) => pick(props, forwardPropsList);
-
 function TouchableWithoutFeedback(props: Props): React.Node {
   const {
     delayPressIn,
@@ -104,7 +102,7 @@ function TouchableWithoutFeedback(props: Props): React.Node {
 
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
-  const supportedProps = pickProps(props);
+  const supportedProps = pick(props, forwardPropsList);
 
   supportedProps['aria-disabled'] =
     disabled ??

@@ -43,8 +43,6 @@ const forwardPropsList = {
   type: true
 };
 
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
-
 const View = (props: {
   ...ViewProps,
   ref?: React.Ref<HTMLElement & PlatformMethods>
@@ -68,8 +66,7 @@ const View = (props: {
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
-    ref,
-    ...rest
+    ref
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -113,7 +110,7 @@ const View = (props: {
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
 
-  const supportedProps = pickProps(rest);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.dir = componentDirection;
   supportedProps.style = [
     styles.view$raw,
