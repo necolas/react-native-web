@@ -170,17 +170,17 @@ describe('components/Pressable', () => {
   });
 
   test('hover interaction (no state callback)', () => {
-    let container, rerender;
     const onHoverIn = jest.fn();
+    const onHoverOut = jest.fn();
     const onRender = jest.fn();
     const ref = React.createRef();
 
     act(() => {
-      ({ container, rerender } = render(
+      render(
         <React.Profiler id="pressable" onRender={onRender}>
-          <Pressable onHoverIn={onHoverIn} ref={ref} />
+          <Pressable onHoverIn={onHoverIn} onHoverOut={onHoverOut} ref={ref} />
         </React.Profiler>
-      ));
+      );
     });
 
     const target = createEventTarget(ref.current);
@@ -189,29 +189,13 @@ describe('components/Pressable', () => {
     act(() => {
       target.pointerover();
     });
-
-    expect(onHoverIn).toHaveBeenCalled();
-    expect(onRender).not.toHaveBeenCalled();
-
-    // A style function added later reads the current state
-    act(() => {
-      rerender(
-        <React.Profiler id="pressable" onRender={onRender}>
-          <Pressable
-            ref={ref}
-            style={({ hovered }) => [hovered && { backgroundColor: 'red' }]}
-          />
-        </React.Profiler>
-      );
-    });
-
-    expect(container.firstChild.style.backgroundColor).toBe('rgb(255, 0, 0)');
-
     act(() => {
       target.pointerout();
     });
 
-    expect(container.firstChild.style.backgroundColor).toBe('');
+    expect(onHoverIn).toHaveBeenCalled();
+    expect(onHoverOut).toHaveBeenCalled();
+    expect(onRender).not.toHaveBeenCalled();
   });
 
   test('press interaction (pointer)', () => {

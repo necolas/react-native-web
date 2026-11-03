@@ -14,7 +14,7 @@ import type { PressResponderConfig } from '../../modules/usePressEvents/PressRes
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { memo, useMemo, useRef } from 'react';
+import { memo, useMemo, useState, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
@@ -95,16 +95,12 @@ function Pressable(props: Props): React.Node {
     ...rest
   } = props;
 
-  // Interaction changes only need a re-render if a callback reads the state
-  const hasStateCallback =
-    typeof style === 'function' || typeof children === 'function';
+  const [hovered, setHovered] = usePressState(testOnly_hovered === true);
+  const [focused, setFocused] = usePressState(false);
+  const [pressed, setPressed] = usePressState(testOnly_pressed === true);
 
-  const [hoveredState, setHovered] = useInteractionState(hasStateCallback);
-  const [focused, setFocused] = useInteractionState(hasStateCallback);
-  const [pressedState, setPressed] = useInteractionState(hasStateCallback);
-
-  const hovered = testOnly_hovered === true || hoveredState;
-  const pressed = testOnly_pressed === true || pressedState;
+  const shouldUpdatePressed =
+    typeof children === 'function' || typeof style === 'function';
 
   const hostRef = useRef(null);
   const setRef = useMergeRefs(ref, hostRef);
@@ -117,7 +113,7 @@ function Pressable(props: Props): React.Node {
       disabled,
       onLongPress,
       onPress,
-      onPressChange: setPressed,
+      onPressChange: shouldUpdatePressed ? setPressed : null,
       onPressStart: onPressIn,
       onPressMove,
       onPressEnd: onPressOut
@@ -132,7 +128,8 @@ function Pressable(props: Props): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed
+      setPressed,
+      shouldUpdatePressed
     ]
   );
 
@@ -143,7 +140,7 @@ function Pressable(props: Props): React.Node {
 
   useHover(hostRef, {
     disabled,
-    onHoverChange: setHovered,
+    onHoverChange: shouldUpdatePressed ? setHovered : null,
     onHoverStart: onHoverIn,
     onHoverEnd: onHoverOut
   });
@@ -153,25 +150,29 @@ function Pressable(props: Props): React.Node {
   const blurHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(false);
+        if (shouldUpdatePressed) {
+          setFocused(false);
+        }
         if (onBlur != null) {
           onBlur(e);
         }
       }
     },
-    [hostRef, setFocused, onBlur]
+    [hostRef, setFocused, shouldUpdatePressed, onBlur]
   );
 
   const focusHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(true);
+        if (shouldUpdatePressed) {
+          setFocused(true);
+        }
         if (onFocus != null) {
           onFocus(e);
         }
       }
     },
-    [hostRef, setFocused, onFocus]
+    [hostRef, setFocused, shouldUpdatePressed, onFocus]
   );
 
   const contextMenuHandler = React.useCallback(
@@ -227,28 +228,9 @@ function Pressable(props: Props): React.Node {
   );
 }
 
-function useInteractionState(
-  rerenderOnChange: boolean
-): [boolean, (boolean) => void] {
-  const [, forceUpdate] = React.useReducer<{}, void>(() => ({}), {});
-  const valueRef = useRef(false);
-  const rerenderOnChangeRef = useRef(rerenderOnChange);
-
-  React.useLayoutEffect(() => {
-    rerenderOnChangeRef.current = rerenderOnChange;
-  });
-
-  const setValue = React.useCallback((value: boolean) => {
-    if (valueRef.current !== value) {
-      valueRef.current = value;
-
-      if (rerenderOnChangeRef.current) {
-        forceUpdate();
-      }
-    }
-  }, []);
-
-  return [valueRef.current, setValue];
+function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
+  const [pressed, setPressed] = useState(false);
+  return [pressed || forcePressed, setPressed];
 }
 
 const styles = StyleSheet.create({
