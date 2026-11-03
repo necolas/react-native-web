@@ -95,9 +95,9 @@ function Pressable(props: Props): React.Node {
     ...rest
   } = props;
 
-  const [hovered, setHovered] = usePressState(testOnly_hovered === true);
-  const [focused, setFocused] = usePressState(false);
-  const [pressed, setPressed] = usePressState(testOnly_pressed === true);
+  const [hovered, setHovered] = useForceableState(testOnly_hovered === true);
+  const [focused, setFocused] = useForceableState(false);
+  const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
   const hasStateCallback =
     typeof children === 'function' || typeof style === 'function';
@@ -228,9 +228,9 @@ function Pressable(props: Props): React.Node {
   );
 }
 
-function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
-  const [pressed, setPressed] = useState(false);
-  return [pressed || forcePressed, setPressed];
+function useForceableState(forced: boolean): [boolean, (boolean) => void] {
+  const [bool, setBool] = useState(false);
+  return [bool || forced, setBool];
 }
 
 const styles = StyleSheet.create({
