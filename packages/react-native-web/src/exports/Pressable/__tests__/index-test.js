@@ -169,6 +169,51 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('hover interaction (no state callback)', () => {
+    let container, rerender;
+    const onHoverIn = jest.fn();
+    const onRender = jest.fn();
+    const ref = React.createRef();
+
+    act(() => {
+      ({ container, rerender } = render(
+        <React.Profiler id="pressable" onRender={onRender}>
+          <Pressable onHoverIn={onHoverIn} ref={ref} />
+        </React.Profiler>
+      ));
+    });
+
+    const target = createEventTarget(ref.current);
+    onRender.mockClear();
+
+    act(() => {
+      target.pointerover;
+    });
+
+    expect(onHoverIn).toHaveBeenCalled();
+    expect(onRender).not.toHaveBeenCalled();
+
+    // A style function added later reads the current state
+    act(() => {
+      rerender(
+        <React.Profiler id="pressable" onRender={onRender}>
+          <Pressable
+            ref={ref}
+            style={({ hovered }) => [hovered && { backgroundColor: 'red' }]}
+          />
+        </React.Profiler>
+      );
+    });
+
+    expect(container.firstChild.style.backgroundColor).toBe('rgb(255, 0, 0)');
+
+    act(() => {
+      target.pointerout();
+    });
+
+    expect(container.firstChild.style.backgroundColor).toBe('');
+  });
+
   test('press interaction (pointer)', () => {
     let container;
     const onContextMenu = jest.fn();

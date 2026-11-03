@@ -14,7 +14,7 @@ import type { PressResponderConfig } from '../../modules/usePressEvents/PressRes
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
-import { memo, useMemo, useState, useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useHover from '../../modules/useHover';
 import usePressEvents from '../../modules/usePressEvents';
@@ -95,9 +95,16 @@ function Pressable(props: Props): React.Node {
     ...rest
   } = props;
 
-  const [hovered, setHovered] = useForceableState(testOnly_hovered === true);
-  const [focused, setFocused] = useForceableState(false);
-  const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
+  // Interaction changes only need a re-render if a callback reads the state
+  const hasStateCallback =
+    typeof style === 'function' || typeof children === 'function';
+
+  const [hoveredState, setHovered] = useInteractionState(hasStateCallback);
+  const [focused, setFocused] = useInteractionState(hasStateCallback);
+  const [pressedState, setPressed] = useInteractionState(hasStateCallback);
+
+  const hovered = testOnly_hovered === true || hoveredState;
+  const pressed = testOnly_pressed === true || pressedState;
 
   const hostRef = useRef(null);
   const setRef = useMergeRefs(ref, hostRef);
@@ -220,9 +227,28 @@ function Pressable(props: Props): React.Node {
   );
 }
 
-function useForceableState(forced: boolean): [boolean, (boolean) => void] {
-  const [bool, setBool] = useState(false);
-  return [bool || forced, setBool];
+function useInteractionState(
+  rerenderOnChange: boolean
+): [boolean, (boolean) => void] {
+  const [, forceUpdate] = React.useReducer<{}, void>(() => ({}), {});
+  const valueRef = useRef(false);
+  const rerenderOnChangeRef = useRef(rerenderOnChange);
+
+  React.useLayoutEffect(() => {
+    rerenderOnChangeRef.current = rerenderOnChange;
+  });
+
+  const setValue = React.useCallback((value: boolean) => {
+    if (valueRef.current !== value) {
+      valueRef.current = value;
+
+      if (rerenderOnChangeRef.current) {
+        forceUpdate();
+      }
+    }
+  }, []);
+
+  return [valueRef.current, setValue];
 }
 
 const styles = StyleSheet.create({
