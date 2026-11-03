@@ -8,7 +8,7 @@
  */
 
 import AccessibilityUtil from '../AccessibilityUtil';
-import StyleSheet from '../../exports/StyleSheet';
+import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
 
 const emptyObject: Object = {};
 const uppercasePattern = /[A-Z]/g;
@@ -23,7 +23,9 @@ function hyphenateString(str: string): string {
   return str.replace(uppercasePattern, toHyphenLower);
 }
 
-const pointerEventsStyles = StyleSheet.create({
+const pointerEventsStyles: {
+  readonly [string]: { readonly pointerEvents: string }
+} = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
   },
@@ -405,13 +407,30 @@ const createDOMProps = (
   }
 
   // Resolve styles
-  const [className, inlineStyle] = StyleSheet(
+  const styleSheetOptions: StyleSheetOptions = {
+    writingDirection: 'ltr',
+    ...options
+  };
+
+  let [className, inlineStyle] = StyleSheet(
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
-    {
-      writingDirection: 'ltr',
-      ...options
-    }
+    styleSheetOptions
   );
+
+  // Inline "pointerEvents" can't style children (needed by "box-none" and
+  // "box-only"), so resolve again with the class. Rare, so cheap.
+  const inlinePointerEvents = inlineStyle?.pointerEvents;
+
+  if (
+    inlinePointerEvents === 'box-none' ||
+    inlinePointerEvents === 'box-only'
+  ) {
+    [className, inlineStyle] = StyleSheet(
+      [style, pointerEventsStyles[inlinePointerEvents]],
+      styleSheetOptions
+    );
+  }
+
   if (className) {
     domProps.className = className;
   }

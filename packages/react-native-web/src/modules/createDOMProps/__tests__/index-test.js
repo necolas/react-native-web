@@ -275,4 +275,12 @@ describe('modules/createDOMProps', () => {
     const props = createProps({ nativeID });
     expect(props.id).toEqual(nativeID);
   });
+
+  test('style "pointerEvents" "box-none" and "box-only" add class names', () => {
+    ['box-none', 'box-only'].forEach((pointerEvents) => {
+      const props = createProps({ style: { pointerEvents } });
+      expect(props.className).toEqual(createProps({ pointerEvents }).className);
+      expect(props.style).toBeUndefined();
+    });
+  });
 });

@@ -41,7 +41,7 @@ function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
 const styleqLTR = createStyleq(false, defaultPreprocessOptions);
 const styleqRTL = createStyleq(true, defaultPreprocessOptions);
 
-function customStyleq(styles: any, options: Options = {}) {
+function customStyleq(styles: any, options: StyleSheetOptions = {}) {
   if (!('shadow' in options) && !('textShadow' in options)) {
     return options.writingDirection === 'rtl'
       ? styleqRTL(styles)
@@ -161,13 +161,14 @@ function getSheet(): { id: string, textContent: string } {
  * resolve
  */
 type StyleProps = [string, { [key: string]: unknown } | null, string];
-type Options = {
+
+export type StyleSheetOptions = {
   shadow?: boolean,
   textShadow?: boolean,
   writingDirection?: 'ltr' | 'rtl'
 };
 
-function StyleSheet(styles: any, options?: Options = {}): StyleProps {
+function StyleSheet(styles: any, options?: StyleSheetOptions = {}): StyleProps {
   const isRTL = options.writingDirection === 'rtl';
   const styleProps: StyleProps = customStyleq(styles, options);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
@@ -193,7 +194,7 @@ if (devToolsHook) {
 }
 
 export type IStyleSheet = {
-  (styles: ReadonlyArray<any>, options?: Options): StyleProps,
+  (styles: ReadonlyArray<any>, options?: StyleSheetOptions): StyleProps,
   absoluteFill: Object,
   create: typeof create,
   compose: typeof compose,
