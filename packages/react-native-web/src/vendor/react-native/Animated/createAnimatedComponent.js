@@ -35,7 +35,14 @@ export type AnimatedComponentType<
 export default function createAnimatedComponent<TProps extends {...}, TInstance>(
   Component: component(ref?: React.Ref<TInstance>, ...TProps),
 ): AnimatedComponentType<TProps, TInstance> {
-  const AnimatedComponent = ({ref: forwardedRef, ...props}: any) => {
+  const AnimatedComponent = (propsWithRef: any) => {
+    const forwardedRef = propsWithRef.ref;
+    // Keep the same `props` object when only the animated values update.
+    // `useAnimatedProps` creates new animated nodes when `props` changes.
+    const props = React.useMemo(() => {
+      const {ref, ...rest} = propsWithRef;
+      return rest;
+    }, [propsWithRef]);
     const [reducedProps, callbackRef] = useAnimatedProps<TProps, TInstance>(
       props,
     );
