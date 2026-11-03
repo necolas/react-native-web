@@ -19,7 +19,7 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../modules/usePlatformMethods';
+import setPlatformMethods from '../../modules/setPlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
@@ -157,8 +157,7 @@ const Text = (props: {
     }
   }
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, ref);
+  const setRef = useMergeRefs(hostRef, setPlatformMethods, ref);
 
   supportedProps.ref = setRef;
 

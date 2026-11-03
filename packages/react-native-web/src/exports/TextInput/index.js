@@ -19,7 +19,7 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../modules/usePlatformMethods';
+import setPlatformMethods from '../../modules/setPlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
@@ -245,7 +245,7 @@ const TextInput = (props: {
   const imperativeRef = React.useMemo(
     () => (hostNode: any) => {
       // TextInput needs to add more methods to the hostNode in addition to those
-      // added by `usePlatformMethods`. This is temporarily until an API like
+      // added by `setPlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
       if (hostNode != null) {
         hostNode.clear = function () {
@@ -423,9 +423,7 @@ const TextInput = (props: {
   supportedProps.virtualkeyboardpolicy =
     showSoftInputOnFocus === false ? 'manual' : 'auto';
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, ref);
+  const setRef = useMergeRefs(hostRef, setPlatformMethods, imperativeRef, ref);
 
   supportedProps.ref = setRef;
 

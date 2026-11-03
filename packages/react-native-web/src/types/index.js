@@ -52,7 +52,7 @@ type MeasureInWindowCallback = (
   height: number
 ) => void;
 
-// Mixin to HTMLElement that represents additions from the `usePlatformMethods` hook
+// Mixin to HTMLElement that represents additions from `setPlatformMethods`
 export interface PlatformMethods {
   blur: () => void;
   focus: () => void;
