@@ -99,6 +99,9 @@ function Pressable(props: Props): React.Node {
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
+  const hasStateCallback =
+    typeof children === 'function' || typeof style === 'function';
+
   const hostRef = useRef(null);
   const setRef = useMergeRefs(ref, hostRef);
 
@@ -110,7 +113,7 @@ function Pressable(props: Props): React.Node {
       disabled,
       onLongPress,
       onPress,
-      onPressChange: setPressed,
+      onPressChange: hasStateCallback ? setPressed : null,
       onPressStart: onPressIn,
       onPressMove,
       onPressEnd: onPressOut
@@ -125,7 +128,8 @@ function Pressable(props: Props): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed
+      setPressed,
+      hasStateCallback
     ]
   );
 
@@ -136,7 +140,7 @@ function Pressable(props: Props): React.Node {
 
   useHover(hostRef, {
     disabled,
-    onHoverChange: setHovered,
+    onHoverChange: hasStateCallback ? setHovered : null,
     onHoverStart: onHoverIn,
     onHoverEnd: onHoverOut
   });
@@ -146,25 +150,29 @@ function Pressable(props: Props): React.Node {
   const blurHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(false);
+        if (hasStateCallback) {
+          setFocused(false);
+        }
         if (onBlur != null) {
           onBlur(e);
         }
       }
     },
-    [hostRef, setFocused, onBlur]
+    [hostRef, setFocused, hasStateCallback, onBlur]
   );
 
   const focusHandler = React.useCallback(
     (e: any) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(true);
+        if (hasStateCallback) {
+          setFocused(true);
+        }
         if (onFocus != null) {
           onFocus(e);
         }
       }
     },
-    [hostRef, setFocused, onFocus]
+    [hostRef, setFocused, hasStateCallback, onFocus]
   );
 
   const contextMenuHandler = React.useCallback(

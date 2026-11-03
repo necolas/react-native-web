@@ -169,6 +169,35 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  test('hover interaction (no state callback)', () => {
+    const onHoverIn = jest.fn();
+    const onHoverOut = jest.fn();
+    const onRender = jest.fn();
+    const ref = React.createRef();
+
+    act(() => {
+      render(
+        <React.Profiler id="pressable" onRender={onRender}>
+          <Pressable onHoverIn={onHoverIn} onHoverOut={onHoverOut} ref={ref} />
+        </React.Profiler>
+      );
+    });
+
+    const target = createEventTarget(ref.current);
+    onRender.mockClear();
+
+    act(() => {
+      target.pointerover();
+    });
+    act(() => {
+      target.pointerout();
+    });
+
+    expect(onHoverIn).toHaveBeenCalled();
+    expect(onHoverOut).toHaveBeenCalled();
+    expect(onRender).not.toHaveBeenCalled();
+  });
+
   test('press interaction (pointer)', () => {
     let container;
     const onContextMenu = jest.fn();
