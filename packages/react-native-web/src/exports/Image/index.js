@@ -19,6 +19,7 @@ import createElement from '../createElement';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import { createBoxShadowValue } from '../StyleSheet/preprocess';
 import ImageLoader, { ImageUriCache } from '../../modules/ImageLoader';
+import type { ImageSize } from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
@@ -292,7 +293,6 @@ const Image = (props: {
     abortPendingRequest();
 
     let isCacheEntryAdded = false;
-    let isCancelled = false;
 
     if (uri != null) {
       if (ImageLoader.has(uri)) {
@@ -305,13 +305,11 @@ const Image = (props: {
       const { onLoadStart } = handlersRef.current;
       onLoadStart?.();
 
-      requestRef.current = ImageLoader.load(
-        uri,
+      const requestId = ImageLoader.generateRequestId();
+      requestRef.current = requestId;
+
+      ImageLoader.load(uri, requestId).then(
         function load(e) {
-          // The decode callback can still run after the request is aborted
-          if (isCancelled) {
-            return;
-          }
           if (!isCacheEntryAdded) {
             isCacheEntryAdded = ImageUriCache.add(uri);
           }
@@ -338,7 +336,6 @@ const Image = (props: {
     }
 
     return () => {
-      isCancelled = true;
       abortPendingRequest();
 
       if (uri != null && isCacheEntryAdded) {
@@ -385,10 +382,10 @@ Image.displayName = 'Image';
 
 Image.getSize = function (
   uri: string,
-  success: (width: number, height: number) => void,
-  failure: () => void
-) {
-  ImageLoader.getSize(uri, success, failure);
+  success?: (width: number, height: number) => void,
+  failure?: (error: unknown) => void
+): void | Promise<ImageSize> {
+  return ImageLoader.getSize(uri, success, failure);
 };
 
 Image.prefetch = function (uri: string): Promise<void> {

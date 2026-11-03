@@ -20,17 +20,33 @@ const originalImageLoaderLoad = ImageLoader.load;
 const originalPixelRatioGet = PixelRatio.get;
 
 function mockLoad() {
-  ImageLoader.load = jest.fn((uri, onLoad) => {
-    onLoad();
-  });
+  ImageLoader.load = jest.fn(() => Promise.resolve({}));
 }
 
 function mockPendingLoad() {
   const resolveLoad = {};
-  ImageLoader.load = jest.fn((uri, onLoad) => {
-    resolveLoad[uri] = onLoad;
+  const abortedRequests = new Set();
+  ImageLoader.abort = jest.fn((requestId) => {
+    abortedRequests.add(requestId);
   });
+  ImageLoader.load = jest.fn(
+    (uri, requestId) =>
+      new Promise((resolve) => {
+        resolveLoad[uri] = () => {
+          return act(async () => {
+            // Same as ImageLoader: an aborted request never settles
+            if (!abortedRequests.has(requestId)) {
+              resolve({});
+            }
+          });
+        };
+      })
+  );
   return resolveLoad;
+}
+
+function flushLoad() {
+  return act(async () => {});
 }
 
 function createLoadHandlers() {
@@ -127,7 +143,7 @@ describe('components/Image', () => {
   describe('prop "onLoad"', () => {
     test.each([false, true])(
       'is called after image is loaded (cached: %s)',
-      (isCached) => {
+      async (isCached) => {
         const uri = 'https://test.com/img.jpg';
         const handlers = createLoadHandlers();
         mockLoad();
@@ -135,18 +151,21 @@ describe('components/Image', () => {
           ImageUriCache.add(uri);
         }
         render(<Image {...handlers} source={uri} />);
+        await flushLoad();
         expect(handlers.onLoad).toHaveBeenCalledTimes(1);
         expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
       }
     );
 
-    test('is called on update if "uri" is different', () => {
+    test('is called on update if "uri" is different', async () => {
       const handlers = createLoadHandlers();
       mockLoad();
       const { rerender } = render(
         <Image {...handlers} source="https://test.com/img.jpg" />
       );
+      await flushLoad();
       rerender(<Image {...handlers} source="https://blah.com/img.png" />);
+      await flushLoad();
       expect(handlers.onLoad).toHaveBeenCalledTimes(2);
       expect(handlers.onLoadEnd).toHaveBeenCalledTimes(2);
     });
@@ -154,16 +173,18 @@ describe('components/Image', () => {
     test.each([
       'https://test.com/img.jpg',
       { uri: 'https://test.com/img.jpg', width: 1, height: 1 }
-    ])('is not called on update if "uri" is the same (%o)', (source) => {
+    ])('is not called on update if "uri" is the same (%o)', async (source) => {
       const handlers = createLoadHandlers();
       mockLoad();
       const { rerender } = render(<Image {...handlers} source={source} />);
+      await flushLoad();
       rerender(
         <Image
           {...handlers}
           source={typeof source === 'object' ? { ...source } : source}
         />
       );
+      await flushLoad();
       expect(handlers.onLoad).toHaveBeenCalledTimes(1);
       expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
     });
@@ -172,7 +193,7 @@ describe('components/Image', () => {
       const firstHandlers = createLoadHandlers();
       const secondHandlers = createLoadHandlers();
       ImageLoader.abort = jest.fn();
-      ImageLoader.load = jest.fn();
+      ImageLoader.load = jest.fn(() => new Promise(() => {}));
       const { rerender } = render(
         <Image {...firstHandlers} source="https://test.com/img.jpg" />
       );
@@ -183,16 +204,14 @@ describe('components/Image', () => {
       expect(secondHandlers.onLoadStart).not.toHaveBeenCalled();
     });
 
-    test('calls the most recent handlers when a load settles after an update', () => {
+    test('calls the most recent handlers when a load settles after an update', async () => {
       const uri = 'https://test.com/img.jpg';
       const firstHandlers = createLoadHandlers();
       const secondHandlers = createLoadHandlers();
       const resolveLoad = mockPendingLoad();
       const { rerender } = render(<Image {...firstHandlers} source={uri} />);
       rerender(<Image {...secondHandlers} source={uri} />);
-      act(() => {
-        resolveLoad[uri]();
-      });
+      await resolveLoad[uri]();
       expect(firstHandlers.onLoad).not.toHaveBeenCalled();
       expect(secondHandlers.onLoad).toHaveBeenCalledTimes(1);
       expect(secondHandlers.onLoadEnd).toHaveBeenCalledTimes(1);
@@ -224,7 +243,7 @@ describe('components/Image', () => {
       });
     });
 
-    test('is shown only once loaded if defaultSource is provided', () => {
+    test('is shown only once loaded if defaultSource is provided', async () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uri = 'https://testing.com/fullSize.jpg';
       const resolveLoad = mockPendingLoad();
@@ -232,9 +251,7 @@ describe('components/Image', () => {
         <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
       );
       expect(container.querySelector('img').src).toBe(defaultUri);
-      act(() => {
-        resolveLoad[uri]();
-      });
+      await resolveLoad[uri]();
       expect(container.querySelector('img').src).toBe(uri);
     });
 
@@ -251,14 +268,12 @@ describe('components/Image', () => {
       });
     });
 
-    test('is shown immediately if another Image has already loaded it', () => {
+    test('is shown immediately if another Image has already loaded it', async () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uri = 'https://testing.com/fullSize.jpg';
       const resolveLoad = mockPendingLoad();
       render(<Image source={{ uri }} />);
-      act(() => {
-        resolveLoad[uri]();
-      });
+      await resolveLoad[uri]();
       const { container } = render(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
       );
@@ -423,26 +438,27 @@ describe('components/Image', () => {
   });
 
   describe('cache', () => {
-    test('releases its cache entry on unmount', () => {
+    test('releases its cache entry on unmount', async () => {
       const uri = 'https://testing.com/avatar.jpg';
       mockLoad();
       const { unmount } = render(<Image source={{ uri }} />);
+      await flushLoad();
       expect(ImageUriCache._entries[uri].refCount).toBe(1);
       unmount();
       expect(ImageUriCache._entries[uri].refCount).toBe(0);
       expect(ImageUriCache.has(uri)).toBe(true);
     });
 
-    test('ignores a load that resolves after unmount', () => {
+    test('ignores a load that resolves after unmount', async () => {
       const uri = 'https://testing.com/avatar.jpg';
       const resolveLoad = mockPendingLoad();
       const { unmount } = render(<Image source={{ uri }} />);
       unmount();
-      resolveLoad[uri]();
+      await resolveLoad[uri]();
       expect(ImageUriCache.has(uri)).toBe(false);
     });
 
-    test('ignores a load that resolves after the source changes', () => {
+    test('ignores a load that resolves after the source changes', async () => {
       const defaultUri = 'https://testing.com/preview.jpg';
       const uriOne = 'https://testing.com/one.jpg';
       const uriTwo = 'https://testing.com/two.jpg';
@@ -453,9 +469,7 @@ describe('components/Image', () => {
       rerender(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriTwo }} />
       );
-      act(() => {
-        resolveLoad[uriOne]();
-      });
+      await resolveLoad[uriOne]();
       expect(ImageUriCache.has(uriOne)).toBe(false);
       expect(container.querySelector('img').src).toBe(defaultUri);
     });
@@ -471,7 +485,7 @@ describe('components/Image', () => {
       expect(ImageUriCache._entries[uri].refCount).toBe(0);
     });
 
-    test('does not evict another entry when a data URI unmounts', () => {
+    test('does not evict another entry when a data URI unmounts', async () => {
       const uri = 'https://testing.com/avatar.jpg';
       const dataUri = 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
       ImageUriCache.add(uri);
@@ -480,6 +494,7 @@ describe('components/Image', () => {
       ImageUriCache._maximumEntries = 1;
       mockLoad();
       const { unmount } = render(<Image source={{ uri: dataUri }} />);
+      await flushLoad();
       unmount();
       ImageUriCache._maximumEntries = maximumEntries;
       expect(ImageUriCache._entries[uri]).toBeDefined();
