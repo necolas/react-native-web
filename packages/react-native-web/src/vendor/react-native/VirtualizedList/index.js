@@ -374,6 +374,9 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     }
   }
 
+  // Not supported on web. Kept so code shared with native doesn't crash.
+  setNativeProps(props: {[string]: unknown, ...}) {}
+
   _getCellKey(): string {
     return this.context?.cellKey || 'rootList';
   }

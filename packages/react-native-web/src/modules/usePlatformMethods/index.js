@@ -32,6 +32,8 @@ export default function usePlatformMethods({
         UIManager.measureLayout(hostNode, relativeToNode, failure, success);
       hostNode.measureInWindow = (callback) =>
         UIManager.measureInWindow(hostNode, callback);
+      // Not supported on web. Kept so code shared with native doesn't crash.
+      hostNode.setNativeProps = () => {};
     }
   });
 

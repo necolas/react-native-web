@@ -402,6 +402,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
     }
   }
 
+  // Not supported on web. Kept so code shared with native doesn't crash.
+  setNativeProps(props: {[string]: unknown, ...}) {}
+
   constructor(props: Props<ItemT>) {
     super(props);
     this._checkProps(this.props);

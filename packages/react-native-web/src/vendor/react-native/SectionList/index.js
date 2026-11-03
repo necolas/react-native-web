@@ -214,6 +214,9 @@ export default class SectionList<
     }
   }
 
+  // Not supported on web. Kept so code shared with native doesn't crash.
+  setNativeProps(props: {[string]: unknown, ...}) {}
+
   render(): React.Node {
     const {
       stickySectionHeadersEnabled: _stickySectionHeadersEnabled,
