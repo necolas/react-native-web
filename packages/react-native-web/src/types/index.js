@@ -63,5 +63,5 @@ export interface PlatformMethods {
     onSuccess: LayoutCallback,
     onFail: () => void
   ) => void;
-  setNativeProps: (nativeProps: {}) => void;
+  setNativeProps: (props: { [string]: unknown, ... }) => void;
 }
