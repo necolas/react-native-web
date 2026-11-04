@@ -313,7 +313,7 @@ interface WebTextStyle {
 
 declare module 'react-native' {
   interface AccessibilityProps extends WebAccessibilityProps {
-    'aria-live'?: 'assertive' | 'none' | 'off' | 'polite' | undefined;
+    'aria-live'?: 'assertive' | 'off' | 'polite' | undefined;
     role?: Role | WebRole | undefined;
   }
 

@@ -47,7 +47,7 @@ export type AccessibilityProps = {|
   'aria-label'?: ?string,
   'aria-labelledby'?: ?idRef,
   'aria-level'?: ?number,
-  'aria-live'?: ?('assertive' | 'none' | 'polite'),
+  'aria-live'?: ?('assertive' | 'off' | 'polite'),
   'aria-modal'?: ?boolean,
   'aria-multiline'?: ?boolean,
   'aria-multiselectable'?: ?boolean,

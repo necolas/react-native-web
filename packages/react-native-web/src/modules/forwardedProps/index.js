@@ -7,7 +7,7 @@
  * @flow strict-local
  */
 
-export const defaultProps = [
+export const defaultProps: string[] = [
   'children',
   'dataSet',
   'dir',
@@ -22,14 +22,7 @@ export const defaultProps = [
   'nativeID'
 ];
 
-export const accessibilityProps = [
-  'accessibilityHint',
-  'accessibilityLabel',
-  'accessibilityLabelledBy',
-  'accessibilityLiveRegion',
-  'accessibilityRole',
-  'accessibilityState',
-  'accessibilityValue',
+export const ariaProps: string[] = [
   'aria-activedescendant',
   'aria-atomic',
   'aria-autocomplete',
@@ -41,6 +34,7 @@ export const accessibilityProps = [
   'aria-controls',
   'aria-current',
   'aria-describedby',
+  'aria-description',
   'aria-details',
   'aria-disabled',
   'aria-errormessage',
@@ -74,12 +68,27 @@ export const accessibilityProps = [
   'aria-valuemax',
   'aria-valuemin',
   'aria-valuenow',
-  'aria-valuetext',
-  'inert',
+  'aria-valuetext'
+];
+
+export const reactNativeAccessibilityProps: string[] = [
+  'accessibilityHint',
+  'accessibilityLabel',
+  'accessibilityLabelledBy',
+  'accessibilityLiveRegion',
+  'accessibilityRole',
+  'accessibilityState',
+  'accessibilityValue',
   'role'
 ];
 
-export const clickProps = [
+export const accessibilityProps: string[] = [
+  ...ariaProps,
+  ...reactNativeAccessibilityProps,
+  'inert'
+];
+
+export const clickProps: string[] = [
   'onAuxClick',
   'onClick',
   'onContextMenu',
@@ -95,16 +104,16 @@ export const clickProps = [
   'onPointerUp'
 ];
 
-export const focusProps = ['onBlur', 'onFocus'];
+export const focusProps: string[] = ['onBlur', 'onFocus'];
 
-export const keyboardProps = [
+export const keyboardProps: string[] = [
   'onKeyDown',
   'onKeyDownCapture',
   'onKeyUp',
   'onKeyUpCapture'
 ];
 
-export const mouseProps = [
+export const mouseProps: string[] = [
   'onMouseDown',
   'onMouseEnter',
   'onMouseLeave',
@@ -114,7 +123,7 @@ export const mouseProps = [
   'onMouseUp'
 ];
 
-export const touchProps = [
+export const touchProps: string[] = [
   'onTouchCancel',
   'onTouchCancelCapture',
   'onTouchEnd',
@@ -125,4 +134,4 @@ export const touchProps = [
   'onTouchStartCapture'
 ];
 
-export const styleProps = ['style'];
+export const styleProps: string[] = ['style'];
