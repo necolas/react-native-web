@@ -6,6 +6,7 @@
  */
 
 import createDOMProps from '..';
+import * as forwardedProps from '../../forwardedProps';
 
 const createProps = (props) => createDOMProps(null, props);
 
@@ -46,7 +47,6 @@ describe('modules/createDOMProps', () => {
       'aria-pressed': true,
       'aria-readonly': true,
       'aria-required': true,
-      role: 'main',
       'aria-roledescription': 'roledescription',
       'aria-rowcount': 5,
       'aria-rowindex': 3,
@@ -63,6 +63,7 @@ describe('modules/createDOMProps', () => {
         custom: 'custom'
       },
       id: 'id',
+      role: 'main',
       tabIndex: 0,
       testID: 'testID'
     };
@@ -282,5 +283,18 @@ describe('modules/createDOMProps', () => {
       expect(props.className).toEqual(createProps({ pointerEvents }).className);
       expect(props.style).toBeUndefined();
     });
+  });
+
+  test('React Native accessibility props are not passed through', () => {
+    forwardedProps.accessibilityProps
+      .filter((prop) => prop.startsWith('accessibility'))
+      .concat(['accessibilityActions', 'onAccessibilityAction'])
+      .forEach((prop) => {
+        expect(createProps({ [prop]: 'value' })).not.toHaveProperty(prop);
+      });
+  });
+
+  test('prop "inert" is passed through', () => {
+    expect(createProps({ inert: true })).toHaveProperty('inert', true);
   });
 });

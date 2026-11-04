@@ -22,7 +22,6 @@ import type {
 
 type ButtonType = 'button' | 'reset' | 'submit';
 type NumberOrString = number | string;
-type idRef = string;
 
 // Roles that react-native-web renders as a specific HTML element.
 // See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
@@ -38,19 +37,20 @@ type WebRole =
 
 // See src/exports/View/types.js
 interface WebAccessibilityProps {
-  'aria-activedescendant'?: idRef | undefined;
+  'aria-activedescendant'?: string | undefined;
   'aria-atomic'?: boolean | undefined;
   'aria-autocomplete'?: 'none' | 'list' | 'inline' | 'both' | undefined;
   'aria-colcount'?: number | undefined;
   'aria-colindex'?: number | undefined;
   'aria-colspan'?: number | undefined;
-  'aria-controls'?: idRef | undefined;
+  'aria-controls'?: string | undefined;
   'aria-current'?:
     boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
-  'aria-describedby'?: idRef | undefined;
-  'aria-details'?: idRef | undefined;
-  'aria-errormessage'?: idRef | undefined;
-  'aria-flowto'?: idRef | undefined;
+  'aria-describedby'?: string | undefined;
+  'aria-description'?: string | undefined;
+  'aria-details'?: string | undefined;
+  'aria-errormessage'?: string | undefined;
+  'aria-flowto'?: string | undefined;
   'aria-haspopup'?:
     'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false | undefined;
   'aria-invalid'?: boolean | undefined;
@@ -59,7 +59,7 @@ interface WebAccessibilityProps {
   'aria-multiline'?: boolean | undefined;
   'aria-multiselectable'?: boolean | undefined;
   'aria-orientation'?: 'horizontal' | 'vertical' | undefined;
-  'aria-owns'?: idRef | undefined;
+  'aria-owns'?: string | undefined;
   'aria-placeholder'?: string | undefined;
   'aria-posinset'?: number | undefined;
   'aria-pressed'?: boolean | 'mixed' | undefined;
@@ -313,7 +313,7 @@ interface WebTextStyle {
 
 declare module 'react-native' {
   interface AccessibilityProps extends WebAccessibilityProps {
-    'aria-live'?: 'assertive' | 'none' | 'off' | 'polite' | undefined;
+    'aria-live'?: 'assertive' | 'off' | 'polite' | undefined;
     role?: Role | WebRole | undefined;
   }
 
