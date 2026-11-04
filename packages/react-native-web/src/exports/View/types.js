@@ -35,6 +35,7 @@ export type AccessibilityProps = {|
   'aria-controls'?: ?idRef,
   'aria-current'?: ?(boolean | 'page' | 'step' | 'location' | 'date' | 'time'),
   'aria-describedby'?: ?idRef,
+  'aria-description'?: ?idRef,
   'aria-details'?: ?idRef,
   'aria-disabled'?: ?boolean,
   'aria-errormessage'?: ?idRef,

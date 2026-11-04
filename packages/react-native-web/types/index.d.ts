@@ -48,6 +48,7 @@ interface WebAccessibilityProps {
   'aria-current'?:
     boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
   'aria-describedby'?: idRef | undefined;
+  'aria-description'?: idRef | undefined;
   'aria-details'?: idRef | undefined;
   'aria-errormessage'?: idRef | undefined;
   'aria-flowto'?: idRef | undefined;
