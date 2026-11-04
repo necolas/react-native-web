@@ -36,7 +36,7 @@ export type LayoutEvent = {
   timeStamp: number
 };
 
-type LayoutCallback = (
+export type LayoutCallback = (
   x: number,
   y: number,
   width: number,
@@ -45,7 +45,7 @@ type LayoutCallback = (
   top: number
 ) => void;
 
-type MeasureInWindowCallback = (
+export type MeasureInWindowCallback = (
   left: number,
   top: number,
   width: number,

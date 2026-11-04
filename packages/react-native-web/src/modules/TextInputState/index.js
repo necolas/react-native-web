@@ -38,7 +38,7 @@ const TextInputState = {
    * noop if the text field was already focused
    */
   focusTextInput(textFieldNode: ?Object) {
-    if (textFieldNode !== null) {
+    if (textFieldNode != null) {
       TextInputState._currentlyFocusedNode = textFieldNode;
       if (document.activeElement !== textFieldNode) {
         UIManager.focus(textFieldNode);
@@ -52,7 +52,7 @@ const TextInputState = {
    * noop if it wasn't focused
    */
   blurTextInput(textFieldNode: ?Object) {
-    if (textFieldNode !== null) {
+    if (textFieldNode != null) {
       TextInputState._currentlyFocusedNode = null;
       if (document.activeElement === textFieldNode) {
         UIManager.blur(textFieldNode);
