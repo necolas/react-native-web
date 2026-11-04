@@ -69,8 +69,7 @@ export default function useResponderEvents(
     onStartShouldSetResponder != null ||
     onStartShouldSetResponderCapture != null;
 
-  // Most nodes never use the Responder System. Their effect dependencies stay
-  // the same, so the effect does not run again on each render.
+  // Stable for nodes without responder props, so the effect skips re-renders
   const responderConfig = requiresResponderSystem ? config : null;
 
   // Register and unregister with the Responder System as necessary

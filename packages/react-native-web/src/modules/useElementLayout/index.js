@@ -59,7 +59,7 @@ export default function useElementLayout(
 
   useLayoutEffect(() => {
     const node = ref.current;
-    // Most nodes have no layout handler, so skip writing to the DOM node
+    // Skip the DOM write for nodes without a layout handler
     if (
       node != null &&
       (onLayout != null || node[DOM_LAYOUT_HANDLER_NAME] != null)
