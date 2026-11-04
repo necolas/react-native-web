@@ -59,7 +59,11 @@ export default function useElementLayout(
 
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null) {
+    // Most nodes have no layout handler, so skip writing to the DOM node
+    if (
+      node != null &&
+      (onLayout != null || node[DOM_LAYOUT_HANDLER_NAME] != null)
+    ) {
       node[DOM_LAYOUT_HANDLER_NAME] = onLayout;
     }
   }, [ref, onLayout]);
@@ -68,17 +72,15 @@ export default function useElementLayout(
   // when 'onLayout' changes.
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null && observer != null) {
-      if (typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function') {
-        observer.observe(node);
-      } else {
+    if (
+      node != null &&
+      observer != null &&
+      typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function'
+    ) {
+      observer.observe(node);
+      return () => {
         observer.unobserve(node);
-      }
+      };
     }
-    return () => {
-      if (node != null && observer != null) {
-        observer.unobserve(node);
-      }
-    };
   }, [ref, observer]);
 }

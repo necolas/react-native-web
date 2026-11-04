@@ -48,39 +48,43 @@ export default function useResponderEvents(
     };
   }, [id]);
 
+  const {
+    onMoveShouldSetResponder,
+    onMoveShouldSetResponderCapture,
+    onScrollShouldSetResponder,
+    onScrollShouldSetResponderCapture,
+    onSelectionChangeShouldSetResponder,
+    onSelectionChangeShouldSetResponderCapture,
+    onStartShouldSetResponder,
+    onStartShouldSetResponderCapture
+  } = config;
+
+  const requiresResponderSystem =
+    onMoveShouldSetResponder != null ||
+    onMoveShouldSetResponderCapture != null ||
+    onScrollShouldSetResponder != null ||
+    onScrollShouldSetResponderCapture != null ||
+    onSelectionChangeShouldSetResponder != null ||
+    onSelectionChangeShouldSetResponderCapture != null ||
+    onStartShouldSetResponder != null ||
+    onStartShouldSetResponderCapture != null;
+
+  // Most nodes never use the Responder System. Their effect dependencies stay
+  // the same, so the effect does not run again on each render.
+  const responderConfig = requiresResponderSystem ? config : null;
+
   // Register and unregister with the Responder System as necessary
   React.useEffect(() => {
-    const {
-      onMoveShouldSetResponder,
-      onMoveShouldSetResponderCapture,
-      onScrollShouldSetResponder,
-      onScrollShouldSetResponderCapture,
-      onSelectionChangeShouldSetResponder,
-      onSelectionChangeShouldSetResponderCapture,
-      onStartShouldSetResponder,
-      onStartShouldSetResponderCapture
-    } = config;
-
-    const requiresResponderSystem =
-      onMoveShouldSetResponder != null ||
-      onMoveShouldSetResponderCapture != null ||
-      onScrollShouldSetResponder != null ||
-      onScrollShouldSetResponderCapture != null ||
-      onSelectionChangeShouldSetResponder != null ||
-      onSelectionChangeShouldSetResponderCapture != null ||
-      onStartShouldSetResponder != null ||
-      onStartShouldSetResponderCapture != null;
-
     const node = hostRef.current;
 
-    if (requiresResponderSystem) {
-      ResponderSystem.addNode(id, node, config);
+    if (responderConfig != null) {
+      ResponderSystem.addNode(id, node, responderConfig);
       isAttachedRef.current = true;
     } else if (isAttachedRef.current) {
       ResponderSystem.removeNode(id);
       isAttachedRef.current = false;
     }
-  }, [config, hostRef, id]);
+  }, [responderConfig, hostRef, id]);
 
   React.useDebugValue({
     isResponder: hostRef.current === ResponderSystem.getResponderNode()
