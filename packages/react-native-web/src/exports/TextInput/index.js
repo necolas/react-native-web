@@ -52,7 +52,7 @@ const setSelection = (node: TextInputElement, selection: Selection) => {
   }
 };
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,
   ...forwardedProps.accessibilityProps,
   ...forwardedProps.clickProps,
@@ -61,24 +61,24 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
-  autoCapitalize: true,
-  autoComplete: true,
-  autoCorrect: true,
-  autoFocus: true,
-  defaultValue: true,
-  disabled: true,
-  lang: true,
-  maxLength: true,
-  onChange: true,
-  onScroll: true,
-  placeholder: true,
-  pointerEvents: true,
-  readOnly: true,
-  rows: true,
-  spellCheck: true,
-  value: true,
-  type: true
-};
+  'autoCapitalize',
+  'autoComplete',
+  'autoCorrect',
+  'autoFocus',
+  'defaultValue',
+  'disabled',
+  'lang',
+  'maxLength',
+  'onChange',
+  'onScroll',
+  'placeholder',
+  'pointerEvents',
+  'readOnly',
+  'rows',
+  'spellCheck',
+  'type',
+  'value'
+]);
 
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode

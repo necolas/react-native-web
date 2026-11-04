@@ -7,127 +7,122 @@
  * @flow strict-local
  */
 
-export const defaultProps = {
-  children: true,
-  dataSet: true,
-  dir: true,
-  id: true,
-  ref: true,
-  suppressHydrationWarning: true,
-  tabIndex: true,
-  testID: true,
-  title: true,
+export const defaultProps = [
+  'children',
+  'dataSet',
+  'dir',
+  'id',
+  'ref',
+  'suppressHydrationWarning',
+  'tabIndex',
+  'testID',
+  'title',
   // @deprecated
-  focusable: true,
-  nativeID: true
-};
+  'focusable',
+  'nativeID'
+];
 
-export const accessibilityProps = {
-  'aria-activedescendant': true,
-  'aria-atomic': true,
-  'aria-autocomplete': true,
-  'aria-busy': true,
-  'aria-checked': true,
-  'aria-colcount': true,
-  'aria-colindex': true,
-  'aria-colspan': true,
-  'aria-controls': true,
-  'aria-current': true,
-  'aria-describedby': true,
-  'aria-details': true,
-  'aria-disabled': true,
-  'aria-errormessage': true,
-  'aria-expanded': true,
-  'aria-flowto': true,
-  'aria-haspopup': true,
-  'aria-hidden': true,
-  'aria-invalid': true,
-  'aria-keyshortcuts': true,
-  'aria-label': true,
-  'aria-labelledby': true,
-  'aria-level': true,
-  'aria-live': true,
-  'aria-modal': true,
-  'aria-multiline': true,
-  'aria-multiselectable': true,
-  'aria-orientation': true,
-  'aria-owns': true,
-  'aria-placeholder': true,
-  'aria-posinset': true,
-  'aria-pressed': true,
-  'aria-readonly': true,
-  'aria-required': true,
-  inert: true,
-  role: true,
-  'aria-roledescription': true,
-  'aria-rowcount': true,
-  'aria-rowindex': true,
-  'aria-rowspan': true,
-  'aria-selected': true,
-  'aria-setsize': true,
-  'aria-sort': true,
-  'aria-valuemax': true,
-  'aria-valuemin': true,
-  'aria-valuenow': true,
-  'aria-valuetext': true,
-  accessibilityHint: true,
-  accessibilityLabel: true,
-  accessibilityLabelledBy: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true
-};
+export const accessibilityProps = [
+  'accessibilityHint',
+  'accessibilityLabel',
+  'accessibilityLabelledBy',
+  'accessibilityLiveRegion',
+  'accessibilityRole',
+  'accessibilityState',
+  'accessibilityValue',
+  'aria-activedescendant',
+  'aria-atomic',
+  'aria-autocomplete',
+  'aria-busy',
+  'aria-checked',
+  'aria-colcount',
+  'aria-colindex',
+  'aria-colspan',
+  'aria-controls',
+  'aria-current',
+  'aria-describedby',
+  'aria-details',
+  'aria-disabled',
+  'aria-errormessage',
+  'aria-expanded',
+  'aria-flowto',
+  'aria-haspopup',
+  'aria-hidden',
+  'aria-invalid',
+  'aria-keyshortcuts',
+  'aria-label',
+  'aria-labelledby',
+  'aria-level',
+  'aria-live',
+  'aria-modal',
+  'aria-multiline',
+  'aria-multiselectable',
+  'aria-orientation',
+  'aria-owns',
+  'aria-placeholder',
+  'aria-posinset',
+  'aria-pressed',
+  'aria-readonly',
+  'aria-required',
+  'aria-roledescription',
+  'aria-rowcount',
+  'aria-rowindex',
+  'aria-rowspan',
+  'aria-selected',
+  'aria-setsize',
+  'aria-sort',
+  'aria-valuemax',
+  'aria-valuemin',
+  'aria-valuenow',
+  'aria-valuetext',
+  'inert',
+  'role'
+];
 
-export const clickProps = {
-  onClick: true,
-  onAuxClick: true,
-  onContextMenu: true,
-  onGotPointerCapture: true,
-  onLostPointerCapture: true,
-  onPointerCancel: true,
-  onPointerDown: true,
-  onPointerEnter: true,
-  onPointerMove: true,
-  onPointerLeave: true,
-  onPointerOut: true,
-  onPointerOver: true,
-  onPointerUp: true
-};
+export const clickProps = [
+  'onAuxClick',
+  'onClick',
+  'onContextMenu',
+  'onGotPointerCapture',
+  'onLostPointerCapture',
+  'onPointerCancel',
+  'onPointerDown',
+  'onPointerEnter',
+  'onPointerLeave',
+  'onPointerMove',
+  'onPointerOut',
+  'onPointerOver',
+  'onPointerUp'
+];
 
-export const focusProps = {
-  onBlur: true,
-  onFocus: true
-};
+export const focusProps = ['onBlur', 'onFocus'];
 
-export const keyboardProps = {
-  onKeyDown: true,
-  onKeyDownCapture: true,
-  onKeyUp: true,
-  onKeyUpCapture: true
-};
+export const keyboardProps = [
+  'onKeyDown',
+  'onKeyDownCapture',
+  'onKeyUp',
+  'onKeyUpCapture'
+];
 
-export const mouseProps = {
-  onMouseDown: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
-  onMouseMove: true,
-  onMouseOver: true,
-  onMouseOut: true,
-  onMouseUp: true
-};
+export const mouseProps = [
+  'onMouseDown',
+  'onMouseEnter',
+  'onMouseLeave',
+  'onMouseMove',
+  'onMouseOut',
+  'onMouseOver',
+  'onMouseUp'
+];
 
-export const touchProps = {
-  onTouchCancel: true,
-  onTouchCancelCapture: true,
-  onTouchEnd: true,
-  onTouchEndCapture: true,
-  onTouchMove: true,
-  onTouchMoveCapture: true,
-  onTouchStart: true,
-  onTouchStartCapture: true
-};
+export const touchProps = [
+  'onTouchCancel',
+  'onTouchCancelCapture',
+  'onTouchEnd',
+  'onTouchEndCapture',
+  'onTouchMove',
+  'onTouchMoveCapture',
+  'onTouchStart',
+  'onTouchStartCapture'
+];
 
-export const styleProps = {
-  style: true
-};
+export const styleProps = ['style'];

@@ -79,13 +79,7 @@ const measureLayout = (
   }
 };
 
-const elementsToIgnore: { readonly [string]: boolean } = {
-  A: true,
-  BODY: true,
-  INPUT: true,
-  SELECT: true,
-  TEXTAREA: true
-};
+const elementsToIgnore = new Set(['A', 'BODY', 'INPUT', 'SELECT', 'TEXTAREA']);
 
 const UIManager = {
   blur(node: HTMLElement): void {
@@ -103,7 +97,7 @@ const UIManager = {
       if (
         node.getAttribute('tabIndex') == null &&
         node.isContentEditable !== true &&
-        elementsToIgnore[name] == null
+        !elementsToIgnore.has(name)
       ) {
         node.setAttribute('tabIndex', '-1');
       }

@@ -134,7 +134,7 @@ const PROPERTIES_I18N: { [key: string]: string } = {
   paddingInlineEnd: paddingRight
 };
 
-const PROPERTIES_VALUE = ['clear', 'float', 'textAlign'];
+const PROPERTIES_VALUE = new Set(['clear', 'float', 'textAlign']);
 
 export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
@@ -167,7 +167,7 @@ export function atomic(style: Style): CompilerOutput {
       if (value != null) {
         let localizeableValue: string | Array<string> | void;
         // BiDi flip values
-        if (PROPERTIES_VALUE.indexOf(srcProp) > -1) {
+        if (PROPERTIES_VALUE.has(srcProp)) {
           const left = atomicCompile(srcProp, srcProp, 'left');
           const right = atomicCompile(srcProp, srcProp, 'right');
           if (value === 'start') {
@@ -281,7 +281,7 @@ export function inline(
     }
 
     // BiDi flip values
-    if (PROPERTIES_VALUE.indexOf(originalProp) > -1) {
+    if (PROPERTIES_VALUE.has(originalProp)) {
       if (originalValue === 'start') {
         value = isRTL ? 'right' : 'left';
       } else if (originalValue === 'end') {

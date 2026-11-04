@@ -44,19 +44,19 @@ export type Props = Readonly<{|
   type?: ViewProps['type']
 |}>;
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.accessibilityProps,
-  children: true,
-  disabled: true,
-  focusable: true,
-  nativeID: true,
-  onBlur: true,
-  onFocus: true,
-  onLayout: true,
-  testID: true,
-  title: true,
-  type: true
-};
+  'children',
+  'disabled',
+  'focusable',
+  'nativeID',
+  'onBlur',
+  'onFocus',
+  'onLayout',
+  'testID',
+  'title',
+  'type'
+]);
 
 function TouchableWithoutFeedback(props: Props): React.Node {
   const {

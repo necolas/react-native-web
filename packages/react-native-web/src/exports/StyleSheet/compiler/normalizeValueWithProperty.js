@@ -10,19 +10,19 @@
 import isUnitlessNumber from '../../../modules/isUnitlessNumber';
 import normalizeColor from './normalizeColor';
 
-const colorProps: { [string]: boolean } = {
-  backgroundColor: true,
-  borderBottomColor: true,
-  borderColor: true,
-  borderLeftColor: true,
-  borderRightColor: true,
-  borderTopColor: true,
-  color: true,
-  shadowColor: true,
-  textDecorationColor: true,
-  textEmphasisColor: true,
-  textShadowColor: true
-};
+const colorProps = new Set([
+  'backgroundColor',
+  'borderBottomColor',
+  'borderColor',
+  'borderLeftColor',
+  'borderRightColor',
+  'borderTopColor',
+  'color',
+  'shadowColor',
+  'textDecorationColor',
+  'textEmphasisColor',
+  'textShadowColor'
+]);
 
 export default function normalizeValueWithProperty(
   value: any,
@@ -33,7 +33,7 @@ export default function normalizeValueWithProperty(
     (property == null || !isUnitlessNumber(property))
   ) {
     return `${value}px`;
-  } else if (property != null && colorProps[property]) {
+  } else if (property != null && colorProps.has(property)) {
     return normalizeColor(value);
   }
   return value;

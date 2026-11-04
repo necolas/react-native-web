@@ -158,12 +158,19 @@ const PROPERTIES_STANDARD: { [key: string]: string } = {
   start: 'insetInlineStart'
 };
 
-const ignoredProps: { [string]: boolean } = {
-  elevation: true,
-  overlayColor: true,
-  resizeMode: true,
-  tintColor: true
-};
+const ignoredProps = new Set([
+  'elevation',
+  'overlayColor',
+  'resizeMode',
+  'shadowColor',
+  'shadowOffset',
+  'shadowOpacity',
+  'shadowRadius',
+  'textShadowColor',
+  'textShadowOffset',
+  'textShadowRadius',
+  'tintColor'
+]);
 
 export type PreprocessOptions = {
   readonly shadow?: boolean,
@@ -212,17 +219,8 @@ export const preprocess = <T extends {| [key: string]: any |}>(
   }
 
   for (const originalProp in style) {
-    if (
-      // Ignore some React Native styles
-      ignoredProps[originalProp] != null ||
-      originalProp === 'shadowColor' ||
-      originalProp === 'shadowOffset' ||
-      originalProp === 'shadowOpacity' ||
-      originalProp === 'shadowRadius' ||
-      originalProp === 'textShadowColor' ||
-      originalProp === 'textShadowOffset' ||
-      originalProp === 'textShadowRadius'
-    ) {
+    // Ignore some React Native styles
+    if (ignoredProps.has(originalProp)) {
       continue;
     }
 

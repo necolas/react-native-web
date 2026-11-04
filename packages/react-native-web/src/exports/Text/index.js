@@ -25,7 +25,7 @@ import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,
   ...forwardedProps.accessibilityProps,
   ...forwardedProps.clickProps,
@@ -34,12 +34,12 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
-  disabled: true,
-  href: true,
-  lang: true,
-  pointerEvents: true,
-  type: true
-};
+  'disabled',
+  'href',
+  'lang',
+  'pointerEvents',
+  'type'
+]);
 
 const Text = (props: {
   ...TextProps,
