@@ -69,7 +69,6 @@ export default function useResponderEvents(
     onStartShouldSetResponder != null ||
     onStartShouldSetResponderCapture != null;
 
-  // Stable for nodes without responder props, so the effect skips re-renders
   const responderConfig = requiresResponderSystem ? config : null;
 
   // Register and unregister with the Responder System as necessary
