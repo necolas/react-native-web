@@ -55,7 +55,8 @@ for (const prop of forwardedProps.reactNativeAccessibilityProps) {
   specialProps.set(prop, REACT_NATIVE_ACCESSIBILITY_PROP);
 }
 
-// Props that are not passed through
+// Props that are not passed through. Keep in sync with the props destructured
+// in createDOMProps.
 for (const prop of [
   'dataSet',
   'disabled',
@@ -161,6 +162,7 @@ const createDOMProps = (
     props = emptyObject;
   }
 
+  // Keep in sync with the OMITTED_PROP list
   const {
     dataSet,
     disabled,
