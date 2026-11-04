@@ -21,10 +21,9 @@ import type {
 
 type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
-type idRef = string;
 
 export type AccessibilityProps = {|
-  'aria-activedescendant'?: ?idRef,
+  'aria-activedescendant'?: ?string,
   'aria-atomic'?: ?boolean,
   'aria-autocomplete'?: ?('none' | 'list' | 'inline' | 'both'),
   'aria-busy'?: ?boolean,
@@ -32,28 +31,28 @@ export type AccessibilityProps = {|
   'aria-colcount'?: ?number,
   'aria-colindex'?: ?number,
   'aria-colspan'?: ?number,
-  'aria-controls'?: ?idRef,
+  'aria-controls'?: ?string,
   'aria-current'?: ?(boolean | 'page' | 'step' | 'location' | 'date' | 'time'),
-  'aria-describedby'?: ?idRef,
-  'aria-description'?: ?idRef,
-  'aria-details'?: ?idRef,
+  'aria-describedby'?: ?string,
+  'aria-description'?: ?string,
+  'aria-details'?: ?string,
   'aria-disabled'?: ?boolean,
-  'aria-errormessage'?: ?idRef,
+  'aria-errormessage'?: ?string,
   'aria-expanded'?: ?boolean,
-  'aria-flowto'?: ?idRef,
+  'aria-flowto'?: ?string,
   'aria-haspopup'?: ?('dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false),
   'aria-hidden'?: ?boolean,
   'aria-invalid'?: ?boolean,
   'aria-keyshortcuts'?: ?string,
   'aria-label'?: ?string,
-  'aria-labelledby'?: ?idRef,
+  'aria-labelledby'?: ?string,
   'aria-level'?: ?number,
   'aria-live'?: ?('assertive' | 'off' | 'polite'),
   'aria-modal'?: ?boolean,
   'aria-multiline'?: ?boolean,
   'aria-multiselectable'?: ?boolean,
   'aria-orientation'?: ?('horizontal' | 'vertical'),
-  'aria-owns'?: ?idRef,
+  'aria-owns'?: ?string,
   'aria-placeholder'?: ?string,
   'aria-posinset'?: ?number,
   'aria-pressed'?: ?(boolean | 'mixed'),
@@ -74,7 +73,7 @@ export type AccessibilityProps = {|
 
   accessibilityHint?: ?string,
   accessibilityLabel?: ?string,
-  accessibilityLabelledBy?: ?(idRef | Array<idRef>),
+  accessibilityLabelledBy?: ?(string | Array<string>),
   accessibilityLiveRegion?: ?('assertive' | 'none' | 'polite'),
   accessibilityRole?: ?string,
   accessibilityState?: ?{|
