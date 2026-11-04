@@ -149,6 +149,7 @@ const ModalFocusTrap = ({
           lastFocusedElementOutsideTrap &&
           document.contains(lastFocusedElementOutsideTrap)
         ) {
+          // $FlowFixMe[incompatible-type] activeElement can be any focusable element
           UIManager.focus(lastFocusedElementOutsideTrap);
         }
       };
