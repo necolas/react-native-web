@@ -529,30 +529,20 @@ describe('components/Modal', () => {
   });
 
   test('focus wraps backwards to the last element inside a focusable container', () => {
-    render(
-      <>
-        <Modal visible={true}>
-          <a data-testid={'inside-a'} href={'#'}>
-            Inside A
-          </a>
-          <div tabIndex={-1}>
-            <a data-testid={'inside-b'} href={'#'}>
-              Inside B
-            </a>
-          </div>
-        </Modal>
-      </>
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <a data-testid="first" href="#" />
+        <div tabIndex={0}>
+          <a data-testid="last" href="#" />
+        </div>
+      </Modal>
     );
 
-    const insideStartElement = document.querySelector(
-      '[data-testid="inside-a"]'
-    );
-    const insideEndElement = document.querySelector('[data-testid="inside-b"]');
-    const focusBracket =
-      insideStartElement.parentNode.parentNode.parentNode.previousSibling;
-    insideStartElement.focus();
+    const first = getByTestId('first');
+    const focusBracket = first.parentNode.parentNode.parentNode.previousSibling;
+    first.focus();
     focusBracket.focus();
-    expect(document.activeElement).toBe(insideEndElement);
+    expect(document.activeElement).toBe(getByTestId('last'));
   });
 
   test('focus is trapped without contents', () => {
