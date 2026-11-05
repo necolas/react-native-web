@@ -86,7 +86,7 @@ const ModalFocusTrap = ({
     lastFocusedElement: null
   });
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (canUseDOM) {
       const trapFocus = () => {
         // We should not trap focus if:
