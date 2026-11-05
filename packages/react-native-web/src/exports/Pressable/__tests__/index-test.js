@@ -323,12 +323,15 @@ describe('components/Pressable', () => {
       act(() => {
         render(<Pressable onPress={onPress} ref={ref} role="link" />);
       });
+
       const target = createEventTarget(ref.current);
+
       act(() => {
         target.keydown({ key: 'Enter' });
         target.keyup({ key: 'Enter' });
         jest.runAllTimers();
       });
+
       expect(onPress).toHaveBeenCalledTimes(1);
     });
 
@@ -347,13 +350,16 @@ describe('components/Pressable', () => {
           />
         );
       });
+
       expect(ref.current.tagName).toBe('A');
       const target = createEventTarget(ref.current);
+
       act(() => {
         target.keydown({ key: 'Enter' });
         target.keyup({ key: 'Enter' });
         jest.runAllTimers();
       });
+
       expect(onPress).not.toHaveBeenCalled();
     });
   });

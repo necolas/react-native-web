@@ -319,6 +319,7 @@ export default class PressResponder {
           elementType === 'input' ||
           elementType === 'select' ||
           elementType === 'textarea';
+
         const isActiveElement = this._responderElement === target;
 
         if (onPress != null && !isNativeInteractiveElement && isActiveElement) {
