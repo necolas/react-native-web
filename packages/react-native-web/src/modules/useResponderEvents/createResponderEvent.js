@@ -54,6 +54,15 @@ function normalizeIdentifier(identifier: number): number {
 }
 
 /**
+ * The client rect includes CSS transforms (e.g. scale) but the offset size
+ * does not. The offset size is rounded, so ignore differences below 1px.
+ */
+const getScale = (rectSize: number, offsetSize: number = 0): number =>
+  offsetSize > 0 && Math.abs(rectSize - offsetSize) >= 1
+    ? rectSize / offsetSize
+    : 1;
+
+/**
  * Converts a native DOM event to a ResponderEvent.
  * Mouse events are transformed into fake touch events.
  */
@@ -61,7 +70,7 @@ export default function createResponderEvent(
   domEvent: any,
   responderTouchHistoryStore: ResponderTouchHistoryStore
 ): ResponderEvent {
-  let rect: ?{ left: number, top: number, ... };
+  let rect: ?{ left: number, top: number, width: number, height: number, ... };
   let propagationWasStopped = false;
   let changedTouches: Array<Touch>;
   let touches: Array<Touch>;
@@ -183,13 +192,15 @@ export default function createResponderEvent(
   function locationX(x: number): number | void {
     rect = rect || getBoundingClientRect(responderEvent.currentTarget);
     if (rect) {
-      return x - rect.left;
+      const offsetWidth = responderEvent.currentTarget.offsetWidth;
+      return (x - rect.left) / getScale(rect.width, offsetWidth);
     }
   }
   function locationY(y: number): number | void {
     rect = rect || getBoundingClientRect(responderEvent.currentTarget);
     if (rect) {
-      return y - rect.top;
+      const offsetHeight = responderEvent.currentTarget.offsetHeight;
+      return (y - rect.top) / getScale(rect.height, offsetHeight);
     }
   }
 
