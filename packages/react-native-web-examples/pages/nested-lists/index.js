@@ -15,8 +15,9 @@ function Option({ label, value, onValueChange }) {
 }
 
 export default function NestedListsPage() {
-  const [outerInverted, setOuterInverted] = React.useState(true);
   const [innerInverted, setInnerInverted] = React.useState(false);
+  const [outerInverted, setOuterInverted] = React.useState(true);
+  const [outerScrollEnabled, setOuterScrollEnabled] = React.useState(true);
 
   const renderRow = ({ item: row }) => {
     if (Number(row.key) % 3 !== 0) {
@@ -56,12 +57,18 @@ export default function NestedListsPage() {
           onValueChange={setInnerInverted}
           value={innerInverted}
         />
+        <Option
+          label="Outer scroll enabled"
+          onValueChange={setOuterScrollEnabled}
+          value={outerScrollEnabled}
+        />
       </View>
       <FlatList
         data={rows}
         extraData={innerInverted}
         inverted={outerInverted}
         renderItem={renderRow}
+        scrollEnabled={outerScrollEnabled}
         style={styles.outer}
       />
     </Example>
