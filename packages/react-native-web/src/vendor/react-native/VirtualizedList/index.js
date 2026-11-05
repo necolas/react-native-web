@@ -461,8 +461,15 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         return;
       }
 
-      const deltaX = ev.deltaX || ev.wheelDeltaX || 0;
-      const deltaY = ev.deltaY || ev.wheelDeltaY || 0;
+      let deltaX = ev.deltaX || ev.wheelDeltaX || 0;
+      let deltaY = ev.deltaY || ev.wheelDeltaY || 0;
+
+      // Windows and Linux report Shift+wheel as deltaY but scroll horizontally
+      if (ev.shiftKey && deltaX === 0) {
+        deltaX = deltaY;
+        deltaY = 0;
+      }
+
       const delta = this.props.horizontal ? deltaX : deltaY;
       const crossDelta = this.props.horizontal ? deltaY : deltaX;
 
