@@ -450,6 +450,32 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(document.body);
   });
 
+  test('focus stays in a modal shown while another modal fades out', () => {
+    const modals = (a, b) => (
+      <>
+        <a data-testid="trigger" href="#" />
+        <Modal animationType="fade" visible={a}>
+          <a data-testid="a" href="#" />
+        </Modal>
+        <Modal visible={b}>
+          <a href="#" />
+          <a data-testid="b" href="#" />
+        </Modal>
+      </>
+    );
+    const { getByTestId, rerender } = render(modals(false, false));
+    getByTestId('trigger').focus();
+    rerender(modals(true, false));
+    const animationA =
+      getByTestId('a').parentElement.parentElement.parentElement.parentElement;
+    fireEvent.animationEnd(animationA);
+
+    rerender(modals(false, true));
+    getByTestId('b').focus();
+    fireEvent.animationEnd(animationA);
+    expect(document.activeElement).toBe(getByTestId('b'));
+  });
+
   test('focus is trapped when active', () => {
     render(
       <>

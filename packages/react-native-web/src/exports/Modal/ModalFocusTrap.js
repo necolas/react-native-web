@@ -161,7 +161,9 @@ const ModalFocusTrap = ({
     if (canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {
+        const { activeElement } = document;
         if (
+          (activeElement == null || activeElement === document.body) &&
           lastFocusedElementOutsideTrap &&
           document.contains(lastFocusedElementOutsideTrap)
         ) {
