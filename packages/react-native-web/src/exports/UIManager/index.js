@@ -9,13 +9,19 @@
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import setValueForStyles from '../../modules/setValueForStyles';
-import type { LayoutCallback, MeasureInWindowCallback } from '../../types';
+import type {
+  MeasureOnSuccessCallback,
+  MeasureInWindowOnSuccessCallback,
+  MeasureLayoutOnSuccessCallback
+} from '../../types';
 
 type Rect = {
   width: number,
   height: number,
   top: number,
-  left: number
+  left: number,
+  offsetTop: number,
+  offsetLeft: number
 };
 
 const hasOwnProperty: (this: Object, key: string) => boolean =
@@ -24,28 +30,32 @@ const hasOwnProperty: (this: Object, key: string) => boolean =
 const getRect = (node: HTMLElement): Rect => {
   const height = node.offsetHeight;
   const width = node.offsetWidth;
-  let left = node.offsetLeft;
-  let top = node.offsetTop;
+  let offsetLeft = node.offsetLeft;
+  let offsetTop = node.offsetTop;
+  let scrollLeft = window.scrollX;
+  let scrollTop = window.scrollY;
   // $FlowFixMe[incompatible-type] offsetParent is an HTMLElement or null
   let parent: ?HTMLElement = node.offsetParent;
 
   while (parent?.nodeType === 1 /* Node.ELEMENT_NODE */) {
-    left += parent.offsetLeft + parent.clientLeft - parent.scrollLeft;
-    top += parent.offsetTop + parent.clientTop - parent.scrollTop;
+    offsetLeft += parent.offsetLeft + parent.clientLeft;
+    offsetTop += parent.offsetTop + parent.clientTop;
+    scrollLeft += parent.scrollLeft;
+    scrollTop += parent.scrollTop;
     // $FlowFixMe[incompatible-type] offsetParent is an HTMLElement or null
     parent = parent.offsetParent;
   }
 
-  top -= window.scrollY;
-  left -= window.scrollX;
+  const top = offsetTop - scrollTop;
+  const left = offsetLeft - scrollLeft;
 
-  return { width, height, top, left };
+  return { width, height, top, left, offsetTop, offsetLeft };
 };
 
 const measureLayout = (
   node: HTMLElement,
   relativeToNativeNode: ?HTMLElement,
-  callback: LayoutCallback
+  callback: MeasureOnSuccessCallback
 ): void => {
   const relativeNode: ?HTMLElement =
     relativeToNativeNode ||
@@ -57,23 +67,15 @@ const measureLayout = (
   if (node && relativeNode) {
     setTimeout(() => {
       if (node.isConnected && relativeNode.isConnected) {
-        const { height, left, top, width } = getRect(node);
-        let x: number;
-        let y: number;
+        const rect = getRect(node);
+        const relativeRect = getRect(relativeNode);
 
-        if (node.offsetParent === relativeNode) {
-          // Fast path: same result as subtracting "getRect(relativeNode)",
-          // without walking the ancestors of "relativeNode" a second time
-          x =
-            node.offsetLeft + relativeNode.clientLeft - relativeNode.scrollLeft;
-          y = node.offsetTop + relativeNode.clientTop - relativeNode.scrollTop;
-        } else {
-          const relativeRect = getRect(relativeNode);
-          x = left - relativeRect.left;
-          y = top - relativeRect.top;
-        }
+        // Like React Native, ignore scroll offsets: a node in a ScrollView is
+        // measured relative to the scroll content
+        const x = rect.offsetLeft - relativeRect.offsetLeft;
+        const y = rect.offsetTop - relativeRect.offsetTop;
 
-        callback(x, y, width, height, left, top);
+        callback(x, y, rect.width, rect.height, rect.left, rect.top);
       }
     }, 0);
   }
@@ -105,11 +107,14 @@ const UIManager = {
     } catch {}
   },
 
-  measure(node: HTMLElement, callback: LayoutCallback): void {
+  measure(node: HTMLElement, callback: MeasureOnSuccessCallback): void {
     measureLayout(node, null, callback);
   },
 
-  measureInWindow(node: HTMLElement, callback: MeasureInWindowCallback): void {
+  measureInWindow(
+    node: HTMLElement,
+    callback: MeasureInWindowOnSuccessCallback
+  ): void {
     if (node) {
       setTimeout(() => {
         const rect = getBoundingClientRect(node);
@@ -129,9 +134,11 @@ const UIManager = {
     node: HTMLElement,
     relativeToNativeNode: ?HTMLElement,
     onFail: (error: unknown) => void,
-    onSuccess: LayoutCallback
+    onSuccess: MeasureLayoutOnSuccessCallback
   ): void {
-    measureLayout(node, relativeToNativeNode, onSuccess);
+    measureLayout(node, relativeToNativeNode, (x, y, width, height) =>
+      onSuccess(x, y, width, height)
+    );
   },
 
   updateView(node: HTMLElement, props: { [string]: any }): void {
