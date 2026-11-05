@@ -234,6 +234,16 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-checked']).toEqual(false);
   });
 
+  test('props "aria-disabled" and "aria-hidden" are omitted when false', () => {
+    const props = createProps({
+      'aria-disabled': false,
+      'aria-hidden': false,
+      accessibilityState: { disabled: true }
+    });
+    expect(props).not.toHaveProperty('aria-disabled');
+    expect(props).not.toHaveProperty('aria-hidden');
+  });
+
   test('prop "accessibilityValue" becomes "aria-value*"', () => {
     const props = createProps({
       accessibilityValue: { max: 10, min: 0, now: 5, text: 'five' }

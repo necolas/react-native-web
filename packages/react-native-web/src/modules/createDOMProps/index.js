@@ -9,7 +9,6 @@
 
 import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
-import * as forwardedProps from '../../modules/forwardedProps';
 
 const emptyObject: Object = {};
 const uppercasePattern = /[A-Z]/g;
@@ -41,69 +40,64 @@ const pointerEventsStyles: {
   }
 });
 
-const ARIA_PROP = 1;
-const REACT_NATIVE_ACCESSIBILITY_PROP = 2;
-const OMITTED_PROP = 3;
-
-// Props that need special handling. Other props are passed through as is.
-const specialProps: Map<string, number> = new Map();
-
-for (const prop of forwardedProps.ariaProps) {
-  specialProps.set(prop, ARIA_PROP);
-}
-for (const prop of forwardedProps.reactNativeAccessibilityProps) {
-  specialProps.set(prop, REACT_NATIVE_ACCESSIBILITY_PROP);
-}
-
-// Props that are not passed through. Keep in sync with the props destructured
-// in createDOMProps.
-for (const prop of [
-  'dataSet',
-  'disabled',
-  'focusable',
-  'id',
-  'nativeID',
-  'pointerEvents',
-  'style',
-  'tabIndex',
-  'testID',
-
-  'accessibilityActions',
-  'onAccessibilityAction'
-]) {
-  specialProps.set(prop, OMITTED_PROP);
-}
-
-function setReactNativeAccessibilityProps(
-  domProps: Object,
+const createDOMProps = (
   elementType: unknown,
-  role: ?string,
-  props: Object
-): void {
+  props: ?Object,
+  options?: ?Object
+): Object => {
+  if (!props) {
+    props = emptyObject;
+  }
+
   const {
+    'aria-disabled': ariaDisabled,
+    'aria-hidden': ariaHidden,
+
+    dataSet,
+    disabled,
+    focusable,
+    id,
+    nativeID,
+    pointerEvents,
+    style,
+    tabIndex,
+    testID,
+
     accessibilityHint,
     accessibilityLabel,
     accessibilityLabelledBy,
-    accessibilityLiveRegion
+    accessibilityLiveRegion,
+    accessibilityState: _accessibilityState,
+    accessibilityValue: _accessibilityValue,
+
+    /* eslint-disable no-unused-vars */
+    accessibilityActions,
+    accessibilityRole,
+    onAccessibilityAction,
+    role: _role,
+    /* eslint-enable no-unused-vars */
+
+    ...domProps
   } = props;
 
-  const state = props.accessibilityState ?? emptyObject;
-  const value = props.accessibilityValue ?? emptyObject;
+  const accessibilityState = _accessibilityState ?? emptyObject;
+  const accessibilityValue = _accessibilityValue ?? emptyObject;
 
-  if (domProps['aria-busy'] == null && state.busy != null) {
-    domProps['aria-busy'] = state.busy;
+  // ACCESSIBILITY
+  if (domProps['aria-busy'] == null && accessibilityState.busy != null) {
+    domProps['aria-busy'] = accessibilityState.busy;
   }
-  if (domProps['aria-checked'] == null && state.checked != null) {
-    domProps['aria-checked'] = state.checked;
+  if (domProps['aria-checked'] == null && accessibilityState.checked != null) {
+    domProps['aria-checked'] = accessibilityState.checked;
   }
   if (domProps['aria-description'] == null && accessibilityHint != null) {
     domProps['aria-description'] = accessibilityHint;
   }
-  if (props['aria-disabled'] == null && state.disabled === true) {
-    domProps['aria-disabled'] = true;
-  }
-  if (domProps['aria-expanded'] == null && state.expanded != null) {
-    domProps['aria-expanded'] = state.expanded;
+  if (
+    domProps['aria-expanded'] == null &&
+    accessibilityState.expanded != null
+  ) {
+    domProps['aria-expanded'] = accessibilityState.expanded;
   }
   if (domProps['aria-label'] == null && accessibilityLabel != null) {
     domProps['aria-label'] = accessibilityLabel;
@@ -118,21 +112,37 @@ function setReactNativeAccessibilityProps(
     domProps['aria-live'] =
       accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (domProps['aria-selected'] == null && state.selected != null) {
-    domProps['aria-selected'] = state.selected;
+  if (
+    domProps['aria-selected'] == null &&
+    accessibilityState.selected != null
+  ) {
+    domProps['aria-selected'] = accessibilityState.selected;
   }
-  if (domProps['aria-valuemax'] == null && value.max != null) {
-    domProps['aria-valuemax'] = value.max;
+  if (domProps['aria-valuemax'] == null && accessibilityValue.max != null) {
+    domProps['aria-valuemax'] = accessibilityValue.max;
   }
-  if (domProps['aria-valuemin'] == null && value.min != null) {
-    domProps['aria-valuemin'] = value.min;
+  if (domProps['aria-valuemin'] == null && accessibilityValue.min != null) {
+    domProps['aria-valuemin'] = accessibilityValue.min;
   }
-  if (domProps['aria-valuenow'] == null && value.now != null) {
-    domProps['aria-valuenow'] = value.now;
+  if (domProps['aria-valuenow'] == null && accessibilityValue.now != null) {
+    domProps['aria-valuenow'] = accessibilityValue.now;
   }
-  if (domProps['aria-valuetext'] == null && value.text != null) {
-    domProps['aria-valuetext'] = value.text;
+  if (domProps['aria-valuetext'] == null && accessibilityValue.text != null) {
+    domProps['aria-valuetext'] = accessibilityValue.text;
   }
+
+  // "false" is omitted, same as the React Native default
+  if (
+    ariaDisabled === true ||
+    (ariaDisabled == null && accessibilityState.disabled === true)
+  ) {
+    domProps['aria-disabled'] = true;
+  }
+  if (ariaHidden === true) {
+    domProps['aria-hidden'] = true;
+  }
+
+  const role = AccessibilityUtil.propsToAriaRole(props);
 
   if (role != null) {
     // h1-h6 already have the heading role. An explicit role="heading" on
@@ -150,63 +160,6 @@ function setReactNativeAccessibilityProps(
       // 'presentation' synonym has wider browser support
       domProps['role'] = role === 'none' ? 'presentation' : role;
     }
-  }
-}
-
-const createDOMProps = (
-  elementType: unknown,
-  props: ?Object,
-  options?: ?Object
-): Object => {
-  if (!props) {
-    props = emptyObject;
-  }
-
-  // Keep in sync with the OMITTED_PROP list
-  const {
-    dataSet,
-    disabled,
-    focusable,
-    id,
-    nativeID,
-    pointerEvents,
-    style,
-    tabIndex,
-    testID
-  } = props;
-
-  // A loop is used because object rest with this many keys is slow in V8
-  const domProps: Object = {};
-  let hasReactNativeAccessibilityProps = false;
-
-  for (const prop in props) {
-    if (hasOwnProperty.call(props, prop)) {
-      const kind = specialProps.get(prop);
-
-      if (kind == null) {
-        domProps[prop] = props[prop];
-      } else if (kind === ARIA_PROP) {
-        const value = props[prop];
-
-        if (prop === 'aria-disabled' || prop === 'aria-hidden') {
-          // "false" is omitted, same as the React Native default
-          if (value === true) {
-            domProps[prop] = true;
-          }
-        } else if (value != null) {
-          domProps[prop] = value;
-        }
-      } else if (kind === REACT_NATIVE_ACCESSIBILITY_PROP) {
-        hasReactNativeAccessibilityProps = true;
-      }
-    }
-  }
-
-  const role = AccessibilityUtil.propsToAriaRole(props);
-
-  // ACCESSIBILITY
-  if (hasReactNativeAccessibilityProps) {
-    setReactNativeAccessibilityProps(domProps, elementType, role, props);
   }
 
   // "dataSet" replaced with "data-*"

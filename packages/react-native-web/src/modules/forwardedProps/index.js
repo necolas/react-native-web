@@ -22,7 +22,14 @@ export const defaultProps: string[] = [
   'nativeID'
 ];
 
-export const ariaProps: string[] = [
+export const accessibilityProps: string[] = [
+  'accessibilityHint',
+  'accessibilityLabel',
+  'accessibilityLabelledBy',
+  'accessibilityLiveRegion',
+  'accessibilityRole',
+  'accessibilityState',
+  'accessibilityValue',
   'aria-activedescendant',
   'aria-atomic',
   'aria-autocomplete',
@@ -68,24 +75,9 @@ export const ariaProps: string[] = [
   'aria-valuemax',
   'aria-valuemin',
   'aria-valuenow',
-  'aria-valuetext'
-];
-
-export const reactNativeAccessibilityProps: string[] = [
-  'accessibilityHint',
-  'accessibilityLabel',
-  'accessibilityLabelledBy',
-  'accessibilityLiveRegion',
-  'accessibilityRole',
-  'accessibilityState',
-  'accessibilityValue',
+  'aria-valuetext',
+  'inert',
   'role'
-];
-
-export const accessibilityProps: string[] = [
-  ...ariaProps,
-  ...reactNativeAccessibilityProps,
-  'inert'
 ];
 
 export const clickProps: string[] = [
