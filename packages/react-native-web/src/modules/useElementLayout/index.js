@@ -31,9 +31,9 @@ function getResizeObserver(): ?ResizeObserver {
           if (typeof onLayout === 'function') {
             // We still need to measure the view because browsers don't yet provide
             // border-box dimensions in the entry
-            UIManager.measure(node, (x, y, width, height, left, top) => {
+            UIManager.measure(node, (x, y, width, height) => {
               const event: LayoutEvent = {
-                nativeEvent: { layout: { x, y, width, height, left, top } },
+                nativeEvent: { layout: { x, y, width, height } },
                 timeStamp: Date.now()
               };
               Object.defineProperty(event.nativeEvent, 'target', {

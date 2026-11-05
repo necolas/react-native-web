@@ -22,8 +22,6 @@ export type GenericStyleProp<out T> =
 export type LayoutValue = {
   x: number,
   y: number,
-  left: number,
-  top: number,
   width: number,
   height: number
 };
@@ -36,18 +34,25 @@ export type LayoutEvent = {
   timeStamp: number
 };
 
-export type LayoutCallback = (
+export type MeasureOnSuccessCallback = (
   x: number,
   y: number,
   width: number,
   height: number,
-  left: number,
-  top: number
+  pageX: number,
+  pageY: number
 ) => void;
 
-export type MeasureInWindowCallback = (
+export type MeasureLayoutOnSuccessCallback = (
   left: number,
   top: number,
+  width: number,
+  height: number
+) => void;
+
+export type MeasureInWindowOnSuccessCallback = (
+  x: number,
+  y: number,
   width: number,
   height: number
 ) => void;
@@ -56,11 +61,11 @@ export type MeasureInWindowCallback = (
 export interface PlatformMethods {
   blur: () => void;
   focus: () => void;
-  measure: (callback: LayoutCallback) => void;
-  measureInWindow: (callback: MeasureInWindowCallback) => void;
+  measure: (callback: MeasureOnSuccessCallback) => void;
+  measureInWindow: (callback: MeasureInWindowOnSuccessCallback) => void;
   measureLayout: (
     relativeToNativeNode: {},
-    onSuccess: LayoutCallback,
+    onSuccess: MeasureLayoutOnSuccessCallback,
     onFail: () => void
   ) => void;
   setNativeProps: (props: { [string]: unknown, ... }) => void;
