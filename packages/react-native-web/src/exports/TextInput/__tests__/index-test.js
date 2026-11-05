@@ -879,6 +879,22 @@ describe('components/TextInput', () => {
     });
   });
 
+  describe('prop "textAlign"', () => {
+    test('value "center"', () => {
+      const { container } = render(<TextInput textAlign="center" />);
+      const style = window.getComputedStyle(container.firstChild);
+      expect(style.textAlign).toEqual('center');
+    });
+
+    test('style takes precedence', () => {
+      const { container } = render(
+        <TextInput style={{ textAlign: 'right' }} textAlign="center" />
+      );
+      const style = window.getComputedStyle(container.firstChild);
+      expect(style.textAlign).toEqual('right');
+    });
+  });
+
   describe('prop "title"', () => {
     test('value is set', () => {
       const { container } = render(<TextInput title="Hello" />);

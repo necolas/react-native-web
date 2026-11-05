@@ -141,7 +141,8 @@ const TextInput = (props: {
     selection,
     selectTextOnFocus,
     showSoftInputOnFocus,
-    spellCheck
+    spellCheck,
+    textAlign
   } = props;
 
   let submitBehavior: SubmitBehavior;
@@ -414,6 +415,7 @@ const TextInput = (props: {
     { '--placeholderTextColor': placeholderTextColor },
     styles.textinput$raw,
     styles.placeholder,
+    textAlign != null && { textAlign },
     props.style,
     caretHidden && styles.caretHidden
   ];

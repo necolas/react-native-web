@@ -74,6 +74,7 @@ export type TextInputProps = {
   spellCheck?: ?boolean,
   style?: ?GenericStyleProp<TextInputStyle>,
   submitBehavior?: ?SubmitBehavior,
+  textAlign?: ?('left' | 'center' | 'right' | 'start' | 'end'),
   value?: ?string,
   // deprecated
   blurOnSubmit?: ?boolean,
