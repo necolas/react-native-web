@@ -150,22 +150,25 @@ export function hasValidSelection(domEvent: any): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }
-  if (domEvent.type === 'select') {
-    try {
-      const { selectionStart, selectionEnd } = domEvent.target;
-      if (
-        typeof selectionStart === 'number' &&
-        typeof selectionEnd === 'number'
-      ) {
-        return selectionStart !== selectionEnd;
-      }
-    } catch {
-      // Some engines (historically Chrome/WebKit) throw InvalidStateError
-      // when reading selection properties on unsupported types (e.g. type="number")
-    }
-    return true;
+  if (domEvent.type !== 'select') {
+    return false;
   }
-  return false;
+
+  try {
+    const { selectionStart, selectionEnd } = domEvent.target;
+
+    if (
+      typeof selectionStart === 'number' &&
+      typeof selectionEnd === 'number'
+    ) {
+      return selectionStart !== selectionEnd;
+    }
+  } catch {
+    // Some engines (historically Chrome/WebKit) throw InvalidStateError
+    // when reading selection properties on unsupported types (e.g. type="number")
+  }
+
+  return true;
 }
 
 /**
