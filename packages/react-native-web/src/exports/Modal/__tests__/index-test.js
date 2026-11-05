@@ -545,6 +545,23 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(getByTestId('last'));
   });
 
+  test('focus wraps forwards past a container with tabIndex -1', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <div tabIndex={-1}>
+          <a data-testid="first" href="#" />
+        </div>
+        <a data-testid="last" href="#" />
+      </Modal>
+    );
+
+    const last = getByTestId('last');
+    const focusBracket = last.parentNode.parentNode.parentNode.nextSibling;
+    last.focus();
+    focusBracket.focus();
+    expect(document.activeElement).toBe(getByTestId('first'));
+  });
+
   test('focus is trapped without contents', () => {
     render(
       <>

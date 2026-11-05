@@ -35,10 +35,13 @@ function attemptFocus(element: any) {
   if (!canUseDOM) {
     return false;
   }
+  if (element.hasAttribute?.('tabindex') && element.tabIndex < 0) {
+    return false;
+  }
 
   try {
     element.focus();
-  } catch (e) {
+  } catch {
     // Do nothing
   }
 
