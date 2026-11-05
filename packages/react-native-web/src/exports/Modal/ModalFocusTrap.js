@@ -31,7 +31,7 @@ const FocusBracket = () => {
   });
 };
 
-function attemptFocus(element: any) {
+function attemptFocus(element: any, preventScroll: boolean) {
   if (!canUseDOM) {
     return false;
   }
@@ -40,7 +40,7 @@ function attemptFocus(element: any) {
   }
 
   try {
-    element.focus();
+    element.focus({ preventScroll });
   } catch {
     // Do nothing
   }
@@ -48,10 +48,13 @@ function attemptFocus(element: any) {
   return document.activeElement === element;
 }
 
-function focusFirstDescendant(element: any): boolean {
+function focusFirstDescendant(element: any, preventScroll: boolean): boolean {
   for (let i = 0; i < element.childNodes.length; i++) {
     const child = element.childNodes[i];
-    if (attemptFocus(child) || focusFirstDescendant(child)) {
+    if (
+      attemptFocus(child, preventScroll) ||
+      focusFirstDescendant(child, preventScroll)
+    ) {
       return true;
     }
   }
@@ -61,7 +64,7 @@ function focusFirstDescendant(element: any): boolean {
 function focusLastDescendant(element: any): boolean {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
-    if (focusLastDescendant(child) || attemptFocus(child)) {
+    if (focusLastDescendant(child) || attemptFocus(child, false)) {
       return true;
     }
   }
@@ -88,7 +91,7 @@ const ModalFocusTrap = ({
 
   React.useLayoutEffect(() => {
     if (canUseDOM) {
-      const trapFocus = () => {
+      const trapFocus = (preventScroll: boolean) => {
         // We should not trap focus if:
         // - The modal hasn't fully initialized with an HTMLElement ref
         // - Focus is already in the process of being trapped (e.g., we're refocusing)
@@ -113,7 +116,11 @@ const ModalFocusTrap = ({
             // If the previously selected element is the "first" descendant
             // and we're leaving it - this means that we should be looping
             // around to the other side of the modal.
-            let hasFocused = focusFirstDescendant(trapElementRef.current);
+            let hasFocused = focusFirstDescendant(
+              trapElementRef.current,
+              preventScroll
+            );
+
             if (
               focusRef.current.lastFocusedElement === document.activeElement
             ) {
@@ -135,10 +142,16 @@ const ModalFocusTrap = ({
       };
 
       // Call the trapFocus callback at least once when this modal has been activated.
-      trapFocus();
+      // Don't let this first focus scroll its ScrollView ancestors, as it would
+      // override their initial scroll position (Safari).
+      trapFocus(true);
 
-      document.addEventListener('focus', trapFocus, true);
-      return () => document.removeEventListener('focus', trapFocus, true);
+      const onFocus = () => {
+        trapFocus(false);
+      };
+
+      document.addEventListener('focus', onFocus, true);
+      return () => document.removeEventListener('focus', onFocus, true);
     }
   }, [active]);
 
