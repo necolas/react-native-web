@@ -176,5 +176,37 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('@supports (color:mark){:host,:root{--rnw-mark:mark;}}', 0);
       expect(element.sheet.cssRules.length).toBe(2);
     });
+
+    test('ignores rules before the first group', () => {
+      element.appendChild(
+        document.createTextNode(
+          '.page { color: blue }\n[stylesheet-group="0"]{}\n.a { color: red }'
+        )
+      );
+
+      const sheet = createOrderedCSSStyleSheet(element.sheet);
+      sheet.insert('.b { color: red }', 0);
+      sheet.insert('.c { color: red }', 1);
+
+      expect(sheet.getTextContent()).toMatchInlineSnapshot(`
+       "[stylesheet-group="0"] {}
+       .a {color: red;}
+       .b { color: red }
+       [stylesheet-group="1"]{}
+       .c { color: red }"
+      `);
+
+      expect(Array.from(element.sheet.cssRules).map((rule) => rule.cssText))
+        .toMatchInlineSnapshot(`
+       [
+         ".page {color: blue;}",
+         "[stylesheet-group="0"] {}",
+         ".a {color: red;}",
+         ".b {color: red;}",
+         "[stylesheet-group="1"] {}",
+         ".c {color: red;}",
+       ]
+      `);
+    });
   });
 });
