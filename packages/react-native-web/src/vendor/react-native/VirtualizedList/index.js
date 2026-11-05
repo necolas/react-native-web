@@ -454,7 +454,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       renderMask: VirtualizedList._createRenderMask(props, initialRenderRegion),
     };
 
-      // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
     // For issue https://github.com/necolas/react-native-web/issues/995
     this.invertedWheelEventHandler = (ev: any) => {
       if (this.props.scrollEnabled === false) {
