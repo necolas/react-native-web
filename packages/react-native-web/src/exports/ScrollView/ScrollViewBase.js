@@ -161,14 +161,10 @@ const ScrollViewBase = (props: Props): React.Node => {
   );
 };
 
-// Chrome doesn't support e.preventDefault in this case; touch-action must be
-// used to disable scrolling.
-// https://developers.google.com/web/updates/2017/01/scrolling-intervention
 const styles = StyleSheet.create({
   scrollDisabled: {
     overflowX: 'hidden',
-    overflowY: 'hidden',
-    touchAction: 'none'
+    overflowY: 'hidden'
   },
   hideScrollbar: {
     scrollbarWidth: 'none'
