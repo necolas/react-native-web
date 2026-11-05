@@ -454,16 +454,34 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       renderMask: VirtualizedList._createRenderMask(props, initialRenderRegion),
     };
 
-      // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
     // For issue https://github.com/necolas/react-native-web/issues/995
     this.invertedWheelEventHandler = (ev: any) => {
+      if (this.props.scrollEnabled === false) {
+        return;
+      }
+
+      let deltaX = ev.deltaX || ev.wheelDeltaX || 0;
+      let deltaY = ev.deltaY || ev.wheelDeltaY || 0;
+
+      // Windows and Linux report Shift+wheel as deltaY but scroll horizontally
+      if (ev.shiftKey && deltaX === 0) {
+        deltaX = deltaY;
+        deltaY = 0;
+      }
+
+      const delta = this.props.horizontal ? deltaX : deltaY;
+      const crossDelta = this.props.horizontal ? deltaY : deltaX;
+
+      // Let the browser handle wheel events on the other axis (e.g. nested lists)
+      if (Math.abs(delta) <= Math.abs(crossDelta)) {
+        return;
+      }
+
       const scrollOffset = this.props.horizontal ? ev.target.scrollLeft : ev.target.scrollTop;
       const scrollLength = this.props.horizontal ? ev.target.scrollWidth : ev.target.scrollHeight;
       const clientLength = this.props.horizontal ? ev.target.clientWidth : ev.target.clientHeight;
       const isEventTargetScrollable = ev.target !== ev.currentTarget && scrollLength > clientLength;
-      const delta = this.props.horizontal
-        ? ev.deltaX || ev.wheelDeltaX
-        : ev.deltaY || ev.wheelDeltaY;
       let leftoverDelta = delta;
       if (isEventTargetScrollable) {
         leftoverDelta = delta < 0
@@ -746,7 +764,8 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   setupWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       this._scrollRef.getScrollableNode().addEventListener('wheel',
-          this.invertedWheelEventHandler
+          this.invertedWheelEventHandler,
+          {passive: false}
       );
     } else {
       setTimeout(() => this.setupWebWheelHandler(), 50);
