@@ -143,14 +143,32 @@ export function hasTargetTouches(target: any, touches: any): boolean {
 }
 
 /**
- * Ignore 'selectionchange' events that don't correspond with a person's intent to
+ * Ignore 'selectionchange' and 'select' events that don't correspond with a person's intent to
  * select text.
  */
 export function hasValidSelection(domEvent: any): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }
-  return domEvent.type === 'select';
+  if (domEvent.type !== 'select') {
+    return false;
+  }
+
+  try {
+    const { selectionStart, selectionEnd } = domEvent.target;
+
+    if (
+      typeof selectionStart === 'number' &&
+      typeof selectionEnd === 'number'
+    ) {
+      return selectionStart !== selectionEnd;
+    }
+  } catch {
+    // Some engines (historically Chrome/WebKit) throw InvalidStateError
+    // when reading selection properties on unsupported types (e.g. type="number")
+  }
+
+  return true;
 }
 
 /**
