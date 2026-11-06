@@ -364,6 +364,31 @@ describe('components/Pressable', () => {
     });
   });
 
+  test.each(['Enter', ' '])(
+    'unmount removes an active %s keyboard press listener',
+    (key) => {
+      const onPress = jest.fn();
+      const onPressOut = jest.fn();
+      const ref = React.createRef();
+      const { unmount } = render(
+        <Pressable onPress={onPress} onPressOut={onPressOut} ref={ref} />
+      );
+      const node = ref.current;
+      const target = createEventTarget(node);
+      act(() => {
+        target.keydown({ key });
+      });
+      unmount();
+      // The document listener must not fire callbacks after cleanup.
+      act(() => {
+        createEventTarget(document.body).keyup({ key });
+        jest.runAllTimers();
+      });
+      expect(onPress).not.toHaveBeenCalled();
+      expect(onPressOut).not.toHaveBeenCalled();
+    }
+  );
+
   test('press interaction as button (keyboard)', () => {
     const onPress = jest.fn();
     const preventDefault = jest.fn();
