@@ -30,15 +30,17 @@ const ModalContent = (props: ModalContentProps): React.Node => {
   React.useLayoutEffect(() => {
     if (canUseDOM) {
       const closeOnEscape = (e: KeyboardEvent) => {
-        if (active && e.key === 'Escape') {
+        if (active && e.key === 'Escape' && !e.repeat && !e.defaultPrevented) {
           e.stopPropagation();
           if (onRequestClose) {
             onRequestClose();
           }
         }
       };
-      document.addEventListener('keyup', closeOnEscape, false);
-      return () => document.removeEventListener('keyup', closeOnEscape, false);
+      document.addEventListener('keydown', closeOnEscape, false);
+      return () => {
+        document.removeEventListener('keydown', closeOnEscape, false);
+      };
     }
   }, [active, onRequestClose]);
 

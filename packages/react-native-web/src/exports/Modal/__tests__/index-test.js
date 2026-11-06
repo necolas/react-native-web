@@ -676,7 +676,7 @@ describe('components/Modal', () => {
 
     render(<Modal onRequestClose={spy} visible={true} />);
 
-    fireEvent.keyUp(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: 'Escape' });
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
@@ -692,7 +692,7 @@ describe('components/Modal', () => {
       </>
     );
 
-    fireEvent.keyUp(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: 'Escape' });
 
     expect(spyA).toHaveBeenCalledTimes(0);
     expect(spyB).toHaveBeenCalledTimes(1);
@@ -735,9 +735,43 @@ describe('components/Modal', () => {
     fireEvent.animationEnd(animationAElement);
     fireEvent.animationEnd(animationBElement);
 
-    fireEvent.keyUp(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: 'Escape' });
 
     expect(spyA).toHaveBeenCalledTimes(0);
     expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key closes one modal per key press when the app handles it', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    function TestComponent() {
+      const [visibleB, setVisibleB] = React.useState(true);
+
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal onRequestClose={spyB} visible={visibleB}>
+            <a
+              data-testid="b"
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  e.preventDefault();
+                  setVisibleB(false);
+                }
+              }}
+            />
+          </Modal>
+        </>
+      );
+    }
+
+    const { getByTestId } = render(<TestComponent />);
+
+    fireEvent.keyDown(getByTestId('b'), { key: 'Escape' });
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(0);
   });
 });

@@ -38,7 +38,7 @@ Called after the modal has been dismissed and is no longer visible.
 {% endcall %}
 
 {% call macro.prop('onRequestClose', '?() => void') %}
-Called when the user is attempting to close the modal like when they hit `Escape`. Only the top-most Modal responds to hitting `Escape`.
+Called when the user tries to close the modal, for example by pressing `Escape`. Only the top-most modal responds to `Escape`, and it ignores the key press if `preventDefault()` was called on its `keydown` event.
 {% endcall %}
 
 {% call macro.prop('onShow', '?() => void') %}
