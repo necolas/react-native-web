@@ -17,7 +17,7 @@ import canUseDOM from '../../modules/canUseDom';
 
 export type ModalContentProps = {
   ...ViewProps,
-  active?: ?(boolean | (() => boolean)),
+  active?: ?boolean,
   children?: any,
   onRequestClose?: ?() => void,
   ref?: React.Ref<React.ElementRef<typeof View>>,
@@ -28,9 +28,9 @@ const ModalContent = (props: ModalContentProps): React.Node => {
   const { active, children, onRequestClose, transparent, ...rest } = props;
 
   React.useLayoutEffect(() => {
-    if (canUseDOM) {
+    if (canUseDOM && active) {
       const closeOnEscape = (e: KeyboardEvent) => {
-        if (active && e.key === 'Escape' && !e.repeat && !e.defaultPrevented) {
+        if (e.key === 'Escape' && !e.repeat && !e.defaultPrevented) {
           e.stopPropagation();
           if (onRequestClose) {
             onRequestClose();

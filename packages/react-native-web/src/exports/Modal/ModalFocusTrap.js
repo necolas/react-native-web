@@ -72,7 +72,7 @@ function focusLastDescendant(element: any): boolean {
 }
 
 export type ModalFocusTrapProps = {|
-  active?: boolean | (() => boolean),
+  active?: boolean,
   children?: any
 |};
 
@@ -90,16 +90,14 @@ const ModalFocusTrap = ({
   });
 
   React.useLayoutEffect(() => {
-    if (canUseDOM) {
+    if (canUseDOM && active) {
       const trapFocus = (preventScroll: boolean) => {
         // We should not trap focus if:
         // - The modal hasn't fully initialized with an HTMLElement ref
         // - Focus is already in the process of being trapped (e.g., we're refocusing)
-        // - isTrapActive prop being falsey tells us to do nothing
         if (
           trapElementRef.current == null ||
-          focusRef.current.trapFocusInProgress ||
-          !active
+          focusRef.current.trapFocusInProgress
         ) {
           return;
         }

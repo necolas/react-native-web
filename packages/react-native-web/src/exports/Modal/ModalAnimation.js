@@ -11,8 +11,14 @@
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import createElement from '../createElement';
+import canUseDOM from '../../modules/canUseDom';
 
 const ANIMATION_DURATION = 250;
+
+const prefersReducedMotionQuery: MediaQueryList | null =
+  canUseDOM && typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
 
 function getAnimationStyle(
   animationType: ?('none' | 'slide' | 'fade'),
@@ -36,11 +42,16 @@ export type ModalAnimationProps = {|
 |};
 
 function ModalAnimation(props: ModalAnimationProps): React.Node {
-  const { animationType, children, onDismiss, onShow, visible } = props;
+  const { children, onDismiss, onShow, visible } = props;
 
   const [isRendering, setIsRendering] = React.useState(false);
   const wasVisible = React.useRef<?boolean>(false);
   const wasRendering = React.useRef(false);
+
+  // Reduced motion CSS resets often use "animation: none", and then browsers
+  // don't fire the "animationend" event that shows and dismisses the modal
+  const animationType =
+    prefersReducedMotionQuery?.matches === true ? 'none' : props.animationType;
 
   const isAnimated = animationType && animationType !== 'none';
 
