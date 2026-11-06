@@ -79,7 +79,9 @@ export default function useHover(
       const leaveListener = function (e: any) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
-          dispatchCustomEvent(target, unlockEventType);
+          dispatchCustomEvent(target, unlockEventType, {
+            detail: { relatedTarget: e.relatedTarget }
+          });
           hoverEnd(e);
         }
       };
@@ -113,8 +115,11 @@ export default function useHover(
               lockEvent.stopPropagation();
             }
           };
-          const unlockListener = function (lockEvent: Event) {
-            if (lockEvent.target !== target) {
+          const unlockListener = function (lockEvent: CustomEvent) {
+            if (
+              lockEvent.target !== target &&
+              target.contains(lockEvent.detail.relatedTarget)
+            ) {
               hoverStart(e);
               // Ancestors further out stay locked.
               lockEvent.stopPropagation();
