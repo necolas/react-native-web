@@ -49,41 +49,38 @@ export type ModalProps = {
   visible?: ?boolean
 };
 
-let uniqueModalIdentifier = 0;
+let uniqueShowIdentifier = 0;
 
-const activeModalStack: Array<number> = [];
-const activeModalListeners: { [number]: (active: boolean) => void } = {};
+// The modal shown last is the active one
+const shownModals: Map<(active: boolean) => void, number> = new Map();
 
 function notifyActiveModalListeners() {
-  if (activeModalStack.length === 0) {
-    return;
-  }
-  const activeModalId = activeModalStack[activeModalStack.length - 1];
-  activeModalStack.forEach((modalId) => {
-    if (modalId in activeModalListeners) {
-      activeModalListeners[modalId](modalId === activeModalId);
+  let activeListener = null;
+  let activeShowId = -1;
+
+  shownModals.forEach((showId, listener) => {
+    if (showId > activeShowId) {
+      activeListener = listener;
+      activeShowId = showId;
     }
+  });
+
+  shownModals.forEach((showId, listener) => {
+    listener(listener === activeListener);
   });
 }
 
-function removeActiveModal(modalId: number) {
-  if (modalId in activeModalListeners) {
+function removeActiveModal(listener: (active: boolean) => void) {
+  if (shownModals.delete(listener)) {
     // Before removing this listener we should probably tell it
     // that it's no longer the active modal for sure.
-    activeModalListeners[modalId](false);
-    delete activeModalListeners[modalId];
-  }
-  const index = activeModalStack.indexOf(modalId);
-  if (index !== -1) {
-    activeModalStack.splice(index, 1);
+    listener(false);
     notifyActiveModalListeners();
   }
 }
 
-function addActiveModal(modalId: number, listener: (active: boolean) => void) {
-  removeActiveModal(modalId);
-  activeModalStack.push(modalId);
-  activeModalListeners[modalId] = listener;
+function addActiveModal(listener: (active: boolean) => void, showId: number) {
+  shownModals.set(listener, showId);
   notifyActiveModalListeners();
 }
 
@@ -99,36 +96,42 @@ const Modal = (props: ModalProps): React.Node => {
     ...rest
   } = props;
 
-  // Set a unique model identifier so we can correctly route
-  // dismissals and check the layering of modals.
-  const modalId = React.useMemo(() => uniqueModalIdentifier++, []);
+  // Set in render, not in an effect: parents render before their children, so
+  // a nested modal shown with its parent gets a higher id
+  const showId = React.useMemo(
+    () => (visible ? uniqueShowIdentifier++ : -1),
+    [visible]
+  );
 
   const [isActive, setIsActive] = React.useState(false);
 
   const onDismissCallback = React.useCallback(() => {
-    removeActiveModal(modalId);
-    if (onDismiss) {
-      onDismiss();
+    // The modal can be shown again in the update that ends its close
+    if (!visible) {
+      removeActiveModal(setIsActive);
     }
-  }, [modalId, onDismiss]);
 
-  const onShowCallback = React.useCallback(() => {
-    addActiveModal(modalId, setIsActive);
-    if (onShow) {
-      onShow();
+    onDismiss?.();
+  }, [onDismiss, visible]);
+
+  // Active when shown, not when the animation ends, so the modal below stops
+  // trapping focus and handling Escape
+  React.useLayoutEffect(() => {
+    if (visible) {
+      addActiveModal(setIsActive, showId);
     }
-  }, [modalId, onShow]);
+  }, [showId, visible]);
 
   React.useEffect(() => {
-    return () => removeActiveModal(modalId);
-  }, [modalId]);
+    return () => removeActiveModal(setIsActive);
+  }, []);
 
   return (
     <ModalPortal>
       <ModalAnimation
         animationType={animationType}
         onDismiss={onDismissCallback}
-        onShow={onShowCallback}
+        onShow={onShow}
         visible={visible}
       >
         <ModalFocusTrap active={isActive}>
