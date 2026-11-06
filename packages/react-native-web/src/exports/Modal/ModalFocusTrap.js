@@ -161,11 +161,13 @@ const ModalFocusTrap = ({
     if (canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {
-        const { activeElement } = document;
         if (
-          (activeElement == null || activeElement === document.body) &&
           lastFocusedElementOutsideTrap &&
-          document.contains(lastFocusedElementOutsideTrap)
+          document.contains(lastFocusedElementOutsideTrap) &&
+          // Don't take focus back if it moved somewhere else while the modal
+          // was closing, e.g. to another modal
+          (document.activeElement == null ||
+            document.activeElement === document.body)
         ) {
           // $FlowFixMe[incompatible-type] activeElement can be any focusable element
           UIManager.focus(lastFocusedElementOutsideTrap);

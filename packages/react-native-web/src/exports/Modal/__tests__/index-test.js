@@ -463,15 +463,19 @@ describe('components/Modal', () => {
         </Modal>
       </>
     );
+
     const { getByTestId, rerender } = render(modals(false, false));
+
     getByTestId('trigger').focus();
     rerender(modals(true, false));
+
     const animationA =
       getByTestId('a').parentElement.parentElement.parentElement.parentElement;
-    fireEvent.animationEnd(animationA);
 
+    fireEvent.animationEnd(animationA);
     rerender(modals(false, true));
     getByTestId('b').focus();
+
     fireEvent.animationEnd(animationA);
     expect(document.activeElement).toBe(getByTestId('b'));
   });
