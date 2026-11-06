@@ -83,6 +83,7 @@ export const accessibilityProps: string[] = [
 export const clickProps: string[] = [
   'onAuxClick',
   'onClick',
+  'onClickCapture',
   'onContextMenu',
   'onGotPointerCapture',
   'onLostPointerCapture',

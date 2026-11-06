@@ -95,6 +95,7 @@ export type EventProps = {|
   onAuxClick?: (e: any) => void,
   onBlur?: (e: any) => void,
   onClick?: (e: any) => void,
+  onClickCapture?: (e: any) => void,
   onContextMenu?: (e: any) => void,
   onFocus?: (e: any) => void,
   onGotPointerCapture?: (e: any) => void,
