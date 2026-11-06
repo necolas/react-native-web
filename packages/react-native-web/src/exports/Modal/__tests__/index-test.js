@@ -473,10 +473,11 @@ describe('components/Modal', () => {
       getByTestId('a').parentElement.parentElement.parentElement.parentElement;
 
     fireEvent.animationEnd(animationA);
+
     rerender(modals(false, true));
     getByTestId('b').focus();
-
     fireEvent.animationEnd(animationA);
+
     expect(document.activeElement).toBe(getByTestId('b'));
   });
 
