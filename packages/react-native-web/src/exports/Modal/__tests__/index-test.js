@@ -471,7 +471,6 @@ describe('components/Modal', () => {
 
     const animationA =
       getByTestId('a').parentElement.parentElement.parentElement.parentElement;
-
     fireEvent.animationEnd(animationA);
 
     rerender(modals(false, true));
