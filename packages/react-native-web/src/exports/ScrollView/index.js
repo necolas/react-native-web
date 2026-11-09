@@ -328,6 +328,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
               return (
                 <View
                   style={[
+                    horizontal && styles.childWrapperHorizontal,
                     isSticky && styles.stickyHeader,
                     pagingEnabled && styles.pagingEnabledChild
                   ]}
@@ -479,6 +480,9 @@ const styles = StyleSheet.create({
   },
   pagingEnabledChild: {
     scrollSnapAlign: 'start'
+  },
+  childWrapperHorizontal: {
+    flexDirection: 'row'
   }
 });
 
