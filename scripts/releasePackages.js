@@ -53,7 +53,7 @@ const currentVersion = workspaces.find(
 
 const releaseTypes = {
   canary: {
-    distTag: 'nightly'
+    distTag: 'canary'
   },
   rc: {
     distTag: 'next',
@@ -120,7 +120,7 @@ async function main() {
   console.log(`Current version: ${currentVersion}`);
 
   const type = await prompt.select('Release type', [
-    { value: 'canary', label: 'canary (npm tag: nightly)' },
+    { value: 'canary', label: 'canary (npm tag: canary)' },
     { value: 'rc', label: 'rc (npm tag: next)' },
     { value: 'stable', label: 'stable (npm tag: latest)' }
   ]);
@@ -136,9 +136,9 @@ async function main() {
 
     const sha = execSync('git rev-parse HEAD', { encoding: 'utf-8' })
       .trim()
-      .slice(0, 9);
+      .slice(0, 7);
 
-    version = `${base}-nightly-${date}-${sha}`;
+    version = `${base}-canary-${date}-${sha}`;
   } else {
     version = await prompt.input('Version:', {
       validate: (value) => {
