@@ -46,6 +46,7 @@ const Text = (props: {
   ref?: React.Ref<HTMLElement & PlatformMethods>
 }): React.Node => {
   const {
+    ellipsizeMode,
     hrefAttrs,
     numberOfLines,
     onClick,
@@ -131,6 +132,7 @@ const Text = (props: {
     hasTextAncestor === true ? styles.textHasAncestor$raw : styles.text$raw,
     numberOfLines === 1 && styles.textOneLine,
     numberOfLines != null && numberOfLines > 1 && styles.textMultiLine,
+    ellipsizeMode === 'clip' && styles.textClip,
     props.style,
     selectable === true && styles.selectable,
     selectable === false && styles.notSelectable,
@@ -216,6 +218,9 @@ const styles = StyleSheet.create({
     overflow: 'clip',
     textOverflow: 'ellipsis',
     WebkitBoxOrient: 'vertical'
+  },
+  textClip: {
+    textOverflow: 'clip'
   },
   notSelectable: {
     userSelect: 'none'

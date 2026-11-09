@@ -164,8 +164,16 @@ describe('components/Text', () => {
       const { container } = render(<Text numberOfLines={3} />);
       expect(container.firstChild).toMatchSnapshot();
     });
+
     test('value is set to one', () => {
       const { container } = render(<Text numberOfLines={1} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set to one with "clip" ellipsizeMode', () => {
+      const { container } = render(
+        <Text ellipsizeMode="clip" numberOfLines={1} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });

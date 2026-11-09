@@ -163,6 +163,13 @@ exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 />
 `;
 
+exports[`components/Text prop "numberOfLines" value is set to one with "clip" ellipsizeMode 1`] = `
+<div
+  class="css-text-1kstuq4 r-maxWidth-dnmrzs r-overflow-1udh08x r-whiteSpace-3s2u2q r-wordWrap-1iln25a r-textOverflow-ptvr8z"
+  dir="auto"
+/>
+`;
+
 exports[`components/Text prop "role" value alters HTML element 1`] = `
 <article
   class="css-text-1kstuq4"

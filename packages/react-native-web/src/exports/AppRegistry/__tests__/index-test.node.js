@@ -77,6 +77,7 @@ describe('AppRegistry', () => {
        .r-position-u8s1d{position:absolute;}
        .r-right-zchlnj{right:0px;}
        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+       .r-textOverflow-ptvr8z{text-overflow:clip;}
        .r-top-ipm5af{top:0px;}
        .r-userSelect-1xnzce8{-webkit-user-select:text;user-select:text;}
        .r-userSelect-lrvibr{-webkit-user-select:none;user-select:none;}
@@ -143,6 +144,7 @@ describe('AppRegistry', () => {
        .r-position-u8s1d{position:absolute;}
        .r-right-zchlnj{right:0px;}
        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+       .r-textOverflow-ptvr8z{text-overflow:clip;}
        .r-top-ipm5af{top:0px;}
        .r-userSelect-1xnzce8{-webkit-user-select:text;user-select:text;}
        .r-userSelect-lrvibr{-webkit-user-select:none;user-select:none;}
@@ -202,6 +204,7 @@ describe('AppRegistry', () => {
        .r-position-u8s1d{position:absolute;}
        .r-right-zchlnj{right:0px;}
        .r-textOverflow-1udbk01{text-overflow:ellipsis;}
+       .r-textOverflow-ptvr8z{text-overflow:clip;}
        .r-top-ipm5af{top:0px;}
        .r-userSelect-1xnzce8{-webkit-user-select:text;user-select:text;}
        .r-userSelect-lrvibr{-webkit-user-select:none;user-select:none;}

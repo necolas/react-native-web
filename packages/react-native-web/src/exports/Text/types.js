@@ -134,6 +134,7 @@ export type TextStyle = {
 export type TextProps = {
   ...ViewProps,
   dir?: 'auto' | 'ltr' | 'rtl',
+  ellipsizeMode?: ?('clip' | 'head' | 'middle' | 'tail'),
   numberOfLines?: ?number,
   role?:
     | 'button'
