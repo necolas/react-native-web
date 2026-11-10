@@ -236,6 +236,7 @@ export default class PressResponder {
   |}>;
   _touchState: TouchState = NOT_RESPONDER;
   _responderElement: ?HTMLElement = null;
+  _keyupHandler: ?(KeyboardEvent) => void = null;
 
   constructor(config: PressResponderConfig) {
     this.configure(config);
@@ -252,6 +253,9 @@ export default class PressResponder {
     this._cancelLongPressDelayTimeout();
     this._cancelPressDelayTimeout();
     this._cancelPressOutDelayTimeout();
+    if (this._keyupHandler != null) {
+      document.removeEventListener('keyup', this._keyupHandler);
+    }
   }
 
   /**
@@ -358,6 +362,7 @@ export default class PressResponder {
             this._responderElement = target;
             // Listen to 'keyup' on document to account for situations where
             // focus is moved to another element during 'keydown'.
+            this._keyupHandler = keyupHandler;
             document.addEventListener('keyup', keyupHandler);
           }
           const isSpacebarKey = key === ' ';
