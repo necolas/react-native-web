@@ -9,10 +9,7 @@
 
 import * as React from 'react';
 
-const UNINITIALIZED =
-  typeof Symbol === 'function' && typeof Symbol() === 'symbol'
-    ? Symbol()
-    : Object.freeze({});
+const UNINITIALIZED = Symbol();
 
 export default function useStable<T>(getInitialValue: () => T): T {
   const ref = React.useRef<any>(UNINITIALIZED);
