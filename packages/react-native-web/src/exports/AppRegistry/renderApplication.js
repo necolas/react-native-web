@@ -17,7 +17,8 @@ import StyleSheet from '../StyleSheet';
 import React from 'react';
 
 export type Application = {
-  unmount: () => void
+  unmount: () => void,
+  ...
 };
 
 export default function renderApplication<Props extends Object>(

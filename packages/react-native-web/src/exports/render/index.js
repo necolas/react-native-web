@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 'use client';
@@ -14,14 +14,22 @@ import {
   hydrateRoot as domHydrateRoot
 } from 'react-dom/client';
 
+import type { Node } from 'react';
+
 import { createSheet } from '../StyleSheet/dom';
 
-export function hydrate(element, root) {
+export type Root = {
+  render: (children: Node) => void,
+  unmount: () => void,
+  ...
+};
+
+export function hydrate(element: Node, root: HTMLElement): Root {
   createSheet(root);
   return domHydrateRoot(root, element);
 }
 
-export default function render(element, root) {
+export default function render(element: Node, root: HTMLElement): Root {
   createSheet(root);
   const reactRoot = domCreateRoot(root);
   reactRoot.render(element);

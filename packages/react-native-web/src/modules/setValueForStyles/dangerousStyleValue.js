@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * From React 16.0.0
- * @noflow
+ * @flow
  */
 
 import isUnitlessNumber from '../isUnitlessNumber';
@@ -21,7 +21,11 @@ import isUnitlessNumber from '../isUnitlessNumber';
  * @param {*} value CSS property value such as `10px`.
  * @return {string} Normalized style value with dimensions applied.
  */
-function dangerousStyleValue(name, value, isCustomProperty) {
+function dangerousStyleValue(
+  name: string,
+  value: unknown,
+  isCustomProperty: boolean
+): string {
   // Note that we've removed escapeTextForBrowser() calls here since the
   // whole string will be escaped when the attribute is injected into
   // the markup. If you provide unsafe user data here they can inject
@@ -46,7 +50,7 @@ function dangerousStyleValue(name, value, isCustomProperty) {
     return value + 'px'; // Presumes implicit 'px' suffix for unitless numbers
   }
 
-  return ('' + value).trim();
+  return String(value).trim();
 }
 
 export default dangerousStyleValue;

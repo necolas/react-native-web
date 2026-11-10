@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * From React 16.3.0
- * @noflow
+ * @flow
  */
 
 import dangerousStyleValue from './dangerousStyleValue';
@@ -19,7 +19,10 @@ import dangerousStyleValue from './dangerousStyleValue';
  * @param {DOMElement} node
  * @param {object} styles
  */
-function setValueForStyles(node, styles) {
+function setValueForStyles(
+  node: HTMLElement,
+  styles: { readonly [string]: unknown }
+): void {
   const style = node.style;
   for (let styleName in styles) {
     if (!styles.hasOwnProperty(styleName)) {
@@ -37,6 +40,7 @@ function setValueForStyles(node, styles) {
     if (isCustomProperty) {
       style.setProperty(styleName, styleValue);
     } else {
+      // $FlowFixMe[incompatible-type] CSSStyleDeclaration has no string indexer
       style[styleName] = styleValue;
     }
   }

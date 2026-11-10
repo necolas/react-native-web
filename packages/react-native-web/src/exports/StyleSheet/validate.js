@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import valueParser from 'postcss-value-parser';
@@ -45,11 +45,11 @@ const invalidMultiValueShortforms = new Set([
   'paddingVertical'
 ]);
 
-function error(message) {
+function error(message: string) {
   console.error(message);
 }
 
-export function validate(obj: Object) {
+export function validate(obj: { [string]: unknown }) {
   for (const k in obj) {
     const prop = k.trim();
     const value = obj[prop];

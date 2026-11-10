@@ -165,7 +165,7 @@ type StyleProps = [string, { [key: string]: unknown } | null, string];
 export type StyleSheetOptions = {
   shadow?: boolean,
   textShadow?: boolean,
-  writingDirection?: 'ltr' | 'rtl'
+  writingDirection?: 'auto' | 'ltr' | 'rtl'
 };
 
 function StyleSheet(styles: any, options?: StyleSheetOptions = {}): StyleProps {
