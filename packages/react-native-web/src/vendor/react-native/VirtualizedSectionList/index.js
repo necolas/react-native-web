@@ -529,7 +529,7 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
     trailingItem: props.item,
     trailingSection: props.trailingSection,
   });
-  const [separatorProps, setSeparatorProps] = React.useState({
+  const [separatorProps, setSeparatorProps] = React.useState<SeparatorProps>({
     leadingItem: props.item,
     leadingSection: props.leadingSection,
     section: props.section,
@@ -539,7 +539,6 @@ function ItemWithSeparator(props: ItemWithSeparatorProps): React.Node {
 
   React.useEffect(() => {
     setSelfHighlightCallback(cellKey, setSeparatorHighlighted);
-    // $FlowFixMe[incompatible-type]
     setSelfUpdatePropsCallback(cellKey, setSeparatorProps);
 
     return () => {

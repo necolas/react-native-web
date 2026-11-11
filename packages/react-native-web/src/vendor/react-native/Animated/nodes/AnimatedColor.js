@@ -65,14 +65,10 @@ function processColor(
   }
 
   if (isRgbaValue(color)) {
-    // $FlowFixMe[incompatible-type] Type is verified above
-    return color as RgbaValue;
+    return color;
   }
 
-  let normalizedColor: ?ProcessedColorValue = normalizeColor(
-    // $FlowFixMe[incompatible-type] Type is verified above
-    color as ColorValue,
-  );
+  let normalizedColor: ?ProcessedColorValue = normalizeColor(color);
   if (normalizedColor === undefined || normalizedColor === null) {
     return null;
   }

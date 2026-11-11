@@ -15,10 +15,10 @@ import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
 const emptyObject: Record<string, unknown> = {};
 const uppercasePattern = /[A-Z]/g;
 
-const hasOwnProperty: (
-  this: Readonly<Record<string, unknown>>,
-  key: string
-) => boolean = Object.prototype.hasOwnProperty;
+const hasOwnProperty: {
+  call(obj: Readonly<Record<string, unknown>>, key: string): boolean,
+  ...
+} = Object.prototype.hasOwnProperty;
 
 function toHyphenLower(match: string): string {
   return '-' + match.toLowerCase();
@@ -171,7 +171,6 @@ const createDOMProps = (
     // $FlowFixMe[invalid-in-rhs] dataSet is not checked to be an object at runtime
     for (const dataProp in dataSet) {
       // $FlowFixMe[incompatible-type] dataSet is not checked to be an object at runtime
-      // $FlowFixMe[invalid-this-arg] dataSet is not checked to be an object at runtime
       if (hasOwnProperty.call(dataSet, dataProp)) {
         const dataName = hyphenateString(dataProp);
         // $FlowFixMe[incompatible-use] dataSet is not checked to be an object at runtime

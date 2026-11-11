@@ -34,7 +34,11 @@ const NativeAnimatedModule =
 let __nativeAnimatedNodeTagCount = 1; /* used for animated nodes */
 let __nativeAnimationIdCount = 1; /* used for started animations */
 
-let nativeEventEmitter;
+type NativeAnimatedEventDefinitions = {
+  onAnimatedValueUpdate: [{tag: number, value: number, ...}],
+};
+
+let nativeEventEmitter: ?NativeEventEmitter<NativeAnimatedEventDefinitions>;
 
 let waitingForQueuedOperations = new Set<string>();
 let queueOperations = false;
@@ -76,10 +80,9 @@ const nativeOps: ?typeof NativeAnimatedModule = useSingleOpBatching
       ];
       return apis.reduce((acc, functionName, i) => {
         // These indices need to be kept in sync with the indices in native (see NativeAnimatedModule in Java, or the equivalent for any other native platform).
-        // $FlowFixMe[prop-missing]
         acc[functionName] = i + 1;
         return acc;
-      }, {});
+      }, {} as Record<string, number>);
     })() as $FlowFixMe)
   : NativeAnimatedModule;
 
@@ -578,13 +581,11 @@ export default {
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
   transformDataType,
-  // $FlowExpectedError[missing-type-arg] - unsafe getter lint suppresion
-  get nativeEventEmitter(): NativeEventEmitter {
+  get nativeEventEmitter(): NativeEventEmitter<NativeAnimatedEventDefinitions> {
     if (!nativeEventEmitter) {
       nativeEventEmitter = new NativeEventEmitter(
         // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
         // If you want to use the native module on other platforms, please remove this condition and test its behavior
-        // $FlowFixMe[class-object-subtyping]
         Platform.OS !== 'ios' ? null : NativeAnimatedModule,
       );
     }

@@ -24,7 +24,7 @@ export type ViewToken = {
 };
 
 export type ViewabilityConfigCallbackPair = {
-  viewabilityConfig: ViewabilityConfig,
+  viewabilityConfig?: ViewabilityConfig,
   onViewableItemsChanged: (info: {
     viewableItems: Array<ViewToken>,
     changed: Array<ViewToken>,

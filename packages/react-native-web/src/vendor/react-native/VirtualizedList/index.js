@@ -465,7 +465,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   state: State;
 
    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
-   invertedWheelEventHandler: ?(ev: InvertedWheelEvent) => void;
+   invertedWheelEventHandler: (ev: InvertedWheelEvent) => void;
 
   constructor(props: Props) {
     super(props);
@@ -812,7 +812,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
   setupWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
-      // $FlowFixMe[incompatible-type] invertedWheelEventHandler is set in the constructor
+      // $FlowFixMe[incompatible-type] the wheel event target is a scroll node, the DOM type is EventTarget
       this._scrollRef.getScrollableNode().addEventListener('wheel',
           this.invertedWheelEventHandler,
           {passive: false}
@@ -826,7 +826,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
   teardownWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
-      // $FlowFixMe[incompatible-type] invertedWheelEventHandler is set in the constructor
+      // $FlowFixMe[incompatible-type] the wheel event target is a scroll node, the DOM type is EventTarget
       this._scrollRef.getScrollableNode().removeEventListener('wheel',
           this.invertedWheelEventHandler
       );
@@ -1153,7 +1153,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         this.props.scrollEventThrottle,
       ), // TODO: Android support
       invertStickyHeaders:
-        // $FlowFixMe[prop-missing] invertStickyHeaders is not a ScrollView prop on web
         this.props.invertStickyHeaders !== undefined
           ? this.props.invertStickyHeaders
           : this.props.inverted,
@@ -1492,9 +1491,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     const itemCount = this.props.getItemCount(this.props.data);
     for (let ii = 0; ii < itemCount; ii++) {
       const frame = this.__getFrameMetricsApprox(ii, this.props);
-      /* $FlowFixMe[prop-missing] (>=0.68.0 site=react_native_fb) This comment
-       * suppresses an error found when Flow v0.68 was deployed. To see the
-       * error delete this comment and run Flow. */
       if (frame.inLayout) {
         framesInLayout.push(frame);
       }
@@ -1663,7 +1659,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       this.props.initialScrollIndex > 0 &&
       !this._hasTriggeredInitialScrollToIndex
     ) {
-      // $FlowFixMe[prop-missing] contentOffset is not a ScrollView prop on web
       if (this.props.contentOffset == null) {
         if (
           this.props.initialScrollIndex <
@@ -1947,6 +1942,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   ) => {
     length: number,
     offset: number,
+    readonly inLayout?: boolean,
     ...
   } = (index, props) => {
     const frame = this._getFrameMetrics(index, props);

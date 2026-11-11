@@ -116,6 +116,14 @@ type OptionalProps = {
    * Reverses the direction of scroll. Uses scale transforms of -1.
    */
   inverted?: ?boolean,
+  /**
+   * Inverts the sticky headers. Defaults to the value of `inverted`.
+   */
+  invertStickyHeaders?: ?boolean,
+  /**
+   * When set, `initialScrollIndex` is not applied after the first layout.
+   */
+  contentOffset?: ?{x: number, y: number, ...},
   keyExtractor?: ?(item: Item, index: number) => string,
   /**
    * CellRendererComponent allows customizing how cells rendered by

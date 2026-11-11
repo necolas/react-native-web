@@ -17,7 +17,7 @@ type SaveValueCallback = (value: number) => void;
 
 export type EventMapping = {
   nativeEventPath: Array<string>,
-  animatedValueTag: ?number,
+  animatedValueTag: number,
 };
 
 // The config has different keys depending on the type of the Node

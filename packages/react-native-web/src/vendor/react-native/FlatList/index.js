@@ -418,7 +418,6 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
         }));
     } else if (this.props.onViewableItemsChanged) {
       this._virtualizedListPairs.push({
-        // $FlowFixMe[incompatible-type] viewabilityConfig is not checked to be set at runtime
         viewabilityConfig: this.props.viewabilityConfig,
         onViewableItemsChanged: this._createOnViewableItemsChanged(
           this.props.onViewableItemsChanged,
