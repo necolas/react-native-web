@@ -20,6 +20,8 @@ export type TextInputStyle = {
 
 export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
 
+type TextInputEvent = { nativeEvent: { text: string, ... }, ... };
+
 export type TextInputProps = {
   ...ViewProps,
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words',
@@ -52,12 +54,14 @@ export type TextInputProps = {
     | 'url',
   maxLength?: ?number,
   multiline?: ?boolean,
-  onChange?: (e: { nativeEvent: { text: string, ... }, ... }) => void,
+  onBlur?: (e: TextInputEvent) => void,
+  onChange?: (e: TextInputEvent) => void,
   onChangeText?: (e: string) => void,
   onContentSizeChange?: (e: {
     nativeEvent: { contentSize: { height: number, width: number } }
   }) => void,
-  onEndEditing?: (e: empty) => void,
+  onEndEditing?: (e: TextInputEvent) => void,
+  onFocus?: (e: TextInputEvent) => void,
   onKeyPress?: (e: KeyboardEvent<HTMLElement>) => void,
   onSelectionChange?: (e: {
     nativeEvent: {
@@ -68,7 +72,7 @@ export type TextInputProps = {
     ...
   }) => void,
   onScroll?: (e: UIEvent<HTMLElement>) => void,
-  onSubmitEditing?: (e: KeyboardEvent<HTMLElement>) => void,
+  onSubmitEditing?: (e: TextInputEvent) => void,
   placeholder?: ?string,
   placeholderTextColor?: ?ColorValue,
   readOnly?: ?boolean,

@@ -13,7 +13,7 @@ import canUseDOM from '../../modules/canUseDom';
 
 const initialURL = canUseDOM ? window.location.href : '';
 
-type Listener = (...args: ReadonlyArray<empty>) => unknown;
+type Listener = (...args: ReadonlyArray<unknown>) => unknown;
 type LinkingTarget = '_blank' | '_self' | '_parent' | '_top';
 
 class Linking {
@@ -46,7 +46,6 @@ class Linking {
 
     if (listeners != null) {
       // Copy so mutations during emit do not change this invocation
-      // $FlowFixMe[incompatible-type] listeners take the arguments emitted for their event type
       [...listeners].forEach(({ listener }) => listener(...args));
     }
   }
