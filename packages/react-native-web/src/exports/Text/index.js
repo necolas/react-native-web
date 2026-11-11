@@ -73,7 +73,7 @@ const Text = (props: {
   } = props;
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
@@ -97,7 +97,7 @@ const Text = (props: {
   });
 
   const handleClick = React.useCallback(
-    (e: any) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (onClick != null) {
         onClick(e);
       } else if (onPress != null) {

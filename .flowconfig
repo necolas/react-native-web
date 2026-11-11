@@ -1,7 +1,8 @@
 [version]
-0.336.0
+0.339.0
 
 [ignore]
+**/node_modules/invariant/**
 **/__tests__/**
 packages/*/dist/**
 packages/benchmarks/**

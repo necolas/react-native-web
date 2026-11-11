@@ -11,14 +11,19 @@ import type {
   ResponderTouchHistoryStore,
   TouchHistory
 } from './ResponderTouchHistoryStore';
-import type { Touch, TouchEvent } from './ResponderEventTypes';
+import type {
+  ResponderDOMEvent,
+  Touch,
+  TouchEvent
+} from './ResponderEventTypes';
+import type { ResponderNode } from './utils';
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 
-export type ResponderEvent = {|
+export type ResponderEvent = {
   bubbles: boolean,
   cancelable: boolean,
-  currentTarget: any,
+  currentTarget: ?ResponderNode,
   defaultPrevented: ?boolean,
   dispatchConfig: {
     registrationName?: string,
@@ -35,10 +40,10 @@ export type ResponderEvent = {|
   stopPropagation: () => void,
   nativeEvent: TouchEvent,
   persist: () => void,
-  target: ?any,
+  target: ?EventTarget,
   timeStamp: number,
   touchHistory: TouchHistory
-|};
+};
 
 const emptyFunction = () => {};
 const emptyObject: ResponderEvent['dispatchConfig'] = {};
@@ -67,7 +72,7 @@ const getScale = (rectSize: number, offsetSize: number = 0): number =>
  * Mouse events are transformed into fake touch events.
  */
 export default function createResponderEvent(
-  domEvent: any,
+  domEvent: ResponderDOMEvent,
   responderTouchHistoryStore: ResponderTouchHistoryStore
 ): ResponderEvent {
   let rect: ?{ left: number, top: number, width: number, height: number, ... };
@@ -84,10 +89,16 @@ export default function createResponderEvent(
   const identifier = normalizeIdentifier(
     domEventChangedTouches?.[0].identifier || 0
   );
-  const clientX = domEventChangedTouches?.[0].clientX || domEvent.clientX;
-  const clientY = domEventChangedTouches?.[0].clientY || domEvent.clientY;
-  const pageX = domEventChangedTouches?.[0].pageX || domEvent.pageX;
-  const pageY = domEventChangedTouches?.[0].pageY || domEvent.pageY;
+  const clientX: number =
+    // $FlowFixMe[incompatible-type] mouse and touch events have coordinates
+    domEventChangedTouches?.[0].clientX || domEvent.clientX;
+  const clientY: number =
+    // $FlowFixMe[incompatible-type] mouse and touch events have coordinates
+    domEventChangedTouches?.[0].clientY || domEvent.clientY;
+  // $FlowFixMe[incompatible-type] mouse and touch events have coordinates
+  const pageX: number = domEventChangedTouches?.[0].pageX || domEvent.pageX;
+  // $FlowFixMe[incompatible-type] mouse and touch events have coordinates
+  const pageY: number = domEventChangedTouches?.[0].pageY || domEvent.pageY;
   const preventDefault =
     typeof domEvent.preventDefault === 'function'
       ? domEvent.preventDefault.bind(domEvent)
@@ -115,7 +126,10 @@ export default function createResponderEvent(
 
   if (domEventChangedTouches != null) {
     changedTouches = normalizeTouches(domEventChangedTouches);
-    touches = normalizeTouches(domEvent.touches);
+    touches =
+      domEvent.touches != null
+        ? normalizeTouches(domEvent.touches)
+        : emptyArray;
   } else {
     const emulatedTouches: Array<Touch> = [
       {
@@ -190,16 +204,18 @@ export default function createResponderEvent(
   // 1) The value of `currentTarget` is not initially available.
   // 2) Measuring the clientRect may cause layout jank and should only be done on-demand.
   function locationX(x: number): number | void {
-    rect = rect || getBoundingClientRect(responderEvent.currentTarget);
-    if (rect) {
-      const offsetWidth = responderEvent.currentTarget.offsetWidth;
+    const currentTarget = responderEvent.currentTarget;
+    rect = rect || getBoundingClientRect(currentTarget);
+    if (rect && currentTarget != null) {
+      const offsetWidth = currentTarget.offsetWidth;
       return (x - rect.left) / getScale(rect.width, offsetWidth);
     }
   }
   function locationY(y: number): number | void {
-    rect = rect || getBoundingClientRect(responderEvent.currentTarget);
-    if (rect) {
-      const offsetHeight = responderEvent.currentTarget.offsetHeight;
+    const currentTarget = responderEvent.currentTarget;
+    rect = rect || getBoundingClientRect(currentTarget);
+    if (rect && currentTarget != null) {
+      const offsetHeight = currentTarget.offsetHeight;
       return (y - rect.top) / getScale(rect.height, offsetHeight);
     }
   }

@@ -10,10 +10,13 @@
 import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
-import normalizeValueWithProperty from './normalizeValueWithProperty';
+import normalizeValueWithProperty, {
+  type StyleValue
+} from './normalizeValueWithProperty';
 
-type Value = Object | Array<any> | string | number;
-type Style = { [key: string]: Value };
+export type Style = Readonly<Record<string, ?StyleValue>>;
+type Keyframes = Readonly<Record<string, Style>>;
+type KeyframesValue = string | Keyframes;
 type Rule = string;
 type Rules = Array<Rule>;
 type RulesData = [Rules, number];
@@ -29,7 +32,7 @@ const emptyObject = {};
 
 const classicGroup = 1;
 const atomicGroup = 3;
-const customGroup: { [key: string]: number } = {
+const customGroup: Record<string, number> = {
   borderColor: 2,
   borderRadius: 2,
   borderStyle: 2,
@@ -95,7 +98,7 @@ const paddingRight = 'paddingRight';
 const left = 'left';
 
 // Map of LTR property names to their BiDi equivalent.
-const PROPERTIES_FLIP: { [key: string]: string } = {
+const PROPERTIES_FLIP: Record<string, string> = {
   [borderTopLeftRadius]: borderTopRightRadius,
   [borderTopRightRadius]: borderTopLeftRadius,
   [borderBottomLeftRadius]: borderBottomRightRadius,
@@ -115,7 +118,7 @@ const PROPERTIES_FLIP: { [key: string]: string } = {
 };
 
 // Map of I18N property names to their LTR equivalent.
-const PROPERTIES_I18N: { [key: string]: string } = {
+const PROPERTIES_I18N: Record<string, string> = {
   borderStartStartRadius: borderTopLeftRadius,
   borderStartEndRadius: borderTopRightRadius,
   borderEndStartRadius: borderBottomLeftRadius,
@@ -140,7 +143,11 @@ export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
 
-  function atomicCompile(srcProp: string, prop: string, value: Value): string {
+  function atomicCompile(
+    srcProp: string,
+    prop: string,
+    value: StyleValue
+  ): string {
     const valueString = stringifyValueWithProperty(value, prop);
     const cacheKey = prop + valueString;
     const cachedResult = cache.get(cacheKey);
@@ -244,6 +251,7 @@ export function classic(style: Style, name: string): CompilerOutput {
   let animationName;
   if (animationKeyframes != null) {
     const [animationNames, keyframesRules] =
+      // $FlowFixMe[incompatible-type] animationKeyframes is not checked to be keyframes at runtime
       processKeyframesValue(animationKeyframes);
     animationName = animationNames.join(',');
     compiledRules.push(...keyframesRules);
@@ -260,12 +268,12 @@ export function classic(style: Style, name: string): CompilerOutput {
  * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
  */
 export function inline(
-  originalStyle: Style,
+  originalStyle: Readonly<Record<string, unknown>>,
   isRTL?: boolean
-): { [key: string]: unknown } {
+): Record<string, unknown> {
   const style = originalStyle || emptyObject;
-  const frozenProps: { [string]: boolean } = {};
-  const nextStyle: Style = {};
+  const frozenProps: Record<string, boolean> = {};
+  const nextStyle: Record<string, unknown> = {};
 
   for (const originalProp in style) {
     const originalValue = style[originalProp];
@@ -302,6 +310,7 @@ export function inline(
         if (typeof val === 'string') {
           const valuePolyfill = PROPERTIES_I18N[val];
           if (valuePolyfill != null) {
+            // $FlowFixMe[cannot-write] Array.isArray() refines unknown to a read-only array
             originalValues[i] = isRTL
               ? PROPERTIES_FLIP[valuePolyfill]
               : valuePolyfill;
@@ -329,7 +338,10 @@ export function inline(
  * Create a value string that normalizes different input values with a common
  * output.
  */
-function stringifyValueWithProperty(value: Value, property: ?string): string {
+function stringifyValueWithProperty(
+  value: StyleValue,
+  property: ?string
+): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);
   return typeof normalizedValue !== 'string'
@@ -344,7 +356,7 @@ function stringifyValueWithProperty(value: Value, property: ?string): string {
 function createAtomicRules(
   identifier: string,
   property: string,
-  value: Value
+  value: StyleValue
 ): Rules {
   const rules: Rules = [];
   const selector = `.${identifier}`;
@@ -353,6 +365,7 @@ function createAtomicRules(
   // CSS rules to be created.
   switch (property) {
     case 'animationKeyframes': {
+      // $FlowFixMe[incompatible-type] animationKeyframes is not checked to be keyframes at runtime
       const [animationNames, keyframesRules] = processKeyframesValue(value);
       const block = createDeclarationBlock({
         animationName: animationNames.join(',')
@@ -454,7 +467,7 @@ function createIdentifier(prefix: string, name: string, key: string): string {
 /**
  * Create individual CSS keyframes rules.
  */
-function createKeyframes(keyframes: Object): [string, Rules] {
+function createKeyframes(keyframes: Keyframes): [string, Rules] {
   const identifier = createIdentifier(
     'r',
     'animation',
@@ -479,7 +492,9 @@ function createKeyframes(keyframes: Object): [string, Rules] {
 /**
  * Create CSS keyframes rules and names from a StyleSheet keyframes object.
  */
-function processKeyframesValue(keyframesValue: Value): [Array<string>, Rules] {
+function processKeyframesValue(
+  keyframesValue: KeyframesValue | ReadonlyArray<KeyframesValue>
+): [Array<string>, Rules] {
   if (typeof keyframesValue === 'number') {
     throw new Error(`Invalid CSS keyframes type: ${typeof keyframesValue}`);
   }

@@ -394,7 +394,7 @@ Image.prefetch = function (uri: string): Promise<void> {
 
 Image.queryCache = function (
   uris: Array<string>
-): Promise<{| [uri: string]: 'disk/memory' |}> {
+): Promise<Record<string, 'disk/memory'>> {
   return ImageLoader.queryCache(uris);
 };
 
@@ -403,7 +403,7 @@ Image.resolveAssetSource = function (
 ): ?(
   | SourceObject
   | Array<SourceObject>
-  | {| height: ?number, scale: number, uri: string, width: ?number |}
+  | { height: ?number, scale: number, uri: string, width: ?number }
 ) {
   if (source == null || typeof source === 'object') {
     return source;

@@ -153,14 +153,13 @@ const stagger = function (
 };
 
 type LoopAnimationConfig = {
-  iterations: number,
+  iterations?: number,
   resetBeforeIteration?: boolean,
   ...
 };
 
 const loop = function (
   animation: CompositeAnimation,
-  // $FlowFixMe[incompatible-type]
   {iterations = -1}: LoopAnimationConfig = {},
 ): CompositeAnimation {
   return emptyAnimation;

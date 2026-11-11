@@ -16,9 +16,9 @@ import useEvent from '../useEvent';
 
 export type HoverEventsConfig = {
   disabled?: ?boolean,
-  onHoverStart?: ?(e: any) => void,
+  onHoverStart?: ?(e: PointerEvent) => void,
   onHoverChange?: ?(boolean: boolean) => void,
-  onHoverEnd?: ?(e: any) => void
+  onHoverEnd?: ?(e: PointerEvent) => void
 };
 
 /**
@@ -36,7 +36,7 @@ function dispatchCustomEvent(
   payload?: {
     bubbles?: boolean,
     cancelable?: boolean,
-    detail?: { [key: string]: unknown }
+    detail?: { relatedTarget: EventTarget | null }
   }
 ) {
   const { bubbles = true, cancelable = true, detail } = payload || emptyObject;
@@ -45,16 +45,16 @@ function dispatchCustomEvent(
 }
 
 export default function useHover(
-  targetRef: any,
+  targetRef: { readonly current: HTMLElement | null },
   config: HoverEventsConfig
 ): void {
   const { disabled, onHoverStart, onHoverChange, onHoverEnd } = config;
 
-  const addEnterListener = useEvent('pointerenter', opts);
-  const addLeaveListener = useEvent('pointerleave', opts);
+  const addEnterListener = useEvent<PointerEvent>('pointerenter', opts);
+  const addLeaveListener = useEvent<PointerEvent>('pointerleave', opts);
   // These custom events end the hover of ancestors while a descendant is hovered.
-  const addLockListener = useEvent(lockEventType, opts);
-  const addUnlockListener = useEvent(unlockEventType, opts);
+  const addLockListener = useEvent<Event>(lockEventType, opts);
+  const addUnlockListener = useEvent<CustomEvent>(unlockEventType, opts);
 
   useLayoutEffect(() => {
     const target = targetRef.current;
@@ -62,7 +62,7 @@ export default function useHover(
       /**
        * End the hover gesture
        */
-      const hoverEnd = function (e: any) {
+      const hoverEnd = function (e: PointerEvent) {
         if (onHoverEnd != null) {
           onHoverEnd(e);
         }
@@ -76,7 +76,7 @@ export default function useHover(
       /**
        * Leave element
        */
-      const leaveListener = function (e: any) {
+      const leaveListener = function (e: PointerEvent) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
           dispatchCustomEvent(target, unlockEventType, {
@@ -89,7 +89,7 @@ export default function useHover(
       /**
        * Start the hover gesture
        */
-      const hoverStart = function (e: any) {
+      const hoverStart = function (e: PointerEvent) {
         if (onHoverStart != null) {
           onHoverStart(e);
         }
@@ -103,7 +103,7 @@ export default function useHover(
       /**
        * Enter element
        */
-      const enterListener = function (e: any) {
+      const enterListener = function (e: PointerEvent) {
         const target = targetRef.current;
         if (target != null && e.pointerType !== 'touch') {
           dispatchCustomEvent(target, lockEventType);

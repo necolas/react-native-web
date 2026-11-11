@@ -7,13 +7,17 @@
  * @flow
  */
 
+import type { PlatformMethods } from '../../types';
+
 import UIManager from '../../exports/UIManager';
 
 /**
  * Adds non-standard methods to the hode element. This is temporarily until an
  * API like `ReactNative.measure(hostRef, callback)` is added to React Native.
  */
-export default function setPlatformMethods(hostNode: any) {
+export default function setPlatformMethods(
+  hostNode: ?(HTMLElement & PlatformMethods)
+) {
   if (hostNode != null) {
     hostNode.measure = (callback) => UIManager.measure(hostNode, callback);
     hostNode.measureLayout = (relativeToNode, success, failure) =>

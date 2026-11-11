@@ -12,7 +12,11 @@ import type { LayoutEvent } from '../../../types';
 import type {
   FocusEvent,
 } from '../Types/CoreEventTypes';
-import type {CellRendererProps, RenderItemType} from './VirtualizedListProps';
+import type {
+  CellRendererProps,
+  RenderItemProps,
+  RenderItemType,
+} from './VirtualizedListProps';
 
 import View, { type ViewProps } from '../../../exports/View';
 import StyleSheet from '../../../exports/StyleSheet';
@@ -24,10 +28,11 @@ type ViewStyleProp = ViewProps['style'];
 
 export type Props<ItemT> = {
   CellRendererComponent?: ?React.ComponentType<CellRendererProps<ItemT>>,
-  ItemSeparatorComponent: ?React.ComponentType<
-    any | {highlighted: boolean, leadingItem: ?ItemT},
-  >,
-  ListItemComponent?: ?(React.ComponentType<any> | React.MixedElement),
+  ItemSeparatorComponent: ?React.ComponentType<SeparatorProps<ItemT>>,
+  ListItemComponent?: ?(
+    | React.ComponentType<RenderItemProps<ItemT>>
+    | React.MixedElement
+  ),
   cellKey: string,
   horizontal: ?boolean,
   index: number,
@@ -42,17 +47,15 @@ export type Props<ItemT> = {
   ) => void,
   prevCellKey: ?string,
   renderItem?: ?RenderItemType<ItemT>,
-  ...
 };
 
-type SeparatorProps<ItemT> = Readonly<{|
+export type SeparatorProps<ItemT> = Readonly<{
   highlighted: boolean,
   leadingItem: ?ItemT,
-|}>;
+}>;
 
 type State<ItemT> = {
   separatorProps: SeparatorProps<ItemT>,
-  ...
 };
 
 export default class CellRenderer<ItemT> extends React.Component<
@@ -66,10 +69,10 @@ export default class CellRenderer<ItemT> extends React.Component<
     },
   };
 
-  static getDerivedStateFromProps(
-    props: Props<ItemT>,
-    prevState: State<ItemT>,
-  ): ?State<ItemT> {
+  static getDerivedStateFromProps<T>(
+    props: Props<T>,
+    prevState: State<T>,
+  ): ?State<T> {
     return {
       separatorProps: {
         ...prevState.separatorProps,
@@ -106,7 +109,7 @@ export default class CellRenderer<ItemT> extends React.Component<
     },
   };
 
-  updateSeparatorProps(newProps: SeparatorProps<ItemT>) {
+  updateSeparatorProps(newProps: Partial<SeparatorProps<ItemT>>) {
     this.setState(state => ({
       separatorProps: {...state.separatorProps, ...newProps},
     }));
@@ -127,7 +130,10 @@ export default class CellRenderer<ItemT> extends React.Component<
 
   _renderElement(
     renderItem: ?RenderItemType<ItemT>,
-    ListItemComponent: any,
+    ListItemComponent: ?(
+      | React.ComponentType<RenderItemProps<ItemT>>
+      | React.MixedElement
+    ),
     item: ItemT,
     index: number,
   ): React.Node {

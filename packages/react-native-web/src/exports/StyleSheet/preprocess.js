@@ -10,7 +10,7 @@
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
 
-const emptyObject: { [string]: any } = {};
+const emptyObject: Record<string, any> = {};
 
 /**
  * Shadows
@@ -18,7 +18,42 @@ const emptyObject: { [string]: any } = {};
 
 const defaultOffset = { height: 0, width: 0 };
 
-export const createBoxShadowValue = (style: Object): void | string => {
+type ShadowOffset = {
+  readonly height?: ?(number | string),
+  readonly width?: ?(number | string),
+  ...
+};
+
+type ShadowStyle = {
+  readonly shadowColor?: ?(number | string),
+  readonly shadowOffset?: ?ShadowOffset,
+  readonly shadowOpacity?: number,
+  readonly shadowRadius?: ?(number | string),
+  ...
+};
+
+type TextShadowStyle = {
+  readonly textShadowColor?: ?(number | string),
+  readonly textShadowOffset?: ?ShadowOffset,
+  readonly textShadowRadius?: ?(number | string),
+  ...
+};
+
+type BoxShadow = {
+  readonly offsetX?: ?(number | string),
+  readonly offsetY?: ?(number | string),
+  readonly blurRadius?: ?(number | string),
+  readonly spreadDistance?: ?(number | string),
+  readonly color?: number | string,
+  readonly inset?: ?boolean,
+  ...
+};
+
+type TransformStyle = Readonly<
+  Record<string, number | string | ReadonlyArray<number>>
+>;
+
+export const createBoxShadowValue = (style: ShadowStyle): void | string => {
   const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
   const { height, width } = shadowOffset || defaultOffset;
   const offsetX = normalizeValueWithProperty(width);
@@ -35,7 +70,9 @@ export const createBoxShadowValue = (style: Object): void | string => {
   }
 };
 
-export const createTextShadowValue = (style: Object): void | string => {
+export const createTextShadowValue = (
+  style: TextShadowStyle
+): void | string => {
   const { textShadowColor, textShadowOffset, textShadowRadius } = style;
   const { height, width } = textShadowOffset || defaultOffset;
   const radius = textShadowRadius || 0;
@@ -57,7 +94,7 @@ export const createTextShadowValue = (style: Object): void | string => {
 
 // { offsetX: 1, offsetY: 2, blurRadius: 3, spreadDistance: 4, color: 'rgba(255, 0, 0)', inset: true }
 // => 'rgba(255, 0, 0) 1px 2px 3px 4px inset'
-const mapBoxShadow = (boxShadow: Object | string): string => {
+const mapBoxShadow = (boxShadow: BoxShadow | string): string => {
   if (typeof boxShadow === 'string') {
     return boxShadow;
   }
@@ -70,24 +107,30 @@ const mapBoxShadow = (boxShadow: Object | string): string => {
   const position = boxShadow.inset ? 'inset ' : '';
   return `${position}${offsetX} ${offsetY} ${blurRadius} ${spreadDistance} ${color}`;
 };
-export const createBoxShadowArrayValue = (value: Array<Object>): string => {
+export const createBoxShadowArrayValue = (
+  value: ReadonlyArray<BoxShadow | string>
+): string => {
   return value.map(mapBoxShadow).join(', ');
 };
 
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
-const mapTransform = (transform: Object): string => {
+const mapTransform = (transform: TransformStyle): string => {
   const type = Object.keys(transform)[0];
   const value = transform[type];
   if (type === 'matrix' || type === 'matrix3d') {
+    // $FlowFixMe[prop-missing] value is an array for matrix transforms
     return `${type}(${value.join(',')})`;
   } else {
     const normalizedValue = normalizeValueWithProperty(value, type);
+    // $FlowFixMe[incompatible-type] value is a number or a string for other transforms
     return `${type}(${normalizedValue})`;
   }
 };
-export const createTransformValue = (value: Array<Object>): string => {
+export const createTransformValue = (
+  value: ReadonlyArray<TransformStyle>
+): string => {
   return value.map(mapTransform).join(' ');
 };
 
@@ -98,7 +141,7 @@ export const createTransformOriginValue = (
   return value.map((v) => normalizeValueWithProperty(v)).join(' ');
 };
 
-const STYLISTIC_SETS: { [key: string]: string } = {
+const STYLISTIC_SETS: Record<string, string> = {
   'stylistic-one': "'ss01'",
   'stylistic-two': "'ss02'",
   'stylistic-three': "'ss03'",
@@ -135,7 +178,7 @@ const mergeFontFeatureSettings = (a: ?string, b: ?string): ?string => {
   return a;
 };
 
-const PROPERTIES_STANDARD: { [key: string]: string } = {
+const PROPERTIES_STANDARD: Record<string, string> = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
   borderTopEndRadius: 'borderStartEndRadius',
@@ -180,12 +223,12 @@ export type PreprocessOptions = {
 /**
  * Preprocess styles
  */
-export const preprocess = <T extends {| [key: string]: any |}>(
+export const preprocess = <T extends Readonly<Record<string, any>>>(
   originalStyle: T,
   options?: PreprocessOptions = {}
 ): T => {
   const style = originalStyle || emptyObject;
-  const nextStyle: { [string]: any } = {};
+  const nextStyle: Record<string, any> = {};
 
   // Convert shadow styles
   if (

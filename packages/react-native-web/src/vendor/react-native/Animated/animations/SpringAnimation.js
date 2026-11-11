@@ -97,12 +97,12 @@ class SpringAnimation extends Animation {
   _mass: number;
   _initialVelocity: number;
   _delay: number;
-  _timeout: any;
+  _timeout: number;
   _startTime: number;
   _lastTime: number;
   _frameTime: number;
   _onUpdate: (value: number) => void;
-  _animationFrame: any;
+  _animationFrame: number;
   _useNativeDriver: boolean;
   _platformConfig: ?PlatformConfig;
 
@@ -171,7 +171,7 @@ class SpringAnimation extends Animation {
     invariant(this._mass > 0, 'Mass value must be greater than 0');
   }
 
-  __getNativeAnimationConfig(): {|
+  __getNativeAnimationConfig(): {
     damping: number,
     initialVelocity: number,
     iterations: number,
@@ -181,9 +181,9 @@ class SpringAnimation extends Animation {
     restDisplacementThreshold: number,
     restSpeedThreshold: number,
     stiffness: number,
-    toValue: any,
+    toValue: number,
     type: string,
-  |} {
+  } {
     return {
       type: 'spring',
       overshootClamping: this._overshootClamping,
@@ -240,7 +240,11 @@ class SpringAnimation extends Animation {
     }
   }
 
-  getInternalState(): Object {
+  getInternalState(): {
+    lastPosition: number,
+    lastVelocity: number,
+    lastTime: number,
+  } {
     return {
       lastPosition: this._lastPosition,
       lastVelocity: this._lastVelocity,
@@ -360,7 +364,9 @@ class SpringAnimation extends Animation {
       this.__debouncedOnEnd({finished: true});
       return;
     }
-    this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
+    this._animationFrame = requestAnimationFrame(
+      this.onUpdate.bind(this) as () => void,
+    );
   }
 
   stop(): void {

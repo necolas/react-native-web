@@ -54,7 +54,7 @@ class AnimatedModulo extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __getNativeConfig(): any {
+  __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'modulus',
       input: this._a.__getNativeTag(),

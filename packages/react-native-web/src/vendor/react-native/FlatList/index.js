@@ -15,29 +15,31 @@ import Platform from '../../../exports/Platform';
 import invariant from 'invariant';
 import * as React from 'react';
 
-type ScrollViewNativeComponent = any;
 type ViewStyleProp = ViewProps['style'];
 import type {
   ViewToken,
   ViewabilityConfigCallbackPair,
 } from '../ViewabilityHelper';
-import type {RenderItemType, RenderItemProps} from '../VirtualizedList';
-type ScrollResponderType = any;
+import type {
+  RenderItemType,
+  RenderItemProps,
+  ScrollableNode,
+  ScrollRef,
+} from '../VirtualizedList';
+type ScrollResponderType = unknown;
 import VirtualizedList from '../VirtualizedList';
 import {keyExtractor as defaultKeyExtractor} from '../VirtualizeUtils';
 
 import memoizeOne from 'memoize-one';
 
-type $FlowFixMe = any;
-
-type RequiredProps<ItemT> = {|
+type RequiredProps<ItemT> = {
   /**
    * An array (or array-like list) of items to render. Other data types can be
    * used by targetting VirtualizedList directly.
    */
   data: ?$ArrayLike<ItemT>,
-|};
-type OptionalProps<ItemT> = {|
+};
+type OptionalProps<ItemT> = {
   /**
    * Takes an item from `data` and renders it into the list. Example usage:
    *
@@ -75,7 +77,7 @@ type OptionalProps<ItemT> = {|
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
    * `data` prop, stick it here and treat it immutably.
    */
-  extraData?: any,
+  extraData?: unknown,
   /**
    * `getItemLayout` is an optional optimizations that let us skip measurement of dynamic content if
    * you know the height of items a priori. `getItemLayout` is the most efficient, and is easy to
@@ -148,7 +150,7 @@ type OptionalProps<ItemT> = {|
    * Enable an optimization to memoize the item renderer to prevent unnecessary rerenders.
    */
   strictMode?: boolean,
-|};
+};
 
 /**
  * Default Props Helper Functions
@@ -170,10 +172,10 @@ function isArrayLike(data: unknown): boolean {
   return typeof Object(data).length === 'number';
 }
 
-type FlatListProps<ItemT> = {|
+type FlatListProps<ItemT> = {
   ...RequiredProps<ItemT>,
   ...OptionalProps<ItemT>,
-|};
+};
 
 type VirtualizedListProps = React.ComponentProps<typeof VirtualizedList>;
 
@@ -388,22 +390,20 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   /**
    * Provides a reference to the underlying host component
    */
-  getNativeScrollRef():
-    | ?React.ElementRef<typeof View>
-    | ?React.ElementRef<ScrollViewNativeComponent> {
+  getNativeScrollRef(): ?ScrollRef {
     if (this._listRef) {
       return this._listRef.getScrollRef();
     }
   }
 
-  getScrollableNode(): any {
+  getScrollableNode(): ?ScrollableNode {
     if (this._listRef) {
       return this._listRef.getScrollableNode();
     }
   }
 
   // Not supported on web. Kept so code shared with native doesn't crash.
-  setNativeProps(props: {[string]: unknown, ...}) {}
+  setNativeProps(props: {[key: string]: unknown, ...}) {}
 
   constructor(props: Props<ItemT>) {
     super(props);
@@ -458,7 +458,9 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
 
   _checkProps(props: Props<ItemT>) {
     const {
+      // $FlowFixMe[prop-missing] getItem is not a FlatList prop, this checks that it is not passed
       getItem,
+      // $FlowFixMe[prop-missing] getItemCount is not a FlatList prop, this checks that it is not passed
       getItemCount,
       horizontal,
       columnWrapperStyle,
@@ -533,18 +535,20 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       );
       return items
         .map((item, kk) =>
-          keyExtractor(item as $FlowFixMe as ItemT, index * numColumns + kk),
+          // $FlowFixMe[incompatible-type] Array.isArray() refines items to Array<unknown>, each item is an ItemT
+          keyExtractor(item as ItemT, index * numColumns + kk),
         )
         .join(':');
     }
 
+    // $FlowFixMe[incompatible-type] items is a single item when numColumns is 1
     return keyExtractor(items, index);
   };
 
   _pushMultiColumnViewable(arr: Array<ViewToken>, v: ViewToken): void {
     const numColumns = numColumnsOrDefault(this.props.numColumns);
     const keyExtractor = this.props.keyExtractor ?? defaultKeyExtractor;
-    v.item.forEach((item, ii) => {
+    v.item.forEach((item: ItemT, ii: number) => {
       invariant(v.index != null, 'Missing index!');
       const index = v.index * numColumns + ii;
       arr.push({...v, item, key: keyExtractor(item, index), index});
@@ -557,8 +561,11 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
       changed: Array<ViewToken>,
       ...
     }) => void,
-    // $FlowFixMe[missing-local-annot]
-  ) {
+  ): (info: {
+    viewableItems: Array<ViewToken>,
+    changed: Array<ViewToken>,
+    ...
+  }) => void {
     return (info: {
       viewableItems: Array<ViewToken>,
       changed: Array<ViewToken>,
@@ -582,11 +589,14 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, void> {
   }
 
   _renderer = (
-    ListItemComponent: ?(React.ComponentType<any> | React.MixedElement),
+    ListItemComponent: ?(
+      | React.ComponentType<RenderItemProps<ItemT>>
+      | React.MixedElement
+    ),
     renderItem: ?RenderItemType<ItemT>,
     columnWrapperStyle: ?ViewStyleProp,
     numColumns: ?number,
-    extraData: ?any,
+    extraData: unknown,
     // $FlowFixMe[missing-local-annot]
   ) => {
     const cols = numColumnsOrDefault(numColumns);

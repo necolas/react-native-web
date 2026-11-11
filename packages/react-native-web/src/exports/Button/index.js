@@ -8,21 +8,23 @@
  * @flow
  */
 
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import TouchableOpacity from '../TouchableOpacity';
 import Text from '../Text';
 
-type ButtonProps = {|
+type ButtonProps = {
   accessibilityLabel?: ?string,
   color?: ?string,
   disabled?: boolean,
-  onPress?: ?(e: any) => void,
+  onPress?: PressResponderConfig['onPress'],
   ref?: React.Ref<React.ElementRef<typeof TouchableOpacity>>,
   testID?: ?string,
   title: string,
   type?: ?('button' | 'reset' | 'submit')
-|};
+};
 
 const Button = (props: ButtonProps): React.Node => {
   const {

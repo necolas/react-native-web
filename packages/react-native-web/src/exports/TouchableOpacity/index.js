@@ -21,11 +21,11 @@ import View from '../View';
 
 type ViewStyle = ViewProps['style'];
 
-type Props = Readonly<{|
+type Props = Readonly<{
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
   style?: ?ViewStyle
-|}>;
+}>;
 
 /**
  * A wrapper for making views respond properly to touches.

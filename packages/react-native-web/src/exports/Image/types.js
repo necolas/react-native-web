@@ -8,7 +8,7 @@
  * @flow
  */
 
-import type { ColorValue, GenericStyleProp } from '../../types';
+import type { ColorValue, GenericStyleProp, LayoutEvent } from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
 
 export type SourceObject = {
@@ -43,7 +43,7 @@ export type SourceObject = {
    * `headers` is an object representing the HTTP headers to send along with the
    * request for a remote image.
    */
-  headers?: { [key: string]: string },
+  headers?: Record<string, string>,
   /**
    * `method` is the HTTP Method to use. Defaults to GET if not specified.
    */
@@ -90,12 +90,12 @@ export type ImageProps = {
   blurRadius?: number,
   defaultSource?: Source,
   draggable?: boolean,
-  onError?: (e: any) => void,
-  onLayout?: (e: any) => void,
-  onLoad?: (e: any) => void,
-  onLoadEnd?: (e: any) => void,
-  onLoadStart?: (e: any) => void,
-  onProgress?: (e: any) => void,
+  onError?: (e: { nativeEvent: { error: string } }) => void,
+  onLayout?: (e: LayoutEvent) => void,
+  onLoad?: (e: { nativeEvent: Event }) => void,
+  onLoadEnd?: () => void,
+  onLoadStart?: () => void,
+  onProgress?: (e: unknown) => void,
   resizeMode?: ResizeMode,
   source?: Source,
   src?: string,

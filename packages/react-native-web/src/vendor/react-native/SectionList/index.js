@@ -14,33 +14,34 @@ import Platform from '../../../exports/Platform';
 import * as React from 'react';
 import VirtualizedSectionList from '../VirtualizedSectionList';
 
-type ScrollResponderType = any;
+type ScrollResponderType = unknown;
 import type {
   SectionBase as _SectionBase,
   Props as VirtualizedSectionListProps,
   ScrollToLocationParamsType,
 } from '../VirtualizedSectionList';
+import type {ScrollableNode, Separators} from '../VirtualizedList';
 
 type Item = any;
 
 export type SectionBase<SectionItemT> = _SectionBase<SectionItemT>;
 
-type RequiredProps<SectionT extends SectionBase<any>> = {|
+type RequiredProps<SectionT extends SectionBase<any>> = {
   /**
    * The actual data to render, akin to the `data` prop in [`<FlatList>`](https://reactnative.dev/docs/flatlist).
    *
    * General shape:
    *
-   *     sections: $ReadOnlyArray<{
-   *       data: $ReadOnlyArray<SectionItem>,
+   *     sections: ReadonlyArray<{
+   *       data: ReadonlyArray<SectionItem>,
    *       renderItem?: ({item: SectionItem, ...}) => ?React.Element<*>,
    *       ItemSeparatorComponent?: ?ReactClass<{highlighted: boolean, ...}>,
    *     }>
    */
   sections: ReadonlyArray<SectionT>,
-|};
+};
 
-type OptionalProps<SectionT extends SectionBase<any>> = {|
+type OptionalProps<SectionT extends SectionBase<any>> = {
   /**
    * Default renderer for every item in every section. Can be over-ridden on a per-section basis.
    */
@@ -48,12 +49,7 @@ type OptionalProps<SectionT extends SectionBase<any>> = {|
     item: Item,
     index: number,
     section: SectionT,
-    separators: {
-      highlight: () => void,
-      unhighlight: () => void,
-      updateProps: (select: 'leading' | 'trailing', newProps: Object) => void,
-      ...
-    },
+    separators: Separators,
     ...
   }) => null | React.MixedElement,
   /**
@@ -61,7 +57,7 @@ type OptionalProps<SectionT extends SectionBase<any>> = {|
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
    * `data` prop, stick it here and treat it immutably.
    */
-  extraData?: any,
+  extraData?: unknown,
   /**
    * How many items to render in the initial batch. This should be enough to fill the screen but not
    * much more. Note these items will never be unmounted as part of the windowed rendering in order
@@ -83,23 +79,23 @@ type OptionalProps<SectionT extends SectionBase<any>> = {|
    * Called once when the scroll position gets within `onEndReachedThreshold` of the rendered
    * content.
    */
-  onEndReached?: ?(info: {distanceFromEnd: number, ...}) => void,
+  onEndReached?: ?(info: {distanceFromEnd: number}) => void,
   /**
    * Note: may have bugs (missing content) in some circumstances - use at your own risk.
    *
    * This may improve scroll performance for large lists.
    */
   removeClippedSubviews?: boolean,
-|};
+};
 
-export type Props<SectionT> = {|
+export type Props<SectionT> = {
   ...Omit<
     VirtualizedSectionListProps<SectionT>,
     'getItem' | 'getItemCount' | 'renderItem' | 'keyExtractor',
   >,
   ...RequiredProps<SectionT>,
   ...OptionalProps<SectionT>,
-|};
+};
 
 /**
  * A performant interface for rendering sectioned lists, supporting the most handy features:
@@ -207,7 +203,7 @@ export default class SectionList<
     }
   }
 
-  getScrollableNode(): any {
+  getScrollableNode(): ?ScrollableNode {
     const listRef = this._wrapperListRef && this._wrapperListRef.getListRef();
     if (listRef) {
       return listRef.getScrollableNode();
@@ -215,7 +211,7 @@ export default class SectionList<
   }
 
   // Not supported on web. Kept so code shared with native doesn't crash.
-  setNativeProps(props: {[string]: unknown, ...}) {}
+  setNativeProps(props: {[key: string]: unknown, ...}) {}
 
   render(): React.Node {
     const {
@@ -225,6 +221,7 @@ export default class SectionList<
     const stickySectionHeadersEnabled =
       _stickySectionHeadersEnabled ?? Platform.OS === 'ios';
     return (
+      // $FlowFixMe[incompatible-type] SectionList and VirtualizedSectionList use different SectionT bounds
       <VirtualizedSectionList
         {...restProps}
         stickySectionHeadersEnabled={stickySectionHeadersEnabled}

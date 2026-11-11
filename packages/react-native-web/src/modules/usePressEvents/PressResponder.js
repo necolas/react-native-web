@@ -14,7 +14,7 @@ type ClickEvent = any;
 type KeyboardEvent = any;
 type ResponderEvent = any;
 
-export type PressResponderConfig = Readonly<{|
+export type PressResponderConfig = Readonly<{
   // The gesture can be interrupted by a parent gesture, e.g., scroll.
   // Defaults to true.
   cancelable?: ?boolean,
@@ -32,16 +32,16 @@ export type PressResponderConfig = Readonly<{|
   // Called when a press gestute has been triggered.
   onPress?: ?(event: ClickEvent) => void,
   // Called when the press is activated to provide visual feedback.
-  onPressChange?: ?(event: ResponderEvent) => void,
+  onPressChange?: ?(isPressed: boolean) => void,
   // Called when the press is activated to provide visual feedback.
   onPressStart?: ?(event: ResponderEvent) => void,
   // Called when the press location moves. (This should rarely be used.)
   onPressMove?: ?(event: ResponderEvent) => void,
   // Called when the press is deactivated to undo visual feedback.
   onPressEnd?: ?(event: ResponderEvent) => void
-|}>;
+}>;
 
-export type EventHandlers = Readonly<{|
+export type EventHandlers = Readonly<{
   onClick: (event: ClickEvent) => void,
   onContextMenu: (event: ClickEvent) => void,
   onKeyDown: (event: KeyboardEvent) => void,
@@ -51,7 +51,7 @@ export type EventHandlers = Readonly<{|
   onResponderTerminate: (event: ResponderEvent) => void,
   onResponderTerminationRequest: (event: ResponderEvent) => boolean,
   onStartShouldSetResponder: (event: ResponderEvent) => boolean
-|}>;
+}>;
 
 type TouchState =
   | 'NOT_RESPONDER'
@@ -78,9 +78,9 @@ const RESPONDER_GRANT = 'RESPONDER_GRANT';
 const RESPONDER_RELEASE = 'RESPONDER_RELEASE';
 const RESPONDER_TERMINATED = 'RESPONDER_TERMINATED';
 
-const Transitions: {
-  readonly [TouchState]: { readonly [TouchSignal]: TouchState }
-} = Object.freeze({
+const Transitions: Readonly<
+  Record<TouchState, Readonly<Record<TouchSignal, TouchState>>>
+> = Object.freeze({
   NOT_RESPONDER: {
     DELAY: ERROR,
     RESPONDER_GRANT: RESPONDER_INACTIVE_PRESS_START,
@@ -136,7 +136,11 @@ const isPressStartSignal = (signal: TouchState) =>
 const isTerminalSignal = (signal: TouchSignal) =>
   signal === RESPONDER_TERMINATED || signal === RESPONDER_RELEASE;
 
-const isValidKeyPress = (event: any) => {
+const isValidKeyPress = (event: {
+  readonly key: string,
+  readonly target: Element,
+  ...
+}) => {
   const { key, target } = event;
   const isSpacebar = key === ' ';
   const isButtonish =
@@ -230,13 +234,13 @@ export default class PressResponder {
   _pressDelayTimeout: ?number = null;
   _pressOutDelayTimeout: ?number = null;
   _selectionTerminated: ?boolean;
-  _touchActivatePosition: ?Readonly<{|
+  _touchActivatePosition: ?Readonly<{
     pageX: number,
     pageY: number
-  |}>;
+  }>;
   _touchState: TouchState = NOT_RESPONDER;
   _responderElement: ?HTMLElement = null;
-  _keyupHandler: ?(KeyboardEvent) => void = null;
+  _keyupHandler: ?(event: KeyboardEvent) => void = null;
 
   constructor(config: PressResponderConfig) {
     this.configure(config);
@@ -431,7 +435,7 @@ export default class PressResponder {
       // * The `onPress` callback is only be called on the first ancestor of the native
       //   `click` target that is using the PressResponder.
       // * The event's `nativeEvent` is a `MouseEvent` not a `TouchEvent`.
-      onClick: (event: any): void => {
+      onClick: (event): void => {
         const { disabled, onPress } = this._config;
         if (!disabled) {
           // If long press dispatched, cancel default click behavior.
@@ -452,7 +456,7 @@ export default class PressResponder {
 
       // If `onLongPress` is provided and a touch pointer is being used, prevent the
       // default context menu from opening.
-      onContextMenu: (event: any): void => {
+      onContextMenu: (event): void => {
         const { disabled, onLongPress } = this._config;
         if (!disabled) {
           if (

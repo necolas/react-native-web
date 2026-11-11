@@ -17,13 +17,13 @@ import {
   shouldUseNativeDriver,
 } from '../NativeAnimatedHelper';
 
-import type {EndCallback} from '../animations/Animation';
+import type {AnimationConfig, EndCallback} from '../animations/Animation';
 
 class AnimatedTracking extends AnimatedNode {
   _value: AnimatedValue;
   _parent: AnimatedNode;
   _callback: ?EndCallback;
-  _animationConfig: Object;
+  _animationConfig: Readonly<{...AnimationConfig, toValue: AnimatedNode, ...}>;
   _animationClass: any;
   _useNativeDriver: boolean;
 
@@ -31,7 +31,7 @@ class AnimatedTracking extends AnimatedNode {
     value: AnimatedValue,
     parent: AnimatedNode,
     animationClass: any,
-    animationConfig: Object,
+    animationConfig: Readonly<{...AnimationConfig, toValue: AnimatedNode, ...}>,
     callback?: ?EndCallback,
   ) {
     super();
@@ -51,7 +51,7 @@ class AnimatedTracking extends AnimatedNode {
     this._value.__makeNative();
   }
 
-  __getValue(): Object {
+  __getValue(): unknown {
     return this._parent.__getValue();
   }
 
@@ -76,13 +76,13 @@ class AnimatedTracking extends AnimatedNode {
     this._value.animate(
       new this._animationClass({
         ...this._animationConfig,
-        toValue: (this._animationConfig.toValue as any).__getValue(),
+        toValue: this._animationConfig.toValue.__getValue(),
       }),
       this._callback,
     );
   }
 
-  __getNativeConfig(): any {
+  __getNativeConfig(): Record<string, unknown> {
     const animation = new this._animationClass({
       ...this._animationConfig,
       // remove toValue from the config as it's a ref to Animated.Value

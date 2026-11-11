@@ -11,6 +11,10 @@
 import * as React from 'react';
 
 import ScrollView from '../../../../exports/ScrollView';
+import type {
+  Props as ScrollViewProps,
+  ScrollViewNode,
+} from '../../../../exports/ScrollView';
 import createAnimatedComponent from '../createAnimatedComponent';
 
 import type {AnimatedComponentType} from '../createAnimatedComponent';
@@ -18,11 +22,11 @@ import type {AnimatedComponentType} from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const ScrollViewWithEventThrottle = (props: React.ComponentProps<typeof ScrollView>) => <ScrollView scrollEventThrottle={0.0001} {...props} />;
+const ScrollViewWithEventThrottle = (props: {...ScrollViewProps, ref?: React.Ref<ScrollViewNode>}) => <ScrollView scrollEventThrottle={0.0001} {...props} />;
 
 export default createAnimatedComponent(
   ScrollViewWithEventThrottle,
 ) as AnimatedComponentType<
-  React.ComponentProps<typeof ScrollView>,
+  ScrollViewProps,
   React.ElementRef<typeof ScrollView>,
 >;

@@ -17,6 +17,11 @@ import type AnimatedValue from '../nodes/AnimatedValue';
 export type EndResult = {finished: boolean, ...};
 export type EndCallback = (result: EndResult) => void;
 
+export type NativeAnimationConfig = {
+  readonly [key: string]: unknown,
+  readonly platformConfig?: ?PlatformConfig,
+};
+
 export type AnimationConfig = {
   isInteraction?: boolean,
   useNativeDriver: boolean,
@@ -48,7 +53,7 @@ class Animation {
       NativeAnimatedHelper.API.stopAnimation(this.__nativeId);
     }
   }
-  __getNativeAnimationConfig(): any {
+  __getNativeAnimationConfig(): NativeAnimationConfig {
     // Subclasses that have corresponding animation implementation done in native
     // should override this method
     throw new Error('This animation type cannot be offloaded to native');

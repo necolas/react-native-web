@@ -13,7 +13,6 @@
 type SpringConfigType = {
   stiffness: number,
   damping: number,
-  ...
 };
 
 function stiffnessFromOrigamiValue(oValue: number): number {

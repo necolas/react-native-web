@@ -49,7 +49,7 @@ function error(message: string) {
   console.error(message);
 }
 
-export function validate(obj: { [string]: unknown }) {
+export function validate(obj: Record<string, unknown>) {
   for (const k in obj) {
     const prop = k.trim();
     const value = obj[prop];

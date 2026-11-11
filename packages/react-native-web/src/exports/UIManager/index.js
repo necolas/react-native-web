@@ -24,8 +24,10 @@ type Rect = {
   offsetLeft: number
 };
 
-const hasOwnProperty: (this: Object, key: string) => boolean =
-  Object.prototype.hasOwnProperty;
+const hasOwnProperty: {
+  call(obj: Readonly<Record<string, unknown>>, key: string): boolean,
+  ...
+} = Object.prototype.hasOwnProperty;
 
 const getRect = (node: HTMLElement): Rect => {
   const height = node.offsetHeight;
@@ -141,7 +143,10 @@ const UIManager = {
     );
   },
 
-  updateView(node: HTMLElement, props: { [string]: any }): void {
+  updateView(
+    node: HTMLElement,
+    props: Readonly<Record<string, unknown>>
+  ): void {
     for (const prop in props) {
       if (!hasOwnProperty.call(props, prop)) {
         continue;
@@ -150,11 +155,13 @@ const UIManager = {
       const value = props[prop];
       switch (prop) {
         case 'style': {
+          // $FlowFixMe[incompatible-type] the style prop is a style object
           setValueForStyles(node, value);
           break;
         }
         case 'class':
         case 'className': {
+          // $FlowFixMe[incompatible-type] setAttribute converts the value to a string
           node.setAttribute('class', value);
           break;
         }
@@ -165,6 +172,7 @@ const UIManager = {
           node.value = value;
           break;
         default:
+          // $FlowFixMe[incompatible-type] setAttribute converts the value to a string
           node.setAttribute(prop, value);
       }
     }

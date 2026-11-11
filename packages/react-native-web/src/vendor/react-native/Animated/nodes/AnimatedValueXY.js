@@ -18,7 +18,6 @@ import invariant from 'invariant';
 type ValueXYListenerCallback = (value: {
   x: number,
   y: number,
-  ...
 }) => unknown;
 
 let _uniqueId = 1;
@@ -32,14 +31,7 @@ let _uniqueId = 1;
 class AnimatedValueXY extends AnimatedWithChildren {
   x: AnimatedValue;
   y: AnimatedValue;
-  _listeners: {
-    [key: string]: {
-      x: string,
-      y: string,
-      ...
-    },
-    ...,
-  };
+  _listeners: Record<string, {x: string, y: string}>;
 
   constructor(
     valueIn?: ?{
@@ -49,10 +41,11 @@ class AnimatedValueXY extends AnimatedWithChildren {
     },
   ) {
     super();
-    const value: any = valueIn || {x: 0, y: 0}; // @flowfixme: shouldn't need `: any`
-    if (typeof value.x === 'number' && typeof value.y === 'number') {
-      this.x = new AnimatedValue(value.x);
-      this.y = new AnimatedValue(value.y);
+    const value = valueIn || {x: 0, y: 0};
+    const {x, y} = value;
+    if (typeof x === 'number' && typeof y === 'number') {
+      this.x = new AnimatedValue(x);
+      this.y = new AnimatedValue(y);
     } else {
       invariant(
         value.x instanceof AnimatedValue && value.y instanceof AnimatedValue,
@@ -113,7 +106,6 @@ class AnimatedValueXY extends AnimatedWithChildren {
   __getValue(): {
     x: number,
     y: number,
-    ...
   } {
     return {
       x: this.x.__getValue(),
@@ -130,7 +122,6 @@ class AnimatedValueXY extends AnimatedWithChildren {
     callback?: (value: {
       x: number,
       y: number,
-      ...
     }) => void,
   ): void {
     this.x.resetAnimation();
@@ -149,7 +140,6 @@ class AnimatedValueXY extends AnimatedWithChildren {
     callback?: (value: {
       x: number,
       y: number,
-      ...
     }) => void,
   ): void {
     this.x.stopAnimation();
@@ -168,7 +158,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    */
   addListener(callback: ValueXYListenerCallback): string {
     const id = String(_uniqueId++);
-    const jointCallback = ({value: number}: {value: number, ...}) => {
+    const jointCallback = ({value: number}: {value: number}) => {
       callback(this.__getValue());
     };
     this._listeners[id] = {
@@ -206,7 +196,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See https://reactnative.dev/docs/animatedvaluexy.html#getlayout
    */
-  getLayout(): {[key: string]: AnimatedValue, ...} {
+  getLayout(): {[key: string]: AnimatedValue} {
     return {
       left: this.x,
       top: this.y,
@@ -218,7 +208,7 @@ class AnimatedValueXY extends AnimatedWithChildren {
    *
    * See https://reactnative.dev/docs/animatedvaluexy.html#gettranslatetransform
    */
-  getTranslateTransform(): Array<{[key: string]: AnimatedValue, ...}> {
+  getTranslateTransform(): Array<{[key: string]: AnimatedValue}> {
     return [{translateX: this.x}, {translateY: this.y}];
   }
 }

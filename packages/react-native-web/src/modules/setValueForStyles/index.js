@@ -21,7 +21,7 @@ import dangerousStyleValue from './dangerousStyleValue';
  */
 function setValueForStyles(
   node: HTMLElement,
-  styles: { readonly [string]: unknown }
+  styles: Readonly<Record<string, ?(string | number | boolean)>>
 ): void {
   const style = node.style;
   for (let styleName in styles) {

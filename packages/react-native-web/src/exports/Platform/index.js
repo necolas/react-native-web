@@ -23,7 +23,7 @@ const Platform = {
     }
   },
 
-  select(spec: Object): any {
+  select<T>(spec: Readonly<Record<string, T>>): T {
     return 'web' in spec ? spec.web : spec.default;
   },
 

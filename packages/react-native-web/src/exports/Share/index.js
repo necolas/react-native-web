@@ -8,14 +8,23 @@
  * @flow
  */
 
+import type { ColorValue } from '../../types';
 import invariant from 'invariant';
 
 type Content =
   | { title?: string, message?: string, url: string }
   | { title?: string, message: string, url?: string };
 
+type Options = {
+  dialogTitle?: string,
+  excludedActivityTypes?: Array<string>,
+  tintColor?: ColorValue,
+  subject?: string,
+  anchor?: number
+};
+
 class Share {
-  static share(content: Content, options: Object = {}): Promise<Object> {
+  static share(content: Content, options: Options = {}): Promise<void> {
     invariant(
       typeof content === 'object' && content != null,
       'Content to share must be a valid object'
@@ -25,7 +34,9 @@ class Share {
       'At least one of URL and message is required'
     );
     invariant(
-      typeof options === 'object' && options !== null,
+      typeof options === 'object' &&
+        // $FlowFixMe[invalid-compare] runtime check for untyped callers
+        options !== null,
       'Options must be a valid object'
     );
     invariant(

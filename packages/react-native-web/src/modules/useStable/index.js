@@ -12,9 +12,10 @@ import * as React from 'react';
 const UNINITIALIZED = Symbol();
 
 export default function useStable<T>(getInitialValue: () => T): T {
-  const ref = React.useRef<any>(UNINITIALIZED);
+  const ref = React.useRef<T | symbol>(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = getInitialValue();
   }
+  // $FlowFixMe[incompatible-type] ref.current is set to a T above
   return ref.current;
 }

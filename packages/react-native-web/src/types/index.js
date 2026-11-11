@@ -29,7 +29,7 @@ export type LayoutValue = {
 export type LayoutEvent = {
   nativeEvent: {
     layout: LayoutValue,
-    target?: any
+    target?: Element
   },
   timeStamp: number
 };
@@ -64,9 +64,12 @@ export interface PlatformMethods {
   measure: (callback: MeasureOnSuccessCallback) => void;
   measureInWindow: (callback: MeasureInWindowOnSuccessCallback) => void;
   measureLayout: (
-    relativeToNativeNode: {},
+    relativeToNativeNode: HTMLElement,
     onSuccess: MeasureLayoutOnSuccessCallback,
     onFail: () => void
   ) => void;
-  setNativeProps: (props: { [string]: unknown, ... }) => void;
+  setNativeProps: (props: { [key: string]: unknown, ... }) => void;
 }
+
+// Host element with the methods added by `setPlatformMethods`
+export type HostNode = HTMLElement & PlatformMethods;

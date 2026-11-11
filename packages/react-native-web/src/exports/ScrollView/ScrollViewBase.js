@@ -14,11 +14,28 @@ import StyleSheet from '../StyleSheet';
 import View from '../View';
 import useMergeRefs from '../../modules/useMergeRefs';
 
+export type ScrollEvent = {
+  readonly nativeEvent: {
+    readonly contentOffset: { readonly x: number, readonly y: number },
+    readonly contentSize: {
+      readonly height: number,
+      readonly width: number
+    },
+    readonly layoutMeasurement: {
+      readonly height: number,
+      readonly width: number
+    },
+    ...
+  },
+  readonly timeStamp: number,
+  ...
+};
+
 type Props = {
   ...ViewProps,
-  onScroll?: (e: any) => void,
-  onTouchMove?: (e: any) => void,
-  onWheel?: (e: any) => void,
+  onScroll?: (e: ScrollEvent) => void,
+  onTouchMove?: ViewProps['onTouchMove'],
+  onWheel?: ViewProps['onWheel'],
   ref?: React.Ref<React.ElementRef<typeof View>>,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
@@ -26,7 +43,10 @@ type Props = {
   showsVerticalScrollIndicator?: boolean
 };
 
-function normalizeScrollEvent(e: any) {
+function normalizeScrollEvent(e: {
+  readonly target: HTMLElement,
+  ...
+}): ScrollEvent {
   return {
     nativeEvent: {
       contentOffset: {
@@ -82,10 +102,12 @@ const ScrollViewBase = (props: Props): React.Node => {
 
   const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
   const scrollTimeout = React.useRef<?number>(null);
-  const scrollRef = React.useRef(null);
+  const scrollRef = React.useRef<?HTMLElement>(null);
 
-  function createPreventableScrollHandler(handler: Function) {
-    return (e: Object) => {
+  function createPreventableScrollHandler<T>(
+    handler: ?(e: T) => void
+  ): (e: T) => void {
+    return (e: T) => {
       if (scrollEnabled) {
         if (handler) {
           handler(e);
@@ -94,7 +116,7 @@ const ScrollViewBase = (props: Props): React.Node => {
     };
   }
 
-  function handleScroll(e: Object) {
+  function handleScroll(e: React.UIEvent<HTMLElement>) {
     e.stopPropagation();
     if (e.target === scrollRef.current) {
       // A scroll happened, so the scroll resets the scrollend timeout.
@@ -121,21 +143,23 @@ const ScrollViewBase = (props: Props): React.Node => {
     }
   }
 
-  function handleScrollStart(e: Object) {
+  function handleScrollStart(e: React.UIEvent<HTMLElement>) {
     scrollState.current.isScrolling = true;
     handleScrollTick(e);
   }
 
-  function handleScrollTick(e: Object) {
+  function handleScrollTick(e: React.UIEvent<HTMLElement>) {
     scrollState.current.scrollLastTick = Date.now();
     if (onScroll) {
+      // $FlowFixMe[incompatible-type] handleScroll only forwards events that target the scroll node
       onScroll(normalizeScrollEvent(e));
     }
   }
 
-  function handleScrollEnd(e: Object) {
+  function handleScrollEnd(e: React.UIEvent<HTMLElement>) {
     scrollState.current.isScrolling = false;
     if (onScroll) {
+      // $FlowFixMe[incompatible-type] handleScroll only forwards events that target the scroll node
       onScroll(normalizeScrollEvent(e));
     }
   }
@@ -145,7 +169,6 @@ const ScrollViewBase = (props: Props): React.Node => {
     showsVerticalScrollIndicator === false;
 
   return (
-    // $FlowFixMe[incompatible-type] Unsupported props are dropped by View
     <View
       {...rest}
       onScroll={handleScroll}

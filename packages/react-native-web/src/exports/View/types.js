@@ -8,6 +8,17 @@
  * @flow
  */
 
+import type {
+  FocusEvent,
+  Node,
+  KeyboardEvent,
+  MouseEvent,
+  PointerEvent,
+  TouchEvent,
+  UIEvent,
+  WheelEvent
+} from 'react';
+import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 import type { ColorValue, GenericStyleProp, LayoutEvent } from '../../types';
 
 import type {
@@ -21,8 +32,9 @@ import type {
 
 type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
+type PointerEventsValue = 'box-none' | 'none' | 'box-only' | 'auto';
 
-export type AccessibilityProps = {|
+export type AccessibilityProps = {
   'aria-activedescendant'?: ?string,
   'aria-atomic'?: ?boolean,
   'aria-autocomplete'?: ?('none' | 'list' | 'inline' | 'both'),
@@ -76,75 +88,83 @@ export type AccessibilityProps = {|
   accessibilityLabelledBy?: ?(string | Array<string>),
   accessibilityLiveRegion?: ?('assertive' | 'none' | 'polite'),
   accessibilityRole?: ?string,
-  accessibilityState?: ?{|
+  accessibilityState?: ?{
     busy?: ?boolean,
     checked?: ?(boolean | 'mixed'),
     disabled?: ?boolean,
     expanded?: ?boolean,
     selected?: ?boolean
-  |},
-  accessibilityValue?: ?{|
+  },
+  accessibilityValue?: ?{
     max?: ?number,
     min?: ?number,
     now?: ?number,
     text?: ?string
-  |}
-|};
+  }
+};
 
-export type EventProps = {|
-  onAuxClick?: (e: any) => void,
-  onBlur?: (e: any) => void,
-  onClick?: (e: any) => void,
-  onContextMenu?: (e: any) => void,
-  onFocus?: (e: any) => void,
-  onGotPointerCapture?: (e: any) => void,
-  onKeyDown?: (e: any) => void,
-  onKeyUp?: (e: any) => void,
+type FocusHandler = (e: FocusEvent<HTMLElement>) => void;
+type KeyboardHandler = (e: KeyboardEvent<HTMLElement>) => void;
+type MouseHandler = (e: MouseEvent<HTMLElement>) => void;
+type PointerHandler = (e: PointerEvent<HTMLElement>) => void;
+type ResponderHandler = (e: ResponderEvent) => void;
+type ShouldSetResponderHandler = (e: ResponderEvent) => boolean;
+type TouchHandler = (e: TouchEvent<HTMLElement>) => void;
+
+export type EventProps = {
+  onAuxClick?: MouseHandler,
+  onBlur?: FocusHandler,
+  onClick?: MouseHandler,
+  onContextMenu?: MouseHandler,
+  onFocus?: FocusHandler,
+  onGotPointerCapture?: PointerHandler,
+  onKeyDown?: KeyboardHandler,
+  onKeyUp?: KeyboardHandler,
   onLayout?: (e: LayoutEvent) => void,
-  onLostPointerCapture?: (e: any) => void,
-  onMoveShouldSetResponder?: (e: any) => boolean,
-  onMoveShouldSetResponderCapture?: (e: any) => boolean,
-  onPointerCancel?: (e: any) => void,
-  onPointerDown?: (e: any) => void,
-  onPointerEnter?: (e: any) => void,
-  onPointerMove?: (e: any) => void,
-  onPointerLeave?: (e: any) => void,
-  onPointerOut?: (e: any) => void,
-  onPointerOver?: (e: any) => void,
-  onPointerUp?: (e: any) => void,
-  onResponderEnd?: (e: any) => void,
-  onResponderGrant?: (e: any) => void | boolean,
-  onResponderMove?: (e: any) => void,
-  onResponderReject?: (e: any) => void,
-  onResponderRelease?: (e: any) => void,
-  onResponderStart?: (e: any) => void,
-  onResponderTerminate?: (e: any) => void,
-  onResponderTerminationRequest?: (e: any) => boolean,
-  onScrollShouldSetResponder?: (e: any) => boolean,
-  onScrollShouldSetResponderCapture?: (e: any) => boolean,
-  onSelectionChangeShouldSetResponder?: (e: any) => boolean,
-  onSelectionChangeShouldSetResponderCapture?: (e: any) => boolean,
-  onStartShouldSetResponder?: (e: any) => boolean,
-  onStartShouldSetResponderCapture?: (e: any) => boolean,
+  onLostPointerCapture?: PointerHandler,
+  onMoveShouldSetResponder?: ShouldSetResponderHandler,
+  onMoveShouldSetResponderCapture?: ShouldSetResponderHandler,
+  onPointerCancel?: PointerHandler,
+  onPointerDown?: PointerHandler,
+  onPointerEnter?: PointerHandler,
+  onPointerMove?: PointerHandler,
+  onPointerLeave?: PointerHandler,
+  onPointerOut?: PointerHandler,
+  onPointerOver?: PointerHandler,
+  onPointerUp?: PointerHandler,
+  onResponderEnd?: ResponderHandler,
+  onResponderGrant?: (e: ResponderEvent) => void | boolean,
+  onResponderMove?: ResponderHandler,
+  onResponderReject?: ResponderHandler,
+  onResponderRelease?: ResponderHandler,
+  onResponderStart?: ResponderHandler,
+  onResponderTerminate?: ResponderHandler,
+  onResponderTerminationRequest?: ShouldSetResponderHandler,
+  onScrollShouldSetResponder?: ShouldSetResponderHandler,
+  onScrollShouldSetResponderCapture?: ShouldSetResponderHandler,
+  onSelectionChangeShouldSetResponder?: ShouldSetResponderHandler,
+  onSelectionChangeShouldSetResponderCapture?: ShouldSetResponderHandler,
+  onStartShouldSetResponder?: ShouldSetResponderHandler,
+  onStartShouldSetResponderCapture?: ShouldSetResponderHandler,
   // unstable
-  onMouseDown?: (e: any) => void,
-  onMouseEnter?: (e: any) => void,
-  onMouseLeave?: (e: any) => void,
-  onMouseMove?: (e: any) => void,
-  onMouseOver?: (e: any) => void,
-  onMouseOut?: (e: any) => void,
-  onMouseUp?: (e: any) => void,
-  onScroll?: (e: any) => void,
-  onTouchCancel?: (e: any) => void,
-  onTouchCancelCapture?: (e: any) => void,
-  onTouchEnd?: (e: any) => void,
-  onTouchEndCapture?: (e: any) => void,
-  onTouchMove?: (e: any) => void,
-  onTouchMoveCapture?: (e: any) => void,
-  onTouchStart?: (e: any) => void,
-  onTouchStartCapture?: (e: any) => void,
-  onWheel?: (e: any) => void
-|};
+  onMouseDown?: MouseHandler,
+  onMouseEnter?: MouseHandler,
+  onMouseLeave?: MouseHandler,
+  onMouseMove?: MouseHandler,
+  onMouseOver?: MouseHandler,
+  onMouseOut?: MouseHandler,
+  onMouseUp?: MouseHandler,
+  onScroll?: (e: UIEvent<HTMLElement>) => void,
+  onTouchCancel?: TouchHandler,
+  onTouchCancelCapture?: TouchHandler,
+  onTouchEnd?: TouchHandler,
+  onTouchEndCapture?: TouchHandler,
+  onTouchMove?: TouchHandler,
+  onTouchMoveCapture?: TouchHandler,
+  onTouchStart?: TouchHandler,
+  onTouchStartCapture?: TouchHandler,
+  onWheel?: (e: WheelEvent<HTMLElement>) => void
+};
 
 export type ViewStyle = {
   ...AnimationStyles,
@@ -185,7 +205,7 @@ export type ViewStyle = {
   overscrollBehavior?: ?OverscrollBehaviorValue,
   overscrollBehaviorX?: ?OverscrollBehaviorValue,
   overscrollBehaviorY?: ?OverscrollBehaviorValue,
-  pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
+  pointerEvents?: PointerEventsValue,
   printColorAdjust?: 'economy' | 'exact',
   scrollbarWidth?: 'auto' | 'none' | 'thin',
   scrollSnapAlign?: ?string,
@@ -197,8 +217,9 @@ export type ViewStyle = {
 export type ViewProps = {
   ...AccessibilityProps,
   ...EventProps,
-  children?: ?any,
-  dataSet?: { ... },
+  children?: ?Node,
+  collapsable?: ?boolean,
+  dataSet?: Readonly<Record<string, unknown>>,
   dir?: 'ltr' | 'rtl',
   id?: ?string,
   lang?: string,
@@ -214,6 +235,6 @@ export type ViewProps = {
   type?: ?('button' | 'reset' | 'submit'),
   // @deprecated
   focusable?: ?boolean,
-  pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto',
+  pointerEvents?: PointerEventsValue,
   nativeID?: ?string
 };

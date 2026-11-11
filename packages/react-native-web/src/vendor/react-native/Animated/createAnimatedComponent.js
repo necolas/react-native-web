@@ -14,7 +14,7 @@ import View from '../../../exports/View';
 import * as React from 'react';
 
 export type AnimatedComponentType<
-  in Props extends {readonly [string]: unknown, ...},
+  in Props extends {readonly [key: string]: unknown, ...},
   out Instance = unknown,
 > = component(
   ref?: React.Ref<Instance>,

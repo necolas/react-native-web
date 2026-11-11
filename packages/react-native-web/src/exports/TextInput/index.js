@@ -33,6 +33,12 @@ type Selection = { readonly start: number, readonly end?: number };
 
 type TextInputElement = HTMLInputElement | HTMLTextAreaElement;
 
+type TextInputNode = TextInputElement &
+  PlatformMethods & {
+    clear?: () => void,
+    isFocused?: () => boolean
+  };
+
 const isSelectionStale = (node: TextInputElement, selection: Selection) => {
   const { selectionEnd, selectionStart } = node;
   const { start, end } = selection;
@@ -205,7 +211,7 @@ const TextInput = (props: {
     height: null,
     width: null
   });
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?TextInputElement>(null);
   const prevSelection = React.useRef<?Selection>(null);
   const prevSecureTextEntry = React.useRef<?boolean>(false);
 
@@ -217,7 +223,7 @@ const TextInput = (props: {
   }, [secureTextEntry]);
 
   const handleContentSizeChange = React.useCallback(
-    (hostNode: ?HTMLElement) => {
+    (hostNode: ?TextInputElement) => {
       if (multiline && onContentSizeChange && hostNode != null) {
         const newHeight = hostNode.scrollHeight;
         const newWidth = hostNode.scrollWidth;
@@ -242,7 +248,7 @@ const TextInput = (props: {
   );
 
   const imperativeRef = React.useMemo(
-    () => (hostNode: any) => {
+    () => (hostNode: TextInputNode | null) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `setPlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
