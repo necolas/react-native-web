@@ -138,11 +138,10 @@ export default class AppRegistry {
     const isDevelopment =
       process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
     if (isDevelopment) {
-      const params: { ...AppParameters, rootTag: HTMLElement | string, ... } = {
-        ...appParameters
+      const params = {
+        ...appParameters,
+        rootTag: `#${appParameters.rootTag.id}`
       };
-      // $FlowFixMe[prop-missing] rootTag is still an HTMLElement when read here
-      params.rootTag = `#${params.rootTag.id}`;
 
       console.log(
         `Running application "${appKey}" with appParams:\n`,

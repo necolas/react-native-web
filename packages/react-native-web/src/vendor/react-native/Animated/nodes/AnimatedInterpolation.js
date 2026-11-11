@@ -216,22 +216,18 @@ function createInterpolationFromStringOutputRange(
   //   [200, 250],
   //   [0, 0.5],
   // ]
-  /* $FlowFixMe[incompatible-use] (>=0.18.0): `outputRange[0].match()` can
-   * return `null`. Need to guard against this possibility. */
-  const outputRanges = outputRange[0].match(stringShapeRegex).map((): Array<number> => []);
+  const firstOutputMatches = outputRange[0].match(stringShapeRegex);
+  invariant(firstOutputMatches != null, 'Bad output range ' + outputRange[0]);
+  const outputRanges = firstOutputMatches.map((): Array<number> => []);
   outputRange.forEach(value => {
-    /* $FlowFixMe[incompatible-use] (>=0.18.0): `value.match()` can return
-     * `null`. Need to guard against this possibility. */
-    value.match(stringShapeRegex).forEach((number, i) => {
+    const valueMatches = value.match(stringShapeRegex);
+    invariant(valueMatches != null, 'Bad output range ' + value);
+    valueMatches.forEach((number, i) => {
       outputRanges[i].push(+number);
     });
   });
 
-  const interpolations = outputRange[0]
-    .match(stringShapeRegex)
-    /* $FlowFixMe[incompatible-use] (>=0.18.0): `outputRange[0].match()` can
-     * return `null`. Need to guard against this possibility. */
-    .map((value, i) => {
+  const interpolations = firstOutputMatches.map((value, i) => {
       return createInterpolation({
         ...config,
         outputRange: outputRanges[i],

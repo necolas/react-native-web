@@ -42,10 +42,10 @@ class AnimatedValueXY extends AnimatedWithChildren {
   ) {
     super();
     const value = valueIn || {x: 0, y: 0};
-    if (typeof value.x === 'number' && typeof value.y === 'number') {
-      this.x = new AnimatedValue(value.x);
-      // $FlowFixMe[incompatible-type] the call above does not change value.y
-      this.y = new AnimatedValue(value.y);
+    const {x, y} = value;
+    if (typeof x === 'number' && typeof y === 'number') {
+      this.x = new AnimatedValue(x);
+      this.y = new AnimatedValue(y);
     } else {
       invariant(
         value.x instanceof AnimatedValue && value.y instanceof AnimatedValue,

@@ -43,13 +43,14 @@ const deepDiffer = function(
   }
   if (Array.isArray(one)) {
     // We know two is also an array because the constructors are equal
+    if (!Array.isArray(two)) {
+      return true;
+    }
     const len = one.length;
-    // $FlowFixMe[invalid-compare] two is an array because the constructors are equal
     if (two.length !== len) {
       return true;
     }
     for (let ii = 0; ii < len; ii++) {
-      // $FlowFixMe[incompatible-type] two is an array because the constructors are equal
       if (deepDiffer(one[ii], two[ii], maxDepth - 1)) {
         return true;
       }

@@ -306,9 +306,10 @@ class ScrollView extends React.Component<ScrollViewProps> {
     const animated = options?.animated !== false;
     const { horizontal } = this.props;
     const scrollResponderNode = this.getScrollableNode();
-    // $FlowFixMe[incompatible-use] scrollToEnd is called after the scroll node is mounted
+    if (scrollResponderNode == null) {
+      return;
+    }
     const x = horizontal ? scrollResponderNode.scrollWidth : 0;
-    // $FlowFixMe[incompatible-use] scrollToEnd is called after the scroll node is mounted
     const y = horizontal ? 0 : scrollResponderNode.scrollHeight;
     this.scrollResponderScrollTo({ x, y, animated });
   };
@@ -356,7 +357,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
         ? React.Children.map(this.props.children, (child, i) => {
             const isSticky =
               hasStickyHeaderIndices &&
-              // $FlowFixMe[incompatible-use] hasStickyHeaderIndices checks that stickyHeaderIndices is an array
+              stickyHeaderIndices != null &&
               stickyHeaderIndices.indexOf(i) > -1;
             if (child != null && (isSticky || pagingEnabled)) {
               return (
@@ -422,8 +423,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
 
   _handleContentOnLayout = (e: LayoutEvent) => {
     const { width, height } = e.nativeEvent.layout;
-    // $FlowFixMe[not-a-function] onLayout is only set when onContentSizeChange is set
-    this.props.onContentSizeChange(width, height);
+    this.props.onContentSizeChange?.(width, height);
   };
 
   _handleScroll = (e: ScrollEvent) => {

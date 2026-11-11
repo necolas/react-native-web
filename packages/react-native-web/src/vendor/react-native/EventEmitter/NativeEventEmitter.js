@@ -63,10 +63,10 @@ export default class NativeEventEmitter<TEventToArgsMap extends {...}>
 
     return {
       remove: () => {
-        if (subscription != null) {
+        const currentSubscription = subscription;
+        if (currentSubscription != null) {
           this._nativeModule?.removeListeners(1);
-          // $FlowFixMe[incompatible-use]
-          subscription.remove();
+          currentSubscription.remove();
           subscription = null;
         }
       },

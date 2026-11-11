@@ -122,7 +122,7 @@ function validateMapping(
       'Bad event of type ' + typeof recEvt + ' for key ' + key,
     );
     for (const mappingKey in recMapping) {
-      // $FlowFixMe[incompatible-use] recEvt is checked to be an object above
+      invariant(recEvt != null, 'Bad event of type null for key ' + key);
       validate(recMapping[mappingKey], recEvt[mappingKey], mappingKey);
     }
   };

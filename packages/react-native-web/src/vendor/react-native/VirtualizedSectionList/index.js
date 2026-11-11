@@ -133,13 +133,14 @@ class VirtualizedSectionList<
       index += this.props.getItemCount(this.props.sections[i].data) + 2;
     }
     let viewOffset = params.viewOffset || 0;
-    if (this._listRef == null) {
+    const listRef = this._listRef;
+    if (listRef == null) {
       return;
     }
     if (params.itemIndex > 0 && this.props.stickySectionHeadersEnabled) {
-      const frame = this._listRef.__getFrameMetricsApprox(
+      const frame = listRef.__getFrameMetricsApprox(
         index - params.itemIndex,
-        this._listRef.props,
+        listRef.props,
       );
       viewOffset += frame.length;
     }
@@ -148,8 +149,7 @@ class VirtualizedSectionList<
       viewOffset,
       index,
     };
-    // $FlowFixMe[incompatible-use]
-    this._listRef.scrollToIndex(toIndexParams);
+    listRef.scrollToIndex(toIndexParams);
   }
 
   getListRef(): ?React.ElementRef<typeof VirtualizedList> {

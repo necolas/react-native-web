@@ -126,8 +126,10 @@ export default function createResponderEvent(
 
   if (domEventChangedTouches != null) {
     changedTouches = normalizeTouches(domEventChangedTouches);
-    // $FlowFixMe[incompatible-type] touch events have touches
-    touches = normalizeTouches(domEvent.touches);
+    touches =
+      domEvent.touches != null
+        ? normalizeTouches(domEvent.touches)
+        : emptyArray;
   } else {
     const emulatedTouches: Array<Touch> = [
       {
@@ -202,18 +204,18 @@ export default function createResponderEvent(
   // 1) The value of `currentTarget` is not initially available.
   // 2) Measuring the clientRect may cause layout jank and should only be done on-demand.
   function locationX(x: number): number | void {
-    rect = rect || getBoundingClientRect(responderEvent.currentTarget);
-    if (rect) {
-      // $FlowFixMe[incompatible-use] rect is only set when currentTarget is set
-      const offsetWidth = responderEvent.currentTarget.offsetWidth;
+    const currentTarget = responderEvent.currentTarget;
+    rect = rect || getBoundingClientRect(currentTarget);
+    if (rect && currentTarget != null) {
+      const offsetWidth = currentTarget.offsetWidth;
       return (x - rect.left) / getScale(rect.width, offsetWidth);
     }
   }
   function locationY(y: number): number | void {
-    rect = rect || getBoundingClientRect(responderEvent.currentTarget);
-    if (rect) {
-      // $FlowFixMe[incompatible-use] rect is only set when currentTarget is set
-      const offsetHeight = responderEvent.currentTarget.offsetHeight;
+    const currentTarget = responderEvent.currentTarget;
+    rect = rect || getBoundingClientRect(currentTarget);
+    if (rect && currentTarget != null) {
+      const offsetHeight = currentTarget.offsetHeight;
       return (y - rect.top) / getScale(rect.height, offsetHeight);
     }
   }
