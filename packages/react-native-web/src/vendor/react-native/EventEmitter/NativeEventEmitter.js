@@ -73,19 +73,6 @@ export default class NativeEventEmitter<TEventToArgsMap extends {...}>
     };
   }
 
-  /**
-   * @deprecated Use `remove` on the EventSubscription from `addListener`.
-   */
-  removeListener<TEvent extends keyof TEventToArgsMap>(
-    eventType: TEvent,
-    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
-  ): void {
-    this._nativeModule?.removeListeners(1);
-    // NOTE: This will report a deprecation notice via `console.error`.
-    // $FlowFixMe[prop-missing] - `removeListener` exists but is deprecated.
-    RCTDeviceEventEmitter.removeListener(eventType, listener);
-  }
-
   emit<TEvent extends keyof TEventToArgsMap>(
     eventType: TEvent,
     ...args: TEventToArgsMap[TEvent]
