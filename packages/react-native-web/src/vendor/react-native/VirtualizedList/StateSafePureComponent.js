@@ -33,7 +33,7 @@ export default class StateSafePureComponent<
 
   // $FlowFixMe[incompatible-type]
   setState(
-    partialState: ?(Partial<State> | ((State, Props) => ?Partial<State>)),
+    partialState: ?(Partial<State> | ((state: State, props: Props) => ?Partial<State>)),
     callback?: () => unknown,
   ): void {
     if (typeof partialState === 'function') {

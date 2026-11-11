@@ -36,6 +36,7 @@ import FillRateHelper from '../FillRateHelper';
 import StateSafePureComponent from './StateSafePureComponent';
 import ViewabilityHelper from '../ViewabilityHelper';
 import CellRenderer from './VirtualizedListCellRenderer';
+import type {SeparatorProps} from './VirtualizedListCellRenderer';
 import {
   VirtualizedListCellContextProvider,
   VirtualizedListContext,
@@ -58,7 +59,58 @@ const ON_EDGE_REACHED_EPSILON = 0.001;
 let _usedIndexForKey = false;
 let _keylessItemComponentName: string = '';
 
-type ScrollResponderType = any;
+type ScrollResponderType = unknown;
+
+export type ScrollRef = {
+  flashScrollIndicators: () => void,
+  getScrollResponder?: () => ScrollResponderType,
+  getScrollableNode?: () => HTMLElement,
+  getScrollRef?: () => ?ScrollRef,
+  measureLayout: (
+    relativeToNativeNode: ?ScrollRef,
+    onSuccess: (x: number, y: number, width: number, height: number) => void,
+    onFail: (error?: unknown) => void,
+  ) => void,
+  scrollTo?: (options?: {
+    x?: number,
+    y?: number,
+    animated?: ?boolean,
+  }) => void,
+  ...
+};
+
+export type ScrollableNode = HTMLElement | ScrollRef;
+
+type InvertedWheelEvent = {
+  deltaX: number,
+  deltaY: number,
+  preventDefault: () => void,
+  target: {
+    clientHeight: number,
+    clientWidth: number,
+    scrollHeight: number,
+    scrollLeft: number,
+    scrollTop: number,
+    scrollWidth: number,
+    ...
+  },
+  wheelDeltaX: number,
+  wheelDeltaY: number,
+  shiftKey: boolean,
+  currentTarget: unknown,
+  ...
+};
+
+type ScrollMetrics = {
+  contentLength: number,
+  dOffset: number,
+  dt: number,
+  offset: number,
+  timestamp: number,
+  velocity: number,
+  visibleLength: number,
+  zoomScale: number,
+};
 type ViewStyleProp = ViewProps['style'];
 
 type ViewabilityHelperCallbackTuple = {
@@ -68,7 +120,6 @@ type ViewabilityHelperCallbackTuple = {
     changed: Array<ViewToken>,
     ...
   }) => void,
-  ...
 };
 
 type State = {
@@ -204,12 +255,12 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   // scrollToIndex may be janky without getItemLayout prop
   scrollToIndex(params: {
-    animated?: ?boolean,
-    index: number,
-    viewOffset?: number,
-    viewPosition?: number,
+    readonly animated?: ?boolean,
+    readonly index: number,
+    readonly viewOffset?: number,
+    readonly viewPosition?: number,
     ...
-  }): $FlowFixMe {
+  }): void {
     const {
       data,
       horizontal,
@@ -277,10 +328,10 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   // scrollToItem may be janky without getItemLayout prop. Required linear scan through items -
   // use scrollToIndex instead if possible.
   scrollToItem(params: {
-    animated?: ?boolean,
-    item: Item,
-    viewOffset?: number,
-    viewPosition?: number,
+    readonly animated?: ?boolean,
+    readonly item: Item,
+    readonly viewOffset?: number,
+    readonly viewPosition?: number,
     ...
   }) {
     const {item} = params;
@@ -356,7 +407,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     }
   }
 
-  getScrollableNode(): ?number {
+  getScrollableNode(): ?ScrollableNode {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
@@ -364,9 +415,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     }
   }
 
-  getScrollRef():
-    | ?React.ElementRef<typeof ScrollView>
-    | ?React.ElementRef<typeof View> {
+  getScrollRef(): ?ScrollRef {
     if (this._scrollRef && this._scrollRef.getScrollRef) {
       return this._scrollRef.getScrollRef();
     } else {
@@ -375,14 +424,13 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   // Not supported on web. Kept so code shared with native doesn't crash.
-  setNativeProps(props: {[string]: unknown, ...}) {}
+  setNativeProps(props: {[key: string]: unknown, ...}) {}
 
   _getCellKey(): string {
     return this.context?.cellKey || 'rootList';
   }
 
-  // $FlowFixMe[missing-local-annot]
-  _getScrollMetrics = () => {
+  _getScrollMetrics = (): ScrollMetrics => {
     return this._scrollMetrics;
   };
 
@@ -390,8 +438,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     return this._hasMore;
   }
 
-  // $FlowFixMe[missing-local-annot]
-  _getOutermostParentListRef = () => {
+  _getOutermostParentListRef = (): VirtualizedList => {
     if (this._isNestedWithSameOrientation()) {
       return this.context.getOutermostParentListRef();
     } else {
@@ -401,7 +448,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   _registerAsNestedChild = (childList: {
     cellKey: string,
-    ref: React.ElementRef<typeof VirtualizedList>,
+    ref: VirtualizedList,
   }): void => {
     this._nestedChildLists.add(childList.ref, childList.cellKey);
     if (this._hasInteracted) {
@@ -410,7 +457,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   };
 
   _unregisterAsNestedChild = (childList: {
-    ref: React.ElementRef<typeof VirtualizedList>,
+    ref: VirtualizedList,
   }): void => {
     this._nestedChildLists.remove(childList.ref);
   };
@@ -418,7 +465,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   state: State;
 
    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
-   invertedWheelEventHandler: ?(ev: any) => void;
+   invertedWheelEventHandler: ?(ev: InvertedWheelEvent) => void;
 
   constructor(props: Props) {
     super(props);
@@ -456,7 +503,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
     // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
     // For issue https://github.com/necolas/react-native-web/issues/995
-    this.invertedWheelEventHandler = (ev: any) => {
+    this.invertedWheelEventHandler = (ev: InvertedWheelEvent) => {
       if (this.props.scrollEnabled === false) {
         return;
       }
@@ -491,7 +538,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       const targetDelta = delta - leftoverDelta;
 
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
-        const node = (this._scrollRef as any).getScrollableNode();
+        const node = this._scrollRef.getScrollableNode();
         if (this.props.horizontal) {
           ev.target.scrollLeft += targetDelta;
           const nextScrollLeft = node.scrollLeft - leftoverDelta;
@@ -511,6 +558,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       props;
 
     invariant(
+      // $FlowFixMe[prop-missing] Animated adds __isNative to native onScroll handlers
       !onScroll || !onScroll.__isNative,
       'Components based on VirtualizedList must be wrapped with Animated.createAnimatedComponent ' +
         'to support native onScroll events with useNativeDriver',
@@ -521,6 +569,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     );
 
     invariant(
+      // $FlowFixMe[constant-condition] getItemCount is required by the type but not checked at runtime
       getItemCount,
       'VirtualizedList: The "getItemCount" prop must be provided',
     );
@@ -763,6 +812,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
   setupWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      // $FlowFixMe[incompatible-type] invertedWheelEventHandler is set in the constructor
       this._scrollRef.getScrollableNode().addEventListener('wheel',
           this.invertedWheelEventHandler,
           {passive: false}
@@ -776,6 +826,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
   teardownWebWheelHandler() {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      // $FlowFixMe[incompatible-type] invertedWheelEventHandler is set in the constructor
       this._scrollRef.getScrollableNode().removeEventListener('wheel',
           this.invertedWheelEventHandler
       );
@@ -802,7 +853,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   _pushCells(
-    cells: Array<Object>,
+    cells: Array<React.Node>,
     stickyHeaderIndices: Array<number>,
     stickyIndicesFromProps: Set<number>,
     first: number,
@@ -884,7 +935,10 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     };
   }
 
-  _onUpdateSeparators = (keys: Array<?string>, newProps: Object) => {
+  _onUpdateSeparators = (
+    keys: Array<?string>,
+    newProps: Partial<SeparatorProps<unknown>>,
+  ) => {
     keys.forEach(key => {
       const ref = key != null && this._cellRefs[key];
       ref && ref.updateSeparatorProps(newProps);
@@ -909,8 +963,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       keyExtractor?: ?(item: Item, index: number) => string,
       ...
     },
-    // $FlowFixMe[missing-local-annot]
-  ) {
+  ): string {
     if (props.keyExtractor != null) {
       return props.keyExtractor(item, index);
     }
@@ -935,7 +988,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         ? styles.horizontallyInverted
         : styles.verticallyInverted
       : null;
-    const cells: Array<any | React.Node> = [];
+    const cells: Array<React.Node> = [];
     const stickyIndicesFromProps = new Set(this.props.stickyHeaderIndices);
     const stickyHeaderIndices = [];
 
@@ -944,9 +997,11 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       if (stickyIndicesFromProps.has(0)) {
         stickyHeaderIndices.push(0);
       }
-      const element = React.isValidElement(ListHeaderComponent) ? (
+      const element: React.Node = React.isValidElement(ListHeaderComponent) ? (
+        // $FlowFixMe[incompatible-type] React.isValidElement() does not refine the union
         ListHeaderComponent
       ) : (
+        // $FlowFixMe[not-a-component] React.isValidElement() does not refine the union
         <ListHeaderComponent />
       );
       cells.push(
@@ -973,6 +1028,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       ) ? (
         ListEmptyComponent
       ) : (
+        // $FlowFixMe[not-a-component] React.isValidElement() does not refine the union
         <ListEmptyComponent />
       )) as any;
       cells.push(
@@ -1060,9 +1116,11 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
     // 3. Add cell for ListFooterComponent
     if (ListFooterComponent) {
-      const element = React.isValidElement(ListFooterComponent) ? (
+      const element: React.Node = React.isValidElement(ListFooterComponent) ? (
+        // $FlowFixMe[incompatible-type] React.isValidElement() does not refine the union
         ListFooterComponent
       ) : (
+        // $FlowFixMe[not-a-component] React.isValidElement() does not refine the union
         <ListFooterComponent />
       );
       cells.push(
@@ -1095,6 +1153,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         this.props.scrollEventThrottle,
       ), // TODO: Android support
       invertStickyHeaders:
+        // $FlowFixMe[prop-missing] invertStickyHeaders is not a ScrollView prop on web
         this.props.invertStickyHeaders !== undefined
           ? this.props.invertStickyHeaders
           : this.props.inverted,
@@ -1116,6 +1175,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           registerAsNestedChild: this._registerAsNestedChild,
           unregisterAsNestedChild: this._unregisterAsNestedChild,
         }}>
+        {/* $FlowFixMe[incompatible-type] cloneElement with children is not typed for MixedElement */}
         {React.cloneElement(
           (
             this.props.renderScrollComponent ||
@@ -1192,22 +1252,23 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   _averageCellLength = 0;
-  _cellRefs: {[string]: null | CellRenderer<any>} = {};
+  _cellRefs: Record<string, null | CellRenderer<Item>> = {};
   _fillRateHelper: FillRateHelper;
-  _frames: {
-    [string]: {
+  _frames: Record<
+    string,
+    {
       inLayout?: boolean,
       index: number,
       length: number,
       offset: number,
     },
-  } = {};
+  > = {};
   _footerLength = 0;
   // Used for preventing scrollToIndex from being called multiple times for initialScrollIndex
   _hasTriggeredInitialScrollToIndex = false;
   _hasInteracted = false;
   _hasMore = false;
-  _hasWarned: {[string]: boolean} = {};
+  _hasWarned: Record<string, boolean> = {};
   _headerLength = 0;
   _hiPriInProgress: boolean = false; // flag to prevent infinite hiPri cell limit update
   _highestMeasuredFrameIndex = 0;
@@ -1217,8 +1278,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     new ChildListCollection();
   _offsetFromParentVirtualizedList: number = 0;
   _prevParentOffset: number = 0;
-  // $FlowFixMe[missing-local-annot]
-  _scrollMetrics = {
+  _scrollMetrics: ScrollMetrics = {
     contentLength: 0,
     dOffset: 0,
     dt: 10,
@@ -1228,7 +1288,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     visibleLength: 0,
     zoomScale: 1,
   };
-  _scrollRef: ?React.ElementRef<any> = null;
+  _scrollRef: ?ScrollRef = null;
   _sentStartForContentLength = 0;
   _sentEndForContentLength = 0;
   _totalCellLength = 0;
@@ -1236,9 +1296,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   _updateCellsToRenderBatcher: Batchinator;
   _viewabilityTuples: Array<ViewabilityHelperCallbackTuple> = [];
 
-  /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
-   * LTI update could not be added via codemod */
-  _captureScrollRef = ref => {
+  _captureScrollRef = (ref: ?ScrollRef) => {
     this._scrollRef = ref;
   };
 
@@ -1426,8 +1484,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     this._headerLength = this._selectLength(e.nativeEvent.layout);
   };
 
-  // $FlowFixMe[missing-local-annot]
-  _renderDebugOverlay() {
+  _renderDebugOverlay(): React.Node {
     const normalize =
       this._scrollMetrics.visibleLength /
       (this._scrollMetrics.contentLength || 1);
@@ -1606,6 +1663,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       this.props.initialScrollIndex > 0 &&
       !this._hasTriggeredInitialScrollToIndex
     ) {
+      // $FlowFixMe[prop-missing] contentOffset is not a ScrollView prop on web
       if (this.props.contentOffset == null) {
         if (
           this.props.initialScrollIndex <
@@ -1636,7 +1694,12 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     visibleLength: number,
     offset: number,
     ...
-  }): $FlowFixMe => {
+  }): {
+    visibleLength: number,
+    contentLength: number,
+    offset: number,
+    dOffset: number,
+  } => {
     // Offset of the top of the nested list relative to the top of its parent's viewport
     const offset = metrics.offset - this._offsetFromParentVirtualizedList;
     // Child's visible length is the same as its parent's
@@ -1652,7 +1715,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     };
   };
 
-  _onScroll = (e: Object) => {
+  _onScroll = (e: ScrollEvent) => {
     this._nestedChildLists.forEach(childList => {
       childList._onScroll(e);
     });
@@ -1699,6 +1762,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     }
 
     // For invalid negative values (w/ RTL), set this to 1.
+    // $FlowFixMe[invalid-compare] zoomScale is optional in ScrollEvent
     const zoomScale = e.nativeEvent.zoomScale < 0 ? 1 : e.nativeEvent.zoomScale;
     this._scrollMetrics = {
       contentLength,
@@ -1708,6 +1772,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       timestamp,
       velocity,
       visibleLength,
+      // $FlowFixMe[incompatible-type] zoomScale is optional in ScrollEvent
       zoomScale,
     };
     this._updateViewableItems(this.props, this.state.cellsAroundViewport);
@@ -1848,8 +1913,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     index: number,
     isViewable: boolean,
     props: FrameMetricProps,
-    // $FlowFixMe[missing-local-annot]
-  ) => {
+  ): ViewToken => {
     const {data, getItem} = props;
     const item = getItem(data, index);
     return {

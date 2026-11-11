@@ -9,6 +9,7 @@
  */
 
 import ScrollView from '../../../exports/ScrollView';
+import type {Props as ScrollViewProps} from '../../../exports/ScrollView';
 import type { LayoutEvent } from '../../../types';
 import type {
   FocusEvent,
@@ -28,7 +29,7 @@ export type Item = any;
 export type Separators = {
   highlight: () => void,
   unhighlight: () => void,
-  updateProps: (select: 'leading' | 'trailing', newProps: Object) => void,
+  updateProps: (select: 'leading' | 'trailing', newProps: Readonly<Record<string, unknown>>) => void,
   ...
 };
 
@@ -53,12 +54,12 @@ export type RenderItemType<ItemT> = (
   info: RenderItemProps<ItemT>,
 ) => React.Node;
 
-type RequiredProps = {|
+type RequiredProps = {
   /**
    * The default accessor functions assume this is an Array<{key: string} | {id: string}> but you can override
    * getItem, getItemCount, and keyExtractor to handle any type of index-based data.
    */
-  data?: any,
+  data?: unknown,
   /**
    * A generic accessor for extracting an item from any sort of data blob.
    */
@@ -67,8 +68,8 @@ type RequiredProps = {|
    * Determines how many items are in the data blob.
    */
   getItemCount: (data: any) => number,
-|};
-type OptionalProps = {|
+};
+type OptionalProps = {
   renderItem?: ?RenderItemType<Item>,
   /**
    * `debug` will turn on extra logging and visual overlays to aid with debugging both usage and
@@ -86,7 +87,7 @@ type OptionalProps = {|
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
    * `data` prop, stick it here and treat it immutably.
    */
-  extraData?: any,
+  extraData?: unknown,
   // e.g. height, y
   getItemLayout?: (
     data: any,
@@ -129,7 +130,11 @@ type OptionalProps = {|
    * which will update the `highlighted` prop, but you can also add custom props with
    * `separators.updateProps`.
    */
-  ItemSeparatorComponent?: ?React.ComponentType<any>,
+  ItemSeparatorComponent?: ?React.ComponentType<{
+    highlighted: boolean,
+    leadingItem: ?Item,
+    ...
+  }>,
   /**
    * Takes an item from `data` and renders it into the list. Example usage:
    *
@@ -156,17 +161,20 @@ type OptionalProps = {|
    * `highlight` and `unhighlight` (which set the `highlighted: boolean` prop) are insufficient for
    * your use-case.
    */
-  ListItemComponent?: ?(React.ComponentType<any> | React.MixedElement),
+  ListItemComponent?: ?(
+    | React.ComponentType<RenderItemProps<Item>>
+    | React.MixedElement
+  ),
   /**
    * Rendered when the list is empty. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListEmptyComponent?: ?(React.ComponentType<any> | React.MixedElement),
+  ListEmptyComponent?: ?(React.ComponentType<{}> | React.MixedElement),
   /**
    * Rendered at the bottom of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListFooterComponent?: ?(React.ComponentType<any> | React.MixedElement),
+  ListFooterComponent?: ?(React.ComponentType<{}> | React.MixedElement),
   /**
    * Styling for internal View for ListFooterComponent
    */
@@ -175,7 +183,7 @@ type OptionalProps = {|
    * Rendered at the top of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListHeaderComponent?: ?(React.ComponentType<any> | React.MixedElement),
+  ListHeaderComponent?: ?(React.ComponentType<{}> | React.MixedElement),
   /**
    * Styling for internal View for ListHeaderComponent
    */
@@ -190,7 +198,7 @@ type OptionalProps = {|
    * Called once when the scroll position gets within within `onEndReachedThreshold`
    * from the logical end of the list.
    */
-  onEndReached?: ?(info: {distanceFromEnd: number, ...}) => void,
+  onEndReached?: ?(info: {distanceFromEnd: number}) => void,
   /**
    * How far from the end (in units of visible length of the list) the trailing edge of the
    * list must be from the end of the content to trigger the `onEndReached` callback.
@@ -212,13 +220,12 @@ type OptionalProps = {|
     index: number,
     highestMeasuredFrameIndex: number,
     averageItemLength: number,
-    ...
   }) => void,
   /**
    * Called once when the scroll position gets within within `onStartReachedThreshold`
    * from the logical start of the list.
    */
-  onStartReached?: ?(info: {distanceFromStart: number, ...}) => void,
+  onStartReached?: ?(info: {distanceFromStart: number}) => void,
   /**
    * How far from the start (in units of visible length of the list) the leading edge of the
    * list must be from the start of the content to trigger the `onStartReached` callback.
@@ -259,7 +266,7 @@ type OptionalProps = {|
   /**
    * Render a custom scroll component, e.g. with a differently styled `RefreshControl`.
    */
-  renderScrollComponent?: (props: Object) => React.MixedElement,
+  renderScrollComponent?: (props: {...}) => React.MixedElement,
   /**
    * Amount of time between low-pri item render batches, e.g. for rendering items quite a ways off
    * screen. Similar fill rate/responsiveness tradeoff as `maxToRenderPerBatch`.
@@ -286,13 +293,13 @@ type OptionalProps = {|
    * The legacy implementation is no longer supported.
    */
   legacyImplementation?: empty,
-|};
+};
 
-export type Props = {|
-  ...React.ComponentProps<typeof ScrollView>,
+export type Props = {
+  ...ScrollViewProps,
   ...RequiredProps,
   ...OptionalProps,
-|};
+};
 
 /**
  * Subset of properties needed to calculate frame metrics

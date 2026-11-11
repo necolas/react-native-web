@@ -23,7 +23,7 @@ import View from '../View';
 
 type ViewStyle = ViewProps['style'];
 
-type Props = Readonly<{|
+type Props = Readonly<{
   ...TouchableWithoutFeedbackProps,
   activeOpacity?: ?number,
   onHideUnderlay?: ?() => void,
@@ -31,12 +31,12 @@ type Props = Readonly<{|
   style?: ViewStyle,
   testOnly_pressed?: ?boolean,
   underlayColor?: ?ColorValue
-|}>;
+}>;
 
-type ExtraStyles = Readonly<{|
+type ExtraStyles = Readonly<{
   child: ViewStyle,
   underlay: ViewStyle
-|}>;
+}>;
 
 function createExtraStyles(
   activeOpacity: ?number,

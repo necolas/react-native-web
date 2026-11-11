@@ -15,15 +15,15 @@ type EndResult = {finished: boolean, ...};
 type EndCallback = (result: EndResult) => void;
 type SaveValueCallback = (value: number) => void;
 
-export type EventMapping = {|
+export type EventMapping = {
   nativeEventPath: Array<string>,
   animatedValueTag: ?number,
-|};
+};
 
 // The config has different keys depending on the type of the Node
 // TODO(T54896888): Make these types strict
-export type AnimatedNodeConfig = Object;
-export type AnimatingNodeConfig = Object;
+export type AnimatedNodeConfig = Readonly<Record<string, unknown>>;
+export type AnimatingNodeConfig = Readonly<Record<string, unknown>>;
 
 export interface Spec extends TurboModule {
   readonly startOperationBatch: () => void;

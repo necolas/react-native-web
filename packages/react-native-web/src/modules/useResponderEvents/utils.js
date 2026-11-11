@@ -7,11 +7,15 @@
  * @flow
  */
 
+import type { ResponderDOMEvent } from './ResponderEventTypes';
+
 import isSelectionValid from '../../modules/isSelectionValid';
 
 const keyName = '__reactResponderId';
 
-function getEventPath(domEvent: any): Array<any> {
+export type ResponderNode = HTMLElement & { __reactResponderId?: number, ... };
+
+function getEventPath(domEvent: ResponderDOMEvent): Array<ResponderNode> {
   // The 'selectionchange' event always has the 'document' as the target.
   // Use the anchor node as the initial target to reconstruct a path.
   // (We actually only need the first "responder" node in practice.)
@@ -19,13 +23,15 @@ function getEventPath(domEvent: any): Array<any> {
     const target = window.getSelection()?.anchorNode;
     return composedPathFallback(target);
   } else {
+    // $FlowFixMe[incompatible-type] the path of a responder event contains host nodes
     return domEvent.composedPath();
   }
 }
 
-function composedPathFallback(target: any): Array<any> {
-  const path = [];
+function composedPathFallback(target: ?Node): Array<ResponderNode> {
+  const path: Array<ResponderNode> = [];
   while (target != null && target !== document.body) {
+    // $FlowFixMe[incompatible-type] the path of a responder event contains host nodes
     path.push(target);
     target = target.parentNode;
   }
@@ -35,7 +41,7 @@ function composedPathFallback(target: any): Array<any> {
 /**
  * Retrieve the responderId from a host node
  */
-function getResponderId(node: any): ?number {
+function getResponderId(node: ?ResponderNode): ?number {
   if (node != null) {
     return node[keyName];
   }
@@ -45,7 +51,7 @@ function getResponderId(node: any): ?number {
 /**
  * Store the responderId on a host node
  */
-export function setResponderId(node: any, id: number) {
+export function setResponderId(node: ?ResponderNode, id: number) {
   if (node != null) {
     node[keyName] = id;
   }
@@ -54,12 +60,12 @@ export function setResponderId(node: any, id: number) {
 /**
  * Filter the event path to contain only the nodes attached to the responder system
  */
-export function getResponderPaths(domEvent: any): {|
+export function getResponderPaths(domEvent: ResponderDOMEvent): {
   idPath: Array<number>,
-  nodePath: Array<any>
-|} {
-  const idPath = [];
-  const nodePath = [];
+  nodePath: Array<ResponderNode>
+} {
+  const idPath: Array<number> = [];
+  const nodePath: Array<ResponderNode> = [];
   const eventPath = getEventPath(domEvent);
   for (let i = 0; i < eventPath.length; i++) {
     const node = eventPath[i];
@@ -76,9 +82,9 @@ export function getResponderPaths(domEvent: any): {|
  * Walk the paths and find the first common ancestor
  */
 export function getLowestCommonAncestor(
-  pathA: Array<any>,
-  pathB: Array<any>
-): any {
+  pathA: Array<number>,
+  pathB: Array<number>
+): ?number {
   let pathALength = pathA.length;
   let pathBLength = pathB.length;
   if (
@@ -127,13 +133,17 @@ export function getLowestCommonAncestor(
  * Determine whether any of the active touches are within the current responder.
  * This cannot rely on W3C `targetTouches`, as Safari doesn't implement it.
  */
-export function hasTargetTouches(target: any, touches: any): boolean {
+export function hasTargetTouches(
+  target: ResponderNode,
+  touches: ?TouchList
+): boolean {
   if (!touches || touches.length === 0) {
     return false;
   }
   for (let i = 0; i < touches.length; i++) {
     const node = touches[i].target;
     if (node != null) {
+      // $FlowFixMe[incompatible-type] touch targets are DOM nodes
       if (target.contains(node)) {
         return true;
       }
@@ -146,7 +156,7 @@ export function hasTargetTouches(target: any, touches: any): boolean {
  * Ignore 'selectionchange' and 'select' events that don't correspond with a person's intent to
  * select text.
  */
-export function hasValidSelection(domEvent: any): boolean {
+export function hasValidSelection(domEvent: ResponderDOMEvent): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }
@@ -155,6 +165,8 @@ export function hasValidSelection(domEvent: any): boolean {
   }
 
   try {
+    // $FlowFixMe[prop-missing] select events target an input or a textarea
+    // $FlowFixMe[incompatible-use] select events target an input or a textarea
     const { selectionStart, selectionEnd } = domEvent.target;
 
     if (
@@ -174,7 +186,7 @@ export function hasValidSelection(domEvent: any): boolean {
 /**
  * Events are only valid if the primary button was used without specific modifier keys.
  */
-export function isPrimaryPointerDown(domEvent: any): boolean {
+export function isPrimaryPointerDown(domEvent: ResponderDOMEvent): boolean {
   const { altKey, button, buttons, ctrlKey, type } = domEvent;
   const isTouch = type === 'touchstart' || type === 'touchmove';
   const isPrimaryMouseDown =

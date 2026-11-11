@@ -45,10 +45,12 @@ function createInterpolation<OutputT extends number | string>(
   config: InterpolationConfigType<OutputT>,
 ): (input: number) => OutputT {
   if (config.outputRange && typeof config.outputRange[0] === 'string') {
-    return createInterpolationFromStringOutputRange(config as any) as any;
+    // $FlowFixMe[incompatible-type] OutputT is string when outputRange holds strings
+    return createInterpolationFromStringOutputRange(config);
   }
 
-  const outputRange: ReadonlyArray<number> = config.outputRange as any;
+  // $FlowFixMe[incompatible-type] OutputT is number when outputRange holds numbers
+  const outputRange: ReadonlyArray<number> = config.outputRange;
 
   const inputRange = config.inputRange;
 
@@ -90,6 +92,7 @@ function createInterpolation<OutputT extends number | string>(
     );
 
     const range = findRange(input, inputRange);
+    // $FlowFixMe[incompatible-type] OutputT is number when outputRange holds numbers
     return interpolate(
       input,
       inputRange[range],
@@ -99,7 +102,7 @@ function createInterpolation<OutputT extends number | string>(
       easing,
       extrapolateLeft,
       extrapolateRight,
-    ) as any;
+    );
   };
 }
 
@@ -200,7 +203,7 @@ const stringShapeRegex = /[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g;
 function createInterpolationFromStringOutputRange(
   config: InterpolationConfigType<string>,
 ): (input: number) => string {
-  let outputRange: Array<string> = config.outputRange as any;
+  let outputRange: ReadonlyArray<string> = config.outputRange;
   invariant(outputRange.length >= 2, 'Bad output range');
   outputRange = outputRange.map(colorToRgba);
   checkPattern(outputRange);
@@ -299,9 +302,8 @@ class AnimatedInterpolation<
   OutputT extends number | string,
 > extends AnimatedWithChildren {
   // Export for testing.
-  static __createInterpolation: (
-    config: InterpolationConfigType<OutputT>,
-  ) => (input: number) => OutputT = createInterpolation;
+  static __createInterpolation: typeof createInterpolation =
+    createInterpolation;
 
   _parent: AnimatedNode;
   _config: InterpolationConfigType<OutputT>;
@@ -343,11 +345,11 @@ class AnimatedInterpolation<
     super.__detach();
   }
 
-  __transformDataType(range: ReadonlyArray<OutputT>): Array<any> {
+  __transformDataType(range: ReadonlyArray<OutputT>): Array<number | string> {
     return range.map(NativeAnimatedHelper.transformDataType);
   }
 
-  __getNativeConfig(): any {
+  __getNativeConfig(): Record<string, unknown> {
     if (__DEV__) {
       NativeAnimatedHelper.validateInterpolation(this._config);
     }

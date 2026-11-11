@@ -9,7 +9,7 @@
 
 import propsToAriaRole from './propsToAriaRole';
 
-const roleComponents: { [string]: string } = {
+const roleComponents: Record<string, string> = {
   article: 'article',
   banner: 'header',
   blockquote: 'blockquote',
@@ -34,7 +34,7 @@ const roleComponents: { [string]: string } = {
 const emptyObject = {};
 
 const propsToAccessibilityComponent = (
-  props: Object = emptyObject
+  props: Readonly<Record<string, unknown>> = emptyObject
 ): void | string => {
   const roleProp = props.role || props.accessibilityRole;
   // special-case for "label" role which doesn't map to an ARIA role
@@ -47,6 +47,7 @@ const propsToAccessibilityComponent = (
     if (role === 'heading') {
       const level = props['aria-level'];
       if (level != null) {
+        // $FlowFixMe[incompatible-type] aria-level is not checked to be a number at runtime
         return `h${level}`;
       }
       return 'h1';

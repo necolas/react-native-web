@@ -1,7 +1,7 @@
 // @flow
 
 declare var process: {
-  env: { [string]: ?string, ... },
+  env: { [key: string]: ?string, ... },
   ...
 };
 

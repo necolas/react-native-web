@@ -39,13 +39,13 @@ let nativeEventEmitter;
 let waitingForQueuedOperations = new Set<string>();
 let queueOperations = false;
 let queue: Array<() => void> = [];
-let singleOpQueue: Array<any> = [];
+let singleOpQueue: Array<unknown> = [];
 
 const useSingleOpBatching: boolean = false;
 let flushQueueTimeout: any = null;
 
-const eventListenerGetValueCallbacks: {[number]: ?(value: number) => void} = {};
-const eventListenerAnimationFinishedCallbacks: {[number]: ?EndCallback} = {};
+const eventListenerGetValueCallbacks: Record<number, ?(value: number) => void> = {};
+const eventListenerAnimationFinishedCallbacks: Record<number, ?EndCallback> = {};
 let globalEventEmitterGetValueListener: ?EventSubscription = null;
 let globalEventEmitterAnimationFinishedListener: ?EventSubscription = null;
 
@@ -170,7 +170,7 @@ const API = {
     }
     */
   },
-  queueOperation: <Args extends ReadonlyArray<unknown>, Fn extends (...Args) => void>(
+  queueOperation: <Args extends ReadonlyArray<unknown>, Fn extends (...args: Args) => void>(
     fn: Fn,
     ...args: Args
   ): void => {
@@ -367,7 +367,7 @@ const SUPPORTED_COLOR_STYLES = {
   tintColor: true,
 };
 
-const SUPPORTED_STYLES: {[string]: boolean} = {
+const SUPPORTED_STYLES: Record<string, boolean> = {
   ...SUPPORTED_COLOR_STYLES,
   borderBottomEndRadius: true,
   borderBottomLeftRadius: true,
@@ -392,7 +392,7 @@ const SUPPORTED_STYLES: {[string]: boolean} = {
   translateY: true,
 };
 
-const SUPPORTED_TRANSFORMS: {[string]: boolean} = {
+const SUPPORTED_TRANSFORMS: Record<string, boolean> = {
   translateX: true,
   translateY: true,
   scale: true,
@@ -405,7 +405,7 @@ const SUPPORTED_TRANSFORMS: {[string]: boolean} = {
   perspective: true,
 };
 
-const SUPPORTED_INTERPOLATION_PARAMS: {[string]: boolean} = {
+const SUPPORTED_INTERPOLATION_PARAMS: Record<string, boolean> = {
   inputRange: true,
   outputRange: true,
   extrapolate: true,
@@ -447,13 +447,11 @@ function validateTransform(
         type: 'animated',
         property: string,
         nodeTag: ?number,
-        ...
       }
     | {
         type: 'static',
         property: string,
         value: number | string,
-        ...
       },
   >,
 ): void {
@@ -466,7 +464,7 @@ function validateTransform(
   });
 }
 
-function validateStyles(styles: {[key: string]: ?number, ...}): void {
+function validateStyles(styles: {[key: string]: ?number}): void {
   for (const key in styles) {
     if (!isSupportedStyleProp(key)) {
       throw new Error(

@@ -7,14 +7,18 @@
  * @flow
  */
 
+import type { ElementType } from 'react';
+
 import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
 
-const emptyObject: Object = {};
+const emptyObject: Record<string, unknown> = {};
 const uppercasePattern = /[A-Z]/g;
 
-const hasOwnProperty: (this: Object, key: string) => boolean =
-  Object.prototype.hasOwnProperty;
+const hasOwnProperty: (
+  this: Readonly<Record<string, unknown>>,
+  key: string
+) => boolean = Object.prototype.hasOwnProperty;
 
 function toHyphenLower(match: string): string {
   return '-' + match.toLowerCase();
@@ -23,9 +27,9 @@ function hyphenateString(str: string): string {
   return str.replace(uppercasePattern, toHyphenLower);
 }
 
-const pointerEventsStyles: {
-  readonly [string]: { readonly pointerEvents: string }
-} = StyleSheet.create({
+const pointerEventsStyles: Readonly<
+  Record<string, { readonly pointerEvents: string }>
+> = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
   },
@@ -41,10 +45,10 @@ const pointerEventsStyles: {
 });
 
 const createDOMProps = (
-  elementType: unknown,
-  props: ?Object,
-  options?: ?Object
-): Object => {
+  elementType: ElementType,
+  props: ?Record<string, unknown>,
+  options?: ?StyleSheetOptions
+): Record<string, unknown> => {
   if (!props) {
     props = emptyObject;
   }
@@ -164,9 +168,13 @@ const createDOMProps = (
 
   // "dataSet" replaced with "data-*"
   if (dataSet != null) {
+    // $FlowFixMe[invalid-in-rhs] dataSet is not checked to be an object at runtime
     for (const dataProp in dataSet) {
+      // $FlowFixMe[incompatible-type] dataSet is not checked to be an object at runtime
+      // $FlowFixMe[invalid-this-arg] dataSet is not checked to be an object at runtime
       if (hasOwnProperty.call(dataSet, dataProp)) {
         const dataName = hyphenateString(dataProp);
+        // $FlowFixMe[incompatible-use] dataSet is not checked to be an object at runtime
         const dataValue = dataSet[dataProp];
         if (dataValue != null) {
           domProps[`data-${dataName}`] = dataValue;
@@ -232,6 +240,7 @@ const createDOMProps = (
   };
 
   let [className, inlineStyle] = StyleSheet(
+    // $FlowFixMe[incompatible-type] pointerEvents is not checked to be a string at runtime
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
     styleSheetOptions
   );

@@ -132,6 +132,8 @@ to return true:wantsResponderID|                            |
                                +                            + */
 
 import type { ResponderEvent } from './createResponderEvent';
+import type { ResponderDOMEvent } from './ResponderEventTypes';
+import type { ResponderNode } from './utils';
 
 import createResponderEvent from './createResponderEvent';
 import {
@@ -159,13 +161,13 @@ type ResponderId = number;
 
 type EventPaths = {
   idPath: Array<ResponderId>,
-  nodePath: Array<any>
+  nodePath: Array<ResponderNode>
 };
 
 type ActiveResponderInstance = {
   id: ResponderId,
   idPath: Array<number>,
-  node: any
+  node: ResponderNode
 };
 
 type EmptyResponderInstance = {
@@ -233,7 +235,9 @@ const scrollRegistration: ShouldSetRegistration = [
   'onScrollShouldSetResponder',
   { bubbles: false }
 ];
-const shouldSetResponderEvents = {
+const shouldSetResponderEvents: Readonly<
+  Record<string, ?ShouldSetRegistration>
+> = {
   touchstart: startRegistration,
   mousedown: startRegistration,
   touchmove: moveRegistration,
@@ -272,7 +276,7 @@ function getResponderConfig(id: ResponderId): ResponderConfig {
  * the Responder System has an ID, which is used to look up its associated
  * callbacks.
  */
-function eventListener(domEvent: any) {
+function eventListener(domEvent: ResponderDOMEvent) {
   const eventType = domEvent.type;
   const eventTarget = domEvent.target;
 
@@ -423,12 +427,18 @@ function eventListener(domEvent: any) {
         (eventType === 'blur' && eventTarget === window) ||
         // responder (or ancestors) blur
         (eventType === 'blur' &&
+          // $FlowFixMe[incompatible-use] blur events that are not on window target a DOM node
+          // $FlowFixMe[prop-missing] blur events that are not on window target a DOM node
           eventTarget.contains(node) &&
           domEvent.relatedTarget !== node) ||
         // native scroll without using a pointer
         (isScrollEvent && trackedTouchCount === 0) ||
         // native scroll on node that is parent of the responder (allow siblings to scroll)
-        (isScrollEvent && eventTarget.contains(node) && eventTarget !== node) ||
+        (isScrollEvent &&
+          // $FlowFixMe[incompatible-use] scroll events target a DOM node
+          // $FlowFixMe[prop-missing] scroll events target a DOM node
+          eventTarget.contains(node) &&
+          eventTarget !== node) ||
         // native select/selectionchange on node
         (isSelectionChangeEvent && hasValidSelection(domEvent));
 
@@ -496,7 +506,7 @@ function eventListener(domEvent: any) {
  */
 function findWantsResponder(
   eventPaths: EventPaths,
-  domEvent: any,
+  domEvent: ResponderDOMEvent,
   responderEvent: ResponderEvent
 ) {
   const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type]; // for Flow
@@ -510,7 +520,7 @@ function findWantsResponder(
 
     const check = function (
       id: ResponderId,
-      node: any,
+      node: ResponderNode,
       callbackName: ShouldSetCallbackName
     ) {
       const config = getResponderConfig(id);
@@ -670,7 +680,11 @@ export function attachListeners() {
 /**
  * Register a node with the ResponderSystem.
  */
-export function addNode(id: ResponderId, node: any, config: ResponderConfig) {
+export function addNode(
+  id: ResponderId,
+  node: ?ResponderNode,
+  config: ResponderConfig
+) {
   setResponderId(node, id);
   responderListenersMap.set(id, config);
 }
@@ -697,6 +711,7 @@ export function terminateResponder() {
   if (id != null && node != null) {
     const { onResponderTerminate } = getResponderConfig(id);
     if (onResponderTerminate != null) {
+      // $FlowFixMe[incompatible-type] termination has no DOM event
       const event = createResponderEvent({}, responderTouchHistoryStore);
       event.currentTarget = node;
       onResponderTerminate(event);
@@ -711,6 +726,6 @@ export function terminateResponder() {
  * Allow unit tests to inspect the current responder in the system.
  * FOR TESTING ONLY.
  */
-export function getResponderNode(): any {
+export function getResponderNode(): ?ResponderNode {
   return currentResponder.node;
 }

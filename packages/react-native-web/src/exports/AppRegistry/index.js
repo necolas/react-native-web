@@ -10,40 +10,55 @@
 
 'use client';
 
-import type { Application } from './renderApplication';
-import type { ComponentType, Node } from 'react';
+import type {
+  AppProps,
+  Application,
+  ApplicationElement,
+  WrapperComponentType
+} from './renderApplication';
+import type { ComponentType } from 'react';
 
 import invariant from 'invariant';
+import type { Root } from '../render';
 import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
 
-type AppParams = Object;
-type Runnable = {|
-  getApplication?: (AppParams) => {|
-    element: Node,
-    getStyleElement: (any) => Node
-  |},
-  run: (AppParams) => any
-|};
+type PartialAppParameters = {
+  readonly callback?: () => void,
+  readonly hydrate?: boolean,
+  readonly initialProps?: AppProps,
+  readonly mode?: 'concurrent' | 'legacy',
+  readonly rootTag?: HTMLElement,
+  ...
+};
+type AppParameters = {
+  ...PartialAppParameters,
+  readonly rootTag: HTMLElement,
+  ...
+};
+type Runnable = (appParameters: AppParameters) => Application;
+type RegisteredApp = {
+  getApplication?: (appParameters: ?PartialAppParameters) => ApplicationElement,
+  run: Runnable
+};
 
-export type ComponentProvider = () => ComponentType<any>;
+export type ComponentProvider = () => ComponentType<empty>;
 export type ComponentProviderInstrumentationHook = (
   component: ComponentProvider
-) => ComponentType<any>;
-export type WrapperComponentProvider = (any) => ComponentType<{
-  children: Node,
-  ...
-}>;
+) => ComponentType<empty>;
+export type WrapperComponentProvider = (
+  appParameters: ?PartialAppParameters
+) => WrapperComponentType;
 
 export type AppConfig = {
   appKey: string,
   component?: ComponentProvider,
-  run?: Function,
+  run?: Runnable,
   section?: boolean
 };
 
 const emptyObject = {};
-const runnables: {| [appKey: string]: Runnable |} = {};
+const runnables: Record<string, RegisteredApp> = {};
 
 let componentProviderInstrumentationHook: ComponentProviderInstrumentationHook =
   (component: ComponentProvider) => component();
@@ -59,8 +74,8 @@ export default class AppRegistry {
 
   static getApplication(
     appKey: string,
-    appParameters?: AppParams
-  ): {| element: Node, getStyleElement: (any) => Node |} {
+    appParameters?: PartialAppParameters
+  ): ApplicationElement {
     invariant(
       runnables[appKey] && runnables[appKey].getApplication,
       `Application ${appKey} has not been registered. ` +
@@ -77,12 +92,14 @@ export default class AppRegistry {
     runnables[appKey] = {
       getApplication: (appParameters) =>
         getApplication(
+          // $FlowFixMe[incompatible-type] initialProps are not checked against the component props
           componentProviderInstrumentationHook(componentProvider),
           appParameters ? appParameters.initialProps : emptyObject,
           wrapperComponentProvider?.(appParameters)
         ),
       run: (appParameters): Application =>
         renderApplication(
+          // $FlowFixMe[incompatible-type] initialProps are not checked against the component props
           componentProviderInstrumentationHook(componentProvider),
           wrapperComponentProvider?.(appParameters),
           appParameters.callback,
@@ -109,16 +126,22 @@ export default class AppRegistry {
   }
 
   // TODO: fix style sheet creation when using this method
-  static registerRunnable(appKey: string, run: Function): string {
+  static registerRunnable(appKey: string, run: Runnable): string {
     runnables[appKey] = { run };
     return appKey;
   }
 
-  static runApplication(appKey: string, appParameters: Object): Application {
+  static runApplication(
+    appKey: string,
+    appParameters: AppParameters
+  ): Application {
     const isDevelopment =
       process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
     if (isDevelopment) {
-      const params = { ...appParameters };
+      const params: { ...AppParameters, rootTag: HTMLElement | string, ... } = {
+        ...appParameters
+      };
+      // $FlowFixMe[prop-missing] rootTag is still an HTMLElement when read here
       params.rootTag = `#${params.rootTag.id}`;
 
       console.log(
@@ -148,7 +171,7 @@ export default class AppRegistry {
     wrapperComponentProvider = provider;
   }
 
-  static unmountApplicationComponentAtRootTag(rootTag: Object) {
+  static unmountApplicationComponentAtRootTag(rootTag: Root) {
     unmountComponentAtNode(rootTag);
   }
 }

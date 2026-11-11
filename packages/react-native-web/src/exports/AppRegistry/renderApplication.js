@@ -21,15 +21,24 @@ export type Application = {
   ...
 };
 
-export default function renderApplication<Props extends Object>(
+export type ApplicationElement = {
+  element: Node,
+  getStyleElement: (props?: { ... }) => Node
+};
+
+export type AppProps = { ... };
+
+export type WrapperComponentType = ComponentType<{ children: Node }>;
+
+export default function renderApplication<Props extends AppProps>(
   RootComponent: ComponentType<Props>,
-  WrapperComponent?: ?ComponentType<{ children: Node, ... }>,
+  WrapperComponent?: ?WrapperComponentType,
   callback?: () => void,
   options: {
     hydrate: boolean,
     initialProps: Props,
-    rootTag: any,
-    ...
+    mode: 'concurrent' | 'legacy',
+    rootTag: HTMLElement
   }
 ): Application {
   const { hydrate: shouldHydrate, initialProps, rootTag } = options;
@@ -50,17 +59,17 @@ export default function renderApplication<Props extends Object>(
 }
 
 export function getApplication(
-  RootComponent: ComponentType<Object>,
-  initialProps: Object,
-  WrapperComponent?: ?ComponentType<{ children: Node, ... }>
-): {| element: Node, getStyleElement: (Object) => Node |} {
+  RootComponent: ComponentType<AppProps>,
+  initialProps: ?AppProps,
+  WrapperComponent?: ?WrapperComponentType
+): ApplicationElement {
   const element = (
     <AppContainer WrapperComponent={WrapperComponent} rootTag={{}}>
       <RootComponent {...initialProps} />
     </AppContainer>
   );
   // Don't escape CSS text
-  const getStyleElement = (props: Object) => {
+  const getStyleElement = (props?: { ... }) => {
     const sheet = StyleSheet.getSheet();
     return (
       <style

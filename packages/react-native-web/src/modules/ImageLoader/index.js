@@ -11,9 +11,10 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries: {
-    [uri: string]: { lastUsedTimestamp: number, refCount: number }
-  } = {};
+  static _entries: Record<
+    string,
+    { lastUsedTimestamp: number, refCount: number }
+  > = {};
 
   static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
@@ -84,7 +85,7 @@ export type ImageSize = {
 };
 
 let id = 0;
-const requests: { [string]: HTMLImageElement } = {};
+const requests: Record<string, HTMLImageElement> = {};
 
 const ImageLoader = {
   abort(requestId: number) {
@@ -174,8 +175,8 @@ const ImageLoader = {
       ImageUriCache.remove(uri);
     });
   },
-  queryCache(uris: Array<string>): Promise<{| [uri: string]: 'disk/memory' |}> {
-    const result: { [uri: string]: 'disk/memory' } = {};
+  queryCache(uris: Array<string>): Promise<Record<string, 'disk/memory'>> {
+    const result: Record<string, 'disk/memory'> = {};
 
     uris.forEach((u) => {
       if (ImageUriCache.has(u)) {

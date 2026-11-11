@@ -10,7 +10,7 @@
 
 import {useCallback} from 'react';
 
-type CallbackRef<T> = T => unknown;
+type CallbackRef<T> = (instance: T) => unknown;
 type ObjectRef<T> = {current: T, ...};
 
 type Ref<T> = CallbackRef<T> | ObjectRef<T>;

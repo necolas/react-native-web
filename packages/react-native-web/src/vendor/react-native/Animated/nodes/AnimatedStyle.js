@@ -19,9 +19,9 @@ import StyleSheet from '../../../../exports/StyleSheet';
 
 const flattenStyle = StyleSheet.flatten;
 
-function createAnimatedStyle(inputStyle: any): Object {
+function createAnimatedStyle(inputStyle: unknown): Record<string, unknown> {
   const style = flattenStyle(inputStyle);
-  const animatedStyles: {[string]: unknown} = {}
+  const animatedStyles: Record<string, unknown> = {}
   for (const key in style) {
     const value = style[key];
     if (key === 'transform' && Array.isArray(value)) {
@@ -38,18 +38,18 @@ function createAnimatedStyle(inputStyle: any): Object {
 }
 
 class AnimatedStyle extends AnimatedWithChildren {
-  _inputStyle: any;
-  _style: Object;
+  _inputStyle: unknown;
+  _style: Record<string, unknown>;
 
-  constructor(style: any) {
+  constructor(style: unknown) {
     super();
     this._inputStyle = style;
     this._style = createAnimatedStyle(style);
   }
 
   // Recursively get values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetValues(style: {readonly [string]: unknown}): {[string]: unknown} {
-    const updatedStyle: {[string]: unknown} = {};
+  _walkStyleAndGetValues(style: Readonly<Record<string, unknown>>): Record<string, unknown> {
+    const updatedStyle: Record<string, unknown> = {};
     for (const key in style) {
       const value = style[key];
       if (value instanceof AnimatedNode) {
@@ -68,7 +68,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     return updatedStyle;
   }
 
-  __getValue(): Array<Object> {
+  __getValue(): Array<unknown> {
     return [
       this._inputStyle,
       this._walkStyleAndGetValues(this._style)
@@ -76,8 +76,8 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   // Recursively get animated values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetAnimatedValues(style: {readonly [string]: unknown}): {[string]: unknown} {
-    const updatedStyle: {[string]: unknown} = {};
+  _walkStyleAndGetAnimatedValues(style: Readonly<Record<string, unknown>>): Record<string, unknown> {
+    const updatedStyle: Record<string, unknown> = {};
     for (const key in style) {
       const value = style[key];
       if (value instanceof AnimatedNode) {
@@ -90,7 +90,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     return updatedStyle;
   }
 
-  __getAnimatedValue(): Object {
+  __getAnimatedValue(): Record<string, unknown> {
     return this._walkStyleAndGetAnimatedValues(this._style);
   }
 
@@ -123,8 +123,8 @@ class AnimatedStyle extends AnimatedWithChildren {
     super.__makeNative();
   }
 
-  __getNativeConfig(): Object {
-    const styleConfig: {[string]: ?number} = {};
+  __getNativeConfig(): Record<string, unknown> {
+    const styleConfig: Record<string, ?number> = {};
     for (const styleKey in this._style) {
       if (this._style[styleKey] instanceof AnimatedNode) {
         const style = this._style[styleKey];

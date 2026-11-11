@@ -22,12 +22,10 @@ import ModalFocusTrap from './ModalFocusTrap';
 export type ModalProps = {
   ...ViewProps,
   animationType?: 'none' | 'slide' | 'fade',
-  children: any,
+  children?: React.Node,
   hardwareAccelerated?: ?boolean,
   onDismiss?: ?() => unknown,
-  onOrientationChange?: ?(e: {|
-    orientation: 'portrait' | 'landscape'
-  |}) => void,
+  onOrientationChange?: ?(e: { orientation: 'portrait' | 'landscape' }) => void,
   onRequestClose?: ?() => void,
   onShow?: ?() => void,
   ref?: React.Ref<React.ElementRef<View>>,

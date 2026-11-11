@@ -18,11 +18,11 @@ import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import invariant from 'invariant';
 
 class AnimatedProps extends AnimatedNode {
-  _props: Object;
-  _animatedView: any;
+  _props: Record<string, unknown>;
+  _animatedView: unknown;
   _callback: () => void;
 
-  constructor(props: Object, callback: () => void) {
+  constructor(props: Record<string, unknown>, callback: () => void) {
     super();
     if (props.style) {
       props = {
@@ -34,8 +34,8 @@ class AnimatedProps extends AnimatedNode {
     this._callback = callback;
   }
 
-  __getValue(): Object {
-    const props: {[string]: unknown} = {};
+  __getValue(): Record<string, unknown> {
+    const props: Record<string, unknown> = {};
     for (const key in this._props) {
       const value = this._props[key];
       if (value instanceof AnimatedNode) {
@@ -53,8 +53,8 @@ class AnimatedProps extends AnimatedNode {
     return props;
   }
 
-  __getAnimatedValue(): Object {
-    const props: {[string]: unknown} = {};
+  __getAnimatedValue(): Record<string, unknown> {
+    const props: Record<string, unknown> = {};
     for (const key in this._props) {
       const value = this._props[key];
       if (value instanceof AnimatedNode) {
@@ -106,7 +106,7 @@ class AnimatedProps extends AnimatedNode {
     }
   }
 
-  setNativeView(animatedView: any): void {
+  setNativeView(animatedView: unknown): void {
     if (this._animatedView === animatedView) {
       return;
     }
@@ -118,6 +118,7 @@ class AnimatedProps extends AnimatedNode {
 
   __connectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
+    // $FlowFixMe[incompatible-type] the animated view is a native view tag
     const nativeViewTag: ?number = this._animatedView
     invariant(
       nativeViewTag != null,
@@ -131,6 +132,7 @@ class AnimatedProps extends AnimatedNode {
 
   __disconnectAnimatedView(): void {
     invariant(this.__isNative, 'Expected node to be marked as "native"');
+    // $FlowFixMe[incompatible-type] the animated view is a native view tag
     const nativeViewTag: ?number = this._animatedView
     invariant(
       nativeViewTag != null,
@@ -152,8 +154,8 @@ class AnimatedProps extends AnimatedNode {
     }
   }
 
-  __getNativeConfig(): Object {
-    const propsConfig: {[string]: unknown} = {};
+  __getNativeConfig(): Record<string, unknown> {
+    const propsConfig: Record<string, unknown> = {};
     for (const propKey in this._props) {
       const value = this._props[propKey];
       if (value instanceof AnimatedNode) {

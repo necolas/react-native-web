@@ -20,15 +20,18 @@ import invariant from 'invariant';
 import {shouldUseNativeDriver}from  './NativeAnimatedHelper';
 
 export type Mapping = {[key: string]: Mapping, ...} | AnimatedValue;
+// Listeners are user callbacks with typed event params, so the args stay `any`.
+export type AnimatedEventListener = (...args: ReadonlyArray<any>) => unknown;
+export type AnimatedEventHandler = (...args: ReadonlyArray<unknown>) => void;
 export type EventConfig = {
-  listener?: ?Function,
+  listener?: ?AnimatedEventListener,
   useNativeDriver: boolean,
 };
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
 export function attachNativeEvent(
-  viewRef: any,
+  viewRef: ?number,
   eventName: string,
   argMapping: ReadonlyArray<?Mapping>,
 ): {detach: () => void} {
@@ -85,8 +88,11 @@ export function attachNativeEvent(
   };
 }
 
-function validateMapping(argMapping: ReadonlyArray<?Mapping>, args: any) {
-  const validate = (recMapping: ?Mapping, recEvt: any, key: string) => {
+function validateMapping(
+  argMapping: ReadonlyArray<?Mapping>,
+  args: ReadonlyArray<unknown>,
+) {
+  const validate = (recMapping: ?Mapping, recEvt: unknown, key: string) => {
     if (recMapping instanceof AnimatedValue) {
       invariant(
         typeof recEvt === 'number',
@@ -117,6 +123,7 @@ function validateMapping(argMapping: ReadonlyArray<?Mapping>, args: any) {
       'Bad event of type ' + typeof recEvt + ' for key ' + key,
     );
     for (const mappingKey in recMapping) {
+      // $FlowFixMe[incompatible-use] recEvt is checked to be an object above
       validate(recMapping[mappingKey], recEvt[mappingKey], mappingKey);
     }
   };
@@ -132,8 +139,8 @@ function validateMapping(argMapping: ReadonlyArray<?Mapping>, args: any) {
 
 export class AnimatedEvent {
   _argMapping: ReadonlyArray<?Mapping>;
-  _listeners: Array<Function> = [];
-  _attachedEvent: ?{detach: () => void, ...};
+  _listeners: Array<AnimatedEventListener> = [];
+  _attachedEvent: ?{detach: () => void};
   __isNative: boolean;
 
   constructor(argMapping: ReadonlyArray<?Mapping>, config: EventConfig) {
@@ -151,15 +158,15 @@ export class AnimatedEvent {
     this.__isNative = shouldUseNativeDriver(config);
   }
 
-  __addListener(callback: Function): void {
+  __addListener(callback: AnimatedEventListener): void {
     this._listeners.push(callback);
   }
 
-  __removeListener(callback: Function): void {
+  __removeListener(callback: AnimatedEventListener): void {
     this._listeners = this._listeners.filter(listener => listener !== callback);
   }
 
-  __attach(viewRef: any, eventName: string) {
+  __attach(viewRef: ?number, eventName: string) {
     invariant(
       this.__isNative,
       'Only native driven events need to be attached.',
@@ -172,7 +179,7 @@ export class AnimatedEvent {
     );
   }
 
-  __detach(viewTag: any, eventName: string) {
+  __detach(viewTag: ?number, eventName: string) {
     invariant(
       this.__isNative,
       'Only native driven events need to be detached.',
@@ -181,11 +188,11 @@ export class AnimatedEvent {
     this._attachedEvent && this._attachedEvent.detach();
   }
 
-  __getHandler(): ((...args: any) => void) {
+  __getHandler(): AnimatedEventHandler {
     if (this.__isNative) {
       if (__DEV__) {
         let validatedMapping = false;
-        return (...args: any) => {
+        return (...args) => {
           if (!validatedMapping) {
             validateMapping(this._argMapping, args);
             validatedMapping = true;
@@ -198,19 +205,20 @@ export class AnimatedEvent {
     }
 
     let validatedMapping = false;
-    return (...args: any) => {
+    return (...args) => {
       if (__DEV__ && !validatedMapping) {
         validateMapping(this._argMapping, args);
         validatedMapping = true;
       }
 
-      const traverse = (recMapping: ?Mapping, recEvt: any, key: string) => {
+      const traverse = (recMapping: ?Mapping, recEvt: unknown, key: string) => {
         if (recMapping instanceof AnimatedValue) {
           if (typeof recEvt === 'number') {
             recMapping.setValue(recEvt);
           }
         } else if (typeof recMapping === 'object') {
           for (const mappingKey in recMapping) {
+            // $FlowFixMe[incompatible-use] the event matches the mapping shape
             traverse(recMapping[mappingKey], recEvt[mappingKey], mappingKey);
           }
         }
@@ -223,7 +231,7 @@ export class AnimatedEvent {
     };
   }
 
-  _callListeners = (...args: any) => {
+  _callListeners = (...args: ReadonlyArray<unknown>) => {
     this._listeners.forEach(listener => listener(...args));
   };
 }

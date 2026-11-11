@@ -33,7 +33,7 @@ export type ViewabilityConfigCallbackPair = {
   ...
 };
 
-export type ViewabilityConfig = {|
+export type ViewabilityConfig = {
   /**
    * Minimum amount of time (in milliseconds) that an item must be physically viewable before the
    * viewability callback will be fired. A high number means that scrolling through content without
@@ -60,7 +60,7 @@ export type ViewabilityConfig = {|
    * render.
    */
   waitForInteraction?: boolean,
-|};
+};
 
 /**
  * A Utility class for calculating viewable items based on current metrics like scroll position and
@@ -113,7 +113,6 @@ class ViewabilityHelper {
     renderRange?: {
       first: number,
       last: number,
-      ...
     },
   ): Array<number> {
     const itemCount = props.getItemCount(props.data);
@@ -191,7 +190,7 @@ class ViewabilityHelper {
       isViewable: boolean,
       props: FrameMetricProps,
     ) => ViewToken,
-    onViewableItemsChanged: ({
+    onViewableItemsChanged: (info: {
       viewableItems: Array<ViewToken>,
       changed: Array<ViewToken>,
       ...
@@ -200,7 +199,6 @@ class ViewabilityHelper {
     renderRange?: {
       first: number,
       last: number,
-      ...
     },
   ): void {
     const itemCount = props.getItemCount(props.data);
@@ -268,7 +266,7 @@ class ViewabilityHelper {
   _onUpdateSync(
     props: FrameMetricProps,
     viewableIndicesToCheck: Array<number>,
-    onViewableItemsChanged: ({
+    onViewableItemsChanged: (info: {
       changed: Array<ViewToken>,
       viewableItems: Array<ViewToken>,
       ...

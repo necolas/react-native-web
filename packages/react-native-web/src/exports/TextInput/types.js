@@ -7,6 +7,7 @@
  * @flow
  */
 
+import type { KeyboardEvent, UIEvent } from 'react';
 import type { ColorValue, GenericStyleProp } from '../../types';
 import type { TextStyle } from '../Text/types';
 import type { ViewProps } from '../View/types';
@@ -51,24 +52,33 @@ export type TextInputProps = {
     | 'url',
   maxLength?: ?number,
   multiline?: ?boolean,
-  onChange?: (e: any) => void,
+  onChange?: (e: { nativeEvent: { text: string, ... }, ... }) => void,
   onChangeText?: (e: string) => void,
-  onContentSizeChange?: (e: any) => void,
-  onEndEditing?: (e: any) => void,
-  onKeyPress?: (e: any) => void,
-  onSelectionChange?: (e: any) => void,
-  onScroll?: (e: any) => void,
-  onSubmitEditing?: (e: any) => void,
+  onContentSizeChange?: (e: {
+    nativeEvent: { contentSize: { height: number, width: number } }
+  }) => void,
+  onEndEditing?: (e: empty) => void,
+  onKeyPress?: (e: KeyboardEvent<HTMLElement>) => void,
+  onSelectionChange?: (e: {
+    nativeEvent: {
+      selection: { start: number, end: number },
+      text: string,
+      ...
+    },
+    ...
+  }) => void,
+  onScroll?: (e: UIEvent<HTMLElement>) => void,
+  onSubmitEditing?: (e: KeyboardEvent<HTMLElement>) => void,
   placeholder?: ?string,
   placeholderTextColor?: ?ColorValue,
   readOnly?: ?boolean,
   rows?: ?number,
   secureTextEntry?: ?boolean,
   selectTextOnFocus?: ?boolean,
-  selection?: {|
+  selection?: {
     start: number,
     end?: number
-  |},
+  },
   selectionColor?: ?ColorValue,
   showSoftInputOnFocus?: ?boolean,
   spellCheck?: ?boolean,

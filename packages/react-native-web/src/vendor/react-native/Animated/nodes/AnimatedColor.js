@@ -17,9 +17,9 @@ import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
 
-type ColorValue = any;
-type NativeColorValue = any;
-type ProcessedColorValue = any;
+type ColorValue = string | number;
+type NativeColorValue = ColorValue;
+type ProcessedColorValue = number;
 
 export type AnimatedColorConfig = Readonly<{
   useNativeDriver: boolean,
@@ -65,12 +65,12 @@ function processColor(
   }
 
   if (isRgbaValue(color)) {
-    // $FlowIgnore[incompatible-cast] - Type is verified above
+    // $FlowFixMe[incompatible-type] Type is verified above
     return color as RgbaValue;
   }
 
   let normalizedColor: ?ProcessedColorValue = normalizeColor(
-    // $FlowIgnore[incompatible-cast] - Type is verified above
+    // $FlowFixMe[incompatible-type] Type is verified above
     color as ColorValue,
   );
   if (normalizedColor === undefined || normalizedColor === null) {
@@ -121,16 +121,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
   b: AnimatedValue;
   a: AnimatedValue;
   nativeColor: ?NativeColorValue;
-  _listeners: {
-    [key: string]: {
-      r: string,
-      g: string,
-      b: string,
-      a: string,
-      ...
-    },
-    ...
-  } = {};
+  _listeners: Record<string, {r: string, g: string, b: string, a: string}> = {};
 
   constructor(valueIn?: InputValue, config?: ?AnimatedColorConfig) {
     super();
@@ -145,14 +136,14 @@ export default class AnimatedColor extends AnimatedWithChildren {
       this.a = rgbaAnimatedValue.a;
     } else {
       const processedColor: RgbaValue | NativeColorValue =
-        // $FlowIgnore[incompatible-cast] - Type is verified above
+        // $FlowFixMe[incompatible-type] Type is verified above
         processColor(value as ColorValue | RgbaValue) ?? defaultColor;
       let initColor: RgbaValue = defaultColor;
       if (isRgbaValue(processedColor)) {
-        // $FlowIgnore[incompatible-cast] - Type is verified above
+        // $FlowFixMe[incompatible-type] Type is verified above
         initColor = processedColor as RgbaValue;
       } else {
-        // $FlowIgnore[incompatible-cast] - Type is verified above
+        // $FlowFixMe[incompatible-type] Type is verified above
         this.nativeColor = processedColor as NativeColorValue;
       }
 
@@ -180,7 +171,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
     const processedColor: RgbaValue | NativeColorValue =
       processColor(value) ?? defaultColor;
     if (isRgbaValue(processedColor)) {
-      // $FlowIgnore[incompatible-type] - Type is verified above
+      // $FlowFixMe[incompatible-type] Type is verified above
       const rgbaValue: RgbaValue = processedColor;
       this.r.setValue(rgbaValue.r);
       this.g.setValue(rgbaValue.g);
@@ -191,7 +182,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
         shouldUpdateNodeConfig = true;
       }
     } else {
-      // $FlowIgnore[incompatible-type] - Type is verified above
+      // $FlowFixMe[incompatible-type] Type is verified above
       const nativeColor: NativeColorValue = processedColor;
       if (this.nativeColor !== nativeColor) {
         this.nativeColor = nativeColor;
@@ -254,7 +245,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
    */
   addListener(callback: ColorListenerCallback): string {
     const id = String(_uniqueId++);
-    const jointCallback = ({value: number}: any) => {
+    const jointCallback = ({value: number}: {value: number}) => {
       callback(this.__getValue());
     };
     this._listeners[id] = {
@@ -345,7 +336,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
     super.__makeNative(platformConfig);
   }
 
-  __getNativeConfig(): {...} {
+  __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'color',
       r: this.r.__getNativeTag(),

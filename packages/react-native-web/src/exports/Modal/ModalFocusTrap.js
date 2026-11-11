@@ -71,10 +71,10 @@ function focusLastDescendant(element: any): boolean {
   return false;
 }
 
-export type ModalFocusTrapProps = {|
+export type ModalFocusTrapProps = {
   active?: boolean,
-  children?: any
-|};
+  children?: React.Node
+};
 
 const ModalFocusTrap = ({
   active,

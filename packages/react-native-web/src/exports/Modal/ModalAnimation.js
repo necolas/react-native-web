@@ -23,7 +23,7 @@ const prefersReducedMotionQuery: MediaQueryList | null =
 function getAnimationStyle(
   animationType: ?('none' | 'slide' | 'fade'),
   visible: ?boolean
-): Object {
+) {
   if (animationType === 'slide') {
     return visible ? animatedSlideInStyles : animatedSlideOutStyles;
   }
@@ -33,13 +33,13 @@ function getAnimationStyle(
   return visible ? styles.container : styles.hidden;
 }
 
-export type ModalAnimationProps = {|
+export type ModalAnimationProps = {
   animationType?: ?('none' | 'slide' | 'fade'),
-  children?: any,
+  children?: React.Node,
   onDismiss?: ?() => void,
   onShow?: ?() => void,
   visible?: ?boolean
-|};
+};
 
 function ModalAnimation(props: ModalAnimationProps): React.Node {
   const { children, onDismiss, onShow, visible } = props;
@@ -56,7 +56,7 @@ function ModalAnimation(props: ModalAnimationProps): React.Node {
   const isAnimated = animationType && animationType !== 'none';
 
   const animationEndCallback = React.useCallback(
-    (e: any) => {
+    (e?: React.AnimationEvent<HTMLElement>) => {
       if (e && e.currentTarget !== e.target) {
         // If the event was generated for something NOT this element we
         // should ignore it as it's not relevant to us

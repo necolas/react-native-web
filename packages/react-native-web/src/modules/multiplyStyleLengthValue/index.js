@@ -12,6 +12,7 @@ const CSS_UNIT_RE = /^[+-]?\d*(?:\.\d+)?(?:[Ee][+-]?\d+)?(%|\w*)/;
 const getUnit = (str: string): string => str.match(CSS_UNIT_RE)?.[1] ?? '';
 
 const isNumeric = (n: number): boolean => {
+  // $FlowFixMe[incompatible-type] parseFloat() accepts numbers at runtime
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 

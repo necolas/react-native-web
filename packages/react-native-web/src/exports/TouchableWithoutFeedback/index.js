@@ -11,6 +11,7 @@
 'use client';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 import type { AccessibilityProps } from '../View/types';
 
@@ -21,7 +22,7 @@ import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
-export type Props = Readonly<{|
+export type Props = Readonly<{
   ...AccessibilityProps,
   children?: ?React.Node,
   delayLongPress?: ?number,
@@ -37,12 +38,12 @@ export type Props = Readonly<{|
   onPress?: PressResponderConfig['onPress'],
   onPressIn?: PressResponderConfig['onPressStart'],
   onPressOut?: PressResponderConfig['onPressEnd'],
-  ref?: React.Ref<any>,
+  ref?: React.Ref<HTMLElement & PlatformMethods>,
   rejectResponderTermination?: ?boolean,
   testID?: ViewProps['testID'],
   title?: ViewProps['title'],
   type?: ViewProps['type']
-|}>;
+}>;
 
 const forwardPropsList = new Set([
   ...forwardedProps.accessibilityProps,

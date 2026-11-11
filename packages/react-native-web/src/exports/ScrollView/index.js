@@ -5,38 +5,68 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 'use client';
 
+import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
+import type { HostNode, LayoutEvent } from '../../types';
+import type { ScrollEvent as NativeScrollEvent } from '../../vendor/react-native/Types/CoreEventTypes';
 import type { ViewProps, ViewStyle } from '../View/types';
 
 import Dimensions from '../Dimensions';
 import dismissKeyboard from '../../modules/dismissKeyboard';
 import invariant from 'invariant';
 import mergeRefs from '../../modules/mergeRefs';
-import ScrollViewBase from './ScrollViewBase';
+import ScrollViewBase, { type ScrollEvent } from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
 import UIManager from '../UIManager';
 import View from '../View';
 import React from 'react';
 
-type ScrollViewProps = {
+export type Props = {
   ...ViewProps,
   centerContent?: boolean,
   contentContainerStyle?: ViewStyle,
   disableScrollViewPanResponder?: boolean,
   horizontal?: boolean,
   keyboardDismissMode?: 'none' | 'interactive' | 'on-drag',
-  onContentSizeChange?: (e: any) => void,
-  onScroll?: (e: any) => void,
+  onContentSizeChange?: (width: number, height: number) => void,
+  onScroll?: (e: ScrollEvent) => void,
   pagingEnabled?: boolean,
-  refreshControl?: any,
+  refreshControl?: React.Node,
   scrollEnabled?: boolean,
   scrollEventThrottle?: number,
-  stickyHeaderIndices?: Array<number>
+  stickyHeaderIndices?: Array<number>,
+  keyboardShouldPersistTaps?: 'always' | 'handled' | 'never' | boolean,
+  onMomentumScrollBegin?: (e: NativeScrollEvent) => void,
+  onMomentumScrollEnd?: (e: NativeScrollEvent) => void,
+  onScrollBeginDrag?: (e: NativeScrollEvent) => void,
+  onScrollEndDrag?: (e: NativeScrollEvent) => void,
+  onScrollResponderKeyboardDismissed?: (e: ResponderEvent) => void
+};
+
+type ScrollViewProps = {
+  ...Props,
+  forwardedRef?: React.Ref<ScrollViewNode>
+};
+
+export type ScrollViewNode = HostNode & {
+  getScrollResponder?: () => ScrollView,
+  getInnerViewNode?: () => ?HostNode,
+  getInnerViewRef?: () => ?HostNode,
+  getNativeScrollRef?: () => ?ScrollViewNode,
+  getScrollableNode?: () => ?ScrollViewNode,
+  scrollToEnd?: (options?: { animated?: boolean }) => void,
+  flashScrollIndicators?: () => void,
+  scrollResponderZoomTo?: () => void,
+  scrollResponderScrollNativeHandleToKeyboard?: (
+    nodeHandle: HTMLElement,
+    additionalOffset?: number,
+    preventNegativeScrollOffset?: boolean
+  ) => void
 };
 
 type ScrollViewScrollToOptions = {
@@ -45,23 +75,21 @@ type ScrollViewScrollToOptions = {
   animated?: boolean
 };
 
-type Event = Object;
+const emptyObject: ScrollViewScrollToOptions = {};
 
-const emptyObject = {};
-
-function stubFalse() {
+function stubFalse(): boolean {
   return false;
 }
 
 function noop() {}
 
-function handleMeasureError(e: Event) {
+function handleMeasureError(e: unknown) {
   console.warn('Error measuring text field: ', e);
 }
 
 class ScrollView extends React.Component<ScrollViewProps> {
-  _scrollNodeRef: any = null;
-  _innerViewRef: any = null;
+  _scrollNodeRef: ?ScrollViewNode = null;
+  _innerViewRef: ?HostNode = null;
 
   isTouching: boolean = false;
   // Reset to false every time becomes responder. This is used to:
@@ -70,23 +98,25 @@ class ScrollView extends React.Component<ScrollViewProps> {
   // - Determine if releasing should dismiss the keyboard when we are in
   // tap-to-dismiss mode (!this.props.keyboardShouldPersistTaps).
   observedScrollSinceBecomingResponder: boolean = false;
+  additionalScrollOffset: number;
+  preventNegativeScrollOffset: boolean;
 
-  _handleTouchStart = (e: Event) => {
+  _handleTouchStart = (e: React.TouchEvent<HTMLElement>) => {
     this.isTouching = true;
     this.props.onTouchStart?.(e);
   };
 
-  _handleTouchEnd = (e: Event) => {
+  _handleTouchEnd = (e: React.TouchEvent<HTMLElement>) => {
     this.isTouching = e.nativeEvent.touches.length !== 0;
     this.props.onTouchEnd?.(e);
   };
 
-  _handleTouchCancel = (e: Event) => {
+  _handleTouchCancel = (e: React.TouchEvent<HTMLElement>) => {
     this.isTouching = false;
     this.props.onTouchCancel?.(e);
   };
 
-  _handleScrollShouldSetResponder = () => {
+  _handleScrollShouldSetResponder = (): boolean => {
     // Allow any event touch pass through if the default pan responder is disabled
     if (this.props.disableScrollViewPanResponder === true) {
       return false;
@@ -94,16 +124,16 @@ class ScrollView extends React.Component<ScrollViewProps> {
     return this.isTouching;
   };
 
-  _handleResponderGrant = (e: Event) => {
+  _handleResponderGrant = (e: ResponderEvent) => {
     this.observedScrollSinceBecomingResponder = false;
     this.props.onResponderGrant?.(e);
   };
 
-  _handleResponderTerminationRequest = () => {
+  _handleResponderTerminationRequest = (): boolean => {
     return !this.observedScrollSinceBecomingResponder;
   };
 
-  _handleResponderRelease = (e: Event) => {
+  _handleResponderRelease = (e: ResponderEvent) => {
     this.isTouching = e.nativeEvent.touches.length !== 0;
     this.props.onResponderRelease?.(e);
 
@@ -141,7 +171,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
     }
   };
 
-  scrollResponderZoomTo = () => {
+  scrollResponderZoomTo = (): void => {
     invariant(false, 'zoomToRect is not implemented');
   };
 
@@ -156,7 +186,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
    *        down to make it meet the keyboard's top. Default is false.
    */
   scrollResponderScrollNativeHandleToKeyboard = (
-    nodeHandle: any,
+    nodeHandle: HTMLElement,
     additionalOffset?: number,
     preventNegativeScrollOffset?: boolean
   ) => {
@@ -207,23 +237,23 @@ class ScrollView extends React.Component<ScrollViewProps> {
    * implement this method so that they can be composed while providing access
    * to the underlying scroll responder's methods.
    */
-  getScrollResponder: ScrollView = () => {
+  getScrollResponder = (): ScrollView => {
     return this;
   };
 
-  getScrollableNode = () => {
+  getScrollableNode = (): ?ScrollViewNode => {
     return this._scrollNodeRef;
   };
 
-  getInnerViewRef = () => {
+  getInnerViewRef = (): ?HostNode => {
     return this._innerViewRef;
   };
 
-  getInnerViewNode = () => {
+  getInnerViewNode = (): ?HostNode => {
     return this._innerViewRef;
   };
 
-  getNativeScrollRef = () => {
+  getNativeScrollRef = (): ?ScrollViewNode => {
     return this._scrollNodeRef;
   };
 
@@ -276,12 +306,14 @@ class ScrollView extends React.Component<ScrollViewProps> {
     const animated = options?.animated !== false;
     const { horizontal } = this.props;
     const scrollResponderNode = this.getScrollableNode();
+    // $FlowFixMe[incompatible-use] scrollToEnd is called after the scroll node is mounted
     const x = horizontal ? scrollResponderNode.scrollWidth : 0;
+    // $FlowFixMe[incompatible-use] scrollToEnd is called after the scroll node is mounted
     const y = horizontal ? 0 : scrollResponderNode.scrollHeight;
     this.scrollResponderScrollTo({ x, y, animated });
   };
 
-  render() {
+  render(): React.Node {
     const {
       contentContainerStyle,
       horizontal,
@@ -310,7 +342,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
       );
     }
 
-    let contentSizeChangeProps = {};
+    let contentSizeChangeProps: { onLayout?: (e: LayoutEvent) => void } = {};
     if (onContentSizeChange) {
       contentSizeChangeProps = {
         onLayout: this._handleContentOnLayout
@@ -323,7 +355,9 @@ class ScrollView extends React.Component<ScrollViewProps> {
       hasStickyHeaderIndices || pagingEnabled
         ? React.Children.map(this.props.children, (child, i) => {
             const isSticky =
-              hasStickyHeaderIndices && stickyHeaderIndices.indexOf(i) > -1;
+              hasStickyHeaderIndices &&
+              // $FlowFixMe[incompatible-use] hasStickyHeaderIndices checks that stickyHeaderIndices is an array
+              stickyHeaderIndices.indexOf(i) > -1;
             if (child != null && (isSticky || pagingEnabled)) {
               return (
                 <View
@@ -378,6 +412,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
     };
 
     return (
+      // $FlowFixMe[incompatible-type] Unsupported props are dropped by View
       <ScrollViewBase {...props} ref={this._setScrollNodeRef}>
         {refreshControl}
         {contentContainer}
@@ -385,12 +420,13 @@ class ScrollView extends React.Component<ScrollViewProps> {
     );
   }
 
-  _handleContentOnLayout = (e: Object) => {
+  _handleContentOnLayout = (e: LayoutEvent) => {
     const { width, height } = e.nativeEvent.layout;
+    // $FlowFixMe[not-a-function] onLayout is only set when onContentSizeChange is set
     this.props.onContentSizeChange(width, height);
   };
 
-  _handleScroll = (e: Object) => {
+  _handleScroll = (e: ScrollEvent) => {
     if (process.env.NODE_ENV !== 'production') {
       if (this.props.onScroll && this.props.scrollEventThrottle == null) {
         console.log(
@@ -411,11 +447,11 @@ class ScrollView extends React.Component<ScrollViewProps> {
     this.props.onScroll?.(e);
   };
 
-  _setInnerViewRef = (node) => {
+  _setInnerViewRef = (node: HostNode | null) => {
     this._innerViewRef = node;
   };
 
-  _setScrollNodeRef = (node) => {
+  _setScrollNodeRef = (node: ScrollViewNode | null) => {
     this._scrollNodeRef = node;
     // ScrollView needs to add more methods to the hostNode in addition to those
     // added by `setPlatformMethods`. This is temporarily until an API like
@@ -426,6 +462,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
       node.getInnerViewRef = this.getInnerViewRef;
       node.getNativeScrollRef = this.getNativeScrollRef;
       node.getScrollableNode = this.getScrollableNode;
+      // $FlowFixMe[incompatible-use] the ScrollView scrollTo replaces the DOM scrollTo
       node.scrollTo = this.scrollTo;
       node.scrollToEnd = this.scrollToEnd;
       node.flashScrollIndicators = this.flashScrollIndicators;
@@ -487,8 +524,8 @@ const styles = StyleSheet.create({
 });
 
 const ForwardedScrollView = (props: {
-  ...React.ComponentProps<typeof ScrollView>,
-  ref?: React.Ref<React.ElementRef<typeof ScrollView>>
+  ...Props,
+  ref?: React.Ref<ScrollViewNode>
 }): React.Node => {
   const { ref, ...rest } = props;
   return <ScrollView {...rest} forwardedRef={ref} />;

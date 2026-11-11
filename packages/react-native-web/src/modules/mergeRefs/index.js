@@ -9,11 +9,11 @@
 
 import * as React from 'react';
 
-export default function mergeRefs(
-  ...args: ReadonlyArray<React.ElementRef<any>>
-): (node: HTMLElement | null) => void {
-  return (node: HTMLElement | null) => {
-    args.forEach((ref: React.ElementRef<any>) => {
+export default function mergeRefs<T = HTMLElement>(
+  ...args: ReadonlyArray<?React.Ref<T>>
+): (node: T | null) => void {
+  return (node: T | null) => {
+    args.forEach((ref) => {
       if (ref == null) {
         return;
       }

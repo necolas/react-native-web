@@ -7,13 +7,13 @@
  * @flow strict-local
  */
 
-type Groups = { [key: number]: { start: ?number, rules: Array<string> } };
-type Selectors = { [key: string]: boolean };
+type Groups = Record<number, { start: ?number, rules: Array<string> }>;
+type Selectors = Record<string, boolean>;
 
-export type OrderedCSSStyleSheet = {|
+export type OrderedCSSStyleSheet = {
   readonly getTextContent: () => string,
   readonly insert: (cssText: string, groupValue: number) => void
-|};
+};
 
 /**
  * Order-based insertion of CSS.
@@ -45,6 +45,7 @@ export default function createOrderedCSSStyleSheet(
       const cssText = cssRule.cssText;
       // Create record of existing selectors and rules
       if (cssText.indexOf('stylesheet-group') > -1) {
+        // $FlowFixMe[incompatible-type] group rules are style rules
         group = decodeGroupRule(cssRule);
         groups[group] = { start: i, rules: [cssText] };
       } else if (group != null) {
@@ -155,11 +156,11 @@ function encodeGroupRule(group: number) {
 }
 
 const groupPattern = /["']/g;
-function decodeGroupRule(cssRule: any) {
+function decodeGroupRule(cssRule: CSSStyleRule) {
   return Number(cssRule.selectorText.split(groupPattern)[1]);
 }
 
-function getOrderedGroups(obj: { [key: number]: any }) {
+function getOrderedGroups(obj: Groups): Array<number> {
   return Object.keys(obj)
     .map(Number)
     .sort((a, b) => (a > b ? 1 : -1));

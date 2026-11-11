@@ -18,7 +18,7 @@ import canUseDOM from '../../modules/canUseDom';
 export type ModalContentProps = {
   ...ViewProps,
   active?: ?boolean,
-  children?: any,
+  children?: React.Node,
   onRequestClose?: ?() => void,
   ref?: React.Ref<React.ElementRef<typeof View>>,
   transparent?: ?boolean

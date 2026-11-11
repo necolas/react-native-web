@@ -14,10 +14,12 @@ import AnimatedNode from './AnimatedNode';
 import AnimatedWithChildren from './AnimatedWithChildren';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
-class AnimatedTransform extends AnimatedWithChildren {
-  _transforms: ReadonlyArray<Object>;
+type Transform = Readonly<Record<string, AnimatedNode | number | string>>;
 
-  constructor(transforms: ReadonlyArray<Object>) {
+class AnimatedTransform extends AnimatedWithChildren {
+  _transforms: ReadonlyArray<Transform>;
+
+  constructor(transforms: ReadonlyArray<Transform>) {
     super();
     this._transforms = transforms;
   }
@@ -34,9 +36,9 @@ class AnimatedTransform extends AnimatedWithChildren {
     super.__makeNative();
   }
 
-  __getValue(): ReadonlyArray<Object> {
+  __getValue(): ReadonlyArray<Record<string, unknown>> {
     return this._transforms.map(transform => {
-      const result: {[string]: unknown} = {};
+      const result: Record<string, unknown> = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -49,9 +51,9 @@ class AnimatedTransform extends AnimatedWithChildren {
     });
   }
 
-  __getAnimatedValue(): ReadonlyArray<Object> {
+  __getAnimatedValue(): ReadonlyArray<Record<string, unknown>> {
     return this._transforms.map(transform => {
-      const result: {[string]: unknown} = {};
+      const result: Record<string, unknown> = {};
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -88,7 +90,7 @@ class AnimatedTransform extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __getNativeConfig(): any {
+  __getNativeConfig(): Record<string, unknown> {
     const transConfigs: Array<
       | {type: 'animated', property: string, nodeTag: ?number}
       | {type: 'static', property: string, value: number | string},

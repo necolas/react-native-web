@@ -7,7 +7,6 @@
  * @flow
  */
 
-import type { ElementRef } from 'react';
 import type { LayoutEvent } from '../../types';
 
 import { useLayoutEffect } from 'react';
@@ -15,6 +14,11 @@ import UIManager from '../../exports/UIManager';
 import canUseDOM from '../canUseDom';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
+
+type LayoutHandlerNode = HTMLElement & {
+  __reactLayoutHandler?: ?(e: LayoutEvent) => void,
+  ...
+};
 
 let resizeObserver: ?ResizeObserver = null;
 
@@ -24,8 +28,7 @@ function getResizeObserver(): ?ResizeObserver {
       resizeObserver = new window.ResizeObserver((entries) => {
         entries.forEach((entry) => {
           // $FlowFixMe[incompatible-type] observed nodes are host nodes
-          const node: HTMLElement = entry.target;
-          // $FlowFixMe[prop-missing]
+          const node: LayoutHandlerNode = entry.target;
           const onLayout = node[DOM_LAYOUT_HANDLER_NAME];
 
           if (typeof onLayout === 'function') {
@@ -52,7 +55,7 @@ function getResizeObserver(): ?ResizeObserver {
 }
 
 export default function useElementLayout(
-  ref: ElementRef<any>,
+  ref: { readonly current: ?LayoutHandlerNode },
   onLayout?: ?(e: LayoutEvent) => void
 ) {
   const observer = getResizeObserver();

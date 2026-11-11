@@ -7,6 +7,7 @@
  * @flow
  */
 
+import type { StyleValue } from '../exports/StyleSheet/compiler/normalizeValueWithProperty';
 import type { ColorValue, DimensionValue } from './index';
 
 type NumberOrString = number | string;
@@ -22,10 +23,12 @@ type AnimationDirection =
   | 'reverse';
 type AnimationFillMode = 'none' | 'forwards' | 'backwards' | 'both';
 type AnimationIterationCount = number | 'infinite';
-type AnimationKeyframes = string | Object;
+type AnimationKeyframes =
+  | string
+  | Readonly<Record<string, Readonly<Record<string, StyleValue>>>>;
 type AnimationPlayState = 'paused' | 'running';
 
-export type AnimationStyles = {|
+export type AnimationStyles = {
   animationDelay?: ?(string | Array<string>),
   animationDirection?: ?(AnimationDirection | Array<AnimationDirection>),
   animationDuration?: ?(string | Array<string>),
@@ -34,14 +37,17 @@ export type AnimationStyles = {|
     | AnimationIterationCount
     | Array<AnimationIterationCount>
   ),
-  animationKeyframes?: ?(AnimationKeyframes | Array<AnimationKeyframes>),
+  animationKeyframes?: ?(
+    | AnimationKeyframes
+    | ReadonlyArray<AnimationKeyframes>
+  ),
   animationPlayState?: ?(AnimationPlayState | Array<AnimationPlayState>),
   animationTimingFunction?: ?(string | Array<string>),
   transitionDelay?: ?(string | Array<string>),
   transitionDuration?: ?(string | Array<string>),
   transitionProperty?: ?(string | Array<string>),
   transitionTimingFunction?: ?(string | Array<string>)
-|};
+};
 
 /**
  * Border
@@ -50,7 +56,7 @@ export type AnimationStyles = {|
 type BorderRadiusValue = number | string;
 type BorderStyleValue = 'solid' | 'dotted' | 'dashed';
 
-export type BorderStyles = {|
+export type BorderStyles = {
   // color
   borderColor?: ?ColorValue,
   borderBlockColor?: ?ColorValue,
@@ -94,7 +100,7 @@ export type BorderStyles = {|
   borderBottomStartRadius?: ?BorderRadiusValue,
   borderTopEndRadius?: ?BorderRadiusValue,
   borderTopStartRadius?: ?BorderRadiusValue
-|};
+};
 
 /**
  * Interactions
@@ -154,7 +160,7 @@ type TouchActionValue =
 
 type UserSelect = 'all' | 'auto' | 'contain' | 'none' | 'text';
 
-export type InteractionStyles = {|
+export type InteractionStyles = {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Formal_syntax
   cursor?: ?CursorValue,
   // https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action#Formal_syntax
@@ -162,7 +168,7 @@ export type InteractionStyles = {|
   // https://developer.mozilla.org/en-US/docs/Web/CSS/user-select#Formal_syntax_2
   userSelect?: ?UserSelect,
   willChange?: ?string
-|};
+};
 
 /**
  * Layout
@@ -171,7 +177,7 @@ export type InteractionStyles = {|
 type OverflowValue = 'auto' | 'hidden' | 'scroll' | 'visible';
 type VisiblilityValue = 'hidden' | 'visible';
 
-export type LayoutStyles = {|
+export type LayoutStyles = {
   alignContent?:
     | 'center'
     | 'flex-end'
@@ -297,50 +303,50 @@ export type LayoutStyles = {|
   paddingEnd?: ?DimensionValue,
   paddingVertical?: ?DimensionValue,
   start?: ?DimensionValue
-|};
+};
 
 /**
  * Shadows
  */
 
-export type ShadowStyles = {|
+export type ShadowStyles = {
   // @deprecated
   shadowColor?: ?ColorValue,
-  shadowOffset?: ?{|
+  shadowOffset?: ?{
     width?: DimensionValue,
     height?: DimensionValue
-  |},
+  },
   shadowOpacity?: ?number,
   shadowRadius?: ?DimensionValue
-|};
+};
 
 /**
  * Transforms
  */
 
-export type TransformStyles = {|
+export type TransformStyles = {
   perspective?: ?NumberOrString,
   perspectiveOrigin?: ?string,
   transform?:
     | ?string
     | Array<
-        | {| readonly perspective: NumberOrString |}
-        | {| readonly rotate: string |}
-        | {| readonly rotateX: string |}
-        | {| readonly rotateY: string |}
-        | {| readonly rotateZ: string |}
-        | {| readonly scale: number |}
-        | {| readonly scaleX: number |}
-        | {| readonly scaleY: number |}
-        | {| readonly scaleZ: number |}
-        | {| readonly scale3d: string |}
-        | {| readonly skewX: string |}
-        | {| readonly skewY: string |}
-        | {| readonly translateX: NumberOrString |}
-        | {| readonly translateY: NumberOrString |}
-        | {| readonly translateZ: NumberOrString |}
-        | {| readonly translate3d: string |}
+        | { readonly perspective: NumberOrString }
+        | { readonly rotate: string }
+        | { readonly rotateX: string }
+        | { readonly rotateY: string }
+        | { readonly rotateZ: string }
+        | { readonly scale: number }
+        | { readonly scaleX: number }
+        | { readonly scaleY: number }
+        | { readonly scaleZ: number }
+        | { readonly scale3d: string }
+        | { readonly skewX: string }
+        | { readonly skewY: string }
+        | { readonly translateX: NumberOrString }
+        | { readonly translateY: NumberOrString }
+        | { readonly translateZ: NumberOrString }
+        | { readonly translate3d: string }
       >,
   transformOrigin?: ?string | Array<NumberOrString>,
   transformStyle?: ?('flat' | 'preserve-3d')
-|};
+};

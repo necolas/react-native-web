@@ -23,7 +23,7 @@ import isUnitlessNumber from '../isUnitlessNumber';
  */
 function dangerousStyleValue(
   name: string,
-  value: unknown,
+  value: ?(string | number | boolean),
   isCustomProperty: boolean
 ): string {
   // Note that we've removed escapeTextForBrowser() calls here since the

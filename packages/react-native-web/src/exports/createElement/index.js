@@ -18,7 +18,7 @@ import { LocaleProvider } from '../../modules/useLocale';
 
 const createElement = (
   component: React.ElementType,
-  props?: ?{ ... },
+  props?: ?Record<string, unknown>,
   options?: ?StyleSheetOptions,
   ...children: ReadonlyArray<React.Node>
 ): React.Node => {
@@ -38,7 +38,9 @@ const createElement = (
   const elementWithLocaleProvider = domProps.dir ? (
     <LocaleProvider
       children={element}
+      // $FlowFixMe[incompatible-type] dir is not checked to be a writing direction at runtime
       direction={domProps.dir}
+      // $FlowFixMe[incompatible-type] lang is not checked to be a string at runtime
       locale={domProps.lang}
     />
   ) : (

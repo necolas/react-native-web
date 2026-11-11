@@ -80,7 +80,7 @@ const View = (props: {
   }
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);

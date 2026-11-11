@@ -18,6 +18,7 @@
  */
 
 import type { ResponderConfig } from './ResponderSystem';
+import type { ResponderNode } from './utils';
 
 import * as React from 'react';
 import * as ResponderSystem from './ResponderSystem';
@@ -32,7 +33,7 @@ function useStable<T>(getInitialValue: () => T): T {
 }
 
 export default function useResponderEvents(
-  hostRef: any,
+  hostRef: { readonly current: ?ResponderNode },
   config: ResponderConfig = emptyObject
 ) {
   const id = useStable(() => idCounter++);

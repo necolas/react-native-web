@@ -11,7 +11,13 @@
 import EventEmitter, {type IEventEmitter} from '../vendor/emitter/EventEmitter';
 
 // FIXME: use typed events
-type RCTDeviceEventDefinitions = $FlowFixMe;
+type RCTDeviceEventDefinitions = {
+  onNativeAnimatedModuleGetValue: [{tag: number, value: number, ...}],
+  onNativeAnimatedModuleAnimationFinished: [
+    {animationId: number, finished: boolean, ...},
+  ],
+  [eventType: string]: ReadonlyArray<unknown>,
+};
 
 /**
  * Global EventEmitter used by the native platform to emit events to JavaScript.
