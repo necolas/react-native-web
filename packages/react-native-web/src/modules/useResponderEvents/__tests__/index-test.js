@@ -172,6 +172,44 @@ describe('useResponderEvents', () => {
     expect(identifier <= 20).toBe(true);
   });
 
+  test('tracks the remaining touch when touch identifiers are negative', () => {
+    const targetRef = createRef();
+    const identifiers = [];
+    const ends = [];
+    const Component = () => {
+      useResponderEvents(targetRef, {
+        onStartShouldSetResponder: () => true,
+        onResponderStart: (e) => {
+          identifiers.push(e.nativeEvent.identifier);
+        },
+        onResponderEnd: (e) => {
+          const { indexOfSingleActiveTouch, numberActiveTouches, touchBank } =
+            e.touchHistory;
+          ends.push({
+            numberActiveTouches,
+            touchActive: touchBank[indexOfSingleActiveTouch]?.touchActive
+          });
+        }
+      });
+      return <div ref={targetRef} />;
+    };
+
+    // render
+    render(<Component />);
+    const target = createEventTarget(targetRef.current);
+    // gesture
+    act(() => {
+      target.pointerdown({ pointerId: -1, pointerType: 'touch' });
+      target.pointerdown({ pointerId: -2, pointerType: 'touch' });
+      target.pointerup({ pointerId: -1, pointerType: 'touch' });
+      target.pointerup({ pointerId: -2, pointerType: 'touch' });
+    });
+    identifiers.forEach((identifier) => {
+      expect(identifier >= 0 && identifier <= 20).toBe(true);
+    });
+    expect(ends[0]).toEqual({ numberActiveTouches: 1, touchActive: true });
+  });
+
   /**
    * SET: onStartShouldSetResponderCapture
    */

@@ -52,9 +52,14 @@ const emptyArray: Array<Touch> = [];
 /**
  * Safari produces very large identifiers that would cause the `touchBank` array
  * length to be so large as to crash the browser, if not normalized like this.
+ * Some browsers produce negative identifiers, which would be stored outside the
+ * array indices that are searched for active touches.
  * In the future the `touchBank` should use an object/map instead.
  */
 function normalizeIdentifier(identifier: number): number {
+  if (identifier < 0) {
+    return (identifier % 20) + 20;
+  }
   return identifier > 20 ? identifier % 20 : identifier;
 }
 
