@@ -24,7 +24,7 @@ type LocaleValue = {
 
 type ProviderProps = {
   ...LocaleValue,
-  children: any
+  children: Node
 };
 
 const defaultLocale: LocaleValue = {

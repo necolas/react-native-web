@@ -52,7 +52,7 @@ exports[`components/View prop "dir" value is "rtl" 1`] = `
 />
 `;
 
-exports[`components/View prop "href" href with accessibilityRole 1`] = `
+exports[`components/View prop "href" href with role 1`] = `
 <a
   class="css-view-g5y9jx"
   href="https://example.com"

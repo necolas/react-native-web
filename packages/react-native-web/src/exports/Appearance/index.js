@@ -14,9 +14,9 @@ import canUseDOM from '../../modules/canUseDom';
 
 export type ColorSchemeName = 'light' | 'dark';
 
-type AppearanceListener = (preferences: {|
+type AppearanceListener = (preferences: {
   colorScheme: ColorSchemeName
-|}) => void;
+}) => void;
 
 const prefersDarkQuery: MediaQueryList | null =
   canUseDOM && typeof window.matchMedia === 'function'

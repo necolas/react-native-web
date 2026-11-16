@@ -7,7 +7,15 @@
  * @flow
  */
 
-const cache = new WeakMap<Object, Array<Object>>();
+type LocalizableValue<T> = T | ReadonlyArray<T>;
+
+export type LocalizedStyle = Readonly<
+  Record<string, LocalizableValue<string> | boolean>
+>;
+
+type CompiledStyle = Record<string, string | boolean>;
+
+const cache = new WeakMap<LocalizedStyle, Array<CompiledStyle>>();
 const markerProp = '$$css$localize';
 
 /**
@@ -19,9 +27,9 @@ const markerProp = '$$css$localize';
  * => { float: 'float-left' }
  */
 
-function compileStyle(style: Object, isRTL: boolean) {
+function compileStyle(style: LocalizedStyle, isRTL: boolean): CompiledStyle {
   // Create a new compiled style for styleq
-  const compiledStyle: Object = {};
+  const compiledStyle: CompiledStyle = {};
   for (const prop in style) {
     if (prop !== markerProp) {
       const value = style[prop];
@@ -35,7 +43,10 @@ function compileStyle(style: Object, isRTL: boolean) {
   return compiledStyle;
 }
 
-export function localizeStyle(style: Object, isRTL: boolean): Object {
+export function localizeStyle(
+  style: LocalizedStyle,
+  isRTL: boolean
+): LocalizedStyle {
   if (style[markerProp] != null) {
     const compiledStyleIndex = isRTL ? 1 : 0;
     // Check the cache in case we've already seen this object
@@ -53,7 +64,7 @@ export function localizeStyle(style: Object, isRTL: boolean): Object {
 
     // Create a new compiled style for styleq
     const compiledStyle = compileStyle(style, isRTL);
-    cachedStyles = new Array<Object>(2);
+    cachedStyles = new Array<CompiledStyle>(2);
     cachedStyles[compiledStyleIndex] = compiledStyle;
     cache.set(style, cachedStyles);
     return compiledStyle;

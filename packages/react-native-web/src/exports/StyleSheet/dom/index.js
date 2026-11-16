@@ -56,9 +56,9 @@ export function createSheet(
         // If we're creating a new sheet, populate it with existing styles
         const textContent =
           initialSheet != null ? initialSheet.getTextContent() : '';
-        // Cast rootNode to 'any' because Flow types for getRootNode are wrong
         sheet = createOrderedCSSStyleSheet(
-          createCSSStyleSheet(id, rootNode as any, textContent)
+          // $FlowFixMe[incompatible-type] getRootNode() returns a Document or a ShadowRoot
+          createCSSStyleSheet(id, rootNode, textContent)
         );
         roots.set(rootNode, sheets.length);
         sheets.push(sheet);

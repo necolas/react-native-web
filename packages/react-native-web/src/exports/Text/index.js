@@ -19,13 +19,13 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../modules/usePlatformMethods';
+import setPlatformMethods from '../../modules/setPlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,
   ...forwardedProps.accessibilityProps,
   ...forwardedProps.clickProps,
@@ -34,19 +34,19 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
-  href: true,
-  lang: true,
-  pointerEvents: true,
-  type: true
-};
-
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
+  'disabled',
+  'href',
+  'lang',
+  'pointerEvents',
+  'type'
+]);
 
 const Text = (props: {
   ...TextProps,
   ref?: React.Ref<HTMLElement & PlatformMethods>
 }): React.Node => {
   const {
+    ellipsizeMode,
     hrefAttrs,
     numberOfLines,
     onClick,
@@ -69,12 +69,11 @@ const Text = (props: {
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
     ref,
-    selectable,
-    ...rest
+    selectable
   } = props;
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
@@ -98,7 +97,7 @@ const Text = (props: {
   });
 
   const handleClick = React.useCallback(
-    (e: any) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (onClick != null) {
         onClick(e);
       } else if (onPress != null) {
@@ -116,7 +115,7 @@ const Text = (props: {
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
 
-  const supportedProps = pickProps(rest);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.dir = componentDirection;
   // 'auto' by default allows browsers to infer writing direction (root elements only)
   if (!hasTextAncestor) {
@@ -133,6 +132,7 @@ const Text = (props: {
     hasTextAncestor === true ? styles.textHasAncestor$raw : styles.text$raw,
     numberOfLines === 1 && styles.textOneLine,
     numberOfLines != null && numberOfLines > 1 && styles.textMultiLine,
+    ellipsizeMode === 'clip' && styles.textClip,
     props.style,
     selectable === true && styles.selectable,
     selectable === false && styles.notSelectable,
@@ -156,8 +156,7 @@ const Text = (props: {
     }
   }
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, ref);
+  const setRef = useMergeRefs(hostRef, setPlatformMethods, ref);
 
   supportedProps.ref = setRef;
 
@@ -219,6 +218,9 @@ const styles = StyleSheet.create({
     overflow: 'clip',
     textOverflow: 'ellipsis',
     WebkitBoxOrient: 'vertical'
+  },
+  textClip: {
+    textOverflow: 'clip'
   },
   notSelectable: {
     userSelect: 'none'

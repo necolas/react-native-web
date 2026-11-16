@@ -7,6 +7,7 @@
 
 import React from 'react';
 import Pressable from '../';
+import TextInput from '../../TextInput';
 import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
 
@@ -16,35 +17,33 @@ describe('components/Pressable', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  describe('prop "accessibilityLabel"', () => {
+  describe('prop "aria-label"', () => {
     test('value is set', () => {
-      const { container } = render(<Pressable accessibilityLabel="label" />);
+      const { container } = render(<Pressable aria-label="label" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityLiveRegion"', () => {
+  describe('prop "aria-live"', () => {
     test('value is set', () => {
-      const { container } = render(
-        <Pressable accessibilityLiveRegion="polite" />
-      );
+      const { container } = render(<Pressable aria-live="polite" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
 
-  describe('prop "accessibilityRole"', () => {
+  describe('prop "role"', () => {
     test('value is set', () => {
-      const { container } = render(<Pressable accessibilityRole="none" />);
+      const { container } = render(<Pressable role="none" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value is "button"', () => {
-      const { container } = render(<Pressable accessibilityRole="button" />);
+      const { container } = render(<Pressable role="button" />);
       expect(container.firstChild).toMatchSnapshot();
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Pressable accessibilityRole="article" />);
+      const { container } = render(<Pressable role="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -52,6 +51,19 @@ describe('components/Pressable', () => {
   test('prop "disabled"', () => {
     const { container } = render(<Pressable disabled={true} />);
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('prop "disabled" takes precedence over "aria-disabled"', () => {
+    const { container } = render(
+      <Pressable aria-disabled={true} disabled={false} />
+    );
+    expect(container.firstChild.getAttribute('aria-disabled')).toBeNull();
+  });
+
+  test('prop "disabled" disables native button', () => {
+    const { container } = render(<Pressable disabled={true} role="button" />);
+    expect(container.firstChild.tagName).toBe('BUTTON');
+    expect(container.firstChild.disabled).toBe(true);
   });
 
   test('prop "href"', () => {
@@ -155,6 +167,35 @@ describe('components/Pressable', () => {
     });
     expect(onHoverOut).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test('hover interaction (no state callback)', () => {
+    const onHoverIn = jest.fn();
+    const onHoverOut = jest.fn();
+    const onRender = jest.fn();
+    const ref = React.createRef();
+
+    act(() => {
+      render(
+        <React.Profiler id="pressable" onRender={onRender}>
+          <Pressable onHoverIn={onHoverIn} onHoverOut={onHoverOut} ref={ref} />
+        </React.Profiler>
+      );
+    });
+
+    const target = createEventTarget(ref.current);
+    onRender.mockClear();
+
+    act(() => {
+      target.pointerover();
+    });
+    act(() => {
+      target.pointerout();
+    });
+
+    expect(onHoverIn).toHaveBeenCalled();
+    expect(onHoverOut).toHaveBeenCalled();
+    expect(onRender).not.toHaveBeenCalled();
   });
 
   test('press interaction (pointer)', () => {
@@ -284,6 +325,37 @@ describe('components/Pressable', () => {
     });
   });
 
+  test('clears a released pointer gesture when no click arrives', () => {
+    const onPress = jest.fn();
+    const onPressOut = jest.fn();
+    const ref = React.createRef();
+    act(() => {
+      render(<Pressable onPress={onPress} onPressOut={onPressOut} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current);
+    act(() => {
+      target.pointerdown({ button: 0 });
+      jest.advanceTimersByTime(0);
+    });
+    act(() => {
+      ref.current.dispatchEvent(
+        new MouseEvent('pointerup', { bubbles: true, button: 0 })
+      );
+      ref.current.dispatchEvent(
+        new MouseEvent('mouseup', { bubbles: true, button: 0 })
+      );
+      jest.advanceTimersByTime(0);
+    });
+    // Establish that a responder release actually happened.
+    expect(onPressOut).toHaveBeenCalledTimes(1);
+    expect(onPress).not.toHaveBeenCalled();
+    act(() => {
+      target.click({ button: 0, detail: 1 });
+      jest.advanceTimersByTime(0);
+    });
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
   test('repeated pointer clicks each fire onPress once', () => {
     const onPress = jest.fn();
     const ref = React.createRef();
@@ -410,6 +482,53 @@ describe('components/Pressable', () => {
       });
       expect(onPress).not.toHaveBeenCalled();
     });
+
+    test('trigger press when role is "link"', () => {
+      const onPress = jest.fn();
+      const ref = React.createRef();
+
+      act(() => {
+        render(<Pressable onPress={onPress} ref={ref} role="link" />);
+      });
+
+      const target = createEventTarget(ref.current);
+
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        target.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+
+      expect(onPress).toHaveBeenCalledTimes(1);
+    });
+
+    test('ignore press when role is "link" and href is set', () => {
+      // The browser dispatches a native 'click' for anchors
+      const onPress = jest.fn();
+      const ref = React.createRef();
+
+      act(() => {
+        render(
+          <Pressable
+            href="https://example.com"
+            onPress={onPress}
+            ref={ref}
+            role="link"
+          />
+        );
+      });
+
+      expect(ref.current.tagName).toBe('A');
+      const target = createEventTarget(ref.current);
+
+      act(() => {
+        target.keydown({ key: 'Enter' });
+        target.keyup({ key: 'Enter' });
+        jest.runAllTimers();
+      });
+
+      expect(onPress).not.toHaveBeenCalled();
+    });
   });
 
   test('press interaction as button (keyboard)', () => {
@@ -441,6 +560,48 @@ describe('components/Pressable', () => {
     expect(preventDefault).not.toHaveBeenCalled();
   });
 
+  test('ignore keyboard press from a nested text input', () => {
+    const onKeyDown = jest.fn();
+    const onPress = jest.fn();
+    const onPressIn = jest.fn();
+    const inputRef = React.createRef();
+    const textAreaRef = React.createRef();
+
+    function TestCase() {
+      return (
+        <Pressable
+          onKeyDown={onKeyDown}
+          onPress={onPress}
+          onPressIn={onPressIn}
+        >
+          <TextInput ref={inputRef} />
+          <TextInput multiline={true} ref={textAreaRef} />
+        </Pressable>
+      );
+    }
+
+    act(() => {
+      render(<TestCase />);
+    });
+
+    const input = createEventTarget(inputRef.current);
+    const textArea = createEventTarget(textAreaRef.current);
+
+    act(() => {
+      input.keydown({ key: 'Enter' });
+      input.keyup({ key: 'Enter' });
+      input.keydown({ key: ' ' });
+      input.keyup({ key: ' ' });
+      textArea.keydown({ key: 'Enter' });
+      textArea.keyup({ key: 'Enter' });
+      jest.runAllTimers();
+    });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(3);
+    expect(onPressIn).not.toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
+  });
+
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = jest.fn();
@@ -457,6 +618,7 @@ describe('components/Pressable', () => {
       expect(typeof node.measure === 'function');
       expect(typeof node.measureLayout === 'function');
       expect(typeof node.measureInWindow === 'function');
+      expect(typeof node.setNativeProps === 'function');
     });
   });
 

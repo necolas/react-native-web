@@ -8,7 +8,7 @@
  */
 
 const uppercasePattern = /[A-Z]/g;
-const cache: { [string]: string } = {};
+const cache: Record<string, string> = {};
 
 function toHyphenLower(match: string) {
   return '-' + match.toLowerCase();

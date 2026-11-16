@@ -64,6 +64,10 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir). The default value of `"auto"` is not set on _nested_ text elements.
 {% endcall %}
 
+{% call macro.prop('ellipsizeMode', '?("clip" | "head" | "middle" | "tail") = "tail"') %}
+When `numberOfLines` is set, defines how the text is truncated. Only `"clip"` and `"tail"` are supported on web.
+{% endcall %}
+
 {% call macro.prop('href', '?string') %}
 If `href` is defined, the view is rendered as an anchor tag pointing to this URL.
 {% endcall %}

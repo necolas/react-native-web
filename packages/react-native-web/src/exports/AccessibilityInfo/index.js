@@ -95,7 +95,10 @@ const AccessibilityInfo = {
   isReduceTransparencyEnabled: (): Promise<boolean> =>
     Promise.resolve(prefersReducedTransparencyMedia.matches),
 
-  addEventListener(eventName: string, handler: Function): EventSubscription {
+  addEventListener(
+    eventName: string,
+    handler: ChangeHandler
+  ): EventSubscription {
     if (eventName === 'highTextContrastChanged') {
       return prefersContrastMedia.addChangeHandler(handler);
     } else if (eventName === 'reduceMotionChanged') {

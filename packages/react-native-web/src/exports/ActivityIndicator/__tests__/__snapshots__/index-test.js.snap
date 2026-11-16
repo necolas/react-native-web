@@ -1,79 +1,5 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`components/ActivityIndicator prop "accessibilityLabel" value is set 1`] = `
-<div
-  aria-label="accessibility label"
-  aria-valuemax="1"
-  aria-valuemin="0"
-  class="css-view-g5y9jx r-alignItems-1awozwy r-justifyContent-1777fci"
-  role="progressbar"
->
-  <div
-    class="css-view-g5y9jx r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
-  >
-    <svg
-      height="100%"
-      viewBox="0 0 32 32"
-      width="100%"
-    >
-      <circle
-        cx="16"
-        cy="16"
-        fill="none"
-        r="14"
-        stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
-      />
-      <circle
-        cx="16"
-        cy="16"
-        fill="none"
-        r="14"
-        stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
-      />
-    </svg>
-  </div>
-</div>
-`;
-
-exports[`components/ActivityIndicator prop "accessibilityLiveRegion" value is set 1`] = `
-<div
-  aria-live="polite"
-  aria-valuemax="1"
-  aria-valuemin="0"
-  class="css-view-g5y9jx r-alignItems-1awozwy r-justifyContent-1777fci"
-  role="progressbar"
->
-  <div
-    class="css-view-g5y9jx r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
-  >
-    <svg
-      height="100%"
-      viewBox="0 0 32 32"
-      width="100%"
-    >
-      <circle
-        cx="16"
-        cy="16"
-        fill="none"
-        r="14"
-        stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
-      />
-      <circle
-        cx="16"
-        cy="16"
-        fill="none"
-        r="14"
-        stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
-      />
-    </svg>
-  </div>
-</div>
-`;
-
 exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
 <div
   aria-valuemax="1"
@@ -112,6 +38,80 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
 
 exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
 <div
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-g5y9jx r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-g5y9jx r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "aria-label" value is set 1`] = `
+<div
+  aria-label="accessibility label"
+  aria-valuemax="1"
+  aria-valuemin="0"
+  class="css-view-g5y9jx r-alignItems-1awozwy r-justifyContent-1777fci"
+  role="progressbar"
+>
+  <div
+    class="css-view-g5y9jx r-height-z80fyv r-width-19wmn03 r-animationDuration-17bb2tj r-animationIterationCount-1muvv40 r-animationKeyframes-1yef0xd r-animationTimingFunction-1ldzwu0"
+  >
+    <svg
+      height="100%"
+      viewBox="0 0 32 32"
+      width="100%"
+    >
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; opacity: 0.2;"
+      />
+      <circle
+        cx="16"
+        cy="16"
+        fill="none"
+        r="14"
+        stroke-width="4"
+        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`components/ActivityIndicator prop "aria-live" value is set 1`] = `
+<div
+  aria-live="polite"
   aria-valuemax="1"
   aria-valuemin="0"
   class="css-view-g5y9jx r-alignItems-1awozwy r-justifyContent-1777fci"

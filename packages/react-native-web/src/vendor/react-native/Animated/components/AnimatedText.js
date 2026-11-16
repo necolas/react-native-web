@@ -16,7 +16,7 @@ import createAnimatedComponent from '../createAnimatedComponent';
 import type {AnimatedComponentType} from '../createAnimatedComponent';
 
 export default createAnimatedComponent(
-  Text as $FlowFixMe,
+  Text,
 ) as AnimatedComponentType<
   Omit<React.ComponentProps<typeof Text>, 'ref'>,
   React.ElementRef<typeof Text>,

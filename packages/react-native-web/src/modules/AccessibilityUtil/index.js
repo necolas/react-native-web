@@ -7,12 +7,10 @@
  * @flow
  */
 
-import isDisabled from './isDisabled';
 import propsToAccessibilityComponent from './propsToAccessibilityComponent';
 import propsToAriaRole from './propsToAriaRole';
 
 const AccessibilityUtil = {
-  isDisabled,
   propsToAccessibilityComponent,
   propsToAriaRole
 };

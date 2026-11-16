@@ -28,7 +28,7 @@ type ReducedProps<TProps> = {
   collapsable: boolean,
   ...
 };
-type CallbackRef<T> = T => unknown;
+type CallbackRef<T> = (instance: T) => unknown;
 
 export default function useAnimatedProps<TProps extends {...}, TInstance>(
   props: TProps,
@@ -73,11 +73,13 @@ export default function useAnimatedProps<TProps extends {...}, TInstance>(
         scheduleUpdate();
       };
 
-      const target = getEventTarget(instance);
+      // $FlowFixMe[incompatible-type] the event target is a native view tag
+      const target: ?number = getEventTarget(instance);
       const events = [];
 
       for (const propName in props) {
-        const propValue = (props as any)[propName];
+        // $FlowFixMe[invalid-computed-prop] props is read as a dictionary
+        const propValue = props[propName];
         if (propValue instanceof AnimatedEvent && propValue.__isNative) {
           propValue.__attach(target, propName);
           events.push([propName, propValue]);
@@ -104,6 +106,7 @@ function reduceAnimatedProps<TProps>(
 ): ReducedProps<TProps> {
   // Force `collapsable` to be false so that the native view is not flattened.
   // Flattened views cannot be accurately referenced by the native driver.
+  // $FlowFixMe[incompatible-type] __getValue() returns untyped props, not TProps
   return {
     ...node.__getValue(),
     collapsable: false,
@@ -163,7 +166,17 @@ function getEventTarget<TInstance>(instance: TInstance): TInstance {
     : instance;
 }
 
-function isFabricInstance(instance: any): boolean {
+type FabricInstance = {
+  readonly _internalInstanceHandle?: ?{
+    readonly stateNode?: ?{readonly canonical?: unknown, ...},
+    ...
+  },
+  readonly getNativeScrollRef?: () => ?FabricInstance,
+  readonly getScrollResponder?: () => ?FabricInstance,
+  ...
+};
+
+function isFabricInstance(instance: ?FabricInstance): boolean {
   return (
     hasFabricHandle(instance) ||
     // Some components have a setNativeProps function but aren't a host component
@@ -179,7 +192,7 @@ function isFabricInstance(instance: any): boolean {
   );
 }
 
-function hasFabricHandle(instance: any): boolean {
+function hasFabricHandle(instance: ?FabricInstance): boolean {
   // eslint-disable-next-line dot-notation
   return instance?.['_internalInstanceHandle']?.stateNode?.canonical != null;
 }

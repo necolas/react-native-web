@@ -31,24 +31,30 @@ const FocusBracket = () => {
   });
 };
 
-function attemptFocus(element: any) {
+function attemptFocus(element: any, preventScroll: boolean) {
   if (!canUseDOM) {
+    return false;
+  }
+  if (element.hasAttribute?.('tabindex') && element.tabIndex < 0) {
     return false;
   }
 
   try {
-    element.focus();
-  } catch (e) {
+    element.focus({ preventScroll });
+  } catch {
     // Do nothing
   }
 
   return document.activeElement === element;
 }
 
-function focusFirstDescendant(element: any): boolean {
+function focusFirstDescendant(element: any, preventScroll: boolean): boolean {
   for (let i = 0; i < element.childNodes.length; i++) {
     const child = element.childNodes[i];
-    if (attemptFocus(child) || focusFirstDescendant(child)) {
+    if (
+      attemptFocus(child, preventScroll) ||
+      focusFirstDescendant(child, preventScroll)
+    ) {
       return true;
     }
   }
@@ -58,17 +64,17 @@ function focusFirstDescendant(element: any): boolean {
 function focusLastDescendant(element: any): boolean {
   for (let i = element.childNodes.length - 1; i >= 0; i--) {
     const child = element.childNodes[i];
-    if (attemptFocus(child) || focusLastDescendant(child)) {
+    if (focusLastDescendant(child) || attemptFocus(child, false)) {
       return true;
     }
   }
   return false;
 }
 
-export type ModalFocusTrapProps = {|
-  active?: boolean | (() => boolean),
-  children?: any
-|};
+export type ModalFocusTrapProps = {
+  active?: boolean,
+  children?: React.Node
+};
 
 const ModalFocusTrap = ({
   active,
@@ -83,17 +89,15 @@ const ModalFocusTrap = ({
     lastFocusedElement: null
   });
 
-  React.useEffect(() => {
-    if (canUseDOM) {
-      const trapFocus = () => {
+  React.useLayoutEffect(() => {
+    if (canUseDOM && active) {
+      const trapFocus = (preventScroll: boolean) => {
         // We should not trap focus if:
         // - The modal hasn't fully initialized with an HTMLElement ref
         // - Focus is already in the process of being trapped (e.g., we're refocusing)
-        // - isTrapActive prop being falsey tells us to do nothing
         if (
           trapElementRef.current == null ||
-          focusRef.current.trapFocusInProgress ||
-          !active
+          focusRef.current.trapFocusInProgress
         ) {
           return;
         }
@@ -110,7 +114,11 @@ const ModalFocusTrap = ({
             // If the previously selected element is the "first" descendant
             // and we're leaving it - this means that we should be looping
             // around to the other side of the modal.
-            let hasFocused = focusFirstDescendant(trapElementRef.current);
+            let hasFocused = focusFirstDescendant(
+              trapElementRef.current,
+              preventScroll
+            );
+
             if (
               focusRef.current.lastFocusedElement === document.activeElement
             ) {
@@ -132,10 +140,16 @@ const ModalFocusTrap = ({
       };
 
       // Call the trapFocus callback at least once when this modal has been activated.
-      trapFocus();
+      // Don't let this first focus scroll its ScrollView ancestors, as it would
+      // override their initial scroll position (Safari).
+      trapFocus(true);
 
-      document.addEventListener('focus', trapFocus, true);
-      return () => document.removeEventListener('focus', trapFocus, true);
+      const onFocus = () => {
+        trapFocus(false);
+      };
+
+      document.addEventListener('focus', onFocus, true);
+      return () => document.removeEventListener('focus', onFocus, true);
     }
   }, [active]);
 
@@ -147,8 +161,13 @@ const ModalFocusTrap = ({
       return function () {
         if (
           lastFocusedElementOutsideTrap &&
-          document.contains(lastFocusedElementOutsideTrap)
+          document.contains(lastFocusedElementOutsideTrap) &&
+          // Don't take focus back if it moved somewhere else while the modal
+          // was closing, e.g. to another modal
+          (document.activeElement == null ||
+            document.activeElement === document.body)
         ) {
+          // $FlowFixMe[incompatible-type] activeElement can be any focusable element
           UIManager.focus(lastFocusedElementOutsideTrap);
         }
       };

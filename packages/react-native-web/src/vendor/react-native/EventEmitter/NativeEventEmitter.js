@@ -18,11 +18,10 @@ import Platform from '../../../exports/Platform';
 import RCTDeviceEventEmitter from './RCTDeviceEventEmitter';
 import invariant from 'invariant';
 
-type NativeModule = Readonly<{
-  addListener: (eventType: string) => void,
-  removeListeners: (count: number) => void,
-  ...
-}>;
+interface NativeModule {
+  readonly addListener: (eventType: string) => void;
+  readonly removeListeners: (count: number) => void;
+}
 
 export type {EventSubscription};
 
@@ -64,27 +63,14 @@ export default class NativeEventEmitter<TEventToArgsMap extends {...}>
 
     return {
       remove: () => {
-        if (subscription != null) {
+        const currentSubscription = subscription;
+        if (currentSubscription != null) {
           this._nativeModule?.removeListeners(1);
-          // $FlowFixMe[incompatible-use]
-          subscription.remove();
+          currentSubscription.remove();
           subscription = null;
         }
       },
     };
-  }
-
-  /**
-   * @deprecated Use `remove` on the EventSubscription from `addListener`.
-   */
-  removeListener<TEvent extends keyof TEventToArgsMap>(
-    eventType: TEvent,
-    listener: (...args: TEventToArgsMap[TEvent]) => unknown,
-  ): void {
-    this._nativeModule?.removeListeners(1);
-    // NOTE: This will report a deprecation notice via `console.error`.
-    // $FlowFixMe[prop-missing] - `removeListener` exists but is deprecated.
-    RCTDeviceEventEmitter.removeListener(eventType, listener);
   }
 
   emit<TEvent extends keyof TEventToArgsMap>(

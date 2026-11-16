@@ -14,17 +14,17 @@ import type { EventSubscription } from '../../vendor/react-native/vendor/emitter
 import invariant from 'invariant';
 import canUseDOM from '../../modules/canUseDom';
 
-export type DisplayMetrics = {|
+export type DisplayMetrics = {
   fontScale: number,
   height: number,
   scale: number,
   width: number
-|};
+};
 
-type DimensionsValue = {|
+type DimensionsValue = {
   window: DisplayMetrics,
   screen: DisplayMetrics
-|};
+};
 
 type DimensionKey = 'window' | 'screen';
 
@@ -44,7 +44,10 @@ const dimensions = {
     width: 0
   }
 };
-const listeners: { [string]: Array<(DimensionsValue) => void> } = {};
+const listeners: Record<
+  string,
+  Array<(dimensions: DimensionsValue) => void>
+> = {};
 
 let shouldInit = canUseDOM;
 
@@ -127,7 +130,7 @@ export default class Dimensions {
 
   static addEventListener(
     type: DimensionEventListenerType,
-    handler: (DimensionsValue) => void
+    handler: (dimensions: DimensionsValue) => void
   ): EventSubscription {
     listeners[type] = listeners[type] || [];
     listeners[type].push(handler);
@@ -141,7 +144,7 @@ export default class Dimensions {
 
   static removeEventListener(
     type: DimensionEventListenerType,
-    handler: (DimensionsValue) => void
+    handler: (dimensions: DimensionsValue) => void
   ): void {
     if (Array.isArray(listeners[type])) {
       listeners[type] = listeners[type].filter(

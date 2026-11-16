@@ -14,6 +14,7 @@ import InteractionManager from '../../../modules/InteractionManager';
 import TouchHistoryMath from '../TouchHistoryMath';
 
 import type {PressEvent} from '../Types/CoreEventTypes';
+import type {MouseEvent} from 'react';
 
 const currentCentroidXOfTouchesChangedAfter =
   TouchHistoryMath.currentCentroidXOfTouchesChangedAfter;
@@ -124,7 +125,7 @@ const currentCentroidY = TouchHistoryMath.currentCentroidY;
  * [PanResponder example in RNTester](https://github.com/facebook/react-native/blob/master/RNTester/js/PanResponderExample.js)
  */
 
-export type GestureState = {|
+export type GestureState = {
   /**
    * ID of the gestureState - persisted as long as there at least one touch on screen
    */
@@ -181,7 +182,7 @@ export type GestureState = {|
    * @private
    */
   _accountsForMovesUpTo: number,
-|};
+};
 
 type ActiveCallback = (
   event: PressEvent,
@@ -192,7 +193,7 @@ type InteractionState = {handle: ?number, shouldCancelClick: boolean, timeout: ?
 
 type PassiveCallback = (event: PressEvent, gestureState: GestureState) => unknown;
 
-type PanResponderConfig = Readonly<{|
+type PanResponderConfig = Readonly<{
   onMoveShouldSetPanResponder?: ?ActiveCallback,
   onMoveShouldSetPanResponderCapture?: ?ActiveCallback,
   onStartShouldSetPanResponder?: ?ActiveCallback,
@@ -211,7 +212,7 @@ type PanResponderConfig = Readonly<{|
   onPanResponderTerminate?: ?PassiveCallback,
   onPanResponderTerminationRequest?: ?ActiveCallback,
   onShouldBlockNativeResponder?: ?ActiveCallback,
-|}>;
+}>;
 
 const PanResponder = {
   /**
@@ -385,10 +386,10 @@ const PanResponder = {
    *  accordingly. (numberActiveTouches) may not be totally accurate unless you
    *  are the responder.
    */
-  create(config: PanResponderConfig): {|
+  create(config: PanResponderConfig): {
   getInteractionHandle: () => ?number,
-  panHandlers: {|
-    onClickCapture: (event: any) => void,
+  panHandlers: {
+    onClickCapture: (event: MouseEvent<HTMLElement>) => void,
     onMoveShouldSetResponder: (event: PressEvent) => boolean,
     onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
     onResponderEnd: (event: PressEvent) => void,
@@ -401,8 +402,8 @@ const PanResponder = {
     onResponderTerminationRequest: (event: PressEvent) => boolean,
     onStartShouldSetResponder: (event: PressEvent) => boolean,
     onStartShouldSetResponderCapture: (event: PressEvent) => boolean,
-  |},
-|} {
+  },
+} {
     const interactionState: InteractionState = {
       handle: null,
       shouldCancelClick: false,
@@ -424,7 +425,7 @@ const PanResponder = {
       _accountsForMovesUpTo: 0,
     };
     const panHandlers: {
-      onClickCapture: (event: any) => void,
+      onClickCapture: (event: MouseEvent<HTMLElement>) => void,
       onMoveShouldSetResponder: (event: PressEvent) => boolean,
       onMoveShouldSetResponderCapture: (event: PressEvent) => boolean,
       onResponderEnd: (event: PressEvent) => void,
@@ -577,7 +578,7 @@ const PanResponder = {
       // on any pan target that is under a mouse cursor when it is released.
       // Browsers will natively cancel 'click' events on a target if a non-mouse
       // active pointer moves.
-      onClickCapture: (event: any): void => {
+      onClickCapture: (event: MouseEvent<HTMLElement>): void => {
         if (interactionState.shouldCancelClick === true) {
           event.stopPropagation();
           event.preventDefault();

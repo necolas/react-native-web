@@ -25,25 +25,25 @@ type Type =
 
 type Property = 'opacity' | 'scaleX' | 'scaleY' | 'scaleXY';
 
-type AnimationConfig = Readonly<{|
+type AnimationConfig = Readonly<{
   duration?: number,
   delay?: number,
   springDamping?: number,
   initialVelocity?: number,
   type?: Type,
   property?: Property,
-|}>;
+}>;
 
-type LayoutAnimationConfig = Readonly<{|
+type LayoutAnimationConfig = Readonly<{
   duration: number,
   create?: AnimationConfig,
   update?: AnimationConfig,
   delete?: AnimationConfig,
-|}>;
+}>;
 
 function configureNext(
   config: LayoutAnimationConfig,
-  onAnimationDidEnd?: Function,
+  onAnimationDidEnd?: () => void,
 ) {
   if (!Platform.isTesting) {
     UIManager.configureNextLayoutAnimation(
@@ -138,9 +138,9 @@ const LayoutAnimation = {
     console.error('LayoutAnimation.checkConfig(...) has been disabled.');
   },
   Presets,
-  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut) as (onAnimationDidEnd?: any) => void,
-  linear: configureNext.bind(null, Presets.linear) as (onAnimationDidEnd?: any) => void,
-  spring: configureNext.bind(null, Presets.spring) as (onAnimationDidEnd?: any) => void,
+  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut) as (onAnimationDidEnd?: () => void) => void,
+  linear: configureNext.bind(null, Presets.linear) as (onAnimationDidEnd?: () => void) => void,
+  spring: configureNext.bind(null, Presets.spring) as (onAnimationDidEnd?: () => void) => void,
 };
 
 export default LayoutAnimation;

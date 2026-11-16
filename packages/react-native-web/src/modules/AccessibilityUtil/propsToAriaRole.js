@@ -7,7 +7,7 @@
  * @flow
  */
 
-const accessibilityRoleToWebRole: { [string]: ?string } = {
+const accessibilityRoleToWebRole: Record<string, ?string> = {
   adjustable: 'slider',
   button: 'button',
   header: 'heading',
@@ -26,14 +26,17 @@ const propsToAriaRole = ({
   accessibilityRole,
   role
 }: {
-  accessibilityRole?: string,
-  role?: string
+  readonly accessibilityRole?: unknown,
+  readonly role?: unknown,
+  ...
 }): string | void => {
   const _role = role || accessibilityRole;
   if (_role) {
+    // $FlowFixMe[incompatible-type] Role props are not checked to be strings at runtime
     const inferredRole = accessibilityRoleToWebRole[_role];
     if (inferredRole !== null) {
       // ignore roles that don't map to web
+      // $FlowFixMe[incompatible-type] Role props are not checked to be strings at runtime
       return inferredRole || _role;
     }
   }

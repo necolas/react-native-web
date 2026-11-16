@@ -2,7 +2,7 @@ module.exports = {
   settings: {
     react: {
       version: '19.0',
-      flowVersion: '0.336.0'
+      flowVersion: '0.339.0'
     }
   },
   // hermes parser to support Flow syntax
@@ -30,7 +30,8 @@ module.exports = {
   globals: {
     ClientRect: 'readonly',
     Readonly: 'readonly',
-    ReadonlyArray: 'readonly'
+    ReadonlyArray: 'readonly',
+    Record: 'readonly'
   },
   rules: {
     camelcase: 'off',

@@ -7,33 +7,56 @@
  * @flow
  */
 
-import { atomic, classic, inline } from './compiler';
+import { atomic, classic, inline, type Style } from './compiler';
 import { createSheet } from './dom';
-import { localizeStyle } from './localizeStyle';
+import { localizeStyle, type LocalizedStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
+import type { PreprocessOptions } from './preprocess';
 import { styleq } from 'styleq';
 import { validate } from './validate';
 import canUseDOM from '../../modules/canUseDom';
 
-const staticStyleMap: WeakMap<Object, Object> = new WeakMap();
+const staticStyleMap: WeakMap<{ ... }, LocalizedStyle> = new WeakMap();
 const sheet = createSheet();
 
-const defaultPreprocessOptions = { shadow: true, textShadow: true };
+const defaultPreprocessOptions: PreprocessOptions = {
+  shadow: true,
+  textShadow: true
+};
 
-function customStyleq(styles: any, options: Options = {}) {
-  const { writingDirection, ...preprocessOptions } = options;
-  const isRTL = writingDirection === 'rtl';
+function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
   return styleq.factory({
     transform(style) {
-      const compiledStyle = staticStyleMap.get(style);
-      if (compiledStyle != null) {
-        return localizeStyle(compiledStyle, isRTL);
-      }
-      return preprocess(style, {
-        ...defaultPreprocessOptions,
-        ...preprocessOptions
-      });
+      // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
+      const compiledStyle =
+        staticStyleMap.get(style) ?? (style.$$css === true ? style : null);
+
+      return compiledStyle != null
+        ? // $FlowFixMe[incompatible-type] styleq's libdef has no type for localized styles
+          localizeStyle(compiledStyle, isRTL)
+        : preprocess(style, preprocessOptions);
     }
+  });
+}
+
+const styleqLTR = createStyleq(false, defaultPreprocessOptions);
+const styleqRTL = createStyleq(true, defaultPreprocessOptions);
+
+function customStyleq(styles: unknown, options: StyleSheetOptions = {}) {
+  if (!('shadow' in options) && !('textShadow' in options)) {
+    return options.writingDirection === 'rtl'
+      ? // $FlowFixMe[incompatible-type] styleq checks style values at runtime
+        styleqRTL(styles)
+      : // $FlowFixMe[incompatible-type] styleq checks style values at runtime
+        styleqLTR(styles);
+  }
+
+  const { writingDirection, ...preprocessOptions } = options;
+
+  return createStyleq(writingDirection === 'rtl', {
+    ...defaultPreprocessOptions,
+    ...preprocessOptions
+    // $FlowFixMe[incompatible-type] styleq checks style values at runtime
   })(styles);
 }
 
@@ -47,7 +70,7 @@ function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
   });
 }
 
-function compileAndInsertAtomic(style: { [key: string]: any }) {
+function compileAndInsertAtomic(style: Style) {
   const [compiledStyle, compiledOrderedRules] = atomic(
     preprocess(style, defaultPreprocessOptions)
   );
@@ -55,7 +78,7 @@ function compileAndInsertAtomic(style: { [key: string]: any }) {
   return compiledStyle;
 }
 
-function compileAndInsertReset(style: { [key: string]: any }, key: string) {
+function compileAndInsertReset(style: Style, key: string) {
   const [compiledStyle, compiledOrderedRules] = classic(style, key);
   insertRules(compiledOrderedRules);
   return compiledStyle;
@@ -63,7 +86,15 @@ function compileAndInsertReset(style: { [key: string]: any }, key: string) {
 
 /* ----- API ----- */
 
-const absoluteFill = create({
+type AbsoluteFillStyle = {
+  readonly position: 'absolute',
+  readonly left: 0,
+  readonly right: 0,
+  readonly top: 0,
+  readonly bottom: 0
+};
+
+const absoluteFill: AbsoluteFillStyle = create({
   x: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }
 }).x;
 
@@ -71,7 +102,7 @@ const absoluteFill = create({
  * create
  */
 function create<const T extends { ... }>(styles: T): Readonly<T> {
-  const stylesMap: { [key: string]: any } = styles;
+  const stylesMap: Record<string, any> = styles;
   Object.keys(stylesMap).forEach((key) => {
     const styleObj = stylesMap[key];
     // Only compile at runtime if the style is not already compiled
@@ -95,7 +126,7 @@ function create<const T extends { ... }>(styles: T): Readonly<T> {
 /**
  * compose
  */
-function compose(style1: any, style2: any): any {
+function compose<T, U>(style1: T, style2: U): [T, U] {
   if (process.env.NODE_ENV !== 'production') {
     /* eslint-disable prefer-rest-params */
     const len = arguments.length;
@@ -115,7 +146,7 @@ function compose(style1: any, style2: any): any {
 /**
  * flatten
  */
-function flatten(...styles: any): { [key: string]: any } {
+function flatten(...styles: ReadonlyArray<unknown>): Record<string, any> {
   const flatArray = styles.flat(Infinity);
   const result = {};
   for (let i = 0; i < flatArray.length; i++) {
@@ -141,14 +172,18 @@ function getSheet(): { id: string, textContent: string } {
 /**
  * resolve
  */
-type StyleProps = [string, { [key: string]: unknown } | null, string];
-type Options = {
+type StyleProps = [string, Record<string, unknown> | null, string];
+
+export type StyleSheetOptions = {
   shadow?: boolean,
   textShadow?: boolean,
-  writingDirection?: 'ltr' | 'rtl'
+  writingDirection?: 'auto' | 'ltr' | 'rtl'
 };
 
-function StyleSheet(styles: any, options?: Options = {}): StyleProps {
+function StyleSheet(
+  styles: unknown,
+  options?: StyleSheetOptions = {}
+): StyleProps {
   const isRTL = options.writingDirection === 'rtl';
   const styleProps: StyleProps = customStyleq(styles, options);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
@@ -174,8 +209,8 @@ if (devToolsHook) {
 }
 
 export type IStyleSheet = {
-  (styles: ReadonlyArray<any>, options?: Options): StyleProps,
-  absoluteFill: Object,
+  (styles: ReadonlyArray<unknown>, options?: StyleSheetOptions): StyleProps,
+  absoluteFill: AbsoluteFillStyle,
   create: typeof create,
   compose: typeof compose,
   flatten: typeof flatten,

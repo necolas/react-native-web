@@ -55,7 +55,7 @@ class AnimatedMultiplication extends AnimatedWithChildren {
     super.__detach();
   }
 
-  __getNativeConfig(): any {
+  __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'multiplication',
       input: [this._a.__getNativeTag(), this._b.__getNativeTag()],

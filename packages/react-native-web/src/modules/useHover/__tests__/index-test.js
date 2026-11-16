@@ -52,9 +52,23 @@ describe('useHover', () => {
       });
       expect(onHoverEnd).toHaveBeenCalled();
       act(() => {
-        child.pointerout();
+        child.pointerout({ relatedTarget: target.node });
       });
-      expect(onHoverStart).toHaveBeenCalled();
+      expect(onHoverStart).toHaveBeenCalledTimes(2);
+    });
+
+    test('does not restart the hover gesture when leaving the target and child together', () => {
+      componentInit();
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: document.body });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
     });
 
     test('only changes the nearest ancestor', () => {

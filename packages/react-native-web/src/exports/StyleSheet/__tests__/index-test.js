@@ -225,6 +225,30 @@ describe('StyleSheet', () => {
       `);
     });
 
+    test('does not preprocess compiled objects', () => {
+      // Keys that preprocessing would drop or rename
+      const compiledStyle = {
+        $$css: true,
+        shadowColor: 'shadowColor-red',
+        textAlignVertical: 'textAlignVertical-center'
+      };
+      expect(StyleSheet([compiledStyle])[0]).toBe(
+        'shadowColor-red textAlignVertical-center'
+      );
+    });
+
+    test('localizes compiled objects', () => {
+      const compiledStyle = {
+        $$css: true,
+        $$css$localize: true,
+        marginStart: ['marginLeft-10', 'marginRight-10']
+      };
+      expect(StyleSheet([compiledStyle])[0]).toBe('marginLeft-10');
+      expect(StyleSheet([compiledStyle], { writingDirection: 'rtl' })[0]).toBe(
+        'marginRight-10'
+      );
+    });
+
     test('dedupes class names and inline styles', () => {
       const styleACompiled = {
         $$css: true,

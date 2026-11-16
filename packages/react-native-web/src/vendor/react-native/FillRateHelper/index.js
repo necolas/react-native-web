@@ -12,7 +12,19 @@
 
 import type {FrameMetricProps} from '../VirtualizedList/VirtualizedListProps';
 
-export type FillRateInfo = Info;
+export type FillRateInfo = {
+  readonly any_blank_count: number,
+  readonly any_blank_ms: number,
+  readonly any_blank_speed_sum: number,
+  readonly mostly_blank_count: number,
+  readonly mostly_blank_ms: number,
+  readonly pixels_blank: number,
+  readonly pixels_sampled: number,
+  readonly pixels_scrolled: number,
+  readonly total_time_spent: number,
+  readonly sample_count: number,
+  ...
+};
 
 class Info {
   any_blank_count: number = 0;
@@ -36,7 +48,7 @@ type FrameMetrics = {
 
 const DEBUG: boolean = false;
 
-let _listeners: Array<(Info) => void> = [];
+let _listeners: Array<(info: FillRateInfo) => void> = [];
 let _minSampleCount = 10;
 let _sampleRate = DEBUG ? 1 : null;
 
@@ -56,9 +68,8 @@ class FillRateHelper {
   _mostlyBlankStartTime: ?number = null;
   _samplesStartTime: ?number = null;
 
-  static addListener(callback: FillRateInfo => void): {
+  static addListener(callback: (info: FillRateInfo) => void): {
     remove: () => void,
-    ...
   } {
     if (_sampleRate === null) {
       console.warn('Call `FillRateHelper.setSampleRate` before `addListener`.');
@@ -110,12 +121,12 @@ class FillRateHelper {
       return;
     }
     const total_time_spent = global.performance.now() - start;
-    const info: any = {
+    const info = {
       ...this._info,
       total_time_spent,
     };
     if (DEBUG) {
-      const derived: {[string]: number} = {
+      const derived: Record<string, number> = {
         avg_blankness: this._info.pixels_blank / this._info.pixels_sampled,
         avg_speed: this._info.pixels_scrolled / (total_time_spent / 1000),
         avg_speed_when_any_blank:
@@ -145,7 +156,6 @@ class FillRateHelper {
     cellsAroundViewport: {
       first: number,
       last: number,
-      ...
     },
     scrollMetrics: {
       dOffset: number,

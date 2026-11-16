@@ -19,7 +19,7 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../modules/usePlatformMethods';
+import setPlatformMethods from '../../modules/setPlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import StyleSheet from '../StyleSheet';
@@ -32,6 +32,12 @@ import TextInputState from '../../modules/TextInputState';
 type Selection = { readonly start: number, readonly end?: number };
 
 type TextInputElement = HTMLInputElement | HTMLTextAreaElement;
+
+type TextInputNode = TextInputElement &
+  PlatformMethods & {
+    clear?: () => void,
+    isFocused?: () => boolean
+  };
 
 const isSelectionStale = (node: TextInputElement, selection: Selection) => {
   const { selectionEnd, selectionStart } = node;
@@ -52,7 +58,7 @@ const setSelection = (node: TextInputElement, selection: Selection) => {
   }
 };
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,
   ...forwardedProps.accessibilityProps,
   ...forwardedProps.clickProps,
@@ -61,26 +67,24 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
-  autoCapitalize: true,
-  autoComplete: true,
-  autoCorrect: true,
-  autoFocus: true,
-  defaultValue: true,
-  disabled: true,
-  lang: true,
-  maxLength: true,
-  onChange: true,
-  onScroll: true,
-  placeholder: true,
-  pointerEvents: true,
-  readOnly: true,
-  rows: true,
-  spellCheck: true,
-  value: true,
-  type: true
-};
-
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
+  'autoCapitalize',
+  'autoComplete',
+  'autoCorrect',
+  'autoFocus',
+  'defaultValue',
+  'disabled',
+  'lang',
+  'maxLength',
+  'onChange',
+  'onScroll',
+  'placeholder',
+  'pointerEvents',
+  'readOnly',
+  'rows',
+  'spellCheck',
+  'type',
+  'value'
+]);
 
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
@@ -143,7 +147,8 @@ const TextInput = (props: {
     selection,
     selectTextOnFocus,
     showSoftInputOnFocus,
-    spellCheck
+    spellCheck,
+    textAlign
   } = props;
 
   let submitBehavior: SubmitBehavior;
@@ -206,7 +211,7 @@ const TextInput = (props: {
     height: null,
     width: null
   });
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?TextInputElement>(null);
   const prevSelection = React.useRef<?Selection>(null);
   const prevSecureTextEntry = React.useRef<?boolean>(false);
 
@@ -218,7 +223,7 @@ const TextInput = (props: {
   }, [secureTextEntry]);
 
   const handleContentSizeChange = React.useCallback(
-    (hostNode: ?HTMLElement) => {
+    (hostNode: ?TextInputElement) => {
       if (multiline && onContentSizeChange && hostNode != null) {
         const newHeight = hostNode.scrollHeight;
         const newWidth = hostNode.scrollWidth;
@@ -243,9 +248,9 @@ const TextInput = (props: {
   );
 
   const imperativeRef = React.useMemo(
-    () => (hostNode: any) => {
+    () => (hostNode: TextInputNode | null) => {
       // TextInput needs to add more methods to the hostNode in addition to those
-      // added by `usePlatformMethods`. This is temporarily until an API like
+      // added by `setPlatformMethods`. This is temporarily until an API like
       // `TextInput.clear(hostRef)` is added to React Native.
       if (hostNode != null) {
         hostNode.clear = function () {
@@ -315,9 +320,6 @@ const TextInput = (props: {
 
   function handleKeyDown(e: any) {
     const hostNode = e.target;
-    // Prevent key events bubbling (see #612)
-    e.stopPropagation();
-
     const nativeEvent = e.nativeEvent;
     const isComposing = isEventComposing(nativeEvent);
 
@@ -399,7 +401,7 @@ const TextInput = (props: {
   });
   const { direction: contextDirection } = useLocaleContext();
 
-  const supportedProps = pickProps(props);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
@@ -419,6 +421,7 @@ const TextInput = (props: {
     { '--placeholderTextColor': placeholderTextColor },
     styles.textinput$raw,
     styles.placeholder,
+    textAlign != null && { textAlign },
     props.style,
     caretHidden && styles.caretHidden
   ];
@@ -426,9 +429,7 @@ const TextInput = (props: {
   supportedProps.virtualkeyboardpolicy =
     showSoftInputOnFocus === false ? 'manual' : 'auto';
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, imperativeRef, ref);
+  const setRef = useMergeRefs(hostRef, setPlatformMethods, imperativeRef, ref);
 
   supportedProps.ref = setRef;
 

@@ -34,18 +34,22 @@ const NativeAnimatedModule =
 let __nativeAnimatedNodeTagCount = 1; /* used for animated nodes */
 let __nativeAnimationIdCount = 1; /* used for started animations */
 
-let nativeEventEmitter;
+type NativeAnimatedEventDefinitions = {
+  onAnimatedValueUpdate: [{tag: number, value: number, ...}],
+};
+
+let nativeEventEmitter: ?NativeEventEmitter<NativeAnimatedEventDefinitions>;
 
 let waitingForQueuedOperations = new Set<string>();
 let queueOperations = false;
 let queue: Array<() => void> = [];
-let singleOpQueue: Array<any> = [];
+let singleOpQueue: Array<unknown> = [];
 
 const useSingleOpBatching: boolean = false;
 let flushQueueTimeout: any = null;
 
-const eventListenerGetValueCallbacks: {[number]: ?(value: number) => void} = {};
-const eventListenerAnimationFinishedCallbacks: {[number]: ?EndCallback} = {};
+const eventListenerGetValueCallbacks: Record<number, ?(value: number) => void> = {};
+const eventListenerAnimationFinishedCallbacks: Record<number, ?EndCallback> = {};
 let globalEventEmitterGetValueListener: ?EventSubscription = null;
 let globalEventEmitterAnimationFinishedListener: ?EventSubscription = null;
 
@@ -76,10 +80,9 @@ const nativeOps: ?typeof NativeAnimatedModule = useSingleOpBatching
       ];
       return apis.reduce((acc, functionName, i) => {
         // These indices need to be kept in sync with the indices in native (see NativeAnimatedModule in Java, or the equivalent for any other native platform).
-        // $FlowFixMe[prop-missing]
         acc[functionName] = i + 1;
         return acc;
-      }, {});
+      }, {} as Record<string, number>);
     })() as $FlowFixMe)
   : NativeAnimatedModule;
 
@@ -170,7 +173,7 @@ const API = {
     }
     */
   },
-  queueOperation: <Args extends ReadonlyArray<unknown>, Fn extends (...Args) => void>(
+  queueOperation: <Args extends ReadonlyArray<unknown>, Fn extends (...args: Args) => void>(
     fn: Fn,
     ...args: Args
   ): void => {
@@ -367,7 +370,7 @@ const SUPPORTED_COLOR_STYLES = {
   tintColor: true,
 };
 
-const SUPPORTED_STYLES: {[string]: boolean} = {
+const SUPPORTED_STYLES: Record<string, boolean> = {
   ...SUPPORTED_COLOR_STYLES,
   borderBottomEndRadius: true,
   borderBottomLeftRadius: true,
@@ -392,7 +395,7 @@ const SUPPORTED_STYLES: {[string]: boolean} = {
   translateY: true,
 };
 
-const SUPPORTED_TRANSFORMS: {[string]: boolean} = {
+const SUPPORTED_TRANSFORMS: Record<string, boolean> = {
   translateX: true,
   translateY: true,
   scale: true,
@@ -405,7 +408,7 @@ const SUPPORTED_TRANSFORMS: {[string]: boolean} = {
   perspective: true,
 };
 
-const SUPPORTED_INTERPOLATION_PARAMS: {[string]: boolean} = {
+const SUPPORTED_INTERPOLATION_PARAMS: Record<string, boolean> = {
   inputRange: true,
   outputRange: true,
   extrapolate: true,
@@ -447,13 +450,11 @@ function validateTransform(
         type: 'animated',
         property: string,
         nodeTag: ?number,
-        ...
       }
     | {
         type: 'static',
         property: string,
         value: number | string,
-        ...
       },
   >,
 ): void {
@@ -466,7 +467,7 @@ function validateTransform(
   });
 }
 
-function validateStyles(styles: {[key: string]: ?number, ...}): void {
+function validateStyles(styles: {[key: string]: ?number}): void {
   for (const key in styles) {
     if (!isSupportedStyleProp(key)) {
       throw new Error(
@@ -580,13 +581,11 @@ export default {
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
   transformDataType,
-  // $FlowExpectedError[missing-type-arg] - unsafe getter lint suppresion
-  get nativeEventEmitter(): NativeEventEmitter {
+  get nativeEventEmitter(): NativeEventEmitter<NativeAnimatedEventDefinitions> {
     if (!nativeEventEmitter) {
       nativeEventEmitter = new NativeEventEmitter(
         // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
         // If you want to use the native module on other platforms, please remove this condition and test its behavior
-        // $FlowFixMe[class-object-subtyping]
         Platform.OS !== 'ios' ? null : NativeAnimatedModule,
       );
     }

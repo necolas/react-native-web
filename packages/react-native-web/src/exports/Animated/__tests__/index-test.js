@@ -10,6 +10,8 @@
 import Animated from '..';
 import Easing from '../../Easing';
 import AnimatedImplementation from '../../../vendor/react-native/Animated/AnimatedImplementation';
+import React from 'react';
+import { act, render } from '@testing-library/react';
 
 const AnimatedInterpolation = Animated.Interpolation;
 
@@ -398,6 +400,29 @@ describe('Animated', () => {
       // after anim2 is finished, the sequence is finished,
       // hence the loop iteration is finished, so the next iteration starts
       expect(anim1.start).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('createAnimatedComponent', () => {
+    test('keeps the same animated nodes when a value updates', () => {
+      const value = new Animated.Value(0);
+      const ref = React.createRef();
+
+      const { container } = render(
+        <Animated.View ref={ref} style={{ opacity: value }} />
+      );
+
+      const children = [...value.__getChildren()];
+      expect(children).toHaveLength(1);
+
+      act(() => {
+        value.setValue(0.5);
+      });
+
+      expect(container.firstChild.style.opacity).toBe('0.5');
+      expect(value.__getChildren()).toEqual(children);
+      expect(value.__getChildren()[0]).toBe(children[0]);
+      expect(ref.current).toBe(container.firstChild);
     });
   });
 });

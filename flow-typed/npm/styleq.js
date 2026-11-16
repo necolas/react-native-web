@@ -3,9 +3,7 @@ type CompiledStyle = {
   [key: string]: string,
 };
 
-type InlineStyle = {
-  [key: string]: unknown,
-};
+type InlineStyle = Record<string, unknown>;
 
 type EitherStyle = CompiledStyle | InlineStyle;
 
@@ -16,7 +14,7 @@ type Style<out T = EitherStyle> = StylesArray<false | ?T>;
 type StyleqOptions = {
   disableCache?: boolean,
   disableMix?: boolean,
-  transform?: (EitherStyle) => EitherStyle,
+  transform?: (style: EitherStyle) => EitherStyle,
 };
 
 type StyleqResult = [string, InlineStyle | null, string];

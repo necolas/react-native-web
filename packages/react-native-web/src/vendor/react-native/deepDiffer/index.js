@@ -14,8 +14,8 @@
  * @returns {bool} true if different, false if equal
  */
 const deepDiffer = function(
-  one: any,
-  two: any,
+  one: unknown,
+  two: unknown,
   maxDepth: number = -1,
 ): boolean {
   if (maxDepth === 0) {
@@ -43,6 +43,9 @@ const deepDiffer = function(
   }
   if (Array.isArray(one)) {
     // We know two is also an array because the constructors are equal
+    if (!Array.isArray(two)) {
+      return true;
+    }
     const len = one.length;
     if (two.length !== len) {
       return true;

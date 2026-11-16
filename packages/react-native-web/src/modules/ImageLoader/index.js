@@ -11,9 +11,10 @@ const dataUriPattern = /^data:/;
 
 export class ImageUriCache {
   static _maximumEntries: number = 256;
-  static _entries: {
-    [uri: string]: { lastUsedTimestamp: number, refCount: number }
-  } = {};
+  static _entries: Record<
+    string,
+    { lastUsedTimestamp: number, refCount: number }
+  > = {};
 
   static has(uri: string): boolean {
     const entries = ImageUriCache._entries;
@@ -21,7 +22,11 @@ export class ImageUriCache {
     return isDataUri || Boolean(entries[uri]);
   }
 
-  static add(uri: string) {
+  static add(uri: string): boolean {
+    // "has" is always true for data URIs, so don't keep them in memory
+    if (dataUriPattern.test(uri)) {
+      return false;
+    }
     const entries = ImageUriCache._entries;
     const lastUsedTimestamp = Date.now();
     if (entries[uri]) {
@@ -33,13 +38,15 @@ export class ImageUriCache {
         refCount: 1
       };
     }
+    return true;
   }
 
   static remove(uri: string) {
     const entries = ImageUriCache._entries;
-    if (entries[uri]) {
-      entries[uri].refCount -= 1;
+    if (!entries[uri]) {
+      return;
     }
+    entries[uri].refCount -= 1;
     // Free up entries when the cache is "full"
     ImageUriCache._cleanUpIfNeeded();
   }
@@ -72,12 +79,18 @@ export class ImageUriCache {
   }
 }
 
+export type ImageSize = {
+  width: number,
+  height: number
+};
+
 let id = 0;
-const requests: { [string]: HTMLImageElement } = {};
+const requests: Record<string, HTMLImageElement> = {};
 
 const ImageLoader = {
   abort(requestId: number) {
     let image: ?HTMLImageElement = requests[`${requestId}`];
+
     if (image) {
       image.onerror = null;
       image.onload = null;
@@ -85,79 +98,92 @@ const ImageLoader = {
       delete requests[`${requestId}`];
     }
   },
+  generateRequestId(): number {
+    id += 1;
+    return id;
+  },
   getSize(
     uri: string,
-    success: (width: number, height: number) => void,
-    failure: () => void
-  ) {
-    let complete = false;
-    const interval = setInterval(callback, 16);
-    const requestId = ImageLoader.load(uri, callback, errorCallback);
+    success?: (width: number, height: number) => void,
+    failure?: (error: unknown) => void
+  ): void | Promise<ImageSize> {
+    const requestId = ImageLoader.generateRequestId();
+    const request = ImageLoader.load(uri, requestId);
+    const image = requests[`${requestId}`];
 
-    function callback() {
-      const image = requests[`${requestId}`];
-      if (image) {
-        const { naturalHeight, naturalWidth } = image;
-        if (naturalHeight && naturalWidth) {
-          success(naturalWidth, naturalHeight);
-          complete = true;
+    const promise = request.then(() => {
+      if (image.naturalHeight && image.naturalWidth) {
+        return {
+          width: image.naturalWidth,
+          height: image.naturalHeight
+        };
+      }
+
+      throw new Error(`Failed to get size for image: ${uri}`);
+    });
+
+    if (typeof success !== 'function') {
+      return promise;
+    }
+
+    promise
+      .then((size) => success(size.width, size.height))
+      .catch((error) => {
+        if (failure != null) {
+          failure(error);
+        } else {
+          console.warn('Failed to get size for image: ' + uri);
         }
-      }
-      if (complete) {
-        ImageLoader.abort(requestId);
-        clearInterval(interval);
-      }
-    }
-
-    function errorCallback() {
-      if (typeof failure === 'function') {
-        failure();
-      }
-      ImageLoader.abort(requestId);
-      clearInterval(interval);
-    }
+      });
   },
   has(uri: string): boolean {
     return ImageUriCache.has(uri);
   },
-  load(uri: string, onLoad: Function, onError: Function): number {
-    id += 1;
-    const image = new window.Image();
-    image.onerror = onError;
-    image.onload = (e) => {
-      // avoid blocking the main thread
-      const onDecode = () => onLoad({ nativeEvent: e });
-      // Safari currently throws exceptions when decoding svgs.
-      // We want to catch that error and allow the load handler
-      // to be forwarded to the onLoad handler in this case
-      image.decode().then(onDecode, onDecode);
-    };
-    image.src = uri;
-    requests[`${id}`] = image;
-    return id;
-  },
-  prefetch(uri: string): Promise<void> {
+  load(uri: string, requestId: number): Promise<{ nativeEvent: Event }> {
     return new Promise((resolve, reject) => {
-      ImageLoader.load(
-        uri,
-        () => {
-          // Add the uri to the cache so it can be immediately displayed when used
-          // but also immediately remove it to correctly reflect that it has no active references
-          ImageUriCache.add(uri);
-          ImageUriCache.remove(uri);
-          resolve();
-        },
-        reject
-      );
+      const image = new window.Image();
+
+      image.onerror = () => {
+        ImageLoader.abort(requestId);
+        reject(new Error(`Failed to load image: ${uri}`));
+      };
+
+      image.onload = (e) => {
+        // avoid blocking the main thread
+        const onDecode = () => {
+          if (requests[`${requestId}`] === image) {
+            ImageLoader.abort(requestId);
+            resolve({ nativeEvent: e });
+          }
+        };
+
+        // Safari currently throws exceptions when decoding svgs.
+        // We want to catch that error and allow the load handler
+        // to be forwarded to the onLoad handler in this case
+        image.decode().then(onDecode, onDecode);
+      };
+
+      image.src = uri;
+      requests[`${requestId}`] = image;
     });
   },
-  queryCache(uris: Array<string>): Promise<{| [uri: string]: 'disk/memory' |}> {
-    const result: { [uri: string]: 'disk/memory' } = {};
+  prefetch(uri: string): Promise<void> {
+    return ImageLoader.load(uri, ImageLoader.generateRequestId()).then(() => {
+      // Add the uri to the cache so it can be immediately displayed when used
+      // but also immediately remove it to correctly reflect that it has no active references
+      ImageUriCache.add(uri);
+      ImageUriCache.remove(uri);
+    });
+  },
+  queryCache(uris: Array<string>): Promise<Record<string, 'disk/memory'>> {
+    const result: Record<string, 'disk/memory'> = {};
+
     uris.forEach((u) => {
       if (ImageUriCache.has(u)) {
         result[u] = 'disk/memory';
       }
     });
+
     return Promise.resolve(result);
   }
 };

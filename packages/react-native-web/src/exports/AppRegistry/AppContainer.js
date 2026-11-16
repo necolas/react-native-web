@@ -8,18 +8,21 @@
  * @flow
  */
 
+import type { HostNode } from '../../types';
+
 import * as React from 'react';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
 type Props = {
-  WrapperComponent?: ?React.ComponentType<{ children: React.Node, ... }>,
+  WrapperComponent?: ?React.ComponentType<{ children: React.Node }>,
   children?: React.Node,
-  ref?: React.Ref<any>,
-  rootTag: any
+  ref?: React.Ref<HostNode>,
+  rootTag: HTMLElement | {}
 };
 
-const RootTagContext: React.Context<any> = React.createContext(null);
+const RootTagContext: React.Context<HTMLElement | {} | null> =
+  React.createContext(null);
 
 const AppContainer = (props: Props): React.Node => {
   const { children, ref, WrapperComponent } = props;

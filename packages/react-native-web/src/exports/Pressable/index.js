@@ -11,6 +11,7 @@
 
 import type { HoverEventsConfig } from '../../modules/useHover';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
@@ -21,11 +22,11 @@ import usePressEvents from '../../modules/usePressEvents';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
-export type StateCallbackType = Readonly<{|
+export type StateCallbackType = Readonly<{
   focused: boolean,
   hovered: boolean,
   pressed: boolean
-|}>;
+}>;
 
 type ViewStyleProp = ViewProps['style'];
 
@@ -99,7 +100,10 @@ function Pressable(props: Props): React.Node {
   const [focused, setFocused] = useForceableState(false);
   const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
 
-  const hostRef = useRef(null);
+  const hasStateCallback =
+    typeof children === 'function' || typeof style === 'function';
+
+  const hostRef = useRef<(HTMLElement & PlatformMethods) | null>(null);
   const setRef = useMergeRefs(ref, hostRef);
 
   const pressConfig = useMemo(
@@ -110,7 +114,7 @@ function Pressable(props: Props): React.Node {
       disabled,
       onLongPress,
       onPress,
-      onPressChange: setPressed,
+      onPressChange: hasStateCallback ? setPressed : null,
       onPressStart: onPressIn,
       onPressMove,
       onPressEnd: onPressOut
@@ -125,7 +129,8 @@ function Pressable(props: Props): React.Node {
       onPressIn,
       onPressMove,
       onPressOut,
-      setPressed
+      setPressed,
+      hasStateCallback
     ]
   );
 
@@ -136,7 +141,7 @@ function Pressable(props: Props): React.Node {
 
   useHover(hostRef, {
     disabled,
-    onHoverChange: setHovered,
+    onHoverChange: hasStateCallback ? setHovered : null,
     onHoverStart: onHoverIn,
     onHoverEnd: onHoverOut
   });
@@ -144,31 +149,35 @@ function Pressable(props: Props): React.Node {
   const interactionState = { hovered, focused, pressed };
 
   const blurHandler = React.useCallback(
-    (e: any) => {
+    (e: React.FocusEvent<HTMLElement>) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(false);
+        if (hasStateCallback) {
+          setFocused(false);
+        }
         if (onBlur != null) {
           onBlur(e);
         }
       }
     },
-    [hostRef, setFocused, onBlur]
+    [hostRef, setFocused, hasStateCallback, onBlur]
   );
 
   const focusHandler = React.useCallback(
-    (e: any) => {
+    (e: React.FocusEvent<HTMLElement>) => {
       if (e.nativeEvent.target === hostRef.current) {
-        setFocused(true);
+        if (hasStateCallback) {
+          setFocused(true);
+        }
         if (onFocus != null) {
           onFocus(e);
         }
       }
     },
-    [hostRef, setFocused, onFocus]
+    [hostRef, setFocused, hasStateCallback, onFocus]
   );
 
   const contextMenuHandler = React.useCallback(
-    (e: any) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (onContextMenuPress != null) {
         onContextMenuPress(e);
       }
@@ -180,7 +189,7 @@ function Pressable(props: Props): React.Node {
   );
 
   const keyDownHandler = React.useCallback(
-    (e: any) => {
+    (e: React.KeyboardEvent<HTMLElement>) => {
       if (onKeyDownPress != null) {
         onKeyDownPress(e);
       }
@@ -202,7 +211,8 @@ function Pressable(props: Props): React.Node {
     <View
       {...rest}
       {...pressEventHandlers}
-      aria-disabled={disabled}
+      aria-disabled={disabled ?? rest['aria-disabled']}
+      disabled={disabled}
       onBlur={blurHandler}
       onContextMenu={contextMenuHandler}
       onFocus={focusHandler}
@@ -219,7 +229,9 @@ function Pressable(props: Props): React.Node {
   );
 }
 
-function useForceableState(forced: boolean): [boolean, (boolean) => void] {
+function useForceableState(
+  forced: boolean
+): [boolean, (value: boolean) => void] {
   const [bool, setBool] = useState(false);
   return [bool || forced, setBool];
 }

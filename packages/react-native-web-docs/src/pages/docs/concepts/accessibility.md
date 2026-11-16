@@ -20,7 +20,17 @@ Accessibility in {{ site.name }} combines several separate web APIs into a cohes
 
 ## Accessibility Props API
 
-{{ site.name }} includes APIs for making accessible apps. (Note that for compatibility with existing React Native code, the React Native-specific `accessibility*` props are also supported.)
+{{ site.name }} includes APIs for making accessible apps. For compatibility with existing React Native code, these React Native props are also supported:
+
+- `accessibilityHint` (`aria-description`)
+- `accessibilityLabel` (`aria-label`)
+- `accessibilityLabelledBy` (`aria-labelledby`)
+- `accessibilityLiveRegion` (`aria-live`)
+- `accessibilityRole` (`role`)
+- `accessibilityState` (`aria-busy`, `aria-checked`, `aria-disabled`, `aria-expanded`, `aria-selected`)
+- `accessibilityValue` (`aria-valuemax`, `aria-valuemin`, `aria-valuenow`, `aria-valuetext`)
+
+Other React Native `accessibility*` props are not supported.
 
 {% call macro.prop('aria-activedescendant', '?string') %}
 Equivalent to [aria-activedescendant](https://www.w3.org/TR/wai-aria-1.2/#aria-activedescendant).

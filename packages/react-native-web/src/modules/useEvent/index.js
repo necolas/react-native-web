@@ -13,10 +13,10 @@ import { useLayoutEffect } from 'react';
 import { addEventListener } from '../addEventListener';
 import useStable from '../useStable';
 
-type Callback = null | ((any) => void);
-type AddListener = (
+type Callback<E> = null | ((e: E) => void);
+type AddListener<E> = (
   target: EventTarget,
-  listener: null | ((any) => void)
+  listener: Callback<E>
 ) => () => void;
 
 /**
@@ -28,14 +28,14 @@ type AddListener = (
  *   return () => click.clear();
  * }).
  */
-export default function useEvent(
+export default function useEvent<E extends Event = Event>(
   eventType: string,
   options?: ?EventOptions
-): AddListener {
+): AddListener<E> {
   const targetListeners = useStable(() => new Map<EventTarget, () => void>());
 
   const addListener = useStable(() => {
-    return (target: EventTarget, callback: Callback) => {
+    return (target: EventTarget, callback: Callback<E>) => {
       const removeTargetListener = targetListeners.get(target);
       if (removeTargetListener != null) {
         removeTargetListener();

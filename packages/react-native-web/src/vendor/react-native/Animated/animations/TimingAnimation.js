@@ -20,7 +20,11 @@ import Animation from './Animation';
 import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type {AnimationConfig, EndCallback} from './Animation';
+import type {
+  AnimationConfig,
+  EndCallback,
+  NativeAnimationConfig,
+} from './Animation';
 import type {RgbaValue} from '../nodes/AnimatedColor';
 
 import AnimatedColor from '../nodes/AnimatedColor';
@@ -68,8 +72,8 @@ class TimingAnimation extends Animation {
   _delay: number;
   _easing: (value: number) => number;
   _onUpdate: (value: number) => void;
-  _animationFrame: any;
-  _timeout: any;
+  _animationFrame: number;
+  _timeout: number;
   _useNativeDriver: boolean;
   _platformConfig: ?PlatformConfig;
 
@@ -85,7 +89,7 @@ class TimingAnimation extends Animation {
     this.__isInteraction = config.isInteraction ?? !this._useNativeDriver;
   }
 
-  __getNativeAnimationConfig(): any {
+  __getNativeAnimationConfig(): NativeAnimationConfig {
     const frameDuration = 1000.0 / 60.0;
     const frames = [];
     const numFrames = Math.round(this._duration / frameDuration);
@@ -127,7 +131,7 @@ class TimingAnimation extends Animation {
           this.__startNativeAnimation(animatedValue);
         } else {
           this._animationFrame = requestAnimationFrame(
-            this.onUpdate.bind(this),
+            this.onUpdate.bind(this) as () => void,
           );
         }
       }
@@ -159,7 +163,9 @@ class TimingAnimation extends Animation {
           (this._toValue - this._fromValue),
     );
     if (this.__active) {
-      this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
+      this._animationFrame = requestAnimationFrame(
+        this.onUpdate.bind(this) as () => void,
+      );
     }
   }
 

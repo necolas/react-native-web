@@ -10,7 +10,7 @@
 import type { Touch, TouchEvent } from './ResponderEventTypes';
 import { isStartish, isMoveish, isEndish } from './ResponderEventTypes';
 
-type TouchRecord = {|
+type TouchRecord = {
   currentPageX: number,
   currentPageY: number,
   currentTimeStamp: number,
@@ -21,14 +21,14 @@ type TouchRecord = {|
   startPageY: number,
   startTimeStamp: number,
   touchActive: boolean
-|};
+};
 
-type MutableTouchHistory = {|
+type MutableTouchHistory = {
   indexOfSingleActiveTouch: number,
   mostRecentTimeStamp: number,
   numberActiveTouches: number,
   touchBank: Array<TouchRecord>
-|};
+};
 
 export type TouchHistory = Readonly<MutableTouchHistory>;
 

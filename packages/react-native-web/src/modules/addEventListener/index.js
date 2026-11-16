@@ -9,7 +9,7 @@
 
 'use strict';
 
-type Listener = (e: any) => void;
+type Listener<E> = (e: E) => void;
 
 export type EventOptions = {
   readonly capture?: boolean,
@@ -41,14 +41,14 @@ function normalizeEvent(event: any) {
 /**
  *
  */
-export function addEventListener(
+export function addEventListener<E extends Event = Event>(
   target: EventTarget,
-  type: any,
-  listener: Listener,
+  type: string,
+  listener: Listener<E>,
   options: ?EventOptions
 ): () => void {
   const opts = options ?? false;
-  const compatListener = (e: any) => listener(normalizeEvent(e));
+  const compatListener = (e: Event) => listener(normalizeEvent(e));
   target.addEventListener(type, compatListener, opts);
 
   return function removeEventListener() {

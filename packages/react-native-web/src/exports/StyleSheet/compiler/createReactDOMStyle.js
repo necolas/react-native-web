@@ -10,7 +10,7 @@
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty from './normalizeValueWithProperty';
 
-type Style = { [key: string]: any };
+type Style = Record<string, any>;
 
 /**
  * The browser implements the CSS cascade, where the order of properties is a
@@ -30,7 +30,7 @@ const MONOSPACE_FONT_STACK = 'monospace,monospace';
 const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
-const STYLE_SHORT_FORM_EXPANSIONS: { [string]: Array<string> } = {
+const STYLE_SHORT_FORM_EXPANSIONS: Record<string, Array<string>> = {
   borderColor: [
     'borderTopColor',
     'borderRightColor',
@@ -183,7 +183,10 @@ const prefixTransitionValue = (value: string): string => {
     .join(',');
 };
 
-const prefixValue = (prop: string, value: any): any => {
+const prefixValue = <T>(
+  prop: string,
+  value: T
+): T | string | [string, string] => {
   if (typeof value !== 'string' || value.indexOf('-webkit-') > -1) {
     return value;
   }
@@ -211,7 +214,10 @@ const prefixValue = (prop: string, value: any): any => {
  * Reducer
  */
 
-const createReactDOMStyle = (style: Style, isInline?: boolean): Style => {
+const createReactDOMStyle = (
+  style: Readonly<Record<string, any>>,
+  isInline?: boolean
+): Style => {
   if (!style) {
     return emptyObject;
   }

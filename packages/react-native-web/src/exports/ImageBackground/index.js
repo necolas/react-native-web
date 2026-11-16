@@ -17,7 +17,7 @@ import View from '../View';
 
 type ImageBackgroundProps = {
   ...ImageProps,
-  imageRef?: any,
+  imageRef?: React.Ref<React.ElementRef<typeof View>>,
   imageStyle?: ImageProps['style'],
   ref?: React.Ref<React.ElementRef<typeof View>>,
   style?: ViewProps['style']

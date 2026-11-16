@@ -35,7 +35,7 @@ interface Registration<TArgs> {
   readonly remove: () => void;
 }
 
-type Registry = {[eventType: string]: Set<Registration<any>>};
+type Registry = Record<string, Set<Registration<any>>>;
 
 /**
  * EventEmitter manages listeners and publishes events to them.

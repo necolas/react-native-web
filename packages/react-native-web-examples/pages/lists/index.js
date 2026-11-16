@@ -371,6 +371,7 @@ class SingleColumnExample extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
+    alignSelf: 'stretch',
     backgroundColor: 'rgb(239, 239, 244)',
     flex: 1
   },

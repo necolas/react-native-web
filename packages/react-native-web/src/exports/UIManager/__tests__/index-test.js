@@ -59,6 +59,81 @@ describe('apis/UIManager', () => {
     });
   });
 
+  describe('measureLayout', () => {
+    const setLayout = (node, layout) => {
+      Object.keys(layout).forEach((prop) => {
+        Object.defineProperty(node, prop, {
+          configurable: true,
+          value: layout[prop]
+        });
+      });
+    };
+
+    // scrollView (scrolled) > content > node
+    const createScrollView = () => {
+      const scrollView = createStyledNode();
+      const content = createStyledNode();
+      const node = createStyledNode();
+
+      scrollView.appendChild(content);
+      content.appendChild(node);
+      document.body.appendChild(scrollView);
+
+      setLayout(scrollView, {
+        offsetParent: null,
+        offsetLeft: 10,
+        offsetTop: 20,
+        clientLeft: 1,
+        clientTop: 2,
+        scrollLeft: 0,
+        scrollTop: 300
+      });
+
+      setLayout(content, {
+        offsetParent: scrollView,
+        offsetLeft: 5,
+        offsetTop: 6,
+        offsetWidth: 100,
+        offsetHeight: 1000
+      });
+
+      setLayout(node, {
+        offsetParent: content,
+        offsetLeft: 3,
+        offsetTop: 600,
+        offsetWidth: 50,
+        offsetHeight: 40
+      });
+
+      return { scrollView, content, node };
+    };
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+      document.body.innerHTML = '';
+    });
+
+    test('ignores the scroll offset of the relative node', () => {
+      const { scrollView, content } = createScrollView();
+      const onSuccess = jest.fn();
+      UIManager.measureLayout(content, scrollView, () => {}, onSuccess);
+      jest.runAllTimers();
+      expect(onSuccess).toHaveBeenCalledWith(6, 8, 100, 1000);
+    });
+
+    test('ignores the scroll offset of an ancestor of the node', () => {
+      const { scrollView, node } = createScrollView();
+      const onSuccess = jest.fn();
+      UIManager.measureLayout(node, scrollView, () => {}, onSuccess);
+      jest.runAllTimers();
+      expect(onSuccess).toHaveBeenCalledWith(9, 608, 50, 40);
+    });
+  });
+
   describe('updateView', () => {
     test('supports className alias for class', () => {
       const node = createStyledNode();

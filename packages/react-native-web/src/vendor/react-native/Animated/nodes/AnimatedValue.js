@@ -286,7 +286,7 @@ class AnimatedValue extends AnimatedWithChildren {
     super.__callListeners(this.__getValue());
   }
 
-  __getNativeConfig(): Object {
+  __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'value',
       value: this._value,

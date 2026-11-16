@@ -73,12 +73,10 @@ export function newRangeCount(
   prev: {
     first: number,
     last: number,
-    ...
   },
   next: {
     first: number,
     last: number,
-    ...
   },
 ): number {
   return (
@@ -247,11 +245,13 @@ export function computeWindowedRenderLimits(
   return {first, last};
 }
 
-export function keyExtractor(item: any, index: number): string {
+export function keyExtractor(item: unknown, index: number): string {
   if (typeof item === 'object' && item?.key != null) {
+    // $FlowFixMe[incompatible-type] item keys are expected to be strings
     return item.key;
   }
   if (typeof item === 'object' && item?.id != null) {
+    // $FlowFixMe[incompatible-type] item ids are expected to be strings
     return item.id;
   }
   return String(index);

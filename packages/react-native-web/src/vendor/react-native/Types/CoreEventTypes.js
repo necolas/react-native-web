@@ -10,14 +10,14 @@
 
 'use strict';
 
-export type SyntheticEvent<out T> = Readonly<{|
+export type SyntheticEvent<out T> = Readonly<{
   bubbles: ?boolean,
   cancelable: ?boolean,
   currentTarget: HTMLElement,
   defaultPrevented: ?boolean,
-  dispatchConfig: Readonly<{|
+  dispatchConfig: Readonly<{
     registrationName: string,
-  |}>,
+  }>,
   eventPhase: ?number,
   preventDefault: () => void,
   isDefaultPrevented: () => boolean,
@@ -29,16 +29,16 @@ export type SyntheticEvent<out T> = Readonly<{|
   target: ?HTMLElement,
   timeStamp: number,
   type: ?string,
-|}>;
+}>;
 
-export type ResponderSyntheticEvent<T> = Readonly<{|
+export type ResponderSyntheticEvent<T> = Readonly<{
   ...SyntheticEvent<T>,
-  touchHistory: Readonly<{|
+  touchHistory: Readonly<{
     indexOfSingleActiveTouch: number,
     mostRecentTimeStamp: number,
     numberActiveTouches: number,
     touchBank: ReadonlyArray<
-      Readonly<{|
+      Readonly<{
         touchActive: boolean,
         startPageX: number,
         startPageY: number,
@@ -49,37 +49,37 @@ export type ResponderSyntheticEvent<T> = Readonly<{|
         previousPageX: number,
         previousPageY: number,
         previousTimeStamp: number,
-      |}>,
+      }>,
     >,
-  |}>,
-|}>;
+  }>,
+}>;
 
-export type Layout = Readonly<{|
+export type Layout = Readonly<{
   x: number,
   y: number,
   width: number,
   height: number,
-|}>;
+}>;
 
-export type TextLayout = Readonly<{|
+export type TextLayout = Readonly<{
   ...Layout,
   ascender: number,
   capHeight: number,
   descender: number,
   text: string,
   xHeight: number,
-|}>;
+}>;
 
 export type LayoutEvent = SyntheticEvent<
-  Readonly<{|
+  Readonly<{
     layout: Layout,
-  |}>,
+  }>,
 >;
 
 export type TextLayoutEvent = SyntheticEvent<
-  Readonly<{|
+  Readonly<{
     lines: Array<TextLayout>,
-  |}>,
+  }>,
 >;
 
 /**
@@ -221,7 +221,7 @@ export interface NativePointerEvent extends NativeMouseEvent {
 export type PointerEvent = SyntheticEvent<NativePointerEvent>;
 
 export type PressEvent = ResponderSyntheticEvent<
-  Readonly<{|
+  Readonly<{
     changedTouches: ReadonlyArray<PressEvent['nativeEvent']>,
     force: number,
     identifier: number,
@@ -232,60 +232,60 @@ export type PressEvent = ResponderSyntheticEvent<
     target: ?HTMLElement,
     timestamp: number,
     touches: ReadonlyArray<PressEvent['nativeEvent']>,
-  |}>,
+  }>,
 >;
 
 export type ScrollEvent = SyntheticEvent<
-  Readonly<{|
-    contentInset: Readonly<{|
+  Readonly<{
+    contentInset: Readonly<{
       bottom: number,
       left: number,
       right: number,
       top: number,
-    |}>,
-    contentOffset: Readonly<{|
+    }>,
+    contentOffset: Readonly<{
       y: number,
       x: number,
-    |}>,
-    contentSize: Readonly<{|
+    }>,
+    contentSize: Readonly<{
       height: number,
       width: number,
-    |}>,
-    layoutMeasurement: Readonly<{|
+    }>,
+    layoutMeasurement: Readonly<{
       height: number,
       width: number,
-    |}>,
-    targetContentOffset?: Readonly<{|
+    }>,
+    targetContentOffset?: Readonly<{
       y: number,
       x: number,
-    |}>,
-    velocity?: Readonly<{|
+    }>,
+    velocity?: Readonly<{
       y: number,
       x: number,
-    |}>,
+    }>,
     zoomScale?: number,
     responderIgnoreScroll?: boolean,
-  |}>,
+  }>,
 >;
 
 export type BlurEvent = SyntheticEvent<
-  Readonly<{|
+  Readonly<{
     target: number,
-  |}>,
+  }>,
 >;
 
 export type FocusEvent = SyntheticEvent<
-  Readonly<{|
+  Readonly<{
     target: number,
-  |}>,
+  }>,
 >;
 
 export type MouseEvent = SyntheticEvent<
-  Readonly<{|
+  Readonly<{
     clientX: number,
     clientY: number,
     pageX: number,
     pageY: number,
     timestamp: number,
-  |}>,
+  }>,
 >;

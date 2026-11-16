@@ -12,9 +12,9 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import canUseDOM from '../../modules/canUseDom';
 
-export type ModalPortalProps = {|
-  children: any
-|};
+export type ModalPortalProps = {
+  children: React.Node
+};
 
 function ModalPortal(props: ModalPortalProps): React.Node {
   const { children } = props;

@@ -15,7 +15,7 @@ const Keyboard = {
   isVisible(): boolean {
     return false;
   },
-  addListener(): {| remove: () => void |} {
+  addListener(): { remove: () => void } {
     return { remove: () => {} };
   },
   dismiss() {

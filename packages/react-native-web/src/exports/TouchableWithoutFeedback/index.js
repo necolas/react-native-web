@@ -11,18 +11,19 @@
 'use client';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
+import type { AccessibilityProps } from '../View/types';
 
 import * as React from 'react';
 import { useMemo } from 'react';
+import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 
-export type Props = Readonly<{|
-  accessibilityLabel?: ViewProps['accessibilityLabel'],
-  accessibilityLiveRegion?: ViewProps['accessibilityLiveRegion'],
-  accessibilityRole?: ViewProps['accessibilityRole'],
+export type Props = Readonly<{
+  ...AccessibilityProps,
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,
@@ -37,33 +38,26 @@ export type Props = Readonly<{|
   onPress?: PressResponderConfig['onPress'],
   onPressIn?: PressResponderConfig['onPressStart'],
   onPressOut?: PressResponderConfig['onPressEnd'],
-  ref?: React.Ref<any>,
+  ref?: React.Ref<HTMLElement & PlatformMethods>,
   rejectResponderTermination?: ?boolean,
   testID?: ViewProps['testID'],
   title?: ViewProps['title'],
   type?: ViewProps['type']
-|}>;
+}>;
 
-const forwardPropsList = {
-  accessibilityDisabled: true,
-  accessibilityLabel: true,
-  accessibilityLiveRegion: true,
-  accessibilityRole: true,
-  accessibilityState: true,
-  accessibilityValue: true,
-  children: true,
-  disabled: true,
-  focusable: true,
-  nativeID: true,
-  onBlur: true,
-  onFocus: true,
-  onLayout: true,
-  testID: true,
-  title: true,
-  type: true
-};
-
-const pickProps = (props: Props) => pick(props, forwardPropsList);
+const forwardPropsList = new Set([
+  ...forwardedProps.accessibilityProps,
+  'children',
+  'disabled',
+  'focusable',
+  'nativeID',
+  'onBlur',
+  'onFocus',
+  'onLayout',
+  'testID',
+  'title',
+  'type'
+]);
 
 function TouchableWithoutFeedback(props: Props): React.Node {
   const {
@@ -109,8 +103,14 @@ function TouchableWithoutFeedback(props: Props): React.Node {
 
   const element: any = React.Children.only(props.children);
   const children = [element.props.children];
-  const supportedProps = pickProps(props);
-  supportedProps.accessibilityDisabled = disabled;
+  const supportedProps = pick(props, forwardPropsList);
+
+  supportedProps['aria-disabled'] =
+    disabled ??
+    props['aria-disabled'] ??
+    props.accessibilityState?.disabled ??
+    element.props['aria-disabled'];
+
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, element.props.ref);
 

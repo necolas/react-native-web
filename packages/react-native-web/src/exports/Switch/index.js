@@ -9,7 +9,7 @@
 
 'use client';
 
-import type { ColorValue } from '../../types';
+import type { ColorValue, HostNode } from '../../types';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
@@ -23,10 +23,10 @@ type SwitchProps = {
   activeThumbColor?: ColorValue,
   activeTrackColor?: ColorValue,
   disabled?: boolean,
-  onValueChange?: (e: any) => void,
-  ref?: React.Ref<any>,
+  onValueChange?: (value: boolean) => void,
+  ref?: React.Ref<HostNode>,
   thumbColor?: ColorValue,
-  trackColor?: ColorValue | {| false: ColorValue, true: ColorValue |},
+  trackColor?: ColorValue | { false: ColorValue, true: ColorValue },
   value?: boolean
 };
 
@@ -60,13 +60,16 @@ const Switch = (props: SwitchProps): React.Node => {
 
   const thumbRef = React.useRef<?React.ElementRef<typeof View>>(null);
 
-  function handleChange(event: Object) {
+  function handleChange(event: {
+    readonly nativeEvent: { readonly target: HTMLInputElement, ... },
+    ...
+  }) {
     if (onValueChange != null) {
       onValueChange(event.nativeEvent.target.checked);
     }
   }
 
-  function handleFocusState(event: Object) {
+  function handleFocusState(event: React.FocusEvent<HTMLInputElement>) {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     if (thumbRef.current != null) {

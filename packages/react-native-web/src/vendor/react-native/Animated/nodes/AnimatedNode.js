@@ -16,17 +16,18 @@ const NativeAnimatedAPI = NativeAnimatedHelper.API;
 import invariant from 'invariant';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
+import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
 
-type ValueListenerCallback = (state: {value: number, ...}) => unknown;
+type ValueListenerCallback = (state: {value: number}) => unknown;
 
 let _uniqueId = 1;
 
 // Note(vjeux): this would be better as an interface but flow doesn't
 // support them yet
 class AnimatedNode {
-  _listeners: {[key: string]: ValueListenerCallback, ...};
+  _listeners: Record<string, ValueListenerCallback>;
   _platformConfig: ?PlatformConfig;
-  __nativeAnimatedValueListener: ?any;
+  __nativeAnimatedValueListener: ?EventSubscription;
   __attach(): void {}
   __detach(): void {
     if (this.__isNative && this.__nativeTag != null) {
@@ -177,12 +178,12 @@ class AnimatedNode {
 
     return nativeTag;
   }
-  __getNativeConfig(): Object {
+  __getNativeConfig(): Record<string, unknown> {
     throw new Error(
       'This JS animated node type cannot be used as native animated node',
     );
   }
-  toJSON(): any {
+  toJSON(): unknown {
     return this.__getValue();
   }
 

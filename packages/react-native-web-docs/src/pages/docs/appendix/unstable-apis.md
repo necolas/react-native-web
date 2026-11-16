@@ -17,14 +17,14 @@ The following APIs are unstable and subject to breaking changes. Use at your own
 
 React Native for Web exports a web-specific module called `unstable_createElement`, which can be used to wrap React DOM components. This allows you to use React Native's accessibility and style optimizations. Since this is a web-specific export it should always be imported from the `react-native-web` package.
 
-In the example below, `Video` will now accept common React Native props such as `accessibilityLabel`, `accessible`, `style`, and even the Responder event props.
+In the example below, `Video` will now accept common React Native props such as `aria-label`, `accessible`, `style`, and even the Responder event props.
 
 ```js
 import { unstable_createElement } from 'react-native-web';
 const Video = (props) => unstable_createElement('video', props);
 ```
 
-This also works with composite components defined in your existing component gallery or dependencies ([live example](https://www.webpackbin.com/bins/-KiTSGFw3fB9Szg7quLI)).
+This also works with composite components defined in your existing component gallery or dependencies.
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
@@ -52,37 +52,36 @@ Remember that React Native styles are not the same as React DOM styles, and care
 
 ## Use as a library framework
 
-The React Native (for Web) building blocks can be used to create higher-level components and abstractions. In the example below, a `styled` function provides an API inspired by styled-components ([live example](https://www.webpackbin.com/bins/-KjT9ziwv4O7FDZdvsnX)).
+The React Native (for Web) building blocks can be used to create higher-level components and abstractions. In the example below, a `styled` function provides an API inspired by styled-components. It accepts a tag name or a component, and a style or a function that returns a style from the props and the theme.
 
 ```jsx
+import { createContext, use } from 'react';
 import { unstable_createElement } from 'react-native-web';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-/**
- * styled API
- */
+const ThemeContext = createContext(null);
+
 const styled = (Component, styler) => {
   const isDOMComponent = typeof Component === 'string';
 
-  class Styled extends React.Component {
-    static contextTypes = {
-      getTheme: React.PropTypes.func
+  const Styled = (props) => {
+    const nextProps = {
+      ...props,
+      style: [
+        typeof styler === 'function'
+          ? styler({ ...props, theme: use(ThemeContext) })
+          : styler,
+        props.style
+      ]
     };
 
-    render() {
-      const theme = this.context.getTheme && this.context.getTheme();
-      const localProps = { ...this.props, theme };
-      const nextProps = { ...this.props };
-      const style = typeof styler === 'function' ? styler(localProps) : styler;
-      nextProps.style = [style, this.props.style];
+    return isDOMComponent ? (
+      unstable_createElement(Component, nextProps)
+    ) : (
+      <Component {...nextProps} />
+    );
+  };
 
-      return isDOMComponent ? (
-        unstable_createElement(Component, nextProps)
-      ) : (
-        <Component {...nextProps} />
-      );
-    }
-  }
   return Styled;
 };
 

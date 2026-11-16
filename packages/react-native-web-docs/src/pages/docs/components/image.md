@@ -83,10 +83,10 @@ Set the styles of the view.
 
 ### Statics
 
-{% call macro.prop('getSize', '?(url: string, complete, failure) => void') %}
-Download an image and measure the width and height (in pixels) prior to displaying it. This method can fail if the image cannot be found, or fails to download.
-Complete callback: `(width: number, height: number) => void`.
-Failure callback: `() => void`.
+{% call macro.prop('getSize', '(uri: string) => Promise<{ width: number, height: number }>') %}
+Retrieve the width and height (in pixels) of an image prior to displaying it. This method can fail if the image cannot be found, or fails to download.
+
+In order to retrieve the image dimensions, the image may first need to be loaded or downloaded, after which it will be cached. This means that in principle you could use this method to preload images, however it is not optimized for that purpose, and may in future be implemented in a way that does not fully load/download the image data. A proper, supported way to preload images will be provided as a separate API.
 {% endcall %}
 
 {% call macro.prop('prefetch', '?(url: string) => Promise') %}

@@ -111,14 +111,8 @@ Thank you for contributing!
 
 ## Releases
 
-To commit, publish, and push a final version:
+To publish a canary, a release candidate, or a final version:
 
 ```
-npm run release -- <version> --otp=<otp-code>
-```
-
-Release candidates or versions that you'd like to publish to npm, but do not want to produce a commit and push it to GitHub:
-
-```
-npm run release -- <version> --skip-git
+npm run release
 ```

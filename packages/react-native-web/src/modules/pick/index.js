@@ -7,11 +7,14 @@
  * @flow
  */
 
-export default function pick(obj: Object, list: { [string]: boolean }): Object {
-  const nextObj: { [string]: unknown } = {};
+export default function pick(
+  obj: Readonly<Record<string, unknown>>,
+  list: Set<string>
+): Record<string, unknown> {
+  const nextObj: Record<string, unknown> = {};
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
-      if (list[key] === true) {
+      if (list.has(key)) {
         nextObj[key] = obj[key];
       }
     }

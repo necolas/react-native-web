@@ -19,13 +19,13 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useElementLayout from '../../modules/useElementLayout';
 import useMergeRefs from '../../modules/useMergeRefs';
-import usePlatformMethods from '../../modules/usePlatformMethods';
+import setPlatformMethods from '../../modules/setPlatformMethods';
 import useResponderEvents from '../../modules/useResponderEvents';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 
-const forwardPropsList = {
+const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,
   ...forwardedProps.accessibilityProps,
   ...forwardedProps.clickProps,
@@ -34,15 +34,14 @@ const forwardPropsList = {
   ...forwardedProps.mouseProps,
   ...forwardedProps.touchProps,
   ...forwardedProps.styleProps,
-  href: true,
-  lang: true,
-  onScroll: true,
-  onWheel: true,
-  pointerEvents: true,
-  type: true
-};
-
-const pickProps = (props: { ... }) => pick(props, forwardPropsList);
+  'disabled',
+  'href',
+  'lang',
+  'onScroll',
+  'onWheel',
+  'pointerEvents',
+  'type'
+]);
 
 const View = (props: {
   ...ViewProps,
@@ -67,8 +66,7 @@ const View = (props: {
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
-    ref,
-    ...rest
+    ref
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -82,7 +80,7 @@ const View = (props: {
   }
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hostRef = React.useRef(null);
+  const hostRef = React.useRef<?HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
@@ -112,7 +110,7 @@ const View = (props: {
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
 
-  const supportedProps = pickProps(rest);
+  const supportedProps = pick(props, forwardPropsList);
   supportedProps.dir = componentDirection;
   supportedProps.style = [
     styles.view$raw,
@@ -136,8 +134,7 @@ const View = (props: {
     }
   }
 
-  const platformMethodsRef = usePlatformMethods(supportedProps);
-  const setRef = useMergeRefs(hostRef, platformMethodsRef, ref);
+  const setRef = useMergeRefs(hostRef, setPlatformMethods, ref);
 
   supportedProps.ref = setRef;
 

@@ -7,7 +7,6 @@
  * @flow
  */
 
-import type { ElementRef } from 'react';
 import type { LayoutEvent } from '../../types';
 
 import { useLayoutEffect } from 'react';
@@ -16,24 +15,28 @@ import canUseDOM from '../canUseDom';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';
 
-let resizeObserver = null;
+type LayoutHandlerNode = HTMLElement & {
+  __reactLayoutHandler?: ?(e: LayoutEvent) => void,
+  ...
+};
+
+let resizeObserver: ?ResizeObserver = null;
 
 function getResizeObserver(): ?ResizeObserver {
   if (canUseDOM && typeof window.ResizeObserver !== 'undefined') {
     if (resizeObserver == null) {
-      resizeObserver = new window.ResizeObserver(function (entries) {
+      resizeObserver = new window.ResizeObserver((entries) => {
         entries.forEach((entry) => {
-          const node = entry.target;
-          // $FlowFixMe[prop-missing]
+          // $FlowFixMe[incompatible-type] observed nodes are host nodes
+          const node: LayoutHandlerNode = entry.target;
           const onLayout = node[DOM_LAYOUT_HANDLER_NAME];
+
           if (typeof onLayout === 'function') {
             // We still need to measure the view because browsers don't yet provide
             // border-box dimensions in the entry
-            UIManager.measure(node, (x, y, width, height, left, top) => {
+            UIManager.measure(node, (x, y, width, height) => {
               const event: LayoutEvent = {
-                nativeEvent: {
-                  layout: { x, y, width, height, left, top }
-                },
+                nativeEvent: { layout: { x, y, width, height } },
                 timeStamp: Date.now()
               };
               Object.defineProperty(event.nativeEvent, 'target', {
@@ -47,18 +50,23 @@ function getResizeObserver(): ?ResizeObserver {
       });
     }
   }
+
   return resizeObserver;
 }
 
 export default function useElementLayout(
-  ref: ElementRef<any>,
+  ref: { readonly current: ?LayoutHandlerNode },
   onLayout?: ?(e: LayoutEvent) => void
 ) {
   const observer = getResizeObserver();
 
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null) {
+
+    if (
+      node != null &&
+      (onLayout != null || node[DOM_LAYOUT_HANDLER_NAME] != null)
+    ) {
       node[DOM_LAYOUT_HANDLER_NAME] = onLayout;
     }
   }, [ref, onLayout]);
@@ -67,17 +75,15 @@ export default function useElementLayout(
   // when 'onLayout' changes.
   useLayoutEffect(() => {
     const node = ref.current;
-    if (node != null && observer != null) {
-      if (typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function') {
-        observer.observe(node);
-      } else {
+    if (
+      node != null &&
+      observer != null &&
+      typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function'
+    ) {
+      observer.observe(node);
+      return () => {
         observer.unobserve(node);
-      }
+      };
     }
-    return () => {
-      if (node != null && observer != null) {
-        observer.unobserve(node);
-      }
-    };
   }, [ref, observer]);
 }

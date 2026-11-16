@@ -10,30 +10,37 @@
 import isUnitlessNumber from '../../../modules/isUnitlessNumber';
 import normalizeColor from './normalizeColor';
 
-const colorProps: { [string]: boolean } = {
-  backgroundColor: true,
-  borderBottomColor: true,
-  borderColor: true,
-  borderLeftColor: true,
-  borderRightColor: true,
-  borderTopColor: true,
-  color: true,
-  shadowColor: true,
-  textDecorationColor: true,
-  textEmphasisColor: true,
-  textShadowColor: true
-};
+export type StyleValue =
+  | number
+  | string
+  | ReadonlyArray<StyleValue>
+  | Readonly<Record<string, ?StyleValue>>;
 
-export default function normalizeValueWithProperty(
-  value: any,
+const colorProps = new Set([
+  'backgroundColor',
+  'borderBottomColor',
+  'borderColor',
+  'borderLeftColor',
+  'borderRightColor',
+  'borderTopColor',
+  'color',
+  'shadowColor',
+  'textDecorationColor',
+  'textEmphasisColor',
+  'textShadowColor'
+]);
+
+export default function normalizeValueWithProperty<T>(
+  value: T,
   property?: ?string
-): any {
+): T | string | void {
   if (
     typeof value === 'number' &&
     (property == null || !isUnitlessNumber(property))
   ) {
     return `${value}px`;
-  } else if (property != null && colorProps[property]) {
+  } else if (property != null && colorProps.has(property)) {
+    // $FlowFixMe[incompatible-type] color props hold a number or a string
     return normalizeColor(value);
   }
   return value;

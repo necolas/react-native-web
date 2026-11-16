@@ -8,6 +8,7 @@
  * @flow
  */
 
+import type { MouseEvent } from 'react';
 import type { ColorValue, GenericStyleProp } from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
 
@@ -107,7 +108,7 @@ export type TextStyle = {
     | 'optimizeSpeed',
   textShadow?: ?string,
   textShadowColor?: ?ColorValue,
-  textShadowOffset?: {| width?: number, height?: number |},
+  textShadowOffset?: { width?: number, height?: number },
   textShadowRadius?: ?number,
   textSizeAdjust?: ?string,
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase',
@@ -134,6 +135,7 @@ export type TextStyle = {
 export type TextProps = {
   ...ViewProps,
   dir?: 'auto' | 'ltr' | 'rtl',
+  ellipsizeMode?: ?('clip' | 'head' | 'middle' | 'tail'),
   numberOfLines?: ?number,
   role?:
     | 'button'
@@ -156,6 +158,6 @@ export type TextProps = {
     | 'listitem'
     | 'none'
     | 'text',
-  onPress?: (e: any) => void,
+  onPress?: (e: MouseEvent<HTMLElement>) => void,
   selectable?: boolean
 };

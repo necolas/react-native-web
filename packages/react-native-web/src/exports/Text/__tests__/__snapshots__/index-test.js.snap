@@ -57,7 +57,7 @@ exports[`components/Text prop "dir" value is "rtl" 1`] = `
 />
 `;
 
-exports[`components/Text prop "href" href with accessibilityRole 1`] = `
+exports[`components/Text prop "href" href with role 1`] = `
 <a
   class="css-text-1kstuq4"
   dir="auto"
@@ -159,6 +159,13 @@ exports[`components/Text prop "numberOfLines" value is set 1`] = `
 exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
 <div
   class="css-text-1kstuq4 r-maxWidth-dnmrzs r-overflow-1udh08x r-textOverflow-1udbk01 r-whiteSpace-3s2u2q r-wordWrap-1iln25a"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" value is set to one with "clip" ellipsizeMode 1`] = `
+<div
+  class="css-text-1kstuq4 r-maxWidth-dnmrzs r-overflow-1udh08x r-whiteSpace-3s2u2q r-wordWrap-1iln25a r-textOverflow-ptvr8z"
   dir="auto"
 />
 `;

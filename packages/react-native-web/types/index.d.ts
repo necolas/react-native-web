@@ -20,10 +20,12 @@ import type {
   Role
 } from 'react-native';
 
+// Like `Pick`, but ignores keys that `T` doesn't have. `Pick` would add them as
+// required props, which breaks components with the legacy `react-native` types.
+type LoosePick<T, K extends PropertyKey> = Pick<T, Extract<K, keyof T>>;
+
 type ButtonType = 'button' | 'reset' | 'submit';
 type NumberOrString = number | string;
-type idRef = string;
-type idRefList = idRef | Array<idRef>;
 
 // Roles that react-native-web renders as a specific HTML element.
 // See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
@@ -39,28 +41,29 @@ type WebRole =
 
 // See src/exports/View/types.js
 interface WebAccessibilityProps {
-  'aria-activedescendant'?: idRef | undefined;
+  'aria-activedescendant'?: string | undefined;
   'aria-atomic'?: boolean | undefined;
   'aria-autocomplete'?: 'none' | 'list' | 'inline' | 'both' | undefined;
   'aria-colcount'?: number | undefined;
   'aria-colindex'?: number | undefined;
   'aria-colspan'?: number | undefined;
-  'aria-controls'?: idRef | undefined;
+  'aria-controls'?: string | undefined;
   'aria-current'?:
     boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
-  'aria-describedby'?: idRef | undefined;
-  'aria-details'?: idRef | undefined;
-  'aria-errormessage'?: idRef | undefined;
-  'aria-flowto'?: idRef | undefined;
+  'aria-describedby'?: string | undefined;
+  'aria-description'?: string | undefined;
+  'aria-details'?: string | undefined;
+  'aria-errormessage'?: string | undefined;
+  'aria-flowto'?: string | undefined;
   'aria-haspopup'?:
     'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false | undefined;
   'aria-invalid'?: boolean | undefined;
-  'aria-keyshortcuts'?: Array<string> | undefined;
+  'aria-keyshortcuts'?: string | undefined;
   'aria-level'?: number | undefined;
   'aria-multiline'?: boolean | undefined;
   'aria-multiselectable'?: boolean | undefined;
   'aria-orientation'?: 'horizontal' | 'vertical' | undefined;
-  'aria-owns'?: idRef | undefined;
+  'aria-owns'?: string | undefined;
   'aria-placeholder'?: string | undefined;
   'aria-posinset'?: number | undefined;
   'aria-pressed'?: boolean | 'mixed' | undefined;
@@ -73,93 +76,6 @@ interface WebAccessibilityProps {
   'aria-setsize'?: number | undefined;
   'aria-sort'?: 'ascending' | 'descending' | 'none' | 'other' | undefined;
   inert?: boolean | undefined;
-
-  /** @deprecated Use `aria-activedescendant`. */
-  accessibilityActiveDescendant?: idRef | undefined;
-  /** @deprecated Use `aria-atomic`. */
-  accessibilityAtomic?: boolean | undefined;
-  /** @deprecated Use `aria-autocomplete`. */
-  accessibilityAutoComplete?: 'none' | 'list' | 'inline' | 'both' | undefined;
-  /** @deprecated Use `aria-busy`. */
-  accessibilityBusy?: boolean | undefined;
-  /** @deprecated Use `aria-checked`. */
-  accessibilityChecked?: boolean | 'mixed' | undefined;
-  /** @deprecated Use `aria-colcount`. */
-  accessibilityColumnCount?: number | undefined;
-  /** @deprecated Use `aria-colindex`. */
-  accessibilityColumnIndex?: number | undefined;
-  /** @deprecated Use `aria-colspan`. */
-  accessibilityColumnSpan?: number | undefined;
-  /** @deprecated Use `aria-controls`. */
-  accessibilityControls?: idRefList | undefined;
-  /** @deprecated Use `aria-current`. */
-  accessibilityCurrent?:
-    boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
-  /** @deprecated Use `aria-describedby`. */
-  accessibilityDescribedBy?: idRefList | undefined;
-  /** @deprecated Use `aria-details`. */
-  accessibilityDetails?: idRef | undefined;
-  /** @deprecated Use `aria-disabled`. */
-  accessibilityDisabled?: boolean | undefined;
-  /** @deprecated Use `aria-errormessage`. */
-  accessibilityErrorMessage?: idRef | undefined;
-  /** @deprecated Use `aria-expanded`. */
-  accessibilityExpanded?: boolean | undefined;
-  /** @deprecated Use `aria-flowto`. */
-  accessibilityFlowTo?: idRefList | undefined;
-  /** @deprecated Use `aria-haspopup`. */
-  accessibilityHasPopup?:
-    'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false | undefined;
-  /** @deprecated Use `aria-hidden`. */
-  accessibilityHidden?: boolean | undefined;
-  /** @deprecated Use `aria-invalid`. */
-  accessibilityInvalid?: boolean | undefined;
-  /** @deprecated Use `aria-keyshortcuts`. */
-  accessibilityKeyShortcuts?: Array<string> | undefined;
-  /** @deprecated Use `aria-level`. */
-  accessibilityLevel?: number | undefined;
-  /** @deprecated Use `aria-modal`. */
-  accessibilityModal?: boolean | undefined;
-  /** @deprecated Use `aria-multiline`. */
-  accessibilityMultiline?: boolean | undefined;
-  /** @deprecated Use `aria-multiselectable`. */
-  accessibilityMultiSelectable?: boolean | undefined;
-  /** @deprecated Use `aria-orientation`. */
-  accessibilityOrientation?: 'horizontal' | 'vertical' | undefined;
-  /** @deprecated Use `aria-owns`. */
-  accessibilityOwns?: idRefList | undefined;
-  /** @deprecated Use `aria-placeholder`. */
-  accessibilityPlaceholder?: string | undefined;
-  /** @deprecated Use `aria-posinset`. */
-  accessibilityPosInSet?: number | undefined;
-  /** @deprecated Use `aria-pressed`. */
-  accessibilityPressed?: boolean | 'mixed' | undefined;
-  /** @deprecated Use `aria-readonly`. */
-  accessibilityReadOnly?: boolean | undefined;
-  /** @deprecated Use `aria-required`. */
-  accessibilityRequired?: boolean | undefined;
-  /** @deprecated Use `aria-roledescription`. */
-  accessibilityRoleDescription?: string | undefined;
-  /** @deprecated Use `aria-rowcount`. */
-  accessibilityRowCount?: number | undefined;
-  /** @deprecated Use `aria-rowindex`. */
-  accessibilityRowIndex?: number | undefined;
-  /** @deprecated Use `aria-rowspan`. */
-  accessibilityRowSpan?: number | undefined;
-  /** @deprecated Use `aria-selected`. */
-  accessibilitySelected?: boolean | undefined;
-  /** @deprecated Use `aria-setsize`. */
-  accessibilitySetSize?: number | undefined;
-  /** @deprecated Use `aria-sort`. */
-  accessibilitySort?: 'ascending' | 'descending' | 'none' | 'other' | undefined;
-  /** @deprecated Use `aria-valuemax`. */
-  accessibilityValueMax?: number | undefined;
-  /** @deprecated Use `aria-valuemin`. */
-  accessibilityValueMin?: number | undefined;
-  /** @deprecated Use `aria-valuenow`. */
-  accessibilityValueNow?: number | undefined;
-  /** @deprecated Use `aria-valuetext`. */
-  accessibilityValueText?: string | undefined;
 }
 
 // Events that react-native does not declare.
@@ -194,12 +110,12 @@ interface WebSharedProps extends WebEventProps {
   /** @unstable */
   hrefAttrs?:
     | {
-        download?: boolean | undefined;
+        download?: boolean | string | undefined;
         rel?: string | undefined;
         target?: string | undefined;
       }
     | undefined;
-  /** Sets the `type` attribute when the element renders as a `<button>`. */
+  /** @unstable */
   type?: ButtonType | undefined;
 }
 
@@ -401,7 +317,7 @@ interface WebTextStyle {
 
 declare module 'react-native' {
   interface AccessibilityProps extends WebAccessibilityProps {
-    'aria-live'?: 'assertive' | 'none' | 'off' | 'polite' | undefined;
+    'aria-live'?: 'assertive' | 'off' | 'polite' | undefined;
     role?: Role | WebRole | undefined;
   }
 
@@ -412,7 +328,7 @@ declare module 'react-native' {
   interface TextProps
     extends
       WebSharedProps,
-      Pick<
+      LoosePick<
         ViewProps,
         | 'focusable'
         | 'onBlur'
@@ -468,7 +384,7 @@ declare module 'react-native' {
     type?: ButtonType | undefined;
   }
 
-  interface PressableProps extends Pick<
+  interface PressableProps extends LoosePick<
     ViewProps,
     'onMouseEnter' | 'onMouseLeave'
   > {

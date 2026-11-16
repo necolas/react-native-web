@@ -22,8 +22,6 @@ export type GenericStyleProp<out T> =
 export type LayoutValue = {
   x: number,
   y: number,
-  left: number,
-  top: number,
   width: number,
   height: number
 };
@@ -31,41 +29,47 @@ export type LayoutValue = {
 export type LayoutEvent = {
   nativeEvent: {
     layout: LayoutValue,
-    target?: any
+    target?: Element
   },
   timeStamp: number
 };
 
-export type PointValue = {|
-  x: number,
-  y: number
-|};
-
-type LayoutCallback = (
+export type MeasureOnSuccessCallback = (
   x: number,
   y: number,
   width: number,
   height: number,
-  left: number,
-  top: number
+  pageX: number,
+  pageY: number
 ) => void;
 
-type MeasureInWindowCallback = (
+export type MeasureLayoutOnSuccessCallback = (
   left: number,
   top: number,
   width: number,
   height: number
 ) => void;
 
-// Mixin to HTMLElement that represents additions from the `usePlatformMethods` hook
+export type MeasureInWindowOnSuccessCallback = (
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) => void;
+
+// Mixin to HTMLElement that represents additions from `setPlatformMethods`
 export interface PlatformMethods {
   blur: () => void;
   focus: () => void;
-  measure: (callback: LayoutCallback) => void;
-  measureInWindow: (callback: MeasureInWindowCallback) => void;
+  measure: (callback: MeasureOnSuccessCallback) => void;
+  measureInWindow: (callback: MeasureInWindowOnSuccessCallback) => void;
   measureLayout: (
-    relativeToNativeNode: {},
-    onSuccess: LayoutCallback,
+    relativeToNativeNode: HTMLElement,
+    onSuccess: MeasureLayoutOnSuccessCallback,
     onFail: () => void
   ) => void;
+  setNativeProps: (props: { [key: string]: unknown, ... }) => void;
 }
+
+// Host element with the methods added by `setPlatformMethods`
+export type HostNode = HTMLElement & PlatformMethods;

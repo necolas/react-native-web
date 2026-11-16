@@ -4,52 +4,52 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @noflow
+ * @flow
  */
 
 import valueParser from 'postcss-value-parser';
 
-const invalidShortforms = {
-  background: true,
-  borderBottom: true,
-  borderLeft: true,
-  borderRight: true,
-  borderTop: true,
-  font: true,
-  grid: true,
-  outline: true,
-  textDecoration: true
-};
+const invalidShortforms = new Set([
+  'background',
+  'borderBottom',
+  'borderLeft',
+  'borderRight',
+  'borderTop',
+  'font',
+  'grid',
+  'outline',
+  'textDecoration'
+]);
 
-const invalidMultiValueShortforms = {
-  flex: true,
-  margin: true,
-  padding: true,
-  borderColor: true,
-  borderRadius: true,
-  borderStyle: true,
-  borderWidth: true,
-  inset: true,
-  insetBlock: true,
-  insetInline: true,
-  marginBlock: true,
-  marginInline: true,
-  marginHorizontal: true,
-  marginVertical: true,
-  paddingBlock: true,
-  paddingInline: true,
-  paddingHorizontal: true,
-  paddingVertical: true,
-  overflow: true,
-  overscrollBehavior: true,
-  backgroundPosition: true
-};
+const invalidMultiValueShortforms = new Set([
+  'backgroundPosition',
+  'borderColor',
+  'borderRadius',
+  'borderStyle',
+  'borderWidth',
+  'flex',
+  'inset',
+  'insetBlock',
+  'insetInline',
+  'margin',
+  'marginBlock',
+  'marginHorizontal',
+  'marginInline',
+  'marginVertical',
+  'overflow',
+  'overscrollBehavior',
+  'padding',
+  'paddingBlock',
+  'paddingHorizontal',
+  'paddingInline',
+  'paddingVertical'
+]);
 
-function error(message) {
+function error(message: string) {
   console.error(message);
 }
 
-export function validate(obj: Object) {
+export function validate(obj: Record<string, unknown>) {
   for (const k in obj) {
     const prop = k.trim();
     const value = obj[prop];
@@ -72,10 +72,10 @@ export function validate(obj: Object) {
       } else if (prop === 'direction') {
         suggestion = 'Did you mean "writingDirection"?';
         isInvalid = true;
-      } else if (invalidShortforms[prop]) {
+      } else if (invalidShortforms.has(prop)) {
         suggestion = 'Please use long-form properties.';
         isInvalid = true;
-      } else if (invalidMultiValueShortforms[prop]) {
+      } else if (invalidMultiValueShortforms.has(prop)) {
         if (typeof value === 'string' && valueParser(value).nodes.length > 1) {
           suggestion = `Value is "${value}" but only single values are supported.`;
           isInvalid = true;

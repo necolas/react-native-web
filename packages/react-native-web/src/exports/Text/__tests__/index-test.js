@@ -79,9 +79,9 @@ describe('components/Text', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    test('href with accessibilityRole', () => {
+    test('href with role', () => {
       const { container } = render(
-        <Text accessibilityRole="none" href="https://example.com" />
+        <Text href="https://example.com" role="none" />
       );
       expect(container.firstChild).toMatchSnapshot();
     });
@@ -164,8 +164,16 @@ describe('components/Text', () => {
       const { container } = render(<Text numberOfLines={3} />);
       expect(container.firstChild).toMatchSnapshot();
     });
+
     test('value is set to one', () => {
       const { container } = render(<Text numberOfLines={1} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    test('value is set to one with "clip" ellipsizeMode', () => {
+      const { container } = render(
+        <Text ellipsizeMode="clip" numberOfLines={1} />
+      );
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -305,6 +313,7 @@ describe('components/Text', () => {
       expect(typeof node.measure === 'function');
       expect(typeof node.measureLayout === 'function');
       expect(typeof node.measureInWindow === 'function');
+      expect(typeof node.setNativeProps === 'function');
     });
   });
 

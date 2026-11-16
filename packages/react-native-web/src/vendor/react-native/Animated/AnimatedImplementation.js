@@ -36,7 +36,12 @@ import type {
 import type {TimingAnimationConfig} from './animations/TimingAnimation';
 import type {DecayAnimationConfig} from './animations/DecayAnimation';
 import type {SpringAnimationConfig} from './animations/SpringAnimation';
-import type {Mapping, EventConfig} from './AnimatedEvent';
+import type {
+  AnimatedEventHandler,
+  AnimatedEventListener,
+  Mapping,
+  EventConfig,
+} from './AnimatedEvent';
 
 import AnimatedColor from './nodes/AnimatedColor';
 
@@ -103,23 +108,26 @@ const _combineCallbacks = function (
   }
 };
 
-const maybeVectorAnim = function (
+const maybeVectorAnim = function <TConfig extends {...}>(
   value: AnimatedValue | AnimatedValueXY | AnimatedColor,
-  config: Object,
-  anim: (value: AnimatedValue, config: Object) => CompositeAnimation,
+  config: TConfig,
+  anim: (value: AnimatedValue, config: TConfig) => CompositeAnimation,
 ): ?CompositeAnimation {
   if (value instanceof AnimatedValueXY) {
     const configX = {...config};
     const configY = {...config};
     for (const key in config) {
+      // $FlowFixMe[invalid-computed-prop] config is read as a dictionary of vector values
       const {x, y} = config[key];
       if (x !== undefined && y !== undefined) {
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configX[key] = x;
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configY[key] = y;
       }
     }
-    const aX = anim((value as AnimatedValueXY).x, configX);
-    const aY = anim((value as AnimatedValueXY).y, configY);
+    const aX = anim(value.x, configX);
+    const aY = anim(value.y, configY);
     // We use `stopTogether: false` here because otherwise tracking will break
     // because the second animation will get stopped before it can update.
     return parallel([aX, aY], {stopTogether: false});
@@ -129,6 +137,7 @@ const maybeVectorAnim = function (
     const configB = {...config};
     const configA = {...config};
     for (const key in config) {
+      // $FlowFixMe[invalid-computed-prop] config is read as a dictionary of vector values
       const {r, g, b, a} = config[key];
       if (
         r !== undefined &&
@@ -136,16 +145,20 @@ const maybeVectorAnim = function (
         b !== undefined &&
         a !== undefined
       ) {
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configR[key] = r;
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configG[key] = g;
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configB[key] = b;
+        // $FlowFixMe[prop-missing] config is split into one config per vector component
         configA[key] = a;
       }
     }
-    const aR = anim((value as AnimatedColor).r, configR);
-    const aG = anim((value as AnimatedColor).g, configG);
-    const aB = anim((value as AnimatedColor).b, configB);
-    const aA = anim((value as AnimatedColor).a, configA);
+    const aR = anim(value.r, configR);
+    const aG = anim(value.g, configG);
+    const aB = anim(value.b, configB);
+    const aA = anim(value.a, configA);
     // We use `stopTogether: false` here because otherwise tracking will break
     // because the second animation will get stopped before it can update.
     return parallel([aR, aG, aB, aA], {stopTogether: false});
@@ -371,7 +384,7 @@ const parallel = function (
 ): CompositeAnimation {
   let doneCount = 0;
   // Make sure we only call stop() at most once for each animation
-  const hasEnded: {[number]: boolean} = {};
+  const hasEnded: Record<number, boolean> = {};
   const stopTogether = !(config && config.stopTogether === false);
 
   const result: CompositeAnimation = {
@@ -455,14 +468,13 @@ const stagger = function (
 };
 
 type LoopAnimationConfig = {
-  iterations: number,
+  iterations?: number,
   resetBeforeIteration?: boolean,
   ...
 };
 
 const loop = function (
   animation: CompositeAnimation,
-  // $FlowFixMe[incompatible-type]
   {iterations = -1, resetBeforeIteration = true}: LoopAnimationConfig = {},
 ): CompositeAnimation {
   let isFinished = false;
@@ -517,16 +529,16 @@ const loop = function (
 };
 
 function forkEvent(
-  event: ?AnimatedEvent | ?Function,
-  listener: Function,
-): AnimatedEvent | Function {
+  event: ?(AnimatedEvent | AnimatedEventListener),
+  listener: AnimatedEventListener,
+): AnimatedEvent | AnimatedEventListener {
   if (!event) {
     return listener;
   } else if (event instanceof AnimatedEvent) {
     event.__addListener(listener);
     return event;
   } else {
-    return (...args) => {
+    return (...args: unknown[]) => {
       typeof event === 'function' && event(...args);
       listener(...args);
     };
@@ -534,8 +546,8 @@ function forkEvent(
 }
 
 function unforkEvent(
-  event: ?AnimatedEvent | ?Function,
-  listener: Function,
+  event: ?(AnimatedEvent | AnimatedEventListener),
+  listener: AnimatedEventListener,
 ): void {
   if (event && event instanceof AnimatedEvent) {
     event.__removeListener(listener);
@@ -545,7 +557,7 @@ function unforkEvent(
 const event = function (
   argMapping: ReadonlyArray<?Mapping>,
   config: EventConfig,
-): any {
+): AnimatedEvent | AnimatedEventHandler {
   const animatedEvent = new AnimatedEvent(argMapping, config);
   if (animatedEvent.__isNative) {
     return animatedEvent;
