@@ -17,7 +17,8 @@
       "types": "./types/index.d.ts"
     },
     "./asset-registry": "./dist/exports/AssetRegistry/index.js",
-    "./dist/*": "./dist/*",
+    "./dist/*.js": "./dist/*.js",
+    "./dist/*": "./dist/*/index.js",
     "./package.json": "./package.json"
   },
   "sideEffects": false,

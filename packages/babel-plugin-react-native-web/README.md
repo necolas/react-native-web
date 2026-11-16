@@ -33,8 +33,8 @@ import { StyleSheet, View } from 'react-native';
 **After**
 
 ```js
-import StyleSheet from 'react-native-web/dist/exports/StyleSheet/index.js';
-import View from 'react-native-web/dist/exports/View/index.js';
+import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
+import View from 'react-native-web/dist/exports/View';
 ```
 
 [package-badge]: https://img.shields.io/npm/v/babel-plugin-react-native-web.svg?style=flat

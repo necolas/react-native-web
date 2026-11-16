@@ -6,7 +6,7 @@ const getDistLocation = (importName) => {
   if (internalName === 'index') {
     return 'react-native-web/dist/index.js';
   } else if (internalName && moduleMap[internalName]) {
-    return `react-native-web/dist/exports/${internalName}/index.js`;
+    return `react-native-web/dist/exports/${internalName}`;
   }
 };
 
