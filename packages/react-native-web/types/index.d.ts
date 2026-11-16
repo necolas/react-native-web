@@ -110,7 +110,7 @@ interface WebSharedProps extends WebEventProps {
   /** @unstable */
   hrefAttrs?:
     | {
-        download?: boolean | undefined;
+        download?: boolean | string | undefined;
         rel?: string | undefined;
         target?: string | undefined;
       }

@@ -231,7 +231,11 @@ export type ViewProps = {
   // unstable
   disabled?: ?boolean,
   href?: ?string,
-  hrefAttrs?: ?{ download?: ?boolean, rel?: ?string, target?: ?string },
+  hrefAttrs?: ?{
+    download?: ?(boolean | string),
+    rel?: ?string,
+    target?: ?string
+  },
   type?: ?('button' | 'reset' | 'submit'),
   // @deprecated
   focusable?: ?boolean,
