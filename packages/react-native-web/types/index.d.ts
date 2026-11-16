@@ -20,6 +20,10 @@ import type {
   Role
 } from 'react-native';
 
+// Like `Pick`, but ignores keys that `T` doesn't have. `Pick` would add them as
+// required props, which breaks components with the legacy `react-native` types.
+type LoosePick<T, K extends PropertyKey> = Pick<T, Extract<K, keyof T>>;
+
 type ButtonType = 'button' | 'reset' | 'submit';
 type NumberOrString = number | string;
 
@@ -324,7 +328,7 @@ declare module 'react-native' {
   interface TextProps
     extends
       WebSharedProps,
-      Pick<
+      LoosePick<
         ViewProps,
         | 'focusable'
         | 'onBlur'
@@ -380,7 +384,7 @@ declare module 'react-native' {
     type?: ButtonType | undefined;
   }
 
-  interface PressableProps extends Pick<
+  interface PressableProps extends LoosePick<
     ViewProps,
     'onMouseEnter' | 'onMouseLeave'
   > {
