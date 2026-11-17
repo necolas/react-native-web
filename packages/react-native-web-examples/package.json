@@ -4,7 +4,7 @@
   "version": "0.21.4",
   "type": "module",
   "scripts": {
-    "build": "next build --webpack",
+    "export": "next build --webpack",
     "dev": "next dev --webpack",
     "start": "next start"
   },
