@@ -104,6 +104,17 @@ const ScrollViewBase = (props: Props): React.Node => {
   const scrollTimeout = React.useRef<?number>(null);
   const scrollRef = React.useRef<?HTMLElement>(null);
 
+  React.useEffect(() => {
+    const state = scrollState.current;
+    return () => {
+      if (scrollTimeout.current != null) {
+        clearTimeout(scrollTimeout.current);
+        scrollTimeout.current = null;
+      }
+      state.isScrolling = false;
+    };
+  }, []);
+
   function createPreventableScrollHandler<T>(
     handler: ?(e: T) => void
   ): (e: T) => void {
