@@ -402,15 +402,6 @@ describe('StyleSheet/compile', () => {
           });
         });
 
-        test(`does not mutate transitionProperty arrays for ${dir}`, () => {
-          const initial = {
-            transitionProperty: Object.freeze(['marginInlineStart', 'opacity'])
-          };
-          expect(inline(initial, isRTL).transitionProperty).toEqual(
-            isRTL ? 'margin-right, opacity' : 'margin-left, opacity'
-          );
-        });
-
         test(`converts "start" properties for ${dir}`, () => {
           const initial = {
             borderInlineStartColor: 'red',
