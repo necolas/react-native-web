@@ -49,7 +49,7 @@ Equivalent to [HTMLElement.autocapitalize](https://developer.mozilla.org/en-US/d
 {% endcall %}
 
 {% call macro.prop('autoComplete', '?string') %}
-Equivalent to [HTMLElement.autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocomplete).
+Equivalent to [HTMLElement.autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
 {% endcall %}
 
 {% call macro.prop('autoCorrect', '?boolean = true') %}
