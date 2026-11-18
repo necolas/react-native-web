@@ -157,13 +157,20 @@ Object.keys(PROPERTIES_I18N).forEach((prop) => {
 });
 
 function localizeTransitionProperty(
-  values: ReadonlyArray<unknown>,
+  value: StyleValue,
   isRTL?: boolean
-): string {
+): StyleValue {
+  if (Array.isArray(value)) {
+    return value.map((item) => localizeTransitionProperty(item, isRTL));
+  }
+  if (typeof value !== 'string') {
+    return value;
+  }
+
   const map = isRTL ? TRANSITION_PROPERTIES_RTL : TRANSITION_PROPERTIES_LTR;
 
-  return values
-    .flatMap((item) => (typeof item === 'string' ? item.split(',') : []))
+  return value
+    .split(',')
     .map((name) => {
       const trimmedName = name.trim();
       return map[trimmedName] ?? trimmedName;
@@ -228,19 +235,18 @@ export function atomic(style: Style): CompilerOutput {
         }
         // BiDi flip transitionProperty value
         if (srcProp === 'transitionProperty') {
-          const values = Array.isArray(value) ? value : [value];
-          const ltrValue = localizeTransitionProperty(values, false);
-          const rtlValue = localizeTransitionProperty(values, true);
-          const ltr = atomicCompile(srcProp, srcProp, ltrValue);
-          localizeableValue =
-            ltrValue !== rtlValue
-              ? [ltr, atomicCompile(srcProp, srcProp, rtlValue)]
-              : ltr;
+          const ltrValue = localizeTransitionProperty(value, false);
+          const rtlValue = localizeTransitionProperty(value, true);
+          if (String(ltrValue) !== String(rtlValue)) {
+            const ltr = atomicCompile(srcProp, srcProp, ltrValue);
+            const rtl = atomicCompile(srcProp, srcProp, rtlValue);
+            localizeableValue = [ltr, rtl];
+          }
         }
 
         if (localizeableValue == null) {
           localizeableValue = atomicCompile(srcProp, srcProp, value);
-        } else if (Array.isArray(localizeableValue)) {
+        } else {
           compiledStyle['$$css$localize'] = true;
         }
 
@@ -317,10 +323,8 @@ export function inline(
     }
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
-      const originalValues = Array.isArray(originalValue)
-        ? originalValue
-        : [originalValue];
-      value = localizeTransitionProperty(originalValues, isRTL);
+      // $FlowFixMe[incompatible-type] inline style values are not checked to be style values at runtime
+      value = localizeTransitionProperty(originalValue, isRTL);
     }
 
     // Create finalized style

@@ -397,8 +397,18 @@ describe('StyleSheet/compile', () => {
 
           expect(inline(array, isRTL)).toEqual({
             transitionProperty: isRTL
-              ? 'border-top-left-radius, padding-right, opacity'
-              : 'border-top-right-radius, padding-left, opacity'
+              ? ['border-top-left-radius', 'padding-right, opacity']
+              : ['border-top-right-radius', 'padding-left, opacity']
+          });
+        });
+
+        test(`does not mutate transitionProperty arrays for ${dir}`, () => {
+          const initial = {
+            transitionProperty: Object.freeze(['marginInlineStart'])
+          };
+
+          expect(inline(initial, isRTL)).toEqual({
+            transitionProperty: [isRTL ? 'margin-right' : 'margin-left']
           });
         });
 
