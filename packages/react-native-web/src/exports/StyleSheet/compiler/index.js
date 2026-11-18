@@ -304,13 +304,12 @@ export function inline(
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
       const originalValues = Array.isArray(originalValue)
-        ? originalValue
+        ? originalValue.slice()
         : [originalValue];
       originalValues.forEach((val, i) => {
         if (typeof val === 'string') {
           const valuePolyfill = PROPERTIES_I18N[val];
           if (valuePolyfill != null) {
-            // $FlowFixMe[cannot-write] Array.isArray() refines unknown to a read-only array
             originalValues[i] = isRTL
               ? PROPERTIES_FLIP[valuePolyfill]
               : valuePolyfill;

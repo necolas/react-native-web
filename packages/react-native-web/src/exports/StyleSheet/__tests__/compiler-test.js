@@ -418,6 +418,34 @@ describe('StyleSheet/compile', () => {
           );
         });
 
+        test(`does not mutate transitionProperty arrays for ${dir}`, () => {
+          const initial = {
+            transitionProperty: ['marginInlineStart', 'opacity']
+          };
+          const first = inline(initial, isRTL);
+          expect(first.transitionProperty).toEqual(
+            isRTL ? 'marginRight opacity' : 'marginLeft opacity'
+          );
+          expect(initial.transitionProperty).toEqual([
+            'marginInlineStart',
+            'opacity'
+          ]);
+          // The same style object compiled for the other direction
+          const second = inline(initial, !isRTL);
+          expect(second.transitionProperty).toEqual(
+            isRTL ? 'marginLeft opacity' : 'marginRight opacity'
+          );
+        });
+
+        test(`supports frozen transitionProperty arrays for ${dir}`, () => {
+          const initial = {
+            transitionProperty: Object.freeze(['marginInlineStart'])
+          };
+          expect(inline(initial, isRTL).transitionProperty).toEqual(
+            isRTL ? 'marginRight' : 'marginLeft'
+          );
+        });
+
         test(`converts "end" values for ${dir}`, () => {
           const initial = {
             clear: 'end',
