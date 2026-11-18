@@ -139,6 +139,38 @@ const PROPERTIES_I18N: Record<string, string> = {
 
 const PROPERTIES_VALUE = new Set(['clear', 'float', 'textAlign']);
 
+// Maps of I18N property names (camelCase and hyphenated) to their hyphenated
+// LTR and RTL equivalent, for transitionProperty values.
+const TRANSITION_PROPERTIES_LTR: Record<string, string> = {};
+const TRANSITION_PROPERTIES_RTL: Record<string, string> = {};
+
+Object.keys(PROPERTIES_I18N).forEach((prop) => {
+  const ltrProp = PROPERTIES_I18N[prop];
+
+  const ltrName = hyphenateStyleName(ltrProp);
+  const rtlName = hyphenateStyleName(PROPERTIES_FLIP[ltrProp]);
+
+  [prop, hyphenateStyleName(prop)].forEach((name) => {
+    TRANSITION_PROPERTIES_LTR[name] = ltrName;
+    TRANSITION_PROPERTIES_RTL[name] = rtlName;
+  });
+});
+
+function localizeTransitionProperty(
+  values: ReadonlyArray<unknown>,
+  isRTL?: boolean
+): string {
+  const map = isRTL ? TRANSITION_PROPERTIES_RTL : TRANSITION_PROPERTIES_LTR;
+
+  return values
+    .flatMap((item) => (typeof item === 'string' ? item.split(',') : []))
+    .map((name) => {
+      const trimmedName = name.trim();
+      return map[trimmedName] ?? trimmedName;
+    })
+    .join(', ');
+}
+
 export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
@@ -197,36 +229,18 @@ export function atomic(style: Style): CompilerOutput {
         // BiDi flip transitionProperty value
         if (srcProp === 'transitionProperty') {
           const values = Array.isArray(value) ? value : [value];
-          const polyfillIndices = [];
-
-          for (let i = 0; i < values.length; i++) {
-            const val = values[i];
-            if (typeof val === 'string' && PROPERTIES_I18N[val] != null) {
-              polyfillIndices.push(i);
-            }
-          }
-
-          if (polyfillIndices.length > 0) {
-            const ltrPolyfillValues = [...values];
-            const rtlPolyfillValues = [...values];
-            polyfillIndices.forEach((i) => {
-              const ltrVal = ltrPolyfillValues[i];
-              if (typeof ltrVal === 'string') {
-                const ltrPolyfill = PROPERTIES_I18N[ltrVal];
-                const rtlPolyfill = PROPERTIES_FLIP[ltrPolyfill];
-                ltrPolyfillValues[i] = ltrPolyfill;
-                rtlPolyfillValues[i] = rtlPolyfill;
-                const ltr = atomicCompile(srcProp, srcProp, ltrPolyfillValues);
-                const rtl = atomicCompile(srcProp, srcProp, rtlPolyfillValues);
-                localizeableValue = [ltr, rtl];
-              }
-            });
-          }
+          const ltrValue = localizeTransitionProperty(values, false);
+          const rtlValue = localizeTransitionProperty(values, true);
+          const ltr = atomicCompile(srcProp, srcProp, ltrValue);
+          localizeableValue =
+            ltrValue !== rtlValue
+              ? [ltr, atomicCompile(srcProp, srcProp, rtlValue)]
+              : ltr;
         }
 
         if (localizeableValue == null) {
           localizeableValue = atomicCompile(srcProp, srcProp, value);
-        } else {
+        } else if (Array.isArray(localizeableValue)) {
           compiledStyle['$$css$localize'] = true;
         }
 
@@ -306,19 +320,7 @@ export function inline(
       const originalValues = Array.isArray(originalValue)
         ? originalValue
         : [originalValue];
-      originalValues.forEach((val, i) => {
-        if (typeof val === 'string') {
-          const valuePolyfill = PROPERTIES_I18N[val];
-          if (valuePolyfill != null) {
-            // $FlowFixMe[cannot-write] Array.isArray() refines unknown to a read-only array
-            originalValues[i] = isRTL
-              ? PROPERTIES_FLIP[valuePolyfill]
-              : valuePolyfill;
-
-            value = originalValues.join(' ');
-          }
-        }
-      });
+      value = localizeTransitionProperty(originalValues, isRTL);
     }
 
     // Create finalized style
