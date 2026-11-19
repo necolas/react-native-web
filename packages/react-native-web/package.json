@@ -34,7 +34,7 @@
     "minify": "node ../../scripts/minifyDist.js dist"
   },
   "dependencies": {
-    "@react-native/normalize-colors": "^0.88.0",
+    "@react-native/normalize-colors": "^0.88.1",
     "invariant": "^2.2.4",
     "memoize-one": "^6.0.0",
     "nullthrows": "^1.1.1",
