@@ -178,7 +178,7 @@ const mergeFontFeatureSettings = (a: ?string, b: ?string): ?string => {
   return a;
 };
 
-const PROPERTIES_STANDARD: Record<string, string> = {
+export const PROPERTIES_STANDARD: Record<string, string> = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
   borderTopEndRadius: 'borderStartEndRadius',

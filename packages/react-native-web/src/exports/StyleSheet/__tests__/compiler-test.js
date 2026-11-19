@@ -270,6 +270,10 @@ describe('StyleSheet/compile', () => {
       expect(
         atomic({ transitionProperty: 'marginInlineStart, opacity' })
       ).toEqual(atomic({ transitionProperty: 'margin-inline-start, opacity' }));
+
+      expect(atomic({ transitionProperty: 'marginStart, opacity' })).toEqual(
+        atomic({ transitionProperty: 'margin-inline-start, opacity' })
+      );
     });
   });
 

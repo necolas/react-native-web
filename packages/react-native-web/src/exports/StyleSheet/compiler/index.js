@@ -13,6 +13,7 @@ import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty, {
   type StyleValue
 } from './normalizeValueWithProperty';
+import { PROPERTIES_STANDARD } from '../preprocess';
 
 export type Style = Readonly<Record<string, ?StyleValue>>;
 type Keyframes = Readonly<Record<string, Style>>;
@@ -139,22 +140,27 @@ const PROPERTIES_I18N: Record<string, string> = {
 
 const PROPERTIES_VALUE = new Set(['clear', 'float', 'textAlign']);
 
-// Maps of I18N property names (camelCase and hyphenated) to their hyphenated
+// Maps of I18N property names and React Native aliases to their hyphenated
 // LTR and RTL equivalent, for transitionProperty values.
 const TRANSITION_PROPERTIES_LTR: Record<string, string> = {};
 const TRANSITION_PROPERTIES_RTL: Record<string, string> = {};
 
-Object.keys(PROPERTIES_I18N).forEach((prop) => {
-  const ltrProp = PROPERTIES_I18N[prop];
+for (const prop of [
+  ...Object.keys(PROPERTIES_I18N),
+  ...Object.keys(PROPERTIES_STANDARD)
+]) {
+  const ltrProp = PROPERTIES_I18N[PROPERTIES_STANDARD[prop] ?? prop];
 
-  const ltrName = hyphenateStyleName(ltrProp);
-  const rtlName = hyphenateStyleName(PROPERTIES_FLIP[ltrProp]);
+  if (ltrProp != null) {
+    const ltrName = hyphenateStyleName(ltrProp);
+    const rtlName = hyphenateStyleName(PROPERTIES_FLIP[ltrProp]);
 
-  [prop, hyphenateStyleName(prop)].forEach((name) => {
-    TRANSITION_PROPERTIES_LTR[name] = ltrName;
-    TRANSITION_PROPERTIES_RTL[name] = rtlName;
-  });
-});
+    [prop, hyphenateStyleName(prop)].forEach((name) => {
+      TRANSITION_PROPERTIES_LTR[name] = ltrName;
+      TRANSITION_PROPERTIES_RTL[name] = rtlName;
+    });
+  }
+}
 
 function localizeTransitionProperty(
   value: StyleValue,
