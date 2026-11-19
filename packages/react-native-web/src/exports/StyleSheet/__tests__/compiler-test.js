@@ -219,6 +219,62 @@ describe('StyleSheet/compile', () => {
        ]
       `);
     });
+
+    test('converts logical transitionProperty values', () => {
+      expect(atomic({ transitionProperty: 'margin-inline-start, opacity' }))
+        .toMatchInlineSnapshot(`
+       [
+         {
+           "$$css": true,
+           "$$css$localize": true,
+           "transitionProperty": [
+             "r-transitionProperty-1b4l1tn",
+             "r-transitionProperty-1mussrw",
+           ],
+         },
+         [
+           [
+             [
+               ".r-transitionProperty-1b4l1tn{transition-property:margin-left, opacity;}",
+             ],
+             3,
+           ],
+           [
+             [
+               ".r-transitionProperty-1mussrw{transition-property:margin-right, opacity;}",
+             ],
+             3,
+           ],
+         ],
+       ]
+      `);
+
+      expect(atomic({ transitionProperty: 'margin-left, opacity' }))
+        .toMatchInlineSnapshot(`
+       [
+         {
+           "$$css": true,
+           "transitionProperty": "r-transitionProperty-1b4l1tn",
+         },
+         [
+           [
+             [
+               ".r-transitionProperty-1b4l1tn{transition-property:margin-left, opacity;}",
+             ],
+             3,
+           ],
+         ],
+       ]
+      `);
+
+      expect(
+        atomic({ transitionProperty: 'marginInlineStart, opacity' })
+      ).toEqual(atomic({ transitionProperty: 'margin-inline-start, opacity' }));
+
+      expect(atomic({ transitionProperty: 'marginStart, opacity' })).toEqual(
+        atomic({ transitionProperty: 'margin-inline-start, opacity' })
+      );
+    });
   });
 
   describe('classic', () => {
@@ -323,6 +379,41 @@ describe('StyleSheet/compile', () => {
             transitionProperty: 'right'
           };
           expect(inline(initial, isRTL)).toEqual(initial);
+        });
+
+        test(`converts transitionProperty values for ${dir}`, () => {
+          const string = {
+            transitionProperty: 'inset-inline-start, marginInlineEnd,opacity'
+          };
+
+          const array = {
+            transitionProperty: [
+              'borderStartEndRadius',
+              'padding-inline-start,opacity'
+            ]
+          };
+
+          expect(inline(string, isRTL)).toEqual({
+            transitionProperty: isRTL
+              ? 'right, margin-left, opacity'
+              : 'left, margin-right, opacity'
+          });
+
+          expect(inline(array, isRTL)).toEqual({
+            transitionProperty: isRTL
+              ? ['border-top-left-radius', 'padding-right, opacity']
+              : ['border-top-right-radius', 'padding-left, opacity']
+          });
+        });
+
+        test(`does not mutate transitionProperty arrays for ${dir}`, () => {
+          const initial = {
+            transitionProperty: Object.freeze(['marginInlineStart'])
+          };
+
+          expect(inline(initial, isRTL)).toEqual({
+            transitionProperty: [isRTL ? 'margin-right' : 'margin-left']
+          });
         });
 
         test(`converts "start" properties for ${dir}`, () => {

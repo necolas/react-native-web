@@ -13,6 +13,7 @@ import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty, {
   type StyleValue
 } from './normalizeValueWithProperty';
+import { PROPERTIES_STANDARD } from '../preprocess';
 
 export type Style = Readonly<Record<string, ?StyleValue>>;
 type Keyframes = Readonly<Record<string, Style>>;
@@ -139,6 +140,50 @@ const PROPERTIES_I18N: Record<string, string> = {
 
 const PROPERTIES_VALUE = new Set(['clear', 'float', 'textAlign']);
 
+// Maps of I18N property names and React Native aliases to their hyphenated
+// LTR and RTL equivalent, for transitionProperty values.
+const TRANSITION_PROPERTIES_LTR: Record<string, string> = {};
+const TRANSITION_PROPERTIES_RTL: Record<string, string> = {};
+
+for (const prop of [
+  ...Object.keys(PROPERTIES_I18N),
+  ...Object.keys(PROPERTIES_STANDARD)
+]) {
+  const ltrProp = PROPERTIES_I18N[PROPERTIES_STANDARD[prop] ?? prop];
+
+  if (ltrProp != null) {
+    const ltrName = hyphenateStyleName(ltrProp);
+    const rtlName = hyphenateStyleName(PROPERTIES_FLIP[ltrProp]);
+
+    [prop, hyphenateStyleName(prop)].forEach((name) => {
+      TRANSITION_PROPERTIES_LTR[name] = ltrName;
+      TRANSITION_PROPERTIES_RTL[name] = rtlName;
+    });
+  }
+}
+
+function localizeTransitionProperty(
+  value: StyleValue,
+  isRTL?: boolean
+): StyleValue {
+  if (Array.isArray(value)) {
+    return value.map((item) => localizeTransitionProperty(item, isRTL));
+  }
+  if (typeof value !== 'string') {
+    return value;
+  }
+
+  const map = isRTL ? TRANSITION_PROPERTIES_RTL : TRANSITION_PROPERTIES_LTR;
+
+  return value
+    .split(',')
+    .map((name) => {
+      const trimmedName = name.trim();
+      return map[trimmedName] ?? trimmedName;
+    })
+    .join(', ');
+}
+
 export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules = [];
@@ -196,31 +241,12 @@ export function atomic(style: Style): CompilerOutput {
         }
         // BiDi flip transitionProperty value
         if (srcProp === 'transitionProperty') {
-          const values = Array.isArray(value) ? value : [value];
-          const polyfillIndices = [];
-
-          for (let i = 0; i < values.length; i++) {
-            const val = values[i];
-            if (typeof val === 'string' && PROPERTIES_I18N[val] != null) {
-              polyfillIndices.push(i);
-            }
-          }
-
-          if (polyfillIndices.length > 0) {
-            const ltrPolyfillValues = [...values];
-            const rtlPolyfillValues = [...values];
-            polyfillIndices.forEach((i) => {
-              const ltrVal = ltrPolyfillValues[i];
-              if (typeof ltrVal === 'string') {
-                const ltrPolyfill = PROPERTIES_I18N[ltrVal];
-                const rtlPolyfill = PROPERTIES_FLIP[ltrPolyfill];
-                ltrPolyfillValues[i] = ltrPolyfill;
-                rtlPolyfillValues[i] = rtlPolyfill;
-                const ltr = atomicCompile(srcProp, srcProp, ltrPolyfillValues);
-                const rtl = atomicCompile(srcProp, srcProp, rtlPolyfillValues);
-                localizeableValue = [ltr, rtl];
-              }
-            });
+          const ltrValue = localizeTransitionProperty(value, false);
+          const rtlValue = localizeTransitionProperty(value, true);
+          if (String(ltrValue) !== String(rtlValue)) {
+            const ltr = atomicCompile(srcProp, srcProp, ltrValue);
+            const rtl = atomicCompile(srcProp, srcProp, rtlValue);
+            localizeableValue = [ltr, rtl];
           }
         }
 
@@ -303,22 +329,8 @@ export function inline(
     }
     // BiDi flip transitionProperty value
     if (originalProp === 'transitionProperty') {
-      const originalValues = Array.isArray(originalValue)
-        ? originalValue
-        : [originalValue];
-      originalValues.forEach((val, i) => {
-        if (typeof val === 'string') {
-          const valuePolyfill = PROPERTIES_I18N[val];
-          if (valuePolyfill != null) {
-            // $FlowFixMe[cannot-write] Array.isArray() refines unknown to a read-only array
-            originalValues[i] = isRTL
-              ? PROPERTIES_FLIP[valuePolyfill]
-              : valuePolyfill;
-
-            value = originalValues.join(' ');
-          }
-        }
-      });
+      // $FlowFixMe[incompatible-type] inline style values are not checked to be style values at runtime
+      value = localizeTransitionProperty(originalValue, isRTL);
     }
 
     // Create finalized style
