@@ -103,7 +103,6 @@ interface WebEventProps {
 interface WebSharedProps extends WebEventProps {
   dataSet?: Record<string, unknown> | undefined;
   lang?: string | undefined;
-  suppressHydrationWarning?: boolean | undefined;
   title?: string | undefined;
   /** @unstable */
   href?: string | undefined;
