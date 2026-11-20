@@ -115,8 +115,6 @@ interface WebSharedProps extends WebEventProps {
         target?: string | undefined;
       }
     | undefined;
-  /** @unstable */
-  type?: ButtonType | undefined;
 }
 
 // Styles that react-native does not declare.
@@ -392,6 +390,8 @@ declare module 'react-native' {
     delayPressIn?: number | undefined;
     /** Duration (in milliseconds) from `onPressEnd` is called after pointerup. */
     delayPressOut?: number | undefined;
+    /** The `type` attribute of the rendered element. */
+    type?: ButtonType | undefined;
     /** Used only for documentation or testing (e.g. snapshot testing). */
     testOnly_hovered?: boolean | undefined;
   }

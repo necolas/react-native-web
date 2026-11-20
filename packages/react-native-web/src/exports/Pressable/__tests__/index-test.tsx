@@ -493,4 +493,12 @@ describe('components/Pressable', () => {
       expect(container.firstChild).toHaveProperty('title', '123');
     });
   });
+
+  describe('prop "type"', () => {
+    test('value is set', () => {
+      const { container } = render(<Pressable type="submit" />);
+      const element = container.firstChild as HTMLElement;
+      expect(element.getAttribute('type')).toBe('submit');
+    });
+  });
 });

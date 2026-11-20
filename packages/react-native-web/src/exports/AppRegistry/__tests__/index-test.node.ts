@@ -102,7 +102,6 @@ describe('AppRegistry', () => {
 
       // First render "RootComponent"
       const RootComponent = (): React.ReactNode =>
-        // @ts-expect-error
         React.createElement(View, React.createElement(Text));
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');

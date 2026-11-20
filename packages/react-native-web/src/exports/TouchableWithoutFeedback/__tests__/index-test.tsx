@@ -28,6 +28,16 @@ describe('components/TouchableWithoutFeedback', () => {
     expect(ref).toHaveBeenCalled();
   });
 
+  test('forwards type', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback type="submit">
+        <View />
+      </TouchableWithoutFeedback>
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.getAttribute('type')).toBe('submit');
+  });
+
   test('forwards title', () => {
     const { container } = render(
       <TouchableWithoutFeedback title="Hello">

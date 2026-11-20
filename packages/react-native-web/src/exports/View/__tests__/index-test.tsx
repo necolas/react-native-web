@@ -319,12 +319,20 @@ describe('components/View', () => {
         'button'
       );
     });
+  });
 
-    test('value is set when role is "button"', () => {
-      const { container } = render(<View role="button" type="submit" />);
-      expect((container.firstChild as HTMLElement).getAttribute('type')).toBe(
-        'submit'
-      );
+  describe('prop "unstable_type"', () => {
+    test('value is set', () => {
+      const { container } = render(<View unstable_type="submit" />);
+      const element = container.firstChild as HTMLElement;
+      expect(element.getAttribute('type')).toBe('submit');
+    });
+
+    test('invalid value is ignored', () => {
+      // @ts-expect-error: "text" is not a valid value
+      const { container } = render(<View unstable_type="text" />);
+      const element = container.firstChild as HTMLElement;
+      expect(element.getAttribute('type')).toBeNull();
     });
   });
 });

@@ -37,8 +37,7 @@ const forwardPropsList = new Set([
   'lang',
   'onScroll',
   'onWheel',
-  'pointerEvents',
-  'type'
+  'pointerEvents'
 ]);
 
 const View = (
@@ -65,7 +64,8 @@ const View = (
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
-    ref
+    ref,
+    unstable_type
   } = props;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -111,6 +111,15 @@ const View = (
 
   const supportedProps = pick(props, forwardPropsList);
   supportedProps.dir = componentDirection;
+
+  if (
+    unstable_type === 'button' ||
+    unstable_type === 'reset' ||
+    unstable_type === 'submit'
+  ) {
+    supportedProps.type = unstable_type;
+  }
+
   supportedProps.style = [
     styles.view$raw,
     hasTextAncestor && styles.inline,

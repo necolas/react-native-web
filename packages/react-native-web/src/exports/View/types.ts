@@ -241,7 +241,7 @@ export type ViewProps = AccessibilityProps &
       rel?: Nullable<string>;
       target?: Nullable<string>;
     }>;
-    type?: Nullable<'button' | 'reset' | 'submit'>;
+    unstable_type?: Nullable<'button' | 'reset' | 'submit'>;
     // @deprecated
     focusable?: Nullable<boolean>;
     pointerEvents?: PointerEventsValue;
