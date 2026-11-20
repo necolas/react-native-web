@@ -102,10 +102,6 @@ Set the test selector label (via `data-testid`).
 Set the advisory information for the element (via `title`). Browsers usually show it as a tooltip on hover.
 {% endcall %}
 
-{% call macro.prop('type', '?("button" | "reset" | "submit")') %}
-If the element renders as a `<button>`, this prop sets its [type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#type). Defaults to `"button"`. Use `"submit"` to submit a parent `<form>`.
-{% endcall %}
-
 ---
 
 ## Examples

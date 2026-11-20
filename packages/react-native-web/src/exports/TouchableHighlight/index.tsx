@@ -90,6 +90,7 @@ function TouchableHighlight(props: Props): React.ReactNode {
     rejectResponderTermination,
     style,
     testOnly_pressed,
+    type,
     underlayColor,
     ...rest
   } = props;
@@ -179,6 +180,7 @@ function TouchableHighlight(props: Props): React.ReactNode {
         !disabled && styles.actionable,
         extraStyles?.underlay
       ]}
+      unstable_type={type}
     >
       {React.cloneElement(child, {
         style: [child.props.style, extraStyles?.child]

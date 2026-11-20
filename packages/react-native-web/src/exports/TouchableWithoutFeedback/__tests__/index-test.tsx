@@ -28,6 +28,27 @@ describe('components/TouchableWithoutFeedback', () => {
     expect(ref).toHaveBeenCalled();
   });
 
+  test('forwards type', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback type="submit">
+        <View />
+      </TouchableWithoutFeedback>
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.getAttribute('type')).toBe('submit');
+  });
+
+  test('forwards type to a host child', () => {
+    const { container } = render(
+      <TouchableWithoutFeedback type="submit">
+        <button />
+      </TouchableWithoutFeedback>
+    );
+    const element = container.firstChild as HTMLElement;
+    expect(element.getAttribute('type')).toBe('submit');
+    expect(element.hasAttribute('unstable_type')).toBe(false);
+  });
+
   test('forwards title', () => {
     const { container } = render(
       <TouchableWithoutFeedback title="Hello">

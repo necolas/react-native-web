@@ -35,8 +35,7 @@ const forwardPropsList = new Set([
   'disabled',
   'href',
   'lang',
-  'pointerEvents',
-  'type'
+  'pointerEvents'
 ]);
 
 const Text = (
@@ -68,7 +67,8 @@ const Text = (
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
     ref,
-    selectable
+    selectable,
+    unstable_type
   } = props;
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
@@ -119,6 +119,14 @@ const Text = (
   // 'auto' by default allows browsers to infer writing direction (root elements only)
   if (!hasTextAncestor) {
     supportedProps.dir = componentDirection ?? 'auto';
+  }
+
+  if (
+    unstable_type === 'button' ||
+    unstable_type === 'reset' ||
+    unstable_type === 'submit'
+  ) {
+    supportedProps.type = unstable_type;
   }
 
   if (onClick || onPress) {

@@ -28,7 +28,7 @@ export type StateCallbackType = Readonly<{
 
 type ViewStyleProp = ViewProps['style'];
 
-type Props = Omit<ViewProps, 'children' | 'style'> & {
+type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
   children?: React.ReactNode | ((state: StateCallbackType) => React.ReactNode);
   // Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
   delayLongPress?: Nullable<number>;
@@ -54,8 +54,12 @@ type Props = Omit<ViewProps, 'children' | 'style'> & {
   onPressMove?: PressResponderConfig['onPressMove'];
   // Called when a touch is released, before `onPress`.
   onPressOut?: PressResponderConfig['onPressEnd'];
+  // Ref to the underlying host view.
   ref?: React.Ref<React.ComponentRef<typeof View>>;
+  // Style, or a function that receives the interaction state and returns a style.
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp);
+  // The `type` attribute of the rendered element.
+  type?: ViewProps['unstable_type'];
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
    */
@@ -90,6 +94,7 @@ function Pressable(props: Props): React.ReactNode {
     tabIndex,
     testOnly_hovered,
     testOnly_pressed,
+    type,
     ...rest
   } = props;
 
@@ -220,6 +225,7 @@ function Pressable(props: Props): React.ReactNode {
         typeof style === 'function' ? style(interactionState) : style
       ]}
       tabIndex={_tabIndex}
+      unstable_type={type}
     >
       {typeof children === 'function' ? children(interactionState) : children}
     </View>

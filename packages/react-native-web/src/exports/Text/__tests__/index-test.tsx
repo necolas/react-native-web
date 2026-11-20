@@ -353,4 +353,19 @@ describe('components/Text', () => {
       );
     });
   });
+
+  describe('prop "unstable_type"', () => {
+    test('value is set', () => {
+      const { container } = render(<Text unstable_type="submit" />);
+      const element = container.firstChild as HTMLElement;
+      expect(element.getAttribute('type')).toBe('submit');
+    });
+
+    test('invalid value is ignored', () => {
+      // @ts-expect-error: "text" is not a valid value
+      const { container } = render(<Text unstable_type="text" />);
+      const element = container.firstChild as HTMLElement;
+      expect(element.getAttribute('type')).toBeNull();
+    });
+  });
 });

@@ -79,6 +79,10 @@ Called when the pointer stops interacting with the element after `delayPressOut`
 The style of the view. Supports computing style as a function of interaction state.
 {% endcall %}
 
+{% call macro.prop('type', '?("button" | "reset" | "submit")') %}
+Set the `type` attribute of the element.
+{% endcall %}
+
 {% call macro.prop('testOnly_hovered', '?boolean') %}
 Used only for documentation or testing (e.g. snapshot testing).
 {% endcall %}

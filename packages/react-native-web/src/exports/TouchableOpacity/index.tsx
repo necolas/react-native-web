@@ -48,6 +48,7 @@ function TouchableOpacity(props: Props): React.ReactNode {
     onPressOut,
     rejectResponderTermination,
     style,
+    type,
     ...rest
   } = props;
 
@@ -136,6 +137,7 @@ function TouchableOpacity(props: Props): React.ReactNode {
         opacityOverride != null && { opacity: opacityOverride },
         { transitionDuration: duration }
       ]}
+      unstable_type={type}
     />
   );
 }

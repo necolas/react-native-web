@@ -41,7 +41,7 @@ export type Props = Readonly<
     rejectResponderTermination?: Nullable<boolean>;
     testID?: ViewProps['testID'];
     title?: ViewProps['title'];
-    type?: ViewProps['type'];
+    type?: ViewProps['unstable_type'];
   }
 >;
 
@@ -55,8 +55,7 @@ const forwardPropsList = new Set([
   'onFocus',
   'onLayout',
   'testID',
-  'title',
-  'type'
+  'title'
 ]);
 
 function TouchableWithoutFeedback(props: Props): React.ReactNode {
@@ -71,7 +70,8 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
     onPressIn,
     onPressOut,
     ref,
-    rejectResponderTermination
+    rejectResponderTermination,
+    type
   } = props;
 
   const pressConfig = useMemo(
@@ -107,6 +107,7 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
     ref?: Props['ref'];
     [key: string]: unknown;
   }>;
+
   const children = [element.props.children];
   const supportedProps = pick(props, forwardPropsList);
 
@@ -116,12 +117,20 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
     props.accessibilityState?.disabled ??
     element.props['aria-disabled'];
 
+  if (type != null) {
+    supportedProps[
+      typeof element.type === 'string' ? 'type' : 'unstable_type'
+    ] = type;
+  }
+
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, element.props.ref);
 
-  const elementProps = { ...supportedProps, ...pressEventHandlers };
-
-  return React.cloneElement(element, elementProps, ...children);
+  return React.cloneElement(
+    element,
+    { ...supportedProps, ...pressEventHandlers },
+    ...children
+  );
 }
 
 const MemoedTouchableWithoutFeedback: React.FunctionComponent<Props> =
