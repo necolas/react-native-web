@@ -3,6 +3,7 @@ const shared = {
     '/node_modules/',
     '<rootDir>/packages/react-native-web/src/vendor/'
   ],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   fakeTimers: {
     enableGlobally: true
   },
