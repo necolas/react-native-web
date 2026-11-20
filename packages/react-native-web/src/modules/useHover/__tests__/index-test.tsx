@@ -1,0 +1,328 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { act, render } from '@testing-library/react';
+import * as React from 'react';
+import { clearPointers, createEventTarget } from 'dom-event-testing-library';
+import useHover from '..';
+
+type DivRef = React.RefObject<HTMLDivElement | null>;
+type HoverMock = jest.Mock<(e: PointerEvent) => void>;
+type HoverChangeMock = jest.Mock<(isHovered: boolean) => void>;
+
+describe('useHover', () => {
+  afterEach(() => {
+    // make sure all tests reset state machine tracking pointers on the mock surface
+    clearPointers();
+  });
+
+  describe('nested targets', () => {
+    let onHoverChange: HoverChangeMock,
+      onHoverStart: HoverMock,
+      onHoverEnd: HoverMock,
+      ref: DivRef,
+      childRef: DivRef;
+
+    const componentInit = () => {
+      onHoverChange = jest.fn();
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      childRef = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, {
+          onHoverChange,
+          onHoverStart,
+          onHoverEnd
+        });
+        useHover(childRef, {});
+        return (
+          <div ref={ref}>
+            <div ref={childRef} />
+          </div>
+        );
+      };
+      render(<Component />);
+    };
+
+    test('contains the hover gesture', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      const child = createEventTarget(childRef.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout();
+        child.pointerover();
+      });
+      expect(onHoverEnd).toHaveBeenCalled();
+      act(() => {
+        child.pointerout({ relatedTarget: target.node });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(2);
+    });
+
+    test('does not restart the hover gesture when leaving the target and child together', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      const child = createEventTarget(childRef.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: document.body });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+    });
+
+    test('only changes the nearest ancestor', () => {
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      childRef = React.createRef<HTMLDivElement>();
+      const grandchildRef = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, { onHoverStart, onHoverEnd });
+        useHover(childRef, {});
+        useHover(grandchildRef, {});
+        return (
+          <div ref={ref}>
+            <div ref={childRef}>
+              <div ref={grandchildRef} />
+            </div>
+          </div>
+        );
+      };
+      render(<Component />);
+      const target = createEventTarget(ref.current!);
+      const child = createEventTarget(childRef.current!);
+      const grandchild = createEventTarget(grandchildRef.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: child.node });
+        child.pointerover();
+        child.pointerout({ relatedTarget: grandchild.node });
+        grandchild.pointerover();
+        grandchild.pointerout({ relatedTarget: child.node });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('disabled', () => {
+    let onHoverChange: HoverChangeMock,
+      onHoverStart: HoverMock,
+      onHoverEnd: HoverMock,
+      ref: DivRef;
+
+    const componentInit = () => {
+      onHoverChange = jest.fn();
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, {
+          disabled: true,
+          onHoverChange,
+          onHoverStart,
+          onHoverEnd
+        });
+        return <div ref={ref} />;
+      };
+      render(<Component />);
+    };
+
+    test('does not call callbacks', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout();
+      });
+      expect(onHoverChange).not.toHaveBeenCalled();
+      expect(onHoverStart).not.toHaveBeenCalled();
+      expect(onHoverEnd).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onHoverStart', () => {
+    let onHoverStart: HoverMock, ref: DivRef;
+
+    const componentInit = () => {
+      onHoverStart = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, { onHoverStart });
+        return <div ref={ref} />;
+      };
+      render(<Component />);
+    };
+
+    test('is called for mouse pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerover({ pointerType: 'mouse' });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+    });
+
+    test('is not called for touch pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+        target.pointerup({ pointerType: 'touch' });
+      });
+      expect(onHoverStart).not.toHaveBeenCalled();
+    });
+
+    test('is called if a mouse pointer is used after a touch pointer', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+        target.pointerup({ pointerType: 'touch' });
+        target.pointerover({ pointerType: 'mouse' });
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('onHoverChange', () => {
+    let onHoverChange: HoverChangeMock, ref: DivRef;
+
+    const componentInit = () => {
+      onHoverChange = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, { onHoverChange });
+        return <div ref={ref} />;
+      };
+      render(<Component />);
+    };
+
+    test('is called for mouse pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerover();
+      });
+      expect(onHoverChange).toHaveBeenCalledTimes(1);
+      expect(onHoverChange).toHaveBeenCalledWith(true);
+      act(() => {
+        target.pointerout();
+      });
+      expect(onHoverChange).toHaveBeenCalledTimes(2);
+      expect(onHoverChange).toHaveBeenCalledWith(false);
+    });
+
+    test('is not called for touch pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+        target.pointerup({ pointerType: 'touch' });
+      });
+      expect(onHoverChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onHoverEnd', () => {
+    let onHoverEnd: HoverMock, ref: DivRef, childRef: DivRef;
+
+    const componentInit = () => {
+      onHoverEnd = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      childRef = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, { onHoverEnd });
+        return (
+          <div ref={ref}>
+            <div ref={childRef} />
+          </div>
+        );
+      };
+      render(<Component />);
+    };
+
+    test('is called for mouse pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout();
+      });
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+    });
+
+    test('is not called for touch pointers', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerdown({ pointerType: 'touch' });
+        target.pointerup({ pointerType: 'touch' });
+      });
+      expect(onHoverEnd).not.toHaveBeenCalled();
+    });
+
+    test('is not called when entering children of the target', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      const child = createEventTarget(childRef.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout({ relatedTarget: childRef.current });
+        child.pointerover({ relatedTarget: target.node });
+      });
+      expect(onHoverEnd).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('repeat use', () => {
+    let onHoverChange: HoverChangeMock,
+      onHoverStart: HoverMock,
+      onHoverEnd: HoverMock,
+      ref: DivRef;
+
+    const componentInit = () => {
+      onHoverChange = jest.fn();
+      onHoverStart = jest.fn();
+      onHoverEnd = jest.fn();
+      ref = React.createRef<HTMLDivElement>();
+      const Component = () => {
+        useHover(ref, {
+          onHoverChange,
+          onHoverStart,
+          onHoverEnd
+        });
+        return <div ref={ref} />;
+      };
+      render(<Component />);
+    };
+
+    test('callbacks are called each time', () => {
+      componentInit();
+      const target = createEventTarget(ref.current!);
+      act(() => {
+        target.pointerover();
+        target.pointerout();
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverChange).toHaveBeenCalledTimes(2);
+      act(() => {
+        target.pointerover();
+        target.pointerout();
+      });
+      expect(onHoverStart).toHaveBeenCalledTimes(2);
+      expect(onHoverEnd).toHaveBeenCalledTimes(2);
+      expect(onHoverChange).toHaveBeenCalledTimes(4);
+    });
+  });
+});

@@ -1,0 +1,949 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import React from 'react';
+import TextInput from '..';
+import View from '../../View';
+import { createEventTarget } from 'dom-event-testing-library';
+import { act, render } from '@testing-library/react';
+import type { PlatformMethods } from '../../../types';
+
+type TextInputNode = HTMLElement &
+  PlatformMethods & {
+    clear?: () => void;
+    isFocused?: () => boolean;
+  };
+
+function findInput(container: HTMLElement) {
+  return container.querySelector('input') as HTMLInputElement;
+}
+
+function findTextArea(container: HTMLElement) {
+  return container.querySelector('textarea') as HTMLTextAreaElement;
+}
+
+const testIfDocumentIsFocused = (message: string, fn: () => void) => {
+  if (document.hasFocus && document.hasFocus()) {
+    test(message, fn);
+  } else {
+    test.skip(`${message} – document is not focused`, () => {});
+  }
+};
+
+function createEvent(type: string, data: Record<string, unknown> = {}) {
+  const event = new CustomEvent(type, { bubbles: true, cancelable: true });
+  if (data != null) {
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+      if (key === 'timeStamp' && !value) {
+        return;
+      }
+      Object.defineProperty(event, key, { value });
+    });
+  }
+  return event;
+}
+
+type KeyboardEventPayload = {
+  altKey?: boolean;
+  ctrlKey?: boolean;
+  isComposing?: boolean;
+  key?: string;
+  keyCode?: number;
+  metaKey?: boolean;
+  preventDefault?: () => void;
+  shiftKey?: boolean;
+};
+
+function createKeyboardEvent(
+  type: string,
+  {
+    altKey = false,
+    ctrlKey = false,
+    isComposing = false,
+    key = '',
+    keyCode = 0,
+    metaKey = false,
+    preventDefault = () => {},
+    shiftKey = false
+  }: KeyboardEventPayload = {}
+) {
+  return createEvent(type, {
+    altKey,
+    ctrlKey,
+    isComposing,
+    key,
+    keyCode,
+    metaKey,
+    preventDefault,
+    shiftKey
+  });
+}
+
+function keydown(payload: KeyboardEventPayload) {
+  return createKeyboardEvent('keydown', payload);
+}
+
+describe('components/TextInput', () => {
+  describe('prop "autoComplete"', () => {
+    test('value "on"', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.getAttribute('autoComplete')).toEqual('on');
+    });
+
+    test('value "off"', () => {
+      const { container } = render(<TextInput autoComplete="off" />);
+      const input = findInput(container);
+      expect(input.getAttribute('autoComplete')).toEqual('off');
+    });
+
+    test('autoCompleteType fallback', () => {
+      const { container } = render(<TextInput autoCompleteType="off" />);
+      const input = findInput(container);
+      expect(input.getAttribute('autoComplete')).toEqual('off');
+    });
+  });
+
+  describe('prop "autoFocus"', () => {
+    test('value "false"', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(document.activeElement).not.toBe(input);
+    });
+
+    test('value "true"', () => {
+      const { container } = render(<TextInput autoFocus />);
+      const input = findInput(container);
+      expect(document.activeElement).toBe(input);
+    });
+  });
+
+  describe('prop "caretHidden"', () => {
+    test('value "true"', () => {
+      const { container } = render(<TextInput caretHidden />);
+      const style = window.getComputedStyle(
+        container.firstChild as HTMLElement
+      );
+      expect(style.caretColor).toEqual('rgba(0, 0, 0, 0)');
+    });
+  });
+
+  describe('prop "clearTextOnFocus"', () => {
+    const defaultValue = 'defaultValue';
+
+    testIfDocumentIsFocused('value "false"', () => {
+      const { container } = render(<TextInput defaultValue={defaultValue} />);
+      const input = findInput(container);
+      input.focus();
+      expect(input.value).toEqual(defaultValue);
+    });
+
+    testIfDocumentIsFocused('value "true"', () => {
+      const { container } = render(
+        <TextInput clearTextOnFocus defaultValue={defaultValue} />
+      );
+      const input = findInput(container);
+      input.focus();
+      expect(input.value).toEqual('');
+    });
+  });
+
+  test('prop "defaultValue"', () => {
+    const defaultValue = 'defaultValue';
+    const { container } = render(<TextInput defaultValue={defaultValue} />);
+    const input = findInput(container);
+    expect(input.value).toEqual(defaultValue);
+  });
+
+  describe('prop "disabled"', () => {
+    test('value "false"', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.disabled).toEqual(false);
+    });
+
+    test('value "true"', () => {
+      const { container } = render(<TextInput disabled={true} />);
+      const input = findInput(container);
+      expect(input.disabled).toEqual(true);
+    });
+  });
+
+  describe('prop "editable"', () => {
+    test('value "true"', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.readOnly).toEqual(false);
+    });
+
+    test('value "false"', () => {
+      const { container } = render(<TextInput editable={false} />);
+      const input = findInput(container);
+      expect(input.readOnly).toEqual(true);
+    });
+  });
+
+  describe('prop "inputMode"', () => {
+    test('value "decimal"', () => {
+      const { container } = render(<TextInput inputMode="decimal" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('decimal');
+    });
+
+    test('value "email"', () => {
+      const { container } = render(<TextInput inputMode="email" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('email');
+      expect(input.type).toEqual('email');
+    });
+
+    test('default value', () => {
+      const { container } = render(<TextInput inputMode="none" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('none');
+      expect(input.type).toEqual('text');
+    });
+
+    test('value "numeric"', () => {
+      const { container } = render(<TextInput inputMode="numeric" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('numeric');
+    });
+
+    test('value "search"', () => {
+      const { container } = render(<TextInput inputMode="search" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('search');
+      expect(input.type).toEqual('search');
+    });
+
+    test('value "tel"', () => {
+      const { container } = render(<TextInput inputMode="tel" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('tel');
+      expect(input.type).toEqual('tel');
+    });
+
+    test('value "text"', () => {
+      const { container } = render(<TextInput inputMode="text" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('text');
+      expect(input.type).toEqual('text');
+    });
+
+    test('value "url"', () => {
+      const { container } = render(<TextInput inputMode="url" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('url');
+      expect(input.type).toEqual('url');
+    });
+  });
+
+  describe('prop "keyboardType"', () => {
+    test('default value', () => {
+      const { container } = render(<TextInput keyboardType="default" />);
+      const input = findInput(container);
+      expect(input.type).toEqual('text');
+    });
+
+    test('value "email-address"', () => {
+      const { container } = render(<TextInput keyboardType="email-address" />);
+      const input = findInput(container);
+      expect(input.type).toEqual('email');
+    });
+
+    test('value "decimal-pad"', () => {
+      const { container } = render(<TextInput keyboardType="decimal-pad" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('decimal');
+    });
+
+    test('value "number-pad"', () => {
+      const { container } = render(<TextInput keyboardType="number-pad" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('numeric');
+    });
+
+    test('value "numeric"', () => {
+      const { container } = render(<TextInput keyboardType="numeric" />);
+      const input = findInput(container);
+      expect(input.inputMode).toEqual('numeric');
+    });
+
+    test('value "phone-pad"', () => {
+      const { container } = render(<TextInput keyboardType="phone-pad" />);
+      const input = findInput(container);
+      expect(input.type).toEqual('tel');
+    });
+
+    test('value "url"', () => {
+      const { container } = render(<TextInput keyboardType="url" />);
+      const input = findInput(container);
+      expect(input.type).toEqual('url');
+    });
+  });
+
+  test('prop "maxLength"', () => {
+    let { container } = render(<TextInput />);
+    let input = findInput(container);
+    expect(input.getAttribute('maxLength')).toEqual(null);
+
+    ({ container } = render(<TextInput maxLength={10} />));
+    input = findInput(container);
+    expect(input.getAttribute('maxLength')).toEqual('10');
+  });
+
+  describe('prop "multiline"', () => {
+    test('value "false"', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input).toBeDefined();
+    });
+
+    test('value "true"', () => {
+      const { container } = render(<TextInput multiline />);
+      const textarea = findTextArea(container);
+      expect(textarea).toBeDefined();
+    });
+  });
+
+  describe('prop "numberOfLines"', () => {
+    test('without "multiline"', () => {
+      const { container } = render(<TextInput numberOfLines={2} />);
+      const input = findInput(container);
+      const textarea = findTextArea(container);
+      expect(input).toBeDefined();
+      expect(textarea).toBeNull();
+    });
+
+    test('with "multiline"', () => {
+      const { container } = render(<TextInput multiline numberOfLines={3} />);
+      const textarea = findTextArea(container);
+      expect(textarea.getAttribute('rows')).toEqual('3');
+    });
+
+    test('with "multiline" defaults to 1 row', () => {
+      const { container } = render(<TextInput multiline />);
+      const textarea = findTextArea(container);
+      expect(textarea.getAttribute('rows')).toEqual('1');
+    });
+  });
+
+  test('prop "onBlur"', () => {
+    const onBlur = jest.fn();
+    const ref = React.createRef<TextInputNode>();
+    act(() => {
+      render(<TextInput onBlur={onBlur} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current!);
+    const body = createEventTarget(document.body);
+    act(() => {
+      target.focus();
+      body.focus({ relatedTarget: target.node });
+    });
+    expect(onBlur).toHaveBeenCalledTimes(1);
+    expect(TextInput.State.currentlyFocusedField()).toBe(null);
+  });
+
+  test.skip('prop "onChange"', () => {
+    const onChange = jest.fn();
+    const { container } = render(<TextInput onChange={onChange} />);
+    const input = findInput(container);
+    // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
+    input.dispatchEvent(new window.Event('change', { bubbles: true }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  test.skip('prop "onChangeText"', () => {
+    const onChangeText = jest.fn();
+    const { container } = render(<TextInput onChangeText={onChangeText} />);
+    const input = findInput(container);
+    // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
+    input.dispatchEvent(keydown({ key: 'a' }));
+    input.dispatchEvent(new window.Event('change', { bubbles: true }));
+    expect(onChangeText).toHaveBeenCalledTimes(1);
+    expect(onChangeText).toHaveBeenCalledWith('a');
+  });
+
+  test('prop "onFocus"', () => {
+    const onFocus = jest.fn();
+    const ref = React.createRef<TextInputNode>();
+    act(() => {
+      render(<TextInput onFocus={onFocus} ref={ref} />);
+    });
+    const target = createEventTarget(ref.current!);
+    act(() => {
+      target.focus();
+    });
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    target.node.focus();
+    expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
+  });
+
+  test('keydown events bubble to ancestors', () => {
+    const onKeyDown = jest.fn();
+    const { container } = render(
+      <View onKeyDown={onKeyDown}>
+        <TextInput />
+      </View>
+    );
+    const input = findInput(container);
+    input.dispatchEvent(keydown({ key: 'Escape' }));
+    input.dispatchEvent(keydown({ key: ' ' }));
+    expect(onKeyDown).toHaveBeenCalledTimes(2);
+  });
+
+  describe('prop "onKeyPress"', () => {
+    test('arrow key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'ArrowLeft' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'ArrowLeft',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('backspace key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Backspace' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'Backspace',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('enter key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Enter' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'Enter',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('escape key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Escape' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'Escape',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('space key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: ' ' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: ' ',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('tab key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Tab' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'Tab',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('text key', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'a' }));
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: false,
+            ctrlKey: false,
+            key: 'a',
+            metaKey: false,
+            shiftKey: false,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('modifier keys are included', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(
+        keydown({
+          altKey: true,
+          ctrlKey: true,
+          metaKey: true,
+          shiftKey: true,
+          key: ' '
+        })
+      );
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledWith(
+        expect.objectContaining({
+          nativeEvent: expect.objectContaining({
+            altKey: true,
+            ctrlKey: true,
+            key: ' ',
+            metaKey: true,
+            shiftKey: true,
+            target: expect.anything()
+          })
+        })
+      );
+    });
+
+    test('meta key + Enter calls "onKeyPress"', () => {
+      const onKeyPress = jest.fn((e) => {
+        e.persist();
+      });
+      const { container } = render(<TextInput onKeyPress={onKeyPress} />);
+      const input = findInput(container);
+      input.dispatchEvent(
+        keydown({
+          metaKey: true,
+          key: 'Enter'
+        })
+      );
+      expect(onKeyPress).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('prop "onSelectionChange"', () => {
+    test('is called on select', () => {
+      const { container } = render(
+        <TextInput defaultValue="12345" onSelectionChange={onSelectionChange} />
+      );
+      const input = findInput(container);
+      input.selectionStart = 0;
+      input.selectionEnd = 3;
+      input.dispatchEvent(new window.Event('select', {}));
+      function onSelectionChange(e: {
+        nativeEvent: {
+          selection: { start: number | null; end: number | null };
+        };
+      }) {
+        expect(e.nativeEvent.selection.end).toEqual(3);
+        expect(e.nativeEvent.selection.start).toEqual(0);
+      }
+    });
+
+    test.skip('is called on change', () => {
+      const onSelectionChange = jest.fn();
+      const { container } = render(
+        <TextInput onSelectionChange={onSelectionChange} />
+      );
+      const input = findInput(container);
+      // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
+      input.dispatchEvent(new window.Event('input', { bubbles: true }));
+      expect(onSelectionChange).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('prop "onSubmitEditing"', () => {
+    test('single-line input', (done) => {
+      const { container } = render(
+        <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
+      );
+      const input = findInput(container);
+      input.dispatchEvent(keydown({ key: 'Enter' }));
+      function onSubmitEditing(e: {
+        nativeEvent: { target?: unknown; text: string };
+      }) {
+        expect(e.nativeEvent.target).toBeDefined();
+        expect(e.nativeEvent.text).toBe('12345');
+        done();
+      }
+    });
+
+    test('single-line input while composing', () => {
+      const onSubmitEditing = jest.fn();
+      const { container } = render(
+        <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
+      );
+      const input = findInput(container);
+      input.dispatchEvent(
+        keydown({ key: 'Enter', isComposing: true, keyCode: 13 })
+      );
+      input.dispatchEvent(
+        keydown({ key: 'Enter', isComposing: false, keyCode: 229 })
+      );
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+    });
+
+    test('multi-line input', () => {
+      jest.useFakeTimers();
+      const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
+      const { container } = render(
+        <TextInput
+          defaultValue="12345"
+          multiline
+          onSubmitEditing={onSubmitEditing}
+        />
+      );
+      const textarea = findTextArea(container);
+      const blur = jest.spyOn(textarea, 'blur');
+      textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
+      act(() => {
+        jest.runAllTimers();
+      });
+      expect(onSubmitEditing).not.toHaveBeenCalled();
+      expect(preventDefault).not.toHaveBeenCalled();
+      expect(blur).not.toHaveBeenCalled();
+      jest.useRealTimers();
+    });
+
+    test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
+      const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
+
+      const { container } = render(
+        <TextInput
+          blurOnSubmit
+          defaultValue="12345"
+          multiline
+          onSubmitEditing={onSubmitEditing}
+        />
+      );
+      const textarea = findTextArea(container);
+      textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+
+      // shift+enter also submits, as in React Native
+      textarea.dispatchEvent(
+        keydown({ key: 'Enter', preventDefault, shiftKey: true })
+      );
+      expect(onSubmitEditing).toHaveBeenCalledTimes(2);
+      expect(preventDefault).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('prop "submitBehavior"', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    function renderAndSubmit(props: React.ComponentProps<typeof TextInput>) {
+      const onSubmitEditing = jest.fn();
+      const preventDefault = jest.fn();
+
+      const { container } = render(
+        <TextInput onSubmitEditing={onSubmitEditing} {...props} />
+      );
+
+      const node = props.multiline
+        ? findTextArea(container)
+        : findInput(container);
+
+      const blur = jest.spyOn(node, 'blur');
+      node.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
+
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      return { blur, onSubmitEditing, preventDefault };
+    }
+
+    test('value "submit"', () => {
+      [false, true].forEach((multiline) => {
+        const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+          multiline,
+          submitBehavior: 'submit'
+        });
+        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(blur).not.toHaveBeenCalled();
+      });
+    });
+
+    test('value "blurAndSubmit"', () => {
+      [false, true].forEach((multiline) => {
+        const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+          multiline,
+          submitBehavior: 'blurAndSubmit'
+        });
+        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(blur).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    test('value "newline" on single-line input is "blurAndSubmit"', () => {
+      const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
+        submitBehavior: 'newline'
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(blur).toHaveBeenCalledTimes(1);
+    });
+
+    test('takes precedence over "blurOnSubmit"', () => {
+      const { blur, onSubmitEditing } = renderAndSubmit({
+        blurOnSubmit: true,
+        submitBehavior: 'submit'
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(blur).not.toHaveBeenCalled();
+    });
+
+    test('single-line "blurOnSubmit={false}" is "submit"', () => {
+      const { blur, onSubmitEditing } = renderAndSubmit({
+        blurOnSubmit: false
+      });
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(blur).not.toHaveBeenCalled();
+    });
+
+    test('multi-line without "onSubmitEditing" does not insert a newline', () => {
+      const { blur, preventDefault } = renderAndSubmit({
+        multiline: true,
+        onSubmitEditing: undefined,
+        submitBehavior: 'blurAndSubmit'
+      });
+      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(blur).toHaveBeenCalledTimes(1);
+    });
+
+    test('single-line without "onSubmitEditing" does not prevent form submit', () => {
+      const { preventDefault } = renderAndSubmit({
+        onSubmitEditing: undefined,
+        submitBehavior: 'submit'
+      });
+      expect(preventDefault).not.toHaveBeenCalled();
+    });
+  });
+
+  test('prop "returnKeyType"', () => {
+    const returnKeyType = 'previous';
+    const { container } = render(<TextInput returnKeyType={returnKeyType} />);
+    const input = findInput(container);
+    expect(input.getAttribute('enterkeyhint')).toEqual(returnKeyType);
+  });
+
+  test('prop "secureTextEntry"', () => {
+    let { container } = render(<TextInput secureTextEntry />);
+    const input = findInput(container);
+    expect(input.getAttribute('type')).toEqual('password');
+    // ignored for multiline
+    ({ container } = render(<TextInput multiline secureTextEntry />));
+    const textarea = findTextArea(container);
+    expect(textarea.getAttribute('type')).toEqual(null);
+  });
+
+  describe('prop "selectTextOnFocus"', () => {
+    testIfDocumentIsFocused('value "false"', () => {
+      const { container } = render(<TextInput defaultValue="text" />);
+      const input = findInput(container);
+      input.focus();
+      expect(input.selectionEnd).toEqual(4);
+      expect(input.selectionStart).toEqual(4);
+    });
+  });
+
+  describe('prop "selection"', () => {
+    test('set cursor location', () => {
+      const cursorLocation = { start: 3, end: 3 };
+      const { container: defaultContainer } = render(
+        <TextInput defaultValue="12345" />
+      );
+      const inputDefaultSelection = findInput(defaultContainer);
+      // default selection is at the end
+      expect(inputDefaultSelection.selectionStart).toEqual(5);
+      expect(inputDefaultSelection.selectionEnd).toEqual(5);
+
+      const { container: customContainer } = render(
+        <TextInput defaultValue="12345" selection={cursorLocation} />
+      );
+      const inputCustomSelection = findInput(customContainer);
+      // custom selection sets cursor at custom position
+      expect(inputCustomSelection.selectionStart).toEqual(cursorLocation.start);
+      expect(inputCustomSelection.selectionEnd).toEqual(cursorLocation.end);
+    });
+  });
+
+  describe('prop "spellCheck"', () => {
+    test('default value', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.getAttribute('spellCheck')).toEqual('true');
+    });
+
+    test('inherit from "autoCorrect"', () => {
+      const { container } = render(<TextInput autoCorrect={false} />);
+      const input = findInput(container);
+      expect(input.getAttribute('spellCheck')).toEqual('false');
+    });
+
+    test('value "false"', () => {
+      const { container } = render(<TextInput spellCheck={false} />);
+      const input = findInput(container);
+      expect(input.getAttribute('spellCheck')).toEqual('false');
+    });
+  });
+
+  test('prop "value"', () => {
+    const value = 'value';
+    const { container } = render(<TextInput value={value} />);
+    const input = findInput(container);
+    expect(input.value).toEqual(value);
+  });
+
+  describe('prop "showSoftInputOnFocus"', () => {
+    test('default value', () => {
+      const { container } = render(<TextInput />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('auto');
+    });
+
+    test('true value', () => {
+      const { container } = render(<TextInput showSoftInputOnFocus={true} />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('auto');
+    });
+
+    test('false value', () => {
+      const { container } = render(<TextInput showSoftInputOnFocus={false} />);
+      const input = findInput(container);
+      expect(input.getAttribute('virtualkeyboardpolicy')).toEqual('manual');
+    });
+  });
+
+  describe('prop "textAlign"', () => {
+    test('value "center"', () => {
+      const { container } = render(<TextInput textAlign="center" />);
+      const style = window.getComputedStyle(
+        container.firstChild as HTMLElement
+      );
+      expect(style.textAlign).toEqual('center');
+    });
+
+    test('style takes precedence', () => {
+      const { container } = render(
+        <TextInput style={{ textAlign: 'right' }} textAlign="center" />
+      );
+      const style = window.getComputedStyle(
+        container.firstChild as HTMLElement
+      );
+      expect(style.textAlign).toEqual('right');
+    });
+  });
+
+  describe('prop "title"', () => {
+    test('value is set', () => {
+      const { container } = render(<TextInput title="Hello" />);
+      const input = findInput(container);
+      expect(input.getAttribute('title')).toBe('Hello');
+    });
+  });
+
+  describe('imperative methods', () => {
+    test('node.clear()', () => {
+      const ref = React.createRef<TextInputNode>();
+      render(<TextInput ref={ref} />);
+      expect(typeof ref.current!.clear).toBe('function');
+    });
+
+    test('node.isFocused()', () => {
+      const ref = React.createRef<TextInputNode>();
+      render(<TextInput ref={ref} />);
+      expect(typeof ref.current!.isFocused).toBe('function');
+    });
+  });
+});

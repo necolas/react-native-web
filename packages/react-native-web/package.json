@@ -29,8 +29,8 @@
   ],
   "scripts": {
     "clean": "del-cli ./dist",
-    "build": "npm run clean && babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\" && npm run minify",
-    "dev": "npm run clean && babel src --root-mode upward --out-dir dist --ignore \"**/__tests__\" --watch",
+    "build": "npm run clean && babel src --root-mode upward --extensions .ts,.tsx --out-dir dist --ignore \"**/__tests__\" && npm run minify",
+    "dev": "npm run clean && babel src --root-mode upward --extensions .ts,.tsx --out-dir dist --ignore \"**/__tests__\" --watch",
     "minify": "node ../../scripts/minifyDist.js dist"
   },
   "dependencies": {

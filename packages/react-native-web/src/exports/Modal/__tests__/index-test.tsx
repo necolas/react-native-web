@@ -1,0 +1,882 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import Modal from '..';
+import React from 'react';
+import { fireEvent, render } from '@testing-library/react';
+
+describe('components/Modal', () => {
+  test('visible by default', () => {
+    const { getByTestId } = render(
+      <Modal>
+        <a data-testid="inside" href="#hello">
+          Hello
+        </a>
+      </Modal>
+    );
+    const insideElement = getByTestId('inside');
+    expect(insideElement).not.toBeNull();
+    expect(insideElement).not.toBe(document.body);
+  });
+
+  test('forwards props', () => {
+    const { getByTestId } = render(
+      <Modal aria-label="label" aria-labelledby="labelledby" testID="root" />
+    );
+    expect(getByTestId('root')).toMatchSnapshot();
+  });
+
+  test('does not render children when not visible', () => {
+    const { container } = render(
+      <Modal visible={false}>
+        <a data-testid="inside" href="#hello">
+          Hello
+        </a>
+      </Modal>
+    );
+    expect(container.children.length).toBe(0);
+  });
+
+  test('invisible modals will not be the active modal', () => {
+    const { getByTestId } = render(
+      <>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <Modal key="modal-b" visible={false}>
+          <a data-testid="inside-b" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+    const insideElement = getByTestId('inside-a');
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(insideElement)).toBeTruthy();
+  });
+
+  test('multiple modals will only mark one as active', () => {
+    const { getByTestId } = render(
+      <>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+    const insideElement = getByTestId('inside-b');
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(insideElement)).toBeTruthy();
+  });
+
+  test('modal active state changes propogate', () => {
+    const { rerender, getByTestId } = render(
+      <>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <Modal key="modal-b" visible={false}>
+          <a data-testid="inside-b" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    rerender(
+      <>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    const insideElement = getByTestId('inside-b');
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(insideElement)).toBeTruthy();
+  });
+
+  test('removed modal sets others active state', () => {
+    const { rerender, getByTestId } = render(
+      <>
+        <Modal key="modal-a" visible={true}>
+          <a data-testid="inside-a" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <Modal key="modal-b" visible={true}>
+          <a data-testid="inside-b" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    rerender(
+      <Modal key="modal-a" visible={true}>
+        <a data-testid="inside-a" href="#hello">
+          Hello
+        </a>
+      </Modal>
+    );
+
+    const insideElement = getByTestId('inside-a');
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(insideElement)).toBeTruthy();
+  });
+
+  test('executes onShow callback when initially showing', () => {
+    const onShowCallback = jest.fn();
+    render(<Modal onShow={onShowCallback} visible={true} />);
+    expect(onShowCallback).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not execute onShow callback when initially hidden', () => {
+    const onShowCallback = jest.fn();
+    render(<Modal onShow={onShowCallback} visible={false} />);
+    expect(onShowCallback).toHaveBeenCalledTimes(0);
+  });
+
+  test('does not execute onDismiss callback when initially hidden', () => {
+    const onDismissCallback = jest.fn();
+    render(<Modal onDismiss={onDismissCallback} visible={false} />);
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+  });
+
+  test('does not execute onDismiss callback when initially showing', () => {
+    const onDismissCallback = jest.fn();
+    render(<Modal onDismiss={onDismissCallback} visible={true} />);
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+  });
+
+  test('executes onShow callback when visibility changes', () => {
+    const onShowCallback = jest.fn();
+    const { rerender } = render(
+      <Modal onShow={onShowCallback} visible={false} />
+    );
+    expect(onShowCallback).toHaveBeenCalledTimes(0);
+    rerender(<Modal onShow={onShowCallback} visible={true} />);
+    expect(onShowCallback).toHaveBeenCalledTimes(1);
+  });
+
+  test('executes onDismiss callback when visibility changes', () => {
+    const onDismissCallback = jest.fn();
+    const { rerender } = render(
+      <Modal onDismiss={onDismissCallback} visible={true} />
+    );
+    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+    rerender(<Modal onDismiss={onDismissCallback} visible={false} />);
+    expect(onDismissCallback).toHaveBeenCalledTimes(1);
+  });
+
+  test('a modal shown again in the update that dismisses it is active', () => {
+    function TestComponent() {
+      const [visible, setVisible] = React.useState(true);
+
+      React.useEffect(() => {
+        if (!visible) {
+          setVisible(true);
+        }
+      }, [visible]);
+
+      return (
+        <>
+          <button data-testid="close" onClick={() => setVisible(false)} />
+          <Modal visible={visible} />
+        </>
+      );
+    }
+
+    const { getByTestId } = render(<TestComponent />);
+    fireEvent.click(getByTestId('close'));
+
+    expect(document.body.querySelectorAll('[role=dialog]').length).toBe(1);
+  });
+
+  test('animationTypes none is the same as omitting', () => {
+    const { rerender, baseElement } = render(
+      <Modal animationType="none" visible={true} />
+    );
+    const animationNoneElement = baseElement.lastChild!
+      .lastChild as HTMLElement;
+    const animationNoneStyle = window.getComputedStyle(
+      animationNoneElement,
+      null
+    );
+    rerender(<Modal visible={true} />);
+    const animationMissingElement = baseElement.lastChild!
+      .lastChild as HTMLElement;
+    const animationMissingStyle = window.getComputedStyle(
+      animationMissingElement,
+      null
+    );
+    const styleProps = new Set<keyof CSSStyleDeclaration>();
+
+    for (let i = 0; i < animationNoneStyle.length; i++) {
+      styleProps.add(animationNoneStyle[i] as keyof CSSStyleDeclaration);
+    }
+
+    for (let i = 0; i < animationMissingStyle.length; i++) {
+      styleProps.add(animationMissingStyle[i] as keyof CSSStyleDeclaration);
+    }
+
+    for (const prop of styleProps) {
+      expect(animationNoneStyle[prop]).toEqual(animationMissingStyle[prop]);
+    }
+  });
+
+  test('creates view with role="dialog" when active', () => {
+    const { baseElement } = render(
+      <Modal visible={true}>
+        <a href="#hello">Hello</a>
+      </Modal>
+    );
+    const dialogElement = (baseElement.lastChild as HTMLElement).querySelector(
+      '[role="dialog"]'
+    )!;
+    expect(dialogElement).not.toBeNull();
+    expect(dialogElement.getAttribute('role')).toBe('dialog');
+    expect(dialogElement.getAttribute('aria-modal')).toBe('true');
+  });
+
+  test('focus is trapped by default', () => {
+    render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    const outsideElement = document.querySelector(
+      '[data-testid="outside"]'
+    ) as HTMLElement;
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    outsideElement.focus();
+    expect(document.activeElement).toBe(insideElement);
+  });
+
+  test('focus is not trapped after closing modal', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={true} />
+      </>
+    );
+
+    const outsideElement = document.querySelector(
+      '[data-testid="outside"]'
+    ) as HTMLElement;
+    const onDismissCallback = jest.fn(() => outsideElement.focus());
+
+    rerender(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal onDismiss={onDismissCallback} visible={false} />
+      </>
+    );
+
+    expect(onDismissCallback).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(outsideElement);
+  });
+
+  test('focus is brought back to the element that triggered modal after closing', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <a data-testid="modal-trigger" href="#modal-trigger">
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector(
+      '[data-testid="modal-trigger"]'
+    ) as HTMLElement;
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <a data-testid="modal-trigger" href="#modal-trigger">
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <a data-testid="modal-trigger" href="#modal-trigger">
+          Outside
+        </a>
+      </>
+    );
+
+    expect(document.activeElement).toBe(modalTrigger);
+  });
+
+  test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
+    const { rerender } = render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <a data-testid="modal-trigger" href="#modal-trigger">
+          Outside
+        </a>
+      </>
+    );
+
+    const modalTrigger = document.querySelector(
+      '[data-testid="modal-trigger"]'
+    ) as HTMLElement;
+    modalTrigger.focus();
+    expect(document.activeElement).toBe(modalTrigger);
+
+    rerender(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={true}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+        <a data-testid="modal-trigger" href="#modal-trigger">
+          Outside
+        </a>
+      </>
+    );
+
+    const insideElement = document.querySelector('[data-testid="inside"]');
+    expect(document.activeElement).toBe(insideElement);
+
+    rerender(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  test('focus stays in a modal shown while another modal fades out', () => {
+    const modals = (a: boolean, b: boolean) => (
+      <>
+        <a data-testid="trigger" href="#" />
+        <Modal animationType="fade" visible={a}>
+          <a data-testid="a" href="#" />
+        </Modal>
+        <Modal visible={b}>
+          <a href="#" />
+          <a data-testid="b" href="#" />
+        </Modal>
+      </>
+    );
+
+    const { getByTestId, rerender } = render(modals(false, false));
+
+    getByTestId('trigger').focus();
+    rerender(modals(true, false));
+
+    const animationA =
+      getByTestId('a').parentElement!.parentElement!.parentElement!
+        .parentElement!;
+    fireEvent.animationEnd(animationA);
+
+    rerender(modals(false, true));
+    getByTestId('b').focus();
+    fireEvent.animationEnd(animationA);
+
+    expect(document.activeElement).toBe(getByTestId('b'));
+  });
+
+  test('a modal is active before its animation ends', () => {
+    const { getByTestId } = render(
+      <Modal animationType="fade" visible={true}>
+        <a data-testid="inside" href="#hello" />
+      </Modal>
+    );
+
+    const dialogElements = document.body.querySelectorAll('[role=dialog]');
+    expect(dialogElements.length).toBe(1);
+    expect(dialogElements[0].contains(getByTestId('inside'))).toBe(true);
+    expect(document.activeElement).toBe(getByTestId('inside'));
+  });
+
+  test('focus moves into a modal opening over another before its animation ends', () => {
+    const modals = (b: boolean) => (
+      <>
+        <Modal visible={true}>
+          <a data-testid="a" href="#" />
+        </Modal>
+        <Modal animationType="fade" visible={b}>
+          <a href="#" />
+          <a data-testid="b" href="#" />
+        </Modal>
+      </>
+    );
+
+    const { getByTestId, rerender } = render(modals(false));
+    expect(document.activeElement).toBe(getByTestId('a'));
+
+    rerender(modals(true));
+    getByTestId('b').focus();
+
+    expect(document.activeElement).toBe(getByTestId('b'));
+  });
+
+  test('focus is brought back to the lower modal after closing a modal opened over it', () => {
+    const modals = (b: boolean) => (
+      <>
+        <Modal visible={true}>
+          <a href="#" />
+          <a data-testid="trigger" href="#" />
+        </Modal>
+        <Modal animationType="fade" visible={b}>
+          <a data-testid="b" href="#" />
+        </Modal>
+      </>
+    );
+
+    const { getByTestId, rerender } = render(modals(false));
+    getByTestId('trigger').focus();
+
+    rerender(modals(true));
+    expect(document.activeElement).toBe(getByTestId('b'));
+
+    const animationB =
+      getByTestId('b').parentElement!.parentElement!.parentElement!
+        .parentElement!;
+    fireEvent.animationEnd(animationB);
+    rerender(modals(false));
+    fireEvent.animationEnd(animationB);
+
+    expect(document.activeElement).toBe(getByTestId('trigger'));
+  });
+
+  test('focus wraps forwards', () => {
+    render(
+      <>
+        <Modal visible={true}>
+          <a data-testid="inside-a" href="#">
+            Inside A
+          </a>
+          <a data-testid="inside-b" href="#">
+            Inside B
+          </a>
+          <a data-testid="inside-c" href="#">
+            Inside C
+          </a>
+        </Modal>
+      </>
+    );
+
+    const insideStartElement = document.querySelector(
+      '[data-testid="inside-a"]'
+    ) as HTMLElement;
+    const insideEndElement = document.querySelector(
+      '[data-testid="inside-c"]'
+    ) as HTMLElement;
+    // This is ugly - perhaps there's a better way?
+    const focusBracket = insideEndElement.parentNode!.parentNode!.parentNode!
+      .nextSibling as HTMLElement;
+    insideEndElement.focus();
+    focusBracket.focus();
+    expect(document.activeElement).toBe(insideStartElement);
+  });
+
+  test('focus wraps backwards', () => {
+    render(
+      <>
+        <Modal visible={true}>
+          <a data-testid="inside-a" href="#">
+            Inside A
+          </a>
+          <a data-testid="inside-b" href="#">
+            Inside B
+          </a>
+          <a data-testid="inside-c" href="#">
+            Inside C
+          </a>
+        </Modal>
+      </>
+    );
+
+    const insideStartElement = document.querySelector(
+      '[data-testid="inside-a"]'
+    ) as HTMLElement;
+    const insideEndElement = document.querySelector(
+      '[data-testid="inside-c"]'
+    ) as HTMLElement;
+    // This is ugly - perhaps there's a better way?
+    const focusBracket = insideEndElement.parentNode!.parentNode!.parentNode!
+      .previousSibling as HTMLElement;
+    insideStartElement.focus();
+    focusBracket.focus();
+    expect(document.activeElement).toBe(insideEndElement);
+  });
+
+  test('focus wraps backwards to the last element inside a focusable container', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <a data-testid="first" href="#" />
+        <div tabIndex={0}>
+          <a data-testid="last" href="#" />
+        </div>
+      </Modal>
+    );
+
+    const first = getByTestId('first');
+    const focusBracket = first.parentNode!.parentNode!.parentNode!
+      .previousSibling as HTMLElement;
+    first.focus();
+    focusBracket.focus();
+    expect(document.activeElement).toBe(getByTestId('last'));
+  });
+
+  test('focus wraps forwards past a container with tabIndex -1', () => {
+    const { getByTestId } = render(
+      <Modal visible={true}>
+        <div tabIndex={-1}>
+          <a data-testid="first" href="#" />
+        </div>
+        <a data-testid="last" href="#" />
+      </Modal>
+    );
+
+    const last = getByTestId('last');
+    const focusBracket = last.parentNode!.parentNode!.parentNode!
+      .nextSibling as HTMLElement;
+    last.focus();
+    focusBracket.focus();
+    expect(document.activeElement).toBe(getByTestId('first'));
+  });
+
+  test('focus is trapped without contents', () => {
+    render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={true}>
+          <div>There are no focusable contents.</div>
+        </Modal>
+      </>
+    );
+    const outsideElement = document.querySelector(
+      '[data-testid="outside"]'
+    ) as HTMLElement;
+    outsideElement.focus();
+    expect(document.activeElement).not.toBe(outsideElement);
+    expect(document.activeElement).not.toBe(document.body);
+  });
+
+  test('focus is not trapped when inactive', () => {
+    render(
+      <>
+        <a data-testid="outside" href="#outside">
+          Outside
+        </a>
+        <Modal visible={false}>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </Modal>
+      </>
+    );
+    const outsideElement = document.querySelector(
+      '[data-testid="outside"]'
+    ) as HTMLElement;
+    outsideElement.focus();
+    expect(document.activeElement).toBe(outsideElement);
+  });
+
+  test('creates portal outside of the react container', () => {
+    const { container, baseElement } = render(
+      <Modal visible={true}>
+        <a data-testid="hello" href="#hello">
+          Hello World
+        </a>
+      </Modal>
+    );
+    const helloAnchor = document.querySelector('[data-testid="hello"]');
+    expect(container.children.length).toBe(0);
+    expect(helloAnchor).not.toBeNull();
+    expect(baseElement.firstChild).toBe(container);
+    expect(
+      baseElement.lastChild!.firstChild!.contains(helloAnchor)
+    ).toBeTruthy();
+  });
+
+  test('portal created is a div', () => {
+    const { baseElement } = render(
+      <Modal visible={true}>
+        <a data-testid="hello" href="#hello">
+          Hello World
+        </a>
+      </Modal>
+    );
+    expect((baseElement.lastChild as HTMLElement).tagName).toBe('DIV');
+  });
+
+  test('ref must be set before `mount` hook', () => {
+    const spy = jest.fn();
+
+    function TestComponent() {
+      React.useEffect(() => spy('mount'), []);
+      return (
+        <Modal visible={true}>
+          <a ref={(ref) => (ref ? spy('ref') : spy('noref'))} />
+        </Modal>
+      );
+    }
+
+    render(<TestComponent />);
+
+    expect(spy).toHaveBeenNthCalledWith(1, 'ref');
+    expect(spy).toHaveBeenNthCalledWith(2, 'mount');
+  });
+
+  test('escape key fires onRequestClose', () => {
+    const spy = jest.fn();
+
+    render(<Modal onRequestClose={spy} visible={true} />);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose for top modal only', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    render(
+      <>
+        <Modal onRequestClose={spyA} visible={true} />
+        <Modal onRequestClose={spyB} visible={true} />
+      </>
+    );
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose for top modal only with animation', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    const { getByTestId, rerender } = render(
+      <>
+        <Modal animationType="slide" onRequestClose={spyA} visible={false}>
+          <a data-testid="a" />
+
+          <Modal animationType="slide" onRequestClose={spyB} visible={false}>
+            <a data-testid="b" />
+          </Modal>
+        </Modal>
+      </>
+    );
+
+    rerender(
+      <>
+        <Modal animationType="slide" onRequestClose={spyA} visible={true}>
+          <a data-testid="a" />
+
+          <Modal animationType="slide" onRequestClose={spyB} visible={true}>
+            <a data-testid="b" />
+          </Modal>
+        </Modal>
+      </>
+    );
+
+    // This is kind of ugly but I can't find a better way to target just the animation div
+    const animationAElement =
+      getByTestId('a').parentElement!.parentElement!.parentElement!
+        .parentElement!;
+    const animationBElement =
+      getByTestId('b').parentElement!.parentElement!.parentElement!
+        .parentElement!;
+
+    fireEvent.animationEnd(animationAElement);
+    fireEvent.animationEnd(animationBElement);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key fires onRequestClose for a modal opening over another before its animation ends', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    const modals = (b: boolean) => (
+      <>
+        <Modal onRequestClose={spyA} visible={true} />
+        <Modal animationType="fade" onRequestClose={spyB} visible={b} />
+      </>
+    );
+
+    const { rerender } = render(modals(false));
+    rerender(modals(true));
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(1);
+  });
+
+  test('escape key closes one modal per key press when the app handles it', () => {
+    const spyA = jest.fn();
+    const spyB = jest.fn();
+
+    function TestComponent() {
+      const [visibleB, setVisibleB] = React.useState(true);
+
+      return (
+        <>
+          <Modal onRequestClose={spyA} visible={true} />
+          <Modal onRequestClose={spyB} visible={visibleB}>
+            <a
+              data-testid="b"
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  e.preventDefault();
+                  setVisibleB(false);
+                }
+              }}
+            />
+          </Modal>
+        </>
+      );
+    }
+
+    const { getByTestId } = render(<TestComponent />);
+
+    fireEvent.keyDown(getByTestId('b'), { key: 'Escape' });
+    fireEvent.keyUp(document, { key: 'Escape' });
+
+    expect(spyA).toHaveBeenCalledTimes(0);
+    expect(spyB).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe('components/Modal with reduced motion', () => {
+  const originalMatchMedia = window.matchMedia;
+
+  afterEach(() => {
+    window.matchMedia = originalMatchMedia;
+  });
+
+  test('executes onShow and onDismiss callbacks without animation', async () => {
+    window.matchMedia = jest.fn(() => ({ matches: true }) as MediaQueryList);
+    jest.resetModules();
+
+    // Testing Library can't be imported again, as it registers Jest hooks
+    const { default: React, act } = await import('react');
+    const { createRoot } = await import('react-dom/client');
+    const { default: Modal } = await import('..');
+
+    const onShow = jest.fn();
+    const onDismiss = jest.fn();
+
+    const modal = (visible: boolean) => (
+      <Modal
+        animationType="fade"
+        onDismiss={onDismiss}
+        onShow={onShow}
+        visible={visible}
+      >
+        <a data-testid="inside" href="#" />
+      </Modal>
+    );
+
+    const root = createRoot(document.createElement('div'));
+
+    await act(() => root.render(modal(true)));
+    expect(onShow).toHaveBeenCalledTimes(1);
+
+    await act(() => root.render(modal(false)));
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(document.querySelector('[data-testid="inside"]')).toBeNull();
+
+    await act(() => root.unmount());
+  });
+});

@@ -3,8 +3,12 @@ const shared = {
     '/node_modules/',
     '<rootDir>/packages/react-native-web/src/vendor/'
   ],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   fakeTimers: {
     enableGlobally: true
+  },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
   },
   modulePathIgnorePatterns: [
     '<rootDir>/packages/benchmarks/',

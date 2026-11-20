@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // Modules
+    "types": ["jest"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+
+    // Emit
+    "declaration": true,
+    "noEmit": true,
+    "stripInternal": true,
+    "sourceMap": true,
+
+    // JavaScript Support
+    "allowJs": false,
+
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+
+    // Language and Environment
+    "jsx": "react",
+    "lib": ["DOM", "ESNext"],
+    "target": "esnext",
+    // Babel removes type-only class fields
+    "useDefineForClassFields": false,
+
+    // Completeness
+    "skipLibCheck": true,
+
+    // Type Checking
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false
+    // "exactOptionalPropertyTypes": true,
+    // "noImplicitOverride": true,
+    // "noImplicitReturns": true,
+    // "noUncheckedIndexedAccess": true,
+    // "noUnusedLocals": true
+    // "noUnusedParameters": true,
+  }
+}
