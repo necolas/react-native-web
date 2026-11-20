@@ -37,6 +37,82 @@ describe('components/ScrollView', () => {
       expect(onScroll).toHaveBeenCalled();
     });
 
+    test('does not call the pending scroll-end handler after unmount', () => {
+      const onScroll = jest.fn();
+      const ref = React.createRef();
+      const { unmount } = render(
+        <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
+      );
+      act(() => createEventTarget(ref.current).scroll());
+      expect(onScroll).toHaveBeenCalledTimes(1);
+      unmount();
+      act(() => jest.advanceTimersByTime(100));
+      expect(onScroll).toHaveBeenCalledTimes(1);
+    });
+
+    test('clears the latest scroll-end timer after repeated scrolls in StrictMode', () => {
+      const onScroll = jest.fn();
+      const ref = React.createRef();
+      const { unmount } = render(
+        <React.StrictMode>
+          <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
+        </React.StrictMode>
+      );
+      act(() => createEventTarget(ref.current).scroll());
+      act(() => jest.advanceTimersByTime(50));
+      act(() => createEventTarget(ref.current).scroll());
+      expect(onScroll).toHaveBeenCalledTimes(2);
+      unmount();
+      act(() => jest.advanceTimersByTime(100));
+      expect(onScroll).toHaveBeenCalledTimes(2);
+    });
+
+    test('unmounting one ScrollView preserves another scroll-end timer', () => {
+      const first = jest.fn();
+      const second = jest.fn();
+      const firstRef = React.createRef();
+      const secondRef = React.createRef();
+      const App = ({ showFirst }) => (
+        <>
+          {showFirst && (
+            <ScrollView
+              key="first"
+              onScroll={first}
+              ref={firstRef}
+              scrollEventThrottle={16}
+            />
+          )}
+          <ScrollView
+            key="second"
+            onScroll={second}
+            ref={secondRef}
+            scrollEventThrottle={16}
+          />
+        </>
+      );
+      const { rerender } = render(<App showFirst={true} />);
+      act(() => {
+        createEventTarget(firstRef.current).scroll();
+        createEventTarget(secondRef.current).scroll();
+      });
+      rerender(<App showFirst={false} />);
+      act(() => jest.advanceTimersByTime(100));
+      expect(first).toHaveBeenCalledTimes(1);
+      expect(second).toHaveBeenCalledTimes(2);
+    });
+
+    test('calls the final scroll handler while mounted', () => {
+      const onScroll = jest.fn();
+      const ref = React.createRef();
+      render(
+        <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
+      );
+      act(() => createEventTarget(ref.current).scroll());
+      expect(onScroll).toHaveBeenCalledTimes(1);
+      act(() => jest.advanceTimersByTime(100));
+      expect(onScroll).toHaveBeenCalledTimes(2);
+    });
+
     test('is not called when descendant scrolls', () => {
       const onScroll = jest.fn();
       const ref = React.createRef();
