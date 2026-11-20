@@ -118,7 +118,9 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
     element.props['aria-disabled'];
 
   if (type != null) {
-    supportedProps.unstable_type = type;
+    supportedProps[
+      typeof element.type === 'string' ? 'type' : 'unstable_type'
+    ] = type;
   }
 
   supportedProps.focusable = !disabled && focusable !== false;
