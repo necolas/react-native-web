@@ -1,0 +1,215 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
+
+'use strict';
+
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+
+const NativeAnimatedAPI = NativeAnimatedHelper.API;
+import invariant from 'invariant';
+
+import type {PlatformConfig} from '../AnimatedPlatformConfig';
+import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
+import type AnimatedColor from './AnimatedColor';
+import type {ColorListenerCallback} from './AnimatedColor';
+import type AnimatedValueXY from './AnimatedValueXY';
+import type {ValueXYListenerCallback} from './AnimatedValueXY';
+import type { Nullable } from '../../../../types';
+
+type ValueListenerCallback = (state: {value: number}) => unknown;
+
+type ListenerCallback<T> = T extends AnimatedColor
+  ? ColorListenerCallback
+  : T extends AnimatedValueXY
+    ? ValueXYListenerCallback
+    : AnimatedNode extends T
+      ? (value: never) => unknown
+      : ValueListenerCallback;
+
+let _uniqueId = 1;
+
+// Note(vjeux): this would be better as an interface but flow doesn't
+// support them yet
+class AnimatedNode {
+  _listeners: Record<string, unknown>;
+  _platformConfig: Nullable<PlatformConfig>;
+  __nativeAnimatedValueListener: Nullable<EventSubscription>;
+  __attach(): void {}
+  __detach(): void {
+    if (this.__isNative && this.__nativeTag != null) {
+      NativeAnimatedHelper.API.dropAnimatedNode(this.__nativeTag);
+      this.__nativeTag = undefined;
+    }
+  }
+  __getValue(): unknown;
+  __getValue(): void {}
+  __getAnimatedValue(): unknown {
+    return this.__getValue();
+  }
+  __addChild(child: AnimatedNode) {}
+  __removeChild(child: AnimatedNode) {}
+  __getChildren(): Array<AnimatedNode> {
+    return [];
+  }
+
+  /* Methods and props used by native Animated impl */
+  __isNative!: boolean;
+  __nativeTag: Nullable<number>;
+  __shouldUpdateListenersForNewNativeTag!: boolean;
+
+  constructor() {
+    this._listeners = {};
+  }
+
+  __makeNative(platformConfig?: Nullable<PlatformConfig>): void {
+    if (!this.__isNative) {
+      throw new Error('This node cannot be made a "native" animated node');
+    }
+
+    this._platformConfig = platformConfig;
+    if (this.hasListeners()) {
+      this._startListeningToNativeValueUpdates();
+    }
+  }
+
+  /**
+   * Adds an asynchronous listener to the value so you can observe updates from
+   * animations.  This is useful because there is no way to
+   * synchronously read the value because it might be driven natively.
+   *
+   * See https://reactnative.dev/docs/animatedvalue#addlistener
+   */
+  addListener(callback: ListenerCallback<this>): string {
+    const id = String(_uniqueId++);
+    this._listeners[id] = callback;
+    if (this.__isNative) {
+      this._startListeningToNativeValueUpdates();
+    }
+    return id;
+  }
+
+  /**
+   * Unregister a listener. The `id` param shall match the identifier
+   * previously returned by `addListener()`.
+   *
+   * See https://reactnative.dev/docs/animatedvalue#removelistener
+   */
+  removeListener(id: string): void {
+    delete this._listeners[id];
+    if (this.__isNative && !this.hasListeners()) {
+      this._stopListeningForNativeValueUpdates();
+    }
+  }
+
+  /**
+   * Remove all registered listeners.
+   *
+   * See https://reactnative.dev/docs/animatedvalue#removealllisteners
+   */
+  removeAllListeners(): void {
+    this._listeners = {};
+    if (this.__isNative) {
+      this._stopListeningForNativeValueUpdates();
+    }
+  }
+
+  hasListeners(): boolean {
+    return !!Object.keys(this._listeners).length;
+  }
+
+  _startListeningToNativeValueUpdates() {
+    if (
+      this.__nativeAnimatedValueListener &&
+      !this.__shouldUpdateListenersForNewNativeTag
+    ) {
+      return;
+    }
+
+    if (this.__shouldUpdateListenersForNewNativeTag) {
+      this.__shouldUpdateListenersForNewNativeTag = false;
+      this._stopListeningForNativeValueUpdates();
+    }
+
+    NativeAnimatedAPI.startListeningToAnimatedNodeValue(this.__getNativeTag());
+    this.__nativeAnimatedValueListener =
+      NativeAnimatedHelper.nativeEventEmitter.addListener(
+        'onAnimatedValueUpdate',
+        data => {
+          if (data.tag !== this.__getNativeTag()) {
+            return;
+          }
+          this.__onAnimatedValueUpdateReceived(data.value);
+        },
+      );
+  }
+
+  __onAnimatedValueUpdateReceived(value: number) {
+    this.__callListeners(value);
+  }
+
+  __callListeners(value: unknown): void {
+    for (const key in this._listeners) {
+      (this._listeners[key] as (state: {value: unknown}) => unknown)({value});
+    }
+  }
+
+  _stopListeningForNativeValueUpdates() {
+    if (!this.__nativeAnimatedValueListener) {
+      return;
+    }
+
+    this.__nativeAnimatedValueListener.remove();
+    this.__nativeAnimatedValueListener = null;
+    NativeAnimatedAPI.stopListeningToAnimatedNodeValue(this.__getNativeTag());
+  }
+
+  __getNativeTag(): number {
+    NativeAnimatedHelper.assertNativeAnimatedModule();
+    invariant(
+      this.__isNative,
+      'Attempt to get native tag from node not marked as "native"',
+    );
+
+    const nativeTag =
+      this.__nativeTag ?? NativeAnimatedHelper.generateNewNodeTag();
+
+    if (this.__nativeTag == null) {
+      this.__nativeTag = nativeTag;
+      const config = this.__getNativeConfig();
+      if (this._platformConfig) {
+        config.platformConfig = this._platformConfig;
+      }
+      NativeAnimatedHelper.API.createAnimatedNode(nativeTag, config);
+      this.__shouldUpdateListenersForNewNativeTag = true;
+    }
+
+    return nativeTag;
+  }
+  __getNativeConfig(): Record<string, unknown> {
+    throw new Error(
+      'This JS animated node type cannot be used as native animated node',
+    );
+  }
+  toJSON(): unknown {
+    return this.__getValue();
+  }
+
+  __getPlatformConfig(): Nullable<PlatformConfig> {
+    return this._platformConfig;
+  }
+  __setPlatformConfig(platformConfig: Nullable<PlatformConfig>) {
+    this._platformConfig = platformConfig;
+  }
+}
+
+export interface AnimatedNumericNode extends AnimatedNode {
+  __getValue(): number;
+}
+
+export default AnimatedNode;

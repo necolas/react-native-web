@@ -1,9 +1,7 @@
 export default function (api) {
   return {
+    shouldPrintComment: (comment) => comment === '#__PURE__',
     plugins: [
-      ['babel-plugin-syntax-hermes-parser', { parseLangTypes: 'flow' }],
-      '@babel/plugin-transform-flow-strip-types',
-
       ...(api.env('test')
         ? // Jest resolves paths without extensions. The extensions depend on other
           // files on disk, which Jest's transform cache does not track.
@@ -14,6 +12,7 @@ export default function (api) {
     ],
     presets: [
       ['@babel/preset-react', { useSpread: true }],
+      ['@babel/preset-typescript', { onlyRemoveTypeImports: true }],
       [
         '@babel/preset-env',
         {

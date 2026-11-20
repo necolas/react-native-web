@@ -1,0 +1,153 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import type { MouseEvent } from 'react';
+import type { ColorValue, GenericStyleProp, Nullable } from '../../types';
+import type { ViewProps, ViewStyle } from '../View/types';
+
+type FontWeightValue =
+  | 'normal'
+  | 'bold'
+  | '100'
+  | '200'
+  | '300'
+  | '400'
+  | '500'
+  | '600'
+  | '700'
+  | '800'
+  | '900';
+
+type NumberOrString = number | string;
+
+export type TextStyle = ViewStyle & {
+  color?: Nullable<ColorValue>;
+  fontFamily?: Nullable<string>;
+  fontFeatureSettings?: Nullable<string>;
+  fontSize?: Nullable<NumberOrString>;
+  fontStyle?: 'italic' | 'normal';
+  fontWeight?: Nullable<FontWeightValue>;
+  fontVariant?:
+    | ReadonlyArray<
+        | 'common-ligatures'
+        | 'contextual'
+        | 'discretionary-ligatures'
+        | 'historical-ligatures'
+        | 'lining-nums'
+        | 'no-common-ligatures'
+        | 'no-contextual'
+        | 'no-discretionary-ligatures'
+        | 'no-historical-ligatures'
+        | 'oldstyle-nums'
+        | 'proportional-nums'
+        | 'small-caps'
+        | 'stylistic-eight'
+        | 'stylistic-eighteen'
+        | 'stylistic-eleven'
+        | 'stylistic-fifteen'
+        | 'stylistic-five'
+        | 'stylistic-four'
+        | 'stylistic-fourteen'
+        | 'stylistic-nine'
+        | 'stylistic-nineteen'
+        | 'stylistic-one'
+        | 'stylistic-seven'
+        | 'stylistic-seventeen'
+        | 'stylistic-six'
+        | 'stylistic-sixteen'
+        | 'stylistic-ten'
+        | 'stylistic-thirteen'
+        | 'stylistic-three'
+        | 'stylistic-twelve'
+        | 'stylistic-twenty'
+        | 'stylistic-two'
+        | 'tabular-nums'
+      >
+    | string;
+  hyphenateCharacter?: Nullable<string>;
+  hyphens?: 'auto' | 'manual' | 'none';
+  initialLetter?: Nullable<NumberOrString>;
+  letterSpacing?: Nullable<NumberOrString>;
+  lineClamp?: Nullable<number>;
+  lineHeight?: Nullable<NumberOrString>;
+  rubyPosition?: 'alternate' | 'over' | 'under';
+  textAlign?:
+    | 'center'
+    | 'end'
+    | 'inherit'
+    | 'justify'
+    | 'justify-all'
+    | 'left'
+    | 'right'
+    | 'start';
+  textDecorationColor?: Nullable<ColorValue>;
+  textDecorationLine?:
+    'none' | 'underline' | 'line-through' | 'underline line-through';
+  textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
+  textEmphasis?: Nullable<string>;
+  textEmphasisColor?: Nullable<ColorValue>;
+  textEmphasisPosition?: Nullable<string>;
+  textEmphasisStyle?: Nullable<string>;
+  textIndent?: Nullable<NumberOrString>;
+  textOverflow?: Nullable<string>;
+  textRendering?:
+    'auto' | 'geometricPrecision' | 'optimizeLegibility' | 'optimizeSpeed';
+  textShadow?: Nullable<string>;
+  textShadowColor?: Nullable<ColorValue>;
+  textShadowOffset?: { width?: number; height?: number };
+  textShadowRadius?: Nullable<number>;
+  textSizeAdjust?: Nullable<string>;
+  textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase';
+  unicodeBidi?:
+    | 'normal'
+    | 'bidi-override'
+    | 'embed'
+    | 'isolate'
+    | 'isolate-override'
+    | 'plaintext';
+  userSelect?: 'none' | 'text';
+  verticalAlign?: Nullable<string>;
+  whiteSpace?: Nullable<string>;
+  wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all';
+  wordWrap?: Nullable<string>;
+  writingDirection?: 'auto' | 'ltr' | 'rtl';
+  /* @platform web */
+  MozOsxFontSmoothing?: Nullable<string>;
+  WebkitFontSmoothing?: Nullable<string>;
+  // deprecated
+  textAlignVertical?: Nullable<string>;
+};
+
+export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
+  dir?: 'auto' | 'ltr' | 'rtl';
+  ellipsizeMode?: Nullable<'clip' | 'head' | 'middle' | 'tail'>;
+  numberOfLines?: Nullable<number>;
+  role?:
+    | 'button'
+    | 'header'
+    | 'heading'
+    | 'label'
+    | 'link'
+    | 'listitem'
+    | 'none'
+    | 'text';
+  style?: GenericStyleProp<TextStyle>;
+  testID?: Nullable<string>;
+  // @deprecated
+  accessibilityRole?:
+    | 'button'
+    | 'header'
+    | 'heading'
+    | 'label'
+    | 'link'
+    | 'listitem'
+    | 'none'
+    | 'text';
+  onPress?: (e: MouseEvent<HTMLElement>) => void;
+  selectable?: boolean;
+};

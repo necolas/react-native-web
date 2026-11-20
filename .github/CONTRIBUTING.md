@@ -71,7 +71,7 @@ npm run lint
 Run the monorepo type checker:
 
 ```
-npm run flow
+npm run typecheck
 ```
 
 Run the monorepo unit tests:

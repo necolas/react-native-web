@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
+
+'use client';
+
+import type { AnimatedValueConfig } from '../../vendor/react-native/Animated/nodes/AnimatedValue';
+import type AnimatedValueXY from '../../vendor/react-native/Animated/nodes/AnimatedValueXY';
+
+import Animated from '../Animated';
+import { useRef } from 'react';
+import type { Nullable } from '../../types';
+
+export default function useAnimatedValueXY(
+  initialValue: {
+    x: number;
+    y: number;
+  },
+  // `useNativeDriver` is not supported on web, so the config is not used.
+  config?: Nullable<AnimatedValueConfig>
+): AnimatedValueXY {
+  const ref = useRef<null | AnimatedValueXY>(null);
+  if (ref.current == null) {
+    ref.current = new Animated.ValueXY(initialValue);
+  }
+  return ref.current;
+}

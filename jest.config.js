@@ -6,6 +6,9 @@ const shared = {
   fakeTimers: {
     enableGlobally: true
   },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
   modulePathIgnorePatterns: [
     '<rootDir>/packages/benchmarks/',
     '<rootDir>/packages/react-native-web-docs/',

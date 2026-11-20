@@ -1,17 +1,16 @@
 module.exports = {
   settings: {
     react: {
-      version: '19.0',
-      flowVersion: '0.340.0'
+      version: '19.0'
     }
   },
-  // hermes parser to support Flow syntax
-  parser: 'hermes-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true }
   },
   extends: ['prettier'],
-  plugins: ['react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   env: {
     browser: true,
     es2021: true,
@@ -21,18 +20,10 @@ module.exports = {
   ignorePatterns: [
     'coverage',
     'dist',
-    'flow-typed',
     'node_modules',
     'packages/**/vendor/*',
     'packages/**/.next'
   ],
-  // Flow built-in types
-  globals: {
-    ClientRect: 'readonly',
-    Readonly: 'readonly',
-    ReadonlyArray: 'readonly',
-    Record: 'readonly'
-  },
   rules: {
     camelcase: 'off',
     'constructor-super': 'error',
@@ -151,5 +142,20 @@ module.exports = {
     // react-hooks
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn'
-  }
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-redeclare': 'off',
+        'no-undef': 'off',
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-redeclare': 'error',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          { vars: 'all', args: 'none', caughtErrors: 'none' }
+        ]
+      }
+    }
+  ]
 };
