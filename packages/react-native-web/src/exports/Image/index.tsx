@@ -141,8 +141,12 @@ function resolveAssetUri(source: Nullable<Source>): Nullable<string> {
     uri = resolvePackagerAsset(asset).uri;
   } else if (typeof source === 'string') {
     uri = source;
-  } else if (source && typeof (source as { uri?: unknown }).uri === 'string') {
-    uri = (source as { uri: string }).uri;
+  } else if (
+    source != null &&
+    !Array.isArray(source) &&
+    typeof source.uri === 'string'
+  ) {
+    uri = source.uri;
   }
 
   if (uri) {

@@ -11,7 +11,6 @@
 
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
 import type { PressEvent } from '../../modules/usePressEvents/PressResponder';
-import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 import type { ViewProps } from '../View';
 
 import * as React from 'react';
@@ -89,10 +88,9 @@ function TouchableOpacity(props: Props): React.ReactNode {
       onPress,
       onPressStart(event: PressEvent) {
         const isGrant =
-          (event as Partial<ResponderEvent>).dispatchConfig != null
-            ? (event as ResponderEvent).dispatchConfig.registrationName ===
-              'onResponderGrant'
-            : (event as Exclude<PressEvent, ResponderEvent>).type === 'keydown';
+          'dispatchConfig' in event
+            ? event.dispatchConfig.registrationName === 'onResponderGrant'
+            : event.type === 'keydown';
         setOpacityActive(isGrant ? 0 : 150);
         if (onPressIn != null) {
           onPressIn(event);

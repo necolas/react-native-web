@@ -37,17 +37,19 @@ const activeTouches = new Map<
 export function addTouch(touch: TouchData) {
   const identifier = touch.identifier;
   const target = touch.target;
-  if (!activeTouches.has(target)) {
-    activeTouches.set(target, new Map());
+  let targetTouches = activeTouches.get(target);
+  if (targetTouches == null) {
+    targetTouches = new Map();
+    activeTouches.set(target, targetTouches);
   }
-  if (activeTouches.get(target)!.get(identifier)) {
+  if (targetTouches.get(identifier)) {
     // Do not allow existing touches to be overwritten
     console.error(
       'Touch with identifier %s already exists. Did not record touch start.',
       identifier
     );
   } else {
-    activeTouches.get(target)!.set(identifier, touch);
+    targetTouches.set(identifier, touch);
   }
   isGesture = activeTouches.size > 1;
 }
@@ -55,8 +57,9 @@ export function addTouch(touch: TouchData) {
 export function updateTouch(touch: TouchData) {
   const identifier = touch.identifier;
   const target = touch.target;
-  if (activeTouches.get(target) != null) {
-    activeTouches.get(target)!.set(identifier, touch);
+  const targetTouches = activeTouches.get(target);
+  if (targetTouches != null) {
+    targetTouches.set(identifier, touch);
     isGesture = true;
   } else {
     console.error(
@@ -69,9 +72,10 @@ export function updateTouch(touch: TouchData) {
 export function removeTouch(touch: TouchData) {
   const identifier = touch.identifier;
   const target = touch.target;
-  if (activeTouches.get(target) != null) {
-    if (activeTouches.get(target)!.has(identifier)) {
-      activeTouches.get(target)!.delete(identifier);
+  const targetTouches = activeTouches.get(target);
+  if (targetTouches != null) {
+    if (targetTouches.has(identifier)) {
+      targetTouches.delete(identifier);
     } else {
       console.error(
         'Touch with identifier %s does not exist. Cannot record touch end without a touch start.',
@@ -91,8 +95,9 @@ export function getTouches() {
 }
 
 export function getTargetTouches(target: Node | Window) {
-  if (activeTouches.get(target) != null) {
-    return Array.from(activeTouches.get(target)!.values());
+  const targetTouches = activeTouches.get(target);
+  if (targetTouches != null) {
+    return Array.from(targetTouches.values());
   }
   return [];
 }

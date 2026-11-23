@@ -38,8 +38,12 @@ export default function normalizeValueWithProperty<T>(
     (property == null || !isUnitlessNumber(property))
   ) {
     return `${value}px`;
-  } else if (property != null && colorProps.has(property)) {
-    return normalizeColor(value as number | string);
+  } else if (
+    property != null &&
+    colorProps.has(property) &&
+    (typeof value === 'number' || typeof value === 'string')
+  ) {
+    return normalizeColor(value);
   }
   return value;
 }

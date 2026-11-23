@@ -246,13 +246,13 @@ const createReactDOMStyle = (
         resolvedStyle.flex = value;
       }
     } else if (prop === 'font') {
-      resolvedStyle[prop] = (value as string).replace(
-        'System',
-        SYSTEM_FONT_STACK
-      );
+      resolvedStyle[prop] =
+        typeof value === 'string'
+          ? value.replace('System', SYSTEM_FONT_STACK)
+          : value;
     } else if (prop === 'fontFamily') {
-      if ((value as string).indexOf('System') > -1) {
-        const stack = (value as string).split(/,\s*/);
+      if (typeof value === 'string' && value.indexOf('System') > -1) {
+        const stack = value.split(/,\s*/);
         stack[stack.indexOf('System')] = SYSTEM_FONT_STACK;
         resolvedStyle[prop] = stack.join(',');
       } else if (value === 'monospace') {

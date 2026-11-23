@@ -83,20 +83,14 @@ const createEventTarget = <T extends Node | Window>(node: T) => ({
     domEventSequences.pointerup(node, payload);
   },
   scroll(payload?: EventPayload) {
-    node.dispatchEvent(
-      (domEvents.scroll as (payload?: EventPayload) => Event)(payload)
-    );
+    node.dispatchEvent(domEvents.scroll());
   },
   select(payload?: EventPayload) {
-    node.dispatchEvent(
-      (domEvents.select as (payload?: EventPayload) => Event)(payload)
-    );
+    node.dispatchEvent(domEvents.select());
   },
   // selectionchange is only dispatched on 'document'
   selectionchange(payload?: EventPayload) {
-    document.dispatchEvent(
-      (domEvents.selectionchange as (payload?: EventPayload) => Event)(payload)
-    );
+    document.dispatchEvent(domEvents.selectionchange());
   },
   /**
    * Gesture abstractions.

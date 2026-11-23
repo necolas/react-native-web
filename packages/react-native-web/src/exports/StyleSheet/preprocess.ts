@@ -114,8 +114,8 @@ export const createBoxShadowArrayValue = (
 const mapTransform = (transform: TransformStyle): string => {
   const type = Object.keys(transform)[0];
   const value = transform[type];
-  if (type === 'matrix' || type === 'matrix3d') {
-    return `${type}(${(value as ReadonlyArray<number>).join(',')})`;
+  if ((type === 'matrix' || type === 'matrix3d') && typeof value === 'object') {
+    return `${type}(${value.join(',')})`;
   } else {
     const normalizedValue = normalizeValueWithProperty(value, type);
     return `${type}(${normalizedValue})`;
